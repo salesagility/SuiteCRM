@@ -44,8 +44,8 @@ require_once('include/EditView/QuickCreate.php');
 
 
 class NotesQuickCreate extends QuickCreate {
-    
-    var $javascript;
+
+    public $javascript;
     
     function process() {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
@@ -70,4 +70,3 @@ class NotesQuickCreate extends QuickCreate {
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }   
 }
-?>

@@ -108,8 +108,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         // if $params tell us to override all ordering
         if(!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
             $order = $this->lvde->getOrderBy(strtolower($params['orderBy']), (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
-        }
-        else {
+        } else {
             $order = $this->lvde->getOrderBy(); // retreive from $_REQUEST
         }
 
@@ -185,7 +184,9 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
                     if(!isset($post_retrieve[$rows[$rowIndex[0]]['parent_type']])) {
                         $post_retrieve[$rows[$rowIndex[0]]['parent_type']] = array();
                     }
-                    if(!empty($rows[$rowIndex[0]]['parent_id'])) $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = array('child_id' => $id , 'parent_id'=> $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent');
+                    if(!empty($rows[$rowIndex[0]]['parent_id'])) {
+                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = array('child_id' => $id , 'parent_id'=> $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent');
+                    }
                 }
                 if(isset($post_retrieve)) {
                     $parent_fields = $seed->retrieve_parent_fields($post_retrieve);
@@ -213,7 +214,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
                 }
                 if($idIndex[$row[$idField]][0] == $dataIndex){
                     $pageData['tag'][$dataIndex] = $temp->listviewACLHelper();
-                }else{
+                } else{
                     $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$idField]][0]];
                 }
                 $data[$dataIndex] = $temp->get_list_view_data();
@@ -227,8 +228,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
                 if($additionalDetailsAllow) {
                     if($this->lvde->additionalDetailsAjax) {
                         $ar = $this->lvde->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
-                    }
-                    else {
+                    } else {
                         $additionalDetailsFile = 'modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
                         if(file_exists('custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php')){
                             $additionalDetailsFile = 'custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
@@ -253,7 +253,9 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
 
         if($offset > 0) {
             $prevOffset = $offset - $limit;
-            if($prevOffset < 0)$prevOffset = 0;
+            if($prevOffset < 0) {
+                $prevOffset = 0;
+            }
         }
         $totalCount = $count + $offset;
 
@@ -287,17 +289,21 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
             (isset($request["module"]) && $request["module"] == "MergeRecords"))
         {
             $queryString = "-advanced_search";
-        }
-        else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
+        } else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
         {
             // TODO: figure out what was the SearchFormReports???
-            if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
-            else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir); // TODO: figure out which SearchForm is it?
+            if($seed->module_dir == "Reports") {
+                $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
+            } else {
+                $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+            }
+            // TODO: figure out which SearchForm is it?
 
             $basicSearchFields = array();
 
-            if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) )
-                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+            if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) ) {
+                            $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+            }
 
             foreach( $basicSearchFields as $basicSearchField)
             {

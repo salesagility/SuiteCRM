@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,76 +34,63 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean {
-	var $field_name_map;
+	public $field_name_map;
 	// Stored fields
-	var $id;
-	var $lead_source;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $description;
-	var $name;
-	var $opportunity_type;
-	var $amount;
-	var $amount_usdollar;
-	var $currency_id;
-	var $date_closed;
-	var $next_step;
-	var $sales_stage;
-	var $probability;
-	var $campaign_id;
+	public $id;
+	public $lead_source;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $assigned_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $name;
+	public $opportunity_type;
+	public $amount;
+	public $amount_usdollar;
+	public $currency_id;
+	public $date_closed;
+	public $next_step;
+	public $sales_stage;
+	public $probability;
+	public $campaign_id;
 
 	// These are related
-	var $account_name;
-	var $account_id;
-	var $contact_id;
-	var $task_id;
-	var $note_id;
-	var $meeting_id;
-	var $call_id;
-	var $email_id;
-	var $assigned_user_name;
+	public $account_name;
+	public $account_id;
+	public $contact_id;
+	public $task_id;
+	public $note_id;
+	public $meeting_id;
+	public $call_id;
+	public $email_id;
+	public $assigned_user_name;
 
-	var $table_name = "opportunities";
-	var $rel_account_table = "accounts_opportunities";
-	var $rel_contact_table = "opportunities_contacts";
-	var $module_dir = "Opportunities";
+	public $table_name = "opportunities";
+	public $rel_account_table = "accounts_opportunities";
+	public $rel_contact_table = "opportunities_contacts";
+	public $module_dir = "Opportunities";
 
-	var $importable = true;
-	var $object_name = "Opportunity";
+	public $importable = true;
+	public $object_name = "Opportunity";
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
+	public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
 	);
 
-	var $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
+	public $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
 									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
 									// Bug 38529 & 40938
 									'currency_id' => 'currencies',
@@ -124,14 +111,13 @@ class Opportunity extends SugarBean {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
+		} else {
 			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
 		}
 		self::__construct();
 	}
 
-	var $new_schema = true;
+	public $new_schema = true;
 
 
 
@@ -169,19 +155,21 @@ $query .= 			"LEFT JOIN users
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
-		}else 	if($show_deleted == 1){
+		} else 	if($show_deleted == 1){
 				$where_auto = " opportunities.deleted=1";
 		}
 
-		if($where != "")
-			$query .= "where ($where) AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+		if($where != "") {
+					$query .= "where ($where) AND ".$where_auto;
+		} else {
+					$query .= "where ".$where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY opportunities.name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY opportunities.name";
+		}
 
 		return $query;
 	}
@@ -209,15 +197,17 @@ $query .= 			"LEFT JOIN users
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
 
-        if($where != "")
-                $query .= "where $where AND ".$where_auto;
-        else
-                $query .= "where ".$where_auto;
+        if($where != "") {
+                        $query .= "where $where AND ".$where_auto;
+        } else {
+                        $query .= "where ".$where_auto;
+        }
 
-        if($order_by != "")
-                $query .= " ORDER BY opportunities.$order_by";
-        else
-                $query .= " ORDER BY opportunities.name";
+        if($order_by != "") {
+                        $query .= " ORDER BY opportunities.$order_by";
+        } else {
+                        $query .= " ORDER BY opportunities.name";
+        }
         return $query;
     }
 
@@ -344,7 +334,9 @@ $query .= 			"LEFT JOIN users
 	$the_where = "";
 	foreach($where_clauses as $clause)
 	{
-		if($the_where != "") $the_where .= " or ";
+		if($the_where != "") {
+		    $the_where .= " or ";
+		}
 		$the_where .= $clause;
 	}
 
@@ -357,17 +349,20 @@ $query .= 			"LEFT JOIN users
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;
 
-        if ( empty($this->currency_id) )
-            $this->currency_id = $current_user->getPreference('currency');
-        if ( empty($this->currency_id) )
-            $this->currency_id = -99;
+        if ( empty($this->currency_id) ) {
+                    $this->currency_id = $current_user->getPreference('currency');
+        }
+        if ( empty($this->currency_id) ) {
+                    $this->currency_id = -99;
+        }
 
         //if probablity isn't set, set it based on the sales stage
         if (!isset($this->probability) && !empty($this->sales_stage))
         {
             $prob_arr = $app_list_strings['sales_probability_dom'];
-        	if (isset($prob_arr[$this->sales_stage]))
-        		$this->probability = $prob_arr[$this->sales_stage];
+        	if (isset($prob_arr[$this->sales_stage])) {
+        	        		$this->probability = $prob_arr[$this->sales_stage];
+        	}
         }
 
 		require_once('modules/Opportunities/SaveOverload.php');
@@ -451,7 +446,7 @@ $query .= 			"LEFT JOIN users
 			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner, 'module', $in_group)){
         	/* END - SECURITY GROUPS */
 				$array_assign['ACCOUNT'] = 'a';
-			}else{
+			} else{
 				$array_assign['ACCOUNT'] = 'span';
 			}
 

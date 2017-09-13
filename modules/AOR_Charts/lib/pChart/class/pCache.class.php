@@ -16,9 +16,9 @@
  /* pData class definition */
  class pCache
   {
-   var $CacheFolder;
-   var $CacheIndex;
-   var $CacheDB;
+     public $CacheFolder;
+     public $CacheIndex;
+     public $CacheDB;
 
    /* Class creator */
    function pCache($Settings="")

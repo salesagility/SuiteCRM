@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/DynamicFields/FieldCases.php');
 require_once('modules/DynamicFields/DynamicField.php');
@@ -89,15 +93,19 @@ require_once('modules/DynamicFields/DynamicField.php');
 			$the_field->set($fieldDef);
 				
 				if(!isset($fields[$col]) && $col != 'id_c'){
-					if(!$simulate)$db->query("ALTER TABLE $mod->table_name" . "_cstm DROP COLUMN $col");
+					if(!$simulate) {
+					    $db->query("ALTER TABLE $mod->table_name" . "_cstm DROP COLUMN $col");
+					}
 					unset($fields[$col]);
 					echo "Dropping Column $col from $mod->table_name" . "_cstm for module $the_module<br>";
-				}	else{
+				} else{
 					if($col != 'id_c'){
 					if(trim($the_field->get_db_type()) != trim($type)){
 						
 					echo "Fixing Column Type for $col changing $type to ". $the_field->get_db_type() . "<br>";
-					if(!$simulate)$db->query($the_field->get_db_modify_alter_table($mod->table_name . '_cstm'));		
+					if(!$simulate) {
+					    $db->query($the_field->get_db_modify_alter_table($mod->table_name . '_cstm'));
+					}
 					}
 					}
 					

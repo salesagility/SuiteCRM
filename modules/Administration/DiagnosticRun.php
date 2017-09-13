@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once( 'include/utils/progress_bar_utils.php' );
 require_once( 'include/utils/zip_utils.php' );
@@ -47,7 +48,9 @@ require_once( 'include/utils/zip_utils.php' );
 global $current_user;
 
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics'])
 {
     sugar_die("Unauthorized access to diagnostic tool.");
@@ -131,9 +134,9 @@ function sodUpdateProgressBar($itemweight){
     global $currentitems;
 
     $currentitems++;
-    if($currentitems == $totalitems)
-      update_progress_bar("diagnostic", 100, 100);
-    else
+    if($currentitems == $totalitems) {
+          update_progress_bar("diagnostic", 100, 100);
+    } else
     {
       $progress_bar_percent += ($itemweight / $GLOBALS['totalweight'] * 100);
       update_progress_bar("diagnostic", $progress_bar_percent, 100);
@@ -214,18 +217,21 @@ function getFullTableDump($tableName){
 			//perform this check when counter is set to two, which means it is on the 'value' column
 			if($counter == 2) {
 				//if the previous "name" column value was set to smtppass, set replace_val to true
-				if(strcmp($row[$counter - 1], "smtppass") == 0  )
-					$replace_val = true;
+				if(strcmp($row[$counter - 1], "smtppass") == 0  ) {
+									$replace_val = true;
+				}
 
 				//if the previous "name" column value was set to smtppass,
 				//and the "category" value set to ldap, set replace_val to true
-				if (strcmp($row[$counter - 2], "ldap") == 0 && strcmp($row[$counter - 1], "admin_password") == 0)
-					$replace_val = true;
+				if (strcmp($row[$counter - 2], "ldap") == 0 && strcmp($row[$counter - 1], "admin_password") == 0) {
+									$replace_val = true;
+				}
 
 				//if the previous "name" column value was set to password,
 				//and the "category" value set to proxy, set replace_val to true
-				if(strcmp($row[$counter - 2], "proxy") == 0 && strcmp($row[$counter - 1], "password") == 0 )
-					$replace_val = true;
+				if(strcmp($row[$counter - 2], "proxy") == 0 && strcmp($row[$counter - 1], "password") == 0 ) {
+									$replace_val = true;
+				}
 			}
 
 			if($replace_val) {
@@ -245,8 +251,9 @@ function getFullTableDump($tableName){
 // Deletes the directory recursively
 function deleteDir($dir)
 {
-   if (substr($dir, strlen($dir)-1, 1) != '/')
-       $dir .= '/';
+   if (substr($dir, strlen($dir)-1, 1) != '/') {
+          $dir .= '/';
+   }
 
    if ($handle = opendir($dir))
    {
@@ -256,21 +263,23 @@ function deleteDir($dir)
            {
                if (is_dir($dir.$obj))
                {
-                   if (!deleteDir($dir.$obj))
-                       return false;
-               }
-               elseif (is_file($dir.$obj))
+                   if (!deleteDir($dir.$obj)) {
+                                          return false;
+                   }
+               } elseif (is_file($dir.$obj))
                {
-                   if (!unlink($dir.$obj))
-                       return false;
+                   if (!unlink($dir.$obj)) {
+                                          return false;
+                   }
                }
            }
        }
 
        closedir($handle);
 
-       if (!@rmdir($dir))
-           return false;
+       if (!@rmdir($dir)) {
+                  return false;
+       }
        return true;
    }
    return false;
@@ -301,10 +310,11 @@ function prepareDiag()
 
 
 	//determine if files.md5 exists or not
-	if(file_exists('files.md5'))
-		$skip_md5_diff = false;
-	else
-		$skip_md5_diff = true;
+	if(file_exists('files.md5')) {
+			$skip_md5_diff = false;
+	} else {
+			$skip_md5_diff = true;
+	}
 
 	// array of all tables that we need to pull rows from below
 	$getDumpsFrom = array('config' => 'config',
@@ -392,8 +402,9 @@ function execute_sql($getinfo, $getdumps, $getschema)
 
 
     //create directory for table definitions
-    if($getschema)
-      $tablesSchemaDir = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/{$db->dbName}/TableSchema/");
+    if($getschema) {
+          $tablesSchemaDir = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/{$db->dbName}/TableSchema/");
+    }
 
     //make sure they checked the box to get basic info
     if($getinfo)
@@ -547,13 +558,13 @@ function executebeanlistbeanfiles()
 		if(!isset($beanFiles[$beanz]))
 		{
 			echo "<font color=orange>NO! --- ".$beanz." is not an index in \$beanFiles</font><br>";
-		}
-		else
+		} else
 		{
-			if(file_exists($beanFiles[$beanz]))
-				echo "<font color=green>YES --- ".$beanz." file \"".$beanFiles[$beanz]."\" exists</font><br>";
-			else
-				echo "<font color=red>NO! --- ".$beanz." file \"".$beanFiles[$beanz]."\" does NOT exist</font><br>";
+			if(file_exists($beanFiles[$beanz])) {
+							echo "<font color=green>YES --- ".$beanz." file \"".$beanFiles[$beanz]."\" exists</font><br>";
+			} else {
+							echo "<font color=red>NO! --- ".$beanz." file \"".$beanFiles[$beanz]."\" does NOT exist</font><br>";
+			}
 		}
 	}
 
@@ -589,24 +600,27 @@ function executemd5($filesmd5, $md5calculated)
 	global $curdatetime;
 	global $skip_md5_diff;
 	global $sod_guid;
-	if(file_exists('files.md5'))
-        include( 'files.md5');
+	if(file_exists('files.md5')) {
+	        include( 'files.md5');
+	}
 	//create dir for md5s
 	$md5_directory = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/md5/");
 
 	//skip this if the files.md5 didn't exist
-	if(!$skip_md5_diff)
-	{
-		//make sure the files.md5
-		if($filesmd5)
-			if(!copy('files.md5', $md5_directory."files.md5"))
-				echo "Couldn't copy files.md5 to ".$md5_directory."<br>Skipping md5 checks.<br>";
-	}
+    if (!$skip_md5_diff) {
+        //make sure the files.md5
+        if ($filesmd5) {
+            if (!copy('files.md5', $md5_directory . "files.md5")) {
+                echo "Couldn't copy files.md5 to " . $md5_directory . "<br>Skipping md5 checks.<br>";
+            }
+        }
+    }
 
 	$md5_string_calculated = generateMD5array('./');
 
-	if($md5calculated)
-		write_array_to_file('md5_string_calculated', $md5_string_calculated, $md5_directory."md5_array_calculated.php");
+	if($md5calculated) {
+			write_array_to_file('md5_string_calculated', $md5_string_calculated, $md5_directory."md5_array_calculated.php");
+	}
 
 
 	//if the files.md5 didn't exist, we can't do this
@@ -668,8 +682,9 @@ function executevardefs()
 
     foreach($tables as $t) {
 	$name = $t;
-	if ( $name == "does_not_exist" )
-	  continue;
+	if ( $name == "does_not_exist" ) {
+		  continue;
+	}
 	$comment = $comments[$t];
 	echo "<h2>Table: $t</h2>
 		<p><i>{$comment}</i></p>";
@@ -686,8 +701,9 @@ function executevardefs()
 
 	foreach($fields[$t] as $k => $v) {
 	  // we only care about physical tables ('source' can be 'non-db' or 'nondb' or 'function' )
-	  if ( isset( $v[ 'source' ] ))
-	    continue;
+	  if ( isset( $v[ 'source' ] )) {
+	  	    continue;
+	  }
 	  $columnname = $v[ 'name' ];
 	  $columntype = $v[ 'type' ];
 	  $columndbtype = $v[ 'dbType' ];
@@ -695,13 +711,20 @@ function executevardefs()
 	  $columncomment = $v[ 'comment' ];
 	  $columnrequired = $v[ 'required' ];
 
-	  if ( empty( $columnlen ) ) $columnlen = '<i>n/a</i>';
-	  if ( empty( $columncomment ) ) $columncomment = '<i>(none)</i>';
-	  if ( !empty( $columndbtype ) ) $columntype = $columndbtype;
-	  if ( empty( $columnrequired ) || ( $columnrequired == false ))
-	    $columndisplayrequired = 'no';
-	  else
-	    $columndisplayrequired = 'yes';
+	  if ( empty( $columnlen ) ) {
+	      $columnlen = '<i>n/a</i>';
+	  }
+	  if ( empty( $columncomment ) ) {
+	      $columncomment = '<i>(none)</i>';
+	  }
+	  if ( !empty( $columndbtype ) ) {
+	      $columntype = $columndbtype;
+	  }
+	  if ( empty( $columnrequired ) || ( $columnrequired == false )) {
+	  	    $columndisplayrequired = 'no';
+	  } else {
+	  	    $columndisplayrequired = 'yes';
+	  }
 
 	  echo '<TR BGCOLOR="#FFFFFF" ALIGN=left>
 			<TD ALIGN=left class=\"tabDetailViewDF\">'.$columnname.'</TD>
@@ -839,5 +862,3 @@ if($dovardefs)
 
 //finish up the last steps
 finishDiag();
-
-?>

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,34 +34,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description: Schedules email for delivery. emailman table holds emails for delivery.
- * A cron job polls the emailman table and delivers emails when intended send date time is reached.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
-
-
-global $timedate;
-global $current_user;
-global $mod_strings;
+global $timedate, $current_user, $mod_strings;
 
 $campaign = new Campaign();
 $campaign->retrieve($_REQUEST['record']);
-$err_messages=array();
+$err_messages = array();
 
-$test=false;
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] =='test') {
-	$test=true;
+$test = false;
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'test') {
+    $test = true;
 }
 
 //this is to account for the case of sending directly from summary page in wizards
@@ -85,14 +74,15 @@ $current_date = $campaign->db->now();
 foreach ($_POST['mass'] as $message_id) {
 
 	//fetch email marketing definition.
-	if (!class_exists('EmailMarketing')) require_once('modules/EmailMarketing/EmailMarketing.php');
+	if (!class_exists('EmailMarketing')) {
+	    require_once('modules/EmailMarketing/EmailMarketing.php');
+	}
 
 
 	$marketing = new EmailMarketing();
 	$marketing->retrieve($message_id);
 
 	//make sure that the marketing message has a mailbox.
-	//
 	if (empty($marketing->inbound_email_id)) {
 
 		echo "<p>";
@@ -160,10 +150,9 @@ foreach ($_POST['mass'] as $message_id) {
 	}
 }
 
-//delete all entries from the emailman table that belong to the exempt list.
-//TODO:SM: may want to move this to query clause above instead
+// delete all entries from the emailman table that belong to the exempt list.
 if (!$test) {
-    $delete_query =  "
+    $delete_query = "
     DELETE FROM emailman WHERE id IN (
         SELECT em.id FROM (
             SELECT emailman.id id
@@ -203,9 +192,6 @@ $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
 	$href = $matches[1];
 	SugarApplication::redirect($href);
-}
-else {
+} else {
 	header($header_URL);
 }
-
-?>

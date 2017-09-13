@@ -44,7 +44,7 @@ require_once 'modules/ModuleBuilder/parsers/parser.label.php';
 require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
 
 class TemplateRelatedTextField extends TemplateText{
-    var $type = 'relate';
+    public $type = 'relate';
     //ext1 is the name field
     //ext2 is the related module
     

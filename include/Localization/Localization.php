@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @api
  */
 class Localization {
-	var $availableCharsets = array(
+    public $availableCharsets = array(
 		'BIG-5',        //Taiwan and Hong Kong
 		/*'CP866'			  // ms-dos Cyrillic */
 		/*'CP949'			  //Microsoft Korean */
@@ -73,14 +73,14 @@ class Localization {
 		'SJIS',         //MS Japanese
 		'UTF-8',        //UTF-8
 		);
-	var $localeNameFormat;
-	var $localeNameFormatDefault;
-	var $default_export_charset = 'UTF-8';
-	var $default_email_charset = 'UTF-8';
-	var $currencies = array(); // array loaded with current currencies
-    var $invalidNameFormatUpgradeFilename = 'upgradeInvalidLocaleNameFormat.php';
+    public $localeNameFormat;
+    public $localeNameFormatDefault;
+    public $default_export_charset = 'UTF-8';
+    public $default_email_charset = 'UTF-8';
+    public $currencies = array(); // array loaded with current currencies
+    public $invalidNameFormatUpgradeFilename = 'upgradeInvalidLocaleNameFormat.php';
     /* Charset mappings for iconv */
-    var $iconvCharsetMap = array(
+    public $iconvCharsetMap = array(
         'KS_C_5601-1987' => 'CP949',
         'ISO-8859-8-I' => 'ISO-8859-8'
         );

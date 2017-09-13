@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 {
@@ -59,8 +58,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -89,8 +87,9 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 		$record = $layout_def['fields'][$key];
 		$layout_def['name'] = $name;
 		global $current_user;
-		if ($module == 'Users' && !is_admin($current_user))
-        	$module = 'Employees';
+		if ($module == 'Users' && !is_admin($current_user)) {
+		        	$module = 'Employees';
+		}
 		$str = "<a target='_blank' href=\"index.php?action=DetailView&module=$module&record=$record\">";
 		$str .= $this->displayListPlain($layout_def);
 		$str .= "</a>";
@@ -105,8 +104,9 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
             $field_name = $layout_def['name'];
             $field_type = $field_def['type'];
             $str .= "</a>";
-            if ($field_name == 'name')
-                $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline","border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'");
+            if ($field_name == 'name') {
+                            $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline","border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'");
+            }
             $str .= "</div>";
         }
 		return $str;
@@ -238,9 +238,9 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 			if ($value == 'Current User') {
 				global $current_user;
 				array_push($arr,$this->reporter->db->quoted($current_user->id));
+			} else {
+							array_push($arr,$this->reporter->db->quoted($value));
 			}
-			else
-				array_push($arr,$this->reporter->db->quoted($value));
 		}
 
 		$str = implode(",",$arr);
@@ -262,9 +262,9 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 			if ($value == 'Current User') {
 				global $current_user;
 				array_push($arr,$this->reporter->db->quoted($current_user->id));
+			} else {
+							array_push($arr,$this->reporter->db->quoted($value));
 			}
-			else
-				array_push($arr,$this->reporter->db->quoted($value));
 		}
 
 		$str = implode(",",$arr);

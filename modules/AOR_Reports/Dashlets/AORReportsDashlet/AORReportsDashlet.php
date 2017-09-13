@@ -9,10 +9,10 @@ require_once 'modules/AOR_Reports/aor_utils.php';
 
 class AORReportsDashlet extends Dashlet
 {
-    var $def;
-    var $report;
-    var $charts;
-    var $onlyCharts;
+    public $def;
+    public $report;
+    public $charts;
+    public $onlyCharts;
 
     function __construct($id, $def = array())
     {

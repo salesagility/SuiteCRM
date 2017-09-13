@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,50 +34,53 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once("include/SugarTheme/cssmin.php");
 
 class SugarSpriteBuilder
 {
-	var $isAvailable = false;
-	var $silentRun = false;
-    var $fromSilentUpgrade = false;
-    var $writeToUpgradeLog = false;
+    public $isAvailable = false;
+    public $silentRun = false;
+    public $fromSilentUpgrade = false;
+    public $writeToUpgradeLog = false;
 
-	var $debug = false;
-	var $fileName = 'sprites';
-	var $cssMinify = true;
+    public $debug = false;
+    public $fileName = 'sprites';
+    public $cssMinify = true;
 
 	// class supported image types
-	var $supportedTypeMap = array(
+    public $supportedTypeMap = array(
 		IMG_GIF => IMAGETYPE_GIF,
 		IMG_JPG => IMAGETYPE_JPEG,
 		IMG_PNG => IMAGETYPE_PNG,
 	);
 
 	// sprite settings
-	var $pngCompression = 9;
-	var $pngFilter = PNG_NO_FILTER;
-	var $maxWidth = 75;
-	var $maxHeight = 75;
-	var $rowCnt = 30;
+    public $pngCompression = 9;
+    public $pngFilter = PNG_NO_FILTER;
+    public $maxWidth = 75;
+    public $maxHeight = 75;
+    public $rowCnt = 30;
 
 	// processed image types
-	var $imageTypes = array();
+    public $imageTypes = array();
 
 	// source files
-	var $spriteSrc = array();
-	var $spriteRepeat = array();
+    public $spriteSrc = array();
+    public $spriteRepeat = array();
 
 	// sprite resource images
-	var $spriteImg;
+    public $spriteImg;
 
 	// sprite_config collection
-	var $sprites_config = array();
+    public $sprites_config = array();
 
 
     public function __construct()
@@ -528,13 +531,13 @@ class SpritePlacement
 {
 
 	// occupied space
-	var $spriteMatrix = array();
+    public $spriteMatrix = array();
 
 	// minimum surface
-	var $minSurface = 0;
+    public $minSurface = 0;
 
 	// sprite src (flattened array)
-	var $spriteSrc = array();
+    public $spriteSrc = array();
 
 	// placement config array
 	/*
@@ -548,7 +551,7 @@ class SpritePlacement
 				-> rowcnt
 
 	*/
-	var $config = array();
+    public $config = array();
 
 	function __construct($spriteSrc, $config) {
 

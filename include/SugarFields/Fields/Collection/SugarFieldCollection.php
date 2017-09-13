@@ -39,7 +39,7 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldCollection extends SugarFieldBase {
-	var $tpl_path;
+    public $tpl_path;
 	
 	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
 		$nolink = array('Users');

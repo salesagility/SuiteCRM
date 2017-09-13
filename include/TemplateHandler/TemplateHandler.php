@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class TemplateHandler
 {
     /**
@@ -412,9 +416,11 @@ class TemplateHandler
     {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
-        if ($this instanceof TemplateHandler) //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
+        if ($this instanceof TemplateHandler) {
+            //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
         {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
+        }
         } else {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults(array());
         }
@@ -432,11 +438,11 @@ class TemplateHandler
                 $field = $f;
                 $name = $qsd->form_name . '_' . $field['name'];
 
-                if ($field['type'] === 'relate' &&
-                    isset($field['module']) &&
-                    !empty($field['module']) &&
-                    !empty($field['quicksearch']) ||
-                    preg_match('/_name$|_c$/si', $name)
+                if (($field['type'] === 'relate' &&
+                        isset($field['module']) &&
+                        !empty($field['module']) &&
+                        preg_match('/_name$|_c$/si', $name)) ||
+                    !empty($field['quicksearch'])
                 ) {
                     if (preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)) {
 

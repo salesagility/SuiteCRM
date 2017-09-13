@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -92,8 +94,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	    	}
     		$viewdefs = array_change_key_case($viewdefs['searchfields']);
             $viewdefs = $this->_viewdefs = $this->ConvertSearchToDashletDefs($viewdefs);
-    	}
-    	else if ($this->_view == MB_DASHLET && isset($viewdefs['columns']))
+    	} else if ($this->_view == MB_DASHLET && isset($viewdefs['columns']))
     	{
     		$viewdefs = $this->_viewdefs = array_change_key_case($viewdefs['columns']);
     		$viewdefs = $this->_viewdefs = $this->convertSearchToListDefs($viewdefs);
@@ -119,7 +120,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     		if($value['default']) {
     			//$temp[$key] = $value;
     			$temp[$key] = array('default' => '');
-    		}else{
+    		} else{
     			$temp[$key] = $value;
     		}
     	}
@@ -145,15 +146,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         	if(!file_exists($writeFile)){
         		mkdir_recursive ( dirname ( $writeFile ) ) ;
     		}
-    	}
-    	else{
+    	} else{
     		$writeFile = $file = $this->implementation->getFileName(MB_DASHLET, $this->_moduleName, $this->_packageName);
     		$writeTodashletName = $dashletName =$this->implementation->module->key_name . 'Dashlet';
     	}
     	
     	$this->implementation->_history->append ( $file ) ;
-    	if ($populate)
-    	   $this->_populateFromRequest() ;
+    	if ($populate) {
+    	    	   $this->_populateFromRequest() ;
+    	}
     	$out = "<?php\n" ;
 
     	require($file);

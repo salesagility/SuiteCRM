@@ -55,7 +55,6 @@ require_once 'Zend/Http/Response/Stream.php';
  * redirections, as well as more advanced features like proxy settings, HTTP
  * authentication and cookie persistance (using a Zend_Http_CookieJar object)
  *
- * @todo Implement proxy settings
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
@@ -1388,12 +1387,6 @@ class Zend_Http_Client
 
                 $authHeader = 'Basic ' . base64_encode($user . ':' . $password);
                 break;
-
-            //case self::AUTH_DIGEST:
-                /**
-                 * @todo Implement digest authentication
-                 */
-            //    break;
 
             default:
                 /** @see Zend_Http_Client_Exception */

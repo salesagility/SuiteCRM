@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Language files management
@@ -56,8 +61,9 @@ class LanguageManager
     	}
 		$temp_mod_strings = $mod_strings;
 		$lang = $current_language;
-        if(empty($lang))
-            $lang = $GLOBALS['sugar_config']['default_language'];
+        if(empty($lang)) {
+                    $lang = $GLOBALS['sugar_config']['default_language'];
+        }
 		static $createdModules = array();
 		if(empty($createdModules[$module]) && ($refresh || !file_exists(sugar_cached('modules/').$module.'/language/'.$lang.'.lang.php'))){
 			$loaded_mod_strings = array();
@@ -84,7 +90,9 @@ class LanguageManager
 	}
 
 	static function addTemplate($module, $lang, $template){
-		if($template == 'default')$template = 'basic';
+		if($template == 'default') {
+		    $template = 'basic';
+		}
 		$templates = array();
 		$fields = array();
 		if(empty($templates[$template])){
@@ -92,7 +100,7 @@ class LanguageManager
 			if(file_exists($path)){
 				require($path);
 				$templates[$template] = $mod_strings;
-			}else{
+			} else{
 				$path = 'include/SugarObjects/implements/' . $template . '/language/'.$lang.'.lang.php';
 				if(file_exists($path)){
 					require($path);
@@ -106,8 +114,9 @@ class LanguageManager
 	}
 
 	static function saveCache($module,$lang, $loaded_mod_strings, $additonal_objects= array()){
-		if(empty($lang))
-			$lang = $GLOBALS['sugar_config']['default_language'];
+		if(empty($lang)) {
+					$lang = $GLOBALS['sugar_config']['default_language'];
+		}
 
 		$file = create_cache_directory('modules/' . $module . '/language/'.$lang.'.lang.php');
 		write_array_to_file('mod_strings',$loaded_mod_strings, $file);
@@ -140,7 +149,9 @@ class LanguageManager
 			$cache_dir = sugar_cached('modules/');
 			if(file_exists($cache_dir) && $dir = @opendir($cache_dir)) {
 				while(($entry = readdir($dir)) !== false) {
-					if ($entry == "." || $entry == "..") continue;
+					if ($entry == "." || $entry == "..") {
+					    continue;
+					}
 						foreach($languages as $clean_lang) {
 							LanguageManager::_clearCache($entry, $clean_lang);
 						}
@@ -188,8 +199,9 @@ class LanguageManager
 		if(empty($createdModules[$module]) && isset($GLOBALS['beanList'][$module])){
 				$object = $GLOBALS['beanList'][$module];
 
-				if ($object == 'aCase')
-		            $object = 'Case';
+				if ($object == 'aCase') {
+						            $object = 'Case';
+				}
 
 		        if(!empty($GLOBALS["dictionary"]["$object"]["templates"])){
 		        	$templates = $GLOBALS["dictionary"]["$object"]["templates"];
@@ -212,8 +224,7 @@ class LanguageManager
 				if(!empty($mod_strings)){
 					if (function_exists('sugarArrayMergeRecursive')){
 						$loaded_mod_strings = sugarArrayMergeRecursive($loaded_mod_strings, $mod_strings);
-					}
-					else{
+					} else{
 						$loaded_mod_strings = sugarLangArrayMerge($loaded_mod_strings, $mod_strings);
 					}
 				}
@@ -222,8 +233,9 @@ class LanguageManager
 
 		//great! now that we have loaded all of our vardefs.
 		//let's go save them to the cache file.
-		if(!empty($loaded_mod_strings))
-			LanguageManager::saveCache($module, $lang, $loaded_mod_strings);
+		if(!empty($loaded_mod_strings)) {
+					LanguageManager::saveCache($module, $lang, $loaded_mod_strings);
+		}
 	}
 
 	static function loadModuleLanguage($module, $lang, $refresh=false){
@@ -256,8 +268,9 @@ class LanguageManager
 			require $cachedfile;
 
 			// now that we hae loaded the data from disk, put it in the cache.
-			if(!empty($mod_strings))
-				sugar_cache_put($key,$mod_strings);
+			if(!empty($mod_strings)) {
+							sugar_cache_put($key,$mod_strings);
+			}
 			if(!empty($_SESSION['translation_mode'])){
 				$mod_strings = array_map('translated_prefix', $mod_strings);
 			}
@@ -292,10 +305,11 @@ class LanguageManager
             unlink($file);
         }
 
-        if( empty($GLOBALS['sugar_config']['js_lang_version']) )
-            $GLOBALS['sugar_config']['js_lang_version'] = 1;
-        else
-            $GLOBALS['sugar_config']['js_lang_version'] += 1;
+        if( empty($GLOBALS['sugar_config']['js_lang_version']) ) {
+                    $GLOBALS['sugar_config']['js_lang_version'] = 1;
+        } else {
+                    $GLOBALS['sugar_config']['js_lang_version'] += 1;
+        }
 
         write_array_to_file( "sugar_config", $GLOBALS['sugar_config'], "config.php");
     }

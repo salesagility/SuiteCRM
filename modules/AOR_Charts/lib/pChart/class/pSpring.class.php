@@ -31,16 +31,16 @@
  /* pSpring class definition */
  class pSpring
   {
-   var $History;
-   var $pChartObject;
-   var $Data;
-   var $Links;
-   var $X1;
-   var $Y1;
-   var $X2;
-   var $Y2;
-   var $AutoComputeFreeZone;
-   var $Labels;
+     public $History;
+     public $pChartObject;
+     public $Data;
+     public $Links;
+     public $X1;
+     public $Y1;
+     public $X2;
+     public $Y2;
+     public $AutoComputeFreeZone;
+     public $Labels;
 
    /* Class creator */
    function pSpring()

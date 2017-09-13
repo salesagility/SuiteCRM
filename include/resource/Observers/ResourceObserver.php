@@ -45,8 +45,8 @@
  */
 class ResourceObserver {
 
-var $module;
-var $limit;
+    public $module;
+    public $limit;
 
 public function __construct($module) {
 	$this->module = $module;
@@ -80,4 +80,3 @@ function notify($msg = '') {
 
 }
 
-?>

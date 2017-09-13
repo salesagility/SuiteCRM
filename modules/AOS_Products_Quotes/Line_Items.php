@@ -1,26 +1,46 @@
 <?php
 /**
- * Advanced OpenSales, Advanced, robust set of sales modules.
- * @package Advanced OpenSales for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function display_lines($focus, $field, $value, $view){
 
@@ -84,8 +104,7 @@ function display_lines($focus, $field, $value, $view){
             $html .= '<script>insertGroup();</script>';
         }
 
-    }
-    else if($view == 'DetailView'){
+    } else if($view == 'DetailView'){
         $params = array('currency_id' => $focus->currency_id);
 
         $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
@@ -111,7 +130,9 @@ function display_lines($focus, $field, $value, $view){
 
             if($enable_groups && ($group_id != $row['group_id'] || $i == 0)){
                 $html .= $groupStart.$product.$service.$groupEnd;
-                if($i != 0)$html .= "<tr><td colspan='9' nowrap='nowrap'><br></td></tr>";
+                if($i != 0) {
+                    $html .= "<tr><td colspan='9' nowrap='nowrap'><br></td></tr>";
+                }
                 $groupStart = '';
                 $groupEnd = '';
                 $product = '';
@@ -241,15 +262,13 @@ function get_discount_string($type, $amount, $params, $locale, $sep){
         if($type == 'Amount')
         {
             return currency_format_number($amount,$params )."</td>";
-        }
-        else if($locale->getPrecision())
+        } else if($locale->getPrecision())
         {
             return rtrim(rtrim(format_number($amount), '0'),$sep[1])."%";
         } else{
             return format_number($amount)."%";
         }
-    }
-    else
+    } else
     {
         return "-";
     }
@@ -260,7 +279,9 @@ function display_shipping_vat($focus, $field, $value, $view){
     if($view == 'EditView'){
         global $app_list_strings;
 
-        if($value != '') $value = format_number($value);
+        if($value != '') {
+            $value = format_number($value);
+        }
 
         $html = "<input id='shipping_tax_amt' type='text' tabindex='0' title='' value='".$value."' maxlength='26,6' size='22' name='shipping_tax_amt' onblur='calculateTotal(\"lineItems\");'>";
         $html .= "<select name='shipping_tax' id='shipping_tax' onchange='calculateTotal(\"lineItems\");' >".get_select_options_with_id($app_list_strings['vat_list'], (isset($focus->shipping_tax) ? $focus->shipping_tax : ''))."</select>";

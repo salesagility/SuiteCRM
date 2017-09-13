@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,38 +34,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 // The history of upgrades on the system
 class UpgradeHistory extends SugarBean
 {
-    var $new_schema = true;
-    var $module_dir = 'Administration';
+    public $new_schema = true;
+    public $module_dir = 'Administration';
 
     // Stored fields
-    var $id;
-    var $filename;
-    var $md5sum;
-    var $type;
-    var $version;
-    var $status;
-    var $date_entered;
-    var $name;
-    var $description;
-    var $id_name;
-    var $manifest;
-    var $enabled;
-    var $tracker_visibility = false;
-    var $table_name = "upgrade_history";
-    var $object_name = "UpgradeHistory";
-    var $column_fields = Array( "id", "filename", "md5sum", "type", "version", "status", "date_entered" );
-    var $disable_custom_fields = true;
+    public $id;
+    public $filename;
+    public $md5sum;
+    public $type;
+    public $version;
+    public $status;
+    public $date_entered;
+    public $name;
+    public $description;
+    public $id_name;
+    public $manifest;
+    public $enabled;
+    public $tracker_visibility = false;
+    public $table_name = "upgrade_history";
+    public $object_name = "UpgradeHistory";
+    public $column_fields = Array( "id", "filename", "md5sum", "type", "version", "status", "date_entered" );
+    public $disable_custom_fields = true;
 
     function delete()
     {
@@ -85,8 +85,7 @@ class UpgradeHistory extends SugarBean
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -109,13 +108,13 @@ class UpgradeHistory extends SugarBean
 
             if(empty($patch_to_check->id_name)){
                 $where = " WHERE name = '$patch_to_check->name' ";
-            }else{
+            } else{
                 $where = " WHERE id_name = '$patch_to_check->id_name' ";
             }
 
             if(!empty($patch_to_check->id)){
                 $where .= "  AND id != '$patch_to_check->id'  ";
-            }else{
+            } else{
                 $where .= "  AND id is not null  ";
             }
 
@@ -144,7 +143,7 @@ class UpgradeHistory extends SugarBean
         $result = $this->db->query($query);
          if(empty($result)){
             return null;
-         }else{
+         } else{
             $temp_version = 0;
             $id = '';
             while($row = $this->db->fetchByAssoc($result))
@@ -154,10 +153,11 @@ class UpgradeHistory extends SugarBean
                     $id = $row['id'];
                 }
             }//end while
-            if($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false))
-                return array('id' => $id, 'version' => $temp_version);
-            else
-                return null;
+            if($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
+                            return array('id' => $id, 'version' => $temp_version);
+            } else {
+                            return null;
+            }
          }
     }
 
@@ -186,7 +186,7 @@ class UpgradeHistory extends SugarBean
                 //we have found a match
                 //if the patch_to_check version is greater than the found version
                 return ($this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version)));
-            }else{
+            } else{
                 return true;
             }
         }
@@ -194,8 +194,9 @@ class UpgradeHistory extends SugarBean
         //with a matching unique_key in the database
         foreach($patch_list as $more_recent_patch)
         {
-            if($more_recent_patch->id == $patch_to_check->id)
-                break;
+            if($more_recent_patch->id == $patch_to_check->id) {
+                            break;
+            }
 
             //we will only resort to checking the files if we cannot find the unique_keys
             //or the unique_keys do not match
@@ -219,25 +220,27 @@ class UpgradeHistory extends SugarBean
     {
         if(is_file($check_path))
         {
-            if(file_exists($recent_path))
-                return true;
-            else
-                return false;
-        }
-        elseif(is_dir($check_path))
+            if(file_exists($recent_path)) {
+                            return true;
+            } else {
+                            return false;
+            }
+        } elseif(is_dir($check_path))
         {
             $status = false;
 
             $d = dir( $check_path );
             while( $f = $d->read() )
             {
-                if( $f == "." || $f == ".." )
-                    continue;
+                if( $f == "." || $f == ".." ) {
+                                    continue;
+                }
 
                 $status = $this->foundConflict("$check_path/$f", "$recent_path/$f");
 
-                if($status)
-                    break;
+                if($status) {
+                                    break;
+                }
             }
 
             $d->close();
@@ -259,20 +262,17 @@ class UpgradeHistory extends SugarBean
     function is_right_version_greater($left, $right, $equals_is_greater = true){
         if(count($left) == 0 && count($right) == 0){
             return $equals_is_greater;
-        }
-        else if(count($left) == 0 || count($right) == 0){
+        } else if(count($left) == 0 || count($right) == 0){
             return true;
-        }
-        else if($left[0] == $right[0]){
+        } else if($left[0] == $right[0]){
             array_shift($left);
             array_shift($right);
             return $this->is_right_version_greater($left, $right, $equals_is_greater);
-        }
-        else if($left[0] < $right[0]){
+        } else if($left[0] < $right[0]){
            return true;
+        } else {
+                    return false;
         }
-        else
-            return false;
     }
 
     /**

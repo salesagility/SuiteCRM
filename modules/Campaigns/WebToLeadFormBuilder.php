@@ -1,4 +1,46 @@
 <?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class WebToLeadFormBuilder {
 
@@ -139,9 +181,9 @@ HTML;
 
         if(isset($lead->field_defs[$colsField]['isMultiSelect']) && $lead->field_defs[$colsField]['isMultiSelect'] ==1){
             $html .= self::getFieldEnumMultiSelectHTML($fieldName, $leadOptions, $fieldRequired);
-        }elseif(ifRadioButton($lead->field_defs[$colsField]['name'])){
+        } elseif(ifRadioButton($lead->field_defs[$colsField]['name'])){
             $html .= self::getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField, $fieldRequired);
-        }else{
+        } else{
             $html .= self::getFieldEnumSelectHTML($fieldName, $leadOptions, $fieldRequired);
         }
         return $html;
@@ -153,22 +195,27 @@ HTML;
         return $html;
     }
 
-    private static function getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField, $fieldRequired) {
+    private static function getFieldEnumRadioGroupHTML(
+        $appListStringsFieldOptions,
+        $lead,
+        $fieldName,
+        $colsField,
+        $fieldRequired
+    ) {
         $_required = $fieldRequired ? ' required' : '';
         $html = '';
-        foreach($appListStringsFieldOptions as $field_option_key => $field_option){
-            if($field_option != null){
-                if(!empty($lead->$fieldName) && in_array($field_option_key,unencodeMultienum($lead->$fieldName))) {
+        foreach ($appListStringsFieldOptions as $field_option_key => $field_option) {
+            if ($field_option != null) {
+                if (!empty($lead->$fieldName) && in_array($field_option_key, unencodeMultienum($lead->$fieldName))) {
                     $_checked = ' checked';
-                }
-                else {
+                } else {
                     $_checked = '';
                 }
-                $html .="<input id=\"{$colsField}_$field_option_key\" name=\"$colsField\" value=\"$field_option_key\" type=\"radio\"$_checked$_required>";
-                // todo ??? -->
-                $html .="<span ='document.getElementById('".$lead->field_defs[$colsField]."_$field_option_key').checked =true style='cursor:default'; onmousedown='return false;'>$field_option</span><br>";
+                $html .= "<input id=\"{$colsField}_$field_option_key\" name=\"$colsField\" value=\"$field_option_key\" type=\"radio\"$_checked$_required>";
+                $html .= "<span ='document.getElementById('" . $lead->field_defs[$colsField] . "_$field_option_key').checked =true style='cursor:default'; onmousedown='return false;'>$field_option</span><br>";
             }
         }
+
         return $html;
     }
 
@@ -246,11 +293,9 @@ HTML;
             if(count($colsFirst) > count($colsSecond) || count($colsFirst) == count($colsSecond)){
                 $columns= count($colsFirst);
             }
-        }
-        else if(!empty($colsFirst)){
+        } else if(!empty($colsFirst)){
             $columns= count($colsFirst);
-        }
-        else if(!empty($colsSecond)){
+        } else if(!empty($colsSecond)){
             $columns= count($colsSecond);
         }
         return $columns;
@@ -272,8 +317,7 @@ HTML;
         $field_label = $field_vname .": ";
         if(isset($lead->field_defs[$colsField]['custom_type']) && $lead->field_defs[$colsField]['custom_type'] != null){
             $field_type= $lead->field_defs[$colsField]['custom_type'];
-        }
-        else{
+        } else{
             $field_type= $lead->field_defs[$colsField]['type'];
         }
 
@@ -296,7 +340,9 @@ HTML;
             }
         }
         $field_options = null;
-        if($field_type=='multienum' || $field_type=='enum' || $field_type=='radioenum')  $field_options= $lead->field_defs[$colsField]['options'];
+        if($field_type=='multienum' || $field_type=='enum' || $field_type=='radioenum') {
+            $field_options= $lead->field_defs[$colsField]['options'];
+        }
         return array($field_name, $field_label, $field_type, $field_required, $field_options);
     }
 
@@ -356,35 +402,28 @@ HTML;
                         if ($field_type == 'multienum' || $field_type == 'enum' || $field_type == 'radioenum') {
                             $colHtml .= self::getFieldEnumHTML($lead, $field_name, $appListStrings[$field_options], $field_required, $field_label, $webRequiredSymbol, $colsFields[$j]);
                             $foundField = true;
-                        }
-                        elseif ($field_type == 'bool') {
+                        } elseif ($field_type == 'bool') {
                             $colHtml .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
                             $foundField = true;
                             if (!in_array($lead->field_defs[$colsFields[$j]]['name'], $bool_fields)) {
                                 array_push($bool_fields, $lead->field_defs[$colsFields[$j]]['name']);
                             }
-                        }
-                        elseif ($field_type == 'date') {
+                        } elseif ($field_type == 'date') {
                             $colHtml .= self::getFieldDateHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
                             $foundField = true;
-                        }
-                        elseif ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
+                        } elseif ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
                             $colHtml .= self::getFieldCharsHTML($field_name, $field_label, $field_required, $webRequiredSymbol);
                             $foundField = true;
-                        }
-                        elseif ($field_type == 'text') {
+                        } elseif ($field_type == 'text') {
                             $colHtml .= self::getFieldTextHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
                             $foundField = true;
-                        }
-                        elseif ($field_type == 'relate' && $field_name == 'account_name') {
+                        } elseif ($field_type == 'relate' && $field_name == 'account_name') {
                             $colHtml .= self::getFieldRelateHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
                             $foundField = true;
-                        }
-                        elseif ($field_type == 'email') {
+                        } elseif ($field_type == 'email') {
                             $colHtml .= self::getFieldEmailHTML();
                             $foundField = true;
-                        }
-                        else {
+                        } else {
                             $colHtml .= self::getFieldEmptyHTML();
                         }
 

@@ -35,7 +35,7 @@ class _parse_lockinfo
 	 * @var bool
 	 * @access public
 	 */
-	var $success = false;
+    public $success = false;
 
 	/**
 	 * lock type, currently only "write"
@@ -43,7 +43,7 @@ class _parse_lockinfo
 	 * @var string
 	 * @access public
 	 */
-	var $locktype = "";
+    public $locktype = "";
 
 	/**
 	 * lock scope, "shared" or "exclusive"
@@ -51,7 +51,7 @@ class _parse_lockinfo
 	 * @var string
 	 * @access public
 	 */
-	var $lockscope = "";
+    public $lockscope = "";
 
 	/**
 	 * lock owner information
@@ -59,7 +59,7 @@ class _parse_lockinfo
 	 * @var string
 	 * @access public
 	 */
-	var $owner = "";
+    public $owner = "";
 
 	/**
 	 * flag that is set during lock owner read
@@ -67,7 +67,7 @@ class _parse_lockinfo
 	 * @var bool
 	 * @access private
 	 */
-	var $collect_owner = false;
+    public $collect_owner = false;
 
 	/**
 	 * constructor
@@ -233,5 +233,3 @@ class _parse_lockinfo
 		}
     }
 }
-
-?>

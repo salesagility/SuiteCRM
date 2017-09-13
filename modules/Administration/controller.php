@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class AdministrationController extends SugarController
 {
@@ -49,7 +52,9 @@ class AdministrationController extends SugarController
 
         global $current_user, $app_strings;
 
-        if (!is_admin($current_user)) sugar_die($app_strings['ERR_NOT_ADMIN']);
+        if (!is_admin($current_user)) {
+            sugar_die($app_strings['ERR_NOT_ADMIN']);
+        }
 
         // handle the tabs listing
         $toDecode = html_entity_decode  ($_REQUEST['enabled_tabs'], ENT_QUOTES);
@@ -71,13 +76,12 @@ class AdministrationController extends SugarController
     public function action_savelanguages()
     {
         global $sugar_config;
-        $toDecode = html_entity_decode  ($_REQUEST['disabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode($_REQUEST['disabled_langs'], ENT_QUOTES);
         $disabled_langs = json_decode($toDecode);
-        $toDecode = html_entity_decode  ($_REQUEST['enabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode($_REQUEST['enabled_langs'], ENT_QUOTES);
         $enabled_langs = json_decode($toDecode);
         $cfg = new Configurator();
         $cfg->config['disabled_languages'] = join(',', $disabled_langs);
-        // TODO: find way to enforce order
         $cfg->handleOverride();
         header("Location: index.php?module=Administration&action=Languages");
     }
@@ -108,8 +112,7 @@ class AdministrationController extends SugarController
 
              $return = 'true';
             echo $return;
-    	 }
-         catch (Exception $ex)
+    	 } catch (Exception $ex)
          {
     	 	 echo "false";
     	 }

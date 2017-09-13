@@ -1,40 +1,47 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
@@ -65,8 +72,7 @@ function clearCacheSU($thedir, $extension) {
 			if ($children != "." && $children != "..") {
 				if (is_dir($thedir . "/" . $children)) {
 					clearCacheSU($thedir . "/" . $children, $extension);
-				}
-				elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
+				} elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
 					unlink($thedir . "/" . $children);
 				}
 			}
@@ -269,8 +275,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
 
     if( write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ){
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -386,7 +391,9 @@ eoq2;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	STANDARD REQUIRED SUGAR INCLUDES AND PRESETS
-if(!defined('sugarEntry')) define('sugarEntry', true);
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 
 $_SESSION = array();
 $_SESSION['schema_change'] = 'sugar'; // we force-run all SQL
@@ -500,13 +507,11 @@ if(!function_exists('sugar_cached'))
 	   if(isset($logged_user['id']) && $logged_user['id'] != null){
 		//do nothing
 	    $current_user->retrieve($logged_user['id']);
-	   }
-	   else{
+	   } else{
 	   	echo "FAILURE: Not an admin user in users table. Please provide an admin user\n";
 		exit(1);
 	   }
-	}
-	else {
+	} else {
 		echo "*******************************************************************************\n";
 		echo "*** ERROR: 4th parameter must be a valid admin user.\n";
 		echo $usage;
@@ -771,8 +776,9 @@ if(!didThisStepRunBefore('commit')){
 					include($file);
 					post_install();
 				// cn: only run conversion if admin selects "Sugar runs SQL"
-				if(!empty($_SESSION['allTables']) && $_SESSION['schema_change'] == 'sugar')
-					executeConvertTablesSql($_SESSION['allTables']);
+				if(!empty($_SESSION['allTables']) && $_SESSION['schema_change'] == 'sugar') {
+									executeConvertTablesSql($_SESSION['allTables']);
+				}
 				//set process to done
 				$progArray['post_install']='done';
 				//set_upgrade_progress('commit','in_progress','post_install','done');
@@ -878,8 +884,7 @@ if(!didThisStepRunBefore('commit')){
 
 			if($new_upgrade->description == null){
 				$new_upgrade->description = "Silent Upgrade was used to upgrade the instance";
-			}
-			else{
+			} else{
 				$new_upgrade->description = $new_upgrade->description." Silent Upgrade was used to upgrade the instance.";
 			}
 		   $new_upgrade->save();
@@ -929,8 +934,7 @@ if(!didThisStepRunBefore('commit')){
 	ob_start();
 	if(!isset($_REQUEST['silent'])){
 		$_REQUEST['silent'] = true;
-	}
-	else if(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
+	} else if(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
 		$_REQUEST['silent'] = true;
 	}
 

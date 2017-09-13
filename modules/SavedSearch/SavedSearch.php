@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,45 +34,42 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-/*********************************************************************************
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once('include/templates/TemplateGroupChooser.php');
 
 
 class SavedSearch extends SugarBean
 {
-    var $db;
-    var $field_name_map;
+    public $db;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $modified_by_name;
-    var $name;
-    var $description;
-    var $content;
-    var $search_module;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $modified_by_name;
+    public $name;
+    public $description;
+    public $content;
+    public $search_module;
 
-    var $object_name = 'SavedSearch';
-    var $table_name = 'saved_search';
+    public $object_name = 'SavedSearch';
+    public $table_name = 'saved_search';
 
-    var $module_dir = 'SavedSearch';
-    var $field_defs = array();
-    var $field_defs_map = array();
+    public $module_dir = 'SavedSearch';
+    public $field_defs = array();
+    public $field_defs_map = array();
 
-    var $columns;
+    public $columns;
 
     public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC')
     {
@@ -433,5 +430,3 @@ class SavedSearch extends SugarBean
 
     }
 }
-
-?>

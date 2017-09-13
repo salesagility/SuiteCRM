@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Users/Forms.php');
 require_once('modules/Configurator/Configurator.php');
@@ -101,10 +98,11 @@ class ViewWizard extends SugarView
 		$this->ss->assign('ADDRESS_COUNTRY', $current_user->address_country);
 		$configurator = new Configurator();
 		if ( $configurator->config['passwordsetting']['SystemGeneratedPasswordON']
-		        || $configurator->config['passwordsetting']['forgotpasswordON'] )
-		    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
-        else
-            $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
+		        || $configurator->config['passwordsetting']['forgotpasswordON'] ) {
+				    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
+		} else {
+                    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
+        }
 
 		// get javascript
         ob_start();
@@ -122,8 +120,9 @@ class ViewWizard extends SugarView
 
         // set default settings
         $use_real_names = $current_user->getPreference('use_real_names');
-        if ( empty($use_real_names) )
-            $current_user->setPreference('use_real_names', 'on');
+        if ( empty($use_real_names) ) {
+                    $current_user->setPreference('use_real_names', 'on');
+        }
         $current_user->setPreference('reminder_time', 1800);
         $current_user->setPreference('email_reminder_time', 3600);
         $current_user->setPreference('mailmerge_on', 'on');
@@ -240,8 +239,7 @@ eoq;
                      || empty($systemOutboundEmail->mail_smtppass)))
                {
                     $hide_if_can_use_default = true;
-                }
-                else{
+                } else{
                     $hide_if_can_use_default = false;
                 }
             }

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,61 +34,54 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ProspectList extends SugarBean {
-	var $field_name_map;
+    public $field_name_map;
 
 	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $list_type;
-	var $domain_name;
+	public $id;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $assigned_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $list_type;
+	public $domain_name;
 
-	var $name;
-	var $description;
+	public $name;
+	public $description;
 
 	// These are related
-	var $assigned_user_name;
-	var $prospect_id;
-	var $contact_id;
-	var $lead_id;
+	public $assigned_user_name;
+	public $prospect_id;
+	public $contact_id;
+	public $lead_id;
 
 	// module name definitions and table relations
-	var $table_name = "prospect_lists";
-	var $module_dir = 'ProspectLists';
-	var $rel_prospects_table = "prospect_lists_prospects";
-	var $object_name = "ProspectList";
+	public $table_name = "prospect_lists";
+	public $module_dir = 'ProspectLists';
+	public $rel_prospects_table = "prospect_lists_prospects";
+	public $object_name = "ProspectList";
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = array(
+	public $additional_column_fields = array(
 		'assigned_user_name', 'assigned_user_id', 'campaign_id',
 	);
-	var $relationship_fields = array(
+	public $relationship_fields = array(
 		'campaign_id'=>'campaigns',
 		'prospect_list_prospects' => 'prospects',
 	);
 
-    var $entry_count;
+    public $entry_count;
 
     public function __construct() {
 		global $sugar_config;
@@ -103,15 +96,14 @@ class ProspectList extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	var $new_schema = true;
+	public $new_schema = true;
 
 	function get_summary_text()
 	{
@@ -137,19 +129,21 @@ class ProspectList extends SugarBean {
 			$where_auto = '1=1';
 				if($show_deleted == 0){
                 	$where_auto = "$this->table_name.deleted=0";
-				}else if($show_deleted == 1){
+				} else if($show_deleted == 1){
                 	$where_auto = "$this->table_name.deleted=1";
 				}
 
-		if($where != "")
-			$query .= "where $where AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+		if($where != "") {
+					$query .= "where $where AND ".$where_auto;
+		} else {
+					$query .= "where ".$where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY prospect_lists.name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY prospect_lists.name";
+		}
 
 		return $query;
 	}
@@ -167,15 +161,17 @@ class ProspectList extends SugarBean {
 
 		$where_auto = " prospect_lists.deleted=0";
 
-        if($where != "")
-                $query .= " WHERE $where AND ".$where_auto;
-        else
-                $query .= " WHERE ".$where_auto;
+        if($where != "") {
+                        $query .= " WHERE $where AND ".$where_auto;
+        } else {
+                        $query .= " WHERE ".$where_auto;
+        }
 
-        if($order_by != "")
-                $query .= " ORDER BY $order_by";
-        else
-                $query .= " ORDER BY prospect_lists.name";
+        if($order_by != "") {
+                        $query .= " ORDER BY $order_by";
+        } else {
+                        $query .= " ORDER BY prospect_lists.name";
+        }
         return $query;
     }
 
@@ -216,8 +212,7 @@ class ProspectList extends SugarBean {
 					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
-					}
-					else {
+					} else {
 						$memberarr['fields'][$fieldname] =
 							strtolower($membername) . '_cstm.' . $fieldname . ' AS ' . $fieldname;
 					}
@@ -313,12 +308,15 @@ FROM prospect_lists_prospects plp
 	function save_relationship_changes($is_update, $exclude = array())
     {
     	parent::save_relationship_changes($is_update, $exclude);
-		if($this->lead_id != "")
-	   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
-    	if($this->contact_id != "")
-    		$this->set_prospect_relationship($this->id, $this->contact_id, "contact");
-    	if($this->prospect_id != "")
-    		$this->set_prospect_relationship($this->id, $this->contact_id, "prospect");
+		if($this->lead_id != "") {
+			   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
+		}
+    	if($this->contact_id != "") {
+    	    		$this->set_prospect_relationship($this->id, $this->contact_id, "contact");
+    	}
+    	if($this->prospect_id != "") {
+    	    		$this->set_prospect_relationship($this->id, $this->contact_id, "prospect");
+    	}
     }
 
 	function set_prospect_relationship($prospect_list_id, &$link_ids, $link_name)
@@ -376,10 +374,11 @@ FROM prospect_lists_prospects plp
 
 		$row = $this->db->fetchByAssoc($result);
 
-		if($row)
-			return $row['num'];
-		else
-			return 0;
+		if($row) {
+					return $row['num'];
+		} else {
+					return 0;
+		}
 	}
 
 
@@ -401,7 +400,9 @@ FROM prospect_lists_prospects plp
 		$the_where = "";
 		foreach($where_clauses as $clause)
 		{
-			if($the_where != "") $the_where .= " or ";
+			if($the_where != "") {
+			    $the_where .= " or ";
+			}
 			$the_where .= $clause;
 		}
 

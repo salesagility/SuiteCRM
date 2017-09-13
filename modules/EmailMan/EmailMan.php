@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,45 +34,47 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class EmailMan extends SugarBean{
-	var $id;
-	var $deleted;
-	var $date_created;
-	var $date_modified;
-	var $module;
-	var $module_id;
-	var $marketing_id;
-	var $campaign_id;
-	var $user_id;
-	var $list_id;
-	var $invalid_email;
-	var $from_name;
-	var $from_email;
-	var $in_queue;
-	var $in_queue_date;
-	var $template_id;
-	var $send_date_time;
-	var $table_name = "emailman";
-	var $object_name = "EmailMan";
-	var $module_dir = "EmailMan";
-	var $send_attempts;
-	var $related_id;
-	var $related_type;
-	var $test=false;
-	var $notes_array = array();
-    var $verified_email_marketing_ids =  array();
+    public $id;
+    public $deleted;
+    public $date_created;
+    public $date_modified;
+    public $module;
+    public $module_id;
+    public $marketing_id;
+    public $campaign_id;
+    public $user_id;
+    public $list_id;
+    public $invalid_email;
+    public $from_name;
+    public $from_email;
+    public $in_queue;
+    public $in_queue_date;
+    public $template_id;
+    public $send_date_time;
+    public $table_name = "emailman";
+    public $object_name = "EmailMan";
+    public $module_dir = "EmailMan";
+    public $send_attempts;
+    public $related_id;
+    public $related_type;
+    public $test=false;
+    public $notes_array = array();
+    public $verified_email_marketing_ids =  array();
 	function toString(){
 		return "EmailMan:\nid = $this->id ,user_id= $this->user_id module = $this->module , related_id = $this->related_id , related_type = $this->related_type ,list_id = $this->list_id, send_date_time= $this->send_date_time\n";
 	}
 
     // This is used to retrieve related fields from form posts.
-	var $additional_column_fields = array();
+    public $additional_column_fields = array();
 
     public function __construct() {
 		parent::__construct();
@@ -86,15 +88,14 @@ class EmailMan extends SugarBean{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	var $new_schema = true;
+    public $new_schema = true;
 
     function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false) {
 		$query = array('select' => '', 'from' => '', 'where' => '', 'order_by' => '');
@@ -124,10 +125,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query['where'] = "WHERE $where AND ".$where_auto;
-		else
-			$query['where'] = "WHERE ".$where_auto;
+        if($where != "") {
+        			$query['where'] = "WHERE $where AND ".$where_auto;
+        } else {
+					$query['where'] = "WHERE ".$where_auto;
+		}
 
     	if(isset($params['group_by'])) {
             $query['group_by'] .= " GROUP BY {$params['group_by']}";
@@ -184,10 +186,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query .= "WHERE $where AND ".$where_auto;
-		else
-			$query .= "WHERE ".$where_auto;
+        if($where != "") {
+        			$query .= "WHERE $where AND ".$where_auto;
+        } else {
+					$query .= "WHERE ".$where_auto;
+		}
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {
@@ -223,10 +226,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query .= "where $where AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+        if($where != "") {
+        			$query .= "where $where AND ".$where_auto;
+        } else {
+					$query .= "where ".$where_auto;
+		}
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {
@@ -306,7 +310,7 @@ class EmailMan extends SugarBean{
 
 			$query = "DELETE FROM emailman WHERE id = $this->id";
 			$this->db->query($query);
-		}else{
+		} else{
 			//try to send the email again a day later.
 			$query = 'UPDATE ' . $this->table_name . " SET in_queue='1', send_attempts='$this->send_attempts', in_queue_date=". $this->db->now() ." WHERE id = $this->id";
 			$this->db->query($query);
@@ -343,7 +347,9 @@ class EmailMan extends SugarBean{
            //this is to account for changes to email template.
            $upd_ref_email=(!empty($this->ref_email->id) and $this->ref_email->parent_type=='test' and $this->ref_email->parent_id=='test');
           //following condition is for switching back to test mode.
-           if (!$upd_ref_email) $upd_ref_email=($this->test and !empty($this->ref_email->id) and empty($this->ref_email->parent_type) and empty($this->ref_email->parent_id));
+           if (!$upd_ref_email) {
+               $upd_ref_email=($this->test and !empty($this->ref_email->id) and empty($this->ref_email->parent_type) and empty($this->ref_email->parent_id));
+           }
            if (empty($this->ref_email->id) or $upd_ref_email) {
                 //create email record.
                 $this->ref_email->id=$marketing_id;
@@ -801,7 +807,7 @@ class EmailMan extends SugarBean{
 
             if($this->test){
                 $mail->Subject =  $mod_strings['LBL_PREPEND_TEST'] . $template_data['subject'];
-            }else{
+            } else{
                 $mail->Subject =  $template_data['subject'];
             }
 
@@ -815,11 +821,13 @@ class EmailMan extends SugarBean{
                 $mail->IsHTML(false);
                 $mail->Body = $template_data['body'];
 
-            }else{
+            } else{
                 $mail->Body = wordwrap($template_data['body_html'], 900);
                 //BEGIN:this code will trigger for only campaigns pending before upgrade to 4.2.0.
                 //will be removed for the next release.
-                if(!isset($btracker)) $btracker=false;
+                if(!isset($btracker)) {
+                    $btracker=false;
+                }
                 if ($btracker) {
                     $mail->Body .= "<br /><br /><a href='". $tracker_url ."'>" . $tracker_text . "</a><br /><br />";
                 } else {
@@ -899,7 +907,7 @@ class EmailMan extends SugarBean{
 				//log send error. save for next attempt after 24hrs. no campaign log entry will be created.
 				$this->set_as_sent($module->email1,false,null,null,'send error');
 			}
-		}else{
+		} else{
             $success = false;
             $this->target_tracker_key=create_guid();
 
@@ -973,10 +981,11 @@ class EmailMan extends SugarBean{
 
         $where_auto = "( emailman.deleted IS NULL OR emailman.deleted=0 )";
 
-        if($where != "")
-            $query .= "where ($where) AND ".$where_auto;
-        else
-            $query .= "where ".$where_auto;
+        if($where != "") {
+                    $query .= "where ($where) AND ".$where_auto;
+        } else {
+                    $query .= "where ".$where_auto;
+        }
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {

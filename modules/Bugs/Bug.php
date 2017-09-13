@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,86 +34,68 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 // Bug is used to store customer information.
 class Bug extends SugarBean {
-        var $field_name_map = array();
-	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $bug_number;
-	var $description;
-	var $name;
-	var $status;
-	var $priority;
+    public $field_name_map = array();
+    // Stored fields
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $bug_number;
+    public $description;
+    public $name;
+    public $status;
+    public $priority;
 
-	// These are related
-	var $resolution;
-	var $found_in_release;
-	var $release_name;
-	var $fixed_in_release_name;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $account_id;
-	var $contact_id;
-	var $case_id;
-	var $task_id;
-	var $note_id;
-	var $meeting_id;
-	var $call_id;
-	var $email_id;
-	var $assigned_user_name;
-	var $type;
+    // These are related
+    public $resolution;
+    public $found_in_release;
+    public $release_name;
+    public $fixed_in_release_name;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $account_id;
+    public $contact_id;
+    public $case_id;
+    public $task_id;
+    public $note_id;
+    public $meeting_id;
+    public $call_id;
+    public $email_id;
+    public $assigned_user_name;
+    public $type;
 
-	//BEGIN Additional fields being added to Bugs
+    //BEGIN Additional fields being added to Bugs
 
-	var $fixed_in_release;
-	var $work_log;
-	var $source;
-	var $product_category;
-	//END Additional fields being added to Bugs
+    public $fixed_in_release;
+    public $work_log;
+    public $source;
+    public $product_category;
+    //END Additional fields being added to Bugs
 
-	var $module_dir = 'Bugs';
-	var $table_name = "bugs";
-	var $rel_account_table = "accounts_bugs";
-	var $rel_contact_table = "contacts_bugs";
-	var $rel_case_table = "cases_bugs";
-    var $importable = true;
-	var $object_name = "Bug";
+    public $module_dir = 'Bugs';
+    public $table_name = "bugs";
+    public $rel_account_table = "accounts_bugs";
+    public $rel_contact_table = "contacts_bugs";
+    public $rel_case_table = "cases_bugs";
+    public $importable = true;
+    public $object_name = "Bug";
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 
-	var $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
+    public $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
 									'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
 									'call_id'=>'calls', 'email_id'=>'emails');
 
@@ -144,7 +126,7 @@ class Bug extends SugarBean {
 		self::__construct();
 	}
 
-	var $new_schema = true;
+	public $new_schema = true;
 
 
 
@@ -400,4 +382,3 @@ function getReleaseDropDown(){
 	}
 	return $releases;
 }
-?>

@@ -85,68 +85,68 @@ class parseCSV {
 	 */
 
 	# use first line/entry as field names
-	var $heading = true;
+	public $heading = true;
 
 	# override field names
-	var $fields = array();
+    public $fields = array();
 
 	# sort entries by this field
-	var $sort_by = null;
-	var $sort_reverse = false;
+    public $sort_by = null;
+    public $sort_reverse = false;
 
 	# sort behavior passed to ksort/krsort functions
 	# regular = SORT_REGULAR
 	# numeric = SORT_NUMERIC
 	# string  = SORT_STRING
-	var $sort_type = null;
+    public $sort_type = null;
 
 	# delimiter (comma) and enclosure (double quote)
-	var $delimiter = ',';
-	var $enclosure = '"';
+    public $delimiter = ',';
+    public $enclosure = '"';
 
 	# basic SQL-like conditions for row matching
-	var $conditions = null;
+    public $conditions = null;
 
 	# number of rows to ignore from beginning of data
-	var $offset = null;
+    public $offset = null;
 
 	# limits the number of returned rows to specified amount
-	var $limit = null;
+    public $limit = null;
 
 	# number of rows to analyze when attempting to auto-detect delimiter
-	var $auto_depth = 15;
+    public $auto_depth = 15;
 
 	# characters to ignore when attempting to auto-detect delimiter
-	var $auto_non_chars = "a-zA-Z0-9\n\r";
+    public $auto_non_chars = "a-zA-Z0-9\n\r";
 
 	# preferred delimiter characters, only used when all filtering method
 	# returns multiple possible delimiters (happens very rarely)
-	var $auto_preferred = ",;\t.:|";
+    public $auto_preferred = ",;\t.:|";
 
 	# character encoding options
-	var $convert_encoding = false;
-	var $input_encoding = 'ISO-8859-1';
-	var $output_encoding = 'ISO-8859-1';
+    public $convert_encoding = false;
+    public $input_encoding = 'ISO-8859-1';
+    public $output_encoding = 'ISO-8859-1';
 
 	# used by unparse(), save(), and output() functions
-	var $linefeed = "\r\n";
+    public $linefeed = "\r\n";
 
 	# only used by output() function
-	var $output_delimiter = ',';
-	var $output_filename = 'data.csv';
+    public $output_delimiter = ',';
+    public $output_filename = 'data.csv';
 
 	# keep raw file data in memory after successful parsing (useful for debugging)
-	var $keep_file_data = false;
+    public $keep_file_data = false;
 
 	/**
 	 * Internal variables
 	 */
 
 	# current file
-	var $file;
+    public $file;
 
 	# loaded file contents
-	var $file_data;
+    public $file_data;
 
 	# error while parsing input data
 	#  0 = No errors found. Everything should be fine :)
@@ -156,16 +156,16 @@ class parseCSV {
 	#      the file is either corrupt, or does not
 	#      standard CSV formatting. Please validate
 	#      the parsed data yourself.
-	var $error = 0;
+    public $error = 0;
 
 	# detailed error info
-	var $error_info = array();
+    public $error_info = array();
 
 	# array of field values in data parsed
-	var $titles = array();
+    public $titles = array();
 
 	# two dimensional array of CSV data
-	var $data = array();
+    public $data = array();
 
 
 	/**
@@ -782,5 +782,3 @@ class parseCSV {
 	}
 
 }
-
-?>

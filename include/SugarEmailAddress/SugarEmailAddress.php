@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,35 +34,30 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once("include/JSON.php");
 
-
 class SugarEmailAddress extends SugarBean {
-    var $table_name = 'email_addresses';
-    var $module_name = "EmailAddresses";
-    var $module_dir = 'EmailAddresses';
-    var $object_name = 'EmailAddress';
+    public $table_name = 'email_addresses';
+    public $module_name = "EmailAddresses";
+    public $module_dir = 'EmailAddresses';
+    public $object_name = 'EmailAddress';
 
     //bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
 	//allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
-    var $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
-    var $disable_custom_fields = true;
-    var $db;
-    var $smarty;
-    var $addresses = array(); // array of emails
-    var $view = '';
+    public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
+    public $disable_custom_fields = true;
+    public $db;
+    public $smarty;
+    public $addresses = array(); // array of emails
+    public $view = '';
     private $stateBeforeWorkflow;
 
     public $email_address;
@@ -85,8 +80,7 @@ class SugarEmailAddress extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -147,8 +141,9 @@ class SugarEmailAddress extends SugarBean {
         $alternate_found = false;
         $alternate2_found = false;
         foreach($this->addresses as $k=>$address) {
-            if ($primary_found && $alternate_found)
-                break;
+            if ($primary_found && $alternate_found) {
+                            break;
+            }
             if ($address['primary_address'] == 1 && !$primary_found) {
                 $primary_index = $k;
                 $primary_found = true;
@@ -309,8 +304,9 @@ class SugarEmailAddress extends SugarBean {
         )
     {
         $emailCaps = strtoupper(trim($email));
-        if(empty($emailCaps))
-            return 0;
+        if(empty($emailCaps)) {
+                    return 0;
+        }
 
         $q = "SELECT *
                 FROM email_addr_bean_rel eabl JOIN email_addresses ea
@@ -326,7 +322,9 @@ class SugarEmailAddress extends SugarBean {
 
         // do it this way to make the count accurate in oracle
         $i = 0;
-        while ($this->db->fetchByAssoc($r)) ++$i;
+        while ($this->db->fetchByAssoc($r)) {
+            ++$i;
+        }
 
         return $i;
     }
@@ -509,8 +507,9 @@ class SugarEmailAddress extends SugarBean {
                     foreach($_REQUEST as $k => $v) {
                         if(preg_match('/'.$eId.'emailAddressVerifiedValue[0-9]+$/i', $k) && !empty($v)) {
                             $validateFlag = str_replace("Value", "Flag", $k);
-                            if (isset($_REQUEST[$validateFlag]) && $_REQUEST[$validateFlag] == "true")
-                              $new_addrs[$k] = $v;
+                            if (isset($_REQUEST[$validateFlag]) && $_REQUEST[$validateFlag] == "true") {
+                                                          $new_addrs[$k] = $v;
+                            }
                         }
                     }
                 }
@@ -713,8 +712,7 @@ class SugarEmailAddress extends SugarBean {
         if ($id) {
             $r = $this->db->query("SELECT * FROM email_addresses WHERE id='".$this->db->quote($id)."'");
             $current_email = $this->db->fetchByAssoc($r);
-        }
-        else {
+        } else {
             $current_email = null;
         }
 
@@ -754,8 +752,7 @@ class SugarEmailAddress extends SugarBean {
                 $upd_r = $this->db->query($upd_q);
             }
             return $duplicate_email['id'];
-        }
-        else {
+        } else {
             // no case-insensitive address match - it's new, or undeleted.
             $guid = '';
             if(!empty($address)){
@@ -821,8 +818,7 @@ class SugarEmailAddress extends SugarBean {
             // otherwise
             $q .= "
                 ORDER BY ear.reply_to_address DESC";
-        }
-        else
+        } else
         {
             // retrieve reply-to address only
             $q .= "
@@ -873,8 +869,9 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetEditView($id, $module, $asMetadata=false, $tpl='',$tabindex='0')
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
-            $this->smarty = new Sugar_Smarty();
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
+                    $this->smarty = new Sugar_Smarty();
+        }
 
         global $app_strings, $dictionary, $beanList;
 
@@ -892,8 +889,9 @@ class SugarEmailAddress extends SugarBean {
         if(!empty($id)) {
             $prefillDataArr = $this->getAddressesByGUID($id, $module);
             //When coming from convert leads, sometimes module is Contacts while the id is for a lead.
-            if (empty($prefillDataArr) && $module == "Contacts")
-                $prefillDataArr = $this->getAddressesByGUID($id, "Leads");
+            if (empty($prefillDataArr) && $module == "Contacts") {
+                            $prefillDataArr = $this->getAddressesByGUID($id, "Leads");
+            }
         } else if(isset($_REQUEST['full_form']) && !empty($_REQUEST['emailAddressWidget'])){
             $widget_id = isset($_REQUEST[$module . '_email_widget_id']) ? $_REQUEST[$module . '_email_widget_id'] : '0';
             $count = 0;
@@ -918,8 +916,9 @@ class SugarEmailAddress extends SugarBean {
 
         $required = false;
         $vardefs = $dictionary[$beanList[$passedModule]]['fields'];
-        if (!empty($vardefs['email1']) && isset($vardefs['email1']['required']) && $vardefs['email1']['required'])
-            $required = true;
+        if (!empty($vardefs['email1']) && isset($vardefs['email1']['required']) && $vardefs['email1']['required']) {
+                    $required = true;
+        }
         $this->smarty->assign('required', $required);
 
         $this->smarty->assign('module', $saveModule);
@@ -980,13 +979,16 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetDetailView($focus, $tpl='')
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
-            $this->smarty = new Sugar_Smarty();
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
+                    $this->smarty = new Sugar_Smarty();
+        }
 
         global $app_strings;
         global $current_user;
         $assign = array();
-        if(empty($focus->id))return '';
+        if(empty($focus->id)) {
+            return '';
+        }
         $prefillData = $this->getAddressesByGUID($focus->id, $focus->module_dir);
 
         foreach($prefillData as $addressItem) {
@@ -1015,8 +1017,9 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetDuplicatesView($focus)
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
-            $this->smarty = new Sugar_Smarty();
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
+                    $this->smarty = new Sugar_Smarty();
+        }
 
         $count = 0;
         $emails = array();
@@ -1176,7 +1179,9 @@ function getEmailAddressWidget($focus, $field, $value, $view, $tabindex='0') {
 
         if($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
             $module = $focus->module_dir;
-            if ($view == 'ConvertLead' && $module == "Contacts")  $module = "Leads";
+            if ($view == 'ConvertLead' && $module == "Contacts") {
+                $module = "Leads";
+            }
 
             return $sea->getEmailAddressWidgetEditView($focus->id, $module, false,'',$tabindex);
         }

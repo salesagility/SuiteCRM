@@ -44,18 +44,18 @@ require_once('include/Sugarpdf/SugarpdfFactory.php');
 
 class ViewSugarpdf extends SugarView{
 
-    var $type ='sugarpdf';
+    public $type ='sugarpdf';
     /**
      * It is set by the "sugarpdf" request parameter and it is use by SugarpdfFactory to load the good sugarpdf class.
      * @var String
      */
-    var $sugarpdf='default';
+    public $sugarpdf='default';
     /**
      * The sugarpdf object (Include the TCPDF object).
      * The atributs of this object are destroy in the output method.
      * @var Sugarpdf object
      */
-    var $sugarpdfBean=NULL;
+    public $sugarpdfBean=NULL;
 
 
     public function __construct(){

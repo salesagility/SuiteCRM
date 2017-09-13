@@ -53,23 +53,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
   */
  class ListViewFacade{
 
- 	var $focus = null;
- 	var $module = '';
- 	var $type = 0;
+     public $focus = null;
+     public $module = '';
+     public $type = 0;
 
- 	var $lv;
+     public $lv;
 
  	//ListView fields
- 	var $template;
- 	var $title;
- 	var $where = '';
- 	var $params = array();
- 	var $offset = 0;
- 	var $limit = -1;
- 	var $filter_fields = array();
- 	var $id_field = 'id';
- 	var $prefix = '';
- 	var $mod_strings = array();
+     public $template;
+     public $title;
+     public $where = '';
+     public $params = array();
+     public $offset = 0;
+     public $limit = -1;
+     public $filter_fields = array();
+     public $id_field = 'id';
+     public $prefix = '';
+     public $mod_strings = array();
 
  	/**
  	 * Constructor
@@ -201,4 +201,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 		$this->title = $title;
 	}
  }
-?>

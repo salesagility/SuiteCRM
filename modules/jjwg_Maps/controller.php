@@ -1,9 +1,46 @@
 <?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-
-// modules/jjwg_Maps/controller.php
+}
 
 require_once('include/utils.php');
 require_once('include/export_utils.php');
@@ -15,56 +52,56 @@ class jjwg_MapsController extends SugarController {
     /**
      * @var settings array
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * $map_marker_data_points is used to store temporary data and prevent duplicate points
      * @var array
      */
-    var $map_marker_data_points = array();
+    public $map_marker_data_points = array();
 
     /**
      * @var google_maps_response_codes
      *
      */
-    var $google_maps_response_codes = array('OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT', 'REQUEST_DENIED');
+    public $google_maps_response_codes = array('OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT', 'REQUEST_DENIED');
 
     /**
      * Last Geocoding Status Message
      * @var string
      */
-    var $last_status = '';
+    public $last_status = '';
 
     /**
      * display_object - display module's object (dom field)
      * @var object
      */
-    var $display_object;
+    public $display_object;
 
     /**
      * relate_object - relate module's object
      * @var object
      */
-    var $relate_object;
+    public $relate_object;
 
     /**
      * jjwg_Maps - Maps module's object
      * @var object
      */
-    var $bean;
-    var $jjwg_Maps; // Deprecated reference
+    public $bean;
+    public $jjwg_Maps; // Deprecated reference
 
     /**
      * jjwg_Address_Cache - Address cache module's object
      * @var object
      */
-    var $jjwg_Address_Cache;
+    public $jjwg_Address_Cache;
 
     /**
      * smarty object for the generic configuration template
      * @var object
      */
-    var $sugarSmarty;
+    public $sugarSmarty;
 
 
     /**
@@ -985,17 +1022,14 @@ class jjwg_MapsController extends SugarController {
 
     /**
      * Define marker data for marker display view
-     * @param $module_type bean name
-     * @param $display bean fields array
-     * $param $mod_strings_display mod_strings from display module
-     * TODO: Use a custom defined field for the $marker['group']
+     * @param string $module_type bean name
+     * @param array $display bean fields
+     * @param bool $center_marker
+     * @param array $mod_strings_display mod_strings from display module
+     * @return array|bool
      */
-    function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array()) {
-
-//        echo "<pre>";
-//        print_r($display);
-//        print_r($mod_strings_display);
-//        echo "</pre>";
+    function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array())
+    {
 
         // Define Marker
         $marker = array();
@@ -1033,14 +1067,14 @@ class jjwg_MapsController extends SugarController {
             // Check to see if marker point already exists and apply offset if needed
             // This often occurs when an address is only defined by city, state, zip.
             $i = 0;
-            while (isset($this->map_marker_data_points[(string) $marker['lat']][(string) $marker['lng']]) &&
-            $i < $this->settings['map_markers_limit']) {
-                $marker['lat'] = (float) $marker['lat'] + (float) $this->settings['map_duplicate_marker_adjustment'];
-                $marker['lng'] = (float) $marker['lng'] + (float) $this->settings['map_duplicate_marker_adjustment'];
+            while (isset($this->map_marker_data_points[(string)$marker['lat']][(string)$marker['lng']]) &&
+                $i < $this->settings['map_markers_limit']) {
+                $marker['lat'] = (float)$marker['lat'] + (float)$this->settings['map_duplicate_marker_adjustment'];
+                $marker['lng'] = (float)$marker['lng'] + (float)$this->settings['map_duplicate_marker_adjustment'];
                 $i++;
             }
             // Set Marker Point as Used (true)
-            $this->map_marker_data_points[(string) $marker['lat']][(string) $marker['lng']] = true;
+            $this->map_marker_data_points[(string)$marker['lat']][(string)$marker['lng']] = true;
 
             if (isset($display['account_name'])) {
                 $marker['account_name'] = $display['account_name'];
@@ -1048,7 +1082,8 @@ class jjwg_MapsController extends SugarController {
             if (isset($display['account_id'])) {
                 $marker['account_id'] = $display['account_id'];
             }
-            $marker['assigned_user_name'] = (isset($display['assigned_user_name'])) ? $display['assigned_user_name'] : '';
+            $marker['assigned_user_name'] = (isset($display['assigned_user_name'])) ?
+                $display['assigned_user_name'] : '';
             $marker['image'] = (isset($display['marker_image'])) ? $display['marker_image'] : '';
 
             // Define Marker Group
@@ -1058,7 +1093,8 @@ class jjwg_MapsController extends SugarController {
                 $group_field_value = $display[$group_field_name];
                 // Check for DOM field types (enum type)
                 if (isset($this->display_object->field_name_map[$group_field_name]['type']) &&
-                        $this->display_object->field_name_map[$group_field_name]['type'] == 'enum') {
+                    $this->display_object->field_name_map[$group_field_name]['type'] == 'enum'
+                ) {
                     $group_field_dom = $this->display_object->field_name_map[$group_field_name]['options'];
                     $marker['group'] = $GLOBALS['app_list_strings'][$group_field_dom][$group_field_value];
                 } elseif (!empty($display[$group_field_name])) {
@@ -1082,24 +1118,29 @@ class jjwg_MapsController extends SugarController {
                 if (!isset($meetingTimeDate) || !is_object($meetingTimeDate)) {
                     $meetingTimeDate = new TimeDate();
                 }
-                $display['date_start'] = $meetingTimeDate->to_display_date_time($display['date_start'], true, true, $GLOBALS['current_user']);
-                $display['date_end'] = $meetingTimeDate->to_display_date_time($display['date_end'], true, true, $GLOBALS['current_user']);
+                $display['date_start'] = $meetingTimeDate->to_display_date_time($display['date_start'], true, true,
+                    $GLOBALS['current_user']);
+                $display['date_end'] = $meetingTimeDate->to_display_date_time($display['date_end'], true, true,
+                    $GLOBALS['current_user']);
             }
             $current_user_data = get_object_vars($GLOBALS['current_user']);
             $this->sugarSmarty->assign('current_user', $current_user_data);
-            $this->sugarSmarty->assign('current_user_address', $this->bean->defineMapsFormattedAddress($current_user_data, 'address'));
+            $this->sugarSmarty->assign('current_user_address',
+                $this->bean->defineMapsFormattedAddress($current_user_data, 'address'));
             $this->sugarSmarty->assign("mod_strings", $mod_strings_display);
             // Define Maps Info Window HTML by Sugar Smarty Template
             $this->sugarSmarty->assign("module_type", $module_type);
             $this->sugarSmarty->assign("address", $display['jjwg_maps_address_c']);
             $this->sugarSmarty->assign("fields", $display); // display fields array
             // Use @ error suppression to avoid issues with SugarCRM On-Demand
-            $marker['html'] = @$this->sugarSmarty->fetch('./custom/modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl');
+            $marker['html'] = @$this->sugarSmarty->fetch('./custom/modules/jjwg_Maps/tpls/' .
+                $module_type . 'InfoWindow.tpl');
             if (empty($marker['html'])) {
-                $marker['html'] = $this->sugarSmarty->fetch('./modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl');
+                $marker['html'] = $this->sugarSmarty->fetch('./modules/jjwg_Maps/tpls/' . $module_type .
+                    'InfoWindow.tpl');
             }
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
-            //var_dump($marker['html']);
+
             return $marker;
 
         } else {

@@ -385,15 +385,19 @@ abstract class AbstractMetaDataImplementation
             }
 
             if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
+                if (isset ($def ['name']) && !is_array($def ['name'])) {
+                    // found a 'name' definition, that is not the definition of a field called name :)
                 {
                     // if this is a module field, then merge in the definition, otherwise this is a new field defined in the layout, so just take the definition
                     $fielddefs [$def ['name']] = (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']],
                         $def) : $def;
+                }
                 } else {
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
+                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
+                        // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
                     {
                         $key = strtolower($key);
+                    }
                         $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
                     } else {
                         $this->_mergeFielddefs($fielddefs, $def);

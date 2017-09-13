@@ -55,9 +55,9 @@
  /* pData class definition */
  class pData
   {
-   var $Data;
+     public $Data;
 
-   var $Palette = array("0"=>array("R"=>188,"G"=>224,"B"=>46,"Alpha"=>100),
+     public $Palette = array("0"=>array("R"=>188,"G"=>224,"B"=>46,"Alpha"=>100),
                         "1"=>array("R"=>224,"G"=>100,"B"=>46,"Alpha"=>100),
                         "2"=>array("R"=>224,"G"=>214,"B"=>46,"Alpha"=>100),
                         "3"=>array("R"=>46,"G"=>151,"B"=>224,"Alpha"=>100),

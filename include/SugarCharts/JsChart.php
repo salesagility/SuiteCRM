@@ -44,12 +44,12 @@ require_once("include/SugarCharts/SugarChart.php");
 
 class JsChart extends SugarChart {
 	protected $ss;
-	var $xmlFile;
-	var $jsonFilename;
-	var $chartId;
-	var $width;
-	var $height;
-	var $chartType;
+    public $xmlFile;
+    public $jsonFilename;
+    public $chartId;
+    public $width;
+    public $height;
+    public $chartType;
 
 	function __construct() {
 		parent::__construct();

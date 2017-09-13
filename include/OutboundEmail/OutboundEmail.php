@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Outbuound email management
@@ -46,8 +50,8 @@ class OutboundEmail {
 	/**
 	 * Necessary
 	 */
-	var $db;
-	var $field_defs = array(
+    public $db;
+    public $field_defs = array(
 		'id',
 		'name',
 		'type',
@@ -65,20 +69,20 @@ class OutboundEmail {
 	/**
 	 * Columns
 	 */
-	var $id;
-	var $name;
-	var $type; // user or system
-	var $user_id; // owner
-	var $mail_sendtype; // smtp
-	var $mail_smtptype;
-	var $mail_smtpserver;
-	var $mail_smtpport = 25;
-	var $mail_smtpuser;
-	var $mail_smtppass;
-	var $mail_smtpauth_req; // bool
-	var $mail_smtpssl; // bool
-	var $mail_smtpdisplay; // calculated value, not in DB
-	var $new_with_id = false;
+    public $id;
+    public $name;
+    public $type; // user or system
+    public $user_id; // owner
+    public $mail_sendtype; // smtp
+    public $mail_smtptype;
+    public $mail_smtpserver;
+    public $mail_smtpport = 25;
+    public $mail_smtpuser;
+    public $mail_smtppass;
+    public $mail_smtpauth_req; // bool
+    public $mail_smtpssl; // bool
+    public $mail_smtpdisplay; // calculated value, not in DB
+    public $new_with_id = false;
 
 	/**
 	 * Sole constructor
@@ -94,8 +98,7 @@ class OutboundEmail {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -118,9 +121,9 @@ class OutboundEmail {
 		  $oe = new OutboundEmail();
 		  $oe->retrieve($row['id']);
 		  return $oe;
+		} else {
+				  return null;
 		}
-		else
-		  return null;
 	}
 
 	/**
@@ -158,12 +161,14 @@ class OutboundEmail {
 	    $ob = $sys->getSystemMailerSettings(); //Dirties '$this'
 
 	    //If auth for system account is disabled or user can use system outbound account return false.
-	    if($ob->mail_smtpauth_req == 0 || $this->isAllowUserAccessToSystemDefaultOutbound() || $this->mail_sendtype == 'sendmail')
-	       return $userCredentialsReq;
+	    if($ob->mail_smtpauth_req == 0 || $this->isAllowUserAccessToSystemDefaultOutbound() || $this->mail_sendtype == 'sendmail') {
+	    	       return $userCredentialsReq;
+	    }
 
 	    $userOverideAccount = $this->getUsersMailerForSystemOverride($user_id);
-	    if( $userOverideAccount == null || empty($userOverideAccount->mail_smtpuser) || empty($userOverideAccount->mail_smtpuser) )
-	       $userCredentialsReq = true;
+	    if( $userOverideAccount == null || empty($userOverideAccount->mail_smtpuser) || empty($userOverideAccount->mail_smtpuser) ) {
+	    	       $userCredentialsReq = true;
+	    }
 
         return $userCredentialsReq;
 
@@ -378,8 +383,9 @@ class OutboundEmail {
             $admin = new Administration();
             $admin->retrieveSettings('',true);
             if (isset($admin->settings['notify_allow_default_outbound'])
-                &&  $admin->settings['notify_allow_default_outbound'] == 2 )
-                $allowAccess = true;
+                &&  $admin->settings['notify_allow_default_outbound'] == 2 ) {
+                            $allowAccess = true;
+            }
         }
 
         return $allowAccess;
@@ -435,10 +441,11 @@ class OutboundEmail {
 					$this->$k = $v;
 				} // else
 			}
-			if ( !empty($a['mail_smtptype']) )
-			    $this->mail_smtpdisplay = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
-			else
-			    $this->mail_smtpdisplay = $a['mail_smtpserver'];
+			if ( !empty($a['mail_smtptype']) ) {
+						    $this->mail_smtpdisplay = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
+			} else {
+						    $this->mail_smtpdisplay = $a['mail_smtpserver'];
+			}
 		}
 
 		return $this;
@@ -608,8 +615,7 @@ class OutboundEmail {
 	        $oe = $this->getUsersMailerForSystemOverride($user->id);
 	        if(!empty($oe) && !empty($oe->id)) {
 	            return $oe;
-	        }
-            else  {
+	        } else  {
                 return $this->getSystemMailerSettings();
             }
 	    }

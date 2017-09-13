@@ -49,18 +49,18 @@ class SugarDependentDropdown {
 	/*
 	 * Holds processed metadata, ready for JSON
 	 */
-	var $metadata;
+    public $metadata;
 
 	/*
 	 * Flag to suppress errors and/or log more heavily
 	 */
-	var $debugMode = false;
+    public $debugMode = false;
 
 	/*
 	 * Default metadata array that will be merged with any passed fields to
 	 * ensure uniformity
 	 */
-	var $defaults = array(
+    public $defaults = array(
 		'name'		=> '',
 		'id'		=> '',
 		'type'		=> 'none',	// form element, valid "select", "input", "checkbox", "none"
@@ -72,7 +72,7 @@ class SugarDependentDropdown {
 	 * Fields that must exist in an element (single dropdown/field) metadata
 	 * array.
 	 */
-	var $elementRequired = array(
+    public $elementRequired = array(
 		'name',
 		'id',
 		//'values',
@@ -83,14 +83,14 @@ class SugarDependentDropdown {
 	/**
 	 * Fields that will be merged down into individual elements and handlers
 	 */
-	var $alwaysMerge = array(
+    public $alwaysMerge = array(
 		'force_render',
 	);
 
 	/*
 	 * Valid 'types' for a dependent dropdown
 	 */
-	var $validTypes = array(
+    public $validTypes = array(
 		"select", 	// select dropdown
 		"input", 	// text input field
 		"checkbox",	// checkbox (radio buttons will not be supported)

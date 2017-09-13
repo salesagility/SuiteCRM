@@ -43,10 +43,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class StudioWizard{
-    var $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
-    var $wizard = 'StudioWizard';
-    var $status = '';
-    var $assign = array();
+    public $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
+    public $wizard = 'StudioWizard';
+    public $status = '';
+    public $assign = array();
     
     function welcome(){
         return $GLOBALS['mod_strings']['LBL_SW_WELCOME'];

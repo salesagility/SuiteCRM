@@ -40,17 +40,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class ACLRole extends SugarBean{
-    var $module_dir = 'ACLRoles';
-    var $object_name = 'ACLRole';
-    var $table_name = 'acl_roles';
-    var $new_schema = true;
-    var $disable_row_level_security = true;
-    var $disable_custom_fields = true;
-    var $relationship_fields = array(
+    public $module_dir = 'ACLRoles';
+    public $object_name = 'ACLRole';
+    public $table_name = 'acl_roles';
+    public $new_schema = true;
+    public $disable_row_level_security = true;
+    public $disable_custom_fields = true;
+    public $relationship_fields = array(
                                     'user_id'=>'users'
                                 );
 
-    var $created_by;
+    public $created_by;
 
     public function __construct(){
         parent::__construct();

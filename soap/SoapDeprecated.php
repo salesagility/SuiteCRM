@@ -1,11 +1,11 @@
 <?php
- if(!defined('sugarEntry'))define('sugarEntry', true);
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,16 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-// the types/methods defined in this file are deprecated -- please see SoapSugarUsers.php, SoapPortalUsers.php, SoapStudio.php, etc.
+// the types/methods defined in this file are deprecated --
+// please see SoapSugarUsers.php, SoapPortalUsers.php, SoapStudio.php, etc.
 
 $server->wsdl->addComplexType(
     'contact_detail',
@@ -420,7 +424,8 @@ $current_user = null;
  *
  * @param string $user_name -- User name to authenticate with
  * @param string $password -- MD5 of the user password
- * @param string $email_address -- Single email address or '; ' separated list of email addresses (e.x "test@example.com; test2@example.com"
+ * @param string $email_address -- Single email address or '; ' separated list of email addresses
+ * (e.x "test@example.com; test2@example.com"
  * @return contact detail array along with associated objects.
  */
 function contact_by_email($user_name, $password, $email_address)
@@ -862,14 +867,12 @@ function create_contact($user_name,$password, $first_name, $last_name, $email_ad
 	$contact->assigned_user_name = $user_name;
 	return $contact->save();
 }
-function create_lead($user_name,$password, $first_name, $last_name, $email_address)
+
+function create_lead($user_name, $password, $first_name, $last_name, $email_address)
 {
 	if(!validate_user($user_name, $password)){
 		return 0;
 	}
-
-	//todo make the activity body not be html encoded
-
 
 	$seed_user = new User();
 	$user_id = $seed_user->retrieve_user_id($user_name);
@@ -886,49 +889,61 @@ function create_lead($user_name,$password, $first_name, $last_name, $email_addre
 	$lead->assigned_user_name = $user_name;
 	return $lead->save();
 }
-function create_account($user_name,$password, $name, $phone, $website)
+/**
+ *
+ * @param string $user_name
+ * @param string $password
+ * @param string $name
+ * @param string $phone
+ * @param string $website
+ * @return string
+ */
+function create_account($user_name, $password, $name, $phone, $website)
 {
-	if(!validate_user($user_name, $password)){
-		return 0;
-	}
+    if (!validate_user($user_name, $password)) {
+        return 0;
+    }
+    $seed_user = new User();
+    $user_id = $seed_user->retrieve_user_id($user_name);
+    $account = new Account();
+    if (!$account->ACLAccess('Save')) {
+        return -1;
+    }
+    $account->name = $name;
+    $account->phone_office = $phone;
+    $account->website = $website;
+    $account->assigned_user_id = $user_id;
+    $account->assigned_user_name = $user_name;
+    $account->save();
 
-	//todo make the activity body not be html encoded
-
-
-	$seed_user = new User();
-	$user_id = $seed_user->retrieve_user_id($user_name);
-	$account = new Account();
-	if(!$account->ACLAccess('Save')){
-		return -1;
-	}
-	$account->name = $name;
-	$account->phone_office = $phone;
-	$account->website = $website;
-	$account->assigned_user_id = $user_id;
-	$account->assigned_user_name = $user_name;
-	$account->save();
-	return $account->id;
+    return $account->id;
 
 }
-function create_case($user_name,$password, $name)
+
+/**
+ *
+ * @param string $user_name
+ * @param string $password
+ * @param string $name
+ * @return string
+ */
+function create_case($user_name, $password, $name)
 {
-	if(!validate_user($user_name, $password)){
-		return 0;
-	}
+    if (!validate_user($user_name, $password)) {
+        return 0;
+    }
 
-	//todo make the activity body not be html encoded
+    $seed_user = new User();
+    $user_id = $seed_user->retrieve_user_id($user_name);
+    $case = new aCase();
+    if (!$case->ACLAccess('Save')) {
+        return -1;
+    }
+    $case->assigned_user_id = $user_id;
+    $case->assigned_user_name = $user_name;
+    $case->name = $name;
 
-
-	$seed_user = new User();
-	$user_id = $seed_user->retrieve_user_id($user_name);
-	$case = new aCase();
-	if(!$case->ACLAccess('Save')){
-		return -1;
-	}
-	$case->assigned_user_id = $user_id;
-	$case->assigned_user_name = $user_name;
-	$case->name = $name;
-	return $case->save();
+    return $case->save();
 }
 function create_opportunity($user_name,$password, $name, $amount)
 {
@@ -967,5 +982,3 @@ function search($user_name, $password,$name){
     }
 	return $list;
 }
-
-?>

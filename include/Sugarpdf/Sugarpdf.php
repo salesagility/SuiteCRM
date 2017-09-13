@@ -65,30 +65,30 @@ class Sugarpdf extends TCPDF
      * the controller and the view.  The bean will automatically be set for us, but this
      * is meant to hold anything else.
      */
-    var $sugarpdf_object_map = array();
+    public $sugarpdf_object_map = array();
     /**
      * The name of the current module.
      */
-    var $module = '';
+    public $module = '';
     /**
      * The name of the current action.
      */
-    var $action = '';
+    public $action = '';
     /**
      */
-    var $bean = null;
+    public $bean = null;
      /**
      * Any errors that occured this can either be set by the view or the controller or the model
      */
-    var $errors = array();
+    public $errors = array();
     /**
      * Use to set the filename of the output pdf file.
      */
-    var $fileName = PDF_FILENAME;
+    public $fileName = PDF_FILENAME;
     /**
      * Use for the ACL access.
      */
-    var $aclAction = PDF_ACL_ACCESS;
+    public $aclAction = PDF_ACL_ACCESS;
     /**
      * Constructor which will peform the setup.
      */

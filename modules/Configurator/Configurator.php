@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,22 +34,22 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
 class Configurator {
-	var $config = '';
-	var $override = '';
-	var $allow_undefined = array ('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
-	var $errors = array ('main' => '');
-	var $logger = NULL;
-	var $previous_sugar_override_config_array = array();
-	var $useAuthenticationClass = false;
+	public $config = '';
+    public $override = '';
+    public $allow_undefined = array ('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
+    public $errors = array ('main' => '');
+    public $logger = NULL;
+    public $previous_sugar_override_config_array = array();
+    public $useAuthenticationClass = false;
 	protected $error = null;
 
 	function __construct() {
@@ -139,7 +139,9 @@ class Configurator {
 		$overideString .= '/***CONFIGURATOR***/';
 
 		$this->saveOverride($overideString);
-		if(isset($this->config['logger']['level']) && $this->logger) $this->logger->setLevel($this->config['logger']['level']);
+		if(isset($this->config['logger']['level']) && $this->logger) {
+		    $this->logger->setLevel($this->config['logger']['level']);
+		}
 	}
 
 	//bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
@@ -175,8 +177,7 @@ class Configurator {
 		if (file_exists('config_override.php')) {
 			if ( !is_readable('config_override.php') ) {
 				$GLOBALS['log']->fatal("Unable to read the config_override.php file. Check the file permissions");
-			}
-			else {
+			} else {
 				include('config_override.php');
 			}
 		}
@@ -287,20 +288,19 @@ class Configurator {
 					$property = isset( $temp[1])? $temp[1] : array();
 					if(preg_match("/log4php.appender.A2.MaxFileSize=/",$value)){
 						setDeepArrayValue($this->config, 'logger_file_maxSize', rtrim( $property));
-					}
-					elseif(preg_match("/log4php.appender.A2.File=/", $value)){
+					} elseif(preg_match("/log4php.appender.A2.File=/", $value)){
 						$ext = preg_split("/\./",$property);
 						if(preg_match( "/^\./", $property)){ //begins with .
 							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[2]) ? '.' . rtrim( $ext[2]):'.log');
 							setDeepArrayValue($this->config, 'logger_file_name', rtrim( ".".$ext[1]));
-						}else{
+						} else{
 							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[1]) ? '.' . rtrim( $ext[1]):'.log');
 							setDeepArrayValue($this->config, 'logger_file_name', rtrim( $ext[0] ));
 						}
-					}elseif(preg_match("/log4php.appender.A2.layout.DateFormat=/",$value)){
+					} elseif(preg_match("/log4php.appender.A2.layout.DateFormat=/",$value)){
 						setDeepArrayValue($this->config, 'logger_file_dateFormat', trim(rtrim( $property), '""'));
 
-					}elseif(preg_match("/log4php.rootLogger=/",$value)){
+					} elseif(preg_match("/log4php.rootLogger=/",$value)){
 						$property = explode(",",$property);
 						setDeepArrayValue($this->config, 'logger_level', rtrim( $property[0]));
 					}
@@ -336,4 +336,3 @@ class Configurator {
 
 
 }
-?>

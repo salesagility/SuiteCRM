@@ -174,37 +174,37 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 */
 class nusoap_client extends nusoap_base  {
 
-	var $username = '';				// Username for HTTP authentication
-	var $password = '';				// Password for HTTP authentication
-	var $authtype = '';				// Type of HTTP authentication
-	var $certRequest = array();		// Certificate for HTTP SSL authentication
-	var $requestHeaders = false;	// SOAP headers in request (text)
-	var $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
-	var $responseHeader = NULL;		// SOAP Header from response (parsed)
-	var $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
-	var $endpoint;
-	var $forceEndpoint = '';		// overrides WSDL endpoint
-    var $proxyhost = '';
-    var $proxyport = '';
-	var $proxyusername = '';
-	var $proxypassword = '';
-	var $portName = '';				// port name to use in WSDL
-    var $xml_encoding = '';			// character set encoding of incoming (response) messages
-	var $http_encoding = false;
-	var $timeout = 0;				// HTTP connection timeout
-	var $response_timeout = 30;		// HTTP response timeout
-	var $endpointType = '';			// soap|wsdl, empty for WSDL initialization error
-	var $persistentConnection = false;
-	var $defaultRpcParams = false;	// This is no longer used
-	var $request = '';				// HTTP request
-	var $response = '';				// HTTP response
-	var $responseData = '';			// SOAP payload of response
-	var $cookies = array();			// Cookies from response or for request
-    var $decode_utf8 = true;		// toggles whether the parser decodes element content w/ utf8_decode()
-	var $operations = array();		// WSDL operations, empty for WSDL initialization error
-	var $curl_options = array();	// User-specified cURL options
-	var $bindingType = '';			// WSDL operation binding type
-	var $use_curl = false;			// whether to always try to use cURL
+    public $username = '';				// Username for HTTP authentication
+    public $password = '';				// Password for HTTP authentication
+    public $authtype = '';				// Type of HTTP authentication
+    public $certRequest = array();		// Certificate for HTTP SSL authentication
+    public $requestHeaders = false;	// SOAP headers in request (text)
+    public $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
+    public $responseHeader = NULL;		// SOAP Header from response (parsed)
+    public $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
+    public $endpoint;
+    public $forceEndpoint = '';		// overrides WSDL endpoint
+    public $proxyhost = '';
+    public $proxyport = '';
+    public $proxyusername = '';
+    public $proxypassword = '';
+    public $portName = '';				// port name to use in WSDL
+    public $xml_encoding = '';			// character set encoding of incoming (response) messages
+    public $http_encoding = false;
+    public $timeout = 0;				// HTTP connection timeout
+    public $response_timeout = 30;		// HTTP response timeout
+    public $endpointType = '';			// soap|wsdl, empty for WSDL initialization error
+    public $persistentConnection = false;
+    public $defaultRpcParams = false;	// This is no longer used
+    public $request = '';				// HTTP request
+    public $response = '';				// HTTP response
+    public $responseData = '';			// SOAP payload of response
+    public $cookies = array();			// Cookies from response or for request
+    public $decode_utf8 = true;		// toggles whether the parser decodes element content w/ utf8_decode()
+    public $operations = array();		// WSDL operations, empty for WSDL initialization error
+    public $curl_options = array();	// User-specified cURL options
+    public $bindingType = '';			// WSDL operation binding type
+    public $use_curl = false;			// whether to always try to use cURL
 
 	/*
 	 * fault related variables
@@ -213,22 +213,22 @@ class nusoap_client extends nusoap_base  {
 	 * @var      fault
 	 * @access   public
 	 */
-	var $fault;
+    public $fault;
 	/**
 	 * @var      faultcode
 	 * @access   public
 	 */
-	var $faultcode;
+    public $faultcode;
 	/**
 	 * @var      faultstring
 	 * @access   public
 	 */
-	var $faultstring;
+    public $faultstring;
 	/**
 	 * @var      faultdetail
 	 * @access   public
 	 */
-	var $faultdetail;
+    public $faultdetail;
 
 	/**
 	* constructor

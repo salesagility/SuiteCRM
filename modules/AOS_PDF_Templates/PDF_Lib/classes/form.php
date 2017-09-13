@@ -2,52 +2,52 @@
 
 class form {
 
-var $mpdf = null;
+    public $mpdf = null;
 
-var $forms;
-var $formn;
+    public $forms;
+    public $formn;
 
 //Active Forms
-var $formSubmitNoValueFields;
-var $formExportType;
-var $formSelectDefaultOption;
-var $formUseZapD;
+    public $formSubmitNoValueFields;
+    public $formExportType;
+    public $formSelectDefaultOption;
+    public $formUseZapD;
 /* Form Styles */
-var $form_border_color; 
-var $form_background_color; 
-var $form_border_width;
-var $form_border_style;
-var $form_button_border_color; 
-var $form_button_background_color;
-var $form_button_border_width;
-var $form_button_border_style;
-var $form_radio_color;
-var $form_radio_background_color; 
+    public $form_border_color;
+    public $form_background_color;
+    public $form_border_width;
+    public $form_border_style;
+    public $form_button_border_color;
+    public $form_button_background_color;
+    public $form_button_border_width;
+    public $form_button_border_style;
+    public $form_radio_color;
+    public $form_radio_background_color;
 
-var $form_element_spacing;
+    public $form_element_spacing;
 
 // Active forms
-var $formMethod;
-var $formAction;
-var $form_fonts;
-var $form_radio_groups;
-var $form_checkboxes;
-var $pdf_acro_array;
+    public $formMethod;
+    public $formAction;
+    public $form_fonts;
+    public $form_radio_groups;
+    public $form_checkboxes;
+    public $pdf_acro_array;
 
-var $pdf_array_co;
-var $array_form_button_js;
-var $array_form_choice_js;
-var $array_form_text_js;
+    public $pdf_array_co;
+    public $array_form_button_js;
+    public $array_form_choice_js;
+    public $array_form_text_js;
 
 /* Button Text */
-var $form_button_text;
-var $form_button_text_over;
-var $form_button_text_click;
-var $form_button_icon;
+    public $form_button_text;
+    public $form_button_text_over;
+    public $form_button_text_click;
+    public $form_button_icon;
 
 
 // FORMS
-var $textarea_lineheight;
+    public $textarea_lineheight;
 
 function form(&$mpdf) {
 	$this->mpdf = $mpdf;

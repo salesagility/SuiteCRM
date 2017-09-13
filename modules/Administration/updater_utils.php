@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +34,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-********************************************************************************/
 require_once('include/utils/encryption_utils.php');
 
 function getSystemInfo($send_usage_info=true){
@@ -94,10 +95,11 @@ function getSystemInfo($send_usage_info=true){
 
 		if(!$send_usage_info){
 			$info['latest_tracker_id'] = -1;
-		}else{
+		} else{
 			$id=$db->getOne("select id from tracker order by date_modified desc", false, 'fetching most recent tracker entry');
-			if ( $id !== false )
-			    $info['latest_tracker_id'] = $id;
+			if ( $id !== false ) {
+						    $info['latest_tracker_id'] = $id;
+			}
 		}
 
 		$info['db_type']=$sugar_config['dbconfig']['db_type'];
@@ -105,7 +107,9 @@ function getSystemInfo($send_usage_info=true){
 	}
 	if(file_exists('distro.php')){
 		include('distro.php');
-		if(!empty($distro_name))$info['distro_name'] = $distro_name;
+		if(!empty($distro_name)) {
+		    $info['distro_name'] = $distro_name;
+		}
 	}
 	$info['os'] = php_uname('s');
 	$info['os_version'] = php_uname('r');
@@ -143,14 +147,16 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
 
 
 	$return_array=array();
-    if(!$from_install && empty($license))loadLicense(true);
+    if(!$from_install && empty($license)) {
+        loadLicense(true);
+    }
 
 	if(!$response_data){
 
         if($from_install){
     		$info = getBaseSystemInfo(false);
 
-        }else{
+        } else{
             $info = getSystemInfo($send_usage_info);
         }
 
@@ -183,7 +189,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
 		}
 		$encodedResult = $sclient->call('sugarHome', array('key'=>$key, 'data'=>$encoded));
 
-	}else{
+	} else{
 		$encodedResult = 	$response_data['data'];
 		$key = $response_data['key'];
 
@@ -197,7 +203,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
 			$resultData = array();
 			$resultData['validation'] = 'invalid validation key';
 		}
-	}else
+	} else
 	{
 		$resultData = array();
 		$resultData['versions'] = array();
@@ -209,22 +215,21 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
 		if(!empty($resultData['msg'])){
 			if(!empty($resultData['msg']['admin'])){
 				$license->saveSetting('license', 'msg_admin', base64_encode($resultData['msg']['admin']));
-			}else{
+			} else{
 				$license->saveSetting('license', 'msg_admin','');
 			}
 			if(!empty($resultData['msg']['all'])){
 				$license->saveSetting('license', 'msg_all', base64_encode($resultData['msg']['all']));
-			}else{
+			} else{
 				$license->saveSetting('license', 'msg_all','');
 			}
-		}else{
+		} else{
 			$license->saveSetting('license', 'msg_admin','');
 			$license->saveSetting('license', 'msg_all','');
 		}
 		$license->saveSetting('license', 'last_validation', 'success');
 		unset($_SESSION['COULD_NOT_CONNECT']);
-	}
-	else
+	} else
 	{
 		$resultData = array();
 		$resultData['versions'] = array();
@@ -243,7 +248,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
 	if(!empty($resultData['versions'])){
 
 		$license->saveSetting('license', 'latest_versions',base64_encode(serialize($resultData['versions'])));
-	}else{
+	} else{
 		$resultData['versions'] = array();
 		$license->saveSetting('license', 'latest_versions','')	;
 	}

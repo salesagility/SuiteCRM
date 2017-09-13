@@ -43,10 +43,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Home/Dashlets/iFrameDashlet/iFrameDashlet.php');
 
 class SugarNewsDashlet extends iFrameDashlet {
-    var $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
-    var $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
-    var $defaultURL = 'https://suitecrm.com/';
-    var $url;
+    public $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
+    public $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
+    public $defaultURL = 'https://suitecrm.com/';
+    public $url;
 
     function __construct($id, $options = null) {
         $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');

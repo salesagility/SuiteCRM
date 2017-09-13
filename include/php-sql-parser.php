@@ -6,8 +6,8 @@
  */
 class PHPSQLParser
 {
-		var $reserved = array();
-		var $functions = array();
+		public $reserved = array();
+		public $functions = array();
 		function __construct($sql = false) {
 			#LOAD THE LIST OF RESERVED WORDS
 			$this->load_reserved_words();
@@ -1983,4 +1983,3 @@ EOREGEX
 		}
 
 	} // END CLASS
-

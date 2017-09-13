@@ -61,33 +61,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class nusoap_xmlschema extends nusoap_base  {
 	
 	// files
-	var $schema = '';
-	var $xml = '';
+    public $schema = '';
+    public $xml = '';
 	// namespaces
-	var $enclosingNamespaces;
+    public $enclosingNamespaces;
 	// schema info
-	var $schemaInfo = array();
-	var $schemaTargetNamespace = '';
+    public $schemaInfo = array();
+    public $schemaTargetNamespace = '';
 	// types, elements, attributes defined by the schema
-	var $attributes = array();
-	var $complexTypes = array();
-	var $complexTypeStack = array();
-	var $currentComplexType = null;
-	var $elements = array();
-	var $elementStack = array();
-	var $currentElement = null;
-	var $simpleTypes = array();
-	var $simpleTypeStack = array();
-	var $currentSimpleType = null;
+    public $attributes = array();
+    public $complexTypes = array();
+    public $complexTypeStack = array();
+    public $currentComplexType = null;
+    public $elements = array();
+    public $elementStack = array();
+    public $currentElement = null;
+    public $simpleTypes = array();
+    public $simpleTypeStack = array();
+    public $currentSimpleType = null;
 	// imports
-	var $imports = array();
+    public $imports = array();
 	// parser vars
-	var $parser;
-	var $position = 0;
-	var $depth = 0;
-	var $depth_array = array();
-	var $message = array();
-	var $defaultNamespace = array();
+    public $parser;
+    public $position = 0;
+    public $depth = 0;
+    public $depth_array = array();
+    public $message = array();
+    public $defaultNamespace = array();
     
 	/**
 	* constructor

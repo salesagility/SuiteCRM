@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
@@ -74,10 +78,11 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 		if(array_key_exists($emptyMarker, $dropdown)){
             $output=array();
             foreach($dropdown as $key => $value){
-                if($emptyMarker===$key)
-                    $output['']='';
-                else
-                    $output[$key]=$value;
+                if($emptyMarker===$key) {
+                                    $output['']='';
+                } else {
+                                    $output[$key]=$value;
+                }
 		}
             $dropdown=$output;
 		}
@@ -89,7 +94,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 			//Can't use synch on selected lang as we want to overwrite values, not just keys
 			$module->mblanguage->appListStrings[$selected_lang.'.lang.php'][$dropdown_name] = $dropdown;
 			$module->mblanguage->save($module->key_name); // tyoung - key is required parameter as of
-		}else{
+		} else{
 			$contents = return_custom_app_list_strings_file_contents($selected_lang);
 			$my_list_strings = return_app_list_strings_language($selected_lang);
 			if($selected_lang == $GLOBALS['current_language']){
@@ -97,7 +102,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 	        }
 			//write to contents
 			$contents = str_replace("?>", '', $contents);
-			if(empty($contents))$contents = "<?php";
+			if(empty($contents)) {
+			    $contents = "<?php";
+			}
 	        //add new drop down to the bottom
 	        if(!empty($params['use_push'])){
 	        	//this is for handling moduleList and such where nothing should be deleted or anything but they can be renamed
@@ -111,7 +118,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 		        		$contents .= "\n\$GLOBALS['app_list_strings']['$dropdown_name']['$key']=" . var_export_helper($value) . ";";
 	        		}
 	        	}
-	        }else{
+	        } else{
 	        	//Now synch up the keys in other langauges to ensure that removed/added Drop down values work properly under all langs.
 	        	$this->synchDropDown($dropdown_name, $dropdown, $selected_lang, $dir);
 	        	$contents = $this->getNewCustomContents($dropdown_name, $dropdown, $selected_lang);
@@ -207,7 +214,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
     function getNewCustomContents($dropdown_name, $dropdown, $lang) {
     	$contents = return_custom_app_list_strings_file_contents($lang);
         $contents = str_replace("?>", '', $contents);
-		if(empty($contents))$contents = "<?php";
+		if(empty($contents)) {
+		    $contents = "<?php";
+		}
     	$contents = preg_replace($this->getPatternMatch($dropdown_name), "\n", $contents);
 	    $contents .= "\n\$GLOBALS['app_list_strings']['$dropdown_name']=" . var_export_helper($dropdown) . ";";
 	    return $contents;

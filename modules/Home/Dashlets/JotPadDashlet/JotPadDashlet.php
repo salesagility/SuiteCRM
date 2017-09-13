@@ -43,8 +43,8 @@ require_once('include/Dashlets/Dashlet.php');
 
 
 class JotPadDashlet extends Dashlet {
-    var $savedText; // users's saved text
-    var $height = '200'; // height of the pad
+    public $savedText; // users's saved text
+    public $height = '200'; // height of the pad
 
     /**
      * Constructor

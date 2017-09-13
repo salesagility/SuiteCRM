@@ -115,8 +115,7 @@ class UsersViewDetail extends ViewDetail
             && isset($sugar_config['lock_default_user_name'])
             && $sugar_config['lock_default_user_name']) {
             $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' =>"<input id='edit_button' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
-        }
-        elseif (is_admin($current_user)|| ($GLOBALS['current_user']->isAdminForModule('Users')&& !$this->bean->is_admin)
+        } elseif (is_admin($current_user)|| ($GLOBALS['current_user']->isAdminForModule('Users')&& !$this->bean->is_admin)
             || $_REQUEST['record'] == $current_user->id) {
             $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' id='edit_button' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
             if ((is_admin($current_user)|| $GLOBALS['current_user']->isAdminForModule('Users')

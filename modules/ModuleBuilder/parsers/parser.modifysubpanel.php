@@ -1,12 +1,11 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-    die ( 'Not A Valid Entry Point' ) ;
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 
@@ -54,12 +57,12 @@ require_once ('modules/ModuleBuilder/parsers/parser.modifylistview.php') ;
 
 class ParserModifySubPanel extends ParserModifyListView
 {
-    
-    var $listViewDefs = false ;
-    var $defaults = array ( ) ;
-    var $additional = array ( ) ;
-    var $available = array ( ) ;
-    var $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
+
+    public $listViewDefs = false ;
+    public $defaults = array () ;
+    public $additional = array () ;
+    public $available = array () ;
+    public $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
     
     function init ($module_name , $subPanelName)
     {
@@ -114,10 +117,12 @@ class ParserModifySubPanel extends ParserModifyListView
         $this->defaults = array ( ) ;
         foreach ( $this->listViewDefs as $key => $def )
         {
-            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0)
-                continue ;
-            if (! empty ( $def [ 'vname' ] ))
-                $def [ 'label' ] = $def [ 'vname' ] ;
+            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0) {
+                            continue ;
+            }
+            if (! empty ( $def [ 'vname' ] )) {
+                            $def [ 'label' ] = $def [ 'vname' ] ;
+            }
             $this->defaults [ $key ] = $def ;
         }
         return $this->defaults ;
@@ -144,11 +149,13 @@ class ParserModifySubPanel extends ParserModifyListView
             foreach ( $this->subPanelParentModule->field_defs as $key => $fieldDefinition )
             {
                 $fieldName = strtolower ( $key ) ;
-                if (! isset ( $lowerFieldList [ $fieldName ] )) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+                if (! isset ( $lowerFieldList [ $fieldName ] )) {
+                    // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
                 {
                     if ((empty ( $fieldDefinition [ 'source' ] ) || $fieldDefinition [ 'source' ] == 'db' || $fieldDefinition [ 'source' ] == 'custom_fields') && $fieldDefinition [ 'type' ] != 'id' && strcmp ( $fieldName, 'deleted' ) != 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) != false) || ! empty ( $def [ 'custom_type' ] ) && (empty ( $fieldDefinition [ 'dbType' ] ) || $fieldDefinition [ 'dbType' ] != 'id') && (empty ( $fieldDefinition [ 'dbtype' ] ) || $fieldDefinition [ 'dbtype' ] != 'id') || (! empty ( $fieldDefinition [ 'studio' ] ) && $fieldDefinition [ 'studio' ] == 'visible'))
                     {
                         $label = (isset ( $fieldDefinition [ 'vname' ] )) ? $fieldDefinition [ 'vname' ] : (isset ( $fieldDefinition [ 'label' ] ) ? $fieldDefinition [ 'label' ] : $fieldDefinition [ 'name' ]) ;
+                }
                         $this->availableFields [ $fieldName ] = array ( 'width' => '10' , 'label' => $label ) ;
                     }
                 }

@@ -2,7 +2,7 @@
 
 class directw {
 
-var $mpdf = null;
+    public $mpdf = null;
 
 function directw(&$mpdf) {
 	$this->mpdf = $mpdf;

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('service/v3_1/SugarWebServiceUtilv3_1.php');
 
@@ -463,41 +468,48 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
           return parent::checkSessionAndModuleAccess($session, $login_error_key, $module_name, $access_level, $module_access_level_error_key, $errorObject);
     }
 
+    /**
+     *
+     * @param SoapError $errorObject - This is an object of type SoapError
+     * @return bool
+     */
     public function checkOAuthAccess($errorObject)
     {
         require_once "include/SugarOAuthServer.php";
         try {
-	        $oauth = new SugarOAuthServer();
-	        $token = $oauth->authorizedToken();
-	        if(empty($token) || empty($token->assigned_user_id)) {
-	            return false;
-	        }
-        } catch(OAuthException $e) {
+            $oauth = new SugarOAuthServer();
+            $token = $oauth->authorizedToken();
+            if (empty($token) || empty($token->assigned_user_id)) {
+                return false;
+            }
+        } catch (OAuthException $e) {
             $GLOBALS['log']->debug("OAUTH Exception: $e");
             $errorObject->set_error('invalid_login');
-			$this->setFaultObject($errorObject);
+            $this->setFaultObject($errorObject);
+
             return false;
         }
 
-	    $user = new User();
-	    $user->retrieve($token->assigned_user_id);
-	    if(empty($user->id)) {
-	        return false;
-	    }
+        $user = new User();
+        $user->retrieve($token->assigned_user_id);
+        if (empty($user->id)) {
+            return false;
+        }
         global $current_user;
-		$current_user = $user;
-		ini_set("session.use_cookies", 0); // disable cookies to prevent session ID from going out
-		session_start();
-		session_regenerate_id();
-		$_SESSION['oauth'] = $oauth->authorization();
-		$_SESSION['avail_modules'] = $this->get_user_module_list($user);
-		// TODO: handle role
-		// handle session
-		$_SESSION['is_valid_session']= true;
-		$_SESSION['ip_address'] = query_client_ip();
-		$_SESSION['user_id'] = $current_user->id;
-		$_SESSION['type'] = 'user';
-		$_SESSION['authenticated_user_id'] = $current_user->id;
+        $current_user = $user;
+        // disable cookies to prevent session ID from going out
+        ini_set("session.use_cookies", 0);
+        session_start();
+        session_regenerate_id();
+        $_SESSION['oauth'] = $oauth->authorization();
+        $_SESSION['avail_modules'] = $this->get_user_module_list($user);
+        // handle session
+        $_SESSION['is_valid_session'] = true;
+        $_SESSION['ip_address'] = query_client_ip();
+        $_SESSION['user_id'] = $current_user->id;
+        $_SESSION['type'] = 'user';
+        $_SESSION['authenticated_user_id'] = $current_user->id;
+
         return session_id();
     }
 

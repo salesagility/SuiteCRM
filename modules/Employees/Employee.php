@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,77 +34,72 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // Employee is used to store customer information.
 class Employee extends Person {
 	// Stored fields
-	var $name = '';
-	var $id;
-	var $is_admin;
-	var $first_name;
-	var $last_name;
-	var $full_name;
-	var $user_name;
-	var $title;
-	var $description;
-	var $department;
-	var $reports_to_id;
-	var $reports_to_name;
-	var $phone_home;
-	var $phone_mobile;
-	var $phone_work;
-	var $phone_other;
-	var $phone_fax;
-	var $email1;
-	var $email2;
-	var $address_street;
-	var $address_city;
-	var $address_state;
-	var $address_postalcode;
-	var $address_country;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $status;
-	var $messenger_id;
-	var $messenger_type;
-	var $employee_status;
-	var $error_string;
+    public $name = '';
+    public $id;
+    public $is_admin;
+    public $first_name;
+    public $last_name;
+    public $full_name;
+    public $user_name;
+    public $title;
+    public $description;
+    public $department;
+    public $reports_to_id;
+    public $reports_to_name;
+    public $phone_home;
+    public $phone_mobile;
+    public $phone_work;
+    public $phone_other;
+    public $phone_fax;
+    public $email1;
+    public $email2;
+    public $address_street;
+    public $address_city;
+    public $address_state;
+    public $address_postalcode;
+    public $address_country;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $status;
+    public $messenger_id;
+    public $messenger_type;
+    public $employee_status;
+    public $error_string;
     public $person_id;
 
-	var $module_dir = "Employees";
+    public $module_dir = "Employees";
 
 
-	var $table_name = "users";
+    public $table_name = "users";
 
-	var $object_name = "Employee";
-	var $user_preferences;
+    public $object_name = "Employee";
+    public $user_preferences;
 
-	var $encodeFields = Array("first_name", "last_name", "description");
+    public $encodeFields = Array("first_name", "last_name", "description");
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('reports_to_name');
+    public $additional_column_fields = Array('reports_to_name');
 
 
 
-	var $new_schema = true;
+    public $new_schema = true;
 
 	function __construct() {
 		parent::__construct();
@@ -119,8 +114,7 @@ class Employee extends Person {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -149,8 +143,7 @@ class Employee extends Person {
 		if($row != null)
 		{
 			$this->reports_to_name = stripslashes($locale->getLocaleFormattedName($row['first_name'], $row['last_name']));
-		}
-		else
+		} else
 		{
 			$this->reports_to_name = '';
 		}
@@ -182,10 +175,12 @@ class Employee extends Person {
         $user_fields = parent::get_list_view_data();
 
 		// Copy over the reports_to_name
-		if ( isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type]) )
-            $user_fields['MESSENGER_TYPE'] = $GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type];
-		if ( isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status]) )
-            $user_fields['EMPLOYEE_STATUS'] = $GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status];
+		if ( isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type]) ) {
+		            $user_fields['MESSENGER_TYPE'] = $GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type];
+		}
+		if ( isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status]) ) {
+		            $user_fields['EMPLOYEE_STATUS'] = $GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status];
+		}
 		$user_fields['REPORTS_TO_NAME'] = $this->reports_to_name;
 
         return $user_fields;
@@ -209,15 +204,17 @@ class Employee extends Person {
 
 		$where_auto = " users.deleted = 0";
 
-		if($where != "")
-			$query .= " WHERE $where AND " . $where_auto;
-		else
-			$query .= " WHERE " . $where_auto;
+		if($where != "") {
+					$query .= " WHERE $where AND " . $where_auto;
+		} else {
+					$query .= " WHERE " . $where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY users.user_name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY users.user_name";
+		}
 
 		return $query;
 	}
@@ -264,7 +261,7 @@ class Employee extends Person {
         //create the filter for portal only users, as they should not be showing up in query results
         if(empty($where)){
             $where = ' users.portal_only = 0 ';
-        }else{
+        } else{
             $where .= ' and users.portal_only = 0 ';
         }
 
@@ -297,11 +294,11 @@ class Employee extends Person {
     }
 
     /**
-	 * Override the original save function,
-	 * for checking first is it same user as employee
-	 * and disable to save any employee data for others.
-	 * (admin user is an exception)
-	 *
+     * Override the original save function,
+     * for checking first is it same user as employee
+     * and disable to save any employee data for others.
+     * (admin user is an exception)
+     *
      * @param bool $check_notify
      * @return bool|string
      */
@@ -311,14 +308,15 @@ class Employee extends Person {
         if ($current_user->id) {
             if (!is_admin($current_user)) {
                 if ($this->id && $current_user->id != $this->id) {
-                	$GLOBALS['log']->security("{$current_user->name} tried to update {$this->name} record with out permission.");
+                    $GLOBALS['log']->security("{$current_user->name} tried to update {$this->name} record with out permission.");
                     $GLOBALS['log']->fatal("You can change only your own employee data.");
+
                     return false;
                 }
             }
         }
+
         return parent::save($check_notify);
     }
 }
 
-?>

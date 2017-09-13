@@ -19,9 +19,9 @@
 
 class CGIFLZW
 {
-	var $MAX_LZW_BITS;
-	var $Fresh, $CodeSize, $SetCodeSize, $MaxCode, $MaxCodeSize, $FirstCode, $OldCode;
-	var $ClearCode, $EndCode, $Next, $Vals, $Stack, $sp, $Buf, $CurBit, $LastBit, $Done, $LastByte;
+    public $MAX_LZW_BITS;
+    public $Fresh, $CodeSize, $SetCodeSize, $MaxCode, $MaxCodeSize, $FirstCode, $OldCode;
+    public $ClearCode, $EndCode, $Next, $Vals, $Stack, $sp, $Buf, $CurBit, $LastBit, $Done, $LastByte;
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -234,8 +234,8 @@ class CGIFLZW
 
 class CGIFCOLORTABLE
 {
-	var $m_nColors;
-	var $m_arColors;
+    public $m_nColors;
+    public $m_arColors;
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -313,16 +313,16 @@ class CGIFCOLORTABLE
 
 class CGIFFILEHEADER
 {
-	var $m_lpVer;
-	var $m_nWidth;
-	var $m_nHeight;
-	var $m_bGlobalClr;
-	var $m_nColorRes;
-	var $m_bSorted;
-	var $m_nTableSize;
-	var $m_nBgColor;
-	var $m_nPixelRatio;
-	var $m_colorTable;
+    public $m_lpVer;
+    public $m_nWidth;
+    public $m_nHeight;
+    public $m_bGlobalClr;
+    public $m_nColorRes;
+    public $m_bSorted;
+    public $m_nTableSize;
+    public $m_nBgColor;
+    public $m_nPixelRatio;
+    public $m_colorTable;
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -390,15 +390,15 @@ class CGIFFILEHEADER
 
 class CGIFIMAGEHEADER
 {
-	var $m_nLeft;
-	var $m_nTop;
-	var $m_nWidth;
-	var $m_nHeight;
-	var $m_bLocalClr;
-	var $m_bInterlace;
-	var $m_bSorted;
-	var $m_nTableSize;
-	var $m_colorTable;
+	public $m_nLeft;
+    public $m_nTop;
+    public $m_nWidth;
+    public $m_nHeight;
+    public $m_bLocalClr;
+    public $m_bInterlace;
+    public $m_bSorted;
+    public $m_nTableSize;
+    public $m_colorTable;
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -461,15 +461,15 @@ class CGIFIMAGEHEADER
 
 class CGIFIMAGE
 {
-	var $m_disp;
-	var $m_bUser;
-	var $m_bTrans;
-	var $m_nDelay;
-	var $m_nTrans;
-	var $m_lpComm;
-	var $m_gih;
-	var $m_data;
-	var $m_lzw;
+    public $m_disp;
+    public $m_bUser;
+    public $m_bTrans;
+    public $m_nDelay;
+    public $m_nTrans;
+    public $m_lpComm;
+    public $m_gih;
+    public $m_data;
+    public $m_lzw;
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -639,10 +639,10 @@ class CGIFIMAGE
 
 class CGIF
 {
-	var $m_gfh;
-	var $m_lpData;
-	var $m_img;
-	var $m_bLoaded;
+    public $m_gfh;
+    public $m_lpData;
+    public $m_img;
+    public $m_bLoaded;
 
 	///////////////////////////////////////////////////////////////////////////
 

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class CalendarUtils {
 
@@ -198,48 +201,52 @@ class CalendarUtils {
 			return $arr;
 	}
 
-	/**
-	 * Get array of repeat data
-	 * @param SugarBean $bean
-	 * @return array
-	 */
-	 static function get_sendback_repeat_data(SugarBean $bean){
-	 	if ($bean->module_dir == "Meetings" || $bean->module_dir == "Calls") {
-	 		if(!empty($bean->repeat_parent_id) || (!empty($bean->repeat_type) && empty($_REQUEST['edit_all_recurrences']))){
-				if(!empty($bean->repeat_parent_id))
-					$repeat_parent_id = $bean->repeat_parent_id;
-				else
-					$repeat_parent_id = $bean->id;
-	 			return array("repeat_parent_id" => $repeat_parent_id);
-	 		}
+    /**
+     * Get array of repeat data
+     * @param SugarBean $bean
+     * @return array
+     */
+    static function get_sendback_repeat_data(SugarBean $bean)
+    {
+        if ($bean->module_dir == "Meetings" || $bean->module_dir == "Calls") {
+            if (!empty($bean->repeat_parent_id) || (!empty($bean->repeat_type) && empty($_REQUEST['edit_all_recurrences']))) {
+                if (!empty($bean->repeat_parent_id)) {
+                    $repeat_parent_id = $bean->repeat_parent_id;
+                } else {
+                    $repeat_parent_id = $bean->id;
+                }
 
-	 		$arr = array();
-	 		if(!empty($bean->repeat_type)){
-	 			$arr = array(
-	 				'repeat_type' => $bean->repeat_type,
-	 				'repeat_interval' => $bean->repeat_interval,
-	 				'repeat_dow' => $bean->repeat_dow,
-	 				'repeat_until' => $bean->repeat_until,
-	 				'repeat_count' => $bean->repeat_count,
-	 			);
-	 		}
+                return array("repeat_parent_id" => $repeat_parent_id);
+            }
 
-	 		// TODO CHECK DATETIME VARIABLE
-	 		if(!empty($_REQUEST['date_start'])){
-	 			$date_start = $_REQUEST['date_start'];
-	 		}else
-	 			$date_start = $bean->date_start;
+            $arr = array();
+            if (!empty($bean->repeat_type)) {
+                $arr = array(
+                    'repeat_type' => $bean->repeat_type,
+                    'repeat_interval' => $bean->repeat_interval,
+                    'repeat_dow' => $bean->repeat_dow,
+                    'repeat_until' => $bean->repeat_until,
+                    'repeat_count' => $bean->repeat_count,
+                );
+            }
 
-	 		$date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format() ,$date_start);
-		 	$arr = array_merge($arr,array(
-		 		'current_dow' => $date->format("w"),
-		 		'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
-		 	));
+            if (!empty($_REQUEST['date_start'])) {
+                $date_start = $_REQUEST['date_start'];
+            } else {
+                $date_start = $bean->date_start;
+            }
 
-		 	return $arr;
-		}
-	 	return false;
-	 }
+            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $date_start);
+            $arr = array_merge($arr, array(
+                'current_dow' => $date->format("w"),
+                'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
+            ));
+
+            return $arr;
+        }
+
+        return false;
+    }
 
 	/**
 	 * Build array of datetimes for recurring meetings
@@ -401,47 +408,50 @@ class CalendarUtils {
 
 		$arr = array();
 		$i = 0;
-		foreach($time_arr as $date_start){
-			$clone = $bean;	// we don't use clone keyword cause not necessary
-			$clone->id = "";
-			$clone->date_start = $date_start;
-			// TODO CHECK DATETIME VARIABLE
-			$date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$date_start);
-			$date = $date->get("+{$bean->duration_hours} Hours")->get("+{$bean->duration_minutes} Minutes");
-			$date_end = $date->format($GLOBALS['timedate']->get_date_time_format());
-			$clone->date_end = $date_end;
-			$clone->recurring_source = "Sugar";
-			$clone->repeat_parent_id = $id;
-			$clone->update_vcal = false;
-			$clone->save(false);
+        foreach ($time_arr as $date_start) {
+            // we don't use clone keyword cause not necessary
+            $clone = $bean;
+            $clone->id = "";
+            $clone->date_start = $date_start;
+            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $date_start);
+            $date = $date->get("+{$bean->duration_hours} Hours")->get("+{$bean->duration_minutes} Minutes");
+            $date_end = $date->format($GLOBALS['timedate']->get_date_time_format());
+            $clone->date_end = $date_end;
+            $clone->recurring_source = "Sugar";
+            $clone->repeat_parent_id = $id;
+            $clone->update_vcal = false;
+            $clone->save(false);
 
-			if($clone->id){
-				foreach($users_rel_arr as $user_id){
-					if($users_filled)
-						$qu_users .= ",".PHP_EOL;
-					$qu_users .= "('".create_guid()."','{$user_id}','{$clone->id}','{$date_modified}')";
-					$users_filled = true;
-				}
-				foreach($contacts_rel_arr as $contact_id){
-					if($contacts_filled)
-						$qu_contacts .= ",".PHP_EOL;
-					$qu_contacts .= "('".create_guid()."','{$contact_id}','{$clone->id}','{$date_modified}')";
-					$contacts_filled = true;
-				}
-				foreach($leads_rel_arr as $lead_id){
-					if($leads_filled)
-						$qu_leads .= ",".PHP_EOL;
-					$qu_leads .= "('".create_guid()."','{$lead_id}','{$clone->id}','{$date_modified}')";
-					$leads_filled = true;
-				}
-				if($i < 44){
-					$clone->date_start = $date_start;
-					$clone->date_end = $date_end;
-					$arr[] = array_merge(array('id' => $clone->id),CalendarUtils::get_time_data($clone));
-				}
-				$i++;
-			}
-		}
+            if ($clone->id) {
+                foreach ($users_rel_arr as $user_id) {
+                    if ($users_filled) {
+                        $qu_users .= "," . PHP_EOL;
+                    }
+                    $qu_users .= "('" . create_guid() . "','{$user_id}','{$clone->id}','{$date_modified}')";
+                    $users_filled = true;
+                }
+                foreach ($contacts_rel_arr as $contact_id) {
+                    if ($contacts_filled) {
+                        $qu_contacts .= "," . PHP_EOL;
+                    }
+                    $qu_contacts .= "('" . create_guid() . "','{$contact_id}','{$clone->id}','{$date_modified}')";
+                    $contacts_filled = true;
+                }
+                foreach ($leads_rel_arr as $lead_id) {
+                    if ($leads_filled) {
+                        $qu_leads .= "," . PHP_EOL;
+                    }
+                    $qu_leads .= "('" . create_guid() . "','{$lead_id}','{$clone->id}','{$date_modified}')";
+                    $leads_filled = true;
+                }
+                if ($i < 44) {
+                    $clone->date_start = $date_start;
+                    $clone->date_end = $date_end;
+                    $arr[] = array_merge(array('id' => $clone->id), CalendarUtils::get_time_data($clone));
+                }
+                $i++;
+            }
+        }
 		
 		if ($users_filled) {
 			$db->query($qu_users);

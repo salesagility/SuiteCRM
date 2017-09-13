@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Contacts/ContactFormBase.php');
 
@@ -64,36 +67,30 @@ class Popup_Picker
 	/**
 	 *
 	 */
-	function process_page_for_address()
-	{
-		global $theme;
-		global $mod_strings;
-		global $app_strings;
-		global $currentModule;
-		global $sugar_version, $sugar_config;
+    function process_page_for_address()
+    {
+        global $theme, $mod_strings, $app_strings, $currentModule;
 
-		$output_html = '';
-		$where = '';
+        $output_html = '';
+        $where = '';
 
-		$where = $this->_get_where_clause();
+        $where = $this->_get_where_clause();
 
 
-		$formBase = new ContactFormBase();
-		if(isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save')
-		{
-			$formBase->handleSave('', false, true);
-		}
+        $formBase = new ContactFormBase();
+        if (isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save') {
+            $formBase->handleSave('', false, true);
+        }
 
-		$first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
-		$last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
-		$account_name = empty($_REQUEST['account_name']) ? '' : $_REQUEST['account_name'];
-		$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
-		$hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
-		$lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
-		$lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
-		$lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
+        $first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
+        $last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
+        $account_name = empty($_REQUEST['account_name']) ? '' : $_REQUEST['account_name'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
+        $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
+        $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
+        $lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
 
-		// TODO: cleanup the construction of $addform
 		$formbody = $formBase->getFormBody('','','EmailEditView');
 		$addform = '<table><tr><td nowrap="nowrap" valign="top">'
 			.str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
@@ -61,7 +60,8 @@ class InboundEmail extends SugarBean
 {
     // module specific
     public $conn;
-    public $purifier; // HTMLPurifier object placeholder
+    // HTMLPurifier object placeholder
+    public $purifier;
     public $email;
 
     // fields
@@ -92,7 +92,8 @@ class InboundEmail extends SugarBean
 
     // email 2.0
     public $pop3socket;
-    public $outboundInstance; // id to outbound_email instance
+    // id to outbound_email instance
+    public $outboundInstance;
     public $autoImport;
     public $iconFlagged = "F";
     public $iconDraft = "D";
@@ -131,7 +132,8 @@ class InboundEmail extends SugarBean
         5 => 'OTHER'
     );
     // object attributes
-    public $compoundMessageId; // concatenation of messageID and deliveredToEmail
+    // concatenation of messageID and deliveredToEmail
+    public $compoundMessageId;
     public $serverConnectString;
     public $disable_row_level_security = true;
     public $InboundEmailCachePath;
@@ -153,7 +155,8 @@ class InboundEmail extends SugarBean
         'port' => 'port',
     );
     public $imageTypes = array("JPG", "JPEG", "GIF", "PNG");
-    public $inlineImages = array();  // temporary space to store ID of inlined images
+    // temporary space to store ID of inlined images
+    public $inlineImages = array();
     public $defaultEmailNumAutoreplies24Hours = 10;
     public $maxEmailNumAutoreplies24Hours = 10;
     // custom ListView attributes
@@ -433,7 +436,10 @@ class InboundEmail extends SugarBean
                 return -1;
             }
         });
-        if(!$sortOrder) array_reverse($emailHeaders); // Make it ASC order
+        if(!$sortOrder) {
+            array_reverse($emailHeaders);
+        }
+        // Make it ASC order
 
 
         return array(
@@ -5546,15 +5552,15 @@ class InboundEmail extends SugarBean
 
     /**
      * returns exactly 1 id match. if more than one, than returns false
-     * @param    $emailName        the subject of the email to match
-     * @param    $tableName        the table of the matching bean type
+     * @param string $emailName subject of the email to match
+     * @param string $tableName table of the matching bean type
+     * @return string
      */
     public function getSingularRelatedId($emailName, $tableName)
     {
         $repStrings = array('RE:', 'Re:', 're:');
         $preppedName = str_replace($repStrings, '', trim($emailName));
 
-        //TODO add team security to this query
         $q = 'SELECT count(id) AS c FROM ' . $tableName . ' WHERE deleted = 0 AND name LIKE \'%' . $preppedName . '%\'';
         $r = $this->db->query($q, true);
         $a = $this->db->fetchByAssoc($r);
@@ -5747,8 +5753,7 @@ class InboundEmail extends SugarBean
     }
 
     /**
-     * finds emails tagged "//UNSEEN" on mailserver and "SINCE: [date]" if that
-     * option is set
+     * finds emails tagged "//UNSEEN" on mailserver and "SINCE: [date]" if that option is set
      *
      * @return array Array of messageNumbers (mail server's internal keys)
      */
@@ -5756,8 +5761,8 @@ class InboundEmail extends SugarBean
     {
         $storedOptions = unserialize(base64_decode($this->stored_options));
 
-        //TODO figure out if the since date is UDT
-        if ($storedOptions['only_since']) {// POP3 does not support Unseen flags
+        // POP3 does not support Unseen flags
+        if ($storedOptions['only_since']) {
             if (!isset($storedOptions['only_since_last']) && !empty($storedOptions['only_since_last'])) {
                 $q = 'SELECT last_run FROM schedulers WHERE job = \'function::pollMonitoredInboxes\'';
                 $r = $this->db->query($q, true);
@@ -6396,8 +6401,7 @@ class InboundEmail extends SugarBean
                 $_REQUEST['team_id'] = $sugarFolder->team_id;
                 $_REQUEST['team_set_id'] = $sugarFolder->team_set_id;
             } else {
-                // TODO - set team_id, team_set for new UI
-            } // else
+            }
 
             $exUids = explode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
 

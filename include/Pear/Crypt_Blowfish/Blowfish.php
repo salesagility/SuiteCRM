@@ -54,7 +54,7 @@ class Crypt_Blowfish
      * @var array
      * @access private
      */
-    var $_P = array();
+    public $_P = array();
 
 
     /**
@@ -63,7 +63,7 @@ class Crypt_Blowfish
      * @var array
      * @access private
      */
-    var $_S = array();
+    public $_S = array();
 
     /**
      * Mcrypt td resource
@@ -71,7 +71,7 @@ class Crypt_Blowfish
      * @var resource
      * @access private
      */
-    var $_td = null;
+    public $_td = null;
 
     /**
      * Initialization vector
@@ -79,7 +79,7 @@ class Crypt_Blowfish
      * @var string
      * @access private
      */
-    var $_iv = null;
+    public $_iv = null;
 
 
     /**

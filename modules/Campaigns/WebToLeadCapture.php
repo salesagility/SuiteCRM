@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/formbase.php');
 require_once('modules/Leads/LeadFormBase.php');
@@ -157,8 +161,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 		        $lead->campaigns->add($camplog->id);
                 if(!empty($GLOBALS['check_notify'])) {
                     $lead->save($GLOBALS['check_notify']);
-                }
-                else {
+                } else {
                     $lead->save(FALSE);
                 }
             }
@@ -188,14 +191,14 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 				$get_and_post = array_merge($_GET, $_POST);
 				foreach($get_and_post as $param => $value) {
 
-					if($param == 'redirect_url' && $param == 'submit')
-						continue;
+					if($param == 'redirect_url' && $param == 'submit') {
+											continue;
+					}
 					
 					if($first_iteration){
 						$first_iteration = false;
 						$query_string .= $first_char;
-					}
-					else{
+					} else{
 						$query_string .= "&";
 					}
 					$query_string .= "{$param}=".urlencode($value);
@@ -203,8 +206,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 				if(empty($lead)) {
 					if($first_iteration){
 						$query_string .= $first_char;
-					}
-					else{
+					} else{
 						$query_string .= "&";
 					}
 					$query_string .= "error=1";
@@ -229,23 +231,20 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     				}
     				echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
     				echo '</body></html>';
-    			}
-				else{
+    			} else{
     				$header_URL = "Location: {$redirect_url}";
 
 					SugarApplication::headerRedirect($header_URL);
 
     				die();
 			    }
-			}
-			else{
+			} else{
 				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
 			}
 			sugar_cleanup();
 			// die to keep code from running into redirect case below
 			die();
-	    }
-	   else{
+	    } else{
 	  	  echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 	  }
 }
@@ -256,8 +255,7 @@ if (!empty($_POST['redirect'])) {
     	echo '<form name="redirect" action="' .$_POST['redirect']. '" method="GET">';
     	echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
     	echo '</body></html>';
-    }
-    else{
+    } else{
     	$header_URL = "Location: {$_POST['redirect']}";
 		SugarApplication::headerRedirect($header_URL);
     	die();

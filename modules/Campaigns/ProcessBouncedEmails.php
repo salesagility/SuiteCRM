@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 //find all mailboxes of type bounce.
 
 /**
@@ -55,8 +54,9 @@ function retrieveErrorReportAttachment($email)
     $contents = "";
     $query = "SELECT description FROM notes WHERE file_mime_type = 'messsage/rfc822' AND parent_type='Emails' AND parent_id = '".$email->id."' AND deleted=0";
     $rs = $GLOBALS['db']->query($query);
-    while ($row = $GLOBALS['db']->fetchByAssoc($rs)) 
-		$contents .= $row['description'];
+    while ($row = $GLOBALS['db']->fetchByAssoc($rs)) {
+    		$contents .= $row['description'];
+    }
 
     return $contents;
 }
@@ -89,9 +89,9 @@ function createBouncedCampaignLogEntry($row,$email, $email_description)
     {
         $bounce->activity_type='invalid email';
         markEmailAddressInvalid($email);
+    } else {
+            $bounce->activity_type='send error';
     }
-    else 
-        $bounce->activity_type='send error';
         
     $return_id=$bounce->save();
     return $return_id;
@@ -104,8 +104,9 @@ function createBouncedCampaignLogEntry($row,$email, $email_description)
  */
 function markEmailAddressInvalid($email_address)
 {
-    if(empty($email_address))
-        return;
+    if(empty($email_address)) {
+            return;
+    }
     $sea = new SugarEmailAddress();
     $rs = $sea->retrieve_by_string_fields( array('email_address_caps' => trim(strtoupper($email_address))) );
     if($rs != null)
@@ -149,8 +150,7 @@ function checkBouncedEmailForIdentifier($email_description)
         $identifiers = preg_split('/X-CampTrackID: /',$matches[0],-1,PREG_SPLIT_NO_EMPTY);
         $found = TRUE;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");  
-    }
-    else if( preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/',$email_description, $matches) )
+    } else if( preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/',$email_description, $matches) )
     {
         $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/',$matches[0],-1,PREG_SPLIT_NO_EMPTY);
         $found = TRUE;
@@ -207,32 +207,27 @@ function campaign_process_bounced_emails(&$email, &$email_header)
 					{
 						$return_id = createBouncedCampaignLogEntry($row, $email, $email_description);	
 						return TRUE;
-					}				
-					else 
+					} else 
 					{
 					    $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
 					    return FALSE;
 					}
-				} 
-				else 
+				} else 
 				{
 				    $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
 					return FALSE;
 				}			
-    		} 
-    		else 
+    		} else 
     		{
     			$GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
     			return FALSE;
     		}
-    	}  
-    	else 
+    	} else 
     	{
     	    $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");	
     		return FALSE;	
       	}
-  } 
-  else 
+  } else 
   {
 	$GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
 	return FALSE;

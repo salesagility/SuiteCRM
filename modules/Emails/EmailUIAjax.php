@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry){
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 /**
  * handle requested subscriptions
@@ -234,8 +233,9 @@ function handleSubs($subs, $email, $json) {
         {
             $overideAccount = $oe->getUsersMailerForSystemOverride($current_user->id);
             //If the user override account has not been created yet, create it for the user.
-            if($overideAccount == null)
-                $overideAccount = $oe->createUserSystemOverrideAccount($current_user->id);
+            if($overideAccount == null) {
+                            $overideAccount = $oe->createUserSystemOverrideAccount($current_user->id);
+            }
 
 		    $out['errorArray'] = array($overideAccount->id => $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS']);
         }
@@ -280,39 +280,39 @@ function handleSubs($subs, $email, $json) {
             die();
         }
     	break;
-    case "getTemplateAttachments":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+      case 'getTemplateAttachments':
+          $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
+          if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+              global $db;
 
+              $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
+              $order = '';
+              $seed = new Note();
+              $fullList = $seed->get_full_list($order, $where, '');
+              $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
-            $where = "parent_id='{$_REQUEST['parent_id']}'";
-            $order = "";
-            $seed = new Note();
-            $fullList = $seed->get_full_list($order, $where, '');
-            $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
+              $js_fields_arr = array();
 
-            $js_fields_arr = array();
+              $i = 1; // js doesn't like 0 index?
+              if (!empty($fullList)) {
+                  foreach ($fullList as $note) {
+                      $js_fields_arr[$i] = array();
 
-            $i=1; // js doesn't like 0 index?
-            if (!empty($fullList)) {
-                foreach($fullList as $note) {
-                    $js_fields_arr[$i] = array();
+                      foreach ($all_fields as $field) {
+                          if (isset($note->$field)) {
+                              $note->$field = from_html($note->$field);
+                              $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
+                              $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
+                              $js_fields_arr[$i][$field] = addslashes($note->$field);
+                          }
+                      }
+                      $i++;
+                  }
+              }
 
-                    foreach($all_fields as $field) {
-                        if(isset($note->$field)) {
-                            $note->$field = from_html($note->$field);
-                            $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
-                            $note->$field = preg_replace('/\n/','<BR>',$note->$field);
-                            $js_fields_arr[$i][$field] = addslashes($note->$field);
-                        }
-                    }
-                    $i++;
-                }
-            }
-
-            $out = $json->encode($js_fields_arr);
-            echo $out;
-        }
+              $out = $json->encode($js_fields_arr);
+              echo $out;
+          }
         break;
         ////    END COMPOSE REPLY FORWARD
         ///////////////////////////////////////////////////////////////////////////
@@ -472,9 +472,9 @@ function handleSubs($subs, $email, $json) {
             {
                 $out = trim($json->encode($ret, false));
                 echo $out;
+            } else {
+                            echo $ret['html'];
             }
-            else
-                echo $ret['html'];
 
     	}
     break;
@@ -987,8 +987,7 @@ eoq;
 
             $out = handleSubs($subs, $email, $json);
 
-        }
-        elseif(empty($_REQUEST['subscriptions'])) {
+        } elseif(empty($_REQUEST['subscriptions'])) {
             $email->et->folder->clearSubscriptions();
         } else {
             $GLOBALS['log']->fatal('Incorrect request for update subscriptions');
@@ -1209,8 +1208,7 @@ eoq;
             if( count($affectedInboundAccounts) > 0 && !$confirmedDelete)
             {
                 $results = array('is_error' => true, 'error_message' => $app_strings['LBL_EMAIL_REMOVE_SMTP_WARNING'] , 'outbound_email' => $_REQUEST['outbound_email']);
-            }
-            else
+            } else
             {
                 $oe->delete();
                 $results = array('is_error' => false, 'error_message' => '');
@@ -1222,8 +1220,7 @@ eoq;
             echo $out;
             ob_end_flush();
             die();
-        }
-        else
+        } else
         {
             echo "NOOP";
         }
@@ -1376,8 +1373,9 @@ eoq;
                         $ie->$k = $retService;
                     }
 
-                    if (isset($ie->$k))
-                    $ret[$k] = $ie->$k;
+                    if (isset($ie->$k)) {
+                                        $ret[$k] = $ie->$k;
+                    }
                 }
 
                 $out = $json->encode($ret);

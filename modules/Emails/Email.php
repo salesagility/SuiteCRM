@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -1517,7 +1518,6 @@ class Email extends Basic
 
     function linkEmailToAddress($id, $type)
     {
-        // TODO: make this update?
         $q1 = "SELECT * FROM emails_email_addr_rel WHERE email_id = '{$this->id}' AND email_address_id = '{$id}' AND address_type = '{$type}' AND deleted = 0";
         $r1 = $this->db->query($q1);
         $a1 = $this->db->fetchByAssoc($r1);
@@ -3073,7 +3073,6 @@ class Email extends Basic
             }
         }
 
-        //todo this  isset( $app_list_strings['dom_email_status'][$this->status]) is hack for 3261.
         if (!empty($this->status) && isset($app_list_strings['dom_email_status'][$this->status])) {
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
@@ -3392,9 +3391,11 @@ class Email extends Basic
         //If we are explicitly looking for attachments.  Do not use a distinct query as the to_addr is defined
         //as a text which equals clob in oracle and the distinct query can not be executed correctly.
         $addDistinctKeyword = "";
-        if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 1) //1 indicates yes
+        if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 1) {
+            //1 indicates yes
         {
             $query['where'] .= " AND EXISTS ( SELECT id FROM notes n WHERE n.parent_id = emails.id AND n.deleted = 0 AND n.filename is not null )";
+        }
         } else {
             if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 2) {
                 $query['where'] .= " AND NOT EXISTS ( SELECT id FROM notes n WHERE n.parent_id = emails.id AND n.deleted = 0 AND n.filename is not null )";
@@ -3837,10 +3838,8 @@ eoq;
     }
 
     /**
-     * Bugs 50972, 50973
      * Sets the field def for a field to allow null values
      *
-     * @todo Consider moving to SugarBean to allow other models to set fields to NULL
      * @param string $field The field name to modify
      * @return void
      */

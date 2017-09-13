@@ -55,7 +55,7 @@ class ImportViewLast extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_5_TITLE';
 
-    var $lvf;
+    public $lvf;
 
  	/**
      * @see SugarView::display()

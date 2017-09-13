@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -484,8 +484,7 @@ class SugarBean
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -699,20 +698,23 @@ class SugarBean
                             } elseif (isset($rel_def[$key])) {
                                 $toInsert[$key] = $rel_def[$key];
                             }
-                            //todo specify defaults if meta not defined.
                         }
 
 
                         $column_list = implode(",", array_keys($toInsert));
                         $value_list = "'" . implode("','", array_values($toInsert)) . "'";
 
-                        //create the record. todo add error check.
+                        if ($column_list === '') {
+                            $GLOBALS['log']->error('No relationships meta set for ' . $module_dir . ', column_list = ' . $column_list);
+                        } elseif ($value_list === '') {
+                            $GLOBALS['log']->error('No relationships meta set for ' . $module_dir . ', value_list = ' . $value_list);
+                        }
                         $insert_string = "INSERT into relationships (" . $column_list . ") values (" . $value_list . ")";
                         $db->query($insert_string, true);
                     }
                 }
             } else {
-                $GLOBALS['log']->info('No relationships meta set for '.$module_dir);
+                $GLOBALS['log']->info('No relationships meta set for ' . $module_dir);
             }
         }
     }
@@ -1957,7 +1959,6 @@ class SugarBean
      *
      * @param bool $check_notify Optional, default false, if set to true assignee of the record is notified via email.
      * @return string
-     * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
     {
@@ -2402,8 +2403,6 @@ class SugarBean
 
     /**
      * Handle the preset fields listed in the fixed relationship_fields array hardcoded into the OOB beans
-     *
-     * TODO: remove this mechanism and replace with mechanism exclusively based on the vardefs
      *
      * @api
      * @see save_relationship_changes
@@ -3683,7 +3682,6 @@ class SugarBean
         $next_offset = $row_offset + $max_per_page;
 
         $class = get_class($this);
-        //FIXME: Bug? we should remove the magic number -99
         //use -99 to return all
         $index = $row_offset;
         while ($max_per_page == -99 || ($index < $row_offset + $max_per_page)) {
@@ -4117,7 +4115,6 @@ class SugarBean
      * Sets value from fetched row into the bean.
      *
      * @param array $row Fetched row
-     * @todo loop through vardefs instead
      * @internal runs into an issue when populating from field_defs for users - corrupts user prefs
      *
      * Internal function, do not override.
@@ -5122,8 +5119,7 @@ class SugarBean
                 elseif (((!empty($value['type']) && ($value['type'] == 'enum' || $value['type'] == 'radioenum'))) && empty($value['function'])) {
                     if (!empty($value['options']) && !empty($app_list_strings[$value['options']][$this->$field])) {
                         $return_array[$cache[$field]] = $app_list_strings[$value['options']][$this->$field];
-                    }
-                    elseif (!empty($value['options']) && !empty($mod_strings[$value['options']][$this->$field])) {
+                    } elseif (!empty($value['options']) && !empty($mod_strings[$value['options']][$this->$field])) {
                         $return_array[$cache[$field]] = $mod_strings[$value['options']][$this->$field];
                     } else {
                         $return_array[$cache[$field]] = $this->$field;

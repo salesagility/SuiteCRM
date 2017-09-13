@@ -124,9 +124,6 @@ class ProjectTest extends PHPUnit_Framework_TestCase {
 
 	}
 
-    /**
-     * @todo: NEEDS FIXING!
-     */
 	public function testget_list_view_data()
 	{
         /*
@@ -186,4 +183,3 @@ class ProjectTest extends PHPUnit_Framework_TestCase {
 	}
 
 }
-?>

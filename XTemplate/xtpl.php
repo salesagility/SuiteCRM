@@ -124,27 +124,27 @@ class XTemplate {
 
 /***[ variables ]***********************************************************/
 
-var $filecontents="";								/* raw contents of template file */
-var $blocks=array();								/* unparsed blocks */
-var $parsed_blocks=array();					/* parsed blocks */
-var $block_parse_order=array();			/* block parsing order for recursive parsing (sometimes reverse:) */
-var $sub_blocks=array();						/* store sub-block names for fast resetting */
-var $VARS=array();									/* variables array */
-var $alternate_include_directory = "";
+    public $filecontents = "";                                /* raw contents of template file */
+    public $blocks = array();                                /* unparsed blocks */
+    public $parsed_blocks = array();                    /* parsed blocks */
+    public $block_parse_order = array();            /* block parsing order for recursive parsing (sometimes reverse:) */
+    public $sub_blocks = array();                        /* store sub-block names for fast resetting */
+    public $VARS = array();                                    /* variables array */
+    public $alternate_include_directory = "";
 
-var $file_delim="/\{FILE\s*\"([^\"]+)\"\s*\}/m";  /* regexp for file includes */
-var $block_start_delim="<!-- ";			/* block start delimiter */
-var $block_end_delim="-->";					/* block end delimiter */
-var $block_start_word="BEGIN:";			/* block start word */
-var $block_end_word="END:";					/* block end word */
+    public $file_delim = "/\{FILE\s*\"([^\"]+)\"\s*\}/m";  /* regexp for file includes */
+    public $block_start_delim = "<!-- ";            /* block start delimiter */
+    public $block_end_delim = "-->";                    /* block end delimiter */
+    public $block_start_word = "BEGIN:";            /* block start word */
+    public $block_end_word = "END:";                    /* block end word */
 
-/* this makes the delimiters look like: <!-- BEGIN: block_name --> if you use my syntax. */
+    /* this makes the delimiters look like: <!-- BEGIN: block_name --> if you use my syntax. */
 
-var $NULL_STRING=array(""=>"");				/* null string for unassigned vars */
-var $NULL_BLOCK=array(""=>"");	/* null string for unassigned blocks */
-var $mainblock="";
-var $ERROR="";
-var $AUTORESET=1;										/* auto-reset sub blocks */
+    public $NULL_STRING = array("" => "");                /* null string for unassigned vars */
+    public $NULL_BLOCK = array("" => "");    /* null string for unassigned blocks */
+    public $mainblock = "";
+    public $ERROR = "";
+    public $AUTORESET = 1;                                        /* auto-reset sub blocks */
 
 /***[ constructor ]*********************************************************/
 
@@ -580,5 +580,3 @@ function r_getfile($file) {
 }
 
 } /* end of XTemplate class. */
-
-?>

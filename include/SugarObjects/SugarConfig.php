@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class SugarConfig
 {
-    var $_cached_values = array();
+    public $_cached_values = array();
 
     static function getInstance() {
         static $instance = null;

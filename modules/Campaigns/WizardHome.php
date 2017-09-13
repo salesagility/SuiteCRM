@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,21 +34,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /************** general UI Stuff *************/
-
-
 require_once('modules/Campaigns/utils.php');
 
 
@@ -74,7 +68,7 @@ global $current_user;
 //account for use within wizards
 if($focus->campaign_type == 'NewsLetter'){
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_NEWSLETTER_WIZARD_START_TITLE'].$focus->name), true, false);
-}else{
+} else{
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_CAMPAIGN_WIZARD_START_TITLE'].$focus->name), true, false);
 }
 
@@ -102,10 +96,18 @@ global $currentModule;
         $ss->assign("MSG_SCRIPT",$confirm_msg);
     }
     
-    if (isset($_REQUEST['return_module'])) $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
-    if (isset($_REQUEST['return_action'])) $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
-    if (isset($_REQUEST['return_id'])) $ss->assign("RETURN_ID", $_REQUEST['return_id']);
-    if (isset($_REQUEST['record'])) $ss->assign("ID", $_REQUEST['record']);    
+    if (isset($_REQUEST['return_module'])) {
+        $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
+    }
+    if (isset($_REQUEST['return_action'])) {
+        $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+    }
+    if (isset($_REQUEST['return_id'])) {
+        $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+    }
+    if (isset($_REQUEST['record'])) {
+        $ss->assign("ID", $_REQUEST['record']);
+    }
     // handle Create $module then Cancel
     if (empty($_REQUEST['return_id'])) {
         $ss->assign("RETURN_ACTION", 'index');
@@ -146,10 +148,10 @@ global $currentModule;
     if($focus->campaign_type == 'NewsLetter'){
         $ss->assign('NAV_ITEMS',create_wiz_menu_items('newsletter',$mrkt_string,$camp_url,$summ_url ));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
-    }elseif($focus->campaign_type == 'Email'){
+    } elseif($focus->campaign_type == 'Email'){
         $ss->assign('NAV_ITEMS',create_wiz_menu_items('email',$mrkt_string,$camp_url,$summ_url ));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
-     }else{
+     } else{
         $ss->assign('NAV_ITEMS',create_wiz_menu_items('general',$mrkt_string,$camp_url,$summ_url ));
     }    
     
@@ -183,14 +185,13 @@ global $currentModule;
         $marketing_id = getMarketingId();
         if(!$marketing_id && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'WizardHome') {
             $header_URL = "Location: index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" . $campaign_id;
-        }
-        else {
+        } else {
             $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
         }
         SugarApplication::headerRedirect($header_URL);
     }
     
-}else{
+} else{
     //there is no record to retrieve, so ask which type of campaign wizard to launch
 /*    $header_URL = "Location: index.php?module=Campaigns&action=index";
     $GLOBALS['log']->debug("about to post header URL of: $header_URL");
@@ -364,7 +365,7 @@ function create_marketing_summary  ($focus){
     
              if( $colorclass== "class='evenListRowS1'"){
                     $colorclass= "class='oddListRowS1'";
-                }else{ 
+                } else{ 
                     $colorclass= "class='evenListRowS1'";
                 }        
     
@@ -380,7 +381,7 @@ function create_marketing_summary  ($focus){
           
               }
             }        
-    }else{
+    } else{
         $mrkt_tbl  .= "<tr><td colspan='3'>".$mod_strings['LBL_NONE']."</td></tr>";   
     }
     $mrkt_tbl .= "</table></p>";
@@ -418,7 +419,7 @@ function create_target_summary  ($focus){
                 
              if( $colorclass== "class='evenListRowS1'"){
                     $colorclass= "class='oddListRowS1'";
-                }else{ 
+                } else{ 
                     $colorclass= "class='evenListRowS1'";
                 }         
                                     
@@ -429,7 +430,7 @@ function create_target_summary  ($focus){
                   if (($pl_focus->list_type == 'default') || ($pl_focus->list_type == 'seed')){$type = $mod_strings['LBL_SUBSCRIPTION_TYPE_NAME'];}
                   if($pl_focus->list_type == 'exempt'){$type = $mod_strings['LBL_UNSUBSCRIPTION_TYPE_NAME'];}
                   if($pl_focus->list_type == 'test'){$type = $mod_strings['LBL_TEST_TYPE_NAME'];}
-              }else{
+              } else{
                 $type = $app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
               }
               if(isset($pl_focus->id) && !empty($pl_focus->id)){
@@ -448,7 +449,7 @@ function create_target_summary  ($focus){
 
               }
             }        
-    }else{
+    } else{
      $pl_tbl .= "<tr><td class='$colorclass' scope='row' colspan='2'>".$mod_strings['LBL_NONE']."</td></tr>";   
     }
 
@@ -474,7 +475,7 @@ function create_tracker_summary  ($focus){
         foreach($trkr_lists as $trkr_id){
              if( $colorclass== "class='evenListRowS1'"){
                     $colorclass= "class='oddListRowS1'";
-                }else{ 
+                } else{ 
                     $colorclass= "class='evenListRowS1'";
                 }        
             
@@ -482,7 +483,7 @@ function create_tracker_summary  ($focus){
             $ct_focus = new CampaignTracker();
             $ct_focus->retrieve($trkr_id);
           if(isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)){
-            if($ct_focus->is_optout){$opt = 'checked';}else{$opt = '';}
+            if($ct_focus->is_optout){$opt = 'checked';} else{$opt = '';}
             $trkr_tbl  .= "<tr $colorclass>";
             $trkr_tbl  .= "<td scope='row' ><a href='index.php?action=DetailView&module=CampaignTrackers&return_module=Campaigns&return_action=WizardHome&return_id=" .$focus->id. "&record=".$ct_focus->id."'>";
             $trkr_tbl  .= $ct_focus->tracker_name."</a></td>";
@@ -491,7 +492,7 @@ function create_tracker_summary  ($focus){
             $trkr_tbl  .= "</tr>";
           }
         }
-    }else{
+    } else{
         $trkr_tbl  .= "<tr ><td colspan='3'>".$mod_strings['LBL_NONE']."</td>";
     }
     $trkr_tbl .= "</table></p>";
@@ -513,7 +514,7 @@ function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url){
 
     if($type == 'newsletter'){
         $steps[$mod_strings['LBL_NAVIGATION_MENU_SUBSCRIPTIONS']] = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetList.tpl';
-    }else{
+    } else{
         $steps[$mod_strings['LBL_TARGET_LISTS']]                  = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl';
     }    
 
@@ -530,7 +531,7 @@ function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url){
         $nav_html .= "<td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
         $nav_html .= "<td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></td></tr>";
         $nav_html .= "<td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
-    }else{
+    } else{
      $nav_html .= "<td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";   
     }
     

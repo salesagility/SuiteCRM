@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -91,7 +91,9 @@ class ListViewSmarty extends ListViewDisplay
      */
     function process($file, $data, $htmlpublic) {
         global $mod_strings;
-        if(!$this->should_process)return;
+        if(!$this->should_process) {
+            return;
+        }
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
         parent::process($file, $data, $htmlpublic);
 
@@ -108,8 +110,9 @@ class ListViewSmarty extends ListViewDisplay
         foreach($this->displayColumns as $name => $params) {
             $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
             // figure out which contextMenu objectsTypes are required
-            if(!empty($params['contextMenu']['objectType']))
-                $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+            if(!empty($params['contextMenu']['objectType'])) {
+                            $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+            }
         }
 
         //Check if inline editing is enabled for list view.
@@ -150,8 +153,12 @@ class ListViewSmarty extends ListViewDisplay
                 $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
             }
 
-            if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
-            if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            if($this->select) {
+                $this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
+            }
+            if($this->select) {
+                $this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            }
 
         }
 
@@ -238,7 +245,9 @@ class ListViewSmarty extends ListViewDisplay
      */
     function display($end = true) {
 
-        if(!$this->should_process) return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        if(!$this->should_process) {
+            return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        }
         global $app_strings, $sugar_version, $sugar_flavor, $currentModule, $app_list_strings;
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);

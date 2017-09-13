@@ -1,13 +1,13 @@
 <?php
 
 require_once 'include/utils/sugar_file_utils.php';
+
 class sugar_file_utilsTest extends PHPUnit_Framework_TestCase
 {
 
-    //@todo: check this - vfs does not seem to be working...
-
-    public function testsugar_dosomething() {
-        $this->assertTrue(true, "Needs checking!");
+    public function testsugar_dosomething()
+    {
+        $this->assertTrue(true, 'Needs checking!');
     }
 
     /*

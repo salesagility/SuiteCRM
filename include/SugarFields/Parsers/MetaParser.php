@@ -48,10 +48,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class MetaParser {
 
-var $mPHPFile;
-var $mView;
-var $mModule;
-var $mCustomPanels;
+    public $mPHPFile;
+    public $mView;
+    public $mModule;
+    public $mCustomPanels;
 
 function __construct() {
 

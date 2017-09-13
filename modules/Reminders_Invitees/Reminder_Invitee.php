@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,28 +34,31 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Reminder_Invitee class
  *
  */
 class Reminder_Invitee extends Basic {
-    var $name;
+    public $name;
 
-    var $new_schema = true;
-    var $module_dir = 'Reminders_Invitees';
-    var $object_name = 'Reminder_Invitee';
-    var $table_name = 'reminders_invitees';
-    var $tracker_visibility = false;
-    var $importable = false;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'Reminders_Invitees';
+    public $object_name = 'Reminder_Invitee';
+    public $table_name = 'reminders_invitees';
+    public $tracker_visibility = false;
+    public $importable = false;
+    public $disable_row_level_security = true;
 
-    var $reminder_id;
-    var $related_invitee_module;
-    var $related_invitee_module_id;
+    public $reminder_id;
+    public $related_invitee_module;
+    public $related_invitee_module_id;
 
 	/**
 	 * Save multiple reminders invitees data.
@@ -65,7 +69,9 @@ class Reminder_Invitee extends Basic {
     public static function saveRemindersInviteesData($reminderId, $inviteesData) {
         $savedInviteeIds = array();
         foreach($inviteesData as $k => $inviteeData) {
-            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $inviteeData->id = '';
+            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) {
+                $inviteeData->id = '';
+            }
             $reminderInviteeBean = BeanFactory::getBean('Reminders_Invitees', $inviteeData->id);
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;
@@ -73,8 +79,7 @@ class Reminder_Invitee extends Basic {
             if(!$inviteeData->id) {
                 $reminderInviteeBean->save();
                 $savedInviteeIds[] = $reminderInviteeBean->id;
-            }
-            else {
+            } else {
                 $addedInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.id != '{$inviteeData->id}' AND reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'");
                 if (!$addedInvitees) {
                     $reminderInviteeBean->save();
@@ -121,11 +126,9 @@ class Reminder_Invitee extends Basic {
             default:
                 if(isset($bean->first_name) && isset($bean->last_name)) {
                     $retValue = "{$bean->first_name} {$bean->last_name}";
-                }
-                else if(isset($bean->name)) {
+                } else if(isset($bean->name)) {
                     $retValue = $bean->name;
-                }
-                else if(isset($bean->email)) {
+                } else if(isset($bean->email)) {
                     $retValue = $bean->email;
                 }
                 if(!$retValue) {

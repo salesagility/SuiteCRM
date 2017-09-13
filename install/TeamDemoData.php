@@ -42,10 +42,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class TeamDemoData {
-	var $_team;
-	var $_large_scale_test;
+    public $_team;
+    public $_large_scale_test;
 
-	var $guids = array(
+    public $guids = array(
 		'jim'	=> 'seed_jim_id',
 		'sarah'	=> 'seed_sarah_id',
 		'sally'	=> 'seed_sally_id',

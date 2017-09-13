@@ -1,12 +1,11 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-    die ( 'Not A Valid Entry Point' ) ;
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
@@ -115,8 +118,9 @@ class ViewListView extends SugarView
         			MB_LISTVIEW => 'LBL_LISTVIEW' ,
         			) ;
         $translatedViewType = '' ;
-		if ( isset ( $labels [ strtolower ( $this->editLayout ) ] ) )
-			$translatedViewType = translate ( $labels [ strtolower( $this->editLayout ) ] , 'ModuleBuilder' ) ;
+		if ( isset ( $labels [ strtolower ( $this->editLayout ) ] ) ) {
+					$translatedViewType = translate ( $labels [ strtolower( $this->editLayout ) ] , 'ModuleBuilder' ) ;
+		}
 		$this->translatedViewType = $translatedViewType;
 
         if ($this->fromModuleBuilder)
@@ -131,8 +135,9 @@ class ViewListView extends SugarView
                 {
                     $subpanelLabel = $this->subpanelLabel;
                     // If the subpanel title has changed, use that for the label instead
-                    if( !empty($_REQUEST['subpanel_title'] ) && $_REQUEST['subpanelLabel'] != $_REQUEST['subpanel_title'] )
-                        $subpanelLabel = $_REQUEST['subpanel_title'];
+                    if( !empty($_REQUEST['subpanel_title'] ) && $_REQUEST['subpanelLabel'] != $_REQUEST['subpanel_title'] ) {
+                                            $subpanelLabel = $_REQUEST['subpanel_title'];
+                    }
 
                     $ajax->addCrumb( $subpanelLabel, '' );
                     $this->translatedViewType = $subpanelLabel . "&nbsp;" . translate("LBL_SUBPANEL", "ModuleBuilder");
@@ -158,8 +163,9 @@ class ViewListView extends SugarView
                 {
                     $subpanelLabel = $this->subpanelLabel;
                     // If the subpanel title has changed, use that for the label instead
-                    if( !empty($_REQUEST['subpanel_title'] ) && $_REQUEST['subpanelLabel'] != $_REQUEST['subpanel_title'] )
-                        $subpanelLabel = $_REQUEST['subpanel_title'];
+                    if( !empty($_REQUEST['subpanel_title'] ) && $_REQUEST['subpanelLabel'] != $_REQUEST['subpanel_title'] ) {
+                                            $subpanelLabel = $_REQUEST['subpanel_title'];
+                    }
 
                     $ajax->addCrumb( $subpanelLabel, '' );
                     $this->translatedViewType = $subpanelLabel . "&nbsp;" . translate("LBL_SUBPANEL", "ModuleBuilder");
@@ -241,12 +247,14 @@ class ViewListView extends SugarView
         $history = $parser->getHistory () ;
 
         $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")" ;
-        if ($this->subpanel)
-            $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->subpanel}\")" ;
+        if ($this->subpanel) {
+                    $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->subpanel}\")" ;
+        }
 
         $restoreAction = "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"\")'";
-        if ($this->subpanel)
-            $restoreAction = "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"{$this->subpanel}\")'";
+        if ($this->subpanel) {
+                    $restoreAction = "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"{$this->subpanel}\")'";
+        }
 
         $buttons = array ( ) ;
         $buttons [] = array ( 'id' =>'savebtn', 'name' => 'savebtn' , 'image' => $imageSave , 'text' => (! $this->fromModuleBuilder)?$GLOBALS [ 'mod_strings' ] [ 'LBL_BTN_SAVEPUBLISH' ]: $GLOBALS [ 'mod_strings' ] [ 'LBL_BTN_SAVE' ], 'actionScript' => "onclick='studiotabs.generateGroupForm(\"edittabs\");if (countListFields()==0) ModuleBuilder.layoutValidation.popup() ; else ModuleBuilder.handleSave(\"edittabs\" )'" ) ;

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Base form for prospect
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ProspectFormBase  {
 
@@ -60,20 +56,20 @@ function checkForDuplicates($prefix){
 	$baseQuery = 'select id,first_name, last_name, title, email1, email2  from prospects where deleted!=1 and (';
 	if(!empty($_POST[$prefix.'first_name']) && !empty($_POST[$prefix.'last_name'])){
 		$query = $baseQuery ."  (first_name like '". $_POST[$prefix.'first_name'] . "%' and last_name = '". $_POST[$prefix.'last_name'] ."')";
-	}else{
+	} else{
 			$query = $baseQuery ."  last_name = '". $_POST[$prefix.'last_name'] ."'";
 	}
 	if(!empty($_POST[$prefix.'email1'])){
 		if(empty($query)){
 		$query = $baseQuery. "  email1='". $_POST[$prefix.'email1'] . "' or email2 = '". $_POST[$prefix.'email1'] ."'";
-		}else {
+		} else {
 			$query .= "or email1='". $_POST[$prefix.'email1'] . "' or email2 = '". $_POST[$prefix.'email1'] ."'";
 		}
 	}
 	if(!empty($_POST[$prefix.'email2'])){
 		if(empty($query))	{
 			$query = $baseQuery. "  email1='". $_POST[$prefix.'email2'] . "' or email2 = '". $_POST[$prefix.'email2'] ."'";
-		}else{
+		} else{
 			$query .= "or email1='". $_POST[$prefix.'email2'] . "' or email2 = '". $_POST[$prefix.'email2'] ."'";
 		}
 
@@ -87,7 +83,9 @@ function checkForDuplicates($prefix){
         while($row = $db->fetchByAssoc($result)) {
             $rows[] = $row;
 		}
-		if(count($rows) > 0) return $rows;
+		if(count($rows) > 0) {
+		    return $rows;
+		}
 		}
 	return null;
 }
@@ -98,15 +96,16 @@ function buildTableForm($rows, $mod=''){
 	if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-	}else global $mod_strings;
+	} else {
+	    global $mod_strings;
+	}
 	global $app_strings;
 	$cols = sizeof($rows[0]) * 2 + 1;
 	if ($action != 'ShowDuplicates') 
 	{
 		$form = '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
 		$form .= "<form action='index.php' method='post' name='dupProspects'><input type='hidden' name='selectedProspect' value=''>";
-	}
-	else 
+	} else 
 	{
 		$form = '<table width="100%"><tr><td>'.$mod_strings['MSG_SHOW_DUPLICATES']. '</td></tr><tr><td height="20"></td></tr></table>';
 	}
@@ -132,8 +131,9 @@ function buildTableForm($rows, $mod=''){
 	foreach($rows as $row){
 
 		$form .= "<tr class='$rowColor'>";
-		if ($action != 'ShowDuplicates') 
-			$form .= "<td width='1%' nowrap='nowrap' ><a href='#' onClick=\"document.dupProspects.selectedProspect.value='${row['id']}';document.dupProspects.submit() \">[${app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
+		if ($action != 'ShowDuplicates') {
+					$form .= "<td width='1%' nowrap='nowrap' ><a href='#' onClick=\"document.dupProspects.selectedProspect.value='${row['id']}';document.dupProspects.submit() \">[${app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
+		}
 		
 		$wasSet = false;
 
@@ -142,8 +142,7 @@ function buildTableForm($rows, $mod=''){
                 if(!$wasSet) {
                     $form .= "<td scope='row' ><a target='_blank' href='index.php?module=Prospects&action=DetailView&record=${row['id']}'>$value</a></td>\n";
                     $wasSet = true;
-                }
-                else {
+                } else {
                     $form .= "<td><a target='_blank' href='index.php?module=Prospects&action=DetailView&record=${row['id']}'>$value</a></td>\n";
                 }
             }
@@ -151,7 +150,7 @@ function buildTableForm($rows, $mod=''){
 
 		if($rowColor == 'evenListRowS1'){
 			$rowColor = 'oddListRowS1';
-		}else{
+		} else{
 			 $rowColor = 'evenListRowS1';
 		}
 		$form .= "</tr>";
@@ -374,7 +373,9 @@ if(!ACLController::checkAccess('Prospects', 'edit', true)){
 if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-}else global $mod_strings;
+} else {
+    global $mod_strings;
+}
 global $app_strings;
 
 $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
@@ -423,10 +424,16 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 	if(!$focus->ACLAccess('Save')){
 		return null;
 	}
-	if (!isset($GLOBALS['check_notify'])) $GLOBALS['check_notify']=false;
+	if (!isset($GLOBALS['check_notify'])) {
+	    $GLOBALS['check_notify']=false;
+	}
 	
-	if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
-	if (!isset($_POST[$prefix.'do_not_call'])) $focus->do_not_call = 0;
+	if (!isset($_POST[$prefix.'email_opt_out'])) {
+	    $focus->email_opt_out = 0;
+	}
+	if (!isset($_POST[$prefix.'do_not_call'])) {
+	    $focus->do_not_call = 0;
+	}
 	
 	if (empty($_POST['record']) && empty($_POST['dup_checked'])) {
 		/*
@@ -482,15 +489,29 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 	$GLOBALS['log']->debug("Saved record with id of ".$return_id);
     if(isset($_POST['popup']) && $_POST['popup'] == 'true') {
         $get = '&module=';
-        if(!empty($_POST['return_module'])) $get .= $_POST['return_module'];
-        else $get .= 'Prospects';
+        if(!empty($_POST['return_module'])) {
+            $get .= $_POST['return_module'];
+        } else {
+            $get .= 'Prospects';
+        }
         $get .= '&action=';
-        if(!empty($_POST['return_action'])) $get .= $_POST['return_action'];
-        else $get .= 'Popup';
-        if(!empty($_POST['return_id'])) $get .= '&return_id='.$_POST['return_id'];
-        if(!empty($_POST['popup'])) $get .= '&popup='.$_POST['popup'];
-        if(!empty($_POST['create'])) $get .= '&create='.$_POST['create'];
-        if(!empty($_POST['to_pdf'])) $get .= '&to_pdf='.$_POST['to_pdf'];
+        if(!empty($_POST['return_action'])) {
+            $get .= $_POST['return_action'];
+        } else {
+            $get .= 'Popup';
+        }
+        if(!empty($_POST['return_id'])) {
+            $get .= '&return_id='.$_POST['return_id'];
+        }
+        if(!empty($_POST['popup'])) {
+            $get .= '&popup='.$_POST['popup'];
+        }
+        if(!empty($_POST['create'])) {
+            $get .= '&create='.$_POST['create'];
+        }
+        if(!empty($_POST['to_pdf'])) {
+            $get .= '&to_pdf='.$_POST['to_pdf'];
+        }
         $get .= '&first_name=' . $focus->first_name;
         $get .= '&last_name=' . $focus->last_name;
         $get .= '&query=true';
@@ -500,7 +521,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 	if($redirect){
 	    require_once('include/formbase.php');
 	    handleRedirect($return_id, 'Prospects');
-	}else{
+	} else{
 		return $focus;
 	}
 }

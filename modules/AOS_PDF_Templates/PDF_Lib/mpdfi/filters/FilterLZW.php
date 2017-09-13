@@ -18,17 +18,17 @@
 //
 
 class FilterLZW {
-    
-    var $sTable = array();
-    var $data = null;
-    var $dataLength = 0;
-    var $tIdx;
-    var $bitsToGet = 9;
-    var $bytePointer;
-    var $bitPointer;
-    var $nextData = 0;
-    var $nextBits = 0;
-    var $andTable = array(511, 1023, 2047, 4095);
+
+    public $sTable = array();
+    public $data = null;
+    public $dataLength = 0;
+    public $tIdx;
+    public $bitsToGet = 9;
+    public $bytePointer;
+    public $bitPointer;
+    public $nextData = 0;
+    public $nextBits = 0;
+    public $andTable = array(511, 1023, 2047, 4095);
 
     function error($msg) {
         die($msg);

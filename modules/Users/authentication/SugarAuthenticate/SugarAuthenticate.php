@@ -48,8 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  */
 class SugarAuthenticate{
-	var $userAuthenticateClass = 'SugarAuthenticateUser';
-	var $authenticationDir = 'SugarAuthenticate';
+    public $userAuthenticateClass = 'SugarAuthenticateUser';
+    public $authenticationDir = 'SugarAuthenticate';
 	/**
 	 * Constructs SugarAuthenticate
 	 * This will load the user authentication class

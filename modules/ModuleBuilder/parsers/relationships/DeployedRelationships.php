@@ -1,12 +1,11 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-    die ( 'Not A Valid Entry Point' ) ;
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,10 +34,13 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.php' ;
 require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipsInterface.php' ;
@@ -60,75 +62,72 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     }
 
     /*
-     * Load the set of relationships for this module - the set is the combination of that held in the working file plus all of the relevant deployed relationships for the module
-     * Note that deployed relationships are readonly and cannot be modified - getDeployedRelationships() takes care of marking them as such
+     * Load the set of relationships for this module - the set is the combination of that held in the working file plus
+     * all of the relevant deployed relationships for the module
+     * Note that deployed relationships are readonly and cannot be modified - getDeployedRelationships() takes care of
+     * marking them as such
      * Assumes that only called for modules which exist in $beansList - otherwise get_module_info will break
      * This means that load() cannot be called for Activities, only Tasks, Notes, etc
      * 
-     * Note that we may need to adjust the cardinality for any custom relationships that we do not have entries for in the working directory
-     * These relationships might have been loaded from an installation package by ModuleInstaller, or the custom/working directory might have been cleared at some point
-     * The cardinality in the installed relationship is not necessarily correct for custom relationships, which currently are all built as many-to-many relationships
-     * Instead we must obtain the true cardinality from a property we added to the relationship metadata when we created the relationship
+     * Note that we may need to adjust the cardinality for any custom relationships that we do not have entries for in
+     * the working directory
+     * These relationships might have been loaded from an installation package by ModuleInstaller, or the custom/working
+     * directory might have been cleared at some point
+     * The cardinality in the installed relationship is not necessarily correct for custom relationships,
+     * which currently are all built as many-to-many relationships
+     * Instead we must obtain the true cardinality from a property we added to the relationship metadata
+     * when we created the relationship
      * This relationship metadata is accessed through the Table Dictionary
-     */ 
-    function load ()
+     */
+    function load()
     {
-        
-        $relationships = $this->getDeployedRelationships () ;
-        
-        if (! empty ( $relationships ))
-        {
-            // load the relationship definitions for all installed custom relationships into $dictionary
-            $dictionary = array ( ) ;
-            if (file_exists ( 'custom/application/Ext/TableDictionary/tabledictionary.ext.php' ))
-            {
-                include ('custom/application/Ext/TableDictionary/tabledictionary.ext.php') ;
-            }
-            
-            $invalidModules = array();
-            $validModules = array_keys ( self::findRelatableModules () ) ;
-            
-            // now convert the relationships array into an array of AbstractRelationship objects
-            foreach ( $relationships as $name => $definition )
-            {
-                if (($definition [ 'lhs_module' ] == $this->moduleName) || ($definition [ 'rhs_module' ] == $this->moduleName))
-                {
-                    if (in_array ( $definition [ 'lhs_module' ], $validModules ) && in_array ( $definition [ 'rhs_module' ], $validModules )
-                        && ! in_array ( $definition [ 'lhs_module' ], $invalidModules ) && ! in_array ( $definition [ 'rhs_module' ], $invalidModules ))
-                    {
-                        // identify the subpanels for this relationship - TODO: optimize this - currently does m x n scans through the subpanel list...
-                        $definition [ 'rhs_subpanel' ] = self::identifySubpanel ( $definition [ 'lhs_module' ], $definition [ 'rhs_module' ] ) ;
-                        $definition [ 'lhs_subpanel' ] = self::identifySubpanel ( $definition [ 'rhs_module' ], $definition [ 'lhs_module' ] ) ;
-                        
-                        // now adjust the cardinality with the true cardinality found in the relationships metadata (see method comment above)
-                        
 
-                        if (! empty ( $dictionary ) && ! empty ( $dictionary [ $name ] ) ) {
-                        	if (! empty ( $dictionary [ $name ] [ 'true_relationship_type' ] )) {
-                        		$definition [ 'relationship_type' ] = $dictionary [ $name ] [ 'true_relationship_type' ] ;
-                        	}
-                            if (! empty ( $dictionary [ $name ] [ 'from_studio' ] )) {
-                                $definition [ 'from_studio' ] = $dictionary [ $name ] [ 'from_studio' ] ;
+        $relationships = $this->getDeployedRelationships();
+
+        if (!empty ($relationships)) {
+            // load the relationship definitions for all installed custom relationships into $dictionary
+            $dictionary = array();
+            if (file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')) {
+                include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');
+            }
+
+            $invalidModules = array();
+            $validModules = array_keys(self::findRelatableModules());
+
+            // now convert the relationships array into an array of AbstractRelationship objects
+            foreach ($relationships as $name => $definition) {
+                if (($definition ['lhs_module'] == $this->moduleName) ||
+                    ($definition ['rhs_module'] == $this->moduleName)) {
+                    if (in_array($definition ['lhs_module'], $validModules) && in_array($definition ['rhs_module'],
+                            $validModules)
+                        && !in_array($definition ['lhs_module'],
+                            $invalidModules) && !in_array($definition ['rhs_module'], $invalidModules)
+                    ) {
+                        // identify the subpanels for this relationship
+                        $definition ['rhs_subpanel'] = self::identifySubpanel($definition ['lhs_module'],
+                            $definition ['rhs_module']);
+                        $definition ['lhs_subpanel'] = self::identifySubpanel($definition ['rhs_module'],
+                            $definition ['lhs_module']);
+
+                        // now adjust the cardinality with the true cardinality found in the relationships metadata
+                        // (see method comment above)
+
+                        if (!empty ($dictionary) && !empty ($dictionary [$name])) {
+                            if (!empty ($dictionary [$name] ['true_relationship_type'])) {
+                                $definition ['relationship_type'] = $dictionary [$name] ['true_relationship_type'];
                             }
-                        	$definition [ 'is_custom' ] = true;
+                            if (!empty ($dictionary [$name] ['from_studio'])) {
+                                $definition ['from_studio'] = $dictionary [$name] ['from_studio'];
+                            }
+                            $definition ['is_custom'] = true;
                         }
-                            
-                        
-                        $this->relationships [ $name ] = RelationshipFactory::newRelationship ( $definition ) ;
+
+
+                        $this->relationships [$name] = RelationshipFactory::newRelationship($definition);
                     }
                 }
             }
-        
         }
-        
-    /*        // Now override with any definitions from the working directory
-        // must do this to capture one-to-ones that we have created as these don't show up in the relationship table that is the source for getDeployedRelationships()
-        $overrides = parent::_load ( "custom/working/modules/{$this->moduleName}" ) ;
-        foreach ( $overrides as $name => $relationship )
-        {
-            $this->relationships [ $name ] = $relationship ;
-        }*/
-    
     }
 
     /*
@@ -243,8 +242,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         foreach ( $module->field_defs as $field )
         {
-            if ($field [ 'type' ] == 'relate' && isset ( $field [ 'module' ] ) && $field [ 'module' ] == $sourceModuleName)
-                return $field [ 'name' ] ;
+            if ($field [ 'type' ] == 'relate' && isset ( $field [ 'module' ] ) && $field [ 'module' ] == $sourceModuleName) {
+                            return $field [ 'name' ] ;
+            }
         }
         return null ;
     }
@@ -389,10 +389,11 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         foreach ( $layoutAdditions as $deployedModuleName => $fieldName )
         {
-            if (! in_array ( strtolower ( $deployedModuleName ), $invalidModules ))
-                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
+            if (! in_array ( strtolower ( $deployedModuleName ), $invalidModules )) {
+                            foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
                 {
                     $GLOBALS [ 'log' ]->info ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
+            }
                     $parser = new GridLayoutMetaDataParser ( $view, $deployedModuleName ) ;
                     $parser->addField ( array ( 'name' => $fieldName ) ) ;
                     $parser->handleSave ( false ) ;
@@ -411,8 +412,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...
-        if ($relationship->getType () == MB_MANYTOMANY)
-            return false ;
+        if ($relationship->getType () == MB_MANYTOMANY) {
+                    return false ;
+        }
         
         $successful = true ;
         $layoutAdditions = $relationship->buildFieldsToLayouts () ;
@@ -433,5 +435,3 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     }
 
 }
-
-?>

@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/file/File.php');
 
@@ -45,73 +48,76 @@ require_once('include/SugarObjects/templates/file/File.php');
 // User is used to store Forecast information.
 class Document extends File {
 
-	var $id;
-	var $document_name;
-	var $description;
-	var $category_id;
-	var $subcategory_id;
-	var $status_id;
-	var $status;
-	var $created_by;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-    var $assigned_user_id;
-	var $active_date;
-	var $exp_date;
-	var $document_revision_id;
-	var $filename;
-	var $doc_type;
+    public $id;
+    public $document_name;
+    public $description;
+    public $category_id;
+    public $subcategory_id;
+    public $status_id;
+    public $status;
+    public $created_by;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $active_date;
+    public $exp_date;
+    public $document_revision_id;
+    public $filename;
+    public $doc_type;
 
-	var $img_name;
-	var $img_name_bare;
-	var $related_doc_id;
-	var $related_doc_name;
-	var $related_doc_rev_id;
-	var $related_doc_rev_number;
-	var $is_template;
-	var $template_type;
+    public $img_name;
+    public $img_name_bare;
+    public $related_doc_id;
+    public $related_doc_name;
+    public $related_doc_rev_id;
+    public $related_doc_rev_number;
+    public $is_template;
+    public $template_type;
 
 	//additional fields.
-	var $revision;
-	var $last_rev_create_date;
-	var $last_rev_created_by;
-	var $last_rev_created_name;
-	var $file_url;
-	var $file_url_noimage;
+    public $revision;
+    public $last_rev_create_date;
+    public $last_rev_created_by;
+    public $last_rev_created_name;
+    public $file_url;
+    public $file_url_noimage;
 
-	var $table_name = "documents";
-	var $object_name = "Document";
-	var $user_preferences;
+    public $table_name = "documents";
+    public $object_name = "Document";
+    public $user_preferences;
 
-	var $encodeFields = Array ();
+    public $encodeFields = Array ();
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array ('revision');
+    public $additional_column_fields = Array ('revision');
 
-	var $new_schema = true;
-	var $module_dir = 'Documents';
+    public $new_schema = true;
+    public $module_dir = 'Documents';
 
-	var $relationship_fields = Array(
+    public $relationship_fields = Array(
 		'contract_id'=>'contracts',
 	 );
 
 
-	function __construct() {
-		parent::__construct();
-		$this->setupCustomFields('Documents'); //parameter is module name
-		$this->disable_row_level_security = false;
-	}
+    function __construct()
+    {
+        parent::__construct();
+        //parameter is module name
+        $this->setupCustomFields('Documents');
+        $this->disable_row_level_security = false;
+    }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     * please update your code, use __construct instead
      */
-    function Document(){
+    function Document()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -225,15 +231,13 @@ class Document extends File {
 		$this->fill_in_additional_detail_fields();
 	}
 
-	function fill_in_additional_detail_fields() {
-		global $theme;
-		global $current_language;
-		global $timedate;
-		global $locale;
+    function fill_in_additional_detail_fields()
+    {
+        global $theme, $current_language, $timedate, $locale;
 
-		parent::fill_in_additional_detail_fields();
+        parent::fill_in_additional_detail_fields();
 
-		$mod_strings = return_module_language($current_language, 'Documents');
+        $mod_strings = return_module_language($current_language, 'Documents');
 
         if (!empty($this->document_revision_id)) {
 
@@ -247,63 +251,71 @@ class Document extends File {
             $row = $this->db->fetchByAssoc($result);
 
             //populate name
-            if(isset($this->document_name))
-            {
-            	$this->name = $this->document_name;
+            if (isset($this->document_name)) {
+                $this->name = $this->document_name;
             }
 
-            if(isset($row['filename']))$this->filename = $row['filename'];
+            if (isset($row['filename'])) {
+                $this->filename = $row['filename'];
+            }
             //$this->latest_revision = $row['revision'];
-            if(isset($row['revision']))$this->revision = $row['revision'];
+            if (isset($row['revision'])) {
+                $this->revision = $row['revision'];
+            }
 
-            //image is selected based on the extension name <ext>_icon_inline, extension is stored in document_revisions.
+            //image is selected based on the extension name <ext>_icon_inline,
+            // extension is stored in document_revisions.
             //if file is not found then default image file will be used.
-            global $img_name;
-            global $img_name_bare;
+            global $img_name, $img_name_bare;
             if (!empty ($row['file_ext'])) {
-                $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext'])."_image_inline.gif");
-                $img_name_bare = strtolower($row['file_ext'])."_image_inline";
+                $img_name = SugarThemeRegistry::current()->getImageURL(
+                    strtolower($row['file_ext']) . "_image_inline.gif");
+                $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
             }
         }
 
-		//set default file name.
-		if (!empty ($img_name) && file_exists($img_name)) {
-			$img_name = $img_name_bare;
-		} else {
-			$img_name = "def_image_inline"; //todo change the default image.
-		}
-		if($this->ACLAccess('DetailView')) {
-			if(!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
-                $file_url= "<a href='".$this->doc_url."' target='_blank'>".SugarThemeRegistry::current()->getImage($this->doc_type.'_image_inline', 'border="0"',null,null,'.png',$mod_strings['LBL_LIST_VIEW_DOCUMENT'])."</a>";
-			} else {
-			    $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>".SugarThemeRegistry::current()->getImage($img_name, 'border="0"', null,null,'.gif',$mod_strings['LBL_LIST_VIEW_DOCUMENT'])."</a>";
-			}
+        //set default file name.
+        if (!empty ($img_name) && file_exists($img_name)) {
+            $img_name = $img_name_bare;
+        } else {
+            $img_name = "def_image_inline";
+        }
+        if ($this->ACLAccess('DetailView')) {
+            if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
+                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" .
+                    SugarThemeRegistry::current()->getImage($this->doc_type . '_image_inline',
+                        'border="0"', null, null, '.png', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+            } else {
+                $file_url = "<a href='index.php?entryPoint=download&id=
+{$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage($img_name,
+                        'border="0"', null, null, '.gif', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+            }
 
-    		$this->file_url = $file_url;
-    		$this->file_url_noimage = "index.php?entryPoint=download&type=Documents&id={$this->document_revision_id}";
-		}else{
+            $this->file_url = $file_url;
+            $this->file_url_noimage = "index.php?entryPoint=download&type=Documents&id={$this->document_revision_id}";
+        } else {
             $this->file_url = "";
             $this->file_url_noimage = "";
-		}
+        }
 
-		//get last_rev_by user name.
-		if (!empty ($row)) {
-			$this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
+        //get last_rev_by user name.
+        if (!empty ($row)) {
+            $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
-			$this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'], 'datetime'));
-			$this->last_rev_mime_type = $row['file_mime_type'];
-		}
+            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],
+                'datetime'));
+            $this->last_rev_mime_type = $row['file_mime_type'];
+        }
 
-		global $app_list_strings;
-	    if(!empty($this->status_id)) {
-	       //_pp($this->status_id);
-	       $this->status = $app_list_strings['document_status_dom'][$this->status_id];
-	    }
+        global $app_list_strings;
+        if (!empty($this->status_id)) {
+            $this->status = $app_list_strings['document_status_dom'][$this->status_id];
+        }
         if (!empty($this->related_doc_id)) {
             $this->related_doc_name = Document::get_document_name($this->related_doc_id);
             $this->related_doc_rev_number = DocumentRevision::get_document_revision_name($this->related_doc_rev_id);
         }
-	}
+    }
 
 	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/) {
 		return $list_form;
@@ -405,4 +417,3 @@ class Document extends File {
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');
-

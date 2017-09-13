@@ -54,13 +54,13 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry) die ( 'Not A Valid Entry Point' 
 class aSubPanel
 {
 
-	var $name ;
-	var $_instance_properties ;
+    public $name ;
+    public $_instance_properties ;
 
-	var $mod_strings ;
-	var $panel_definition ;
-	var $sub_subpanels ;
-	var $parent_bean ;
+    public $mod_strings ;
+    public $panel_definition ;
+    public $sub_subpanels ;
+    public $parent_bean ;
 
     /**
      * Can we display this subpanel?
@@ -70,16 +70,16 @@ class aSubPanel
      *
      * @var bool
      */
-    var $canDisplay = true;
+    public $canDisplay = true;
 
 	//module's table name and column fields.
-	var $table_name ;
-	var $db_fields ;
-	var $bean_name ;
-	var $template_instance ;
+    public $table_name ;
+    public $db_fields ;
+    public $bean_name ;
+    public $template_instance ;
 
-	var $search_query;
-	var $base_collection_list = array();
+    public $search_query;
+    public $base_collection_list = array();
 
 	function __construct ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
 
@@ -602,10 +602,10 @@ class aSubPanel
 class SubPanelDefinitions
 {
 
-	var $_focus ;
-	var $_visible_tabs_array ;
-	var $panels ;
-	var $layout_defs ;
+    public $_focus ;
+    public $_visible_tabs_array ;
+    public $panels ;
+    public $layout_defs ;
 
 	/**
 	 * Enter description here...

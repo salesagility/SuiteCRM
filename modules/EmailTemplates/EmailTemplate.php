@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,47 +34,45 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 // EmailTemplate is used to store email email_template information.
 class EmailTemplate extends SugarBean
 {
-    var $field_name_map = array();
+    public $field_name_map = array();
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $name;
-    var $published;
-    var $description;
-    var $body;
-    var $body_html;
-    var $subject;
-    var $attachments;
-    var $from_name;
-    var $from_address;
-    var $table_name = "email_templates";
-    var $object_name = "EmailTemplate";
-    var $module_dir = "EmailTemplates";
-    var $new_schema = true;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $name;
+    public $published;
+    public $description;
+    public $body;
+    public $body_html;
+    public $subject;
+    public $attachments;
+    public $from_name;
+    public $from_address;
+    public $table_name = "email_templates";
+    public $object_name = "EmailTemplate";
+    public $module_dir = "EmailTemplates";
+    public $new_schema = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array();
+    public $additional_column_fields = array();
     // add fields here that would not make sense in an email template
-    var $badFields = array(
+    public $badFields = array(
         'account_description',
         'contact_id',
         'lead_id',
@@ -125,8 +123,7 @@ class EmailTemplate extends SugarBean
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -194,8 +191,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    if ($dup) {
+                                            $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -268,8 +266,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    if ($dup) {
+                                            $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -341,8 +340,9 @@ class EmailTemplate extends SugarBean
     function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
-        if (!isset($this->parsed_urls))
-            $this->parsed_urls = array();
+        if (!isset($this->parsed_urls)) {
+                    $this->parsed_urls = array();
+        }
 
         $return_array = $template_text_array;
         if (count($tracked_urls) > 0) {
@@ -423,8 +423,9 @@ class EmailTemplate extends SugarBean
             $user->retrieve($focus->assigned_user_id);
         }
 
-        if (!isset($this->parsed_entities))
-            $this->parsed_entities = array();
+        if (!isset($this->parsed_entities)) {
+                    $this->parsed_entities = array();
+        }
 
         //parse the template and find all the dynamic strings that need replacement.
         // Bug #48111 It's strange why prefix for User module is contact_user (see self::generateFieldDefsJS method)
@@ -806,8 +807,9 @@ class EmailTemplate extends SugarBean
         $template = new EmailTemplate();
         $optionKey = $template->field_defs['type']['options'];
         $options = $GLOBALS['app_list_strings'][$optionKey];
-        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow']))
-            unset($options['workflow']);
+        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow'])) {
+                    unset($options['workflow']);
+        }
 
         return $options;
     }

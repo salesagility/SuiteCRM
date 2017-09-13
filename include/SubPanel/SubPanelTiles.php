@@ -49,17 +49,17 @@ require_once('include/SubPanel/SubPanelDefinitions.php');
  */
 class SubPanelTiles
 {
-	var $id;
-	var $module;
-	var $focus;
-	var $start_on_field;
-	var $layout_manager;
-	var $layout_def_key;
-	var $show_tabs = false;
+    public $id;
+    public $module;
+    public $focus;
+    public $start_on_field;
+    public $layout_manager;
+    public $layout_def_key;
+    public $show_tabs = false;
 
-	var $subpanel_definitions;
+    public $subpanel_definitions;
 
-	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
+    public $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
 							//should be the array.
 
 	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')

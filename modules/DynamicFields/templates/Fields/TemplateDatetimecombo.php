@@ -43,9 +43,9 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateDatetimecombo extends TemplateRange 
 {
-	var $type = 'datetimecombo';
-	var $len = '';
-	var $dateStrings = array(
+    public $type = 'datetimecombo';
+    public $len = '';
+    public $dateStrings = array(
 		'-none-' => '',
         'today'=>'now',
         'yesterday'=> '-1 day',
@@ -60,8 +60,8 @@ class TemplateDatetimecombo extends TemplateRange
         'six months'=> '+6 months',
         'next year'=> '+1 year',
     );
-    
-    var $hoursStrings = array(
+
+    public $hoursStrings = array(
     	'' => '',
     	'01' => '01',	
     	'02' => '02',
@@ -76,8 +76,8 @@ class TemplateDatetimecombo extends TemplateRange
     	'11' => '11',
     	'12' => '12',
     );
-    
-    var $hoursStrings24 = array(
+
+    public $hoursStrings24 = array(
     	'' => '',
         '00' => '00',
     	'01' => '01',	
@@ -103,17 +103,17 @@ class TemplateDatetimecombo extends TemplateRange
     	'21' => '21',
     	'22' => '22',
     	'23' => '23',
-    );    
-    
-    var $minutesStrings = array(
+    );
+
+    public $minutesStrings = array(
     	'' => '',
     	'00' => '00',	
     	'15' => '15',
     	'30' => '30',
     	'45' => '45',
     );
-    
-    var $meridiemStrings = array(
+
+    public $meridiemStrings = array(
     	'' => '',
     	'am' => 'am',
     	'pm' => 'pm',

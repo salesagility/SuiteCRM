@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry){
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
 
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
@@ -57,20 +50,20 @@ require_once 'include/Exceptions/SuiteException.php';
 
 
 class EmailUI {
-	var $db;
-	var $folder; // place holder for SugarFolder object
-	var $folderStates = array(); // array of folderPath names and their states (1/0)
-	var $smarty;
-	var $addressSeparators = array(";", ",");
-	var $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
-	var $groupCss = "<span class='groupInbox'>";
-	var $cacheTimeouts = array(
+    public $db;
+    public $folder; // place holder for SugarFolder object
+    public $folderStates = array(); // array of folderPath names and their states (1/0)
+    public $smarty;
+    public $addressSeparators = array(";", ",");
+    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $groupCss = "<span class='groupInbox'>";
+    public $cacheTimeouts = array(
 		'messages'		=> 86400,	// 24 hours
 		'folders'		=> 300,		// 5 mins
 		'attachments'	=> 86400,	// 24 hours
 	);
-	var $userCacheDir = '';
-	var $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
+    public $userCacheDir = '';
+    public $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
 								   JOIN emails_text on emails.id = emails_text.email_id
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
@@ -100,8 +93,7 @@ class EmailUI {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
+		} else {
 			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
 		}
 		self::__construct();
@@ -417,7 +409,7 @@ eoq;
         if(!$lazyLoad){
     	    require_once('modules/Emails/Compose.php');
     	    $composePackage = generateComposeDataPackage($composeData,FALSE, $bean);
-        }else{
+        } else{
             $composePackage = $composeData;
         }
 
@@ -426,8 +418,9 @@ eoq;
     	// but not double quotes since json would escape them
     	foreach ($composePackage as $key => $singleCompose)
     	{
-    	   if (is_string($singleCompose))
-    	       $composePackage[$key] = str_replace("&nbsp;", " ", from_html($singleCompose));
+    	   if (is_string($singleCompose)) {
+    	       	       $composePackage[$key] = str_replace("&nbsp;", " ", from_html($singleCompose));
+    	   }
     	}
 
     	$quickComposeOptions = array('fullComposeUrl' => $fullLinkUrl,'composePackage' => $composePackage);
@@ -531,7 +524,9 @@ eoq;
             require_once("modules/{$module}/{$class}.php");
             $person = new $class();
 
-            if (!$person->ACLAccess('list')) continue;
+            if (!$person->ACLAccess('list')) {
+                continue;
+            }
             $filterPeopleTables[$person->table_name] = $app_list_strings['moduleList'][$person->module_dir];
 		}
 		$this->smarty->assign('listOfPersons' , get_select_options_with_id($filterPeopleTables,''));
@@ -594,8 +589,9 @@ eoq;
 		$concat = "";
 
 		foreach($ids as $id) {
-			if(!empty($concat))
-				$concat .= ", ";
+			if(!empty($concat)) {
+							$concat .= ", ";
+			}
 
 			$concat .= "'{$id}'";
 		}
@@ -916,20 +912,24 @@ eoq;
 	 */
 	function preflightEmailCache($cacheRoot) {
 		// base
-		if(!file_exists($cacheRoot))
-			mkdir_recursive(clean_path($cacheRoot));
+		if(!file_exists($cacheRoot)) {
+					mkdir_recursive(clean_path($cacheRoot));
+		}
 
 		// folders
-		if(!file_exists($cacheRoot."/folders"))
-			mkdir_recursive(clean_path("{$cacheRoot}/folders"));
+		if(!file_exists($cacheRoot."/folders")) {
+					mkdir_recursive(clean_path("{$cacheRoot}/folders"));
+		}
 
 		// messages
-		if(!file_exists($cacheRoot."/messages"))
-			mkdir_recursive(clean_path("{$cacheRoot}/messages"));
+		if(!file_exists($cacheRoot."/messages")) {
+					mkdir_recursive(clean_path("{$cacheRoot}/messages"));
+		}
 
 		// attachments
-		if(!file_exists($cacheRoot."/attachments"))
-			mkdir_recursive(clean_path("{$cacheRoot}/attachments"));
+		if(!file_exists($cacheRoot."/attachments")) {
+					mkdir_recursive(clean_path("{$cacheRoot}/attachments"));
+		}
 	}
 
 	function deleteEmailCacheForFolders($cacheRoot) {
@@ -1283,7 +1283,7 @@ eoq;
                 if($email->status == "sent")
                 {
                     $from = (isset($email->to_addrs_names) && !empty($email->to_addrs_names)) ? $email->to_addrs_names : $email->to_addrs;
-                }else{
+                } else{
                     $from = (isset($email->from_name) && !empty($email->from_name)) ? $email->from_name : $email->from_addr_name;
                 }
             }
@@ -1405,10 +1405,12 @@ eoq;
         	$showAssignTo = true;
 		} // if
 		if ($showAssignTo) {
-	        if(empty($email->assigned_user_id) && empty($email->id))
-	            $email->assigned_user_id = $current_user->id;
-	        if(empty($email->assigned_name) && empty($email->id))
-	            $email->assigned_user_name = $current_user->user_name;
+	        if(empty($email->assigned_user_id) && empty($email->id)) {
+	        	            $email->assigned_user_id = $current_user->id;
+	        }
+	        if(empty($email->assigned_name) && empty($email->id)) {
+	        	            $email->assigned_user_name = $current_user->user_name;
+	        }
 	        $sqs_objects["{$formName}_assigned_user_name"] = $qsd->getQSUser();
 		}
 		$smarty->assign("showAssignedTo",$showAssignTo);
@@ -1919,8 +1921,9 @@ function getSingleMessage($ie) {
 eoq;
 		}
 
-		 if(empty($out['meta']['email']['description']))
-                $out['meta']['email']['description'] = $mod_strings['LBL_EMPTY_EMAIL_BODY'];
+		 if(empty($out['meta']['email']['description'])) {
+		                 $out['meta']['email']['description'] = $mod_strings['LBL_EMPTY_EMAIL_BODY'];
+		 }
 
 		if($noCache) {
 			$GLOBALS['log']->debug("EMAILUI: getSingleMessage() NOT using cache file");
@@ -2111,7 +2114,7 @@ eoq;
 			                      "prospects",
 			                      "accounts"
 			                     );
-		}else{
+		} else{
 			$peopleTables = array($person);
 		}
 		$q = '';
@@ -2189,13 +2192,14 @@ eoq;
     	global $beanList, $current_user, $app_strings, $db;
     	$finalQuery = '';
 		$searchBeans = null;
-		if($beanType === 'LBL_DROPDOWN_LIST_ALL')
-			$searchBeans = array("users",
+		if($beanType === 'LBL_DROPDOWN_LIST_ALL') {
+					$searchBeans = array("users",
 			                     "contacts",
 			                     "leads",
 			                     "prospects",
 			                     "accounts"
 			                    );
+		}
 
     	if ($relatedBeanInfoArr == '' || empty($relatedBeanInfoArr['related_bean_type']) )
     	{
@@ -2209,13 +2213,13 @@ eoq;
 					    $q[] = "($searchq)";
 				    }
 				}
-				if (!empty($q))
-    			    $finalQuery .= implode("\n UNION ALL \n", $q);
+				if (!empty($q)) {
+				    			    $finalQuery .= implode("\n UNION ALL \n", $q);
+				}
+			} else {
+							$finalQuery = $this->findEmailFromBeanIds('', $beanType, $whereArr);
 			}
-			else
-				$finalQuery = $this->findEmailFromBeanIds('', $beanType, $whereArr);
-    	}
-    	else
+    	} else
     	{
     	    $class = $beanList[$relatedBeanInfoArr['related_bean_type']];
     	    $focus = new $class();
@@ -2228,20 +2232,22 @@ eoq;
     	            if ($focus->load_relationship($searchBean))
     	            {
     	                $data = $focus->$searchBean->get();
-    	                if (count($data) != 0)
-    	                $q[] = '('.$this->findEmailFromBeanIds($data, $searchBean, $whereArr).')';
+    	                if (count($data) != 0) {
+    	                    	                $q[] = '('.$this->findEmailFromBeanIds($data, $searchBean, $whereArr).')';
+    	                }
     	            }
     	        }
-    	        if (!empty($q))
-    	        $finalQuery .= implode("\n UNION ALL \n", $q);
-    	    }
-    	    else
+    	        if (!empty($q)) {
+    	            	        $finalQuery .= implode("\n UNION ALL \n", $q);
+    	        }
+    	    } else
     	    {
     	        if ($focus->load_relationship($beanType))
     	        {
     	            $data = $focus->$beanType->get();
-    	            if (count($data) != 0)
-    	            $finalQuery = $this->findEmailFromBeanIds($data, $beanType, $whereArr);
+    	            if (count($data) != 0) {
+    	                	            $finalQuery = $this->findEmailFromBeanIds($data, $beanType, $whereArr);
+    	            }
     	        }
     	    }
     	}
@@ -2500,8 +2506,9 @@ eoq;
 	 */
 	function preflightUserCache() {
 		$path = clean_path($this->userCacheDir);
-		if(!file_exists($this->userCacheDir))
-			mkdir_recursive($path);
+		if(!file_exists($this->userCacheDir)) {
+					mkdir_recursive($path);
+		}
 
 		$files = findAllFiles($path, array());
 
@@ -2604,8 +2611,9 @@ eoq;
 
         $userSystemOverride = $oe->getUsersMailerForSystemOverride($current_user->id);
         //Substitute in the users system override if its available.
-        if($userSystemOverride != null)
-		    $system = $userSystemOverride;
+        if($userSystemOverride != null) {
+        		    $system = $userSystemOverride;
+        }
 
         if( !empty($system->mail_smtpserver) )
         {
@@ -2732,8 +2740,9 @@ eoq;
 	 * @return string XML
 	 */
 	function arrayToXML($a, $paramName) {
-		if(!is_array($a))
-			return '';
+		if(!is_array($a)) {
+					return '';
+		}
 
 		$bad = array("<",">","'",'"',"&");
 		$good = array("&lt;", "&gt;", "&#39;", "&quot;","&amp;");
@@ -2786,17 +2795,18 @@ eoq;
 		    //Retrieve the related IE accounts.
             $relatedIEAccounts = $ie->retrieveByGroupFolderId($singleGroup['id']);
 
-            if(count($relatedIEAccounts) == 0)
-                $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY'];
-            else if(count($relatedIEAccounts) == 1)
+            if(count($relatedIEAccounts) == 0) {
+                            $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY'];
+            } else if(count($relatedIEAccounts) == 1)
             {
-                if($relatedIEAccounts[0]->status != 'Active' || $relatedIEAccounts[0]->mailbox_type == 'bounce')
-                    continue;
+                if($relatedIEAccounts[0]->status != 'Active' || $relatedIEAccounts[0]->mailbox_type == 'bounce') {
+                                    continue;
+                }
 
                 $server_url = $relatedIEAccounts[0]->server_url;
+            } else {
+                            $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS'];
             }
-            else
-                $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS'];
 
             $type = $mod_strings['LBL_MAILBOX_TYPE_GROUP_FOLDER'];
 		    $ieAccountsShowOptionsMeta[] = array("id" => $singleGroup['id'], "name" => $singleGroup['origName'], 'is_active' => $singleGroup['selected'],
@@ -3018,13 +3028,15 @@ eoq;
 
 		$count = ($count > 0) ? $count : 0;
 
-		if(isset($a['fromCache']))
-			$cached = ($a['fromCache'] == 1) ? 1 : 0;
-		else
-			$cached = ($fromCache) ? 1 : 0;
+		if(isset($a['fromCache'])) {
+					$cached = ($a['fromCache'] == 1) ? 1 : 0;
+		} else {
+					$cached = ($fromCache) ? 1 : 0;
+		}
 
-		if($data['mbox'] == 'undefined' || empty($data['mbox']))
-			$data['mbox'] = $app_strings['LBL_NONE'];
+		if($data['mbox'] == 'undefined' || empty($data['mbox'])) {
+					$data['mbox'] = $app_strings['LBL_NONE'];
+		}
 
 		$jsonOut = array('TotalCount' => $count, 'FromCache' => $cached, 'UnreadCount' => $unread, $resultsParam => $data['out']);
 

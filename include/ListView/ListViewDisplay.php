@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/ListView/ListViewData.php');
 require_once('include/MassUpdate.php');
@@ -47,30 +48,30 @@ require_once('include/MassUpdate.php');
 class ListViewDisplay {
     static $listViewCounter = 0;
 
-	var $show_mass_update_form = false;
-	var $show_action_dropdown = true;
+    public $show_mass_update_form = false;
+    public $show_action_dropdown = true;
 
 	/**
 	 * @var bool Show Bulk Action button as Delete link
 	 */
-	var $show_action_dropdown_as_delete = false;
+    public $show_action_dropdown_as_delete = false;
 
-	var $rowCount;
-	var $mass = null;
-	var $seed;
-	var $multi_select_popup;
-	var $lvd;
-	var $moduleString;
-	var $export = true;
-	var $multiSelect = true;
-	var $mailMerge = true;
-	var $should_process = true;
-	var $show_plus = false;
+    public $rowCount;
+    public $mass = null;
+    public $seed;
+    public $multi_select_popup;
+    public $lvd;
+    public $moduleString;
+    public $export = true;
+    public $multiSelect = true;
+    public $mailMerge = true;
+    public $should_process = true;
+    public $show_plus = false;
 	/*
 	 * Used in view.popup.php. Sometimes there are fields on the search form that are not referenced in the listviewdefs. If this
 	 * is the case, then the filterFields will be set and the related fields will not be referenced when calling create_new_list_query.
 	 */
-	var $mergeDisplayColumns = false;
+    public $mergeDisplayColumns = false;
     public $actionsMenuExtraItems = array();
 
 	/**
@@ -88,8 +89,7 @@ class ListViewDisplay {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -248,8 +248,9 @@ class ListViewDisplay {
 	 */
 	function buildSelectLink($id = 'select_link', $total=0, $pageTotal=0, $location="top") {
 		global $app_strings;
-		if ($pageTotal < 0)
-			$pageTotal = $total;
+		if ($pageTotal < 0) {
+					$pageTotal = $total;
+		}
 
 
         $total_label = "";
@@ -315,27 +316,34 @@ class ListViewDisplay {
             }
 
             // compose email
-            if ( $this->email )
-                $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            if ( $this->email ) {
+                            $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            }
             // mass update
             $mass = $this->getMassUpdate();
             $mass->setSugarBean($this->seed);
-            if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
-                $menuItems[] = $this->buildMassUpdateLink($location);
+            if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() ) {
+                            $menuItems[] = $this->buildMassUpdateLink($location);
+            }
             // merge
-            if ( $this->mailMerge )
-                $menuItems[] = $this->buildMergeLink(null, $location);
-            if ( $this->mergeduplicates )
-                $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            if ( $this->mailMerge ) {
+                            $menuItems[] = $this->buildMergeLink(null, $location);
+            }
+            if ( $this->mergeduplicates ) {
+                            $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            }
             // add to target list
-            if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) )
-                $menuItems[] = $this->buildTargetList($location);
+            if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) ) {
+                            $menuItems[] = $this->buildTargetList($location);
+            }
             // export
-            if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export )
-                $menuItems[] = $this->buildExportLink($location);
+            if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export ) {
+                            $menuItems[] = $this->buildExportLink($location);
+            }
 
-            foreach ( $this->actionsMenuExtraItems as $item )
-                $menuItems[] = $item;
+            foreach ( $this->actionsMenuExtraItems as $item ) {
+                            $menuItems[] = $item;
+            }
 
 
             if($this->delete && !$this->show_action_dropdown_as_delete) {
@@ -470,30 +478,34 @@ class ListViewDisplay {
 	 * The link can be disabled by setting module level duplicate_merge property to false
 	 * in the moudle's vardef file.
 	 *
+     * @param string $loc
 	 * @return string HTML
 	 */
-	protected function buildMergeDuplicatesLink($loc = 'top')
-	{
+    protected function buildMergeDuplicatesLink($loc = 'top')
+    {
         global $app_strings, $dictionary;
 
-        $return_string='';
-        $return_string.= isset($_REQUEST['module']) ? "&return_module={$_REQUEST['module']}" : "";
-        $return_string.= isset($_REQUEST['action']) ? "&return_action={$_REQUEST['action']}" : "";
-        $return_string.= isset($_REQUEST['record']) ? "&return_id={$_REQUEST['record']}" : "";
+        $return_string = '';
+        $return_string .= isset($_REQUEST['module']) ? "&return_module={$_REQUEST['module']}" : "";
+        $return_string .= isset($_REQUEST['action']) ? "&return_action={$_REQUEST['action']}" : "";
+        $return_string .= isset($_REQUEST['record']) ? "&return_id={$_REQUEST['record']}" : "";
         //need delete and edit access.
-		if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) or !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))) {
-			return "";
-		}
-
-        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true ) {
-            return "<a href='javascript:void(0)' ".
-                            "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_". $loc ."'".
-                            "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>".
-                            $app_strings['LBL_MERGE_DUPLICATES'].'</a>';
+        if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) ||
+            !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))
+        ) {
+            return "";
         }
 
-        return "";
-     }
+        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) &&
+            $dictionary[$this->seed->object_name]['duplicate_merge'] == true) {
+            return "<a href='javascript:void(0)' " .
+                "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_" . $loc . "'" .
+                "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>" .
+                $app_strings['LBL_MERGE_DUPLICATES'] . '</a>';
+        }
+
+        return '';
+    }
     /**
 	 * Builds the mail merge link
 	 *

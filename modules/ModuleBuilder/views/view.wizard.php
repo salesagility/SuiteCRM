@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
 require_once ('modules/ModuleBuilder/Module/StudioModuleFactory.php') ;
 require_once ('include/MVC/View/SugarView.php') ;
@@ -55,8 +58,9 @@ class ModuleBuilderViewWizard extends SugarView
 
 	function __construct()
 	{
-		if ( isset ( $_REQUEST [ 'view' ] ) )
-			$this->view = $_REQUEST [ 'view' ] ;
+		if ( isset ( $_REQUEST [ 'view' ] ) ) {
+					$this->view = $_REQUEST [ 'view' ] ;
+		}
 
 		$this->editModule = (! empty ( $_REQUEST [ 'view_module' ] ) ) ? $_REQUEST [ 'view_module' ] : null ;
 		$this->buttons = array(); // initialize so that modules without subpanels for example don't result in this being unset and causing problems in the smarty->assign
@@ -115,8 +119,9 @@ class ModuleBuilderViewWizard extends SugarView
 			$this->question = translate('LBL_QUESTION_EDIT') ;
 			$this->title = translate( 'LBL_STUDIO' );
 			global $current_user;
-			if (is_admin($current_user))
-				$this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ( 'LBL_BTN_EXPORT' ) . '">' ;
+			if (is_admin($current_user)) {
+							$this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ( 'LBL_BTN_EXPORT' ) . '">' ;
+			}
 
 			$this->help = 'studioHelp' ;
 		} else
@@ -178,10 +183,11 @@ class ModuleBuilderViewWizard extends SugarView
 					$this->title = translate( 'LBL_EDIT' ) . " " . $module->name ;
 					$this->help = 'moduleHelp' ;
 					global $current_user;
-					if (is_admin($current_user))
-                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
+					if (is_admin($current_user)) {
+					                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
                         . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\"" 
                         . translate( 'LBL_RESET_MODULE' ) . '">' ;
+					}
 			}
 		}
 	}

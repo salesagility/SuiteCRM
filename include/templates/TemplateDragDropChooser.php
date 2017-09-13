@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once("include/templates/Template.php");
 
 class TemplateDragDropChooser extends Template {
-    var $args;
+    public $args;
     function __construct() {
     }
 

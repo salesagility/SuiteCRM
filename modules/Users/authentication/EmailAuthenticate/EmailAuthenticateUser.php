@@ -47,7 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php');
 class EmailAuthenticateUser extends SugarAuthenticateUser {
-    var $passwordLength = 4;
+    public $passwordLength = 4;
 
 
     /**

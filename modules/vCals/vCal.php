@@ -1,69 +1,71 @@
 <?php
-    if (!defined('sugarEntry') || !sugarEntry) {
-        die('Not A Valid Entry Point');
-    }
-    /*********************************************************************************
-     * SugarCRM Community Edition is a customer relationship management program developed by
-     * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-     * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
-     * Copyright (C) 2011 - 2014 Salesagility Ltd.
-     *
-     * This program is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU Affero General Public License version 3 as published by the
-     * Free Software Foundation with the addition of the following permission added
-     * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
-     * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
-     * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT
-     * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
-     * details.
-     *
-     * You should have received a copy of the GNU Affero General Public License along with
-     * this program; if not, see http://www.gnu.org/licenses or write to the Free
-     * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-     * 02110-1301 USA.
-     *
-     * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
-     * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
-     *
-     * The interactive user interfaces in modified source and object code versions
-     * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU Affero General Public License version 3.
-     *
-     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
-     * these Appropriate Legal Notices must retain the display of the "Powered by
-     * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
-     * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
-     * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
-     ********************************************************************************/
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-    require_once('modules/Calendar/Calendar.php');
+require_once('modules/Calendar/Calendar.php');
 
     class vCal extends SugarBean {
 
         // Stored fields
-        var $id;
-        var $date_modified;
-        var $user_id;
-        var $content;
-        var $deleted;
-        var $type;
-        var $source;
-        var $module_dir = "vCals";
-        var $table_name = "vcals";
+        public $id;
+        public $date_modified;
+        public $user_id;
+        public $content;
+        public $deleted;
+        public $type;
+        public $source;
+        public $module_dir = "vCals";
+        public $table_name = "vcals";
 
-        var $object_name = "vCal";
-        var $tracker_visibility = false;
+        public $object_name = "vCal";
+        public $tracker_visibility = false;
 
-        var $new_schema = true;
+        public $new_schema = true;
 
-        var $field_defs = array();
+        public $field_defs = array();
 
         // This is used to retrieve related fields from form posts.
-        var $additional_column_fields = Array();
+        public $additional_column_fields = Array();
 
         const UTC_FORMAT = 'Ymd\THi00\Z';
         const EOL = "\r\n";
@@ -209,22 +211,8 @@
 
             // now insert the freebusy lines
             // retrieve cached freebusy lines from vcals
-            if ($timeOffset != 0) {
-                //               $freebusy = $this->create_sugar_freebusy($user_focus,$start_date_time,$end_date_time);
-                //               $str .= self::create_ical_string_from_array($freebusy[0]);
-                //               $str .= self::create_ical_string_from_array($freebusy[1]);
-                // TODO: add back once the previous works!!!!
-                //               if ($cached == true)
-                //               {
-                //                 $str .= $this->get_freebusy_lines_cache($user_focus);
-                //               }
-                //               // generate freebusy from Meetings and Calls
-                //               else
-                //               {
-                //$freebusy = self::create_ical_string_from_array($user_focus,$start_date_time,$end_date_time);
-
+            if ($timeOffset !== 0) {
                 $str .= $this->create_sugar_freebusy($user_focus, $start_date_time, $end_date_time);
-                //               }
             }
 
             // UID:20030724T213406Z-10358-1000-1-12@phoenix
@@ -383,5 +371,3 @@
         }
 
     }
-
-?>

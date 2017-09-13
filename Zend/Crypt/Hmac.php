@@ -29,8 +29,6 @@ require_once 'Zend/Crypt.php';
  * PHP implementation of the RFC 2104 Hash based Message Authentication Code
  * algorithm.
  *
- * @todo  Patch for refactoring failed tests (key block sizes >80 using internal algo)
- * @todo       Check if mhash() is a required alternative (will be PECL-only soon)
  * @category   Zend
  * @package    Zend_Crypt
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)

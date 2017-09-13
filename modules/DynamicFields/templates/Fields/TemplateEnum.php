@@ -41,13 +41,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/utils/array_utils.php');
 class TemplateEnum extends TemplateText{
-    var $max_size = 100;
-    var $len = 100;
-    var $type='enum';
-    var $ext1 = '';
-    var $default_value = '';
-    var $dependency ; // any dependency information
-    var $supports_unified_search = true;
+    public $max_size = 100;
+    public $len = 100;
+    public $type='enum';
+    public $ext1 = '';
+    public $default_value = '';
+    public $dependency ; // any dependency information
+    public $supports_unified_search = true;
 
     function __construct ()
     {

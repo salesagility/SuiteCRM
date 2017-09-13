@@ -344,7 +344,6 @@ class Zend_Oauth_Provider
         $our_sign = $util->sign($params, $params['oauth_signature_method'], $this->consumer_secret,
             $this->token_secret, $method, $this->url->getUri());
         if($req_sign != $our_sign) {
-            // TODO: think how to extract signature base string
             $this->problem = $our_sign;
             $GLOBALS['log']->fatal("Bad signature: $req_sign != $our_sign");
             throw new Zend_Oauth_Exception("Invalid signature", self::INVALID_SIGNATURE);

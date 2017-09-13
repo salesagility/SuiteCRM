@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,81 +34,85 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Meeting extends SugarBean {
 	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $assigned_user_id;
-	var $modified_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $description;
-	var $name;
-	var $location;
-	var $status;
-	var $type;
-	var $date_start;
-	var $time_start;
-	var $date_end;
-	var $duration_hours;
-	var $duration_minutes;
-	var $time_meridiem;
-	var $parent_type;
-	var $parent_type_options;
-	var $parent_id;
-	var $field_name_map;
-	var $contact_id;
-	var $user_id;
-	var $meeting_id;
-	var $reminder_time;
-	var $reminder_checked;
-	var $email_reminder_time;
-	var $email_reminder_checked;
-	var $email_reminder_sent;
-	var $required;
-	var $accept_status;
-	var $parent_name;
-	var $contact_name;
-	var $contact_phone;
-	var $contact_email;
-	var $account_id;
-	var $opportunity_id;
-	var $case_id;
-	var $assigned_user_name;
-	var $outlook_id;
-	var $sequence;
-	var $syncing = false;
-	var $recurring_source;
+	public $id;
+	public $date_entered;
+	public $date_modified;
+	public $assigned_user_id;
+	public $modified_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $name;
+	public $location;
+	public $status;
+	public $type;
+	public $date_start;
+	public $time_start;
+	public $date_end;
+	public $duration_hours;
+	public $duration_minutes;
+	public $time_meridiem;
+	public $parent_type;
+	public $parent_type_options;
+	public $parent_id;
+	public $field_name_map;
+	public $contact_id;
+	public $user_id;
+	public $meeting_id;
+	public $reminder_time;
+	public $reminder_checked;
+	public $email_reminder_time;
+	public $email_reminder_checked;
+	public $email_reminder_sent;
+	public $required;
+	public $accept_status;
+	public $parent_name;
+	public $contact_name;
+	public $contact_phone;
+	public $contact_email;
+	public $account_id;
+	public $opportunity_id;
+	public $case_id;
+	public $assigned_user_name;
+	public $outlook_id;
+	public $sequence;
+	public $syncing = false;
+	public $recurring_source;
 
-	var $update_vcal = true;
-	var $contacts_arr;
-	var $users_arr;
-	var $meetings_arr;
+	public $update_vcal = true;
+	public $contacts_arr;
+	public $users_arr;
+	public $meetings_arr;
 	// when assoc w/ a user/contact:
-	var $minutes_value_default = 15;
-	var $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
-	var $table_name = "meetings";
-	var $rel_users_table = "meetings_users";
-	var $rel_contacts_table = "meetings_contacts";
-	var $rel_leads_table = "meetings_leads";
-	var $module_dir = "Meetings";
-	var $object_name = "Meeting";
+	public $minutes_value_default = 15;
+	public $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
+	public $table_name = "meetings";
+	public $rel_users_table = "meetings_users";
+	public $rel_contacts_table = "meetings_contacts";
+	public $rel_leads_table = "meetings_leads";
+	public $module_dir = "Meetings";
+	public $object_name = "Meeting";
 
-	var $importable = true;
+	public $importable = true;
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name', 'accept_status');
-	var $relationship_fields = array('account_id'=>'accounts','opportunity_id'=>'opportunity','case_id'=>'case',
+	public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name', 'accept_status');
+	public $relationship_fields = array('account_id'=>'accounts','opportunity_id'=>'opportunity','case_id'=>'case',
 									 'assigned_user_id'=>'users','contact_id'=>'contacts', 'user_id'=>'users', 'meeting_id'=>'meetings');
 	// so you can run get_users() twice and run query only once
-	var $cached_get_users = null;
-	var $new_schema = true;
-    var $date_changed = false;
+	public $cached_get_users = null;
+	public $new_schema = true;
+    public $date_changed = false;
 
 	/**
 	 * sole constructor
@@ -933,34 +937,29 @@ class Meeting extends SugarBean {
 } // end class def
 
 // External API integration, for the dropdown list of what external API's are available
-//TODO: do we really need focus, name and view params for this function
 function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null)
 {
-	global $dictionary, $app_list_strings;
+    global $dictionary, $app_list_strings;
 
-	$cacheKeyName = 'meetings_type_drop_down';
+    $cacheKeyName = 'meetings_type_drop_down';
 
     $apiList = sugar_cache_retrieve($cacheKeyName);
-    if ($apiList === null)
-    {
+    if ($apiList === null) {
         require_once('include/externalAPI/ExternalAPIFactory.php');
 
         $apiList = ExternalAPIFactory::getModuleDropDown('Meetings');
-        $apiList = array_merge(array('Sugar'=>$GLOBALS['app_list_strings']['eapm_list']['Sugar']), $apiList);
+        $apiList = array_merge(array('Sugar' => $GLOBALS['app_list_strings']['eapm_list']['Sugar']), $apiList);
         sugar_cache_put($cacheKeyName, $apiList);
     }
 
-	if(!empty($value) && empty($apiList[$value]))
-	{
-		$apiList[$value] = $value;
+    if (!empty($value) && empty($apiList[$value])) {
+        $apiList[$value] = $value;
     }
-	//bug 46294: adding list of options to dropdown list (if it is not the default list)
-    if ($dictionary['Meeting']['fields']['type']['options'] != "eapm_list")
-    {
+    if ($dictionary['Meeting']['fields']['type']['options'] !== "eapm_list") {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
 
-	return $apiList;
+    return $apiList;
 }
 
 /**

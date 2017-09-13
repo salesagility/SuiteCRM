@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Job queue job
@@ -77,17 +80,17 @@ class SchedulersJob extends Basic
     public $percent_complete; // how much of the job is done
 
 	// standard SugarBean child attrs
-	var $table_name		= "job_queue";
-	var $object_name		= "SchedulersJob";
-	var $module_dir		= "SchedulersJobs";
-	var $new_schema		= true;
-	var $process_save_dates = true;
+	public $table_name		= "job_queue";
+	public $object_name		= "SchedulersJob";
+	public $module_dir		= "SchedulersJobs";
+	public $new_schema		= true;
+	public $process_save_dates = true;
 	// related fields
-	var $job_name;	// the Scheduler's 'name' field
-	var $job;		// the Scheduler's 'job' field
+	public $job_name;	// the Scheduler's 'name' field
+	public $job;		// the Scheduler's 'job' field
 	// object specific attributes
 	public $user; // User object
-	var $scheduler; // Scheduler parent
+	public $scheduler; // Scheduler parent
 	public $min_interval = 30; // minimal interval for job reruns
 	protected $job_done = true;
     protected $old_user;
@@ -161,61 +164,78 @@ class SchedulersJob extends Basic
 	///////////////////////////////////////////////////////////////////////////
 	////	SCHEDULERSJOB HELPER FUNCTIONS
 
-	/**
-	 * This function takes a passed URL and cURLs it to fake multi-threading with another httpd instance
-	 * @param	$job		String in URI-clean format
-	 * @param	$timeout	Int value in secs for cURL to timeout. 30 default.
-	 */
-	public function fireUrl($job, $timeout=30)
-	{
-	// TODO: figure out what error is thrown when no more apache instances can be spun off
-	    // cURL inits
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $job); // set url
-		curl_setopt($ch, CURLOPT_FAILONERROR, true); // silent failure (code >300);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // do not follow location(); inits - we always use the current
-		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false);  // not thread-safe
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return into a variable to continue program execution
-		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // never times out - bad idea?
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 secs for connect timeout
-		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);  // open brand new conn
-		curl_setopt($ch, CURLOPT_HEADER, true); // do not return header info with result
-		curl_setopt($ch, CURLOPT_NOPROGRESS, true); // do not have progress bar
-		$urlparts = parse_url($job);
-		if(empty($urlparts['port'])) {
-		    if($urlparts['scheme'] == 'https'){
-				$urlparts['port'] = 443;
-			} else {
-				$urlparts['port'] = 80;
-			}
-		}
-		curl_setopt($ch, CURLOPT_PORT, $urlparts['port']); // set port as reported by Server
-		//TODO make the below configurable
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // most customers will not have Certificate Authority account
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // most customers will not have Certificate Authority account
+    /**
+     * This function takes a passed URL and cURLs it to fake multi-threading with another httpd instance
+     *
+     * @param string $job String in URI-clean format
+     * @param int $timeout Int value in secs for cURL to timeout. 30 default.
+     * @return string|bool
+     */
+    public function fireUrl($job, $timeout = 30)
+    {
+        // cURL inits
+        $ch = curl_init();
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $job);
+        // silent failure (code >300);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        // do not follow location(); inits - we always use the current
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+        // not thread-safe
+        curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false);
+        // return into a variable to continue program execution
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // never times out - bad idea?
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        // 5 secs for connect timeout
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        // open brand new conn
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+        // do not return header info with result
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        // do not have progress bar
+        curl_setopt($ch, CURLOPT_NOPROGRESS, true);
+        $urlparts = parse_url($job);
+        if (empty($urlparts['port'])) {
+            if ($urlparts['scheme'] == 'https') {
+                $urlparts['port'] = 443;
+            } else {
+                $urlparts['port'] = 80;
+            }
+        }
+        // set port as reported by Server
+        curl_setopt($ch, CURLOPT_PORT, $urlparts['port']);
+        // most customers will not have Certificate Authority account
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        // most customers will not have Certificate Authority account
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-		curl_setopt($ch, CURLOPT_NOSIGNAL, true); // ignore any cURL signals to PHP (for multi-threading)
-		$result = curl_exec($ch);
-		$cInfo = curl_getinfo($ch);	//url,content_type,header_size,request_size,filetime,http_code
-									//ssl_verify_result,total_time,namelookup_time,connect_time
-									//pretransfer_time,size_upload,size_download,speed_download,
-									//speed_upload,download_content_length,upload_content_length
-									//starttransfer_time,redirect_time
-		if(curl_errno($ch)) {
-		    $this->errors .= curl_errno($ch)."\n";
-		}
-		curl_close($ch);
+        // ignore any cURL signals to PHP (for multi-threading)
+        curl_setopt($ch, CURLOPT_NOSIGNAL, true);
+        $result = curl_exec($ch);
+        // url,content_type,header_size,request_size,filetime,http_code
+        // ssl_verify_result,total_time,namelookup_time,connect_time
+        // pretransfer_time,size_upload,size_download,speed_download,
+        // speed_upload,download_content_length,upload_content_length
+        // starttransfer_time,redirect_time
+        $cInfo = curl_getinfo($ch);
+        if (curl_errno($ch)) {
+            $this->errors .= curl_errno($ch) . "\n";
+        }
+        curl_close($ch);
 
-		if($result !== FALSE && $cInfo['http_code'] < 400) {
-			$GLOBALS['log']->debug("----->Firing was successful: $job");
-			$GLOBALS['log']->debug('----->WTIH RESULT: '.strip_tags($result).' AND '.strip_tags(print_r($cInfo, true)));
-			return true;
-		} else {
-			$GLOBALS['log']->fatal("Job failed: $job");
-			return false;
-		}
-	}
+        if ($result !== false && $cInfo['http_code'] < 400) {
+            $GLOBALS['log']->debug("----->Firing was successful: $job");
+            $GLOBALS['log']->debug('----->WTIH RESULT: ' . strip_tags($result) . ' AND ' . strip_tags(print_r($cInfo,
+                    true)));
+
+            return true;
+        } else {
+            $GLOBALS['log']->fatal("Job failed: $job");
+            return false;
+        }
+    }
 	////	END SCHEDULERSJOB HELPER FUNCTIONS
 	///////////////////////////////////////////////////////////////////////////
 
@@ -268,7 +288,6 @@ class SchedulersJob extends Basic
      */
     public function onFailureRetry()
     {
-        // TODO: what we do if job fails, notify somebody?
         $this->call_custom_logic("job_failure_retry");
     }
 
@@ -277,7 +296,6 @@ class SchedulersJob extends Basic
      */
     public function onFinalFailure()
     {
-        // TODO: what we do if job fails, notify somebody?
         $this->call_custom_logic("job_failure");
     }
 

@@ -40,7 +40,7 @@
  require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
  require_once('ModuleInstall/PackageManager/PackageManager.php');
  class PackageController{
-        var $_pm;
+     public $_pm;
 
         /**
          * Constructor: this class is called from the the ajax call and handles invoking the correct

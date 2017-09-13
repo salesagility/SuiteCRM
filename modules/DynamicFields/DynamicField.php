@@ -1,16 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -21,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -39,9 +34,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class DynamicField
 {
     public $use_existing_labels = false; // this value is set to true by install_custom_fields() in ModuleInstaller.php; everything else expects it to be false
@@ -558,6 +558,7 @@ class DynamicField
      * Method required by the TemplateRelatedTextField->save() method
      * Taken from MBModule's implementation
      */
+
     /**
      * @param string $name
      * @param string $type
@@ -565,8 +566,8 @@ class DynamicField
      */
     public function fieldExists($name = '', $type = '')
     {
-        // must get the vardefs from the GLOBAL array as $bean->field_defs does not contain the values from the cache at this point
-        // TODO: fix this - saveToVardefs() updates GLOBAL['dictionary'] correctly, obtaining its information directly from the fields_meta_data table via buildCache()...
+        // must get the vardefs from the GLOBAL array as $bean->field_defs
+        // does not contain the values from the cache at this point
         $name = $this->getDBName($name);
         $vardefs = $GLOBALS['dictionary'][$this->bean->object_name]['fields'];
         if (!empty($vardefs)) {
@@ -974,8 +975,8 @@ class DynamicField
      *
      * @param string $displayLabel The label value to be displayed
      *
-     * @return string The core of the system label name - returns currency_id5 for example, when the full label would then be LBL_CURRENCY_ID5
-     *                TODO: Only the core is returned for historical reasons - switch to return the real system label
+     * @return string The core of the system label name -
+     * returns currency_id5 for example, when the full label would then be LBL_CURRENCY_ID5
      */
     public function addLabel($displayLabel)
     {

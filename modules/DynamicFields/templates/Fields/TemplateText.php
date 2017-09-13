@@ -40,8 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
 class TemplateText extends TemplateField{
-	var $type='varchar';
-    var $supports_unified_search = true;
+    public $type='varchar';
+    public $supports_unified_search = true;
 
     function __construct(){
         parent::__construct();

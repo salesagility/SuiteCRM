@@ -45,7 +45,7 @@
  */
 require_once('include/EditView/EditView2.php');
  class ViewMultiedit extends SugarView{
- 	var $type ='edit';
+     public $type ='edit';
 
  	public function __construct(){
  		parent::__construct();

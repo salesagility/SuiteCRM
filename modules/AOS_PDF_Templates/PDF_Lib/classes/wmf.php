@@ -2,8 +2,8 @@
 
 class wmf {
 
-var $mpdf = null;
-var $gdiObjectArray;
+    public $mpdf = null;
+    public $gdiObjectArray;
 
 function wmf(&$mpdf) {
 	$this->mpdf = $mpdf;

@@ -44,14 +44,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/ListView/ListViewDisplay.php');
 
 class ListViewXTPL extends ListViewDisplay{
-	var $row_block = 'main.row';
-	var $main_block = 'main';
-	var $pro_block = 'main.row.pro';
-	var $os_block  = 'main.row.os';
-	var $nav_block = 'main.list_nav_row';
-	var $pro_nav_block = 'main.pro_nav';
-	var $data;
-	var $xtpl;
+    public $row_block = 'main.row';
+    public $main_block = 'main';
+    public $pro_block = 'main.row.pro';
+    public $os_block  = 'main.row.os';
+    public $nav_block = 'main.list_nav_row';
+    public $pro_nav_block = 'main.pro_nav';
+    public $data;
+    public $xtpl;
 
 	function __construct() {
 		parent::__construct();
@@ -234,6 +234,3 @@ class ListViewXTPL extends ListViewDisplay{
 		}
 	}
 }
-
-
-?>

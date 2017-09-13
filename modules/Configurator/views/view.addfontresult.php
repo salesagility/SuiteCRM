@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/SugarView.php');
 class ConfiguratorViewAddFontResult extends SugarView {
-   var $log="";
+    public $log="";
     /**
      * display the form
      */

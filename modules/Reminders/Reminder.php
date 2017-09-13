@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Reminder class
@@ -46,23 +51,23 @@ class Reminder extends Basic
 
     const UPGRADE_VERSION = '7.4.3';
 
-    var $name;
+    public $name;
 
-    var $new_schema = true;
-    var $module_dir = 'Reminders';
-    var $object_name = 'Reminder';
-    var $table_name = 'reminders';
-    var $tracker_visibility = false;
-    var $importable = false;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'Reminders';
+    public $object_name = 'Reminder';
+    public $table_name = 'reminders';
+    public $tracker_visibility = false;
+    public $importable = false;
+    public $disable_row_level_security = true;
 
-    var $popup;
-    var $email;
-    var $email_sent = false;
-    var $timer_popup;
-    var $timer_email;
-    var $related_event_module;
-    var $related_event_module_id;
+    public $popup;
+    public $email;
+    public $email_sent = false;
+    public $timer_popup;
+    public $timer_email;
+    public $related_event_module;
+    public $related_event_module_id;
 
     private static $remindersData = array();
 
@@ -635,6 +640,11 @@ class Reminder extends Basic
         return $ret;
     }
 
+    /**
+     * @param array $invitee
+     * @return string
+     * @throws Exception Thrown if invitee module type is unknown
+     */
     private static function getRelatedInviteeModuleFromInviteeArray($invitee)
     {
         if (array_key_exists('user_id', $invitee)) {
@@ -646,11 +656,14 @@ class Reminder extends Basic
         if (array_key_exists('contact_id', $invitee)) {
             return 'Contacts';
         }
-        // TODO:!!!!
         throw new Exception('Unknown invitee module type');
-        //return null;
     }
 
+    /**
+     * @param $invitee
+     * @return mixed
+     * @throws Exception Thrown if invitee module type is unknown
+     */
     private static function getRelatedInviteeModuleIdFromInviteeArray($invitee)
     {
         if (array_key_exists('user_id', $invitee)) {
@@ -662,9 +675,7 @@ class Reminder extends Basic
         if (array_key_exists('contact_id', $invitee)) {
             return $invitee['contact_id'];
         }
-        // TODO:!!!!
         throw new Exception('Unknown invitee type');
-        //return null;
     }
 
     /**
@@ -701,17 +712,15 @@ class Reminder extends Basic
         return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
     }
 
-    /*
-     * @todo implenent it
+    /**
+     * @param SugarBean $event
+     * @throws Exception
      */
     public static function getRemindersListInlineEditView(SugarBean $event)
     {
-        // TODO: getEditFieldHTML() function in InlineEditing.php:218 doesn't pass the Bean ID to this custom inline edit view function but we have to know which Bean are in the focus to editing.
         if (!$event->id) {
-            throw new Exception("No GUID for edit.");
+            throw new Exception('No GUID for edit.');
         }
     }
 
 }
-
-?>

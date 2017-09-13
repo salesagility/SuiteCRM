@@ -42,8 +42,8 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 
 class TemplateDynamicenum extends TemplateEnum
 {
-    var $type = 'dynamicenum';
-    var $parentenum = '';
+    public $type = 'dynamicenum';
+    public $parentenum = '';
 
     function __construct()
     {

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButton
 {
@@ -60,8 +59,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 				if(!empty($defines['focus']->$value))
 				{
 					$additionalFormFields[$key] = $defines['focus']->$value;
-				}
-				else
+				} else
 				{
 					$additionalFormFields[$key] = '';
 				}
@@ -71,8 +69,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 		if(!empty($this->module))
 		{
 			$defines['child_module_name'] = $this->module;
-		}
-		else
+		} else
 		{
 			$defines['child_module_name'] = $defines['module'];
 		}
@@ -104,8 +101,9 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
             $additionalFormFields['return_name'] = $defines['focus']->name;
 		}
 		
-		if(!empty($defines['view']))
-		$button .= '<input type="hidden" name="target_view" value="'. $defines['view'] . '" />';
+		if(!empty($defines['view'])) {
+				$button .= '<input type="hidden" name="target_view" value="'. $defines['view'] . '" />';
+		}
 		$button .= '<input type="hidden" name="to_pdf" value="true" />';
         $button .= '<input type="hidden" name="tpl" value="QuickCreate.tpl" />';
 		$button .= '<input type="hidden" name="return_module" value="' . $currentModule . "\" />\n";
@@ -119,8 +117,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 		{
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_type'] = 'Accounts';
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_type'] = $defines['focus']->module_dir;
 			}
 		}
@@ -129,8 +126,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_name'] = $defines['focus']->account_name;
 				$additionalFormFields['account_name'] = $defines['focus']->account_name;
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_name'] = $defines['focus']->name;
 			}
 		}
@@ -139,8 +135,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_id'] = $defines['focus']->account_id;
 				$additionalFormFields['account_id'] = $defines['focus']->account_id;
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_id'] = $defines['focus']->id;
 			}
 		}
@@ -149,15 +144,27 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
             //set variables to account name, or parent account name
             if(strtolower($defines['parent_bean_name']) == 'account' ){
                 //if account is parent bean, then get focus id/focus name
-                if(isset($defines['focus']->id))$additionalFormFields['account_id'] = $defines['focus']->id;
-                if(isset($defines['focus']->name))$additionalFormFields['account_name'] = $defines['focus']->name;
-            }elseif(strtolower($defines['parent_bean_name']) == 'quote' ){
+                if(isset($defines['focus']->id)) {
+                    $additionalFormFields['account_id'] = $defines['focus']->id;
+                }
+                if(isset($defines['focus']->name)) {
+                    $additionalFormFields['account_name'] = $defines['focus']->name;
+                }
+            } elseif(strtolower($defines['parent_bean_name']) == 'quote' ){
                 //if quote is parent bean, then get billing_account_id/billing_account_name
-                if(isset($defines['focus']->billing_account_id))$additionalFormFields['account_id'] = $defines['focus']->billing_account_id;
-                if(isset($defines['focus']->billing_account_name))$additionalFormFields['account_name'] = $defines['focus']->billing_account_name;
-            }else{
-                if(isset($defines['focus']->account_id))$additionalFormFields['account_id'] = $defines['focus']->account_id;
-                if(isset($defines['focus']->account_name))$additionalFormFields['account_name'] = $defines['focus']->account_name;
+                if(isset($defines['focus']->billing_account_id)) {
+                    $additionalFormFields['account_id'] = $defines['focus']->billing_account_id;
+                }
+                if(isset($defines['focus']->billing_account_name)) {
+                    $additionalFormFields['account_name'] = $defines['focus']->billing_account_name;
+                }
+            } else{
+                if(isset($defines['focus']->account_id)) {
+                    $additionalFormFields['account_id'] = $defines['focus']->account_id;
+                }
+                if(isset($defines['focus']->account_name)) {
+                    $additionalFormFields['account_name'] = $defines['focus']->account_name;
+                }
             }
         }
 

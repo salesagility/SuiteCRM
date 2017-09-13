@@ -38,46 +38,46 @@ define("GF_TWOBYTWO",(1 << 7));
 
 class TTFontFile {
 
-var $unAGlyphs;	// mPDF 5.4.05
-var $panose;
-var $maxUni;
-var $sFamilyClass;
-var $sFamilySubClass;
-var $sipset;
-var $smpset;
-var $_pos;
-var $numTables;
-var $searchRange;
-var $entrySelector;
-var $rangeShift;
-var $tables;
-var $otables;
-var $filename;
-var $fh;
-var $glyphPos;
-var $charToGlyph;
-var $ascent;
-var $descent;
-var $name;
-var $familyName;
-var $styleName;
-var $fullName;
-var $uniqueFontID;
-var $unitsPerEm;
-var $bbox;
-var $capHeight;
-var $stemV;
-var $italicAngle;
-var $flags;
-var $underlinePosition;
-var $underlineThickness;
-var $charWidths;
-var $defaultWidth;
-var $maxStrLenRead;
-var $numTTCFonts;
-var $TTCFonts;
-var $maxUniChar;
-var $kerninfo;
+    public $unAGlyphs;    // mPDF 5.4.05
+    public $panose;
+    public $maxUni;
+    public $sFamilyClass;
+    public $sFamilySubClass;
+    public $sipset;
+    public $smpset;
+    public $_pos;
+    public $numTables;
+    public $searchRange;
+    public $entrySelector;
+    public $rangeShift;
+    public $tables;
+    public $otables;
+    public $filename;
+    public $fh;
+    public $glyphPos;
+    public $charToGlyph;
+    public $ascent;
+    public $descent;
+    public $name;
+    public $familyName;
+    public $styleName;
+    public $fullName;
+    public $uniqueFontID;
+    public $unitsPerEm;
+    public $bbox;
+    public $capHeight;
+    public $stemV;
+    public $italicAngle;
+    public $flags;
+    public $underlinePosition;
+    public $underlineThickness;
+    public $charWidths;
+    public $defaultWidth;
+    public $maxStrLenRead;
+    public $numTTCFonts;
+    public $TTCFonts;
+    public $maxUniChar;
+    public $kerninfo;
 
 	function TTFontFile() {
 		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)

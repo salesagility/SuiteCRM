@@ -837,8 +837,7 @@ class OneLogin_Saml2_Settings
      * Validates an XML SP Metadata.
      *
      * @param string $xml Metadata's XML that will be validate
-     *
-     * @return Array The list of found errors
+     * @return array The list of found errors
      */
     public function validateMetadata($xml)
     {
@@ -869,9 +868,6 @@ class OneLogin_Saml2_Settings
                 }
             }
         }
-
-        // TODO: Support Metadata Sign Validation
-
         return $errors;
     }
 
