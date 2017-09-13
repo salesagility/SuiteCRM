@@ -55,7 +55,8 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
         //if the contract has been executed or selected_revision is same as latest revision
         //then hide the latest button.
         //if the contract state is executed or document is not a template hide this action.
-        if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS'] == 'executed') or
+        if ((!empty($layout_def['fields']['CONTRACT_STATUS']) &&
+                $layout_def['fields']['CONTRACT_STATUS'] == 'executed') ||
             $layout_def['fields']['SELECTED_REVISION_ID'] == $layout_def['fields']['LATEST_REVISION_ID']
         ) {
             return "";
@@ -76,12 +77,10 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
             null, null, '.gif', $app_strings['LNK_GET_LATEST']);
         if ($layout_def['EditView']) {
             return '<a href="' . $href . '"' . "title ='" . $app_strings['LNK_GET_LATEST_TOOLTIP'] . "'"
-                . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] . '</a>&nbsp;';
-        } else {
-            return '';
+                . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] .
+                '</a>&nbsp;';
         }
+
+        return '';
     }
-
 }
-
-?>

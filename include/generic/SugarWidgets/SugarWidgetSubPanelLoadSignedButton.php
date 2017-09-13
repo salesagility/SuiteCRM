@@ -70,16 +70,16 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
         $edit_icon_html = SugarThemeRegistry::current()->getImage('loadSignedDocument', 'align="absmiddle" border="0"',
             null, null, '.gif', $app_strings['LNK_LOAD_SIGNED']);
         //if the contract state is executed or document is not a template hide this action.
-        if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS'] == 'executed') or
+        if ((!empty($layout_def['fields']['CONTRACT_STATUS']) &&
+                $layout_def['fields']['CONTRACT_STATUS'] == 'executed') ||
             empty($layout_def['fields']['IS_TEMPLATE']) or $layout_def['fields']['IS_TEMPLATE'] == 0
         ) {
             return "";
         }
 
         return '<a href="' . $href . '"' . "title ='" . $app_strings['LNK_LOAD_SIGNED_TOOLTIP'] . "'"
-            . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_LOAD_SIGNED'] . '</a>&nbsp;';
+            . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_LOAD_SIGNED'] .
+            '</a>&nbsp;';
     }
 
 }
-
-?>
