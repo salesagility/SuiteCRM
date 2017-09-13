@@ -68,7 +68,8 @@ class JsonRPCServer
     /**
      * JsonRPCServer constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->jsonParser = getJSONobj();
         $this->jsonServerUtils = new JsonRPCServerUtils();
         $this->jsonServerCalls = new JsonRPCServerCalls();
@@ -98,13 +99,13 @@ class JsonRPCServer
 
         session_start();
         $log->debug('JSON_SERVER:session started');
-        
+
         if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] !== '') {
             $current_language = $_SESSION['authenticated_user_language'];
         } else {
             $current_language = $sugar_config['default_language'];
         }
-        
+
         $log->debug('JSON_SERVER: current_language:' . $current_language);
 
         if (strtolower($_SERVER['REQUEST_METHOD']) === 'get') {
@@ -131,6 +132,7 @@ class JsonRPCServer
 
         if ($current_user === null) {
             $response['error'] = array('error_msg' => 'user not logged in');
+
             return $response;
         }
 
@@ -143,25 +145,29 @@ class JsonRPCServer
 
         if (!is_array($request)) {
             $response['error'] = array('error_msg' => 'malformed request');
+
             return $response;
         }
 
         // make sure required RPC fields are set
         if (empty($request['method']) || empty($request['id'])) {
             $response['error'] = array('error_msg' => 'missing parameters');
+
             return $response;
         }
 
         $response['id'] = $request['id'];
 
         if (method_exists($this->jsonServerCalls, $request['method'])) {
-            $response = call_user_func(array($this->jsonServerCalls, $request['method']), $request['id'], $request['params']);
-            if(!empty($response)) {
+            $response = call_user_func(array($this->jsonServerCalls, $request['method']), $request['id'],
+                $request['params']);
+            if (!empty($response)) {
                 return $response;
             }
         }
 
         $response['error'] = array('error_msg' => 'method:' . $request['method'] . ' not supported');
+
         return $response;
 
     }
