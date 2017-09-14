@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SyncInboundEmailAccountsException extends Exception {
+class SyncInboundEmailAccountsException extends Exception
+{
 
     const UNKNOWN_ERROR = 100;
     const PROCESS_OUTPUT_CLEANUP_ERROR = 110;

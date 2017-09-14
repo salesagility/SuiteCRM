@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $layout_defs['Opportunities'] = array(
     // list of what Subpanels to show in the DetailView
@@ -186,7 +189,8 @@ $layout_defs['Opportunities'] = array(
             'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopCreateLeadNameButton'),
-                array('widget_class' => 'SubPanelTopSelectButton',
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'Opportunities',
                     'mode' => 'MultiSelect',
                 ),
@@ -203,7 +207,8 @@ $layout_defs['Opportunities'] = array(
             'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopCreateAccountNameButton'),
-                array('widget_class' => 'SubPanelTopSelectButton',
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'Opportunities',
                     'mode' => 'MultiSelect',
                     'initial_filter_fields' => array('account_id' => 'account_id', 'account_name' => 'account_name'),
@@ -243,7 +248,13 @@ $layout_defs['Opportunities'] = array(
             'get_subpanel_data' => 'aos_contracts',
         ),
         'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'SecurityGroups',
+                    'mode' => 'MultiSelect'
+                ),
+            ),
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',

@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,72 +34,75 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 <!-- BEGIN: main -->
 {ERROR_STRING}
 <form name="DetailView" method="POST" action="index.php">
-	<input type="hidden" name="module" value="EmailMarketing">
-	<input type="hidden" name="record" value="{ID}">
-	<input type="hidden" name="action" value="DetailView">
-	<input type="hidden" name="campaign_id" value="{CAMPAIGN_ID}">
-	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
-	<input type="hidden" name="return_id" value="{RETURN_ID}">
-	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
-	<input type="hidden" name="isDuplicate" value="">	
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
-		<tr>
-			<td>
-				<input title="{APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{APP.LBL_EDIT_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='EmailMarketing'; this.form.return_action.value='DetailView'; this.form.return_id.value='{ID}'; this.form.action.value='EditView'" type="submit" name="Edit" value="  {APP.LBL_EDIT_BUTTON_LABEL}  ">
-				<input title="{APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{APP.LBL_DUPLICATE_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.isDuplicate.value=true; this.form.action.value='EditView';" type="submit" name="Duplicate" value=" {APP.LBL_DUPLICATE_BUTTON_LABEL} ">
-				<input title="{APP.LBL_DELETE_BUTTON_TITLE}" accessKey="{APP.LBL_DELETE_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.action.value='Delete'; return confirm('{APP.NTC_DELETE_CONFIRMATION}')" type="submit" name="Delete" value=" {APP.LBL_DELETE_BUTTON_LABEL} ">
-			</td>
-			<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
-			<td align='right'>{ADMIN_EDIT}</td>
-		</tr>
-	</table>
+    <input type="hidden" name="module" value="EmailMarketing">
+    <input type="hidden" name="record" value="{ID}">
+    <input type="hidden" name="action" value="DetailView">
+    <input type="hidden" name="campaign_id" value="{CAMPAIGN_ID}">
+    <input type="hidden" name="return_module" value="{RETURN_MODULE}">
+    <input type="hidden" name="return_id" value="{RETURN_ID}">
+    <input type="hidden" name="return_action" value="{RETURN_ACTION}">
+    <input type="hidden" name="isDuplicate" value="">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td>
+                <input title="{APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{APP.LBL_EDIT_BUTTON_KEY}" class="button"
+                       onclick="this.form.return_module.value='EmailMarketing'; this.form.return_action.value='DetailView'; this.form.return_id.value='{ID}'; this.form.action.value='EditView'"
+                       type="submit" name="Edit" value="  {APP.LBL_EDIT_BUTTON_LABEL}  ">
+                <input title="{APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{APP.LBL_DUPLICATE_BUTTON_KEY}"
+                       class="button"
+                       onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.isDuplicate.value=true; this.form.action.value='EditView';"
+                       type="submit" name="Duplicate" value=" {APP.LBL_DUPLICATE_BUTTON_LABEL} ">
+                <input title="{APP.LBL_DELETE_BUTTON_TITLE}" accessKey="{APP.LBL_DELETE_BUTTON_KEY}" class="button"
+                       onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.action.value='Delete'; return confirm('{APP.NTC_DELETE_CONFIRMATION}')"
+                       type="submit" name="Delete" value=" {APP.LBL_DELETE_BUTTON_LABEL} ">
+            </td>
+            <td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+            <td align='right'>{ADMIN_EDIT}</td>
+        </tr>
+    </table>
 
 
-<div class="detail view">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td width="15%" scope="row"><span>{MOD.LBL_NAME}</span></td>
-	<td width="35%"><span>{NAME}&nbsp;</span></td>
-	<td scope="row"><span>{MOD.LBL_STATUS_TEXT}</span></td>
-	<td><span>{STATUS}&nbsp;</span></td>
-	</tr>
-	<tr>
-	<td scope="row"><span>{MOD.LBL_FROM_MAILBOX_NAME}</span></td>
-	<td><span>{FROM_MAILBOX_NAME}&nbsp;</span></td>
-	<td scope="row"><span>{MOD.LBL_FROM_NAME}</span></td>
-	<td><span>{FROM_NAME}&nbsp;</span></td>
-	</tr>
-	<tr>
-	<td scope="row"><span>{MOD.LBL_START_DATE_TIME}</span></td>
-	<td><span>{DATE_START}&nbsp;{TIME_START}</span></td>
-	<td scope="row"><span>{MOD.LBL_FROM_ADDR}</span></td>
-	<td>{FROM_ADDR}&nbsp;</td>
-	</tr>
-	<tr>
-	<td scope="row"><span>{MOD.LBL_TEMPLATE}</span></td>
-	<td><span>{EMAIL_TEMPLATE}&nbsp;{TIME_START}</span></td>
-	<td scope="row"><span>{MOD.LBL_REPLY_NAME}</span></td>
-	<td>{REPLY_TO_NAME}&nbsp;</td>
-	</tr>
-    <tr>
-	<td scope="row"><span>{MOD.LBL_MESSAGE_FOR}</span></td>
-	<td><span>{MESSAGE_FOR}&nbsp;</span></td>
-	<td scope="row"><span>{MOD.LBL_REPLY_ADDR}</span></td>
-	<td><span>{REPLY_TO_ADDR}&nbsp;</span></td>
-	</tr>	
-</table>
-</div>
+    <div class="detail view">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="15%" scope="row"><span>{MOD.LBL_NAME}</span></td>
+                <td width="35%"><span>{NAME}&nbsp;</span></td>
+                <td scope="row"><span>{MOD.LBL_STATUS_TEXT}</span></td>
+                <td><span>{STATUS}&nbsp;</span></td>
+            </tr>
+            <tr>
+                <td scope="row"><span>{MOD.LBL_FROM_MAILBOX_NAME}</span></td>
+                <td><span>{FROM_MAILBOX_NAME}&nbsp;</span></td>
+                <td scope="row"><span>{MOD.LBL_FROM_NAME}</span></td>
+                <td><span>{FROM_NAME}&nbsp;</span></td>
+            </tr>
+            <tr>
+                <td scope="row"><span>{MOD.LBL_START_DATE_TIME}</span></td>
+                <td><span>{DATE_START}&nbsp;{TIME_START}</span></td>
+                <td scope="row"><span>{MOD.LBL_FROM_ADDR}</span></td>
+                <td>{FROM_ADDR}&nbsp;</td>
+            </tr>
+            <tr>
+                <td scope="row"><span>{MOD.LBL_TEMPLATE}</span></td>
+                <td><span>{EMAIL_TEMPLATE}&nbsp;{TIME_START}</span></td>
+                <td scope="row"><span>{MOD.LBL_REPLY_NAME}</span></td>
+                <td>{REPLY_TO_NAME}&nbsp;</td>
+            </tr>
+            <tr>
+                <td scope="row"><span>{MOD.LBL_MESSAGE_FOR}</span></td>
+                <td><span>{MESSAGE_FOR}&nbsp;</span></td>
+                <td scope="row"><span>{MOD.LBL_REPLY_ADDR}</span></td>
+                <td><span>{REPLY_TO_ADDR}&nbsp;</span></td>
+            </tr>
+        </table>
+    </div>
 </form>
 {JAVASCRIPT}
 <!-- END: main -->

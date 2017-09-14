@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,28 +34,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 require_once('include/formbase.php');
-
-
 
 
 require_once('include/utils/db_utils.php');
 
 
-
-
-global $app_list_strings, $app_strings,$mod_strings;
+global $app_list_strings, $app_strings, $mod_strings;
 
 $site_url = $sugar_config['site_url'];
 $web_form_header = $mod_strings['LBL_LEAD_DEFAULT_HEADER'];
@@ -64,7 +57,7 @@ $web_form_submit_label = $mod_strings['LBL_DEFAULT_LEAD_SUBMIT'];
 $web_form_required_fields_msg = $mod_strings['LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'];
 $web_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
 $web_not_valid_email_address = $mod_strings['LBL_NOT_VALID_EMAIL_ADDRESS'];
-$web_post_url = $site_url.'/index.php?entryPoint=WebToPersonCapture';
+$web_post_url = $site_url . '/index.php?entryPoint=WebToPersonCapture';
 $web_redirect_url = '';
 $web_notify_campaign = '';
 $web_assigned_user = '';
@@ -74,44 +67,44 @@ $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 //_ppd($web_required_symbol);
 
 $moduleDir = '';
-if(!empty($_REQUEST['moduleDir'])){
-    $moduleDir= $_REQUEST['moduleDir'];
+if (!empty($_REQUEST['moduleDir'])) {
+    $moduleDir = $_REQUEST['moduleDir'];
 }
 
-if(!empty($_REQUEST['web_header'])){
-    $web_form_header= $_REQUEST['web_header'];
+if (!empty($_REQUEST['web_header'])) {
+    $web_form_header = $_REQUEST['web_header'];
 }
-if(!empty($_REQUEST['web_description'])){
-    $web_form_description= $_REQUEST['web_description'];
+if (!empty($_REQUEST['web_description'])) {
+    $web_form_description = $_REQUEST['web_description'];
 }
-if(!empty($_REQUEST['web_submit'])){
-    $web_form_submit_label=to_html($_REQUEST['web_submit']);
+if (!empty($_REQUEST['web_submit'])) {
+    $web_form_submit_label = to_html($_REQUEST['web_submit']);
 }
-if(!empty($_REQUEST['post_url'])){
-    $web_post_url= $_REQUEST['post_url'];
+if (!empty($_REQUEST['post_url'])) {
+    $web_post_url = $_REQUEST['post_url'];
 }
-if(!empty($_REQUEST['redirect_url']) && $_REQUEST['redirect_url'] !="http://"){
-    $web_redirect_url= $_REQUEST['redirect_url'];
+if (!empty($_REQUEST['redirect_url']) && $_REQUEST['redirect_url'] != "http://") {
+    $web_redirect_url = $_REQUEST['redirect_url'];
 }
-if(!empty($_REQUEST['notify_campaign'])){
+if (!empty($_REQUEST['notify_campaign'])) {
     $web_notify_campaign = $_REQUEST['notify_campaign'];
 }
-if(!empty($_REQUEST['web_footer'])){
-    $web_form_footer= $_REQUEST['web_footer'];
+if (!empty($_REQUEST['web_footer'])) {
+    $web_form_footer = $_REQUEST['web_footer'];
 }
-if(!empty($_REQUEST['campaign_id'])){
-    $web_form_campaign= $_REQUEST['campaign_id'];
+if (!empty($_REQUEST['campaign_id'])) {
+    $web_form_campaign = $_REQUEST['campaign_id'];
 }
-if(!empty($_REQUEST['assigned_user_id'])){
+if (!empty($_REQUEST['assigned_user_id'])) {
     $web_assigned_user = $_REQUEST['assigned_user_id'];
 }
 
 $typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
- $person = new $typeOfPerson();
- $fieldsMetaData = new FieldsMetaData();
- $xtpl=new XTemplate ('modules/Campaigns/WebToLeadForm.html');
- $xtpl->assign("MOD", $mod_strings);
- $xtpl->assign("APP", $app_strings);
+$person = new $typeOfPerson();
+$fieldsMetaData = new FieldsMetaData();
+$xtpl = new XTemplate ('modules/Campaigns/WebToLeadForm.html');
+$xtpl->assign("MOD", $mod_strings);
+$xtpl->assign("APP", $app_strings);
 
 include_once 'WebToLeadFormBuilder.php';
 $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
@@ -137,9 +130,9 @@ $xtpl->assign("BODY_HTML", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '')
 
 require_once('include/SugarTinyMCE.php');
 $tiny = new SugarTinyMCE();
-$tiny->defaultConfig['height']=700;
-$tiny->defaultConfig['apply_source_formatting']=true;
-$tiny->defaultConfig['cleanup']=false;
+$tiny->defaultConfig['height'] = 700;
+$tiny->defaultConfig['apply_source_formatting'] = true;
+$tiny->defaultConfig['cleanup'] = false;
 $tiny->defaultConfig['extended_valid_elements'] .= ',input[name|id|type|value|onclick|required|placeholder|title],select[name|id|multiple|tabindex|onchange|required|title],option[value|selected|title]';
 $ed = $tiny->getInstance('body_html');
 $xtpl->assign("tiny", $ed);
@@ -150,19 +143,19 @@ $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable_html(document.EditView
 $xtpl->parse("main.variable_button");
 
 
-
-
 $xtpl->parse("main");
 $xtpl->out("main");
 
-function ifRadioButton($customFieldName){
+function ifRadioButton($customFieldName)
+{
     $custRow = null;
-    $query="select id,type from fields_meta_data where deleted = 0 and name = '$customFieldName'";
-    $result=$GLOBALS['db']->query($query);
+    $query = "select id,type from fields_meta_data where deleted = 0 and name = '$customFieldName'";
+    $result = $GLOBALS['db']->query($query);
     $row = $GLOBALS['db']->fetchByAssoc($result);
-    if($row != null && $row['type'] == 'radioenum'){
+    if ($row != null && $row['type'] == 'radioenum') {
         return $custRow = $row;
     }
+
     return $custRow;
 }
 

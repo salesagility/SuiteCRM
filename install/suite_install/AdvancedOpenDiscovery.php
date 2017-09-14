@@ -1,5 +1,6 @@
 <?php
-function install_aod() {
+function install_aod()
+{
 
     require_once('modules/Administration/Administration.php');
 
@@ -49,7 +50,8 @@ function installAODHooks()
     );
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        check_logic_hook_file($hook['module'], $hook['hook'],
+            array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
 
 }

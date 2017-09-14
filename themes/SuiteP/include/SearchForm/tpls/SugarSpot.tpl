@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,53 +34,60 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
 <div id='SpotResults'>
-{if !empty($displayResults)}
-    {foreach from=$displayResults key=module item=data}
-    <section>
-        <div class="resultTitle">
-            {if isset($appListStrings.moduleList[$module])}
-                {$appListStrings.moduleList[$module]}
-            {else}
-                {$module}
-            {/if}
-            {if !empty($displayMoreForModule[$module])}
-                {assign var="more" value=$displayMoreForModule[$module]}
-                <br>
-                <small class='more' onclick="DCMenu.spotZoom('{$more.query}', '{$module}', '{$more.offset}');">({$more.countRemaining} {$appStrings.LBL_SEARCH_MORE})</small>
-            {/if}
-        </div>
-            <ul>
-                {foreach from=$data key=id item=name}
-                        <div onmouseover="DCMenu.showQuickViewIcon('{$id}')" onmouseout="DCMenu.hideQuickViewIcon('{$id}')" class="gs_div" style="position: relative" >
+    {if !empty($displayResults)}
+        {foreach from=$displayResults key=module item=data}
+            <section>
+                <div class="resultTitle">
+                    {if isset($appListStrings.moduleList[$module])}
+                        {$appListStrings.moduleList[$module]}
+                    {else}
+                        {$module}
+                    {/if}
+                    {if !empty($displayMoreForModule[$module])}
+                        {assign var="more" value=$displayMoreForModule[$module]}
+                        <br>
+                        <small class='more' onclick="DCMenu.spotZoom('{$more.query}', '{$module}', '{$more.offset}');">
+                            ({$more.countRemaining} {$appStrings.LBL_SEARCH_MORE})
+                        </small>
+                    {/if}
+                </div>
+                <ul>
+                    {foreach from=$data key=id item=name}
+                        <div onmouseover="DCMenu.showQuickViewIcon('{$id}')"
+                             onmouseout="DCMenu.hideQuickViewIcon('{$id}')" class="gs_div" style="position: relative">
                             <div id="gs_div_{$id}" style="position: absolute;left: 0" class="SpanQuickView">
-                                    <img id="gs_img_{$id}" class="QuickView" src="themes/default/images/Search.gif" alt="quick_view_{$id}" onclick="DCMenu.showQuickView('{$module}', '{$id}');return false;">
+                                <img id="gs_img_{$id}" class="QuickView" src="themes/default/images/Search.gif"
+                                     alt="quick_view_{$id}"
+                                     onclick="DCMenu.showQuickView('{$module}', '{$id}');return false;">
 
                             </div>
 
-                        <div class="gsLinkWrapper" >
-                            <a href="index.php?module={$module}&action=DetailView&record={$id}" class="gs_link">{$name}</a>
+                            <div class="gsLinkWrapper">
+                                <a href="index.php?module={$module}&action=DetailView&record={$id}"
+                                   class="gs_link">{$name}</a>
+                            </div>
                         </div>
-                        </div>
-                {/foreach}
-            </ul>
-        <div class="clear"></div>
-    </section>
-    {/foreach}
-    <a href='index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}' class="resultAll">
-        {$appStrings.LNK_SEARCH_NONFTS_VIEW_ALL}
-    </a>
-{else}
-    <section class="resultNull">
-        <h1>{$appStrings.LBL_EMAIL_SEARCH_NO_RESULTS}</h1>
-        <div style="float:right;">
-            <a href="index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}">{$appStrings.LNK_ADVANCED_FILTER}</a>
-        </div>
-    </section>
-{/if}
+                    {/foreach}
+                </ul>
+                <div class="clear"></div>
+            </section>
+        {/foreach}
+        <a href='index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}'
+           class="resultAll">
+            {$appStrings.LNK_SEARCH_NONFTS_VIEW_ALL}
+        </a>
+    {else}
+        <section class="resultNull">
+            <h1>{$appStrings.LBL_EMAIL_SEARCH_NO_RESULTS}</h1>
+            <div style="float:right;">
+                <a href="index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}">{$appStrings.LNK_ADVANCED_FILTER}</a>
+            </div>
+        </section>
+    {/if}
 </div>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,72 +34,72 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 {literal}
     <script type="text/javascript">
 
-        /**
-         *  Start Bug#50590
-         *  mod_array global array that contains required modules
-         *  addDropdownElements fills lead_conv_ac_op_sel with all required modules except Contacts
-         *  as this module is in the list by default
-         */
+      /**
+       *  Start Bug#50590
+       *  mod_array global array that contains required modules
+       *  addDropdownElements fills lead_conv_ac_op_sel with all required modules except Contacts
+       *  as this module is in the list by default
+       */
 
-        var mod_array = new Array;
-        function addDropdownElements() {
-            var i;
-            for (i = 0; i <= mod_array.length - 1; i++) {
-                if (mod_array[i] != 'Contacts') {
-                    var dropdown = document.getElementById('lead_conv_ac_op_sel');
-                    //if dropdown does not exist, then return and exit function
-                    if (!dropdown) {
-                        return;
-                    }
-                    var opt = document.createElement("option");
-                    opt.text = SUGAR.language.get('app_list_strings', "moduleListSingular")[mod_array[i]];
-                    opt.value = mod_array[i];
-                    opt.label = opt.text;
-                    dropdown.options.add(opt);
-                }
-            }
-        }
-        /**
-         *   End Bug#50590
-         */
-
-
-        function addRemoveDropdownElement(module) {
-            var accountText = document.getElementById('account_name');
-            var checkbox = document.getElementById('new' + module);
+      var mod_array = new Array;
+      function addDropdownElements() {
+        var i;
+        for (i = 0; i <= mod_array.length - 1; i++) {
+          if (mod_array[i] != 'Contacts') {
             var dropdown = document.getElementById('lead_conv_ac_op_sel');
-            if (!checkbox || !dropdown) {
-                return;
+            //if dropdown does not exist, then return and exit function
+            if (!dropdown) {
+              return;
             }
-            var found = false;
-            var i;
-            for (i = dropdown.options.length - 1; i >= 0; i--) {
-                if (dropdown.options[i].value == module) {
-                    found = true;
-                    if (!checkbox.checked) {
-                        // if this is Accounts and the text of account name is not empty, do not remove
-                        if (module != 'Accounts' || !accountText || accountText.value == '') {
-                            dropdown.remove(i);
-                        }
-                    }
-                    break;
-                }
-            }
-            if (!found && checkbox.checked) {
-                var opt = document.createElement("option");
-                opt.text = SUGAR.language.get('app_list_strings', "moduleListSingular")[module];
-                opt.value = module;
-                opt.label = opt.text;
-                dropdown.options.add(opt);
-            }
+            var opt = document.createElement("option");
+            opt.text = SUGAR.language.get('app_list_strings', "moduleListSingular")[mod_array[i]];
+            opt.value = mod_array[i];
+            opt.label = opt.text;
+            dropdown.options.add(opt);
+          }
         }
+      }
+      /**
+       *   End Bug#50590
+       */
+
+
+      function addRemoveDropdownElement(module) {
+        var accountText = document.getElementById('account_name');
+        var checkbox = document.getElementById('new' + module);
+        var dropdown = document.getElementById('lead_conv_ac_op_sel');
+        if (!checkbox || !dropdown) {
+          return;
+        }
+        var found = false;
+        var i;
+        for (i = dropdown.options.length - 1; i >= 0; i--) {
+          if (dropdown.options[i].value == module) {
+            found = true;
+            if (!checkbox.checked) {
+              // if this is Accounts and the text of account name is not empty, do not remove
+              if (module != 'Accounts' || !accountText || accountText.value == '') {
+                dropdown.remove(i);
+              }
+            }
+            break;
+          }
+        }
+        if (!found && checkbox.checked) {
+          var opt = document.createElement("option");
+          opt.text = SUGAR.language.get('app_list_strings', "moduleListSingular")[module];
+          opt.value = module;
+          opt.label = opt.text;
+          dropdown.options.add(opt);
+        }
+      }
     </script>
 {/literal}
 

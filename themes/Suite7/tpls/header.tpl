@@ -1,7 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -12,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -29,50 +33,52 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 {include file="_head.tpl" theme_template=true}
 <body onMouseOut="closeMenus();">
 <a name="top"></a>
 {$DCSCRIPT}
 {if $AUTHENTICATED}
-<header>
-    <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
-    </div>
-    {include file="_globalLinks.tpl" theme_template=true}
-    {include file="_welcome.tpl" theme_template=true}
-    <div class="clear"></div>
-    {include file="_headerSearch.tpl" theme_template=true}
-    <div class="clear"></div>
-    {if !$AUTHENTICATED}
-        <br /><br />
-    {/if}
+    <header>
+        <div id="ajaxHeader">
+            {include file="_headerModuleList.tpl" theme_template=true}
+        </div>
+        {include file="_globalLinks.tpl" theme_template=true}
+        {include file="_welcome.tpl" theme_template=true}
+        <div class="clear"></div>
+        {include file="_headerSearch.tpl" theme_template=true}
+        <div class="clear"></div>
+        {if !$AUTHENTICATED}
+            <br/>
+            <br/>
+        {/if}
 
-    <div class="clear"></div>
+        <div class="clear"></div>
 
-</header>
-
+    </header>
 {/if}
 
 {literal}
-    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png'  title='empty' style='display:none'></iframe>
+    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png' title='empty'
+            style='display:none'></iframe>
 <input id='ajaxUI-history-field' type='hidden'>
 <script type='text/javascript'>
-    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded)
-    {
-        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
-        YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
-        {/if}{literal}
-    }
+  if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
+    YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
+      {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
+    YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
+      {/if}{literal}
+  }
 </script>
 {/literal}
 
 <main>
     <div id="content" {if !$AUTHENTICATED}class="noLeftColumn" {/if}>
-        <table style=""" id="contentTable"><tr><td>
+        <table style=""
+        " id="contentTable">
+        <tr>
+            <td>

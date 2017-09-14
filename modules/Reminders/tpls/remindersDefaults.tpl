@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,108 +34,107 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 {literal}
+    <style type="text/css">
 
-<style type="text/css">
-
-</style>
+    </style>
 {/literal}
-	{if $fields.reminder_time}            	
-            	
-            	{assign var="REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
-            	{assign var="EMAIL_REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}	
-            	
-            	{if !$fields.reminder_checked.value}            		
-            		{assign var="REMINDER_TIME" value=-1}
-            	{else}
-            		{assign var="REMINDER_TIME" value=$fields.reminder_time.value}
-            	{/if}
-            	{if !$fields.email_reminder_checked.value}            		
-            		{assign var="EMAIL_REMINDER_TIME" value=-1}
-            	{else}
-            		{assign var="EMAIL_REMINDER_TIME" value=$fields.email_reminder_time.value}
-            	{/if}
-	{/if}
-	
-	{assign var="REMINDER_TIME_DISPLAY" value="none"}
-	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="none"}
-	{if $REMINDER_TIME != -1}
-            	{* {assign var="REMINDER_CHECKED" value="checked"} *}
-            	{assign var="REMINDER_TIME_DISPLAY" value="inline"}	
-	{/if}
-        {if $EMAIL_REMINDER_TIME != -1}
-            	{* {assign var="EMAIL_REMINDER_CHECKED" value="checked"} *}
-            	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="inline"}
-        {/if}
+{if $fields.reminder_time}
+
+    {assign var="REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
+    {assign var="EMAIL_REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
+
+    {if !$fields.reminder_checked.value}
+        {assign var="REMINDER_TIME" value=-1}
+    {else}
+        {assign var="REMINDER_TIME" value=$fields.reminder_time.value}
+    {/if}
+    {if !$fields.email_reminder_checked.value}
+        {assign var="EMAIL_REMINDER_TIME" value=-1}
+    {else}
+        {assign var="EMAIL_REMINDER_TIME" value=$fields.email_reminder_time.value}
+    {/if}
+{/if}
+
+{assign var="REMINDER_TIME_DISPLAY" value="none"}
+{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="none"}
+{if $REMINDER_TIME != -1}
+    {* {assign var="REMINDER_CHECKED" value="checked"} *}
+    {assign var="REMINDER_TIME_DISPLAY" value="inline"}
+{/if}
+{if $EMAIL_REMINDER_TIME != -1}
+    {* {assign var="EMAIL_REMINDER_CHECKED" value="checked"} *}
+    {assign var="EMAIL_REMINDER_TIME_DISPLAY" value="inline"}
+{/if}
 
 
 {if $view == "EditView" || $view == "QuickCreate" || $view == "QuickEdit"}
 {else}
-	{assign var="disabled" value="disabled"}
+    {assign var="disabled" value="disabled"}
 {/if}
 
 
 <!-- Reminders field default in EditViews -->
 <div id="reminders">
 
-	{if !$disabled}
-		<div class="col">
-			<span>{$MOD.LBL_REMINDERS_ACTIONS}</span>&nbsp;
-		</div>
-	{/if}
+    {if !$disabled}
+        <div class="col">
+            <span>{$MOD.LBL_REMINDERS_ACTIONS}</span>&nbsp;
+        </div>
+    {/if}
 
-	<div class="col">
-		<input name="reminder_checked" type="hidden" value="0">
-		<input name="reminder_checked" type="checkbox" class="popup_chkbox" value="1"{if $REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
-		<span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
+    <div class="col">
+        <input name="reminder_checked" type="hidden" value="0">
+        <input name="reminder_checked" type="checkbox" class="popup_chkbox"
+               value="1"{if $REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
+        <span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
 
-		{if !$disabled}
-			<br>
-			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
-			<select tabindex="0" class="popup_timer_sel" name="reminder_time"{$disabled}>
-				{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
-			</select>
-			<br>
-			&nbsp;
-		{else}
-			{$REMINDER_TIME_OPTIONS.$REMINDER_TIME}
-		{/if}
-	</div>
+        {if !$disabled}
+            <br>
+            <!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
+            <select tabindex="0" class="popup_timer_sel" name="reminder_time"{$disabled}>
+                {html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
+            </select>
+            <br>
+            &nbsp;
+        {else}
+            {$REMINDER_TIME_OPTIONS.$REMINDER_TIME}
+        {/if}
+    </div>
 
-	<div class="col">
-		<input name="email_reminder_checked" type="hidden" value="0">
-		<input name="email_reminder_checked" type="checkbox" class="email_chkbox" value="1"{if $EMAIL_REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
-		<span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
+    <div class="col">
+        <input name="email_reminder_checked" type="hidden" value="0">
+        <input name="email_reminder_checked" type="checkbox" class="email_chkbox"
+               value="1"{if $EMAIL_REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
+        <span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
 
-		{if !$disabled}
-			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
-			<br>
-			<select tabindex="0" class="email_timer_sel" name="email_reminder_time"{$disabled}>
-				{html_options options=$REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
-			</select>
-			<br>
-			&nbsp;
-		{else}
-			{$REMINDER_TIME_OPTIONS.$EMAIL_REMINDER_TIME}
-		{/if}
-	</div>
+        {if !$disabled}
+            <!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
+            <br>
+            <select tabindex="0" class="email_timer_sel" name="email_reminder_time"{$disabled}>
+                {html_options options=$REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
+            </select>
+            <br>
+            &nbsp;
+        {else}
+            {$REMINDER_TIME_OPTIONS.$EMAIL_REMINDER_TIME}
+        {/if}
+    </div>
 
 </div>
 
 {literal}
-<script type="text/javascript">
+    <script type="text/javascript">
 
-	$(function(){
-		
-	});
+      $(function () {
 
-</script>
+      });
+
+    </script>
 {/literal}
 
 

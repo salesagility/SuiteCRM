@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 
 {literal}
@@ -88,7 +84,8 @@
                                 </li>
                             {/foreach}
                             <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px'
-                                class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+                                class='noBullet'>&nbsp;&nbsp;&nbsp;
+                            </li>
                         </ul>
                     </td>
                     {counter}
@@ -99,76 +96,76 @@
 </div>
 
 <script type="text/javascript">
-    var activePage = {$activePage};
-    var colNum = {$colNum};
-    var theme = '{$theme}';
-    current_user_id = '{$current_user}';
-    jsChartsArray = new Array();
-    var moduleName = '{$module}';
-    document.body.setAttribute("class", "yui-skin-sam");
-    {literal}
+  var activePage = {$activePage};
+  var colNum = {$colNum};
+  var theme = '{$theme}';
+  current_user_id = '{$current_user}';
+  jsChartsArray = new Array();
+  var moduleName = '{$module}';
+  document.body.setAttribute("class", "yui-skin-sam");
+  {literal}
 
-    $(function(){
-        var percent = Math.round(100/(colNum+1));
-        $('#pageContainer #pageNum_'+activePage+'_div .dashletcontainer').addClass('col-'+percent);
-    });
+  $(function () {
+    var percent = Math.round(100 / (colNum + 1));
+    $('#pageContainer #pageNum_' + activePage + '_div .dashletcontainer').addClass('col-' + percent);
+  });
 
-    var mySugarLoader = new YAHOO.util.YUILoader({
-        require : ["my_sugar", "sugar_charts"],
-        // Bug #48940 Skin always must be blank
-        skin: {
-            base: 'blank',
-            defaultSkin: ''
-        },
-        onSuccess: function(){
-            initMySugar();
-            initmySugarCharts();
-            SUGAR.mySugar.maxCount = 	{/literal}{$maxCount}{literal};
-            SUGAR.mySugar.homepage_dd = new Array();
-            var j = 0;
+  var mySugarLoader = new YAHOO.util.YUILoader({
+    require: ["my_sugar", "sugar_charts"],
+    // Bug #48940 Skin always must be blank
+    skin: {
+      base: 'blank',
+      defaultSkin: ''
+    },
+    onSuccess: function () {
+      initMySugar();
+      initmySugarCharts();
+      SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
+      SUGAR.mySugar.homepage_dd = new Array();
+      var j = 0;
 
-            {/literal}
-            var dashletIds = {$dashletIds};
+        {/literal}
+      var dashletIds = {$dashletIds};
 
-            {if !$lock_homepage}
-            for(i in dashletIds) {ldelim}
-                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                // Bug #47097 : Dashlets not displayed after moving them
-                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-                j++;
-                {rdelim}
-            {if $hiddenCounter > 0}
-            for(var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
-                SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_'+activePage+'_hidden' + wp);
-                {rdelim}
-            {/if}
-            YAHOO.util.DDM.mode = 1;
-            {/if}
-            {literal}
-            SUGAR.mySugar.renderDashletsDialog();
-            SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
-            {/literal}
-            {literal}
-        }
-    });
-    mySugarLoader.addModule({
-        name :"my_sugar",
-        type : "js",
-        fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
-        varName: "initMySugar",
-        requires: []
-    });
-    mySugarLoader.addModule({
-        name :"sugar_charts",
-        type : "js",
-        fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
-        varName: "initmySugarCharts",
-        requires: []
-    });
-    mySugarLoader.insert();
-    {/literal}
+        {if !$lock_homepage}
+      for (i in dashletIds) {ldelim}
+        SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+        SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+        // Bug #47097 : Dashlets not displayed after moving them
+        // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+        SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+        SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+        SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+        j++;
+          {rdelim}
+        {if $hiddenCounter > 0}
+      for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
+        SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
+          {rdelim}
+        {/if}
+      YAHOO.util.DDM.mode = 1;
+        {/if}
+        {literal}
+      SUGAR.mySugar.renderDashletsDialog();
+      SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
+        {/literal}
+        {literal}
+    }
+  });
+  mySugarLoader.addModule({
+    name: "my_sugar",
+    type: "js",
+    fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
+    varName: "initMySugar",
+    requires: []
+  });
+  mySugarLoader.addModule({
+    name: "sugar_charts",
+    type: "js",
+    fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
+    varName: "initmySugarCharts",
+    requires: []
+  });
+  mySugarLoader.insert();
+  {/literal}
 </script>

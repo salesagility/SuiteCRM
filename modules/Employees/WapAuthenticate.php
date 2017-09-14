@@ -1,12 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry)
-    die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,17 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $mod_strings;
 
@@ -60,7 +55,7 @@ $focus->load_user($user_password);
 if ($focus->is_authenticated()) {
     // save the user information into the session
     // go to the home screen
-    header("Location: ".$GLOBALS['app']->getLoginRedirect());
+    header("Location: " . $GLOBALS['app']->getLoginRedirect());
     unset($_SESSION['login_password']);
     unset($_SESSION['login_error']);
     unset($_SESSION['login_user_name']);
@@ -90,8 +85,9 @@ if ($focus->is_authenticated()) {
         $authenticated_user_theme = $sugar_config['default_theme'];
     }
     if (isset($reset_language_on_default_user) && $reset_language_on_default_user &&
-         $focus->user_name == $sugar_config['default_user_name']) {
-            $authenticated_user_language = $sugar_config['default_language'];
+        $focus->user_name == $sugar_config['default_user_name']
+    ) {
+        $authenticated_user_language = $sugar_config['default_language'];
     }
 
     $_SESSION['authenticated_user_theme'] = $authenticated_user_theme;
@@ -103,7 +99,7 @@ if ($focus->is_authenticated()) {
     // Clear all uploaded import files for this user if it exists
 
     require_once('modules/Import/ImportCacheFiles.php');
-    $tmp_file_name = ImportCacheFiles::getImportDir()."/IMPORT_" . $focus->id;
+    $tmp_file_name = ImportCacheFiles::getImportDir() . "/IMPORT_" . $focus->id;
 
     if (file_exists($tmp_file_name)) {
         unlink($tmp_file_name);

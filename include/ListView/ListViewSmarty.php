@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -75,7 +75,8 @@ class ListViewSmarty extends ListViewDisplay
      * Constructor, Smarty object immediately available after
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->ss = new Sugar_Smarty();
     }
@@ -89,9 +90,12 @@ class ListViewSmarty extends ListViewDisplay
      * @param html_public string the corresponding html public in xtpl per row
      *
      */
-    function process($file, $data, $htmlpublic) {
+    function process($file, $data, $htmlpublic)
+    {
         global $mod_strings;
-        if(!$this->should_process)return;
+        if (!$this->should_process) {
+            return;
+        }
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
         parent::process($file, $data, $htmlpublic);
 
@@ -99,25 +103,26 @@ class ListViewSmarty extends ListViewDisplay
         $this->data = $data;
 
         $totalWidth = 0;
-        foreach($this->displayColumns as $name => $params) {
+        foreach ($this->displayColumns as $name => $params) {
             $totalWidth += $params['width'];
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
-        foreach($this->displayColumns as $name => $params) {
+        foreach ($this->displayColumns as $name => $params) {
             $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
             // figure out which contextMenu objectsTypes are required
-            if(!empty($params['contextMenu']['objectType']))
+            if (!empty($params['contextMenu']['objectType'])) {
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+            }
         }
 
         //Check if inline editing is enabled for list view.
-        if(!isset($sugar_config['enable_line_editing_list']) || $sugar_config['enable_line_editing_list']){
+        if (!isset($sugar_config['enable_line_editing_list']) || $sugar_config['enable_line_editing_list']) {
             $this->ss->assign('inline_edit', true);
         }
 
-        if(!isset($sugar_config['hide_subpanels']) || $sugar_config['hide_subpanels']){
+        if (!isset($sugar_config['hide_subpanels']) || $sugar_config['hide_subpanels']) {
             $this->ss->assign('hide_subpanels', true);
         }
 
@@ -127,8 +132,8 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('form', isset($this->templateMeta['form']) ? $this->templateMeta['form'] : null);
         $this->ss->assign('includes', isset($this->templateMeta['includes']) ? $this->templateMeta['includes'] : null);
 
-        $this->ss->assign('APP',$app_strings);
-        $this->ss->assign('MOD',$mod_strings);
+        $this->ss->assign('APP', $app_strings);
+        $this->ss->assign('MOD', $mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
         $this->ss->assign('colCount', count($this->displayColumns) + 10);
@@ -136,12 +141,12 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
         $this->ss->assign('viewLinkString', $app_strings['LBL_VIEW_BUTTON']);
-        $this->ss->assign('allLinkString',$app_strings['LBL_LINK_ALL']);
-        $this->ss->assign('noneLinkString',$app_strings['LBL_LINK_NONE']);
-        $this->ss->assign('recordsLinkString',$app_strings['LBL_LINK_RECORDS']);
-        $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
+        $this->ss->assign('allLinkString', $app_strings['LBL_LINK_ALL']);
+        $this->ss->assign('noneLinkString', $app_strings['LBL_LINK_NONE']);
+        $this->ss->assign('recordsLinkString', $app_strings['LBL_LINK_RECORDS']);
+        $this->ss->assign('selectLinkString', $app_strings['LBL_LINK_SELECT']);
 
-        if(!isset($this->data['pageData']['offsets'])) {
+        if (!isset($this->data['pageData']['offsets'])) {
             $GLOBALS['log']->warn('Incorrect pageData: offset is not set');
         } else {
             // Bug 24677 - Correct the page total amount on the last page of listviews
@@ -150,38 +155,46 @@ class ListViewSmarty extends ListViewDisplay
                 $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
             }
 
-            if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
-            if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            if ($this->select) {
+                $this->ss->assign('selectLinkTop',
+                    $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
+            }
+            if ($this->select) {
+                $this->ss->assign('selectLinkBottom',
+                    $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal,
+                        "bottom"));
+            }
 
         }
 
-        if($this->show_action_dropdown)
-        {
+        if ($this->show_action_dropdown) {
             $action_menu = $this->buildActionsLink();
             $this->ss->assign('actionsLinkTop', $action_menu);
-            if(count($action_menu['buttons']) > 0) {
-                $this->ss->assign('actionDisabledLink', preg_replace("/id\s*\=(\"\w+\"|w+)/i", "", $action_menu['buttons'][0]));
+            if (count($action_menu['buttons']) > 0) {
+                $this->ss->assign('actionDisabledLink',
+                    preg_replace("/id\s*\=(\"\w+\"|w+)/i", "", $action_menu['buttons'][0]));
             }
             $menu_location = 'bottom';
-            $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link' ,$menu_location));
+            $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link', $menu_location));
         }
 
         $this->ss->assign('quickViewLinks', $this->quickViewLinks);
 
         // handle save checks and stuff
-        if($this->multiSelect)
-        {
+        if ($this->multiSelect) {
             $this->ss->assign('multiSelectData', $this->getMultiSelectData());
         } else {
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');
         }
         // include button for Adding to Target List if in one of four applicable modules
-        if ( isset ( $_REQUEST['module']) && in_array ( $_REQUEST['module'] , array ( 'Contacts','Prospects','Leads','Accounts' ))
-            && ACLController::checkAccess('ProspectLists','edit',true)) {
-            $this->ss->assign( 'targetLink', $this->buildTargetList() ) ;
+        if (isset ($_REQUEST['module']) && in_array($_REQUEST['module'],
+                array('Contacts', 'Prospects', 'Leads', 'Accounts'))
+            && ACLController::checkAccess('ProspectLists', 'edit', true)
+        ) {
+            $this->ss->assign('targetLink', $this->buildTargetList());
         }
 
-        if(!isset($data['pageData']['ordering'])) {
+        if (!isset($data['pageData']['ordering'])) {
             $GLOBALS['log']->warn("Incorrect pageData: ordering is not set");
         } else {
             $this->processArrows($data['pageData']['ordering']);
@@ -196,10 +209,10 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('is_admin', $GLOBALS['current_user']->isAdmin());
 
 
-        if($this->contextMenus && !empty($contextMenuObjectsTypes)) {
+        if ($this->contextMenus && !empty($contextMenuObjectsTypes)) {
             $script = '';
             $cm = new contextMenu();
-            foreach($contextMenuObjectsTypes as $type => $value) {
+            foreach ($contextMenuObjectsTypes as $type => $value) {
                 $cm->loadFromFile($type);
                 $script .= $cm->getScript();
                 $cm->menuItems = array(); // clear menuItems out
@@ -207,8 +220,9 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
-	}
+        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'],
+            isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+    }
 
     /**
      * Assigns the sort arrows in the tpl
@@ -218,9 +232,9 @@ class ListViewSmarty extends ListViewDisplay
      */
     function processArrows($ordering)
     {
-        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif',false));
+        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif', false));
 
-        list($width,$height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
+        list($width, $height) = getimagesize($pathParts['dirname'] . '/' . $pathParts['basename']);
 
         $this->ss->assign('arrowExt', $pathParts['extension']);
         $this->ss->assign('arrowWidth', $width);
@@ -229,25 +243,29 @@ class ListViewSmarty extends ListViewDisplay
     }
 
 
-
     /**
      * Displays the xtpl, either echo or returning the contents
      *
      * @param end bool display the ending of the listview data (ie MassUpdate)
      *
      */
-    function display($end = true) {
+    function display($end = true)
+    {
 
-        if(!$this->should_process) return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        if (!$this->should_process) {
+            return $this->getSearchIcon() . $GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        }
         global $app_strings, $sugar_version, $sugar_flavor, $currentModule, $app_list_strings;
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
         $this->ss->assign('data', $this->data['data']);
         $this->ss->assign('query', $this->data['query']);
-        $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
-            "sugar_flavor" => $sugar_flavor));
+        $this->ss->assign('sugar_info', array(
+            "sugar_version" => $sugar_version,
+            "sugar_flavor" => $sugar_flavor
+        ));
 
-        if(!isset($this->data['pageData']['offsets'])) {
+        if (!isset($this->data['pageData']['offsets'])) {
             $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
         } else {
             $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
@@ -255,20 +273,23 @@ class ListViewSmarty extends ListViewDisplay
 
         $this->ss->assign('pageData', $this->data['pageData']);
 
-        $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],
+        $navStrings = array(
+            'next' => $app_strings['LNK_LIST_NEXT'],
             'previous' => $app_strings['LNK_LIST_PREVIOUS'],
             'end' => $app_strings['LNK_LIST_END'],
             'start' => $app_strings['LNK_LIST_START'],
-            'of' => $app_strings['LBL_LIST_OF']);
+            'of' => $app_strings['LBL_LIST_OF']
+        );
         $this->ss->assign('navStrings', $navStrings);
 
-        $displayEmptyDataMessages = TRUE;
+        $displayEmptyDataMessages = true;
         //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
-        $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
-        if( (isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
-            || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages) )
-        {
-            $displayEmptyDataMessages = FALSE;
+        $modulesExemptFromEmptyDataMessages = array('WorkFlow', 'ContractTypes', 'OAuthKeys', 'TimePeriods');
+        if ((isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
+            || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule,
+                $modulesExemptFromEmptyDataMessages)
+        ) {
+            $displayEmptyDataMessages = false;
         }
         $this->ss->assign('displayEmptyDataMesssages', $displayEmptyDataMessages);
 
@@ -279,23 +300,27 @@ class ListViewSmarty extends ListViewDisplay
     }
 
 
-    private function getSearchIcon() {
+    private function getSearchIcon()
+    {
         global $sugar_config;
 
-        $searchFormInPopup = !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
-        if($sugar_config['save_query'] == 'populate_only' && !$searchFormInPopup) {
-            return ;
+        $searchFormInPopup = !in_array($_REQUEST['module'],
+            isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
+        if ($sugar_config['save_query'] == 'populate_only' && !$searchFormInPopup) {
+            return;
         }
         $ss = new Sugar_Smarty();
         $ss->assign('currentModule', $_REQUEST['module']);
+
         return $ss->fetch('include/ListView/ListViewSearchLink.tpl') . '<br>';
     }
 
 
-    function displayEnd() {
+    function displayEnd()
+    {
         $str = '';
-        if($this->show_mass_update_form) {
-            if($this->showMassupdateFields){
+        if ($this->show_mass_update_form) {
+            if ($this->showMassupdateFields) {
                 $str .= $this->mass->getMassUpdateForm(true);
             }
             $str .= $this->mass->endMassUpdateForm();

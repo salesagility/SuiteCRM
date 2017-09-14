@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,16 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 
-class EmailsViewCompose extends ViewEdit {
+class EmailsViewCompose extends ViewEdit
+{
 
     /**
      * @var Email $bean
@@ -57,7 +57,7 @@ class EmailsViewCompose extends ViewEdit {
     public function __construct()
     {
         $this->type = 'compose';
-        if(empty($_REQUEST['return_module'])) {
+        if (empty($_REQUEST['return_module'])) {
             $this->options['show_title'] = false;
             $this->options['show_header'] = false;
             $this->options['show_footer'] = false;
@@ -77,7 +77,7 @@ class EmailsViewCompose extends ViewEdit {
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
 
-        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {
@@ -86,7 +86,7 @@ class EmailsViewCompose extends ViewEdit {
 
         $this->ev->ss->assign('TEMP_ID', create_guid());
         $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : '';
-        if(empty($record) && !empty($this->bean->id)) {
+        if (empty($record) && !empty($this->bean->id)) {
             $record = $this->bean->id;
         }
         $this->ev->ss->assign('RECORD', $record);
@@ -110,8 +110,9 @@ class EmailsViewCompose extends ViewEdit {
      */
     public function getEditView()
     {
-        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
+        $a = dirname(dirname(__FILE__)) . '/include/ComposeView/ComposeView.php';
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
+
         return new ComposeView();
     }
 
@@ -124,34 +125,35 @@ class EmailsViewCompose extends ViewEdit {
      */
     public function getSignatures(User $user)
     {
-        if(empty($user->id) || $user->new_with_id === true) {
+        if (empty($user->id) || $user->new_with_id === true) {
             throw new \SugarControllerException(
-                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
+                'EmailsController::composeSignature() requires an existing User and not a new User object. ' .
                 'This is typically the $current_user global'
             );
         }
 
         $emailSignatures = unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
 
-        if(isset($emailSignatures[$email->mailbox_id])) {
+        if (isset($emailSignatures[$email->mailbox_id])) {
             $emailSignatureId = $emailSignatures[$email->mailbox_id];
         } else {
             $emailSignatureId = $user->getPreference('signature_default');
         }
-        if(gettype($emailSignatureId) === 'string') {
+        if (gettype($emailSignatureId) === 'string') {
             $emailSignatures = $user->getSignature($emailSignatureId);
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
+
             return $email;
         } else {
             $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the signature id for user: '.
+                'EmailsController::composeSignature() was unable to get the signature id for user: ' .
                 $user->name
             );
+
             return false;
         }
     }
-
 
 
 }

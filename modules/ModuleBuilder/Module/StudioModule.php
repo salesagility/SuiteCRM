@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'data/BeanFactory.php';
 require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
@@ -250,23 +253,6 @@ class StudioModule
     }
 
     /**
-     * @return array list of views
-     */
-    public function getViews()
-    {
-        $views = array();
-        foreach ($this->sources as $file => $def) {
-            if (file_exists("modules/{$this->module}/metadata/$file")
-                || file_exists("custom/modules/{$this->module}/metadata/$file")
-            ) {
-                $views [str_replace('.php', '', $file)] = $def;
-            }
-        }
-
-        return $views;
-    }
-
-    /**
      * @return array
      */
     public function getLayouts()
@@ -359,6 +345,23 @@ class StudioModule
 
         return $layouts;
 
+    }
+
+    /**
+     * @return array list of views
+     */
+    public function getViews()
+    {
+        $views = array();
+        foreach ($this->sources as $file => $def) {
+            if (file_exists("modules/{$this->module}/metadata/$file")
+                || file_exists("custom/modules/{$this->module}/metadata/$file")
+            ) {
+                $views [str_replace('.php', '', $file)] = $def;
+            }
+        }
+
+        return $views;
     }
 
     /**
@@ -496,57 +499,6 @@ class StudioModule
     }
 
     /**
-     * @param string $subpanel
-     * @return array
-     */
-    public function getParentModulesOfSubpanel($subpanel)
-    {
-        global $moduleList, $beanFiles, $beanList, $module;
-
-        //use tab controller function to get module list with named keys
-        require_once("modules/MySettings/TabController.php");
-        require_once("include/SubPanel/SubPanelDefinitions.php");
-        $modules_to_check = TabController::get_key_array($moduleList);
-
-        //change case to match subpanel processing later on
-        $modules_to_check = array_change_key_case($modules_to_check);
-
-        $spd = '';
-        $spd_arr = array();
-        //iterate through modules and build subpanel array  
-        foreach ($modules_to_check as $mod_name) {
-
-           /**
-            * skip if module name is not in bean list, otherwise get the bean class name
-            */
-            if (!isset($beanList[$mod_name])) {
-                continue;
-            }
-            $class = $beanList[$mod_name];
-
-            /**
-             * skip if class name is not in file list, otherwise require the bean file
-             * and create new class
-             */
-            if (!isset($beanFiles[$class]) || !file_exists($beanFiles[$class])) {
-                continue;
-            }
-
-            //retrieve subpanels for this bean
-            require_once($beanFiles[$class]);
-            $bean_class = new $class();
-
-            //create new subpanel definition instance and get list of tabs
-            $spd = new SubPanelDefinitions($bean_class);
-            if (isset($spd->layout_defs['subpanel_setup'][strtolower($subpanel)]['module'])) {
-                $spd_arr[] = $mod_name;
-            }
-        }
-
-        return $spd_arr;
-    }
-
-    /**
      * @param string $fieldName
      */
     public function removeFieldFromLayouts($fieldName)
@@ -601,6 +553,57 @@ class StudioModule
         $sources[] = array('type' => MB_QUICKCREATE);
 
         return $sources;
+    }
+
+    /**
+     * @param string $subpanel
+     * @return array
+     */
+    public function getParentModulesOfSubpanel($subpanel)
+    {
+        global $moduleList, $beanFiles, $beanList, $module;
+
+        //use tab controller function to get module list with named keys
+        require_once("modules/MySettings/TabController.php");
+        require_once("include/SubPanel/SubPanelDefinitions.php");
+        $modules_to_check = TabController::get_key_array($moduleList);
+
+        //change case to match subpanel processing later on
+        $modules_to_check = array_change_key_case($modules_to_check);
+
+        $spd = '';
+        $spd_arr = array();
+        //iterate through modules and build subpanel array
+        foreach ($modules_to_check as $mod_name) {
+
+            /**
+             * skip if module name is not in bean list, otherwise get the bean class name
+             */
+            if (!isset($beanList[$mod_name])) {
+                continue;
+            }
+            $class = $beanList[$mod_name];
+
+            /**
+             * skip if class name is not in file list, otherwise require the bean file
+             * and create new class
+             */
+            if (!isset($beanFiles[$class]) || !file_exists($beanFiles[$class])) {
+                continue;
+            }
+
+            //retrieve subpanels for this bean
+            require_once($beanFiles[$class]);
+            $bean_class = new $class();
+
+            //create new subpanel definition instance and get list of tabs
+            $spd = new SubPanelDefinitions($bean_class);
+            if (isset($spd->layout_defs['subpanel_setup'][strtolower($subpanel)]['module'])) {
+                $spd_arr[] = $mod_name;
+            }
+        }
+
+        return $spd_arr;
     }
 
     /**

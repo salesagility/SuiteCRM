@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,19 +34,19 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
 <script>
     {literal}
-    $(document).ready(function(){
-	    $("ul.clickMenu").each(function(index, node){
-	        $(node).sugarActionMenu();
-	    });
+    $(document).ready(function () {
+      $("ul.clickMenu").each(function (index, node) {
+        $(node).sugarActionMenu();
+      });
 
-        if($('.edit-view-pagination').children().length == 0) $('.saveAndContinue').remove();
+      if ($('.edit-view-pagination').children().length == 0) $('.saveAndContinue').remove();
     });
     {/literal}
 </script>
@@ -61,48 +61,49 @@
         </div>
     </div>
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="dcQuickEdit">
-<tr>
-<td class="buttons">
-<input type="hidden" name="module" value="{$module}">
-{if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}
-<input type="hidden" name="record" value="">
-<input type="hidden" name="duplicateSave" value="true">
-<input type="hidden" name="duplicateId" value="{$fields.id.value}">
-{else}
-<input type="hidden" name="record" value="{$fields.id.value}">
-{/if}
-<input type="hidden" name="isDuplicate" value="false">
-<input type="hidden" name="action">
-<input type="hidden" name="return_module" value="{$smarty.request.return_module}">
-<input type="hidden" name="return_action" value="{$smarty.request.return_action}">
-<input type="hidden" name="return_id" value="{$smarty.request.return_id}">
-<input type="hidden" name="module_tab"> 
-<input type="hidden" name="contact_role">
-{if (!empty($smarty.request.return_module) || !empty($smarty.request.relate_to)) && !(isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true")}
-<input type="hidden" name="relate_to" value="{if $smarty.request.return_relationship}{$smarty.request.return_relationship}{elseif $smarty.request.relate_to && empty($smarty.request.from_dcmenu)}{$smarty.request.relate_to}{elseif empty($isDCForm) && empty($smarty.request.from_dcmenu)}{$smarty.request.return_module}{/if}">
-<input type="hidden" name="relate_id" value="{$smarty.request.return_id}">
-{/if}
-<input type="hidden" name="offset" value="{$offset}">
-{assign var='place' value="_HEADER"} <!-- to be used for id for buttons with custom code in def files-->
-{{if isset($form.hidden)}}
-{{foreach from=$form.hidden item=field}}
-{{$field}}   
-{{/foreach}}
-{{/if}}
-{{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="dcQuickEdit">
+        <tr>
+            <td class="buttons">
+                <input type="hidden" name="module" value="{$module}">
+                {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}
+                    <input type="hidden" name="record" value="">
+                    <input type="hidden" name="duplicateSave" value="true">
+                    <input type="hidden" name="duplicateId" value="{$fields.id.value}">
+                {else}
+                    <input type="hidden" name="record" value="{$fields.id.value}">
+                {/if}
+                <input type="hidden" name="isDuplicate" value="false">
+                <input type="hidden" name="action">
+                <input type="hidden" name="return_module" value="{$smarty.request.return_module}">
+                <input type="hidden" name="return_action" value="{$smarty.request.return_action}">
+                <input type="hidden" name="return_id" value="{$smarty.request.return_id}">
+                <input type="hidden" name="module_tab">
+                <input type="hidden" name="contact_role">
+                {if (!empty($smarty.request.return_module) || !empty($smarty.request.relate_to)) && !(isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true")}
+                    <input type="hidden" name="relate_to"
+                           value="{if $smarty.request.return_relationship}{$smarty.request.return_relationship}{elseif $smarty.request.relate_to && empty($smarty.request.from_dcmenu)}{$smarty.request.relate_to}{elseif empty($isDCForm) && empty($smarty.request.from_dcmenu)}{$smarty.request.return_module}{/if}">
+                    <input type="hidden" name="relate_id" value="{$smarty.request.return_id}">
+                {/if}
+                <input type="hidden" name="offset" value="{$offset}">
+                {assign var='place' value="_HEADER"} <!-- to be used for id for buttons with custom code in def files-->
+                {{if isset($form.hidden)}}
+                {{foreach from=$form.hidden item=field}}
+                {{$field}}
+                {{/foreach}}
+                {{/if}}
+                {{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
 
-</td>
-<td align='right' class="edit-view-pagination-desktop-container">
-{{$ADMIN_EDIT}}
-{{if $panelCount == 0}}
-    {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
-	<div class="edit-view-pagination edit-view-pagination-desktop">
-        {{if $SHOW_VCR_CONTROL}}
-        {$PAGINATION}
-        {{/if}}
-    </div>
-{{/if}}
-</td>
-</tr>
-</table>
+            </td>
+            <td align='right' class="edit-view-pagination-desktop-container">
+                {{$ADMIN_EDIT}}
+                {{if $panelCount == 0}}
+                {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
+                <div class="edit-view-pagination edit-view-pagination-desktop">
+                    {{if $SHOW_VCR_CONTROL}}
+                    {$PAGINATION}
+                    {{/if}}
+                </div>
+                {{/if}}
+            </td>
+        </tr>
+    </table>

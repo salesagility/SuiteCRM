@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description: view handler for last step of the import process
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
 require_once('modules/Import/views/ImportView.php');
 require_once('modules/Import/ImportCacheFiles.php');
 require_once('modules/Import/sources/ImportFile.php');
@@ -53,63 +51,61 @@ require_once('include/ListView/ListViewFacade.php');
 
 class ImportViewLast extends ImportView
 {
+    public $lvf;
     protected $pageTitleKey = 'LBL_STEP_5_TITLE';
 
-    var $lvf;
-
- 	/**
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $app_strings, $current_user, $sugar_config, $current_language;
 
 
-
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("TYPE", $_REQUEST['type']);
-        $this->ss->assign("HEADER", $app_strings['LBL_IMPORT']." ". $mod_strings['LBL_MODULE_NAME']);
+        $this->ss->assign("HEADER", $app_strings['LBL_IMPORT'] . " " . $mod_strings['LBL_MODULE_NAME']);
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
         // lookup this module's $mod_strings to get the correct module name
         $module_mod_strings =
             return_module_language($current_language, $_REQUEST['import_module']);
-        $this->ss->assign("MODULENAME",$module_mod_strings['LBL_MODULE_NAME']);
+        $this->ss->assign("MODULENAME", $module_mod_strings['LBL_MODULE_NAME']);
 
         // read status file to get totals for records imported, errors, and duplicates
-        $count        = 0;
-        $errorCount   = 0;
-        $dupeCount    = 0;
+        $count = 0;
+        $errorCount = 0;
+        $dupeCount = 0;
         $createdCount = 0;
         $updatedCount = 0;
         $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'r');
-        
+
         // Read the data if we successfully opened file 
-        if ($fp !== false)
-        {
+        if ($fp !== false) {
             // Read rows 1 by 1 and add the info
-            while ($row = fgetcsv($fp, 8192))
-            {
-                $count         += (int) $row[0];
-                $errorCount    += (int) $row[1];
-                $dupeCount     += (int) $row[2];
-                $createdCount  += (int) $row[3];
-                $updatedCount  += (int) $row[4];
+            while ($row = fgetcsv($fp, 8192)) {
+                $count += (int)$row[0];
+                $errorCount += (int)$row[1];
+                $dupeCount += (int)$row[2];
+                $createdCount += (int)$row[3];
+                $updatedCount += (int)$row[4];
             }
             fclose($fp);
         }
-        
-        $this->ss->assign("showUndoButton",FALSE);
-        if($createdCount > 0)
-        {
-        	$this->ss->assign("showUndoButton",TRUE);
+
+        $this->ss->assign("showUndoButton", false);
+        if ($createdCount > 0) {
+            $this->ss->assign("showUndoButton", true);
         }
 
-        if ($errorCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
+        if ($errorCount > 0 && ($createdCount <= 0 && $updatedCount <= 0)) {
             $activeTab = 2;
-        else if($dupeCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
-            $activeTab = 1;
-        else
-            $activeTab = 0;
+        } else {
+            if ($dupeCount > 0 && ($createdCount <= 0 && $updatedCount <= 0)) {
+                $activeTab = 1;
+            } else {
+                $activeTab = 0;
+            }
+        }
 
         $this->ss->assign("JAVASCRIPT", $this->_getJS($activeTab));
 
@@ -118,81 +114,36 @@ class ImportViewLast extends ImportView
         $this->ss->assign("createdCount", $createdCount);
         $this->ss->assign("updatedCount", $updatedCount);
         $this->ss->assign("errorFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getErrorFileName()));
-        $this->ss->assign("errorrecordsFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getErrorRecordsWithoutErrorFileName()));
+        $this->ss->assign("errorrecordsFile",
+            ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getErrorRecordsWithoutErrorFileName()));
         $this->ss->assign("dupeFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getDuplicateFileName()));
 
-        if ( $this->bean->object_name == "Prospect" )
-        {
-        	$this->ss->assign("PROSPECTLISTBUTTON", $this->_addToProspectListButton());
-        }
-        else {
-            $this->ss->assign("PROSPECTLISTBUTTON","");
+        if ($this->bean->object_name == "Prospect") {
+            $this->ss->assign("PROSPECTLISTBUTTON", $this->_addToProspectListButton());
+        } else {
+            $this->ss->assign("PROSPECTLISTBUTTON", "");
         }
 
         $resultsTable = "";
-        foreach ( UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname )
-        {
+        foreach (UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname) {
             // load bean
-            if ( !( $this->bean instanceof $beanname ) )
-            {
+            if (!($this->bean instanceof $beanname)) {
                 $this->bean = new $beanname;
             }
-           $resultsTable .= $this->getListViewResults();
+            $resultsTable .= $this->getListViewResults();
         }
-        if(empty($resultsTable))
-        {
+        if (empty($resultsTable)) {
             $resultsTable = $this->getListViewResults();
         }
 
         $this->ss->assign("RESULTS_TABLE", $resultsTable);
-        $this->ss->assign("ERROR_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors') );
-        $this->ss->assign("DUP_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getDuplicateFileDisplayName(), 'dup'));
+        $this->ss->assign("ERROR_TABLE",
+            $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors'));
+        $this->ss->assign("DUP_TABLE",
+            $this->getListViewTableFromFile(ImportCacheFiles::getDuplicateFileDisplayName(), 'dup'));
         $content = $this->ss->fetch('modules/Import/tpls/last.tpl');
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
-    }
-
-    protected function getListViewResults()
-    {
-        global $mod_strings, $current_language;
-        // build listview to show imported records
-        $lvf = !empty($this->lvf) ? $this->lvf : new ListViewFacade($this->bean, $this->bean->module_dir, 0);
-
-        $params = array();
-        if(!empty($_REQUEST['orderBy']))
-        {
-            $params['orderBy'] = $_REQUEST['orderBy'];
-            $params['overrideOrder'] = true;
-            if(!empty($_REQUEST['sortOrder'])) $params['sortOrder'] = $_REQUEST['sortOrder'];
-        }
-        $beanname = ($this->bean->object_name == 'Case' ? 'aCase' : $this->bean->object_name);
-        // add users_last_import joins so we only show records done in this import
-        $params['custom_from']  = ', users_last_import';
-        $params['custom_where'] = " AND users_last_import.assigned_user_id = '{$GLOBALS['current_user']->id}'
-                AND users_last_import.bean_type = '{$beanname}'
-                AND users_last_import.bean_id = {$this->bean->table_name}.id
-                AND users_last_import.deleted = 0
-                AND {$this->bean->table_name}.deleted = 0";
-
-        $lvf->lv->mergeduplicates = false;
-        $lvf->lv->showMassupdateFields = false;
-        if ( $lvf->type == 2 )
-            $lvf->template = 'include/ListView/ListViewNoMassUpdate.tpl';
-
-        $module_mod_strings = return_module_language($current_language, $this->bean->module_dir);
-        $lvf->setup('', '', $params, $module_mod_strings, 0, -1, '', strtoupper($beanname), array(), 'id');
-        global $app_list_strings;
-        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', TRUE);
-
-    }
-
-    protected function getListViewTableFromFile($fileName, $tableName)
-    {
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
-        $if = new ImportFile($fileName, ",", '"', FALSE, FALSE);
-        $if->setHeaderRow($has_header);
-        $lv = new ImportListView($if,array('offset'=> 0), $tableName);
-        return $lv->display(TRUE);
     }
 
     /**
@@ -279,6 +230,7 @@ SUGAR.IV.togglePages('$activeTab');
 
 EOJAVASCRIPT;
     }
+
     /**
      * Returns a button to add this list of prospects to a Target List
      *
@@ -297,12 +249,11 @@ EOJAVASCRIPT;
 				WHERE users_last_import.assigned_user_id = '{$current_user->id}' AND users_last_import.bean_type='Prospect' AND users_last_import.bean_id=prospects.id
 				AND users_last_import.deleted=0 AND prospects.deleted=0";
 
-        $prospect_id='';
-        if(!empty($query)){
-            $res=$GLOBALS['db']->query($query);
-            while($row = $GLOBALS['db']->fetchByAssoc($res))
-            {
-                $prospect_id[]=$row['id'];
+        $prospect_id = '';
+        if (!empty($query)) {
+            $res = $GLOBALS['db']->query($query);
+            while ($row = $GLOBALS['db']->fetchByAssoc($res)) {
+                $prospect_id[] = $row['id'];
             }
         }
         $popup_request_data = array(
@@ -316,14 +267,14 @@ EOJAVASCRIPT;
                 'return_url' => 'notused',
                 'link_field_name' => 'notused',
                 'module_name' => 'notused',
-                'refresh_page'=>'1',
-                'return_type'=>'addtoprospectlist',
-                'parent_module'=>'ProspectLists',
-                'parent_type'=>'ProspectList',
-                'child_id'=>'id',
-                'link_attribute'=>'prospects',
-                'link_type'=>'default',	 //polymorphic or default
-                'prospect_ids'=>$prospect_id,
+                'refresh_page' => '1',
+                'return_type' => 'addtoprospectlist',
+                'parent_module' => 'ProspectLists',
+                'parent_type' => 'ProspectList',
+                'child_id' => 'id',
+                'link_attribute' => 'prospects',
+                'link_type' => 'default',     //polymorphic or default
+                'prospect_ids' => $prospect_id,
             )
         );
 
@@ -339,5 +290,53 @@ EOJAVASCRIPT;
 EOHTML;
 
     }
+
+    protected function getListViewResults()
+    {
+        global $mod_strings, $current_language;
+        // build listview to show imported records
+        $lvf = !empty($this->lvf) ? $this->lvf : new ListViewFacade($this->bean, $this->bean->module_dir, 0);
+
+        $params = array();
+        if (!empty($_REQUEST['orderBy'])) {
+            $params['orderBy'] = $_REQUEST['orderBy'];
+            $params['overrideOrder'] = true;
+            if (!empty($_REQUEST['sortOrder'])) {
+                $params['sortOrder'] = $_REQUEST['sortOrder'];
+            }
+        }
+        $beanname = ($this->bean->object_name == 'Case' ? 'aCase' : $this->bean->object_name);
+        // add users_last_import joins so we only show records done in this import
+        $params['custom_from'] = ', users_last_import';
+        $params['custom_where'] = " AND users_last_import.assigned_user_id = '{$GLOBALS['current_user']->id}'
+                AND users_last_import.bean_type = '{$beanname}'
+                AND users_last_import.bean_id = {$this->bean->table_name}.id
+                AND users_last_import.deleted = 0
+                AND {$this->bean->table_name}.deleted = 0";
+
+        $lvf->lv->mergeduplicates = false;
+        $lvf->lv->showMassupdateFields = false;
+        if ($lvf->type == 2) {
+            $lvf->template = 'include/ListView/ListViewNoMassUpdate.tpl';
+        }
+
+        $module_mod_strings = return_module_language($current_language, $this->bean->module_dir);
+        $lvf->setup('', '', $params, $module_mod_strings, 0, -1, '', strtoupper($beanname), array(), 'id');
+        global $app_list_strings;
+
+        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', true);
+
+    }
+
+    protected function getListViewTableFromFile($fileName, $tableName)
+    {
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
+        $if = new ImportFile($fileName, ",", '"', false, false);
+        $if->setHeaderRow($has_header);
+        $lv = new ImportListView($if, array('offset' => 0), $tableName);
+
+        return $lv->display(true);
+    }
 }
+
 ?>

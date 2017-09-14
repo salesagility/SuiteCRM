@@ -45,19 +45,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class ListViewDataEmailsSearchAbstract
  */
-abstract class ListViewDataEmailsSearchAbstract {
-
-    /**
-     * @var ListViewDataEmails
-     */
-    protected $lvde;
+abstract class ListViewDataEmailsSearchAbstract
+{
 
     /**
      * @var Emails $seed
      */
     public $seed;
+    /**
+     * @var ListViewDataEmails
+     */
+    protected $lvde;
 
-    public function __construct($listViewDataEmails) {
+    public function __construct($listViewDataEmails)
+    {
         $this->lvde = $listViewDataEmails;
     }
 

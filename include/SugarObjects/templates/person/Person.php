@@ -69,15 +69,6 @@ class Person extends Basic
     public $emailAddress;
 
     /**
-     * Person constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->emailAddress = new SugarEmailAddress();
-    }
-
-    /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
      *     please update your code, use __construct instead
      */
@@ -91,6 +82,15 @@ class Person extends Basic
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
+    }
+
+    /**
+     * Person constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->emailAddress = new SugarEmailAddress();
     }
 
     /**
@@ -110,17 +110,6 @@ class Person extends Basic
         $this->_create_proper_name_field();
 
         return $ret_val;
-    }
-
-    /**
-     * Populate email address fields here instead of retrieve() so that they are properly available for logic hooks
-     *
-     * @see parent::fill_in_relationship_fields()
-     */
-    public function fill_in_relationship_fields()
-    {
-        parent::fill_in_relationship_fields();
-        $this->emailAddress->handleLegacyRetrieve($this);
     }
 
     /**
@@ -169,6 +158,17 @@ class Person extends Basic
 
         $this->name = $full_name;
         $this->full_name = $full_name; //used by campaigns
+    }
+
+    /**
+     * Populate email address fields here instead of retrieve() so that they are properly available for logic hooks
+     *
+     * @see parent::fill_in_relationship_fields()
+     */
+    public function fill_in_relationship_fields()
+    {
+        parent::fill_in_relationship_fields();
+        $this->emailAddress->handleLegacyRetrieve($this);
     }
 
     /**
@@ -255,7 +255,7 @@ class Person extends Basic
     ) {
         parent::populateRelatedBean($newBean);
 
-        if ($newBean instanceOf Company) {
+        if ($newBean instanceof Company) {
             $newBean->phone_fax = $this->phone_fax;
             $newBean->phone_office = $this->phone_work;
             $newBean->phone_alternate = $this->phone_other;
@@ -295,8 +295,8 @@ class Person extends Basic
 					$table.*,
 					email_addresses.email_address email_address,
 					'' email_addresses_non_primary, " .
-                 // email_addresses_non_primary needed for get_field_order_mapping()
-                 'users.user_name as assigned_user_name ';
+            // email_addresses_non_primary needed for get_field_order_mapping()
+            'users.user_name as assigned_user_name ';
         if ($custom_join) {
             $query .= $custom_join['select'];
         }
@@ -308,8 +308,8 @@ class Person extends Basic
 
         //Join email address table too.
         $query .= " LEFT JOIN email_addr_bean_rel on $table.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module = '" .
-                  $this->module_dir .
-                  "' and email_addr_bean_rel.deleted = 0 and email_addr_bean_rel.primary_address = 1";
+            $this->module_dir .
+            "' and email_addr_bean_rel.deleted = 0 and email_addr_bean_rel.primary_address = 1";
         $query .= ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ';
 
         if ($custom_join) {

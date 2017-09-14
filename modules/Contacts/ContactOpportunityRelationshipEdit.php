@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,18 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Contacts/ContactOpportunityRelationship.php');
 
@@ -57,12 +52,12 @@ global $sugar_version, $sugar_config;
 
 $focus = new ContactOpportunityRelationship();
 
-if(isset($_REQUEST['record'])) {
+if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 }
 
-if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
-	$focus->id = "";
+if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
+    $focus->id = "";
 }
 
 // Prepopulate either side of the relationship if passed in.
@@ -83,7 +78,7 @@ $sqs_objects['opportunity_name']['populate_list'] = array('opportunity_name', 'o
 $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '</script>';
 echo $quicksearch_js;
 
-$xtpl=new XTemplate ('modules/Contacts/ContactOpportunityRelationshipEdit.html');
+$xtpl = new XTemplate ('modules/Contacts/ContactOpportunityRelationshipEdit.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
@@ -91,16 +86,18 @@ $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailV
 $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?" . $GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
-$xtpl->assign("CONTACT",$contactName = Array("NAME" => $focus->contact_name, "ID" => $focus->contact_id));
-$xtpl->assign("OPPORTUNITY",$oppName = Array("NAME" => $focus->opportunity_name, "ID" => $focus->opportunity_id));
+$xtpl->assign("CONTACT", $contactName = array("NAME" => $focus->contact_name, "ID" => $focus->contact_id));
+$xtpl->assign("OPPORTUNITY", $oppName = array("NAME" => $focus->opportunity_name, "ID" => $focus->opportunity_id));
 
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_CONTACT_OPP_FORM_TITLE']." ".$contactName['NAME'] . " - ". $oppName['NAME']), true);
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array(
+    $mod_strings['LBL_MODULE_NAME'],
+    $mod_strings['LBL_CONTACT_OPP_FORM_TITLE'] . " " . $contactName['NAME'] . " - " . $oppName['NAME']
+), true);
 
-$xtpl->assign("CONTACT_ROLE_OPTIONS", get_select_options_with_id($app_list_strings['opportunity_relationship_type_dom'], $focus->contact_role));
-
-
+$xtpl->assign("CONTACT_ROLE_OPTIONS",
+    get_select_options_with_id($app_list_strings['opportunity_relationship_type_dom'], $focus->contact_role));
 
 
 $xtpl->parse("main");
@@ -111,7 +108,8 @@ $xtpl->out("main");
 $javascript = new javascript();
 $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
-$javascript->addToValidateBinaryDependency('opportunity_name', 'alpha', $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $mod_strings['LBL_OPP_NAME'], 'false', '', 'opportunity_id');
+$javascript->addToValidateBinaryDependency('opportunity_name', 'alpha',
+    $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $mod_strings['LBL_OPP_NAME'], 'false', '', 'opportunity_id');
 echo $javascript->getScript();
 
 

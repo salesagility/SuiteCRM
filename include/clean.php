@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -49,12 +48,14 @@ class HTMLPurifier_URIScheme_cid extends HTMLPurifier_URIScheme
     public $browsable = true;
     public $may_omit_host = true;
 
-    public function doValidate(&$uri, $config, $context) {
+    public function doValidate(&$uri, $config, $context)
+    {
         $uri->userinfo = null;
-        $uri->port     = null;
-        $uri->host     = null;
-        $uri->query    = null;
+        $uri->port = null;
+        $uri->host = null;
+        $uri->query = null;
         $uri->fragment = null;
+
         return true;
     }
 
@@ -90,7 +91,7 @@ class SugarCleaner
         global $sugar_config;
         $config = HTMLPurifier_Config::createDefault();
 
-        if(!is_dir(sugar_cached("htmlclean"))) {
+        if (!is_dir(sugar_cached("htmlclean"))) {
             create_cache_directory("htmlclean/");
         }
         $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
@@ -107,7 +108,7 @@ class SugarCleaner
         // for style
         //$config->set('Filter.ExtractStyleBlocks', true);
         $config->set('Filter.ExtractStyleBlocks.TidyImpl', false); // can't use csstidy, GPL
-        if(!empty($GLOBALS['sugar_config']['html_allow_objects'])) {
+        if (!empty($GLOBALS['sugar_config']['html_allow_objects'])) {
             // for object
             $config->set('HTML.SafeObject', true);
             // for embed
@@ -115,7 +116,7 @@ class SugarCleaner
         }
         $config->set('Output.FlashCompat', true);
         // for iframe and xmp
-        $config->set('Filter.Custom',  array(new HTMLPurifier_Filter_Xmp()));
+        $config->set('Filter.Custom', array(new HTMLPurifier_Filter_Xmp()));
         // for link
         $config->set('HTML.DefinitionID', 'Sugar HTML Def');
         $config->set('HTML.DefinitionRev', 2);
@@ -126,33 +127,33 @@ class SugarCleaner
 
         if ($def = $config->maybeGetRawHTMLDefinition()) {
             $form = $def->addElement(
-      			'link',   // name
-      			'Flow',  // content set
-      			'Empty', // allowed children
-      			'Core', // attribute collection
-                 array( // attributes
-            		'href*' => 'URI',
-            		'rel' => 'Enum#stylesheet', // only stylesheets supported here
-            		'type' => 'Enum#text/css' // only CSS supported here
-    			)
+                'link',   // name
+                'Flow',  // content set
+                'Empty', // allowed children
+                'Core', // attribute collection
+                array( // attributes
+                    'href*' => 'URI',
+                    'rel' => 'Enum#stylesheet', // only stylesheets supported here
+                    'type' => 'Enum#text/css' // only CSS supported here
+                )
             );
             $iframe = $def->addElement(
-      			'iframe',   // name
-      			'Flow',  // content set
-      			'Optional: #PCDATA | Flow | Block', // allowed children
-      			'Core', // attribute collection
-                 array( // attributes
-            		'src*' => 'URI',
+                'iframe',   // name
+                'Flow',  // content set
+                'Optional: #PCDATA | Flow | Block', // allowed children
+                'Core', // attribute collection
+                array( // attributes
+                    'src*' => 'URI',
                     'frameborder' => 'Enum#0,1',
-                    'marginwidth' =>  'Pixels',
-                    'marginheight' =>  'Pixels',
+                    'marginwidth' => 'Pixels',
+                    'marginheight' => 'Pixels',
                     'scrolling' => 'Enum#|yes,no,auto',
-                 	'align' => 'Enum#top,middle,bottom,left,right,center',
+                    'align' => 'Enum#top,middle,bottom,left,right,center',
                     'height' => 'Length',
                     'width' => 'Length',
-                 )
+                )
             );
-            $iframe->excludes=array('iframe');
+            $iframe->excludes = array('iframe');
         }
         $uri = $config->getDefinition('URI');
         $uri->addFilter(new SugarURIFilter(), $config);
@@ -196,11 +197,12 @@ class SugarCleaner
 
     static public function stripTags($string, $encoded = true)
     {
-        if($encoded) {
+        if ($encoded) {
             $string = from_html($string);
         }
         $string = filter_var($string, FILTER_SANITIZE_STRIPPED, FILTER_FLAG_NO_ENCODE_QUOTES);
-        return $encoded?to_html($string):$string;
+
+        return $encoded ? to_html($string) : $string;
     }
 }
 
@@ -219,8 +221,7 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
     public function prepare($config)
     {
         global $sugar_config;
-        if(!empty($sugar_config['security_trusted_domains']) && is_array($sugar_config['security_trusted_domains']))
-        {
+        if (!empty($sugar_config['security_trusted_domains']) && is_array($sugar_config['security_trusted_domains'])) {
             $this->allowed = $sugar_config['security_trusted_domains'];
         }
         /* Allow this host?
@@ -234,24 +235,28 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
     public function filter(&$uri, $config, $context)
     {
         // skip non-resource URIs
-        if (!$context->get('EmbeddedURI', true)) return true;
+        if (!$context->get('EmbeddedURI', true)) {
+            return true;
+        }
 
         //if(empty($this->allowed)) return false;
 
-        if(!empty($uri->scheme) && strtolower($uri->scheme) != 'http' && strtolower($uri->scheme) != 'https') {
-	        // do not touch non-HTTP URLs
-	        return true;
-	    }
+        if (!empty($uri->scheme) && strtolower($uri->scheme) != 'http' && strtolower($uri->scheme) != 'https') {
+            // do not touch non-HTTP URLs
+            return true;
+        }
 
-    	// relative URLs permitted since email templates use it
-		// if(empty($uri->host)) return false;
-	    // allow URLs with no query
-		if(empty($uri->query)) return true;
+        // relative URLs permitted since email templates use it
+        // if(empty($uri->host)) return false;
+        // allow URLs with no query
+        if (empty($uri->query)) {
+            return true;
+        }
 
-		// allow URLs for known good hosts
-		foreach($this->allowed as $allow) {
+        // allow URLs for known good hosts
+        foreach ($this->allowed as $allow) {
             // must be equal to our domain or subdomain of our domain
-            if($uri->host == $allow || substr($uri->host, -(strlen($allow)+1)) == ".$allow") {
+            if ($uri->host == $allow || substr($uri->host, -(strlen($allow) + 1)) == ".$allow") {
                 return true;
             }
         }
@@ -259,24 +264,30 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
         // Here we try to block URLs that may be used for nasty XSRF stuff by
         // referring back to Sugar URLs
         // allow URLs that don't start with /? or /index.php?
-		if(!empty($uri->path) && $uri->path != '/') {
-		    $lpath = strtolower($uri->path);
-		    if(substr($lpath, -10) != '/index.php' && $lpath != 'index.php') {
-    			return true;
-	    	}
-		}
+        if (!empty($uri->path) && $uri->path != '/') {
+            $lpath = strtolower($uri->path);
+            if (substr($lpath, -10) != '/index.php' && $lpath != 'index.php') {
+                return true;
+            }
+        }
 
         $query_items = array();
-		parse_str(from_html($uri->query), $query_items);
-	    // weird query, probably harmless
-		if(empty($query_items)) return true;
-    	// suspiciously like SugarCRM query, reject
-		if(!empty($query_items['module']) && !empty($query_items['action'])) return false;
-    	// looks like non-download entry point - allow only specific entry points
-		if(!empty($query_items['entryPoint']) && !in_array($query_items['entryPoint'], array('download', 'image', 'getImage'))) {
-			return false;
-		}
+        parse_str(from_html($uri->query), $query_items);
+        // weird query, probably harmless
+        if (empty($query_items)) {
+            return true;
+        }
+        // suspiciously like SugarCRM query, reject
+        if (!empty($query_items['module']) && !empty($query_items['action'])) {
+            return false;
+        }
+        // looks like non-download entry point - allow only specific entry points
+        if (!empty($query_items['entryPoint']) && !in_array($query_items['entryPoint'],
+                array('download', 'image', 'getImage'))
+        ) {
+            return false;
+        }
 
-		return true;
+        return true;
     }
 }

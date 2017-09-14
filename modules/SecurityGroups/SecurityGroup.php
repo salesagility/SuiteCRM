@@ -1,70 +1,52 @@
 <?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'modules/SecurityGroups/SecurityGroup_sugar.php';
 
 class SecurityGroup extends SecurityGroup_sugar
 {
-    /**
-     * SecurityGroup constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * @deprecated 7.6 PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code
-     * @see __construct
-     */
-    public function SecurityGroup()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
     public $last_run = array('module' => '', 'record' => '', 'action' => '', 'response' => '');
-
-    /**
-     * Gets the join statement used for returning all rows in a list view that a user has group rights to.
-     * Make sure any use of this also return records that the user has owner access to.
-     * (e.g. caller uses getOwnerWhere as well).
-     *
-     * @param string $table_name
-     * @param string $module
-     * @param string $user_id
-     * @return string
-     */
-    public function getGroupWhere($table_name, $module, $user_id)
-    {
-
-        //need a different query if doing a securitygroups check
-        if ($module == 'SecurityGroups') {
-            return " $table_name.id in (
-                select secg.id from securitygroups secg
-                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
-                    and secu.user_id = '$user_id'
-                where secg.deleted = 0
-            )";
-        } else {
-            return " EXISTS (SELECT  1
-                  FROM    securitygroups secg
-                          INNER JOIN securitygroups_users secu
-                            ON secg.id = secu.securitygroup_id
-                               AND secu.deleted = 0
-                               AND secu.user_id = '$user_id'
-                          INNER JOIN securitygroups_records secr
-                            ON secg.id = secr.securitygroup_id
-                               AND secr.deleted = 0
-                               AND secr.module = '$module'
-                       WHERE   secr.record_id = " . $table_name . '.id
-                               AND secg.deleted = 0) ';
-        }
-    }
 
     /**
      * Gets the join statement used for returning all users that a given user is in the same group with.
@@ -81,57 +63,6 @@ class SecurityGroup extends SecurityGroup_sugar
                 and secu.user_id = '$user_id'
             where sec.deleted = 0
         )";
-    }
-
-    /**
-     * Gets the join statement used for returning all rows in a list view that a user has group rights to.
-     * Make sure any use of this also return records that the user has owner access to.
-     * (e.g. caller uses getOwnerWhere as well).
-     *
-     * NOTE: Make sure to add the check in the where clause for ($table_name.assigned_user_id or securitygroup_join.record_id is not null)
-     *
-     * @param string $table_name
-     * @param string $module
-     * @param string $user_id
-     *
-     * @return string
-     */
-    public function getGroupJoin($table_name, $module, $user_id)
-    {
-
-        //need a different query if doing a securitygroups check
-        if ($module == 'SecurityGroups') {
-            return " LEFT JOIN (select distinct secg.id from securitygroups secg
-    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
-            and secu.user_id = '" . $user_id . "'
-    where secg.deleted = 0
-) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        } else {
-            return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
-    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
-            and secu.user_id = '" . $user_id . "'
-    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
-             and secr.module = '" . $module . "'
-    where secg.deleted = 0
-) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        }
-    }
-
-    /**
-     * Gets the join statement used for returning all users that a given user is in the same group with.
-     *
-     * @param string $user_id
-     *
-     * @return string
-     */
-    public function getGroupUsersJoin($user_id)
-    {
-        return " LEFT JOIN (
-            select distinct sec.user_id as id from securitygroups_users sec
-            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
-                and secu.user_id = '$user_id'
-            where sec.deleted = 0
-        ) securitygroup_join on securitygroup_join.id = users.id ";
     }
 
     /**
@@ -261,42 +192,70 @@ class SecurityGroup extends SecurityGroup_sugar
     }
 
     /**
-     * @param SugarBean $focus
-     * @param boolean $isUpdate
+     * Used to get the modules that are tied to security groups.
+     * There should be a relationship of some sort in order to tie the two together.
+     *
+     * This will be used for things such as default groups for modules, etc.
      */
-    public static function inherit_creator($focus, $isUpdate)
+    public function getSecurityModules()
     {
-        global $sugar_config;
-        global $current_user;
-        if (!$isUpdate && isset($sugar_config['securitysuite_inherit_creator']) && $sugar_config['securitysuite_inherit_creator'] == true) {
-            if (isset($_SESSION['portal_id']) && isset($_SESSION['user_id'])) {
-                return; //don't inherit if from portal
-            }
+        global $app_list_strings;
 
-            //inherit only for those that support Security Groups
-            $groupFocus = new self();
-            $security_modules = $groupFocus->getSecurityModules();
+        $security_modules = array();
 
-            if (in_array($focus->module_dir, array_keys($security_modules))) {
+        //https://www.sugaroutfitters.com/support/securitysuite/496
+        //There are some modules that shouldn't ever inherit groups...
+        $module_blacklist = array('SchedulersJobs', 'Schedulers', 'Trackers');
 
-                $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-                    . 'SELECT DISTINCT ';
-                if ($focus->db->dbType == 'mysql') {
-                    $query .= ' uuid() ';
-                } elseif ($focus->db->dbType == 'mssql') {
-                    $query .= ' lower(newid()) ';
+        require_once 'modules/Relationships/Relationship.php';
+        $rs = new Relationship();
+        $query = "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
+        $GLOBALS['log']->debug("SecuritySuite: Get SecuritySuite Enabled Modules: $query");
+        $result = $rs->db->query($query);
+        while (($row = $rs->db->fetchByAssoc($result)) != null) {
+            if ($row['lhs_module'] == 'SecurityGroups') {
+                if (in_array($row['rhs_module'], $module_blacklist)) {
+                    continue;
                 }
-                $currentUserId = isset($current_user->id) ? $current_user->id : null;
-                $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
-                    . $focus->db->convert('', 'today') . ',0 '
-                    . 'from securitygroups_users u '
-                    . 'inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
-                    . "left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
-                    . "where d.id is null and u.user_id = '$currentUserId' and u.deleted = 0 and (u.noninheritable is null or u.noninheritable <> 1)";
-                $GLOBALS['log']->debug("SecuritySuite: Inherit from Creator: $query");
-                $focus->db->query($query, true);
+
+                //$security_modules[$row['rhs_module']] = $row['rhs_module'];
+                $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
+            } else {
+                if (in_array($row['lhs_module'], $module_blacklist)) {
+                    continue;
+                }
+
+                //$security_modules[$row['lhs_module']] = $row['lhs_module'];
+                $security_modules[$row['lhs_module']] = $app_list_strings['moduleList'][$row['lhs_module']];//rost fix
             }
         }
+
+        return $security_modules;
+    }
+
+    /**
+     * @return array
+     */
+    public function retrieveDefaultGroups()
+    {
+        global $db;
+
+        $default_groups = array();
+        $query = 'select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id '
+            . 'from securitygroups_default '
+            . 'inner join securitygroups on securitygroups_default.securitygroup_id = securitygroups.id '
+            . 'where securitygroups_default.deleted = 0 and securitygroups.deleted = 0';
+        $GLOBALS['log']->debug("SecuritySuite: Retrieve Default Groups: $query");
+        $result = $db->query($query);
+        while (($row = $db->fetchByAssoc($result)) != null) {
+            $default_groups[$row['id']] = array(
+                'group' => $row['name'],
+                'module' => $row['module'],
+                'securitygroup_id' => $row['securitygroup_id']
+            );
+        }
+
+        return $default_groups;
     }
 
     /**
@@ -409,7 +368,8 @@ class SecurityGroup extends SecurityGroup_sugar
 
                         self::inherit_parentQuery($focus, $relate_parent_type, $relate_parent_id, $focus_id,
                             $focus_module_dir);
-                    } elseif (isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) { //soap account
+                    } elseif (isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) {
+//soap account
                         $relate_parent_id = $_SESSION[$def['id_name']];
                         $relate_parent_type = $def['module'];
 
@@ -462,6 +422,213 @@ class SecurityGroup extends SecurityGroup_sugar
     }
 
     /**
+     * returns # of groups a user is a member of that are inheritable.
+     * @param string $user_id
+     * @return
+     */
+    public function getMembershipCount($user_id)
+    {
+        global $db;
+
+        if (!isset($_SESSION['securitygroup_count'])) {
+            $query = 'select count(securitygroups.id) as results from securitygroups '
+                . 'inner join securitygroups_users on securitygroups.id = securitygroups_users.securitygroup_id '
+                . ' and securitygroups_users.deleted = 0 '
+                . " where securitygroups.deleted = 0 and securitygroups_users.user_id = '$user_id' "
+                . '  and (securitygroups.noninheritable is null or securitygroups.noninheritable <> 1) '
+                . '  and (securitygroups_users.noninheritable is null or securitygroups_users.noninheritable <> 1) ';
+            $GLOBALS['log']->debug("SecuritySuite: Inherit One Pre-Check Qualifier: $query");
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
+            if (isset($row)) {
+                $_SESSION['securitygroup_count'] = $row['results'];
+            }
+        }
+
+        return $_SESSION['securitygroup_count'];
+    }
+
+    /**
+     * @param SugarBean $focus
+     * @param boolean $isUpdate
+     */
+    public static function inherit_creator($focus, $isUpdate)
+    {
+        global $sugar_config;
+        global $current_user;
+        if (!$isUpdate && isset($sugar_config['securitysuite_inherit_creator']) && $sugar_config['securitysuite_inherit_creator'] == true) {
+            if (isset($_SESSION['portal_id']) && isset($_SESSION['user_id'])) {
+                return; //don't inherit if from portal
+            }
+
+            //inherit only for those that support Security Groups
+            $groupFocus = new self();
+            $security_modules = $groupFocus->getSecurityModules();
+
+            if (in_array($focus->module_dir, array_keys($security_modules))) {
+
+                $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
+                    . 'SELECT DISTINCT ';
+                if ($focus->db->dbType == 'mysql') {
+                    $query .= ' uuid() ';
+                } elseif ($focus->db->dbType == 'mssql') {
+                    $query .= ' lower(newid()) ';
+                }
+                $currentUserId = isset($current_user->id) ? $current_user->id : null;
+                $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
+                    . $focus->db->convert('', 'today') . ',0 '
+                    . 'from securitygroups_users u '
+                    . 'inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
+                    . "left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
+                    . "where d.id is null and u.user_id = '$currentUserId' and u.deleted = 0 and (u.noninheritable is null or u.noninheritable <> 1)";
+                $GLOBALS['log']->debug("SecuritySuite: Inherit from Creator: $query");
+                $focus->db->query($query, true);
+            }
+        }
+    }
+
+    /**
+     * For the current user, grab the user's primary group (if none, then first related group).
+     *
+     * Used in the various MVC views to determine which group layout to load.
+     */
+    public static function getPrimaryGroupID()
+    {
+        $primary_group_id = null;
+        global $db, $current_user;
+        $query = 'select ';
+        if ($db->dbType == 'mssql') {
+            $query .= ' top 1 ';
+        }
+        $query .= "securitygroups.id from securitygroups_users
+inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id
+      and securitygroups.deleted = 0
+where securitygroups_users.user_id='" . $current_user->id . "' and securitygroups_users.deleted = 0
+order by securitygroups_users.primary_group desc ";
+        if ($db->dbType == 'mysql') {
+            $query .= ' limit 0,1 ';
+        }
+
+        $result = $db->query($query, true, 'Error finding the current users primary group: ');
+        if (($row = $db->fetchByAssoc($result)) != null) {
+            $primary_group_id = $row['id'];
+        }
+
+        return $primary_group_id;
+    }
+
+    /**
+     * @deprecated 7.6 PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code
+     * @see __construct
+     */
+    public function SecurityGroup()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    /**
+     * SecurityGroup constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Gets the join statement used for returning all rows in a list view that a user has group rights to.
+     * Make sure any use of this also return records that the user has owner access to.
+     * (e.g. caller uses getOwnerWhere as well).
+     *
+     * @param string $table_name
+     * @param string $module
+     * @param string $user_id
+     * @return string
+     */
+    public function getGroupWhere($table_name, $module, $user_id)
+    {
+
+        //need a different query if doing a securitygroups check
+        if ($module == 'SecurityGroups') {
+            return " $table_name.id in (
+                select secg.id from securitygroups secg
+                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+                    and secu.user_id = '$user_id'
+                where secg.deleted = 0
+            )";
+        } else {
+            return " EXISTS (SELECT  1
+                  FROM    securitygroups secg
+                          INNER JOIN securitygroups_users secu
+                            ON secg.id = secu.securitygroup_id
+                               AND secu.deleted = 0
+                               AND secu.user_id = '$user_id'
+                          INNER JOIN securitygroups_records secr
+                            ON secg.id = secr.securitygroup_id
+                               AND secr.deleted = 0
+                               AND secr.module = '$module'
+                       WHERE   secr.record_id = " . $table_name . '.id
+                               AND secg.deleted = 0) ';
+        }
+    }
+
+    /**
+     * Gets the join statement used for returning all rows in a list view that a user has group rights to.
+     * Make sure any use of this also return records that the user has owner access to.
+     * (e.g. caller uses getOwnerWhere as well).
+     *
+     * NOTE: Make sure to add the check in the where clause for ($table_name.assigned_user_id or securitygroup_join.record_id is not null)
+     *
+     * @param string $table_name
+     * @param string $module
+     * @param string $user_id
+     *
+     * @return string
+     */
+    public function getGroupJoin($table_name, $module, $user_id)
+    {
+
+        //need a different query if doing a securitygroups check
+        if ($module == 'SecurityGroups') {
+            return " LEFT JOIN (select distinct secg.id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '" . $user_id . "'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
+        } else {
+            return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '" . $user_id . "'
+    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
+             and secr.module = '" . $module . "'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
+        }
+    }
+
+    /**
+     * Gets the join statement used for returning all users that a given user is in the same group with.
+     *
+     * @param string $user_id
+     *
+     * @return string
+     */
+    public function getGroupUsersJoin($user_id)
+    {
+        return " LEFT JOIN (
+            select distinct sec.user_id as id from securitygroups_users sec
+            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
+                and secu.user_id = '$user_id'
+            where sec.deleted = 0
+        ) securitygroup_join on securitygroup_join.id = users.id ";
+    }
+
+    /**
      * If user is a member of just one group inherit group for new record
      * returns true if inherit just one else false.
      * @param string $user_id
@@ -501,58 +668,6 @@ class SecurityGroup extends SecurityGroup_sugar
     }
 
     /**
-     * returns # of groups a user is a member of that are inheritable.
-     * @param string $user_id
-     * @return
-     */
-    public function getMembershipCount($user_id)
-    {
-        global $db;
-
-        if (!isset($_SESSION['securitygroup_count'])) {
-            $query = 'select count(securitygroups.id) as results from securitygroups '
-                . 'inner join securitygroups_users on securitygroups.id = securitygroups_users.securitygroup_id '
-                . ' and securitygroups_users.deleted = 0 '
-                . " where securitygroups.deleted = 0 and securitygroups_users.user_id = '$user_id' "
-                . '  and (securitygroups.noninheritable is null or securitygroups.noninheritable <> 1) '
-                . '  and (securitygroups_users.noninheritable is null or securitygroups_users.noninheritable <> 1) ';
-            $GLOBALS['log']->debug("SecuritySuite: Inherit One Pre-Check Qualifier: $query");
-            $result = $db->query($query);
-            $row = $db->fetchByAssoc($result);
-            if (isset($row)) {
-                $_SESSION['securitygroup_count'] = $row['results'];
-            }
-        }
-
-        return $_SESSION['securitygroup_count'];
-    }
-
-    /**
-     * @return array
-     */
-    public function retrieveDefaultGroups()
-    {
-        global $db;
-
-        $default_groups = array();
-        $query = 'select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id '
-            . 'from securitygroups_default '
-            . 'inner join securitygroups on securitygroups_default.securitygroup_id = securitygroups.id '
-            . 'where securitygroups_default.deleted = 0 and securitygroups.deleted = 0';
-        $GLOBALS['log']->debug("SecuritySuite: Retrieve Default Groups: $query");
-        $result = $db->query($query);
-        while (($row = $db->fetchByAssoc($result)) != null) {
-            $default_groups[$row['id']] = array(
-                'group' => $row['name'],
-                'module' => $row['module'],
-                'securitygroup_id' => $row['securitygroup_id']
-            );
-        }
-
-        return $default_groups;
-    }
-
-    /**
      * @param string $group_id
      * @param string $module
      */
@@ -578,48 +693,6 @@ class SecurityGroup extends SecurityGroup_sugar
     {
         $query = "DELETE FROM securitygroups_default WHERE id = '" . htmlspecialchars($default_id) . "' ";
         $this->db->query($query);
-    }
-
-    /**
-     * Used to get the modules that are tied to security groups.
-     * There should be a relationship of some sort in order to tie the two together.
-     *
-     * This will be used for things such as default groups for modules, etc.
-     */
-    public function getSecurityModules()
-    {
-        global $app_list_strings;
-
-        $security_modules = array();
-
-        //https://www.sugaroutfitters.com/support/securitysuite/496
-        //There are some modules that shouldn't ever inherit groups...
-        $module_blacklist = array('SchedulersJobs', 'Schedulers', 'Trackers');
-
-        require_once 'modules/Relationships/Relationship.php';
-        $rs = new Relationship();
-        $query = "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
-        $GLOBALS['log']->debug("SecuritySuite: Get SecuritySuite Enabled Modules: $query");
-        $result = $rs->db->query($query);
-        while (($row = $rs->db->fetchByAssoc($result)) != null) {
-            if ($row['lhs_module'] == 'SecurityGroups') {
-                if (in_array($row['rhs_module'], $module_blacklist)) {
-                    continue;
-                }
-
-                //$security_modules[$row['rhs_module']] = $row['rhs_module'];
-                $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
-            } else {
-                if (in_array($row['lhs_module'], $module_blacklist)) {
-                    continue;
-                }
-
-                //$security_modules[$row['lhs_module']] = $row['lhs_module'];
-                $security_modules[$row['lhs_module']] = $app_list_strings['moduleList'][$row['lhs_module']];//rost fix
-            }
-        }
-
-        return $security_modules;
     }
 
     /** To get the link name used to call load_relationship
@@ -741,35 +814,5 @@ class SecurityGroup extends SecurityGroup_sugar
         }
 
         return $user_array;
-    }
-
-    /**
-     * For the current user, grab the user's primary group (if none, then first related group).
-     *
-     * Used in the various MVC views to determine which group layout to load.
-     */
-    public static function getPrimaryGroupID()
-    {
-        $primary_group_id = null;
-        global $db, $current_user;
-        $query = 'select ';
-        if ($db->dbType == 'mssql') {
-            $query .= ' top 1 ';
-        }
-        $query .= "securitygroups.id from securitygroups_users
-inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id
-      and securitygroups.deleted = 0
-where securitygroups_users.user_id='" . $current_user->id . "' and securitygroups_users.deleted = 0
-order by securitygroups_users.primary_group desc ";
-        if ($db->dbType == 'mysql') {
-            $query .= ' limit 0,1 ';
-        }
-
-        $result = $db->query($query, true, 'Error finding the current users primary group: ');
-        if (($row = $db->fetchByAssoc($result)) != null) {
-            $primary_group_id = $row['id'];
-        }
-
-        return $primary_group_id;
     }
 }

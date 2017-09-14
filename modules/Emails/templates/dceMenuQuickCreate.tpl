@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,39 +34,38 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <div id="dccontent" style="width:880px; height:400px; z-index:2;"></div>
 <script type='text/javascript'>
-{literal}
-function closeEmailOverlay() {
-	lastLoadedMenu=undefined; 
+    {literal}
+    function closeEmailOverlay() {
+      lastLoadedMenu = undefined;
 
-	if(typeof SUGAR.quickCompose.parentPanel != 'undefined' && SUGAR.quickCompose.parentPanel != null) {
-       if(tinyMCE) {
-    	  tinyMCE.execCommand('mceRemoveControl', false, 'htmleditor0'); 
-       }
-       SUGAR.quickCompose.parentPanel.hide();
-       SUGAR.quickCompose.parentPanel = null;
-	}
-	
-	DCMenu.closeOverlay();
-}
-{/literal}   
- 
-SUGAR.quickCompose.init({$json_output});
+      if (typeof SUGAR.quickCompose.parentPanel != 'undefined' && SUGAR.quickCompose.parentPanel != null) {
+        if (tinyMCE) {
+          tinyMCE.execCommand('mceRemoveControl', false, 'htmleditor0');
+        }
+        SUGAR.quickCompose.parentPanel.hide();
+        SUGAR.quickCompose.parentPanel = null;
+      }
 
-{literal}
+      DCMenu.closeOverlay();
+    }
+    {/literal}
 
-YAHOO.util.Event.onAvailable('dcmenu_close_link', function() {
-	document.getElementById('dcmenu_close_link').href = 'javascript:closeEmailOverlay();'; 
-}, this);
+    SUGAR.quickCompose.init({$json_output});
 
-//override the action here so we know to close the menu when email is sent
-action_sugar_grp1 = 'quickcreate';
+    {literal}
 
-{/literal}
+    YAHOO.util.Event.onAvailable('dcmenu_close_link', function () {
+      document.getElementById('dcmenu_close_link').href = 'javascript:closeEmailOverlay();';
+    }, this);
+
+    //override the action here so we know to close the menu when email is sent
+    action_sugar_grp1 = 'quickcreate';
+
+    {/literal}
 </script>

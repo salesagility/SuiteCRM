@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -288,14 +288,14 @@ $dictionary['Email'] = array(
         ),
 
         'parent_name' => array(
-            'name'=> 'parent_name',
-            'parent_type'=>'record_type_display' ,
-            'type_name'=>'parent_type',
-            'id_name'=>'parent_id',
-            'vname'=>'LBL_EMAIL_RELATE',
-            'type'=>'parent',
-            'source'=>'non-db',
-            'options'=> 'record_type_display',
+            'name' => 'parent_name',
+            'parent_type' => 'record_type_display',
+            'type_name' => 'parent_type',
+            'id_name' => 'parent_id',
+            'vname' => 'LBL_EMAIL_RELATE',
+            'type' => 'parent',
+            'source' => 'non-db',
+            'options' => 'record_type_display',
             'inline_edit' => false,
         ),
         'parent_type' => array(
@@ -333,7 +333,7 @@ $dictionary['Email'] = array(
                 'name' => 'displayIndicatorField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayIndicatorField.php',
-                'onListView' =>  true
+                'onListView' => true
             ),
         ),
 
@@ -351,7 +351,7 @@ $dictionary['Email'] = array(
                 'name' => 'displaySubjectField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displaySubjectField.php',
-                'onListView' =>  true
+                'onListView' => true
             ),
         ),
 
@@ -430,7 +430,7 @@ $dictionary['Email'] = array(
                 'name' => 'displayHasAttachmentField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayHasAttachmentField.php',
-                'onListView' =>  true
+                'onListView' => true
             ),
         ),
 
@@ -585,7 +585,7 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
-        "emails_email_templates" => array (
+        "emails_email_templates" => array(
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -595,7 +595,7 @@ $dictionary['Email'] = array(
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
         ),
-        "emails_email_templates_name" => array (
+        "emails_email_templates_name" => array(
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -607,7 +607,7 @@ $dictionary['Email'] = array(
             'module' => 'EmailTemplates',
             'rname' => 'name',
         ),
-        "emails_email_templates_idb" => array (
+        "emails_email_templates_idb" => array(
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',

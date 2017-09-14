@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,23 +34,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once 'include/SugarOAuthServer.php';
 
 class OauthTokensViewAuthorize extends SugarView
 {
-	public function display()
+    public function display()
     {
-        if(!SugarOAuthServer::enabled()) {
+        if (!SugarOAuthServer::enabled()) {
             sugar_die($GLOBALS['mod_strings']['LBL_OAUTH_DISABLED']);
         }
         global $current_user;
-        if(!isset($_REQUEST['token']) && isset($_REQUEST['oauth_token'])) {
+        if (!isset($_REQUEST['token']) && isset($_REQUEST['oauth_token'])) {
             $_REQUEST['token'] = $_REQUEST['oauth_token'];
         }
         $sugar_smarty = new Sugar_Smarty();
@@ -59,12 +62,13 @@ class OauthTokensViewAuthorize extends SugarView
         $sugar_smarty->assign('token', $_REQUEST['token']);
         $sugar_smarty->assign('sid', session_id());
         $token = OAuthToken::load($_REQUEST['token']);
-        if(empty($token) || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
+        if (empty($token) || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
             sugar_die('Invalid token');
         }
 
-        if(empty($_REQUEST['confirm'])) {
-            $sugar_smarty->assign('consumer', sprintf($GLOBALS['mod_strings']['LBL_OAUTH_CONSUMERREQ'], $token->consumer_obj->name));
+        if (empty($_REQUEST['confirm'])) {
+            $sugar_smarty->assign('consumer',
+                sprintf($GLOBALS['mod_strings']['LBL_OAUTH_CONSUMERREQ'], $token->consumer_obj->name));
 // SM: roles disabled for now
 //            $roles = array('' => '');
 //            $allroles = ACLRole::getAllRoles();
@@ -77,18 +81,18 @@ class OauthTokensViewAuthorize extends SugarView
             $sugar_smarty->assign('hash', $hash);
             echo $sugar_smarty->fetch('modules/OAuthTokens/tpl/authorize.tpl');
         } else {
-            if($_REQUEST['sid'] != session_id() || $_SESSION['oauth_hash'] != $_REQUEST['hash']) {
+            if ($_REQUEST['sid'] != session_id() || $_SESSION['oauth_hash'] != $_REQUEST['hash']) {
                 sugar_die('Invalid request');
             }
             $verify = $token->authorize(array("user" => $current_user->id));
-            if(!empty($token->callback_url)){
-                $redirect_url=$token->callback_url;
-                if(strchr($redirect_url, "?") !== false) {
+            if (!empty($token->callback_url)) {
+                $redirect_url = $token->callback_url;
+                if (strchr($redirect_url, "?") !== false) {
                     $redirect_url .= '&';
                 } else {
                     $redirect_url .= '?';
                 }
-                $redirect_url .= "oauth_verifier=".$verify.'&oauth_token='.$_REQUEST['token'];
+                $redirect_url .= "oauth_verifier=" . $verify . '&oauth_token=' . $_REQUEST['token'];
                 SugarApplication::redirect($redirect_url);
             }
             $sugar_smarty->assign('VERIFY', $verify);

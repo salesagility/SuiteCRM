@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,11 +33,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!SUGAR.Emails) {
+if (!SUGAR.Emails) {
   SUGAR.Emails = {};
 }
 
@@ -49,29 +49,27 @@ if(!SUGAR.Emails) {
  * @param {string} loadingTitle (optional)
  * @param {string} errorMessage (optional)
  */
-SUGAR.Emails.handleSelectedListViewItems =  function(
-  moduleName,
-  actionUrl,
-  successCallback,
-  errorCallback,
-  loadingTitle,
-  errorMessage
-) {
+SUGAR.Emails.handleSelectedListViewItems = function (moduleName,
+                                                     actionUrl,
+                                                     successCallback,
+                                                     errorCallback,
+                                                     loadingTitle,
+                                                     errorMessage) {
 
-  if(typeof loadingTitle === 'undefined') {
+  if (typeof loadingTitle === 'undefined') {
     loadingTitle = SUGAR.language.translate('Emails', 'LBL_LOADING');
   }
 
-  if(typeof errorMessage === 'undefined') {
+  if (typeof errorMessage === 'undefined') {
     errorMessage = 'Error at selected emails handling.';
   }
 
   var mb = messageBox({backdrop: false});
   mb.setTitle(loadingTitle);
-  mb.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+  mb.setBody('<div class="in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
   mb.hideFooter();
   mb.show();
-  mb.on('cancel', function() {
+  mb.on('cancel', function () {
     "use strict";
     mb.remove();
   });
@@ -87,27 +85,27 @@ SUGAR.Emails.handleSelectedListViewItems =  function(
     "uid[]": []
   };
 
-  if(document.MassUpdate.select_entire_list &&
+  if (document.MassUpdate.select_entire_list &&
     document.MassUpdate.select_entire_list.value == 1) {
     // Import all emails from mail box
     postOpts.all = true;
   } else {
     postOpts.all = false;
     // import only selected emails from inbox
-    $('.listview-checkbox').each(function(i,v) {
-      if($(v).is(':checked')) {
+    $('.listview-checkbox').each(function (i, v) {
+      if ($(v).is(':checked')) {
         postOpts['uid[]'].push(query.email_uids[i]);
       }
     });
   }
 
-  $.post( url, postOpts).done(function (data) {
+  $.post(url, postOpts).done(function (data) {
     var jsonData = JSON.parse(data);
     mb.hide();
-    if(jsonData.response) {
+    if (jsonData.response) {
       successCallback(jsonData);
     } else {
-      if(errorCallback) {
+      if (errorCallback) {
         errorCallback(jsonData);
       } else {
         console.error(errorMessage + ' Please check the logs for details.');
@@ -124,9 +122,9 @@ $(document).ready(function () {
   var query = JSON.parse($('[name=current_query_by_page]').val());
   var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
 
-  if(typeof query.folder === 'undefined' ||  query.folder === '') {
+  if (typeof query.folder === 'undefined' || query.folder === '') {
     jQueryBtnEmailsCurrentFolder.remove();
-  } else if(query.folder === null) {
+  } else if (query.folder === null) {
     jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
   } else {
     jQueryBtnEmailsCurrentFolder.text(query.folder);

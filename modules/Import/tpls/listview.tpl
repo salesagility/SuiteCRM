@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,18 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <style type="text/css">{literal}
-.warn { font-style:italic;
-        font-weight:bold;
-        color:red;
-}{/literal}
+    .warn {
+        font-style: italic;
+        font-weight: bold;
+        color: red;
+    }
+
+    {/literal}
 </style>
 
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
@@ -54,12 +56,13 @@
         <tr height='20'>
             {counter start=0 name="colCounter" print=false assign="colCounter"}
             {if $displayColumns eq false}
-                <th scope='col'  style="text-align: left;" nowrap="nowrap" colspan="{$maxColumns}">{$MOD.LBL_MISSING_HEADER_ROW}</th>
+                <th scope='col' style="text-align: left;" nowrap="nowrap"
+                    colspan="{$maxColumns}">{$MOD.LBL_MISSING_HEADER_ROW}</th>
             {else}
                 {foreach from=$displayColumns key=colHeader item=label}
                     <th scope='col' nowrap="nowrap">
-                        <div style='white-space: nowrap;'width='100%' align='left' >
-                        {$label}
+                        <div style='white-space: nowrap;' width='100%' align='left'>
+                            {$label}
                         </div>
                     </th>
                     {counter name="colCounter"}
@@ -79,20 +82,20 @@
                 {counter start=0 name="colCounter" print=false assign="colCounter"}
                 {foreach from=$rowData key=col item=params}
                     {strip}
-                    <td align='left' valign="top">
-                        {$params}
-                    </td>
+                        <td align='left' valign="top">
+                            {$params}
+                        </td>
                     {/strip}
                     {counter name="colCounter"}
                 {/foreach}
-                </tr>
-        {foreachelse}
-        <tr height='20' class='{$rowColor[0]}S1'>
-            <td colspan="{$colCounter}">
-                <em>{$APP.LBL_NO_DATA}</em>
-            </td>
-        </tr>
+            </tr>
+            {foreachelse}
+            <tr height='20' class='{$rowColor[0]}S1'>
+                <td colspan="{$colCounter}">
+                    <em>{$APP.LBL_NO_DATA}</em>
+                </td>
+            </tr>
         {/foreach}
-    {include file='modules/Import/tpls/listviewpaginator.tpl'}
+        {include file='modules/Import/tpls/listviewpaginator.tpl'}
     </table>
 </div>

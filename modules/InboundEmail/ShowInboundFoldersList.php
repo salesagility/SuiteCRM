@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,27 +34,25 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:
- ********************************************************************************/
- // hack to allow "&", "%" and "+" through a $_GET var
+// hack to allow "&", "%" and "+" through a $_GET var
 // set by ie_test_open_popup() javascript call
-foreach($_REQUEST as $k => $v) {
-	$v = str_replace('::amp::', '&', $v);
-	$v = str_replace('::plus::', '+', $v);
-	$v = str_replace('::percent::', '%', $v);
-	$_REQUEST[$k] = $v;
+foreach ($_REQUEST as $k => $v) {
+    $v = str_replace('::amp::', '&', $v);
+    $v = str_replace('::plus::', '+', $v);
+    $v = str_replace('::percent::', '%', $v);
+    $_REQUEST[$k] = $v;
 }
 
 require_once('modules/InboundEmail/language/en_us.lang.php');
 global $theme;
-
-
 
 
 // GLOBALS
@@ -64,14 +62,14 @@ global $app_list_strings;
 global $current_user;
 global $sugar_config;
 
-$title				= '';
-$msg				= '';
-$tls				= '';
-$cert				= '';
-$ssl				= '';
-$notls				= '';
-$novalidate_cert	= '';
-$useSsl				= false;
+$title = '';
+$msg = '';
+$tls = '';
+$cert = '';
+$ssl = '';
+$notls = '';
+$novalidate_cert = '';
+$useSsl = false;
 $deletedFoldersList = "";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,55 +77,55 @@ $deletedFoldersList = "";
 
 $popupBoolean = false;
 if (isset($_REQUEST['target']) && $_REQUEST['target'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 if (isset($_REQUEST['target1']) && $_REQUEST['target1'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 
-if($popupBoolean) {
-	$title = $mod_strings['LBL_SELECT_SUBSCRIBED_FOLDERS'];
-	$msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
+if ($popupBoolean) {
+    $title = $mod_strings['LBL_SELECT_SUBSCRIBED_FOLDERS'];
+    $msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
 }
 
 $subdcriptionFolderHelp = $app_strings['LBL_EMAIL_SUBSCRIPTION_FOLDER_HELP'];
 
-if(isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
-	$useSsl = true;
+if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
+    $useSsl = true;
 }
 
 $searchField = !empty($_REQUEST['searchField']) ? $_REQUEST['searchField'] : "";
 $multipleString = "multiple=\"true\"";
 if (!empty($searchField)) {
-	$subdcriptionFolderHelp = "";
-	$multipleString = "";
-	if ($searchField == 'trash') {
-		$title = $mod_strings['LBL_SELECT_TRASH_FOLDERS'];
-	} else {
-		$title = $mod_strings['LBL_SELECT_SENT_FOLDERS'];
-	} // else
+    $subdcriptionFolderHelp = "";
+    $multipleString = "";
+    if ($searchField == 'trash') {
+        $title = $mod_strings['LBL_SELECT_TRASH_FOLDERS'];
+    } else {
+        $title = $mod_strings['LBL_SELECT_SENT_FOLDERS'];
+    } // else
 
 } // else
 
 
-$ie                 = new InboundEmail();
-if(!empty($_REQUEST['ie_id'])) {
+$ie = new InboundEmail();
+if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
-$ie->email_user     = $_REQUEST['email_user'];
-$ie->server_url     = $_REQUEST['server_url'];
-$ie->port           = $_REQUEST['port'];
-$ie->protocol       = $_REQUEST['protocol'];
+$ie->email_user = $_REQUEST['email_user'];
+$ie->server_url = $_REQUEST['server_url'];
+$ie->port = $_REQUEST['port'];
+$ie->protocol = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
-if(!empty($_REQUEST['email_password'])) {
+if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
     $ie->email_password = str_rot13($ie->email_password);
 }
 //$ie->mailbox      = $_REQUEST['mailbox'];
 
-$ie->mailbox        = 'INBOX';
+$ie->mailbox = 'INBOX';
 
-if($popupBoolean) {
+if ($popupBoolean) {
     $returnArray = $ie->getFoldersListForMailBox();
     $foldersList = $returnArray['foldersList'];
     if ($returnArray['status']) {
@@ -137,7 +135,7 @@ if($popupBoolean) {
         $deletedFoldersString = "";
         $count = 0;
         if (!empty($requestMailBox) && !empty($foldersListArray)) {
-            foreach($requestMailBox as $mailbox) {
+            foreach ($requestMailBox as $mailbox) {
                 if (!in_array($mailbox, $foldersListArray)) {
                     if ($count != 0) {
                         $deletedFoldersString = $deletedFoldersString . " ,";
@@ -167,12 +165,12 @@ echo '<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				</td>
 				<td valign="top">
 					<div id="sf_msg">
-					'.$msg.'
+					' . $msg . '
 					</div>
 				</td>
 			</tr>';
 if (!empty($subdcriptionFolderHelp)) {
-echo '<tr>
+    echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td>&nbsp;
@@ -181,7 +179,7 @@ echo '<tr>
 			<tr align="center">
 				<td>&nbsp;
 				</td>
-				<td>'.$subdcriptionFolderHelp.'
+				<td>' . $subdcriptionFolderHelp . '
 				</td>
 			</tr>';
 } // if
@@ -190,7 +188,7 @@ echo '<tr>
 				</td>
 				<td valign="top">
 					<div id="sf_deletedFoldersList" style="display:none;">
-					'.$deletedFoldersList.'
+					' . $deletedFoldersList . '
 					</div>
 				</td>
 			</tr>
@@ -198,7 +196,7 @@ echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td  valign="top">
-					<select '.$multipleString.' size="12" name="inboundmailboxes" id="sf_inboundmailboxes">
+					<select ' . $multipleString . ' size="12" name="inboundmailboxes" id="sf_inboundmailboxes">
 					</select>
 				</td>
 			</tr>
@@ -212,8 +210,8 @@ echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td>
-					<input type="button" style="" class="button" value="'.$app_strings['LBL_DONE_BUTTON_LABEL'].'" onclick="setMailbox();">
-					<input type="button" class="button" value="'.$app_strings['LBL_EMAIL_CANCEL'].'" onclick="SUGAR.inboundEmail.listDlg.hide()">
+					<input type="button" style="" class="button" value="' . $app_strings['LBL_DONE_BUTTON_LABEL'] . '" onclick="setMailbox();">
+					<input type="button" class="button" value="' . $app_strings['LBL_EMAIL_CANCEL'] . '" onclick="SUGAR.inboundEmail.listDlg.hide()">
 				</td>
 			</tr>
 			<tr>
@@ -229,14 +227,15 @@ echo '	</table>';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	COMPLETE RENDERING OF THE POPUP
-echo '<input type="hidden" id="sf_returnstatus" name="returnstatus" value="'. $returnArray['status'] .'">';
-echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="'. htmlspecialchars($foldersList) .'">';
-echo '<input type="hidden" id="sf_selectedfoldersList" name="selectedfoldersList" value="'. implode(",", $requestMailBox) .'">';
-echo '<input type="hidden" id="sf_searchField" name="searchField" value="'. $searchField .'">';
+echo '<input type="hidden" id="sf_returnstatus" name="returnstatus" value="' . $returnArray['status'] . '">';
+echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="' . htmlspecialchars($foldersList) . '">';
+echo '<input type="hidden" id="sf_selectedfoldersList" name="selectedfoldersList" value="' . implode(",",
+        $requestMailBox) . '">';
+echo '<input type="hidden" id="sf_searchField" name="searchField" value="' . $searchField . '">';
 
 echo '
 <script type="text/javascript">
-    SUGAR.inboundEmail.listDlg.setHeader("'.$title.'");
+    SUGAR.inboundEmail.listDlg.setHeader("' . $title . '");
     function setMailbox(box) {
         var inboundmailboxes = document.getElementById("sf_inboundmailboxes");
         var selectedmbox = "";
@@ -267,9 +266,9 @@ echo '
      }
 	function switchMsg() {
 		if(typeof(document.getElementById("sf_msg")) != "undefined") {
-			document.getElementById("sf_msg").innerHTML = "'.$msg.'";
+			document.getElementById("sf_msg").innerHTML = "' . $msg . '";
 			var deletedFoldersList = document.getElementById("sf_deletedFoldersList");
-			deletedFoldersList.innerHTML = "'. $deletedFoldersList .'";
+			deletedFoldersList.innerHTML = "' . $deletedFoldersList . '";
 			if (deletedFoldersList.innerHTML.length > 0) {
 				deletedFoldersList.style.display = "";
 			} // if

@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 $dictionary['Project'] = array(
@@ -449,59 +453,116 @@ $dictionary['Project'] = array(
         ),
     ),
     'indices' => array(
-        array('name' => 'projects_primary_key_index',
+        array(
+            'name' => 'projects_primary_key_index',
             'type' => 'primary',
             'fields' => array('id')
         ),
     ),
     'relationships' => array(
         'projects_notes' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'Notes', 'rhs_table' => 'notes', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Project'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Notes',
+            'rhs_table' => 'notes',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Project'
+        ),
         'projects_tasks' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'Tasks', 'rhs_table' => 'tasks', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Project'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Tasks',
+            'rhs_table' => 'tasks',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Project'
+        ),
         'projects_meetings' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'Meetings', 'rhs_table' => 'meetings', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Project'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Meetings',
+            'rhs_table' => 'meetings',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Project'
+        ),
         'projects_calls' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'Calls', 'rhs_table' => 'calls', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Project'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Calls',
+            'rhs_table' => 'calls',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Project'
+        ),
         'projects_emails' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'Emails', 'rhs_table' => 'emails', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Project'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Emails',
+            'rhs_table' => 'emails',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Project'
+        ),
         'projects_project_tasks' => array(
-            'lhs_module' => 'Project', 'lhs_table' => 'project', 'lhs_key' => 'id',
-            'rhs_module' => 'ProjectTask', 'rhs_table' => 'project_task', 'rhs_key' => 'project_id',
-            'relationship_type' => 'one-to-many'),
+            'lhs_module' => 'Project',
+            'lhs_table' => 'project',
+            'lhs_key' => 'id',
+            'rhs_module' => 'ProjectTask',
+            'rhs_table' => 'project_task',
+            'rhs_key' => 'project_id',
+            'relationship_type' => 'one-to-many'
+        ),
         'projects_assigned_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Project', 'rhs_table' => 'project', 'rhs_key' => 'assigned_user_id',
-                'relationship_type' => 'one-to-many')
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Project',
+                'rhs_table' => 'project',
+                'rhs_key' => 'assigned_user_id',
+                'relationship_type' => 'one-to-many'
+            )
 
-    , 'projects_modified_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Project', 'rhs_table' => 'project', 'rhs_key' => 'modified_user_id',
-                'relationship_type' => 'one-to-many')
+    ,
+        'projects_modified_user' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Project',
+                'rhs_table' => 'project',
+                'rhs_key' => 'modified_user_id',
+                'relationship_type' => 'one-to-many'
+            )
 
-    , 'projects_created_by' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Project', 'rhs_table' => 'project', 'rhs_key' => 'created_by',
-                'relationship_type' => 'one-to-many')
+    ,
+        'projects_created_by' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Project',
+                'rhs_table' => 'project',
+                'rhs_key' => 'created_by',
+                'relationship_type' => 'one-to-many'
+            )
 
     ),
 );
 
-VardefManager::createVardef('Project', 'Project', array('security_groups',
+VardefManager::createVardef('Project', 'Project', array(
+    'security_groups',
 ));
 ?>

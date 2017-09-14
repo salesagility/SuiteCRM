@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
@@ -74,7 +74,8 @@
                 * There is more than one tab set
                 * When Acton Menu's are enabled
             *}
-            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab{{if $tabCountOnlyXS > 0}}-xs{{/if}} dropdown-toggle" data-toggle="dropdown">
+            <a id="xstab{{$tabCount}}" href="#"
+               class="visible-xs first-tab{{if $tabCountOnlyXS > 0}}-xs{{/if}} dropdown-toggle" data-toggle="dropdown">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
             {{if $tabCountOnlyXS > 0}}
@@ -84,7 +85,8 @@
                 {{capture name=label_upper_xs assign=label_upper_xs}}{{$label|upper}}{{/capture}}
                 {{if (isset($tabDefs[$label_upper_xs].newTab) && $tabDefs[$label_upper_xs].newTab == true)}}
                 <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                    <a id="tab{{$tabCountXS}}" data-toggle="tab"
+                       onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </a>
                 </li>
@@ -259,7 +261,8 @@
                         {* display panels as they have always been displayed *}
                         <div class="panel panel-default">
                             <div class="panel-heading {{$panelHeadingCollapse}}">
-                                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
+                                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}"
+                                   aria-expanded="false">
                                     <div class="col-xs-10 col-sm-11 col-md-11">
                                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                                     </div>
@@ -277,7 +280,8 @@
                     {* display panels as they have always been displayed *}
                     <div class="panel panel-default">
                         <div class="panel-heading {{$panelHeadingCollapse}}">
-                            <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
+                            <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}"
+                               aria-expanded="false">
                                 <div class="col-xs-10 col-sm-11 col-md-11">
                                     {sugar_translate label='{{$label}}' module='{{$module}}'}
                                 </div>
@@ -305,40 +309,38 @@
             <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
 
             {literal}
-
                 <script type="text/javascript">
 
-                    var selectTabDetailView = function(tab) {
-                        $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-                        $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
-                    };
+                  var selectTabDetailView = function (tab) {
+                    $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+                    $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+                  };
 
-                    var selectTabOnError = function(tab) {
+                  var selectTabOnError = function (tab) {
+                    selectTabDetailView(tab);
+                    $('#content ul.nav.nav-tabs > li').removeClass('active');
+                    $('#content ul.nav.nav-tabs > li a').css('color', '');
+
+                    $('#content ul.nav.nav-tabs > li').eq(tab).find('a').first().css('color', 'red');
+                    $('#content ul.nav.nav-tabs > li').eq(tab).addClass('active');
+
+                  };
+
+                  var selectTabOnErrorInputHandle = function (inputHandle) {
+                    var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+                    selectTabOnError(tab);
+                  };
+
+
+                  $(function () {
+                    $('#content ul.nav.nav-tabs > li > a[data-toggle="tab"]').click(function (e) {
+                      if (typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
+                        var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
                         selectTabDetailView(tab);
-                        $('#content ul.nav.nav-tabs > li').removeClass('active');
-                        $('#content ul.nav.nav-tabs > li a').css('color', '');
-
-                        $('#content ul.nav.nav-tabs > li').eq(tab).find('a').first().css('color', 'red');
-                        $('#content ul.nav.nav-tabs > li').eq(tab).addClass('active');
-
-                    };
-
-                    var selectTabOnErrorInputHandle = function(inputHandle) {
-                        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
-                        selectTabOnError(tab);
-                    };
-
-
-                    $(function(){
-                        $('#content ul.nav.nav-tabs > li > a[data-toggle="tab"]').click(function(e){
-                            if(typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
-                                var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                                selectTabDetailView(tab);
-                            }
-                        });
+                      }
                     });
+                  });
 
                 </script>
-
             {/literal}
 

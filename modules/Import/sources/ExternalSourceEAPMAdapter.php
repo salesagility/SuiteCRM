@@ -1,11 +1,11 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Import/sources/ImportDataSource.php');
 
@@ -45,46 +48,51 @@ require_once('modules/Import/sources/ImportDataSource.php');
 class ExternalSourceEAPMAdapter extends ImportDataSource
 {
 
+    protected $_localeSettings = array(
+        'importlocale_charset' => 'UTF-8',
+        'importlocale_dateformat' => 'Y-m-d',
+        'importlocale_timeformat' => 'H:i',
+        'importlocale_timezone' => '',
+        'importlocale_currency' => '',
+        'importlocale_default_currency_significant_digits' => '',
+        'importlocale_num_grp_sep' => '',
+        'importlocale_dec_sep' => '',
+        'importlocale_default_locale_name_format' => ''
+    );
     /**
      * @var string The name of the EAPM object.
      */
     private $_eapmName = 'Google';
-
     /**
      * @var int Total record count of rows that will be imported
      */
     private $_totalRecordCount = -1;
-
     /**
      * @var The record set loaded from the external source
      */
     private $_recordSet = array();
 
-    protected $_localeSettings = array('importlocale_charset' => 'UTF-8',
-                                       'importlocale_dateformat' => 'Y-m-d',
-                                       'importlocale_timeformat' => 'H:i',
-                                       'importlocale_timezone' => '',
-                                       'importlocale_currency' => '',
-                                       'importlocale_default_currency_significant_digits' => '',
-                                       'importlocale_num_grp_sep' => '',
-                                       'importlocale_dec_sep' => '',
-                                       'importlocale_default_locale_name_format' => '');
-
-
     public function __construct($eapmName)
     {
         global $current_user, $locale;
         $this->_eapmName = $eapmName;
-      
+
         $this->_localeSettings['importlocale_num_grp_sep'] = $current_user->getPreference('num_grp_sep');
         $this->_localeSettings['importlocale_dec_sep'] = $current_user->getPreference('dec_sep');
-        $this->_localeSettings['importlocale_default_currency_significant_digits'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
+        $this->_localeSettings['importlocale_default_currency_significant_digits'] = $locale->getPrecedentPreference('default_currency_significant_digits',
+            $current_user);
         $this->_localeSettings['importlocale_default_locale_name_format'] = $locale->getLocaleFormatMacro($current_user);
         $this->_localeSettings['importlocale_currency'] = $locale->getPrecedentPreference('currency', $current_user);
         $this->_localeSettings['importlocale_timezone'] = $current_user->getPreference('timezone');
 
         $this->setSourceName();
     }
+
+    public function setSourceName($sourceName = '')
+    {
+        $this->_sourcename = $this->_eapmName;
+    }
+
     /**
      * Return a feed of google contacts using the EAPM and Connectors farmework.
      *
@@ -94,23 +102,19 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
      */
     public function loadDataSet($maxResults = 0)
     {
-         if ( !$eapmBean = EAPM::getLoginInfo($this->_eapmName,true) )
-         {
+        if (!$eapmBean = EAPM::getLoginInfo($this->_eapmName, true)) {
             throw new Exception("Authentication error with {$this->_eapmName}");
-         }
+        }
 
         $api = ExternalAPIFactory::loadAPI($this->_eapmName);
         $api->loadEAPM($eapmBean);
         $conn = $api->getConnector();
 
         $feed = $conn->getList(array('maxResults' => $maxResults, 'startIndex' => $this->_offset));
-        if($feed !== FALSE)
-        {
+        if ($feed !== false) {
             $this->_totalRecordCount = $feed['totalResults'];
             $this->_recordSet = $feed['records'];
-        }
-        else
-        {
+        } else {
             throw new Exception("Unable to retrieve {$this->_eapmName} feed.");
         }
     }
@@ -119,21 +123,18 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     {
         return '';
     }
-    
+
     public function getTotalRecordCount()
     {
         return $this->_totalRecordCount;
     }
 
-    public function setSourceName($sourceName = '')
-    {
-        $this->_sourcename = $this->_eapmName;
-    }
-
     //Begin Implementation for SPL's Iterator interface
+
     public function current()
     {
-        $this->_currentRow =  current($this->_recordSet);
+        $this->_currentRow = current($this->_recordSet);
+
         return $this->_currentRow;
     }
 
@@ -141,7 +142,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     {
         return key($this->_recordSet);
     }
-    
+
     public function rewind()
     {
         reset($this->_recordSet);
@@ -155,7 +156,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
     public function valid()
     {
-        return (current($this->_recordSet) !== FALSE);
+        return (current($this->_recordSet) !== false);
     }
 }
 

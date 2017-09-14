@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -45,42 +44,48 @@
  */
 require_once('include/MVC/View/views/view.detail.php');
 
-class ViewQuick extends ViewDetail{
-	var $type ='detail';
-
- 	public function __construct(){
- 		parent::__construct();
- 		$this->options['show_subpanels'] = false;
- 		$this->options['show_title'] = false;
-		$this->options['show_header'] = false;
-		$this->options['show_footer'] = false;
-		$this->options['show_javascript'] = false;
- 	}
+class ViewQuick extends ViewDetail
+{
+    public $type = 'detail';
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ViewQuick(){
+    public function ViewQuick()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->options['show_subpanels'] = false;
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+    }
 
- 	function display(){
- 		 $this->dv->showVCRControl = false;
- 		 $this->dv->th->ss->assign('hideHeader', true);
- 		 if(empty($this->bean->id)){
-			global $app_strings;
-			sugar_die($app_strings['ERROR_NO_RECORD']);
-		}
-		$this->dv->process();
-		ob_clean();
-		echo json_encode(array('title'=> $this->bean->name, 'url'=>'index.php?module=' . $this->bean->module_dir . '&action=DetailView&record=' . $this->bean->id ,'html'=> $this->dv->display(false)));
- 	}
+    function display()
+    {
+        $this->dv->showVCRControl = false;
+        $this->dv->th->ss->assign('hideHeader', true);
+        if (empty($this->bean->id)) {
+            global $app_strings;
+            sugar_die($app_strings['ERROR_NO_RECORD']);
+        }
+        $this->dv->process();
+        ob_clean();
+        echo json_encode(array(
+            'title' => $this->bean->name,
+            'url' => 'index.php?module=' . $this->bean->module_dir . '&action=DetailView&record=' . $this->bean->id,
+            'html' => $this->dv->display(false)
+        ));
+    }
 }

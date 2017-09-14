@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,10 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * Contains styling for the yui widget elements
@@ -69,13 +73,13 @@
     background: #000;
     -moz-opacity: 0.10;
     opacity: .10;
-    filter: alpha(opacity = 10);
+    filter: alpha(opacity=10);
     z-index: 9049;
 }
 
 .yui-ac iframe {
     opacity: 0;
-    filter: alpha(opacity = 0);
+    filter: alpha(opacity=0);
     padding-right: .3em;
     padding-bottom: .3em;
 }
@@ -103,7 +107,6 @@
     background: #426FD9;
     color: #FFF;
 }
-
 
 .yui-calcontainer {
     position: relative;
@@ -330,8 +333,7 @@ p#clear {
     background-color: #f2f2f2;
 }
 
-.yui-calendar .calrowhead, .yui-calendar .calrowfoot
-{
+.yui-calendar .calrowhead, .yui-calendar .calrowfoot {
     color: #a6a6a6;
     font-size: 85%;
     font-style: normal;
@@ -440,7 +442,7 @@ p#clear {
 .yui-calcontainer .yui-cal-nav-mask {
     background-color: #000;
     opacity: 0.25;
-    filter: alpha(opacity = 25);
+    filter: alpha(opacity=25);
 }
 
 .yui-calcontainer .yui-cal-nav {
@@ -464,8 +466,7 @@ p#clear {
     margin-left: -8em;
 }
 
-.yui-calcontainer .yui-cal-nav-y, .yui-calcontainer .yui-cal-nav-m, .yui-calcontainer .yui-cal-nav-b
-{
+.yui-calcontainer .yui-cal-nav-y, .yui-calcontainer .yui-cal-nav-m, .yui-calcontainer .yui-cal-nav-b {
     padding: 5px 10px 5px 10px;
 }
 
@@ -519,7 +520,7 @@ p#clear {
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default {
     background-color: #426fd9;
     border: 1px solid #326A9C;
-    -moz-border-radius :  4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
@@ -527,7 +528,6 @@ p#clear {
     background-color: #356EA1;
     text-shadow: -1px -1px #254F74;
 }
-
 
 .yui-carousel {
     visibility: hidden;
@@ -659,8 +659,7 @@ span.yui-carousel-first-button-disabled {
     background-position: 0 -1950px;
 }
 
-.yui-carousel-vertical span.yui-carousel-first-button-disabled
-{
+.yui-carousel-vertical span.yui-carousel-first-button-disabled {
     background-position: 0 -2050px;
 }
 
@@ -680,8 +679,7 @@ span.yui-carousel-first-button-disabled {
     top: 4px;
 }
 
-.yui-carousel-vertical .yui-carousel-nav ul, .yui-carousel-vertical .yui-carousel-nav select
-{
+.yui-carousel-vertical .yui-carousel-nav ul, .yui-carousel-vertical .yui-carousel-nav select {
     float: none;
     margin: 0;
     zoom: 1;
@@ -783,9 +781,7 @@ span.yui-carousel-first-button-disabled {
 
 * html .yui-picker-bg {
     background-image: none;
-    filter: progid : DXImageTransform.Microsoft.AlphaImageLoader ( src =
-    '../../build/colorpicker/assets/picker_mask.png', sizingMethod =
-    'scale' );
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader (src='../../build/colorpicker/assets/picker_mask.png', sizingMethod='scale' );
 }
 
 .yui-picker-mask {
@@ -874,7 +870,7 @@ span.yui-carousel-first-button-disabled {
     color: #000;
 }
 
-.yui-overlay,.yui-panel-container {
+.yui-overlay, .yui-panel-container {
     visibility: hidden;
     position: absolute;
     z-index: 2;
@@ -898,7 +894,7 @@ span.yui-carousel-first-button-disabled {
     overflow: auto;
 }
 
-.masked select,.drag select,.hide-select select {
+.masked select, .drag select, .hide-select select {
     _visibility: hidden;
 }
 
@@ -906,7 +902,7 @@ span.yui-carousel-first-button-disabled {
     _visibility: inherit;
 }
 
-.hide-scrollbars,.hide-scrollbars * {
+.hide-scrollbars, .hide-scrollbars * {
     overflow: hidden;
 }
 
@@ -918,12 +914,11 @@ span.yui-carousel-first-button-disabled {
     overflow: auto;
 }
 
-.yui-panel-container.show-scrollbars,.yui-tt.show-scrollbars {
+.yui-panel-container.show-scrollbars, .yui-tt.show-scrollbars {
     overflow: visible;
 }
 
-.yui-panel-container.show-scrollbars .underlay,.yui-tt.show-scrollbars .yui-tt-shadow
-{
+.yui-panel-container.show-scrollbars .underlay, .yui-tt.show-scrollbars .yui-tt-shadow {
     overflow: auto;
 }
 
@@ -952,7 +947,7 @@ span.yui-carousel-first-button-disabled {
 .mask {
     background-color: #000;
     opacity: .25;
-    filter: alpha(opacity = 25);
+    filter: alpha(opacity=25);
 }
 
 .yui-panel-container {
@@ -973,8 +968,7 @@ span.yui-carousel-first-button-disabled {
     _zoom: normal;
 }
 
-.yui-module .hd, .yui-panel .hd, .yui-panel .bd, .yui-panel .ft
-{
+.yui-module .hd, .yui-panel .hd, .yui-panel .bd, .yui-panel .ft {
 
     margin: 0 -1px;
     margin: 0;
@@ -983,22 +977,23 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-module {
-    border : 1px solid #C0C0C0;
+    border: 1px solid #C0C0C0;
 }
-
 
 .yui-module .hd, .yui-panel .hd {
     border-bottom: solid 1px #C0C0C0;
-    padding:10px 0 10px 0;
+    padding: 10px 0 10px 0;
 }
 
 .yui-module .bd, .yui-panel .bd, .yui-panel .ft {
     background-color: #FFFFFF;
 }
-.container-close{
+
+.container-close {
     margin: 4px 000;
 
 }
+
 .yui-module .hd, .yui-panel .hd {
     padding: 3px 6px;
     font-size: 12px;
@@ -1006,7 +1001,7 @@ span.yui-carousel-first-button-disabled {
     line-height: 2;
     line-height: 1.8;
     color: #ffffff;
-    background-color:#3C8DBC;
+    background-color: #3C8DBC;
     background: #3C8DBC none repeat scroll 0 0;
 }
 
@@ -1027,7 +1022,7 @@ span.yui-carousel-first-button-disabled {
 .container-close {
     position: absolute;
     top: 3px;
-    right:0;
+    right: 0;
     width: 25px;
     height: 15px;
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
@@ -1148,7 +1143,7 @@ span.yui-carousel-first-button-disabled {
 
 .yui-tt-shadow-visible {
     opacity: .12;
-    filter: alpha(opacity = 12);
+    filter: alpha(opacity=12);
 }
 
 .yui-dt-mask {
@@ -1170,8 +1165,7 @@ span.yui-carousel-first-button-disabled {
     position: relative;
 }
 
-.yui-dt-scrollable .yui-dt-bd thead tr,.yui-dt-scrollable .yui-dt-bd thead th
-{
+.yui-dt-scrollable .yui-dt-bd thead tr, .yui-dt-scrollable .yui-dt-bd thead th {
     position: absolute;
     left: -1500px;
 }
@@ -1206,7 +1200,7 @@ th.yui-dt-resizeable .yui-dt-resizerliner {
     cursor: col-resize;
     background-color: #CCC;
     opacity: 0;
-    filter: alpha(opacity = 0);
+    filter: alpha(opacity=0);
 }
 
 .yui-dt-resizerproxy {
@@ -1215,8 +1209,7 @@ th.yui-dt-resizeable .yui-dt-resizerliner {
     z-index: 9000;
 }
 
-th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .yui-dt-resizer
-{
+th.yui-dt-hidden .yui-dt-liner, td.yui-dt-hidden .yui-dt-liner, th.yui-dt-hidden .yui-dt-resizer {
     display: none;
 }
 
@@ -1273,7 +1266,7 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
 }
 
 .yui-dt th .yui-dt-liner {
-    background:#EEEEEE none repeat scroll 0 0;
+    background: #EEEEEE none repeat scroll 0 0;
     white-space: nowrap;
 }
 
@@ -1294,7 +1287,7 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
     padding: 0;
     border: none;
     border-right: 1px solid #CBCBCB;
-    border-color:#FFFFFF #EDEDED #E7E7E7;
+    border-color: #FFFFFF #EDEDED #E7E7E7;
     border-bottom: 1px solid #E7E7E7;
     text-align: left;
 }
@@ -1315,7 +1308,7 @@ th.yui-dt-hidden, td.yui-dt-hidden {
 .yui-dt-mask {
     background-color: #000;
     opacity: .25;
-    filter: alpha(opacity = 25);
+    filter: alpha(opacity=25);
 }
 
 .yui-dt-message {
@@ -1413,13 +1406,11 @@ tr.yui-dt-odd {
     background-color: #FFF;
 }
 
-tr.yui-dt-even td.yui-dt-asc, tr.yui-dt-even td.yui-dt-desc
-{
+tr.yui-dt-even td.yui-dt-asc, tr.yui-dt-even td.yui-dt-desc {
     /*background-color: #F2F2F2;*/
 }
 
-tr.yui-dt-odd td.yui-dt-asc, tr.yui-dt-odd td.yui-dt-desc
-{
+tr.yui-dt-odd td.yui-dt-asc, tr.yui-dt-odd td.yui-dt-desc {
     /*background-color: #DBEAFF;*/
 }
 
@@ -1431,34 +1422,28 @@ tr.yui-dt-odd td.yui-dt-asc, tr.yui-dt-odd td.yui-dt-desc
     background-color: #FFF;
 }
 
-.yui-dt-list tr.yui-dt-even td.yui-dt-asc, .yui-dt-list tr.yui-dt-even td.yui-dt-desc
-{
+.yui-dt-list tr.yui-dt-even td.yui-dt-asc, .yui-dt-list tr.yui-dt-even td.yui-dt-desc {
     background-color: #F2F2F2;
 }
 
-.yui-dt-list tr.yui-dt-odd td.yui-dt-asc, .yui-dt-list tr.yui-dt-odd td.yui-dt-desc
-{
+.yui-dt-list tr.yui-dt-odd td.yui-dt-asc, .yui-dt-list tr.yui-dt-odd td.yui-dt-desc {
     background-color: #F2F2F2;
 }
 
-th.yui-dt-highlighted, th.yui-dt-highlighted a
-{
+th.yui-dt-highlighted, th.yui-dt-highlighted a {
     background-color: #B2D2FF;
 }
 
-tr.yui-dt-highlighted, tr.yui-dt-highlighted td.yui-dt-asc, tr.yui-dt-highlighted td.yui-dt-desc, tr.yui-dt-even td.yui-dt-highlighted, tr.yui-dt-odd td.yui-dt-highlighted
-{
+tr.yui-dt-highlighted, tr.yui-dt-highlighted td.yui-dt-asc, tr.yui-dt-highlighted td.yui-dt-desc, tr.yui-dt-even td.yui-dt-highlighted, tr.yui-dt-odd td.yui-dt-highlighted {
     cursor: pointer;
     background-color: #E5F2FF;
 }
 
-.yui-dt-list th.yui-dt-highlighted, .yui-dt-list th.yui-dt-highlighted a
-{
+.yui-dt-list th.yui-dt-highlighted, .yui-dt-list th.yui-dt-highlighted a {
     background-color: #B2D2FF;
 }
 
-.yui-dt-list tr.yui-dt-highlighted, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-asc, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-desc, .yui-dt-list tr.yui-dt-even td.yui-dt-highlighted, .yui-dt-list tr.yui-dt-odd td.yui-dt-highlighted
-{
+.yui-dt-list tr.yui-dt-highlighted, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-asc, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-desc, .yui-dt-list tr.yui-dt-even td.yui-dt-highlighted, .yui-dt-list tr.yui-dt-odd td.yui-dt-highlighted {
     cursor: pointer;
     background-color: #B2D2FF;
 }
@@ -1467,30 +1452,25 @@ th.yui-dt-selected, th.yui-dt-selected a {
     background-color: #446CD7;
 }
 
-tr.yui-dt-selected td, tr.yui-dt-selected td.yui-dt-asc, tr.yui-dt-selected td.yui-dt-desc
-{
+tr.yui-dt-selected td, tr.yui-dt-selected td.yui-dt-asc, tr.yui-dt-selected td.yui-dt-desc {
     background-color: #C4DDF4;
 }
 
-tr.yui-dt-even td.yui-dt-selected, tr.yui-dt-odd td.yui-dt-selected
-{
+tr.yui-dt-even td.yui-dt-selected, tr.yui-dt-odd td.yui-dt-selected {
     background-color: #446CD7;
     color: #FFF;
 }
 
-.yui-dt-list th.yui-dt-selected, .yui-dt-list th.yui-dt-selected a
-{
+.yui-dt-list th.yui-dt-selected, .yui-dt-list th.yui-dt-selected a {
     background-color: #446CD7;
 }
 
-.yui-dt-list tr.yui-dt-selected td, .yui-dt-list tr.yui-dt-selected td.yui-dt-asc, .yui-dt-list tr.yui-dt-selected td.yui-dt-desc
-{
+.yui-dt-list tr.yui-dt-selected td, .yui-dt-list tr.yui-dt-selected td.yui-dt-asc, .yui-dt-list tr.yui-dt-selected td.yui-dt-desc {
     background-color: #426FD9;
     color: #FFF;
 }
 
-.yui-dt-list tr.yui-dt-even td.yui-dt-selected, .yui-dt-list tr.yui-dt-odd td.yui-dt-selected
-{
+.yui-dt-list tr.yui-dt-even td.yui-dt-selected, .yui-dt-list tr.yui-dt-odd td.yui-dt-selected {
     background-color: #446CD7;
     color: #FFF;
 }
@@ -1501,18 +1481,15 @@ tr.yui-dt-even td.yui-dt-selected, tr.yui-dt-odd td.yui-dt-selected
     white-space: nowrap;
 }
 
-.yui-dt-paginator .yui-dt-first, .yui-dt-paginator .yui-dt-last, .yui-dt-paginator .yui-dt-selected
-{
+.yui-dt-paginator .yui-dt-first, .yui-dt-paginator .yui-dt-last, .yui-dt-paginator .yui-dt-selected {
     padding: 2px 6px;
 }
 
-.yui-dt-paginator a.yui-dt-first, .yui-dt-paginator a.yui-dt-last
-{
+.yui-dt-paginator a.yui-dt-first, .yui-dt-paginator a.yui-dt-last {
     text-decoration: none;
 }
 
-.yui-dt-paginator .yui-dt-previous, .yui-dt-paginator .yui-dt-next
-{
+.yui-dt-paginator .yui-dt-previous, .yui-dt-paginator .yui-dt-next {
     display: none;
 }
 
@@ -1634,8 +1611,7 @@ a.yui-dt-page {
     height: 50px;
 }
 
-.yui-toolbar-container.yui-toolbar-grouped .yui-toolbar-group span.yui-toolbar-separator
-{
+.yui-toolbar-container.yui-toolbar-grouped .yui-toolbar-group span.yui-toolbar-separator {
     height: 18px;
     display: block;
 }
@@ -1650,14 +1626,12 @@ a.yui-dt-page {
     display: none;
 }
 
-.yui-toolbar-container .yui-push-button,.yui-toolbar-container .yui-color-button,.yui-toolbar-container .yui-menu-button
-{
+.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button {
     position: relative;
     cursor: pointer;
 }
 
-.yui-toolbar-container .yui-button .first-child,.yui-toolbar-container .yui-button .first-child a
-{
+.yui-toolbar-container .yui-button .first-child, .yui-toolbar-container .yui-button .first-child a {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -1670,13 +1644,12 @@ a.yui-dt-page {
 
 .yui-toolbar-container .yui-button-disabled .yui-toolbar-icon {
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
-.yui-toolbar-container .yui-button-disabled .up,.yui-toolbar-container .yui-button-disabled .down
-{
+.yui-toolbar-container .yui-button-disabled .up, .yui-toolbar-container .yui-button-disabled .down {
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
 .yui-toolbar-container .yui-button a {
@@ -1736,10 +1709,10 @@ a.yui-dt-page {
     opacity: 1;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a.up,.yui-toolbar-container .yui-toolbar-spinbutton a.down
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down {
     position: absolute;
-    display: block right : 0;
+    display: block
+    right: 0;
     cursor: pointer;
     z-index: 1;
     padding: 0;
@@ -1899,8 +1872,7 @@ a.yui-dt-page {
     margin-top: 3px;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize,.yui-editor-panel .yui-toolbar-bordertype
-{
+.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype {
     font-size: 75%;
 }
 
@@ -1908,8 +1880,7 @@ a.yui-dt-page {
     border: none;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span,.yui-editor-panel .yui-toolbar-bordertype span a span
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span, .yui-editor-panel .yui-toolbar-bordertype span a span {
     display: block;
     height: 8px;
     left: 4px;
@@ -1921,71 +1892,59 @@ a.yui-dt-page {
     font-size: 0%;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid {
     border-bottom: 1px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dotted
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dotted {
     border-bottom: 1px dotted black;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dashed
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dashed {
     border-bottom: 1px dashed black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0 {
     top: 0px;
     text-indent: 0px;
     font-size: 75%;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-1
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-1 {
     border-bottom: 1px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-2
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-2 {
     border-bottom: 2px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-3
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-3 {
     top: 2px;
     top: -5px;
     border-bottom: 3px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-4
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-4 {
     top: 1px;
     top: -5px;
     border-bottom: 4px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-5
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-5 {
     top: 1px;
     top: -5px;
     border-bottom: 5px solid black;
 }
 
-.yui-toolbar-container .yui-toolbar-bordersize-menu,.yui-toolbar-container .yui-toolbar-bordertype-menu
-{
+.yui-toolbar-container .yui-toolbar-bordersize-menu, .yui-toolbar-container .yui-toolbar-bordertype-menu {
     width: 95px !important;
 }
 
-.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
-{
+.yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel, .yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel:hover {
     margin: 0px 3px 7px 17px;
 }
 
-.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator,.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator
-{
+.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator, .yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator {
     position: absolute;
     left: -12px;
     top: 14px;
@@ -2032,7 +1991,7 @@ a.yui-dt-page {
     height: 14px;
 }
 
-h2.yui-editor-skipheader,h3.yui-editor-skipheader {
+h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     height: 0;
     margin: 0;
     padding: 0;
@@ -2117,8 +2076,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     width: 65%;
 }
 
-.yui-toolbar-group-undoredo h3,.yui-toolbar-group-insertitem h3,.yui-toolbar-group-indentlist h3
-{
+.yui-toolbar-group-undoredo h3, .yui-toolbar-group-insertitem h3, .yui-toolbar-group-indentlist h3 {
     width: 68px;
 }
 
@@ -2184,8 +2142,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     border-bottom: 1px solid #808080;
 }
 
-.yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow
-{
+.yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow {
     display: none;
 }
 
@@ -2213,8 +2170,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     padding: 0.25em;
 }
 
-.yui-toolbar-container .yui-toolbar-titlebar span.collapse
-{
+.yui-toolbar-container .yui-toolbar-titlebar span.collapse {
     cursor: pointer;
     position: absolute;
     top: 4px;
@@ -2226,8 +2182,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     text-indent: 9999px;
 }
 
-.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button
-{
+.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button {
     position: relative;
     display: block;
     height: 22px;
@@ -2241,8 +2196,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     zoom: 1;
 }
 
-.yui-toolbar-container .yui-push-button a, .yui-toolbar-container .yui-color-button a, .yui-toolbar-container .yui-menu-button a
-{
+.yui-toolbar-container .yui-push-button a, .yui-toolbar-container .yui-color-button a, .yui-toolbar-container .yui-menu-button a {
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
@@ -2254,13 +2208,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     white-space: nowrap;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a, .yui-toolbar-container .yui-toolbar-select a
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a, .yui-toolbar-container .yui-toolbar-select a {
     font-size: 12px;
 }
 
-.yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child
-{
+.yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child {
     border-color: #808080;
     border-style: solid;
     border-width: 0 1px;
@@ -2269,19 +2221,16 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     position: relative;
 }
 
-.yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child
-{
+.yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child {
     border-color: #ccc;
 }
 
-.yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a
-{
+.yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a {
     color: #A6A6A6;
     cursor: default;
 }
 
-.yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled
-{
+.yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled {
     border-color: #ccc;
 }
 
@@ -2309,13 +2258,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     display: none;
 }
 
-.yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group
-{
+.yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group {
     margin-top: .75em;
 }
 
-.yui-toolbar-container .yui-push-button span.yui-toolbar-icon, .yui-toolbar-container .yui-color-button span.yui-toolbar-icon, .yui-toolbar-container .yui-menu-button span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-push-button span.yui-toolbar-icon, .yui-toolbar-container .yui-color-button span.yui-toolbar-icon, .yui-toolbar-container .yui-menu-button span.yui-toolbar-icon {
     display: block;
     position: absolute;
     top: 2px;
@@ -2325,8 +2272,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     background: url(editor-sprite.gif) no-repeat 30px 30px;
 }
 
-.yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon {
     background-image: url(editor-sprite-active.gif);
 }
 
@@ -2340,8 +2286,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     background-color: #fff;
 }
 
-.yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled
-{
+.yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled {
     position: relative;
 }
 
@@ -2353,186 +2298,155 @@ div.yuimenu li.selected a.selected {
     color: #000;
 }
 
-.yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon {
     background-position: 0 0;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-strikethrough span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-strikethrough span.yui-toolbar-icon {
     background-position: 0 -108px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-italic span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-italic span.yui-toolbar-icon {
     background-position: 0 -36px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-undo span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-undo span.yui-toolbar-icon {
     background-position: 0 -1326px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-redo span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-redo span.yui-toolbar-icon {
     background-position: 0 -1355px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-underline span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-underline span.yui-toolbar-icon {
     background-position: 0 -72px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-subscript span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-subscript span.yui-toolbar-icon {
     background-position: 0 -180px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-superscript span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-superscript span.yui-toolbar-icon {
     background-position: 0 -144px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-forecolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-forecolor span.yui-toolbar-icon {
     background-position: 0 -216px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-backcolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-backcolor span.yui-toolbar-icon {
     background-position: 0 -288px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyleft span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyleft span.yui-toolbar-icon {
     background-position: 0 -324px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifycenter span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifycenter span.yui-toolbar-icon {
     background-position: 0 -360px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyright span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyright span.yui-toolbar-icon {
     background-position: 0 -396px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyfull span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyfull span.yui-toolbar-icon {
     background-position: 0 -432px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-indent span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-indent span.yui-toolbar-icon {
     background-position: 0 -720px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-outdent span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-outdent span.yui-toolbar-icon {
     background-position: 0 -684px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-createlink span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-createlink span.yui-toolbar-icon {
     background-position: 0 -792px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertimage span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertimage span.yui-toolbar-icon {
     background-position: 1px -756px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-left span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-left span.yui-toolbar-icon {
     background-position: 0 -972px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-right span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-right span.yui-toolbar-icon {
     background-position: 0 -936px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-inline span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-inline span.yui-toolbar-icon {
     background-position: 0 -900px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-block span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-block span.yui-toolbar-icon {
     background-position: 0 -864px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-bordercolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-bordercolor span.yui-toolbar-icon {
     background-position: 0 -252px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-removeformat span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-removeformat span.yui-toolbar-icon {
     background-position: 0 -1080px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-hiddenelements span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-hiddenelements span.yui-toolbar-icon {
     background-position: 0 -1044px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertunorderedlist span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertunorderedlist span.yui-toolbar-icon {
     background-position: 0 -468px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertorderedlist span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertorderedlist span.yui-toolbar-icon {
     background-position: 0 -504px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton, .yui-toolbar-container .yui-toolbar-spinbutton .first-child
-{
+.yui-toolbar-container .yui-toolbar-spinbutton, .yui-toolbar-container .yui-toolbar-spinbutton .first-child {
     width: 35px;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton .first-child a
-{
+.yui-toolbar-container .yui-toolbar-spinbutton .first-child a {
     padding-left: 2px;
     text-align: left;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-spinbutton span.yui-toolbar-icon {
     display: none;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down {
     right: 2px;
     background: url(editor-sprite.gif) no-repeat 0 -1222px;
     overflow: hidden;
@@ -2557,15 +2471,13 @@ div.yuimenu li.selected a.selected {
     border: 1px solid #808080;
 }
 
-.yui-toolbar-container .yui-toolbar-select .first-child a
-{
+.yui-toolbar-container .yui-toolbar-select .first-child a {
     padding-left: 5px;
     text-align: left;
 }
 
-.yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon
-{
-    background: url( editor-sprite.gif ) no-repeat 0 -1144px;
+.yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon {
+    background: url(editor-sprite.gif) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
     top: 0px;
@@ -2634,15 +2546,13 @@ div.yuimenu li.selected a.selected {
 
 }
 
-.yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont
-{
+.yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont {
     padding: 0;
     border: none;
     margin-top: 0.35em;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype
-{
+.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype {
     width: 50px;
 }
 
@@ -2664,8 +2574,7 @@ div.yuimenu li.selected a.selected {
     width: 75%;
 }
 
-.yui-editor-panel .createlink_target, .yui-editor-panel .insertimage_target
-{
+.yui-editor-panel .createlink_target, .yui-editor-panel .insertimage_target {
     width: auto;
     margin-right: 5px;
 }
@@ -2762,7 +2671,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .ft span.tip span.icon {
-    background: url( editor-sprite.gif ) no-repeat 0 -1260px;
+    background: url(editor-sprite.gif) no-repeat 0 -1260px;
     display: block;
     height: 20px;
     left: 2px;
@@ -2787,7 +2696,7 @@ div.yuimenu li.selected a.selected {
     left: 25px;
     text-indent: 9999px;
     overflow: hidden;
-    background: url( editor-knob.gif ) no-repeat 0 0;
+    background: url(editor-knob.gif) no-repeat 0 0;
 }
 
 .yui-editor-panel .yui-toolbar-container {
@@ -2802,7 +2711,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-blankimage {
-    background-image: url( blankimage.png );
+    background-image: url(blankimage.png);
 }
 
 .yui-editor-container .yui-resize-handle-br {
@@ -2844,7 +2753,7 @@ div.yuimenu li.selected a.selected {
 .yui-crop .yui-crop-mask {
     background-color: #000;
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
 .yui-crop .yui-resize {
@@ -2870,7 +2779,7 @@ body.yui-layout {
     overflow: visible;
     padding: 0;
     margin: 0;
-    height:100%;
+    height: 100%;
 }
 
 .yui-layout-unit {
@@ -2901,8 +2810,8 @@ body.yui-layout {
     right: 0;
 }
 
-.yui-layout-unit-right.yui-resize .yui-layout-wrap{
-    margin-left:5px;
+.yui-layout-unit-right.yui-resize .yui-layout-wrap {
+    margin-left: 5px;
 }
 
 .yui-layout-unit-bottom {
@@ -2919,17 +2828,15 @@ body.yui-layout {
     width: 100%;
 }
 
-
-
 .yui-layout div.yui-layout-hd {
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
     position: absolute;
     top: 0;
     left: 0;
@@ -2943,9 +2850,9 @@ div.yui-layout-hd h2 {
 
 }
 
-.yui-layout-unit{
+.yui-layout-unit {
 
-    height:50px;
+    height: 50px;
 
 }
 
@@ -3076,11 +2983,11 @@ div.yui-layout-hd h2 {
     height: 5px;
 }
 
-.yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse
-{
+.yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
     right: 10px;
 }
+
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
     border: 1px solid #666;
     right: 9px;
@@ -3090,6 +2997,7 @@ div.yui-layout-hd h2 {
 .yui-layout .yui-layout-clip-left .collapse {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
 }
+
 .yui-layout .yui-layout-clip-left .collapse:hover, .yui-layout .yui-layout-clip-right .collapse {
     border: 1px solid #666;
     right: 5px;
@@ -3100,6 +3008,7 @@ div.yui-layout-hd h2 {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
     left: 5px;
 }
+
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
     border: 1px solid #666;
     left: 4px;
@@ -3110,19 +3019,17 @@ div.yui-layout-hd h2 {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -0 -110px;
 }
 
-.yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse
-{
+.yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
     border: 1px solid #808080;
 }
 
 .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')no-repeat -20px -240px;
+    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
     border: 1px solid #808080;
 }
 
-.yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse
-{
+.yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
     right: 5px;
 }
@@ -3134,20 +3041,19 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .close {
 
-
 }
 
 .yui-layout .yui-layout-hd {
 
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-    border:1px solid #ccc;
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
+    border: 1px solid #ccc;
     border-width: 0px;
 }
 
@@ -3164,7 +3070,7 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit-right div.yui-layout-hd h2 {
     text-align: right;
-    margin-right:5px;
+    margin-right: 5px;
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-bd {
@@ -3229,8 +3135,7 @@ div.yui-layout-hd h2 {
     background-image: none;
 }
 
-.yui-layout-unit .yui-resize-handle-r .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-l .yui-layout-resize-knob
-{
+.yui-layout-unit .yui-resize-handle-r .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-l .yui-layout-resize-knob {
     position: absolute;
     height: 16px;
     width: 6px;
@@ -3239,8 +3144,7 @@ div.yui-layout-hd h2 {
     background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
 }
 
-.yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob
-{
+.yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob {
     position: absolute;
     height: 6px;
     width: 16px;
@@ -3364,27 +3268,25 @@ div.yui-layout-hd h2 {
     left: -999em;
 }
 
-
 .yuimenubar {
     position: static;
 }
 
-.yuimenu .yuimenu,.yuimenubar .yuimenu {
+.yuimenu .yuimenu, .yuimenubar .yuimenu {
     position: absolute;
 }
 
-.yuimenubar li,.yuimenu li {
+.yuimenubar li, .yuimenu li {
     list-style-type: none;
 }
 
-.yuimenubar ul,.yuimenu ul,.yuimenubar li,.yuimenu li,.yuimenu h6,.yuimenubar h6
-{
+.yuimenubar ul, .yuimenu ul, .yuimenubar li, .yuimenu li, .yuimenu h6, .yuimenubar h6 {
     margin: 0;
     padding: 0;
-    background-color:#DDDDDD;
+    background-color: #DDDDDD;
 }
 
-.yuimenuitemlabel,.yuimenubaritemlabel {
+.yuimenuitemlabel, .yuimenubaritemlabel {
     text-align: left;
     white-space: nowrap;
 }
@@ -3397,7 +3299,7 @@ div.yui-layout-hd h2 {
     zoom: normal;
 }
 
-.yuimenubar>.bd>ul:after {
+.yuimenubar > .bd > ul:after {
     content: ".";
     display: block;
     clear: both;
@@ -3410,7 +3312,7 @@ div.yui-layout-hd h2 {
     float: left;
 }
 
-.yuimenubaritemlabel,.yuimenuitemlabel {
+.yuimenubaritemlabel, .yuimenuitemlabel {
     display: block;
 }
 
@@ -3442,17 +3344,15 @@ div.yui-layout-hd h2 {
     display: none;
 }
 
-.yuimenu.show-scrollbars,.yuimenubar.show-scrollbars {
+.yuimenu.show-scrollbars, .yuimenubar.show-scrollbars {
     overflow: visible;
 }
 
-.yuimenu.hide-scrollbars .yui-menu-shadow,.yuimenubar.hide-scrollbars .yui-menu-shadow
-{
+.yuimenu.hide-scrollbars .yui-menu-shadow, .yuimenubar.hide-scrollbars .yui-menu-shadow {
     overflow: hidden;
 }
 
-.yuimenu.show-scrollbars .yui-menu-shadow,.yuimenubar.show-scrollbars .yui-menu-shadow
-{
+.yuimenu.show-scrollbars .yui-menu-shadow, .yuimenubar.show-scrollbars .yui-menu-shadow {
     overflow: auto;
 }
 
@@ -3485,8 +3385,7 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenubarnav .yuimenubaritemlabel-hassubmenu {
-    background: url(menubaritem_submenuindicator.png) right center no-repeat
-;
+    background: url(menubaritem_submenuindicator.png) right center no-repeat;
 }
 
 .yuimenubaritemlabel-selected {
@@ -3548,8 +3447,7 @@ div.yui-layout-hd h2 {
     padding: 3px 10px 0 10px;
 }
 
-.yuimenu ul.hastitle, .yuimenu h6.first-of-type
-{
+.yuimenu ul.hastitle, .yuimenu h6.first-of-type {
     border-width: 0;
 }
 
@@ -3558,8 +3456,7 @@ div.yui-layout-hd h2 {
     overflow: hidden;
 }
 
-.yuimenu .topscrollbar, .yuimenu .bottomscrollbar
-{
+.yuimenu .topscrollbar, .yuimenu .bottomscrollbar {
     height: 16px;
     border: solid 1px #808080;
 }
@@ -3586,28 +3483,29 @@ div.yui-layout-hd h2 {
     _border-bottom: solid 1px #fff;
 }
 
-.yuimenuitem.first-of-type a, .yuimenuitem.first-of-type img{
+.yuimenuitem.first-of-type a, .yuimenuitem.first-of-type img {
     padding-top: 3px;
 }
 
 .yuimenuitemlabel, a.yuimenuitemlabel, a.yuimenuitemlabel:link, a.yuimenuitemlabel:visited {
-    background-color:#FFF;
-    border-left:1px solid #999;
-    color:#000;
-    cursor:default;
-    margin:0 0 0 20px;
-    padding:0 5px;
-    text-decoration:none;
+    background-color: #FFF;
+    border-left: 1px solid #999;
+    color: #000;
+    cursor: default;
+    margin: 0 0 0 20px;
+    padding: 0 5px;
+    text-decoration: none;
 }
 
 a.yuimenuitemlabel:hover {
     background-color: #DDD;
 }
+
 .yuimenuitemlabel img {
-    border:none;
-    vertical-align:middle;
-    left:3px;
-    position:absolute;
+    border: none;
+    vertical-align: middle;
+    left: 3px;
+    position: absolute;
 }
 
 .yuimenuitemlabel .helptext {
@@ -3615,7 +3513,7 @@ a.yuimenuitemlabel:hover {
     margin-top: -1.45em;
 }
 
-.yuimenuitem-hassubmenu > a{
+.yuimenuitem-hassubmenu > a {
     background-image: url(../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png);
     background-position: right -126px;
     background-repeat: no-repeat;
@@ -3630,7 +3528,7 @@ a.yuimenuitemlabel:hover {
 .yui-menu-shadow-visible {
     background-color: #000;
     opacity: .12;
-    filter: alpha(opacity = 12);
+    filter: alpha(opacity=12);
 }
 
 .yuimenuitem-selected {
@@ -3652,14 +3550,13 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-pg-container {
-    background:#FAFAFA none repeat scroll 0 0;
-    color:#666666;
+    background: #FAFAFA none repeat scroll 0 0;
+    color: #666666;
     display: block;
     white-space: nowrap;
 }
 
-.yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-pages, .yui-pg-page
-{
+.yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-pages, .yui-pg-page {
     display: inline-block;
     font-family: arial, helvetica, clean, sans-serif;
     padding: 3px 6px;
@@ -3769,8 +3666,7 @@ a.yuimenuitemlabel:hover {
     margin: 4px 10px 0 0;
 }
 
-.yui-pv .hd:after,.yui-pv .bd:after, .yui-pv-chartlegend dl:after
-{
+.yui-pv .hd:after, .yui-pv .bd:after, .yui-pv-chartlegend dl:after {
     content: '.';
     visibility: hidden;
     clear: left;
@@ -3803,13 +3699,11 @@ a.yuimenuitemlabel:hover {
     background: #58637a;
 }
 
-.yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-desc
-{
+.yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-desc {
     background: #384970;
 }
 
-.yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-desc
-{
+.yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-desc {
     background: #6F6E6E;
 }
 
@@ -3831,8 +3725,7 @@ a.yuimenuitemlabel:hover {
     font: bold 12px arial;
 }
 
-.yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-asc, .yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-desc
-{
+.yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-asc, .yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-desc {
     background: #333;
 }
 
@@ -3955,9 +3848,9 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize .yui-resize-handle-r {
-    border-color:#999;
-    border-style:none solid;
-    border-width:thin;
+    border-color: #999;
+    border-style: none solid;
+    border-width: thin;
     width: 5px;
     height: 100%;
     top: 0;
@@ -3991,9 +3884,9 @@ a.yuimenuitemlabel:hover {
     right: 0;
     cursor: n-resize;
     zoom: 1;
-    border-color:#999;
-    border-style:solid none;
-    border-width:thin;
+    border-color: #999;
+    border-style: solid none;
+    border-width: thin;
 }
 
 .yui-resize-proxy {
@@ -4003,15 +3896,14 @@ a.yuimenuitemlabel:hover {
     z-index: 1000;
 }
 
-.yui-resize-hover .yui-resize-handle,.yui-resize-hidden .yui-resize-handle
-{
+.yui-resize-hover .yui-resize-handle, .yui-resize-hidden .yui-resize-handle {
     opacity: 0;
-    filter: alpha(opacity = 0);
+    filter: alpha(opacity=0);
 }
 
 .yui-resize-ghost {
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
 .yui-resize-knob .yui-resize-handle {
@@ -4070,7 +3962,7 @@ a.yuimenuitemlabel:hover {
     z-index: 9999;
 }
 
-.yui-resize-status strong,.yui-resize-status em {
+.yui-resize-status strong, .yui-resize-status em {
     font-weight: normal;
     font-style: normal;
     padding: 1px;
@@ -4084,8 +3976,7 @@ a.yuimenuitemlabel:hover {
     zoom: 1;
 }
 
-.yui-resize .yui-resize-handle-l, .yui-resize .yui-resize-handle-r, .yui-resize .yui-resize-handle-l-active, .yui-resize .yui-resize-handle-r-active
-{
+.yui-resize .yui-resize-handle-l, .yui-resize .yui-resize-handle-r, .yui-resize .yui-resize-handle-l-active, .yui-resize .yui-resize-handle-r-active {
     height: 100%;
 }
 
@@ -4095,7 +3986,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-resize-hover .yui-resize-handle-active {
     opacity: 1;
-    filter: alpha(opacity = 100);
+    filter: alpha(opacity=100);
 }
 
 .yui-resize-proxy {
@@ -4109,8 +4000,7 @@ a.yuimenuitemlabel:hover {
     color: #000;
 }
 
-.yui-resize-status strong, .yui-resize-status em
-{
+.yui-resize-status strong, .yui-resize-status em {
     float: left;
     display: block;
     clear: both;
@@ -4118,17 +4008,15 @@ a.yuimenuitemlabel:hover {
     text-align: center;
 }
 
-.yui-resize .yui-resize-handle-inner-r, .yui-resize .yui-resize-handle-inner-l
-{
-    background: transparent url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
+.yui-resize .yui-resize-handle-inner-r, .yui-resize .yui-resize-handle-inner-l {
+    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
     height: 16px;
     width: 5px;
     position: absolute;
     top: 45%;
 }
 
-.yui-resize .yui-resize-handle-inner-t, .yui-resize .yui-resize-handle-inner-b
-{
+.yui-resize .yui-resize-handle-inner-t, .yui-resize .yui-resize-handle-inner-b {
     background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat -20px 0;
     height: 5px;
     width: 16px;
@@ -4137,36 +4025,34 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize .yui-resize-handle-br {
-    background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
     background-repeat: no-repeat;
     background-position: -22px -62px;
 }
 
 .yui-resize .yui-resize-handle-tr {
-    background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
     background-repeat: no-repeat;
     background-position: -22px -42px;
 }
 
 .yui-resize .yui-resize-handle-tl {
-    background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
     background-repeat: no-repeat;
     background-position: -22px -82px;
 }
 
 .yui-resize .yui-resize-handle-bl {
-    background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
     background-repeat: no-repeat;
     background-position: -22px -23px;
 }
 
-.yui-resize-knob .yui-resize-handle-t, .yui-resize-knob .yui-resize-handle-r, .yui-resize-knob .yui-resize-handle-b, .yui-resize-knob .yui-resize-handle-l, .yui-resize-knob .yui-resize-handle-tl, .yui-resize-knob .yui-resize-handle-tr, .yui-resize-knob .yui-resize-handle-bl, .yui-resize-knob .yui-resize-handle-br, .yui-resize-knob .yui-resize-handle-inner-t, .yui-resize-knob .yui-resize-handle-inner-r, .yui-resize-knob .yui-resize-handle-inner-b, .yui-resize-knob .yui-resize-handle-inner-l, .yui-resize-knob .yui-resize-handle-inner-tl, .yui-resize-knob .yui-resize-handle-inner-tr, .yui-resize-knob .yui-resize-handle-inner-bl, .yui-resize-knob .yui-resize-handle-inner-br
-{
+.yui-resize-knob .yui-resize-handle-t, .yui-resize-knob .yui-resize-handle-r, .yui-resize-knob .yui-resize-handle-b, .yui-resize-knob .yui-resize-handle-l, .yui-resize-knob .yui-resize-handle-tl, .yui-resize-knob .yui-resize-handle-tr, .yui-resize-knob .yui-resize-handle-bl, .yui-resize-knob .yui-resize-handle-br, .yui-resize-knob .yui-resize-handle-inner-t, .yui-resize-knob .yui-resize-handle-inner-r, .yui-resize-knob .yui-resize-handle-inner-b, .yui-resize-knob .yui-resize-handle-inner-l, .yui-resize-knob .yui-resize-handle-inner-tl, .yui-resize-knob .yui-resize-handle-inner-tr, .yui-resize-knob .yui-resize-handle-inner-bl, .yui-resize-knob .yui-resize-handle-inner-br {
     background-image: none;
 }
 
-.yui-resize-knob .yui-resize-handle-l, .yui-resize-knob .yui-resize-handle-r, .yui-resize-knob .yui-resize-handle-l-active, .yui-resize-knob .yui-resize-handle-r-active
-{
+.yui-resize-knob .yui-resize-handle-l, .yui-resize-knob .yui-resize-handle-r, .yui-resize-knob .yui-resize-handle-l-active, .yui-resize-knob .yui-resize-handle-r-active {
     height: 6px;
     width: 6px;
 }
@@ -4277,8 +4163,7 @@ a.yuimenuitemlabel:hover {
     height: 50px;
 }
 
-.yui-toolbar-container.yui-toolbar-grouped .yui-toolbar-group span.yui-toolbar-separator
-{
+.yui-toolbar-container.yui-toolbar-grouped .yui-toolbar-group span.yui-toolbar-separator {
     height: 18px;
     display: block;
 }
@@ -4293,14 +4178,12 @@ a.yuimenuitemlabel:hover {
     display: none;
 }
 
-.yui-toolbar-container .yui-push-button,.yui-toolbar-container .yui-color-button,.yui-toolbar-container .yui-menu-button
-{
+.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button {
     position: relative;
     cursor: pointer;
 }
 
-.yui-toolbar-container .yui-button .first-child,.yui-toolbar-container .yui-button .first-child a
-{
+.yui-toolbar-container .yui-button .first-child, .yui-toolbar-container .yui-button .first-child a {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -4313,13 +4196,12 @@ a.yuimenuitemlabel:hover {
 
 .yui-toolbar-container .yui-button-disabled .yui-toolbar-icon {
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
-.yui-toolbar-container .yui-button-disabled .up,.yui-toolbar-container .yui-button-disabled .down
-{
+.yui-toolbar-container .yui-button-disabled .up, .yui-toolbar-container .yui-button-disabled .down {
     opacity: .5;
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
 }
 
 .yui-toolbar-container .yui-button a {
@@ -4379,10 +4261,10 @@ a.yuimenuitemlabel:hover {
     opacity: 1;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a.up,.yui-toolbar-container .yui-toolbar-spinbutton a.down
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down {
     position: absolute;
-    display: block right : 0;
+    display: block
+    right: 0;
     cursor: pointer;
     z-index: 1;
     padding: 0;
@@ -4542,8 +4424,7 @@ a.yuimenuitemlabel:hover {
     margin-top: 3px;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize,.yui-editor-panel .yui-toolbar-bordertype
-{
+.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype {
     font-size: 75%;
 }
 
@@ -4551,8 +4432,7 @@ a.yuimenuitemlabel:hover {
     border: none;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span,.yui-editor-panel .yui-toolbar-bordertype span a span
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span, .yui-editor-panel .yui-toolbar-bordertype span a span {
     display: block;
     height: 8px;
     left: 4px;
@@ -4564,71 +4444,59 @@ a.yuimenuitemlabel:hover {
     font-size: 0%;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid {
     border-bottom: 1px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dotted
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dotted {
     border-bottom: 1px dotted black;
 }
 
-.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dashed
-{
+.yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dashed {
     border-bottom: 1px dashed black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0 {
     top: 0px;
     text-indent: 0px;
     font-size: 75%;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-1
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-1 {
     border-bottom: 1px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-2
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-2 {
     border-bottom: 2px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-3
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-3 {
     top: 2px;
     top: -5px;
     border-bottom: 3px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-4
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-4 {
     top: 1px;
     top: -5px;
     border-bottom: 4px solid black;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-5
-{
+.yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-5 {
     top: 1px;
     top: -5px;
     border-bottom: 5px solid black;
 }
 
-.yui-toolbar-container .yui-toolbar-bordersize-menu,.yui-toolbar-container .yui-toolbar-bordertype-menu
-{
+.yui-toolbar-container .yui-toolbar-bordersize-menu, .yui-toolbar-container .yui-toolbar-bordertype-menu {
     width: 95px !important;
 }
 
-.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
-{
+.yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel, .yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel:hover {
     margin: 0px 3px 7px 17px;
 }
 
-.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator,.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator
-{
+.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator, .yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator {
     position: absolute;
     left: -12px;
     top: 14px;
@@ -4675,7 +4543,7 @@ a.yuimenuitemlabel:hover {
     height: 14px;
 }
 
-h2.yui-editor-skipheader,h3.yui-editor-skipheader {
+h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     height: 0;
     margin: 0;
     padding: 0;
@@ -4760,8 +4628,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     width: 65%;
 }
 
-.yui-toolbar-group-undoredo h3,.yui-toolbar-group-insertitem h3,.yui-toolbar-group-indentlist h3
-{
+.yui-toolbar-group-undoredo h3, .yui-toolbar-group-insertitem h3, .yui-toolbar-group-indentlist h3 {
     width: 68px;
 }
 
@@ -4827,8 +4694,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     border-bottom: 1px solid #808080;
 }
 
-.yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow
-{
+.yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow {
     display: none;
 }
 
@@ -4856,8 +4722,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     padding: 0.25em;
 }
 
-.yui-toolbar-container .yui-toolbar-titlebar span.collapse
-{
+.yui-toolbar-container .yui-toolbar-titlebar span.collapse {
     cursor: pointer;
     position: absolute;
     top: 4px;
@@ -4869,8 +4734,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     text-indent: 9999px;
 }
 
-.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button
-{
+.yui-toolbar-container .yui-push-button, .yui-toolbar-container .yui-color-button, .yui-toolbar-container .yui-menu-button {
     position: relative;
     display: block;
     height: 22px;
@@ -4884,8 +4748,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     zoom: 1;
 }
 
-.yui-toolbar-container .yui-push-button a, .yui-toolbar-container .yui-color-button a, .yui-toolbar-container .yui-menu-button a
-{
+.yui-toolbar-container .yui-push-button a, .yui-toolbar-container .yui-color-button a, .yui-toolbar-container .yui-menu-button a {
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
@@ -4897,13 +4760,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     white-space: nowrap;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a, .yui-toolbar-container .yui-toolbar-select a
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a, .yui-toolbar-container .yui-toolbar-select a {
     font-size: 12px;
 }
 
-.yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child
-{
+.yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child {
     border-color: #808080;
     border-style: solid;
     border-width: 0 1px;
@@ -4912,19 +4773,16 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     position: relative;
 }
 
-.yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child
-{
+.yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child {
     border-color: #ccc;
 }
 
-.yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a
-{
+.yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a {
     color: #A6A6A6;
     cursor: default;
 }
 
-.yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled
-{
+.yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled {
     border-color: #ccc;
 }
 
@@ -4952,13 +4810,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     display: none;
 }
 
-.yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group
-{
+.yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group {
     margin-top: .75em;
 }
 
-.yui-toolbar-container .yui-push-button span.yui-toolbar-icon, .yui-toolbar-container .yui-color-button span.yui-toolbar-icon, .yui-toolbar-container .yui-menu-button span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-push-button span.yui-toolbar-icon, .yui-toolbar-container .yui-color-button span.yui-toolbar-icon, .yui-toolbar-container .yui-menu-button span.yui-toolbar-icon {
     display: block;
     position: absolute;
     top: 2px;
@@ -4968,8 +4824,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     background: url(editor-sprite.gif) no-repeat 30px 30px;
 }
 
-.yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon {
     background-image: url(editor-sprite-active.gif);
 }
 
@@ -4983,8 +4838,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     background-color: #fff;
 }
 
-.yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled
-{
+.yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled {
     position: relative;
 }
 
@@ -4996,186 +4850,155 @@ div.yuimenu li.selected a.selected {
     color: #000;
 }
 
-.yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon {
     background-position: 0 0;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-strikethrough span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-strikethrough span.yui-toolbar-icon {
     background-position: 0 -108px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-italic span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-italic span.yui-toolbar-icon {
     background-position: 0 -36px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-undo span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-undo span.yui-toolbar-icon {
     background-position: 0 -1326px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-redo span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-redo span.yui-toolbar-icon {
     background-position: 0 -1355px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-underline span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-underline span.yui-toolbar-icon {
     background-position: 0 -72px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-subscript span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-subscript span.yui-toolbar-icon {
     background-position: 0 -180px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-superscript span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-superscript span.yui-toolbar-icon {
     background-position: 0 -144px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-forecolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-forecolor span.yui-toolbar-icon {
     background-position: 0 -216px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-backcolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-backcolor span.yui-toolbar-icon {
     background-position: 0 -288px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyleft span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyleft span.yui-toolbar-icon {
     background-position: 0 -324px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifycenter span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifycenter span.yui-toolbar-icon {
     background-position: 0 -360px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyright span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyright span.yui-toolbar-icon {
     background-position: 0 -396px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-justifyfull span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-justifyfull span.yui-toolbar-icon {
     background-position: 0 -432px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-indent span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-indent span.yui-toolbar-icon {
     background-position: 0 -720px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-outdent span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-outdent span.yui-toolbar-icon {
     background-position: 0 -684px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-createlink span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-createlink span.yui-toolbar-icon {
     background-position: 0 -792px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertimage span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertimage span.yui-toolbar-icon {
     background-position: 1px -756px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-left span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-left span.yui-toolbar-icon {
     background-position: 0 -972px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-right span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-right span.yui-toolbar-icon {
     background-position: 0 -936px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-inline span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-inline span.yui-toolbar-icon {
     background-position: 0 -900px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-block span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-block span.yui-toolbar-icon {
     background-position: 0 -864px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-bordercolor span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-bordercolor span.yui-toolbar-icon {
     background-position: 0 -252px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-removeformat span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-removeformat span.yui-toolbar-icon {
     background-position: 0 -1080px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-hiddenelements span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-hiddenelements span.yui-toolbar-icon {
     background-position: 0 -1044px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertunorderedlist span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertunorderedlist span.yui-toolbar-icon {
     background-position: 0 -468px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-insertorderedlist span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-insertorderedlist span.yui-toolbar-icon {
     background-position: 0 -504px;
     left: 5px;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton, .yui-toolbar-container .yui-toolbar-spinbutton .first-child
-{
+.yui-toolbar-container .yui-toolbar-spinbutton, .yui-toolbar-container .yui-toolbar-spinbutton .first-child {
     width: 35px;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton .first-child a
-{
+.yui-toolbar-container .yui-toolbar-spinbutton .first-child a {
     padding-left: 2px;
     text-align: left;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton span.yui-toolbar-icon
-{
+.yui-toolbar-container .yui-toolbar-spinbutton span.yui-toolbar-icon {
     display: none;
 }
 
-.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down
-{
+.yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down {
     right: 2px;
     background: url(editor-sprite.gif) no-repeat 0 -1222px;
     overflow: hidden;
@@ -5200,15 +5023,13 @@ div.yuimenu li.selected a.selected {
     border: 1px solid #808080;
 }
 
-.yui-toolbar-container .yui-toolbar-select .first-child a
-{
+.yui-toolbar-container .yui-toolbar-select .first-child a {
     padding-left: 5px;
     text-align: left;
 }
 
-.yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon
-{
-    background: url( editor-sprite.gif ) no-repeat 0 -1144px;
+.yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon {
+    background: url(editor-sprite.gif) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
     top: 0px;
@@ -5277,15 +5098,13 @@ div.yuimenu li.selected a.selected {
 
 }
 
-.yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont
-{
+.yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont {
     padding: 0;
     border: none;
     margin-top: 0.35em;
 }
 
-.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype
-{
+.yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype {
     width: 50px;
 }
 
@@ -5307,8 +5126,7 @@ div.yuimenu li.selected a.selected {
     width: 75%;
 }
 
-.yui-editor-panel .createlink_target, .yui-editor-panel .insertimage_target
-{
+.yui-editor-panel .createlink_target, .yui-editor-panel .insertimage_target {
     width: auto;
     margin-right: 5px;
 }
@@ -5405,7 +5223,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .ft span.tip span.icon {
-    background: url( editor-sprite.gif ) no-repeat 0 -1260px;
+    background: url(editor-sprite.gif) no-repeat 0 -1260px;
     display: block;
     height: 20px;
     left: 2px;
@@ -5430,7 +5248,7 @@ div.yuimenu li.selected a.selected {
     left: 25px;
     text-indent: 9999px;
     overflow: hidden;
-    background: url( editor-knob.gif ) no-repeat 0 0;
+    background: url(editor-knob.gif) no-repeat 0 0;
 }
 
 .yui-editor-panel .yui-toolbar-container {
@@ -5445,7 +5263,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-blankimage {
-    background-image: url( blankimage.png );
+    background-image: url(blankimage.png);
 }
 
 .yui-editor-container .yui-resize-handle-br {
@@ -5455,11 +5273,11 @@ div.yuimenu li.selected a.selected {
     background-color: transparent;
 }
 
-.yui-h-slider,.yui-v-slider {
+.yui-h-slider, .yui-v-slider {
     position: relative;
 }
 
-.yui-h-slider .yui-slider-thumb,.yui-v-slider .yui-slider-thumb {
+.yui-h-slider .yui-slider-thumb, .yui-v-slider .yui-slider-thumb {
     position: absolute;
     cursor: default;
 }
@@ -5480,12 +5298,11 @@ div.yuimenu li.selected a.selected {
     width: 48px;
 }
 
-.yui-navset .yui-nav li,.yui-navset .yui-navset-top .yui-nav li,.yui-navset .yui-navset-bottom .yui-nav li
-{
+.yui-navset .yui-nav li, .yui-navset .yui-navset-top .yui-nav li, .yui-navset .yui-navset-bottom .yui-nav li {
     margin: 0 0.5em 0 0;
 }
 
-.yui-navset-left .yui-nav li,.yui-navset-right .yui-nav li {
+.yui-navset-left .yui-nav li, .yui-navset-right .yui-nav li {
     margin: 0 0 0.5em;
 }
 
@@ -5493,17 +5310,16 @@ div.yuimenu li.selected a.selected {
     display: none;
 }
 
-.yui-navset .yui-navset-left .yui-nav,.yui-navset .yui-navset-right .yui-nav,.yui-navset-left .yui-nav,.yui-navset-right .yui-nav
-{
+.yui-navset .yui-navset-left .yui-nav, .yui-navset .yui-navset-right .yui-nav, .yui-navset-left .yui-nav, .yui-navset-right .yui-nav {
     width: 6em;
 }
 
-.yui-navset-top .yui-nav,.yui-navset-bottom .yui-nav {
-    padding-top:4px;
+.yui-navset-top .yui-nav, .yui-navset-bottom .yui-nav {
+    padding-top: 4px;
     width: auto;
 }
 
-.yui-navset .yui-navset-left,.yui-navset-left {
+.yui-navset .yui-navset-left, .yui-navset-left {
     padding: 0 0 0 6em;
 }
 
@@ -5511,14 +5327,14 @@ div.yuimenu li.selected a.selected {
     padding: 0 6em 0 0;
 }
 
-.yui-navset-top,.yui-navset-bottom {
+.yui-navset-top, .yui-navset-bottom {
     padding: auto;
 }
 
 .yui-nav, .yui-nav li, .yui-navset .yui-nav li {
     margin: 0;
     padding: 0;
-    padding-top:0px;
+    padding-top: 0px;
     list-style: none;
 }
 
@@ -5526,13 +5342,13 @@ div.yuimenu li.selected a.selected {
     font-style: normal;
     font-size: 11px;
     font-weight: bold;
-    color:#666;
+    color: #666;
 }
 
 .yui-navset {
     position: relative;
     overflow-y: visible;
-    height:100%;
+    height: 100%;
     zoom: 1;
 }
 
@@ -5542,8 +5358,7 @@ div.yuimenu li.selected a.selected {
     color: #000;
 }
 
-.yui-navset .yui-nav li,.yui-navset .yui-navset-top .yui-nav li,.yui-navset .yui-navset-bottom .yui-nav li
-{
+.yui-navset .yui-nav li, .yui-navset .yui-navset-top .yui-nav li, .yui-navset .yui-navset-bottom .yui-nav li {
     display: inline-block;
     display: -moz-inline-stack;
     display: inline;
@@ -5552,7 +5367,7 @@ div.yuimenu li.selected a.selected {
     zoom: 1;
 }
 
-.yui-navset-left .yui-nav li,.yui-navset-right .yui-nav li {
+.yui-navset-left .yui-nav li, .yui-navset-right .yui-nav li {
     display: block;
 }
 
@@ -5561,8 +5376,7 @@ div.yuimenu li.selected a.selected {
 
 }
 
-.yui-navset .yui-nav li a,.yui-navset-top .yui-nav li a,.yui-navset-bottom .yui-nav li a
-{
+.yui-navset .yui-nav li a, .yui-navset-top .yui-nav li a, .yui-navset-bottom .yui-nav li a {
     display: inline;
     display: inline-block;
     display: -moz-inline-stack;
@@ -5570,7 +5384,7 @@ div.yuimenu li.selected a.selected {
     zoom: 1;
 }
 
-.yui-navset-left .yui-nav li a,.yui-navset-right .yui-nav li a {
+.yui-navset-left .yui-nav li a, .yui-navset-right .yui-nav li a {
     display: block;
 
 }
@@ -5579,67 +5393,60 @@ div.yuimenu li.selected a.selected {
     vertical-align: text-top;
 }
 
-.yui-navset .yui-nav li a em,.yui-navset-top .yui-nav li a em,.yui-navset-bottom .yui-nav li a em
-{
+.yui-navset .yui-nav li a em, .yui-navset-top .yui-nav li a em, .yui-navset-bottom .yui-nav li a em {
     display: block;
 }
 
-.yui-navset .yui-navset-left .yui-nav,.yui-navset .yui-navset-right .yui-nav,.yui-navset-left .yui-nav,.yui-navset-right .yui-nav
-{
+.yui-navset .yui-navset-left .yui-nav, .yui-navset .yui-navset-right .yui-nav, .yui-navset-left .yui-nav, .yui-navset-right .yui-nav {
     position: absolute;
 
     z-index: 1;
 }
 
-.yui-navset-top .yui-nav,.yui-navset-bottom .yui-nav {
+.yui-navset-top .yui-nav, .yui-navset-bottom .yui-nav {
     position: static;
 }
 
-.yui-navset .yui-navset-left .yui-nav,.yui-navset-left .yui-nav {
+.yui-navset .yui-navset-left .yui-nav, .yui-navset-left .yui-nav {
     left: 0;
     right: auto;
 }
 
-.yui-navset .yui-navset-right .yui-nav,.yui-navset-right .yui-nav {
+.yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav {
     right: 0;
     left: auto;
 }
 
-.yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav
-{
+.yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav {
     zoom: 1;
     white-space: nowrap;
-    overflow-x:hidden;
-    white-space:nowrap;
+    overflow-x: hidden;
+    white-space: nowrap;
 }
 
-.yui-navset .yui-nav li, .yui-navset .yui-navset-top .yui-nav li
-{
-    margin:0px 1px 0 0;
+.yui-navset .yui-nav li, .yui-navset .yui-navset-top .yui-nav li {
+    margin: 0px 1px 0 0;
     overflow: hidden;
     height: 18px;
     zoom: 1;
 
 }
 
-.yui-navset .yui-nav .selected, .yui-navset .yui-navset-top .yui-nav .selected
-{
+.yui-navset .yui-nav .selected, .yui-navset .yui-navset-top .yui-nav .selected {
     /*  margin: 0 0.16em -1px 0;*/
 }
 
-.yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
-{
+.yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a {
     background: #eeeeee;
     border: solid #a3a3a3;
     border-width: 0 1px;
     color: #000;
     position: relative;
     text-decoration: none;
-    height:30px;
+    height: 30px;
 }
 
-.yui-navset .yui-nav a em, .yui-navset .yui-navset-top .yui-nav a em
-{
+.yui-navset .yui-nav a em, .yui-navset .yui-navset-top .yui-nav a em {
     background: #eeeeee;
     border: solid #a3a3a3;
     border-width: 1px 0 0;
@@ -5652,18 +5459,16 @@ div.yuimenu li.selected a.selected {
     position: relative;
 }
 
-.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover
-{
+.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover {
 
     color: #000;
 }
 
-.yui-navset .yui-nav a:hover, .yui-navset .yui-nav a:focus
-{
+.yui-navset .yui-nav a:hover, .yui-navset .yui-nav a:focus {
     outline: 0;
 }
 
-.yui-navset  .selected a em{
+.yui-navset .selected a em {
     padding: 8px;
     color: #333;
     background: #ffffff;
@@ -5675,54 +5480,49 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset {
 
-    padding:5px;
+    padding: 5px;
 }
 
 .yui-nav a em {
 
-    padding:5px;
+    padding: 5px;
 }
 
 div.bodywrapper {
 
-    padding:10px;
+    padding: 10px;
 }
 
-.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em
-{
+.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em {
 
 }
 
-.yui-navset .yui-nav
-{
-    margin-left:10px;
+.yui-navset .yui-nav {
+    margin-left: 10px;
 
 }
-.yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content
-{
+
+.yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content {
     border-top-width: 0px;
     padding: 0.2em 0.5em;
 }
 
-.yui-layout-unit-center .yui-navset .yui-content, .yui-layout .yui-layout-unit.yui-layout-unit-center div.yui-layout-bd{
-    border-style:none;
+.yui-layout-unit-center .yui-navset .yui-content, .yui-layout .yui-layout-unit.yui-layout-unit-center div.yui-layout-bd {
+    border-style: none;
 }
 
-.yui-navset-left .yui-nav, .yui-navset .yui-navset-left .yui-nav, .yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav
-{
+.yui-navset-left .yui-nav, .yui-navset .yui-navset-left .yui-nav, .yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav {
     border-width: 0 5px 0 0;
     Xposition: absolute;
     top: 0;
     bottom: 0;
 }
 
-.yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav
-{
+.yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav {
     border-width: 0 0 0 5px;
 }
 
-.yui-navset-left .yui-nav li, .yui-navset .yui-navset-left .yui-nav li, .yui-navset-right .yui-nav li
-{
+.yui-navset-left .yui-nav li, .yui-navset .yui-navset-left .yui-nav li, .yui-navset-right .yui-nav li {
     margin: 0 0 0.16em;
     padding: 0 0 0 1px;
 }
@@ -5731,8 +5531,7 @@ div.bodywrapper {
     padding: 0 1px 0 0;
 }
 
-.yui-navset-left .yui-nav .selected, .yui-navset .yui-navset-left .yui-nav .selected
-{
+.yui-navset-left .yui-nav .selected, .yui-navset .yui-navset-left .yui-nav .selected {
     margin: 0 -1px 0.16em 0;
 }
 
@@ -5740,25 +5539,23 @@ div.bodywrapper {
     margin: 0 0 0.16em -1px;
 }
 
-.yui-navset-left .yui-nav a, .yui-navset-right .yui-nav a
-{
+.yui-navset-left .yui-nav a, .yui-navset-right .yui-nav a {
     border-width: 1px 0;
 }
 
-.yui-navset-left .yui-nav a em, .yui-navset .yui-navset-left .yui-nav a em, .yui-navset-right .yui-nav a em
-{
+.yui-navset-left .yui-nav a em, .yui-navset .yui-navset-left .yui-nav a em, .yui-navset-right .yui-nav a em {
     border-width: 0 0 0 1px;
     padding: 0.2em .75em;
     top: auto;
     left: -1px;
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
 }
 
 .yui-navset-right .yui-nav a em {
@@ -5766,17 +5563,16 @@ div.bodywrapper {
     left: auto;
     right: -1px;
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
 }
 
-.yui-navset-left .yui-nav a, .yui-navset-left .yui-nav .selected a, .yui-navset-left .yui-nav a:hover, .yui-navset-right .yui-nav a, .yui-navset-right .yui-nav .selected a, .yui-navset-right .yui-nav a:hover, .yui-navset-bottom .yui-nav a, .yui-navset-bottom .yui-nav .selected a, .yui-navset-bottom .yui-nav a:hover
-{
+.yui-navset-left .yui-nav a, .yui-navset-left .yui-nav .selected a, .yui-navset-left .yui-nav a:hover, .yui-navset-right .yui-nav a, .yui-navset-right .yui-nav .selected a, .yui-navset-right .yui-nav a:hover, .yui-navset-bottom .yui-nav a, .yui-navset-bottom .yui-nav .selected a, .yui-navset-bottom .yui-nav a:hover {
     background-image: none;
 }
 
@@ -5785,44 +5581,38 @@ div.bodywrapper {
     border-left-color: #243356;
 }
 
-.yui-navset-bottom .yui-nav, .yui-navset .yui-navset-bottom .yui-nav
-{
+.yui-navset-bottom .yui-nav, .yui-navset .yui-navset-bottom .yui-nav {
     border-width: 5px 0 0;
 }
 
-.yui-navset .yui-navset-bottom .yui-nav .selected, .yui-navset-bottom .yui-nav .selected
-{
+.yui-navset .yui-navset-bottom .yui-nav .selected, .yui-navset-bottom .yui-nav .selected {
     margin: -1px 0.16em 0 0;
 }
 
-.yui-navset .yui-navset-bottom .yui-nav li, .yui-navset-bottom .yui-nav li
-{
+.yui-navset .yui-navset-bottom .yui-nav li, .yui-navset-bottom .yui-nav li {
     padding: 0 0 1px 0;
     vertical-align: top;
 }
 
-.yui-navset .yui-navset-bottom .yui-nav li a, .yui-navset-bottom .yui-nav li a
-{
+.yui-navset .yui-navset-bottom .yui-nav li a, .yui-navset-bottom .yui-nav li a {
 
 }
 
-.yui-navset .yui-navset-bottom .yui-nav a em, .yui-navset-bottom .yui-nav a em
-{
+.yui-navset .yui-navset-bottom .yui-nav a em, .yui-navset-bottom .yui-nav a em {
     border-width: 0 0 1px;
     top: auto;
     bottom: -1px;
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
 }
 
-.yui-navset-bottom .yui-content, .yui-navset .yui-navset-bottom .yui-content
-{
+.yui-navset-bottom .yui-content, .yui-navset .yui-navset-bottom .yui-content {
     border: 1px solid #808080;
     border-bottom-color: #243356;
 }
@@ -5858,7 +5648,7 @@ div.bodywrapper {
 
 }
 
-.ygtvtmh,.ygtvtmhh {
+.ygtvtmh, .ygtvtmhh {
     width: 18px;
     height: 22px;
     cursor: pointer;
@@ -5872,7 +5662,7 @@ div.bodywrapper {
 
 }
 
-.ygtvtph,.ygtvtphh {
+.ygtvtph, .ygtvtphh {
     width: 18px;
     height: 22px;
     cursor: pointer;
@@ -5892,7 +5682,7 @@ div.bodywrapper {
 
 }
 
-.ygtvlmh,.ygtvlmhh {
+.ygtvlmh, .ygtvlmhh {
     width: 18px;
     height: 22px;
     cursor: pointer;
@@ -5906,7 +5696,7 @@ div.bodywrapper {
 
 }
 
-.ygtvlph,.ygtvlphh {
+.ygtvlph, .ygtvlphh {
     width: 18px;
     height: 22px;
     cursor: pointer;
@@ -5938,14 +5728,14 @@ div.bodywrapper {
     height: 2%;
 }
 
-.ygtvlabel,.ygtvlabel:link,.ygtvlabel:visited,.ygtvlabel:hover {
+.ygtvlabel, .ygtvlabel:link, .ygtvlabel:visited, .ygtvlabel:hover {
     margin-left: 2px;
     text-decoration: none;
     background-color: white;
     cursor: pointer;
 }
 
-.ygtvcontent, .ygtvcontent a:link, .ygtvcontent a:visited{
+.ygtvcontent, .ygtvcontent a:link, .ygtvcontent a:visited {
     color: #444444;
 }
 
@@ -5953,6 +5743,7 @@ div.bodywrapper {
     height: 22px;
     width: 12px;
 }
+
 /*
 .ygtvfocus {
     background-color: #c0e0e0;
@@ -5973,7 +5764,7 @@ div.bodywrapper {
 }
 
 .ygtv-highlight1 .ygtvcontent {
-    border:thin dashed lightgrey;
+    border: thin dashed lightgrey;
 }
 
 .ygtvok {
@@ -6009,7 +5800,7 @@ div.bodywrapper {
     width: 190px;
 }
 
-.ygtv-edit-TextNode .ygtvcancel,.ygtv-edit-TextNode .ygtvok {
+.ygtv-edit-TextNode .ygtvcancel, .ygtv-edit-TextNode .ygtvok {
     border: none;
 }
 
@@ -6035,32 +5826,31 @@ div.bodywrapper {
 }
 
 .ydlg-bd {
-    background-color:#F2F2F2;
+    background-color: #F2F2F2;
     padding: 5px;
 }
 
-
 .sugar-progress-wrap {
     background-color: #FFF;
-    border:1px solid #666;
+    border: 1px solid #666;
     height: 16px;
     width: 100%;
 }
 
 .sugar-progress-bar {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+    background: #DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
     width: 0px;
 }
 
 /* Sugar YUI widget styles */
 a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav .selected a.sugar-tab-close {
-    height:9px;
-    left:6px;
-    position:relative;
-    top:-3px;
-    width:9px;
-    background : transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')  no-repeat scroll 0px -70px;
+    height: 9px;
+    left: 6px;
+    position: relative;
+    top: -3px;
+    width: 9px;
+    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0px -70px;
 }
 
 .sugar-message-prompt {
@@ -6068,19 +5858,19 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 .sugar-subpanel-header-row {
-    background-color:#EEEEEE;
-    border-bottom:1px solid #C0C0C0;
-    height:21px;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #C0C0C0;
+    height: 21px;
 }
 
 /* KBDocuments tree*/
-#tagstree{
-    width:auto;
-    margin-top:0px;
-    margin-bottom:0px;
+#tagstree {
+    width: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
-.ygtvlabel, .ygtvlp, .ygtvlm
-{
+
+.ygtvlabel, .ygtvlp, .ygtvlm {
     background-color: transparent !important;
 }
 
@@ -6114,26 +5904,26 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 
 .yui-layout-unit-right.yui-resize .yui-layout-wrap .yui-layout-hd {
 
-    padding:10px 0 10px 0;
+    padding: 10px 0 10px 0;
 
 }
 
 .yui-layout-unit-left.yui-resize .yui-layout-wrap .yui-layout-hd {
 
-    padding:10px 0 10px 0;
+    padding: 10px 0 10px 0;
 
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
 
-    margin:10px 0 10px 0;
+    margin: 10px 0 10px 0;
 }
 
 .bodywrapper div {
 
-    #padding:0 10px 0 10px;
+    #padding: 0 10px 0 10px;
 }
 
 .yui-layout .yui-layout-clip {
-    padding:10px 000;
+    padding: 10px 000;
 }

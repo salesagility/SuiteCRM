@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,25 +34,25 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <script>
     {literal}
     $(function () {
-        var $dialog = $('<div></div>')
-                .html(SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TEXT'))
-                .dialog({
-                    autoOpen: false,
-                    title: SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TITLE'),
-                    width: 700
-                });
-
-        $('.help-search').click(function () {
-            $dialog.dialog('open');
-            // prevent the default action, e.g., following a link
+      var $dialog = $('<div></div>')
+        .html(SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TEXT'))
+        .dialog({
+          autoOpen: false,
+          title: SUGAR.language.get('app_strings', 'LBL_SEARCH_HELP_TITLE'),
+          width: 700
         });
+
+      $('.help-search').click(function () {
+        $dialog.dialog('open');
+        // prevent the default action, e.g., following a link
+      });
 
     });
     {/literal}
@@ -168,13 +168,13 @@
                     {/if}
                     <a id="basic_search_link" href="javascript:void(0)"
                        accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_BASIC_FILTER}</a>
-        <span class='white-space'>
+                    <span class='white-space'>
             &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_FILTER_SHORTCUT}</b>&nbsp;
-            {$SAVED_SEARCHES_OPTIONS} {/if}
-            <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'
-                                                               onclick='SUGAR.searchForm.clear_form(this.form);'
-                                                               class='button' type='button' name='go_select'
-                                                               value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>
+                        {$SAVED_SEARCHES_OPTIONS} {/if}
+                        <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'
+                                                                           onclick='SUGAR.searchForm.clear_form(this.form);'
+                                                                           class='button' type='button' name='go_select'
+                                                                           value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>
         </span>
                     {if $searchFormInPopup}
                 </div>
@@ -192,17 +192,17 @@
 <script>
     {literal}
     if (typeof(loadSSL_Scripts) == 'function') {
-        loadSSL_Scripts();
+      loadSSL_Scripts();
     }
     {/literal}
 </script>
 <script>
     {literal}
     $(document).ready(function () {
-        $('#basic_search_link').one("click", function () {
-            //alert( "This will be displayed only once." );
-            SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|basic_search', '{/literal}{$module}{literal}|advanced_search');
-        });
+      $('#basic_search_link').one("click", function () {
+        //alert( "This will be displayed only once." );
+        SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|basic_search', '{/literal}{$module}{literal}|advanced_search');
+      });
     });
     {/literal}
 </script>

@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 (function ($) {
@@ -43,7 +43,7 @@
    * @param options
    * @return {*|HTMLElement}
    */
-  $.fn.FoldersViewModal =  function(options) {
+  $.fn.FoldersViewModal = function (options) {
     "use strict";
     var self = this;
     var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
@@ -57,7 +57,7 @@
         "showFooter": false,
         "size": 'lg'
       });
-      foldersBox.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+      foldersBox.setBody('<div class="in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       foldersBox.show();
 
       $.ajax({
@@ -67,8 +67,8 @@
       }).done(function (data) {
         var response = JSON.parse(data);
 
-        if(typeof response.errors !== "undefined") {
-          $(response.errors).each(function(i,v) {
+        if (typeof response.errors !== "undefined") {
+          $(response.errors).each(function (i, v) {
             foldersBox.setBody('<div class="error">' + v + '</div>');
           });
           return false;
@@ -78,12 +78,12 @@
 
         self.tree = $('<div></div>');
         self.tree.jstree({
-          'core' : {
-            'data' : response
+          'core': {
+            'data': response
           }
-        }).on('select_node.jstree', function(e, data) {
+        }).on('select_node.jstree', function (e, data) {
           "use strict";
-          if(typeof data.selected[0] !== "undefined") {
+          if (typeof data.selected[0] !== "undefined") {
             var mbox = data.selected[0];
             // reload with different inbox
             $('[name=folders_id]').val(mbox);
@@ -105,9 +105,9 @@
     };
 
     /**
-    * @destructor
-    */
-    self.destruct = function() {
+     * @destructor
+     */
+    self.destruct = function () {
 
     };
 
@@ -123,6 +123,6 @@
   }
 }(jQuery));
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(document).FoldersViewModal();
 });

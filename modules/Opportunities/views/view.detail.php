@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,59 +34,56 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description: This file is used to override the default Meta-data DetailView behavior
- * to provide customization specific to the Campaigns module.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class OpportunitiesViewDetail extends ViewDetail {
-
- 	function __construct(){
- 		parent::__construct();
- 	}
+class OpportunitiesViewDetail extends ViewDetail
+{
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function OpportunitiesViewDetail(){
+    function OpportunitiesViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    function __construct()
+    {
+        parent::__construct();
+    }
 
- 	function display() {
+    function display()
+    {
 
-	    $currency = new Currency();
-	    if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
-	    {
-	    	$currency->retrieve($this->bean->currency_id);
-	    	if( $currency->deleted != 1){
-	    		$this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
-	    	}else {
-	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    	}
-	    }else{
-	    	$this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    }
+        $currency = new Currency();
+        if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
+            $currency->retrieve($this->bean->currency_id);
+            if ($currency->deleted != 1) {
+                $this->ss->assign('CURRENCY', $currency->iso4217 . ' ' . $currency->symbol);
+            } else {
+                $this->ss->assign('CURRENCY',
+                    $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
+            }
+        } else {
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
+        }
 
- 		parent::display();
- 	}
+        parent::display();
+    }
 }
+
 ?>

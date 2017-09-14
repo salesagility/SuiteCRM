@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <link rel="stylesheet" type="text/css" href="include/javascript/c3/c3.min.css">
@@ -47,50 +47,50 @@
 <script type="text/javascript">
     {literal}
     $(function () {
-        $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10');
-        var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+      $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10');
+      var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
 
-        var template = {
-            renderers: renderers
-        }
-        function getDataForPivot(element, config, type, showUI)
-        {
-                $.getJSON("index.php",
-                        {
-                            'module': 'Spots',
-                            {/literal}
-                            'action': type,
-                            {literal}
-                            'to_pdf':1
-                        },
-                        function (data) {
-                            {/literal}
-                            if("derivedAttributes" in config)
-                                delete config["derivedAttributes"];
-                            $(element)
-                                    .pivotUI(data,$.extend(config,template),true);
+      var template = {
+        renderers: renderers
+      }
 
-                            if(showUI !== "1")
-                                hideUI(element);
+      function getDataForPivot(element, config, type, showUI) {
+        $.getJSON("index.php",
+          {
+            'module': 'Spots',
+              {/literal}
+            'action': type,
+              {literal}
+            'to_pdf': 1
+          },
+          function (data) {
+              {/literal}
+            if ("derivedAttributes" in config)
+              delete config["derivedAttributes"];
+            $(element)
+              .pivotUI(data, $.extend(config, template), true);
 
-                            {literal}
+            if (showUI !== "1")
+              hideUI(element);
 
-                        });
-        }
-        function hideUI(element)
-        {
-            //This is to ascertain if the pivot ui is laying out the column options horizontally or vertically
-            //It is vertically for larger data sets.  This allows us to hide the pivot ui appropriately
-            var columnLayout = $(element+" table.pvtUi tr td:nth-child(3)").length;
+              {literal}
 
-            if(columnLayout > 0)
-                $(element+" table.pvtUi tbody tr:lt(1),"+element+" table.pvtUi tbody tr:eq(1) td:lt(2)").hide();
-            else
-                $(element+" table.pvtUi tbody tr:lt(2),"+element+" table.pvtUi tbody tr:nth-child(3) td:nth-child(1)").hide();
+          });
+      }
 
-        }
+      function hideUI(element) {
+        //This is to ascertain if the pivot ui is laying out the column options horizontally or vertically
+        //It is vertically for larger data sets.  This allows us to hide the pivot ui appropriately
+        var columnLayout = $(element + " table.pvtUi tr td:nth-child(3)").length;
+
+        if (columnLayout > 0)
+          $(element + " table.pvtUi tbody tr:lt(1)," + element + " table.pvtUi tbody tr:eq(1) td:lt(2)").hide();
+        else
+          $(element + " table.pvtUi tbody tr:lt(2)," + element + " table.pvtUi tbody tr:nth-child(3) td:nth-child(1)").hide();
+
+      }
         {/literal}
-        getDataForPivot(".output-{$id}",JSON.parse($(".config-{$id}").val()),$(".type-{$id}").val(), $(".showUI-{$id}").val());
+      getDataForPivot(".output-{$id}", JSON.parse($(".config-{$id}").val()), $(".type-{$id}").val(), $(".showUI-{$id}").val());
 
         {literal}
 

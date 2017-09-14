@@ -51,7 +51,7 @@ global $mod_strings, $sugar_config;
 
 $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['uid']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Record");
 }
 
@@ -81,7 +81,8 @@ $object_arr['Contacts'] = $bean->billing_contact_id;
 $object_arr['Users'] = $bean->assigned_user_id;
 $object_arr['Currencies'] = $bean->currency_id;
 
-$search = array('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
+$search = array(
+    '/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
     '/<[\/\!]*?[^<>]*?>/si',        // Strip out HTML tags
     '/([\r\n])[\s]+/',          // Strip out white space
     '/&(quot|#34);/i',          // Replace HTML entities
@@ -95,7 +96,8 @@ $search = array('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
     '/&#(\d+);/'
 );
 
-$replace = array('',
+$replace = array(
+    '',
     '',
     '\1',
     '"',
@@ -141,7 +143,9 @@ if ($task == 'pdf' || $task == 'emailpdf') {
     ob_clean();
     try {
         $orientation = ($template->orientation == "Landscape") ? "-L" : "";
-        $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+        $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left,
+            $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header,
+            $template->margin_footer);
         $pdf->SetAutoFont();
         $pdf->SetHTMLHeader($header);
         $pdf->SetHTMLFooter($footer);
@@ -350,6 +354,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
 
         $text .= $parts[1];
     }
+
     return $text;
 }
 
@@ -426,5 +431,6 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
 
         $text .= $parts[1];
     }
+
     return $text;
 }

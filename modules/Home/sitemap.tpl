@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,50 +34,46 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
-		<!-- begin sitemap-->
+<!-- begin sitemap-->
 
-        <div id="sitemap">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
-		<tr>
-			<td align="right" colspan="5">
-			<input type='button' class='button' value="{$CLOSE}" id="sitemapClose">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-				<div>{$ACTIVITIES}</div>
-				<div>{$EMAILS}</div>
-			</td>
+<div id="sitemap">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+        <tr>
+            <td align="right" colspan="5">
+                <input type='button' class='button' value="{$CLOSE}" id="sitemapClose">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <div>{$ACTIVITIES}</div>
+                <div>{$EMAILS}</div>
+            </td>
 
-			<td valign="top">
-			    <div>{$CONTACTS}</div>
-				<div>{$ACCOUNTS}</div>
-				<div>{$LEADS}</div>
-				<div>{$OPPORTUNITIES}</div>
-			</td>
+            <td valign="top">
+                <div>{$CONTACTS}</div>
+                <div>{$ACCOUNTS}</div>
+                <div>{$LEADS}</div>
+                <div>{$OPPORTUNITIES}</div>
+            </td>
 
-			<td valign="top">
-				<div>{$PROJECT}</div>
-				<div>{$CASES}</div>
-				<div>{$BUGS}</div>
-				<div>{$DOCUMENTS}</div>
-			</td>
+            <td valign="top">
+                <div>{$PROJECT}</div>
+                <div>{$CASES}</div>
+                <div>{$BUGS}</div>
+                <div>{$DOCUMENTS}</div>
+            </td>
 
-			<td valign="top">
-				<div>{$CAMPAIGNS}</div>
-				<div>{$QUOTES}</div>
-				<div>{$REPORTS}</div>
-			</td>
+            <td valign="top">
+                <div>{$CAMPAIGNS}</div>
+                <div>{$QUOTES}</div>
+                <div>{$REPORTS}</div>
+            </td>
 
-		</tr>
-		</table>
-		</div>
-		<!-- end sitemap-->
+        </tr>
+    </table>
+</div>
+<!-- end sitemap-->

@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,31 +36,33 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- require_once('include/ListView/ListViewSmarty.php');
+require_once('include/ListView/ListViewSmarty.php');
 
-class ListViewPackages extends ListViewSmarty{
-    var $secondaryDisplayColumns;
-    /**
-     * Constructor  Call ListViewSmarty
-     */
-    function __construct(){
-        parent::__construct();
-    }
+class ListViewPackages extends ListViewSmarty
+{
+    public $secondaryDisplayColumns;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ListViewPackages(){
+    function ListViewPackages()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    /**
+     * Constructor  Call ListViewSmarty
+     */
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Override the setup method in ListViewSmarty since we are not passing in a bean
@@ -69,7 +70,16 @@ class ListViewPackages extends ListViewSmarty{
      * @param data  the data to display on the page
      * @param file  the template file to parse
      */
-    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id'){
+    function setup(
+        $data,
+        $file,
+        $where,
+        $params = Array(),
+        $offset = 0,
+        $limit = -1,
+        $filter_fields = Array(),
+        $id_field = 'id'
+    ) {
         $this->data = $data;
         $this->tpl = $file;
     }
@@ -77,14 +87,17 @@ class ListViewPackages extends ListViewSmarty{
     /**
      * Override the display method
      */
-    function display($end = true){
+    function display($end = true)
+    {
         global $odd_bg, $even_bg, $app_strings;
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
         $this->ss->assign('bgColor', array($odd_bg, $even_bg));
         $this->ss->assign('displayColumns', $this->displayColumns);
         $this->ss->assign('secondaryDisplayColumns', $this->secondaryDisplayColumns);
         $this->ss->assign('data', $this->data);
+
         return $this->ss->fetch($this->tpl);
     }
 }
+
 ?>

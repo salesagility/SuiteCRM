@@ -30,6 +30,15 @@ require_once("modules/AOR_Reports/aor_utils.php");
 class AOR_ReportsController extends SugarController
 {
 
+    public function action_getVarDefs()
+    {
+        if ($_REQUEST['aor_module']) {
+            $bean = BeanFactory::getBean($_REQUEST['aor_module']);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
+            die();
+        }
+    }
+
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
@@ -43,15 +52,6 @@ class AOR_ReportsController extends SugarController
         }
         die;
 
-    }
-
-    public function action_getVarDefs()
-    {
-        if ($_REQUEST['aor_module']) {
-            $bean = BeanFactory::getBean($_REQUEST['aor_module']);
-            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
-            die();
-        }
     }
 
     protected function action_getModuleTreeData()
@@ -637,9 +637,9 @@ class AOR_ReportsController extends SugarController
                 }
                 echo getDateField($module, $aor_field, $view, $value);
                 break;
-            Case 'Round_Robin';
-            Case 'Least_Busy';
-            Case 'Random';
+            case 'Round_Robin';
+            case 'Least_Busy';
+            case 'Random';
                 echo getAssignField($aor_field, $view, $value);
                 break;
             case 'Value':

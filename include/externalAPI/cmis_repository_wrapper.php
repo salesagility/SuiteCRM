@@ -31,18 +31,36 @@ define("HTTP_NOT_FOUND", 404); // objectNotFound
 define("HTTP_METHOD_NOT_ALLOWED", 405); // notSupported
 define("HTTP_NOT_ACCEPTABLE", 406);
 define("HTTP_PROXY_AUTHENTICATION_REQUIRED", 407);
-define("xHTTP_REQUEST_TIMEOUT", 408); //Had to change this b/c HTTP_REQUEST_TIMEOUT conflicts with definition in Drupal 7
+define("xHTTP_REQUEST_TIMEOUT",
+    408); //Had to change this b/c HTTP_REQUEST_TIMEOUT conflicts with definition in Drupal 7
 define("HTTP_CONFLICT", 409); // constraint, contentAlreadyExists, versioning, updateConflict, nameConstraintViolation
 define("HTTP_UNSUPPORTED_MEDIA_TYPE", 415);
 define("HTTP_UNPROCESSABLE_ENTITY", 422);
 define("HTTP_INTERNAL_SERVER_ERROR", 500); // runtime, storage
 
-class CmisInvalidArgumentException extends Exception {}
-class CmisObjectNotFoundException extends Exception {}
-class CmisPermissionDeniedException extends Exception {}
-class CmisNotSupportedException extends Exception {}
-class CmisConstraintException extends Exception {}
-class CmisRuntimeException extends Exception {}
+class CmisInvalidArgumentException extends Exception
+{
+}
+
+class CmisObjectNotFoundException extends Exception
+{
+}
+
+class CmisPermissionDeniedException extends Exception
+{
+}
+
+class CmisNotSupportedException extends Exception
+{
+}
+
+class CmisConstraintException extends Exception
+{
+}
+
+class CmisRuntimeException extends Exception
+{
+}
 
 class CMISRepositoryWrapper
 {
@@ -58,61 +76,30 @@ class CMISRepositoryWrapper
     // Very Little Error Checking
     // Does not work against pre CMIS 1.0 Repos
 
-    var $url;
-    var $username;
-    var $password;
-    var $authenticated;
-    var $workspace;
-    var $last_request;
-    var $do_not_urlencode;
-    protected $_addlCurlOptions = array();
-
-    static $namespaces = array (
+    static $namespaces = array(
         "cmis" => "http://docs.oasis-open.org/ns/cmis/core/200908/",
         "cmisra" => "http://docs.oasis-open.org/ns/cmis/restatom/200908/",
         "atom" => "http://www.w3.org/2005/Atom",
         "app" => "http://www.w3.org/2007/app",
 
     );
+    public $url;
+    public $username;
+    public $password;
+    public $authenticated;
+    public $workspace;
+    public $last_request;
+    public $do_not_urlencode;
+    protected $_addlCurlOptions = array();
 
     function __construct($url, $username = null, $password = null, $options = null, array $addlCurlOptions = array())
     {
         if (is_array($options) && $options["config:do_not_urlencode"]) {
-            $this->do_not_urlencode=true;
+            $this->do_not_urlencode = true;
         }
         $this->_addlCurlOptions = $addlCurlOptions; // additional cURL options
 
         $this->connect($url, $username, $password, $options);
-    }
-
-    static function getOpUrl($url, $options = null)
-    {
-        if (is_array($options) && (count($options) > 0))
-        {
-            $needs_question = strstr($url, "?") === false;
-            return $url . ($needs_question ? "?" : "&") . http_build_query($options);
-        } else
-        {
-            return $url;
-        }
-    }
-
-    function convertStatusCode($code, $message)
-    {
-        switch ($code) {
-            case HTTP_BAD_REQUEST:
-                return new CmisInvalidArgumentException($message, $code);
-            case HTTP_NOT_FOUND:
-                return new CmisObjectNotFoundException($message, $code);
-            case HTTP_FORBIDDEN:
-                return new CmisPermissionDeniedException($message, $code);
-            case HTTP_METHOD_NOT_ALLOWED:
-                return new CmisNotSupportedException($message, $code);
-            case HTTP_CONFLICT:
-                return new CmisConstraintException($message, $code);
-            default:
-                return new CmisRuntimeException($message, $code);
-            }
     }
 
     function connect($url, $username, $password, $options)
@@ -124,50 +111,19 @@ class CMISRepositoryWrapper
         $this->auth_options = $options;
         $this->authenticated = false;
         $retval = $this->doGet($this->url);
-        if ($retval->code == HTTP_OK || $retval->code == HTTP_CREATED)
-        {
+        if ($retval->code == HTTP_OK || $retval->code == HTTP_CREATED) {
             $this->authenticated = true;
-            $this->workspace = CMISRepositoryWrapper :: extractWorkspace($retval->body);
+            $this->workspace = CMISRepositoryWrapper:: extractWorkspace($retval->body);
         }
     }
 
     function doGet($url)
     {
         $retval = $this->doRequest($url);
-        if ($retval->code != HTTP_OK)
-        {
+        if ($retval->code != HTTP_OK) {
             throw $this->convertStatusCode($retval->code, $retval->body);
         }
-        return $retval;
-    }
 
-    function doDelete($url)
-    {
-        $retval = $this->doRequest($url, "DELETE");
-        if ($retval->code != HTTP_NO_CONTENT)
-        {
-            throw $this->convertStatusCode($retval->code, $retval->body);
-        }
-        return $retval;
-    }
-
-    function doPost($url, $content, $contentType, $charset = null)
-    {
-        $retval = $this->doRequest($url, "POST", $content, $contentType);
-        if ($retval->code != HTTP_CREATED)
-        {
-            throw $this->convertStatusCode($retval->code, $retval->body);
-        }
-        return $retval;
-    }
-
-    function doPut($url, $content, $contentType, $charset = null)
-    {
-        $retval = $this->doRequest($url, "PUT", $content, $contentType);
-        if (($retval->code < HTTP_OK) || ($retval->code >= HTTP_MULTIPLE_CHOICES))
-        {
-            throw $this->convertStatusCode($retval->code, $retval->body);
-        }
         return $retval;
     }
 
@@ -176,30 +132,25 @@ class CMISRepositoryWrapper
         // Process the HTTP request
         // 'til now only the GET request has been tested
         // Does not URL encode any inputs yet
-        if (is_array($this->auth_options))
-        {
-            $url = CMISRepositoryWrapper :: getOpUrl($url, $this->auth_options);
+        if (is_array($this->auth_options)) {
+            $url = CMISRepositoryWrapper:: getOpUrl($url, $this->auth_options);
         }
         $session = curl_init($url);
         curl_setopt($session, CURLOPT_HEADER, false);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-        if ($this->username)
-        {
+        if ($this->username) {
             curl_setopt($session, CURLOPT_USERPWD, $this->username . ":" . $this->password);
         }
         curl_setopt($session, CURLOPT_CUSTOMREQUEST, $method);
-        if ($contentType)
-        {
-            curl_setopt($session, CURLOPT_HTTPHEADER, array (
+        if ($contentType) {
+            curl_setopt($session, CURLOPT_HTTPHEADER, array(
                 "Content-Type: " . $contentType
             ));
         }
-        if ($content)
-        {
+        if ($content) {
             curl_setopt($session, CURLOPT_POSTFIELDS, $content);
         }
-        if ($method == "POST")
-        {
+        if ($method == "POST") {
             curl_setopt($session, CURLOPT_POST, true);
         }
 
@@ -224,6 +175,415 @@ class CMISRepositoryWrapper
         $retval->content_length = curl_getinfo($session, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
         curl_close($session);
         $this->last_request = $retval;
+
+        return $retval;
+    }
+
+    static function getOpUrl($url, $options = null)
+    {
+        if (is_array($options) && (count($options) > 0)) {
+            $needs_question = strstr($url, "?") === false;
+
+            return $url . ($needs_question ? "?" : "&") . http_build_query($options);
+        } else {
+            return $url;
+        }
+    }
+
+    function convertStatusCode($code, $message)
+    {
+        switch ($code) {
+            case HTTP_BAD_REQUEST:
+                return new CmisInvalidArgumentException($message, $code);
+            case HTTP_NOT_FOUND:
+                return new CmisObjectNotFoundException($message, $code);
+            case HTTP_FORBIDDEN:
+                return new CmisPermissionDeniedException($message, $code);
+            case HTTP_METHOD_NOT_ALLOWED:
+                return new CmisNotSupportedException($message, $code);
+            case HTTP_CONFLICT:
+                return new CmisConstraintException($message, $code);
+            default:
+                return new CmisRuntimeException($message, $code);
+        }
+    }
+
+    static function extractWorkspace($xmldata)
+    {
+        //Assumes only one workspace for now
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractWorkspaceFromNode($doc);
+    }
+
+    static function extractWorkspaceFromNode($xmlnode)
+    {
+        // Assumes only one workspace for now
+        // Load up the workspace object with arrays of
+        //  links
+        //  URI Templates
+        //  Collections
+        //  Capabilities
+        //  General Repository Information
+        $retval = new stdClass();
+        $retval->links = CMISRepositoryWrapper:: getLinksArray($xmlnode);
+        $retval->uritemplates = array();
+        $retval->collections = array();
+        $retval->capabilities = array();
+        $retval->repositoryInfo = array();
+        $retval->permissions = array();
+        $retval->permissionsMapping = array();
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//cmisra:uritemplate");
+        foreach ($result as $node) {
+            $retval->uritemplates[$node->getElementsByTagName("type")->item(0)->nodeValue] = $node->getElementsByTagName("template")->item(0)->nodeValue;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//app:collection");
+        foreach ($result as $node) {
+            $retval->collections[$node->getElementsByTagName("collectionType")->item(0)->nodeValue] = $node->attributes->getNamedItem("href")->nodeValue;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//cmis:capabilities/*");
+        foreach ($result as $node) {
+            $retval->capabilities[$node->nodeName] = $node->nodeValue;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode,
+            "//cmisra:repositoryInfo/*[name()!='cmis:capabilities' and name()!='cmis:aclCapability']");
+        foreach ($result as $node) {
+            $retval->repositoryInfo[$node->nodeName] = $node->nodeValue;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//cmis:aclCapability/cmis:permissions");
+        foreach ($result as $node) {
+            $retval->permissions[$node->getElementsByTagName("permission")->item(0)->nodeValue] = $node->getElementsByTagName("description")->item(0)->nodeValue;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//cmis:aclCapability/cmis:mapping");
+        foreach ($result as $node) {
+            $key = $node->getElementsByTagName("key")->item(0)->nodeValue;
+            $values = array();
+            foreach ($node->getElementsByTagName("permission") as $value) {
+                array_push($values, $value->nodeValue);
+            }
+            $retval->permissionsMapping[$key] = $values;
+        }
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode,
+            "//cmis:aclCapability/*[name()!='cmis:permissions' and name()!='cmis:mapping']");
+        foreach ($result as $node) {
+            $retval->repositoryInfo[$node->nodeName] = $node->nodeValue;
+        }
+
+        return $retval;
+    }
+
+    static function getLinksArray($xmlnode)
+    {
+        // Gets the links of an object or a workspace
+        // Distinguishes between the two "down" links
+        //  -- the children link is put into the associative array with the "down" index
+        //  -- the descendants link is put into the associative array with the "down-tree" index
+        //  These links are distinguished by the mime type attribute, but these are probably the only two links that share the same rel ..
+        //    so this was done as a one off
+        $links = array();
+        $link_nodes = $xmlnode->getElementsByTagName("link");
+        foreach ($link_nodes as $ln) {
+            if ($ln->attributes->getNamedItem("rel")->nodeValue == "down" && $ln->attributes->getNamedItem("type")->nodeValue == "application/cmistree+xml") {
+                //Descendents and children share same "rel" but different document type.
+                $links["down-tree"] = $ln->attributes->getNamedItem("href")->nodeValue;
+            } else {
+                $links[$ln->attributes->getNamedItem("rel")->nodeValue] = $ln->attributes->getNamedItem("href")->nodeValue;
+            }
+        }
+
+        return $links;
+    }
+
+    static function doXQueryFromNode($xmlnode, $xquery)
+    {
+        // Perform an XQUERY on a NODE
+        // Register the 4 CMIS namespaces
+        //THis may be a hopeless HACK!
+        //TODO: Review
+        if (!($xmlnode instanceof DOMDocument)) {
+            $xdoc = new DOMDocument();
+            $xnode = $xdoc->importNode($xmlnode, true);
+            $xdoc->appendChild($xnode);
+            $xpath = new DomXPath($xdoc);
+        } else {
+            $xpath = new DomXPath($xmlnode);
+        }
+        foreach (CMISRepositoryWrapper:: $namespaces as $nspre => $nsuri) {
+            $xpath->registerNamespace($nspre, $nsuri);
+        }
+
+        return $xpath->query($xquery);
+
+    }
+
+    static function processTemplate($template, $values = array())
+    {
+        // Fill in the blanks --
+        $retval = $template;
+        if (is_array($values)) {
+            foreach ($values as $name => $value) {
+                $retval = str_replace("{" . $name . "}", $value, $retval);
+            }
+        }
+
+        // Fill in any unpoupated variables with ""
+        return preg_replace("/{[a-zA-Z0-9_]+}/", "", $retval);
+
+    }
+
+    static function doXQuery($xmldata, $xquery)
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: doXQueryFromNode($doc, $xquery);
+    }
+
+    static function extractAllowableActions($xmldata)
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractAllowableActionsFromNode($doc);
+    }
+
+    static function extractAllowableActionsFromNode($xmlnode)
+    {
+        $result = array();
+        $allowableActions = $xmlnode->getElementsByTagName("allowableActions");
+        if ($allowableActions->length > 0) {
+            foreach ($allowableActions->item(0)->childNodes as $action) {
+                if (isset($action->localName)) {
+                    $result[$action->localName] = (preg_match("/^true$/i", $action->nodeValue) > 0);
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    static function extractObject($xmldata)
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractObjectFromNode($doc);
+
+    }
+
+    static function extractObjectFromNode($xmlnode)
+    {
+        // Extracts the contents of an Object and organizes them into:
+        //  -- Links
+        //  -- Properties
+        //  -- the Object ID
+        // RRM -- NEED TO ADD ALLOWABLEACTIONS
+        $retval = new stdClass();
+        $retval->links = CMISRepositoryWrapper:: getLinksArray($xmlnode);
+        $retval->properties = array();
+        $prop_nodes = $xmlnode->getElementsByTagName("object")->item(0)->getElementsByTagName("properties")->item(0)->childNodes;
+        foreach ($prop_nodes as $pn) {
+            if ($pn->attributes) {
+                $propDefId = $pn->attributes->getNamedItem("propertyDefinitionId");
+                // TODO: Maybe use ->length=0 to even detect null values
+                if (!is_null($propDefId) && $pn->getElementsByTagName("value") && $pn->getElementsByTagName("value")->item(0)) {
+                    if ($pn->getElementsByTagName("value")->length > 1) {
+                        $retval->properties[$propDefId->nodeValue] = array();
+                        for ($idx = 0; $idx < $pn->getElementsByTagName("value")->length; $idx++) {
+                            $retval->properties[$propDefId->nodeValue][$idx] = $pn->getElementsByTagName("value")->item($idx)->nodeValue;
+                        }
+                    } else {
+                        $retval->properties[$propDefId->nodeValue] = $pn->getElementsByTagName("value")->item(0)->nodeValue;
+                    }
+                }
+            }
+        }
+        $retval->uuid = $xmlnode->getElementsByTagName("id")->item(0)->nodeValue;
+        $retval->id = $retval->properties["cmis:objectId"];
+        //TODO: RRM FIX THIS
+        $children_node = $xmlnode->getElementsByTagName("children");
+        if (is_object($children_node)) {
+            $children_feed_c = $children_node->item(0);
+        }
+        if (is_object($children_feed_c)) {
+            $children_feed_l = $children_feed_c->getElementsByTagName("feed");
+        }
+        if (isset($children_feed_l) && is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
+            $children_feed = $children_feed_l->item(0);
+            $children_doc = new DOMDocument();
+            $xnode = $children_doc->importNode($children_feed, true); // Avoid Wrong Document Error
+            $children_doc->appendChild($xnode);
+            $retval->children = CMISRepositoryWrapper:: extractObjectFeedFromNode($children_doc);
+        }
+        $retval->allowableActions = CMISRepositoryWrapper:: extractAllowableActionsFromNode($xmlnode);
+
+        return $retval;
+    }
+
+    static function extractObjectFeedFromNode($xmlnode)
+    {
+        // Process a feed and extract the objects
+        //   Does not handle hierarchy
+        //   Provides two arrays
+        //   -- one sequential array (a list)
+        //   -- one hash table indexed by objectID
+        //   and a property "numItems" that holds the total number of items available.
+        $retval = new stdClass();
+        // extract total number of items
+        $numItemsNode = CMISRepositoryWrapper::doXQueryFromNode($xmlnode, "/atom:feed/cmisra:numItems");
+        $retval->numItems = $numItemsNode->length ? (int)$numItemsNode->item(0)->nodeValue : -1; // set to negative value if info is not available
+
+        $retval->objectList = array();
+        $retval->objectsById = array();
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "/atom:feed/atom:entry");
+        foreach ($result as $node) {
+            $obj = CMISRepositoryWrapper:: extractObjectFromNode($node);
+            $retval->objectsById[$obj->id] = $obj;
+            $retval->objectList[] = &$retval->objectsById[$obj->id];
+        }
+
+        return $retval;
+    }
+
+    static function extractTypeDef($xmldata)
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractTypeDefFromNode($doc);
+
+    }
+
+    // Static Utility Functions
+
+    static function extractTypeDefFromNode($xmlnode)
+    {
+        // Extracts the contents of an Object and organizes them into:
+        //  -- Links
+        //  -- Properties
+        //  -- the Object ID
+        // RRM -- NEED TO ADD ALLOWABLEACTIONS
+        $retval = new stdClass();
+        $retval->links = CMISRepositoryWrapper:: getLinksArray($xmlnode);
+        $retval->properties = array();
+        $retval->attributes = array();
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "//cmisra:type/*");
+        foreach ($result as $node) {
+            if ((substr($node->nodeName, 0, 13) == "cmis:property") && (substr($node->nodeName, -10) == "Definition")) {
+                $id = $node->getElementsByTagName("id")->item(0)->nodeValue;
+                $cardinality = $node->getElementsByTagName("cardinality")->item(0)->nodeValue;
+                $propertyType = $node->getElementsByTagName("propertyType")->item(0)->nodeValue;
+                // Stop Gap for now
+                $retval->properties[$id] = array(
+                    "cmis:propertyType" => $propertyType,
+                    "cmis:cardinality" => $cardinality,
+
+                );
+            } else {
+                $retval->attributes[$node->nodeName] = $node->nodeValue;
+            }
+            $retval->id = $retval->attributes["cmis:id"];
+        }
+        //TODO: RRM FIX THIS
+        $children_node = $xmlnode->getElementsByTagName("children");
+        if (is_object($children_node)) {
+            $children_feed_c = $children_node->item(0);
+        }
+        if (is_object($children_feed_c)) {
+            $children_feed_l = $children_feed_c->getElementsByTagName("feed");
+        }
+        if (is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
+            $children_feed = $children_feed_l->item(0);
+            $children_doc = new DOMDocument();
+            $xnode = $children_doc->importNode($children_feed, true); // Avoid Wrong Document Error
+            $children_doc->appendChild($xnode);
+            $retval->children = CMISRepositoryWrapper:: extractTypeFeedFromNode($children_doc);
+        }
+
+        /*
+         *
+
+
+
+        		$prop_nodes = $xmlnode->getElementsByTagName("object")->item(0)->getElementsByTagName("properties")->item(0)->childNodes;
+        		foreach ($prop_nodes as $pn) {
+        			if ($pn->attributes) {
+        				$retval->properties[$pn->attributes->getNamedItem("propertyDefinitionId")->nodeValue] = $pn->getElementsByTagName("value")->item(0)->nodeValue;
+        			}
+        		}
+                $retval->uuid=$xmlnode->getElementsByTagName("id")->item(0)->nodeValue;
+                $retval->id=$retval->properties["cmis:objectId"];
+         */
+
+        return $retval;
+    }
+
+    static function extractTypeFeedFromNode($xmlnode)
+    {
+        // Process a feed and extract the objects
+        //   Does not handle hierarchy
+        //   Provides two arrays
+        //   -- one sequential array (a list)
+        //   -- one hash table indexed by objectID
+        $retval = new stdClass();
+        $retval->objectList = array();
+        $retval->objectsById = array();
+        $result = CMISRepositoryWrapper:: doXQueryFromNode($xmlnode, "/atom:feed/atom:entry");
+        foreach ($result as $node) {
+            $obj = CMISRepositoryWrapper:: extractTypeDefFromNode($node);
+            $retval->objectsById[$obj->id] = $obj;
+            $retval->objectList[] = &$retval->objectsById[$obj->id];
+        }
+
+        return $retval;
+    }
+
+    static function extractObjectFeed($xmldata)
+    {
+        //Assumes only one workspace for now
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractObjectFeedFromNode($doc);
+    }
+
+    static function extractTypeFeed($xmldata)
+    {
+        //Assumes only one workspace for now
+        $doc = new DOMDocument();
+        $doc->loadXML($xmldata);
+
+        return CMISRepositoryWrapper:: extractTypeFeedFromNode($doc);
+    }
+
+    function doDelete($url)
+    {
+        $retval = $this->doRequest($url, "DELETE");
+        if ($retval->code != HTTP_NO_CONTENT) {
+            throw $this->convertStatusCode($retval->code, $retval->body);
+        }
+
+        return $retval;
+    }
+
+    function doPost($url, $content, $contentType, $charset = null)
+    {
+        $retval = $this->doRequest($url, "POST", $content, $contentType);
+        if ($retval->code != HTTP_CREATED) {
+            throw $this->convertStatusCode($retval->code, $retval->body);
+        }
+
+        return $retval;
+    }
+
+    function doPut($url, $content, $contentType, $charset = null)
+    {
+        $retval = $this->doRequest($url, "PUT", $content, $contentType);
+        if (($retval->code < HTTP_OK) || ($retval->code >= HTTP_MULTIPLE_CHOICES)) {
+            throw $this->convertStatusCode($retval->code, $retval->body);
+        }
+
         return $retval;
     }
 
@@ -272,354 +632,9 @@ class CMISRepositoryWrapper
         return $this->last_request->content_sent;
     }
 
-    // Static Utility Functions
-    static function processTemplate($template, $values = array ())
-    {
-        // Fill in the blanks --
-        $retval = $template;
-        if (is_array($values))
-        {
-            foreach ($values as $name => $value)
-            {
-                $retval = str_replace("{" . $name . "}", $value, $retval);
-            }
-        }
-        // Fill in any unpoupated variables with ""
-        return preg_replace("/{[a-zA-Z0-9_]+}/", "", $retval);
-
-    }
-
-    static function doXQuery($xmldata, $xquery)
-    {
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: doXQueryFromNode($doc, $xquery);
-    }
-
-    static function doXQueryFromNode($xmlnode, $xquery)
-    {
-        // Perform an XQUERY on a NODE
-        // Register the 4 CMIS namespaces
-        //THis may be a hopeless HACK!
-        //TODO: Review
-        if (!($xmlnode instanceof DOMDocument)) {
-            $xdoc=new DOMDocument();
-            $xnode = $xdoc->importNode($xmlnode,true);
-            $xdoc->appendChild($xnode);
-            $xpath = new DomXPath($xdoc);
-        } else {
-        	$xpath = new DomXPath($xmlnode);
-        }
-        foreach (CMISRepositoryWrapper :: $namespaces as $nspre => $nsuri)
-        {
-            $xpath->registerNamespace($nspre, $nsuri);
-        }
-        return $xpath->query($xquery);
-
-    }
-    static function getLinksArray($xmlnode)
-    {
-        // Gets the links of an object or a workspace
-        // Distinguishes between the two "down" links
-        //  -- the children link is put into the associative array with the "down" index
-        //  -- the descendants link is put into the associative array with the "down-tree" index
-        //  These links are distinguished by the mime type attribute, but these are probably the only two links that share the same rel ..
-        //    so this was done as a one off
-        $links = array ();
-        $link_nodes = $xmlnode->getElementsByTagName("link");
-        foreach ($link_nodes as $ln)
-        {
-            if ($ln->attributes->getNamedItem("rel")->nodeValue == "down" && $ln->attributes->getNamedItem("type")->nodeValue == "application/cmistree+xml")
-            {
-                //Descendents and children share same "rel" but different document type.
-                $links["down-tree"] = $ln->attributes->getNamedItem("href")->nodeValue;
-            } else
-            {
-                $links[$ln->attributes->getNamedItem("rel")->nodeValue] = $ln->attributes->getNamedItem("href")->nodeValue;
-            }
-        }
-        return $links;
-    }
-	static function extractAllowableActions($xmldata)
-    {
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractAllowableActionsFromNode($doc);
-    }
-    static function extractAllowableActionsFromNode($xmlnode)
-    {
-        $result = array();
-        $allowableActions = $xmlnode->getElementsByTagName("allowableActions");
-        if ($allowableActions->length > 0) {
-            foreach($allowableActions->item(0)->childNodes as $action)
-            {
-                if (isset($action->localName)) {
-                    $result[$action->localName] = (preg_match("/^true$/i", $action->nodeValue) > 0);
-                }
-            }
-        }
-        return $result;
-    }
-    static function extractObject($xmldata)
-    {
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractObjectFromNode($doc);
-
-    }
-    static function extractObjectFromNode($xmlnode)
-    {
-        // Extracts the contents of an Object and organizes them into:
-        //  -- Links
-        //  -- Properties
-        //  -- the Object ID
-        // RRM -- NEED TO ADD ALLOWABLEACTIONS
-        $retval = new stdClass();
-        $retval->links = CMISRepositoryWrapper :: getLinksArray($xmlnode);
-        $retval->properties = array ();
-        $prop_nodes = $xmlnode->getElementsByTagName("object")->item(0)->getElementsByTagName("properties")->item(0)->childNodes;
-        foreach ($prop_nodes as $pn)
-        {
-            if ($pn->attributes)
-            {
-                $propDefId = $pn->attributes->getNamedItem("propertyDefinitionId");
-                // TODO: Maybe use ->length=0 to even detect null values
-                if (!is_null($propDefId) && $pn->getElementsByTagName("value") && $pn->getElementsByTagName("value")->item(0))
-                {
-                	if ($pn->getElementsByTagName("value")->length > 1) {
-                		$retval->properties[$propDefId->nodeValue] = array();
-                		for ($idx=0;$idx < $pn->getElementsByTagName("value")->length;$idx++) {
-                			$retval->properties[$propDefId->nodeValue][$idx] = $pn->getElementsByTagName("value")->item($idx)->nodeValue;
-                		}
-                	} else {
-                		$retval->properties[$propDefId->nodeValue] = $pn->getElementsByTagName("value")->item(0)->nodeValue;
-                	}
-                }
-            }
-        }
-        $retval->uuid = $xmlnode->getElementsByTagName("id")->item(0)->nodeValue;
-        $retval->id = $retval->properties["cmis:objectId"];
-        //TODO: RRM FIX THIS
-        $children_node = $xmlnode->getElementsByTagName("children");
-        if (is_object($children_node)) {
-        	    $children_feed_c = $children_node->item(0);
-        }
-        if (is_object($children_feed_c)) {
-			$children_feed_l = $children_feed_c->getElementsByTagName("feed");
-        }
-        if (isset($children_feed_l) && is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
-        	$children_feed = $children_feed_l->item(0);
-			$children_doc = new DOMDocument();
-			$xnode = $children_doc->importNode($children_feed,true); // Avoid Wrong Document Error
-			$children_doc->appendChild($xnode);
-	        $retval->children = CMISRepositoryWrapper :: extractObjectFeedFromNode($children_doc);
-        }
-		$retval->allowableActions = CMISRepositoryWrapper :: extractAllowableActionsFromNode($xmlnode);
-        return $retval;
-    }
-
     function handleSpaces($path)
     {
         return $this->do_not_urlencode ? $path : rawurlencode($path);
-    }
-
-    static function extractTypeDef($xmldata)
-    {
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractTypeDefFromNode($doc);
-
-    }
-    static function extractTypeDefFromNode($xmlnode)
-    {
-        // Extracts the contents of an Object and organizes them into:
-        //  -- Links
-        //  -- Properties
-        //  -- the Object ID
-        // RRM -- NEED TO ADD ALLOWABLEACTIONS
-        $retval = new stdClass();
-        $retval->links = CMISRepositoryWrapper :: getLinksArray($xmlnode);
-        $retval->properties = array ();
-        $retval->attributes = array ();
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmisra:type/*");
-        foreach ($result as $node)
-        {
-            if ((substr($node->nodeName, 0, 13) == "cmis:property") && (substr($node->nodeName, -10) == "Definition"))
-            {
-                $id = $node->getElementsByTagName("id")->item(0)->nodeValue;
-                $cardinality = $node->getElementsByTagName("cardinality")->item(0)->nodeValue;
-                $propertyType = $node->getElementsByTagName("propertyType")->item(0)->nodeValue;
-                // Stop Gap for now
-                $retval->properties[$id] = array (
-                    "cmis:propertyType" => $propertyType,
-                    "cmis:cardinality" => $cardinality,
-
-                );
-            } else
-            {
-                $retval->attributes[$node->nodeName] = $node->nodeValue;
-            }
-            $retval->id = $retval->attributes["cmis:id"];
-        }
-        //TODO: RRM FIX THIS
-        $children_node = $xmlnode->getElementsByTagName("children");
-        if (is_object($children_node)) {
-        	    $children_feed_c = $children_node->item(0);
-        }
-        if (is_object($children_feed_c)) {
-			$children_feed_l = $children_feed_c->getElementsByTagName("feed");
-        }
-        if (is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
-        	$children_feed = $children_feed_l->item(0);
-			$children_doc = new DOMDocument();
-			$xnode = $children_doc->importNode($children_feed,true); // Avoid Wrong Document Error
-			$children_doc->appendChild($xnode);
-	        $retval->children = CMISRepositoryWrapper :: extractTypeFeedFromNode($children_doc);
-        }
-
-        /*
-         *
-
-
-
-        		$prop_nodes = $xmlnode->getElementsByTagName("object")->item(0)->getElementsByTagName("properties")->item(0)->childNodes;
-        		foreach ($prop_nodes as $pn) {
-        			if ($pn->attributes) {
-        				$retval->properties[$pn->attributes->getNamedItem("propertyDefinitionId")->nodeValue] = $pn->getElementsByTagName("value")->item(0)->nodeValue;
-        			}
-        		}
-                $retval->uuid=$xmlnode->getElementsByTagName("id")->item(0)->nodeValue;
-                $retval->id=$retval->properties["cmis:objectId"];
-         */
-        return $retval;
-    }
-
-    static function extractObjectFeed($xmldata)
-    {
-        //Assumes only one workspace for now
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractObjectFeedFromNode($doc);
-    }
-    static function extractObjectFeedFromNode($xmlnode)
-    {
-        // Process a feed and extract the objects
-        //   Does not handle hierarchy
-        //   Provides two arrays
-        //   -- one sequential array (a list)
-        //   -- one hash table indexed by objectID
-        //   and a property "numItems" that holds the total number of items available.
-        $retval = new stdClass();
-        // extract total number of items
-        $numItemsNode = CMISRepositoryWrapper::doXQueryFromNode($xmlnode, "/atom:feed/cmisra:numItems");
-        $retval->numItems = $numItemsNode->length ? (int) $numItemsNode->item(0)->nodeValue : -1; // set to negative value if info is not available
-
-        $retval->objectList = array ();
-        $retval->objectsById = array ();
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "/atom:feed/atom:entry");
-        foreach ($result as $node)
-        {
-            $obj = CMISRepositoryWrapper :: extractObjectFromNode($node);
-            $retval->objectsById[$obj->id] = $obj;
-            $retval->objectList[] = & $retval->objectsById[$obj->id];
-        }
-        return $retval;
-    }
-
-    static function extractTypeFeed($xmldata)
-    {
-        //Assumes only one workspace for now
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractTypeFeedFromNode($doc);
-    }
-    static function extractTypeFeedFromNode($xmlnode)
-    {
-        // Process a feed and extract the objects
-        //   Does not handle hierarchy
-        //   Provides two arrays
-        //   -- one sequential array (a list)
-        //   -- one hash table indexed by objectID
-        $retval = new stdClass();
-        $retval->objectList = array ();
-        $retval->objectsById = array ();
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "/atom:feed/atom:entry");
-        foreach ($result as $node)
-        {
-            $obj = CMISRepositoryWrapper :: extractTypeDefFromNode($node);
-            $retval->objectsById[$obj->id] = $obj;
-            $retval->objectList[] = & $retval->objectsById[$obj->id];
-        }
-        return $retval;
-    }
-
-    static function extractWorkspace($xmldata)
-    {
-        //Assumes only one workspace for now
-        $doc = new DOMDocument();
-        $doc->loadXML($xmldata);
-        return CMISRepositoryWrapper :: extractWorkspaceFromNode($doc);
-    }
-    static function extractWorkspaceFromNode($xmlnode)
-    {
-        // Assumes only one workspace for now
-        // Load up the workspace object with arrays of
-        //  links
-        //  URI Templates
-        //  Collections
-        //  Capabilities
-        //  General Repository Information
-        $retval = new stdClass();
-        $retval->links = CMISRepositoryWrapper :: getLinksArray($xmlnode);
-        $retval->uritemplates = array ();
-        $retval->collections = array ();
-        $retval->capabilities = array ();
-        $retval->repositoryInfo = array ();
-        $retval->permissions = array();
-        $retval->permissionsMapping = array();
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmisra:uritemplate");
-        foreach ($result as $node)
-        {
-            $retval->uritemplates[$node->getElementsByTagName("type")->item(0)->nodeValue] = $node->getElementsByTagName("template")->item(0)->nodeValue;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//app:collection");
-        foreach ($result as $node)
-        {
-            $retval->collections[$node->getElementsByTagName("collectionType")->item(0)->nodeValue] = $node->attributes->getNamedItem("href")->nodeValue;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmis:capabilities/*");
-        foreach ($result as $node)
-        {
-            $retval->capabilities[$node->nodeName] = $node->nodeValue;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmisra:repositoryInfo/*[name()!='cmis:capabilities' and name()!='cmis:aclCapability']");
-        foreach ($result as $node)
-        {
-            $retval->repositoryInfo[$node->nodeName] = $node->nodeValue;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmis:aclCapability/cmis:permissions");
-        foreach ($result as $node)
-        {
-            $retval->permissions[$node->getElementsByTagName("permission")->item(0)->nodeValue] = $node->getElementsByTagName("description")->item(0)->nodeValue;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmis:aclCapability/cmis:mapping");
-        foreach ($result as $node)
-        {
-            $key = $node->getElementsByTagName("key")->item(0)->nodeValue;
-            $values = array();
-            foreach ($node->getElementsByTagName("permission") as $value)
-            {
-                array_push($values, $value->nodeValue);
-            }
-            $retval->permissionsMapping[$key] = $values;
-        }
-        $result = CMISRepositoryWrapper :: doXQueryFromNode($xmlnode, "//cmis:aclCapability/*[name()!='cmis:permissions' and name()!='cmis:mapping']");
-        foreach ($result as $node)
-        {
-            $retval->repositoryInfo[$node->nodeName] = $node->nodeValue;
-        }
-
-        return $retval;
     }
 }
 
@@ -650,101 +665,28 @@ define("MIME_CMIS_QUERY", 'application/cmisquery+xml');
 
 class CMISService extends CMISRepositoryWrapper
 {
-    var $_link_cache;
-    var $_title_cache;
-    var $_objTypeId_cache;
-    var $_type_cache;
+    public $_link_cache;
+    public $_title_cache;
+    public $_objTypeId_cache;
+    public $_type_cache;
+
     function __construct($url, $username, $password, $options = null, array $addlCurlOptions = array())
     {
-        parent :: __construct($url, $username, $password, $options, $addlCurlOptions);
-        $this->_link_cache = array ();
-        $this->_title_cache = array ();
-        $this->_objTypeId_cache = array ();
-        $this->_type_cache = array ();
+        parent:: __construct($url, $username, $password, $options, $addlCurlOptions);
+        $this->_link_cache = array();
+        $this->_title_cache = array();
+        $this->_objTypeId_cache = array();
+        $this->_type_cache = array();
     }
 
     // Utility Methods -- Added Titles
     // Should refactor to allow for single object
-    function cacheObjectInfo($obj)
+
+    static function createAtomEntry($name, $properties)
     {
-        $this->_link_cache[$obj->id] = $obj->links;
-        $this->_title_cache[$obj->id] = $obj->properties["cmis:name"]; // Broad Assumption Here?
-        $this->_objTypeId_cache[$obj->id] = $obj->properties["cmis:objectTypeId"];
+
     }
 
-    function cacheFeedInfo($objs)
-    {
-        foreach ($objs->objectList as $obj)
-        {
-            $this->cacheObjectInfo($obj);
-        }
-    }
-
-    function cacheTypeFeedInfo($typs)
-    {
-        foreach ($typs->objectList as $typ)
-        {
-            $this->cacheTypeInfo($typ);
-        }
-    }
-
-    function cacheTypeInfo($tDef)
-    {
-        // TODO: Fix Type Caching with missing properties
-        $this->_type_cache[$tDef->id] = $tDef;
-    }
-
-    function getPropertyType($typeId, $propertyId)
-    {
-        if ($this->_type_cache[$typeId]->properties)
-        {
-            return $this->_type_cache[$typeId]->properties[$propertyId]["cmis:propertyType"];
-        }
-        $obj = $this->getTypeDefinition($typeId);
-        return $obj->properties[$propertyId]["cmis:propertyType"];
-    }
-
-    function getObjectType($objectId)
-    {
-        if ($this->_objTypeId_cache[$objectId])
-        {
-            return $this->_objTypeId_cache[$objectId];
-        }
-        $obj = $this->getObject($objectId);
-        return $obj->properties["cmis:objectTypeId"];
-    }
-
-    function getTitle($objectId)
-    {
-        if ($this->_title_cache[$objectId])
-        {
-            return $this->_title_cache[$objectId];
-        }
-        $obj = $this->getObject($objectId);
-        return $obj->properties["cmis:name"];
-    }
-
-    function getTypeLink($typeId, $linkName)
-    {
-        if ($this->_type_cache[$typeId]->links)
-        {
-            return $this->_type_cache[$typeId]->links[$linkName];
-        }
-        $typ = $this->getTypeDefinition($typeId);
-        return $typ->links[$linkName];
-    }
-
-    function getLink($objectId, $linkName)
-    {
-        if ($this->_link_cache[$objectId][$linkName])
-        {
-            return $this->_link_cache[$objectId][$linkName];
-        }
-        $obj = $this->getObject($objectId);
-        return $obj->links[$linkName];
-    }
-
-    // Repository Services
     function getRepositories()
     {
         throw Exception("Not Implemented");
@@ -755,42 +697,37 @@ class CMISService extends CMISRepositoryWrapper
         return $this->workspace;
     }
 
-    function getTypeDescendants($typeId=null, $depth, $options = array ())
+    function getTypeDescendants($typeId = null, $depth, $options = array())
     {
-    	// TODO: Refactor Type Entries Caching
+        // TODO: Refactor Type Entries Caching
         $varmap = $options;
         if ($typeId) {
-	        $hash_values = $options;
-	        $hash_values['depth'] = $depth;
-	        $myURL = $this->getTypeLink($typeId, "down-tree");
-	        $myURL = CMISRepositoryWrapper :: getOpUrl ($myURL, $hash_values);
+            $hash_values = $options;
+            $hash_values['depth'] = $depth;
+            $myURL = $this->getTypeLink($typeId, "down-tree");
+            $myURL = CMISRepositoryWrapper:: getOpUrl($myURL, $hash_values);
         } else {
-        	$myURL = $this->processTemplate($this->workspace->collections['http://docs.oasis-open.org/ns/cmis/link/200908/typedescendants'], $varmap);
+            $myURL = $this->processTemplate($this->workspace->collections['http://docs.oasis-open.org/ns/cmis/link/200908/typedescendants'],
+                $varmap);
         }
         $ret = $this->doGet($myURL);
         $typs = $this->extractTypeFeed($ret->body);
         $this->cacheTypeFeedInfo($typs);
+
         return $typs;
     }
 
-    function getTypeChildren($typeId=null, $options = array ())
+    function getTypeLink($typeId, $linkName)
     {
-    	// TODO: Refactor Type Entries Caching
-        $varmap = $options;
-        if ($typeId) {
-	        $myURL = $this->getTypeLink($typeId, "down");
-	        //TODO: Need GenURLQueryString Utility
-        } else {
-            //TODO: Need right URL
-        	$myURL = $this->processTemplate($this->workspace->collections['types'], $varmap);
+        if ($this->_type_cache[$typeId]->links) {
+            return $this->_type_cache[$typeId]->links[$linkName];
         }
-        $ret = $this->doGet($myURL);
-        $typs = $this->extractTypeFeed($ret->body);
-        $this->cacheTypeFeedInfo($typs);
-        return $typs;
+        $typ = $this->getTypeDefinition($typeId);
+
+        return $typ->links[$linkName];
     }
 
-    function getTypeDefinition($typeId, $options = array ())
+    function getTypeDefinition($typeId, $options = array())
     { // Nice to have
         $varmap = $options;
         $varmap["id"] = $typeId;
@@ -798,8 +735,42 @@ class CMISService extends CMISRepositoryWrapper
         $ret = $this->doGet($myURL);
         $obj = $this->extractTypeDef($ret->body);
         $this->cacheTypeInfo($obj);
+
         return $obj;
     }
+
+    function cacheTypeInfo($tDef)
+    {
+        // TODO: Fix Type Caching with missing properties
+        $this->_type_cache[$tDef->id] = $tDef;
+    }
+
+    function cacheTypeFeedInfo($typs)
+    {
+        foreach ($typs->objectList as $typ) {
+            $this->cacheTypeInfo($typ);
+        }
+    }
+
+    function getTypeChildren($typeId = null, $options = array())
+    {
+        // TODO: Refactor Type Entries Caching
+        $varmap = $options;
+        if ($typeId) {
+            $myURL = $this->getTypeLink($typeId, "down");
+            //TODO: Need GenURLQueryString Utility
+        } else {
+            //TODO: Need right URL
+            $myURL = $this->processTemplate($this->workspace->collections['types'], $varmap);
+        }
+        $ret = $this->doGet($myURL);
+        $typs = $this->extractTypeFeed($ret->body);
+        $this->cacheTypeFeedInfo($typs);
+
+        return $typs;
+    }
+
+    // Repository Services
 
     function getObjectTypeDefinition($objectId)
     { // Nice to have
@@ -807,69 +778,130 @@ class CMISService extends CMISRepositoryWrapper
         $ret = $this->doGet($myURL);
         $obj = $this->extractTypeDef($ret->body);
         $this->cacheTypeInfo($obj);
+
         return $obj;
     }
-    //Navigation Services
-    function getFolderTree($folderId, $depth, $options = array ())
+
+    function getLink($objectId, $linkName)
+    {
+        if ($this->_link_cache[$objectId][$linkName]) {
+            return $this->_link_cache[$objectId][$linkName];
+        }
+        $obj = $this->getObject($objectId);
+
+        return $obj->links[$linkName];
+    }
+
+    function getObject($objectId, $options = array())
+    {
+        $varmap = $options;
+        $varmap["id"] = $objectId;
+        $obj_url = $this->processTemplate($this->workspace->uritemplates['objectbyid'], $varmap);
+        $ret = $this->doGet($obj_url);
+        $obj = $this->extractObject($ret->body);
+        $this->cacheObjectInfo($obj);
+
+        return $obj;
+    }
+
+    function cacheObjectInfo($obj)
+    {
+        $this->_link_cache[$obj->id] = $obj->links;
+        $this->_title_cache[$obj->id] = $obj->properties["cmis:name"]; // Broad Assumption Here?
+        $this->_objTypeId_cache[$obj->id] = $obj->properties["cmis:objectTypeId"];
+    }
+
+    function getFolderTree($folderId, $depth, $options = array())
     {
         $hash_values = $options;
         $hash_values['depth'] = $depth;
         $myURL = $this->getLink($folderId, "http://docs.oasis-open.org/ns/cmis/link/200908/foldertree");
-        $myURL = CMISRepositoryWrapper :: getOpUrl ($myURL, $hash_values);
+        $myURL = CMISRepositoryWrapper:: getOpUrl($myURL, $hash_values);
         $ret = $this->doGet($myURL);
         $objs = $this->extractObjectFeed($ret->body);
         $this->cacheFeedInfo($objs);
+
         return $objs;
     }
 
-    function getDescendants($folderId, $depth, $options = array ())
+    function cacheFeedInfo($objs)
+    {
+        foreach ($objs->objectList as $obj) {
+            $this->cacheObjectInfo($obj);
+        }
+    }
+
+    //Navigation Services
+
+    function getDescendants($folderId, $depth, $options = array())
     { // Nice to have
         $hash_values = $options;
         $hash_values['depth'] = $depth;
         $myURL = $this->getLink($folderId, "down-tree");
-        $myURL = CMISRepositoryWrapper :: getOpUrl ($myURL, $hash_values);
+        $myURL = CMISRepositoryWrapper:: getOpUrl($myURL, $hash_values);
         $ret = $this->doGet($myURL);
         $objs = $this->extractObjectFeed($ret->body);
         $this->cacheFeedInfo($objs);
+
         return $objs;
     }
 
-    function getChildren($folderId, $options = array ())
+    function getChildren($folderId, $options = array())
     {
         $myURL = $this->getLink($folderId, "down");
         //TODO: Need GenURLQueryString Utility
         $ret = $this->doGet($myURL);
         $objs = $this->extractObjectFeed($ret->body);
         $this->cacheFeedInfo($objs);
+
         return $objs;
     }
 
-    function getFolderParent($folderId, $options = array ())
+    function getFolderParent($folderId, $options = array())
     { //yes
         $myURL = $this->getLink($folderId, "up");
         //TODO: Need GenURLQueryString Utility
         $ret = $this->doGet($myURL);
         $obj = $this->extractObjectEntry($ret->body);
         $this->cacheObjectInfo($obj);
+
         return $obj;
     }
 
-    function getObjectParents($objectId, $options = array ())
+    function getObjectParents($objectId, $options = array())
     { // yes
         $myURL = $this->getLink($objectId, "up");
         //TODO: Need GenURLQueryString Utility
         $ret = $this->doGet($myURL);
         $objs = $this->extractObjectFeed($ret->body);
         $this->cacheFeedInfo($objs);
+
         return $objs;
     }
 
-    function getCheckedOutDocs($options = array ())
+    function getCheckedOutDocs($options = array())
     {
         $obj_url = $this->workspace->collections['checkedout'];
         $ret = $this->doGet($obj_url);
         $objs = $this->extractObjectFeed($ret->body);
         $this->cacheFeedInfo($objs);
+
+        return $objs;
+    }
+
+    function query($statement, $options = array())
+    {
+        static $query_template;
+        if (!isset ($query_template)) {
+            $query_template = CMISService:: getQueryTemplate();
+        }
+        $hash_values = $options;
+        $hash_values['q'] = $statement;
+        $post_value = CMISRepositoryWrapper:: processTemplate($query_template, $hash_values);
+        $ret = $this->doPost($this->workspace->collections['query'], $post_value, MIME_CMIS_QUERY);
+        $objs = $this->extractObjectFeed($ret->body);
+        $this->cacheFeedInfo($objs);
+
         return $objs;
     }
 
@@ -879,38 +911,21 @@ class CMISService extends CMISRepositoryWrapper
     {
         ob_start();
         echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
-?>
-<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
-xmlns:cmism="http://docs.oasis-open.org/ns/cmis/messaging/200908/"
-xmlns:atom="http://www.w3.org/2005/Atom"
-xmlns:app="http://www.w3.org/2007/app"
-xmlns:cmisra="http://docs.oasisopen.org/ns/cmis/restatom/200908/">
-<cmis:statement>{q}</cmis:statement>
-<cmis:searchAllVersions>{searchAllVersions}</cmis:searchAllVersions>
-<cmis:includeAllowableActions>{includeAllowableActions}</cmis:includeAllowableActions>
-<cmis:includeRelationships>{includeRelationships}</cmis:includeRelationships>
-<cmis:renditionFilter>{renditionFilter}</cmis:renditionFilter>
-<cmis:maxItems>{maxItems}</cmis:maxItems>
-<cmis:skipCount>{skipCount}</cmis:skipCount>
-</cmis:query>
-<?php
+        ?>
+        <cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
+                    xmlns:atom="http://www.w3.org/2005/Atom"
+                    xmlns:cmisra="http://docs.oasisopen.org/ns/cmis/restatom/200908/">
+            <cmis:statement>{q}</cmis:statement>
+            <cmis:searchAllVersions>{searchAllVersions}</cmis:searchAllVersions>
+            <cmis:includeAllowableActions>{includeAllowableActions}</cmis:includeAllowableActions>
+            <cmis:includeRelationships>{includeRelationships}</cmis:includeRelationships>
+            <cmis:renditionFilter>{renditionFilter}</cmis:renditionFilter>
+            <cmis:maxItems>{maxItems}</cmis:maxItems>
+            <cmis:skipCount>{skipCount}</cmis:skipCount>
+        </cmis:query>
+        <?php
 
         return ob_get_clean();
-    }
-    function query($statement, $options = array ())
-    {
-        static $query_template;
-        if (!isset ($query_template))
-        {
-            $query_template = CMISService :: getQueryTemplate();
-        }
-        $hash_values = $options;
-        $hash_values['q'] = $statement;
-        $post_value = CMISRepositoryWrapper :: processTemplate($query_template, $hash_values);
-        $ret = $this->doPost($this->workspace->collections['query'], $post_value, MIME_CMIS_QUERY);
-        $objs = $this->extractObjectFeed($ret->body);
-        $this->cacheFeedInfo($objs);
-        return $objs;
     }
 
     function getContentChanges()
@@ -918,35 +933,132 @@ xmlns:cmisra="http://docs.oasisopen.org/ns/cmis/restatom/200908/">
         throw Exception("Not Implemented");
     }
 
+    function getObjectByPath($path, $options = array())
+    {
+        $varmap = $options;
+        $varmap["path"] = $this->handleSpaces($path);
+        $obj_url = $this->processTemplate($this->workspace->uritemplates['objectbypath'], $varmap);
+        $ret = $this->doGet($obj_url);
+        $obj = $this->extractObject($ret->body);
+        $this->cacheObjectInfo($obj);
+
+        return $obj;
+    }
+
     //Object Services
+
+    function getProperties($objectId, $options = array())
+    {
+        // May need to set the options array default --
+        return $this->getObject($objectId, $options);
+    }
+
+    function getAllowableActions($objectId, $options = array())
+    {
+        $myURL = $this->getLink($objectId, LINK_ALLOWABLE_ACTIONS);
+        $ret = $this->doGet($myURL);
+        $result = $this->extractAllowableActions($ret->body);
+
+        return $result;
+    }
+
+    function getRenditions(
+        $objectId,
+        $options = array(
+            OPT_RENDITION_FILTER => "*"
+        )
+    ) {
+        return getObject($objectId, $options);
+    }
+
+    function getContentStream($objectId, $options = array())
+    { // Yes
+        $myURL = $this->getLink($objectId, "edit-media");
+        $ret = $this->doGet($myURL);
+
+        // doRequest stores the last request information in this object
+        return $ret->body;
+    }
+
+    function createDocument(
+        $folderId,
+        $fileName,
+        $properties = array(),
+        $content = null,
+        $content_type = "application/octet-stream",
+        $options = array()
+    ) { // Yes
+        return $this->postObject($folderId, $fileName, "cmis:document", $properties, $content, $content_type, $options);
+    }
+
+    function postObject(
+        $folderId,
+        $objectName,
+        $objectType,
+        $properties = array(),
+        $content = null,
+        $content_type = "application/octet-stream",
+        $options = array()
+    ) { // Yes
+        $myURL = $this->getLink($folderId, "down");
+        // TODO: Need Proper Query String Handling
+        // Assumes that the 'down' link does not have a querystring in it
+        $myURL = CMISRepositoryWrapper:: getOpUrl($myURL, $options);
+        static $entry_template;
+        if (!isset ($entry_template)) {
+            $entry_template = CMISService:: getEntryTemplate();
+        }
+        if (is_array($properties)) {
+            $hash_values = $properties;
+        } else {
+            $hash_values = array();
+        }
+        if (!isset ($hash_values["cmis:objectTypeId"])) {
+            $hash_values["cmis:objectTypeId"] = $objectType;
+        }
+        $properties_xml = $this->processPropertyTemplates($hash_values["cmis:objectTypeId"], $hash_values);
+        if (is_array($options)) {
+            $hash_values = $options;
+        } else {
+            $hash_values = array();
+        }
+        $hash_values["PROPERTIES"] = $properties_xml;
+        $hash_values["SUMMARY"] = CMISService:: getSummaryTemplate();
+        if ($content) {
+            $hash_values["CONTENT"] = CMISService:: getContentEntry($content, $content_type);
+        }
+        if (!isset ($hash_values['title'])) {
+            $hash_values['title'] = $objectName;
+        }
+        if (!isset ($hash_values['summary'])) {
+            $hash_values['summary'] = $objectName;
+        }
+        $post_value = CMISRepositoryWrapper:: processTemplate($entry_template, $hash_values);
+        $ret = $this->doPost($myURL, $post_value, MIME_ATOM_XML_ENTRY);
+        // print "DO_POST\n";
+        // print_r($ret);
+        $obj = $this->extractObject($ret->body);
+        $this->cacheObjectInfo($obj);
+
+        return $obj;
+    }
+
     static function getEntryTemplate()
     {
         ob_start();
         echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
-?>
-<atom:entry xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
-xmlns:cmism="http://docs.oasis-open.org/ns/cmis/messaging/200908/"
-xmlns:atom="http://www.w3.org/2005/Atom"
-xmlns:app="http://www.w3.org/2007/app"
-xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
-<atom:title>{title}</atom:title>
-{SUMMARY}
-{CONTENT}
-<cmisra:object><cmis:properties>{PROPERTIES}</cmis:properties></cmisra:object>
-</atom:entry>
-<?php
-
-        return ob_get_clean();
-    }
-
-    static function getPropertyTemplate()
-    {
-        ob_start();
-?>
-		<cmis:property{propertyType} propertyDefinitionId="{propertyId}">
-			<cmis:value>{properties}</cmis:value>
-		</cmis:property{propertyType}>
-<?php
+        ?>
+        <atom:entry xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
+                    xmlns:atom="http://www.w3.org/2005/Atom"
+                    xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
+            <atom:title>{title}</atom:title>
+            {SUMMARY}
+            {CONTENT}
+            <cmisra:object>
+                <cmis:properties>{PROPERTIES}</cmis:properties>
+            </cmisra:object>
+        </atom:entry>
+        <?php
 
         return ob_get_clean();
     }
@@ -955,13 +1067,11 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
     {
         static $propTemplate;
         static $propertyTypeMap;
-        if (!isset ($propTemplate))
-        {
-            $propTemplate = CMISService :: getPropertyTemplate();
+        if (!isset ($propTemplate)) {
+            $propTemplate = CMISService:: getPropertyTemplate();
         }
-        if (!isset ($propertyTypeMap))
-        { // Not sure if I need to do this like this
-            $propertyTypeMap = array (
+        if (!isset ($propertyTypeMap)) { // Not sure if I need to do this like this
+            $propertyTypeMap = array(
                 "integer" => "Integer",
                 "boolean" => "Boolean",
                 "datetime" => "DateTime",
@@ -975,193 +1085,97 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
             );
         }
         $propertyContent = "";
-        $hash_values = array ();
-        foreach ($propMap as $propId => $propValue)
-        {
+        $hash_values = array();
+        foreach ($propMap as $propId => $propValue) {
             $hash_values['propertyType'] = $propertyTypeMap[$this->getPropertyType($objectType, $propId)];
             $hash_values['propertyId'] = $propId;
-            if (is_array($propValue))
-            {
+            if (is_array($propValue)) {
                 $first_one = true;
                 $hash_values['properties'] = "";
-                foreach ($propValue as $val)
-                {
+                foreach ($propValue as $val) {
                     //This is a bit of a hack
-                    if ($first_one)
-                    {
+                    if ($first_one) {
                         $first_one = false;
-                    } else
-                    {
+                    } else {
                         $hash_values['properties'] .= "</cmis:value>\n<cmis:value>";
                     }
                     $hash_values['properties'] .= $val;
                 }
-            } else
-            {
+            } else {
                 $hash_values['properties'] = $propValue;
             }
             //echo "HASH:\n";
             //print_r(array("template" =>$propTemplate, "Hash" => $hash_values));
-            $propertyContent .= CMISRepositoryWrapper :: processTemplate($propTemplate, $hash_values);
+            $propertyContent .= CMISRepositoryWrapper:: processTemplate($propTemplate, $hash_values);
         }
+
         return $propertyContent;
     }
 
-    static function getContentEntry($content, $content_type = "application/octet-stream")
+    static function getPropertyTemplate()
     {
-        static $contentTemplate;
-        if (!isset ($contentTemplate))
-        {
-            $contentTemplate = CMISService :: getContentTemplate();
+        ob_start();
+        ?>
+        <cmis:property{propertyType} propertyDefinitionId="{propertyId}">
+        <cmis:value>{properties}</cmis:value>
+        </cmis:property{propertyType}>
+        <?php
+
+        return ob_get_clean();
+    }
+
+    function getPropertyType($typeId, $propertyId)
+    {
+        if ($this->_type_cache[$typeId]->properties) {
+            return $this->_type_cache[$typeId]->properties[$propertyId]["cmis:propertyType"];
         }
-        if ($content)
-        {
-            return CMISRepositoryWrapper :: processTemplate($contentTemplate, array (
-                "content" => base64_encode($content
-            ), "content_type" => $content_type));
-        } else
-        {
-            return "";
-        }
+        $obj = $this->getTypeDefinition($typeId);
+
+        return $obj->properties[$propertyId]["cmis:propertyType"];
     }
 
     static function getSummaryTemplate()
     {
         ob_start();
-?>
-		<atom:summary>{summary}</atom:summary>
-<?php
+        ?>
+        <atom:summary>{summary}</atom:summary>
+        <?php
 
         return ob_get_clean();
+    }
+
+    static function getContentEntry($content, $content_type = "application/octet-stream")
+    {
+        static $contentTemplate;
+        if (!isset ($contentTemplate)) {
+            $contentTemplate = CMISService:: getContentTemplate();
+        }
+        if ($content) {
+            return CMISRepositoryWrapper:: processTemplate($contentTemplate, array(
+                "content" => base64_encode($content
+                ),
+                "content_type" => $content_type
+            ));
+        } else {
+            return "";
+        }
     }
 
     static function getContentTemplate()
     {
         ob_start();
-?>
-		<cmisra:content>
-			<cmisra:mediatype>
-				{content_type}
-			</cmisra:mediatype>
-			<cmisra:base64>
-				{content}
-			</cmisra:base64>
-		</cmisra:content>
-<?php
+        ?>
+        <cmisra:content>
+            <cmisra:mediatype>
+                {content_type}
+            </cmisra:mediatype>
+            <cmisra:base64>
+                {content}
+            </cmisra:base64>
+        </cmisra:content>
+        <?php
 
         return ob_get_clean();
-    }
-    static function createAtomEntry($name, $properties)
-    {
-
-    }
-    function getObject($objectId, $options = array ())
-    {
-        $varmap = $options;
-        $varmap["id"] = $objectId;
-        $obj_url = $this->processTemplate($this->workspace->uritemplates['objectbyid'], $varmap);
-        $ret = $this->doGet($obj_url);
-        $obj = $this->extractObject($ret->body);
-        $this->cacheObjectInfo($obj);
-        return $obj;
-    }
-
-    function getObjectByPath($path, $options = array ())
-    {
-        $varmap = $options;
-        $varmap["path"] = $this->handleSpaces($path);
-        $obj_url = $this->processTemplate($this->workspace->uritemplates['objectbypath'], $varmap);
-        $ret = $this->doGet($obj_url);
-        $obj = $this->extractObject($ret->body);
-        $this->cacheObjectInfo($obj);
-        return $obj;
-    }
-
-    function getProperties($objectId, $options = array ())
-    {
-        // May need to set the options array default --
-        return $this->getObject($objectId, $options);
-    }
-
-    function getAllowableActions($objectId, $options = array ())
-    {
-        $myURL = $this->getLink($objectId, LINK_ALLOWABLE_ACTIONS);
-        $ret = $this->doGet($myURL);
-        $result = $this->extractAllowableActions($ret->body);
-        return $result;
-    }
-
-    function getRenditions($objectId, $options = array (
-        OPT_RENDITION_FILTER => "*"
-    ))
-    {
-        return getObject($objectId, $options);
-    }
-
-    function getContentStream($objectId, $options = array ())
-    { // Yes
-        $myURL = $this->getLink($objectId, "edit-media");
-        $ret = $this->doGet($myURL);
-        // doRequest stores the last request information in this object
-        return $ret->body;
-    }
-
-    function postObject($folderId, $objectName, $objectType, $properties = array (), $content = null, $content_type = "application/octet-stream", $options = array ())
-    { // Yes
-        $myURL = $this->getLink($folderId, "down");
-        // TODO: Need Proper Query String Handling
-        // Assumes that the 'down' link does not have a querystring in it
-        $myURL = CMISRepositoryWrapper :: getOpUrl($myURL, $options);
-        static $entry_template;
-        if (!isset ($entry_template))
-        {
-            $entry_template = CMISService :: getEntryTemplate();
-        }
-        if (is_array($properties))
-        {
-            $hash_values = $properties;
-        } else
-        {
-            $hash_values = array ();
-        }
-        if (!isset ($hash_values["cmis:objectTypeId"]))
-        {
-            $hash_values["cmis:objectTypeId"] = $objectType;
-        }
-        $properties_xml = $this->processPropertyTemplates($hash_values["cmis:objectTypeId"], $hash_values);
-        if (is_array($options))
-        {
-            $hash_values = $options;
-        } else
-        {
-            $hash_values = array ();
-        }
-        $hash_values["PROPERTIES"] = $properties_xml;
-        $hash_values["SUMMARY"] = CMISService :: getSummaryTemplate();
-        if ($content)
-        {
-            $hash_values["CONTENT"] = CMISService :: getContentEntry($content, $content_type);
-        }
-        if (!isset ($hash_values['title']))
-        {
-            $hash_values['title'] = $objectName;
-        }
-        if (!isset ($hash_values['summary']))
-        {
-            $hash_values['summary'] = $objectName;
-        }
-        $post_value = CMISRepositoryWrapper :: processTemplate($entry_template, $hash_values);
-        $ret = $this->doPost($myURL, $post_value, MIME_ATOM_XML_ENTRY);
-        // print "DO_POST\n";
-        // print_r($ret);
-        $obj = $this->extractObject($ret->body);
-        $this->cacheObjectInfo($obj);
-        return $obj;
-    }
-
-    function createDocument($folderId, $fileName, $properties = array (), $content = null, $content_type = "application/octet-stream", $options = array ())
-    { // Yes
-        return $this->postObject($folderId, $fileName, "cmis:document", $properties, $content, $content_type, $options);
     }
 
     function createDocumentFromSource()
@@ -1169,7 +1183,7 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
         throw new CmisNotSupportedException("createDocumentFromSource is not supported by the AtomPub binding!");
     }
 
-    function createFolder($folderId, $folderName, $properties = array (), $options = array ())
+    function createFolder($folderId, $folderName, $properties = array(), $options = array())
     { // Yes
         return $this->postObject($folderId, $folderName, "cmis:folder", $properties, null, null, $options);
     }
@@ -1184,66 +1198,82 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
         throw Exception("Not Implemented");
     }
 
-    function updateProperties($objectId, $properties = array (), $options = array ())
+    function updateProperties($objectId, $properties = array(), $options = array())
     { // Yes
         $varmap = $options;
         $varmap["id"] = $objectId;
         $objectName = $this->getTitle($objectId);
         $objectType = $this->getObjectType($objectId);
         $obj_url = $this->getLink($objectId, "edit");
-        $obj_url = CMISRepositoryWrapper :: getOpUrl($obj_url, $options);
+        $obj_url = CMISRepositoryWrapper:: getOpUrl($obj_url, $options);
         static $entry_template;
-        if (!isset ($entry_template))
-        {
-            $entry_template = CMISService :: getEntryTemplate();
+        if (!isset ($entry_template)) {
+            $entry_template = CMISService:: getEntryTemplate();
         }
-        if (is_array($properties))
-        {
+        if (is_array($properties)) {
             $hash_values = $properties;
-        } else
-        {
-            $hash_values = array ();
+        } else {
+            $hash_values = array();
         }
         $properties_xml = $this->processPropertyTemplates($objectType, $hash_values);
-        if (is_array($options))
-        {
+        if (is_array($options)) {
             $hash_values = $options;
-        } else
-        {
-            $hash_values = array ();
+        } else {
+            $hash_values = array();
         }
         $hash_values["PROPERTIES"] = $properties_xml;
-        $hash_values["SUMMARY"] = CMISService :: getSummaryTemplate();
-        if (!isset ($hash_values['title']))
-        {
+        $hash_values["SUMMARY"] = CMISService:: getSummaryTemplate();
+        if (!isset ($hash_values['title'])) {
             $hash_values['title'] = $objectName;
         }
-        if (!isset ($hash_values['summary']))
-        {
+        if (!isset ($hash_values['summary'])) {
             $hash_values['summary'] = $objectName;
         }
-        $put_value = CMISRepositoryWrapper :: processTemplate($entry_template, $hash_values);
-	 	// print $put_value; // RRM DEBUG
+        $put_value = CMISRepositoryWrapper:: processTemplate($entry_template, $hash_values);
+        // print $put_value; // RRM DEBUG
         $ret = $this->doPut($obj_url, $put_value, MIME_ATOM_XML_ENTRY);
         $obj = $this->extractObject($ret->body);
         $this->cacheObjectInfo($obj);
+
         return $obj;
     }
 
-    function moveObject($objectId, $targetFolderId, $sourceFolderId, $options = array ())
+    function getTitle($objectId)
+    {
+        if ($this->_title_cache[$objectId]) {
+            return $this->_title_cache[$objectId];
+        }
+        $obj = $this->getObject($objectId);
+
+        return $obj->properties["cmis:name"];
+    }
+
+    function getObjectType($objectId)
+    {
+        if ($this->_objTypeId_cache[$objectId]) {
+            return $this->_objTypeId_cache[$objectId];
+        }
+        $obj = $this->getObject($objectId);
+
+        return $obj->properties["cmis:objectTypeId"];
+    }
+
+    function moveObject($objectId, $targetFolderId, $sourceFolderId, $options = array())
     { //yes
         $options['sourceFolderId'] = $sourceFolderId;
-        return $this->postObject($targetFolderId, $this->getTitle($objectId), $this->getObjectType($objectId), array (
+
+        return $this->postObject($targetFolderId, $this->getTitle($objectId), $this->getObjectType($objectId), array(
             "cmis:objectId" => $objectId
         ), null, null, $options);
     }
 
-    function deleteObject($objectId, $options = array ())
+    function deleteObject($objectId, $options = array())
     { //Yes
         $varmap = $options;
         $varmap["id"] = $objectId;
         $obj_url = $this->getLink($objectId, "edit");
         $ret = $this->doDelete($obj_url);
+
         return;
     }
 
@@ -1252,26 +1282,27 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
         throw Exception("Not Implemented");
     }
 
-    function setContentStream($objectId, $content, $content_type, $options = array ())
+    function setContentStream($objectId, $content, $content_type, $options = array())
     { //Yes
         $myURL = $this->getLink($objectId, "edit-media");
         $ret = $this->doPut($myURL, $content, $content_type);
     }
 
-    function deleteContentStream($objectId, $options = array ())
+    function deleteContentStream($objectId, $options = array())
     { //yes
         $myURL = $this->getLink($objectId, "edit-media");
         $ret = $this->doDelete($myURL);
+
         return;
     }
 
     //Versioning Services
-    function getPropertiesOfLatestVersion($objectId, $major =false, $options = array ())
+    function getPropertiesOfLatestVersion($objectId, $major = false, $options = array())
     {
         return $this->getObjectOfLatestVersion($objectId, $major, $options);
     }
 
-    function getObjectOfLatestVersion($objectId, $major = false, $options = array ())
+    function getObjectOfLatestVersion($objectId, $major = false, $options = array())
     {
         return $this->getObject($objectId, $options); // Won't be able to handle major/minor distinction
         // Need to add this -- "current-version"

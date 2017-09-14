@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,10 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -131,7 +132,9 @@ if (is_array($_POST['merged_ids'])) {
             continue;
         }
         foreach ($linked_fields as $name => $properties) {
-            if ($properties['name'] == 'modified_user_link' || $properties['name'] == 'created_by_link' || in_array($properties['name'], $exclude)) {
+            if ($properties['name'] == 'modified_user_link' || $properties['name'] == 'created_by_link' || in_array($properties['name'],
+                    $exclude)
+            ) {
                 continue;
             }
             if (isset($properties['duplicate_merge']) &&
@@ -167,7 +170,7 @@ if (is_array($_POST['merged_ids'])) {
         $mergeSource->mark_deleted($mergeSource->id);
     }
 }
-$GLOBALS['log']->debug('Merged record with id of '.$return_id);
+$GLOBALS['log']->debug('Merged record with id of ' . $return_id);
 
 //do not redirect if noRedirect flag is set.  This is mostly used by Unit tests
 if (empty($_REQUEST['noRedirect'])) {
@@ -179,8 +182,8 @@ if (empty($_REQUEST['noRedirect'])) {
  * of the email addresses that are not duplicates.
  *
  * @param MergeRecord $focus - Merge Bean
- * @param string      $name  name of relationship (email_addresses)
- * @param array       $data  array of email id's that will be merged into existing bean.
+ * @param string $name name of relationship (email_addresses)
+ * @param array $data array of email id's that will be merged into existing bean.
  */
 function handleEmailMerge($focus, $name, $data)
 {
@@ -197,8 +200,8 @@ function handleEmailMerge($focus, $name, $data)
     if (!is_array($existingData) || empty($existingData)) {
         return;
     }
-        //query email and retrieve existing email address 
-        $exEmailQuery = 'Select id, email_address from email_addresses where id in (';
+    //query email and retrieve existing email address
+    $exEmailQuery = 'Select id, email_address from email_addresses where id in (';
     $first = true;
     foreach ($exData as $id) {
         if ($first) {
@@ -217,8 +220,8 @@ function handleEmailMerge($focus, $name, $data)
         $existingEmails[$row['id']] = $row['email_address'];
     }
 
-        //query email and retrieve email address to be linked.
-        $newEmailQuery = 'Select id, email_address from email_addresses where id in (';
+    //query email and retrieve email address to be linked.
+    $newEmailQuery = 'Select id, email_address from email_addresses where id in (';
     $first = true;
     foreach ($existingData as $id) {
         if ($first) {

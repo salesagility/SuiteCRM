@@ -74,10 +74,30 @@ class Folder
     /**
      * Folder constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = DBManagerFactory::getInstance();
         $this->id = null;
         $this->type = "inbound";
+    }
+
+    /**
+     * @param array $request
+     * @return Folder
+     * @throws SuiteException
+     */
+    public function retrieveFromRequest($request)
+    {
+
+        if (isset($request['folders_id']) && !empty($request['folders_id'])) {
+
+            $foldersId = $request['folders_id'];
+            $this->retrieve($foldersId);
+        } else {
+            $GLOBALS['log']->warn("Empty or undefined Email Folder ID");
+        }
+
+        return $this;
     }
 
     /**
@@ -89,7 +109,7 @@ class Folder
      */
     public function retrieve($folderId = -1)
     {
-        if(isValidId($folderId)) {
+        if (isValidId($folderId)) {
 
             $result = $this->db->query('SELECT * FROM folders WHERE id="' . $folderId . '"');
             $row = $this->db->fetchByAssoc($result);
@@ -120,34 +140,18 @@ class Folder
     }
 
     /**
-     * @param array $request
-     * @return Folder
-     * @throws SuiteException
-     */
-    public function retrieveFromRequest($request) {
-
-        if (isset($request['folders_id']) && !empty($request['folders_id'])) {
-
-            $foldersId = $request['folders_id'];
-            $this->retrieve($foldersId);
-        } else {
-            $GLOBALS['log']->warn("Empty or undefined Email Folder ID");
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
     /**
      * @return null|string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 

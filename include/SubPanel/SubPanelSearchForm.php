@@ -7,31 +7,33 @@
 
 require_once('include/SearchForm/SearchForm2.php');
 
-class SubPanelSearchForm extends SearchForm  {
+class SubPanelSearchForm extends SearchForm
+{
 
-    var $subPanel; // the instantiated bean of the subPanel
-
-    function __construct($seed, $module, $subPanel, $options = array()){
-        $this->subPanel = $subPanel;
-        parent::__construct($seed, $module, 'DetailView', $options);
-    }
+    public $subPanel; // the instantiated bean of the subPanel
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SubPanelSearchForm($seed, $module, $subPanel, $options = array()){
+    function SubPanelSearchForm($seed, $module, $subPanel, $options = array())
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($seed, $module, $subPanel, $options);
     }
 
+    function __construct($seed, $module, $subPanel, $options = array())
+    {
+        $this->subPanel = $subPanel;
+        parent::__construct($seed, $module, 'DetailView', $options);
+    }
 
-    function display($header = false){
+    function display($header = false)
+    {
         /*//global $app_list_strings;
         if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
             $GLOBALS['app_list_strings']['collection_temp_list'] = $this->getCollectionList($this->subPanel->subpanel_defs->base_collection_list);
@@ -39,31 +41,36 @@ class SubPanelSearchForm extends SearchForm  {
         $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
 
         // Adding the offset to subpanel search field - this has no affect on pagination
-        if($this->subPanel->parent_bean->module_dir != ''){
-            $this->th->ss->assign('subpanelPageOffset', '<input type="hidden" name="'.$this->subPanel->parent_bean->module_dir.'_'.$this->subPanel->subpanel_id.'_CELL_offset" value="0" />');
+        if ($this->subPanel->parent_bean->module_dir != '') {
+            $this->th->ss->assign('subpanelPageOffset',
+                '<input type="hidden" name="' . $this->subPanel->parent_bean->module_dir . '_' . $this->subPanel->subpanel_id . '_CELL_offset" value="0" />');
         }
         $this->parsedView = 'sps';
+
         return parent::display($header);
     }
 
-    function getCollectionList($collection = array()){
+    function getCollectionList($collection = array())
+    {
         global $app_list_strings;
 
         $select = array();
 
-        if(!empty($collection)){
+        if (!empty($collection)) {
 
             $select = array();
-            foreach($collection as $name => $value_array){
-                if(isset($app_list_strings['moduleList'][$value_array['module']])){
+            foreach ($collection as $name => $value_array) {
+                if (isset($app_list_strings['moduleList'][$value_array['module']])) {
                     $select[$name] = $app_list_strings['moduleList'][$value_array['module']];
                 }
             }
         }
+
         return $select;
     }
 
-    function displaySavedSearchSelect(){
+    function displaySavedSearchSelect()
+    {
         return null;
     }
 

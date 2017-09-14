@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,10 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -64,60 +66,6 @@ class SpotsController extends SugarController
     protected $spotsStaleTime = 3600;
 
     /**
-     * This returns a string of the type of db being used.
-     *
-     * @return a string of the type of db being used (mysql, mssql or undefined)
-     */
-    public function getDatabaseType()
-    {
-        global $sugar_config;
-        $dbType = 'undefined';
-        if ($sugar_config['dbconfig']['db_type'] == 'mysql') {
-            $dbType = 'mysql';
-        } elseif ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-            $dbType = 'mssql';
-        }
-
-        return $dbType;
-    }
-
-    /**
-     * This is a duplicate of the build_report_access_query in AOR_Report (here for autonomy).
-     *
-     * @param SugarBean $module the $module to return the access query for
-     * @param string    $alias  the alias for the table
-     *
-     * @return string $where the where clause to represent access
-     */
-    public function buildSpotsAccessQuery(SugarBean $module, $alias)
-    {
-        $module->table_name = $alias;
-        $where = '';
-        if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
-            global $current_user;
-            $owner_where = $module->getOwnerWhere($current_user->id);
-            $where = ' AND '.$owner_where;
-        }
-
-        if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
-            /* BEGIN - SECURITY GROUPS */
-            if ($module->bean_implements('ACL') && ACLController::requireSecurityGroup($module->module_dir, 'list')) {
-                require_once 'modules/SecurityGroups/SecurityGroup.php';
-                global $current_user;
-                $owner_where = $module->getOwnerWhere($current_user->id);
-                $group_where = SecurityGroup::getGroupWhere($alias, $module->module_dir, $current_user->id);
-                if (!empty($owner_where)) {
-                    $where .= ' AND ('.$owner_where.' or '.$group_where.') ';
-                } else {
-                    $where .= ' AND '.$group_where;
-                }
-            }
-        }
-
-        return $where;
-    }
-
-    /**
      * Returns the cached account file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the accounts file
@@ -125,7 +73,7 @@ class SpotsController extends SugarController
     public function action_getAccountsSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->accountsFilName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -158,7 +106,7 @@ EOF;
         $accounts = BeanFactory::getBean('Accounts');
         $aclWhere = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
 
-        $queryString = $query.$aclWhere;
+        $queryString = $query . $aclWhere;
 
         $result = $db->query($queryString);
 
@@ -174,6 +122,42 @@ EOF;
     }
 
     /**
+     * This is a duplicate of the build_report_access_query in AOR_Report (here for autonomy).
+     *
+     * @param SugarBean $module the $module to return the access query for
+     * @param string $alias the alias for the table
+     *
+     * @return string $where the where clause to represent access
+     */
+    public function buildSpotsAccessQuery(SugarBean $module, $alias)
+    {
+        $module->table_name = $alias;
+        $where = '';
+        if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
+            global $current_user;
+            $owner_where = $module->getOwnerWhere($current_user->id);
+            $where = ' AND ' . $owner_where;
+        }
+
+        if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
+            /* BEGIN - SECURITY GROUPS */
+            if ($module->bean_implements('ACL') && ACLController::requireSecurityGroup($module->module_dir, 'list')) {
+                require_once 'modules/SecurityGroups/SecurityGroup.php';
+                global $current_user;
+                $owner_where = $module->getOwnerWhere($current_user->id);
+                $group_where = SecurityGroup::getGroupWhere($alias, $module->module_dir, $current_user->id);
+                if (!empty($owner_where)) {
+                    $where .= ' AND (' . $owner_where . ' or ' . $group_where . ') ';
+                } else {
+                    $where .= ' AND ' . $group_where;
+                }
+            }
+        }
+
+        return $where;
+    }
+
+    /**
      * Returns the cached leads file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the leads file
@@ -181,7 +165,7 @@ EOF;
     public function action_getLeadsSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->leadsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -242,9 +226,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -258,7 +242,7 @@ EOF;
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereLeads.$aclWhereUsers.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereLeads . $aclWhereUsers . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -279,6 +263,24 @@ EOF;
     }
 
     /**
+     * This returns a string of the type of db being used.
+     *
+     * @return a string of the type of db being used (mysql, mssql or undefined)
+     */
+    public function getDatabaseType()
+    {
+        global $sugar_config;
+        $dbType = 'undefined';
+        if ($sugar_config['dbconfig']['db_type'] == 'mysql') {
+            $dbType = 'mysql';
+        } elseif ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+            $dbType = 'mssql';
+        }
+
+        return $dbType;
+    }
+
+    /**
      * Returns the cached sales file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the sales file
@@ -286,7 +288,7 @@ EOF;
     public function action_getSalesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->salesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -365,9 +367,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -383,7 +385,7 @@ EOF;
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereAccounts.$aclWhereUsers.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereOpps . $aclWhereAccounts . $aclWhereUsers . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -418,7 +420,7 @@ EOF;
     public function action_getServiceSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->servicesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -485,9 +487,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -501,7 +503,7 @@ EOF;
         $aclWhereAccounts = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
 
-        $queryString = $query.$aclWhereCases.$aclWhereAccounts.$aclWhereUsers;
+        $queryString = $query . $aclWhereCases . $aclWhereAccounts . $aclWhereUsers;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -531,7 +533,7 @@ EOF;
     public function action_getActivitiesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->activitiesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -640,9 +642,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlQueryCalls.$aclWhereCalls.$mssqlQueryMeetings.$aclWhereMeetings.$mssqlQueryTasks.$aclWhereTasks;
+            $query = $mssqlQueryCalls . $aclWhereCalls . $mssqlQueryMeetings . $aclWhereMeetings . $mssqlQueryTasks . $aclWhereTasks;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlQueryCalls.$aclWhereCalls.$mysqlQueryMeetings.$aclWhereMeetings.$mysqlQueryTasks.$aclWhereTasks;
+            $query = $mysqlQueryCalls . $aclWhereCalls . $mysqlQueryMeetings . $aclWhereMeetings . $mysqlQueryTasks . $aclWhereTasks;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -671,7 +673,7 @@ EOF;
     public function action_getMarketingSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->marketingsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -740,9 +742,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -757,7 +759,7 @@ EOF;
         $aclWhereAccounts = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereUsers.$aclWhereAccounts.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereOpps . $aclWhereUsers . $aclWhereAccounts . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -786,7 +788,7 @@ EOF;
     public function action_getMarketingActivitySpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->marketingActivitiesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -824,7 +826,7 @@ EOF;
         $campaigns = BeanFactory::getBean('Campaigns');
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -848,7 +850,7 @@ EOF;
     public function action_getQuotesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->quotesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -960,9 +962,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -984,10 +986,11 @@ EOF;
         $aclWhereContacts = $this->buildSpotsAccessQuery($contacts, $contacts->table_name);
         $aclWhereProductQuotes = $this->buildSpotsAccessQuery($aosProductQuotes, $aosProductQuotes->table_name);
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
-        $aclWhereProductCategories = $this->buildSpotsAccessQuery($asoProductCategories, $asoProductCategories->table_name);
+        $aclWhereProductCategories = $this->buildSpotsAccessQuery($asoProductCategories,
+            $asoProductCategories->table_name);
         $aclWhereProducts = $this->buildSpotsAccessQuery($aosProducts, $aosProducts->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereQuotes.$aclWhereAccounts.$aclWhereContacts.$aclWhereProductQuotes.$aclWhereUsers.$aclWhereProductCategories.$aclWhereProducts;
+        $queryString = $query . $aclWhereOpps . $aclWhereQuotes . $aclWhereAccounts . $aclWhereContacts . $aclWhereProductQuotes . $aclWhereUsers . $aclWhereProductCategories . $aclWhereProducts;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {

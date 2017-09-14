@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,41 +34,44 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 
- {include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
+{include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
 
 <tr>
-	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
-	<td>
-	{if $hideLevel < 5 && empty($vardef.function)}
-		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
-	{else}
-		<input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
-	{/if}
-	</td>
-</tr>
-<tr>
-    <td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_PARENT_ENUM"}:</td>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
     <td>
-           <input type="text" id="parentenum"  name="parentenum" value="{$vardef.parentenum}" />
+        {if $hideLevel < 5 && empty($vardef.function)}
+            {html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}
+            <br>
+            <input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button'
+                   onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">
+            &nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}'
+                         class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
+        {else}
+            <input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
+        {/if}
     </td>
 </tr>
 <tr>
-	<td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
-	<td>
-	{if $hideLevel < 5}
-		<input type="checkbox" id="massupdate"  name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
-	{else}
-		<input type="checkbox" id="massupdate"  name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
-	{/if}
-	</td>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_PARENT_ENUM"}:</td>
+    <td>
+        <input type="text" id="parentenum" name="parentenum" value="{$vardef.parentenum}"/>
+    </td>
+</tr>
+<tr>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
+    <td>
+        {if $hideLevel < 5}
+            <input type="checkbox" id="massupdate" name="massupdate" value="1"
+                   {if !empty($vardef.massupdate)}checked{/if}/>
+        {else}
+            <input type="checkbox" id="massupdate" name="massupdate" value="1" disabled
+                   {if !empty($vardef.massupdate)}checked{/if}/>
+        {/if}
+    </td>
 </tr>
 {include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}

@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <form name="AdminSettings" method="POST">
     <input type="hidden" name="action" value="historyContactsEmailsSave">
@@ -45,8 +45,13 @@
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
         <tr>
             <td width="100%" colspan="2">
-                <input type="submit" id="configuratorHistoryContactsEmails_admin_save"  class="button primary" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
-                <input type="button" id="configuratorHistoryContactsEmails_admin_cancel" onclick="location.href='index.php?module=Administration&amp;action=index';" class="button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+                <input type="submit" id="configuratorHistoryContactsEmails_admin_save" class="button primary"
+                       title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}"
+                       value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+                <input type="button" id="configuratorHistoryContactsEmails_admin_cancel"
+                       onclick="location.href='index.php?module=Administration&amp;action=index';" class="button"
+                       title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}"
+                       value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
             </td>
         </tr>
     </table>
@@ -61,11 +66,13 @@
                         <td scope="row" align="right">{$entry.label}:</td>
                         <td>
                             <input type="hidden" name="modules[{$entry.module}]" value="0">
-                            <input type="checkbox" id="modules[{$entry.module}]" name="modules[{$entry.module}]" value="1" {if $entry.enabled==1}CHECKED{/if}>
+                            <input type="checkbox" id="modules[{$entry.module}]" name="modules[{$entry.module}]"
+                                   value="1" {if $entry.enabled==1}CHECKED{/if}>
                         </td>
                         {if ($i % 2)==1}</tr>{/if}
                     {/foreach}
                 </table>
-            </td></tr>
+            </td>
+        </tr>
     </table>
 </form>

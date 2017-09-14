@@ -68,7 +68,9 @@ if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
 
 
 //setting default flag value so due date and time not required
-if (!isset($focus->id)) $focus->date_due_flag = 1;
+if (!isset($focus->id)) {
+    $focus->date_due_flag = 1;
+}
 
 //needed when creating a new case with default values passed in
 if (isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
@@ -130,12 +132,16 @@ $xtpl->assign("LBL_ACCOUNT", $app_list_strings['moduleList']['Accounts']);
 $xtpl->parse("main.variable_option");
 
 $returnAction = 'index';
-if (isset($_REQUEST['return_module'])) $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+if (isset($_REQUEST['return_module'])) {
+    $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+}
 if (isset($_REQUEST['return_action'])) {
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
     $returnAction = $_REQUEST['return_action'];
 }
-if (isset($_REQUEST['return_id'])) $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+if (isset($_REQUEST['return_id'])) {
+    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+}
 // handle Create $module then Cancel
 if (empty($_REQUEST['return_id'])) {
     $xtpl->assign("RETURN_ACTION", 'index');
@@ -164,11 +170,14 @@ $popup_request_data = array(
 );
 $json = getJSONobj();
 $xtpl->assign('encoded_assigned_users_popup_request_data', $json->encode($popup_request_data));
-if (!empty($focus->assigned_user_name))
+if (!empty($focus->assigned_user_name)) {
     $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
+}
 
-$xtpl->assign("assign_user_select", SugarThemeRegistry::current()->getImage('id-ff-select', '', null, null, '.png', $mod_strings['LBL_SELECT']));
-$xtpl->assign("assign_user_clear", SugarThemeRegistry::current()->getImage('id-ff-clear', '', null, null, '.gif', $mod_strings['LBL_ID_FF_CLEAR']));
+$xtpl->assign("assign_user_select",
+    SugarThemeRegistry::current()->getImage('id-ff-select', '', null, null, '.png', $mod_strings['LBL_SELECT']));
+$xtpl->assign("assign_user_clear",
+    SugarThemeRegistry::current()->getImage('id-ff-clear', '', null, null, '.gif', $mod_strings['LBL_ID_FF_CLEAR']));
 //Assign qsd script
 require_once('include/QuickSearchDefaults.php');
 $qsd = QuickSearchDefaults::getQuickSearchDefaults();
@@ -183,27 +192,45 @@ if (!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')
     require_once('include/language/jsLanguage.php');
     jsLanguage::createAppStringsCache($GLOBALS['current_language']);
 }
-$jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']);
+$jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js",
+    $GLOBALS['sugar_config']['js_lang_version']);
 $xtpl->assign("JSLANG", $jsLang);
 
 $xtpl->assign("ID", $focus->id);
-if (isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign("NAME", "");
+if (isset($focus->name)) {
+    $xtpl->assign("NAME", $focus->name);
+} else {
+    $xtpl->assign("NAME", "");
+}
 
 //Bug45632
 /* BEGIN - SECURITY GROUPS */
 /**
  * if(isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id); else $xtpl->assign("ASSIGNED_USER_ID", "");
  */
-if (isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
-else if (empty($focus->id) && empty($focus->assigned_user_id)) {
-    $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
-    $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
-} else $xtpl->assign("ASSIGNED_USER_ID", "");
+if (isset($focus->assigned_user_id)) {
+    $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
+} else {
+    if (empty($focus->id) && empty($focus->assigned_user_id)) {
+        $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
+        $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
+    } else {
+        $xtpl->assign("ASSIGNED_USER_ID", "");
+    }
+}
 /* END - SECURITY GROUPS */
 //Bug45632
 
-if (isset($focus->description)) $xtpl->assign("DESCRIPTION", $focus->description); else $xtpl->assign("DESCRIPTION", "");
-if (isset($focus->subject)) $xtpl->assign("SUBJECT", $focus->subject); else $xtpl->assign("SUBJECT", "");
+if (isset($focus->description)) {
+    $xtpl->assign("DESCRIPTION", $focus->description);
+} else {
+    $xtpl->assign("DESCRIPTION", "");
+}
+if (isset($focus->subject)) {
+    $xtpl->assign("SUBJECT", $focus->subject);
+} else {
+    $xtpl->assign("SUBJECT", "");
+}
 if ($focus->published == 'on') {
     $xtpl->assign("PUBLISHED", "CHECKED");
 }
@@ -211,7 +238,8 @@ if ($focus->published == 'on') {
 if (isset($focus->text_only) && $focus->text_only) {
     $xtpl->assign("TEXTONLY_CHECKED", "CHECKED");
     $xtpl->assign("TEXTONLY_VALUE", "1");
-} else {//set value to 0
+} else {
+//set value to 0
     $xtpl->assign("TEXTONLY_VALUE", "0");
 }
 
@@ -226,7 +254,9 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
         $record = $_REQUEST['record'];
     }
 
-    $xtpl->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=" . $_REQUEST['action'] . "&from_module=" . $_REQUEST['module'] . "&record=" . $record . "'>" . SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT']) . "</a>");
+    $xtpl->assign("ADMIN_EDIT",
+        "<a href='index.php?action=index&module=DynamicLayout&from_action=" . $_REQUEST['action'] . "&from_module=" . $_REQUEST['module'] . "&record=" . $record . "'>" . SugarThemeRegistry::current()->getImage("EditLayout",
+            "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT']) . "</a>");
 
 }
 if (isset($focus->parent_type) && $focus->parent_type != "") {
@@ -237,15 +267,25 @@ window.open(\"index.php?module=\"+ document.EditView.parent_type.value +
     $xtpl->assign("CHANGE_PARENT_BUTTON", $change_parent_button);
 }
 if ($focus->parent_type == "Account") {
-    $xtpl->assign("DEFAULT_SEARCH", "&query=true&account_id=$focus->parent_id&account_name=" . urlencode($focus->parent_name));
+    $xtpl->assign("DEFAULT_SEARCH",
+        "&query=true&account_id=$focus->parent_id&account_name=" . urlencode($focus->parent_name));
 }
 
 $xtpl->assign("DESCRIPTION", $focus->description);
-$xtpl->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['record_type_display'], $focus->parent_type));
+$xtpl->assign("TYPE_OPTIONS",
+    get_select_options_with_id($app_list_strings['record_type_display'], $focus->parent_type));
 //$xtpl->assign("DEFAULT_MODULE","Accounts");
 
-if (isset($focus->body)) $xtpl->assign("BODY", $focus->body); else $xtpl->assign("BODY", "");
-if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); else $xtpl->assign("BODY_HTML", "");
+if (isset($focus->body)) {
+    $xtpl->assign("BODY", $focus->body);
+} else {
+    $xtpl->assign("BODY", "");
+}
+if (isset($focus->body_html)) {
+    $xtpl->assign("BODY_HTML", $focus->body_html);
+} else {
+    $xtpl->assign("BODY_HTML", "");
+}
 
 
 // ---------------------------------
@@ -256,8 +296,11 @@ if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); els
 require_once 'include/SuiteEditor/SuiteEditorConnector.php';
 $templateWidth = 600;
 $xtpl->assign('template_width', $templateWidth);
-$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
-$xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
+$xtpl->assign('BODY_EDITOR',
+    SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '',
+        $templateWidth)));
+$xtpl->assign('width_style',
+    'style="display:' . ($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row') . ';"');
 
 // ---------------------------------
 // ---------------------------------
@@ -276,7 +319,8 @@ if (true) {
     }
     ///////////////////////////////////////
     ////	MACRO VARS
-    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value, \"email_template_editor\")");
+    $xtpl->assign("INSERT_VARIABLE_ONCLICK",
+        "insert_variable(document.EditView.variable_text.value, \"email_template_editor\")");
 
     // bug 37255, included without condition
     $xtpl->parse("main.NoInbound.variable_button");
@@ -361,18 +405,22 @@ if (true) {
     if ($has_campaign) {
         if (empty($_REQUEST['record'])) {
             // new record, default to campaign
-            $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_campaigns'], 'campaign'));
+            $xtpl->assign("TYPEDROPDOWN",
+                get_select_options_with_id($app_list_strings['emailTemplates_type_list_campaigns'], 'campaign'));
         } else {
-            $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_campaigns'], $templateType));
+            $xtpl->assign("TYPEDROPDOWN",
+                get_select_options_with_id($app_list_strings['emailTemplates_type_list_campaigns'], $templateType));
         }
     } else {
         // if the type is workflow, we will show it
         // otherwise we don't allow user to select workflow type because workflow type email template
         // should be created from within workflow module because it requires more fields (such as base module, etc)
         if ($templateType == 'workflow') {
-            $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list'], $templateType));
+            $xtpl->assign("TYPEDROPDOWN",
+                get_select_options_with_id($app_list_strings['emailTemplates_type_list'], $templateType));
         } else {
-            $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
+            $xtpl->assign("TYPEDROPDOWN",
+                get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
         }
     }
     // done and parse

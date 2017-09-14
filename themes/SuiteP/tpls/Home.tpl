@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 {literal}
@@ -52,14 +52,14 @@
 
 
 <script type="text/javascript">
-    var numPages = {$numPages};
-    var theme = '{$theme}';
-    var loadedPages = new Array();
-    var activePage = {$activePage};
-    loadedPages[0] = '{$loadedPage}';
-    current_user_id = '{$current_user}';
-    jsChartsArray = new Array();
-    var moduleName = 'Home';
+  var numPages = {$numPages};
+  var theme = '{$theme}';
+  var loadedPages = new Array();
+  var activePage = {$activePage};
+  loadedPages[0] = '{$loadedPage}';
+  current_user_id = '{$current_user}';
+  jsChartsArray = new Array();
+  var moduleName = 'Home';
 </script>
 
 <script type="text/javascript"
@@ -122,7 +122,8 @@
                     <td valign='top' width='{$data.width}'>
                         <ul class='noBullet' id='col_{$activePage}_{$colNum}'>
                             <li id='page_{$activePage}_hidden{$hiddenCounter}b' style='height: 5px' class='noBullet'>
-                                &nbsp;&nbsp;&nbsp;</li>
+                                &nbsp;&nbsp;&nbsp;
+                            </li>
                             {foreach from=$data.dashlets key=id item=dashlet}
                                 <li class='noBullet' id='dashlet_{$id}'>
                                     <div id='dashlet_entire_{$id}'>
@@ -132,7 +133,8 @@
                                 </li>
                             {/foreach}
                             <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px' class='noBullet'>
-                                &nbsp;&nbsp;&nbsp;</li>
+                                &nbsp;&nbsp;&nbsp;
+                            </li>
                         </ul>
                     </td>
                     {counter}
@@ -193,36 +195,36 @@
 {if !$lock_homepage}
 {literal}
     <script type="text/javascript">
-        SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
-        SUGAR.mySugar.homepage_dd = new Array();
-        SUGAR.mySugar.init = function () {
-            j = 0;
-            {/literal}
-            dashletIds = {$dashletIds};
-            {literal}
-            for (i in dashletIds) {
-                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-                j++;
-            }
-            {/literal}
-            {if $hiddenCounter > 0}
-            for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
-                SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
-                {rdelim}
-            {/if}
-            {literal}
-
-            YAHOO.util.DDM.mode = 1;
-
-            SUGAR.mySugar.renderAddPageDialog();
-            SUGAR.mySugar.renderDashletsTree();
-            SUGAR.mySugar.renderChangeLayoutDialog();
+      SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
+      SUGAR.mySugar.homepage_dd = new Array();
+      SUGAR.mySugar.init = function () {
+        j = 0;
+          {/literal}
+        dashletIds = {$dashletIds};
+          {literal}
+        for (i in dashletIds) {
+          SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+          SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+          SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+          SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+          j++;
         }
+          {/literal}
+          {if $hiddenCounter > 0}
+        for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
+          SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
+            {rdelim}
+          {/if}
+          {literal}
 
-        YAHOO.util.Event.addListener(window, 'load', SUGAR.mySugar.init);
+        YAHOO.util.DDM.mode = 1;
+
+        SUGAR.mySugar.renderAddPageDialog();
+        SUGAR.mySugar.renderDashletsTree();
+        SUGAR.mySugar.renderChangeLayoutDialog();
+      }
+
+      YAHOO.util.Event.addListener(window, 'load', SUGAR.mySugar.init);
 
     </script>
 {/literal}

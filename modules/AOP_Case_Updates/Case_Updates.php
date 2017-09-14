@@ -223,17 +223,17 @@ function getUpdateDisplayHead(SugarBean $update)
     }
     $html = "<a href='' onclick='toggleCaseUpdate(\"" . $update->id . "\");return false;'>";
     $html .= "<img  id='caseUpdate" .
-             $update->id .
-             "Image' class='caseUpdateImage' src='" .
-             SugarThemeRegistry::current()->getImageURL('basic_search.gif') .
-             "'>";
+        $update->id .
+        "Image' class='caseUpdateImage' src='" .
+        SugarThemeRegistry::current()->getImageURL('basic_search.gif') .
+        "'>";
     $html .= '</a>';
     $html .= '<span>' .
-             ($update->internal ? '<strong>' . $mod_strings['LBL_INTERNAL'] . '</strong> ' : '') .
-             $name .
-             ' ' .
-             $update->date_entered .
-             '</span><br>';
+        ($update->internal ? '<strong>' . $mod_strings['LBL_INTERNAL'] . '</strong> ' : '') .
+        $name .
+        ' ' .
+        $update->date_entered .
+        '</span><br>';
     $notes = $update->get_linked_beans('notes', 'Notes');
     if ($notes) {
         $html .= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];

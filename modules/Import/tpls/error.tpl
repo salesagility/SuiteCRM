@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,69 +34,68 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <script type="text/javascript" src="{sugar_getjspath file='include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <script>
 
-    //set the variables
-    var modalBod = "{$MESSAGE}";
-    var cnfgtitle = '{$MOD.LBL_ERROR}';
-    var startOverLBL = '{$MOD.LBL_TRY_AGAIN}';
-    var cancelLBL = '{$MOD.LBL_CANCEL}';
-    var actionVAR = '{$ACTION}';
-    var importModuleVAR = '{$IMPORT_MODULE}';
-    var sourceVAR = '{$SOURCE}';
-    var showCancelVAR = '{$SHOWCANCEL}';
-    {if !empty($CANCELLABEL)}
-        cancelLBL = '{$CANCELLABEL}';
-    {/if}
+  //set the variables
+  var modalBod = "{$MESSAGE}";
+  var cnfgtitle = '{$MOD.LBL_ERROR}';
+  var startOverLBL = '{$MOD.LBL_TRY_AGAIN}';
+  var cancelLBL = '{$MOD.LBL_CANCEL}';
+  var actionVAR = '{$ACTION}';
+  var importModuleVAR = '{$IMPORT_MODULE}';
+  var sourceVAR = '{$SOURCE}';
+  var showCancelVAR = '{$SHOWCANCEL}';
+  {if !empty($CANCELLABEL)}
+  cancelLBL = '{$CANCELLABEL}';
+  {/if}
 
-{literal}
-    //function called when 'start over' button is pressed
-    var chooseToStartOver = function() {
-        //hide the modal and redirect window to previous step
-        this.hide();
-        document.location.href='index.php?module=Import&action='+actionVAR+'&import_module='+importModuleVAR+'&source='+sourceVAR;
-        //SUGAR.importWizard.renderDialog(importModuleVAR,actionVAR,sourceVAR);
-    };
-    var chooseToCancel = function() {
-        //do nothing, just hide the modal
-        this.hide();
-    };
+  {literal}
+  //function called when 'start over' button is pressed
+  var chooseToStartOver = function () {
+    //hide the modal and redirect window to previous step
+    this.hide();
+    document.location.href = 'index.php?module=Import&action=' + actionVAR + '&import_module=' + importModuleVAR + '&source=' + sourceVAR;
+    //SUGAR.importWizard.renderDialog(importModuleVAR,actionVAR,sourceVAR);
+  };
+  var chooseToCancel = function () {
+    //do nothing, just hide the modal
+    this.hide();
+  };
 
-    //define the buttons to be used in modal popup
-    var importButtons = '';
-    if(showCancelVAR){
-        importButtons = [{ text: startOverLBL, handler: chooseToStartOver, isDefault:true },{ text:cancelLBL, handler: chooseToCancel}];
-    }else{
-        importButtons = [{ text: startOverLBL, handler: chooseToStartOver, isDefault:true }];
-    }
+  //define the buttons to be used in modal popup
+  var importButtons = '';
+  if (showCancelVAR) {
+    importButtons = [{text: startOverLBL, handler: chooseToStartOver, isDefault: true}, {
+      text: cancelLBL,
+      handler: chooseToCancel
+    }];
+  } else {
+    importButtons = [{text: startOverLBL, handler: chooseToStartOver, isDefault: true}];
+  }
 
-    //define import error modal window
-    ImportErrorBox = new YAHOO.widget.SimpleDialog('importMsgWindow', {
-        type : 'alert',
-        modal: true,
-        width: '350px',
-        id: 'importMsgWindow',
-        close: true,
-        visible: true,
-        fixedcenter: true,
-        constraintoviewport: true,
-        draggable: true,
-        buttons: importButtons
-    });
-{/literal}
-    //display the window
-    ImportErrorBox.setHeader(cnfgtitle);
-    ImportErrorBox.setBody(modalBod);
-    ImportErrorBox.render(document.body);
-    ImportErrorBox.show();
+  //define import error modal window
+  ImportErrorBox = new YAHOO.widget.SimpleDialog('importMsgWindow', {
+    type: 'alert',
+    modal: true,
+    width: '350px',
+    id: 'importMsgWindow',
+    close: true,
+    visible: true,
+    fixedcenter: true,
+    constraintoviewport: true,
+    draggable: true,
+    buttons: importButtons
+  });
+  {/literal}
+  //display the window
+  ImportErrorBox.setHeader(cnfgtitle);
+  ImportErrorBox.setBody(modalBod);
+  ImportErrorBox.render(document.body);
+  ImportErrorBox.show();
 
 </script>

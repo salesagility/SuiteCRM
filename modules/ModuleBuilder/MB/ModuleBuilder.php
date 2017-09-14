@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,123 +34,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
-
-define ( 'MB_PACKAGE_PATH', 'custom/modulebuilder/packages' ) ;
+define('MB_PACKAGE_PATH', 'custom/modulebuilder/packages');
 define('MB_PACKAGE_BUILD', 'custom' . DIRECTORY_SEPARATOR . 'modulebuilder' . DIRECTORY_SEPARATOR . 'builds');
-require_once ('modules/ModuleBuilder/MB/MBPackage.php') ;
+require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
 class ModuleBuilder
 {
-    var $packages = array ( ) ;
-
-    function getPackageList ()
-    {
-        static $list = array ( ) ;
-        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH ))
-            return $list ;
-        $d = dir ( MB_PACKAGE_PATH ) ;
-        while ( $e = $d->read () )
-        {
-            if (file_exists ( MB_PACKAGE_PATH . '/' . $e . '/manifest.php' ))
-            {
-                $list [] = $e ;
-            }
-        }
-        sort ( $list ) ; // order important as generate_nodes_array in Tree.php later loops over this by foreach to generate the package list
-        return $list ;
-    
-    }
-
-    /**
-     * @param $name
-     * @return MBPackage
-     */
-    function getPackage ($name)
-    {
-        if (empty ( $this->packages [ $name ] ))
-            $this->packages [ $name ] = new MBPackage ( $name ) ;
-
-        return $this->packages [ $name ] ;
-    }
-    
-    function getPackageKey ($name)
-    {
-        $manifestPath = MB_PACKAGE_PATH . '/' . $name . '/manifest.php' ;
-        if (file_exists ( $manifestPath ))
-        {
-            require( $manifestPath ) ;
-            if(!empty($manifest))
-                return $manifest['key'];
-        }
-        return false ;
-    }
-
-    function &getPackageModule ($package , $module)
-    {
-        $this->getPackage ( $package ) ;
-        $this->packages [ $package ]->getModule ( $module ) ;
-        return $this->packages [ $package ]->modules [ $module ] ;
-    }
-
-    function save ()
-    {
-        $packages = array_keys ( $this->packages ) ;
-        foreach ( $packages as $package )
-        {
-            $this->packages [ $package ]->save () ;
-        }
-    }
-
-    function build ()
-    {
-        $packages = array_keys ( $this->packages ) ;
-        foreach ( $packages as $package )
-        {
-            if (count ( $packages ) == 1)
-            {
-                $this->packages [ $package ]->build ( true ) ;
-            } else
-            {
-                $this->packages [ $package ]->build ( false ) ;
-            }
-        }
-    }
-
-    function getPackages ()
-    {
-        if (empty ( $this->packages ))
-        {
-            $list = $this->getPackageList () ;
-            foreach ( $list as $package )
-            {
-                if (! empty ( $this->packages [ $package ] ))
-                    continue ;
-                $this->packages [ $package ] = new MBPackage ( $package ) ;
-            }
-        }
-    }
-
-    function getNodes ()
-    {
-        $this->getPackages () ;
-        $nodes = array ( ) ;
-        foreach ( array_keys ( $this->packages ) as $name )
-        {
-            $nodes [] = $this->packages [ $name ]->getNodes () ;
-        }
-        return $nodes ;
-    }
+    public $packages = array();
 
     /**
      * Function return module name and this aliases
@@ -166,11 +64,107 @@ class ModuleBuilder
             'Employees' => 'Users'
         );
 
-        if (isset($relate_arr[$module])){
+        if (isset($relate_arr[$module])) {
             $aliases[] = $relate_arr[$module];
         }
 
         return $aliases;
+    }
+
+    function getPackageKey($name)
+    {
+        $manifestPath = MB_PACKAGE_PATH . '/' . $name . '/manifest.php';
+        if (file_exists($manifestPath)) {
+            require($manifestPath);
+            if (!empty($manifest)) {
+                return $manifest['key'];
+            }
+        }
+
+        return false;
+    }
+
+    function &getPackageModule($package, $module)
+    {
+        $this->getPackage($package);
+        $this->packages [$package]->getModule($module);
+
+        return $this->packages [$package]->modules [$module];
+    }
+
+    /**
+     * @param $name
+     * @return MBPackage
+     */
+    function getPackage($name)
+    {
+        if (empty ($this->packages [$name])) {
+            $this->packages [$name] = new MBPackage ($name);
+        }
+
+        return $this->packages [$name];
+    }
+
+    function save()
+    {
+        $packages = array_keys($this->packages);
+        foreach ($packages as $package) {
+            $this->packages [$package]->save();
+        }
+    }
+
+    function build()
+    {
+        $packages = array_keys($this->packages);
+        foreach ($packages as $package) {
+            if (count($packages) == 1) {
+                $this->packages [$package]->build(true);
+            } else {
+                $this->packages [$package]->build(false);
+            }
+        }
+    }
+
+    function getNodes()
+    {
+        $this->getPackages();
+        $nodes = array();
+        foreach (array_keys($this->packages) as $name) {
+            $nodes [] = $this->packages [$name]->getNodes();
+        }
+
+        return $nodes;
+    }
+
+    function getPackages()
+    {
+        if (empty ($this->packages)) {
+            $list = $this->getPackageList();
+            foreach ($list as $package) {
+                if (!empty ($this->packages [$package])) {
+                    continue;
+                }
+                $this->packages [$package] = new MBPackage ($package);
+            }
+        }
+    }
+
+    function getPackageList()
+    {
+        static $list = array();
+        if (!empty ($list) || !file_exists(MB_PACKAGE_PATH)) {
+            return $list;
+        }
+        $d = dir(MB_PACKAGE_PATH);
+        while ($e = $d->read()) {
+            if (file_exists(MB_PACKAGE_PATH . '/' . $e . '/manifest.php')) {
+                $list [] = $e;
+            }
+        }
+        sort($list); // order important as generate_nodes_array in Tree.php later loops over this by foreach to generate the package list
+
+        return $list;
+
     }
 
 }

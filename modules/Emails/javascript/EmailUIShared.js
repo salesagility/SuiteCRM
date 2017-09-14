@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,43 +33,43 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 SUGAR.email2 = {
-    cache : new Object(),
-    o : null, // holder for reference to AjaxObject's return object (used in composeDraft())
-    reGUID : new RegExp(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/i),
-    templates : {},
-    tinyInstances : {
-        currentHtmleditor : ''
-    },
+  cache: new Object(),
+  o: null, // holder for reference to AjaxObject's return object (used in composeDraft())
+  reGUID: new RegExp(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/i),
+  templates: {},
+  tinyInstances: {
+    currentHtmleditor: ''
+  },
 
-    /**
-     * preserves hits from email server
-     */ 
-    _setDetailCache : function(ret) {
-        if(ret.meta) {
-            var compKey = ret.meta.mbox + ret.meta.uid;
+  /**
+   * preserves hits from email server
+   */
+  _setDetailCache: function (ret) {
+    if (ret.meta) {
+      var compKey = ret.meta.mbox + ret.meta.uid;
 
-            if(!SUGAR.email2.cache[compKey]) {
-                SUGAR.email2.cache[compKey] = ret;
-            }
-        }
-    },
-
-    autoSetLayout : function() {
-    	var c = document.getElementById('container');
-        var tHeight = YAHOO.util.Dom.getViewportHeight() - YAHOO.util.Dom.getY(c) - 35;
-        //Ensure a minimum height.
-        tHeight = Math.max(tHeight, 550);
-        c.style.height = tHeight + "px";
-        SUGAR.email2.complexLayout.set('height', tHeight);
-        SUGAR.email2.complexLayout.set('width', YAHOO.util.Dom.getViewportWidth() - 40);
-        SUGAR.email2.complexLayout.render();
-        SUGAR.email2.listViewLayout.resizePreview();        
+      if (!SUGAR.email2.cache[compKey]) {
+        SUGAR.email2.cache[compKey] = ret;
+      }
     }
+  },
+
+  autoSetLayout: function () {
+    var c = document.getElementById('container');
+    var tHeight = YAHOO.util.Dom.getViewportHeight() - YAHOO.util.Dom.getY(c) - 35;
+    //Ensure a minimum height.
+    tHeight = Math.max(tHeight, 550);
+    c.style.height = tHeight + "px";
+    SUGAR.email2.complexLayout.set('height', tHeight);
+    SUGAR.email2.complexLayout.set('width', YAHOO.util.Dom.getViewportWidth() - 40);
+    SUGAR.email2.complexLayout.render();
+    SUGAR.email2.listViewLayout.resizePreview();
+  }
 };
 
 
@@ -77,23 +78,23 @@ SUGAR.email2 = {
  */
 
 //overlayModal
-SUGAR.showMessageBoxModal = function(title, body) {
-    SUGAR.showMessageBox(title, body);
+SUGAR.showMessageBoxModal = function (title, body) {
+  SUGAR.showMessageBox(title, body);
 }
 
 //overlay
-SUGAR.showMessageBox = function(reqtitle, body, type, additconfig) {
-    var config = { };
-    if (typeof(additconfig) == "object") {
-        var config = additconfig;
-    }
-    config.type = type;
-    config.title = reqtitle;
-    config.msg = body;
-    YAHOO.SUGAR.MessageBox.show(config);
+SUGAR.showMessageBox = function (reqtitle, body, type, additconfig) {
+  var config = {};
+  if (typeof(additconfig) == "object") {
+    var config = additconfig;
+  }
+  config.type = type;
+  config.title = reqtitle;
+  config.msg = body;
+  YAHOO.SUGAR.MessageBox.show(config);
 }
 
 //hideOverlay
-SUGAR.hideMessageBox = function() {
-	YAHOO.SUGAR.MessageBox.hide();
+SUGAR.hideMessageBox = function () {
+  YAHOO.SUGAR.MessageBox.hide();
 };

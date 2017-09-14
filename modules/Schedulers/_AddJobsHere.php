@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Set up an array of Jobs with the appropriate metadata
@@ -93,7 +96,10 @@ function refreshJobs()
 function pollMonitoredInboxes()
 {
 
-    $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
+    $_bck_up = array(
+        'team_id' => $GLOBALS['current_user']->team_id,
+        'team_set_id' => $GLOBALS['current_user']->team_set_id
+    );
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxes()');
     global $dictionary;
     global $app_strings;
@@ -240,7 +246,8 @@ function pollMonitoredInboxes()
                         if ($ieX->isPop3Protocol()) {
                             $ieX->deleteMessageOnMailServerForPop3(implode(",", $messagesToDelete));
                         } else {
-                            $ieX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'], $messagesToDelete));
+                            $ieX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'],
+                                $messagesToDelete));
                         }
                     }
                 }
@@ -252,6 +259,7 @@ function pollMonitoredInboxes()
         imap_expunge($ieX->conn);
         imap_close($ieX->conn, CL_EXPUNGE);
     } // while;
+
     return true;
 }
 
@@ -279,6 +287,7 @@ function runMassEmailCampaign()
     }
 
     require('modules/EmailMan/EmailManDelivery.php');
+
     return true;
 }
 
@@ -300,7 +309,9 @@ function pruneDatabase()
             // find tables with deleted=1
             $columns = $db->get_columns($table);
             // no deleted - won't delete
-            if (empty($columns['deleted'])) continue;
+            if (empty($columns['deleted'])) {
+                continue;
+            }
 
             $custom_columns = array();
             if (array_search($table . '_cstm', $tables)) {
@@ -342,8 +353,10 @@ function pruneDatabase()
         // write cache file
 
         write_array_to_file('pruneDatabase', $queryString, $backupDir . '/' . $backupFile);
+
         return true;
     }
+
     return false;
 }
 
@@ -377,7 +390,8 @@ function trimTracker()
             continue;
         }
 
-        $timeStamp = db_convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+        $timeStamp = db_convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'",
+            "datetime");
         if ($tableName == 'tracker_sessions') {
             $query = "DELETE FROM $tableName WHERE date_end < $timeStamp";
         } else {
@@ -387,6 +401,7 @@ function trimTracker()
         $GLOBALS['log']->info("----->Scheduler is about to trim the $tableName table by running the query $query");
         $db->query($query);
     } //foreach
+
     return true;
 }
 
@@ -421,6 +436,7 @@ function sendEmailReminders()
     $GLOBALS['log']->info('----->Scheduler fired job of type sendEmailReminders()');
     require_once("modules/Activities/EmailReminder.php");
     $reminder = new EmailReminder();
+
     return $reminder->process();
 }
 
@@ -475,7 +491,8 @@ function removeDocumentsFromFS()
                 $return = false;
             }
         } else {
-            $db->query('UPDATE ' . $tableName . ' SET date_modified=' . $db->convert($db->quoted(TimeDate::getInstance()->nowDb()), 'datetime') . ' WHERE id=' . $db->quoted($row['id']));
+            $db->query('UPDATE ' . $tableName . ' SET date_modified=' . $db->convert($db->quoted(TimeDate::getInstance()->nowDb()),
+                    'datetime') . ' WHERE id=' . $db->quoted($row['id']));
         }
     }
 
@@ -499,7 +516,8 @@ function trimSugarFeeds()
 
 
     //create and run the query to delete the records
-    $timeStamp = $db->convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+    $timeStamp = $db->convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'",
+        "datetime");
     $query = "DELETE FROM sugarfeed WHERE date_modified < $timeStamp";
 
 
@@ -519,14 +537,17 @@ function cleanJobQueue($job)
         $soft_cutoff = $GLOBALS['sugar_config']['jobs']['soft_lifetime'];
     }
     $soft_cutoff_date = $job->db->quoted($td->getNow()->modify("- $soft_cutoff days")->asDb());
-    $job->db->query("UPDATE {$job->table_name} SET deleted=1 WHERE status='done' AND date_modified < " . $job->db->convert($soft_cutoff_date, 'datetime'));
+    $job->db->query("UPDATE {$job->table_name} SET deleted=1 WHERE status='done' AND date_modified < " . $job->db->convert($soft_cutoff_date,
+            'datetime'));
     // hard delete all jobs that are older than hard cutoff
     $hard_cutoff = 21;
     if (isset($GLOBALS['sugar_config']['jobs']['hard_lifetime'])) {
         $hard_cutoff = $GLOBALS['sugar_config']['jobs']['hard_lifetime'];
     }
     $hard_cutoff_date = $job->db->quoted($td->getNow()->modify("- $hard_cutoff days")->asDb());
-    $job->db->query("DELETE FROM {$job->table_name} WHERE status='done' AND date_modified < " . $job->db->convert($hard_cutoff_date, 'datetime'));
+    $job->db->query("DELETE FROM {$job->table_name} WHERE status='done' AND date_modified < " . $job->db->convert($hard_cutoff_date,
+            'datetime'));
+
     return true;
 }
 
@@ -541,7 +562,7 @@ function pollMonitoredInboxesAOP()
     require_once('modules/Configurator/Configurator.php');
     $aopInboundEmail = new AOPInboundEmail();
     $sqlQueryResult = $aopInboundEmail->db->query(
-        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\''.
+        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\'' .
         ' AND mailbox_type != \'bounce\''
     );
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
@@ -644,7 +665,8 @@ function pollMonitoredInboxesAOP()
                         if ($aopInboundEmailX->isPop3Protocol()) {
                             $aopInboundEmailX->deleteMessageOnMailServerForPop3(implode(",", $messagesToDelete));
                         } else {
-                            $aopInboundEmailX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'], $messagesToDelete));
+                            $aopInboundEmailX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'],
+                                $messagesToDelete));
                         }
                     }
                 }
@@ -656,6 +678,7 @@ function pollMonitoredInboxesAOP()
         imap_expunge($aopInboundEmailX->conn);
         imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
     } // while
+
     return true;
 }
 
@@ -670,10 +693,11 @@ function aodIndexUnindexed()
     while ($total > 0) {
         $total = performLuceneIndexing();
         $sanityCount++;
-        if($sanityCount > 100){
+        if ($sanityCount > 100) {
             return true;
         }
     }
+
     return true;
 }
 
@@ -681,6 +705,7 @@ function aodOptimiseIndex()
 {
     $index = BeanFactory::getBean("AOD_Index")->getIndex();
     $index->optimise();
+
     return true;
 }
 
@@ -700,12 +725,12 @@ function performLuceneIndexing()
         if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
             continue;
         }
-        $query = "SELECT b.id FROM ".$bean->getTableName()." b LEFT JOIN aod_indexevent ie ON (ie.record_id = b.id AND ie.record_module = '".$beanModule."') WHERE b.deleted = 0 AND (ie.id IS NULL OR ie.date_modified < b.date_modified) ORDER BY b.date_modified ASC";
+        $query = "SELECT b.id FROM " . $bean->getTableName() . " b LEFT JOIN aod_indexevent ie ON (ie.record_id = b.id AND ie.record_module = '" . $beanModule . "') WHERE b.deleted = 0 AND (ie.id IS NULL OR ie.date_modified < b.date_modified) ORDER BY b.date_modified ASC";
         $res = $db->limitQuery($query, 0, 500);
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
             $suc = $index->index($beanModule, $row['id']);
-            if($suc){
+            if ($suc) {
                 $c++;
                 $total++;
             }
@@ -717,6 +742,7 @@ function performLuceneIndexing()
 
     }
     $index->optimise();
+
     return $total;
 }
 
@@ -739,13 +765,15 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;  
+
+    return true;
 }
 
 function processAOW_Workflow()
 {
     require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
     $workflow = new AOW_WorkFlow();
+
     return $workflow->run_flows();
 }
 
@@ -812,6 +840,7 @@ EOF;
         }
         $bean->last_run = $timedate->getNow()->asDb(false);
         $bean->save();
+
         return true;
     }
 }

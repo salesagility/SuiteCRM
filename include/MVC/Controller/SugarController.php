@@ -45,13 +45,14 @@ require_once('include/MVC/View/SugarView.php');
 class SugarController
 {
     /**
-     * @var array $action_remap
-     * remap actions in here
-     * e.g. make all detail views go to edit views
-     * $action_remap = array('detailview'=>'editview');
+     * Map case sensitive filenames to action.  This is used for linux/unix systems
+     * where filenames are case sensitive
      */
-    protected $action_remap = array('index' => 'listview');
-
+    public static $action_case_file = array(
+        'editview' => 'EditView',
+        'detailview' => 'DetailView',
+        'listview' => 'ListView'
+    );
     /**
      * @var string $module
      * The name of the current module.
@@ -93,46 +94,26 @@ class SugarController
      * The id of the return record.
      */
     public $return_id = null;
-
-    /**
-     * @var string $do_action
-     * If the action was remapped it will be set to do_action and then we will just
-     * use do_action for the actual action to perform.
-     */
-    protected $do_action = 'index';
-
     /**
      * @var SugarBean|null $bean
      * If a bean is present that set it.*
      */
     public $bean = null;
-
     /**
      * @var string $redirect_url
      * url to redirect to
      */
     public $redirect_url = '';
-
     /**
      * @var string $view
      * any subcontroller can modify this to change the view
      */
     public $view = 'classic';
-
     /**
      * @var array $view_object_map
      * this array will hold the mappings between a key and an object for use within the view.
      */
     public $view_object_map = array();
-
-    /**
-     * This array holds the methods that handleAction() will invoke, in sequence.
-     */
-    protected $tasks = array(
-        'pre_action',
-        'do_action',
-        'post_action'
-    );
     /**
      * @var array $process_tasks
      * List of options to run through within the process() method.
@@ -148,51 +129,52 @@ class SugarController
         'handleActionMaps',
     );
     /**
+     * This can be set from the application to tell us whether we have authorization to
+     * process the action. If this is set we will default to the noaccess view.
+     * @var bool
+     */
+    public $hasAccess;
+    /**
+     * @var array $action_remap
+     * remap actions in here
+     * e.g. make all detail views go to edit views
+     * $action_remap = array('detailview'=>'editview');
+     */
+    protected $action_remap = array('index' => 'listview');
+    /**
+     * @var string $do_action
+     * If the action was remapped it will be set to do_action and then we will just
+     * use do_action for the actual action to perform.
+     */
+    protected $do_action = 'index';
+    /**
+     * Map an action directly to a file
+     */
+    /**
+     * This array holds the methods that handleAction() will invoke, in sequence.
+     */
+    protected $tasks = array(
+        'pre_action',
+        'do_action',
+        'post_action'
+    );
+    /**
+     * Map an action directly to a view
+     */
+    /**
      * Whether or not the action has been handled by $process_tasks
      *
      * @var bool
      */
     protected $_processed = false;
     /**
-     * Map an action directly to a file
-     */
-    /**
      * Map an action directly to a file. This will be loaded from action_file_map.php
      */
     protected $action_file_map = array();
     /**
-     * Map an action directly to a view
-     */
-    /**
      * Map an action directly to a view. This will be loaded from action_view_map.php
      */
     protected $action_view_map = array();
-
-    /**
-     * This can be set from the application to tell us whether we have authorization to
-     * process the action. If this is set we will default to the noaccess view.
-     * @var bool
-     */
-    public $hasAccess;
-
-    /**
-     * Map case sensitive filenames to action.  This is used for linux/unix systems
-     * where filenames are case sensitive
-     */
-    public static $action_case_file = array(
-        'editview' => 'EditView',
-        'detailview' => 'DetailView',
-        'listview' => 'ListView'
-    );
-
-    /**
-     * Constructor. This ie meant to load up the module, action, record as well
-     * as the mapping arrays.
-     */
-    public function __construct()
-    {
-        $this->hasAccess = true;
-    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -208,6 +190,14 @@ class SugarController
         self::__construct();
     }
 
+    /**
+     * Constructor. This ie meant to load up the module, action, record as well
+     * as the mapping arrays.
+     */
+    public function __construct()
+    {
+        $this->hasAccess = true;
+    }
 
     /**
      * Called from SugarApplication and is meant to perform the setup operations
@@ -285,40 +275,6 @@ class SugarController
     }
 
     /**
-     * Allows action to be pass XSS protection check provide that the action exists in the SugarController
-     *
-     * @param string $action
-     */
-    protected function allowAction($action)
-    {
-        if ($this->hasFunction($this->getActionMethodName())) {
-            $GLOBALS['sugar_config']['http_referer']['actions'][] = $action;
-        } else {
-            $GLOBALS['log']->debug("Unable to find SugarController:: $action");
-        }
-    }
-
-    /**
-     * Given a record id load the bean. This bean is accessible from any sub controllers.
-     */
-    public function loadBean()
-    {
-        if (!empty($GLOBALS['beanList'][$this->module])) {
-            $class = $GLOBALS['beanList'][$this->module];
-            if (!empty($GLOBALS['beanFiles'][$class])) {
-                require_once($GLOBALS['beanFiles'][$class]);
-                $this->bean = new $class();
-                if (!empty($this->record)) {
-                    $this->bean->retrieve($this->record);
-                    if ($this->bean) {
-                        $GLOBALS['FOCUS'] = $this->bean;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Generic load method to load mapping arrays.
      */
     private function loadMapping($var, $merge = false)
@@ -359,6 +315,39 @@ class SugarController
     }
 
     /**
+     * Allows action to be pass XSS protection check provide that the action exists in the SugarController
+     *
+     * @param string $action
+     */
+    protected function allowAction($action)
+    {
+        if ($this->hasFunction($this->getActionMethodName())) {
+            $GLOBALS['sugar_config']['http_referer']['actions'][] = $action;
+        } else {
+            $GLOBALS['log']->debug("Unable to find SugarController:: $action");
+        }
+    }
+
+    /**
+     * Determine if a given function exists on the objects
+     * @param function - the function to check
+     * @return true if the method exists on the object, false otherwise
+     */
+    protected function hasFunction($function)
+    {
+        return method_exists($this, $function);
+    }
+
+    /**
+     * @param $action
+     * @return string
+     */
+    protected function getActionMethodName()
+    {
+        return 'action_' . strtolower($this->do_action);
+    }
+
+    /**
      * This method is called from SugarApplication->execute and it will bootstrap the entire controller process
      */
     final public function execute()
@@ -376,63 +365,6 @@ class SugarController
         }
 
 
-    }
-
-    protected function showException(Exception $e)
-    {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
-        $GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
-        if ($prev = $e->getPrevious()) {
-            $GLOBALS['log']->fatal("Previous:\n");
-            $this->showException($prev);
-        }
-    }
-
-    /**
-     * Handle exception
-     * @param Exception $e
-     */
-    protected function handleException(Exception $e)
-    {
-        $GLOBALS['log']->fatal("Exception handling in " . __FILE__ . ':' . __LINE__);
-        $this->showException($e);
-        $logicHook = new LogicHook();
-
-        if (isset($this->bean)) {
-            $logicHook->setBean($this->bean);
-            $logicHook->call_custom_logic($this->bean->module_dir, "handle_exception", $e);
-        } else {
-            $logicHook->call_custom_logic('', "handle_exception", $e);
-        }
-    }
-
-    /**
-     * Display the appropriate view.
-     */
-    private function processView()
-    {
-        if (!isset($this->view_object_map['remap_action']) && isset($this->action_view_map[strtolower($this->action)])) {
-            $this->view_object_map['remap_action'] = $this->action_view_map[strtolower($this->action)];
-        }
-        $view = ViewFactory::loadView($this->view, $this->module, $this->bean, $this->view_object_map,
-            $this->target_module);
-        $GLOBALS['current_view'] = $view;
-        if (!empty($this->bean) && !$this->bean->ACLAccess($view->type) && $view->type != 'list') {
-            ACLController::displayNoAccess(true);
-            sugar_cleanup(true);
-        }
-        if (isset($this->errors)) {
-            $view->errors = $this->errors;
-        }
-        $view->process();
-    }
-
-    /**
-     * Meant to be overridden by a subclass and allows for specific functionality to be
-     * injected prior to the process() method being called.
-     */
-    public function preProcess()
-    {
     }
 
     /**
@@ -471,140 +403,35 @@ class SugarController
     }
 
     /**
-     * This method is called from the process method. I could also be called within an action_* method.
-     * It allows a developer to override any one of these methods contained within,
-     * or if the developer so chooses they can override the entire action_* method.
-     *
-     * @return true if any one of the pre_, do_, or post_ methods have been defined,
-     * false otherwise.  This is important b/c if none of these methods exists, then we will run the
-     * action_default() method.
+     * getActionFilename
      */
-    protected function handle_action()
+    public static function getActionFilename($action)
     {
-        $processed = false;
-        foreach ($this->tasks as $task) {
-            $processed = ($this->$task() || $processed);
-        }
-        $this->_processed = $processed;
-    }
-
-    /**
-     * Perform an action prior to the specified action.
-     * This can be overridde in a sub-class
-     */
-    private function pre_action()
-    {
-        $function = $this->getPreActionMethodName();
-        if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing pre_action');
-            $this->$function();
-
-            return true;
+        if (isset(self::$action_case_file[$action])) {
+            return self::$action_case_file[$action];
         }
 
-        return false;
+        return $action;
     }
 
     /**
-     * Perform the specified action.
-     * This can be overridde in a sub-class
+     * Given a record id load the bean. This bean is accessible from any sub controllers.
      */
-    private function do_action()
+    public function loadBean()
     {
-
-        $function = $this->getActionMethodName();
-        if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing action: ' . $function . ' MODULE: ' . $this->module);
-            $this->$function();
-
-            return true;
+        if (!empty($GLOBALS['beanList'][$this->module])) {
+            $class = $GLOBALS['beanList'][$this->module];
+            if (!empty($GLOBALS['beanFiles'][$class])) {
+                require_once($GLOBALS['beanFiles'][$class]);
+                $this->bean = new $class();
+                if (!empty($this->record)) {
+                    $this->bean->retrieve($this->record);
+                    if ($this->bean) {
+                        $GLOBALS['FOCUS'] = $this->bean;
+                    }
+                }
+            }
         }
-
-        return false;
-    }
-
-    /**
-     * Perform an action after to the specified action has occurred.
-     * This can be overridde in a sub-class
-     */
-    private function post_action()
-    {
-        $function = $this->getPostActionMethodName();
-        if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing post_action');
-            $this->$function();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * If there is no action found then display an error to the user.
-     */
-    protected function no_action()
-    {
-        sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
-    }
-
-    /**
-     * The default action handler for instances where we do not have access to process.
-     */
-    protected function no_access()
-    {
-        $this->view = 'noaccess';
-    }
-
-    ///////////////////////////////////////////////
-    /////// HELPER FUNCTIONS
-    ///////////////////////////////////////////////
-
-    /**
-     * Determine if a given function exists on the objects
-     * @param function - the function to check
-     * @return true if the method exists on the object, false otherwise
-     */
-    protected function hasFunction($function)
-    {
-        return method_exists($this, $function);
-    }
-
-    /**
-     * @param $action
-     * @return string
-     */
-    protected function getPreActionMethodName()
-    {
-        return 'pre_' . $this->action;
-    }
-
-    /**
-     * @param $action
-     * @return string
-     */
-    protected function getActionMethodName()
-    {
-        return 'action_' . strtolower($this->do_action);
-    }
-
-    /**
-     * @param $action
-     * @return string
-     */
-    protected function getPostActionMethodName()
-    {
-        return 'post_' . strtolower($this->action);
-    }
-
-    /**
-     * Set the url to which we will want to redirect
-     *
-     * @param string url - the url to which we will want to redirect
-     */
-    protected function set_redirect($url)
-    {
-        $this->redirect_url = $url;
     }
 
     /**
@@ -619,13 +446,70 @@ class SugarController
         }
     }
 
-    ////////////////////////////////////////////////////////
-    ////// DEFAULT ACTIONS
-    ///////////////////////////////////////////////////////
-
-    /*
-     * Save a bean
+    /**
+     * The default action handler for instances where we do not have access to process.
      */
+    protected function no_access()
+    {
+        $this->view = 'noaccess';
+    }
+
+    /**
+     * Display the appropriate view.
+     */
+    private function processView()
+    {
+        if (!isset($this->view_object_map['remap_action']) && isset($this->action_view_map[strtolower($this->action)])) {
+            $this->view_object_map['remap_action'] = $this->action_view_map[strtolower($this->action)];
+        }
+        $view = ViewFactory::loadView($this->view, $this->module, $this->bean, $this->view_object_map,
+            $this->target_module);
+        $GLOBALS['current_view'] = $view;
+        if (!empty($this->bean) && !$this->bean->ACLAccess($view->type) && $view->type != 'list') {
+            ACLController::displayNoAccess(true);
+            sugar_cleanup(true);
+        }
+        if (isset($this->errors)) {
+            $view->errors = $this->errors;
+        }
+        $view->process();
+    }
+
+    /**
+     * Handle exception
+     * @param Exception $e
+     */
+    protected function handleException(Exception $e)
+    {
+        $GLOBALS['log']->fatal("Exception handling in " . __FILE__ . ':' . __LINE__);
+        $this->showException($e);
+        $logicHook = new LogicHook();
+
+        if (isset($this->bean)) {
+            $logicHook->setBean($this->bean);
+            $logicHook->call_custom_logic($this->bean->module_dir, "handle_exception", $e);
+        } else {
+            $logicHook->call_custom_logic('', "handle_exception", $e);
+        }
+    }
+
+    protected function showException(Exception $e)
+    {
+        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+        $GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+        if ($prev = $e->getPrevious()) {
+            $GLOBALS['log']->fatal("Previous:\n");
+            $this->showException($prev);
+        }
+    }
+
+    /**
+     * Meant to be overridden by a subclass and allows for specific functionality to be
+     * injected prior to the process() method being called.
+     */
+    public function preProcess()
+    {
+    }
 
     /**
      * Do some processing before saving the bean to the database.
@@ -670,6 +554,10 @@ class SugarController
         }
     }
 
+    ///////////////////////////////////////////////
+    /////// HELPER FUNCTIONS
+    ///////////////////////////////////////////////
+
     /**
      * Perform the actual save
      */
@@ -678,12 +566,47 @@ class SugarController
         $this->bean->save(!empty($this->bean->notify_on_save));
     }
 
-
     public function action_spot()
     {
         $this->view = 'spot';
     }
 
+    /**
+     * Checks to see if the requested entry point requires auth
+     *
+     * @param  $entrypoint string name of the entrypoint
+     * @return bool true if auth is required, false if not
+     */
+    public function checkEntryPointRequiresAuth($entryPoint)
+    {
+        $this->loadMapping('entry_point_registry');
+
+        if (isset($this->entry_point_registry[$entryPoint]['auth'])
+            && !$this->entry_point_registry[$entryPoint]['auth']
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * This method is called from the process method. I could also be called within an action_* method.
+     * It allows a developer to override any one of these methods contained within,
+     * or if the developer so chooses they can override the entire action_* method.
+     *
+     * @return true if any one of the pre_, do_, or post_ methods have been defined,
+     * false otherwise.  This is important b/c if none of these methods exists, then we will run the
+     * action_default() method.
+     */
+    protected function handle_action()
+    {
+        $processed = false;
+        foreach ($this->tasks as $task) {
+            $processed = ($this->$task() || $processed);
+        }
+        $this->_processed = $processed;
+    }
 
     /**
      * Specify what happens after the save has occurred.
@@ -698,8 +621,22 @@ class SugarController
         $this->set_redirect($url);
     }
 
+    /**
+     * Set the url to which we will want to redirect
+     *
+     * @param string url - the url to which we will want to redirect
+     */
+    protected function set_redirect($url)
+    {
+        $this->redirect_url = $url;
+    }
+
+    ////////////////////////////////////////////////////////
+    ////// DEFAULT ACTIONS
+    ///////////////////////////////////////////////////////
+
     /*
-     * Delete a bean
+     * Save a bean
      */
 
     /**
@@ -812,13 +749,18 @@ class SugarController
             $_REQUEST['return_action'] :
             $GLOBALS['sugar_config']['default_action'];
         $url = "index.php?module=" . $return_module . "&action=" . $return_action;
-        if ($return_module == 'Emails') {//specificly for My Achieves
+        if ($return_module == 'Emails') {
+//specificly for My Achieves
             if (!empty($this->req_for_email['type']) && !empty($this->req_for_email['ie_assigned_user_id'])) {
                 $url = $url . "&type=" . $this->req_for_email['type'] . "&assigned_user_id=" . $this->req_for_email['ie_assigned_user_id'];
             }
         }
         $this->set_redirect($url);
     }
+
+    /*
+     * Delete a bean
+     */
 
     /**
      * Perform the listview action
@@ -827,21 +769,6 @@ class SugarController
     {
         $this->view_object_map['bean'] = $this->bean;
         $this->view = 'list';
-    }
-
-    /*
-
-        //THIS IS HANDLED IN ACTION_REMAP WHERE INDEX IS SET TO LISTVIEW
-        function action_index(){
-        }
-    */
-
-    /**
-     * Action to handle when using a file as was done in previous versions of Sugar.
-     */
-    protected function action_default()
-    {
-        $this->view = 'classic';
     }
 
     /**
@@ -882,10 +809,12 @@ class SugarController
 
             $dashlet = new $dashletDefs[$id]['className']($id,
                 (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
-            if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
+            if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) {
+// save settings
                 $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
                 $current_user->setPreference('dashlets', $dashletDefs, 0, $_REQUEST['module']);
-            } else { // display options
+            } else {
+// display options
                 $json = getJSONobj();
 
                 return 'result = ' . $json->encode((array(
@@ -928,20 +857,136 @@ class SugarController
     }
 
     /**
-     * getActionFilename
+     * Meant to handle old views e.g. DetailView.php.
+     *
      */
-    public static function getActionFilename($action)
+    protected function callLegacyCode()
     {
-        if (isset(self::$action_case_file[$action])) {
-            return self::$action_case_file[$action];
+        $file = self::getActionFilename($this->do_action);
+        if (isset($this->action_view_map[strtolower($this->do_action)])) {
+            $action = $this->action_view_map[strtolower($this->do_action)];
+        } else {
+            $action = $this->do_action;
+        }
+        // index actions actually maps to the view.list.php view
+        if ($action == 'index') {
+            $action = 'list';
         }
 
-        return $action;
+        if ((file_exists('modules/' . $this->module . '/' . $file . '.php')
+                && !file_exists('modules/' . $this->module . '/views/view.' . $action . '.php'))
+            || (file_exists('custom/modules/' . $this->module . '/' . $file . '.php')
+                && !file_exists('custom/modules/' . $this->module . '/views/view.' . $action . '.php'))
+        ) {
+            // A 'classic' module, using the old pre-MVC display files
+            // We should now discard the bean we just obtained for tracking as the pre-MVC module will instantiate its own
+            unset($GLOBALS['FOCUS']);
+            $GLOBALS['log']->debug('Module:' . $this->module . ' using file: ' . $file);
+            $this->action_default();
+            $this->_processed = true;
+        }
+    }
+
+    /*
+
+        //THIS IS HANDLED IN ACTION_REMAP WHERE INDEX IS SET TO LISTVIEW
+        function action_index(){
+        }
+    */
+
+    /**
+     * Action to handle when using a file as was done in previous versions of Sugar.
+     */
+    protected function action_default()
+    {
+        $this->view = 'classic';
+    }
+
+    /**
+     * Actually remap the action if required.
+     *
+     */
+    protected function remapAction()
+    {
+        if (!empty($this->action_remap[$this->do_action])) {
+            $this->action = $this->action_remap[$this->do_action];
+            $this->do_action = $this->action;
+        }
+    }
+
+    /**
+     * Perform an action prior to the specified action.
+     * This can be overridde in a sub-class
+     */
+    private function pre_action()
+    {
+        $function = $this->getPreActionMethodName();
+        if ($this->hasFunction($function)) {
+            $GLOBALS['log']->debug('Performing pre_action');
+            $this->$function();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $action
+     * @return string
+     */
+    protected function getPreActionMethodName()
+    {
+        return 'pre_' . $this->action;
+    }
+
+    /**
+     * Perform the specified action.
+     * This can be overridde in a sub-class
+     */
+    private function do_action()
+    {
+
+        $function = $this->getActionMethodName();
+        if ($this->hasFunction($function)) {
+            $GLOBALS['log']->debug('Performing action: ' . $function . ' MODULE: ' . $this->module);
+            $this->$function();
+
+            return true;
+        }
+
+        return false;
     }
 
     /********************************************************************/
     // 				PROCESS TASKS
     /********************************************************************/
+
+    /**
+     * Perform an action after to the specified action has occurred.
+     * This can be overridde in a sub-class
+     */
+    private function post_action()
+    {
+        $function = $this->getPostActionMethodName();
+        if ($this->hasFunction($function)) {
+            $GLOBALS['log']->debug('Performing post_action');
+            $this->$function();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $action
+     * @return string
+     */
+    protected function getPostActionMethodName()
+    {
+        return 'post_' . strtolower($this->action);
+    }
 
     /**
      * Given the module and action, determine whether the super/admin has prevented access
@@ -1014,56 +1059,6 @@ class SugarController
     }
 
     /**
-     * Checks to see if the requested entry point requires auth
-     *
-     * @param  $entrypoint string name of the entrypoint
-     * @return bool true if auth is required, false if not
-     */
-    public function checkEntryPointRequiresAuth($entryPoint)
-    {
-        $this->loadMapping('entry_point_registry');
-
-        if (isset($this->entry_point_registry[$entryPoint]['auth'])
-            && !$this->entry_point_registry[$entryPoint]['auth']
-        ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Meant to handle old views e.g. DetailView.php.
-     *
-     */
-    protected function callLegacyCode()
-    {
-        $file = self::getActionFilename($this->do_action);
-        if (isset($this->action_view_map[strtolower($this->do_action)])) {
-            $action = $this->action_view_map[strtolower($this->do_action)];
-        } else {
-            $action = $this->do_action;
-        }
-        // index actions actually maps to the view.list.php view
-        if ($action == 'index') {
-            $action = 'list';
-        }
-
-        if ((file_exists('modules/' . $this->module . '/' . $file . '.php')
-                && !file_exists('modules/' . $this->module . '/views/view.' . $action . '.php'))
-            || (file_exists('custom/modules/' . $this->module . '/' . $file . '.php')
-                && !file_exists('custom/modules/' . $this->module . '/views/view.' . $action . '.php'))
-        ) {
-            // A 'classic' module, using the old pre-MVC display files
-            // We should now discard the bean we just obtained for tracking as the pre-MVC module will instantiate its own
-            unset($GLOBALS['FOCUS']);
-            $GLOBALS['log']->debug('Module:' . $this->module . ' using file: ' . $file);
-            $this->action_default();
-            $this->_processed = true;
-        }
-    }
-
-    /**
      * If the action has been remapped to a different action as defined in
      * action_file_map.php or action_view_map.php load those maps here.
      *
@@ -1085,15 +1080,11 @@ class SugarController
     }
 
     /**
-     * Actually remap the action if required.
-     *
+     * If there is no action found then display an error to the user.
      */
-    protected function remapAction()
+    protected function no_action()
     {
-        if (!empty($this->action_remap[$this->do_action])) {
-            $this->action = $this->action_remap[$this->do_action];
-            $this->do_action = $this->action;
-        }
+        sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
     }
 
 }

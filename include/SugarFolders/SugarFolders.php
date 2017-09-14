@@ -46,7 +46,9 @@ require_once('include/ytree/Tree.php');
 require_once('include/ytree/ExtNode.php');
 
 
-class SugarFolderEmptyException extends Exception { }
+class SugarFolderEmptyException extends Exception
+{
+}
 
 /**
  * Polymorphic buckets - place any item in a folder
@@ -95,10 +97,10 @@ class SugarFolder
         $this->db = DBManagerFactory::getInstance();
 
         $this->core = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic, f.dynamic_query," .
-        " f.folder_type, f.created_by, f.deleted FROM folders f ";
-        $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic,".
-        " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
-        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.id = f.id ";
+            " f.folder_type, f.created_by, f.deleted FROM folders f ";
+        $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic," .
+            " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions" .
+            " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.id = f.id ";
         $this->coreWhere = "WHERE f.deleted != 1 ";
         $this->coreWhereSubscribed = "WHERE f.deleted != 1 AND i.deleted != 1 AND fs.assigned_user_id = ";
         $this->coreOrderBy = " ORDER BY f.is_dynamic, f.is_group, f.name ASC ";
@@ -121,14 +123,14 @@ class SugarFolder
 
     public function deleteEmailFromFolder($id)
     {
-        $q = "delete from folders_rel where polymorphic_module = 'Emails' AND polymorphic_id = '{$id}' AND".
+        $q = "delete from folders_rel where polymorphic_module = 'Emails' AND polymorphic_id = '{$id}' AND" .
             "folder_id = '{$this->id}'";
         $r = $this->db->query($q);
     }
 
     public function checkEmailExistForFolder($id)
     {
-        $q = "SELECT COUNT(*) c from folders_rel where polymorphic_module = 'Emails' AND polymorphic_id = '{$id}'".
+        $q = "SELECT COUNT(*) c from folders_rel where polymorphic_module = 'Emails' AND polymorphic_id = '{$id}'" .
             " AND folder_id = '{$this->id}'";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
@@ -147,7 +149,7 @@ class SugarFolder
      */
     public function move($fromFolder, $toFolder, $beanId)
     {
-        $q = "UPDATE folders_rel SET folder_id = '{$toFolder}' WHERE folder_id = '{$fromFolder}' ".
+        $q = "UPDATE folders_rel SET folder_id = '{$toFolder}' WHERE folder_id = '{$fromFolder}' " .
             "AND polymorphic_id = '{$beanId}' AND deleted = 0";
         $r = $this->db->query($q);
     }
@@ -184,25 +186,73 @@ class SugarFolder
     }
 
     /**
-     * Returns GUIDs of folders that the user in focus is subscribed to
-     * @param object user User object in focus
-     * @return array
+     * Saves folder
+     * @return bool
      */
-    public function getSubscriptions($user)
+    public function save($addSubscriptions = true)
     {
-        if (empty($user)) {
-            global $current_user;
-            $user = $current_user;
+        global $current_user;
+
+        $this->dynamic_query = $this->db->quote($this->dynamic_query);
+
+
+        if ((!empty($this->id) && $this->new_with_id == false) || (empty($this->id) && $this->new_with_id == true)) {
+            if (empty($this->id) and $this->new_with_id == true) {
+                $guid = create_guid();
+                $this->id = $guid;
+            }
+
+
+            $q = "INSERT INTO folders(id, name, folder_type, parent_folder, has_child," .
+                " is_group, is_dynamic, dynamic_query, assign_to_id, " .
+                "created_by, modified_by, deleted)" .
+
+                " VALUES('{$this->id}', '{$this->name}', '{$this->folder_type}', '{$this->parent_folder}'," .
+                " {$this->has_child}, {$this->is_group}, {$this->is_dynamic}," .
+                " '{$this->dynamic_query}', '{$this->assign_to_id}', " .
+                "'{$current_user->id}', '{$current_user->id}', 0)";
+
+
+            if ($addSubscriptions) {
+                // create default subscription
+                $this->addSubscriptionsToGroupFolder();
+            }
+
+            // if parent_id is set, update parent's has_child flag
+            $q3 = "UPDATE folders SET has_child = 1 WHERE id = '{$this->parent_folder}'";
+            $r3 = $this->db->query($q3);
+        } else {
+            $q = "UPDATE folders SET name = '{$this->name}', parent_folder = '{$this->parent_folder}'," .
+                " dynamic_query = '{$this->dynamic_query}', assign_to_id = '{$this->assign_to_id}', " .
+                "modified_by = '{$current_user->id}' WHERE id = '{$this->id}'";
         }
 
-        $q = "SELECT folder_id FROM folders_subscriptions WHERE assigned_user_id = '{$user->id}'";
-        $r = $this->db->query($q);
-        $ret = array();
-        while ($a = $this->db->fetchByAssoc($r)) {
-            $ret[] = $a['folder_id'];
-        }
+        $this->db->query($q, true);
 
-        return $ret;
+        return true;
+    }
+
+    /**
+     * Add subscriptions to this group folder.
+     *
+     */
+    public function addSubscriptionsToGroupFolder()
+    {
+        global $current_user;
+
+        $this->createSubscriptionForUser($current_user->id);
+
+    }
+
+    /**
+     * Add subscriptions to this group folder.
+     *
+     */
+    public function createSubscriptionForUser($user_id)
+    {
+        $guid2 = create_guid();
+        $query = "INSERT INTO folders_subscriptions VALUES('{$guid2}', '{$this->id}', '{$user_id}')";
+        $this->db->query($query);
     }
 
     /**
@@ -214,7 +264,7 @@ class SugarFolder
     {
         global $current_user;
 
-        if(empty($user)) {
+        if (empty($user)) {
             $focusUser = $current_user;
         }
 
@@ -250,23 +300,6 @@ class SugarFolder
         foreach ($cleanSubscriptions as $id) {
             $this->insertFolderSubscription($id, $focusUser->id);
         }
-    }
-
-    /**
-     * Given a folder id and user id, create a folder subscription entry.
-     *
-     * @param String $folderId
-     * @param String $userID
-     * @return String The id of the newly created folder subscription.
-     */
-    public function insertFolderSubscription($folderId, $userID)
-    {
-        $guid = create_guid();
-        $query = "INSERT INTO folders_subscriptions".
-            " (id, folder_id, assigned_user_id) VALUES ('{$guid}', '{$folderId}', '{$userID}')";
-        $r = $this->db->query($query);
-
-        return $guid;
     }
 
     /**
@@ -311,8 +344,24 @@ class SugarFolder
         }
     }
 
-
     /**
+     * Given a folder id and user id, create a folder subscription entry.
+     *
+     * @param String $folderId
+     * @param String $userID
+     * @return String The id of the newly created folder subscription.
+     */
+    public function insertFolderSubscription($folderId, $userID)
+    {
+        $guid = create_guid();
+        $query = "INSERT INTO folders_subscriptions" .
+            " (id, folder_id, assigned_user_id) VALUES ('{$guid}', '{$folderId}', '{$userID}')";
+        $r = $this->db->query($query);
+
+        return $guid;
+    }
+
+        /**
      * Deletes all subscriptions for a particular folder id
      *
      * @return unknown
@@ -321,50 +370,7 @@ class SugarFolder
     {
         $query = "DELETE FROM folders_subscriptions WHERE folder_id = '$folderID'";
         $r = $this->db->query($query);
-    }
-
-    protected function generateArchiveFolderQuery()
-    {
-        global $current_user;
-        $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, ".
-            "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'".
-            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id ".
-            "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')"."
-            AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (".
-            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
-            "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND".
-            " eabr.bean_id = '{$current_user->id}' AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
-
-        return $q;
-    }
-
-    public function generateSugarsDynamicFolderQuery()
-    {
-        global $current_user;
-        $type = $this->folder_type;
-        if ($type == 'archived') {
-            return $this->generateArchiveFolderQuery();
-        }
-        $status = $type;
-        if ($type == "sent") {
-            $type = "out";
-        }
-        if ($type == 'inbound') {
-            $ret = " AND emails.status NOT IN ('sent', 'archived', 'draft') AND emails.type NOT IN ".
-                "('out', 'archived', 'draft')";
-        } else {
-            $ret = " AND emails.status NOT IN ('archived') AND emails.type NOT IN ('archived')";
-        }
-        $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged,".
-            " emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, ".
-            "'Emails' polymorphic_module FROM emails" .
-            " JOIN emails_text on emails.id = emails_text.email_id
-                                   WHERE (type = '{$type}' OR status = '{$status}')".
-            " AND assigned_user_id = '{$current_user->id}' AND emails.deleted=0";
-
-        return $q . $ret;
     } // fn
-
 
     /**
      * returns array of items for listView display in yui-ext Grid
@@ -400,8 +406,8 @@ class SugarFolder
             );
         } else {
             // get items and iterate through them
-            $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged,".
-                " emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs,".
+            $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged," .
+                " emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs," .
                 " 'Emails' polymorphic_module FROM emails JOIN folders_rel ON emails.id = folders_rel.polymorphic_id" .
                 " JOIN emails_text on emails.id = emails_text.email_id
                   WHERE folders_rel.folder_id = '{$folderId}' AND folders_rel.deleted = 0 AND emails.deleted = 0";
@@ -445,6 +451,75 @@ class SugarFolder
         return $metadata;
     }
 
+    /**
+     * Retrieves and populates object
+     * @param string $id ID of folder
+     * @return bool True on success
+     */
+    public function retrieve($id)
+    {
+        $q = "SELECT * FROM folders WHERE id = '{$id}' AND deleted = 0";
+        $r = $this->db->query($q);
+        $a = $this->db->fetchByAssoc($r);
+
+        if (!empty($a)) {
+            foreach ($a as $k => $v) {
+                if ($k == 'dynamic_query') {
+                    $v = from_html($v);
+                }
+                $this->$k = $v;
+            }
+
+            $new_with_id = false;
+
+            return true;
+        }
+
+        return false;
+    }
+
+public function generateSugarsDynamicFolderQuery()
+    {
+        global $current_user;
+        $type = $this->folder_type;
+        if ($type == 'archived') {
+            return $this->generateArchiveFolderQuery();
+        }
+        $status = $type;
+        if ($type == "sent") {
+            $type = "out";
+        }
+        if ($type == 'inbound') {
+            $ret = " AND emails.status NOT IN ('sent', 'archived', 'draft') AND emails.type NOT IN " .
+                "('out', 'archived', 'draft')";
+        } else {
+            $ret = " AND emails.status NOT IN ('archived') AND emails.type NOT IN ('archived')";
+        }
+        $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged," .
+            " emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, " .
+            "'Emails' polymorphic_module FROM emails" .
+            " JOIN emails_text on emails.id = emails_text.email_id
+                                   WHERE (type = '{$type}' OR status = '{$status}')" .
+            " AND assigned_user_id = '{$current_user->id}' AND emails.deleted=0";
+
+        return $q . $ret;
+    }
+
+    protected function generateArchiveFolderQuery()
+    {
+        global $current_user;
+        $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, " .
+            "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'" .
+            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id " .
+            "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')" . "
+            AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (" .
+            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
+            "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND" .
+            " eabr.bean_id = '{$current_user->id}' AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
+
+        return $q;
+    }
+
     public function getCountItems($folderId)
     {
         global $current_user;
@@ -473,36 +548,6 @@ class SugarFolder
         return $a['c'];
     }
 
-    public function getCountUnread($folderId)
-    {
-        global $current_user;
-        global $beanList;
-        global $sugar_config;
-        global $app_strings;
-
-        $this->retrieve($folderId);
-        if ($this->is_dynamic) {
-            $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
-            $replacement = 'SELECT count(*) c FROM ';
-            $modified_select_query = preg_replace($pattern, $replacement, $this->generateSugarsDynamicFolderQuery(), 1);
-            $r = $this->db->query(from_html($modified_select_query) . " AND emails.status = 'unread'");
-        } else {
-            // get items and iterate through them
-            $q = "SELECT count(*) c FROM folders_rel fr JOIN emails on fr.folder_id = '{$folderId}'".
-                " AND fr.deleted = 0 " .
-                "AND fr.polymorphic_id = emails.id AND emails.status = 'unread' AND emails.deleted = 0";
-            if ($this->is_group) {
-                $q .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
-            }
-            $r = $this->db->query($q);
-        }
-
-        $a = $this->db->fetchByAssoc($r);
-
-        return $a['c'];
-    }
-
-
     /**
      * Convenience method, pass a SugarBean and User to this to add anything to a given folder
      */
@@ -530,6 +575,32 @@ class SugarFolder
         $r = $this->db->query($q);
 
         return true;
+    }
+
+    /**
+     * Preps object array for async call from user's Settings->Folders
+     */
+    public function getGroupFoldersForSettings($focusUser = null)
+    {
+        global $app_strings;
+
+        $grp = array();
+
+        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+        $subscriptions = $this->getSubscriptions($focusUser);
+
+        foreach ($folders as $a) {
+            $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
+            $a['origName'] = $a['name'];
+
+            if ($a['is_group'] == 1) {
+                if ($a['deleted'] != 1) {
+                    $grp[] = $a;
+                }
+            }
+        }
+
+        return $grp;
     }
 
     /**
@@ -587,39 +658,36 @@ class SugarFolder
             }
         }
 
-        if(empty($found)) {
+        if (empty($found)) {
             throw new SugarFolderEmptyException(
-                ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
+                ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - ' .
                 'Please check the users inbound email settings.'
             );
         }
+
         return $return;
     }
 
     /**
-     * Preps object array for async call from user's Settings->Folders
+     * Returns GUIDs of folders that the user in focus is subscribed to
+     * @param object user User object in focus
+     * @return array
      */
-    public function getGroupFoldersForSettings($focusUser = null)
+    public function getSubscriptions($user)
     {
-        global $app_strings;
-
-        $grp = array();
-
-        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
-        $subscriptions = $this->getSubscriptions($focusUser);
-
-        foreach ($folders as $a) {
-            $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
-            $a['origName'] = $a['name'];
-
-            if ($a['is_group'] == 1) {
-                if ($a['deleted'] != 1) {
-                    $grp[] = $a;
-                }
-            }
+        if (empty($user)) {
+            global $current_user;
+            $user = $current_user;
         }
 
-        return $grp;
+        $q = "SELECT folder_id FROM folders_subscriptions WHERE assigned_user_id = '{$user->id}'";
+        $r = $this->db->query($q);
+        $ret = array();
+        while ($a = $this->db->fetchByAssoc($r)) {
+            $ret[] = $a['folder_id'];
+        }
+
+        return $ret;
     }
 
     /**
@@ -692,34 +760,6 @@ class SugarFolder
         return $ret;
     }
 
-    /**
-     * Remove folders of deleted inbounds
-     *
-     * @param array $folders - array of folders table rows
-     * @return array
-     */
-    private function removeDeletedFolders($folders) {
-
-        $ret = array();
-
-        foreach($folders as $folder) {
-            $correct = false;
-            if(!$folder['id']) {
-                $correct = true;
-            }
-            $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
-            if($ie) {
-                $correct = true;
-            }
-
-            if($correct) {
-                $ret[] = $folder;
-            }
-        }
-
-        return $ret;
-    }
-
     public function getFoldersChildForSettings($a, $collection, $subscriptions)
     {
         $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
@@ -748,22 +788,32 @@ class SugarFolder
     }
 
     /**
-     * Returns the number of "new" items (based on passed criteria)
-     * @param string id ID of folder
-     * @param array criteria
-     *        expected:
-     *        array('field' => 'status',
-     *                'value' => 'unread');
-     * @param array
-     * @return int
+     * Remove folders of deleted inbounds
+     *
+     * @param array $folders - array of folders table rows
+     * @return array
      */
-    public function getCountNewItems($id, $criteria, $folder)
+    private function removeDeletedFolders($folders)
     {
-        global $current_user;
 
-        $sugarFolder = new SugarFolder();
+        $ret = array();
 
-        return $sugarFolder->getCountUnread($id);
+        foreach ($folders as $folder) {
+            $correct = false;
+            if (!$folder['id']) {
+                $correct = true;
+            }
+            $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
+            if ($ie) {
+                $correct = true;
+            }
+
+            if ($correct) {
+                $ret[] = $folder;
+            }
+        }
+
+        return $ret;
     }
 
     /**
@@ -853,34 +903,51 @@ class SugarFolder
     }
 
     /**
-     * Builds up a metanode for folder refresh (Sugar folders only)
+     * Returns the number of "new" items (based on passed criteria)
+     * @param string id ID of folder
+     * @param array criteria
+     *        expected:
+     *        array('field' => 'status',
+     *                'value' => 'unread');
+     * @param array
+     * @return int
      */
-    public function buildTreeNodeRefresh($folderNode, $subscriptions)
+    public function getCountNewItems($id, $criteria, $folder)
     {
-        $metaNode = $folderNode->_properties;
-        $metaNode['expanded'] = $folderNode->expanded;
-        $metaNode['text'] = $folderNode->_label;
-        if ($metaNode['is_group'] == 'true') {
-            $metaNode['cls'] = 'groupFolder';
+        global $current_user;
+
+        $sugarFolder = new SugarFolder();
+
+        return $sugarFolder->getCountUnread($id);
+    }
+
+    public function getCountUnread($folderId)
+    {
+        global $current_user;
+        global $beanList;
+        global $sugar_config;
+        global $app_strings;
+
+        $this->retrieve($folderId);
+        if ($this->is_dynamic) {
+            $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
+            $replacement = 'SELECT count(*) c FROM ';
+            $modified_select_query = preg_replace($pattern, $replacement, $this->generateSugarsDynamicFolderQuery(), 1);
+            $r = $this->db->query(from_html($modified_select_query) . " AND emails.status = 'unread'");
         } else {
-            $metaNode['cls'] = 'sugarFolder';
-        }
-        $metaNode['id'] = $folderNode->_properties['id'];
-        $metaNode['children'] = array();
-        $metaNode['type'] = 1;
-        $metaNode['leaf'] = false;
-        $metaNode['isTarget'] = true;
-        $metaNode['allowChildren'] = true;
-
-        if (!empty($folderNode->nodes)) {
-            foreach ($folderNode->nodes as $node) {
-                if (in_array($node->_properties['id'], $subscriptions)) {
-                    $metaNode['children'][] = $this->buildTreeNodeRefresh($node, $subscriptions);
-                }
+            // get items and iterate through them
+            $q = "SELECT count(*) c FROM folders_rel fr JOIN emails on fr.folder_id = '{$folderId}'" .
+                " AND fr.deleted = 0 " .
+                "AND fr.polymorphic_id = emails.id AND emails.status = 'unread' AND emails.deleted = 0";
+            if ($this->is_group) {
+                $q .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
             }
+            $r = $this->db->query($q);
         }
 
-        return $metaNode;
+        $a = $this->db->fetchByAssoc($r);
+
+        return $a['c'];
     }
 
     /**
@@ -914,7 +981,7 @@ class SugarFolder
         $folderNode->dynamic_load = true;
         $folderNode->set_property(
             'click',
-            "SUGAR.email2.listView.populateListFrameSugarFolder(".
+            "SUGAR.email2.listView.populateListFrameSugarFolder(" .
             "YAHOO.namespace('frameFolders').selectednode, '{$a['id']}', 'false');"
         );
         $folderNode->set_property('ieId', 'folder');
@@ -941,6 +1008,37 @@ class SugarFolder
         }
 
         return $folderNode;
+    }
+
+    /**
+     * Builds up a metanode for folder refresh (Sugar folders only)
+     */
+    public function buildTreeNodeRefresh($folderNode, $subscriptions)
+    {
+        $metaNode = $folderNode->_properties;
+        $metaNode['expanded'] = $folderNode->expanded;
+        $metaNode['text'] = $folderNode->_label;
+        if ($metaNode['is_group'] == 'true') {
+            $metaNode['cls'] = 'groupFolder';
+        } else {
+            $metaNode['cls'] = 'sugarFolder';
+        }
+        $metaNode['id'] = $folderNode->_properties['id'];
+        $metaNode['children'] = array();
+        $metaNode['type'] = 1;
+        $metaNode['leaf'] = false;
+        $metaNode['isTarget'] = true;
+        $metaNode['allowChildren'] = true;
+
+        if (!empty($folderNode->nodes)) {
+            foreach ($folderNode->nodes as $node) {
+                if (in_array($node->_properties['id'], $subscriptions)) {
+                    $metaNode['children'][] = $this->buildTreeNodeRefresh($node, $subscriptions);
+                }
+            }
+        }
+
+        return $metaNode;
     }
 
     /**
@@ -983,10 +1081,10 @@ class SugarFolder
             return false;
         } // if
 
-        $q = "SELECT COUNT(*) c from folders_rel where polymorphic_module = 'Emails' ".
+        $q = "SELECT COUNT(*) c from folders_rel where polymorphic_module = 'Emails' " .
             "AND polymorphic_id = '{$id}' AND folder_id = '{$this->id}'";
 
-        $checkEmailQuery = "SELECT count(*) c FROM folders_rel where polymorphic_module = 'Emails' ".
+        $checkEmailQuery = "SELECT count(*) c FROM folders_rel where polymorphic_module = 'Emails' " .
             "and folder_id = '{$id}' and deleted = 0";
         $resultSet = $this->db->query($checkEmailQuery);
         $a = $this->db->fetchByAssoc($resultSet);
@@ -1024,80 +1122,7 @@ class SugarFolder
 
         return $canContinue;
         //_pp($q3);_pp($qRel);_pp($qSub);
-    }
-
-
-    /**
-     * Saves folder
-     * @return bool
-     */
-    public function save($addSubscriptions = true)
-    {
-        global $current_user;
-
-        $this->dynamic_query = $this->db->quote($this->dynamic_query);
-
-
-        if ((!empty($this->id) && $this->new_with_id == false) || (empty($this->id) && $this->new_with_id == true)) {
-            if (empty($this->id) and $this->new_with_id == true) {
-                $guid = create_guid();
-                $this->id = $guid;
-            }
-
-
-            $q = "INSERT INTO folders(id, name, folder_type, parent_folder, has_child,".
-                " is_group, is_dynamic, dynamic_query, assign_to_id, " .
-                "created_by, modified_by, deleted)" .
-
-                " VALUES('{$this->id}', '{$this->name}', '{$this->folder_type}', '{$this->parent_folder}',".
-                " {$this->has_child}, {$this->is_group}, {$this->is_dynamic},".
-                " '{$this->dynamic_query}', '{$this->assign_to_id}', " .
-                "'{$current_user->id}', '{$current_user->id}', 0)";
-
-
-            if ($addSubscriptions) {
-                // create default subscription
-                $this->addSubscriptionsToGroupFolder();
-            }
-
-            // if parent_id is set, update parent's has_child flag
-            $q3 = "UPDATE folders SET has_child = 1 WHERE id = '{$this->parent_folder}'";
-            $r3 = $this->db->query($q3);
-        } else {
-            $q = "UPDATE folders SET name = '{$this->name}', parent_folder = '{$this->parent_folder}',".
-                " dynamic_query = '{$this->dynamic_query}', assign_to_id = '{$this->assign_to_id}', " .
-                "modified_by = '{$current_user->id}' WHERE id = '{$this->id}'";
-        }
-
-        $this->db->query($q, true);
-
-        return true;
-    }
-
-    /**
-     * Add subscriptions to this group folder.
-     *
-     */
-    public function addSubscriptionsToGroupFolder()
-    {
-        global $current_user;
-
-        $this->createSubscriptionForUser($current_user->id);
-
-    }
-
-
-    /**
-     * Add subscriptions to this group folder.
-     *
-     */
-    public function createSubscriptionForUser($user_id)
-    {
-        $guid2 = create_guid();
-        $query = "INSERT INTO folders_subscriptions VALUES('{$guid2}', '{$this->id}', '{$user_id}')";
-        $this->db->query($query);
-    }
-
+    } // fn
 
     public function updateFolder($fields)
     {
@@ -1136,11 +1161,12 @@ class SugarFolder
             $q3 = "UPDATE folders SET has_child = 1 WHERE id = '{$this->parent_folder}'";
             $r3 = $this->db->query($q3);
         } // if
+
         return array('status' => "done");
 
     } // fn
 
-    public function findAllChildren($folderId, &$childrenArray)
+public function findAllChildren($folderId, &$childrenArray)
     {
         $q = "SELECT * FROM folders WHERE id = '{$folderId}'";
         $r = $this->db->query($q);
@@ -1156,31 +1182,5 @@ class SugarFolder
             } // while
         } // if
 
-    } // fn
-
-    /**
-     * Retrieves and populates object
-     * @param string $id ID of folder
-     * @return bool True on success
-     */
-    public function retrieve($id)
-    {
-        $q = "SELECT * FROM folders WHERE id = '{$id}' AND deleted = 0";
-        $r = $this->db->query($q);
-        $a = $this->db->fetchByAssoc($r);
-
-        if (!empty($a)) {
-            foreach ($a as $k => $v) {
-                if ($k == 'dynamic_query') {
-                    $v = from_html($v);
-                }
-                $this->$k = $v;
-            }
-
-            $new_with_id  = false;
-            return true;
-        }
-
-        return false;
     }
 } // end class def

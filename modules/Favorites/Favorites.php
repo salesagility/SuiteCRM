@@ -1,11 +1,11 @@
 <?php
-
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class Favorites extends Basic
 {
     public $new_schema = true;
@@ -115,7 +120,7 @@ class Favorites extends Basic
         $i = 0;
         while ($row = $db->fetchByAssoc($result)) {
             $bean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
-            if($bean) {
+            if ($bean) {
                 $return_array[$i]['item_summary'] = $bean->name;
                 $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
                 $return_array[$i]['id'] = $row['parent_id'];
@@ -124,9 +129,11 @@ class Favorites extends Basic
                 // Change since 7.7 side bar icons can exist in images/sidebar.
                 $sidebarPath = 'themes/' . SugarThemeRegistry::current() . '/images/sidebar/modules/';
                 if (file_exists($sidebarPath)) {
-                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage('sidebar/modules/' . $row['parent_type'], 'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
+                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage('sidebar/modules/' . $row['parent_type'],
+                        'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
                 } else {
-                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage($row['parent_type'], 'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
+                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage($row['parent_type'],
+                        'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
                 }
 
                 ++$i;
