@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/DetailView/DetailView.php');
 global $theme;
@@ -49,18 +52,19 @@ $GLOBALS['log']->info("Groups DetailView");
 $focus = new Group();
 $focus->retrieve($_REQUEST['record']);
 $detailView = new DetailView();
-$offset=0;
+$offset = 0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
-	$result = $detailView->processSugarBean("Group", $focus, $offset);
-	if($result == null) {
-	    sugar_die($app_strings['ERROR_NO_RECORD']);
-	}
-	$focus=$result;
+    $result = $detailView->processSugarBean("Group", $focus, $offset);
+    if ($result == null) {
+        sugar_die($app_strings['ERROR_NO_RECORD']);
+    }
+    $focus = $result;
 } else {
-	header("Location: index.php?module=Groups&action=index");
+    header("Location: index.php?module=Groups&action=index");
 }
 
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->user_name), true);
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'], $focus->user_name),
+    true);
 
 /* end standard DetailView layout process */
 
@@ -71,10 +75,9 @@ $xtpl->assign('APP', $app_strings);
 $xtpl->assign("CREATED_BY", $focus->created_by_name);
 $xtpl->assign("MODIFIED_BY", $focus->modified_by_name);
 $xtpl->assign("GRIDLINE", $gridline);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?" . $GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign('USER_NAME', $focus->user_name);
 
 $xtpl->parse('main');
 $xtpl->out('main');
-?>

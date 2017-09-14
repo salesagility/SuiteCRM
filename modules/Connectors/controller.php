@@ -1,13 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/connectors/sources/SourceFactory.php');
 require_once('include/connectors/ConnectorFactory.php');
@@ -148,7 +150,8 @@ class ConnectorsController extends SugarController
 
             $label = $field;
             if (isset($fieldDefs[$key])) {
-                $label = isset($connector_strings[$fieldDefs[$key]['vname']]) ? $connector_strings[$fieldDefs[$key]['vname']] : $label;
+                $label = isset($connector_strings[$fieldDefs[$key]['vname']]) ?
+                    $connector_strings[$fieldDefs[$key]['vname']] : $label;
             }
 
             $val = $result->$field;
@@ -478,7 +481,9 @@ class ConnectorsController extends SugarController
         $searchdefs = array();
         foreach ($sources_modules as $source_id => $modules) {
             foreach ($modules as $module) {
-                $searchdefs[$source_id][$module] = !empty($connectorSearchDefs[$source_id][$module]) ? $connectorSearchDefs[$source_id][$module] : (!empty($originalSearchDefs[$source_id][$module]) ? $originalSearchDefs[$source_id][$module] : array());
+                $searchdefs[$source_id][$module] = !empty($connectorSearchDefs[$source_id][$module]) ?
+                    $connectorSearchDefs[$source_id][$module] : (!empty($originalSearchDefs[$source_id][$module]) ?
+                        $originalSearchDefs[$source_id][$module] : array());
             }
         }
 
@@ -548,7 +553,7 @@ class ConnectorsController extends SugarController
 
             } //foreach
 
-            if ($id == 'ext_rest_twitter' || $id == 'ext_rest_facebook') {
+            if ($id === 'ext_rest_twitter' || $id === 'ext_rest_facebook') {
 
 
                 $full_list = array_keys($mapping['beans']);
@@ -638,7 +643,6 @@ class ConnectorsController extends SugarController
         require_once('ModuleInstall/ModuleInstaller.php');
         $moduleInstaller = new ModuleInstaller();
         $moduleInstaller->install_custom_fields($field);
-        //$moduleInstaller->addFieldsToLayout($layout);
 
 
         $this->create_panel_on_view('detailview', $field, $module, 'LBL_PANEL_SOCIAL_FEED');
@@ -675,7 +679,7 @@ class ConnectorsController extends SugarController
             //if the panel already exists we need to push items on to it.
             foreach ($parser->_viewdefs['panels'][$panel_name] as $row_key => $row) {
                 foreach ($row as $key_field => $single_field) {
-                    if ($single_field == "(empty)") {
+                    if ($single_field === "(empty)") {
                         $parser->_viewdefs['panels'][$panel_name][$row_key][$key_field] = $field['0']['name'];
                     }
                 }
@@ -805,5 +809,3 @@ class ConnectorsController extends SugarController
     }
 
 }
-
-?>

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,38 +34,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- * Description:  Contains a variety of utility functions used to display UI
- * components such as form headers and footers.  Intended to be modified on a per
- * theme basis.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-/**
- * Create javascript to validate the data entered into a record.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-function get_validate_record_document_revision_js () {
-global $mod_strings;
-global $app_strings;
 
-$lbl_version = $mod_strings['LBL_DOC_VERSION'];
-$lbl_filename = $mod_strings['LBL_FILENAME'];
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+function get_validate_record_document_revision_js()
+{
+    global $mod_strings;
+    global $app_strings;
+
+    $lbl_version = $mod_strings['LBL_DOC_VERSION'];
+    $lbl_filename = $mod_strings['LBL_FILENAME'];
 
 
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
 
 
-$the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 
@@ -92,12 +81,12 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
 
 function get_chooser_js()
 {
-$the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -123,29 +112,30 @@ document.EditView.display_tabs_def.value = display_tabs_def;
 </script>
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
-function get_validate_record_js(){
-	
-global $mod_strings;
-global $app_strings;
 
-$lbl_name = $mod_strings['ERR_DOC_NAME'];
-$lbl_start_date = $mod_strings['ERR_DOC_ACTIVE_DATE'];
-$lbl_file_name = $mod_strings['ERR_FILENAME'];
-$lbl_file_version=$mod_strings['ERR_DOC_VERSION'];
-$sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'];
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-
-if(isset($_REQUEST['record'])) {
-//do not validate upload file
-	$the_upload_script="";
-
-
-} else 
+function get_validate_record_js()
 {
 
-$the_upload_script  = <<<EOQ
+    global $mod_strings;
+    global $app_strings;
+
+    $lbl_name = $mod_strings['ERR_DOC_NAME'];
+    $lbl_start_date = $mod_strings['ERR_DOC_ACTIVE_DATE'];
+    $lbl_file_name = $mod_strings['ERR_FILENAME'];
+    $lbl_file_version = $mod_strings['ERR_DOC_VERSION'];
+    $sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+
+    if (isset($_REQUEST['record'])) {
+//do not validate upload file
+        $the_upload_script = "";
+
+
+    } else {
+
+        $the_upload_script = <<<EOQ
 
 	if (trim(form.uploadfile.value) == "") {
 		isError = true;
@@ -153,9 +143,9 @@ $the_upload_script  = <<<EOQ
 	}
 EOQ;
 
-}
+    }
 
-$the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 
@@ -192,7 +182,6 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
 
-?>

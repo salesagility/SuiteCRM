@@ -59,6 +59,3 @@ class TemplateAddressCountry extends TemplateEnum
         return $def;
     }
 }
-
-
-?>

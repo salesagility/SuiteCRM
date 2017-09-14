@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -43,88 +43,88 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $viewdefs['EmailTemplates']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-    ),
- 'panels' =>array (
-  'default' => 
-  array (
-    
-    array (
-      'name',
-      '',
-    ),
-    
-    array (
-      'type',
-    ),
-    
-    array (
-      
-      array (
-        'name' => 'description',
-        'displayParams' => 
-        array (
-          'rows' => '1',
-          'cols' => '90',
+    'templateMeta' => array(
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
         ),
-      ),
     ),
-    
-    array (
-      
-      array (
-        'name' => 'tracker_url',
-        'fields' => 
-        array (
-          'tracker_url',
-          'url_text',
-        ),
-      ),
-    ),
-    
-    array (
-      
-      array (
-        'name' => 'subject',
-        'displayParams' => 
-        array (
-          'rows' => '1',
-          'cols' => '90',
-        ),
-      ),
-    ),
-    
-    array (
-      'text_only',
-    ),
-    
-    array (
-      
-      array (
-        'name' => 'body_html',
-        'displayParams' => 
-        array (
-          'rows' => '20',
-          'cols' => '100',
-        ),
-      ),
-    ),
-    
-    array (
-      
-      array (
-        'name' => 'ATTACHMENTS_JAVASCRIPT',
-        'customCode' => '{$fields.attachments_javascript.value} {$fields.attachments.value}',
-        'description' => 'This field was auto generated',
-      ),
-    ),
-  ),
-)
+    'panels' => array(
+        'default' =>
+            array(
+
+                array(
+                    'name',
+                    '',
+                ),
+
+                array(
+                    'type',
+                ),
+
+                array(
+
+                    array(
+                        'name' => 'description',
+                        'displayParams' =>
+                            array(
+                                'rows' => '1',
+                                'cols' => '90',
+                            ),
+                    ),
+                ),
+
+                array(
+
+                    array(
+                        'name' => 'tracker_url',
+                        'fields' =>
+                            array(
+                                'tracker_url',
+                                'url_text',
+                            ),
+                    ),
+                ),
+
+                array(
+
+                    array(
+                        'name' => 'subject',
+                        'displayParams' =>
+                            array(
+                                'rows' => '1',
+                                'cols' => '90',
+                            ),
+                    ),
+                ),
+
+                array(
+                    'text_only',
+                ),
+
+                array(
+
+                    array(
+                        'name' => 'body_html',
+                        'displayParams' =>
+                            array(
+                                'rows' => '20',
+                                'cols' => '100',
+                            ),
+                    ),
+                ),
+
+                array(
+
+                    array(
+                        'name' => 'ATTACHMENTS_JAVASCRIPT',
+                        'customCode' => '{$fields.attachments_javascript.value} {$fields.attachments.value}',
+                        'description' => 'This field was auto generated',
+                    ),
+                ),
+            ),
+    )
 
 
 );
-?>

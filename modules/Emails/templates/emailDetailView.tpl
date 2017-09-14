@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 <!-- BEGIN: main -->
 {$emailTitle}
@@ -48,7 +45,7 @@
 
 <script type="text/javascript" src="{sugar_getjspath file="modules/Emails/javascript/Email.js"}"></script>
 <script type="text/javascript" language="Javascript">
-{$JS_VARS}
+    {$JS_VARS}
 </script>
 <form action="index.php" method="POST" name="DetailView" id="emailDetailView">
     <input type="hidden" name="inbound_email_id" value="{$ID}">
@@ -70,67 +67,68 @@
     <input type="hidden" name="parent_name" value="{$PARENT_NAME}">
 </form>
 
-<table  border="0" cellspacing="{$GRIDLINE}" cellpadding="0" class="detail view">
-	<tr>
-		<td  valign="top" scope="row">{$APP.LBL_ASSIGNED_TO}</td>
-		<td  valign="top">{$ASSIGNED_TO}</td>
-		<td  scope="row">{$MOD.LBL_DATE_SENT}</td>
-		<td  colspan="3">{$DATE_START} {$TIME_START}</td>
-	</tr>
-	<tr>
-		<td scope="row">&nbsp;</td>
-		<td>&nbsp;</td>
-		<td scope="row">{$PARENT_TYPE}</td>
-		<td>{$PARENT_NAME}</td>
-	</tr>
-	<tr>
-		<td scope="row">{$MOD.LBL_FROM}</td>
-		<td colspan=3>{$FROM}</td>
-	</tr>
-	<tr>
-		<td scope="row">{$MOD.LBL_TO}</td>
-		<td colspan='3'>{$TO}</td>
-	</tr>
-	<tr>
-		<td scope="row">{$MOD.LBL_CC}</td>
-		<td colspan='3'>{$CC}</td>
-	</tr>
-	<tr>
-		<td scope="row">{$MOD.LBL_BCC}</td>
-		<td colspan='3'>{$BCC}</td>
-	</tr>
-	<tr>
-		<td scope="row">{$MOD.LBL_SUBJECT}</td>
-		<td colspan='3'>{$NAME}</td>
-	</tr>
-	<tr>
-		<td valign="top" valign="top" scope="row">{$MOD.LBL_BODY}</td>
-		<td colspan="3"  style="background-color: #ffffff; color: #000000" >
-			<div id="html_div" style="background-color: #ffffff;padding: 5px">{$DESCRIPTION_HTML}</div>
-			<input id='toggle_textarea_elem' onclick="toggle_textarea();" type="checkbox" name="toggle_html"/> <label for='toggle_textarea_elem'>{$MOD.LBL_SHOW_ALT_TEXT}</label><br>
-			<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px">{$DESCRIPTION}</div>
-			<script type="text/javascript" language="Javascript">
-				var plainOnly = {$SHOW_PLAINTEXT};
-				{literal}
-				if(plainOnly == true) {
-					document.getElementById("toggle_textarea_elem").checked = true;
-					toggle_textarea();
-				}
-				{/literal}
-			</script>
-		</td>
-	</tr>
-	<tr>
-		<td valign="top" scope="row">{$MOD.LBL_ATTACHMENTS}</td>
-		<td colspan="3">{$ATTACHMENTS}</td>
-	</tr>
+<table border="0" cellspacing="{$GRIDLINE}" cellpadding="0" class="detail view">
+    <tr>
+        <td valign="top" scope="row">{$APP.LBL_ASSIGNED_TO}</td>
+        <td valign="top">{$ASSIGNED_TO}</td>
+        <td scope="row">{$MOD.LBL_DATE_SENT}</td>
+        <td colspan="3">{$DATE_START} {$TIME_START}</td>
+    </tr>
+    <tr>
+        <td scope="row">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td scope="row">{$PARENT_TYPE}</td>
+        <td>{$PARENT_NAME}</td>
+    </tr>
+    <tr>
+        <td scope="row">{$MOD.LBL_FROM}</td>
+        <td colspan=3>{$FROM}</td>
+    </tr>
+    <tr>
+        <td scope="row">{$MOD.LBL_TO}</td>
+        <td colspan='3'>{$TO}</td>
+    </tr>
+    <tr>
+        <td scope="row">{$MOD.LBL_CC}</td>
+        <td colspan='3'>{$CC}</td>
+    </tr>
+    <tr>
+        <td scope="row">{$MOD.LBL_BCC}</td>
+        <td colspan='3'>{$BCC}</td>
+    </tr>
+    <tr>
+        <td scope="row">{$MOD.LBL_SUBJECT}</td>
+        <td colspan='3'>{$NAME}</td>
+    </tr>
+    <tr>
+        <td valign="top" valign="top" scope="row">{$MOD.LBL_BODY}</td>
+        <td colspan="3" style="background-color: #ffffff; color: #000000">
+            <div id="html_div" style="background-color: #ffffff;padding: 5px">{$DESCRIPTION_HTML}</div>
+            <input id='toggle_textarea_elem' onclick="toggle_textarea();" type="checkbox" name="toggle_html"/> <label
+                    for='toggle_textarea_elem'>{$MOD.LBL_SHOW_ALT_TEXT}</label><br>
+            <div id="text_div" style="display: none;background-color: #ffffff;padding: 5px">{$DESCRIPTION}</div>
+            <script type="text/javascript" language="Javascript">
+              var plainOnly = {$SHOW_PLAINTEXT};
+              {literal}
+              if (plainOnly == true) {
+                document.getElementById("toggle_textarea_elem").checked = true;
+                toggle_textarea();
+              }
+              {/literal}
+            </script>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top" scope="row">{$MOD.LBL_ATTACHMENTS}</td>
+        <td colspan="3">{$ATTACHMENTS}</td>
+    </tr>
 </table>
 {literal}
-<script>
-$(document).ready(function(){
-	SUGAR.themes.actionMenu();
-});
-</script>
+    <script>
+      $(document).ready(function () {
+        SUGAR.themes.actionMenu();
+      });
+    </script>
 {/literal}
 
 {$SUBPANEL}

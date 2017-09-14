@@ -57,7 +57,6 @@ $listViewDefs['Contacts'] = array(
                 'parent_id' => '{$ACCOUNT_ID}',
                 'parent_name' => '{$ACCOUNT_NAME}',
                 'return_module' => 'Contacts',
-                'return_action' => 'ListView',
                 'parent_type' => 'Account',
                 'notes_parent_type' => 'Account'
             )
@@ -83,7 +82,6 @@ $listViewDefs['Contacts'] = array(
                 'return_module' => 'Contacts',
                 'return_action' => 'ListView',
                 'module' => 'Accounts',
-                'return_action' => 'ListView',
                 'parent_id' => '{$ACCOUNT_ID}',
                 'parent_name' => '{$ACCOUNT_NAME}',
                 'account_id' => '{$ACCOUNT_ID}',
@@ -159,10 +157,6 @@ $listViewDefs['Contacts'] = array(
         'width' => '10',
         'label' => 'LBL_PRIMARY_ADDRESS_POSTALCODE'
     ),
-    'ALT_ADDRESS_COUNTRY' => array(
-        'width' => '10',
-        'label' => 'LBL_ALT_ADDRESS_COUNTRY'
-    ),
     'ALT_ADDRESS_STREET' => array(
         'width' => '10',
         'label' => 'LBL_ALT_ADDRESS_STREET'
@@ -211,4 +205,3 @@ $listViewDefs['Contacts'] = array(
         'default' => true
     )
 );
-?>

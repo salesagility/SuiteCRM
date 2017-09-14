@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,89 +34,91 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 
 <!-- BEGIN: main -->
 
 <script type="text/javascript">
-<!--
-		function save_checks(offset) {
-			checked_ids = Array();
-			for (i = 0; i < document.MassUpdate.elements.length; i++){
-				if(document.MassUpdate.elements[i].name == 'mass[]' && document.MassUpdate.elements[i].checked) {
-					temp_string = '';
-					temp_string += '"' + document.MassUpdate.elements[i].value + '": {';
-					for(the_key in associated_javascript_data[document.MassUpdate.elements[i].value]) {
-						temp_string += '"' + the_key + '":"' + associated_javascript_data[document.MassUpdate.elements[i].value][the_key] + '",'; 
-					}
-					temp_string = temp_string.substring(0,temp_string.length - 1);
-					temp_string += '}';
-					checked_ids.push(temp_string);
-				}				 
-			}
-			document.MassUpdate.saved_associated_data.value = escape('{' + checked_ids.join(',') + '}');
-			document.MassUpdate.action.value = 'ContactAddressPopup';
-			document.MassUpdate.Contacts_CONTACT_offset.value = offset;
-			document.MassUpdate.submit();
-			return false;
-		}
+  <!--
+  function save_checks(offset) {
+    checked_ids = Array();
+    for (i = 0; i < document.MassUpdate.elements.length; i++) {
+      if (document.MassUpdate.elements[i].name == 'mass[]' && document.MassUpdate.elements[i].checked) {
+        temp_string = '';
+        temp_string += '"' + document.MassUpdate.elements[i].value + '": {';
+        for (the_key in associated_javascript_data[document.MassUpdate.elements[i].value]) {
+          temp_string += '"' + the_key + '":"' + associated_javascript_data[document.MassUpdate.elements[i].value][the_key] + '",';
+        }
+        temp_string = temp_string.substring(0, temp_string.length - 1);
+        temp_string += '}';
+        checked_ids.push(temp_string);
+      }
+    }
+    document.MassUpdate.saved_associated_data.value = escape('{' + checked_ids.join(',') + '}');
+    document.MassUpdate.action.value = 'ContactAddressPopup';
+    document.MassUpdate.Contacts_CONTACT_offset.value = offset;
+    document.MassUpdate.submit();
+    return false;
+  }
 
-		// reassigned the saved data from the saved checks
-		if(typeof(document.MassUpdate) != 'undefined' && document.MassUpdate.saved_associated_data.value != '') {
-			temp_array = '';
-			for(the_key in temp_array) {
-				associated_javascript_data[the_key] = temp_array[the_key];
-			}
-		}
+  // reassigned the saved data from the saved checks
+  if (typeof(document.MassUpdate) != 'undefined' && document.MassUpdate.saved_associated_data.value != '') {
+    temp_array = '';
+    for (the_key in temp_array) {
+      associated_javascript_data[the_key] = temp_array[the_key];
+    }
+  }
 
-		// save checks across pages for multiselects 
-		if(typeof(document.MassUpdate) != "undefined") {		
-			checked_items = Array();
-			inputs_array = document.MassUpdate.elements;
-	
-			for(wp = 0 ; wp < inputs_array.length; wp++) {
-				if(inputs_array[wp].name == "mass[]" && inputs_array[wp].style.display == "none") {
-					checked_items.push(inputs_array[wp].value);
-				} 
-			}
-			for(i in checked_items) {
-				for(wp = 0 ; wp < inputs_array.length; wp++) {
-					if(inputs_array[wp].name == "mass[]" && inputs_array[wp].value == checked_items[i]) {
-						inputs_array[wp].checked = true;
-					}
-				}
-			}
-		}
--->
+  // save checks across pages for multiselects
+  if (typeof(document.MassUpdate) != "undefined") {
+    checked_items = Array();
+    inputs_array = document.MassUpdate.elements;
+
+    for (wp = 0; wp < inputs_array.length; wp++) {
+      if (inputs_array[wp].name == "mass[]" && inputs_array[wp].style.display == "none") {
+        checked_items.push(inputs_array[wp].value);
+      }
+    }
+    for (i in checked_items) {
+      for (wp = 0; wp < inputs_array.length; wp++) {
+        if (inputs_array[wp].name == "mass[]" && inputs_array[wp].value == checked_items[i]) {
+          inputs_array[wp].checked = true;
+        }
+      }
+    }
+  }
+  -->
 </script>
 
 <!-- BEGIN: list_nav_row -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr height="20">
-<td scope="col"  NOWRAP>{CHECKALL}</td>
-<td scope="col" width="20%"  nowrap="nowrap"><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_CONTACT_NAME}{arrow_start}{last_name_arrow}{arrow_end}</a></td>
-<td scope="col" width="35%"  nowrap="nowrap"><a href="{ORDER_BY}primary_address_street" class="listViewThLinkS1">{MOD.LBL_PRIMARY_ADDRESS}{arrow_start}{email1_arrow}{arrow_end}</a></td>
-<td scope="col" width="40%"  nowrap="nowrap">{MOD.LBL_LIST_ACCOUNT_NAME}</td>
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1">
-<td valign="top">{PREROW}</td>
-<td scope='row' valign="top"><a href="#"  onclick="send_back('Contacts','{CONTACT.ID}');">{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a></td>
-<td valign="top">
+    {PAGINATION}
+    <!-- END: list_nav_row -->
+    <tr height="20">
+        <td scope="col" NOWRAP>{CHECKALL}</td>
+        <td scope="col" width="20%" nowrap="nowrap"><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_CONTACT_NAME}{arrow_start}{last_name_arrow}{arrow_end}</a>
+        </td>
+        <td scope="col" width="35%" nowrap="nowrap"><a href="{ORDER_BY}primary_address_street" class="listViewThLinkS1">{MOD.LBL_PRIMARY_ADDRESS}{arrow_start}{email1_arrow}{arrow_end}</a>
+        </td>
+        <td scope="col" width="40%" nowrap="nowrap">{MOD.LBL_LIST_ACCOUNT_NAME}</td>
+    </tr>
+    <!-- BEGIN: row -->
+    <tr height="20" class="{ROW_COLOR}S1">
+        <td valign="top">{PREROW}</td>
+        <td scope='row' valign="top"><a href="#" onclick="send_back('Contacts','{CONTACT.ID}');">{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a>
+        </td>
+        <td valign="top">
 	<span>{CONTACT.PRIMARY_ADDRESS_STREET}<br>
 	{CONTACT.PRIMARY_ADDRESS_CITY} {CONTACT.PRIMARY_ADDRESS_STATE}&nbsp;&nbsp;{CONTACT.PRIMARY_ADDRESS_POSTALCODE}<br>
 	{CONTACT.PRIMARY_ADDRESS_COUNTRY}</span>
-<td valign="top">{CONTACT.ACCOUNT_NAME}</td>
-</tr>
+        <td valign="top">{CONTACT.ACCOUNT_NAME}</td>
+    </tr>
 
-<!-- END: row -->
-{ASSOCIATED_JAVASCRIPT_DATA}
+    <!-- END: row -->
+    {ASSOCIATED_JAVASCRIPT_DATA}
 </table>
 
 <!-- END: main -->

@@ -126,7 +126,6 @@ class InsideViewLogicHook
             } else {
                 $smarty->assign('showInsideView', true);
                 $smarty->assign('URL', $url);
-                //echo "<div id='insideViewDiv' style='width:100%;height:400px;overflow:hidden'><iframe id='insideViewFrame' src='$url' style='border:0px; width:100%;height:480px;overflow:hidden'></iframe></div>";
             }
             echo $smarty->fetch($tplName);
         }

@@ -72,4 +72,3 @@ $out = $email->sendEmailTest($_REQUEST['mail_smtpserver'], $_REQUEST['mail_smtpp
 
 $out = $json->encode($out);
 echo $out;
-?>

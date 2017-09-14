@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'data/SugarBean.php';
 require_once 'include/SugarObjects/templates/basic/Basic.php';
@@ -44,6 +49,7 @@ require_once 'include/SugarOauth.php';
 
 class EAPM extends Basic
 {
+    public static $passwordPlaceholder = '::PASSWORD::';
     public $new_schema = true;
     public $module_dir = 'EAPM';
     public $object_name = 'EAPM';
@@ -74,16 +80,6 @@ class EAPM extends Basic
     public $consumer_key;
     public $consumer_secret;
     public $disable_row_level_security = true;
-    public static $passwordPlaceholder = '::PASSWORD::';
-
-    public function bean_implements($interface)
-    {
-        switch ($interface) {
-            case 'ACL': return true;
-        }
-
-        return false;
-    }
 
     public static function getLoginInfo($application, $includeInactive = false)
     {
@@ -104,16 +100,16 @@ class EAPM extends Basic
             }
             $eapmBean = $eapmBean->retrieve_by_string_fields($queryArray, false);
 
-           // Don't cache the include inactive results
-           if (!$includeInactive) {
-               if ($eapmBean != null) {
-                   $_SESSION['EAPM'][$application] = $eapmBean->toArray();
-               } else {
-                   $_SESSION['EAPM'][$application] = '';
+            // Don't cache the include inactive results
+            if (!$includeInactive) {
+                if ($eapmBean != null) {
+                    $_SESSION['EAPM'][$application] = $eapmBean->toArray();
+                } else {
+                    $_SESSION['EAPM'][$application] = '';
 
-                   return;
-               }
-           }
+                    return;
+                }
+            }
         }
 
         if (isset($eapmBean->password)) {
@@ -124,8 +120,28 @@ class EAPM extends Basic
         return $eapmBean;
     }
 
-    public function create_new_list_query($order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false)
+    public function bean_implements($interface)
     {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
+
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    ) {
         global $current_user;
 
         if (!is_admin($GLOBALS['current_user'])) {
@@ -135,11 +151,12 @@ class EAPM extends Basic
             if (empty($where)) {
                 $where = $owner_where;
             } else {
-                $where .= ' AND '.$owner_where;
+                $where .= ' AND ' . $owner_where;
             }
         }
 
-        return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, $return_array, $parentbean, $singleSelect);
+        return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
+            $return_array, $parentbean, $singleSelect);
     }
 
     public function save($check_notify = false)
@@ -155,20 +172,30 @@ class EAPM extends Basic
 
         $parentRet = parent::save($check_notify);
 
-       // Nuke the EAPM cache for this record
-       if (isset($_SESSION['EAPM'][$this->application])) {
-           unset($_SESSION['EAPM'][$this->application]);
-       }
+        // Nuke the EAPM cache for this record
+        if (isset($_SESSION['EAPM'][$this->application])) {
+            unset($_SESSION['EAPM'][$this->application]);
+        }
 
         return $parentRet;
+    }
+
+    protected function fillInName()
+    {
+        if (!empty($this->application)) {
+            $apiList = ExternalAPIFactory::loadFullAPIList(false, true);
+        }
+        if (!empty($apiList) && isset($apiList[$this->application]) && $apiList[$this->application]['authMethod'] == 'oauth') {
+            $this->name = sprintf(translate('LBL_OAUTH_NAME', $this->module_dir), $this->application);
+        }
     }
 
     public function mark_deleted($id)
     {
         // Nuke the EAPM cache for this record
-       if (isset($_SESSION['EAPM'][$this->application])) {
-           unset($_SESSION['EAPM'][$this->application]);
-       }
+        if (isset($_SESSION['EAPM'][$this->application])) {
+            unset($_SESSION['EAPM'][$this->application]);
+        }
 
         return parent::mark_deleted($id);
     }
@@ -179,27 +206,17 @@ class EAPM extends Basic
             return false;
         }
         // Don't use save, it will attempt to revalidate
-       $adata = $GLOBALS['db']->quote($this->api_data);
+        $adata = $GLOBALS['db']->quote($this->api_data);
         $GLOBALS['db']->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app
-           $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
+            $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
             $GLOBALS['db']->query($sql, true);
         }
 
-       // Nuke the EAPM cache for this record
-       if (isset($_SESSION['EAPM'][$this->application])) {
-           unset($_SESSION['EAPM'][$this->application]);
-       }
-    }
-
-    protected function fillInName()
-    {
-        if (!empty($this->application)) {
-            $apiList = ExternalAPIFactory::loadFullAPIList(false, true);
-        }
-        if (!empty($apiList) && isset($apiList[$this->application]) && $apiList[$this->application]['authMethod'] == 'oauth') {
-            $this->name = sprintf(translate('LBL_OAUTH_NAME', $this->module_dir), $this->application);
+        // Nuke the EAPM cache for this record
+        if (isset($_SESSION['EAPM'][$this->application])) {
+            unset($_SESSION['EAPM'][$this->application]);
         }
     }
 

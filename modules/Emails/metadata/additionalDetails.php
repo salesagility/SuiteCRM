@@ -101,6 +101,3 @@ function additionalDetailsEmail($fields)
         'viewLink' => $viewLink
     );
 }
-
-?>
- 

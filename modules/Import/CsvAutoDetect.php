@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-/*********************************************************************************
- * Description: Class to detect csv file settings (delimiter, enclosure, etc)
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /* sample usage
 
@@ -85,15 +82,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/parsecsv.lib.php');
 
-class CsvAutoDetect {
-
-    protected $_parser = null;
-
-    protected $_csv_file = null;
-
-    protected $_max_depth = 15;
-
-    protected $_parsed = false;
+class CsvAutoDetect
+{
 
     static protected $_date_formats = array(
         'm/d/Y' => "/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d\d\d\d/", // 12/23/2010 or 3/23/2010
@@ -106,20 +96,32 @@ class CsvAutoDetect {
         'd.m.Y' => "/^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])\.\d\d\d\d/", // 23.12.2010 or 23.3.2010
         'Y.m.d' => "/^\d\d\d\d\.(0?[1-9]|1[012])\.(0?[1-9]|[12][0-9]|3[01])/", // 2010.12.23 or 2010.3.23
     );
-
-    static protected $_time_formats =  array(
-        'h:ia' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?[am|pm]/", // 11:00pm or 11:00:00pm or 9:3pm
-        'h:iA' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?[AM|PM]/", // 11:00PM or 11:00:00PM or 9:3PM
-        'h:i a' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])? [am|pm]/", // 11:00 pm or 11:00:00 pm or 9:3 pm
-        'h:i A' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])? [AM|PM]/", // 11:00 PM or 11:00:00 PM or 9:3 PM
-        'H:i' => "/(^| )(0?[0-9]|1[0-9]|2[0-4]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?/", // 23:00 or 23:00:00 or 9:3
-        'h.ia' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?[am|pm]/", // 11.00pm or 11.00.00pm or 9.3pm
-        'h.iA' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?[AM|PM]/", // 11.00PM or 11.00.00PM or 9.3PM
-        'h.i a' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])? [am|pm]/", // 11.00 pm or 11.00.00 pm or 9.3 pm
-        'h.i A' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])? [AM|PM]/", // 11.00 PM or 11.00.00 PM or 9.3 PM
-        'H.i' => "/(^| )(0?[0-9]|1[0-9]|2[0-4])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?/", // 23.00 or 23.00.00 or 9.3
+    static protected $_time_formats = array(
+        'h:ia' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?[am|pm]/",
+        // 11:00pm or 11:00:00pm or 9:3pm
+        'h:iA' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?[AM|PM]/",
+        // 11:00PM or 11:00:00PM or 9:3PM
+        'h:i a' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])? [am|pm]/",
+        // 11:00 pm or 11:00:00 pm or 9:3 pm
+        'h:i A' => "/(^| )(0?[0-9]|1[0-2]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])? [AM|PM]/",
+        // 11:00 PM or 11:00:00 PM or 9:3 PM
+        'H:i' => "/(^| )(0?[0-9]|1[0-9]|2[0-4]):(0?[0-9]|[1-5][0-9])(:0?[0-9]|[1-5][0-9])?/",
+        // 23:00 or 23:00:00 or 9:3
+        'h.ia' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?[am|pm]/",
+        // 11.00pm or 11.00.00pm or 9.3pm
+        'h.iA' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?[AM|PM]/",
+        // 11.00PM or 11.00.00PM or 9.3PM
+        'h.i a' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])? [am|pm]/",
+        // 11.00 pm or 11.00.00 pm or 9.3 pm
+        'h.i A' => "/(^| )(0?[0-9]|1[0-2])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])? [AM|PM]/",
+        // 11.00 PM or 11.00.00 PM or 9.3 PM
+        'H.i' => "/(^| )(0?[0-9]|1[0-9]|2[0-4])\.(0?[0-9]|[1-5][0-9])(\.0?[0-9]|[1-5][0-9])?/",
+        // 23.00 or 23.00.00 or 9.3
     );
-
+    protected $_parser = null;
+    protected $_csv_file = null;
+    protected $_max_depth = 15;
+    protected $_parsed = false;
 
     /**
      * Constructor
@@ -127,7 +129,8 @@ class CsvAutoDetect {
      * @param string $csv_filename
      * @param int $max_depth
      */
-    public function __construct($csv_filename, $max_depth = 2) {
+    public function __construct($csv_filename, $max_depth = 2)
+    {
         $this->_csv_file = $csv_filename;
 
         $this->_parser = new parseCSV();
@@ -136,7 +139,6 @@ class CsvAutoDetect {
 
         $this->_max_depth = $max_depth;
     }
-
 
 
     /**
@@ -148,7 +150,8 @@ class CsvAutoDetect {
      * @param string $enclosure
      * @return bool true if settings are found, false otherwise
      */
-    public function getCsvSettings(&$delimiter, &$enclosure) {
+    public function getCsvSettings(&$delimiter, &$enclosure)
+    {
         // try parsing the file to find possible delimiter and enclosure
         $this->_parser->heading = false;
 
@@ -170,7 +173,7 @@ class CsvAutoDetect {
                     $len = strlen($data);
                     // check if it begins and ends with single quotes
                     // if it does, then it double quotes may not be the enclosure
-                    if ($len>=2 && $data[0] == "'" && $data[$len-1] == "'") {
+                    if ($len >= 2 && $data[0] == "'" && $data[$len - 1] == "'") {
                         $beginEndWithSingle = true;
                         break;
                     }
@@ -201,7 +204,7 @@ class CsvAutoDetect {
                         $len = strlen($data);
                         // check if it begins and ends with double quotes
                         // if it does, then it single quotes may not be the enclosure
-                        if ($len>=2 && $data[0] == "\"" && $data[$len-1] == "\"") {
+                        if ($len >= 2 && $data[0] == "\"" && $data[$len - 1] == "\"") {
                             $beginEndWithDouble = true;
                             break;
                         }
@@ -229,11 +232,13 @@ class CsvAutoDetect {
                 $delimiter = $delimiter1;
                 $enclosure = "\"";
                 $found_setting = true;
-            } else if ($singleQuoteParsedOK) {
-                // otherwise, if single quote parsed ok, let's use it
-                $delimiter = $delimiter2;
-                $enclosure = "'";
-                $found_setting = true;
+            } else {
+                if ($singleQuoteParsedOK) {
+                    // otherwise, if single quote parsed ok, let's use it
+                    $delimiter = $delimiter2;
+                    $enclosure = "'";
+                    $found_setting = true;
+                }
             }
         }
 
@@ -252,7 +257,8 @@ class CsvAutoDetect {
      * @param bool $heading true of it has header, false if not
      * @return bool true if header is found, false if error
      */
-    public function hasHeader(&$heading, $module, $encoding = null) {
+    public function hasHeader(&$heading, $module, $encoding = null)
+    {
 
         if (!$this->_parsed) {
             return false;
@@ -275,36 +281,40 @@ class CsvAutoDetect {
 
         global $locale;
         // process only the first row
-        foreach ($this->_parser->data[0] as $val)
-        {
-            if (!empty($encoding))
-            {
+        foreach ($this->_parser->data[0] as $val) {
+            if (!empty($encoding)) {
                 // Convert all values to UTF-8
                 $val = $locale->translateCharset($val, $encoding);
             }
-            
+
             // bug51433 - everything relies on $val having a value so if it's empty,
             // we can skip this iteration and not get warnings
-            if( !empty( $val ) )
-            {
-                foreach ($bean->field_defs as $field_name=>$defs) {
+            if (!empty($val)) {
+                foreach ($bean->field_defs as $field_name => $defs) {
 
                     // check if the CSV item matches field name
                     if (!strcasecmp($val, $field_name)) {
                         $match_count++;
                         break;
-                    }
-                    // check if the CSV item is part of the label or vice versa
-                    else if (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
-                        if (stripos(trim($mod_strings[$defs['vname']],':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']],':')) !== false) {
-                            $match_count++;
-                            break;
-                        }
-                    }
-                    else if (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
-                        if (stripos(trim($GLOBALS['app_strings'][$defs['vname']],':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']],':')) !== false) {
-                            $match_count++;
-                            break;
+                    } // check if the CSV item is part of the label or vice versa
+                    else {
+                        if (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
+                            if (stripos(trim($mod_strings[$defs['vname']], ':'), $val) !== false || stripos($val,
+                                    trim($mod_strings[$defs['vname']], ':')) !== false
+                            ) {
+                                $match_count++;
+                                break;
+                            }
+                        } else {
+                            if (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
+                                if (stripos(trim($GLOBALS['app_strings'][$defs['vname']], ':'),
+                                        $val) !== false || stripos($val,
+                                        trim($GLOBALS['app_strings'][$defs['vname']], ':')) !== false
+                                ) {
+                                    $match_count++;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -312,7 +322,7 @@ class CsvAutoDetect {
         }
 
         // if more than 50% matched, consider it a header
-        if ($match_count/$total_count >= 0.5) {
+        if ($match_count / $total_count >= 0.5) {
             $heading = true;
         } else {
             $heading = false;
@@ -321,6 +331,18 @@ class CsvAutoDetect {
         return true;
     }
 
+    /**
+     * To get the possible date format used in the csv file
+     *
+     * @return mixed possible date format if found, false otherwise
+     */
+    public function getDateFormat()
+    {
+
+        $format = $this->getFormat(self::$_date_formats);
+
+        return $format;
+    }
 
     /**
      * To get the possible format (for date or time)
@@ -328,7 +350,8 @@ class CsvAutoDetect {
      * @param array $formats
      * @return mixed possible format if found, false otherwise
      */
-    protected function getFormat(&$formats) {
+    protected function getFormat(&$formats)
+    {
 
         if (!$this->_parsed) {
             return false;
@@ -340,7 +363,7 @@ class CsvAutoDetect {
 
             foreach ($row as $val) {
 
-                foreach ($formats as $format=>$regex) {
+                foreach ($formats as $format => $regex) {
 
                     $ret = preg_match($regex, $val);
                     if ($ret) {
@@ -359,26 +382,13 @@ class CsvAutoDetect {
         return false;
     }
 
-
-    /**
-     * To get the possible date format used in the csv file
-     *
-     * @return mixed possible date format if found, false otherwise
-     */
-    public function getDateFormat() {
-
-        $format = $this->getFormat(self::$_date_formats);
-
-        return $format;
-    }
-
-
     /**
      * To get the possible time format used in the csv file
      *
      * @return mixed possible time format if found, false otherwise
      */
-    public function getTimeFormat() {
+    public function getTimeFormat()
+    {
 
         $format = $this->getFormat(self::$_time_formats);
 
@@ -386,4 +396,5 @@ class CsvAutoDetect {
     }
 
 }
+
 ?>

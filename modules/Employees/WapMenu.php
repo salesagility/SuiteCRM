@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings;
 global $current_user;
 
-$module_menu = Array();
+$module_menu = array();
 if (is_admin($current_user)) {
-    $module_menu = Array();
+    $module_menu = array();
 }

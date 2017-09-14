@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 (function ($) {
@@ -78,17 +78,17 @@
      * Where selects ok in messageBox
      * @param {MouseEvent} e
      */
-    self.messageBoxOkHandler = function(e, caller) {
+    self.messageBoxOkHandler = function (e, caller) {
       self.messageBox.hideFooter();
       self.messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORTING_EMAIL'));
 
       var view = self.messageBox.controls.modal.content.find('[name="EditView"]');
-      var action = 'index.php?module=Emails&action=ImportAndShowDetailView&folder=INBOXTestInbox&folder=inbound'+
-        '&inbound_email_record='+self.email.inboundEmailRecord +
-        '&uid='+ self.email.uid +
+      var action = 'index.php?module=Emails&action=ImportAndShowDetailView&folder=INBOXTestInbox&folder=inbound' +
+        '&inbound_email_record=' + self.email.inboundEmailRecord +
+        '&uid=' + self.email.uid +
         '&msgno=' + self.email.msgno;
 
-      $('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>')
+      $('<div class="in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>')
         .prependTo(view.parent());
 
       view.hide();
@@ -96,17 +96,17 @@
       view.attr('action', action);
 
       $.each(view.find('input[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
 
       $.each(view.find('select[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
 
       $.each(view.find('textarea[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
       view.submit();
@@ -116,12 +116,12 @@
      * Where selects ok in messageBox
      * @param {MouseEvent} e
      */
-    self.messageBoxCancelHandler = function(e, caller) {
+    self.messageBoxCancelHandler = function (e, caller) {
       self.messageBox.remove();
     };
 
 
-    self.showMessageBox = function(mouseEvent) {
+    self.showMessageBox = function (mouseEvent) {
 
       var caller = $(mouseEvent.target);
       self.email.inboundEmailRecord = caller.attr('data-inbound-email-record');
@@ -131,7 +131,7 @@
       self.messageBox = messageBox({'size': 'lg'});
 
       if (typeof opts.messageBoxOkHandler !== "undefined") {
-        self.messageBox.on('ok', function(e) {
+        self.messageBox.on('ok', function (e) {
           opts.messageBoxOkHandler(e, [self]);
         });
       } else {
@@ -139,7 +139,7 @@
       }
 
       if (typeof opts.messageBoxCancelHandler !== "undefined") {
-        self.messageBox.on('cancel', function(e) {
+        self.messageBox.on('cancel', function (e) {
           opts.messageBoxCancelHandler(e, [self]);
         });
       } else {
@@ -175,7 +175,7 @@
      */
     self.construct = function () {
 
-      if(opts.callerSelector) {
+      if (opts.callerSelector) {
         $(opts.callerSelector).on('click', self.showMessageBox);
       }
 

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * ContactsViewRetrieveEmailUsername.php
@@ -50,31 +50,34 @@
 require_once('include/MVC/View/SugarView.php');
 require_once("include/JSON.php");
 
-class ContactsViewRetrieveEmail extends SugarView {
+class ContactsViewRetrieveEmail extends SugarView
+{
 
- 	function __construct(){
- 		parent::__construct();
- 	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
- 	function process() {
-		$this->display();
- 	}
+    function process()
+    {
+        $this->display();
+    }
 
- 	function display(){
-	    $data = array();
-	    $data['target'] = $_REQUEST['target'];
-        if(!empty($_REQUEST['email'])) {
-	        $db = DBManagerFactory::getInstance();
-	        $email = $GLOBALS['db']->quote(strtoupper(trim($_REQUEST['email'])));
-	        $result = $db->query("SELECT * FROM email_addresses WHERE email_address_caps = '$email' AND deleted = 0");
-			if($row = $db->fetchByAssoc($result)) {
-		        $data['email'] = $row;
-			} else {
-				$data['email'] = '';
-			}
+    function display()
+    {
+        $data = array();
+        $data['target'] = $_REQUEST['target'];
+        if (!empty($_REQUEST['email'])) {
+            $db = DBManagerFactory::getInstance();
+            $email = $GLOBALS['db']->quote(strtoupper(trim($_REQUEST['email'])));
+            $result = $db->query("SELECT * FROM email_addresses WHERE email_address_caps = '$email' AND deleted = 0");
+            if ($row = $db->fetchByAssoc($result)) {
+                $data['email'] = $row;
+            } else {
+                $data['email'] = '';
+            }
         }
-		$json = new JSON(JSON_LOOSE_TYPE);
-		echo $json->encode($data);
- 	}
+        $json = new JSON(JSON_LOOSE_TYPE);
+        echo $json->encode($data);
+    }
 }
-?>

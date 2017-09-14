@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -44,12 +44,12 @@
    * @param options
    * @return {*|HTMLElement}
    */
-  $.fn.ImportEmailAction =  function(options) {
+  $.fn.ImportEmailAction = function (options) {
     "use strict";
     var self = this;
     var opts = $.extend({}, $.fn.ImportEmailAction.defaults, options);
 
-    if(typeof messageBox === "undefined") {
+    if (typeof messageBox === "undefined") {
       console.error('ImportEmailAction - Missing Dependency: Cannot find messageBox.');
       return $(self);
     }
@@ -75,7 +75,7 @@
       var action = 'index.php?module=Emails&action=ImportFromListView';
       var view = caller[0].messageBox.controls.modal.content.find('[name="EditView"]');
       caller[0].messageBox.hideFooter();
-      $('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>')
+      $('<div class="in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>')
         .prependTo(view.parent());
       caller[0].messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORTING_EMAIL'));
       view.hide();
@@ -83,17 +83,17 @@
       view.attr('action', action);
 
       $.each(view.find('input[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
 
       $.each(view.find('select[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
 
       $.each(view.find('textarea[name]'), function (i, v) {
-        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        var name = 'SET_AFTER_IMPORT_' + $(v).attr('name');
         $(v).attr('name', name);
       });
 
@@ -102,15 +102,15 @@
       $('<input type="hidden" name="folder">').val(postOpts.folder).appendTo(view);
       $('<input type="hidden" name="all">').val(postOpts.all).appendTo(view);
 
-      if(document.MassUpdate.select_entire_list &&
+      if (document.MassUpdate.select_entire_list &&
         document.MassUpdate.select_entire_list.value == 1) {
         // Import all emails from mail box
         postOpts.all = true;
       } else {
         postOpts.all = false;
         // import only selected emails from inbox
-        $('.listview-checkbox').each(function(i,v) {
-          if($(v).is(':checked')) {
+        $('.listview-checkbox').each(function (i, v) {
+          if ($(v).is(':checked')) {
             $('<input type="hidden" name="uid[]">').val(query.email_uids[i]).appendTo(view);
           }
         });
@@ -120,7 +120,7 @@
 
     };
 
-    self.construct = function() {
+    self.construct = function () {
       $(document).ImportView({
         'callerSelector': opts.buttonSelector,
         'messageBoxOkHandler': self.handleClick
@@ -138,6 +138,6 @@
   };
 }(jQuery));
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(document).ImportEmailAction();
 });

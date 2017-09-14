@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 global $mod_strings;
-$module_menu = Array();
+$module_menu = array();
 $module_menu[] = array(
     "index.php?module=InboundEmail&action=EditView",
     $mod_strings['LNK_LIST_CREATE_NEW_GROUP'],

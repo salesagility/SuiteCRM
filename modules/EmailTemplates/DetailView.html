@@ -1,42 +1,42 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
- * 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 <!-- BEGIN: main -->
 <!--
@@ -48,99 +48,100 @@
  */
  -->
 <form action="index.php" method="post" name="DetailView" id="form">
-<!--
-/** END SECURITY GROUPS */
--->
-		<table cellpadding="0" cellspacing="0" border="0" width='100%'>
-			<input type="hidden" name="module" value="EmailTemplates">
-			<input type="hidden" name="record" value="{ID}">
-			<input type="hidden" name="isDuplicate" value=false>
-			<input type="hidden" name="action">
-			<input type="hidden" name="return_module">
-			<input type="hidden" name="return_action">
-			<input type="hidden" name="return_id">
-			{PORTAL_ON}
-		<tr>
-		<td>
-            {ACTION_BUTTON}
-        </td>
-		<td align='right'>{ADMIN_EDIT}</td>
-		</tr></table>
+    <!--
+    /** END SECURITY GROUPS */
+    -->
+    <table cellpadding="0" cellspacing="0" border="0" width='100%'>
+        <input type="hidden" name="module" value="EmailTemplates">
+        <input type="hidden" name="record" value="{ID}">
+        <input type="hidden" name="isDuplicate" value=false>
+        <input type="hidden" name="action">
+        <input type="hidden" name="return_module">
+        <input type="hidden" name="return_action">
+        <input type="hidden" name="return_id">
+        {PORTAL_ON}
+        <tr>
+            <td>
+                {ACTION_BUTTON}
+            </td>
+            <td align='right'>{ADMIN_EDIT}</td>
+        </tr>
+    </table>
 
-	</form>
+</form>
 
 <div class="detail view">
-<table width="100%" border="0" cellspacing="{GRIDLINE}" cellpadding="0">
-{PAGINATION}
-    <tr>
-    <td scope="row" width='15%'><span>{MOD.LBL_TYPE}</span></td>
-    <td colspan="3"><span>{TYPE}</span></td>
-    </tr>
-	<tr>
-	<td scope="row" width='15%'><span>{MOD.LBL_NAME}</span></td>
-	<td><span>{NAME}&nbsp;</span></td>
-	<td scope="row"><span>{APP.LBL_DATE_MODIFIED}</span></td>
-	<td><span>{DATE_MODIFIED} {APP.LBL_BY} {MODIFIED_BY}&nbsp;</span></td>
-	<!--
-	<td><span>{MOD.LBL_PUBLISH}</span></td>
-	<td><span><input type="checkbox" name="published" disabled {PUBLISHED}></span></td>
-	-->
-	</tr>
-	<tr>
-	<td scope="row" width='15%'><span>{MOD.LBL_DESCRIPTION}</span></td>
-	<td><span>{DESCRIPTION}&nbsp;</span></td>
-	<td scope="row"><span>{APP.LBL_DATE_ENTERED}</span></td>
-	<td><span>{DATE_ENTERED} {APP.LBL_BY} {CREATED_BY}&nbsp;</span></td>
-	</tr>
-<!--
-	<tr>
-	<td scope="row" valign="top"><span></span></td>
-	<td><span></span></td>
-	</tr>
--->
-	<tr>
-	<td scope="row" valign="top"><span>{MOD.LBL_SUBJECT}</span></td>
-	<td><span>{SUBJECT}&nbsp;</span></td>
-	<td scope="row" valign="top">
-	</td>
-	<td><span>{TEAM}&nbsp;</span></td>
-	</tr>
-	<tr>
-	<td scope="row" width='15%'><span>{MOD.LBL_SEND_AS_TEXT}</span></td>
-	<td><span><input id='text_only' type="checkbox" disabled="disabled" {TEXT_ONLY_CHECKED} /></span></td>
-	
-	<td scope="row" width='15%'><span>{APP.LBL_ASSIGNED_TO}</span></td>
-	<td><span>{ASSIGNED_USER_NAME}</span></td>
-	
-	</tr>
-	<tr>
-	<td scope="row" valign="top"><span>{MOD.LBL_BODY}</span></td>
-        <td colspan="3"  style="background-color: #ffffff;" ><span><div id="html_div" style="background-color: #ffffff;padding: 5px"><iframe id="html_frame" src="" style="width:100%; height:500px"></iframe></div>
-<input id='toggle_textarea_elem' onclick="toggle_textarea(this);" type="button" name="toggle_html" value="{MOD.LBL_SHOW_ALT_TEXT}"/><br>
+    <table width="100%" border="0" cellspacing="{GRIDLINE}" cellpadding="0">
+        {PAGINATION}
+        <tr>
+            <td scope="row" width='15%'><span>{MOD.LBL_TYPE}</span></td>
+            <td colspan="3"><span>{TYPE}</span></td>
+        </tr>
+        <tr>
+            <td scope="row" width='15%'><span>{MOD.LBL_NAME}</span></td>
+            <td><span>{NAME}&nbsp;</span></td>
+            <td scope="row"><span>{APP.LBL_DATE_MODIFIED}</span></td>
+            <td><span>{DATE_MODIFIED} {APP.LBL_BY} {MODIFIED_BY}&nbsp;</span></td>
+            <!--
+            <td><span>{MOD.LBL_PUBLISH}</span></td>
+            <td><span><input type="checkbox" name="published" disabled {PUBLISHED}></span></td>
+            -->
+        </tr>
+        <tr>
+            <td scope="row" width='15%'><span>{MOD.LBL_DESCRIPTION}</span></td>
+            <td><span>{DESCRIPTION}&nbsp;</span></td>
+            <td scope="row"><span>{APP.LBL_DATE_ENTERED}</span></td>
+            <td><span>{DATE_ENTERED} {APP.LBL_BY} {CREATED_BY}&nbsp;</span></td>
+        </tr>
+        <!--
+            <tr>
+            <td scope="row" valign="top"><span></span></td>
+            <td><span></span></td>
+            </tr>
+        -->
+        <tr>
+            <td scope="row" valign="top"><span>{MOD.LBL_SUBJECT}</span></td>
+            <td><span>{SUBJECT}&nbsp;</span></td>
+            <td scope="row" valign="top">
+            </td>
+            <td><span>{TEAM}&nbsp;</span></td>
+        </tr>
+        <tr>
+            <td scope="row" width='15%'><span>{MOD.LBL_SEND_AS_TEXT}</span></td>
+            <td><span><input id='text_only' type="checkbox" disabled="disabled" {TEXT_ONLY_CHECKED}/></span></td>
+
+            <td scope="row" width='15%'><span>{APP.LBL_ASSIGNED_TO}</span></td>
+            <td><span>{ASSIGNED_USER_NAME}</span></td>
+
+        </tr>
+        <tr>
+            <td scope="row" valign="top"><span>{MOD.LBL_BODY}</span></td>
+            <td colspan="3" style="background-color: #ffffff;"><span><div id="html_div"
+                                                                          style="background-color: #ffffff;padding: 5px"><iframe
+                    id="html_frame" src="" style="width:100%; height:500px"></iframe></div>
+<input id='toggle_textarea_elem' onclick="toggle_textarea(this);" type="button" name="toggle_html"
+       value="{MOD.LBL_SHOW_ALT_TEXT}"/><br>
 <div id="text_div" style="display: none;background-color: #ffffff;padding: 5px"><pre>{BODY}</pre></div></span>
-<script>
-function toggle_textarea(obj)
-{
- if(document.getElementById('text_div').style.display == 'none')
- {
-        document.getElementById('text_div').style.display = 'block';
-        document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_HIDE_ALT_TEXT}'
- } else
- {
-        document.getElementById('text_div').style.display = 'none';
-        document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_SHOW_ALT_TEXT}'
- }
-}
-document.getElementById("html_frame").contentWindow.document.write({BODY_HTML});
-document.getElementById("html_frame").contentWindow.document.close();
-</script>
+                <script>
+                  function toggle_textarea(obj) {
+                    if (document.getElementById('text_div').style.display == 'none') {
+                      document.getElementById('text_div').style.display = 'block';
+                      document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_HIDE_ALT_TEXT}'
+                    } else {
+                      document.getElementById('text_div').style.display = 'none';
+                      document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_SHOW_ALT_TEXT}'
+                    }
+                  }
+                  document.getElementById("html_frame").contentWindow.document.write({BODY_HTML});
+                  document.getElementById("html_frame").contentWindow.document.close();
+                </script>
 
-	</tr>
-	<tr>
-		<td scope="row" valign="top"><span>{MOD.LBL_ATTACHMENTS}</td>
-		<td colspan="3"><span>{ATTACHMENTS}&nbsp;</span></td>
-	</tr>
+        </tr>
+        <tr>
+            <td scope="row" valign="top"><span>{MOD.LBL_ATTACHMENTS}</td>
+            <td colspan="3"><span>{ATTACHMENTS}&nbsp;</span></td>
+        </tr>
 
-</table>
+    </table>
 </div>
 <!-- END: main -->

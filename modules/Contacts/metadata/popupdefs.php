@@ -112,4 +112,3 @@ $popupMeta = array(
         ),
     )
 );
-?>

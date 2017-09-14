@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,39 +34,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $current_user;
 
 
-if(!isset($_POST['dashName'])){
-    $html  ='<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
-    $html .='<table>';
-    $html .='<tr>';
-    $html .='<td><label for="dashName">'.$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'].'</label></td>';
-    $html .='<td><input type="text" name="dashName" id="dashName"/></td>';
-    $html .='</tr>';
-    $html .='<tr>';
-    $html .='<td><label for="numColumns">'.$GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS'].' </label></td>';
-    $html .='<td><select name="numColumns">';
-    $html .='<option value="1">1</option>';
-    $html .='<option value="2">2</option>';
-    $html .='<option value="3">3</option>';
-    $html .='</select></td>';
-    $html .='</tr>';
-    $html .='<td></td>';
-    $html .='</tr></table>';
-    $html .='</form>';
+if (!isset($_POST['dashName'])) {
+    $html = '<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
+    $html .= '<table>';
+    $html .= '<tr>';
+    $html .= '<td><label for="dashName">' . $GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'] . '</label></td>';
+    $html .= '<td><input type="text" name="dashName" id="dashName"/></td>';
+    $html .= '</tr>';
+    $html .= '<tr>';
+    $html .= '<td><label for="numColumns">' . $GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS'] . ' </label></td>';
+    $html .= '<td><select name="numColumns">';
+    $html .= '<option value="1">1</option>';
+    $html .= '<option value="2">2</option>';
+    $html .= '<option value="3">3</option>';
+    $html .= '</select></td>';
+    $html .= '</tr>';
+    $html .= '<td></td>';
+    $html .= '</tr></table>';
+    $html .= '</form>';
 
     echo $html;
-}else{
+} else {
     $type = 'Home';
 
-    $existingPages = $current_user->getPreference('pages',$type);
+    $existingPages = $current_user->getPreference('pages', $type);
     $dashboardPage = array();
     $numberColumns = $_POST['numColumns'];
     $pageName = $_POST['dashName'];
@@ -102,22 +104,23 @@ if(!isset($_POST['dashName'])){
     $dashboardPage['pageTitle'] = $pageName;
     $dashboardPage['numColumns'] = $numberColumns;
 
-    array_push($existingPages,$dashboardPage);
+    array_push($existingPages, $dashboardPage);
 
     $current_user->setPreference('pages', $existingPages, 0, $type);
 
     $display = array();
 
-    foreach($dashboardPage['columns'] as $colNum => $column)
+    foreach ($dashboardPage['columns'] as $colNum => $column) {
         $display[$colNum]['width'] = $column['width'];
+    }
 
     $home_mod_strings = return_module_language($current_language, $type);
 
     $sugar_smarty = new Sugar_Smarty();
     $sugar_smarty->assign('columns', $display);
     $sugar_smarty->assign('selectedPage', sizeof($pages) - 1);
-    $sugar_smarty->assign('mod',$home_mod_strings);
-    $sugar_smarty->assign('app',$GLOBALS['app_strings']);
+    $sugar_smarty->assign('mod', $home_mod_strings);
+    $sugar_smarty->assign('app', $GLOBALS['app_strings']);
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);
     $sugar_smarty->assign('numCols', $dashboardPage['numColumns']);
 

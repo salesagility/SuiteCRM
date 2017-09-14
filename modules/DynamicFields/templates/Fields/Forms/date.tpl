@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,42 +34,43 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 {include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
 <tr>
-	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_DEFAULT_VALUE"}:</td>
-	<td>
-	{if $hideLevel < 5}
-		{html_options id='default' name='default' options=$default_values selected=$vardef.display_default}
-	{else}
-		<input type='hidden' id='default' name='default' value='$vardef.display_default'>{$vardef.display_default}
-	{/if}
-	</td>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_DEFAULT_VALUE"}:</td>
+    <td>
+        {if $hideLevel < 5}
+            {html_options id='default' name='default' options=$default_values selected=$vardef.display_default}
+        {else}
+            <input type='hidden' id='default' name='default' value='$vardef.display_default'>
+            {$vardef.display_default}
+        {/if}
+    </td>
 </tr>
 <tr>
-	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
-	<td>
-	{if $hideLevel < 5}
-		<input type="checkbox" id="massupdate" name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
-	{else}
-		<input type="checkbox" id="massupdate" name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
-	{/if}
-	</td>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
+    <td>
+        {if $hideLevel < 5}
+            <input type="checkbox" id="massupdate" name="massupdate" value="1"
+                   {if !empty($vardef.massupdate)}checked{/if}/>
+        {else}
+            <input type="checkbox" id="massupdate" name="massupdate" value="1" disabled
+                   {if !empty($vardef.massupdate)}checked{/if}/>
+        {/if}
+    </td>
 </tr>
 {if $range_search_option_enabled}
-<tr>	
-    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_ENABLE_RANGE_SEARCH"}:</td>
-    <td>
-        <input type='checkbox' name='enable_range_search' value=1 {if !empty($vardef.enable_range_search) }checked{/if} {if $hideLevel > 5}disabled{/if} />
-        {if $hideLevel > 5}<input type='hidden' name='enable_range_search' value='{$vardef.enable_range_search}'>{/if}
-    </td>	
-</tr>
+    <tr>
+        <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_ENABLE_RANGE_SEARCH"}:</td>
+        <td>
+            <input type='checkbox' name='enable_range_search' value=1
+                   {if !empty($vardef.enable_range_search) }checked{/if} {if $hideLevel > 5}disabled{/if} />
+            {if $hideLevel > 5}<input type='hidden' name='enable_range_search'
+                                      value='{$vardef.enable_range_search}'>{/if}
+        </td>
+    </tr>
 {/if}
 {include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}

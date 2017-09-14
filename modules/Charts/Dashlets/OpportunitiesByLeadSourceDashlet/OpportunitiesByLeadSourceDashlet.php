@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +34,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class OpportunitiesByLeadSourceDashlet extends DashletGenericChart 
+class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 {
     public $pbls_lead_sources = array();
-    public $pbls_ids          = array();
+    public $pbls_ids = array();
 
     /**
      * @see DashletGenericChart::$_seedName
@@ -62,17 +62,20 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (!empty($this->pbls_lead_sources) && sizeof($this->pbls_lead_sources) > 0)
-            foreach ($this->pbls_lead_sources as $key)
+        if (!empty($this->pbls_lead_sources) && sizeof($this->pbls_lead_sources) > 0) {
+            foreach ($this->pbls_lead_sources as $key) {
                 $selected_datax[] = $key;
-        else
+            }
+        } else {
             $selected_datax = array_keys($app_list_strings['lead_source_dom']);
+        }
 
         $this->_searchFields['pbls_lead_sources']['options'] = array_filter($app_list_strings['lead_source_dom']);
         $this->_searchFields['pbls_lead_sources']['input_name0'] = $selected_datax;
 
-        if (!isset($this->pbls_ids) || count($this->pbls_ids) == 0)
+        if (!isset($this->pbls_ids) || count($this->pbls_ids) == 0) {
             $this->_searchFields['pbls_ids']['input_name0'] = array_keys(get_user_array(false));
+        }
 
         return parent::displayOptions();
     }
@@ -85,7 +88,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         global $current_user, $sugar_config;
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
+        if ($current_user->getPreference('currency')) {
 
             $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
@@ -94,9 +97,9 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
         $data = $this->getChartData($this->constructQuery());
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
-        $canvasId = 'rGraphLeadSource'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphLeadSource' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonLabels = json_encode($chartReadyData['labels']);
@@ -106,18 +109,15 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         $module = 'Opportunities';
         $action = 'index';
-        $query  ='true';
-        $searchFormTab ='advanced_search';
+        $query = 'true';
+        $searchFormTab = 'advanced_search';
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#8080ff','#c03f80']";
 
-        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
-        {
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
-        //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
-        //<canvas id='$canvasId' width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
         $chart = <<<EOD
 
 <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'  class='resizableCanvas' >[No canvas support]</canvas>
@@ -167,36 +167,6 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 EOD;
 
         return $chart;
-        /*
-        require("modules/Charts/chartdefs.php");
-        $chartDef = $chartDefs['pipeline_by_lead_source'];
-
-        require_once('include/SugarCharts/SugarChartFactory.php');
-        $sugarChart = SugarChartFactory::getInstance();
-        $sugarChart->is_currency = true;
-        $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
-
-            $currency = new Currency();
-            $currency->retrieve($current_user->getPreference('currency'));
-            $currency_symbol = $currency->symbol;
-        }
-        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
-        $sugarChart->setProperties('', $subtitle, $chartDef['chartType']);
-        $sugarChart->base_url = $chartDef['base_url'];
-        $sugarChart->group_by = $chartDef['groupBy'];
-        $sugarChart->url_params = array();
-        if ( count($this->pbls_ids) > 0 )
-            $sugarChart->url_params['assigned_user_id'] = array_values($this->pbls_ids);
-        $sugarChart->getData($this->constructQuery());
-        $sugarChart->data_set = $sugarChart->sortData($sugarChart->data_set, 'lead_source', true);
-		$xmlFile = $sugarChart->getXMLFileName($this->id);
-		$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
-
-		return $this->getTitle('<div align="center"></div>') .
-            '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
-        */
-
 
     }
 
@@ -208,29 +178,12 @@ EOD;
 
         $row = $db->fetchByAssoc($result);
 
-        while ($row != null){
+        while ($row != null) {
             $dataSet[] = $row;
             $row = $db->fetchByAssoc($result);
         }
-        return $dataSet;
-    }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
-    {
-        //return $data;
-        $chart['labels']=array();
-        $chart['data']=array();
-        $total = 0;
-        foreach($data as $i)
-        {
-            $chart['labelsAndValues'][]=$i['lead_source'].' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
-            //$chart['labelsAndValues'][]=$currency_symbol.(int)$i['total'].$thousands_symbol;
-            $chart['labels'][]=$i['lead_source'];
-            $chart['data'][]=(int)$i['total'];
-            $total+=(int)$i['total'];
-        }
-        $chart['total']=$total;
-        return $chart;
+        return $dataSet;
     }
 
     /**
@@ -238,17 +191,37 @@ EOD;
      */
     protected function constructQuery()
     {
-        $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count ".
+        $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count " .
             "FROM opportunities ";
         $query .= "WHERE opportunities.deleted=0 ";
-        if ( count($this->pbls_ids) > 0 )
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','",$this->pbls_ids)."') ";
-        if ( count($this->pbls_lead_sources) > 0 )
-            $query .= "AND opportunities.lead_source IN ('".implode("','",$this->pbls_lead_sources)."') ";
-        else
-            $query .= "AND opportunities.lead_source IN ('".implode("','",array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+        if (count($this->pbls_ids) > 0) {
+            $query .= "AND opportunities.assigned_user_id IN ('" . implode("','", $this->pbls_ids) . "') ";
+        }
+        if (count($this->pbls_lead_sources) > 0) {
+            $query .= "AND opportunities.lead_source IN ('" . implode("','", $this->pbls_lead_sources) . "') ";
+        } else {
+            $query .= "AND opportunities.lead_source IN ('" . implode("','",
+                    array_keys($GLOBALS['app_list_strings']['lead_source_dom'])) . "') ";
+        }
         $query .= "GROUP BY lead_source ORDER BY total DESC";
 
         return $query;
+    }
+
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
+    {
+        //return $data;
+        $chart['labels'] = array();
+        $chart['data'] = array();
+        $total = 0;
+        foreach ($data as $i) {
+            $chart['labelsAndValues'][] = $i['lead_source'] . ' (' . $currency_symbol . (int)$i['total'] . $thousands_symbol . ')';
+            $chart['labels'][] = $i['lead_source'];
+            $chart['data'][] = (int)$i['total'];
+            $total += (int)$i['total'];
+        }
+        $chart['total'] = $total;
+
+        return $chart;
     }
 }

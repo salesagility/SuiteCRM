@@ -117,7 +117,3 @@ function additionalDetailsContact($fields)
         'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}"
     );
 }
-
-?>
- 
- 

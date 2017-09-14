@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,30 +34,29 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 *}
 
 <p>
-{$MODULE_TITLE}
+    {$MODULE_TITLE}
 </p>
 <form name="addFontResult" method="POST" action="index.php" id="addFontResult">
-<input type="hidden" name="module" value="Configurator">
-<input type="hidden" name="action" value="FontManager">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr>
-        <td style="padding-bottom: 2px;">
-            <input title="{$MOD.LBL_FONTMANAGER_TITLE}" class="button"  type="submit" name="back" value="  {$MOD.LBL_FONTMANAGER_BUTTON}  " >
-        </td>
-    </tr>
-</table>
-<br>
-<div>{if isset($error)}<span class='error'><b>{$MOD.LBL_STATUS_FONT_ERROR}</b></span>{else}<b>{$MOD.LBL_STATUS_FONT_SUCCESS}</b>{/if}</div>
-<span class='error'><pre>{$error}</pre></span>
-<pre>{$info}</pre>
+    <input type="hidden" name="module" value="Configurator">
+    <input type="hidden" name="action" value="FontManager">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td style="padding-bottom: 2px;">
+                <input title="{$MOD.LBL_FONTMANAGER_TITLE}" class="button" type="submit" name="back"
+                       value="  {$MOD.LBL_FONTMANAGER_BUTTON}  ">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>{if isset($error)}<span class='error'><b>{$MOD.LBL_STATUS_FONT_ERROR}</b></span>{else}
+            <b>{$MOD.LBL_STATUS_FONT_SUCCESS}</b>{/if}</div>
+    <span class='error'><pre>{$error}</pre></span>
+    <pre>{$info}</pre>
 </form>

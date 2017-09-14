@@ -44,53 +44,52 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $fields_array['DocumentRevision'] = array(
     'column_fields' => array(
-        "id"
+        'id'
     ,
-        "change_log"
+        'change_log'
     ,
-        "document_id"
+        'document_id'
     ,
-        "date_entered"
+        'date_entered'
     ,
-        "created_by"
+        'created_by'
     ,
-        "filename"
+        'filename'
     ,
-        "file_ext"
+        'file_ext'
     ,
-        "file_mime_type"
+        'file_mime_type'
     ,
-        "revision"
+        'revision'
     ,
-        "date_modified"
+        'date_modified'
     ,
-        "deleted"
+        'deleted'
     ),
     'list_fields' => array(
-        "id"
+        'id'
     ,
-        "change_log"
+        'change_log'
     ,
-        "document_id"
+        'document_id'
     ,
-        "date_entered"
+        'date_entered'
     ,
-        "created_by"
+        'created_by'
     ,
-        "filename"
+        'filename'
     ,
-        "file_ext"
+        'file_ext'
     ,
-        "file_mime_type"
+        'file_mime_type'
     ,
-        "revision"
+        'revision'
     ,
-        "date_modified"
+        'date_modified'
     ,
-        "deleted"
+        'deleted'
     ,
-        "latest_revision_id"
+        'latest_revision_id'
     ),
-    'required_fields' => array("revision" => 1),
+    'required_fields' => array('revision' => 1),
 );
-?>

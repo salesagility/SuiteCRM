@@ -180,7 +180,13 @@ $layout_defs['Emails'] = array(
             'top_buttons' => array(),
         ),
         'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'SecurityGroups',
+                    'mode' => 'MultiSelect'
+                ),
+            ),
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',
