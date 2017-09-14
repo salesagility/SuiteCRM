@@ -59,12 +59,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     $mod_strings = return_module_language($GLOBALS['current_language'], 'ACL');
     $file_type = strtolower($_REQUEST['type']);
     
-    /*
-     * Check url like: index.php?entryPoint=download&id=7d604f85-b2ae-d1fa-3ebf-57adbffcda1c_image_c&type=Notes
-     * and separate id and field name
-     * @see: include/SugarFields/Fields/Image/DetailView.tpl
-     *
-     */
     /**
      * Check and separate id and field name in url like:
      * index.php?entryPoint=download&id=7d604f85-b2ae-d1fa-3ebf-57adbffcda1c_image_c&type=Notes
