@@ -66,7 +66,7 @@ class Administration extends SugarBean
 
     );
     public $disable_custom_fields = true;
-    public $checkbox_fields = Array(
+    public $checkbox_fields = array(
         "notify_send_by_default",
         "mail_smtpauth_req",
         "notify_on",
@@ -134,8 +134,8 @@ class Administration extends SugarBean
     function get_config_prefix($str)
     {
         return $str
-            ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_") + 1))
-            : Array(false, false);
+            ? array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_") + 1))
+            : array(false, false);
     }
 
     function saveSetting($category, $key, $value)

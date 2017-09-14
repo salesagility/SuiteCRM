@@ -433,7 +433,7 @@ foreach ($beanFiles as $bean => $file) {
             continue;
         }
 
-        if (($focus instanceOf SugarBean)) {
+        if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
                 $sql = $GLOBALS['db']->repairTable($focus, true);
                 if (trim($sql) != '') {

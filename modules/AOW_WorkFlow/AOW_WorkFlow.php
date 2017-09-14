@@ -239,11 +239,11 @@ class AOW_WorkFlow extends Basic
 
                     case'New_Records':
                         $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
-                        Break;
+                        break;
 
                     case'Modified_Records':
                         $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
-                        Break;
+                        break;
 
                 }
             }
@@ -418,7 +418,7 @@ class AOW_WorkFlow extends Basic
             }
 
             //handle like conditions
-            Switch ($condition->operator) {
+            switch ($condition->operator) {
                 case 'Contains':
                     $value = "CONCAT('%', " . $value . " ,'%')";
                     break;
@@ -599,7 +599,7 @@ class AOW_WorkFlow extends Basic
                     ) {
                         return false;
                     }
-                    Break;
+                    break;
 
                 case'Modified_Records':
                     // it isn't a valid bean if the user create it now because the affection need on already exists records only!
@@ -608,7 +608,7 @@ class AOW_WorkFlow extends Basic
                     ) {
                         return false;
                     }
-                    Break;
+                    break;
 
             }
         }

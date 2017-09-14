@@ -98,8 +98,8 @@ $xtpl->assign("IMAGE_PATH", $image_path);
 $xtpl->assign("PRINT_URL", "index.php?" . $GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign("SECURITYGROUP",
-    $securityGroup = Array("NAME" => $focus->securitygroup_name, "ID" => $focus->securitygroup_id));
-$xtpl->assign("USER", $user = Array("NAME" => $focus->user_name, "ID" => $focus->user_id));
+    $securityGroup = array("NAME" => $focus->securitygroup_name, "ID" => $focus->securitygroup_id));
+$xtpl->assign("USER", $user = array("NAME" => $focus->user_name, "ID" => $focus->user_id));
 
 echo "\n<p>\n";
 echo get_module_title($mod_strings['LBL_MODULE_NAME'],

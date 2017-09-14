@@ -524,7 +524,7 @@ eoq;
 
         foreach ($QCModules as $module) {
             $seed = SugarModule::get($module)->loadBean();
-            if (($seed instanceOf SugarBean) && $seed->ACLAccess('edit')) {
+            if (($seed instanceof SugarBean) && $seed->ACLAccess('edit')) {
                 $QCAvailableModules[] = $module;
             }
         }

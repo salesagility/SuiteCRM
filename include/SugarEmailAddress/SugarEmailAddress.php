@@ -926,7 +926,7 @@ class SugarEmailAddress extends SugarBean
      */
     function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
     {
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 
@@ -1041,7 +1041,7 @@ class SugarEmailAddress extends SugarBean
      */
     function getEmailAddressWidgetDetailView($focus, $tpl = '')
     {
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 
@@ -1083,7 +1083,7 @@ class SugarEmailAddress extends SugarBean
      */
     function getEmailAddressWidgetDuplicatesView($focus)
     {
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 

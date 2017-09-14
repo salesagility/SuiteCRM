@@ -404,7 +404,7 @@ FROM prospect_lists_prospects plp
      */
     function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $GLOBALS['db']->quote($the_query_string);
         array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
 

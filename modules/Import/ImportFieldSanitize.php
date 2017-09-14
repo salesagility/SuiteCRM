@@ -99,7 +99,7 @@ class ImportFieldSanitize
         }
 
         $field = $sfh::getSugarField(ucfirst($name));
-        if ($field instanceOf SugarFieldBase) {
+        if ($field instanceof SugarFieldBase) {
             $value = $field->importSanitize($value, $vardef, $focus, $this);
         }
 

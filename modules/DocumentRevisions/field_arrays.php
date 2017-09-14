@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $fields_array['DocumentRevision'] = array(
-    'column_fields' => Array(
+    'column_fields' => array(
         "id"
     ,
         "change_log"
@@ -66,7 +66,7 @@ $fields_array['DocumentRevision'] = array(
     ,
         "deleted"
     ),
-    'list_fields' => Array(
+    'list_fields' => array(
         "id"
     ,
         "change_log"
@@ -91,6 +91,6 @@ $fields_array['DocumentRevision'] = array(
     ,
         "latest_revision_id"
     ),
-    'required_fields' => Array("revision" => 1),
+    'required_fields' => array("revision" => 1),
 );
 ?>

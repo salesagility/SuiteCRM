@@ -435,7 +435,7 @@ class RepairAndClear
         global $mod_strings;
 
         // skip if not a SugarBean object
-        if (!($focus instanceOf SugarBean)) {
+        if (!($focus instanceof SugarBean)) {
             return;
         }
 

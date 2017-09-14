@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $fields_array['EmailTemplate'] = array(
-    'column_fields' => Array(
+    'column_fields' => array(
         "id"
     ,
         "date_entered"
@@ -66,7 +66,7 @@ $fields_array['EmailTemplate'] = array(
     ,
         "published"
     ),
-    'list_fields' => Array(
+    'list_fields' => array(
         'id',
         'name',
         'description',

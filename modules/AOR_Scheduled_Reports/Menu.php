@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings, $app_strings, $sugar_config;
 
 if (ACLController::checkAccess('AOR_Scheduled_Reports', 'edit', true)) {
-    $module_menu[] = Array(
+    $module_menu[] = array(
         "index.php?module=AOR_Scheduled_Reports&action=EditView&return_module=AOR_Scheduled_Reports&return_action=DetailView",
         $mod_strings['LNK_NEW_RECORD'],
         "Create",
@@ -53,7 +53,7 @@ if (ACLController::checkAccess('AOR_Scheduled_Reports', 'edit', true)) {
     );
 }
 if (ACLController::checkAccess('AOR_Scheduled_Reports', 'list', true)) {
-    $module_menu[] = Array(
+    $module_menu[] = array(
         "index.php?module=AOR_Scheduled_Reports&action=index",
         $mod_strings['LNK_LIST'],
         "List",

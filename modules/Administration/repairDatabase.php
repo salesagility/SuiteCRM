@@ -115,12 +115,12 @@ if (is_admin($current_user) || isset ($from_sync_client) || is_admin_for_any_mod
                 require_once($file);
                 unset($GLOBALS['dictionary'][$bean]);
                 $focus = new $bean ();
-                if (($focus instanceOf SugarBean) && !isset($repairedTables[$focus->table_name])) {
+                if (($focus instanceof SugarBean) && !isset($repairedTables[$focus->table_name])) {
                     $sql .= $db->repairTable($focus, $execute);
                     $repairedTables[$focus->table_name] = true;
                 }
                 //Repair Custom Fields
-                if (($focus instanceOf SugarBean) && $focus->hasCustomFields() && !isset($repairedTables[$focus->table_name . '_cstm'])) {
+                if (($focus instanceof SugarBean) && $focus->hasCustomFields() && !isset($repairedTables[$focus->table_name . '_cstm'])) {
                     $df = new DynamicField($focus->module_dir);
                     //Need to check if the method exists as during upgrade an old version of Dynamic Fields may be loaded.
                     if (method_exists($df, "repairCustomFields")) {

@@ -88,7 +88,7 @@ class Opportunity extends SugarBean
     public $object_name = "Opportunity";
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array(
+    public $additional_column_fields = array(
         'assigned_user_name',
         'assigned_user_id',
         'account_name',
@@ -101,7 +101,7 @@ class Opportunity extends SugarBean
         'email_id'
     );
 
-    public $relationship_fields = Array(
+    public $relationship_fields = array(
         'task_id' => 'tasks',
         'note_id' => 'notes',
         'account_id' => 'accounts',
@@ -308,7 +308,7 @@ class Opportunity extends SugarBean
         foreach ($query_array as $qstring) {
             $query .= ' ' . $qstring;
         }
-        $temp = Array(
+        $temp = array(
             'id',
             'first_name',
             'last_name',
@@ -383,7 +383,7 @@ class Opportunity extends SugarBean
      */
     function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $GLOBALS['db']->quote($the_query_string);
         array_push($where_clauses, "opportunities.name like '$the_query_string%'");
         array_push($where_clauses, "accounts.name like '$the_query_string%'");

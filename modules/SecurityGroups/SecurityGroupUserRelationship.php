@@ -61,7 +61,7 @@ class SecurityGroupUserRelationship extends SugarBean
 
     public $table_name = "securitygroups_users";
     public $object_name = "SecurityGroupUserRelationship";
-    public $column_fields = Array(
+    public $column_fields = array(
         "id"
     ,
         "securitygroup_id"
@@ -77,7 +77,7 @@ class SecurityGroupUserRelationship extends SugarBean
 
     public $new_schema = true;
 
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
     public $field_defs = array(
         'id' => array('name' => 'id', 'type' => 'char', 'len' => '36', 'default' => '')
     ,

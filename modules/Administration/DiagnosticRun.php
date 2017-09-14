@@ -120,7 +120,7 @@ define("VARDEFS_WEIGHT", 2);
 define("RETURN_FROM_DIAG_DIR", "../../../..");
 
 global $getDumpsFrom;
-$getDumpsFrom = Array();
+$getDumpsFrom = array();
 
 global $cacheDir;
 $cacheDir = "";

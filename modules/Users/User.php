@@ -104,7 +104,7 @@ class User extends Person
     public $importable = true;
     public $_userPreferenceFocus;
 
-    public $encodeFields = Array("first_name", "last_name", "description");
+    public $encodeFields = array("first_name", "last_name", "description");
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
@@ -999,7 +999,7 @@ EOQ;
             }
 
             $focus = SugarModule::get($module)->loadBean();
-            if ($focus instanceOf SugarBean) {
+            if ($focus instanceof SugarBean) {
                 $key = $focus->acltype;
             } else {
                 $key = 'module';

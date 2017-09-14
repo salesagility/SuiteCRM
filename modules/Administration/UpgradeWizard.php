@@ -204,8 +204,7 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             ) {
                 die("<span class='error'>File is not a zipped archive.</span>");
             }
-            if (unlink($delete_me)) {
-// successful deletion?
+            if (unlink($delete_me)) { // successful deletion?
                 echo "Package $delete_me has been removed.<br>";
             } else {
                 die("Problem removing package $delete_me.");

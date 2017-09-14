@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $fields_array['Opportunity'] = array(
-    'column_fields' => Array(
+    'column_fields' => array(
         "id"
     ,
         "name"
@@ -80,7 +80,7 @@ $fields_array['Opportunity'] = array(
     ,
         "campaign_id"
     ),
-    'list_fields' => Array(
+    'list_fields' => array(
         'id',
         'name',
         'account_id',
@@ -97,6 +97,6 @@ $fields_array['Opportunity'] = array(
     ,
         "amount_usdollar"
     ),
-    'required_fields' => Array('name' => 1, 'date_closed' => 2, 'amount' => 3, 'sales_stage' => 4, 'account_name' => 5),
+    'required_fields' => array('name' => 1, 'date_closed' => 2, 'amount' => 3, 'sales_stage' => 4, 'account_name' => 5),
 );
 ?>

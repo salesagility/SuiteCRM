@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings, $app_strings, $sugar_config;
 
 if (ACLController::checkAccess('AOS_Product_Categories', 'edit', true)) {
-    $module_menu[] = Array(
+    $module_menu[] = array(
         "index.php?module=AOS_Product_Categories&action=EditView&return_module=AOS_Product_Categories&return_action=DetailView",
         $mod_strings['LNK_NEW_RECORD'],
         "Create",
@@ -53,7 +53,7 @@ if (ACLController::checkAccess('AOS_Product_Categories', 'edit', true)) {
     );
 }
 if (ACLController::checkAccess('AOS_Product_Categories', 'list', true)) {
-    $module_menu[] = Array(
+    $module_menu[] = array(
         "index.php?module=AOS_Product_Categories&action=index&return_module=AOS_Product_Categories&return_action=DetailView",
         $mod_strings['LNK_LIST'],
         "List",
@@ -61,7 +61,7 @@ if (ACLController::checkAccess('AOS_Product_Categories', 'list', true)) {
     );
 }
 if (ACLController::checkAccess('AOS_Product_Categories', 'import', true)) {
-    $module_menu[] = Array(
+    $module_menu[] = array(
         "index.php?module=Import&action=Step1&import_module=AOS_Product_Categories&return_module=AOS_Product_Categories&return_action=index",
         $app_strings['LBL_IMPORT'],
         "Import",

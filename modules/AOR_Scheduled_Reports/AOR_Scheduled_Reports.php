@@ -130,7 +130,7 @@ class AOR_Scheduled_Reports extends basic
                     case 'Users':
                         $users = array();
                         switch ($params['email'][$key][0]) {
-                            Case 'security_group':
+                            case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
@@ -154,13 +154,13 @@ class AOR_Scheduled_Reports extends basic
                                     break;
                                 }
                             //No Security Group module found - fall through.
-                            Case 'role':
+                            case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
                                 break;
-                            Case 'all':
+                            case 'all':
                             default:
                                 global $db;
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";

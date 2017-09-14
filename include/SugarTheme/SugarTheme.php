@@ -577,7 +577,7 @@ class SugarTheme
         $defaultFileName = $this->getDefaultCSSPath() . '/' . $cssFileName;
         $fullFileName = $this->getCSSPath() . '/' . $cssFileName;
         if (isset($this->parentTheme)
-            && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
+            && SugarThemeRegistry::get($this->parentTheme) instanceof SugarTheme
             && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName, false)) != ''
         ) {
             $cssFileContents .= file_get_contents($filename);
@@ -702,7 +702,7 @@ EOHTML;
         $fullFileName = $this->getJSPath() . '/' . $jsFileName;
         $defaultFileName = $this->getDefaultJSPath() . '/' . $jsFileName;
         if (isset($this->parentTheme)
-            && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
+            && SugarThemeRegistry::get($this->parentTheme) instanceof SugarTheme
             && ($filename = SugarThemeRegistry::get($this->parentTheme)->getJSURL($jsFileName,
                 false)) != '' && !in_array($jsFileName, $this->ignoreParentFiles)
         ) {
@@ -789,7 +789,7 @@ EOHTML;
         } elseif (is_file($this->getTemplatePath() . '/' . $templateName)) {
             $templatePath = $this->getTemplatePath() . '/' . $templateName;
         } elseif (isset($this->parentTheme)
-            && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
+            && SugarThemeRegistry::get($this->parentTheme) instanceof SugarTheme
             && ($filename = SugarThemeRegistry::get($this->parentTheme)->getTemplate($templateName)) != ''
         ) {
             $templatePath = $filename;
@@ -1044,7 +1044,7 @@ EOHTML;
         } elseif (($filename = $this->_getImageFileName($this->getImagePath() . '/' . $imageName)) != '') {
             $imagePath = $filename;
         } elseif (isset($this->parentTheme)
-            && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
+            && SugarThemeRegistry::get($this->parentTheme) instanceof SugarTheme
             && ($filename = SugarThemeRegistry::get($this->parentTheme)->getImageURL($imageName, false)) != ''
         ) {
             $imagePath = $filename;
@@ -1149,7 +1149,7 @@ EOHTML;
         // first, lets get all the paths of where to look
         $pathsToSearch = array($this->getImagePath());
         $theme = $this;
-        while (isset($theme->parentTheme) && SugarThemeRegistry::get($theme->parentTheme) instanceOf SugarTheme) {
+        while (isset($theme->parentTheme) && SugarThemeRegistry::get($theme->parentTheme) instanceof SugarTheme) {
             $theme = SugarThemeRegistry::get($theme->parentTheme);
             $pathsToSearch[] = $theme->getImagePath();
         }
@@ -1323,19 +1323,6 @@ class SugarThemeRegistry
     }
 
     /**
-     * Removes a new theme from the registry
-     *
-     * @param $themeName string
-     */
-    public static function remove(
-        $themeName
-    ) {
-        if (self::exists($themeName)) {
-            unset(self::$_themes[$themeName]);
-        }
-    }
-
-    /**
      * Returns true if a theme object specified by the given $themeName exists in the registry
      *
      * @param  $themeName string
@@ -1357,6 +1344,19 @@ class SugarThemeRegistry
     ) {
         if (isset(self::$_themes[$themeName])) {
             return self::$_themes[$themeName];
+        }
+    }
+
+    /**
+     * Removes a new theme from the registry
+     *
+     * @param $themeName string
+     */
+    public static function remove(
+        $themeName
+    ) {
+        if (self::exists($themeName)) {
+            unset(self::$_themes[$themeName]);
         }
     }
 
