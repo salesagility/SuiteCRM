@@ -79,6 +79,32 @@ class templateParser
                     }
                     $link = $secureLink;
                     $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                } else if ($field_def['source'] == 'function') {
+					$can_execute = true;
+					$execute_params = array();
+					$execute_function = array();
+					if (!empty($field_def['function_class'])) {
+						$execute_function[] = $field_def['function_class'];
+						$execute_function[] = $field_def['function_name'];
+					} else {
+						$execute_function = $field_def['function_name'];
+					}
+					foreach ($field_def['function_params'] as $param) {
+						if ($param == '$this') {
+							$execute_params[] = $focus;
+						} elseif (empty($focus->$param)) {
+							$can_execute = false;
+						} else {
+							$execute_params[] = $focus->$param;
+						}
+					}
+					if ($can_execute) {
+						if (!empty($field_def['function_require'])) {
+							require_once($field_def['function_require']);
+						}
+						$repl_arr[$key . "_" . $fieldName] = call_user_func_array($execute_function, $execute_params);
+					}
+
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
