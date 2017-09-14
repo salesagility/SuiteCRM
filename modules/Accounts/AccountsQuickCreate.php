@@ -56,7 +56,8 @@ class AccountsQuickCreate extends QuickCreate
 
         parent::process();
 
-        if ($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) {
+// override for ajax call
             $this->ss->assign('saveOnclick',
                 "onclick='if(check_form(\"accountsQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"accounts\"); else return false;'");
             $this->ss->assign('cancelOnclick',

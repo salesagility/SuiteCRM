@@ -431,11 +431,13 @@ eoq2;
                     $disabled = "disabled=\"true\"";
                     //$checked = "";
                 }
-                if ($checked != "" && $disabled != "") {    // need to put a hidden field
+                if ($checked != "" && $disabled != "") {
+// need to put a hidden field
                     print("<input name=\"copy_$count\" type=\"hidden\" value=\"" . $the_file . "\">\n");
                 }
                 print("<li><input id=\"copy_$count\" name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end);
-                if ($checked == "" && $disabled != "") {    // need to explain this file hasn't changed
+                if ($checked == "" && $disabled != "") {
+// need to explain this file hasn't changed
                     print(" (no changes)");
                 }
                 print("<br>\n");

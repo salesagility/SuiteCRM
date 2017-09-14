@@ -189,7 +189,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     $column = $colID;
                 }
                 // now pad out to the end of the row
-                if (($column + 1) < $this->getMaxColumns()) { // last column is maxColumns-1
+                if (($column + 1) < $this->getMaxColumns()) {
+// last column is maxColumns-1
                     for ($i = $column + 1; $i < $this->getMaxColumns(); $i++) {
                         $row [$i] = MBConstants::$EMPTY ['name'];
                     }

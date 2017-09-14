@@ -329,7 +329,8 @@ function verifyArguments($argv, $usage_regular)
         //this should be a regular sugar install
         $upgradeType = constant('SUGARCRM_INSTALL');
         //check if this is a valid zip file
-        if (!is_file($argv[1])) { // valid zip?
+        if (!is_file($argv[1])) {
+// valid zip?
             echo "*******************************************************************************\n";
             echo "*** ERROR: First argument must be a full path to the patch file. Got [ {$argv[1]} ].\n";
             echo $usage_regular;

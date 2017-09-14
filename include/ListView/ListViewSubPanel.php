@@ -313,7 +313,7 @@ class ListViewSubPanel extends ListView
         }
     }
 
-        public function process_dynamic_listview_rows(
+    public function process_dynamic_listview_rows(
         $data,
         $parent_data,
         $smartyTemplateSection,
@@ -537,7 +537,8 @@ class ListViewSubPanel extends ListView
                                 // We need to call into the old SugarWidgets for the time being, so it can generate a proper link with all the various corner-cases handled
                                 // So we'll populate the field data with the pre-rendered display for the field
                                 $list_field['fields'][$field_name] = $widget_contents[$aVal][$field_name];
-                                if ('full_name' == $field_name) {//bug #32465
+                                if ('full_name' == $field_name) {
+//bug #32465
                                     $list_field['fields'][strtoupper($field_name)] = $widget_contents[$aVal][$field_name];
                                 }
 
@@ -605,7 +606,7 @@ class ListViewSubPanel extends ListView
         $this->smartyTemplate->assign('ROWS_BUTTONS', $button_contents);
     } // end processListNavigation
 
-public function processListNavigation(
+    public function processListNavigation(
         $smartyTemplateSection,
         $html_varName,
         $current_offset,
@@ -696,7 +697,8 @@ public function processListNavigation(
                         "border='0' align='absmiddle'", null, null, '.gif',
                         $this->local_app_strings['LNK_LIST_PREVIOUS']) . "</button>";
             } else {
-                if ($this->multi_select_popup) {// nav links for multiselect popup, submit form to save checks.
+                if ($this->multi_select_popup) {
+// nav links for multiselect popup, submit form to save checks.
                     $start_link = "<button type='button' class='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' onClick='javascript:save_checks(0, \"{$moduleString}\");'>" . SugarThemeRegistry::current()->getImage("start",
                             "border='0' align='absmiddle'", null, null, '.gif',
                             $this->local_app_strings['LNK_LIST_START']) . "</button>";
@@ -741,7 +743,8 @@ public function processListNavigation(
                         "aborder='0' align='absmiddle'", null, null, '.gif',
                         $this->local_app_strings['LNK_LIST_NEXT']) . "</button>";
             } else {
-                if ($this->multi_select_popup) { // nav links for multiselect popup, submit form to save checks.
+                if ($this->multi_select_popup) {
+// nav links for multiselect popup, submit form to save checks.
                     $end_link = "<button type='button' name='listViewEndButton' class='button' title='{$this->local_app_strings['LNK_LIST_END']}' onClick='javascript:save_checks($last_offset, \"{$moduleString}\");'>" . SugarThemeRegistry::current()->getImage("end",
                             "border='0' align='absmiddle'", null, null, '.gif',
                             $this->local_app_strings['LNK_LIST_END']) . "</button>";

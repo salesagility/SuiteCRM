@@ -57,8 +57,8 @@ class SugarEmailAddress extends SugarBean
     public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
     public $disable_custom_fields = true;
     public $db;
-        public $smarty; // array of emails
-public $addresses = array();
+    public $smarty; // array of emails
+    public $addresses = array();
     public $view = '';
     public $email_address;
     private $stateBeforeWorkflow;
@@ -516,7 +516,8 @@ public $addresses = array();
                     //verify linkage and flags.
                     $upd_eabr = "";
                     if (isset($current_links[$emailId])) {
-                        if (!$isConversion) { // do not update anything if this is for lead conversion
+                        if (!$isConversion) {
+// do not update anything if this is for lead conversion
                             if ($address['primary_address'] != $current_links[$emailId]['primary_address'] or $address['reply_to_address'] != $current_links[$emailId]['reply_to_address']) {
                                 $upd_eabr = "UPDATE email_addr_bean_rel SET primary_address='" . $this->db->quote($address['primary_address']) . "', reply_to_address='" . $this->db->quote($address['reply_to_address']) . "' WHERE id='" . $this->db->quote($current_links[$emailId]['id']) . "'";
                             }

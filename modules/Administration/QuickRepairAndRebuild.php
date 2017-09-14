@@ -188,7 +188,8 @@ class RepairAndClear
         if (!empty($this->module_list) && is_array($this->module_list)) {
             if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
                 LanguageManager::clearLanguageCache();
-            } else { //use the modules selected thrut the select list.
+            } else {
+//use the modules selected thrut the select list.
                 foreach ($this->module_list as $module_name) {
                     LanguageManager::clearLanguageCache($module_name);
                 }

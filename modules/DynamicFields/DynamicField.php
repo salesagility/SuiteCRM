@@ -56,20 +56,6 @@ class DynamicField
     public $bean;
 
     /**
-     * DynamicField constructor.
-     * @param string $module
-     */
-    public function __construct($module = '')
-    {
-        global $sugar_config;
-        $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
-        $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
-        if(isset($sugar_config['dbconfig'])) {
-            $this->db = DBManagerFactory::getInstance();
-        }
-    }
-
-    /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      * @param string $module
      */
@@ -82,6 +68,20 @@ class DynamicField
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module);
+    }
+
+    /**
+     * DynamicField constructor.
+     * @param string $module
+     */
+    public function __construct($module = '')
+    {
+        global $sugar_config;
+        $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
+        $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
+        if (isset($sugar_config['dbconfig'])) {
+            $this->db = DBManagerFactory::getInstance();
+        }
     }
 
     /**
@@ -127,24 +127,6 @@ class DynamicField
     }
 
     /**
-     * @param string $language
-     * @param $key
-     * @param $value
-     */
-    public function setLabel($language, $key, $value)
-    {
-        // set $language = 'en_us' as default
-        if (!$language) {
-            $language = 'en_us';
-        }
-
-        $params ['label_' . $key] = $value;
-        require_once 'modules/ModuleBuilder/parsers/parser.label.php';
-        $parser = new ParserLabel($this->module);
-        $parser->handleSave($params, $language);
-    }
-
-    /**
      * Builds the cache for custom fields based on the vardefs.
      *
      * @param string|bool $module
@@ -170,6 +152,7 @@ class DynamicField
             unset($results[$module]); // clear out any old results for the module as $results is declared static
         } else {
             $results = array(); // clear out results - if we remove a module we don't want to have its old vardefs hanging around
+
             return false;
         }
 
@@ -213,31 +196,6 @@ class DynamicField
         }
 
         return true;
-    }
-
-
-    /**
-     * Returns the widget for a custom field from the fields_meta_data table.
-     *
-     * @param $module
-     * @param $fieldName
-     * @return null|TemplateDate|TemplateDecimal|TemplateFloat|TemplateInt|TemplateText|TemplateTextArea
-     * @throws Exception
-     */
-    public function getFieldWidget($module, $fieldName)
-    {
-        if (empty($module) || empty($fieldName)) {
-            sugar_die("Unable to load widget for '$module' : '$fieldName'");
-        }
-        $query = "SELECT * FROM fields_meta_data WHERE custom_module='$module' AND name='$fieldName' AND deleted = 0";
-        $result = $this->db->query($query);
-        require_once 'modules/DynamicFields/FieldCases.php';
-        if ($row = $this->db->fetchByAssoc($result)) {
-            $field = get_widget($row ['type']);
-            $field->populateFromRow($row);
-
-            return $field;
-        }
     }
 
     /**
@@ -303,6 +261,48 @@ class DynamicField
 
                 return;
             }
+        }
+    }
+
+    /**
+     * @param string $language
+     * @param $key
+     * @param $value
+     */
+    public function setLabel($language, $key, $value)
+    {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
+        $params ['label_' . $key] = $value;
+        require_once 'modules/ModuleBuilder/parsers/parser.label.php';
+        $parser = new ParserLabel($this->module);
+        $parser->handleSave($params, $language);
+    }
+
+    /**
+     * Returns the widget for a custom field from the fields_meta_data table.
+     *
+     * @param $module
+     * @param $fieldName
+     * @return null|TemplateDate|TemplateDecimal|TemplateFloat|TemplateInt|TemplateText|TemplateTextArea
+     * @throws Exception
+     */
+    public function getFieldWidget($module, $fieldName)
+    {
+        if (empty($module) || empty($fieldName)) {
+            sugar_die("Unable to load widget for '$module' : '$fieldName'");
+        }
+        $query = "SELECT * FROM fields_meta_data WHERE custom_module='$module' AND name='$fieldName' AND deleted = 0";
+        $result = $this->db->query($query);
+        require_once 'modules/DynamicFields/FieldCases.php';
+        if ($row = $this->db->fetchByAssoc($result)) {
+            $field = get_widget($row ['type']);
+            $field->populateFromRow($row);
+
+            return $field;
         }
     }
 
@@ -425,7 +425,8 @@ class DynamicField
             if ($field['type'] == 'relate') {
                 $related_module = $field['ext2'];
                 $name = $field['name'];
-                if (empty($this->bean->$name)) { //Don't load the relationship twice
+                if (empty($this->bean->$name)) {
+//Don't load the relationship twice
                     $id_name = $field['id_name'];
                     $mod = BeanFactory::getBean($related_module);
                     if (is_object($mod) && isset($this->bean->$name)) {
@@ -463,7 +464,18 @@ class DynamicField
                 if (isset($this->bean->$name)) {
                     $quote = "'";
 
-                    if (in_array($field['type'], array('int', 'float', 'double', 'uint', 'ulong', 'long', 'short', 'tinyint', 'currency', 'decimal'))) {
+                    if (in_array($field['type'], array(
+                        'int',
+                        'float',
+                        'double',
+                        'uint',
+                        'ulong',
+                        'long',
+                        'short',
+                        'tinyint',
+                        'currency',
+                        'decimal'
+                    ))) {
                         $quote = '';
                         if (!isset($this->bean->$name) || !is_numeric($this->bean->$name)) {
                             if ($field['required']) {
@@ -558,6 +570,19 @@ class DynamicField
      * Method required by the TemplateRelatedTextField->save() method
      * Taken from MBModule's implementation
      */
+
+    /**
+     * @param $field
+     */
+    protected function removeVardefExtension($field)
+    {
+        $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
+
+        if (is_file($file_loc)) {
+            unlink($file_loc);
+        }
+    }
+
     /**
      * @param string $name
      * @param string $type
@@ -588,6 +613,98 @@ class DynamicField
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns a Database Safe Name.
+     *
+     * @param string $name
+     * @param bool $_C do we append _c to the name
+     *
+     * @return string
+     */
+    public function getDBName($name, $_C = true)
+    {
+        static $cached_results = array();
+        if (!empty($cached_results[$name])) {
+            return $cached_results[$name];
+        }
+        $exclusions = array('parent_type', 'parent_id', 'currency_id', 'parent_name');
+        // Remove any non-db friendly characters
+        $return_value = preg_replace("/[^\w]+/", '_', $name);
+        if ($_C == true && !in_array($return_value, $exclusions) && substr($return_value, -2) != '_c') {
+            $return_value .= '_c';
+        }
+        $cached_results[$name] = $return_value;
+
+        return $return_value;
+    }
+
+    /**
+     * DEPRECIATED: Use addFieldObject instead.
+     * Adds a Custom Field using parameters.
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $type
+     * @param string $max_size
+     * @param string $required_option
+     * @param string $default_value
+     * @param string $ext1
+     * @param string $ext2
+     * @param string $ext3
+     * @param int $audited
+     * @param int $inline_edit
+     * @param int $mass_update
+     * @param string $ext4
+     * @param string $help
+     * @param int $duplicate_merge
+     * @param string $comment
+     *
+     * @return bool
+     */
+    public function addField(
+        $name,
+        $label = '',
+        $type = 'Text',
+        $max_size = '255',
+        $required_option = 'optional',
+        $default_value = '',
+        $ext1 = '',
+        $ext2 = '',
+        $ext3 = '',
+        $audited = 0,
+        $inline_edit = 1,
+        $mass_update = 0,
+        $ext4 = '',
+        $help = '',
+        $duplicate_merge = 0,
+        $comment = ''
+    ) {
+        require_once 'modules/DynamicFields/templates/Fields/TemplateField.php';
+        $field = new TemplateField();
+        $field->label = $label;
+        if (empty($field->label)) {
+            $field->label = $name;
+        }
+        $field->name = $name;
+        $field->type = $type;
+        $field->len = $max_size;
+        $field->required = (!empty($required_option) && $required_option != 'optional');
+        $field->default = $default_value;
+        $field->ext1 = $ext1;
+        $field->ext2 = $ext2;
+        $field->ext3 = $ext3;
+        $field->ext4 = $ext4;
+        $field->help = $help;
+        $field->comments = $comment;
+        $field->massupdate = $mass_update;
+        $field->duplicate_merge = $duplicate_merge;
+        $field->audited = $audited;
+        $field->inline_edit = $inline_edit;
+        $field->reportable = 1;
+
+        return $this->addFieldObject($field);
     }
 
     /**
@@ -677,6 +794,97 @@ class DynamicField
     }
 
     /**
+     * Creates the custom table with an id of id_c.
+     *
+     * @param bool $execute
+     * @return string
+     */
+    public function createCustomTable($execute = true)
+    {
+        $out = '';
+        if (!$this->db->tableExists($this->bean->table_name . '_cstm')) {
+            $GLOBALS['log']->debug('creating custom table for ' . $this->bean->table_name);
+            $idDef = array(
+                'id_c' => array(
+                    'name' => 'id_c',
+                    'type' => 'id',
+                    'required' => 1,
+                ),
+            );
+            $idIdx = array(
+                'id' => array(
+                    'name' => $this->bean->table_name . '_cstm_pk',
+                    'type' => 'primary',
+                    'fields' => array('id_c'),
+                ),
+            );
+
+            $query = $this->db->createTableSQLParams($this->bean->table_name . '_cstm', $idDef, $idIdx);
+            if (!$this->db->supports('inline_keys')) {
+                $indicesArr = $this->db->getConstraintSql($idIdx, $this->bean->table_name . '_cstm');
+            } else {
+                $indicesArr = array();
+            }
+            if ($execute) {
+                $this->db->query($query);
+                if (!empty($indicesArr)) {
+                    foreach ($indicesArr as $idxq) {
+                        $this->db->query($idxq);
+                    }
+                }
+            }
+            $out = $query . "\n";
+            if (!empty($indicesArr)) {
+                $out .= implode("\n", $indicesArr) . "\n";
+            }
+
+            $out .= $this->add_existing_custom_fields($execute);
+        }
+
+        return $out;
+    }
+
+    /**
+     * Updates the db schema and adds any custom fields we have used if the custom table was dropped.
+     *
+     * @param bool $execute
+     * @return string
+     */
+    public function add_existing_custom_fields($execute = true)
+    {
+        $out = '';
+        if ($this->bean->hasCustomFields()) {
+            foreach ($this->bean->field_defs as $name => $data) {
+                if (empty($data['source']) || $data['source'] != 'custom_fields') {
+                    continue;
+                }
+                $out .= $this->add_existing_custom_field($data, $execute);
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * @param array $data
+     * @param bool $execute
+     * @return string
+     */
+    public function add_existing_custom_field($data, $execute = true)
+    {
+        $field = get_widget($data ['type']);
+        $field->populateFromRow($data);
+        $query = "/*MISSING IN DATABASE - {$data['name']} -  ROW*/\n"
+            . $field->get_db_add_alter_table($this->bean->table_name . '_cstm');
+        $out = $query . "\n";
+        if ($execute) {
+            $this->db->query($query);
+        }
+
+        return $out;
+    }
+
+    /**
      * @param $field
      * @param $column_fields
      */
@@ -698,7 +906,8 @@ class DynamicField
                 continue;
             }
             $to_save[$property] =
-                is_string($field->$property) ? htmlspecialchars_decode($field->$property, ENT_QUOTES) : $field->$property;
+                is_string($field->$property) ? htmlspecialchars_decode($field->$property,
+                    ENT_QUOTES) : $field->$property;
         }
         $bean_name = $beanList[$this->module];
 
@@ -754,7 +963,8 @@ class DynamicField
 
         $out = "<?php\n // created: " . date('Y-m-d H:i:s') . "\n";
         foreach ($def_override as $property => $val) {
-            $out .= override_value_to_string_recursive(array($vBean, 'fields', $field->name, $property), 'dictionary', $val) . "\n";
+            $out .= override_value_to_string_recursive(array($vBean, 'fields', $field->name, $property), 'dictionary',
+                    $val) . "\n";
         }
 
         $out .= "\n ?>";
@@ -771,161 +981,6 @@ class DynamicField
         } else {
             return false;
         }
-    }
-
-    /**
-     * @param $field
-     */
-    protected function removeVardefExtension($field)
-    {
-        $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
-
-        if (is_file($file_loc)) {
-            unlink($file_loc);
-        }
-    }
-
-    /**
-     * DEPRECIATED: Use addFieldObject instead.
-     * Adds a Custom Field using parameters.
-     *
-     * @param string $name
-     * @param string $label
-     * @param string $type
-     * @param string $max_size
-     * @param string $required_option
-     * @param string $default_value
-     * @param string $ext1
-     * @param string $ext2
-     * @param string $ext3
-     * @param int $audited
-     * @param int $inline_edit
-     * @param int $mass_update
-     * @param string $ext4
-     * @param string $help
-     * @param int $duplicate_merge
-     * @param string $comment
-     *
-     * @return bool
-     */
-    public function addField($name, $label = '', $type = 'Text', $max_size = '255', $required_option = 'optional', $default_value = '', $ext1 = '', $ext2 = '', $ext3 = '', $audited = 0, $inline_edit = 1, $mass_update = 0, $ext4 = '', $help = '', $duplicate_merge = 0, $comment = '')
-    {
-        require_once 'modules/DynamicFields/templates/Fields/TemplateField.php';
-        $field = new TemplateField();
-        $field->label = $label;
-        if (empty($field->label)) {
-            $field->label = $name;
-        }
-        $field->name = $name;
-        $field->type = $type;
-        $field->len = $max_size;
-        $field->required = (!empty($required_option) && $required_option != 'optional');
-        $field->default = $default_value;
-        $field->ext1 = $ext1;
-        $field->ext2 = $ext2;
-        $field->ext3 = $ext3;
-        $field->ext4 = $ext4;
-        $field->help = $help;
-        $field->comments = $comment;
-        $field->massupdate = $mass_update;
-        $field->duplicate_merge = $duplicate_merge;
-        $field->audited = $audited;
-        $field->inline_edit = $inline_edit;
-        $field->reportable = 1;
-
-        return $this->addFieldObject($field);
-    }
-
-    /**
-     * Creates the custom table with an id of id_c.
-     *
-     * @param bool $execute
-     * @return string
-     */
-    public function createCustomTable($execute = true)
-    {
-        $out = '';
-        if (!$this->db->tableExists($this->bean->table_name . '_cstm')) {
-            $GLOBALS['log']->debug('creating custom table for ' . $this->bean->table_name);
-            $idDef = array(
-                'id_c' => array(
-                    'name' => 'id_c',
-                    'type' => 'id',
-                    'required' => 1,
-                ),
-            );
-            $idIdx = array(
-                'id' => array(
-                    'name' => $this->bean->table_name . '_cstm_pk',
-                    'type' => 'primary',
-                    'fields' => array('id_c'),
-                ),
-            );
-
-            $query = $this->db->createTableSQLParams($this->bean->table_name . '_cstm', $idDef, $idIdx);
-            if (!$this->db->supports('inline_keys')) {
-                $indicesArr = $this->db->getConstraintSql($idIdx, $this->bean->table_name . '_cstm');
-            } else {
-                $indicesArr = array();
-            }
-            if ($execute) {
-                $this->db->query($query);
-                if (!empty($indicesArr)) {
-                    foreach ($indicesArr as $idxq) {
-                        $this->db->query($idxq);
-                    }
-                }
-            }
-            $out = $query . "\n";
-            if (!empty($indicesArr)) {
-                $out .= implode("\n", $indicesArr) . "\n";
-            }
-
-            $out .= $this->add_existing_custom_fields($execute);
-        }
-
-        return $out;
-    }
-
-
-    /**
-     * Updates the db schema and adds any custom fields we have used if the custom table was dropped.
-     *
-     * @param bool $execute
-     * @return string
-     */
-    public function add_existing_custom_fields($execute = true)
-    {
-        $out = '';
-        if ($this->bean->hasCustomFields()) {
-            foreach ($this->bean->field_defs as $name => $data) {
-                if (empty($data['source']) || $data['source'] != 'custom_fields') {
-                    continue;
-                }
-                $out .= $this->add_existing_custom_field($data, $execute);
-            }
-        }
-
-        return $out;
-    }
-
-    /**
-     * @param array $data
-     * @param bool $execute
-     * @return string
-     */
-    public function add_existing_custom_field($data, $execute = true)
-    {
-        $field = get_widget($data ['type']);
-        $field->populateFromRow($data);
-        $query = "/*MISSING IN DATABASE - {$data['name']} -  ROW*/\n"
-            . $field->get_db_add_alter_table($this->bean->table_name . '_cstm');
-        $out = $query . "\n";
-        if ($execute) {
-            $this->db->query($query);
-        }
-
-        return $out;
     }
 
     /**
@@ -984,7 +1039,8 @@ class DynamicField
         $count = 0;
         $field_key = $this->getDBName($displayLabel, false);
         $systemLabel = $field_key;
-        if (!$this->use_existing_labels) { // use_existing_labels defaults to false in this module; as of today, only set to true by ModuleInstaller.php
+        if (!$this->use_existing_labels) {
+// use_existing_labels defaults to false in this module; as of today, only set to true by ModuleInstaller.php
             while (isset($mod_strings [$systemLabel]) && $count <= $limit) {
                 $systemLabel = $field_key . "_$count";
                 ++$count;
@@ -996,31 +1052,6 @@ class DynamicField
         $parser->handleSave(array('label_' . $systemLabel => $displayLabel), $GLOBALS ['current_language']);
 
         return $systemLabel;
-    }
-
-    /**
-     * Returns a Database Safe Name.
-     *
-     * @param string $name
-     * @param bool $_C do we append _c to the name
-     *
-     * @return string
-     */
-    public function getDBName($name, $_C = true)
-    {
-        static $cached_results = array();
-        if (!empty($cached_results[$name])) {
-            return $cached_results[$name];
-        }
-        $exclusions = array('parent_type', 'parent_id', 'currency_id', 'parent_name');
-        // Remove any non-db friendly characters
-        $return_value = preg_replace("/[^\w]+/", '_', $name);
-        if ($_C == true && !in_array($return_value, $exclusions) && substr($return_value, -2) != '_c') {
-            $return_value .= '_c';
-        }
-        $cached_results[$name] = $return_value;
-
-        return $return_value;
     }
 
     /**
@@ -1067,7 +1098,17 @@ class DynamicField
                 $this->bean->$name = $value;
             }
         }
+
         return true;
+    }
+
+    /**
+     * @param XTemplate $xtpl
+     * @param string $view
+     */
+    public function populateAllXTPL($xtpl, $view)
+    {
+        $this->populateXTPL($xtpl, $view);
     }
 
     /**
@@ -1088,16 +1129,6 @@ class DynamicField
                 }
             }
         }
-    }
-
-
-    /**
-     * @param XTemplate $xtpl
-     * @param string $view
-     */
-    public function populateAllXTPL($xtpl, $view)
-    {
-        $this->populateXTPL($xtpl, $view);
     }
 
     /**
@@ -1122,7 +1153,12 @@ class DynamicField
                     $results[$name] = array('xtpl' => $field->get_xtpl());
                     break;
                 case 'html':
-                    $results[$name] = array('html' => $field->get_html(), 'label' => $field->get_html_label(), 'fieldType' => $field->data_type, 'isCustom' => true);
+                    $results[$name] = array(
+                        'html' => $field->get_html(),
+                        'label' => $field->get_html_label(),
+                        'fieldType' => $field->data_type,
+                        'isCustom' => true
+                    );
                     break;
             }
         }

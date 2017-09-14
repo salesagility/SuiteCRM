@@ -56,13 +56,12 @@ class EmailsNonImportedDetailView extends EmailsDetailView
 
     public function setup(
         $module,
-        $focus  = null,
+        $focus = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'nonimporteddetailviewdefs'
-    )
-    {
+    ) {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 
@@ -72,10 +71,10 @@ class EmailsNonImportedDetailView extends EmailsDetailView
      */
     public function populateBean($request = array())
     {
-        if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
+        if (!empty($request['uid']) && !empty($request['inbound_email_record']) && !empty($request['msgno'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
 
-            if($_REQUEST['folder'] === 'sent') {
+            if ($_REQUEST['folder'] === 'sent') {
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
             }
 

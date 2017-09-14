@@ -252,7 +252,8 @@ class EmailMarketing extends SugarBean
         if (!$this->from_name) {
             $errors['from_name'] = isset($mod_strings['LBL_NO_FROM_NAME']) ? $mod_strings['LBL_NO_FROM_NAME'] : 'LBL_NO_FROM_NAME';
         }
-        if (!$this->from_addr) { // TODO test for valid email address
+        if (!$this->from_addr) {
+// TODO test for valid email address
             $errors['from_addr'] = isset($mod_strings['LBL_NO_FROM_ADDR_OR_INVALID']) ? $mod_strings['LBL_NO_FROM_ADDR_OR_INVALID'] : 'LBL_NO_FROM_ADDR_OR_INVALID';
         }
 

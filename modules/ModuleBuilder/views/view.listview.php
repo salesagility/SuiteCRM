@@ -223,7 +223,6 @@ class ViewListView extends SugarView
     }
 
     function _constructTitle()
-
     {
 
         global $app_list_strings;

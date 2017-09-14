@@ -22,37 +22,37 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-    if(!(ACLController::checkAccess('Opportunities', 'edit', true))){
-        ACLController::displayNoAccess();
-        die;
-    }
+if (!(ACLController::checkAccess('Opportunities', 'edit', true))) {
+    ACLController::displayNoAccess();
+    die;
+}
 
-    global $app_list_strings;
+global $app_list_strings;
 
-	require_once('modules/AOS_Quotes/AOS_Quotes.php');
-	require_once('modules/Opportunities/Opportunity.php');
-	
-	//Setting values in Quotes
-	$quote = new AOS_Quotes();
-	$quote->retrieve($_REQUEST['record']);
+require_once('modules/AOS_Quotes/AOS_Quotes.php');
+require_once('modules/Opportunities/Opportunity.php');
 
-	//Setting Opportunity Values
-	$opportunity = new Opportunity();
-    $opportunity->name = $quote->name;
-    $opportunity->assigned_user_id = $quote->assigned_user_id;
-    $opportunity->amount = format_number($quote->total_amount);
-    $opportunity->account_id = $quote->billing_account_id;
-    $opportunity->currency_id = $quote->currency_id;
-    $opportunity->sales_stage = 'Proposal/Price Quote';
-    $opportunity->probability = $app_list_strings['sales_probability_dom']['Proposal/Price Quote'];
-    $opportunity->lead_source = 'Self Generated';
-    $opportunity->date_closed = $quote->expiration;
+//Setting values in Quotes
+$quote = new AOS_Quotes();
+$quote->retrieve($_REQUEST['record']);
 
-    $opportunity->save();
+//Setting Opportunity Values
+$opportunity = new Opportunity();
+$opportunity->name = $quote->name;
+$opportunity->assigned_user_id = $quote->assigned_user_id;
+$opportunity->amount = format_number($quote->total_amount);
+$opportunity->account_id = $quote->billing_account_id;
+$opportunity->currency_id = $quote->currency_id;
+$opportunity->sales_stage = 'Proposal/Price Quote';
+$opportunity->probability = $app_list_strings['sales_probability_dom']['Proposal/Price Quote'];
+$opportunity->lead_source = 'Self Generated';
+$opportunity->date_closed = $quote->expiration;
 
-	//Setting opportunity quote relationship
-    $quote->load_relationship('opportunities');
-    $quote->opportunities->add($opportunity->id);
-	ob_clean();
-	header('Location: index.php?module=Opportunities&action=EditView&record='.$opportunity->id);
+$opportunity->save();
+
+//Setting opportunity quote relationship
+$quote->load_relationship('opportunities');
+$quote->opportunities->add($opportunity->id);
+ob_clean();
+header('Location: index.php?module=Opportunities&action=EditView&record=' . $opportunity->id);
 ?>

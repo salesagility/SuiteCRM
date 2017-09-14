@@ -127,6 +127,25 @@ class User extends Person
     }
 
     /**
+     * Check that md5-encoded password matches existing hash
+     * @param string $password MD5-encoded password
+     * @param string $user_hash DB hash
+     * @return bool Match or not?
+     */
+    public static function checkPasswordMD5($password_md5, $user_hash)
+    {
+        if (empty($user_hash)) {
+            return false;
+        }
+        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
+            // Old way - just md5 password
+            return strtolower($password_md5) == $user_hash;
+        }
+
+        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
+    }
+
+    /**
      * getAllUsers
      *
      * Returns all active and inactive users
@@ -275,6 +294,11 @@ class User extends Person
         return $user->_userPreferenceFocus->loadPreferences($category);
     }
 
+    /* Returns the User's private GUID; this is unassociated with the User's
+     * actual GUID.  It is used to secure file names that must be HTTP://
+     * accesible, but obfusicated.
+     */
+
     /**
      * convenience function to get user's default signature
      * return array
@@ -287,11 +311,6 @@ class User extends Person
             return array();
         }
     }
-
-    /* Returns the User's private GUID; this is unassociated with the User's
-     * actual GUID.  It is used to secure file names that must be HTTP://
-     * accesible, but obfusicated.
-     */
 
     /**
      * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
@@ -767,25 +786,6 @@ class User extends Person
         return false;
     }
 
-    /**
-     * Check that md5-encoded password matches existing hash
-     * @param string $password MD5-encoded password
-     * @param string $user_hash DB hash
-     * @return bool Match or not?
-     */
-    public static function checkPasswordMD5($password_md5, $user_hash)
-    {
-        if (empty($user_hash)) {
-            return false;
-        }
-        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
-            // Old way - just md5 password
-            return strtolower($password_md5) == $user_hash;
-        }
-
-        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
-    }
-
     function retrieve_by_email_address($email)
     {
 
@@ -1232,7 +1232,7 @@ EOQ;
         return $list_form;
     }
 
-        function create_export_query($order_by, $where, $relate_link_join = '')
+    function create_export_query($order_by, $where, $relate_link_join = '')
     {
         include('modules/Users/field_arrays.php');
 
@@ -1267,7 +1267,7 @@ EOQ;
         return $query;
     } // fn
 
-        /** Returns a list of the associated users
+    /** Returns a list of the associated users
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
      * All Rights Reserved..
      * Contributor(s): ______________________________________..
@@ -1387,7 +1387,7 @@ EOQ;
         return $ret;
     }
 
-function getUsersNameAndEmail()
+    function getUsersNameAndEmail()
     {
         // Bug #48555 Not User Name Format of User's locale.
         $this->_create_proper_name_field();
@@ -1409,7 +1409,7 @@ function getUsersNameAndEmail()
      *
      */
 
-function getSystemDefaultNameAndEmail()
+    function getSystemDefaultNameAndEmail()
     {
 
         $email = new Email();
@@ -1706,7 +1706,8 @@ function getSystemDefaultNameAndEmail()
         $parentbean = null,
         $singleSelect = false,
         $ifListForExport = false
-    ) {    //call parent method, specifying for array to be returned
+    ) {
+//call parent method, specifying for array to be returned
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true,
             $parentbean, $singleSelect, $ifListForExport);
 

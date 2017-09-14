@@ -50,17 +50,9 @@ include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchOnCrm.php'
 include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchOnIMap.php';
 
 
-
 class ListViewDataEmails extends ListViewData
 {
 
-
-    /**
-     * enum('crm', 'imap')
-     *
-     * @var string
-     */
-    protected $searchType;
 
     /**
      * @var array
@@ -78,7 +70,6 @@ class ListViewDataEmails extends ListViewData
         'description' => 'BODY',
         'imap_keywords' => 'KEYWORD'
     );
-
     /**
      * @var array
      * never select these fields during crm filter
@@ -90,7 +81,6 @@ class ListViewDataEmails extends ListViewData
         'has_attachment',
         'imap_keywords'
     );
-
     /**
      * @var array
      * always include these fields during crm filter
@@ -103,7 +93,6 @@ class ListViewDataEmails extends ListViewData
         'has_attachment',
         'status',
     );
-
     /**
      * @var array
      * during crm filter map these fields so that the correct
@@ -122,7 +111,12 @@ class ListViewDataEmails extends ListViewData
         'has_attachment' => 'has_attachment',
         'status' => 'emails.status',
     );
-
+    /**
+     * enum('crm', 'imap')
+     *
+     * @var string
+     */
+    protected $searchType;
 
     /**
      * Constructor
@@ -132,183 +126,6 @@ class ListViewDataEmails extends ListViewData
         parent::__construct();
     }
 
-
-    /**
-     * @param User $currentUser
-     * @param Folder $folder
-     * @return InboundEmail
-     * @throws SuiteException
-     */
-    protected function getInboundEmail($currentUser, $folder) {
-
-        $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
-        $id = $folder->getId();
-        if (!empty($id)) {
-            $inboundEmailID = $folder->getId();
-        }
-
-        if ($inboundEmailID && !isValidId($inboundEmailID)) {
-            throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
-        }
-
-        /**
-         * @var InboundEmail $inboundEmail
-         */
-        $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
-
-        if(!$inboundEmail || !isset($inboundEmail->id) || !$inboundEmail->id) {
-
-            // something went wrong when SugarBean trying to retrieve the inbound email account
-            // maybe there is no IE bean in database or wrong ID stored in user preferences?
-            // look at the active group emails and load from the first one possibility
-
-            $query = "
-              SELECT inbound_email.id FROM inbound_email
-                JOIN folders ON
-                  folders.id = inbound_email.id AND
-                  folders.folder_type = 'inbound' AND
-                  folders.deleted = 0
-
-                WHERE
-                  inbound_email.status = 'Active' AND
-                  inbound_email.mailbox_type = 'pick' AND
-                  inbound_email.is_personal = 0 AND
-                  inbound_email.deleted = 0";
-
-            $results = $this->db->query($query);
-
-            $rows = array();
-            while ($row = $this->db->fetchByAssoc($results)) {
-                $rows[] = $row;
-            }
-
-            if($rows) {
-                $inboundEmailID = $rows[0]['id'];
-                $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
-            }
-
-        }
-
-        if(!$inboundEmail) {
-            throw new SuiteException("Error: InboundEmail not loaded (id:{$inboundEmailID})");
-        }
-
-        return $inboundEmail;
-    }
-
-    /**
-     * set $inboundEmail->mailbox and return $this->searchType
-     *
-     * @param Folder $folder
-     * @param InboundEmail $inboundEmail
-     * @return string $this->searchType
-     */
-    protected function getSearchType($folder, $inboundEmail) {
-
-        switch ($folder->getType()) {
-
-            case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
-                $this->searchType = "imap";
-                break;
-
-            case "draft":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
-                $this->searchType = "crm";
-                break;
-
-            case "trash":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
-                $this->searchType = "imap";
-                break;
-
-            default:
-                $GLOBALS['log']->warn("unknown or undefined folder type (we will use 'imap' instead): " . $folder->getType());
-                $this->searchType = "imap";
-                break;
-        }
-
-        return $this->searchType;
-    }
-
-
-    /**
-     * it returns filter fields,
-     * set $this->searchType to 'crm' if any field is not IMap field
-     *
-     * @param array $filterFields
-     * @param string $where
-     * @param array $request
-     * @return array
-     */
-    protected function getFilter($filterFields, $where, $request) {
-        // Create a list of fields to filter and decide based on the field which type of filter to carry out
-
-        $filter = array();
-
-        // $searchType = "imap"; it searches the IMap headers and then searches the crm to see which messages are imported.
-        // $searchType = "crm"; it uses the usual crm search and handles the indicator and attachment fields.
-
-        if (!empty($where)) {
-            foreach ($filterFields as $filteredField => $filteredFieldValue) {
-
-                // Ignore blank fields
-                if (empty($filteredField)) {
-                    continue;
-                }
-
-                if (!isset($request[$filteredField.'_advanced']) && !isset($request[$filteredField.'_basic'])) {
-                    continue;
-                }
-
-                if (empty($request[$filteredField.'_advanced']) && empty($request[$filteredField.'_basic'])) {
-                    continue;
-                }
-
-                // strip out the suffix to the the field names
-                if ((stristr($filteredField, 'advanced') !== false) || (stristr($filteredField, 'basic') !== false)) {
-                    $f = str_ireplace('_advanced', '', $filteredField);
-                    $f = str_ireplace('_basic', '', $f);
-                    if (isset(self::$mapServerFields[$f])) {
-                        $filter[self::$mapServerFields[$f]] = $filteredFieldValue;
-                    }
-
-                    if(array_key_exists($filteredField, $f)) {
-                        continue;
-                    }
-
-                    // if field name is not an IMap field
-                    if (!array_key_exists($f, self::$mapServerFields)) {
-                        $this->searchType = 'crm';
-                    }
-                } else {
-                    // use the field names
-                    if(in_array($filteredField, self::$mapIgnoreFields)) {
-                        continue;
-                    }
-
-                    // if field name is not an IMap field
-                    if (!array_key_exists($filteredField, self::$mapServerFields)) {
-                        $this->searchType = 'crm';
-                    } else {
-                        if (!empty($request[$filteredField.'_advanced'])) {
-                            $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_advanced'];
-                        } else if (!empty($request[$filteredField.'_basic'])) {
-                            $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
-                        } else {
-                            $f = str_ireplace('_advanced', '', $filteredField);
-                            $f = str_ireplace('_basic', '', $f);
-                            $filter[self::$mapServerFields[$filteredField]] = $f;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $filter;
-    }
-
-
     /**
      * Fix fields in filter fields and repair sql $where
      *
@@ -317,33 +134,38 @@ class ListViewDataEmails extends ListViewData
      * @param string $where
      * @return array
      */
-    public function fixFieldsInFilter($filterFields, $request, &$where) {
+    public function fixFieldsInFilter($filterFields, $request, &$where)
+    {
         // Fix fields in filter fields
         foreach (self::$mapEmailFieldsToEmailTextFields as $EmailSearchField => $EmailTextSearchField) {
-            if(array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
+            if (array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
                 $filterFields[$EmailSearchField] = true;
                 continue;
-            } else if(
-                array_key_exists($EmailSearchField . '_advanced', $request) &&
-                empty($request[$EmailSearchField . '_advanced'])
-            ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
-            } else if(
-                array_key_exists($EmailSearchField . '_basic', $request) &&
-                empty($request[$EmailSearchField . '_basic'])
-            ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
+            } else {
+                if (
+                    array_key_exists($EmailSearchField . '_advanced', $request) &&
+                    empty($request[$EmailSearchField . '_advanced'])
+                ) {
+                    $pos = array_search($EmailSearchField, $filterFields);
+                    unset($filterFields[$pos]);
+                    continue;
+                } else {
+                    if (
+                        array_key_exists($EmailSearchField . '_basic', $request) &&
+                        empty($request[$EmailSearchField . '_basic'])
+                    ) {
+                        $pos = array_search($EmailSearchField, $filterFields);
+                        unset($filterFields[$pos]);
+                        continue;
+                    }
+                }
             }
 
-            if(!array_key_exists($EmailSearchField, $filterFields)) {
+            if (!array_key_exists($EmailSearchField, $filterFields)) {
                 $filterFields[$EmailTextSearchField] = true;
             } else {
                 $pos = array_search($EmailSearchField, $filterFields);
-                if($pos !== false) {
+                if ($pos !== false) {
                     unset($filterFields[$pos]);
                     $filterFields[$EmailTextSearchField] = true;
                 }
@@ -351,12 +173,11 @@ class ListViewDataEmails extends ListViewData
 
             // since the where is hard coded at this point we need to map the fields in the where
             // clause of the SQL
-            $where = str_replace($EmailSearchField, $EmailTextSearchField, $where );
+            $where = str_replace($EmailSearchField, $EmailTextSearchField, $where);
         }
 
         return $filterFields;
     }
-
 
     /**
      * Populates CRM fields
@@ -368,7 +189,8 @@ class ListViewDataEmails extends ListViewData
      * @param bool $singleSelect
      * @return array|string
      */
-    public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect) {
+    public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect)
+    {
 
         $crmQueryArray = $seed->create_new_list_query(
             'id',
@@ -393,7 +215,6 @@ class ListViewDataEmails extends ListViewData
         return $crmQueryArray;
     }
 
-
     /**
      * get crm emails query and fix params custom values
      *
@@ -401,7 +222,8 @@ class ListViewDataEmails extends ListViewData
      * @param array $params
      * @return string
      */
-    public function getCrmEmailsQuery($crmQueryArray, &$params) {
+    public function getCrmEmailsQuery($crmQueryArray, &$params)
+    {
 
         if (!is_array($params)) {
             $params = array();
@@ -427,7 +249,7 @@ class ListViewDataEmails extends ListViewData
             $params['custom_select'] .
             $crmQueryArray['from'] .
             $params['custom_from'] .
-            $crmQueryArray['inner_join'].
+            $crmQueryArray['inner_join'] .
             $crmQueryArray['where'] .
             $params['custom_where'] .
             $crmQueryArray['order_by'] .
@@ -436,35 +258,32 @@ class ListViewDataEmails extends ListViewData
         return $crmEmailsQuery;
     }
 
-
     /**
-     * get email header status
-     *
-     * possible return variables:
-     * enum('replied', 'draft', 'read', 'unread')
-     *
+     * @param Folder $folderObj
      * @param array $emailHeader
-     * @return string
+     * @param Email $seed
+     * @param InboundEmail $inboundEmail
+     * @param User $currentUser
+     * @param string $folder
+     * @return array|bool
      */
-    protected function getEmailHeaderStatus($emailHeader)
+    public function getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder)
     {
-        if (isset($emailHeader['answered']) && $emailHeader['answered'] != 0) {
-            $ret = 'replied';
-        } else {
-            if (isset($emailHeader['draft']) && $emailHeader['draft'] != 0) {
-                $ret = 'draft';
-            } else {
-                if (isset($emailHeader['seen']) && $emailHeader['seen'] != 0) {
-                    $ret = 'read';
-                } else {
-                    $ret = 'unread';
-                }
-            }
+        $emailRecord = array();
+
+        if ($folderObj->getType() === 'draft' && $emailHeader['draft'] === 0) {
+            return false;
         }
 
-        return $ret;
-    }
+        foreach ($seed->column_fields as $c => $field) {
 
+            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail,
+                $currentUser, $folder, $folderObj);
+
+        }
+
+        return $emailRecord;
+    }
 
     /**
      * @param string $field
@@ -475,7 +294,8 @@ class ListViewDataEmails extends ListViewData
      * @param Folder $folderObj
      * @return bool|string
      */
-    protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj) {
+    protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj)
+    {
 
         switch ($field) {
             case 'from_addr_name':
@@ -555,37 +375,40 @@ class ListViewDataEmails extends ListViewData
         return $ret;
     }
 
-
     /**
-     * @param Folder $folderObj
+     * get email header status
+     *
+     * possible return variables:
+     * enum('replied', 'draft', 'read', 'unread')
+     *
      * @param array $emailHeader
-     * @param Email $seed
-     * @param InboundEmail $inboundEmail
-     * @param User $currentUser
-     * @param string $folder
-     * @return array|bool
+     * @return string
      */
-    public function getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder) {
-        $emailRecord = array();
-
-        if ($folderObj->getType() === 'draft' && $emailHeader['draft'] === 0) {
-            return false;
+    protected function getEmailHeaderStatus($emailHeader)
+    {
+        if (isset($emailHeader['answered']) && $emailHeader['answered'] != 0) {
+            $ret = 'replied';
+        } else {
+            if (isset($emailHeader['draft']) && $emailHeader['draft'] != 0) {
+                $ret = 'draft';
+            } else {
+                if (isset($emailHeader['seen']) && $emailHeader['seen'] != 0) {
+                    $ret = 'read';
+                } else {
+                    $ret = 'unread';
+                }
+            }
         }
 
-        foreach ($seed->column_fields as $c => $field) {
-
-            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj);
-
-        }
-
-        return $emailRecord;
+        return $ret;
     }
 
     /**
      * @param array $request $_REQUEST
      * @return bool
      */
-    public function isRequestedSearchAdvanced($request) {
+    public function isRequestedSearchAdvanced($request)
+    {
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
@@ -599,17 +422,17 @@ class ListViewDataEmails extends ListViewData
      * @param array $request $_REQUEST
      * @return bool
      */
-    public function isRequestedSearchBasic($request) {
+    public function isRequestedSearchBasic($request)
+    {
         return isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search";
     }
-
-
 
     /**
      * @param array $data
      * @return array
      */
-    public function getEmailUIds($data) {
+    public function getEmailUIds($data)
+    {
         $emailUIds = array();
         foreach ($data as $row) {
             $emailUIds[] = $row['UID'];
@@ -661,7 +484,7 @@ class ListViewDataEmails extends ListViewData
 
             // search in draft in CRM db?
 
-            if($folderObj->getType() === 'draft' && !array_key_exists('status', $filter_fields)) {
+            if ($folderObj->getType() === 'draft' && !array_key_exists('status', $filter_fields)) {
                 if (!empty($where)) {
                     $where .= ' AND ';
                 }
@@ -694,7 +517,8 @@ class ListViewDataEmails extends ListViewData
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
                     $search = new ListViewDataEmailsSearchOnIMap($this);
-                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
+                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj,
+                        $current_user, $folder, $limit, $limitPerPage);
                     break;
 
                 default:
@@ -705,8 +529,6 @@ class ListViewDataEmails extends ListViewData
 
                     break;
             }
-
-
 
 
         } catch (SuiteException $e) {
@@ -725,6 +547,185 @@ class ListViewDataEmails extends ListViewData
     }
 
     /**
+     * @param User $currentUser
+     * @param Folder $folder
+     * @return InboundEmail
+     * @throws SuiteException
+     */
+    protected function getInboundEmail($currentUser, $folder)
+    {
+
+        $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
+        $id = $folder->getId();
+        if (!empty($id)) {
+            $inboundEmailID = $folder->getId();
+        }
+
+        if ($inboundEmailID && !isValidId($inboundEmailID)) {
+            throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
+        }
+
+        /**
+         * @var InboundEmail $inboundEmail
+         */
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
+
+        if (!$inboundEmail || !isset($inboundEmail->id) || !$inboundEmail->id) {
+
+            // something went wrong when SugarBean trying to retrieve the inbound email account
+            // maybe there is no IE bean in database or wrong ID stored in user preferences?
+            // look at the active group emails and load from the first one possibility
+
+            $query = "
+              SELECT inbound_email.id FROM inbound_email
+                JOIN folders ON
+                  folders.id = inbound_email.id AND
+                  folders.folder_type = 'inbound' AND
+                  folders.deleted = 0
+
+                WHERE
+                  inbound_email.status = 'Active' AND
+                  inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.is_personal = 0 AND
+                  inbound_email.deleted = 0";
+
+            $results = $this->db->query($query);
+
+            $rows = array();
+            while ($row = $this->db->fetchByAssoc($results)) {
+                $rows[] = $row;
+            }
+
+            if ($rows) {
+                $inboundEmailID = $rows[0]['id'];
+                $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
+            }
+
+        }
+
+        if (!$inboundEmail) {
+            throw new SuiteException("Error: InboundEmail not loaded (id:{$inboundEmailID})");
+        }
+
+        return $inboundEmail;
+    }
+
+    /**
+     * set $inboundEmail->mailbox and return $this->searchType
+     *
+     * @param Folder $folder
+     * @param InboundEmail $inboundEmail
+     * @return string $this->searchType
+     */
+    protected function getSearchType($folder, $inboundEmail)
+    {
+
+        switch ($folder->getType()) {
+
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+                $this->searchType = "imap";
+                break;
+
+            case "draft":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                $this->searchType = "crm";
+                break;
+
+            case "trash":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
+                $this->searchType = "imap";
+                break;
+
+            default:
+                $GLOBALS['log']->warn("unknown or undefined folder type (we will use 'imap' instead): " . $folder->getType());
+                $this->searchType = "imap";
+                break;
+        }
+
+        return $this->searchType;
+    }
+
+    /**
+     * it returns filter fields,
+     * set $this->searchType to 'crm' if any field is not IMap field
+     *
+     * @param array $filterFields
+     * @param string $where
+     * @param array $request
+     * @return array
+     */
+    protected function getFilter($filterFields, $where, $request)
+    {
+        // Create a list of fields to filter and decide based on the field which type of filter to carry out
+
+        $filter = array();
+
+        // $searchType = "imap"; it searches the IMap headers and then searches the crm to see which messages are imported.
+        // $searchType = "crm"; it uses the usual crm search and handles the indicator and attachment fields.
+
+        if (!empty($where)) {
+            foreach ($filterFields as $filteredField => $filteredFieldValue) {
+
+                // Ignore blank fields
+                if (empty($filteredField)) {
+                    continue;
+                }
+
+                if (!isset($request[$filteredField . '_advanced']) && !isset($request[$filteredField . '_basic'])) {
+                    continue;
+                }
+
+                if (empty($request[$filteredField . '_advanced']) && empty($request[$filteredField . '_basic'])) {
+                    continue;
+                }
+
+                // strip out the suffix to the the field names
+                if ((stristr($filteredField, 'advanced') !== false) || (stristr($filteredField, 'basic') !== false)) {
+                    $f = str_ireplace('_advanced', '', $filteredField);
+                    $f = str_ireplace('_basic', '', $f);
+                    if (isset(self::$mapServerFields[$f])) {
+                        $filter[self::$mapServerFields[$f]] = $filteredFieldValue;
+                    }
+
+                    if (array_key_exists($filteredField, $f)) {
+                        continue;
+                    }
+
+                    // if field name is not an IMap field
+                    if (!array_key_exists($f, self::$mapServerFields)) {
+                        $this->searchType = 'crm';
+                    }
+                } else {
+                    // use the field names
+                    if (in_array($filteredField, self::$mapIgnoreFields)) {
+                        continue;
+                    }
+
+                    // if field name is not an IMap field
+                    if (!array_key_exists($filteredField, self::$mapServerFields)) {
+                        $this->searchType = 'crm';
+                    } else {
+                        if (!empty($request[$filteredField . '_advanced'])) {
+                            $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField . '_advanced'];
+                        } else {
+                            if (!empty($request[$filteredField . '_basic'])) {
+                                $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField . '_basic'];
+                            } else {
+                                $f = str_ireplace('_advanced', '', $filteredField);
+                                $f = str_ireplace('_basic', '', $f);
+                                $filter[self::$mapServerFields[$filteredField]] = $f;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $filter;
+    }
+
+    /**
      * generates queries for use by the display layer
      *
      * @param int $sortOrder
@@ -735,7 +736,8 @@ class ListViewDataEmails extends ListViewData
      * @param int $totalCounted
      * @return array of queries orderBy and baseURL are always returned the others are only returned  according to values passed in.
      */
-    public function callGenerateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted) {
+    public function callGenerateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted)
+    {
         return $this->generateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted);
     }
 
@@ -745,7 +747,8 @@ class ListViewDataEmails extends ListViewData
      * @param array $queries
      * @return array of urls orderBy and baseURL are always returned the others are only returned  according to values passed in.
      */
-    public function callGenerateURLS($queries) {
+    public function callGenerateURLS($queries)
+    {
         return $this->generateURLS($queries);
     }
 

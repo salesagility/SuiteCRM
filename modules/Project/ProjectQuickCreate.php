@@ -57,7 +57,8 @@ class ProjectQuickCreate extends QuickCreate
         $mod_strings = return_module_language($current_language, 'Project');
 
         parent::process();
-        if ($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) {
+// override for ajax call
             $this->ss->assign('saveOnclick',
                 "onclick='if(check_form(\"projectQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"projects\"); else return false;'");
             $this->ss->assign('cancelOnclick',

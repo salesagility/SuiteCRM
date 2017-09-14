@@ -155,7 +155,8 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     function queryFilterone_of($layout_def, $rename_columns = true)
     {
 
-        if ($rename_columns) { // this was a hack to get reports working, sugarwidgets should not be renaming $name!
+        if ($rename_columns) {
+// this was a hack to get reports working, sugarwidgets should not be renaming $name!
             $layout_def['name'] = 'id';
             $layout_def['type'] = 'id';
         }
@@ -178,7 +179,8 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     function queryFilternot_one_of($layout_def, $rename_columns = true)
     {
 
-        if ($rename_columns) { // this was a hack to get reports working, sugarwidgets should not be renaming $name!
+        if ($rename_columns) {
+// this was a hack to get reports working, sugarwidgets should not be renaming $name!
             $layout_def['name'] = 'id';
             $layout_def['type'] = 'id';
         }

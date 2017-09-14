@@ -59,7 +59,8 @@ class ContactsQuickCreate extends QuickCreate
 
         $this->ss->assign("SALUTATION_OPTIONS", get_select_options_with_id($app_list_strings['salutation_dom'], ''));
 
-        if ($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) {
+// override for ajax call
             $this->ss->assign('saveOnclick',
                 "onclick='if(check_form(\"contactsQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"contacts\"); else return false;'");
             $this->ss->assign('cancelOnclick',

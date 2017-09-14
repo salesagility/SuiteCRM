@@ -93,7 +93,8 @@ class ViewLabels extends ViewModulefields
             $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser ($value, $editModule);
             foreach ($gridLayoutMetaDataParserTemp->getLayout() as $panel) {
                 foreach ($panel as $row) {
-                    foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
+                    foreach ($row as $fieldArray) {
+// fieldArray is an array('name'=>name,'label'=>label)
                         if (isset ($fieldArray ['label'])) {
                             $vnames[$fieldArray ['label']] = $fieldArray ['label'];
                         }

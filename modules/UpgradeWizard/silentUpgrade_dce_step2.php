@@ -273,7 +273,8 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             exit(1);
         }
         // this is an instance
-        if (!is_dir($argv[1])) { // valid directory . template path?
+        if (!is_dir($argv[1])) {
+// valid directory . template path?
             echo "*******************************************************************************\n";
             echo "*** ERROR: First argument must be a full path to the template. Got [ {$argv[1]} ].\n";
             echo $usage_dce;
@@ -285,7 +286,8 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             //this should be a regular sugar install
             $upgradeType = constant('SUGARCRM_INSTALL');
             //check if this is a valid zip file
-            if (!is_file($argv[1])) { // valid zip?
+            if (!is_file($argv[1])) {
+// valid zip?
                 echo "*******************************************************************************\n";
                 echo "*** ERROR: First argument must be a full path to the patch file. Got [ {$argv[1]} ].\n";
                 echo $usage_regular;

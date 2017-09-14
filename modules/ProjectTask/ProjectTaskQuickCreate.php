@@ -56,7 +56,8 @@ class ProjectTaskQuickCreate extends QuickCreate
 
         parent::process();
 
-        if ($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) {
+// override for ajax call
             $this->ss->assign('saveOnclick',
                 "onclick='if(check_form(\"projectTaskQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"projecttask\"); else return false;'");
             $this->ss->assign('cancelOnclick',

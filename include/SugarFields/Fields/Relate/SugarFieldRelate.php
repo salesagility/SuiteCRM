@@ -54,7 +54,7 @@ class SugarFieldRelate extends SugarFieldBase
      * @param integer $tabindex
      * @return string
      */
-   public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $nolink = array('Users', 'Teams');
         if (in_array($vardef['module'], $nolink)) {

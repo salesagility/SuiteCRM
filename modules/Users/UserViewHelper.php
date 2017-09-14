@@ -719,7 +719,8 @@ class UserViewHelper
         $this->ss->assign('NAMEFORMAT', $sugar_config['name_formats'][$nformat]);
 
         //// Timezone
-        if (empty($this->bean->id)) { // remove default timezone for new users(set later)
+        if (empty($this->bean->id)) {
+// remove default timezone for new users(set later)
             $this->bean->user_preferences['timezone'] = '';
         }
 

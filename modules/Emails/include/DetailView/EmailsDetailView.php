@@ -68,13 +68,12 @@ class EmailsDetailView extends DetailView2
      */
     public function setup(
         $module,
-        $focus  = null,
+        $focus = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'detail'
-    )
-    {
+    ) {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 
@@ -94,7 +93,7 @@ class EmailsDetailView extends DetailView2
      */
     public function populateFields()
     {
-        if(empty($this->focus->from_addr_name)) {
+        if (empty($this->focus->from_addr_name)) {
             $this->focus->from_addr_name = $this->focus->from_addr;
         }
     }

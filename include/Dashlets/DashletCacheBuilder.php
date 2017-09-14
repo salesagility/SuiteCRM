@@ -60,13 +60,15 @@ class DashletCacheBuilder
         $allDashlets = array_merge($dashletFiles, $dashletFilesCustom);
         $dashletFiles = array();
         foreach ($allDashlets as $num => $file) {
-            if (substr_count($file, '.meta') == 0) { // ignore meta data files
+            if (substr_count($file, '.meta') == 0) {
+// ignore meta data files
                 $class = substr($file, strrpos($file, '/') + 1, -4);
                 $dashletFiles[$class] = array();
                 $dashletFiles[$class]['file'] = $file;
                 $dashletFiles[$class]['class'] = $class;
                 if (is_file(preg_replace('/(.*\/.*)(\.php)/Uis', '$1.meta$2',
-                    $file))) { // is there an associated meta data file?
+                    $file))) {
+// is there an associated meta data file?
                     $dashletFiles[$class]['meta'] = preg_replace('/(.*\/.*)(\.php)/Uis', '$1.meta$2', $file);
                     require($dashletFiles[$class]['meta']);
                     if (isset($dashletMeta[$class]['module'])) {

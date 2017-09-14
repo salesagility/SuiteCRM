@@ -317,7 +317,8 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                         $column = $colID;
                     }
                     // now pad out to the end of the row
-                    if (($column + 1) < $this->maxColumns) { // last column is maxColumns-1
+                    if (($column + 1) < $this->maxColumns) {
+// last column is maxColumns-1
                         for ($i = $column + 1; $i < $this->maxColumns; $i++) {
                             $row [$i] = array('name' => '(empty)', 'label' => '(empty)');
                         }
@@ -339,7 +340,8 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         if (!empty($this->_viewdefs)) {
             foreach ($this->_viewdefs ['panels'] as $panel) {
                 foreach ($panel as $row) {
-                    foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
+                    foreach ($row as $fieldArray) {
+// fieldArray is an array('name'=>name,'label'=>label)
                         if (isset($fieldArray ['name'])) {
                             unset($availableFields [$fieldArray ['name']]);
                             $GLOBALS['log']->debug(get_class($this) . "->getAvailableFields(): removing " . $fieldArray ['name']);

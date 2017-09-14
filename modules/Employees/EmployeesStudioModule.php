@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,20 +36,21 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
+require_once 'modules/ModuleBuilder/Module/StudioModule.php';
 
-class EmployeesStudioModule extends StudioModule {
-    function getProvidedSubpanels ()
+class EmployeesStudioModule extends StudioModule
+{
+    function getProvidedSubpanels()
     {
         // Much like pointy haired bosses, other modules should not be able to relate to Employees.
         return false;
     }
 
-    function getModule ()
+    function getModule()
     {
         $normalModules = parent::getModule();
-        
-        if(isset($normalModules[translate('LBL_RELATIONSHIPS')])) {
+
+        if (isset($normalModules[translate('LBL_RELATIONSHIPS')])) {
             unset($normalModules[translate('LBL_RELATIONSHIPS')]);
         }
 

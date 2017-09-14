@@ -170,7 +170,8 @@ if (isset($_REQUEST['emailUIAction'])) {
             $email->type = 'out';
             $email->status = 'sent';
 
-            if (isset($_REQUEST['email_id']) && !empty($_REQUEST['email_id'])) {// && isset($_REQUEST['saveDraft']) && !empty($_REQUEST['saveDraft'])) {
+            if (isset($_REQUEST['email_id']) && !empty($_REQUEST['email_id'])) {
+// && isset($_REQUEST['saveDraft']) && !empty($_REQUEST['saveDraft'])) {
                 $email->retrieve($_REQUEST['email_id']); // uid is GUID in draft cases
             }
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {

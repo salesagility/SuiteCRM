@@ -528,7 +528,7 @@ if (!isset($_POST['fromuser']) && !isset($_GET['execute'])) {
     }
   }
   <?php
-  if(!isset($_POST['fromuser']) && !isset($_GET['execute'])){
+  if(!isset($_POST['fromuser']) && !isset($_GET['execute'])) {
   ?>
   updateDivDisplay(document.getElementById('modulemultiselect'));
   <?php

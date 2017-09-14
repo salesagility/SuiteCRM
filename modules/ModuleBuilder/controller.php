@@ -833,7 +833,8 @@ class ModuleBuilderController extends SugarController
             {
                 $this->view = 'modulelabels';
             }
-        } else { //STUDIO
+        } else {
+//STUDIO
             $this->view = 'labels';
         }
     }

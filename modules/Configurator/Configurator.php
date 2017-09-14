@@ -329,7 +329,8 @@ class Configurator
                         setDeepArrayValue($this->config, 'logger_file_maxSize', rtrim($property));
                     } elseif (preg_match("/log4php.appender.A2.File=/", $value)) {
                         $ext = preg_split("/\./", $property);
-                        if (preg_match("/^\./", $property)) { //begins with .
+                        if (preg_match("/^\./", $property)) {
+//begins with .
                             setDeepArrayValue($this->config, 'logger_file_ext',
                                 isset($ext[2]) ? '.' . rtrim($ext[2]) : '.log');
                             setDeepArrayValue($this->config, 'logger_file_name', rtrim("." . $ext[1]));

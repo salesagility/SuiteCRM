@@ -477,7 +477,8 @@ function getRunningUser()
     // disabled_functions in php.ini (typical in shared hosting)
     $runningUser = exec('whoami');
 
-    if ($runningUser == null) {  // matches null, false and ""
+    if ($runningUser == null) {
+// matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN') . '\\' . getenv('USERNAME');
         } else {
@@ -825,7 +826,8 @@ function get_user_array(
         // Get the id and the name.
         while ($row = $db->fetchByAssoc($result)) {
             if ($use_real_name == true || showFullName()) {
-                if (isset($row['last_name'])) { // cn: we will ALWAYS have both first_name and last_name (empty value if blank in db)
+                if (isset($row['last_name'])) {
+// cn: we will ALWAYS have both first_name and last_name (empty value if blank in db)
                     $temp_result[$row['id']] = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
                 } else {
                     $temp_result[$row['id']] = $row['user_name'];
@@ -2943,7 +2945,8 @@ function get_bean_select_array(
 
         if ($add_blank == true) {
             // Add in a blank row
-            if ($blank_is_none == true) { // set 'blank row' to "--None--"
+            if ($blank_is_none == true) {
+// set 'blank row' to "--None--"
                 global $app_strings;
                 $temp_result[''] = $app_strings['LBL_NONE'];
             } else {
@@ -3959,9 +3962,11 @@ function getPhpInfo($level = -1)
                 $vPat3 = "/$vPat\s*$vPat\s*$vPat/";
                 $vPat2 = "/$vPat\s*$vPat/";
 
-                if (preg_match($vPat3, $vOne, $match)) { // 3cols
+                if (preg_match($vPat3, $vOne, $match)) {
+// 3cols
                     $returnInfo[$vName][trim($match[1])] = array(trim($match[2]), trim($match[3]));
-                } elseif (preg_match($vPat2, $vOne, $match)) { // 2cols
+                } elseif (preg_match($vPat2, $vOne, $match)) {
+// 2cols
                     $returnInfo[$vName][trim($match[1])] = trim($match[2]);
                 }
             }

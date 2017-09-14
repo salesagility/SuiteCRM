@@ -132,7 +132,8 @@ class ViewWizard extends SugarView
         $current_user->setPreference('mailmerge_on', 'on');
 
         //// Timezone
-        if (empty($current_user->id)) { // remove default timezone for new users(set later)
+        if (empty($current_user->id)) {
+// remove default timezone for new users(set later)
             $current_user->user_preferences['timezone'] = '';
         }
 

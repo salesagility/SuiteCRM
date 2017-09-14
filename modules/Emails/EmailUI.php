@@ -734,7 +734,7 @@ eoq;
         return false;
     }
 
-function getMailBoxesFromCacheValue($mailAccount)
+    function getMailBoxesFromCacheValue($mailAccount)
     {
         $foldersCache = $this->getCacheValue($mailAccount->id, 'folders', "folders.php", 'foldersCache');
         $mailboxes = $foldersCache['mailboxes'];
@@ -1091,7 +1091,7 @@ eoq;
         return $ret;
     }
 
-        /**
+    /**
      * Removes contacts from the user's address book
      * @param array ids
      */
@@ -1267,7 +1267,7 @@ eoq;
         return $ret;
     }
 
-        /**
+    /**
      * Creates a new Sugar folder
      * @param string $nodeLabel New sugar folder name
      * @param string $parentLabel Parent folder name
@@ -1348,7 +1348,7 @@ eoq;
         $current_user->setPreference('focusFolder', $saveStateSerial, '', 'Emails');
     }
 
-        /**
+    /**
      * Identifies subscribed mailboxes and empties the trash
      * @param object $ie InboundEmail
      */
@@ -1393,7 +1393,7 @@ eoq;
         return $ret;
     }
 
-function createCopyOfInboundAttachment($ie, $ret, $uid)
+    function createCopyOfInboundAttachment($ie, $ret, $uid)
     {
         global $sugar_config;
         if ($ie->isPop3Protocol()) {
@@ -1435,7 +1435,7 @@ function createCopyOfInboundAttachment($ie, $ret, $uid)
 
     }
 
-        function parseAttachmentInfo(&$actualAttachmentInfo, $attachmentHtmlData)
+    function parseAttachmentInfo(&$actualAttachmentInfo, $attachmentHtmlData)
     {
         $downLoadPHP = strpos($attachmentHtmlData, "index.php?entryPoint=download&");
         while ($downLoadPHP) {
@@ -1588,7 +1588,7 @@ function createCopyOfInboundAttachment($ie, $ret, $uid)
         return $meta;
     }
 
-        /**
+    /**
      * Renders the Import form from Smarty and returns HTML
      * @param array $vars request variable global
      * @param object $email Fetched email object
@@ -1647,7 +1647,7 @@ function createCopyOfInboundAttachment($ie, $ret, $uid)
         return $meta;
     } // fn
 
-/**
+    /**
      * This function returns the detail view for email in new 2.0 interface
      *
      */
@@ -1772,7 +1772,7 @@ function createCopyOfInboundAttachment($ie, $ret, $uid)
 
     }
 
-function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
+    function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
     {
         global $app_strings;
         $users = explode(",", $users);
@@ -1818,7 +1818,7 @@ function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
         return $out;
     }
 
-function doDistributionWithMethod($users, $emailIds, $distributionMethod)
+    function doDistributionWithMethod($users, $emailIds, $distributionMethod)
     {
         // we have users and the items to distribute
         if ($distributionMethod == 'roundRobin') {
@@ -1837,7 +1837,7 @@ function doDistributionWithMethod($users, $emailIds, $distributionMethod)
 
     }
 
-        /**
+    /**
      * distributes emails to users on Round Robin basis
      * @param    $userIds    array of users to dist to
      * @param    $mailIds    array of email ids to push on those users
@@ -1868,7 +1868,7 @@ function doDistributionWithMethod($users, $emailIds, $distributionMethod)
         return true;
     } // fn
 
-        /**
+    /**
      * distributes emails to users on Least Busy basis
      * @param    $userIds    array of users to dist to
      * @param    $mailIds    array of email ids to push on those users
@@ -1895,7 +1895,7 @@ function doDistributionWithMethod($users, $emailIds, $distributionMethod)
         return true;
     } // fn
 
-        /**
+    /**
      * distributes emails to 1 user
      * @param    $user        users to dist to
      * @param    $mailIds    array of email ids to push
@@ -1923,7 +1923,7 @@ function doDistributionWithMethod($users, $emailIds, $distributionMethod)
     {
     }
 
-function getAssignedEmailsCountForUsers($userIds)
+    function getAssignedEmailsCountForUsers($userIds)
     {
         $counts = array();
         foreach ($userIds as $id) {
@@ -1935,7 +1935,7 @@ function getAssignedEmailsCountForUsers($userIds)
         return $counts;
     }
 
-function getLastRobin($ie)
+    function getLastRobin($ie)
     {
         $lastRobin = "";
         if ($this->validCacheFileExists($ie->id, 'folders', "robin.cache.php")) {
@@ -1945,7 +1945,7 @@ function getLastRobin($ie)
         return $lastRobin;
     }
 
-function setLastRobin($ie, $lastRobin)
+    function setLastRobin($ie, $lastRobin)
     {
         global $sugar_config;
         $cacheFolderPath = sugar_cached("modules/Emails/{$ie->id}/folders");
@@ -2358,7 +2358,7 @@ eoq;
         return $ret;
     }
 
-        /**
+    /**
      * Formats email body on reply/forward
      * @param object email Email object in focus
      * @param string type
@@ -2506,7 +2506,7 @@ eoq;
         return array('query' => $q, 'countQuery' => $countq);
     }
 
-        /**
+    /**
      * get emails of related bean for a given bean id
      * @param $beanType
      * @param $condition array of conditions inclued bean id
@@ -2573,7 +2573,7 @@ eoq;
         return array('query' => $finalQuery, 'countQuery' => $countq);
     } // fn
 
-        function findEmailFromBeanIds($beanIds, $beanType, $whereArr)
+    function findEmailFromBeanIds($beanIds, $beanType, $whereArr)
     {
         global $current_user;
         $q = '';
@@ -2789,7 +2789,7 @@ eoq;
         return $folder;
     }
 
-function clearInboundAccountCache($ieId)
+    function clearInboundAccountCache($ieId)
     {
         global $sugar_config;
         $cacheRoot = sugar_cached("modules/Emails/{$ieId}");
@@ -2803,7 +2803,7 @@ function clearInboundAccountCache($ieId)
         } // for
     }
 
-function getFromAccountsArray($ie)
+    function getFromAccountsArray($ie)
     {
         global $current_user;
         global $app_strings;
@@ -2881,7 +2881,7 @@ function getFromAccountsArray($ie)
         return $ieAccountsFrom;
     }
 
-/**
+    /**
      * This function will return all the accounts this user has access to based on the
      * match of the emailId passed in as a parameter
      * @deprecate 7.9

@@ -64,7 +64,8 @@ foreach ($_FILES as $k => $file) {
         if ($upload_file->confirm_upload()) {
             $dest = $cachedir . basename($upload_file->get_stored_file_name()); // target name
             $guid = create_guid();
-            if ($upload_file->final_move($guid)) { // move to uploads
+            if ($upload_file->final_move($guid)) {
+// move to uploads
                 $path = $upload_file->get_upload_path($guid);
                 // if file is OK, copy to cache
                 if (verify_uploaded_image($path) && copy($path, $dest)) {

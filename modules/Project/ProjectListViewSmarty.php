@@ -78,7 +78,8 @@ class ProjectListViewSmarty extends ListViewSmarty
         global $app_strings;
         global $sugar_config;
 
-        if (preg_match('/^6\.[2-4]/', $sugar_config['sugar_version'])) { // Older v6.2-6.4
+        if (preg_match('/^6\.[2-4]/', $sugar_config['sugar_version'])) {
+// Older v6.2-6.4
 
             $script = "<a href='#' style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' " .
                 "onmouseout='unhiliteItem(this);' onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
@@ -88,7 +89,8 @@ class ProjectListViewSmarty extends ListViewSmarty
                 "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
                 "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
 
-        } else { // Newer v6.5+
+        } else {
+// Newer v6.5+
 
             $script = "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id='export_listview_top' " .
                 "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .

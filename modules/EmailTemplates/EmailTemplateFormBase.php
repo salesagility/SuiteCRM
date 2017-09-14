@@ -266,7 +266,8 @@ EOF;
         if (!empty($focus->id)) {
             $note = new Note();
             $where = "notes.parent_id='{$focus->id}'";
-            if (!empty($_REQUEST['old_id'])) { // to support duplication of email templates
+            if (!empty($_REQUEST['old_id'])) {
+// to support duplication of email templates
                 $where .= " OR notes.parent_id='" . htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES) . "'";
             }
             $notes_list = $note->get_full_list("", $where, true);
@@ -276,7 +277,8 @@ EOF;
             $notes_list = array();
         }
 
-        if (!is_array($focus->attachments)) { // PHP5 does not auto-create arrays(). Need to initialize it here.
+        if (!is_array($focus->attachments)) {
+// PHP5 does not auto-create arrays(). Need to initialize it here.
             $focus->attachments = array();
         }
         $focus->attachments = array_merge($focus->attachments, $notes_list);

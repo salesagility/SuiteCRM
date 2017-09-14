@@ -756,7 +756,8 @@ class MBPackage
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 foreach ($relationships as $k => $v) {
 
-                    if (strpos($fileInfo->getFilename(), $k) !== false) {   //filter by modules being exported
+                    if (strpos($fileInfo->getFilename(), $k) !== false) {
+//filter by modules being exported
                         if ($this->filterExportedRelationshipFile(
                             $fileInfo->getFilename(),
                             $moduleName,

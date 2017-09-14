@@ -119,7 +119,8 @@ if ($bean_name === "Meeting") {
     $focus->retrieve($record);
     $user = new User();
     $user->retrieve($linked_id);
-    if (!empty($user->id)) {  //make sure that record exists. we may have a contact on our hands.
+    if (!empty($user->id)) {
+//make sure that record exists. we may have a contact on our hands.
 
         if ($focus->update_vcal) {
             vCal::cache_sugar_vcal($user);

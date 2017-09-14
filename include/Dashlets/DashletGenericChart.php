@@ -276,7 +276,8 @@ abstract class DashletGenericChart extends Dashlet
                     }
                     $currentSearchFields[$name]['input'] = $this->layoutManager->widgetDisplayInput($widgetDef, true,
                         (empty($this->$name) ? '' : $this->$name));
-                } else { // ability to create spacers in input fields
+                } else {
+// ability to create spacers in input fields
                     $currentSearchFields['blank' + $count]['label'] = '';
                     $currentSearchFields['blank' + $count]['input'] = '';
                     $count++;
@@ -473,7 +474,8 @@ abstract class DashletGenericChart extends Dashlet
                         $a = 1;
                     }
                 }
-                if ($ifsort2 && $a == 0) {//Add 0 for sorting by the second column, if the first row doesn't have a certain col, it will fill the column with 0.
+                if ($ifsort2 && $a == 0) {
+//Add 0 for sorting by the second column, if the first row doesn't have a certain col, it will fill the column with 0.
                     $val = array();
                     $val['total'] = 0;
                     $val['count'] = 0;

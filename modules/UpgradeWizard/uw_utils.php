@@ -280,7 +280,8 @@ function removeFileFromPath($file, $path, $deleteNot = array())
         return $removed;
     }
     $d = dir($path);
-    while (false !== ($e = $d->read())) {  // Fixed bug. !== is required to literally match the type and value of false, so that a filename that could evaluate and cast to false, ie "false" or "0", still allows the while loop to continue.  From example at http://www.php.net/manual/en/function.dir.php
+    while (false !== ($e = $d->read())) {
+// Fixed bug. !== is required to literally match the type and value of false, so that a filename that could evaluate and cast to false, ie "false" or "0", still allows the while loop to continue.  From example at http://www.php.net/manual/en/function.dir.php
         $next = $path . '/' . $e;
         if (substr($e, 0, 1) != '.' && is_dir($next)) {
             $removed += removeFileFromPath($file, $next, $deleteNot);
@@ -1219,9 +1220,11 @@ function checkSystemCompliance()
     $memory_limit = "-1";//ini_get('memory_limit');
     $sugarMinMem = constant('SUGARCRM_MIN_MEM');
     // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-    if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
+    if ($memory_limit == "") {
+// memory_limit disabled at compile time, no memory limit
         $ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_OK']}</span></b>";
-    } elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
+    } elseif ($memory_limit == "-1") {
+// memory_limit enabled, but set to unlimited
         $ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']}</span></b>";
     } else {
         rtrim($memory_limit, 'M');
@@ -1360,7 +1363,8 @@ function updateQuickCreateDefs()
     $d = dir('modules');
     $studio_modules = array();
 
-    while ($e = $d->read()) { //collect all studio modules.
+    while ($e = $d->read()) {
+//collect all studio modules.
         if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
             continue;
         }
@@ -1369,7 +1373,8 @@ function updateQuickCreateDefs()
         }
     }
 
-    foreach ($studio_modules as $modname) { //for each studio enabled module
+    foreach ($studio_modules as $modname) {
+//for each studio enabled module
         //Check !exists modules/$modname/metadata/quickcreatedefs.php &&
         //exists custom/$modname/editviewdefs.php (module was customized) &&
         //!exists custom/$modname/quickcreateviewdefs.php
@@ -1900,7 +1905,8 @@ eoq;
         // check that destination files are writable
         $destFile = getcwd() . str_replace(clean_path($unzip_dir . '/' . $zip_from_dir), '', $file);
 
-        if (is_file($destFile)) { // of course it needs to exist first...
+        if (is_file($destFile)) {
+// of course it needs to exist first...
             if (!is_writable($destFile)) {
                 $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'] . ": " . $destFile;
             }
@@ -2386,7 +2392,8 @@ function uwFindAllFiles($dir, $theArray, $includeDirs = false, $skipDirs = array
 
     while ($f = $d->read()) {
         // bug 40793 Skip Directories array in upgradeWizard does not function correctly
-        if ($f == "." || $f == ".." || whetherNeedToSkipDir("$dir/$f", $skipDirs)) { // skip *nix self/parent
+        if ($f == "." || $f == ".." || whetherNeedToSkipDir("$dir/$f", $skipDirs)) {
+// skip *nix self/parent
             continue;
         }
 
@@ -2397,7 +2404,8 @@ function uwFindAllFiles($dir, $theArray, $includeDirs = false, $skipDirs = array
         }
 
         if (is_dir("$dir/$f")) {
-            if ($includeDirs) { // add the directory if flagged
+            if ($includeDirs) {
+// add the directory if flagged
                 $theArray[] = clean_path("$dir/$f");
             }
 
@@ -2547,10 +2555,12 @@ function testThis()
 
         $relativePath = dirname($relativeFile);
 
-        if ($relativePath == $priorPath) { // same dir, new file
+        if ($relativePath == $priorPath) {
+// same dir, new file
             $out .= "<tr><td>" . basename($relativeFile) . "</td></tr>";
             $priorPath = $relativePath;
-        } else { // new dir
+        } else {
+// new dir
 
         }
     }
@@ -2618,11 +2628,13 @@ function testThis3(&$files, $id, $hide, $previousPath = '')
             continue;
         }
 
-        if ($path == $previousPath) { // same directory
+        if ($path == $previousPath) {
+// same directory
             // new row for each file
             $out .= "<tr><td valign='top' align='left'>&nbsp;</td>";
             $out .= "<td valign='top' align='left'>{$fileName}</td></tr>";
-        } else { // new directory
+        } else {
+// new directory
             $newI = $k;
             $out .= "<tr><td valign='top'><a href='javascript:toggleNwFiles(\"{$newI}\");'>" . SugarThemeRegistry::current()->getImage("Workflow",
                     "", null, null, ".gif", $mod_strings['LBL_WORKFLOW']) . "</a></td>\n";
@@ -2654,9 +2666,11 @@ function testThis4($filePath, $fileNodes = array(), $fileName = '')
     $exFile = explode('/', $path);
 
     foreach ($exFile as $pathSegment) {
-        if (is_array($fileNodes[$pathSegment])) { // path already processed
+        if (is_array($fileNodes[$pathSegment])) {
+// path already processed
 
-        } else { // newly found path
+        } else {
+// newly found path
             $fileNodes[$pathSegment] = array();
         }
 

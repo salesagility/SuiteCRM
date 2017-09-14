@@ -1522,17 +1522,20 @@ class Email extends Basic
         foreach ($this->saved_attachments as $note) {
             $mime_type = 'text/plain';
             if ($note->object_name == 'Note') {
-                if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
+                if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
+// brandy-new file upload/attachment
                     $file_location = "file://" . $note->file->temp_file_location;
                     $filename = $note->file->original_file_name;
                     $mime_type = $note->file->mime_type;
-                } else { // attachment coming from template/forward
+                } else {
+// attachment coming from template/forward
                     $file_location = "upload://{$note->id}";
                     // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                     $filename = !empty($note->filename) ? $note->filename : $note->name;
                     $mime_type = $note->file_mime_type;
                 }
-            } elseif ($note->object_name == 'DocumentRevision') { // from Documents
+            } elseif ($note->object_name == 'DocumentRevision') {
+// from Documents
                 $filePathName = $note->id;
                 // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                 $filename = $note->getDocumentRevisionNameForDisplay();
@@ -2746,7 +2749,8 @@ class Email extends Basic
     public function getStartPage($uri)
     {
         if (strpos($uri,
-            '&')) { // "&" to ensure that we can explode the GET vars - else we're gonna trigger a Notice error
+            '&')) {
+// "&" to ensure that we can explode the GET vars - else we're gonna trigger a Notice error
             $serial = substr($uri, (strpos($uri, '?') + 1), strlen($uri));
             $exUri = explode('&', $serial);
             $start = array('module' => '', 'action' => '', 'group' => '', 'record' => '', 'type' => '');
@@ -3976,12 +3980,14 @@ eoq;
         }
 
         if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
-            if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
+            if (false === strpos($request['from_addr'], '&lt;')) {
+// we have an email only?
                 $bean->from_addr = $request['from_addr'];
                 $bean->from_name = '';
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
-            } else { // we have a compound string
+            } else {
+// we have a compound string
                 $newFromAddr = str_replace($old, $new, $request['from_addr']);
                 $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
                     (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);

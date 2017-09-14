@@ -980,7 +980,8 @@ class EmailMan extends SugarBean
                             $filename = $note->id . $note->filename;
                             $mime_type = $note->file_mime_type;
                         }
-                    } elseif ($note->object_name == 'DocumentRevision') { // from Documents
+                    } elseif ($note->object_name == 'DocumentRevision') {
+// from Documents
                         $filename = $note->id . $note->filename;
                         $file_location = "upload://$filename";
                         $mime_type = $note->file_mime_type;

@@ -63,7 +63,8 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign("USER_DATEFORMAT", '(' . $timedate->get_user_date_format() . ')');
 
 
-        if ($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) {
+// override for ajax call
             $this->ss->assign('saveOnclick',
                 "onclick='if(check_form(\"meetingsQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"activities\"); else return false;'");
             $this->ss->assign('cancelOnclick',

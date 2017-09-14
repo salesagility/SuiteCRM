@@ -368,7 +368,8 @@ class SecurityGroup extends SecurityGroup_sugar
 
                         self::inherit_parentQuery($focus, $relate_parent_type, $relate_parent_id, $focus_id,
                             $focus_module_dir);
-                    } elseif (isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) { //soap account
+                    } elseif (isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) {
+//soap account
                         $relate_parent_id = $_SESSION[$def['id_name']];
                         $relate_parent_type = $def['module'];
 

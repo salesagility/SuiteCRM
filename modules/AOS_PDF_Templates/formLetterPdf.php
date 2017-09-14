@@ -46,7 +46,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -69,19 +69,21 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
-$pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+$pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right,
+    $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
-    $pdf_history = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+    $pdf_history = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right,
+        $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
     $object_arr = array();
     $object_arr[$bean->module_dir] = $bean->id;
@@ -90,7 +92,8 @@ foreach ($recordIds as $recordId) {
         $object_arr['Accounts'] = $bean->account_id;
     }
 
-    $search = array('@<script[^>]*?>.*?</script>@si',        // Strip out javascript
+    $search = array(
+        '@<script[^>]*?>.*?</script>@si',        // Strip out javascript
         '@<[\/\!]*?[^<>]*?>@si',        // Strip out HTML tags
         '@([\r\n])[\s]+@',            // Strip out white space
         '@&(quot|#34);@i',            // Replace HTML entities
@@ -102,7 +105,8 @@ foreach ($recordIds as $recordId) {
         '@<address[^>]*?>@si'
     );
 
-    $replace = array('',
+    $replace = array(
+        '',
         '',
         '\1',
         '"',

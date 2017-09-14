@@ -52,17 +52,20 @@ class updateDependencies
         $tasks = $Task->get_full_list("",
             "project_task.project_id = '" . $bean->project_id . "' AND project_task.predecessors = '" . $bean->project_task_id . "'");
 
-        if ($bean->date_finish != $bean->fetched_row['date_finish']) { //if the end date of a current task is changed
+        if ($bean->date_finish != $bean->fetched_row['date_finish']) {
+//if the end date of a current task is changed
 
             $diff = $this->count_days($bean->date_finish,
                 $bean->fetched_row['date_finish']); //Gets the difference in days
 
             if ($tasks) {
-                foreach ($tasks as $task) { //loop through all dependant tasks
+                foreach ($tasks as $task) {
+//loop through all dependant tasks
 
                     $rel_type = $task->relationship_type;//Determine their dependency type
 
-                    if ($rel_type == 'FS') {//if its a Finish to start
+                    if ($rel_type == 'FS') {
+//if its a Finish to start
                         //Modify the task's start and end date dependant on the difference in days
                         $start = new DateTime($task->date_start);
                         $start = $start->modify($diff);
@@ -78,7 +81,8 @@ class updateDependencies
                         $task->save();
 
                     } else {
-                        if ($rel_type == 'SS') {//if its a start to start
+                        if ($rel_type == 'SS') {
+//if its a start to start
                             //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
                             if ($bean->fetched_row['duration'] == $bean->duration) {
 

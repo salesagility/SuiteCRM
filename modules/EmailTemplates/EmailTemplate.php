@@ -619,7 +619,8 @@ class EmailTemplate extends SugarBean
                                 'account_' . $fieldName => $translated,
                                 'contact_account_' . $fieldName => $translated,
                             ));
-                        } else { // unset enum field, make sure we have a match string to replace with ""
+                        } else {
+// unset enum field, make sure we have a match string to replace with ""
                             $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
                                 'account_' . $fieldName => '',
                                 'contact_account_' . $fieldName => '',
@@ -664,7 +665,8 @@ class EmailTemplate extends SugarBean
                             'contact_' . $fieldName => $translated,
                             'contact_account_' . $fieldName => $translated,
                         ));
-                    } else { // unset enum field, make sure we have a match string to replace with ""
+                    } else {
+// unset enum field, make sure we have a match string to replace with ""
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
                             'contact_' . $fieldName => '',
                             'contact_account_' . $fieldName => '',
@@ -699,7 +701,8 @@ class EmailTemplate extends SugarBean
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
                             strtolower($beanList[$bean_name]) . "_" . $fieldName => $translated,
                         ));
-                    } else { // unset enum field, make sure we have a match string to replace with ""
+                    } else {
+// unset enum field, make sure we have a match string to replace with ""
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
                             strtolower($beanList[$bean_name]) . "_" . $fieldName => '',
                         ));
@@ -801,7 +804,8 @@ class EmailTemplate extends SugarBean
 
                 if (isset($translated) && !is_array($translated)) {
                     $repl_arr["contact_user_" . $fieldName] = $translated;
-                } else { // unset enum field, make sure we have a match string to replace with ""
+                } else {
+// unset enum field, make sure we have a match string to replace with ""
                     $repl_arr["contact_user_" . $fieldName] = '';
                 }
             } else {

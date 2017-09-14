@@ -238,7 +238,8 @@ if ($focus->published == 'on') {
 if (isset($focus->text_only) && $focus->text_only) {
     $xtpl->assign("TEXTONLY_CHECKED", "CHECKED");
     $xtpl->assign("TEXTONLY_VALUE", "1");
-} else {//set value to 0
+} else {
+//set value to 0
     $xtpl->assign("TEXTONLY_VALUE", "0");
 }
 

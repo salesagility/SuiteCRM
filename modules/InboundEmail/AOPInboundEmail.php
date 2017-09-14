@@ -48,7 +48,7 @@ require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail
 {
 
-function handleCreateCase($email, $userId)
+    function handleCreateCase($email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");

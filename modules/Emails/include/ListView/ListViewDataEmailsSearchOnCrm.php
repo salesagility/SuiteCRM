@@ -131,7 +131,8 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
             $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
         }
 
-        if (empty($params['skipOrderSave'])) { // don't save preferences if told so
+        if (empty($params['skipOrderSave'])) {
+// don't save preferences if told so
             $currentUser->setPreference('listviewOrder', $order, 0, $this->lvde->var_name); // save preference
         }
 
