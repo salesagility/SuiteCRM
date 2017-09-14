@@ -67,6 +67,10 @@ class templateParser
                 } //Fix for Windows Server as it needed to be converted to a string.
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } 
+                // FibreCRM Fix Decimal type issue KC-15 - it needed to be converted to a string.
+				else if ($field_def['type'] == 'decimal') {
+                    $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
                 } else if ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
