@@ -62,16 +62,22 @@ ini_set('zlib.output_compression', 'Off');
 // cn: bug 8753: current_user's preferred export charset not being honored
 $GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id']);
 $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
+
 $app_strings = return_application_language($GLOBALS['current_language']);
 $mod_strings = return_module_language($GLOBALS['current_language'], 'ACL');
+
+$bean_id = $_REQUEST['id'];
 $file_type = strtolower($_REQUEST['type']);
+$is_temp_file = $_REQUEST['isTempFile'];
+$ie_id = $_REQUEST['ieId'];
+$is_profile = $_REQUEST['isProfile'];
+$temp_name = $_REQUEST['tempName'];
 
 /**
  * Check and separate id and field name in compound id like:
  * ...&id=7d604f85-b2ae-d1fa-3ebf-57adbffcda1c_image_c&...
  * @see: include/SugarFields/Fields/Image/DetailView.tpl
  */
-$bean_id = $_REQUEST['id'];
 $image_field = false;
 $temp = explode("_", $bean_id, 2);
 if (is_array($temp))
@@ -80,11 +86,11 @@ if (is_array($temp))
     $image_field = $temp[1];
 }
 
-if (!isset($_REQUEST['isTempFile']))
+if (!isset($is_temp_file))
 {
     //Custom modules may have capitalizations anywhere in their names. We should check the passed in format first.
     require('include/modules.php');
-    $module = $db->quote($_REQUEST['type']);
+    $module = $db->quote($file_type);
     if (empty($beanList[$module]))
     {
         //start guessing at a module name
@@ -144,25 +150,25 @@ if (!isset($_REQUEST['isTempFile']))
     
 }
 
-if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile']))
+if (isset($ie_id) && isset($is_temp_file))
 {
-    $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$bean_id}");
+    $local_location = sugar_cached("modules/Emails/{$ie_id}/attachments/{$bean_id}");
 }
-elseif (isset($_REQUEST['isTempFile']) && $file_type == "import")
+elseif (isset($is_temp_file) && $file_type == "import")
 {
-    $local_location = "upload://import/{$_REQUEST['tempName']}";
+    $local_location = "upload://import/{$temp_name}";
 }
 else
 {
     $local_location = "upload://{$bean_id}";
 }
 
-if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage"))
+if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
 {
     $local_location = "upload://{$bean_id}";
 }
 
-if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage") && (isset($_REQUEST['isProfile']))
+if (isset($is_temp_file) && ($file_type == "SugarFieldImage") && (isset($is_profile))
     && empty($bean_id)
 )
 {
@@ -232,7 +238,7 @@ else
         $query .= " WHERE notes.id = '" . $db->quote($bean_id) . "'";
         
     }
-    elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type'])
+    elseif (!isset($is_temp_file) && !isset($temp_name) && isset($file_type)
         && $file_type != 'temp'
         && isset($image_field)
     )
@@ -249,7 +255,7 @@ else
         }
         $query .= "WHERE " . $file_type . ".id= '" . $db->quote($bean_id) . "'";
     }
-    elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type'])
+    elseif (!isset($is_temp_file) && !isset($temp_name) && isset($file_type)
         && $file_type != 'temp'
     )
     { //make sure not email temp file.
@@ -302,18 +308,18 @@ else
     }
     else
     {
-        if (isset($_REQUEST['tempName']) && isset($_REQUEST['isTempFile']))
+        if (isset($temp_name) && isset($is_temp_file))
         {
             // downloading a temp file (email 2.0)
             $download_location = $local_location;
-            $file_name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
+            $file_name = isset($temp_name) ? $temp_name : '';
         }
         else
         {
-            if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage"))
+            if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
             {
                 $download_location = $local_location;
-                $file_name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
+                $file_name = isset($temp_name) ? $temp_name : '';
             }
         }
     }
@@ -326,7 +332,7 @@ else
     
     header("Pragma: public");
     header("Cache-Control: maxage=1, post-check=0, pre-check=0");
-    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage"))
+    if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
     {
         $mime = getimagesize($download_location);
         if (!empty($mime))
