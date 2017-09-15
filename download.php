@@ -58,6 +58,21 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     $app_strings = return_application_language($GLOBALS['current_language']);
     $mod_strings = return_module_language($GLOBALS['current_language'], 'ACL');
     $file_type = strtolower($_REQUEST['type']);
+    
+    /**
+     * Check and separate id and field name in url like:
+     * index.php?entryPoint=download&id=7d604f85-b2ae-d1fa-3ebf-57adbffcda1c_image_c&type=Notes
+     * @see: include/SugarFields/Fields/Image/DetailView.tpl
+     */
+    $bean_id = $_REQUEST['id'];
+    $image_field = false;
+    $temp = explode("_", $bean_id, 2);
+    if (is_array($temp))
+    {
+        $bean_id = $temp[0];
+        $image_field = $temp[1];
+    }
+    
     if (!isset($_REQUEST['isTempFile'])) {
         //Custom modules may have capitalizations anywhere in their names. We should check the passed in format first.
         require('include/modules.php');
@@ -75,15 +90,20 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         $focus = BeanFactory::newBean($module);
-        $focus->retrieve($_REQUEST['id']);
+        
+        //$focus->retrieve($bean_id); // Why is this before AND after ACL check?
+        
         if (!$focus->ACLAccess('view')) {
             die($mod_strings['LBL_NO_ACCESS']);
-        } // if
+        }
+        
+        $focus->retrieve($bean_id);
+        
         // Pull up the document revision, if it's of type Document
         if (isset($focus->object_name) && $focus->object_name == 'Document') {
             // It's a document, get the revision that really stores this file
             $focusRevision = new DocumentRevision();
-            $focusRevision->retrieve($_REQUEST['id']);
+            $focusRevision->retrieve($bean_id);
 
             if (empty($focusRevision->id)) {
                 // This wasn't a document revision id, it's probably actually a document id,
@@ -91,7 +111,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
                 $focusRevision->retrieve($focus->document_revision_id);
 
                 if (!empty($focusRevision->id)) {
-                    $_REQUEST['id'] = $focusRevision->id;
+                    $bean_id = $focusRevision->id;
                 }
             }
         }
@@ -108,25 +128,26 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
     } // if
-    $temp = explode("_", $_REQUEST['id'], 2);
-    if (is_array($temp)) {
-        $image_field = $temp[1];
-        $image_id = $temp[0];
-    }
+
     if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile'])) {
-        $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$_REQUEST['id']}");
+        $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$bean_id}");
     } elseif (isset($_REQUEST['isTempFile']) && $file_type == "import") {
         $local_location = "upload://import/{$_REQUEST['tempName']}";
     } else {
-        $local_location = "upload://{$_REQUEST['id']}";
+        $local_location = "upload://{$bean_id}";
     }
 
     if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
-        $local_location = "upload://{$_REQUEST['id']}";
+        $local_location = "upload://{$bean_id}";
     }
 
-    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage") && (isset($_REQUEST['isProfile'])) && empty($_REQUEST['id'])) {
+    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage") && (isset($_REQUEST['isProfile'])) && empty($bean_id)) {
         $local_location = "include/images/default-profile.png";
+    }
+    
+    if (!empty($image_field))
+    {
+        $local_location .= "_" . $image_field;
     }
 
     if (!file_exists($local_location) || strpos($local_location, "..")) {
@@ -149,13 +170,31 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         if ($file_type == 'documents') {
             // cn: bug 9674 document_revisions table has no 'name' column.
             $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
-            $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
+            $query .= "WHERE document_revisions.id = '" . $db->quote($bean_id) . "' ";
         } elseif ($file_type == 'kbdocuments') {
             $query = "SELECT document_revisions.filename name	FROM document_revisions INNER JOIN kbdocument_revisions ON document_revisions.id = kbdocument_revisions.document_revision_id INNER JOIN kbdocuments ON kbdocument_revisions.kbdocument_id = kbdocuments.id ";
-            $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "'";
+            $query .= "WHERE document_revisions.id = '" . $db->quote($bean_id) . "'";
         } elseif ($file_type == 'notes') {
-            $query = "SELECT filename name, file_mime_type FROM notes ";
-            $query .= "WHERE notes.id = '" . $db->quote($_REQUEST['id']) . "'";
+            
+            $query = "SELECT";
+            if ($image_field)
+            {
+                $query .= " " . $image_field . " name";
+            }
+            else
+            {
+                $query .= " filename name, file_mime_type";
+            }
+            $query .= " FROM notes ";
+            
+            // If custom field name then custom table join
+            if (substr($image_field, -2) == "_c")
+            {
+                $query .= "LEFT JOIN notes_cstm cstm ON cstm.id_c = notes.id ";
+            }
+            
+            $query .= " WHERE notes.id = '" . $db->quote($bean_id) . "'";
+            
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp' && isset($image_field)) { //make sure not email temp file.
             $file_type = ($file_type == "employees") ? "users" : $file_type;
             //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
@@ -166,12 +205,12 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             if (substr($image_field, -2) == "_c") {
                 $query .= "LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
             }
-            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
+            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($bean_id) . "'";
 
             //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp') { //make sure not email temp file.
             $query = "SELECT filename name FROM " . $file_type . " ";
-            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($_REQUEST['id']) . "'";
+            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($bean_id) . "'";
         } elseif ($file_type == 'temp') {
             $doQuery = false;
         }
@@ -181,6 +220,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         if ($mime_type == null || $mime_type == '') {
             $mime_type = 'application/octet-stream';
         }
+    
+        $download_location = "";
+        $file_name = "";
 
         if ($doQuery && isset($query)) {
             $rs = $GLOBALS['db']->query($query);
@@ -191,38 +233,35 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
 
             if (isset($image_field)) {
-                $name = $row[$image_field];
+                $file_name = $row[$image_field];
             } else {
-                $name = $row['name'];
+                $file_name = $row['name'];
             }
             // expose original mime type only for images, otherwise the content of arbitrary type
             // may be interpreted/executed by browser
             if (isset($row['file_mime_type']) && strpos($row['file_mime_type'], 'image/') === 0) {
                 $mime_type = $row['file_mime_type'];
             }
-            if (isset($_REQUEST['field'])) {
-                $id = $row[$id_field];
-                $download_location = "upload://{$id}";
-            } else {
-                $download_location = "upload://{$_REQUEST['id']}";
-            }
+    
+            $download_location = "upload://{$bean_id}"
+                . ($image_field ? '_' . $image_field : '');
 
         } else {
             if (isset($_REQUEST['tempName']) && isset($_REQUEST['isTempFile'])) {
                 // downloading a temp file (email 2.0)
                 $download_location = $local_location;
-                $name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
+                $file_name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
             } else {
                 if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
                     $download_location = $local_location;
-                    $name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
+                    $file_name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
                 }
             }
         }
 
         if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT'])) {
-            $name = urlencode($name);
-            $name = str_replace("+", "_", $name);
+            $file_name = urlencode($file_name);
+            $file_name = str_replace("+", "_", $file_name);
         }
 
         header("Pragma: public");
@@ -236,7 +275,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+            header("Content-Disposition: attachment; filename=\"" . $file_name . "\";");
 
         }
         // disable content type sniffing in MSIE
