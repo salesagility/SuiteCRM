@@ -415,6 +415,24 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
     }
 
+    // If field is of type currency
+    if ($vardef['type'] == "currency") {
+
+        require_once("include/generic/LayoutManager.php");
+        $layoutManager = new LayoutManager();
+
+        require_once("include/generic/SugarWidgets/SugarWidgetFieldcurrency.php");
+        $SugarWidgetFieldcurrency = new SugarWidgetFieldCurrency($layoutManager);
+
+        // Require to include currency to display record's custom currency.
+        if(!$SugarWidgetFieldcurrency->isSystemCurrency($vardef)){
+            $vardef['currency_id'] = $bean->currency_id;
+            $vardef['currency_symbol'] = $bean->currency_symbol;
+        }
+        $value = $SugarWidgetFieldcurrency->displayList($vardef);
+
+    }
+
     //If field is of type link and name.
     if (isset($vardef['link']) && $vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 

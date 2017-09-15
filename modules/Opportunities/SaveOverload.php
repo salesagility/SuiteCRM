@@ -44,7 +44,11 @@ function perform_save(&$focus){
 	if(isset($focus->amount) && !number_empty($focus->amount)){
 		$currency = new Currency();
 		$currency->retrieve($focus->currency_id);
-		$focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
+		// If the call was focused on the Inline Editor && the Field targets is amount_usdollar then set that as the primary!
+		if(isset($_REQUEST['field']) && $_REQUEST['field'] == 'amount_usdollar'){
+			$focus->amount = $currency->convertFromDollar(unformat_number($focus->amount_usdollar));
+		}
+		else $focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
 	}	
 }
 ?>
