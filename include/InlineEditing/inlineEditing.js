@@ -432,6 +432,10 @@ function handleSave(field,id,module,type){
 
 
     var output_value = saveFieldHTML(field,module,id,value, parent_type);
+	if (type == 'enum' || type == 'dynamicenum')
+	{
+		output_value = '<input type="hidden" class="sugar_field" id="'+field+'" value="'+value+'">'+output_value;
+	}
     var output = setValueClose(output_value);
 }
 
