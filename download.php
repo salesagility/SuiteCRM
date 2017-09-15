@@ -66,12 +66,13 @@ $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
 $app_strings = return_application_language($GLOBALS['current_language']);
 $mod_strings = return_module_language($GLOBALS['current_language'], 'ACL');
 
-$bean_id = $_REQUEST['id'];
-$file_type = strtolower($_REQUEST['type']);
-$is_temp_file = $_REQUEST['isTempFile'];
-$ie_id = $_REQUEST['ieId'];
-$is_profile = $_REQUEST['isProfile'];
-$temp_name = $_REQUEST['tempName'];
+$bean_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : false;
+$file_type = isset($_REQUEST['type']) ? strtolower($_REQUEST['type']) : false;
+$ie_id = isset($_REQUEST['ieId']) ? $_REQUEST['ieId'] : false;
+$is_profile = isset($_REQUEST['isProfile']);
+$is_temp_file = isset($_REQUEST['isTempFile']);
+$temp_name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : false;
+$is_attachment = isset($_REQUEST['isAttachment']) ? $_REQUEST['isAttachment'] == "true" : true;
 
 /**
  * Check and separate id and field name in compound id like:
@@ -86,7 +87,7 @@ if (is_array($temp))
     $image_field = $temp[1];
 }
 
-if (!isset($is_temp_file))
+if (!$is_temp_file)
 {
     //Custom modules may have capitalizations anywhere in their names. We should check the passed in format first.
     require('include/modules.php');
@@ -150,11 +151,11 @@ if (!isset($is_temp_file))
     
 }
 
-if (isset($ie_id) && isset($is_temp_file))
+if ($ie_id && $is_temp_file)
 {
     $local_location = sugar_cached("modules/Emails/{$ie_id}/attachments/{$bean_id}");
 }
-elseif (isset($is_temp_file) && $file_type == "import")
+elseif ($is_temp_file && $file_type == "import")
 {
     $local_location = "upload://import/{$temp_name}";
 }
@@ -163,13 +164,12 @@ else
     $local_location = "upload://{$bean_id}";
 }
 
-if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
+if ($is_temp_file && $file_type == "SugarFieldImage")
 {
     $local_location = "upload://{$bean_id}";
 }
 
-if (isset($is_temp_file) && ($file_type == "SugarFieldImage") && (isset($is_profile))
-    && empty($bean_id)
+if ($is_temp_file && $file_type == "SugarFieldImage" && $is_profile && empty($bean_id)
 )
 {
     $local_location = "include/images/default-profile.png";
@@ -186,7 +186,7 @@ if (!file_exists($local_location) || strpos($local_location, ".."))
     if (isset($image_field))
     {
         header("Content-Type: image/png");
-        header("Content-Disposition: attachment; filename=\"No-Image.png\"");
+        header("Content-Disposition: " . ($is_attachment ? "attachment; " : "") . "filename=\"No-Image.png\"");
         header("X-Content-Type-Options: nosniff");
         header("Content-Length: " . filesize('include/SugarFields/Fields/Image/no_image.png'));
         header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
@@ -238,10 +238,7 @@ else
         $query .= " WHERE notes.id = '" . $db->quote($bean_id) . "'";
         
     }
-    elseif (!isset($is_temp_file) && !isset($temp_name) && isset($file_type)
-        && $file_type != 'temp'
-        && isset($image_field)
-    )
+    elseif (!$is_temp_file && !$temp_name && $file_type && $file_type != 'temp' && isset($image_field))
     { //make sure not email temp file.
         $file_type = ($file_type == "employees") ? "users" : $file_type;
         //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
@@ -255,9 +252,7 @@ else
         }
         $query .= "WHERE " . $file_type . ".id= '" . $db->quote($bean_id) . "'";
     }
-    elseif (!isset($is_temp_file) && !isset($temp_name) && isset($file_type)
-        && $file_type != 'temp'
-    )
+    elseif (!$is_temp_file && !$temp_name && $file_type && $file_type != 'temp')
     { //make sure not email temp file.
         $query = "SELECT filename name FROM " . $file_type . " ";
         $query .= "WHERE " . $file_type . ".id= '" . $db->quote($bean_id) . "'";
@@ -308,18 +303,18 @@ else
     }
     else
     {
-        if (isset($temp_name) && isset($is_temp_file))
+        if ($temp_name && $is_temp_file)
         {
             // downloading a temp file (email 2.0)
             $download_location = $local_location;
-            $file_name = isset($temp_name) ? $temp_name : '';
+            $file_name = $temp_name ? $temp_name : '';
         }
         else
         {
-            if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
+            if ($is_temp_file && $file_type == "SugarFieldImage")
             {
                 $download_location = $local_location;
-                $file_name = isset($temp_name) ? $temp_name : '';
+                $file_name = $temp_name ? $temp_name : '';
             }
         }
     }
@@ -332,7 +327,7 @@ else
     
     header("Pragma: public");
     header("Cache-Control: maxage=1, post-check=0, pre-check=0");
-    if (isset($is_temp_file) && ($file_type == "SugarFieldImage"))
+    if ($is_temp_file && $file_type == "SugarFieldImage")
     {
         $mime = getimagesize($download_location);
         if (!empty($mime))
@@ -347,7 +342,7 @@ else
     else
     {
         header('Content-type: ' . $mime_type);
-        header("Content-Disposition: attachment; filename=\"" . $file_name . "\";");
+        header("Content-Disposition: " . ($is_attachment ? "attachment; " : "") . "filename=\"" . $file_name . "\";");
         
     }
     // disable content type sniffing in MSIE
