@@ -47,7 +47,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     || !isset($_SESSION['authenticated_user_id'])
 )
 {
-    die("Invalid resuest");
+    die("Invalid request");
 }
 
 global $db;
