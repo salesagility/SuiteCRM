@@ -77,7 +77,6 @@ $mod_strings = array(
     'LBL_STREET' => 'Other Address',
     'LBL_CITY' => 'City',
     'LBL_STATE' => 'State',
-    'LBL_POSTALCODE' => 'Postal Code',
     'LBL_POSTAL_CODE' => 'Postal Code',
     'LBL_COUNTRY' => 'Country',
     'LBL_CONTACT_INFORMATION' => 'Contact Information',
