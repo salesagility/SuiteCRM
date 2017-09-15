@@ -1,9 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,7 +36,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+if (!defined('sugarEntry') || !sugarEntry)
+{
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/DynamicFields/templates/Fields/TemplateTextArea.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateFloat.php');
@@ -51,7 +52,6 @@ require_once('modules/DynamicFields/templates/Fields/TemplateMultiEnum.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateRadioEnum.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateEmail.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateRelatedTextField.php');
-
 require_once('modules/DynamicFields/templates/Fields/TemplateURL.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateIFrame.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateHTML.php');
@@ -65,89 +65,139 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEncrypt.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateId.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateImage.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateDecimal.php');
+
+/**
+ * @param string $type
+ *
+ * @return mixed
+ */
 function get_widget($type)
 {
-
-	$local_temp = null;
-	switch(strtolower($type)){
-			case 'char':
-			case 'varchar':
-			case 'varchar2':
-						$local_temp = new TemplateText(); break;
-			case 'text':
-			case 'textarea':
-						$local_temp = new TemplateTextArea(); break;
-			case 'double':
-
-			case 'float':
-						$local_temp = new TemplateFloat(); break;
-			case 'decimal':
-						$local_temp = new TemplateDecimal(); break;
-			case 'int':
-						$local_temp = new TemplateInt(); break;
-			case 'date':
-						$local_temp = new TemplateDate(); break;
-			case 'bool':
-						$local_temp = new TemplateBoolean(); break;
-			case 'relate':
-						$local_temp = new TemplateRelatedTextField(); break;
-			case 'enum':
-						$local_temp = new TemplateEnum(); break;
-			case 'multienum':
-						$local_temp = new TemplateMultiEnum(); break;
-			case 'radioenum':
-						$local_temp = new TemplateRadioEnum(); break;
-			case 'email':
-						$local_temp = new TemplateEmail(); break;
-		    case 'url':
-						$local_temp = new TemplateURL(); break;
-			case 'iframe':
-						$local_temp = new TemplateIFrame(); break;
-			case 'html':
-						$local_temp = new TemplateHTML(); break;
-			case 'phone':
-						$local_temp = new TemplatePhone(); break;
-			case 'currency':
-						$local_temp = new TemplateCurrency(); break;
-			case 'parent':
-						$local_temp = new TemplateParent(); break;
-			case 'parent_type':
-						$local_temp = new TemplateParentType(); break;
-			case 'currency_id':
-						$local_temp = new TemplateCurrencyId(); break;
-			case 'address':
-						$local_temp = new TemplateAddress(); break;
-			case 'encrypt':
-						$local_temp = new TemplateEncrypt(); break;
-			case 'id':
-						$local_temp = new TemplateId(); break;
-			case 'datetimecombo':
-			case 'datetime':
-						$local_temp = new TemplateDatetimecombo(); break;
+    
+    $widgetInstance = null;
+    
+    /**
+     * Check for Custom override first
+     */
+    if (file_exists('custom/modules/DynamicFields/templates/Fields/CustomTemplate' . ucfirst($type) . '.php'))
+    {
+        $file = 'custom/modules/DynamicFields/templates/Fields/CustomTemplate' . ucfirst($type) . '.php';
+        if (!empty($file))
+        {
+            require_once($file);
+            $className = 'CustomTemplate' . ucfirst($type);
+            if (class_exists($className))
+            {
+                $widgetInstance = new $className();
+            }
+        }
+    }
+    
+    if (!$widgetInstance)
+    {
+        switch (strtolower($type))
+        {
+            case 'char':
+            case 'varchar':
+            case 'varchar2':
+                $widgetInstance = new TemplateText();
+                break;
+            case 'text':
+            case 'textarea':
+                $widgetInstance = new TemplateTextArea();
+                break;
+            case 'double':
+            
+            case 'float':
+                $widgetInstance = new TemplateFloat();
+                break;
+            case 'decimal':
+                $widgetInstance = new TemplateDecimal();
+                break;
+            case 'int':
+                $widgetInstance = new TemplateInt();
+                break;
+            case 'date':
+                $widgetInstance = new TemplateDate();
+                break;
+            case 'bool':
+                $widgetInstance = new TemplateBoolean();
+                break;
+            case 'relate':
+                $widgetInstance = new TemplateRelatedTextField();
+                break;
+            case 'enum':
+                $widgetInstance = new TemplateEnum();
+                break;
+            case 'multienum':
+                $widgetInstance = new TemplateMultiEnum();
+                break;
+            case 'radioenum':
+                $widgetInstance = new TemplateRadioEnum();
+                break;
+            case 'email':
+                $widgetInstance = new TemplateEmail();
+                break;
+            case 'url':
+                $widgetInstance = new TemplateURL();
+                break;
+            case 'iframe':
+                $widgetInstance = new TemplateIFrame();
+                break;
+            case 'html':
+                $widgetInstance = new TemplateHTML();
+                break;
+            case 'phone':
+                $widgetInstance = new TemplatePhone();
+                break;
+            case 'currency':
+                $widgetInstance = new TemplateCurrency();
+                break;
+            case 'parent':
+                $widgetInstance = new TemplateParent();
+                break;
+            case 'parent_type':
+                $widgetInstance = new TemplateParentType();
+                break;
+            case 'currency_id':
+                $widgetInstance = new TemplateCurrencyId();
+                break;
+            case 'address':
+                $widgetInstance = new TemplateAddress();
+                break;
+            case 'encrypt':
+                $widgetInstance = new TemplateEncrypt();
+                break;
+            case 'id':
+                $widgetInstance = new TemplateId();
+                break;
+            case 'datetimecombo':
+            case 'datetime':
+                $widgetInstance = new TemplateDatetimecombo();
+                break;
             case 'image':
-                        $local_temp = new TemplateImage(); break;
-			default:
-						$file = false;
-						if(file_exists('custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
-							$file  =	'custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
-						}else if(file_exists('modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
-							$file  =	'modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
-						}
-						if(!empty($file)){
-							require_once($file);
-							$class  = 'Template' . ucfirst($type) ;
-							$customClass = 'Custom' . $class;
-							if(class_exists($customClass)){
-								$local_temp = new $customClass();
-							}else{
-								$local_temp = new $class();
-							}
-							break;
-						}else{
-							$local_temp = new TemplateText(); break;
-						}
-	}
-
-	return $local_temp;
+                $widgetInstance = new TemplateImage();
+                break;
+            default:
+                if (file_exists('modules/DynamicFields/templates/Fields/Template' . ucfirst($type) . '.php'))
+                {
+                    $file = 'modules/DynamicFields/templates/Fields/Template' . ucfirst($type) . '.php';
+                    
+                    require_once($file);
+                    $className = 'Template' . ucfirst($type);
+                    if (class_exists($className))
+                    {
+                        $widgetInstance = new $className();
+                    }
+                }
+                break;
+        }
+    }
+    
+    if (!$widgetInstance)
+    {
+        $widgetInstance = new TemplateText();
+    }
+    
+    return $widgetInstance;
 }
-?>
