@@ -53,8 +53,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
 global $db;
 
 require_once("data/BeanFactory.php");
-$file_type = ''; // bug 45896
-require_once("data/BeanFactory.php");
 
 //bug 27089, if use gzip here, the Content-Length in header may be incorrect.
 ini_set('zlib.output_compression', 'Off');
