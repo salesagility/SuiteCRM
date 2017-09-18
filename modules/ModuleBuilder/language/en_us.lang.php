@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -46,7 +46,6 @@ $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
     'LBL_HIDEOPTIONS' => 'Hide Options' /*for 508 compliance fix*/,
     'LBL_DELETE' => 'Delete' /*for 508 compliance fix*/,
-    'LBL_POWERED_BY_SUGAR' => 'Powered By SugarCRM' /*for 508 compliance fix*/,
     'help' => array(
         'package' => array(
             'create' => 'Provide a <b>Name</b> for the package. The name you enter must be alphanumeric and contain no spaces. (Example: HR_Management)<br/><br/> You can provide <b>Author</b> and <b>Description</b> information for package. <br/><br/>Click <b>Save</b> to create the package.',
@@ -328,26 +327,17 @@ $mod_strings = array(
 //HOME
     'LBL_HOME_EDIT_DROPDOWNS' => 'Dropdown Editor',
 
-//ASSISTANT
-    'LBL_AS_SHOW' => 'Show Assistant in future.',
-    'LBL_AS_IGNORE' => 'Ignore Assistant in future.',
-    'LBL_AS_SAYS' => 'Assistant Says:',
-
-
 //STUDIO2
     'LBL_MODULEBUILDER' => 'Module Builder',
     'LBL_STUDIO' => 'Studio',
     'LBL_DROPDOWNEDITOR' => 'Dropdown Editor',
-    'LBL_EDIT_DROPDOWN' => 'Edit Dropdown',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
     'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
-    'LBL_SYNCPORTAL' => 'Sync Portal',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
     'LBL_DEPLOYE_COMPLETE' => 'Deploy complete',
     'LBL_DEPLOY_FAILED' => 'An error has occurred during deploy process, your package may not have installed correctly',
-    'LBL_ADD_FIELDS' => 'Add Custom Fields',
     'LBL_AVAILABLE_SUBPANELS' => 'Available Subpanels',
     'LBL_ADVANCED' => 'Advanced',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
@@ -355,24 +345,16 @@ $mod_strings = array(
     'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_CURRENT_LAYOUT' => 'Layout',
     'LBL_CURRENCY' => 'Currency',
-    'LBL_CUSTOM' => 'Custom',
     'LBL_DASHLET' => 'SuiteCRM Dashlet',
     'LBL_DASHLETLISTVIEW' => 'SuiteCRM Dashlet ListView',
-    'LBL_DASHLETSEARCH' => 'SuiteCRM Dashlet Search',
     'LBL_POPUP' => 'PopupView',
-    'LBL_POPUPLIST' => 'Popup ListView',
     'LBL_POPUPLISTVIEW' => 'Popup ListView',
     'LBL_POPUPSEARCH' => 'Popup Search',
     'LBL_DASHLETSEARCHVIEW' => 'SuiteCRM Dashlet Search',
-    'LBL_DISPLAY_HTML' => 'Display HTML Code',
     'LBL_DETAILVIEW' => 'DetailView',
     'LBL_DROP_HERE' => '[Drop Here]',
     'LBL_EDIT' => 'Edit',
     'LBL_EDIT_LAYOUT' => 'Edit Layout',
-    'LBL_EDIT_ROWS' => 'Edit Rows',
-    'LBL_EDIT_COLUMNS' => 'Edit Columns',
-    'LBL_EDIT_LABELS' => 'Edit Labels',
-    'LBL_EDIT_PORTAL' => 'Edit Portal for ',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
     'LBL_EDITVIEW' => 'EditView',
     'LBL_FILLER' => '(filler)',
@@ -392,27 +374,17 @@ $mod_strings = array(
     'LBL_PUBLISHING' => 'Publishing ...',
     'LBL_PUBLISHED' => 'Published',
     'LBL_SELECT_FILE' => 'Select File',
-    'LBL_SAVE_LAYOUT' => 'Save Layout',
-    'LBL_SELECT_A_SUBPANEL' => 'Select a Subpanel',
-    'LBL_SELECT_SUBPANEL' => 'Select Subpanel',
     'LBL_SUBPANELS' => 'Subpanels',
     'LBL_SUBPANEL' => 'Subpanel',
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
     'LBL_FILTER' => 'Filter',
-    'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
-    'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-    'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
     'LBL_TOOLBOX' => 'Toolbox',
-    'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
-    'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
     'LBL_QUICKCREATE' => 'QuickCreate',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
     'LBL_BLANK' => '-blank-',
     'LBL_TAB_ORDER' => 'Tab Order',
-    'LBL_TAB_PANELS' => 'Enable tabs',
-    'LBL_TAB_PANELS_HELP' => 'When tabs are enabled, use the "type" dropdown box<br />for each section to define how it will be displayed (tab or panel)',
     'LBL_TABDEF_TYPE' => 'Display Type',
     'LBL_TABDEF_TYPE_HELP' => 'Select how this section should be displayed. This option only has effect if you have enabled tabs on this view.',
     'LBL_TABDEF_TYPE_OPTION_TAB' => 'Tab',
@@ -458,8 +430,6 @@ $mod_strings = array(
 
 
 //STUDIO QUESTIONS
-    'LBL_QUESTION_FUNCTION' => 'Select a function or component.',
-    'LBL_QUESTION_MODULE1' => 'Select a module.',
     'LBL_QUESTION_EDIT' => 'Select a module to edit.',
     'LBL_QUESTION_LAYOUT' => 'Select a layout to edit.',
     'LBL_QUESTION_SUBPANEL' => 'Select a subpanel to edit.',
@@ -467,16 +437,12 @@ $mod_strings = array(
     'LBL_QUESTION_MODULE' => 'Select a module component to edit.',
     'LBL_QUESTION_PACKAGE' => 'Select a package to edit, or create a new package.',
     'LBL_QUESTION_EDITOR' => 'Select a tool.',
-    'LBL_QUESTION_DROPDOWN' => 'Select a dropdown to edit, or create a new dropdown.',
     'LBL_QUESTION_DASHLET' => 'Select a dashlet layout to edit.',
     'LBL_QUESTION_POPUP' => 'Select a popup layout to edit.',
 //CUSTOM FIELDS
-    'LBL_RELATE_TO' => 'Relate To',
     'LBL_NAME' => 'Name',
     'LBL_LABELS' => 'Labels',
     'LBL_MASS_UPDATE' => 'Mass Update',
-    'LBL_AUDITED' => 'Audit',
-    'LBL_CUSTOM_MODULE' => 'Module',
     'LBL_DEFAULT_VALUE' => 'Default Value',
     'LBL_REQUIRED' => 'Required',
     'LBL_DATA_TYPE' => 'Type',
@@ -490,18 +456,14 @@ $mod_strings = array(
     'LBL_SECTION_PACKAGES' => 'Packages',
     'LBL_SECTION_PACKAGE' => 'Package',
     'LBL_SECTION_MODULES' => 'Modules',
-    'LBL_SECTION_PORTAL' => 'Portal',
     'LBL_SECTION_DROPDOWNS' => 'Dropdowns',
     'LBL_SECTION_PROPERTIES' => 'Properties',
     'LBL_SECTION_DROPDOWNED' => 'Edit Dropdown',
     'LBL_SECTION_HELP' => 'Help',
-    'LBL_SECTION_ACTION' => 'Action',
     'LBL_SECTION_MAIN' => 'Main',
-    'LBL_SECTION_EDPANELLABEL' => 'Edit Panel Label',
     'LBL_SECTION_FIELDEDITOR' => 'Edit Field',
     'LBL_SECTION_DEPLOY' => 'Deploy',
     'LBL_SECTION_MODULE' => 'Module',
-    'LBL_SECTION_VISIBILITY_EDITOR' => 'Edit Visibility',
 //WIZARDS
 
 //LIST VIEW EDITOR
@@ -515,7 +477,6 @@ $mod_strings = array(
     'LBL_MB_PREVIEW' => 'Preview',
     'LBL_MB_RESTORE' => 'Restore',
     'LBL_MB_DELETE' => 'Delete',
-    'LBL_MB_COMPARE' => 'Compare',
     'LBL_MB_DEFAULT_LAYOUT' => 'Default Layout',
 
 //END WIZARDS
@@ -528,10 +489,7 @@ $mod_strings = array(
     'LBL_BTN_CANCEL' => 'Cancel',
     'LBL_BTN_CLOSE' => 'Close',
     'LBL_BTN_SAVEPUBLISH' => 'Save & Deploy',
-    'LBL_BTN_NEXT' => 'Next',
-    'LBL_BTN_BACK' => 'Back',
     'LBL_BTN_CLONE' => 'Clone',
-    'LBL_BTN_ADDCOLS' => 'Add Columns',
     'LBL_BTN_ADDROWS' => 'Add Rows',
     'LBL_BTN_ADDFIELD' => 'Add Field',
     'LBL_BTN_ADDDROPDOWN' => 'Add Dropdown',
@@ -552,7 +510,6 @@ $mod_strings = array(
     'LBL_BTN_VIEW_RELATIONSHIPS' => 'View Relationships',
     'LBL_BTN_ADD_RELATIONSHIP' => 'Add Relationship',
     'LBL_BTN_RENAME_MODULE' => 'Change Module Name',
-    'LBL_BTN_INSERT' => 'Insert',
 //TABS
 
 
@@ -563,7 +520,6 @@ $mod_strings = array(
     'ERROR_MINIMUM_FIELDS' => 'The layout must contain at least one field',
     'ERROR_GENERIC_TITLE' => 'An error has occurred',
     'ERROR_REQUIRED_FIELDS' => 'Are you sure you wish to continue? The following required fields are missing from the layout:  ',
-    'ERROR_ARE_YOU_SURE' => 'Are you sure you wish to continue?',
 
 
 //PACKAGE AND MODULE BUILDER
@@ -580,35 +536,19 @@ $mod_strings = array(
     'LBL_WIDTH' => 'Width',
     'LBL_PACKAGE' => 'Package:',
     'LBL_TYPE' => 'Type:',
-    'LBL_TEAM_SECURITY' => 'Team Security',
-    'LBL_ASSIGNABLE' => 'Assignable',
-    'LBL_PERSON' => 'Person',
-    'LBL_COMPANY' => 'Company',
-    'LBL_ISSUE' => 'Issue',
-    'LBL_SALE' => 'Sale',
-    'LBL_FILE' => 'File',
     'LBL_NAV_TAB' => 'Navigation Tab',
     'LBL_CREATE' => 'Create',
     'LBL_LIST' => 'List',
     'LBL_VIEW' => 'View',
-    'LBL_LIST_VIEW' => 'List View',
     'LBL_HISTORY' => 'View History',
     'LBL_RESTORE_DEFAULT' => 'Restore Default',
     'LBL_ACTIVITIES' => 'Activities',
     'LBL_NEW' => 'New',
-    'LBL_TYPE_BASIC' => 'basic',
-    'LBL_TYPE_COMPANY' => 'company',
-    'LBL_TYPE_PERSON' => 'person',
-    'LBL_TYPE_ISSUE' => 'issue',
-    'LBL_TYPE_SALE' => 'sale',
-    'LBL_TYPE_FILE' => 'file',
     'LBL_RSUB' => 'This is the subpanel that will be displayed in your module',
     'LBL_MSUB' => 'This is the subpanel that your module provides to the related module for display',
     'LBL_MB_IMPORTABLE' => 'Importing',
 
 // VISIBILITY EDITOR
-    'LBL_VE_VISIBLE' => 'visible',
-    'LBL_VE_HIDDEN' => 'hidden',
     'LBL_PACKAGE_WAS_DELETED' => '[[package]] was deleted',
 
 //EXPORT CUSTOMS
@@ -616,7 +556,6 @@ $mod_strings = array(
     'LBL_EC_NAME' => 'Package Name:',
     'LBL_EC_AUTHOR' => 'Author:',
     'LBL_EC_DESCRIPTION' => 'Description:',
-    'LBL_EC_KEY' => 'Key:',
     'LBL_EC_CHECKERROR' => 'Please select a module.',
     'LBL_EC_CUSTOMFIELD' => 'customized field(s)',
     'LBL_EC_CUSTOMLAYOUT' => 'customized layout(s)',
@@ -628,12 +567,10 @@ $mod_strings = array(
 
 //AJAX STATUS
     'LBL_AJAX_FAILED_DATA' => 'Failed to retrieve data',
-    'LBL_AJAX_TIME_DEPENDENT' => 'A time dependent action is in progress. Please wait and try again in a few seconds.',
     'LBL_AJAX_LOADING' => 'Loading...',
     'LBL_AJAX_DELETING' => 'Deleting...',
     'LBL_AJAX_BUILDPROGRESS' => 'Build In Progress...',
     'LBL_AJAX_DEPLOYPROGRESS' => 'Deploy In Progress...',
-    'LBL_AJAX_FIELD_EXISTS' => 'The field name you entered already exists. Please enter a new field name.',
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
@@ -651,26 +588,18 @@ $mod_strings = array(
     'LBL_JS_VALIDATE_KEY' => 'Key - Must be alphanumeric, begin with a letter and contain no spaces.',
     'LBL_JS_VALIDATE_LABEL' => 'Please enter a label that will be used as the Display Name for this module',
     'LBL_JS_VALIDATE_TYPE' => 'Please select the type of module you wish to build from the list above',
-    'LBL_JS_VALIDATE_REL_NAME' => 'Name - Must be alphanumeric with no spaces',
     'LBL_JS_VALIDATE_REL_LABEL' => 'Label - please add a label that will be displayed above the subpanel',
 
 //CONFIRM
     'LBL_CONFIRM_FIELD_DELETE' => 'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
 
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => 'Are you sure you wish to delete this relationship?',
-    'LBL_CONFIRM_RELATIONSHIP_DEPLOY' => 'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
     'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
     'LBL_CONFIRM_DONT_SAVE_TITLE' => 'Save Changes?',
     'LBL_CONFIRM_LOWER_LENGTH' => 'Data may be truncated and this cannot be undone, are you sure you wish to continue?',
 
 //POPUP HELP
     'LBL_POPHELP_FIELD_DATA_TYPE' => 'Select the appropriate data type based on the type of data that will be entered into the field.',
-    'LBL_POPHELP_SEARCHABLE' => 'Select the boost level for this field. <br />Fields with a higher boost level will be given greater weight when the search is performed. <br />When a search is performed, matching records containing fields with a greater weight will be appear higher in the search results.<br /> If you change the boost level for a field from one level to another, perform a system index to apply the change. <br/> Be sure to select to delete the existing data at the time that the system index is performed.',
-    'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
-    'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
-    'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
-    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
-    'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
 
 //Revert Module labels
     'LBL_RESET' => 'Reset',
@@ -683,18 +612,6 @@ $mod_strings = array(
     'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
     'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
     'LBL_HISTORY_TITLE' => ' history',
-
-
-    'LBL_ADD_LAYOUT' => 'Add Layout',
-    'LBL_ADD_LAYOUTS' => 'Add Layout',
-    'LBL_QUESTION_ADD_LAYOUT' => 'Select a Group Layout to Add.',
-    'LBL_REMOVE_LAYOUT' => 'Remove Group Layout',
-
-    'LBL_SECURITYGROUP' => 'Security Group:',
-    'LBL_COPY_FROM' => 'Copy From:',
-    'LBL_ADDLAYOUTDONE' => 'Layout Saved',
-    'LBL_REMOVELAYOUTDONE' => 'Layout Removed',
-    'LBL_REMOVE_CONFIRM' => 'Are you really sure?',
 
     'fieldTypes' => array(
         'varchar' => 'TextField',
@@ -725,11 +642,7 @@ $mod_strings = array(
 
     'parent' => 'Flex Relate',
 
-    'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
-
-
 
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',

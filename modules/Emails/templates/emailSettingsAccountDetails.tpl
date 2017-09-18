@@ -42,7 +42,7 @@
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	   <td colspan="2" >
-			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+			<table cellpadding="4" cellspacing="0" border="0"  class="view">
     		<tr>
 					<th colspan="4" align="left" colspan="4" scope="row" style="padding-bottom: 5px;">
 					<h4>{$mod_strings.LBL_EMAIL_SETTINGS_INBOUND_ACCOUNTS}</h4>
@@ -72,7 +72,7 @@
     </tr>                
 	<tr>
 	<td colspan="2">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%" class="view">
+			<table border="0" cellspacing="0" cellpadding="0"  class="view">
 			    <tr>
 					<th colspan="4" align="left" colspan="4" scope="row" style="padding-bottom: 5px;">
 					<h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND_ACCOUNTS}</h4>

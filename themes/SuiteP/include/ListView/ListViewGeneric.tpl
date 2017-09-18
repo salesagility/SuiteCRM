@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+{sugar_include include=$includes}
 {include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
@@ -65,6 +66,10 @@
 {assign var="moduleName" value = $moduleList.$currentModule}
 {assign var="hideTable" value=false}
 
+{if $form.headerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
+{/if}
+
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
@@ -90,11 +95,13 @@
                 {capture assign="quotedQuery"}"{$query}"{/capture}
                 {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
             </p>
+			{if $pageData}
             <p class="submsg">
                 <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
             </p>
+			{/if}
         {/if}
     {else}
         <p class="msg">
@@ -118,7 +125,7 @@
 			{if $prerow}
 				<th class="td_alt">&nbsp;</th>
 			{/if}
-			{if !empty($quickViewLinks)}
+			{if !(isset($options.hide_edit_link) && $options.hide_edit_link === true) && !empty($quickViewLinks)}
 				<th class='td_alt quick_view_links'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -156,8 +163,10 @@
 									<a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
 								{/if}
 							{/if}
+							{if isset($params.hide_header_label) && $params.hide_header_label == true}
+							{else}
 							{sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-							&nbsp;&nbsp;
+						&nbsp;&nbsp;  {/if}
 							{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
@@ -176,7 +185,10 @@
 							</a>
 						{else}
 							{if !isset($params.noHeader) || $params.noHeader == false}
-							  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+                                {if isset($params.hide_header_label) && $params.hide_header_label == true}
+                                {else}
+                                    {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+									&nbsp;&nbsp;  {/if}
 							{/if}
 						{/if}
 						</div>
@@ -203,25 +215,27 @@
 				{if $prerow}
 				<td>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
-						<input type='checkbox' disabled="disabled" class='' value='{$rowData.ID}'>
+						<input type='checkbox' disabled="disabled" class='listview-checkbox' value='{$rowData.ID}'>
 				 {else}
-	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='' name='mass[]' value='{$rowData.ID}'>
+	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='listview-checkbox' name='mass[]' value='{$rowData.ID}'>
 				 {/if}
 				</td>
 				{/if}
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				<td>
-                    {if $pageData.rowAccess[$id].edit}
-
-                        <a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
-                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-                                >
-                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
-                    {/if}
-	            </td>
+				{if isset($options.hide_edit_link) && $options.hide_edit_link === true}
+				{else}
+					<td>
+                        {if $pageData.rowAccess[$id].edit && !empty($quickViewLinks)}
+							<a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
+							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+							>
+                                {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                        {/if}
+					</td>
+				{/if}
 
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -257,7 +271,7 @@
 	                       {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
 
 						{/if}
-						{if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
+						{if empty($rowData.$col) && empty($params.customCode)}{/if}
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
@@ -293,7 +307,8 @@
 {$contextMenuScript}
 {literal}
 function lvg_nav(m,id,act,offset,t){
-    if(t.href.search(/#/) < 0){return;}
+  if (t.href.search(/#/) < 0) {
+  }
     else{
         if(act=='pte'){
             act='ProjectTemplatesEditView';
@@ -316,4 +331,9 @@ function lvg_nav(m,id,act,offset,t){
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+{/if}
+
+
+{if $form.footerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
 {/if}

@@ -1,4 +1,5 @@
 /**Style**/
+@import 'mixins';
 @import 'main';
 @import 'sidebar';
 @import 'navbar';
@@ -15,3 +16,11 @@
 @import 'yui';
 @import 'cases';
 @import 'calendar';
+@import 'email';
+@import 'modal';
+@import 'popup';
+// Generated Glyphs
+@import 'suitepicon-glyphs';
+// Font fixes
+@import 'suitepicon';
+@import "jstree";

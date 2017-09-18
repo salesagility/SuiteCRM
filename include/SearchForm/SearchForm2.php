@@ -121,7 +121,7 @@ class SearchForm
         return $this->savedSearchData;
     }
 
-    function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array())
+    function setup($searchdefs, $searchFields = array(), $tpl = 'SubpanelSearchFormGeneric.tpl', $displayView = 'basic_search', $listViewDefs = array())
     {
         $this->searchdefs = isset($searchdefs[$this->module]) ? $searchdefs[$this->module] : null;
         $this->tpl = $tpl;
@@ -735,7 +735,7 @@ class SearchForm
                                 ) {
                                     require_once('include/SugarFields/SugarFieldHandler.php');
                                     $sfh = new SugarFieldHandler();
-                                    $sf = $sfh->getSugarField('Parent');
+                                    $sf = $sfh::getSugarField('Parent');
 
                                     $this->searchFields[$params['type_name']] = array('query_type' => 'default',
                                         'value' => $sf->getSearchInput($params['type_name'], $array));

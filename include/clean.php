@@ -194,6 +194,7 @@ class SugarCleaner
         if ($encode_html === true) {
             $clean_html = htmlentities($clean_html);
         }
+
         return $clean_html;
     }
 
