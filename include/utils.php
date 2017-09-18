@@ -1951,6 +1951,21 @@ function unTranslateNum($num)
     return $num;
 }
 
+/**
+ * @return bool
+ */
+function isSSL()
+{
+    if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
 function add_http($url)
 {
     if (!preg_match('@://@i', $url)) {

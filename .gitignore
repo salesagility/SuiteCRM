@@ -71,7 +71,7 @@ SuiteCRM.kdev4
 
 #Ignore composer vendor folder
 vendor/
-public/
+/public/
 
 
 #Ignore Sass Generated files in SuiteP

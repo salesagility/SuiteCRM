@@ -5,10 +5,10 @@
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
-  "config": {
-    "vendor-dir": "vendor"
+  "require": {
+    "slim/slim": "3.8.1",
+    "tuupola/slim-jwt-auth": "^2.0"
   },
-  "require": {},
   "require-dev": {
     "leafo/scssphp": "dev-master",
     "phpunit/phpunit": "^3.7",
@@ -17,6 +17,9 @@
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
+    "psr-4": {
+      "SuiteCRM\\api\\": "api"
+    },
     "psr-0": {
       "": "src/"
     }
