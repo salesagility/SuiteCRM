@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 var request_id=0;var current_child_field='';var current_subpanel_url='';var child_field_loaded=new Object();var request_map=new Object();function get_module_name()
 {if(typeof(window.document.forms['DetailView'])=='undefined'){return'';}else{if(typeof(window.document.forms['DetailView'].elements['subpanel_parent_module'])!='undefined'&&window.document.forms['DetailView'].elements['subpanel_parent_module'].value!=''){return window.document.forms['DetailView'].elements['subpanel_parent_module'].value;}
 return window.document.forms['DetailView'].elements['module'].value;}}
@@ -89,8 +90,7 @@ if(force_load||typeof(child_field_loaded[child_field])=='undefined')
 url='index.php?sugar_body_only=1&module='+module+'&subpanel='+child_field+'&action=SubPanelViewer&inline='+inline+'&record='+id+'&layout_def_key='+layout_def_key;}
 if(url.indexOf('http://')!=0&&url.indexOf('https://')!=0)
 {url=''+url;}
-current_subpanel_url=url;var returnstuff=http_fetch_sync(url+'&inline='+inline+'&ajaxSubpanel=true');request_id++;got_data(returnstuff,inline);
-$('#whole_subpanel_'+child_field+' .table-responsive').footable();}
+current_subpanel_url=url;var returnstuff=http_fetch_sync(url+'&inline='+inline+'&ajaxSubpanel=true');request_id++;got_data(returnstuff,inline);$('#whole_subpanel_'+child_field+' .table-responsive').footable();}
 else
 {var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field)
 {hideSubPanel(current_child_field);}
@@ -108,7 +108,7 @@ if(asString)return subpanelIds.join(',');else return subpanelIds;},onDrag:functi
 var success=function(data){ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVED_LAYOUT'));window.setTimeout('ajaxStatus.hideStatus()',2000);if(typeof SUGAR.subpanelUtils.currentSubpanelGroup!='undefined'){SUGAR.subpanelUtils.reorderSubpanelSubtabs(currentGroup,orderList);}}
 url='index.php?module=Home&action=SaveSubpanelLayout&layout='+order+'&layoutModule='+currentModule;if(typeof SUGAR.subpanelUtils.currentSubpanelGroup!='undefined'){url=url+'&layoutGroup='+encodeURI(SUGAR.subpanelUtils.currentSubpanelGroup);}
 var cObj=YAHOO.util.Connect.asyncRequest('GET',url,{success:success,failure:success});},inlineSave:function(theForm,buttonName){var saveButton=document.getElementsByName(buttonName);for(var i=0;i<saveButton.length;i++){saveButton[i].disabled=true;}
-ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var success=function(data){var module=get_module_name();var id=get_record_id();var layout_def_key=get_layout_def_key();try{eval('result = '+data.responseText);}catch(err){}
+ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var success=function(data){var module=get_module_name();var id=get_record_id();var layout_def_key=get_layout_def_key();try{SUGAR.util.globalEval('result = '+data.responseText);}catch(err){}
 if(typeof(result)!='undefined'&&result!=null&&result['status']=='dupe'){document.location.href="index.php?"+result['get'].replace(/&amp;/gi,'&').replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&#039;/gi,'\'').replace(/&quot;/gi,'"').replace(/\r\n/gi,'\n');for(var i=0;i<saveButton.length;i++){saveButton[i].disabled=false;}
 return;}else{SUGAR.subpanelUtils.cancelCreate(buttonName);var parts=theForm.split('_');var savedModule='';var subPanels=[];for(var i=parts.length-1;i>=0;i--){if(parts[i]==''){continue;}
 if(savedModule!=''){savedModule='_'+savedModule;}
