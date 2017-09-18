@@ -103,7 +103,7 @@ class SugarFieldHtml extends SugarFieldBase
      * @param array $vardef
      * @return mixed
      */
-    public function getVardefValue($vardef)
+    private function getVardefValue($vardef)
     {
         if (empty($vardef['value'])) {
             if (!empty($vardef['default'])) {
