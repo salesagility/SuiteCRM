@@ -55,7 +55,7 @@
                     <td align='right' nowrap='nowrap'>
                         {if $pageData.urls.startPage}
                             <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}")' >{sugar_getimage name="start" ext=".png" width="14" height="13" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
-							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}")'>
+							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								{sugar_getimage name="start.png" attr='align="absmiddle" border="0" ' alt="$alt_start"}
 							</button>
 
@@ -68,7 +68,7 @@
                         {/if}
                         {if $pageData.urls.prevPage}
                             <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.prevPage}")' >{sugar_getimage name="previous" ext=".png" width="8" height="13" alt=$navStrings.previous other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.previous}</a>&nbsp;-->
-							<button title='{$navStrings.previous}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.prevPage}")'>
+							<button title='{$navStrings.previous}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.prevPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								{sugar_getimage name="previous.png" attr='align="absmiddle" border="0" ' alt="$alt_prev"}
 							</button>
 
@@ -81,7 +81,7 @@
                             <span class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</span>
                         {if $pageData.urls.nextPage}
                             <!--&nbsp;<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.nextPage}")' >{$navStrings.next}&nbsp;{sugar_getimage name="next" ext=".png" width="8" height="13" alt=$navStrings.next other_attributes='align="absmiddle" border="0" '}</a>&nbsp;-->
-							<button title='{$navStrings.next}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.nextPage}")'>
+							<button title='{$navStrings.next}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.nextPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								{sugar_getimage name="next.png" attr='align="absmiddle" border="0" ' alt="$alt_next"}
 							</button>
 
@@ -94,7 +94,7 @@
                         {/if}
 						{if $pageData.urls.endPage  && $pageData.offsets.total != $pageData.offsets.lastOffsetOnPage}
                             <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.endPage}")' >{$navStrings.end}&nbsp;{sugar_getimage name="end" ext=".png" width="14" height="13" alt=$navStrings.end other_attributes='align="absmiddle" border="0" '}</a></td>-->
-							<button title='{$navStrings.end}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.endPage}")'>
+							<button title='{$navStrings.end}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.endPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								{sugar_getimage name="end.png" attr='align="absmiddle" border="0" ' alt="$alt_end"}
 							</button>
 
@@ -121,7 +121,8 @@
             {else}<th scope='col' data-hide="{$datahide}">{/if}
 				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
-	                <a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}&sugar_body_only=1&id={$dashletId}")' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}</a>&nbsp;&nbsp;
+					<!-- dashlet: {$dashletId} -->
+	                <a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}&sugar_body_only=1&id={$dashletId}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}</a>&nbsp;&nbsp;
 	                {if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 	                    {if $pageData.ordering.sortOrder == 'ASC'}
                             {capture assign="imageName"}arrow_down.{$arrowExt}{/capture}

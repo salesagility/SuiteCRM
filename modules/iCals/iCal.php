@@ -58,7 +58,7 @@ class iCal extends vCal {
     */
     public function __construct()
     {
-        parent::vCal();
+        parent::__construct();
     }
 
     /**
@@ -214,7 +214,25 @@ class iCal extends vCal {
             $taskAsVTODO = false;
         }
 
-        $acts_arr = CalendarActivity::get_activities($user_bean->id,
+        $activityList = array(
+            "Meetings" => array(
+                "showCompleted" => true,
+                "start" =>  "date_start",
+                "end" => "date_end"
+            ),
+            "Calls" => array(
+                "showCompleted" => true,
+                "start" =>  "date_start",
+                "end" => "date_end"
+            ),
+            "Tasks" => array(
+                "showCompleted" => true,
+                "start" =>  "date_due",
+                "end" => "date_due"
+            )
+        );
+
+        $acts_arr = CalendarActivity::get_activities($activityList,$user_bean->id,
             !$taskAsVTODO,
             $start_date_time,
             $end_date_time,
@@ -374,7 +392,7 @@ class iCal extends vCal {
                 }
             }
         }
-        
+
         return $str;
     }
 

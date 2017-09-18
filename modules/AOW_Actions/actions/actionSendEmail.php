@@ -28,9 +28,24 @@ class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
 
-    function actionSendEmail($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionSendEmail($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
 
     function loadJS(){
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
@@ -38,7 +53,7 @@ class actionSendEmail extends actionBase {
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
         global $app_list_strings;
-        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
         if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
@@ -50,11 +65,12 @@ class actionSendEmail extends actionBase {
         $checked = '';
         if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
 
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_INDIVIDUAL_EMAILS","AOW_Actions").':';
+        $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate("LBL_INDIVIDUAL_EMAILS",
+                "AOW_Actions") . ':</label>';
         $html .= '</td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= "<td valign='top'>";
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][individual_email]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][individual_email]' name='aow_actions_param[".$line."][individual_email]' value='1' $checked></td>";
         $html .= '</td>';
@@ -63,8 +79,9 @@ class actionSendEmail extends actionBase {
         $hidden = "style='visibility: hidden;'";
         if($params['email_template'] != '') $hidden = "";
 
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL_TEMPLATE","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL_TEMPLATE",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
 
         $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE','AOW_Actions')."</a>";
@@ -72,11 +89,12 @@ class actionSendEmail extends actionBase {
         $html .= "</td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= '<td valign="top" scope="row" width="37.5%">';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td valign="top" scope="row">';
 
         $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%" class="email-line"></table>';
         $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";
@@ -210,16 +228,18 @@ class actionSendEmail extends actionBase {
                         $field = $relatedFields[$emailTarget];
                         if($field['type'] == 'relate') {
                             $linkedBeans = array();
-                            $id = $bean->$field['id_name'];
+                            $idName = $field['id_name'];
+                            $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
                         }
                         else if($field['type'] == 'link'){
+                            $relField = $field['name'];
                             if(isset($field['module']) && $field['module'] != '') {
                                 $rel_module = $field['module'];
-                            } else if($bean->load_relationship($field['name'])){
-                                $rel_module = $bean->$field['name']->getRelatedModuleName();
+                            } else if($bean->load_relationship($relField)){
+                                $rel_module = $bean->$relField->getRelatedModuleName();
                             }
-                            $linkedBeans = $bean->get_linked_beans($field['name'],$rel_module);
+                            $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
                         }else{
                             $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
                         }
@@ -274,7 +294,15 @@ class actionSendEmail extends actionBase {
 
         } else {
             $this->parse_template($bean, $emailTemp);
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+			if($emailTemp->text_only=='1')
+			{
+				$email_body_html = $emailTemp->body;
+			}
+			else 
+			{
+				$email_body_html = $emailTemp->body_html;
+			}
+            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
         }
         return true;
     }
@@ -289,8 +317,9 @@ class actionSendEmail extends actionBase {
         foreach($bean->field_defs as $bean_arr){
             if($bean_arr['type'] == 'relate'){
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
-                    if(isset($bean->field_defs[$bean_arr['id_name']]) && $bean->field_defs[$bean_arr['id_name']]['source'] != 'non-db'){
-                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$bean_arr['id_name'];
+                    $idName = $bean_arr['id_name'];
+                    if(isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db'){
+                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$idName;
                     }
                 }
             }
@@ -306,7 +335,7 @@ class actionSendEmail extends actionBase {
             }
         }
 
-        $object_arr['Users'] = $bean->assigned_user_id;
+        $object_arr['Users'] = is_a($bean, 'User') ? $bean->id : $bean->assigned_user_id;
 
         $object_arr = array_merge($object_arr, $object_override);
 
@@ -403,6 +432,27 @@ class actionSendEmail extends actionBase {
             $emailObj->status = 'sent';
             $emailObj->save();
 
+            // Fix for issue 1561 - Email Attachments Sent By Workflow Do Not Show In Related Activity.
+            foreach($attachments as $attachment) {
+                $note = new Note();
+                $note->id = create_guid();
+                $note->date_entered = $attachment->date_entered;
+                $note->date_modified = $attachment->date_modified;
+                $note->modified_user_id = $attachment->modified_user_id;
+                $note->assigned_user_id = $attachment->assigned_user_id;
+                $note->new_with_id = true;
+                $note->parent_id = $emailObj->id;
+                $note->parent_type = $attachment->parent_type;
+                $note->name = $attachment->name;;
+                $note->filename = $attachment->filename;
+                $note->file_mime_type = $attachment->file_mime_type;
+                $fileLocation = "upload://{$attachment->id}";
+                $dest = "upload://{$note->id}";
+                if(!copy($fileLocation, $dest)) {
+                    $GLOBALS['log']->debug("EMAIL 2.0: could not copy attachment file to $fileLocation => $dest");
+                }
+                $note->save();
+            }
             return true;
         }
         return false;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="49px" height="148px" viewBox="0 0 49 148" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #534D64;">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>p_icon_user</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="25" cy="24" r="20"></circle>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="40" height="40" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <circle id="path-3" cx="25" cy="124" r="20"></circle>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="40" height="40" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="p_icon_user">
+            <g id="Group" transform="translate(11.000000, 13.000000)">
+                <circle id="Oval-1" stroke="#FFFFFF" stroke-width="2" cx="13.8095238" cy="4.76190476" r="4.76190476"></circle>
+                <ellipse id="Oval-1" stroke="#FFFFFF" stroke-width="2" cx="13.8095238" cy="18.0952381" rx="8.57142857" ry="8.57142857"></ellipse>
+                <path d="M5.47619048,18.0952381 L22.1428571,18.0952381" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
+                <rect id="Rectangle-84" fill="#534D64" x="0" y="18.5714286" width="30" height="11.4285714"></rect>
+            </g>
+            <use id="Oval-5" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            <g id="Group" transform="translate(11.000000, 113.000000)">
+                <circle id="Oval-1" stroke="#F08377" stroke-width="2" cx="13.8095238" cy="4.76190476" r="4.76190476"></circle>
+                <ellipse id="Oval-1" stroke="#F08377" stroke-width="2" cx="13.8095238" cy="18.0952381" rx="8.57142857" ry="8.57142857"></ellipse>
+                <path d="M5.47619048,18.0952381 L22.1428571,18.0952381" id="Line" stroke="#F08377" stroke-width="2" stroke-linecap="square"></path>
+                <rect id="Rectangle-84" fill="#534D64" x="0" y="18.5714286" width="30" height="11.4285714"></rect>
+            </g>
+            <use id="Oval-5" stroke="#F08377" mask="url(#mask-4)" stroke-width="2" xlink:href="#path-3"></use>
+        </g>
+    </g>
+</svg>

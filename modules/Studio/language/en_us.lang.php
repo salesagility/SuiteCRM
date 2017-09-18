@@ -58,10 +58,10 @@ $mod_strings = array (
 'LBL_MODULE_TITLE' => 'Studio',
 'LBL_TOOLBOX' => 'Toolbox',
 'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
-'LBL_SUGAR_FIELDS_STAGE' => 'Sugar Fields (click items to add to staging area)',
-'LBL_SUGAR_BIN_STAGE' => 'Sugar Bin (click items to add to staging area)',
-'LBL_VIEW_SUGAR_FIELDS' => 'View Sugar Fields',
-'LBL_VIEW_SUGAR_BIN' => 'View Sugar Bin',
+'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
+'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
+'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
+'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
 'LBL_FAILED_TO_SAVE' => 'Failed To Save',
 'LBL_CONFIRM_UNSAVE' => 'Any changes will go unsaved. Are you sure you would like to continue?',
 'LBL_PUBLISHING' => 'Publishing ...',
@@ -97,7 +97,7 @@ $mod_strings = array (
 
 
 //SELECT MODULE WIZARD
-'LBL_SMW_WELCOME'=>'<h2>Welcome to Studio!</h2><br><b>Please select a module from below.',
+'LBL_SMW_WELCOME'=>'<h2>Welcome to Studio!</h2><br><b>Please select a module from below.</b>',
 
 //SELECT MODULE ACTION
 'LBL_SMA_WELCOME'=>'<h2>Edit a Module</h2>What do you want to do with that module?<br><b>Please select what action you would like to take.',
@@ -158,7 +158,7 @@ $mod_strings = array (
 'LBL_GROUP_TAB_WELCOME'=>'The filters below will be displayed in the More list in the module menu for users to use to view groups of modules within the menu. Drag and drop modules to and from the filters. Note: Empty filters will not be displayed in the menu.',
 'LBL_RENAME_TAB_WELCOME'=>'Click on any tab\'s Display Value in the table below to rename the tab.',
 'LBL_DELETE_MODULE'=>'Remove&nbsp;module<br />from&nbsp;filter',
-'LBL_DISPLAY_OTHER_TAB_HELP' => 'Select to display the "Other" tab in the navigation bar.  By default, the "Other" tab displays any modules not already included in other groups.',
+'LBL_DISPLAY_OTHER_TAB_HELP' => 'Select to display the "Other" tab in the navigation bar. By default, the "Other" tab displays any modules not already included in other groups.',
 'LBL_TAB_GROUP_LANGUAGE_HELP' => 'Select an available language, edit the Group labels and click Save & Deploy to apply the labels in the selected language.',
 'LBL_ADD_GROUP'=>'Add Filter',
 'LBL_NEW_GROUP'=>'New Group',
@@ -177,11 +177,11 @@ $mod_strings = array (
 'ERROR_INVALID_KEY_VALUE'=> "Error: Invalid Key Value: [']",
 
 //SUGAR PORTAL
-'LBL_SW_SUGARPORTAL'=>'Sugar Portal',
+'LBL_SW_SUGARPORTAL'=>'SuiteCRM Portal',
 'LBL_SMP_WELCOME'=>' Please select a module you would like to edit from the list below',
-'LBL_SP_WELCOME'=>'Welcome to Studio for Sugar Portal. You can either choose to edit modules here or sync to a portal instance.<br> Please choose from the list below.',
+'LBL_SP_WELCOME'=>'Welcome to Studio for SuiteCRM Portal. You can either choose to edit modules here or sync to a portal instance.<br> Please choose from the list below.',
 'LBL_SP_SYNC'=>'Portal Sync',
-'LBL_SYNCP_WELCOME'=>'Please enter the url to the portal instance you wish to update then press the Go button.<br> This will bring up a prompt for your user name and password.<br> Please enter your Sugar user name and password and press the Begin Sync button.',
+'LBL_SYNCP_WELCOME'=>'Please enter the url to the portal instance you wish to update then press the Go button.<br> This will bring up a prompt for your user name and password.<br> Please enter your SuiteCRM user name and password and press the Begin Sync button.',
 'LBL_LISTVIEWP_DESCRIPTION'=>'There are two columns below: Default which are the fields that will be displayed and Available which are the fields that are not displayed, but are available for displaying. Just drag the fields between the two columns. You can also reorder the items in a column by dragging and dropping them.',
 'LBL_SP_STYLESHEET'=>'Upload a Style Sheet',
 'LBL_SP_UPLOADSTYLE'=>'Click on the browse button and select a style sheet from your computer to upload.<br> The next time you sync down to portal it will bring down the style sheet along with it.',

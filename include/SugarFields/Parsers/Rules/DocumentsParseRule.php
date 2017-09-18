@@ -43,14 +43,29 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class DocumentsParseRule extends BaseRule {
 
-function DocumentsParseRule() {
-	
+function __construct() {
+
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function DocumentsParseRule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function preParse($panels, $view) {
 		foreach($panels as $name=>$panel) {
 		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {  	
+		   	  	 foreach($row as $key=>$column) {
 		   	  	     if($this->matches($column, '/^related_doc_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_name';
 		   	  	 	 } else if($this->matches($column, '/^related_doc_rev_id$/')) {
@@ -72,10 +87,10 @@ function preParse($panels, $view) {
 		   	  	 	 } else if($this->matches($column, '/^related_document_version$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_rev_number';
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
-	return $panels;	
+	return $panels;
 }
 
 function parsePanels(& $panels, $view) {
@@ -88,12 +103,12 @@ function parsePanels(& $panels, $view) {
 				   $this->matches($column, '/latest_revision/si') ||
 				   $this->matches($column, '/file_name/si')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
-				} 	
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
-      
-	   return $panels;		
+
+	   return $panels;
 }
 
 }

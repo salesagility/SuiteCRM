@@ -1,0 +1,25 @@
+{
+  "name": "salesagility/suitecrm",
+  "description": "SuiteCRM",
+  "type": "project",
+  "license": "GPL-3.0",
+  "authors": [],
+  "minimum-stability": "dev",
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "require": {},
+  "require-dev": {
+    "leafo/scssphp": "dev-master",
+    "phpunit/phpunit": "^3.7",
+    "mikey179/vfsStream": "1.4.*"
+  },
+  "scripts": {},
+  "prefer-stable": true,
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
+  },
+  "extra": {}
+}

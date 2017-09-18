@@ -42,7 +42,7 @@ require_once('include/MVC/View/views/view.list.php');
 
 class HomeViewList extends ViewList{
  	function ActivitiesViewList(){
- 		parent::ViewList();
+ 		parent::__construct();
  		
  	}
 

@@ -55,7 +55,7 @@
                                 <td scope="row" width="17%">
                                 {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
                                 </td>
-                                <td>
+                                <td width="83%">
                                     {$NEW_EMAIL}
                                 </td>
                             </tr>
@@ -105,7 +105,7 @@
                         </table>
             </div>
 </div>
-<div>
+<div class="user-tab-content">
             {if ($CHANGE_PWD) == '1'}
             <div id="generate_password">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
@@ -195,7 +195,7 @@
             {/if}
     </div>
     {if $SHOW_THEMES}
-    <div>
+    <div class="user-tab-content">
         <div id="themepicker" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody>
@@ -219,7 +219,7 @@
         </div>
     </div>
     {/if}
-    <div>
+    <div class="user-tab-content">
         <div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
@@ -244,7 +244,10 @@
                             <slot>{$MOD.LBL_REMINDER}:</slot>&nbsp;{sugar_help text=$MOD.LBL_REMINDER_TEXT }
                             </td>
                             <td valign="top"  nowrap>
+								<!--
                                 <slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot>
+								-->
+								<slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot>
                             </td>
                         </tr>
             <tr>
@@ -371,7 +374,6 @@
                         </tr>
                     </table>
         </div>
-
         <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
             <tr>
@@ -404,7 +406,7 @@
         </div>
     </div>
     {if $ID}
-    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
+    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
         <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
     </div>
     {/if}

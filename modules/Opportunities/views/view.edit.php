@@ -50,11 +50,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class OpportunitiesViewEdit extends ViewEdit {
 
- 	function OpportunitiesViewEdit(){
- 		parent::ViewEdit();
+ 	function __construct(){
+ 		parent::__construct();
  		$this->useForSubpanel = true;
  	}
- 	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function OpportunitiesViewEdit(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
  	function display() {
 		global $app_list_strings;
 		$json = getJSONobj();
@@ -63,7 +78,7 @@ class OpportunitiesViewEdit extends ViewEdit {
  		if(empty($this->bean->id) && empty($_REQUEST['probability'])) {
 		   $prePopProb = 'document.getElementsByName(\'sales_stage\')[0].onchange();';
 		}
-		
+
 $probability_script=<<<EOQ
 	<script>
 	prob_array = $prob_array;
@@ -74,13 +89,13 @@ $probability_script=<<<EOQ
 				document.getElementsByName('probability')[0].value = prob_array[document.getElementsByName('sales_stage')[0].value];
 				SUGAR.util.callOnChangeListers(document.getElementsByName('probability')[0]);
 
-			} 
+			}
 		};
 	$prePopProb
 	</script>
 EOQ;
-	    
-	    $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);    
+
+	    $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);
  		parent::display();
  	}
 }

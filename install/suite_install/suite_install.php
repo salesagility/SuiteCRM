@@ -8,6 +8,7 @@ $sugar_config['default_max_tabs'] = 10;
 $sugar_config['suitecrm_version'] = $suitecrm_version;
 $sugar_config['sugar_version'] = $sugar_version;
 $sugar_config['sugarbeet'] = false;
+$sugar_config['enable_action_menu'] = true;
 
 ksort($sugar_config);
 write_array_to_file('sugar_config', $sugar_config, 'config.php');
@@ -28,11 +29,20 @@ install_aod();
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 
+require_once('install/suite_install/Projects.php');
+install_projects();
+
+require_once('install/suite_install/Reschedule.php');
+install_reschedule();
+
 require_once('install/suite_install/SecurityGroups.php');
 install_ss();
 
 require_once('install/suite_install/GoogleMaps.php');
 install_gmaps();
+
+require_once('install/suite_install/Social.php');
+install_social();
 
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 $actions = array('clearAll');

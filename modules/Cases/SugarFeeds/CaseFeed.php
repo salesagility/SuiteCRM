@@ -3,9 +3,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -45,10 +45,15 @@ class CaseFeed extends FeedLogicBase {
     var $module = 'Cases';
     function pushFeed($bean, $event, $arguments){
         $text = '';
-        if(empty($bean->fetched_row)){
-            $text =  '{SugarFeed.CREATED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name.'] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $bean->account_name . ']: '. $bean->description;
+	if(empty($bean->fetched_row) && $bean->in_save){
+            $accountName = $bean->account_name;
+            if(empty($accountName) && $bean->account_id){
+                $acc = BeanFactory::getBean('Accounts',$bean->account_id);
+                $accountName = $acc->name;
+            }
+            $text =  '{SugarFeed.CREATED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name.'] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $accountName . ']: '. $bean->description;
         }else{
-            if(!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && $bean->status == 'Closed_Closed'){
+            if(!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && strpos($bean->status, 'Closed') !== false){
                 $text =  '{SugarFeed.CLOSED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name. '] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $bean->account_name . ']';
             }
         }

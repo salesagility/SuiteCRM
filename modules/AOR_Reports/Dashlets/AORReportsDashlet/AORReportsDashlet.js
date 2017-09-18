@@ -1,8 +1,11 @@
 function displayEmployeeDuration () {
     // Hack to display duration seconds in more pleasent way
-    var unix_timestamp = parseInt(document.getElementById('employment_duration').innerHTML);
-    var date = secondsToString(unix_timestamp)
-    document.getElementById('employment_duration').innerHTML = date;
+    if(document.getElementById('employment_duration')!== null)
+    {
+        var unix_timestamp = parseInt(document.getElementById('employment_duration').innerHTML);
+        var date = secondsToString(unix_timestamp)
+        document.getElementById('employment_duration').innerHTML = date;
+    }
 }
 
 function secondsToString(seconds)

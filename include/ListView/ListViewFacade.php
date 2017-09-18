@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  require_once('include/ListView/ListViewSmarty.php');
- 
+
 
  /**
   * A Facade to ListView and ListViewSmarty
@@ -77,12 +77,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  	 * @param $module - the module name
  	 * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
  	 */
- 	function ListViewFacade($focus, $module, $type = 0){
+ 	function __construct($focus, $module, $type = 0){
  		$this->focus = $focus;
  		$this->module = $module;
  		$this->type = $type;
  		$this->build();
  	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ListViewFacade($focus, $module, $type = 0){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($focus, $module, $type);
+    }
+
 
  	function build(){
  		//we will assume that if the ListView.html file exists we will want to use that one
@@ -159,7 +174,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 			$this->lv->mailMerge = false;
 			$this->lv->multiSelect = false;
  			$this->lv->setup($this->focus, $this->template, $where, $params, $offset, $limit,  $filter_fields, $id_field);
- 			
+
  		}
  	}
 

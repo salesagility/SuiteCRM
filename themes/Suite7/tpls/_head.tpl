@@ -45,7 +45,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
+    <title>{$SYSTEM_NAME}</title>
     {$SUGAR_JS}
     {literal}
     <script type="text/javascript">
@@ -61,6 +61,7 @@
         -->
     </script>
     {/literal}
+    <link rel="stylesheet" href="themes/Suite7/css/bootstrap.min.css">
     {$SUGAR_CSS}
     <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->

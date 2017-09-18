@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 function treeinit() {}
 
@@ -79,8 +80,20 @@ if (typeof(ModuleBuilder) == 'undefined') {
             var aRegex = /#.*ajaxUILoc=([^&]*)/.exec(window.location);
             var ajaxLoc = aRegex ? aRegex[1] : false;
             if (ajaxLoc) {
-                window.location = "index.php?action=ajaxui#ajaxUILoc=" + ajaxLoc;
-                return;
+              var url = "index.php?action=ajaxui#ajaxUILoc=" + ajaxLoc;
+              // ajaxUILoc XSS protection:
+              // window.location = url; is vulnerable to XSS attack
+              // Check for valid url
+              // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+              var testUrl = decodeURIComponent(url);
+              if (
+                /^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl) === false
+              ) {
+                throw "Invalid url";
+              }
+              window.location = url;
+              return;
+
             }
 			//Setup the basic ajax request settings
 			Connect.extraParams = {
@@ -527,10 +540,10 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
 			} catch (err) {
 				YAHOO.SUGAR.MessageBox.show({
-                    title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
-                    msg: o.responseText,
-                    width: 500
-                });
+					title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
+					msg: o.responseText,
+					width: 500
+				});
 				return false;
 			}
 			
@@ -607,22 +620,52 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			if (SUGAR.util.isLoginPage(o.responseText))
 				return true;
 			if (o.responseText.substr(0, 1) == "<") {
-                YAHOO.SUGAR.MessageBox.show({
+				YAHOO.SUGAR.MessageBox.show({
 					title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
 					msg: o.responseText,
-					width: 500
+					width: 500,
+					close: false
 				});
 				return true;
-            }
+			}
 			
 			
 			return false;
 		},
 		submitForm: function(formname, successCall){
+			var onSuccess = function() {console.log('No success binding function')};
+			var onFailure =  function() {console.log('No success binding function')};
 			var failureCall = ModuleBuilder.failed;
 			ajaxStatus.showStatus(SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'));
+			YAHOO.SUGAR.MessageBox.show({
+				title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'),
+				msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_TITLE'),
+				width: 500,
+				close: false
+			});
+
 			if (typeof(successCall) == 'undefined') {
-				successCall = ModuleBuilder.updateContent;
+				onSuccess = function(o) {
+					YAHOO.SUGAR.MessageBox.hide();
+					YAHOO.SUGAR.MessageBox.show({
+						title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+						msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
+						width: 500,
+						close: true
+					});
+					ModuleBuilder.updateContent(o);
+				}
+
+				onFailure = function(o) {
+					YAHOO.SUGAR.MessageBox.hide();
+					YAHOO.SUGAR.MessageBox.show({
+						title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+						msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_FAILED_MESSAGE'),
+						width: 500,
+						close: true
+					});
+					ModuleBuilder.updateContent(o);
+				}
 
 				// get bookmarked url state
 				var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
@@ -635,31 +678,26 @@ if (typeof(ModuleBuilder) == 'undefined') {
 
 				// check where we are and do it if we are in field editor in module builder
 				if(
+					formname != "dropdown_form" && formname != "popup_form" &&
 					// user came from studio/fields layout by ajax urls
-					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
+					((urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
 					// user refresh the page or came from direct url
-					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == '')
+					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
 				) {
 					// switch on the preloader message
 					ModuleBuilder.preloader.on();
 
 					// set callback functions
-					successCall = function(o){
+					onSuccess = function(o){
 						// switch off preloader
 						ModuleBuilder.preloader.off();
 						// call the original callback
 						if(ModuleBuilder.updateContent(o)) {
-							// show results
-							YAHOO.SUGAR.MessageBox.show({
-								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
-								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
-								width: 500
-							});
+							// refresh page content
+							ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
 						}
-						// refresh page content
-						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
 					};
-					failureCall = function(o) {
+					onFailure = function(o) {
 						// switch off preloader
 						ModuleBuilder.preloader.off();
 						// call the original callback
@@ -671,12 +709,25 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			}
 			else {
 				ModuleBuilder.callLock = true;
+				onSuccess = function(o) {
+						YAHOO.SUGAR.MessageBox.hide();
+						YAHOO.SUGAR.MessageBox.show({
+							title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+							msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
+							width: 500,
+							close: true
+						});
+						successCall(o);
+				}
 			}
 			Connect.setForm(document.getElementById(formname) || document.forms[formname]);
 			Connect.asyncRequest(
-			    Connect.method, 
-			    Connect.url, 
-			    {success: successCall, failure: failureCall}
+			    Connect.method,
+			    Connect.url,
+			    {
+						success: onSuccess,
+						failure: onFailure
+					}
 			);
 		},
 
@@ -705,7 +756,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					title: title,
 					msg: message,
 					width: 500,
-					close: false
+
 				});
 			},
 

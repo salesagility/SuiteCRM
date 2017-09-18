@@ -63,10 +63,25 @@ class ListViewData {
 	 *
 	 * @return ListViewData
 	 */
-	function ListViewData() {
+	public function __construct() {
 		$this->limitName = 'list_max_entries_per_page';
-		$this->db = &DBManagerFactory::getInstance('listviews');
+		$this->db = DBManagerFactory::getInstance('listviews');
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ListViewData(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/**
 	 * checks the request for the order by and if that is not set then it checks the session for it
@@ -164,10 +179,10 @@ class ListViewData {
 	 *
 	 * @param unknown_type $baseName
 	 */
-	function setVariableName($baseName, $where, $listviewName = null){
+	function setVariableName($baseName, $where, $listviewName = null, $id = null){
         global $timedate;
         $module = (!empty($listviewName)) ? $listviewName: $_REQUEST['module'];
-        $this->var_name = $module .'2_'. strtoupper($baseName);
+        $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
 
 		$this->var_order_by = $this->var_name .'_ORDER_BY';
 		$this->var_offset = $this->var_name . '_offset';
@@ -184,7 +199,7 @@ class ListViewData {
 		if(!empty($this->count_query)){
 		    $count_query = $this->count_query;
 		}else{
-	        $count_query = SugarBean::create_list_count_query($main_query);
+	        $count_query = $this->seed->create_list_count_query($main_query);
 	    }
 		$result = $this->db->query($count_query);
 		if($row = $this->db->fetchByAssoc($result)){
@@ -229,8 +244,9 @@ class ListViewData {
 	 * @param string:'id' $id_field
 	 * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
 	 */
-	function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true) {
+	function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true, $id = null) {
         global $current_user;
+        require_once 'include/SearchForm/SearchForm2.php';
         SugarVCR::erase($seed->module_dir);
         $this->seed =& $seed;
         $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
@@ -239,7 +255,7 @@ class ListViewData {
             $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
         }
 
-        $this->setVariableName($seed->object_name, $where, $this->listviewName);
+        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
 
 		$this->seed->id = '[SELECT_ID_LIST]';
 

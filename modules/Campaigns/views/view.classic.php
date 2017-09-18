@@ -41,13 +41,28 @@ require_once('include/MVC/View/SugarView.php');
 require_once('include/MVC/Controller/SugarController.php');
 
 class CampaignsViewClassic extends SugarView
-{	
- 	function CampaignsViewClassic()
+{
+ 	function __construct()
  	{
- 		parent::SugarView();
+ 		parent::__construct();
  		$this->type = $this->action;
- 	}	
- 	
+ 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function CampaignsViewClassic(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
  	/**
 	 * @see SugarView::display()
 	 */
@@ -63,8 +78,8 @@ class CampaignsViewClassic extends SugarView
 			return true;
 		}
 		return false;
- 	} 	
-	
+ 	}
+
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
@@ -93,20 +108,20 @@ class CampaignsViewClassic extends SugarView
 				    	break;
     				case 'CampaignDiagnostic':
     					$params[] = $GLOBALS['mod_strings']['LBL_CAMPAIGN_DIAGNOSTICS'];
-    					break;  
+    					break;
     				case 'WizardEmailSetup':
     					$params[] = $GLOBALS['mod_strings']['LBL_EMAIL_SETUP_WIZARD_TITLE'];
-    					break;    
+    					break;
     				case 'TrackDetailView':
     					if(!empty($this->bean->id))
     					{
 	    					$params[] = "<a href='index.php?module={$this->module}&action=DetailView&record={$this->bean->id}'>".$this->bean->name."</a>";
     					}
 	    				$params[] = $GLOBALS['mod_strings']['LBL_LIST_TO_ACTIVITY'];
-    					break;			  					    					
+    					break;
     		}//switch
     	}//fi
- 		
+
     	return $params;
     }
 }

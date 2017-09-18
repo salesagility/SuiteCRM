@@ -66,7 +66,7 @@ class Monitor implements Trackable {
     /**
      * Monitor constructor
      */
-    function Monitor($name='', $monitorId='', $metadata='', $store='') {
+    public function __construct($name='', $monitorId='', $metadata='', $store='') {
 
     	if(empty($metadata) || !file_exists($metadata)) {
     	   $GLOBALS['log']->error($GLOBALS['app_strings']['ERR_MONITOR_FILE_MISSING'] . "($metadata)");
@@ -103,6 +103,20 @@ class Monitor implements Trackable {
 	 		$this->setValue('session_id', $this->getSessionId());
     	}
     }
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Monitor($name='', $monitorId='', $metadata='', $store=''){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($name, $monitorId, $metadata, $store);
+	}
 
     /**
      * setValue

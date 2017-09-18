@@ -52,8 +52,9 @@ if(!defined('SUGAR_SMARTY_DIR'))
  */
 class Sugar_Smarty extends Smarty
 {
-	function Sugar_Smarty()
+	public function __construct()
 	{
+        parent::__construct();
 		if(!file_exists(SUGAR_SMARTY_DIR))mkdir_recursive(SUGAR_SMARTY_DIR, true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'templates_c'))mkdir_recursive(SUGAR_SMARTY_DIR . 'templates_c', true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'configs'))mkdir_recursive(SUGAR_SMARTY_DIR . 'configs', true);
@@ -76,6 +77,20 @@ class Sugar_Smarty extends Smarty
 	}
 
 	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Sugar_Smarty(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
+	/**
 	 * Override default _unlink method call to fix Bug 53010
 	 *
 	 * @param string $resource
@@ -86,8 +101,35 @@ class Sugar_Smarty extends Smarty
         if(file_exists($resource)) {
             return parent::_unlink($resource, $exp_time);
         }
-        
+
         // file wasn't found, so it must be gone.
         return true;
     }
+
+	/**
+	 * executes & returns or displays the template results
+	 *
+	 * @param string $resource_name
+	 * @param string $cache_id
+	 * @param string $compile_id
+	 * @param boolean $display
+	 */
+	function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
+
+		/// Try and fetch the tpl from the theme folder
+		/// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
+		/// otherwise fall back to the default tpl
+		$current_theme = SugarThemeRegistry::current();
+		$theme_directory = $current_theme->dirName;
+		if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+			$test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+			if (file_exists($test_path)) {
+				$resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+			}
+		}
+		///
+		return parent::fetch($resource_name, $cache_id = null, $compile_id = null, $display);
+	}
+
+
 }

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -55,7 +55,7 @@
 <tr>
     <td scope='row'>{$titleLBL}</td>
     <td>
-    	<input class="text" name="title" size='20' maxlength='80' value='{$title}'>
+    	<input type="text" class="text" name="title" size='20' maxlength='80' value='{$title}'>
     </td>
 </tr>
 {if $isRefreshable}
@@ -73,7 +73,7 @@
 <tr>
     <td scope='row'>{$rowsLBL}</td>
     <td>
-    	<input class="text" name="rows" size='3' value='{$rows}'>
+    	<input type="text" class="text" name="rows" size='3' value='{$rows}'>
     </td>
 </tr>
 <tr>

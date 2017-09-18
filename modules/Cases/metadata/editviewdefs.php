@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Cases'] = 
+$viewdefs ['Cases'] =
 array (
   'EditView' => 
   array (
@@ -56,6 +56,21 @@ array (
           'label' => '10',
           'field' => '30',
         ),
+      ),
+      'includes' => 
+      array (
+          0 =>
+              array (
+                  'file' => 'include/javascript/bindWithDelay.js',
+              ),
+        1 =>
+        array (
+          'file' => 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.js',
+        ),
+          2 =>
+              array (
+                  'file' => 'include/javascript/qtip/jquery.qtip.min.js',
+              ),
       ),
       'useTabs' => false,
       'tabDefs' => 
@@ -106,20 +121,24 @@ array (
             'name' => 'name',
             'displayParams' => 
             array (
-              'size' => 75,
+              //'size' => 75,
             ),
           ),
+            1 =>
+                array (
+                    'name' => 'suggestion_box',
+                  //'studio' => 'visible',
+                    'label' => 'LBL_SUGGESTION_BOX'
+                ),
         ),
-        4 => 
+        4 =>
         array (
           0 => 
           array (
             'name' => 'description',
-            'nl2br' => true,
           ),
-          1 => '',
         ),
-        5 => 
+        5 =>
         array (
           0 => 
           array (
@@ -127,7 +146,7 @@ array (
             'nl2br' => true,
           ),
         ),
-        6 => 
+        6 =>
         array (
           0 => 
           array (
@@ -135,14 +154,15 @@ array (
             'studio' => 'visible',
             'label' => 'LBL_UPDATE_TEXT',
           ),
-          1 => 
-          array (
-            'name' => 'internal',
-            'studio' => 'visible',
-            'label' => 'LBL_INTERNAL',
-          ),
         ),
-        7 => 
+          7 => array(
+              0 => array (
+                  'name' => 'internal',
+                  'studio' => 'visible',
+                  'label' => 'LBL_INTERNAL',
+              ),
+          ),
+        8 =>
         array (
           0 => 
           array (
@@ -150,7 +170,7 @@ array (
             'studio' => 'visible',
           ),
         ),
-        8 => 
+        9 =>
         array (
           0 => 'assigned_user_name',
         ),

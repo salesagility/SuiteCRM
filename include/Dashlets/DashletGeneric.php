@@ -114,8 +114,8 @@ class DashletGeneric extends Dashlet {
     var $lvs;
     var $layoutManager;
 
-    function DashletGeneric($id, $options = null) {
-        parent::Dashlet($id);
+    function __construct($id, $options = null) {
+        parent::__construct($id);
         $this->isConfigurable = true;
         if(isset($options)) {
             if(!empty($options['filters'])) $this->filters = $options['filters'];
@@ -133,6 +133,20 @@ class DashletGeneric extends Dashlet {
         $temp = (object) array('db' => &$GLOBALS['db'], 'report_def_str' => '');
         $this->layoutManager->setAttributePtr('reporter', $temp);
         $this->lvs = new ListViewSmarty();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function DashletGeneric($id, $options = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $options);
     }
 
     /**
@@ -318,8 +332,9 @@ class DashletGeneric extends Dashlet {
                         // No break here, we want to run through the default handler
                     case 'relate':
                         if (isset($widgetDef['link']) && $this->seedBean->load_relationship($widgetDef['link'])) {
-                            $widgetDef['module'] = $this->seedBean->$widgetDef['link']->focus->module_name;
-                            $widgetDef['link'] = $this->seedBean->$widgetDef['link']->getRelationshipObject()->name;
+                            $widgetLink = $widgetDef['link'];
+                            $widgetDef['module'] = $this->seedBean->$widgetLink->focus->module_name;
+                            $widgetDef['link'] = $this->seedBean->$widgetLink->getRelationshipObject()->name;
                         }
                         // No break - run through the default handler
                     default:
@@ -362,7 +377,7 @@ class DashletGeneric extends Dashlet {
     /**
      * Does all dashlet processing, here's your chance to modify the rows being displayed!
      */
-    function process($lvsParams = array()) {
+    function process($lvsParams = array(), $id = null) {
         $currentSearchFields = array();
         $configureView = true; // configure view or regular view
         $query = false;
@@ -435,7 +450,7 @@ class DashletGeneric extends Dashlet {
             if(!empty($whereArray)){
                 $where = '(' . implode(') AND (', $whereArray) . ')';
             }
-            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows/*, $filterFields*/);
+            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows/*, $filterFields*/, array(), 'id', $id);
             if(in_array('CREATED_BY', array_keys($displayColumns))) { // handle the created by field
                 foreach($this->lvs->data['data'] as $row => $data) {
                     $this->lvs->data['data'][$row]['CREATED_BY'] = get_assigned_user_name($data['CREATED_BY']);

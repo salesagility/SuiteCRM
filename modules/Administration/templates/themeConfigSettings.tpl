@@ -47,8 +47,8 @@
 	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
 		<tr>
 			<td>
-			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
-			<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="document.themeConfigSettings.action.value='ThemeSettings';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+			<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="document.themeConfigSettings.action.value='ThemeSettings';" type="submit" name="cancel_button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
 			</td>
 		</tr>
 	</table>
@@ -75,8 +75,8 @@
 	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
 		<tr>
 			<td>
-				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
-				<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+				<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="cancel_button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
 			</td>
 		</tr>
 	</table>

@@ -85,13 +85,13 @@ class Account extends Company {
 	var $shipping_address_state;
 	var $shipping_address_country;
 	var $shipping_address_postalcode;
-    
+
     var $shipping_address_street_2;
     var $shipping_address_street_3;
     var $shipping_address_street_4;
-    
+
     var $campaign_id;
-    
+
 	var $sic_code;
 	var $ticker_symbol;
 	var $account_type;
@@ -138,12 +138,13 @@ class Account extends Company {
     var $push_billing;
     var $push_shipping;
 
-	function Account() {
-        parent::Company();
+	public function __construct() {
+        parent::__construct();
+
 
         $this->setupCustomFields('Accounts');
 
-		foreach ($this->field_defs as $field) 
+		foreach ($this->field_defs as $field)
 		{
 			if(isset($field['name']))
 			{
@@ -158,6 +159,20 @@ class Account extends Company {
 			$_REQUEST['parent_name'] = '';
 			$_REQUEST['parent_id'] = '';
 		}
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Account(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	function get_summary_text()
@@ -222,11 +237,11 @@ class Account extends Company {
 			{
 				$this->parent_name = '';
 			}
-        }		
-        
+        }
+
         // Set campaign name if there is a campaign id
 		if( !empty($this->campaign_id)){
-			
+
 			$camp = new Campaign();
 		    $where = "campaigns.id='{$this->campaign_id}'";
 		    $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
@@ -250,7 +265,7 @@ class Account extends Company {
 		}
 		$temp_array["BILLING_ADDRESS_STREET"]  = $this->billing_address_street;
 		$temp_array["SHIPPING_ADDRESS_STREET"] = $this->shipping_address_street;
-    	
+
 		return $temp_array;
 	}
 	/**
@@ -278,7 +293,7 @@ class Account extends Company {
 }
 
 
-        function create_export_query(&$order_by, &$where, $relate_link_join='')
+        function create_export_query($order_by, $where, $relate_link_join='')
         {
             $custom_join = $this->getCustomJoin(true, true, $where);
             $custom_join['join'] .= $relate_link_join;
@@ -332,6 +347,23 @@ class Account extends Company {
 	function get_unlinked_email_query($type=array()) {
 
 		return get_unlinked_email_query($type, $this);
+	}
+
+	/**
+	 * Create a query string for select Products/Services Purchased list from database.
+	 * @return string final query
+	 */
+	public function getProductsServicesPurchasedQuery() {
+		$query = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '{$this->id}'
+
+			";
+		return $query;
 	}
 
 }

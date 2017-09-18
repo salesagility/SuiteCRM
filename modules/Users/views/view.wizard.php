@@ -53,9 +53,9 @@ class ViewWizard extends SugarView
 	/**
 	 * Constructor.
 	 */
-	public function __construct()
+	public function __construct($bean = null, $view_object_map = array())
 	{
-		parent::SugarView();
+		parent::__construct($bean, $view_object_map);
 
         $this->options['show_header'] = false;
         $this->options['show_footer'] = false;
@@ -125,6 +125,7 @@ class ViewWizard extends SugarView
         if ( empty($use_real_names) )
             $current_user->setPreference('use_real_names', 'on');
         $current_user->setPreference('reminder_time', 1800);
+        $current_user->setPreference('email_reminder_time', 3600);
         $current_user->setPreference('mailmerge_on', 'on');
 
 		//// Timezone

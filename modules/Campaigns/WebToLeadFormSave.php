@@ -72,11 +72,14 @@ while (strpos($bodyHTML, "ta_replace") !== false){
 
 	//replace input markup with text areas markups
 	$new_str = str_replace('input','textarea',$working_str);
-	$new_str = str_replace("type='text'", ' ', $new_str);
+	$new_str = str_replace("type=\"text\"", ' ', $new_str);
 	$new_str = $new_str . '> </textarea';
 
 	//replace the marker with generic term
 	$new_str = str_replace('ta_replace', 'sugarslot', $new_str);
+
+	// NET-enabling start-tag requires SHORTTAG YES
+	$new_str = str_replace('/> </textarea>', '> </textarea>', $new_str);
 
 	//merge the processed string back into bodyhtml string
 	$bodyHTML = str_replace($working_str , $new_str, $bodyHTML);
@@ -102,7 +105,7 @@ $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";
 $webformlink .= "<a href=\"index.php?entryPoint=download&id={$guid}&isTempFile=1&tempName=WebToLeadForm.html&type=temp\">$mod_strings[LBL_DOWNLOAD_WEB_TO_LEAD_FORM]</a>";
 $xtpl->assign("LINK_TO_WEB_FORM",$webformlink);
-$xtpl->assign("RAW_SOURCE", htmlspecialchars($html)); 
+$xtpl->assign("RAW_SOURCE", htmlspecialchars($html, ENT_QUOTES, 'iso8859-1'));
 $xtpl->parse("main.copy_source");
 $xtpl->parse("main");
 $xtpl->out("main");

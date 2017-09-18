@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="112px" viewBox="0 0 32 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sb_resource_chart</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sb_resource_chart">
+            <ellipse id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#534D64" cx="16" cy="56" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#F08377" cx="16" cy="96" rx="15" ry="15"></ellipse>
+            <polygon id="Page-1" fill="#F08377" points="25.02624 102 21.33276 95.49 18.3404 96.9502 15.21112 91.07468 11.7702 93.24132 8 87.615 8 102"></polygon>
+            <polygon id="Page-1" fill="#534D64" points="25.02624 62 21.33276 55.49 18.3404 56.9502 15.21112 51.07468 11.7702 53.24132 8 47.615 8 62"></polygon>
+            <polygon id="Page-1" fill="#F5F5F5" points="25.02624 22 21.33276 15.49 18.3404 16.9502 15.21112 11.07468 11.7702 13.24132 8 7.615 8 22"></polygon>
+        </g>
+    </g>
+</svg>

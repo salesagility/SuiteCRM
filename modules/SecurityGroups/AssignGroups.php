@@ -42,7 +42,7 @@ function popup_select(&$bean, $event, $arguments)
 
 	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
-		&& $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
+		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
 
 		//$_REQUEST['return_module'] = $bean->module_dir;
 		//$_REQUEST['return_action'] = "DetailView";

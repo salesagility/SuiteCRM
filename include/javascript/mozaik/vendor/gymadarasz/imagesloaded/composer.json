@@ -1,0 +1,14 @@
+{
+    "name": "gymadarasz/imagesloaded",
+    "description": "imagesloaded jquery plugin fork",
+    "type": "library",
+    "license": "MIT",
+	"minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "gymadarasz",
+            "email": "gyula.madarasz@gmail.com"
+        }
+    ],
+    "require": {}
+}

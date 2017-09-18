@@ -60,7 +60,7 @@ class UserSignature extends SugarBean {
 	var $object_name ='UserSignature';
 	var $disable_custom_fields = true;
 
-	function UserSignature() {
+    public function __construct() {
 		//Ensure the vardefs get loaded.
 		global $dictionary;
 		if(file_exists('custom/metadata/users_signaturesMetaData.php')) {
@@ -68,11 +68,25 @@ class UserSignature extends SugarBean {
 		} else {
 			require_once('metadata/users_signaturesMetaData.php');
 		}
-		
-		
-		parent::SugarBean();	
+
+
+		parent::__construct();
 	}
-	
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function UserSignature(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
 	/**
 	 * returns the bean name - overrides SugarBean's
 	 */
@@ -84,7 +98,7 @@ class UserSignature extends SugarBean {
 	 * Override's SugarBean's
 	 */
 	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted = 0);
+		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
 	}
 
 	/**

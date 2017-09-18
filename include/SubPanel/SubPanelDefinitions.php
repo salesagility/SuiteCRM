@@ -1,12 +1,11 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-	die ( 'Not A Valid Entry Point' ) ;
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) die ( 'Not A Valid Entry Point' ) ;
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -79,10 +78,34 @@ class aSubPanel
 	var $bean_name ;
 	var $template_instance ;
 
-	function aSubPanel ( $name , $instance_properties , $parent_bean , $reload = false , $original_only = false )
-	{
+	var $search_query;
+	var $base_collection_list = array();
+
+	function __construct ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
 
 		$this->_instance_properties = $instance_properties ;
+
+		if(isset($instance_properties['collection_list' ])) $this->base_collection_list = $instance_properties['collection_list' ];
+
+		if(!empty($collections) && isset($instance_properties['collection_list' ])){
+			foreach($instance_properties['collection_list' ] as $cname => $value){
+				if(!in_array($value['module'], $collections)){
+					unset($instance_properties['collection_list'][$cname]);
+				}
+			}
+		}
+
+		if (isset($instance_properties['type']) && $instance_properties['type'] != 'collection' && !empty($collections)) {
+			$instance = $this->_instance_properties;
+			$BreakDownCollections = $collections;
+			$newTable = strtolower($instance['module']);
+			$collection = array_shift(array_values($BreakDownCollections));
+
+			$table = strtolower($collection['module']); //tasks or contacts.
+			$search_query = str_replace($table, $newTable, $search_query);
+		}
+
+		$this->search_query = $search_query;
 		$this->name = $name ;
 		$this->parent_bean = $parent_bean ;
 
@@ -142,6 +165,20 @@ class aSubPanel
 			}
 		}
 
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($name, $instance_properties, $parent_bean, $reload, $original_only, $search_query, $collections);
 	}
 
     /**
@@ -242,10 +279,10 @@ class aSubPanel
 			}
 		}
 
-        //by default all the activities modules are exempt, so hiding them won't affect their appearance unless the 'activity' subpanel itself is hidden.
-        //add email to the list temporarily so it is not affected in activities subpanel
-        global $modules_exempt_from_availability_check ;
-        $modules_exempt_from_availability_check['Emails'] = 'Emails';
+		//by default all the activities modules are exempt, so hiding them won't affect their appearance unless the 'activity' subpanel itself is hidden.
+		//add email to the list temporarily so it is not affected in activities subpanel
+		global $modules_exempt_from_availability_check ;
+		$modules_exempt_from_availability_check['Emails'] = 'Emails';
 
 		$listFieldMap = array();
 
@@ -256,14 +293,14 @@ class aSubPanel
 			{
 				if (array_key_exists ( $properties [ 'module' ], $modListHeader ) or array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
 				{
-					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean ) ;
+					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
 				}
 			}
-            // if it's empty just dump out as there is nothing to process.
-            if(empty($this->sub_subpanels)) return false;
+			// if it's empty just dump out as there is nothing to process.
+			if(empty($this->sub_subpanels)) return false;
 			//Sync displayed list fields across the subpanels
 			$display_fields = $this->getDisplayFieldsFromCollection($this->sub_subpanels);
-		 	$query_fields = array();
+			$query_fields = array();
 			foreach ( $this->sub_subpanels as $key => $subpanel )
 			{
 				$list_fields = $subpanel->get_list_fields();
@@ -316,11 +353,11 @@ class aSubPanel
 					{
 						$list_fields[$field] = $subpanel->panel_definition['list_fields'][$field];
 					}
-				    else if ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key]))
-                    {
-                        $list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
+					else if ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key]))
+					{
+						$list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
 
-                    }
+					}
 					else {
 						$list_fields[$field] = $display_fields[$vname];
 					}
@@ -339,7 +376,7 @@ class aSubPanel
 			}
 		}
 
-        return true;
+		return true;
 	}
 
 	protected function getDisplayFieldsFromCollection($sub_subpanels)
@@ -454,6 +491,11 @@ class aSubPanel
 	//returns the where clause for the query.
 	function get_where ()
 	{
+		if($this->get_def_prop_value ( 'where' ) != '' && $this->search_query != ''){
+			return $this->get_def_prop_value ( 'where' ).' AND '.$this->search_query;
+		} else if($this->search_query != ''){
+			return $this->search_query;
+		}
 		return $this->get_def_prop_value ( 'where' ) ;
 	}
 
@@ -573,7 +615,7 @@ class SubPanelDefinitions
 	 * @param ARRAY $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
 	 * @return SubPanelDefinitions
 	 */
-	function SubPanelDefinitions ( $focus , $layout_def_key = '' , $layout_def_override = '' )
+	function __construct ( $focus , $layout_def_key = '' , $layout_def_override = '' )
 	{
 		$this->_focus = $focus ;
 		if (! empty ( $layout_def_override ))
@@ -597,7 +639,7 @@ class SubPanelDefinitions
 	 * @param boolean 	Optional - include the subpanel title label in the return array (false)
 	 * @return array	All tabs that pass an ACL check
 	 */
-	function get_available_tabs ($FromGetModuleSubpanels=false)
+	function get_available_tabs ($FromGetModuleSubpanels = false)
 	{
 		global $modListHeader ;
 		global $modules_exempt_from_availability_check ;
@@ -672,20 +714,20 @@ class SubPanelDefinitions
      * @return boolean|aSubPanel        Returns aSubPanel object or boolean false if one is not found or it can't be
      *      displayed due to ACL reasons.
 	 */
-	function load_subpanel ( $name , $reload = false , $original_only = false )
+	function load_subpanel ( $name , $reload = false , $original_only = false, $search_query = '', $collections = array() )
 	{
 		if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower ( $name ) ] [ 'module' ]))
-		  return false;
+			return false;
 
-        $subpanel = new aSubPanel ( $name, $this->layout_defs [ 'subpanel_setup' ] [ strtolower ( $name ) ], $this->_focus, $reload, $original_only ) ;
+		$subpanel = new aSubPanel ( $name, $this->layout_defs [ 'subpanel_setup' ] [ strtolower ( $name ) ], $this->_focus, $reload, $original_only, $search_query, $collections ) ;
 
-        // only return the subpanel object if we can display it.
-        if($subpanel->canDisplay == true) {
-            return $subpanel;
-        }
+		// only return the subpanel object if we can display it.
+		if($subpanel->canDisplay == true) {
+			return $subpanel;
+		}
 
-        // by default return false so we don't show anything if it's not required.
-        return false;
+		// by default return false so we don't show anything if it's not required.
+		return false;
 	}
 
 	/**

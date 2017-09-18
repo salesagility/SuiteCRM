@@ -41,17 +41,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * BaseRule.php
- * 
- * This is a utility base class to provide further refinement when converting 
+ *
+ * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
- 
+
  * @author Collin Lee
  */
- 
+
 class BaseRule {
 
-function BaseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -81,7 +81,7 @@ function matches($mixed, $regExp) {
    } else if(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
    	  return true;
    }
-   return false;	
+   return false;
 }
 
 function getMatch($mixed, $regExp) {
@@ -90,7 +90,7 @@ function getMatch($mixed, $regExp) {
    } else if(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
    	  return $matches;
    }
-   return null;	
+   return null;
 }
 
 }

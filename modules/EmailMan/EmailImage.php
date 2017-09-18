@@ -47,7 +47,7 @@ require_once('modules/Notes/Note.php');
 $note = new Note();
 //check if file is an email image
 if (!$note->retrieve_by_string_fields(array('id' => $_REQUEST['id'], 'parent_type' => "Emails"))) {
-	die("Not a Valid Entry Point");
+	//die("Not a Valid Entry Point");
 }
 
 $location = $GLOBALS['sugar_config']['upload_dir']."/" . $_REQUEST['id'];

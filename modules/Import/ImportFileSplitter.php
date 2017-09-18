@@ -146,7 +146,7 @@ class ImportFileSplitter
             $enclosure = trim($enclosure);
 			if(!empty($enclosure)) {
 				foreach($row as $key => $v){
-					$row[$key] =preg_replace("/$enclosure/","$enclosure$enclosure", $v);
+					$row[$key] = str_replace($enclosure, $enclosure.$enclosure, $v);
 				}
 			}
             $line = $enclosure.implode($enclosure.$delimiter.$enclosure, $row).$enclosure.PHP_EOL;

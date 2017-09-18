@@ -44,7 +44,7 @@ require_once("include/utils/db_utils.php");
 class jsAlerts{
 	var $script;
 
-	function jsAlerts(){
+    public function __construct() {
 		global $app_strings;
 		$this->script .= <<<EOQ
 		if (!alertsTimeoutId) {
@@ -53,6 +53,7 @@ class jsAlerts{
 
 EOQ;
 		$this->addActivities();
+		Reminder::addNotifications($this);
 		if(!empty($GLOBALS['sugar_config']['enable_timeout_alerts'])){
 			$this->addAlert($app_strings['ERROR_JS_ALERT_SYSTEM_CLASS'], $app_strings['ERROR_JS_ALERT_TIMEOUT_TITLE'],'', $app_strings['ERROR_JS_ALERT_TIMEOUT_MSG_1'], (session_cache_expire() - 2) * 60 );
 			$this->addAlert($app_strings['ERROR_JS_ALERT_SYSTEM_CLASS'], $app_strings['ERROR_JS_ALERT_TIMEOUT_TITLE'],'', $app_strings['ERROR_JS_ALERT_TIMEOUT_MSG_2'], (session_cache_expire()) * 60 , 'index.php');
@@ -60,7 +61,8 @@ EOQ;
 	}
 	function addAlert($type, $name, $subtitle, $description, $countdown, $redirect='')
     {
-        $this->script .= 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).')' . "\n";
+		$script = 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).');' . "\n";
+        $this->script .= $script;
 	}
 
     function getScript()

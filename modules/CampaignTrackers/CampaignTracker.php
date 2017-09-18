@@ -101,12 +101,28 @@ class CampaignTracker extends SugarBean {
     var $relationship_fields = Array('campaing_id'=>'campaign');
 
     var $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
+
     /*This bean's constructor*/
-    function CampaignTracker() {
-        parent::SugarBean();
+    public function __construct() {
+        parent::__construct();
     }
 
-    function save() {
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function CampaignTracker(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
+    function save($check_notify = false) {
         //make sure that the url has a scheme, if not then add http:// scheme
         if ($this->is_optout!=1 ){
             $url = strtolower(trim($this->tracker_url));
@@ -115,7 +131,7 @@ class CampaignTracker extends SugarBean {
             }
         }
 
-        parent::save();
+        parent::save($check_notify);
     }
 
     /* This method should return the summary text which is used to build the bread crumb navigation*/

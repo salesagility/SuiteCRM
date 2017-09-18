@@ -1,4 +1,4 @@
-<?php	
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,41 +40,56 @@
 class MBLanguage{
 		var $iTemplates = array();
 		var $templates = array();
-		function MBLanguage( $name, $path, $label, $key_name){
+		function __construct( $name, $path, $label, $key_name){
 			$this->path = $path;
 			$this->name = $name;
 			$this->key_name = $key_name;
 			$this->label = $label;
 		}
-		
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function MBLanguage($name, $path, $label, $key_name){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($name, $path, $label, $key_name);
+    }
+
+
 		function load(){
 			$this->generateModStrings();
 			$this->generateAppStrings();
 		}
-		
+
 		function loadStrings($file)
         {
             $module = strtoupper($this->name);
             $object_name = strtoupper($this->key_name);
-            $_object_name = strtolower($this->name);		
+            $_object_name = strtolower($this->name);
 			if(!file_exists($file))return;
-			
+
 			$d = dir($file);
 			while($e = $d->read()){
 				if(substr($e, 0, 1) != '.' && is_file($file . '/' . $e)){
 					include($file.'/'. $e);
 					if(empty($this->strings[$e])){
-						
+
 						$this->strings[$e] = $mod_strings;
 					}else{
 						$this->strings[$e] = array_merge($this->strings[$e], $mod_strings);
 					}
-					
-					
+
+
 				}
 			}
 		}
-		
+
 	    function loadAppListStrings($file){
             if(!file_exists($file))return;
 			//we may not need this when loading in the app strings, but there is no harm
@@ -86,21 +101,21 @@ class MBLanguage{
 				if(substr($e, 0, 1) != '.' && is_file($file . '/' . $e)){
 					include($file.'/'. $e);
 					if(empty($this->appListStrings[$e])){
-						
+
 						$this->appListStrings[$e] = $app_list_strings;
 					}else{
 						$this->appListStrings[$e] = array_merge($this->appListStrings[$e], $app_list_strings);
 					}
-					
-					
+
+
 				}
 			}
 		}
-		
+
 		function generateModStrings(){
 			$this->strings = array();
 			$this->loadTemplates();
-			
+
 			foreach($this->iTemplates as $template=>$val){
 				$file = MB_IMPLEMENTS . '/' . $template . '/language';
 				$this->loadStrings($file);
@@ -111,7 +126,7 @@ class MBLanguage{
 			}
 			$this->loadStrings($this->path . '/language');
 		}
-		
+
 		function getModStrings($language='en_us'){
 			$language .= '.lang.php';
 			if(!empty($this->strings[$language]) && $language != 'en_us.lang.php'){
@@ -130,13 +145,13 @@ class MBLanguage{
 			$empty = array();
 			return $empty;
 		}
-		
+
 		function generateAppStrings($buildFromTemplate = true){
 			$this->appListStrings = array('en_us.lang.php'=>array());
 			//By default, generate app strings for the current language as well.
 			$this->appListStrings[$GLOBALS [ 'current_language' ] . ".lang.php"] = array();
 			$this->loadAppListStrings($this->path . '/../../language/application');
-			
+
 			if($buildFromTemplate){
 				//go through the templates application strings and load anything that is needed
 				foreach($this->iTemplates as $template=>$val){
@@ -166,15 +181,15 @@ class MBLanguage{
                 'LNK_NEW_RECORD'=>$mod_strings['LBL_CREATE'] ." ". $this->label,
                 'LNK_LIST'=>$mod_strings['LBL_VIEW'] ." ". $this->label,
                 'LNK_IMPORT_'.strtoupper($this->key_name)=>translate('LBL_IMPORT') ." ". $this->label,
-                'LBL_SEARCH_FORM_TITLE'=>$mod_strings['LBL_SEARCH'] ." ". $this->label, 
+                'LBL_SEARCH_FORM_TITLE'=>$mod_strings['LBL_SEARCH'] ." ". $this->label,
                 'LBL_HISTORY_SUBPANEL_TITLE'=>$mod_strings['LBL_HISTORY'],
                 'LBL_ACTIVITIES_SUBPANEL_TITLE'=>$mod_strings['LBL_ACTIVITIES'],
-                'LBL_'.strtoupper($this->key_name).'_SUBPANEL_TITLE'=>$this->label, 
+                'LBL_'.strtoupper($this->key_name).'_SUBPANEL_TITLE'=>$this->label,
                 'LBL_NEW_FORM_TITLE' => $mod_strings['LBL_NEW'] ." ". $this->label,
                 );
 				foreach($required as $k=>$v){
 					if(empty($values[$k]) || $renameLang){
-						$values[$k] = $v;			
+						$values[$k] = $v;
 					}
 				}
 				write_array_to_file('mod_strings', $values, $save_path .'/'.$lang,'w', $header);
@@ -182,25 +197,25 @@ class MBLanguage{
 			$app_save_path = $this->path . '/../../language/application';
 			mkdir_recursive($app_save_path);
 			$key_changed = ($this->key_name != $key_name);
-			
+
 			foreach($this->appListStrings as $lang=>$values){
 				// Load previously created modules data
-				$app_list_strings = array ();
+				// $app_list_strings = array (); --- fix for issue #305
 				$neededFile = $app_save_path . '/'. $lang;
 				if (file_exists($neededFile)) {
 					include $neededFile;
 				}
 
-				
+
 				if(!$duplicate){
 					unset($values['moduleList'][$this->key_name]);
 				}
-				
 
-				$values = sugarLangArrayMerge($values, $app_list_strings);
+
+				// $values = sugarLangArrayMerge($values, $app_list_strings); --- fix for issue #305
 				$values['moduleList'][$key_name]= $this->label;
-				
-				
+
+
 				$appFile = $header. "\n";
 				require_once('include/utils/array_utils.php');
 				$this->getGlobalAppListStringsForMB($values);
@@ -217,16 +232,16 @@ class MBLanguage{
 						$appFile .= override_value_to_string_recursive2 ('app_list_strings', $key, $array);
 					}
 				}
-			
+
 				$fp = sugar_fopen($app_save_path . '/'. $lang, 'w');
 				fwrite($fp, $appFile);
 				fclose($fp);
 			}
 		}
-		
+
 		/**
-		*  If there is no this dropdown list  in  custom\modulebuilder\packages\$package\language\application\$lang.lang.php , 
-		*  we will include it from global app_list_string array into custom\modulebuilder\packages\$package\language\application\$lang.lang.php 
+		*  If there is no this dropdown list  in  custom\modulebuilder\packages\$package\language\application\$lang.lang.php ,
+		*  we will include it from global app_list_string array into custom\modulebuilder\packages\$package\language\application\$lang.lang.php
 		*  when we create a dropdown filed  and the value is created in MB.(#20728 )
 		**/
 		function getGlobalAppListStringsForMB(&$values){
@@ -235,17 +250,17 @@ class MBLanguage{
 				if(!isset($values[$_REQUEST['options']])){
 					global $app_list_strings;
 					if(!empty($app_list_strings[$_REQUEST['options']])){
-						$values[$_REQUEST['options']]  = $app_list_strings[$_REQUEST['options']];						
+						$values[$_REQUEST['options']]  = $app_list_strings[$_REQUEST['options']];
 					}
 				}
 			}
 		}
-		
+
 		function build($path){
 			if(file_exists($this->path.'/language/'))
 			copy_recursive($this->path.'/language/', $path . '/language/');
 		}
-		
+
 		function loadTemplates() {
 			if(empty($this->templates)){
 				if (file_exists("$this->path/config.php")) {
@@ -255,9 +270,9 @@ class MBLanguage{
 				}
 			}
 		}
-		
+
 		/**
-		 * Reset the templates and load the language files again.  This is called from 
+		 * Reset the templates and load the language files again.  This is called from
 		 * MBModule->save() once the config file has been written.
 		 */
 		function reload(){
@@ -283,6 +298,6 @@ class MBLanguage{
 
             return $label;
         }
-		
-	
+
+
 }

@@ -332,7 +332,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             } else {
                 $this->xTemplate->assign('TAG_NAME','span');
             }
-            $this->xTemplate->assign('CHECKALL', "<input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
         }
 
         if($oddRow)
@@ -366,7 +366,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             $thepanel=$subpanel_def;
         }
 
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 
 		//This check is costly doing it field by field in the below foreach
 		//instead pull up here and do once per record....
@@ -382,15 +382,15 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
 
 		require_once("modules/SecurityGroups/SecurityGroup.php");
 		$aclaccess_in_group = SecurityGroup::groupHasAccess($aItem->module_dir,$aItem->id);
-        	
-    	/* END - SECURITY GROUPS */ 
-    	
+
+    	/* END - SECURITY GROUPS */
+
         //get data source name
         $linked_field=$thepanel->get_data_source_name();
         $linked_field_set=$thepanel->get_data_source_name(true);
         static $count;
         if(!isset($count))$count = 0;
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 		/**
         $field_acl['DetailView'] = $aItem->ACLAccess('DetailView');
         $field_acl['ListView'] = $aItem->ACLAccess('ListView');
@@ -402,7 +402,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
         $field_acl['ListView'] = $aItem->ACLAccess('ListView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['EditView'] = $aItem->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['Delete'] = $aItem->ACLAccess('Delete',$aclaccess_is_owner,$aclaccess_in_group);
-		/* END - SECURITY GROUPS */ 
+		/* END - SECURITY GROUPS */
         foreach($thepanel->get_list_fields() as $field_name=>$list_field)
         {
             //add linked field attribute to the array.
@@ -579,7 +579,7 @@ function setDisplayHeaderAndFooter($bool) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________.
 */
- function ListView() {
+ function __construct() {
 
 
     if(!$this->initialized) {
@@ -593,6 +593,7 @@ function setDisplayHeaderAndFooter($bool) {
         $this->local_current_module = $currentModule;
     }
 }
+
 /**sets how many records should be displayed per page in the list view
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -1228,15 +1229,15 @@ function getUserVariable($localVarName, $varName) {
                 $end_URL = $this->start_link_wrapper.$end_URL.$this->end_link_wrapper;
             }
 
-            $moduleString = "{$currentModule}_{$html_varName}_offset";
-            $moduleStringOrder = "{$currentModule}_{$html_varName}_ORDER_BY";
+            $moduleString = htmlspecialchars("{$currentModule}_{$html_varName}_offset");
+            $moduleStringOrder = htmlspecialchars("{$currentModule}_{$html_varName}_ORDER_BY");
             if($this->shouldProcess && !$this->multi_select_popup) {
                 // check the checkboxes onload
                 echo "<script>YAHOO.util.Event.addListener(window, \"load\", sListView.check_boxes);</script>\n";
 
                 $massUpdateRun = isset($_REQUEST['massupdate']) && $_REQUEST['massupdate'] == 'true';
                 $uids = empty($_REQUEST['uid']) || $massUpdateRun ? '' : $_REQUEST['uid'];
-                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? $_REQUEST['select_entire_list'] : 0));
+                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? htmlspecialchars($_REQUEST['select_entire_list']) : 0));
 
                 echo "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
                     "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
@@ -1315,18 +1316,18 @@ function getUserVariable($localVarName, $varName) {
 
             $end_record = $end_record-1;
 
-$script_href = "<a style=\'width: 150px\' name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
- . "<a style=\'width: 150px\' name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
- . "<a style=\'width: 150px\' name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>";
+$script_href = "<a  name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
+ . "<a  name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
+ . "<a  name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>";
 
 $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
 
             echo "<script>
                 function select_dialog() {
                 	var \$dialog = \$('<div></div>')
-					.html('<a style=\'width: 150px\' name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
-                . "<a style=\'width: 150px\' name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
-                . "<a style=\'width: 150px\' name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>')
+					.html('<a  name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
+                . "<a  name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
+                . "<a  name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>')
 					.dialog({
 						autoOpen: false,
 						width: 150
@@ -1354,7 +1355,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 //Bug#52931: Replace with actionMenu
                 //$select_link = "<a id='select_link' onclick='return select_dialog();' href=\"javascript:void(0)\">".$this->local_app_strings['LBL_LINK_SELECT']."&nbsp;".SugarThemeRegistry::current()->getImage('MoreDetail', 'border=0', 11, 7, '.png', $app_strings['LBL_MOREDETAIL'])."</a>";
                 $menuItems = array(
-                    "<input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
+                    "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
                     "<a  name='thispage' id='button_select_this_page' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $pageTotal)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$pageTotal}&#x29;&#x200E;</a>",
                     "<a  name='selectall' id='button_select_all' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$total});' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$total_label}&#x29;&#x200E;</a>",
                     "<a name='deselect' id='button_deselect' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href='#'>{$app_strings['LBL_LISTVIEW_NONE']}</a>",
@@ -1388,9 +1389,9 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 echo "<script>
                 function mailmerge_dialog(el) {
                    	var \$dialog = \$('<div></div>')
-					.html('<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'return sListView.send_form(true, \"MailMerge\", \"index.php\", \"{$this->local_app_strings['LBL_LISTVIEW_NO_SELECTED']}\")\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>"
-                        . "<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>"
-                        . "<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge&entire=true\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
+					.html('<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'return sListView.send_form(true, \"MailMerge\", \"index.php\", \"{$this->local_app_strings['LBL_LISTVIEW_NO_SELECTED']}\")\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge&entire=true\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
 					.dialog({
 						autoOpen: false,
 						title: '". $this->local_app_strings['LBL_MAILMERGE']."',
@@ -1612,7 +1613,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             }
             $this->xTemplate->assign('PREROW', $prerow);
 
-            $this->xTemplate->assign('CHECKALL', "<input type='checkbox' class='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox' class='bootstrap-checkbox-hidden checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
             }
             if(!isset($this->data_array)) {
                 $tag = $aItem->listviewACLHelper();

@@ -58,6 +58,7 @@ array (
         'default' => false,
         'width' => '10%',
       ),
+        3 => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
     array (

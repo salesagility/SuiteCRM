@@ -46,12 +46,27 @@ require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
 class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
 {
 	//button_properties is a collection of properties associated with the widget_class definition. layoutmanager
-	function SugarWidgetSubPanelTopSelectButton($button_properties=array())
+	function __construct($button_properties=array())
 	{
 		$this->button_properties=$button_properties;
 	}
 
-    public function getWidgetId()
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetSubPanelTopSelectButton($button_properties=array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($button_properties);
+    }
+
+
+    public function getWidgetId($buttonSuffix = true)
     {
         return parent::getWidgetId(false) . 'select_button';
     }
@@ -61,7 +76,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
         return $GLOBALS['app_strings']['LBL_SELECT_BUTTON_LABEL'];
     }
 	//widget_data is the collection of attributes associated with the button in the layout_defs file.
-	function display(&$widget_data)
+	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		global $app_strings;
 		$initial_filter = '';
@@ -157,7 +172,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
                     $popup_request_data['passthru_data']['marketing_id'] = $_REQUEST['mkt_id'];
                 }
 
-                if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data'])) 
+                if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data']))
                 {
                     $popup_request_data['passthru_data']= array_merge($popup_request_data['passthru_data'],$this->button_properties['add_to_passthru_data']);
                 }

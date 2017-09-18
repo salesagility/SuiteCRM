@@ -215,24 +215,28 @@ function multiFiles( list_target){
 
                 //AJAX call begins
                 YAHOO.util.Connect.setForm(document.getElementById("upload_form"), true, true);
-                YAHOO.util.Connect.asyncRequest('POST', url, {upload: function() {}}, null);
+                YAHOO.util.Connect.asyncRequest('POST', url, {upload: function(e) {
+					if(mozaik && mozaik.uploadPathField) {
+						var resp = JSON.parse(e.responseText);
+						document.getElementById(mozaik.uploadPathField).value = resp[0];
+					}
+				}}, null);
                 //AJAX call ends
-
-                // New file input
-                new_element = document.createElement('input');
-                new_element.type = 'file';
-                // new_element.name = 'email_attachment' +up++;
-
-                // Add new element
-                this.parentNode.insertBefore(new_element, this);
-                // Apply 'update' to element
-                this.multi_selector.addElement(new_element);
-                // Update list
-                this.multi_selector.addListRow(this);
-                // Hide this: we can't use display:none because Safari doesn't like it
-                //this.style.display='none';
-                //display none works fine for FF and IE
-                this.style.display = 'none';
+				if(!mozaik.uploadPathField) {
+					// New file input
+					new_element = document.createElement('input');
+					new_element.type = 'file';
+					// Add new element
+					this.parentNode.insertBefore(new_element, this);
+					// Apply 'update' to element
+					this.multi_selector.addElement(new_element);
+					// Update list
+					this.multi_selector.addListRow(this);
+					// Hide this: we can't use display:none because Safari doesn't like it
+					//this.style.display='none';
+					//display none works fine for FF and IE
+					this.style.display = 'none';
+				}
                 //later for Safari add following
                 //this.style.position = 'absolute';
                 //this.style.left = '-5000px';
@@ -300,22 +304,29 @@ function multiFiles( list_target){
 		// Delete function
 		new_row_button_remove.onclick = function() {
 			var filePathComponents = this.parentNode.element.value.split("\\"),
-                fileName = (filePathComponents[filePathComponents.length - 1]),
+                fileName = (filePathComponents[filePathComponents.length - 1]);
 
                 // tinymce related
-                tiny = tinyMCE.getInstanceById('body_text'),
-                currValTiny = tiny.getContent();
+			//tiny = tinyMCE.getInstanceById('body_text'),
 
 			// Remove row element from form
 			this.parentNode.element.parentNode.removeChild(this.parentNode.element);
 
-            // find instances of the file and set it to ''
-            while (currValTiny.indexOf(fileName) !== -1) {
-                currValTiny = currValTiny.replace(fileName, 'QW%%^%%WQ');
-                currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/, '');
-            }
+			$(tinyMCE.editors).each(function(i, tiny){
 
-		    tiny.setContent(currValTiny);
+
+				var currValTiny = tiny.getContent({format: 'raw'});
+
+
+				// find instances of the file and set it to ''
+				while (currValTiny.indexOf(fileName) !== -1) {
+					currValTiny = currValTiny.replace(fileName, 'QW%%^%%WQ');
+					currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/, '');
+				}
+
+				tiny.setContent(currValTiny);
+
+			});
 
 			// Remove this row from the list
 			this.parentNode.parentNode.removeChild(this.parentNode);
@@ -466,13 +477,16 @@ function docUpload() {
     eai.onclick=function(){
     	var filename = this.parentNode.childNodes[4].value;
 	    	if(filename){
-                var tiny = tinyMCE.getInstanceById('body_text');
-				var currValTiny = tiny.getContent();
-	            while(currValTiny.indexOf(unescape(filename)) != -1){
-				   currValTiny = currValTiny.replace(unescape(filename),'QW%%^%%WQ');
-				   currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/,'&#32');
-				}
-				tiny.setContent(currValTiny);
+					$(tinyMCE.editors).each(function(i, tiny){
+						//var tiny = tinyMCE.getInstanceById('body_text');
+						var currValTiny = tiny.getContent();
+						while(currValTiny.indexOf(unescape(filename)) != -1){
+							currValTiny = currValTiny.replace(unescape(filename),'QW%%^%%WQ');
+							currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/,'&#32');
+						}
+						tiny.setContent(currValTiny);
+					});
+
 	    	}
     	this.parentNode.parentNode.removeChild(this.parentNode);
     }
@@ -884,7 +898,7 @@ function button_change_onclick(obj) {
 	var acct_name = '';
 
 	if(document.EditView.parent_type.value  == 'Accounts' && typeof(document.EditView.parent_name.value) != 'undefined' && document.EditView.parent_name.value != '') {
-		filter = "&form_submit=false&query=true&html=Email_picker&account_name=" + escape(document.EditView.parent_name.value);
+		filter = "&form_submit=false&query=true&html=Email_picker&account_name=" + escape(document.EditView.parent_name.value) + "&account_id=" + escape(document.EditView.parent_id.value);
 		acct_name = document.EditView.parent_name.value;
 	}
 

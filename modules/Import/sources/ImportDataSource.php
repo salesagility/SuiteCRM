@@ -336,13 +336,14 @@ abstract class ImportDataSource implements Iterator
 
     public function __get($var)
     {
-        if( isset($_REQUEST[$var]) )
+        if (isset($_REQUEST[$var])) {
             return $_REQUEST[$var];
-        else if( isset($this->_localeSettings[$var]) )
+        } elseif (isset($this->_localeSettings[$var])) {
             return $this->_localeSettings[$var];
-        else
+        } elseif (isset($this->$var)) {
             return $this->$var;
+        }
+        return null;
     }
-    
 }
  

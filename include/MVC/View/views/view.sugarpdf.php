@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Sugarpdf/SugarpdfFactory.php');
 
 class ViewSugarpdf extends SugarView{
-    
+
     var $type ='sugarpdf';
     /**
      * It is set by the "sugarpdf" request parameter and it is use by SugarpdfFactory to load the good sugarpdf class.
@@ -57,29 +57,44 @@ class ViewSugarpdf extends SugarView{
      */
     var $sugarpdfBean=NULL;
 
-    
-    function ViewSugarpdf(){
-         parent::SugarView();
+
+    public function __construct(){
+         parent::__construct();
          if (isset($_REQUEST["sugarpdf"]))
          	$this->sugarpdf = $_REQUEST["sugarpdf"];
-         else 
+         else
         	header('Location:index.php?module='.$_REQUEST['module'].'&action=DetailView&record='.$_REQUEST['record']);
      }
-     
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ViewSugarpdf(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
      function preDisplay(){
          $this->sugarpdfBean = SugarpdfFactory::loadSugarpdf($this->sugarpdf, $this->module, $this->bean, $this->view_object_map);
-         
+
          // ACL control
         if(!empty($this->bean) && !$this->bean->ACLAccess($this->sugarpdfBean->aclAction)){
             ACLController::displayNoAccess(true);
             sugar_cleanup(true);
         }
-        
+
         if(isset($this->errors)){
           $this->sugarpdfBean->errors = $this->errors;
         }
      }
-     
+
     function display(){
         $this->sugarpdfBean->process();
         $this->sugarpdfBean->Output($this->sugarpdfBean->fileName,'I');

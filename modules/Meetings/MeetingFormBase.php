@@ -299,7 +299,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	        $deleteUsers = array();
 	    	$focus->load_relationship('users');
 	    	// Get all users for the meeting
-	    	$q = 'SELECT mu.user_id, mu.accept_status FROM meetings_users mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.user_id, mu.accept_status FROM meetings_users mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusUsers = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
@@ -330,7 +330,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	        $deleteContacts = array();
 	    	$focus->load_relationship('contacts');
-	    	$q = 'SELECT mu.contact_id, mu.accept_status FROM meetings_contacts mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.contact_id, mu.accept_status FROM meetings_contacts mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusContacts = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
@@ -342,14 +342,9 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	}
 
 	    	if(count($deleteContacts) > 0) {
-	    		$sql = '';
-	    		foreach($deleteContacts as $u) {
-	    		        $sql .= ",'" . $u . "'";
-	    		}
-	    		$sql = substr($sql, 1);
-	    		// We could run a delete SQL statement here, but will just mark as deleted instead
-	    		$sql = "UPDATE meetings_contacts set deleted = 1 where contact_id in ($sql) AND meeting_id = '". $focus->id . "'";
-	    		$focus->db->query($sql);
+				foreach($deleteContacts as $u) {
+					$focus->contacts->delete($focus->id, $u);
+				}
 	    	}
 	        if(!empty($_POST['lead_invitees'])) {
 	    	   $leadInvitees = explode(',', trim($_POST['lead_invitees'], ','));
@@ -359,7 +354,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	        $deleteLeads = array();
 	    	$focus->load_relationship('leads');
-	    	$q = 'SELECT mu.lead_id, mu.accept_status FROM meetings_leads mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.lead_id, mu.accept_status FROM meetings_leads mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusLeads = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
@@ -371,14 +366,9 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	}
 
 	    	if(count($deleteLeads) > 0) {
-	    		$sql = '';
 	    		foreach($deleteLeads as $u) {
-	    		        $sql .= ",'" . $u . "'";
+					$focus->leads->delete($focus->id, $u);
 	    		}
-	    		$sql = substr($sql, 1);
-	    		// We could run a delete SQL statement here, but will just mark as deleted instead
-	    		$sql = "UPDATE meetings_leads set deleted = 1 where lead_id in ($sql) AND meeting_id = '". $focus->id . "'";
-	    		$focus->db->query($sql);
 	    	}
 	    	////	END REMOVE
 	    	///////////////////////////////////////////////////////////////////////////

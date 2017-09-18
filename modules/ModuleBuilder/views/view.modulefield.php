@@ -151,6 +151,12 @@ class ViewModulefield extends SugarView
 
             VardefManager::loadVardef($moduleName, $objectName,true);
             global $dictionary;
+
+            // Fix for issue #1177 - when trying to add or edit fields in a module an error message is shown:
+            // "Warning: Creating default object from empty value"
+            if(!isset($module->mbvardefs) || is_null($module->mbvardefs)) {
+                $module->mbvardefs = new stdClass();
+            }
             $module->mbvardefs->vardefs =  $dictionary[$objectName];
 			
             $module->name = $moduleName;
@@ -354,6 +360,15 @@ class ViewModulefield extends SugarView
         }
 
         $fv->ss->assign('help_group', $edit_or_add);
+
+        // Fix for case 2183 - the form in the field.tpl needs to know whether it is an update
+        if($field_name == '') {
+            $is_update = false;
+        } else {
+            $is_update = true;
+        }
+        $fv->ss->assign('is_update', $is_update);
+
         $body = $this->fetchTemplate($fv, 'modules/ModuleBuilder/tpls/MBModule/field.tpl');
         $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR','ModuleBuilder'), $body );
         return $ac;
@@ -368,8 +383,9 @@ class ViewModulefield extends SugarView
      * @param string $template the file to fetch
      * @return string contents from calling the fetch method on the FieldViewer Sugar_Smarty instance
      */
-    protected function fetchTemplate($fv, $template)
+    protected function fetchTemplate($fv/*, $template*/)
     {
+        $template = func_get_arg(1);
         return $fv->ss->fetch($this->getCustomFilePathIfExists($template));
     }
 }

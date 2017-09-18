@@ -81,5 +81,13 @@ if (isset($_POST['is_optout']) && $_POST['is_optout'] =='on') {
 $focus->save($check_notify);
 $return_id = $focus->id;
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);
-handleRedirect('', '');
+
+if(isset($_POST['response_json']) && $_POST['response_json']) {
+	$results['data'] = array('id' => $focus->id);
+	echo json_encode($results);
+	die();
+}
+else {
+	handleRedirect('', '');
+}
 ?>

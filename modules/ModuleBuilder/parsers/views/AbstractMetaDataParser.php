@@ -119,7 +119,7 @@ abstract class AbstractMetaDataParser
 		}
 	}
 
-	abstract static function _trimFieldDefs ( $def ) ;
+	static function _trimFieldDefs ( $def ) {}
 	
 	public function getRequiredFields(){
 	    $fieldDefs = $this->implementation->getFielddefs();

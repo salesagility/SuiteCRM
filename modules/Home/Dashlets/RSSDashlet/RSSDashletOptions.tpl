@@ -54,7 +54,7 @@
 <tr>
     <td valign='top' nowrap scope='row'>{$titleLbl}</td>
     <td valign='top'>
-    	<input class="text" name="title" size='20' value='{$title}'>
+    	<input type="text" class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
 {if $isRefreshable}
@@ -72,13 +72,13 @@
 <tr>
     <td valign='top' nowrap scope='row'>{$rssUrlLbl}</td>
     <td valign='top'>
-    	<input class="text" name="url" size='20' value='{$url}'>
+    	<input type="text" class="text" name="url" size='20' value='{$url}'>
     </td>
 </tr>
 <tr>
     <td valign='top' nowrap scope='row'>{$heightLbl}</td>
     <td valign='top'>
-    	<input class="text" name="height" size='3' value='{$height}'>
+    	<input type="text" class="text" name="height" size='3' value='{$height}'>
     </td>
 </tr>
 <tr>

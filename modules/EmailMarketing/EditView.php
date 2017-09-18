@@ -53,6 +53,8 @@ global $current_user;
 
 $focus = new EmailMarketing();
 if(isset($_REQUEST['record'])) {
+	SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
+	return;
     $focus->retrieve($_REQUEST['record']);
 }
 
@@ -217,6 +219,31 @@ $IEStoredOptions = get_campaign_mailboxes_with_stored_options();
 $IEStoredOptionsJSON = (!empty($IEStoredOptions)) ? $json->encode($IEStoredOptions, false) : 'new Object()';
 $xtpl->assign("IEStoredOptions", $IEStoredOptionsJSON);
 
+
+function getOutboundEmailAccountOptions() {
+	global $mod_strings;
+//	$ret = array(
+//		0 => $mod_strings['LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT'],
+//	);
+	$oeaList = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list();
+	foreach($oeaList as $oea) {
+		$ret[$oea->id] = $oea->name;
+	}
+	return $ret;
+}
+
+function getOutboundEmailAccountSelected(EmailMarketing $emailMarketing) {
+	$ret = 0;
+	if($emailMarketing->outbound_email_id) {
+		$ret = $emailMarketing->outbound_email_id;
+	}
+	return $ret;
+}
+
+$outboundEmailAccountOptions = getOutboundEmailAccountOptions();
+$outboundEmailAccountSelected = getOutboundEmailAccountSelected($focus);
+$outboundEmailAccountOptionsHTML = get_select_options_with_id($outboundEmailAccountOptions, $outboundEmailAccountSelected ? $outboundEmailAccountSelected : '');
+$xtpl->assign('outboundEmailAccountOptionsHTML', $outboundEmailAccountOptionsHTML);
 
 $xtpl->parse("main");
 $xtpl->out("main");

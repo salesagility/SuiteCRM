@@ -56,9 +56,10 @@ class SugarAuthenticate{
 	 *
 	 * @return SugarAuthenticate
 	 */
-	function SugarAuthenticate()
+	public function __construct()
 	{
 	    // check in custom dir first, in case someone want's to override an auth controller
+
 		if (file_exists('custom/modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php')) {
             require_once('custom/modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php');
         }
@@ -68,6 +69,21 @@ class SugarAuthenticate{
 
         $this->userAuthenticate = new $this->userAuthenticateClass();
 	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function SugarAuthenticate(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
 	/**
 	 * Authenticates a user based on the username and password
 	 * returns true if the user was authenticated false otherwise
@@ -101,7 +117,8 @@ class SugarAuthenticate{
 		}
 		else
 		{
-			if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+			//if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+            if(!empty($usr_id)){
 				if (($logout=$usr->getPreference('loginfailed'))=='')
 	        		$usr->setPreference('loginfailed','1');
 	    		else
@@ -135,30 +152,8 @@ class SugarAuthenticate{
 	 */
 	function postLoginAuthenticate(){
 
-		global $reset_theme_on_default_user, $reset_language_on_default_user, $sugar_config;
-		//THIS SECTION IS TO ENSURE VERSIONS ARE UPTODATE
-
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
-
-
+		global $reset_language_on_default_user, $sugar_config;
+		
 		//just do a little house cleaning here
 		unset($_SESSION['login_password']);
 		unset($_SESSION['login_error']);
@@ -317,6 +312,7 @@ class SugarAuthenticate{
 	 *
 	 */
 	function logout(){
+			session_start();
 			session_destroy();
 			ob_clean();
 			header('Location: index.php?module=Users&action=Login');
@@ -330,7 +326,7 @@ class SugarAuthenticate{
 	 * @param STRING $password
 	 * @return STRING $encoded_password
 	 */
-	function encodePassword($password){
+	static function encodePassword($password){
 		return strtolower(md5($password));
 	}
 
@@ -369,12 +365,12 @@ class SugarAuthenticate{
 
     /**
      * Redirect to login page
-     * 
+     *
      * @param SugarApplication $app
      */
     public function redirectToLogin(SugarApplication $app)
     {
         $loginVars = $app->createLoginVars();
-        $app->redirect('index.php?action=Login&module=Users' . $loginVars);
+		SugarApplication::redirect('index.php?action=Login&module=Users' . $loginVars);
     }
 }

@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -65,21 +65,36 @@ class AOS_Products_sugar extends Basic {
 		var $url;
 		var $contact_id;
 		var $contact;
-	
 
 
 
 
-	function AOS_Products_sugar(){	
-		parent::Basic();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOS_Products_sugar(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

@@ -6,7 +6,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -36,18 +36,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Quotes/AOS_Quotes.php');
 
-class AOS_QuotesDashlet extends DashletGeneric { 
-    function AOS_QuotesDashlet($id, $def = null) {
+class AOS_QuotesDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Quotes/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_Quotes');
 
         $this->searchFields = $dashletData['AOS_QuotesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_QuotesDashlet']['columns'];
 
-        $this->seedBean = new AOS_Quotes();        
+        $this->seedBean = new AOS_Quotes();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOS_QuotesDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
 }

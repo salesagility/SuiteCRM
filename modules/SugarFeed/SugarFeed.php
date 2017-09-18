@@ -3,31 +3,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo. If the display of the logo is not reasonably feasible for
@@ -59,9 +59,24 @@ class SugarFeed extends Basic {
 		var $assigned_user_name;
 		var $assigned_user_link;
 
-	function SugarFeed(){
-		parent::Basic();
+	function __construct(){
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarFeed(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     static function activateModuleFeed( $module, $updateDB = true ) {
         if ( $module != 'UserFeed' ) {
@@ -244,7 +259,7 @@ class SugarFeed extends Basic {
 			$GLOBALS['log']->error('Unable to save SugarFeed record (missing data or no ACL access)');
 			return;
 		}
-		
+
 		if(!empty($link_url)){
             $linkClass = SugarFeed::getLinkClass($link_type);
             if ( $linkClass !== FALSE ) {
@@ -253,9 +268,9 @@ class SugarFeed extends Basic {
         }
         $text = strip_tags(from_html($text));
 		$text = '<b>{this.CREATED_BY}</b> ' . $text;
-		$feed->name = substr($text, 0, 255);
-		if(strlen($text) > 255){
-			$feed->description = substr($text, 255, 510);
+		$feed->name = mb_substr($text, 0, 255, 'UTF-8');	
+		if(mb_strlen($text, 'UTF-8') > 255){
+			$feed->description = mb_substr($text, 255, 510, 'UTF-8');
 		}
 
 		if ( $record_assigned_user_id === false ) {
@@ -343,16 +358,16 @@ class SugarFeed extends Basic {
 	function get_list_view_data(){
 		$data = parent::get_list_view_data();
 		$delete = '';
-		/* BEGIN - SECURITY GROUPS */   
+		/* BEGIN - SECURITY GROUPS */
 		/**
 		if (ACLController::moduleSupportsACL($data['RELATED_MODULE']) && !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id) && !ACLController::checkAccess($data['RELATED_MODULE'], 'list', $data['CREATED_BY'] == $GLOBALS['current_user']->id)){
   		*/
 		if (ACLController::moduleSupportsACL($data['RELATED_MODULE'])) {
     		$in_group = 'not_set';
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($data['RELATED_MODULE'],$data['RELATED_ID'],'list'); 
+			$in_group = SecurityGroup::groupHasAccess($data['RELATED_MODULE'],$data['RELATED_ID'],'list');
 			if(
-			 !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id,'module', $in_group) 
+			 !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id,'module', $in_group)
 			&& !ACLController::checkAccess($data['RELATED_MODULE'], 'list', $data['CREATED_BY'] == $GLOBALS['current_user']->id,'module', $in_group)
 
 			){
@@ -363,7 +378,7 @@ class SugarFeed extends Basic {
         if(is_admin($GLOBALS['current_user']) || (isset($data['CREATED_BY']) && $data['CREATED_BY'] == $GLOBALS['current_user']->id) ) {
             $delete = ' - <a id="sugarFeedDeleteLink'.$data['ID'].'" href="#" onclick=\'SugarFeed.deleteFeed("'. $data['ID'] . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
         }
-		/* END - SECURITY GROUPS */	
+		/* END - SECURITY GROUPS */
 		$data['NAME'] .= $data['DESCRIPTION'];
 		$data['NAME'] =  '<div style="padding:3px">' . html_entity_decode($data['NAME']);
 		if(!empty($data['LINK_URL'])){

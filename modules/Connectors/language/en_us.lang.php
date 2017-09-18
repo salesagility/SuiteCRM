@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$mod_strings = array (
+$mod_strings = array(
 
     'LBL_ADD_MODULE' => 'Add',
     'LBL_ADDRCITY' => 'City',
@@ -51,7 +50,7 @@ $mod_strings = array (
     'LBL_AVAILABLE' => 'Available',
     'LBL_BACK' => '< Back',
     'LBL_COMPANY_ID' => 'Company Id',
-	'LBL_CONFIRM_CONTINUE_SAVE' => 'Some required fields have been left blank.  Proceed to save changes?',
+    'LBL_CONFIRM_CONTINUE_SAVE' => 'Some required fields have been left blank. Proceed to save changes?',
     'LBL_CONNECTOR' => 'Connector',
     'LBL_CONNECTOR_FIELDS' => 'Connector Fields',
     'LBL_DATA' => 'Data',
@@ -77,10 +76,10 @@ $mod_strings = array (
     'LBL_MODIFY_PROPERTIES_DESC' => 'Configure the properties for each connector, including URLs and API keys.',
     'LBL_MODIFY_PROPERTIES_PAGE_TITLE' => 'Connector Settings: Set Connector Properties',
     'LBL_MODIFY_SEARCH_TITLE' => 'Manage Connector Search',
-	'LBL_MODIFY_SEARCH' => 'Search',
+    'LBL_MODIFY_SEARCH' => 'Search',
     'LBL_MODIFY_SEARCH_DESC' => 'Select the connector fields to use to search for data for each module.',
     'LBL_MODIFY_SEARCH_PAGE_TITLE' => 'Connector Settings: Manage Connector Search',
-	'LBL_MODULE_NAME' => 'Connectors',
+    'LBL_MODULE_NAME' => 'Connectors',
     'LBL_NO_PROPERTIES' => 'There are no configurable properties for this connector.',
     'LBL_PARENT_DUNS' => 'Parent DUNS',
     'LBL_PREVIOUS' => '< Back',
@@ -89,10 +88,10 @@ $mod_strings = array (
     'LBL_RESET_TO_DEFAULT' => 'Reset to Default',
     'LBL_RESET_TO_DEFAULT_CONFIRM' => 'Are you sure you want to reset to the default configuration?',
     'LBL_RESET_BUTTON_TITLE' => 'Reset',
-	'LBL_RESULT_LIST' => 'Data List',
+    'LBL_RESULT_LIST' => 'Data List',
     'LBL_RUN_WIZARD' => 'Run Wizard',
     'LBL_SAVE' => 'Save',
-	'LBL_SEARCHING_BUTTON_LABEL' => 'Searching...',
+    'LBL_SEARCHING_BUTTON_LABEL' => 'Searching...',
     'LBL_SHOW_IN_LISTVIEW' => 'Show In Merge Listview',
     'LBL_SMART_COPY' => 'Smart Copy',
     'LBL_SUMMARY' => 'Summary',
@@ -110,16 +109,19 @@ $mod_strings = array (
     'ERROR_EMPTY_SOURCE_ID' => 'Error: Source Id not specified or empty.',
     'ERROR_EMPTY_RECORD_ID' => 'Error: Record Id not specified or empty.',
     'ERROR_NO_ADDITIONAL_DETAIL' => 'Error: No additional details were found for the record.',
-    'ERROR_NO_SEARCHDEFS_DEFINED' => 'No modules have been enabled for this connector.  Select a module for this connector in the Enable Connectors page.',
+    'ERROR_NO_SEARCHDEFS_DEFINED' => 'No modules have been enabled for this connector. Select a module for this connector in the Enable Connectors page.',
     'ERROR_NO_SEARCHDEFS_MAPPED' => 'Error: There are no connectors enabled that have search fields defined.',
     'ERROR_NO_SOURCEDEFS_FILE' => 'Error: No sourcedefs.php file could be found.',
     'ERROR_NO_SOURCEDEFS_SPECIFIED' => 'Error: No sources were specified from which to retrieve data.',
     'ERROR_NO_CONNECTOR_DISPLAY_CONFIG_FILE' => 'Error: There are no connectors mapped to this module.',
-    'ERROR_NO_SEARCHDEFS_MAPPING' => 'Error: There are no search fields defined for the module and connector.  Please contact the system administrator.',
+    'ERROR_NO_SEARCHDEFS_MAPPING' => 'Error: There are no search fields defined for the module and connector. Please contact the system administrator.',
     'ERROR_NO_FIELDS_MAPPED' => 'Error: You must map at least one Connector field to a module field for each module entry.',
-    'ERROR_NO_DISPLAYABLE_MAPPED_FIELDS' => 'Error: There are no module fields that have been mapped for display in the results.  Please contact the system administrator.',
+    'ERROR_NO_DISPLAYABLE_MAPPED_FIELDS' => 'Error: There are no module fields that have been mapped for display in the results. Please contact the system administrator.',
     'LBL_TWITTER_USER' => 'Twitter User',
     'LBL_FACEBOOK_USER' => 'Facebook User',
+    'LBL_INFO_INLINE' => 'Info' /*for 508 compliance fix*/,
+    'LBL_CLOSE' => 'Close' /*for 508 compliance fix*/,
+
 );
 
 ?>

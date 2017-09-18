@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,112 +35,112 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarPHPMailer.php');
 require_once 'include/upload_file.php';
 
 class Email extends SugarBean {
-	/* SugarBean schema */
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $modified_user_id;
-	var $created_by;
-	var $deleted;
-	var $from_addr;
-	var $reply_to_addr;
-	var $to_addrs;
-    var $cc_addrs;
-    var $bcc_addrs;
-	var $message_id;
+    /* SugarBean schema */
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $modified_user_id;
+    public $created_by;
+    public $deleted;
+    public $from_addr;
+    public $reply_to_addr;
+    public $to_addrs;
+    public $cc_addrs;
+    public $bcc_addrs;
+    public $message_id;
 
-	/* Bean Attributes */
-	var $name;
-    var $type = 'archived';
-    var $date_sent;
-	var $status;
-	var $intent;
-	var $mailbox_id;
-	var $from_name;
+    /* Bean Attributes */
+    public $name;
+    public $type = 'archived';
+    public $date_sent;
+    public $status;
+    public $intent;
+    public $mailbox_id;
+    public $from_name;
 
-	var $reply_to_status;
-	var $reply_to_name;
-	var $reply_to_email;
-	var $description;
-	var $description_html;
-	var $raw_source;
-	var $parent_id;
-	var $parent_type;
+    public $reply_to_status;
+    public $reply_to_name;
+    public $reply_to_email;
+    public $description;
+    public $description_html;
+    public $raw_source;
+    public $parent_id;
+    public $parent_type;
 
-	/* link attributes */
-	var $parent_name;
+    /* link attributes */
+    public $parent_name;
 
+    /* legacy */
+    public $date_start; // legacy
+    public $time_start; // legacy
+    public $from_addr_name;
+    public $to_addrs_arr;
+    public $cc_addrs_arr;
+    public $bcc_addrs_arr;
+    public $to_addrs_ids;
+    public $to_addrs_names;
+    public $to_addrs_emails;
+    public $cc_addrs_ids;
+    public $cc_addrs_names;
+    public $cc_addrs_emails;
+    public $bcc_addrs_ids;
+    public $bcc_addrs_names;
+    public $bcc_addrs_emails;
+    public $contact_id;
+    public $contact_name;
 
-	/* legacy */
-	var $date_start; // legacy
-	var $time_start; // legacy
-	var $from_addr_name;
-	var $to_addrs_arr;
-    var $cc_addrs_arr;
-    var $bcc_addrs_arr;
-	var $to_addrs_ids;
-	var $to_addrs_names;
-	var $to_addrs_emails;
-	var $cc_addrs_ids;
-	var $cc_addrs_names;
-	var $cc_addrs_emails;
-	var $bcc_addrs_ids;
-	var $bcc_addrs_names;
-	var $bcc_addrs_emails;
-	var $contact_id;
-	var $contact_name;
+    /* Archive Email attrs */
+    public $duration_hours;
 
-	/* Archive Email attrs */
-	var $duration_hours;
+    public $new_schema = true;
+    public $table_name = 'emails';
+    public $module_dir = 'Emails';
+    public $module_name = 'Emails';
+    public $object_name = 'Email';
+    public $db;
 
+    /* private attributes */
+    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;text-decoration: none;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $cachePath;
+    public $cacheFile = 'robin.cache.php';
+    public $replyDelimiter = "> ";
+    public $emailDescription;
+    public $emailDescriptionHTML;
+    public $emailRawSource;
+    public $link_action;
+    public $emailAddress;
+    public $attachments = array();
 
+    /* to support Email 2.0 */
+    public $isDuplicate;
+    public $uid;
+    public $to;
+    public $flagged;
+    public $answered;
+    public $seen;
+    public $draft;
+    public $relationshipMap = array(
+        'Contacts'  => 'emails_contacts_rel',
+        'Accounts'  => 'emails_accounts_rel',
+        'Leads'     => 'emails_leads_rel',
+        'Users'     => 'emails_users_rel',
+        'Prospects' => 'emails_prospects_rel',
+    );
 
-	var $new_schema = true;
-	var $table_name = 'emails';
-	var $module_dir = 'Emails';
-    var $module_name = 'Emails';
-	var $object_name = 'Email';
-	var $db;
-
-	/* private attributes */
-	var $rolloverStyle		= "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;text-decoration: none;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
-	var $cachePath;
-	var $cacheFile			= 'robin.cache.php';
-	var $replyDelimiter	= "> ";
-	var $emailDescription;
-	var $emailDescriptionHTML;
-	var $emailRawSource;
-	var $link_action;
-	var $emailAddress;
-	var $attachments = array();
-
-	/* to support Email 2.0 */
-	var $isDuplicate;
-	var $uid;
-	var $to;
-	var $flagged;
-	var $answered;
-	var $seen;
-	var $draft;
-	var $relationshipMap = array(
-		'Contacts'	=> 'emails_contacts_rel',
-		'Accounts'	=> 'emails_accounts_rel',
-		'Leads'		=> 'emails_leads_rel',
-		'Users'		=> 'emails_users_rel',
-		'Prospects'	=> 'emails_prospects_rel',
-	);
-
-	/* public */
-	var $et;		// EmailUI object
+    /* public */
+    public $et;        // EmailUI object
 	// prefix to use when importing inlinge images in emails
 	public $imagePrefix;
 
@@ -153,20 +152,39 @@ class Email extends SugarBean {
     public $modifiedFieldDefs = array();
 
     public $attachment_image;
+    /**
+     * @var Link2
+     */
+    public $cases;
 
 	/**
 	 * sole constructor
 	 */
-	function Email()
+	public function __construct()
 	{
 	    global $current_user;
 	    $this->cachePath = sugar_cached('modules/Emails');
-		parent::SugarBean();
+		parent::__construct();
 
 		$this->emailAddress = new SugarEmailAddress();
 
 		$this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/")."/cache/images/";
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Email(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function email2init() {
 		require_once('modules/Emails/EmailUI.php');
@@ -1223,7 +1241,7 @@ class Email extends SugarBean {
 
 	///////////////////////////////////////////////////////////////////////////
 	////	RETRIEVERS
-	function retrieve($id, $encoded=true, $deleted=true) {
+	function retrieve($id = -1, $encoded=true, $deleted=true) {
 		// cn: bug 11915, return SugarBean's retrieve() call bean instead of $this
 		$ret = parent::retrieve($id, $encoded, $deleted);
 
@@ -2201,26 +2219,62 @@ class Email extends SugarBean {
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->parent_name)){
 
 			if(!empty($this->parent_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->parent_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//parent_name_owner not being set for whatever reason so we need to figure this out
+			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)){
+		*/
+		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner, 'module', $in_group)){
+        /* END - SECURITY GROUPS */
 			$array_assign['PARENT'] = 'a';
 		} else {
 			$array_assign['PARENT'] = 'span';
 		}
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->contact_name)) {
 			if(!empty($this->contact_name_owner)) {
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(ACLController::checkAccess('Contacts', 'view', $is_owner)) {
+		*/
+		if(ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
+        /* END - SECURITY GROUPS */
 			$array_assign['CONTACT'] = 'a';
 		} else {
 			$array_assign['CONTACT'] = 'span';
@@ -2244,7 +2298,7 @@ class Email extends SugarBean {
 	}
 
 
-    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false) {
+    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false) {
 
 		if ($return_array) {
 			return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect);
@@ -2326,9 +2380,9 @@ class Email extends SugarBean {
 		//if ($this->parent_type == 'Contacts') {
 			$query  = "SELECT contacts.first_name, contacts.last_name, contacts.phone_work, contacts.id, contacts.assigned_user_id contact_name_owner, 'Contacts' contact_name_mod FROM contacts, emails_beans ";
 			$query .= "WHERE emails_beans.email_id='$this->id' AND emails_beans.bean_id=contacts.id AND emails_beans.bean_module = 'Contacts' AND emails_beans.deleted=0 AND contacts.deleted=0";
-			if(!empty($this->parent_id)){
+			if(!empty($this->parent_id) && $this->parent_type == 'Contacts'){
 				$query .= " AND contacts.id= '".$this->parent_id."' ";
-			}else if(!empty($_REQUEST['record'])){
+			}else if(!empty($_REQUEST['record']) && !empty($_REQUEST['module']) && $_REQUEST['module'] == 'Contacts'){
 				$query .= " AND contacts.id= '".$_REQUEST['record']."' ";
 			}
 			$result =$this->db->query($query,true," Error filling in additional detail fields: ");
@@ -2395,7 +2449,7 @@ class Email extends SugarBean {
 
 
 
-	function create_export_query(&$order_by, &$where)
+	function create_export_query($order_by, $where)
     {
 		$contact_required = stristr($where, "contacts");
 		$custom_join = $this->getCustomJoin(true, true, $where);
@@ -2556,7 +2610,7 @@ class Email extends SugarBean {
 
 		//Perform a count query needed for pagination.
 		$countQuery = $this->create_list_count_query($fullQuery);
-		
+
 		$count_rs = $this->db->query($countQuery, false, 'Error executing count query for imported emails search');
 		$count_row = $this->db->fetchByAssoc($count_rs);
 		$total_count = ($count_row != null) ? $count_row['c'] : 0;
@@ -2669,7 +2723,7 @@ class Email extends SugarBean {
              $query['where'] .= " AND NOT EXISTS ( SELECT id FROM notes n WHERE n.parent_id = emails.id AND n.deleted = 0 AND n.filename is not null )";
 
         $fullQuery = "SELECT " . $query['select'] . " " . $query['joins'] . " " . $query['where'];
-        
+
         return $fullQuery;
     }
         /**
@@ -2703,8 +2757,8 @@ class Email extends SugarBean {
 		          $additionalWhereClause[] = "{$properties['table_name']}.$db_key $opp '$searchValue' ";
 		      }
         }
-        
-        
+
+
 
         $isDateFromSearchSet = !empty($_REQUEST['searchDateFrom']);
         $isdateToSearchSet = !empty($_REQUEST['searchDateTo']);

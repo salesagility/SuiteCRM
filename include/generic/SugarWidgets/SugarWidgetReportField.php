@@ -54,10 +54,25 @@ class SugarWidgetReportField extends SugarWidgetField
      */
     protected $reporter;
 
-	function SugarWidgetReportField(&$layout_manager) {
-        parent::SugarWidgetField($layout_manager);
+	function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute("reporter");
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetReportField(&$layout_manager){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($layout_manager);
+    }
+
 
 	function  getSubClass($layout_def)
 	{
@@ -259,8 +274,9 @@ class SugarWidgetReportField extends SugarWidgetField
                 if(!in_array($layout_def['name'], array('description', 'account_description', 'lead_source_description', 'status_description', 'to_addrs', 'cc_addrs', 'bcc_addrs', 'work_log', 'objective', 'resolution'))) {
                     $header_cell = "<a class=\"listViewThLinkS1\" href=\"".$start.$sort_by.$end."\">";
                     $header_cell .= $this->displayHeaderCellPlain($layout_def);
-                    $header_cell .= ListView::getArrowUpDownStart(isset($layout_def['sort']) ? $layout_def['sort'] : '');
-                    $header_cell .= ListView::getArrowUpDownEnd(isset($layout_def['sort']) ? $layout_def['sort'] : '');
+                    $objListView = new ListView();
+                    $header_cell .= $objListView->getArrowUpDownStart(isset($layout_def['sort']) ? $layout_def['sort'] : '');
+                    $header_cell .= $objListView->getArrowUpDownEnd(isset($layout_def['sort']) ? $layout_def['sort'] : '');
 		            $header_cell .= "</a>";
 					return $header_cell;
 				}

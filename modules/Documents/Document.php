@@ -97,11 +97,26 @@ class Document extends File {
 	 );
 
 
-	function Document() {
-		parent :: File();
+	function __construct() {
+		parent::__construct();
 		$this->setupCustomFields('Documents'); //parameter is module name
 		$this->disable_row_level_security = false;
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Document(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function save($check_notify = false) {
 
@@ -290,11 +305,11 @@ class Document extends File {
         }
 	}
 
-	function list_view_parse_additional_sections(& $list_form, $xTemplateSection) {
+	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/) {
 		return $list_form;
 	}
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;

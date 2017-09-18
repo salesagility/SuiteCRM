@@ -138,7 +138,7 @@ $mod_strings = array (
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
-    'LBL_MEETING_INFORMATION' => 'Overview',
+    'LBL_MEETING_INFORMATION' => 'OVERVIEW',
 	'LBL_LIST_JOIN_MEETING' => 'Join Meeting',
 	'LBL_JOIN_EXT_MEETING' => 'Join Meeting',
 	'LBL_HOST_EXT_MEETING' => 'Start Meeting',
@@ -187,7 +187,17 @@ $mod_strings = array (
     'LBL_REPEAT_PARENT_ID' => 'Repeat Parent ID',
     'LBL_RECURRING_SOURCE' => 'Recurring Source',
     
-    'LBL_SYNCED_RECURRING_MSG' => 'This meeting originated in another system and was synced to Sugar. To make changes, go to the original meeting within the other system. Changes made in the other system can be synced to this record.',
+    'LBL_SYNCED_RECURRING_MSG' => 'This meeting originated in another system and was synced to SuiteCRM. To make changes, go to the original meeting within the other system. Changes made in the other system can be synced to this record.',
     'LBL_RELATED_TO' => 'Related to:',
+
+	// for reminders
+	'LBL_REMINDERS' => 'Reminders',
+	'LBL_REMINDERS_ACTIONS' => 'Actions:',
+	'LBL_REMINDERS_POPUP' => 'Popup',
+	'LBL_REMINDERS_EMAIL' => 'Email invitees',
+	'LBL_REMINDERS_WHEN' => 'When:',
+	'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
+	'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
+	'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
 );
 ?>

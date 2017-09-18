@@ -44,10 +44,25 @@ require_once('modules/Calls_Reschedule/Calls_Reschedule_sugar.php');
 require_once('modules/Calls/Call.php');
 
 class Calls_Reschedule extends Calls_Reschedule_sugar {
-	
-	function Calls_Reschedule(){	
-		parent::Calls_Reschedule_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Calls_Reschedule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 }
 ?>

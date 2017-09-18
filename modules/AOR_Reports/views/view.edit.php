@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -29,13 +29,13 @@ require_once 'modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewEdit extends ViewEdit {
 
     public function __construct() {
-        parent::ViewEdit();
+        parent::__construct();
     }
 
     public function preDisplay() {
         global $app_list_strings;
         echo "<style type='text/css'>";
-        readfile('modules/AOR_Reports/css/edit.css');
+        //readfile('modules/AOR_Reports/css/edit.css');
         readfile('modules/AOR_Reports/js/jqtree/jqtree.css');
         echo "</style>";
         if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
@@ -54,6 +54,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
         echo "total_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], '')))."\";";
+        echo "format_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_format_options'], '')))."\";";
         echo "</script>";
 
         $fields = $this->getFieldLines();
@@ -78,15 +79,25 @@ class AOR_ReportsViewEdit extends ViewEdit {
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $condition_name = new AOR_Condition();
             $condition_name->retrieve($row['id']);
-            $condition_name->module_path = implode(":",unserialize(base64_decode($condition_name->module_path)));
+            if(!$condition_name->parenthesis) {
+                $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
+            }
             if($condition_name->value_type == 'Date'){
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
-            $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
-            $condition_item['module_path_display'] = $display['module'];
-            $condition_item['field_label'] = $display['field'];
-            $conditions[] = $condition_item;
+
+            if(!$condition_name->parenthesis) {
+                $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
+                $condition_item['module_path_display'] = $display['module'];
+                $condition_item['field_label'] = $display['field'];
+            }
+            if(isset($conditions[$condition_item['condition_order']])) {
+                $conditions[] = $condition_item;
+            }
+            else {
+                $conditions[$condition_item['condition_order']] = $condition_item;
+            }
         }
         return $conditions;
     }
@@ -104,7 +115,11 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->retrieve($row['id']);
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
+
+            $arr['field_type'] = $this->getDisplayForField($field_name->module_path, $field_name->field  , $this->bean->report_module);
+
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
+
             $arr['module_path_display'] = $display['module'];
             $arr['field_label'] = $display['field'];
             $fields[] = $arr;
@@ -123,5 +138,36 @@ class AOR_ReportsViewEdit extends ViewEdit {
         return $charts;
     }
 
+    public function getDisplayForField($modulePath, $field, $reportModule){
+        $modulePathDisplay = array();
+        $currentBean = BeanFactory::getBean($reportModule);
+        $modulePathDisplay[] = $currentBean->module_name;
+        if(is_array($modulePath)) {
+            $split = $modulePath;
+        }else{
+            $split = explode(':', $modulePath);
+        }
+        if ($split && $split[0] == $currentBean->module_dir) {
+            array_shift($split);
+        }
+        foreach($split as $relName){
+            if(empty($relName)){
+                continue;
+            }
+            if(!empty($currentBean->field_name_map[$relName]['vname'])){
+                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'],$currentBean->module_dir),':');
+            }
+            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+            $currentBean = BeanFactory::getBean($thisModule);
+
+            if(!empty($moduleLabel)){
+                $modulePathDisplay[] = $moduleLabel;
+            }else {
+                $modulePathDisplay[] = $currentBean->module_name;
+            }
+        }
+        $fieldDisplay = $currentBean->field_name_map[$field]['type'];
+        return $fieldDisplay;
+    }
 
 }

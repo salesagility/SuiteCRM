@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -65,12 +65,17 @@ global $app_language, $sugar_config;
 global $current_language;
 
 // Get the login page image
-if ( sugar_is_file('custom/include/images/sugar_md.png') ) {
+if ( is_file('custom/include/images/sugar_md.png') ) {
     $login_image = '<IMG src="custom/include/images/sugar_md.png" alt="Sugar" width="340" height="25">';
 }
 else {
     $login_image = '<IMG src="include/images/sugar_md_open.png" alt="Sugar" width="340" height="25" style="margin: 5px 0;">';
 }
+
+$login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
+$login_image = '<IMG src="'.$login_image_url.'" alt="SuiteCRM" style="margin: 5px 0;">';
+
+
 $sugar_smarty->assign('LOGIN_IMAGE',$login_image);
 
 // See if any messages were passed along to display to the user.
@@ -82,9 +87,10 @@ if(isset($_COOKIE['loginErrorMessage'])) {
 }
 if(isset($_REQUEST['loginErrorMessage'])) {
     if (isset($mod_strings[$_REQUEST['loginErrorMessage']])) {
-        echo "<p align='center' class='error' > ". $mod_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+        $sugar_smarty->assign("LOGIN_ERROR_MESSAGE", $mod_strings[$_REQUEST['loginErrorMessage']]);
     } else if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
-        echo "<p align='center' class='error' > ". $app_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+
+        $sugar_smarty->assign("LOGIN_ERROR_MESSAGE",  $app_strings[$_REQUEST['loginErrorMessage']]);
     }
 }
 
@@ -211,4 +217,11 @@ if ( !empty($logindisplay) )
 		</script>";
 	}
 
-$sugar_smarty->display('modules/Users/login.tpl'); ?>
+if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
+	echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+} elseif (file_exists('custom/modules/Users/login.tpl')) {
+	echo $sugar_smarty->display('custom/modules/Users/login.tpl');
+} else {
+	echo $sugar_smarty->display('modules/Users/login.tpl');
+}
+

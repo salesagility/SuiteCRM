@@ -2,37 +2,40 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2011 SugarCRM Inc.
- * 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -49,12 +52,12 @@ var $userfeed_created;
 var $selectedCategories = array();
 
 
-    function SugarFeedDashlet($id, $def = null) {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings, $app_list_strings;
 
-		require('modules/SugarFeed/metadata/dashletviewdefs.php');
+		require_once('modules/SugarFeed/metadata/dashletviewdefs.php');
 		$this->myItemsOnly = false;
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 		$this->myItemsOnly = false;
 		$this->isConfigurable = true;
 		$this->hasScript = true;
@@ -69,7 +72,7 @@ var $selectedCategories = array();
         $this->categories['ALL'] = translate('LBL_ALL','SugarFeed');
         // Need to get the rest of the active SugarFeed modules
         $module_list = SugarFeed::getActiveFeedModules();
-        
+
         // Translate the category names
         if ( ! is_array($module_list) ) { $module_list = array(); }
         foreach ( $module_list as $module ) {
@@ -95,6 +98,18 @@ var $selectedCategories = array();
 		if(!empty($def['userfeed_created'])) $this->userfeed_created = $def['userfeed_created'];
         $this->searchFields = $dashletData['SugarFeedDashlet']['searchFields'];
         $this->columns = $dashletData['SugarFeedDashlet']['columns'];
+
+        $twitter_enabled = $this->check_enabled('twitter');
+        $facebook_enabled = $this->check_enabled('facebook');
+
+        if($facebook_enabled){
+            $this->categories["Facebook"] = "Facebook";
+        }
+
+        if($twitter_enabled){
+            $this->categories["Twitter"] = "Twitter";
+        }
+
 		$catCount = count($this->categories);
 		ACLController::filterModuleList($this->categories, false);
 		if(count($this->categories) < $catCount){
@@ -105,8 +120,21 @@ var $selectedCategories = array();
 				unset($this->selectedCategories[0]);
 			}
 		}
-
         $this->seedBean = new SugarFeed();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarFeedDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
     }
 
 	function process($lvsParams = array()) {
@@ -161,6 +189,15 @@ var $selectedCategories = array();
 				$regular_modules[] = 'UserFeed';
 				continue;
 			}
+            if($module == 'Facebook'){
+                $regular_modules[] = "Facebook";
+                continue;
+            }
+            if($module == 'Twitter'){
+                $regular_modules[] = 'Twitter';
+                continue;
+            }
+
             if ( in_array($module,$this->externalAPIList) ) {
                 $external_modules[] = $module;
             }
@@ -174,6 +211,9 @@ var $selectedCategories = array();
                 $regular_modules[] = $module;
             }
         }
+        //add custom modules here that will appear.
+
+
 
         if(!empty($this->displayTpl))
         {
@@ -216,8 +256,8 @@ var $selectedCategories = array();
                                     'created_by',
                                     /* BEGIN - SECURITY GROUPS */
 									//related_module now included but keep this here just in case
-                                    'related_module', 
-                                    'related_id', 
+                                    'related_module',
+                                    'related_id',
                                     /* END - SECURITY GROUPS */
 
 
@@ -228,30 +268,33 @@ var $selectedCategories = array();
 
             foreach($this->lvs->data['data'] as $row => $data) {
 
-                $this->lvs->data['data'][$row]['NAME'] = str_replace("{this.CREATED_BY}",get_assigned_user_name($this->lvs->data['data'][$row]['CREATED_BY']),$data['NAME']);
+                    $this->lvs->data['data'][$row]['NAME'] = str_replace("{this.CREATED_BY}",get_assigned_user_name($this->lvs->data['data'][$row]['CREATED_BY']),$data['NAME']);
 
-                //Translate the SugarFeeds labels if necessary.
-                preg_match('/\{([^\^ }]+)\.([^\}]+)\}/', $this->lvs->data['data'][$row]['NAME'] ,$modStringMatches );
-                if(count($modStringMatches) == 3 && $modStringMatches[1] == 'SugarFeed' && !empty($data['RELATED_MODULE']) )
-                {
-                    $modKey = $modStringMatches[2];
-                    $modString = translate($modKey, $modStringMatches[1]);
-                    if( strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']]) )
-                        continue;
-                    
-                    $modStringSingular = $GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']];
-                    $modString = string_format($modString, array($modStringSingular) );
-                    $this->lvs->data['data'][$row]['NAME'] = preg_replace('/' . $modStringMatches[0] . '/', strtolower($modString), $this->lvs->data['data'][$row]['NAME']);
+                    //Translate the SugarFeeds labels if necessary.
+                    preg_match('/\{([^\^ }]+)\.([^\}]+)\}/', $this->lvs->data['data'][$row]['NAME'] ,$modStringMatches );
+                    if(count($modStringMatches) == 3 && $modStringMatches[1] == 'SugarFeed' && !empty($data['RELATED_MODULE']) )
+                    {
+                        $modKey = $modStringMatches[2];
+                        $modString = translate($modKey, $modStringMatches[1]);
+                        if( strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']]) )
+                            continue;
+
+                        $modStringSingular = $GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']];
+                        $modString = string_format($modString, array($modStringSingular) );
+                        $this->lvs->data['data'][$row]['NAME'] = preg_replace('/' . $modStringMatches[0] . '/', strtolower($modString), $this->lvs->data['data'][$row]['NAME']);
+                    }
+                //if social then unless the user is the assigned user it wont show. IJD1986
+                if(($data['RELATED_MODULE'] == "facebook" || $data['RELATED_MODULE'] == "twitter" ) && $data['ASSIGNED_USER_ID'] != $current_user->id){
+                    unset($this->lvs->data['data'][$row]);
                 }
             }
 
             // assign a baseURL w/ the action set as DisplayDashlet
             foreach($this->lvs->data['pageData']['urls'] as $type => $url) {
             	// awu Replacing action=DisplayDashlet with action=DynamicAction&DynamicAction=DisplayDashlet
-                if($type == 'orderBy')
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url);
-                else
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url) . '&sugar_body_only=1&id=' . $this->id;
+                $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet';
+                if($type != 'orderBy')
+                    $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&id=' . $this->id;
             }
 
             $this->lvs->ss->assign('dashletId', $this->id);
@@ -376,7 +419,7 @@ var $selectedCategories = array();
 			$ss->assign('autoRefreshSelect', $this->autoRefresh);
 		}
 
-        return  $ss->fetch('modules/SugarFeed/Dashlets/SugarFeedDashlet/Options.tpl');
+        return  $ss->fetch(get_custom_file_if_exists('modules/SugarFeed/Dashlets/SugarFeedDashlet/Options.tpl'));
     }
 
 	/**
@@ -445,11 +488,13 @@ enableQS(false);
             'if($matches[1] == "this"){$var = $matches[2]; return $GLOBALS[\'current_sugarfeed\']->$var;}else{return translate($matches[2], $matches[1]);}'
         ),$listview);
 
+
         //grab each token and store the module for later processing
         preg_match_all('/\[(\w+)\:/', $listview, $alt_modules);
 
         //now process each token to create the proper url and image tags in feed, leaving a string for the alt to be replaced in next step
 		$listview = preg_replace('/\[(\w+)\:([\w\-\d]*)\:([^\]]*)\]/', '<a href="index.php?module=$1&action=DetailView&record=$2"><img src="themes/default/images/$1.gif" border=0 REPLACE_ALT>$3</a>', $listview); /*SKIP_IMAGE_TAG*/
+
 
         //process each module for the singular version so we can populate the alt tag on the image
         $altStrings = array();
@@ -458,6 +503,9 @@ enableQS(false);
             $altString = 'alt="'.translate('LBL_VIEW','SugarFeed').' '.$GLOBALS['app_list_strings']['moduleListSingular'][$alt].'"';
             $listview = preg_replace('/REPLACE_ALT/', $altString, $listview,1);
         }
+
+
+
 
 		return $listview.'</div></div>';
 	}
@@ -510,6 +558,10 @@ enableQS(false);
 		$ss->assign('id', $this->id);
 		$ss->assign('more_img', $moreimg);
 		$ss->assign('less_img', $lessimg);
+
+        include_once("include/social/get_feed_data.php");
+        $ss->assign('facebook', $html );
+
         if($current_user->getPreference('use_real_names') == 'on'){
             $ss->assign('user_name', $current_user->full_name);
         }
@@ -522,8 +574,10 @@ enableQS(false);
             $linkTypes[$key] = translate('LBL_LINK_TYPE_'.$value,'SugarFeed');
         }
 		$ss->assign('link_types', $linkTypes);
-		return $ss->fetch('modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl');
 
+        $userPostFormTplFile = 'modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl';
+        $fetch = $ss->fetch(get_custom_file_if_exists($userPostFormTplFile));
+        return $fetch;
 	}
 
     // This is called from the include/MySugar/DashletsDialog/DashletsDialog.php and determines if we should display the SugarFeed dashlet as an option or not
@@ -538,4 +592,16 @@ enableQS(false);
             return true;
         }
     }
+
+    function check_enabled($type){
+        global $db;
+        $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
+        $results = $db->query($query);
+
+        while ($row = $db->fetchByAssoc($results)) {
+            return true;
+            break;
+        }
+    }
+
 }

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,66 +36,62 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+$module_name = '<module_name>';
 
- $module_name = '<module_name>';
+$viewdefs[$module_name]['EditView'] = array(
+    'templateMeta' => array(
+        'form' => array(
+            'enctype' => 'multipart/form-data',
+            'hidden' => array()
+        ),
 
- $viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array('form' => array('enctype'=>'multipart/form-data',
-                                            'hidden'=>array()),
-
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-'javascript' =>
-	'{sugar_getscript file="include/javascript/popup_parent_helper.js"}
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
+        ),
+        'javascript' => '{sugar_getscript file="include/javascript/popup_parent_helper.js"}
 	{sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 	{sugar_getscript file="modules/Documents/documents.js"}',
-),
- 'panels' =>array (
-  'default' =>
-  array (
-
-    array (
-      'document_name',
-      array(
-      		'name'=>'uploadfile',
-            'displayParams' => array('onchangeSetFileNameTo' => 'document_name'),
-      ),
-
-	),
-
-    array (
-       'category_id',
-       'subcategory_id',
     ),
+    'panels' => array(
+        'default' => array(
 
-    array (
-      'assigned_user_name',
-    ),
+            array(
+                'document_name',
+                array(
+                    'name' => 'uploadfile',
+                    'displayParams' => array('onchangeSetFileNameTo' => 'document_name'),
+                ),
 
-    array (
-      'active_date',
-      'exp_date',
-    ),
+            ),
 
-	array('status_id'),
-    array (
+            array(
+                'category_id',
+                'subcategory_id',
+            ),
 
-      array('name'=>'description'),
+            array(
+                'assigned_user_name',
+            ),
 
-    ),
-  ),
-)
+            array(
+                'active_date',
+                'exp_date',
+            ),
+
+            array('status_id'),
+            array(
+
+                array('name' => 'description'),
+
+            ),
+        ),
+    )
 );
-
-?>

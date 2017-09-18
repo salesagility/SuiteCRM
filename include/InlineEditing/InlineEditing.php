@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2015 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $id = '', $alt_type = '', $currency_id = '')
 {
@@ -101,7 +106,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'] . '_id';
             if ((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
-                $vardef['module'] = $focus->$vardef['name']->getRelatedModuleName();
+                $vardef['module'] = $focus->{$vardef['name']}->getRelatedModuleName();
             }
 
         }
@@ -134,15 +139,25 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
+        // remove extra wrong javascript which breaks auto complete on flexi relationship parent fields
+        $contents = preg_replace("/<script language=\"javascript\">if\(typeof sqs_objects == \'undefined\'\){var sqs_objects = new Array;}sqs_objects\[\'EditView_parent_name\'\].*?<\/script>/","",$contents);
+
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+
             $contents = str_replace('"' . $vardef['id_name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
             $contents = str_replace('"' . $vardef['name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+            // regex below fixes button javascript for flexi relationship
+            if($vardef['type'] == 'parent') {
+                $contents = str_replace("onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"{\$fields.parent_name.id_name}", "onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"parent_id", $contents);
+            }
         }
 
         // hack to disable one of the js calls in this control
         if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown'))
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+
+
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
@@ -181,7 +196,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields[$fieldname] = $focus->field_defs[$fieldname];
-    if ($vardefFields[$fieldname]['type'] == 'parent_type') {
+    if ($vardefFields[$fieldname]['type'] == 'parent') {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
     foreach ($vardefFields as $name => $properties) {
@@ -192,9 +207,6 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
         elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']]))
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
-        // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if (!isset($fieldlist[$name]['options']['']))
-            $fieldlist[$name]['options'][''] = '';
     }
 
     // fill in function return values
@@ -215,8 +227,13 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'] . '_id';
 
         if ((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
-            $fieldlist[$fieldname]['module'] = $focus->$fieldlist[$fieldname]['name']->getRelatedModuleName();
+            $relateField = $fieldlist[$fieldname]['name'];
+            $fieldlist[$fieldname]['module'] = $focus->$relateField->getRelatedModuleName();
         }
+    }
+
+    if($fieldlist[$fieldname]['type'] == 'parent'){
+        $fieldlist['parent_id']['name'] = 'parent_id';
     }
 
     if (isset($fieldlist[$fieldname]['name']) && ($fieldlist[$fieldname]['name'] == 'date_modified')) {
@@ -227,7 +244,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         if($value){
-            $rel_value =  $bean->$fieldlist[$fieldname]['id_name'];
+            $relateIdField = $fieldlist[$fieldname]['id_name'];
+            $rel_value =  $bean->$relateIdField;
 
         }
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $rel_value;
@@ -244,7 +262,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['name'] = $aow_field;
-        if (empty($value) == "") {
+        if (empty($value)) {
             $value = str_replace("%", "", date($date_format));
         }
         $fieldlist[$fieldname]['value'] = $value;
@@ -291,20 +309,64 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 function saveField($field, $id, $module, $value)
 {
 
+    global $current_user;
+
+    if ($module == 'Users' && $field == 'is_admin' && !$current_user->is_admin) {
+        $err = 'SECURITY: Only admin user can change user type';
+        $GLOBALS['log']->fatal($err);
+        throw new RuntimeException($err);
+    }
+
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
 
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        }else if ($bean->field_defs[$field]['type'] == "relate"){
+        }else if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
             $save_field = $bean->field_defs[$field]['id_name'];
             $bean->$save_field = $value;
+            if ($bean->field_defs[$field]['type'] == 'parent') {
+                $bean->parent_type = $_REQUEST['parent_type'];
+                $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
+            }
+        }else if ($bean->field_defs[$field]['type'] == "currency"){
+			if (stripos($field, 'usdollar')) {
+				$newfield = str_replace("_usdollar", "", $field);
+				$bean->$newfield = $value;
+			}
+			else{
+				$bean->$field = $value;
+			}
+            
         }else{
             $bean->$field = $value;
         }
 
-        $bean->save();
+        $check_notify = FALSE;
+
+        if (isset( $bean->fetched_row['assigned_user_id']) && $field == "assigned_user_name") {
+            $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
+            if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
+                $check_notify = TRUE;
+            }
+        }
+
+        $adminOnlyModules = array('Users', 'Employees');
+
+        $enabled = true;
+        if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
+            $enabled = false;
+        }
+
+        if(($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
+            if(!$bean->save($check_notify)) {
+                $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
+            }
+        } else {
+            $GLOBALS['log']->fatal("ACLAccess denied to save this field.");
+        }
+        $bean->retrieve();
         return getDisplayValue($bean, $field);
     } else {
         return false;
@@ -321,7 +383,6 @@ function getDisplayValue($bean, $field, $method = "save")
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
 
-    $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
 
     $fieldlist[$field] = $bean->getFieldDefinition($field);
 
@@ -334,10 +395,10 @@ function getDisplayValue($bean, $field, $method = "save")
     return $value;
 }
 
-function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
+function formatDisplayValue($bean, $value, $vardef, $method = "save")
 {
 
-    global $current_user, $app_list_strings, $timedate;
+    global $app_list_strings, $timedate;
 
     //Fake the params so we can pass the values through the sugarwidgets to get the correct display html.
 
@@ -356,7 +417,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
     }
 
     //If field is of type link and name.
-    if ($vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
+    if (isset($vardef['link']) && $vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
@@ -409,8 +470,13 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
         $value = implode(", ", $values);
     }
 
+    //if field is of type radio.
+     if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum" || $vardef['type'] == "dynamicenum") {
+        $value = $app_list_strings[$vardef['options']][$value];
+    }
+
     //if field is of type relate.
-    if ($vardef['type'] == "relate") {
+    if ($vardef['type'] == "relate" || $vardef['type'] == "parent")  {
 
         if($vardef['source'] == "non-db"){
 
@@ -420,26 +486,61 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
             }
 
         }
+        if($vardef['type'] == "parent") {
+            $vardef['module'] = $bean->parent_type;
+            $name = $bean->parent_name;
+        }
+        $idName = $vardef['id_name'];
+        $record = $bean->$idName;
 
-        $record = $bean->$vardef['id_name'];
+        if($vardef['name'] != "assigned_user_name") {
+            $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
+        } else {
+            $value = "";
+        }
 
-        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
+
+        //To fix github bug 880 (the rname was null and was causing a 500 error in the getFieldValueFromModule call to $fieldname
+        $fieldName = 'name';//$vardef['name'];
+        if(!is_null($vardef['rname']))
+            $fieldName = $vardef['rname'];
 
         if($vardef['ext2']){
-            $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
 
-        }else{
-            $value .= getFieldValueFromModule($vardef['rname'],$vardef['module'],$record) . "</a>";
+            $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
+        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
+            $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
+
+        } else {
+            $value .= $name;
+        }
+
+        if($vardef['name'] != "assigned_user_name") {
+            $value .= "</a>";
         }
     }
-
-
+	if($vardef['type'] == "url")
+	{
+		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
+	}
+	
+	if($vardef['type'] == "currency"){
+		if($_REQUEST['view'] != "DetailView"){			
+			$value = currency_format_number($value);		
+		}
+		else
+			$value = format_number($value);		
+	}
+	
     return $value;
 }
 
 function getFieldValueFromModule($fieldname, $module, $id)
 {
+    //Github bug 880, if the fieldname is null, do no call from bean
+    if(is_null($fieldname))
+        return '';
 
     $bean = BeanFactory::getBean($module, $id);
     if (is_object($bean) && $bean->id != "") {
@@ -460,20 +561,8 @@ function convertDateUserToDB($value)
 }
 
 function checkAccess($bean){
-    $aclaccess_is_owner = false;
-    $aclaccess_in_group = false;
 
-    global $current_user;
-    if(is_admin($current_user)) {
-        $aclaccess_is_owner = true;
-    } else {
-        $aclaccess_is_owner = $bean->isOwner($current_user->id);
-    }
-
-
-    $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
-
-    if($aclaccess_is_owner && $aclaccess_in_role){
+    if($bean->ACLAccess('EditView')) {
         return true;
     }else {
         return false;

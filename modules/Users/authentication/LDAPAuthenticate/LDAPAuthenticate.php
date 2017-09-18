@@ -42,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 /**
- * This file is used to control the authentication process. 
- * It will call on the user authenticate and controll redirection 
+ * This file is used to control the authentication process.
+ * It will call on the user authenticate and controll redirection
  * based on the users validation
  *
  */
@@ -57,8 +57,23 @@ class LDAPAuthenticate extends SugarAuthenticate {
 	 *
 	 * @return LDAPAuthenticate
 	 */
-	function LDAPAuthenticate(){
-		parent::SugarAuthenticate();
+	function __construct(){
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function LDAPAuthenticate(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 }

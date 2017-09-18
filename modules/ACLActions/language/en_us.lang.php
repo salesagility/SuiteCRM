@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,32 +38,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-'LBL_ACCESS_ALL'=>'All',
-'LBL_ACCESS_NONE'=>'None',
-'LBL_ACCESS_OWNER'=>'Owner',
-'LBL_ACCESS_NORMAL'=>'Normal',
-'LBL_ACCESS_ADMIN'=>'Admin',
-'LBL_ACCESS_ENABLED'=>'Enabled',
-'LBL_ACCESS_DISABLED'=>'Disabled',
-'LBL_ACCESS_DEV'=>'Developer',
-'LBL_ACCESS_ADMIN_DEV'=>'Admin & Developer',
-'LBL_NAME'=>'Name',
-'LBL_DESCRIPTION'=>'Description',
-'LIST_ROLES'=>'List Roles',
-'LBL_USERS_SUBPANEL_TITLE'=>'Users',
-'LIST_ROLES_BY_USER'=>'List Roles By User',
-'LBL_ROLES_SUBPANEL_TITLE'=>'User Roles',
-'LBL_SEARCH_FORM_TITLE'=>'Search',
-'LBL_ACTION_VIEW'=>'View',
-'LBL_ACTION_EDIT'=>'Edit',
-'LBL_ACTION_DELETE'=>'Delete',
-'LBL_ACTION_IMPORT'=>'Import',
-'LBL_ACTION_EXPORT'=>'Export',
-'LBL_ACTION_LIST'=>'List',
-'LBL_ACTION_MASSUPDATE' => 'Mass Update',
-'LBL_ACTION_ACCESS'=>'Access',
-'LBL_ACTION_ADMIN'=>'Access Type',
-'LBL_ACCESS_DEFAULT'=>'Not Set',
+$mod_strings = array(
+    'LBL_ACCESS_ALL' => 'All',
+    'LBL_ACCESS_NONE' => 'None',
+    'LBL_ACCESS_OWNER' => 'Owner',
+    'LBL_ACCESS_GROUP' => 'Group',
+    'LBL_ACCESS_NORMAL' => 'Normal',
+    'LBL_ACCESS_ADMIN' => 'Admin',
+    'LBL_ACCESS_ENABLED' => 'Enabled',
+    'LBL_ACCESS_DISABLED' => 'Disabled',
+    'LBL_ACCESS_DEV' => 'Developer',
+    'LBL_ACCESS_ADMIN_DEV' => 'Admin & Developer',
+    'LBL_NAME' => 'Name',
+    'LBL_DESCRIPTION' => 'Description',
+    'LIST_ROLES' => 'List Roles',
+    'LBL_USERS_SUBPANEL_TITLE' => 'Users',
+    'LIST_ROLES_BY_USER' => 'List Roles By User',
+    'LBL_ROLES_SUBPANEL_TITLE' => 'User Roles',
+    'LBL_SEARCH_FORM_TITLE' => 'Search',
+    'LBL_ACTION_VIEW' => 'View',
+    'LBL_ACTION_EDIT' => 'Edit',
+    'LBL_ACTION_DELETE' => 'Delete',
+    'LBL_ACTION_IMPORT' => 'Import',
+    'LBL_ACTION_EXPORT' => 'Export',
+    'LBL_ACTION_LIST' => 'List',
+    'LBL_ACTION_MASSUPDATE' => 'Mass Update',
+    'LBL_ACTION_ACCESS' => 'Access',
+    'LBL_ACTION_ADMIN' => 'Access Type',
+    'LBL_ACCESS_DEFAULT' => 'Not Set',
 )
 ?>

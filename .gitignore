@@ -11,10 +11,14 @@ custom/blowfish/*
 custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
+custom/modules/unified_search_modules_display.php
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
-# Custom configuration should also be ignored.
+install/status.json
+# Configuration files should be ignored.
 /config.php
+/config_override.php
+/config_si.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
@@ -48,6 +52,7 @@ tramp
 *.ipr
 *.iws
 .idea/
+.phpstorm.meta.php
 # NetBeans
 nbproject/
 # Vim
@@ -63,3 +68,42 @@ Desktop.ini
 lang_cmp.php
 .kdev4/
 SuiteCRM.kdev4
+
+#Ignore composer vendor folder
+vendor/
+public/
+
+
+#Ignore Sass Generated files in SuiteP
+themes/SuiteP/studio.css
+themes/SuiteP/studio.css.map
+themes/SuiteP/sidebar.css
+themes/SuiteP/sidebar.css.map
+themes/SuiteP/projects.css
+themes/SuiteP/projects.css.map
+themes/SuiteP/panels.css
+themes/SuiteP/panels.css.map
+themes/SuiteP/navbar.css
+themes/SuiteP/navbar.css.map
+themes/SuiteP/main.css
+themes/SuiteP/main.css.map
+themes/SuiteP/login.css
+themes/SuiteP/login.css.map
+themes/SuiteP/listview.css
+themes/SuiteP/listview.css.map
+themes/SuiteP/forms.css
+themes/SuiteP/forms.css.map
+themes/SuiteP/editview.css
+themes/SuiteP/editview.css.map
+themes/SuiteP/detailview.css
+themes/SuiteP/detailview.css.map
+themes/SuiteP/dashboard.css
+themes/SuiteP/dashboard.css.map
+themes/SuiteP/cases.css
+themes/SuiteP/cases.css.map
+themes/SuiteP/campaigns.css
+themes/SuiteP/campaigns.css.map
+themes/SuiteP/calendar.css
+themes/SuiteP/calendar.css.map
+themes/SuiteP/admin.css
+themes/SuiteP/admin.css.map

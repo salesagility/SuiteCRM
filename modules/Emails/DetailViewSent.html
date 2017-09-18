@@ -65,7 +65,7 @@
 	<input type="hidden" name="email_name" value="{EMAIL_NAME}">
 	<input type="hidden" name="to_email_addrs" value="{FROM}">
 
-<table width="10%" cellpadding="0" cellspacing="0" border="0">
+<table width="80%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td>{ACTION_BUTTON_SENT_EMAIL}</td>
 		<td align='right'>{ADMIN_EDIT}</td>
@@ -87,8 +87,10 @@
 		<td scope="row"><slot>&nbsp;</slot></td>
 		<td><slot>&nbsp;</slot></td>
 		<!-- END: open_source -->
+
+
 		<td scope="row"><slot>{PARENT_TYPE}</slot></td>
-		<td><slot>{PARENT_NAME}</slot></td>
+		<td><slot>{PARENT_LINK}</slot></td>
 	</tr>
 	<tr>
        <td scope="row"><slot>{MOD.LBL_FROM}</slot></td>

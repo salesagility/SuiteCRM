@@ -51,27 +51,42 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class SubPanelViewNotes {
-	
+
 var $notes_list = null;
 var $hideNewButton = false;
 var $focus;
 
 function setFocus(&$value){
-	$this->focus =(object) $value;		
+	$this->focus =(object) $value;
 }
 
 
 function setNotesList(&$value){
-	$this->notes_list =$value;		
+	$this->notes_list =$value;
 }
 
 function setHideNewButton($value){
-	$this->hideNewButton = $value;	
+	$this->hideNewButton = $value;
 }
 
-function SubPanelViewNotes(){
+function __construct(){
 	global $theme;
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SubPanelViewNotes(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function getHeaderText($action, $currentModule){
 	global $app_strings;
@@ -91,7 +106,7 @@ function ProcessSubPanelListView($xTemplatePath, &$mod_strings,$action, $curModu
 	$ListView = new ListView();
 	global $current_user;
 $header_text = '';
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){	
+if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
 		$header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Notes&record=". $this->focus->id."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 	$ListView->initNewXTemplate($xTemplatePath,$mod_strings);

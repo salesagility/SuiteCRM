@@ -231,12 +231,15 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     				echo '</body></html>';
     			}
 				else{
-    				header("Location: {$redirect_url}");
+    				$header_URL = "Location: {$redirect_url}";
+
+					SugarApplication::headerRedirect($header_URL);
+
     				die();
 			    }
 			}
 			else{
-				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING_LEAD'];
+				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
 			}
 			sugar_cleanup();
 			// die to keep code from running into redirect case below
@@ -255,7 +258,8 @@ if (!empty($_POST['redirect'])) {
     	echo '</body></html>';
     }
     else{
-    	header("Location: {$_POST['redirect']}");
+    	$header_URL = "Location: {$_POST['redirect']}";
+		SugarApplication::headerRedirect($header_URL);
     	die();
     }
 }

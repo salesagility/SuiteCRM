@@ -49,18 +49,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/FP_events/FP_events.php');
 
-class FP_eventsDashlet extends DashletGeneric { 
-    function FP_eventsDashlet($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/FP_events/metadata/dashletviewdefs.php');
+class FP_eventsDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
+        global $current_user, $app_strings;
+        require('modules/FP_events/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'FP_events');
 
         $this->searchFields = $dashletData['FP_eventsDashlet']['searchFields'];
         $this->columns = $dashletData['FP_eventsDashlet']['columns'];
 
-        $this->seedBean = new FP_events();        
+        $this->seedBean = new FP_events();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function FP_eventsDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
 }

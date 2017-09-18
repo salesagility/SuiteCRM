@@ -117,7 +117,6 @@ $mod_strings = array (
 	//document list view.
 	'LBL_LIST_FORM_TITLE' => 'Document List',
 	'LBL_LIST_DOCUMENT' => 'Document',
-	'LBL_LIST_CATEGORY' => 'Category',
 	'LBL_LIST_SUBCATEGORY' => 'Sub Category',
 	'LBL_LIST_REVISION' => 'Revision',
 	'LBL_LIST_LAST_REV_CREATOR' => 'Published By',
@@ -154,12 +153,11 @@ $mod_strings = array (
 	'ERR_DELETE_LATEST_VERSION'=> 'You are not allowed to delete the latest revision of a document.',
 	'LNK_NEW_MAIL_MERGE' => 'Mail Merge',
 	'LBL_MAIL_MERGE_DOCUMENT' => 'Mail Merge Template:',
-	'ERR_MISSING_FILE' => 'This document is missing a file, most likely due to  an error during upload.  Please retry uploading the file or contact your administrator.',
+	'ERR_MISSING_FILE' => 'This document is missing a file, most likely due to  an error during upload. Please retry uploading the file or contact your administrator.',
 
 	'LBL_TREE_TITLE' => 'Documents',
 	//sub-panel vardefs.
 	'LBL_LIST_DOCUMENT_NAME'=>'Name',
-	'LBL_CONTRACT_NAME'=>'Contract Name:',
 	'LBL_LIST_IS_TEMPLATE'=>'Template?',
 	'LBL_LIST_TEMPLATE_TYPE'=>'Document Type',
 	'LBL_LIST_SELECTED_REVISION'=>'Selected Revision',
@@ -170,7 +168,7 @@ $mod_strings = array (
     'LBL_CONTRACTS' => 'Contracts',
     'LBL_CREATED_USER' => 'Created User',
     'LBL_THEREVISIONS_SUBPANEL_TITLE' => 'Reversions',
-    'LBL_DOCUMENT_INFORMATION' => 'Overview',
+    'LBL_DOCUMENT_INFORMATION' => 'OVERVIEW',
 	'LBL_DOC_ID' => 'Document Source ID',
 	'LBL_DOC_TYPE' => 'Source',
 	'LBL_LIST_DOC_TYPE' => 'Source',
@@ -190,6 +188,8 @@ $mod_strings = array (
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
     'LBL_QUOTES_SUBPANEL_TITLE' => 'Quotes',
 	'LBL_PRODUCTS_SUBPANEL_TITLE' => 'Products',
+
+	'LBL_AOS_CONTRACTS' => 'Contracts',
 );
 
 

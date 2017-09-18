@@ -101,6 +101,7 @@ $mod_strings = array (
     'LBL_PDF_NAME' => 'Contract',
     'LBL_EMAIL_NAME' => 'Contract for',
     'LBL_NO_TEMPLATE' => 'ERROR\nNo templates found. If you have not created an Contract template, go to the PDF templates module and create one',
+    'LBL_TOTAL_CONTRACT_VALUE_USDOLLAR' => 'Contract Value (Default Currency)',
     'LBL_SUBTOTAL_AMOUNT_USDOLLAR' => 'Subtotal (Default Currency)',
     'LBL_DISCOUNT_AMOUNT_USDOLLAR' => 'Discount (Default Currency)',
     'LBL_TAX_AMOUNT_USDOLLAR' => 'Tax (Default Currency)',
@@ -109,5 +110,10 @@ $mod_strings = array (
     'LBL_SHIPPING_TAX_USDOLLAR' => 'Shipping Tax (Default Currency)',
     'LBL_SHIPPING_TAX_AMT_USDOLLAR' => 'Shipping Tax (Default Currency)',
     'LBL_GRAND_TOTAL_USDOLLAR' => 'Grand Total (Default Currency)',
+
+    'LBL_CALL_ID' => 'Call ID',
+    'LBL_AOS_LINE_ITEM_GROUPS' => 'Line Item Groups',
+    'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
+    'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes: Contracts',
 );
 ?>

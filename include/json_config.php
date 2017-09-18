@@ -1,11 +1,12 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 /*********************************************************************************
 
@@ -134,7 +135,9 @@ class json_config {
 		return "\n".$this->global_registry_var_name."['focus'] = ". $json->encode($module_arr).";\n";
 	}
 
+	/*	multiple project module related changes added by haris raheem*/
 	function meeting_retrieve($module, $record) {
+
 		global $json, $response;
 		global $beanFiles, $beanList;
 		require_once($beanFiles[$beanList[$module]]);
@@ -152,8 +155,17 @@ class json_config {
 		}
 		else if ( $module == 'Calls') {
 			$users = $focus->get_call_users();
+		} 
+		else if ( $module == 'Project') { 
+			$focus->load_relationships('users');
+			$users=$focus->get_linked_beans('project_users_1','User');
 		}
-
+		else if ( $module == 'AM_ProjectTemplates') { 
+			$focus->load_relationships('users');
+			$users=$focus->get_linked_beans('am_projecttemplates_users_1','User');
+		}		
+		
+		
 		$module_arr['users_arr'] = array();
 
 		foreach($users as $user) {
@@ -169,18 +181,29 @@ class json_config {
 		$module_arr['contacts_arr'] = array();
 
 		$focus->load_relationships('contacts');
-		$contacts=$focus->get_linked_beans('contacts','Contact');
+
+		if($module == 'Project')			
+			$contacts=$focus->get_linked_beans('project_contacts_1','Contact');
+		else if($module == 'AM_ProjectTemplates')			
+			$contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+		else
+			$contacts=$focus->get_linked_beans('contacts','Contact');
+
 		foreach($contacts as $contact) {
 			array_push($module_arr['users_arr'], $this->populateBean($contact));
 	  	}
-		$module_arr['leads_arr'] = array();
-        $focus->load_relationships('leads');
-		$leads=$focus->get_linked_beans('leads','Lead');
-		foreach($leads as $lead) {
-			array_push($module_arr['users_arr'], $this->populateBean($lead));
-	  	}
 
+		$module_arr['leads_arr'] = array();
+
+		if($module != 'Project' && $module != 'AM_ProjectTemplates' ){
+			$focus->load_relationships('leads');
+			$leads=$focus->get_linked_beans('leads','Lead');
+			foreach($leads as $lead) {
+				array_push($module_arr['users_arr'], $this->populateBean($lead));
+			}
+		}
 		return $module_arr;
+	
 	}
 
 	function getStringsJSON($module) {
@@ -204,6 +227,7 @@ class json_config {
 		$all_fields = $focus->column_fields;
 		// MEETING SPECIFIC
 		$all_fields = array_merge($all_fields,array('required','accept_status','name')); // need name field for contacts and users
+        $all_fields = $this->listFilter($focus->module_dir, $all_fields);
 		//$all_fields = array_merge($focus->column_fields,$focus->additional_column_fields);
 
 		$module_arr = array();
@@ -223,5 +247,49 @@ class json_config {
 			$GLOBALS['log']->debug("JSON_SERVER:populate bean:");
 			return $module_arr;
 		}
-	}
-?>
+
+    /**
+     * @param string $module
+     * @param array $fields
+     *
+     * @return array
+     */
+    protected function listFilter($module, $fields)
+    {
+        $currentUser = $this->getCurrentUser();
+
+        // admin users can access any field
+        if ($currentUser && $currentUser->isAdminForModule($module)) {
+            return $fields;
+        }
+
+        $noAccessFields = array(
+            'Users' => array(
+                'show_on_employees' => true,
+                'portal_only' => true,
+                'is_group' => true,
+                'system_generated_password' => true,
+                'external_auth_only' => true,
+                'sugar_login' => true,
+                'authenticate_id' => true,
+                'pwd_last_changed' => true,
+                'user_hash' => true,
+                'password' => true,
+                'last_login' => true,
+            ),
+        );
+        if (!empty($noAccessFields[$module])) {
+            $fields = array_diff($fields, array_keys($noAccessFields[$module]));
+        }
+        return $fields;
+    }
+
+    /**
+     * Get current user
+     * @return User|null
+     */
+    protected function getCurrentUser()
+    {
+        return isset($GLOBALS['current_user']) ? $GLOBALS['current_user'] : null;
+    }
+}

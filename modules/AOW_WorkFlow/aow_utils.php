@@ -1,53 +1,107 @@
 <?php
 /**
- * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-function getModuleFields($module, $view='EditView',$value = '', $valid = array())
+function getModuleFields($module, $view='EditView', $value = '', $valid = array())
 {
-    global $app_strings, $beanList;
+    global $app_strings, $beanList, $current_user;
 
-    $fields = array(''=>$app_strings['LBL_NONE']);
+
+    $blockedModuleFields = array(
+        // module = array( ... fields )
+        'Users' => array(
+            'id',
+            'is_admin',
+            'name',
+            'user_hash',
+            'user_name',
+            'system_generated_password',
+            'pwd_last_changed',
+            'authenticate_id',
+            'sugar_login',
+            'external_auth_only',
+            'deleted',
+            'is_group',
+        )
+    );
+
+    $fields = array('' => $app_strings['LBL_NONE']);
     $unset = array();
 
-    if ($module != '') {
-        if(isset($beanList[$module]) && $beanList[$module]){
+    if ($module !== '') {
+        if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
-            foreach($mod->field_defs as $name => $arr){
-                if($arr['type'] != 'link' &&((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'], $valid)) && $name != 'currency_name' && $name != 'currency_symbol'){
-                    if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $fields[$name] = rtrim(translate($arr['vname'],$mod->module_dir), ':');
-                    } else {
-                        $fields[$name] = $name;
+            foreach ($mod->field_defs as $name => $arr) {
+                if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
+
+                    if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
+                        if (in_array($arr['name'],
+                                $blockedModuleFields[$mod->module_dir]
+                            ) && !$current_user->isAdmin()
+                        ) {
+                            $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
+                            continue;
+                        }
                     }
-                    if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
-                        $unset[] = $arr['id_name'];
+                    if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
+                                $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
+                    ) {
+                        if (isset($arr['vname']) && $arr['vname'] !== '') {
+                            $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
+                        } else {
+                            $fields[$name] = $name;
+                        }
+                        if ($arr['type'] === 'relate' && isset($arr['id_name']) && $arr['id_name'] !== '') {
+                            $unset[] = $arr['id_name'];
+                        }
                     }
                 }
             } //End loop.
 
-            foreach($unset as $name){
-                if(isset($fields[$name])) unset( $fields[$name]);
+            foreach ($unset as $name) {
+                if (isset($fields[$name])) {
+                    unset($fields[$name]);
+                }
             }
 
         }
@@ -101,11 +155,12 @@ function getModuleTreeData($module){
     global $beanList, $app_list_strings;
 
     $sort_fields = array();
+    $module_label = isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module;
     $fields = array(
-        $module =>  array('label' => $app_list_strings['moduleList'][$module],
+        $module =>  array('label' => $module_label,
                         'type' => 'module',
                         'module' => $module,
-                        'module_label'=> $app_list_strings['moduleList'][$module])
+                        'module_label'=> $module_label)
     );
 
     if ($module != '') {
@@ -119,11 +174,12 @@ function getModuleTreeData($module){
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
 
+                $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                 if(isset($arr['vname']) && $arr['vname'] != '') {
-                    $label = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                    $label = $rel_module_label . ' : ' . translate($arr['vname'], $mod->module_dir);
                     $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
                 }else {
-                    $label = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                    $label = $rel_module_label . ' : '. $name;
                     $module_label = $name;
                 }
                 $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module,'module_label'=>$module_label);
@@ -166,10 +222,11 @@ function getModuleRelationships($module, $view='EditView',$value = '')
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
                 if(!in_array($rel_module,$invalid_modules)){
+                    $relModuleName = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                     if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'],$mod->module_dir);
                     } else {
-                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                        $sort_fields[$name] = $relModuleName.' : '. $name;
                     }
                     if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
                         if(isset($fields[$arr['id_name']])) unset( $fields[$arr['id_name']]);
@@ -229,7 +286,7 @@ function getValidFieldsTypes($module, $field){
 }
 
 
-function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = ''){
+function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array()){
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     // use the mod_strings for this module
@@ -237,6 +294,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
     // set the filename for this control
     $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
+
+    $displayParams = array();
 
     if ( !is_file($file)
         || inDeveloperMode()
@@ -256,7 +315,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef = $focus->getFieldDefinition($fieldname);
         }
 
-        $displayParams = array();
+
         //$displayParams['formName'] = 'EditView';
 
         // if this is the id relation field, then don't have a pop-up selector.
@@ -290,7 +349,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'].'_id';
             if((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
-                $vardef['module'] = $focus->$vardef['name']->getRelatedModuleName();
+                $relName = $vardef['name'];
+                $vardef['module'] = $focus->$relName->getRelatedModuleName();
             }
 
         }
@@ -371,7 +431,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields = $focus->getFieldDefinitions();
-    if ( $vardefFields[$fieldname]['type'] == 'parent_type' ) {
+    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type' ) {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
     foreach ( $vardefFields as $name => $properties ) {
@@ -403,11 +463,12 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         }
     }
 
-    if($fieldlist[$fieldname]['type'] == 'link'){
+    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'link'){
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'].'_id';
 
         if((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
-            $fieldlist[$fieldname]['module'] = $focus->$fieldlist[$fieldname]['name']->getRelatedModuleName();
+            $relName = $fieldlist[$fieldname]['name'];
+            $fieldlist[$fieldname]['module'] = $focus->$relName->getRelatedModuleName();
         }
     }
 
@@ -436,10 +497,11 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
             $rel_focus->retrieve($value);
             if(isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != ''){
-                $rel_value = $rel_focus->$fieldlist[$fieldname]['rname'];
+                $relDisplayField = $fieldlist[$fieldname]['rname'];
             } else {
-                $rel_value = $rel_focus->name;
+                $relDisplayField = 'name';
             }
+            $rel_value = $rel_focus->$relDisplayField;
         }
 
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
@@ -447,9 +509,15 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')){
+    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+        if(!empty($params['date_format']) && isset($params['date_format'])){
+            $convert_format = "Y-m-d H:i:s";
+            if($fieldlist[$fieldname]['type'] == 'date') $convert_format = "Y-m-d";
+            $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
+        }else{
+            $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+        }
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
@@ -463,7 +531,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
     }
 
-    if($fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
+    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
         static $sfh;
 
         if(!isset($sfh)) {
@@ -517,7 +585,7 @@ function getDateField($module, $aow_field, $view='EditView', $value, $field_opti
         $field .= "<select type='text' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' onchange='date_field_change(\"$aow_field\")'  title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_operator'], $value[1]) ."</select>&nbsp;";
         $display = 'none';
         if($value[1] == 'plus' || $value[1] == 'minus') $display = '';
-        $field .= "<input  type='text' style='width:40px; display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' value='$value[2]' tabindex='116'>&nbsp;";
+        $field .= "<input  type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' value='$value[2]' tabindex='116'>&nbsp;";
         $field .= "<select type='text' style='display:$display' name='$aow_field".'[3]'."' id='$aow_field".'[3]'."' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_type_list'], $value[3]) ."</select>";
     }
     else {
@@ -707,7 +775,8 @@ function getRelatedEmailableFields($module){
                     if(isset($field['module']) && $field['module'] != '') {
                         $rel_module = $field['module'];
                     } else if($mod->load_relationship($field['name'])){
-                        $rel_module = $mod->$field['name']->getRelatedModuleName();
+                        $relField = $field['name'];
+                        $rel_module = $mod->$relField->getRelatedModuleName();
                     }
 
                     if(in_array($rel_module,$emailableModules)) {

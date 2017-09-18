@@ -44,9 +44,24 @@ class SoapResourceObserver extends ResourceObserver {
 
 private $soapServer;
 
-function SoapResourceObserver($module) {
-   parent::ResourceObserver($module);
+function __construct($module) {
+   parent::__construct($module);
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SoapResourceObserver($module){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($module);
+    }
+
 
 
 /**
@@ -74,11 +89,11 @@ $error->set_error('resource_management_error');
 //Override the description
 $error->description = $msg;
 $this->soapServer->methodreturn = array('result'=>$msg, 'error'=>$error->get_soap_array());
-$this->soapServer->serialize_return();	
+$this->soapServer->serialize_return();
 $this->soapServer->send_response();
 sugar_cleanup(true);
 
-}	
-	
+}
+
 }
 ?>

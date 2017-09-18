@@ -46,7 +46,7 @@ function copy_recursive( $source, $dest ){
     if( is_file( $source ) ){
         return( copy( $source, $dest ) );
     }
-    if( !sugar_is_dir($dest, 'instance') ){
+    if( !is_dir($dest) ){
         sugar_mkdir( $dest );
     }
 
@@ -68,10 +68,10 @@ function copy_recursive( $source, $dest ){
 
 function mkdir_recursive($path, $check_is_parent_dir = false)
 {
-	if(sugar_is_dir($path, 'instance')) {
+	if(is_dir($path)) {
 		return(true);
 	}
-	if(sugar_is_file($path, 'instance')) {
+	if(is_file($path)) {
 	    if(!empty($GLOBALS['log'])) {
 		    $GLOBALS['log']->fatal("ERROR: mkdir_recursive(): argument $path is already a file.");
 	    }
@@ -187,6 +187,16 @@ function findTextFiles( $the_dir, $the_array ){
     return( $the_array );
 }
 
+
+function getBacktraceString() {
+    ob_start();
+    debug_print_backtrace();
+    $contents = ob_get_contents();
+    ob_end_clean();
+    return $contents;
+}
+
+
 function findAllFiles( $the_dir, $the_array, $include_dirs=false, $ext='', $exclude_dir=''){
 	// jchi  #24296
 	if(!empty($exclude_dir)){
@@ -203,6 +213,20 @@ function findAllFiles( $the_dir, $the_array, $include_dirs=false, $ext='', $excl
 		return $the_array;
 	}
 	$d = dir($the_dir);
+
+    if(is_null($d)) {
+        $backtrace = getBacktraceString();
+        $emsg = 'wrong parameter for dir() function: ' . $the_dir . "\n" . $backtrace;
+        $GLOBALS['log']->fatal($emsg);
+        return $the_array;
+    }
+    if($d === false) {
+        $backtrace = getBacktraceString();
+        $emsg = 'dir() function return with another error: ' . $the_dir . "\n" . $backtrace;
+        $GLOBALS['log']->fatal($emsg);
+        return $the_array;
+    }
+
     while (false !== ($f = $d->read())) {
         if( $f == "." || $f == ".." ){
             continue;

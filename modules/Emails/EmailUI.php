@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+
+if (!defined('sugarEntry') || !sugarEntry){
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
 
@@ -72,14 +76,14 @@ class EmailUI {
 	/**
 	 * Sole constructor
 	 */
-	function EmailUI() {
+	function __construct() {
 		global $sugar_config;
 		global $current_user;
 
 		$folderStateSerial = $current_user->getPreference('folderOpenState', 'Emails');
 
 		if(!empty($folderStateSerial)) {
-			$this->folderStates = unserialize($folderStateSerial);
+			$this->folderStates = sugar_unserialize($folderStateSerial);
 		}
 
 		$this->smarty = new Sugar_Smarty();
@@ -88,6 +92,19 @@ class EmailUI {
 		$this->db = DBManagerFactory::getInstance();
 	}
 
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function EmailUI(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
 
 	///////////////////////////////////////////////////////////////////////////
 	////	CORE
@@ -248,7 +265,7 @@ class EmailUI {
 		$preloadFolder = 'lazyLoadFolder = ';
 		$focusFolderSerial = $current_user->getPreference('focusFolder', 'Emails');
 		if(!empty($focusFolderSerial)) {
-			$focusFolder = unserialize($focusFolderSerial);
+			$focusFolder = sugar_unserialize($focusFolderSerial);
 			//$focusFolder['ieId'], $focusFolder['folder']
 			$preloadFolder .= json_encode($focusFolder).";";
 		} else {
@@ -428,6 +445,7 @@ eoq;
 		$lang = "var app_strings = new Object();\n";
 		foreach($app_strings as $k => $v) {
 			if(strpos($k, 'LBL_EMAIL_') !== false) {
+				$v = str_replace("'", "\'", $v);
 				$lang .= "app_strings.{$k} = '{$v}';\n";
 			}
 		}
@@ -593,7 +611,7 @@ eoq;
 		// prefill some REQUEST vars for emailAddress save
 		$_REQUEST['emailAddressOptOutFlag'] = $obj['optOut'];
 		$_REQUEST['emailAddressInvalidFlag'] = $obj['invalid'];
-		$contact->emailAddress->save($obj['contact_id'], 'Contacts', $addresses, $obj['primary'], '');
+		$contact->emailAddress->saveEmail($obj['contact_id'], 'Contacts', $addresses, $obj['primary'], '');
 	}
 
 	/**
@@ -724,18 +742,18 @@ eoq;
 		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 		$sortArray = array();
 		if(!empty($sortSerial)) {
-			$sortArray = unserialize($sortSerial);
+			$sortArray = sugar_unserialize($sortSerial);
 		}
 
 		// treeview collapsed/open states
 		$folderStateSerial = $current_user->getPreference('folderOpenState', 'Emails');
 		$folderStates = array();
 		if(!empty($folderStateSerial)) {
-			$folderStates = unserialize($folderStateSerial);
+			$folderStates = sugar_unserialize($folderStateSerial);
 		}
 
 		// subscribed accounts
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		// general settings
 		$emailSettings = $current_user->getPreference('emailSettings', 'Emails');
@@ -752,7 +770,7 @@ eoq;
 
 		// focus folder
 		$focusFolder = $current_user->getPreference('focusFolder', 'Emails');
-		$focusFolder = !empty($focusFolder) ? unserialize($focusFolder) : array();
+		$focusFolder = !empty($focusFolder) ? sugar_unserialize($focusFolder) : array();
 
 		// unread only flag
 		$showUnreadOnly = $current_user->getPreference('showUnreadOnly', 'Emails');
@@ -831,7 +849,7 @@ eoq;
 
 		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 		if(!empty($sortSerial)) {
-			$sortArray = unserialize($sortSerial);
+			$sortArray = sugar_unserialize($sortSerial);
 		}
 
 		$sortArray[$ieId][$focusFolder]['current']['sort'] = $sortBy;
@@ -850,7 +868,7 @@ eoq;
 		$folderStates = array();
 
 		if(!empty($folderStateSerial)) {
-			$folderStates = unserialize($folderStateSerial);
+			$folderStates = sugar_unserialize($folderStateSerial);
 		}
 
 		$folderStates[$focusFolder] = $focusFolderOpen;
@@ -907,7 +925,7 @@ eoq;
 	function emptyTrash(&$ie) {
 		global $current_user;
 
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		if(is_array($showFolders)) {
 			foreach($showFolders as $ieId) {
@@ -940,7 +958,7 @@ eoq;
 		$rootNode->dynamicloadfunction = '';
 		$rootNode->expanded = true;
 		$rootNode->dynamic_load = true;
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		if(empty($showFolders)) {
 			$showFolders = array();
@@ -1822,6 +1840,10 @@ function getSingleMessage($ie) {
 			$filename = $_REQUEST['mbox'].$md5uidl.".php";
 		} // if
 
+		if(isset($filename) && strpos($filename, "..") !== false){
+			die("Directory navigation attack denied.");
+		}
+
 		if($this->validCacheFileExists($_REQUEST['ieId'], 'messages', $filename)) {
 			$out = $this->getCacheValue($_REQUEST['ieId'], 'messages', $filename, 'out');
 			$noCache = false;
@@ -2121,7 +2143,7 @@ eoq;
 				$t .= " AND (".  $owner_where." or ".$group_where.") ";
 			}
 			/* END - SECURITY GROUPS */
-    	
+
 
 			if(!empty($q)) {
 				$q .= "\n UNION ALL \n";
@@ -2489,7 +2511,7 @@ eoq;
 
 		if(ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess('EmailTemplates', 'view', true)) {
 			$et = new EmailTemplate();
-            $etResult = $et->db->query($et->create_new_list_query('',"(type IS NULL OR type='' OR type='email')",array(),array(),''));
+            $etResult = $et->db->query($et->create_new_list_query('',"(email_templates.type IS NULL OR email_templates.type='' OR email_templates.type='email')",array(),array(),''));
 			$email_templates_arr = array('' => $app_strings['LBL_NONE']);
 			while($etA = $et->db->fetchByAssoc($etResult)) {
 				$email_templates_arr[$etA['id']] = $etA['name'];
@@ -2527,7 +2549,7 @@ eoq;
 		} // if
 
 		//Check to make sure that the user has set the associated inbound email account -> outbound account is active.
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
         $sf = new SugarFolder();
         $groupSubs = $sf->getSubscriptions($current_user);
 
@@ -2718,7 +2740,7 @@ eoq;
 
 		$ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
 		$ieAccountsShowOptionsMeta = array();
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		$defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
 
@@ -2772,7 +2794,7 @@ eoq;
 		//$ieAccountsShowOptions = "<option value=''>{$app_strings['LBL_NONE']}</option>\n";
 		$ieAccountsShowOptionsMeta = array();
 		$ieAccountsShowOptionsMeta[] = array("value" => "", "text" => $app_strings['LBL_NONE'], 'selected' => '');
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		foreach($ieAccountsFull as $k => $v) {
 			if(!in_array($v->id, $showFolders)) {

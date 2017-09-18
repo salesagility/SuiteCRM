@@ -188,7 +188,7 @@ class ViewQuickedit extends ViewAjax
 
         $defaultProcess = true;
         if(file_exists($editFileName)) {
-           include($editFileName);
+           include_once $editFileName;
            $c = $module . 'ViewEdit';
 
            if(class_exists($c)) {

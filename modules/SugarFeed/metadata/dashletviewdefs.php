@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,20 +37,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
-
-global $current_user;
-
-$dashletData['SugarFeedDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
-                                                          'date_modified'    => array('default' => ''),
-                                                          'assigned_user_id' => array('type'    => 'assigned_user_name',
-                                                                                      'default' => $current_user->name));
-$dashletData['SugarFeedDashlet']['columns'] =  array(   'name' => array('width'   => '40',
-                                                                      'label'   => '',
-                                                                      'link'    => false,
-																	  'sortable'=>false,
-                                                                      'default' => true), 
-
-                                               );
+$dashletData['SugarFeedDashlet']['searchFields'] = array(
+    'date_entered' =>
+        array(
+            'default' => '',
+        ),
+    'date_modified' =>
+        array(
+            'default' => '',
+        ),
+    'assigned_user_id' =>
+        array(
+            'type' => 'assigned_user_name',
+            'default' => $current_user->name
+        ),
+);
+$dashletData['SugarFeedDashlet']['columns'] = array(
+    'name' =>
+        array(
+            'width' => '40%',
+            'label' => '',
+            'link' => false,
+            'sortable' => false,
+            'default' => true,
+            'name' => 'name',
+        ),
+);

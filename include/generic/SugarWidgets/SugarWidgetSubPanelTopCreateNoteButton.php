@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopCreateNoteButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
-	function &_get_form($defines, $additionalFormFields = null)
+	function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
 	{
 		global $app_strings;
 		global $currentModule;
@@ -152,7 +152,7 @@ class SugarWidgetSubPanelTopCreateNoteButton extends SugarWidgetSubPanelTopButto
 	}
 
 
-	function display($defines, $additionalFormFields = null)
+	function display($defines, $additionalFormFields = null, $nonbutton = false)
 	{
 	    $focus = new Note;
 		if ( !$focus->ACLAccess('EditView') ) {

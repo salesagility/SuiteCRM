@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -46,18 +46,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopSelectButton
 {
 	//button_properties is a collection of properties associated with the widget_class definition. layoutmanager
-	function SugarWidgetSubPanelTopSelectContactsButton($button_properties=array())
+	function __construct($button_properties=array())
 	{
 		$this->button_properties=$button_properties;
 	}
 
-    public function getWidgetId()
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetSubPanelTopSelectContactsButton($button_properties=array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($button_properties);
+    }
+
+
+    public function getWidgetId($buttonSuffix = true)
     {
         return parent::getWidgetId() . '_select_button';
     }
 
 	//widget_data is the collection of attributes associated with the button in the layout_defs file.
-	function display(&$widget_data)
+	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		global $app_strings;
 		$initial_filter = '';
@@ -106,10 +121,11 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 			$this->module_name = $subpanel_name;
 		}
 
-		if ($subpanel_name == 'Project'){
-			$link_field_name = 'contact_resources';
-		}
-		else{
+		if ($subpanel_name == 'Project') {
+			$link_field_name = 'project_contacts_1';
+		} elseif ($subpanel_name == 'AM_ProjectTemplates') {
+			$link_field_name = 'am_projecttemplates_contacts_1';
+		} else {
 			$link_field_name = $subpanel_definition->get_data_source_name(true);
 		}
 

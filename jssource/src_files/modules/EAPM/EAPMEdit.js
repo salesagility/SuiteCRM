@@ -42,6 +42,7 @@
  */
 function EAPMChange() {
     var apiName = '';
+    var passwordPlaceholder = '::PASSWORD::';
 
     if ( EAPMFormName == 'EditView' ) {
         apiName = document.getElementById('application').value;
@@ -67,6 +68,29 @@ function EAPMChange() {
         passObj.setContext(new SUGAR.forms.FormExpressionContext(this.form));
         if ( EAPMFormName == 'EditView' ) {
             EAPMSetFieldRequired('password',(apiOpts.authMethod == 'password'));
+            var $el = $('#password');
+
+            //Setup a toggle to prevent accidental password changes since we no longer send the real password
+            //to the browser
+            if ($el.val() == passwordPlaceholder) {
+                var instructions = $(EAPMBClickToEdit);
+                instructions.click(function(e) {
+                    e.preventDefault();
+                    $el.val('');
+                    instructions.hide();
+                    $el.show();
+                    $el.focus();
+                });
+                $el.parent().append(instructions);
+                $el.hide();
+                $el.focusout(function() {
+                    if ($el.val() == '') {
+                        $el.val(passwordPlaceholder);
+                        instructions.show();
+                        $el.hide();
+                    }
+                });
+            }
         }
 
         urlObj.exec();

@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,7 +39,7 @@
  ********************************************************************************/
 
     $field = $_REQUEST['field'];
-    $removeFile = "upload://{$_REQUEST['image_c_record_id']}_" . $field;
+    $removeFile = "upload://{$_REQUEST[$field . '_record_id'] }_" . $field;
     $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST[$field . "_record_id"]);
 
 

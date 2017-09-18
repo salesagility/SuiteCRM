@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -68,7 +68,7 @@ if (
 'submenu' => ''
 );
 $global_control_links['training'] = array(
-'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'http://support.sugarcrm.com\'))'),
+'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'http://suitecrm.com/forum/index\'))'),
 'submenu' => ''
  );
 
@@ -88,10 +88,10 @@ $global_control_links['about'] = array('linkinfo' => array($app_strings['LNK_ABO
 'submenu' => ''
 );
 
-if (sugar_is_file('custom/include/globalControlLinks.php')) {
+if (is_file('custom/include/globalControlLinks.php')) {
     include('custom/include/globalControlLinks.php');
 }
-if (sugar_is_file('custom/application/Ext/GlobalLinks/links.ext.php')) {
+if (is_file('custom/application/Ext/GlobalLinks/links.ext.php')) {
     include('custom/application/Ext/GlobalLinks/links.ext.php');
 }
 ?>

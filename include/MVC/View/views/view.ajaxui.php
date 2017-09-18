@@ -52,10 +52,10 @@ class ViewAjaxUI extends SugarView
 		$this->options['show_header'] = true;
 		$this->options['show_footer'] = true;
 		$this->options['show_javascript'] = true;
-		$this->options['show_subpanels'] = false; 
+		$this->options['show_subpanels'] = false;
 		$this->options['show_search'] = false;
-		
- 		parent::SugarView();
+
+ 		parent::__construct();
  	}
 
     public function display()

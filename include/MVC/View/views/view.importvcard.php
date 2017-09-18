@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
- 
+
 require_once('include/vCard.php');
 
 class ViewImportvcard extends SugarView
@@ -54,9 +54,9 @@ class ViewImportvcard extends SugarView
 
     public function __construct()
     {
- 		parent::SugarView();
+ 		parent::__construct();
  	}
- 	
+
 	/**
      * @see SugarView::display()
      */

@@ -43,6 +43,9 @@ array (
   array (
     'templateMeta' => 
     array (
+        'includes' => array(
+            array('file' => 'modules/Reminders/Reminders.js'),
+        ),
       'maxColumns' => '2',
       'form' => 
       array (
@@ -86,6 +89,23 @@ array (
             'customCode' => '{if $fields.status.value != "Held"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" id="CLOSE_CREATE_FOOTER" accessKey="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_KEY}" class="button" onclick="SUGAR.calls.fill_invitees(); document.EditView.status.value=\'Held\'; document.EditView.action.value=\'Save\'; document.EditView.return_module.value=\'Calls\'; document.EditView.isDuplicate.value=true; document.EditView.isSaveAndNew.value=true; document.EditView.return_action.value=\'EditView\'; document.EditView.return_id.value=\'{$fields.id.value}\'; formSubmitCheck();" type="button" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
           ),
         ),
+        'headerTpl' => 'modules/Calls/tpls/header.tpl',
+        'buttons_footer' =>
+            array (
+                0 =>
+                    array (
+                        'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_FOOTER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.calls.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
+                    ),
+                1 => 'CANCEL',
+                2 =>
+                    array (
+                        'customCode' => '<input title="{$MOD.LBL_SEND_BUTTON_TITLE}" id="save_and_send_invites_footer" class="button" onclick="document.EditView.send_invites.value=\'1\';SUGAR.calls.fill_invitees();document.EditView.action.value=\'Save\';document.EditView.return_action.value=\'EditView\';document.EditView.return_module.value=\'{$smarty.request.return_module}\'; formSubmitCheck();"type="button" name="button" value="{$MOD.LBL_SEND_BUTTON_LABEL}">',
+                    ),
+                3 =>
+                    array (
+                        'customCode' => '{if $fields.status.value != "Held"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" id="close_and_create_new_footer" class="button" onclick="SUGAR.calls.fill_invitees(); document.EditView.status.value=\'Held\'; document.EditView.action.value=\'Save\'; document.EditView.return_module.value=\'Meetings\'; document.EditView.isDuplicate.value=true; document.EditView.isSaveAndNew.value=true; document.EditView.return_action.value=\'EditView\'; document.EditView.return_id.value=\'{$fields.id.value}\'; formSubmitCheck();"type="button" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
+                    ),
+            ),
         'footerTpl' => 'modules/Calls/tpls/footer.tpl',
       ),
       'widths' => 
@@ -166,14 +186,22 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_DURATION',
             'customCode' => '{literal}<script type="text/javascript">function isValidDuration() { form = document.getElementById(\'EditView\'); if ( form.duration_hours.value + form.duration_minutes.value <= 0 ) { alert(\'{/literal}{$MOD.NOTICE_DURATION_TIME}{literal}\'); return false; } return true; }</script>{/literal}<input id="duration_hours" name="duration_hours" size="2" maxlength="2" type="text" value="{$fields.duration_hours.value}" onkeyup="SugarWidgetScheduler.update_time();"/>{$fields.duration_minutes.value}&nbsp;<span class="dateFormat">{$MOD.LBL_HOURS_MINUTES}</span>',
           ),
-          1 => 
-          array (
-            'name' => 'reminder_time',
-            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
-            'label' => 'LBL_REMINDER',
-          ),
+//          1 =>
+//          array (
+//            'name' => 'reminder_time',
+//            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
+//            'label' => 'LBL_REMINDER',
+//          ),
         ),
-        3 => 
+        3 => array(
+            0 =>
+                array (
+                    'name' => 'reminders',
+                    'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
+                    'label' => 'LBL_REMINDERS',
+                ),
+        ),
+        4 =>
         array (
           0 => 
           array (
@@ -182,7 +210,7 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
-        4 => 
+        5 =>
         array (
           0 => 
           array (

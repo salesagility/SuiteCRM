@@ -83,8 +83,8 @@ $out =<<<EOQ
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_DBCONF_TITLE']}</title>
     <link rel="stylesheet" href="install/install.css" type="text/css" />
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
     <script type="text/javascript" src="install/installCommon.js"></script>
     <script type="text/javascript" src="install/dbConfig.js"></script>
@@ -200,8 +200,8 @@ if($db->supports("create_user")){
             <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
             <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
-            <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" /><input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
-            <input type="hidden" name="setup_db_sugarsales_password" value="{$_SESSION['setup_db_sugarsales_password']}" />
+            <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
+            <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD2']}</b></label>
             <input type="password" name="setup_db_sugarsales_password_retype_entry" value="{$setup_db_sugarsales_password_retype}"  /><input type="hidden" name="setup_db_sugarsales_password_retype" value="{$setup_db_sugarsales_password_retype}" />
     </span>

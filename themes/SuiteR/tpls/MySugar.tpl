@@ -152,8 +152,8 @@
     </div>
 
 </div>
-<script type="text/javascript" src="custom/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-<script type="text/javascript" src="custom/include/MySugar/javascript/retrievePage.js"></script>
+<script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+<script type="text/javascript" src="include/MySugar/javascript/retrievePage.js"></script>
 <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/dashboardstyle.css">
 <script type="text/javascript">
 

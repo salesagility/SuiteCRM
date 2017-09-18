@@ -273,6 +273,14 @@ $from_addr = !empty($focus->from_addr_name) ? htmlspecialchars($focus->from_addr
 $cc_addr = !empty($focus->cc_addrs_names) ? htmlspecialchars($focus->cc_addrs_names, ENT_COMPAT, 'UTF-8') : nl2br($focus->cc_addrs);
 $bcc_addr = !empty($focus->bcc_addrs_names) ? htmlspecialchars($focus->bcc_addrs_names, ENT_COMPAT, 'UTF-8') : nl2br($focus->bcc_addrs);
 
+$parent_link = $focus->parent_name;
+if($focus->parent_id != '' & $focus->parent_type != ''){
+	$parent_link = '<a class="tabDetailViewDFLink" href="index.php?module='.$focus->parent_type.'&action=DetailView&record='.$focus->parent_id.'">'.$focus->parent_name.'</a>';
+}
+$assign_link = $focus->assigned_user_name;
+if($focus->assigned_user_id != '' & $focus->assigned_user_name != ''){
+	$assign_link = '<a class="tabDetailViewDFLink" href="index.php?module=Users&action=DetailView&record='.$focus->assigned_user_id.'">'.$focus->assigned_user_name.'</a>';
+}
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
 $xtpl->assign('GRIDLINE', $gridline);
@@ -280,9 +288,10 @@ $xtpl->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
 $xtpl->assign('ID', $focus->id);
 $xtpl->assign('TYPE', $email_type);
 $xtpl->assign('PARENT_NAME', $focus->parent_name);
+$xtpl->assign('PARENT_LINK', $parent_link);
 $xtpl->assign('PARENT_ID', $focus->parent_id);
 $xtpl->assign('NAME', $focus->name);
-$xtpl->assign('ASSIGNED_TO', $focus->assigned_user_name);
+$xtpl->assign('ASSIGNED_TO', $assign_link);
 $xtpl->assign('DATE_MODIFIED', $focus->date_modified);
 $xtpl->assign('DATE_ENTERED', $focus->date_entered);
 $xtpl->assign('DATE_START', $focus->date_start);

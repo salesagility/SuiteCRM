@@ -139,7 +139,9 @@ class CalendarController extends SugarController
             if (!empty($_REQUEST['edit_all_recurrences'])) {
                 $jsonData['edit_all_recurrences'] = 'true';
             }
-                
+            if($jsonData['duration_hours'] %24 == 0) {
+                $jsonData['allDay'] == "true";
+            }
         } else {
             $jsonData = array(
                 'access' => 'no',
@@ -165,7 +167,12 @@ class CalendarController extends SugarController
         $this->view_object_map['currentBean'] = $this->currentBean;    
 
     }
-    
+
+    protected function action_getUser(){
+        $bean = BeanFactory::getBean("Users", $_REQUEST['record']);
+        echo json_encode( array("user_name" => $bean->user_name, "full_name" =>  $bean->full_name) );
+        die();
+    }
     /**
      * Action Reschedule
      * Used for drag & drop
@@ -185,12 +192,19 @@ class CalendarController extends SugarController
         $dateField = "date_start";
         if ($this->currentBean->module_dir == "Tasks") {
             $dateField = "date_due";
-        }            
+        }
+        if($_REQUEST['allDay'] == true){
+            $endDateField = "date_end";
+            list($tmp, $time) = explode(" ", $this->currentBean->$endDateField);
+            list($date, $tmp) = explode(" ", $_REQUEST['enddatetime']);
+            $_REQUEST[ $endDateField ] = $date . " " . $tmp;
+            $_POST[$endDateField] = $_REQUEST[ $endDateField ];
+        }
 
         if (!empty($_REQUEST['calendar_style']) && $_REQUEST['calendar_style'] == "basic") {
             list($tmp, $time) = explode(" ", $this->currentBean->$dateField);            
             list($date, $tmp) = explode(" ", $_REQUEST['datetime']);
-            $_REQUEST['datetime'] = $date . " " . $time;            
+            $_POST['datetime'] = $date . " " . $tmp;
         }
         $_POST[$dateField] = $_REQUEST['datetime'];
         

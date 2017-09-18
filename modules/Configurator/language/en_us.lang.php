@@ -87,8 +87,8 @@ $mod_strings = array (
 	'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port:',
 	'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server:',
     'LBL_ALLOW_DEFAULT_SELECTION'           => 'Allow users to use this account for outgoing email:',
-    'LBL_ALLOW_DEFAULT_SELECTION_HELP'          => 'When this option is selected, all users will be able to send emails using the same outgoing mail account used to send system notifications and alerts.  If the option is not selected, users can still use the outgoing mail server after providing their own account information.',
-	'LBL_MAILMERGE_DESC' => 'This flag should be checked only if you have the Sugar Plug-in for Microsoft&reg; Word&reg;.',
+    'LBL_ALLOW_DEFAULT_SELECTION_HELP'          => 'When this option is selected, all users will be able to send emails using the same outgoing mail account used to send system notifications and alerts. If the option is not selected, users can still use the outgoing mail server after providing their own account information.',
+	'LBL_MAILMERGE_DESC' => 'This flag should be checked only if you have the SuiteCRM Plugin for Microsoft&reg; Word&reg;.',
 	'LBL_MAILMERGE' => 'Mail Merge',
 	'LBL_MIN_AUTO_REFRESH_INTERVAL' => 'Minimum Dashlet Auto-Refresh Interval',
 	'LBL_MIN_AUTO_REFRESH_INTERVAL_HELP' => 'This is the minimum value one can choose to have dashlets auto-refresh. Setting to \'Never\' disables auto-refreshing of dashlets entirely.',
@@ -99,7 +99,7 @@ $mod_strings = array (
 	'LBL_MODULE_TITLE'=>'User Interface',
 	'LBL_NOTIFY_FROMADDRESS' => '"From" Address:',
 	'LBL_NOTIFY_SUBJECT' => 'Email subject:',
-	'LBL_PORTAL_ON_DESC' => 'Allows users to manage portal user information within contact records. Portal users can access Cases, Bugs, Knowledge Base articles and other data through the Sugar Portal application.',
+	'LBL_PORTAL_ON_DESC' => 'Allows users to manage portal user information within contact records. Portal users can access Cases, Bugs, Knowledge Base articles and other data through the SuiteCRM Portal application.',
 	'LBL_PORTAL_ON' => 'Enable Portal User Management',
 	'LBL_PORTAL_TITLE' => 'Customer Self-Service Portal',
 	'LBL_PROXY_AUTH'=>'Authentication?',
@@ -112,9 +112,9 @@ $mod_strings = array (
 	'LBL_PROXY_USERNAME'=>'User Name',
 	'LBL_RESTORE_BUTTON_LABEL'=>'Restore',
 	'LBL_SYSTEM_SETTINGS' => 'System Settings',
-	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using SkypeOut&reg;. The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
-	'LBL_SKYPEOUT_ON' => 'Enable SkypeOut&reg; integration',
-	'LBL_SKYPEOUT_TITLE' => 'SkypeOut&reg;',
+	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using the phone dialer on your mobile device, or a telephony app on your computer (SkypeOut&reg;, etc.). The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
+	'LBL_SKYPEOUT_ON' => 'Enable click-to-call for phone numbers',
+	'LBL_SKYPEOUT_TITLE' => 'Click-To-Call',
 	'LBL_USE_REAL_NAMES'	=> 'Show Full Names',
 	'LBL_USE_REAL_NAMES_DESC'			=> 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_DISALBE_CONVERT_LEAD' => 'Disable convert lead action for converted leads',
@@ -125,16 +125,17 @@ $mod_strings = array (
     'LBL_ENABLE_INLINE_EDITING_LIST_DESC' => 'Select to enable Inline Editing for fields on the list view. If unselected Inline Editing will be disabled on list view.',
     'LBL_ENABLE_INLINE_EDITING_DETAIL' => 'Enable inline editing on detail view',
     'LBL_ENABLE_INLINE_EDITING_DETAIL_DESC' => 'Select to enable Inline Editing for fields on the detail view. If unselected Inline Editing will be disabled on detail view.',
+	'LBL_HIDE_SUBPANELS' => 'Collapsed subpanels',
     'LIST_ENTRIES_PER_LISTVIEW'=>'Listview items per page',
 	'LIST_ENTRIES_PER_SUBPANEL'=>'Subpanel items per page',
 	'LOG_MEMORY_USAGE'=>'Log memory usage',
 	'LOG_SLOW_QUERIES'=>'Log slow queries',
     'LOCK_HOMEPAGE_HELP'=>'This setting is to prevent<BR> 1) the addition of any dashlets to the home page, <BR>2) customization of dashlet placement in the home pages by dragging and dropping.',
     'CURRENT_LOGO'=>'Current Logo:',
-    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the Sugar application.',
+    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
     'NEW_LOGO'=>'Select Logo:',
-	'NEW_LOGO_HELP'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
-    'NEW_LOGO_HELP_NO_SPACE'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions. Image file name must not contain a space character.',
+	'NEW_LOGO_HELP'=>'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
+    'NEW_LOGO_HELP_NO_SPACE'=>'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions. Image file name must not contain a space character.',
     'NEW_QUOTE_LOGO'=>'Upload new Quotes logo',
     'NEW_QUOTE_LOGO_HELP'=>'The required image file format is .jpg.<BR>The recommended size is 867x74 px.',
     'QUOTES_CURRENT_LOGO'=>'Quotes logo',
@@ -144,7 +145,7 @@ $mod_strings = array (
 	'VERIFY_CLIENT_IP'=>'Validate user IP address',
     'LOCK_HOMEPAGE' => 'Prevent user customizable Homepage layout',
     'LOCK_SUBPANELS' => 'Prevent user customizable subpanel layout',
-    'MAX_DASHLETS' => 'Maximum number of Sugar Dashlets on Homepage',
+    'MAX_DASHLETS' => 'Maximum number of SuiteCRM Dashlets on Homepage',
 	'SYSTEM_NAME'=>'System Name:',
 	'SYSTEM_NAME_WIZARD'=>'Name:',
 	'SYSTEM_NAME_HELP'=>'This is the name that displays in the title bar of your browser.',
@@ -153,7 +154,7 @@ $mod_strings = array (
     'LBL_LDAP_SERVER_HOSTNAME'=> 'Server:',
     'LBL_LDAP_SERVER_PORT'=> 'Port Number:',
     'LBL_LDAP_ADMIN_USER'=> 'User Name:',
-    'LBL_LDAP_ADMIN_USER_DESC'=>'Used to search for the Sugar user. [May need to be fully qualified] It will bind anonymously if not provided.',
+    'LBL_LDAP_ADMIN_USER_DESC'=>'Used to search for the SuiteCRM user. [May need to be fully qualified] It will bind anonymously if not provided.',
     'LBL_LDAP_ADMIN_PASSWORD'=> 'Password:',
 	'LBL_LDAP_AUTHENTICATION'=> 'Authentication:',
 	'LBL_LDAP_AUTHENTICATION_DESC'=>'Bind to the LDAP server using a specific users credentials',
@@ -168,7 +169,7 @@ $mod_strings = array (
 	'LBL_LDAP_GROUP_USER_ATTR_DESC'=>'The unique identifier of the person that will be used to check if they are a member of the group Example: <em>uid</em>',
 	'LBL_LDAP_GROUP_ATTR_DESC'=>'The attribute of the Group that will be used to filter against the User Attribute Example: <em>memberUid</em>',
 	'LBL_LDAP_GROUP_ATTR'=>'Group Attribute:',
-	'LBL_LDAP_USER_FILTER_DESC'=>'Any additional filter params to apply when authenticating users e.g.<em>is_sugar_user=1 or (is_sugar_user=1)(is_sales=1)</em>',
+	'LBL_LDAP_USER_FILTER_DESC'=>'Any additional filter params to apply when authenticating users e.g.<em>is_suitecrm_user=1 or (is_suitecrm_user=1)(is_sales=1)</em>',
     'LBL_LDAP_LOGIN_ATTRIBUTE'=>'Login Attribute:',
     'LBL_LDAP_BIND_ATTRIBUTE'=>'Bind Attribute:',
     'LBL_LDAP_BIND_ATTRIBUTE_DESC'=>'For Binding the LDAP User Examples:[<b>AD:</b>&nbsp;userPrincipalName] [<b>openLDAP:</b>&nbsp;userPrincipalName] [<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid] ',
@@ -176,14 +177,14 @@ $mod_strings = array (
     'LBL_LDAP_SERVER_HOSTNAME_DESC'=>'Example: ldap.example.com or ldaps://ldap.example.com for SSL',
     'LBL_LDAP_SERVER_PORT_DESC'=>'Example: <em>389 or 636 for SSL</em>',
 	'LBL_LDAP_GROUP_NAME'=>'Group Name:',
-	'LBL_LDAP_GROUP_NAME_DESC'=>'Example <em>cn=sugarcrm</em>',
+	'LBL_LDAP_GROUP_NAME_DESC'=>'Example <em>cn=suitecrm</em>',
     'LBL_LDAP_USER_DN_DESC'=>'Example: <em>ou=people,dc=example,dc=com</eM>',
-    'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'If an authenticated user does not exist one will be created in Sugar.',
+    'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'If an authenticated user does not exist one will be created.',
     'LBL_LDAP_ENC_KEY'	=> 'Encryption Key:',
     'DEVELOPER_MODE'=>'Developer Mode',
 
 	'SHOW_DOWNLOADS_TAB' =>'Display Downloads Tab',
-	'SHOW_DOWNLOADS_TAB_HELP' =>'When selected, the Download tab will appear in the User settings and provide users with access to Sugar plug-ins and other available files',
+	'SHOW_DOWNLOADS_TAB_HELP' =>'When selected, the Download tab will appear in the User settings and provide users with access to SuiteCRM plug-ins and other available files',
     'LBL_LDAP_ENC_KEY_DESC'	=> 'For SOAP authentication when using LDAP.',
     'LDAP_ENC_KEY_NO_FUNC_DESC' => 'The php_mcrypt extension must be enabled in your php.ini file.',
     'LBL_ALL' => 'All',
@@ -199,10 +200,10 @@ $mod_strings = array (
     'LBL_YOUR_IP_ADDRESS'=>'Your IP Address is',
     'LBL_IT_WILL_BE_IGNORED'=>' It will be ignored ',
     'LBL_LOG_NOT_CHANGED'=>'Log has not changed',
-    'LBL_ALERT_JPG_IMAGE' => 'The file format of the image must be JPEG.  Upload a new file with the file extension .jpg.',
-    'LBL_ALERT_TYPE_IMAGE' => 'The file format of the image must be JPEG or PNG.  Upload a new file with the file extension .jpg or .png.',
-    'LBL_ALERT_SIZE_RATIO' => 'The aspect ratio of the image should be between 1:1 and 10:1.  The image will be resized.',
-    'LBL_ALERT_SIZE_RATIO_QUOTES' => 'The aspect ratio of the image must be between 3:1 and 20:1.  Upload a new file with this ratio.',
+    'LBL_ALERT_JPG_IMAGE' => 'The file format of the image must be JPEG. Upload a new file with the file extension .jpg.',
+    'LBL_ALERT_TYPE_IMAGE' => 'The file format of the image must be JPEG or PNG. Upload a new file with the file extension .jpg or .png.',
+    'LBL_ALERT_SIZE_RATIO' => 'The aspect ratio of the image should be between 1:1 and 10:1. The image will be resized.',
+    'LBL_ALERT_SIZE_RATIO_QUOTES' => 'The aspect ratio of the image must be between 3:1 and 20:1. Upload a new file with this ratio.',
     'ERR_ALERT_FILE_UPLOAD' => 'Error during the upload of the image.',
     'LBL_LOGGER'=>'Logger Settings',
 	'LBL_LOGGER_FILENAME'=>'Log File Name',
@@ -218,13 +219,12 @@ $mod_strings = array (
 	'LBL_LOGGER_FILENAME_SUFFIX' =>'Append after filename',
 	'LBL_VCAL_PERIOD' => 'vCal Updates Time Period:',
     'LBL_IMPORT_MAX_RECORDS' => 'Import - Maximum Number of Rows:',
-    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files. If the number of rows <br>in an import file exceeds this number, the user will be alerted. If no number<br> is entered, an unlimited number of rows are allowed.',
-	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0".  The minimum is 1 month; the maximum is 12 months.',
+    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
+	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0". The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
     'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
     'SUGARPDF_LOGO_SETTINGS' => 'Images',
-
     'PDF_CREATOR' => 'PDF Creator',
     'PDF_CREATOR_INFO' => 'Defines the creator of the document. <br>This is typically the name of the application that generates the PDF.',
 
@@ -241,7 +241,7 @@ $mod_strings = array (
     'PDF_HEADER_LOGO_WIDTH_INFO' => 'Change the scale of the uploaded image that appears in Quotes PDF Documents. (TCPDF only)',
 
     'PDF_SMALL_HEADER_LOGO' => 'For Reports PDF Documents',
-    'PDF_SMALL_HEADER_LOGO_INFO' => 'This image appears in the default Header in Reports PDF Documents.<br> This image also appears in the top left-hand corner of the Sugar application.',
+    'PDF_SMALL_HEADER_LOGO_INFO' => 'This image appears in the default Header in Reports PDF Documents.<br> This image also appears in the top left-hand corner of the SuiteCRM application.',
 
     'PDF_NEW_SMALL_HEADER_LOGO' => 'Select New Image for Reports',
     'PDF_NEW_SMALL_HEADER_LOGO_INFO' => 'The file format can be either .jpg or .png. (Only .jpg for EZPDF)<BR>The recommended size is 212x40 px.',
@@ -333,29 +333,29 @@ $mod_strings = array (
     'LBL_FONT_LIST_EMBEDDED' => 'Embedded',
     'LBL_FONT_LIST_EMBEDDED_INFO' => 'Check to embed the font into the PDF file',
     'LBL_FONT_LIST_CIDINFO' => 'CID Information',
-    'LBL_FONT_LIST_CIDINFO_INFO' => "Examples :".
-"<ul><li>".
-"Chinese Traditional :<br>".
-"<pre>\$enc=\'UniCNS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>".
-"</li><li>".
-"Chinese Simplified :<br>".
-"<pre>\$enc=\'UniGB-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>".
-"</li><li>".
-"Korean :<br>".
-"<pre>\$enc=\'UniKS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>".
-"</li><li>".
-"Japanese :<br>".
-"<pre>\$enc=\'UniJIS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
-"</li></ul>".
-"More help : www.tcpdf.org",
+    'LBL_FONT_LIST_CIDINFO_INFO' => 'Examples :
+<ul><li>.
+Chinese Traditional :<br>.
+<pre>\$enc=\'UniCNS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>.
+</li><li>.
+Chinese Simplified :<br>.
+<pre>\$enc=\'UniGB-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>.
+</li><li>.
+Korean :<br>.
+<pre>\$enc=\'UniKS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>.
+</li><li>.
+Japanese :<br>.
+<pre>\$enc=\'UniJIS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>.
+include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>.
+</li></ul>.
+More help : www.tcpdf.org',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
@@ -374,8 +374,8 @@ $mod_strings = array (
     'LBL_ADD_FONT_BUTTON' => 'Add',
     'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
     'LBL_PDF_INSTRUCTIONS' => 'Instructions',
-    'PDF_INSTRUCTIONS_ADD_FONT' => <<<BSOFR
-Fonts supported by SugarPDF :
+    'PDF_INSTRUCTIONS_ADD_FONT' => '<<<BSOFR
+Fonts supported by the PDF :
 <ul>
 <li>TrueTypeUnicode (UTF-8 Unicode)</li>
 <li>OpenTypeUnicode</li>
@@ -387,14 +387,14 @@ Fonts supported by SugarPDF :
 <br>
 If you choose to not embed your font in the PDF, the generated PDF file will be lighter but a substitution will be use if the font is not available in the system of your reader.
 <br><br>
-Adding a PDF font to SugarCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
+Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR
-,
+BSOFR',
+
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
-    'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SugarCRM.',
+    'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
     'LBL_STATUS_FONT_ERROR' => 'ERROR : The font has not been added. Look at the log below.',
     'LBL_FONT_MOVE_DEFFILE' => 'Font definition file move to : ',
     'LBL_FONT_MOVE_FILE' => 'Font file move to : ',
@@ -413,10 +413,15 @@ BSOFR
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
+	//Wizard Scenarios
+	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation. These options can be changed post-install.',
+
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
     'LBL_WIZARD_WELCOME_TAB' => 'Welcome',
     'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to SuiteCRM!',
-    'LBL_WIZARD_WELCOME' => 'Click <b>Next</b> to brand, localize and configure Sugar now. If you wish to configure Sugar later, click <b>Skip</b>.',
+    'LBL_WIZARD_WELCOME' => 'Click <b>Next</b> to brand, localize and configure SuiteCRM now. If you wish to configure SuiteCRM later, click <b>Skip</b>.',
     'LBL_WIZARD_NEXT_BUTTON' => 'Next >',
     'LBL_WIZARD_BACK_BUTTON' => '< Back',
     'LBL_WIZARD_SKIP_BUTTON' => 'Skip',
@@ -424,22 +429,20 @@ BSOFR
     'LBL_WIZARD_CONTINUE_BUTTON' => 'Continue',
     'LBL_WIZARD_FINISH_TAB' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'Basic system configuration is complete',
-    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />
-To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
+    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
     'LBL_WIZARD_SYSTEM_TITLE' => 'Branding',
-    'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your Sugar.',
-    'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in Sugar to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
-    'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from Sugar, as sent from the specified email account.',
-    'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Sugar Mobile iPhone client.',
-	'LBL_GMAIL_LOGO' => 'Gmail Logo' /*for 508 compliance fix*/,
+    'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your SuiteCRM.',
+    'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
+    'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from SuiteCRM, as sent from the specified email account.',
+  	'LBL_GMAIL_LOGO' => 'Gmail Logo' /*for 508 compliance fix*/,
 	'LBL_YAHOO_MAIL' => 'Yahoo Mail' /*for 508 compliance fix*/,
 	'LBL_EXCHANGE_LOGO' => 'Exchange' /*for 508 compliance fix*/,
 	'LBL_LOADING' => 'Loading...' /*for 508 compliance fix*/,
 	'LBL_DELETE' => 'Delete' /*for 508 compliance fix*/,
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
-    'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Sugar Mobile native clients',
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+	
 );
 
 

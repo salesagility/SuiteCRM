@@ -52,9 +52,24 @@ class ACLRole extends SugarBean{
 
     var $created_by;
 
-    function ACLRole(){
-        parent::SugarBean();
+    public function __construct(){
+        parent::__construct();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ACLRole(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
     function get_summary_text()
@@ -224,14 +239,14 @@ function getRoleActions($role_id, $type='module'){
 
 
         }
-        
+
         // Sort by translated categories
         uksort($role_actions, "ACLRole::langCompare");
         return $role_actions;
 
     }
-    
-    private static function langCompare($a, $b) 
+
+    private static function langCompare($a, $b)
     {
         global $app_list_strings;
         // Fallback to array key if translation is empty
@@ -262,7 +277,7 @@ function mark_relationships_deleted($id){
     *
     * @return array of fields with id, name, description
     */
-    function toArray(){
+    function toArray($dbOnly = false, $stringOnly = false, $upperKeys=false){
         $array_fields = array('id', 'name', 'description');
         $arr = array();
         foreach($array_fields as $field){

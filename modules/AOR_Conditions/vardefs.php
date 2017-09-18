@@ -67,6 +67,17 @@ $dictionary['AOR_Condition'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
+        'logic_op' => array(
+            'name' => 'logic_op',
+            'vname' => 'LBL_LOGIC_OP',
+            'type' => 'varchar',
+            'default_value' => 'AND',
+        ),
+        'parenthesis' => array(
+            'name' => 'parenthesis',
+            'vname' => 'LBL_PARENTHESIS',
+            'type' => 'varchar',
+        ),
   'module_path' =>
   array (
     'name' => 'module_path',
@@ -124,8 +135,9 @@ $dictionary['AOR_Condition'] = array(
     'required' => false,
     'name' => 'value_type',
     'vname' => 'LBL_VALUE_TYPE',
-    'type' => 'varchar',
+    'type' => 'enum',
     'massupdate' => 0,
+    'default' => '',
     'comments' => '',
     'help' => '',
     'importable' => 'true',
@@ -135,9 +147,12 @@ $dictionary['AOR_Condition'] = array(
     'reportable' => true,
     'unified_search' => false,
     'merge_filter' => 'disabled',
-    'len' => '255',
+    'len' => 100,
     'size' => '20',
-    ),
+    'options' => 'aor_condition_type_list',
+    'studio' => 'visible',
+    'dependency' => false,
+  ),
   'value' => 
   array (
     'required' => false,
@@ -179,7 +194,7 @@ $dictionary['AOR_Condition'] = array(
   array (
     'name' => 'aor_reports',
     'type' => 'link',
-    'relationship' => 'aor_report_aor_conditions',
+    'relationship' => 'aor_reports_aor_conditions',
     'module'=>'AOR_Reports',
     'bean_name'=>'AOR_Reports',
     'source'=>'non-db',

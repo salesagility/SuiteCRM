@@ -70,8 +70,8 @@ class PopupSmarty extends ListViewSmarty{
     var $module;
     var $massUpdateData = '';
 
-	function PopupSmarty($seed, $module){
-		parent::ListViewSmarty();
+	public function __construct($seed, $module){
+		parent::__construct();
 		$this->th = new TemplateHandler();
 		$this->th->loadSmarty();
 		$this->seed = $seed;
@@ -85,8 +85,23 @@ class PopupSmarty extends ListViewSmarty{
 	}
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function PopupSmarty($seed, $module){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed, $module);
+    }
+
+
+    /**
      * Assign several arrow image attributes to TemplateHandler smarty. Such as width, height, etc.
-     * 
+     *
      * @return void
      */
     function processArrowVars()
@@ -218,10 +233,10 @@ class PopupSmarty extends ListViewSmarty{
 
 
 		$associated_row_data = array();
-		
+
 		//C.L. - Bug 44324 - Override the NAME entry to not display salutation so that the data returned from the popup can be searched on correctly
 		$searchNameOverride = !empty($this->seed) && $this->seed instanceof Person && (isset($this->data['data'][0]['FIRST_NAME']) && isset($this->data['data'][0]['LAST_NAME'])) ? true : false;
-		
+
 		global $locale;
 		foreach($this->data['data'] as $val)
 		{
@@ -246,12 +261,12 @@ class PopupSmarty extends ListViewSmarty{
 		$this->th->ss->assign('formData', $this->formData);
 		$this->th->ss->assign('APP', $GLOBALS['app_strings']);
 		$this->th->ss->assign('MOD', $GLOBALS['mod_strings']);
-        if (isset($this->_popupMeta['create']['createButton'])) 
+        if (isset($this->_popupMeta['create']['createButton']))
 		{
            $this->_popupMeta['create']['createButton'] = translate($this->_popupMeta['create']['createButton']);
         }
 		$this->th->ss->assign('popupMeta', $this->_popupMeta);
-        $this->th->ss->assign('current_query', base64_encode(serialize($_REQUEST)));
+        $this->th->ss->assign('current_query', htmlentities(json_encode(($_REQUEST))));
 		$this->th->ss->assign('customFields', $this->customFieldDefs);
 		$this->th->ss->assign('numCols', NUM_COLS);
 		$this->th->ss->assign('massUpdateData', $this->massUpdateData);
@@ -272,7 +287,11 @@ class PopupSmarty extends ListViewSmarty{
 	/*
 	 * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
 	 */
-	function setup($file) {
+	function setup($seed, $file = null, $where = null, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id') {
+		$args = func_get_args();
+		return call_user_func_array(array($this, '_setup'), $args);
+	}
+	function _setup($file) {
 
 	    if(isset($this->_popupMeta)){
 			if(isset($this->_popupMeta['create']['formBase'])) {
@@ -395,7 +414,7 @@ class PopupSmarty extends ListViewSmarty{
         }
 
         /**
-         * Bug #46842 : The relate field field_to_name_array fails to copy over custom fields 
+         * Bug #46842 : The relate field field_to_name_array fails to copy over custom fields
          * By default bean's create_new_list_query function loads fields displayed on the page or used in the search
          * add fields used to populate forms from _viewdefs :: field_to_name_array to retrive from db
          */
@@ -410,7 +429,7 @@ class PopupSmarty extends ListViewSmarty{
                     $this->filter_fields[$add_field] = true;
                 }
             }
-            
+
         }
 
 

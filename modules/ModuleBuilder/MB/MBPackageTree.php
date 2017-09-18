@@ -40,18 +40,33 @@
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/Node.php');
 class MBPackageTree{
-	
-	function MBPackageTree(){
+
+	function __construct(){
 		$this->tree = new Tree('package_tree');
 		$this->tree->id = 'package_tree';
 		$this->mb = new ModuleBuilder();
 		$this->populateTree($this->mb->getNodes(), $this->tree);
 	}
-	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function MBPackageTree(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function getName(){
 		return 'Packages';
 	}
-	
+
 	function populateTree($nodes, &$parent){
 		foreach($nodes as $node){
 			if(empty($node['label']))$node['label'] = $node['name'];
@@ -64,19 +79,19 @@ class MBPackageTree{
 			$parent->add_node($yn);
 		}
 	}
-	
+
 	function fetch(){
 		//return $this->tree->generate_header() . $this->tree->generate_nodes_array();
 		return $this->tree->generate_nodes_array();
 	}
-	
+
 	function fetchNodes(){
 		return $this->tree->generateNodesRaw();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 ?>

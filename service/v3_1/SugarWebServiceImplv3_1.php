@@ -243,7 +243,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3 {
                 $seed->$name = $value;
                 $return_fields[] = $name;
             }else{
-                $seed->$value['name'] = $value['value'];
+                $seed->{$value['name']} = $value['value'];
                 $return_fields[] = $value['name'];
             }
         }

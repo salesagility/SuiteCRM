@@ -47,7 +47,7 @@ class ConfiguratorViewAddFontView extends SugarView {
      * Constructor
      */
     public function AddFontView(){
-        parent::SugarView();
+        parent::__construct();
     }
     /** 
      * display the form

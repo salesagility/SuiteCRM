@@ -148,7 +148,7 @@ var $AUTORESET=1;										/* auto-reset sub blocks */
 
 /***[ constructor ]*********************************************************/
 
-function XTemplate ($file, $alt_include = "", $mainblock="main") {
+function __construct ($file, $alt_include = "", $mainblock="main") {
 	$this->alternate_include_directory = $alt_include;
 	$this->mainblock=$mainblock;
 	$this->filecontents=$this->r_getfile($file);	/* read in template file */
@@ -156,6 +156,21 @@ function XTemplate ($file, $alt_include = "", $mainblock="main") {
 	$this->blocks=$this->maketree($this->filecontents,$mainblock);	/* preprocess some stuff */
 	//$this->scan_globals();
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function XTemplate($file, $alt_include = "", $mainblock="main"){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($file, $alt_include, $mainblock);
+    }
+
 
 
 /***************************************************************************/
@@ -559,7 +574,7 @@ function r_getfile($file) {
 	$text=$this->getfile($file);
 	while (preg_match($this->file_delim,$text,$res)) {
 		$text2=$this->getfile($res[1]);
-		$text=preg_replace("'".preg_quote($res[0])."'",$text2,$text);
+		$text=str_replace($res[0], $text2, $text);
 	}
 	return $text;
 }

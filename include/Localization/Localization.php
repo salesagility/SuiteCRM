@@ -82,17 +82,32 @@ class Localization {
     /* Charset mappings for iconv */
     var $iconvCharsetMap = array(
         'KS_C_5601-1987' => 'CP949',
-        'ISO-8859-8-I' => 'ISO-8859-8'            
+        'ISO-8859-8-I' => 'ISO-8859-8'
         );
 
 	/**
 	 * sole constructor
 	 */
-	function Localization() {
+	public function __construct() {
 		global $sugar_config;
 		$this->localeNameFormatDefault = empty($sugar_config['locale_name_format_default']) ? 's f l' : $sugar_config['default_name_format'];
 		$this->loadCurrencies();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Localization(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/**
 	 * returns an array of Sugar Config defaults that are determined by locale settings
@@ -249,8 +264,8 @@ class Localization {
 			'YEN' => array(	'name'		=> 'Japanese Yen',
 							'iso4217'	=> 'JPY',
 							'symbol'	=> '¥'),
-			'MXM' => array(	'name'		=> 'Mexican Pesos',
-							'iso4217'	=> 'MXM',
+			'MXN' => array(	'name'		=> 'Mexican Pesos',
+							'iso4217'	=> 'MXN',
 							'symbol'	=> '$'),
 			'SGD' => array(	'name'		=> 'Singaporean Dollars',
 							'iso4217'	=> 'SGD',

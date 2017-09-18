@@ -67,7 +67,7 @@ class SugarChart {
 	var $image_export_type = "";
 
 	public function __construct() {
-		$this->db = &DBManagerFactory::getInstance();
+		$this->db = DBManagerFactory::getInstance();
 		$this->ss = new Sugar_Smarty();
 
 		$this->chart_yAxis['yMin'] = 0;
@@ -719,7 +719,7 @@ class SugarChart {
 
         // Create dir if it doesn't exist
         $dir = dirname($xmlFilename);
-        if (!sugar_is_dir($dir))
+        if (!is_dir($dir))
         {
             sugar_mkdir($dir, null, true);
         }

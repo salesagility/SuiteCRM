@@ -108,7 +108,7 @@ class MassUpdate
 		unset($_REQUEST['current_query_by_page']);
 		unset($_REQUEST[session_name()]);
 		unset($_REQUEST['PHPSESSID']);
-		$query = base64_encode(serialize($_REQUEST));
+		$query = json_encode($_REQUEST);
 
         $bean = loadBean($_REQUEST['module']);
        $order_by_name = $bean->module_dir.'2_'.strtoupper($bean->object_name).'_ORDER_BY' ;
@@ -324,6 +324,26 @@ eoq;
 							} // if
 	                    } // if
 
+						// Fix for issue 1549: mass update the cases, and change the state value from open to close,
+						// Status value can still display New, Assigned, Pending Input (even though it should not)
+						foreach ($newbean->field_name_map as $field_name) {
+							if( isset($field_name['type']) && $field_name['type'] == 'dynamicenum' )  {
+								if( isset($field_name['parentenum']) && $field_name['parentenum'] != '' ) {
+									$parentenum_name = $field_name['parentenum'];
+									// Updated parent field value.
+									$parentenum_value = $newbean->$parentenum_name;
+
+									$dynamic_field_name = $field_name['name'];
+									// Dynamic field set value.
+									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
+
+									if($parentenum_value != $dynamic_field_value) {
+										// Change to the default value of the correct value set.
+										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+									}
+								}
+							}
+						}
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
@@ -442,6 +462,7 @@ eoq;
 						case "account_name":$even = !$even; $newhtml .= $this->addAccountID($displayname,  $field["id_name"]); break;
 						case "bool": $even = !$even; $newhtml .= $this->addBool($displayname,  $field["name"]); break;
 						case "enum":
+						case "dynamicenum":
 						case "multienum":
 							if(!empty($field['isMultiSelect']))
 							{
@@ -1238,7 +1259,7 @@ EOQ;
         }
 	/* bug 31271: using false to not add all bean fields since some beans - like SavedReports
 	   can have fields named 'module' etc. which may break the query */
-        $query = unserialize(base64_decode($query));
+		$query = json_decode(html_entity_decode($query),true);
         $searchForm->populateFromArray($query, null, true);
         $this->searchFields = $searchForm->searchFields;
         $where_clauses = $searchForm->generateSearchWhere(true, $module);
@@ -1301,23 +1322,24 @@ EOQ;
                 if(isset($field['custom_type']))$field['type'] = $field['custom_type'];
                 if(isset($field['type']))
                 {
-                    switch($field["type"]){
-                    case "relate":
-                    case "parent":
-                    case "int":
-                    case "contact_id":
-                    case "assigned_user_name":
-                    case "account_id":
-                    case "account_name":
-                    case "bool":
-                    case "enum":
-                    case "multienum":
-                    case "radioenum":
-                    case "datetimecombo":
-                    case "datetime":
-                    case "date":
-                        return true;
-                        break;
+                    switch ($field["type"]) {
+                        case "relate":
+                        case "parent":
+                        case "int":
+                        case "contact_id":
+                        case "assigned_user_name":
+                        case "account_id":
+                        case "account_name":
+                        case "bool":
+                        case "enum":
+                        case "dynamicenum":
+                        case "multienum":
+                        case "radioenum":
+                        case "datetimecombo":
+                        case "datetime":
+                        case "date":
+                            return true;
+                            break;
                     }
                 }
             }

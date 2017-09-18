@@ -95,11 +95,13 @@ function changeParentQS(field) {
     }
     enableQS(false);
 }}
+</script>
+{{$displayParams.disabled_parent_types}}
+{{$quickSearchCode}}
+<script>
 //change this in case it wasn't the default on editing existing items.
 $(document).ready(function(){
 	changeParentQS("parent_name")
 });
 </script>
-{{$displayParams.disabled_parent_types}}
-{{$quickSearchCode}}
 {/literal}

@@ -39,9 +39,9 @@
 
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
-class ViewDisplaydeploy extends SugarView 
+class ViewDisplaydeploy extends SugarView
 {
-	function ViewDisplaydeploy()
+	function __construct()
 	{
 		$smarty = new Sugar_Smarty();
  		$smarty->assign('package', $_REQUEST['name']);
@@ -53,14 +53,29 @@ class ViewDisplaydeploy extends SugarView
 		$ajax->addSection('center', translate('LBL_SECTION_DEPLOY', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/MBPackage/deploy.tpl'));
 		echo $ajax->getJavascript();
 	}
-	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ViewDisplaydeploy(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
 	protected function _getModuleTitleParams($browserTitle = false)
 	{
 	    global $mod_strings;
-	    
+
     	return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),

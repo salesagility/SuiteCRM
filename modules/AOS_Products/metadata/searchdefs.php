@@ -13,6 +13,7 @@ array (
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
+        'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
     array (

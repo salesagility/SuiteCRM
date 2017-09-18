@@ -26,19 +26,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 
 function perform_aos_save($focus){
-    //US DOLLAR
 
     foreach($focus->field_defs as $field){
 
-        if(isset($focus->field_defs[$field['name'].'_usdollar'])){
+        $fieldName = $field['name'];
+        $fieldNameDollar = $field['name'].'_usdollar';
 
-            $fieldName = $field['name'].'_usdollar';
+        if(isset($focus->field_defs[$fieldNameDollar])){
 
-            $focus->$fieldName = '';
+            $focus->$fieldNameDollar = '';
             if(!number_empty($focus->field_defs[$field['name']])){
                 $currency = new Currency();
                 $currency->retrieve($focus->currency_id);
-                $focus->$fieldName = $currency->convertToDollar(unformat_number($focus->$field['name']));
+                $focus->$fieldNameDollar = $currency->convertToDollar(unformat_number($fieldName));
             }
 
         }

@@ -80,7 +80,6 @@ $mod_strings = array (
   'LBL_INDEXED_RECORDS' => 'Indexed records',
   'LBL_UNINDEXED_RECORDS' => 'Unindexed records',
   'LBL_FAILED_RECORDS' => 'Failed records',
-  'LBL_LAST_OPTIMISED' => 'Last optimised',
   'LBL_INDEX_FILES' => 'Index file count',
   'LBL_SEARCH_RESULT_SCORE' => 'Search Score',
   'LBL_SEARCH_RESULT_MODULE' => 'Module',
@@ -94,6 +93,6 @@ $mod_strings = array (
   'LBL_FAILED_INDEX_DATE' => 'Date',
   'LBL_FAILED_INDEX_ERROR' => 'Error',
   'LBL_NEVER_OPTIMISED' => 'Never',
-  'LBL_USE_AOD_SEARCH' => 'Use Advanced OpenDiscovery Search',
-  'LBL_USE_VANILLA_SEARCH' => 'Use standard SugarCRM search',
+  'LBL_USE_AOD_SEARCH' => 'Use Advanced Search',
+  'LBL_USE_VANILLA_SEARCH' => 'Use Basic Search',
 );

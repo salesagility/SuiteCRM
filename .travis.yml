@@ -1,0 +1,27 @@
+language: php
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 5.4
+matrix:
+  allow_failures:
+    - php: 5.4
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
+  - php tests/testinstall.php
+script:
+  - cd tests
+  - ../vendor/bin/phpunit
+  - cat ../suitecrm.log
+services:
+  - mysql
+branches:
+  only:
+    - master
+    - hotfix
+    - develop
+    - /feature.*/

@@ -39,17 +39,33 @@
 
 class ViewJson extends SugarView{
 	var $type ='detail';
-	function ViewJson(){
- 		parent::SugarView();
+
+	public function __construct(){
+ 		parent::__construct();
  	}
- 	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ViewJson(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function display(){
  		global $beanList;
 		$module = $GLOBALS['module'];
 		$json = getJSONobj();
 		$bean = $this->bean;
 		$all_fields = array_merge($bean->column_fields,$bean->additional_column_fields);
-		
+
 		$js_fields_arr = array();
 		foreach($all_fields as $field) {
 			if(isset($bean->$field)) {

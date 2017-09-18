@@ -1,5 +1,5 @@
 
-<button id="addFileButton" type="button">{$MOD.LBL_ADD_CASE_FILE}</button>
+<button id="addFileButton" class="button primary" type="button">{$MOD.LBL_ADD_CASE_FILE}</button>
 {literal}
 <script>
     $(document).ready(function(){

@@ -31,7 +31,8 @@ $mod_strings = array (
   'LBL_USERS' => 'Users',
   'LBL_USERS_SUBPANEL_TITLE' => 'Users',
   'LBL_ROLES_SUBPANEL_TITLE' => 'Roles',
-  
+  'LBL_ROLES' => 'Roles',
+
   'LBL_CONFIGURE_SETTINGS' => 'Configure',
   'LBL_ADDITIVE' => 'Additive Rights',
   'LBL_ADDITIVE_DESC' => "User gets greatest rights of all roles assigned to the user or the user's group(s)",
@@ -83,7 +84,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Continue?",
   
   'LBL_GROUP_SELECT' => 'Select which groups should have access to this record',
-  'LBL_ERROR_DUPLICATE' => 'Due to a possible duplicate detected by Sugar you will have to manually add Security Groups to your newly created record.',
+  'LBL_ERROR_DUPLICATE' => 'Due to a possible duplicate detected by SuiteCRM you will have to manually add Security Groups to your newly created record.',
 
   'LBL_INBOUND_EMAIL' => 'Inbound email account',
   'LBL_INBOUND_EMAIL_DESC' => 'Only allow access to an email account if user belongs to a group that is assigned to the mail account.',

@@ -47,7 +47,7 @@ class AlertsController extends SugarController
         $this->view_object_map['Flash'] = '';
         $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
         if($this->view_object_map['Results'] == '') {
-            $this->view_object_map['Flash'] =$app_strings['LBL_EMAIL_ERROR_VIEW_RAW_SOURCE'];
+            $this->view_object_map['Flash'] =$app_strings['LBL_NOTIFICATIONS_NONE'];
         }
         $this->view = 'default';
     }
@@ -77,7 +77,7 @@ class AlertsController extends SugarController
         if(isset($_POST['url_redirect'])) {
             $url_redirect = $_POST['url_redirect'];
         } else {
-            $url_redirect == null;
+            $url_redirect = null;
         }
 
         if($url_redirect == null) {

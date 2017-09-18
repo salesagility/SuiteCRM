@@ -53,7 +53,7 @@ class JotPadDashlet extends Dashlet {
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
-    function JotPadDashlet($id, $def) {
+    function __construct($id, $def) {
         $this->loadLanguage('JotPadDashlet'); // load the language strings here
 
         if(!empty($def['savedText']))  // load default text is none is defined
@@ -64,7 +64,7 @@ class JotPadDashlet extends Dashlet {
         if(!empty($def['height'])) // set a default height if none is set
             $this->height = $def['height'];
 
-        parent::Dashlet($id); // call parent constructor
+        parent::__construct($id); // call parent constructor
 
         $this->isConfigurable = true; // dashlet is configurable
         $this->hasScript = true;  // dashlet has javascript attached to it
@@ -73,6 +73,21 @@ class JotPadDashlet extends Dashlet {
         if(empty($def['title'])) $this->title = $this->dashletStrings['LBL_TITLE'];
         else $this->title = $def['title'];
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function JotPadDashlet($id, $def){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
 
     /**
      * Displays the dashlet

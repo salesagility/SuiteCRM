@@ -96,7 +96,7 @@ foreach ($_POST['mass'] as $message_id) {
 	if (empty($marketing->inbound_email_id)) {
 
 		echo "<p>";
-		echo "<h4>{$mod_strings['ERR_NO_MAILBOX']}</h4>";
+		echo "<h4 class=\"header-4\">{$mod_strings['ERR_NO_MAILBOX']}</h4>";
 		echo "<BR><a href='index.php?module=EmailMarketing&action=EditView&record={$marketing->id}'>$marketing->name</a>";
 		echo "</p>";
 		sugar_die('');
@@ -194,6 +194,17 @@ if ($test) {
 	$header_URL = "Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}";
     if($from_wiz){$header_URL .= "&from=send";}
 }
+if($action=='WizardMarketingSave') {
+	$header_URL .= '&WizardMarketingSave=1&marketing_id=' . $_REQUEST['wiz_mass'];
+}
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-header($header_URL);
+
+if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+	$href = $matches[1];
+	SugarApplication::redirect($href);
+}
+else {
+	header($header_URL);
+}
+
 ?>

@@ -43,11 +43,26 @@ requireLucene();
 
 class AOD_Index extends AOD_Index_sugar {
 
-	function AOD_Index(){
-		parent::AOD_Index_sugar();
+	function __construct(){
+		parent::__construct();
         Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('utf-8');
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive());
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOD_Index(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function isEnabled(){
         global $sugar_config;
@@ -152,12 +167,16 @@ class AOD_Index extends AOD_Index_sugar {
         foreach($GLOBALS['dictionary'][$bean->getObjectName()]['fields'] as $key => $field){
             switch($field['type']){
                 case "enum":
-                    $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key),'UTF-8'));
+                	if(property_exists($bean, $key)) {
+                		$document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key),'UTF-8'));
+                	}
                     break;
 
                 case "multienum":
-                    $vals = unencodeMultienum($bean->$key);
-                    $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ",$vals)),'UTF-8'));
+                	if(property_exists($bean, $key)) {
+                		$vals = unencodeMultienum($bean->$key);
+                		$document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ",$vals)),'UTF-8'));
+                	}
                     break;
                 case "name":
                 case "phone":
@@ -207,6 +226,7 @@ class AOD_Index extends AOD_Index_sugar {
     }
 
     private function getIndexEvent($module, $beanId){
+    	global $timedate;
         $indexEventBean = BeanFactory::getBean("AOD_IndexEvent");
         $indexEvents = $indexEventBean->get_full_list('',"aod_indexevent.record_id = '".$beanId."' AND aod_indexevent.record_module = '".$module."'");
         if($indexEvents){
@@ -223,6 +243,13 @@ class AOD_Index extends AOD_Index_sugar {
             $indexEvent->record_id = $beanId;
             $indexEvent->record_module = $module;
         }
+        /*
+         * "Now" is cached in the SugarBean which means for long running processes (such as the indexing scheduler) that
+         * the date_modified could be in the past. This caused issues when comparing the date modified of the event with that
+         * of a bean. Here we explicitly set the date modified to be the current date.
+         */
+        $indexEvent->update_date_modified = false;
+        $indexEvent->date_modified = $timedate->asDb(new DateTime());
         return $indexEvent;
     }
 
@@ -268,7 +295,7 @@ class AOD_Index extends AOD_Index_sugar {
                 return false;
             }
 
-            $bean->retrieve($beanId);
+            $bean = $bean->retrieve($beanId);
             if(!$bean){
                 return false;
             }
@@ -291,6 +318,7 @@ class AOD_Index extends AOD_Index_sugar {
             $GLOBALS['log']->error($ex->getMessage());
             return false;
         }
+        return true;
     }
     private function getIdForDoc($module, $beanId){
         return $module . " " . $beanId;

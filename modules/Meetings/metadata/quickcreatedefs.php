@@ -43,6 +43,9 @@ array (
   array (
     'templateMeta' =>
     array (
+        'includes' => array(
+            array('file' => 'modules/Reminders/Reminders.js'),
+        ),
       'maxColumns' => '2',
       'form' =>
       array (
@@ -166,11 +169,16 @@ array (
                 </script>            
             ',
           ),          
-          array (
-            'name' => 'reminder_time',
-            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
-            'label' => 'LBL_REMINDER',
-          ),
+//          array (
+//            'name' => 'reminder_time',
+//            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
+//            'label' => 'LBL_REMINDER',
+//          ),
+              array (
+                  'name' => 'reminders',
+                  'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
+                  'label' => 'LBL_REMINDERS',
+              ),
        ),
 
          array (

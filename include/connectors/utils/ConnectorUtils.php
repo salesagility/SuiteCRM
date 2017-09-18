@@ -616,7 +616,7 @@ class ConnectorUtils
         return true;
     }
 
-    public function removeHoverField(
+    public static function removeHoverField(
         &$viewdefs,
         $module
         )

@@ -46,6 +46,11 @@ $focus = populateFromPost('', $focus);
 ///////////////////////////////////////////////////////////////////////////////
 ////	USE_ADV override
 if(!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' || $_REQUEST['adv_interval'] == '0') {
+	// Fix for issue #1142 - basic Scheduler settings do not allow to specify  day_of_month or which month it should run on,
+	// so both of these options should be set to '*'; . These is especially important in case user moves from advanced to basic settings.
+	$_REQUEST['day_of_month'] = '*';
+	$_REQUEST['months'] = '*';
+
 	// days of week
 	$xtDays = array(1 => 'mon',
 					2 => 'tue',

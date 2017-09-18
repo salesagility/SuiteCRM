@@ -1,44 +1,56 @@
 <?php
 /**
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * @package Advanced OpenPortal
- * @copyright SalesAgility Ltd http://www.salesagility.com
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-function display_updates($focus, $field, $value, $view){
+/**
+ * @param $focus
+ *
+ * @return string
+ */
+function display_updates($focus)
+{
     global $mod_strings;
-
-    $updates = $focus->get_linked_beans('aop_case_updates',"AOP_Case_Updates");
-    if(!$updates){
-        $html = quick_edit_case_updates();
-        return $html;
-        //return $mod_strings['LBL_NO_CASE_UPDATES'];
-    }
 
     $hideImage = SugarThemeRegistry::current()->getImageURL('basic_search.gif');
     $showImage = SugarThemeRegistry::current()->getImageURL('advanced_search.gif');
 
-
-
-    $html = <<<EOD
+    //Javascript for Asynchronous update
+    $html = <<<A
 <script>
 var hideUpdateImage = '$hideImage';
 var showUpdateImage = '$showImage';
@@ -62,166 +74,7 @@ function toggleCaseUpdate(updateId){
     }
     updateElem.slideToggle('fast');
 }
-$(document).ready(function(){
-    collapseAllUpdates();
-    var id = $('.caseUpdate').last().attr('id');
-    if(id){
-        toggleCaseUpdate(id.replace('caseUpdate',''));
-    }
-});
-</script>
-<a href='' onclick='collapseAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
-<a href='' onclick='expandAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
-<div>
-EOD;
-
-
-    usort($updates,function($a,$b){
-        $aDate = $a->fetched_row['date_entered'];
-        $bDate = $b->fetched_row['date_entered'];
-        if($aDate < $bDate){
-            return -1;
-        }elseif($aDate > $bDate){
-            return 1;
-        }
-        return 0;
-    });
-
-    foreach($updates as $update){
-        $html .= display_single_update($update, $hideImage);
-    }
-    $html .= "</div>";
-    $html .= quick_edit_case_updates();
-    return $html;
-}
-
-/**
- * @return mixed|string|void
- */
-function display_update_form(){
-    global $mod_strings, $app_strings;
-    $sugar_smarty	= new Sugar_Smarty();
-    $sugar_smarty->assign('MOD', $mod_strings);
-    $sugar_smarty->assign('APP', $app_strings);
-    return $sugar_smarty->fetch('modules/AOP_Case_Updates/tpl/caseUpdateForm.tpl');
-}
-
-/**
- *
- * @param SugarBean $update
- * @return string - html to be displayed
- */
-function getUpdateDisplayHead(SugarBean $update){
-    global $mod_strings;
-    if($update->contact_id){
-        $name = $update->getUpdateContact()->name;
-    }elseif($update->assigned_user_id){
-        $name = $update->getUpdateUser()->name;
-    }else{
-        $name = "Unknown";
-    }
-    $html = "<a href='' onclick='toggleCaseUpdate(\"".$update->id."\");return false;'>";
-    $html .= "<img  id='caseUpdate".$update->id."Image' class='caseUpdateImage' src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."'>";
-    $html .= "</a>";
-    $html .= "<span>".($update->internal ? "<strong>" . $mod_strings['LBL_INTERNAL'] . "</strong> " : '') .$name . " ".$update->date_entered."</span><br>";
-    $notes = $update->get_linked_beans('notes','Notes');
-    if($notes){
-        $html.= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];
-        foreach($notes as $note){
-            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
-        }
-    }
-    return $html;
-}
-
-/**
- * Gets a single update and returns it
- *
- * @param AOP_Case_Updates $update
- * @return string - the html for the update
- */
-function display_single_update(AOP_Case_Updates $update){
-
-    /*if assigned user*/
-    if($update->assigned_user_id){
-        /*if internal update*/
-        if ($update->internal){
-            $html = "<div id='caseStyleInternal'>".getUpdateDisplayHead($update);
-            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-            $html .= nl2br(html_entity_decode($update->description));
-            $html .= "</div></div>";
-            return $html;
-        }
-        /*if standard update*/
-        else {
-        $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= "</div></div></div>";
-        return $html;
-        }
-    }
-
-    /*if contact user*/
-    if($update->contact_id){
-        $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= "</div></div></div>";
-        return $html;
-    }
-
-}
-
-/**
- * Displays case attachments
- *
- * @param $case
- * @return string - html link
- */
-function display_case_attachments($case){
-    $html = '';
-    $notes = $case->get_linked_beans('notes','Notes');
-    if($notes){
-        foreach($notes as $note){
-            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
-        }
-    }
-    return $html;
-}
-
-
-/**
- * The Quick edit for case updates which appears under update stream
- * Also includes the javascript for AJAX update
- *
- * @return string - the html to be displayed and javascript
- */
-function quick_edit_case_updates(){
-
-    //current record id
-    $record = $_GET['record'];
-
-    //Get Users roles
-    require_once('modules/ACLRoles/ACLRole.php');
-    $user = $GLOBALS['current_user'];
-    $id = $user->id;
-    $acl = new ACLRole();
-    $roles = $acl->getUserRoles($id);
-
-    //Return if user cannot edit cases
-    if(in_array( "no edit cases", $roles) || $roles === "no edit cases"){
-
-        return;
-    }
-
-
-
-
-//Javascript for Asynchronous update
-    $javascript = <<<A
-<script>
-function caseUpdates(){
+function caseUpdates(record){
     loadingMessgPanl = new YAHOO.widget.SimpleDialog('loading', {
                     width: '200px',
                     close: true,
@@ -236,7 +89,7 @@ function caseUpdates(){
     loadingMessgPanl.render(document.body);
     loadingMessgPanl.show();
 
-    var update_data = document.getElementById('update_text').value;
+    var update_data = encodeURIComponent(document.getElementById('update_text').value);
     var checkbox = document.getElementById('internal').checked;
     var internal = "";
     if(checkbox){
@@ -246,7 +99,7 @@ function caseUpdates(){
     //Post parameters
 
     var params =
-        "record=$record&module=Cases&return_module=Cases&action=Save&return_id=$record&return_action=DetailView&relate_to=Cases&relate_id=$record&offset=1&update_text="
+        "record="+record+"&module=Cases&return_module=Cases&action=Save&return_id="+record+"&return_action=DetailView&relate_to=Cases&relate_id="+record+"&offset=1&update_text="
         + update_data + "&internal=" + internal;
 
     var xmlhttp = new XMLHttpRequest();
@@ -265,7 +118,7 @@ function caseUpdates(){
 
             showSubPanel('history', null, true);
             //Reload the case updates stream and history panels
-		    $("#LBL_AOP_CASE_UPDATES").load("index.php?module=Cases&action=DetailView&record=$record" + " #LBL_AOP_CASE_UPDATES", function(){
+		    $("#LBL_AOP_CASE_UPDATES").load("index.php?module=Cases&action=DetailView&record="+record + " #LBL_AOP_CASE_UPDATES", function(){
 
 
             //Collapse all except newest update
@@ -294,16 +147,213 @@ function caseUpdates(){
 </script>
 A;
 
+    $updates = $focus->get_linked_beans('aop_case_updates', 'AOP_Case_Updates');
+    if (!$updates || is_null($focus->id)) {
+        $html .= quick_edit_case_updates($focus);
+
+        return $html;
+    }
+
+    $html .= <<<EOD
+<script>
+$(document).ready(function(){
+    collapseAllUpdates();
+    var id = $('.caseUpdate').last().attr('id');
+    if(id){
+        toggleCaseUpdate(id.replace('caseUpdate',''));
+    }
+});
+</script>
+<a href='' onclick='collapseAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
+<a href='' onclick='expandAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
+<div>
+EOD;
+
+    usort(
+        $updates,
+        function ($a, $b) {
+            $aDate = $a->fetched_row['date_entered'];
+            $bDate = $b->fetched_row['date_entered'];
+            if ($aDate < $bDate) {
+                return -1;
+            } elseif ($aDate > $bDate) {
+                return 1;
+            }
+
+            return 0;
+        }
+    );
+
+    foreach ($updates as $update) {
+        $html .= display_single_update($update, $hideImage);
+    }
+    $html .= '</div>';
+    $html .= quick_edit_case_updates($focus);
+
+    return $html;
+}
+
+/**
+ * @return mixed|string|void
+ */
+function display_update_form()
+{
+    global $mod_strings, $app_strings;
+    $sugar_smarty = new Sugar_Smarty();
+    $sugar_smarty->assign('MOD', $mod_strings);
+    $sugar_smarty->assign('APP', $app_strings);
+
+    return $sugar_smarty->fetch('modules/AOP_Case_Updates/tpl/caseUpdateForm.tpl');
+}
+
+/**
+ * @param SugarBean $update
+ *
+ * @return string - html to be displayed
+ */
+function getUpdateDisplayHead(SugarBean $update)
+{
+    global $mod_strings;
+    if ($update->contact_id) {
+        $name = $update->getUpdateContact()->name;
+    } elseif ($update->assigned_user_id) {
+        $name = $update->getUpdateUser()->name;
+    } else {
+        $name = 'Unknown';
+    }
+    $html = "<a href='' onclick='toggleCaseUpdate(\"" . $update->id . "\");return false;'>";
+    $html .= "<img  id='caseUpdate" .
+             $update->id .
+             "Image' class='caseUpdateImage' src='" .
+             SugarThemeRegistry::current()->getImageURL('basic_search.gif') .
+             "'>";
+    $html .= '</a>';
+    $html .= '<span>' .
+             ($update->internal ? '<strong>' . $mod_strings['LBL_INTERNAL'] . '</strong> ' : '') .
+             $name .
+             ' ' .
+             $update->date_entered .
+             '</span><br>';
+    $notes = $update->get_linked_beans('notes', 'Notes');
+    if ($notes) {
+        $html .= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];
+        foreach ($notes as $note) {
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
+
+    return $html;
+}
+
+/**
+ * Gets a single update and returns it.
+ *
+ * @param AOP_Case_Updates $update
+ *
+ * @return string - the html for the update
+ */
+function display_single_update(AOP_Case_Updates $update)
+{
+
+    /*if assigned user*/
+    if ($update->assigned_user_id) {
+        /*if internal update*/
+        if ($update->internal) {
+            $html = "<div id='caseStyleInternal'>" . getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= '</div></div>';
+
+            return $html;
+        } /*if standard update*/ else {
+            $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= '</div></div></div>';
+
+            return $html;
+        }
+    }
+
+    /*if contact user*/
+    if ($update->contact_id) {
+        $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= '</div></div></div>';
+
+        return $html;
+    }
+}
+
+/**
+ * Displays case attachments.
+ *
+ * @param $case
+ *
+ * @return string - html link
+ */
+function display_case_attachments($case)
+{
+    $html = '';
+    $notes = $case->get_linked_beans('notes', 'Notes');
+    if ($notes) {
+        foreach ($notes as $note) {
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
+
+    return $html;
+}
+
+/**
+ * The Quick edit for case updates which appears under update stream
+ * Also includes the javascript for AJAX update.
+ *
+ * @param $case
+ *
+ * @return string - the html to be displayed and javascript
+ */
+function quick_edit_case_updates($case)
+{
+    global $action, $app_strings, $mod_strings;
+
+    //on DetailView only
+    if ($action !== 'DetailView') {
+        return;
+    }
+
+    //current record id
+    $record = $_GET['record'];
+
+    //Get Users roles
+    require_once 'modules/ACLRoles/ACLRole.php';
+    $user = $GLOBALS['current_user'];
+    $id = $user->id;
+    $acl = new ACLRole();
+    $roles = $acl->getUserRoles($id);
+
+    //Return if user cannot edit cases
+    if ($roles === 'no edit cases' || in_array('no edit cases', $roles)) {
+        return '';
+    }
+    $internalChecked = '';
+    if (isset($case->internal) && $case->internal) {
+        $internalChecked = "checked='checked'";
+    }
+    $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
+    $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
 
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
-
+    <div><label for="update_text">{$mod_strings['LBL_UPDATE_TEXT']}</label></div>
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1'> Internal</input>
-    </br>
-    <input type='button' value='Save' onclick="caseUpdates()" title="Save" name="button"> </input>
+    <div><label>{$mod_strings['LBL_INTERNAL']}</label>
+    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked ></input>
+    </div>
+    <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
 
 
     </br>
@@ -312,9 +362,5 @@ A;
 
 EOD;
 
-
-
-
-    return $javascript.$html;
-
+    return $html;
 }

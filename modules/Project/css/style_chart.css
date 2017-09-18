@@ -1,0 +1,336 @@
+/**
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ * @Package Gantt chart
+ * @copyright Andrew Mclaughlan 2014
+ * @author Andrew Mclaughlan <andrew@mclaughlan.info>
+ */
+
+/*Resource chart specific styles*/
+#wrapper_chart {
+
+    padding-right:0px;
+    height:auto;
+}
+
+#header_wrap {
+   float: left;
+   width:200px;
+   display: none;
+}
+#header_table_chart {
+    border: 0px solid #DDDDDD;
+    border-bottom: 0;
+    font-size: 13px;
+    line-height: 20px;
+    border-collapse: collapse;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+}
+#project_chart {
+    width: 99.75%;
+}
+#gantt_chart {
+    overflow: auto;
+}
+
+.heading_chart {
+    font-weight: bold;
+    white-space: nowrap;
+    padding-left: 5px;
+}
+.field_chart {
+    padding-left: 5px;
+}
+.field_chart select {
+    width:280px;
+    border: 1px solid #DDDDDD;
+}
+
+.select_row {
+    background-color: #FFFFFF;
+    border-bottom:  1px solid #DDDDDD;
+}
+.main_table {
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    border-collapse: collapse;
+    background-color: #F6F6F6;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 24px;
+    font-size:12px;
+}
+.main_table th, td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+.top_row {
+    background-image:url('../images/bgbak.gif');
+}
+
+.top_row a:link, .top_row a:visited, .top_row a:hover {
+    text-decoration: none;
+}
+
+.month_row {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.week, .day {
+    vertical-align:middle;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+
+.weeks, .months {
+    text-align:center;
+    font-size:13px;
+    font-weight: bold;
+    border-right: 1px solid #DDDDDD;
+}
+.months:last-child {
+    border-right: 1px solid #DDDDDD;
+}
+.weeks {
+    border-bottom: 1px solid #999;
+}
+
+.years {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    background-image:url('../images/bgbak.gif');
+}
+
+.year_div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    margin: 0, auto;
+}
+.inner_container:last-child {
+    border-right:none;
+}
+.inner_container {
+    border-right: 1px solid #DDDDDD;
+}
+.table_inner {
+    border-left:none;
+    border-collapse: collapse;
+}
+.task_row {
+    border-top: 0px solid #DDDDDD;
+}
+.inner_td {
+    text-align:center;
+    border-bottom: 1px solid #DDDDDD;
+}
+.task_row:last-child .inner_td {
+    border-bottom: none;
+}
+.inner_container .inner_td {
+    border-right: 1px solid #DDDDDD;
+    font-weight: bold;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 24px;
+    font-size:12px;
+}
+.inner_container .inner_td:last-child {
+    border-right: none;
+}
+.task_row .inner_td {
+    border-right: 1px solid #DDDDDD;
+}
+.days_row .inner_td {
+    border-right: 1px solid #DDDDDD;
+}
+.task_row .inner_td:last-child {
+    border-right: 1px solid #DDDDDD;
+}
+.cell_width{
+    width: 25px;
+    height:23px;
+}
+.day_block {
+    background-color: #ffffff;
+}
+
+.day_block_wk {
+    background-color: #f6f6f6;
+}
+.today {
+    background-color: #ffffff;
+    border:1px solid red!important;
+    margin: 0 auto;
+    height:21px;
+    width:23px;
+
+}
+.weekend {
+    background-color: #f6f6f6;
+    height:23px;
+}
+.weekend-today {
+    border:1px solid red!important;
+    background-color: #f6f6f6;
+    height:22px;
+    width:23px;
+
+}
+
+.d{
+    height: 22px;
+    width:24px;
+    border-right: 1px solid #f3350c;
+    margin: 0 auto;
+    background-color: #f3350c;
+}
+
+.h{
+    height: 22px;
+    width:24px;
+    border-right: 1px solid #8080E8;
+    margin: 0 auto;
+    background-color: #8080E8;
+}
+.task_block_inner {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+}
+.task_block_inner_c {
+    height: 22px;
+}
+
+.task_div {
+    color: #ffffff !important;
+    /*  background-color: #D8EDA3;*/
+    background-color: #DDDDDD;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25) inset;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    height: 17px;
+    line-height: 18px;
+    text-align: left;
+    text-overflow: ellipsis;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.task_percent {
+    height:17px;
+    background-color: #D8EDA3;
+    z-index: 1;
+    position: relative;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25) inset;
+    line-height: 18px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #778461;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    text-overflow: ellipsis;
+    text-align: center;
+    overflow: hidden;
+}
+
+/*milestone diamond*/
+.milestone {
+    height:17px;
+    overflow: hidden;
+}
+
+.taskDepLine {
+    border: 1px solid #9999FF;
+    overflow: hidden;
+    position: absolute;
+    background-color: #9999FF;
+}
+.no_wrap{
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-style:italic;
+    font-weight: bold;
+
+}
+
+.qtip_box {
+    min-width: 200px!important;
+    max-width: none !important;
+}
+
+/*tooltip table */
+.qtip_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.qtip_table th {
+    text-align: left;
+    padding: 2px 10px 2px 0px;
+    border-bottom: 1px solid #3f6219;
+    white-space: nowrap;
+}
+
+.qtip_table td {
+    padding: 2px 10px 2px 0px;
+    white-space: nowrap;
+}
+
+.qtip_table a {
+    color: #3f6219;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.qtip_table a:hover {
+    text-decoration: underline;
+}
+
+#header_table_chart label {
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    max-width: 100%;
+	vertical-align: top;
+}
+
+
+#header_table_chart td[scope="row_label"] {
+    padding: 5px 30px 5px 7px !important;
+    text-align: left;
+    vertical-align: top;
+	width:8.3333333333333% !important; 
+}
+
+#header_table_chart td[scope="row_val"]{
+    text-align: left;
+    vertical-align: top;
+	width: 25% !important;
+}
+
+
+#header_table_chart {
+	margin-top:50px;
+	margin-bottom:30px;
+}

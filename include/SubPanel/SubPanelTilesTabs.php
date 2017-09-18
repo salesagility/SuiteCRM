@@ -48,7 +48,7 @@ require_once('include/SubPanel/SubPanelTiles.php');
 class SubPanelTilesTabs extends SubPanelTiles
 {
 
-	function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = '')
+	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 
 		$this->focus = $focus;
@@ -104,7 +104,11 @@ class SubPanelTilesTabs extends SubPanelTiles
      * @param boolean $showTabs	Call the view code to display the generated tabs
      * @param string $selectedGroup	(Optional) Name of any selected tab (defaults to 'All')
      */
-	function getTabs($tabs, $showTabs = true, $selectedGroup='All')
+    function getTabs($showTabs = true, $selectedGroup='') {
+        $args = func_get_args();
+        return call_user_func_array(array($this, '_getTabs'), $args);
+    }
+    function _getTabs($tabs, $showTabs = true, $selectedGroup='All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
         if($selectedGroup=='All')
@@ -199,7 +203,7 @@ class SubPanelTilesTabs extends SubPanelTiles
             $displayTabs = array();
             $otherTabs = array();
 
-    	    foreach ($groups as $key=>$tab)
+    	    foreach ($groups as $key => $tab)
     		{
                 $display = false;
                 foreach($tab['modules'] as $subkey=>$subtab)
@@ -222,10 +226,10 @@ class SubPanelTilesTabs extends SubPanelTiles
                 {
                     $relevantTabs = SubPanelTilesTabs::applyUserCustomLayoutToTabs($tabs, $key);
 
-                    $sugarTabs[$key] = array(//'url'=>'index.php?module=' . $_REQUEST['module'] . '&record=' . $_REQUEST['record'] . '&action=' . $_REQUEST['action']. '&subpanel=' . $key.'#tabs',
-                                         //'url'=>"javascript:SUGAR.util.retrieveAndFill('index.php?to_pdf=1&module=MySettings&action=LoadTabSubpanels&loadModule={$_REQUEST['module']}&record={$_REQUEST['record']}&subpanel=$key','subpanel_list',null,null,null);",
-                                         'label'=>( !empty($tab['label']) ? $tab['label']: $key ),
-                                         'type'=>$selected);
+                    $sugarTabs[$key] = array(
+                             'label'=>( !empty($tab['label']) ? $tab['label']: $key ),
+                             'type'=>$selected
+                    );
 
                     $otherTabs[$key] = array('key'=>$key, 'tabs'=>array());
 
@@ -265,7 +269,8 @@ class SubPanelTilesTabs extends SubPanelTiles
             $retTabs = array_intersect($tabs, array_map('strtolower', $groups[$selectedGroup]['modules']));
         }
 
-		return $retTabs;
+        // Use javascript to filter tabs.
+		return $tabs;
 	}
 }
 ?>

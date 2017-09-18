@@ -47,21 +47,21 @@
  	/**
  	 * records the query in the session for later retrieval
  	 */
- 	function store($module, $query){
+ 	static function store($module, $query){
  		$_SESSION[$module .'2_QUERY'] = $query;
  	}
 
  	/**
  	 * This function retrieves a query from the session
  	 */
- 	function retrieve($module){
+ 	static function retrieve($module){
  		return (!empty($_SESSION[$module .'2_QUERY']) ? $_SESSION[$module .'2_QUERY'] : '');
  	}
 
  	/**
  	 * return the start, prev, next, end
  	 */
- 	function play($module, $offset){
+ 	static function play($module, $offset){
  		//given some global offset try to determine if we have this
  		//in our array.
  		$ids = array();
@@ -79,7 +79,7 @@
  		return $menu;
  	}
 
-    function menu($module, $offset, $isAuditEnabled, $saveAndContinue = false ){
+    static function menu($module, $offset, $isAuditEnabled, $saveAndContinue = false ){
         $html_text = "";
         if ($offset < 0)
         {
@@ -154,7 +154,7 @@
         return $html_text;
     }
 
- 	function record($module, $offset){
+ 	static function record($module, $offset){
  		$GLOBALS['log']->debug('SUGARVCR is recording more records');
  		$start = max(0, $offset - VCRSTART);
  		$index = $start;
@@ -173,7 +173,7 @@
  		return $ids;
  	}
 
- 	function recordIDs($module, $rids, $offset, $totalCount){
+ 	static function recordIDs($module, $rids, $offset, $totalCount){
  		$index = $offset;
  		$index++;
  		$ids = array();
@@ -186,7 +186,7 @@
  		$_SESSION[$module.'total'] = $totalCount;
  	}
 
- 	function erase($module){
+ 	static function erase($module){
  		unset($_SESSION[$module. 'QUERY_ARRAY']);
  	}
 

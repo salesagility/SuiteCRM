@@ -65,13 +65,28 @@ class ModuleInstaller{
 	var $modulesInPackage = array();
 	public $disabled_path = DISABLED_PATH;
     public $id_name;
-	function ModuleInstaller(){
+	function __construct(){
 		$this->ms = new ModuleScanner();
 		$this->modules = get_module_dir_list();
-		$this->db = & DBManagerFactory::getInstance();
+		$this->db = DBManagerFactory::getInstance();
         include("ModuleInstall/extensions.php");
         $this->extensions = $extensions;
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ModuleInstaller(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
    /*
     * ModuleInstaller->install includes the manifest.php from the base directory it has been given. If it has been asked to do an upgrade it checks to see if there is
@@ -830,11 +845,11 @@ class ModuleInstaller{
 				$action['from'] = str_replace('<basepath>', $this->base_dir, $action['from']);
 				$GLOBALS['log']->debug("Uninstalling DCActions ..." . $action['from'] );
 				$path = 'custom/Extension/application/Ext/DashletContainer/Containers';
-				if (sugar_is_file($path . '/'. $this->id_name . '.php', 'w'))
+				if (is_file($path . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. $this->id_name . '.php');
 				}
-				else if (sugar_is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php', 'w'))
+				else if (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
 				}
@@ -940,7 +955,7 @@ class ModuleInstaller{
 
     /**
      * Function return path to file where store label
-     * 
+     *
      * @param $packs
      * @return string
      */
@@ -968,10 +983,10 @@ class ModuleInstaller{
 						if($packs['to_module'] == 'application'){
 							$path ='custom/Extension/' . $packs['to_module']. '/Ext/Language';
 						}
-						if (sugar_is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
+						if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
 							rmdir_recursive( $path.'/'.$packs['language'].'.'. $this->id_name . '.php');
-						} else if (sugar_is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
-							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w');
+						} else if (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
+							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
 						}
 					}
 					$this->rebuild_languages($languages, $modules);
@@ -1096,7 +1111,7 @@ class ModuleInstaller{
 
     /**
      * Check labels inside label files and remove them
-     * 
+     *
      * @param $basePath - path to files with labels
      * @param array $labelDefinitions - format like output from AbstractRelationship buildLabels()
      */
@@ -1119,7 +1134,7 @@ class ModuleInstaller{
 
     /**
      * Check labels inside label file and remove them
-     * 
+     *
      * @param $uninstalLabes
      * @param $definition
      * @param $filename
@@ -1152,7 +1167,7 @@ class ModuleInstaller{
 
     /**
      * Save labels that not need be uninstalled at this case
-     * 
+     *
      * @param $filename
      * @param $stringsName
      * @param $strings
@@ -1168,7 +1183,7 @@ class ModuleInstaller{
 
     /**
      * Uninstall extend labels
-     * 
+     *
      * @param $labelDefinitions
      */
     public function uninstallExtLabels($labelDefinitions)
@@ -1177,7 +1192,7 @@ class ModuleInstaller{
             if (!isset($GLOBALS['sugar_config']['languages']) || !is_array($GLOBALS['sugar_config']['languages'])) {
                 continue;
             }
-            
+
             foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
                 $pathDef = array(
                     'language' => $language,
@@ -1194,7 +1209,7 @@ class ModuleInstaller{
 
     /**
      * Returns the names of the label(key 'system_label') from a multi-dimensional array $labelDefinitions
-     * 
+     *
      * @param $labelDefinitions
      * @return array of labels
      */
@@ -1229,7 +1244,7 @@ class ModuleInstaller{
 		if($dir == '.' && is_dir($from)){
 			$dir = $to;
 		}
-		if(!sugar_is_dir($dir, 'instance'))
+		if(!is_dir($dir))
 			mkdir_recursive($dir, true);
 /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
 		if(empty($backup_path)) {
@@ -1929,7 +1944,7 @@ class ModuleInstaller{
 					if(is_subclass_of($mod, 'SugarBean')  && $mod->disable_vardefs == false ){
 						$GLOBALS['log']->debug( "Creating Tables Bean : $bean");
 						$mod->create_tables();
-						SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db,$mod->table_name,'',$mod->module_dir);    
+						SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db,$mod->table_name,'',$mod->module_dir);
 					}
 				}else{
 					$GLOBALS['log']->debug( "File Does Not Exist:" . $beanFiles[$class] );
@@ -2105,7 +2120,7 @@ private function dir_file_count($path){
 	 *
 	 * @return an array of errors
 	 */
-	function getErrors(){
+	static function getErrors(){
 		if(!empty($_SESSION['MODULEINSTALLER_ERRORS'])){
 			$errors = $_SESSION['MODULEINSTALLER_ERRORS'];
 			unset($_SESSION['MODULEINSTALLER_ERRORS']);

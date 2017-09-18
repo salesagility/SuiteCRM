@@ -171,14 +171,28 @@ class parseCSV {
 	/**
 	 * Constructor
 	 * @param   input   CSV file or string
-	 * @return  nothing
 	 */
-	function parseCSV ($input = null, $offset = null, $limit = null, $conditions = null) {
+	function __construct ($input = null, $offset = null, $limit = null, $conditions = null) {
 		if ( $offset !== null ) $this->offset = $offset;
 		if ( $limit !== null ) $this->limit = $limit;
 		if ( count($conditions) > 0 ) $this->conditions = $conditions;
 		if ( !empty($input) ) $this->parse($input);
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function parseCSV($input = null, $offset = null, $limit = null, $conditions = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($input, $offset, $limit, $conditions);
+    }
+
 
 
 	// ==============================================

@@ -55,7 +55,7 @@ class TopCampaignsDashlet extends Dashlet
 	public function __construct($id, $def = null) 
 	{
         global $current_user, $app_strings;
-        parent::Dashlet($id);
+        parent::__construct($id);
         $this->isConfigurable = true;
         $this->isRefreshable = true;        
 

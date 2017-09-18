@@ -46,10 +46,25 @@ class NoteSoap
 {
     var $upload_file;
 
-    function NoteSoap()
+    function __construct()
     {
     	$this->upload_file = new UploadFile('uploadfile');
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function NoteSoap(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function saveFile($note, $portal = false)
     {

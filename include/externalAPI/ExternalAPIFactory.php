@@ -66,6 +66,11 @@ class ExternalAPIFactory
                             && $connector->isRequiredConfigFieldsSet()) {
                                 $filteredList[$name] = $data;
                         }
+                     } elseif (isset($data['authMethod']) && $data['authMethod'] == 'oauth2') {
+                        $connector = SourceFactory::getSource($data['connector'], false);
+                        if (!empty($connector) && $connector->isRequiredConfigFieldsSet()) {
+                            $filteredList[$name] = $data;
+                        }
                      }else{
                         $filteredList[$name] = $data;
                      }
@@ -270,6 +275,7 @@ class ExternalAPIFactory
      * @param string $moduleName
      * @param bool $ignoreAuth Ignore if we have authentication details or not
      * @param bool $addEmptyEntry Add empty entry?
+     * @return array
      */
      public static function getModuleDropDown($moduleName, $ignoreAuth = false, $addEmptyEntry = false) {
         global $app_list_strings;

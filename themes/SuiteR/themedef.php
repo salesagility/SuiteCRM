@@ -93,10 +93,16 @@ $themedef = array(
             'default' => '#ffffff'
         ),
 
+        'action_menu_button' => array(
+            'vname' => 'LBL_ACTION_MENU_BUTTON',
+            'type' => 'colour',
+            'default' => '#eeeeee'
+        ),
+
         'action_menu_background' => array(
             'vname' => 'LBL_ACTION_MENU_BACKGROUND',
             'type' => 'colour',
-            'default' => '#ffffff'
+            'default' => '#F7F7F7'
         ),
 
         'action_menu_background_hover' => array(
@@ -142,10 +148,25 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#ffffff'
         ),
+        'dashlet_headertext' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DASHHEADTEXT',
+            'type' => 'colour',
+            'default' => '#3C8DBC'
+        ),        
         'icon' => array(
             'vname' => 'LBL_COLOUR_ADMIN_ICON',
             'type' => 'colour',
             'default' => '#ffffff'
+        ),
+        'suggestion_popup_from' => array(
+            'vname' => 'LBL_SUGGESTION_POPUP_FROM',
+            'type' => 'colour',
+            'default' => '#3c8dbc'
+        ),
+        'suggestion_popup_to' => array(
+            'vname' => 'LBL_SUGGESTION_POPUP_TO',
+            'type' => 'colour',
+            'default' => '#4286AD'
         ),
 
     )

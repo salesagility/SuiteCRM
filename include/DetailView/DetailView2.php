@@ -47,8 +47,8 @@ require_once('include/EditView/EditView2.php');
  */
 class DetailView2 extends EditView
 {
-    var $view = 'DetailView';
-
+    public $view = 'DetailView';
+    public $defs;
     /**
      * DetailView constructor
      * This is the DetailView constructor responsible for processing the new
@@ -60,11 +60,13 @@ class DetailView2 extends EditView
      * @param $metadataFile String value of file location to use in overriding default metadata file
      * @param tpl String value of file location to use in overriding default Smarty template
      */
+
     function setup(
         $module,
-        $focus,
+        $focus  = null,
         $metadataFile = null,
-        $tpl = 'include/DetailView/DetailView.tpl'
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true
         )
     {
         global $sugar_config;
@@ -73,7 +75,7 @@ class DetailView2 extends EditView
         $this->th->ss = $this->ss;
 
         //Check if inline editing is enabled for detail view.
-        if($sugar_config['enable_line_editing_detail']){
+        if(!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']){
             $this->ss->assign('inline_edit', true);
         }
         $this->focus = $focus;

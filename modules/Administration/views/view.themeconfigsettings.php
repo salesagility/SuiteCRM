@@ -84,6 +84,7 @@ class AdministrationViewThemeConfigSettings extends SugarView
                 }
             }
             $configurator->handleOverride();
+            sleep(3);
             SugarApplication::redirect('index.php?module=Administration&action=ThemeSettings');
             exit();
         }

@@ -50,7 +50,7 @@ class javascript{
 		$this->formname = $name;
 	}
 
-	function javascript(){
+	function __construct(){
 		global $app_strings, $current_user, $sugar_config;
 
         // Bug 24730 - default initialize the bean object in case we never set it to the current bean object
@@ -58,6 +58,21 @@ class javascript{
 		$this->sugarbean->field_name_map = array();
 		$this->sugarbean->module_dir = '';
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function javascript(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function setSugarBean($sugar){
 		$this->sugarbean = $sugar;
@@ -286,7 +301,7 @@ class javascript{
         if($clearValidateFields){
             $this->script .= "addForm('{$this->formname}');";
         }
-  
+
 		$this->script .= $tempScript;
 
 		if($showScriptTag){

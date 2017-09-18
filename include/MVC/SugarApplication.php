@@ -2,9 +2,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -57,8 +57,23 @@ class SugarApplication
  	var $default_module = 'Home';
  	var $default_action = 'index';
 
- 	function SugarApplication()
+ 	public function __construct()
  	{}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarApplication(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
  	/**
  	 * Perform execution of the application. This method is called from index2.php
@@ -84,9 +99,7 @@ class SugarApplication
 
         SugarThemeRegistry::buildRegistry();
         $this->loadLanguages();
-		$this->checkDatabaseVersion();
 		$this->loadDisplaySettings();
-		//$this->loadLicense();
 		$this->loadGlobals();
 		$this->setupResourceManagement($module);
 		$this->controller->execute();
@@ -104,7 +117,7 @@ class SugarApplication
 		$allowed_actions = (!empty($this->controller->allowed_actions)) ? $this->controller->allowed_actions : $allowed_actions = array('Authenticate', 'Login', 'LoggedOut');
 
         $authController = new AuthenticationController();
-        
+
 		if(($user_unique_key != $server_unique_key) && (!in_array($this->controller->action, $allowed_actions)) &&
 		   (!isset($_SESSION['login_error'])))
 		   {
@@ -123,11 +136,15 @@ class SugarApplication
 			        $this->controller->action = 'index';
 			    elseif($this->isModifyAction())
 			        $this->controller->action = 'index';
-                elseif ($this->controller->action == $this->default_action 
+                elseif ($this->controller->action == $this->default_action
                     && $this->controller->module == $this->default_module) {
                     $this->controller->action = '';
                     $this->controller->module = '';
                 }
+				elseif(strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
+					echo 'lost session';
+					exit();
+				}
 			}
 
             $authController->authController->redirectToLogin($this);
@@ -631,7 +648,7 @@ class SugarApplication
 	 * @access	public
 	 * @param	string	$url	The URL to redirect to
 	 */
- 	function redirect(
+ 	static function redirect(
  	    $url
  	    )
 	{
@@ -662,6 +679,20 @@ class SugarApplication
             }
         }
 		exit();
+	}
+
+	/**
+	 * classic redirect to another URL, but check first that URL start with "Location:"... 
+	 * @param $header_URL
+	 */
+	public static function headerRedirect($header_URL) {
+		if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+			$href = $matches[1];
+			SugarApplication::redirect($href);
+		}
+		else {
+			header($header_URL);
+		}
 	}
 
     /**

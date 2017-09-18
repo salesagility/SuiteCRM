@@ -109,12 +109,26 @@ class Opportunity extends SugarBean {
 									'currency_id' => 'currencies',
 									);
 
-	function Opportunity() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 		global $sugar_config;
 		if(!$sugar_config['require_accounts']){
 			unset($this->required_fields['account_name']);
 		}
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function Opportunity(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	var $new_schema = true;
@@ -173,7 +187,7 @@ $query .= 			"LEFT JOIN users
 	}
 
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -363,7 +377,7 @@ $query .= 			"LEFT JOIN users
 
 	}
 
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
 	{
 		//if account_id was replaced unlink the previous account_id.
 		//this rel_fields_before_value is populated by sugarbean during the retrieve call.
@@ -375,7 +389,7 @@ $query .= 			"LEFT JOIN users
 		}
 		// Bug 38529 & 40938 - exclude currency_id
 		parent::save_relationship_changes($is_update, array('currency_id'));
-		
+
 		if (!empty($this->contact_id)) {
 			$this->set_opportunity_contact_relationship($this->contact_id);
 		}
@@ -411,14 +425,31 @@ $query .= 			"LEFT JOIN users
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->account_id)){
 
 			if(!empty($this->account_id_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->account_id_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Accounts',$this->account_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner)){
+			*/
+			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['ACCOUNT'] = 'a';
 			}else{
 				$array_assign['ACCOUNT'] = 'span';

@@ -43,12 +43,27 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class LeadsParseRule extends BaseRule {
 
-function LeadsParseRule() {
-	
+function __construct() {
+
 }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function LeadsParseRule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 function preParse($panels, $view) {
-	
+
 	if($view == 'DetailView') {
 		foreach($panels as $name=>$panel) {
 		   	  foreach($panel as $rowCount=>$row) {
@@ -56,13 +71,13 @@ function preParse($panels, $view) {
 		   	  	 	if($this->matches($column, '/^lead_view_c$/')) {
 		   	  	 	   $panels[$name][$rowCount][$key] = 'full_name';
 		   	  	 	}
-				} //foreach 
+				} //foreach
 		   	} //foreach
 	    } //foreach
 	}
-	
-	return $panels;	
-	
+
+	return $panels;
+
 }
 
 }

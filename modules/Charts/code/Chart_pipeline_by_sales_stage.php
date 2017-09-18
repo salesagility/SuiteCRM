@@ -57,9 +57,24 @@ class Chart_pipeline_by_sales_stage
 {
 	  var $modules = array('Opportunities');
 	  var $order = 0;
-function Chart_pipeline_by_sales_stage()
+function __construct()
 {
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Chart_pipeline_by_sales_stage(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function draw($extra_tools)
 {

@@ -22,9 +22,7 @@
  *
  * @author SalesAgility <info@salesagility.com>
  */
-
-$module_name = 'AOS_Quotes';
-$searchFields[$module_name] = 
+$searchFields['AOS_Quotes'] = 
 	array (
 		'name' => array( 'query_type'=>'default'),
 		'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),
@@ -44,7 +42,15 @@ $searchFields[$module_name] =
 		'ticker_symbol'=> array('query_type'=>'default'),
 		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
 		'assigned_user_id'=> array('query_type'=>'default'),
-
+        'favorites_only' => array(
+            'query_type'=>'format',
+            'operator' => 'subquery',
+			'checked_only' => true,
+			'subquery' => "SELECT favorites.parent_id FROM favorites
+			                    WHERE favorites.deleted = 0
+			                        and favorites.parent_type = 'AOS_Quotes'
+			                        and favorites.assigned_user_id = '{1}'",
+            'db_field'=>array('id')),
 
         //Range Search Support
         'range_total_amount' => array ('query_type' => 'default', 'enable_range_search' => true),

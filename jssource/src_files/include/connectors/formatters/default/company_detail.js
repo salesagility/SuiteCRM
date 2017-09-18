@@ -60,7 +60,7 @@ function footer(footer)
 
 function display()
 {
-    if(typeof(dialog) != 'undefined')
+    if(typeof(dialog) != 'undefined' && dialog.destroy && typeof(dialog.destroy) == 'function')
         dialog.destroy();
 
     dialog = new YAHOO.widget.SimpleDialog(this.div_id,

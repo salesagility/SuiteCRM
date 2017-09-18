@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,7 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 *}
 <script>
@@ -44,10 +45,10 @@ if(typeof(Assistant)!="undefined" && Assistant.mbAssistant){
 	//Assistant.mbAssistant.render(document.body);
 {/literal}
 {if $userPref }
-	Assistant.processUserPref("{$userPref}");
+	{literal}Assistant.processUserPref("{/literal}{$userPref}{literal}");{/literal}
 {/if}
 {if $assistant.key && $assistant.group}
-	Assistant.mbAssistant.setBody(SUGAR.language.get('ModuleBuilder','assistantHelp').{$assistant.group}.{$assistant.key});
+	{literal}Assistant.mbAssistant.setBody(SUGAR.language.get('ModuleBuilder','assistantHelp').{/literal}{$assistant.group}{literal}.{/literal}{$assistant.key}{literal});{/literal}
 {/if}
 {literal}
 	if(Assistant.mbAssistant.visible){

@@ -28,11 +28,11 @@ require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
 
 class AOW_WorkFlowDashlet extends DashletGeneric {
-    function AOW_WorkFlowDashlet($id, $def = null) {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOW_WorkFlow/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOW_WorkFlow');
 
@@ -41,4 +41,19 @@ class AOW_WorkFlowDashlet extends DashletGeneric {
 
         $this->seedBean = new AOW_WorkFlow();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOW_WorkFlowDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
 }

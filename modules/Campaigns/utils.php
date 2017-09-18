@@ -53,15 +53,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strings=array()) {
 
-    //find prospect list attached to this campaign..
-    $query =  "SELECT prospect_list_id, prospect_lists.name ";
-    $query .= "FROM prospect_list_campaigns ";
-    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
-    $query .= "WHERE prospect_lists.deleted = 0 ";
-    $query .= "AND prospect_list_campaigns.deleted=0 ";
-    $query .= "AND campaign_id='".$campaign_id."'";
-    $query.=" and prospect_lists.list_type not like 'exempt%'";
-
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
     }
@@ -69,6 +60,15 @@ function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strin
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Campaigns');
     }
+
+    //find prospect list attached to this campaign..
+    $query =  "SELECT prospect_list_id, prospect_lists.name ";
+    $query .= "FROM prospect_list_campaigns ";
+    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
+    $query .= "WHERE prospect_lists.deleted = 0 ";
+    $query .= "AND prospect_list_campaigns.deleted=0 ";
+    $query .= "AND campaign_id='". $db->quote($campaign_id)."'";
+    $query.=" and prospect_lists.list_type not like 'exempt%'";
 
     //add campaign to the result array.
     //$return_array[$campaign_id]= $campaign_name . ' (' . $mod_strings['LBL_DEFAULT'] . ')';
@@ -98,9 +98,9 @@ function get_campaign_mailboxes(&$emails, $get_name=true) {
     	if($get_name) {
     		$return_array[$row['id']] = $row['name'];
     	} else {
-        	$return_array[$row['id']]= InboundEmail::get_stored_options('from_name',$row['name'],$row['stored_options']);
+        	$return_array[$row['id']]= InboundEmail::get_stored_options_static('from_name',$row['name'],$row['stored_options']);
     	}
-        $emails[$row['id']]=InboundEmail::get_stored_options('from_addr','nobody@example.com',$row['stored_options']);
+        $emails[$row['id']]=InboundEmail::get_stored_options_static('from_addr','nobody@example.com',$row['stored_options']);
     }
 
     if (empty($return_array)) $return_array=array(''=>'');
@@ -317,6 +317,8 @@ function get_campaign_urls($campaign_id) {
     if (!empty($campaign_id)) {
 
         $db = DBManagerFactory::getInstance();
+
+        $campaign_id = $db->quote($campaign_id);
 
         $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
         $current=$db->query($query1);
@@ -713,11 +715,26 @@ function process_subscriptions($subscription_string_to_parse) {
      *This function will return a string to the newsletter wizard if campaign check
      *does not return 100% healthy.
      */
-    function diagnose()
+    function diagnose(&$errors = array(), &$links = array())
     {
         global $mod_strings;
         global $current_user;
-        $msg = " <table class='detail view small' width='100%'><tr><td> ".$mod_strings['LNK_CAMPAIGN_DIGNOSTIC_LINK']."</td></tr>";
+
+        $errors = array(
+            'mailbox1' => false,
+            'mailbox2' => false,
+            'admin' => false,
+            'scheduler1' => false,
+            'scheduler2' => false,
+        );
+
+        $links = array(
+            'scheduler' => false,
+            'email' => false,
+        );
+
+        $msg = " <table class='diagnose_messages detail view small' width='100%'><tr><td> ".$mod_strings['LNK_CAMPAIGN_DIGNOSTIC_LINK']."</td></tr>";
+
         //Start with email components
         //monitored mailbox section
         $focus = new Administration();
@@ -740,6 +757,7 @@ function process_subscriptions($subscription_string_to_parse) {
             //if array is empty, then increment health counter
             $email_health =$email_health +1;
             $msg  .=  "<tr><td ><font color='red'><b>". $mod_strings['LBL_MAILBOX_CHECK1_BAD']."</b></font></td></tr>";
+            $errors['mailbox1'] = $mod_strings['LBL_MAILBOX_CHECK1_BAD'];
         }
 
 
@@ -747,23 +765,27 @@ function process_subscriptions($subscription_string_to_parse) {
             //if "from_address" is the default, then set "bad" message and increment health counter
             $email_health =$email_health +1;
             $msg .= "<tr><td ><font color='red'><b> ".$mod_strings['LBL_MAILBOX_CHECK2_BAD']." </b></font></td></tr>";
+            $errors['mailbox2'] = $mod_strings['LBL_MAILBOX_CHECK2_BAD'];
         }else{
             //do nothing, address has been changed
         }
         //if health counter is above 1, then show admin link
         if($email_health>0){
             if (is_admin($current_user)){
-                $msg.="<tr><td ><a href='index.php?module=Campaigns&action=WizardEmailSetup";
+                $lnk = 'index.php?module=Campaigns&action=WizardEmailSetup';
+                $msg.="<tr><td ><a href='";
                 if(isset($_REQUEST['return_module'])){
-                    $msg.="&return_module=".$_REQUEST['return_module'];
+                    $lnk .="&return_module=".$_REQUEST['return_module'];
                 }
                 if(isset($_REQUEST['return_action'])){
-                    $msg.="&return_action=".$_REQUEST['return_action'];
+                    $lnk .="&return_action=".$_REQUEST['return_action'];
                 }
+                $msg .= $lnk;
+                $links['email'] = $lnk;
                 $msg.="'>".$mod_strings['LBL_EMAIL_SETUP_WIZ']."</a></td></tr>";
             }else{
                 $msg.="<tr><td >".$mod_strings['LBL_NON_ADMIN_ERROR_MSG']."</td></tr>";
-
+                $errors['admin'] = $mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
             }
 
         }
@@ -798,18 +820,23 @@ function process_subscriptions($subscription_string_to_parse) {
         if($check_sched2 != 'found'){
             $sched_health =$sched_health +1;
             $msg.= "<tr><td><font color='red'><b>".$mod_strings['LBL_SCHEDULER_CHECK1_BAD']."</b></font></td></tr>";
+            $errors['scheduler1'] = $mod_strings['LBL_SCHEDULER_CHECK1_BAD'];
         }
         if($check_sched1 != 'found'){
             $sched_health =$sched_health +1;
             $msg.= "<tr><td><font color='red'><b>".$mod_strings['LBL_SCHEDULER_CHECK2_BAD']."</b></font></td></tr>";
+            $errors['scheduler2'] = $mod_strings['LBL_SCHEDULER_CHECK2_BAD'];
         }
         //if health counter is above 1, then show admin link
         if($sched_health>0){
             global $current_user;
             if (is_admin($current_user)){
-                $msg.="<tr><td ><a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_SCHEDULER_LINK']."</a></td></tr>";
+                $link = 'index.php?module=Schedulers&action=index';
+                $msg.="<tr><td ><a href='$link'>".$mod_strings['LBL_SCHEDULER_LINK']."</a></td></tr>";
+                $links['scheduler'] = $link;
             }else{
                 $msg.="<tr><td >".$mod_strings['LBL_NON_ADMIN_ERROR_MSG']."</td></tr>";
+                $errors['admin'] = $mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
             }
 
         }

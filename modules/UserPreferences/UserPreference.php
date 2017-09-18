@@ -75,7 +75,7 @@ class UserPreference extends SugarBean
         User $user = null
         )
     {
-        parent::SugarBean();
+        parent::__construct();
 
         $this->_userFocus = $user;
         $this->tracker_visibility = false;

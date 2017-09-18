@@ -41,27 +41,30 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-function progress_bar_flush()
+function progress_bar_flush($flush=true )
 {
-	if(ob_get_level()) {
-	    @ob_flush();
-	} else {
-        @flush();
-	}
+    if($flush) {
+        if(ob_get_level()) {
+            @ob_flush();
+        } else {
+            @flush();
+        }
+    }
 }
 
-function display_flow_bar($name,$delay, $size=200)
+function display_flow_bar($name, $delay, $size=200, $flush=true)
 {
 	$chunk = $size/5;
 	echo "<div id='{$name}_flow_bar'><table  class='list view' cellpading=0 cellspacing=0><tr><td id='{$name}_flow_bar0' width='{$chunk}px' bgcolor='#cccccc' align='center'>&nbsp;</td><td id='{$name}_flow_bar1' width='{$chunk}px' bgcolor='#ffffff' align='center'>&nbsp;</td><td id='{$name}_flow_bar2' width='{$chunk}px' bgcolor='#ffffff' align='center'>&nbsp;</td><td id='{$name}_flow_bar3' width='{$chunk}px' bgcolor='#ffffff' align='center'>&nbsp;</td><td id='{$name}_flow_bar4' width='{$chunk}px' bgcolor='#ffffff' align='center'>&nbsp;</td></tr></table></div><br>";
 
 	echo str_repeat(' ',256);
 
-	progress_bar_flush();
-	start_flow_bar($name, $delay);
+    progress_bar_flush($flush);
+
+	start_flow_bar($name, $delay, $flush);
 }
 
-function start_flow_bar($name, $delay)
+function start_flow_bar($name, $delay, $flush=true)
 {
 	$delay *= 1000;
 	$timer_id = $name . '_id';
@@ -80,19 +83,19 @@ function start_flow_bar($name, $delay)
 ";
 	echo str_repeat(' ',256);
 
-	progress_bar_flush();
+    progress_bar_flush($flush);
 }
 
-function destroy_flow_bar($name)
+function destroy_flow_bar($name, $flush=true)
 {
 	$timer_id = $name . '_id';
 	echo "<script>clearTimeout($timer_id);document.getElementById('{$name}_flow_bar').innerHTML = '';</script>";
 	echo str_repeat(' ',256);
 
-	progress_bar_flush();
+	progress_bar_flush($flush);
 }
 
-function display_progress_bar($name,$current, $total)
+function display_progress_bar($name,$current, $total, $flush=true)
 {
 	$percent = $current/$total * 100;
 	$remain = 100 - $percent;
@@ -112,10 +115,10 @@ function display_progress_bar($name,$current, $total)
 	}
 	echo str_repeat(' ',256);
 
-	progress_bar_flush();
+	progress_bar_flush($flush);
 }
 
-function update_progress_bar($name,$current, $total)
+function update_progress_bar($name,$current, $total, $flush=true)
 {
 	$percent = $current/$total * 100;
 	$remain = 100 - $percent;
@@ -147,5 +150,5 @@ function update_progress_bar($name,$current, $total)
 		document.getElementById('{$name}_complete_bar').innerHTML = '$status%';
 		document.getElementById('{$name}_remain_bar').width='{$remain}px';
 		</script>";
-	progress_bar_flush();
+	progress_bar_flush($flush);
 }

@@ -1,35 +1,41 @@
 <?php
-/**
- * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
  *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-global $locale;
-
-if ((int)$locale->getPrecedentPreference('sugar_version') > 5) {
-    $type = 'datetimecombo';
-} else {
-    $type = 'datetime';
-}
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
 
 $dictionary['AOS_Contracts'] = array(
     'table' => 'aos_contracts',
@@ -210,7 +216,7 @@ $dictionary['AOS_Contracts'] = array(
                 'name' => 'renewal_reminder_date',
                 'vname' => 'LBL_RENEWAL_REMINDER_DATE',
                 'dbType' => 'datetime',
-                'type' => $type,
+                'type' => 'datetimecombo',
                 'massupdate' => 0,
                 'comments' => '',
                 'help' => '',
@@ -363,7 +369,7 @@ $dictionary['AOS_Contracts'] = array(
             array(
                 'required' => false,
                 'name' => 'call_id',
-                'vname' => '',
+                'vname' => 'LBL_CALL_ID',
                 'type' => 'id',
                 'massupdate' => 0,
                 'comments' => '',
@@ -393,70 +399,6 @@ $dictionary['AOS_Contracts'] = array(
                 'audited' => false,
                 'reportable' => true,
                 'size' => '20',
-            ),
-
-        'tasks' =>
-            array(
-                'name' => 'tasks',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_tasks',
-                'module' => 'Tasks',
-                'bean_name' => 'Task',
-                'source' => 'non-db',
-            ),
-        'notes' =>
-            array(
-                'name' => 'notes',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_notes',
-                'module' => 'Notes',
-                'bean_name' => 'Note',
-                'source' => 'non-db',
-            ),
-        'meetings' =>
-            array(
-                'name' => 'meetings',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_meetings',
-                'module' => 'Meetings',
-                'bean_name' => 'Meeting',
-                'source' => 'non-db',
-            ),
-        'calls' =>
-            array(
-                'name' => 'calls',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_calls',
-                'module' => 'Calls',
-                'bean_name' => 'Call',
-                'source' => 'non-db',
-            ),
-
-        'emails' =>
-            array(
-                'name' => 'emails',
-                'type' => 'link',
-                'relationship' => 'emails_aos_contracts_rel', /* reldef in emails */
-                'module' => 'Emails',
-                'bean_name' => 'Email',
-                'source' => 'non-db',
-                'studio' => array("formula" => false),
-            ),
-        'aos_quotes_aos_contracts' =>
-            array(
-                'name' => 'aos_quotes_aos_contracts',
-                'type' => 'link',
-                'relationship' => 'aos_quotes_aos_contracts',
-                'source' => 'non-db',
-                'module' => 'AOS_Quotes',
-            ),
-        "documents" =>
-            array(
-                'name' => 'documents',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_documents',
-                'source' => 'non-db',
-                'module' => 'Documents',
             ),
         'line_items' =>
             array(
@@ -737,32 +679,98 @@ $dictionary['AOS_Contracts'] = array(
                 ),
                 'len' => '26,6',
             ),
-        'currency_id' =>
+        
+        'accounts' =>
             array(
-                'required' => false,
-                'name' => 'currency_id',
-                'vname' => 'LBL_CURRENCY',
-                'type' => 'id',
-                'massupdate' => 0,
-                'comments' => '',
-                'help' => '',
-                'importable' => 'true',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => 0,
-                'audited' => false,
-                'reportable' => false,
-                'len' => 36,
-                'size' => '20',
-                'studio' => 'visible',
-                'function' =>
-                    array(
-                        'name' => 'getCurrencyDropDown',
-                        'returns' => 'html',
-                    ),
+                'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
+                'type' => 'link',
+                'relationship' => 'account_aos_contracts',
+                'module' => 'Accounts',
+                'bean_name' => 'Account',
+                'source' => 'non-db',
+            ),
+        'contacts' =>
+            array(
+                'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
+                'type' => 'link',
+                'relationship' => 'contact_aos_contracts',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'source' => 'non-db',
+            ),
+        'tasks' =>
+            array(
+                'name' => 'tasks',
+                'vname' => 'LBL_TASKS',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_tasks',
+                'module' => 'Tasks',
+                'bean_name' => 'Task',
+                'source' => 'non-db',
+            ),
+        'notes' =>
+            array(
+                'name' => 'notes',
+                'vname' => 'LBL_NOTES',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_notes',
+                'module' => 'Notes',
+                'bean_name' => 'Note',
+                'source' => 'non-db',
+            ),
+        'meetings' =>
+            array(
+                'name' => 'meetings',
+                'vname' => 'LBL_MEETINGS',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_meetings',
+                'module' => 'Meetings',
+                'bean_name' => 'Meeting',
+                'source' => 'non-db',
+            ),
+        'calls' =>
+            array(
+                'name' => 'calls',
+                'vname' => 'LBL_CALLS',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_calls',
+                'module' => 'Calls',
+                'bean_name' => 'Call',
+                'source' => 'non-db',
+            ),
+        'emails' =>
+            array(
+                'name' => 'emails',
+                'vname' => 'LBL_EMAILS',
+                'type' => 'link',
+                'relationship' => 'emails_aos_contracts_rel',/* reldef in emails */
+                'source' => 'non-db',
+                'vname' => 'LBL_EMAILS',
+            ),
+        'aos_quotes_aos_contracts' =>
+            array(
+                'name' => 'aos_quotes_aos_contracts',
+                'vname' => 'LBL_AOS_QUOTES_AOS_CONTRACTS',
+                'type' => 'link',
+                'relationship' => 'aos_quotes_aos_contracts',
+                'source' => 'non-db',
+                'module' => 'AOS_Quotes',
+            ),
+        "documents" =>
+            array(
+                'name' => 'documents',
+                'vname' => 'LBL_DOCUMENTS',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_documents',
+                'source' => 'non-db',
+                'module' => 'Documents',
             ),
         "aos_products_quotes" =>
             array(
                 'name' => 'aos_products_quotes',
+                'vname' => 'LBL_AOS_PRODUCT_QUOTES',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_aos_products_quotes',
                 'module' => 'AOS_Products_Quotes',
@@ -772,6 +780,7 @@ $dictionary['AOS_Contracts'] = array(
         'aos_line_item_groups' =>
             array(
                 'name' => 'aos_line_item_groups',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_aos_line_item_groups',
                 'module' => 'AOS_Line_Item_Groups',
@@ -780,6 +789,50 @@ $dictionary['AOS_Contracts'] = array(
             ),
     ),
     'relationships' => array(
+        'aos_contracts_tasks' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Tasks',
+            'rhs_table' => 'tasks',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_notes' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Notes',
+            'rhs_table' => 'notes',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_meetings' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Meetings',
+            'rhs_table' => 'meetings',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_calls' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Calls',
+            'rhs_table' => 'calls',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
         'aos_contracts_aos_products_quotes' =>
             array(
                 'lhs_module' => 'AOS_Contracts',
@@ -807,4 +860,4 @@ $dictionary['AOS_Contracts'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOS_Contracts', 'AOS_Contracts', array('basic', 'assignable'));
+VardefManager::createVardef('AOS_Contracts', 'AOS_Contracts', array('basic', 'assignable', 'security_groups'));

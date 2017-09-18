@@ -41,13 +41,15 @@
 
  ********************************************************************************/
 *}
-
+<div class="template-panel">
+	<div class="template-panel-container panel">
+		<div class="template-container-full">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-		<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
+		<th colspan="4" align="left" ><h4 class="header-4">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 		</tr>
-		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_BUDGET_MESSAGE}<br></td><td>&nbsp;</td></tr>
-		<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
+		<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td class="emptyField">&nbsp;</td></tr>
+		<tr class="emptyRow"><td class="datalabel" colspan="4">&nbsp;</td></tr>
 		<tr>
 		<td scope="col"><span sugar='slot14'>{$MOD.LBL_CAMPAIGN_BUDGET}</span sugar='slot'></td>
 		<td ><span sugar='slot14b'><input type="text" size="10" maxlength="15" id="budget" name="wiz_step2_budget" title="{$MOD.LBL_CAMPAIGN_BUDGET}" value="{$CAMP_BUDGET}"></span sugar='slot'></td>
@@ -82,11 +84,15 @@
 		<td>&nbsp;</td>
 		</tr>
 	</table>
+			</div>
+		</div>
+	</div>
 	<p>
 	
 	<script>
 	var	num_grp_sep ='{$NUM_GRP_SEP}';
 	var	dec_sep = '{$DEC_SEP}';
+	var campaignBudget = true;
 
     /*
      * this is the custom validation script that will validate the fields on step2 of wizard

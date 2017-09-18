@@ -26,9 +26,24 @@
 require_once('modules/AOW_Actions/actions/actionBase.php');
 class actionCreateRecord extends actionBase {
 
-    function actionCreateRecord($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionCreateRecord($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
 
     function loadJS(){
 
@@ -43,22 +58,29 @@ class actionCreateRecord extends actionBase {
         $checked = 'CHECKED';
         if(isset($params['relate_to_workflow']) && !$params['relate_to_workflow']) $checked = '';
 
-        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='create-record'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
+        $html .= '<td id="name_label" class="name_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RECORD_TYPE", "AOW_Actions") .
+                 '</label>:<span class="required">
+*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."'  onchange='show_crModuleFields($line);'>".get_select_options_with_id($modules, $params['record_type'])."</select></td>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_RELATE_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
+        $html .= '<td id="relate_label" class="relate_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RELATE_WORKFLOW", "AOW_Actions") .
+                 '</label>:';
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crLine' .
+                 $line .
+                 '_table" width="100%" class="lines"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_FIELD","AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_RELATIONSHIP","AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
@@ -132,7 +154,8 @@ class actionCreateRecord extends actionBase {
                 switch($params['value_type'][$key]) {
                     case 'Field':
                         if($params['value'][$key] == '') continue;
-                        $data = $bean->field_defs[$params['value'][$key]];
+                        $fieldName = $params['value'][$key];
+                        $data = $bean->field_defs[$fieldName];
 
                         switch($data['type'] ) {
                             case 'double':
@@ -145,15 +168,16 @@ class actionCreateRecord extends actionBase {
                             case 'short':
                             case 'tinyint':
                             case 'int':
-                                $value = format_number($bean->$params['value'][$key]);
+                                $value = format_number($bean->$fieldName);
                                 break;
                             case 'relate':
                                 if(isset($data['id_name'])) {
-                                    $value = $bean->$data['id_name'];
+                                    $idName = $data['id_name'];
+                                    $value = $bean->$idName;
                                 }
                                 break;
                             default:
-                                $value = $bean->$params['value'][$key];
+                                $value = $bean->$fieldName;
                                 break;
                         }
                         break;
@@ -192,6 +216,8 @@ class actionCreateRecord extends actionBase {
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
                                     $date = $record->fetched_row[$params['field'][$key]];
+                                } else if ($params['value'][$key][0] == 'today') {
+                                    $date = $params['value'][$key][0];
                                 } else {
                                     $date = $bean->fetched_row[$params['value'][$key][0]];
                                 }
@@ -318,18 +344,20 @@ class actionCreateRecord extends actionBase {
             foreach($params['rel'] as $key => $field){
                 if($field == '' || $params['rel_value'][$key] == '') continue;
 
+                $relField = $params['rel_value'][$key];
+
                 switch($params['rel_value_type'][$key]) {
                     case 'Field':
 
-                        $data = $bean->field_defs[$params['rel_value'][$key]];
+                        $data = $bean->field_defs[$relField];
 
                         if($data['type'] == 'relate' && isset($data['id_name'])) {
-                            $params['rel_value'][$key] = $data['id_name'];
+                            $relField = $data['id_name'];
                         }
-                        $rel_id = $bean->$params['rel_value'][$key];
+                        $rel_id = $bean->$relField;
                         break;
                     default:
-                        $rel_id = $params['rel_value'][$key];
+                        $rel_id = $relField;
                         break;
                 }
 

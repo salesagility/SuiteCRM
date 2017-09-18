@@ -67,15 +67,30 @@ class LogicHook{
 
 	var $bean = null;
 
-	function LogicHook(){
+	public function __construct(){
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function LogicHook(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/**
 	 * Static Function which returns and instance of LogicHook
 	 *
 	 * @return unknown
 	 */
-	function initialize(){
+	static function initialize(){
 		if(empty($GLOBALS['logic_hook']))
 			$GLOBALS['logic_hook'] = new LogicHook();
 		return $GLOBALS['logic_hook'];

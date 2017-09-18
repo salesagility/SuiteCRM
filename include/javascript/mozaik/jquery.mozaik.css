@@ -1,0 +1,233 @@
+/* mozaik */
+.mozaik {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid lightgray;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+}
+
+.mozaik-inner {
+    max-width: 600px;
+    width: auto;
+    margin: 0 auto;
+    background: white;
+    padding: 0 30px;
+    -webkit-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
+    box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
+}
+
+.mozaik-clear {clear: both; height: 0;}
+
+/* thumbnails */
+
+ul.mozaik-thumbs {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    display: inline-block;
+    float: left;
+    overflow-y: scroll;
+}
+ul.mozaik-thumbs li.mozaik-thumbnail {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    float: none;
+    text-align: center;
+    z-index: 1;
+    width: 100%;
+}
+ul.mozaik-thumbs li.mozaik-thumbnail:hover {
+    background-color: lightgrey;
+}
+ul.mozaik-thumbs li.mozaik-thumbnail img {
+    border: 1px solid #ddd;
+}
+span.mozaik-thumb-label {
+    cursor: pointer;
+}
+
+
+
+/* editor area */
+
+ul.mozaik-list {
+    list-style-type: none;
+    padding: 32px 10px 128px 10px;
+    margin: 0;
+    display: inline-block;
+    float: left;
+    min-width: 300px;
+    min-height: 200px;
+    background-color: #ddd;
+    overflow-y: scroll;
+    height: 400px;
+}
+ul.mozaik-listmozaik-list li.mozaik-elem {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    float: none;
+}
+ul.mozaik-list li.mozaik-elem:hover {
+    border: 1px dotted black;
+    border-left: none;
+    border-right: none;
+    background-color: #aaa;
+}
+
+
+/* tools */
+
+ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+
+    background-color: white;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.75);
+}
+ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools li.mozaik-tool-btn {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin: 4px;
+}
+ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools li.mozaik-tool-btn a {
+    display: block;
+    float: none;
+}
+
+/* show on mouseover */
+ul.mozaik-list li.mozaik-elem {
+    position: relative;
+}
+ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools {
+    display: block;
+}
+
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools {
+    position: absolute;
+    top: 0;
+    left: -8px;
+    display: none;
+    z-index: 1;
+    opacity: 1;
+}
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools:hover {
+    opacity: 1;
+}
+
+/* tool-icons */
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-handle {
+    background-image: url('img/direction401.png');
+}
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-remove {
+    background-image: url('img/delete81.png');
+}
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-source {
+    background-image: url('img/computing10.png');
+}
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-stick {
+    background-image: url('img/pinch.png');
+}
+ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-copy {
+    background-image: url('img/archive46.png');
+}
+/* ace editor */
+div#mozaik-ace {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    display: none;
+    background: rgba(0,0,0,0.4);
+    padding: 20px 50px;
+}
+div#mozaik-ace-editor {
+    min-height: 90%;
+    -webkit-box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.75);
+}
+
+/* toolbar for ace editor */
+ul#mozaik-ace-tools {
+    display: block;
+    float: none;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    background: white;
+    border: 1px solid #ddd;
+}
+ul#mozaik-ace-tools li {
+    display: block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin: 4px;
+    float: left;
+}
+ul#mozaik-ace-tools li a {
+    display: block;
+    float: none;
+    height: 100%;
+}
+li#mozaik-ace-tool-save {
+    background-image: url(img/check30.png);
+}
+li#mozaik-ace-tool-cancel {
+    background-image: url(img/back57.png);
+}
+
+/* mozaik preloader */
+div.mozaik-preloader {
+    background-color: black;
+    color: white;
+    text-align: center;
+    color: black;
+    float: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+
+#email_template_editor > ul.mozaik-list.ui-droppable.ui-sortable > li > ul > li.mozaik-tool-btn > a {
+    margin-bottom: 8px;
+}
+
+#email_template_editor > ul.mozaik-list.ui-droppable.ui-sortable > li:nth-child(2) > ul > li.mozaik-tool-btn {
+    width: 32px;
+    background-position: center;
+    background-repeat:  no-repeat;
+}
+
+.mozaik-list {
+    height: 400px;
+}
+
+.mozaik-thumbs {
+    background: #fff;
+    height: 400px;
+}

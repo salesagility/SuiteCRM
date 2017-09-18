@@ -199,6 +199,9 @@ function create_custom_directory($file)
 function generateMD5array($path, $ignore_dirs = array('cache', 'upload'))
 {
 	$dh  = opendir($path);
+    if(!$dh){
+        return array();
+    }
 	while (false !== ($filename = readdir($dh)))
 	{
 		$current_dir_content[] = $filename;

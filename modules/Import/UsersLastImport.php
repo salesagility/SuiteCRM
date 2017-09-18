@@ -82,7 +82,7 @@ class UsersLastImport extends SugarBean
      */
     public function __construct()
     {
-        parent::SugarBean();
+        parent::__construct();
     }
 
     /**

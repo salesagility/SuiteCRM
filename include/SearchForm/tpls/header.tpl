@@ -52,8 +52,7 @@
 function submitOnEnter(e)
 {
     var characterCode = (e && e.which) ? e.which : event.keyCode;
-
-    if (characterCode == 13) {
+    if (characterCode == 13 && event.target.type !== "textarea") {
         document.getElementById('search_form').submit();
         return false;
     } else {
@@ -62,7 +61,12 @@ function submitOnEnter(e)
 }
 </script>
 {/literal}
-<form name='search_form' id='search_form' class='search_form' method='post' action='index.php?module={$module}&action={$action}' onkeydown='submitOnEnter(event);'>
+
+{if $searchFormInPopup}
+    {include file='include/SearchForm/tpls/headerPopup.tpl'}
+{/if}
+
+<form name='search_form' id='search_form' class='search_form{if !$searchFormInPopup} non-popup{/if}' method='post' action='index.php?module={$module}&action={$action}' onkeydown='submitOnEnter(event);'>
 <input type='hidden' name='searchFormTab' value='{$displayView}'/>
 <input type='hidden' name='module' value='{$module}'/>
 <input type='hidden' name='action' value='{$action}'/> 

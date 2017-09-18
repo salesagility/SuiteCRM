@@ -46,6 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+
 class Call extends SugarBean {
 	var $field_name_map;
 	// Stored fields
@@ -121,8 +122,8 @@ class Call extends SugarBean {
                                         'lead_id'			=> 'leads',
 								);
 
-	function Call() {
-		parent::SugarBean();
+	public function __construct() {
+	    parent::__construct();
 		global $app_list_strings;
 
        	$this->setupCustomFields('Calls');
@@ -139,11 +140,25 @@ class Call extends SugarBean {
 	}
 
 	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Call(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
+	/**
 	 * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if call is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -157,7 +172,7 @@ class Call extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
     // save date_end by calculating user input
     // this is for calendar
@@ -216,7 +231,55 @@ class Call extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
         }
 
+		if(isset($_REQUEST['reminders_data'])) {
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
+		}
+
         return $return_id;
+	}
+
+	/**
+	 * @param array $reminders
+	 * @return array
+     */
+	public function removeUnInvitedFromReminders($reminders) {
+
+		$reminderData = $reminders;
+		$uninvited = array();
+		foreach($reminders as $r => $reminder) {
+			foreach($reminder['invitees'] as $i => $invitee) {
+				switch($invitee['module']) {
+					case "Users":
+						if(in_array($invitee['module_id'], $this->users_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove user
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Contacts":
+						if(in_array($invitee['module_id'], $this->contacts_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove contact
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Leads":
+						if(in_array($invitee['module_id'], $this->leads_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove lead
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+				}
+			}
+		}
+		return $reminderData;
 	}
 
 	/** Returns a list of the associated contacts
@@ -300,7 +363,7 @@ class Call extends SugarBean {
 		return $query;
 	}
 
-        function create_export_query(&$order_by, &$where, $relate_link_join='')
+        function create_export_query($order_by, $where, $relate_link_join='')
         {
             $custom_join = $this->getCustomJoin(true, true, $where);
             $custom_join['join'] .= $relate_link_join;
@@ -411,8 +474,8 @@ class Call extends SugarBean {
 		}
 		$this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-		if (isset ($_REQUEST['parent_type']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != 'SubpanelEdits')) {
-			$this->parent_type = $_REQUEST['parent_type'];
+        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+                $this->parent_type = $_REQUEST['parent_type'];
 		} elseif (is_null($this->parent_type)) {
 			$this->parent_type = $app_list_strings['record_type_default_key'];
 		}
@@ -446,7 +509,14 @@ class Call extends SugarBean {
 		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
-			$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";
+			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
+			{    
+				$call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";   
+			}   
+			else   
+			{    
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
 		}else{
@@ -658,27 +728,64 @@ class Call extends SugarBean {
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->parent_name)){
 
 			if(!empty($this->parent_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->parent_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//parent_name_owner not being set for whatever reason so we need to figure this out
+			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)){
+			*/
+			if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['PARENT'] = 'a';
 			}else{
 				$array_assign['PARENT'] = 'span';
 			}
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->contact_name)){
 
 			if(!empty($this->contact_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if( ACLController::checkAccess('Contacts', 'view', $is_owner)){
+			*/
+			if( ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['CONTACT'] = 'a';
 			}else{
 				$array_assign['CONTACT'] = 'span';
@@ -687,8 +794,7 @@ class Call extends SugarBean {
 		return $array_assign;
 	}
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 		if(empty($this->in_workflow))
         {
             if(empty($this->in_import))
