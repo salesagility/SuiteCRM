@@ -64,6 +64,10 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+# Microsoft Visual Studio
+*.sln
+*.suo
+*.phpproj
 # Disytel
 lang_cmp.php
 .kdev4/
