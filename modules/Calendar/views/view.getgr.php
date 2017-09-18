@@ -41,29 +41,14 @@ require_once('include/MVC/View/SugarView.php');
 
 class CalendarViewGetGR extends SugarView {
 
-	function __construct(){
- 		parent::__construct();
+	function CalendarViewGetGR(){
+ 		parent::SugarView();
 	}
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function CalendarViewGetGR(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-
+	
 	function process(){
 		$this->display();
 	}
-
+	
 	function display(){
 		error_reporting(0);
 		require_once('include/json_config.php');
@@ -73,7 +58,7 @@ class CalendarViewGetGR extends SugarView {
         	$GRjavascript = $json_config->getFocusData($_REQUEST['type'], $_REQUEST['record']);
         	ob_clean();
         	echo $GRjavascript;
-	}
+	}	
 
 }
 

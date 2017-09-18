@@ -103,6 +103,9 @@ include("metadata/cron_remove_documentsMetaData.php");
 include('metadata/aok_knowledgebase_categoriesMetaData.php');
 
 include('metadata/am_projecttemplates_project_1MetaData.php');
+include('metadata/am_projecttemplates_contacts_1MetaData.php');
+include('metadata/am_projecttemplates_users_1MetaData.php');
+
 include('metadata/am_tasktemplates_am_projecttemplatesMetaData.php');
 include('metadata/aos_contracts_documentsMetaData.php');
 include('metadata/aos_quotes_aos_contractsMetaData.php');

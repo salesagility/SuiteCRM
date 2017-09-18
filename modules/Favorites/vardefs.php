@@ -1,9 +1,10 @@
 <?php
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,45 +35,41 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 $dictionary['Favorites'] = array(
     'table' => 'favorites',
     'audited' => false,
     'duplicate_merge' => false,
     'fields' => array(
 
-        'parent_id' =>
-            array(
-                'name' => 'parent_id',
-                'vname' => 'LBL_PARENT_FAVORITE_ID',
-                'type' => 'id',
-                'required' => false,
-                'reportable' => false,
-                'audited' => true,
-                'comment' => 'Favorite ID of the parent of this account',
-            ),
+        'parent_id' => array(
+            'name' => 'parent_id',
+            'vname' => 'LBL_PARENT_FAVORITE_ID',
+            'type' => 'id',
+            'required' => false,
+            'reportable' => false,
+            'audited' => true,
+            'comment' => 'Favorite ID of the parent of this account',
+        ),
 
-        'parent_type' =>
-            array(
-                'name' => 'parent_type',
-                'vname' => 'LBL_PARENT_TYPE',
-                'type' => 'parent_type',
-                'dbType' => 'varchar',
-                'required' => false,
-                'group' => 'parent_name',
-                'options' => 'parent_type_display',
-                'len' => 255,
-                'comment' => 'The Sugar object to which the call is related'
-            ),
-
+        'parent_type' => array(
+            'name' => 'parent_type',
+            'vname' => 'LBL_PARENT_TYPE',
+            'type' => 'parent_type',
+            'dbType' => 'varchar',
+            'required' => false,
+            'group' => 'parent_name',
+            'options' => 'parent_type_display',
+            'len' => 255,
+            'comment' => 'The Sugar object to which the call is related',
+        ),
 
     ),
     'relationships' => array(),
     'optimistic_locking' => true,
-    'unified_search' => true,
+    'unified_search' => false,
 );
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
 VardefManager::createVardef('Favorites', 'Favorites', array('basic', 'assignable'));

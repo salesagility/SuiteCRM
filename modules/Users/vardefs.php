@@ -526,6 +526,17 @@ $dictionary['User'] = array(
             'studio' => false,
         ),
 
+        'editor_type' => array(
+            'name' => 'editor_type',
+            'vname' => 'LBL_EDITOR_TYPE',
+            'type' => 'enum',
+            'options' => 'dom_editor_type',
+            'importable' => false,
+            'reportable' => false,
+            'source' => 'non-db',
+            'studio' => false,
+        ),
+
         'aclroles' => array(
             'name' => 'aclroles',
             'type' => 'link',
@@ -641,6 +652,24 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'module' => 'Project',
                 'bean_name' => 'Project',
+                'vname' => 'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE',
+            ),
+        'am_projecttemplates_resources' =>
+            array(
+                'name' => 'am_projecttemplates_resources',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_users_resources',
+                'source' => 'non-db',
+                'vname' => 'LBL_PROJECTS',
+            ),
+        'am_projecttemplates_users_1' =>
+            array(
+                'name' => 'am_projecttemplates_users_1',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_users_1',
+                'source' => 'non-db',
+                'module' => 'AM_ProjectTemplates',
+                'bean_name' => 'AM_ProjectTemplates',
                 'vname' => 'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE',
             ),
         'SecurityGroups' =>

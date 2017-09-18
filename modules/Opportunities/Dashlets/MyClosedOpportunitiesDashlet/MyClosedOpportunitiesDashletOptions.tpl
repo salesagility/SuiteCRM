@@ -52,7 +52,7 @@
 <tr>
     <td scope='row'>{$titleLBL}</td>
     <td>
-    	<input class="text" name="title" size='20' maxlength='80' value='{$title}'>
+    	<input type="text" class="text" name="title" size='20' maxlength='80' value='{$title}'>
     </td>
 </tr>
 {if $isRefreshable}
@@ -70,13 +70,13 @@
 <tr>
     <td scope='row'>{$urlLBL}</td>
     <td>
-    	<input class="text" name="url" size='20' maxlength='255' value='{$url}'>
+    	<input type="text" class="text" name="url" size='20' maxlength='255' value='{$url}'>
     </td>
 </tr>
 <tr>
     <td scope='row'>{$heightLBL}</td>
     <td>
-    	<input class="text" name="height" size='20' maxlength='80' value='{$height}'>
+    	<input type="text" class="text" name="height" size='20' maxlength='80' value='{$height}'>
     </td>
 </tr>
 <tr>

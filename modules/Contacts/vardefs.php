@@ -302,6 +302,24 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                 'vname' => 'LBL_PROJECTS_RESOURCES',
             ),
 
+            'am_projecttemplates_resources' => array(
+                'name' => 'am_projecttemplates_resources',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_contacts_resources',
+                'source' => 'non-db',
+                'vname' => 'LBL_PROJECTS_RESOURCES',
+            ),
+
+            'am_projecttemplates_contacts_1' =>
+                array(
+                    'name' => 'am_projecttemplates_contacts_1',
+                    'type' => 'link',
+                    'relationship' => 'am_projecttemplates_contacts_1',
+                    'source' => 'non-db',
+                    'module' => 'AM_ProjectTemplates',
+                    'bean_name' => 'AM_ProjectTemplates',
+                    'vname' => 'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE',
+                ),
 
             'tasks' =>
                 array(
@@ -503,6 +521,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
             'aos_quotes' =>
                 array(
                     'name' => 'aos_quotes',
+                    'vname' => 'LBL_AOS_QUOTES',
                     'type' => 'link',
                     'relationship' => 'contact_aos_quotes',
                     'module' => 'AOS_Quotes',
@@ -512,6 +531,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
             'aos_invoices' =>
                 array(
                     'name' => 'aos_invoices',
+                    'vname' => 'LBL_AOS_INVOICES',
                     'type' => 'link',
                     'relationship' => 'contact_aos_invoices',
                     'module' => 'AOS_Invoices',
@@ -521,6 +541,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
             'aos_contracts' =>
                 array(
                     'name' => 'aos_contracts',
+                    'vname' => 'LBL_AOS_CONTRACTS',
                     'type' => 'link',
                     'relationship' => 'contact_aos_contracts',
                     'module' => 'AOS_Contracts',

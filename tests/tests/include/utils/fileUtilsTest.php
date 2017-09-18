@@ -78,6 +78,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'Alerts' => 'Alerts',
                 'AM_ProjectTemplates' => 'AM_ProjectTemplates',
                 'AM_TaskTemplates' => 'AM_TaskTemplates',
+				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOD_Index' => 'AOD_Index',
                 'AOD_IndexEvent' => 'AOD_IndexEvent',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
@@ -161,12 +162,14 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'Relationships' => 'Relationships',
                 'Reminders' => 'Reminders',
                 'Reminders_Invitees' => 'Reminders_Invitees',
+                'ResourceCalendar' => 'ResourceCalendar',
                 'Releases' => 'Releases',
                 'Roles' => 'Roles',
                 'SavedSearch' => 'SavedSearch',
                 'Schedulers' => 'Schedulers',
                 'SchedulersJobs' => 'SchedulersJobs',
                 'SecurityGroups' => 'SecurityGroups',
+                'Spots' => 'Spots',
                 'Studio' => 'Studio',
                 'SugarFeed' => 'SugarFeed',
                 'Tasks' => 'Tasks',
@@ -286,13 +289,13 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
                 'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
-                'data/Relationships/M2MRelationship.php' => 'c320909b5a17d63aafa0d7497fe3c991',
+                'data/Relationships/M2MRelationship.php' => '3c19c005121d5d53e7592ee566963c5a',
                 'data/Relationships/One2MBeanRelationship.php' => 'c09fe92826b4c8a3944694098de35027',
                 'data/Relationships/One2MRelationship.php' => '588ad87910bd9d885fe27da77ad13e30',
                 'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
                 'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
-                'data/Relationships/RelationshipFactory.php' => '3bd7cc6998beaf82a13808f54bff1c2d',
-                'data/Relationships/SugarRelationship.php' => '8d0fa8ae0f41ac34eb5d0c04f0e02825',
+                'data/Relationships/RelationshipFactory.php' => '50112936176b9ae891d0cfddde89ca28',
+                'data/Relationships/SugarRelationship.php' => '87e9151907a03823b1045402d46f022c',
         );
 
         $actual = generateMD5array('data/Relationships/');

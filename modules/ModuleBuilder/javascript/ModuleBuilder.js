@@ -527,10 +527,10 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
 			} catch (err) {
 				YAHOO.SUGAR.MessageBox.show({
-                    title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
-                    msg: o.responseText,
-                    width: 500
-                });
+					title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
+					msg: o.responseText,
+					width: 500
+				});
 				return false;
 			}
 			
@@ -607,22 +607,52 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			if (SUGAR.util.isLoginPage(o.responseText))
 				return true;
 			if (o.responseText.substr(0, 1) == "<") {
-                YAHOO.SUGAR.MessageBox.show({
+				YAHOO.SUGAR.MessageBox.show({
 					title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
 					msg: o.responseText,
-					width: 500
+					width: 500,
+					close: false
 				});
 				return true;
-            }
+			}
 			
 			
 			return false;
 		},
 		submitForm: function(formname, successCall){
+			var onSuccess = function() {console.log('No success binding function')};
+			var onFailure =  function() {console.log('No success binding function')};
 			var failureCall = ModuleBuilder.failed;
 			ajaxStatus.showStatus(SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'));
+			YAHOO.SUGAR.MessageBox.show({
+				title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'),
+				msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_TITLE'),
+				width: 500,
+				close: false
+			});
+
 			if (typeof(successCall) == 'undefined') {
-				successCall = ModuleBuilder.updateContent;
+				onSuccess = function(o) {
+					YAHOO.SUGAR.MessageBox.hide();
+					YAHOO.SUGAR.MessageBox.show({
+						title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+						msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
+						width: 500,
+						close: true
+					});
+					ModuleBuilder.updateContent(o);
+				}
+
+				onFailure = function(o) {
+					YAHOO.SUGAR.MessageBox.hide();
+					YAHOO.SUGAR.MessageBox.show({
+						title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+						msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_FAILED_MESSAGE'),
+						width: 500,
+						close: true
+					});
+					ModuleBuilder.updateContent(o);
+				}
 
 				// get bookmarked url state
 				var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
@@ -645,22 +675,16 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					ModuleBuilder.preloader.on();
 
 					// set callback functions
-					successCall = function(o){
+					onSuccess = function(o){
 						// switch off preloader
 						ModuleBuilder.preloader.off();
 						// call the original callback
 						if(ModuleBuilder.updateContent(o)) {
-							// show results
-							YAHOO.SUGAR.MessageBox.show({
-								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
-								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
-								width: 500
-							});
+							// refresh page content
+							ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
 						}
-						// refresh page content
-						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
 					};
-					failureCall = function(o) {
+					onFailure = function(o) {
 						// switch off preloader
 						ModuleBuilder.preloader.off();
 						// call the original callback
@@ -672,12 +696,25 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			}
 			else {
 				ModuleBuilder.callLock = true;
+				onSuccess = function(o) {
+						YAHOO.SUGAR.MessageBox.hide();
+						YAHOO.SUGAR.MessageBox.show({
+							title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+							msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
+							width: 500,
+							close: true
+						});
+						successCall(o);
+				}
 			}
 			Connect.setForm(document.getElementById(formname) || document.forms[formname]);
 			Connect.asyncRequest(
-			    Connect.method, 
-			    Connect.url, 
-			    {success: successCall, failure: failureCall}
+			    Connect.method,
+			    Connect.url,
+			    {
+						success: onSuccess,
+						failure: onFailure
+					}
 			);
 		},
 
@@ -706,7 +743,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					title: title,
 					msg: message,
 					width: 500,
-					close: false
+
 				});
 			},
 

@@ -43,7 +43,7 @@ function display_lines($focus, $field, $value, $view){
         $html .= 'var total_tax = '.$total_tax.';';
         $html .= '</script>';
 
-        $html .= "<table border='0' cellspacing='4' width='37.5%' id='lineItems'></table>";
+        $html .= "<table border='0' cellspacing='4' id='lineItems'></table>";
 
         if($enable_groups){
             $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";

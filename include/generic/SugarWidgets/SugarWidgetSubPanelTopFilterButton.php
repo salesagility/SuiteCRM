@@ -46,7 +46,7 @@ class SugarWidgetSubPanelTopFilterButton  extends SugarWidgetSubPanelTopButton{
 
         $button = "<script src='include/SubPanel/SubPanel.js'></script>";
 
-        $button .= "<input class='button' type='button'  value='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  id='". $this->getWidgetId() ."'  name='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  title='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."' onclick=\"showSearchPanel('history');return false;\" />";
+        $button .= "<input class='button' type='button'  value='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  id='". $this->getWidgetId() ."'  name='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  title='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."' onclick=\"showSearchPanel('" .  strtolower($this->widget_id) . "');return false;\" />";
 
         return $button;
     }

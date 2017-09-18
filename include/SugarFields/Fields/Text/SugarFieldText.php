@@ -45,7 +45,7 @@ class SugarFieldText extends SugarFieldBase {
         if(!isset($displayParams['nl2br'])){
             $displayParams['nl2br'] = true;
         }
-        if(!isset($displayParams['htmlescape'])) {
+        if(!isset($displayParams['htmlescape']) && $vardef['editor'] != "html") {
             $displayParams['htmlescape'] = true;
         }
         if(!isset($displayParams['url2html'])) {
@@ -82,5 +82,24 @@ class SugarFieldText extends SugarFieldBase {
 
 		return $this->ss->fetch($this->findTemplate('ClassicEditView'));
     }
+
+    function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass=true) {
+       parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
+        $editor = "";
+        if(isset($vardef['editor']) && $vardef['editor'] == "html"){
+            if(!isset($displayParams['htmlescape'])) {
+                $displayParams['htmlescape'] = false;
+            }
+            if($_REQUEST['action'] == "EditView") {
+                require_once ("include/SugarTinyMCE.php");
+                $tiny = new SugarTinyMCE();
+                $editor = $tiny->getInstance($vardef['name'], 'email_compose_light');
+            }
+            $this->ss->assign("tinymce", $editor);
+        }else{
+            $this->ss->assign("tinymce", $editor);
+        }
+    }
+
 }
 ?>

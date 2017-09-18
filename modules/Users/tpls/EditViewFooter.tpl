@@ -53,9 +53,9 @@
                             </tr>
                             <tr>
                                 <td scope="row" width="17%">
-                                {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
+                                {$MOD.LBL_EMAIL}  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
                                 </td>
-                                <td>
+                                <td width="83%">
                                     {$NEW_EMAIL}
                                 </td>
                             </tr>
@@ -69,43 +69,20 @@
                                     </select>
                                 </td>
                             </tr>
-                            {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-                            <tr id="mail_smtpserver_tr">
-                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
-                                <td width="30%" ><slot>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                             {if !empty($mail_smtpauth_req) }
 
-                            <tr id="mail_smtpuser_tr">
-                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            <tr id="mail_smtppass_tr">
-                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
-                                <td width="30%" ><slot>
-                                <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'>
-                                <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
-                                </slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            {/if}
-
-                            <tr id="test_outbound_settings_tr">
-                                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
-                                <td width="33%" >&nbsp;</td>
-                                <td width="17%">&nbsp;</td>
-                                <td width="33%" >&nbsp;</td>
-                            </tr>
-                            {/if}
+                <tr>
+                    <td scope="row" width="17%">{$MOD.LBL_EDITOR_TYPE}</td>
+                    <td width="83%">
+                        <select id="editor_type" name="editor_type" tabindex='410'>
+                            {$EDITOR_TYPE}
+                        </select>
+                    </td>
+                </tr>
                         </table>
+                        <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings(); return false;"><img src="themes/default/images/icon_email_settings.gif" align="absmiddle" border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
             </div>
 </div>
-<div>
+<div class="user-tab-content">
             {if ($CHANGE_PWD) == '1'}
             <div id="generate_password">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
@@ -195,7 +172,7 @@
             {/if}
     </div>
     {if $SHOW_THEMES}
-    <div>
+    <div class="user-tab-content">
         <div id="themepicker" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody>
@@ -219,7 +196,7 @@
         </div>
     </div>
     {/if}
-    <div>
+    <div class="user-tab-content">
         <div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
@@ -374,7 +351,6 @@
                         </tr>
                     </table>
         </div>
-
         <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
             <tr>
@@ -407,7 +383,7 @@
         </div>
     </div>
     {if $ID}
-    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
+    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
         <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
     </div>
     {/if}

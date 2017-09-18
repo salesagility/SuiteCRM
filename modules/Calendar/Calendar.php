@@ -46,10 +46,18 @@ require_once('include/utils/activity_utils.php');
 require_once('modules/Calendar/CalendarUtils.php');
 require_once('modules/Calendar/CalendarActivity.php');
 
-
 class Calendar {
-	
-	public $view = 'week'; // current view
+
+	public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Calls" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Tasks" => array("showCompleted" => true,"start" =>  "date_due", "end" => "date_due"),
+//								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
+	//							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
+								 );
+	public $views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(),"month" => array(), "sharedMonth" => array(), "sharedWeek" => array());
+
+	public $view = 'agendaWeek'; // current view
 	public $style; // calendar style (basic or advanced)
 	public $dashlet = false; // if is displayed in dashlet	
 	public $date_time; // current date
@@ -82,15 +90,16 @@ class Calendar {
 	/**
 	 * constructor
 	 * @param string $view 
-	 * @param array $time_arr 
+	 * @param array $time_arr
+	 * @param array $views
 	 */	
-	function __construct($view = "day", $time_arr = array()){
+	function __construct($view = "agendaWeek", $time_arr = array()){
 		global $current_user, $timedate, $current_language;
 		
 		$this->view = $view;		
 
-		if(!in_array($this->view,array('day','week','month','year','shared','mobile')))
-			$this->view = 'week';
+		if(!array_key_exists($this->view, $this->views))
+			$this->view = 'agendaWeek';
 		
 		$date_arr = array();
 		if(!empty($_REQUEST['day']))
@@ -165,10 +174,24 @@ class Calendar {
 			if (is_null($displayTimeslots)) {
 				$displayTimeslots = SugarConfig::getInstance()->get('calendar.display_timeslots', true);
 			}
-			if ($displayTimeslots) {
-				$this->style = "advanced";
-			} else {
-				$this->style = "basic";
+			if (!$displayTimeslots) {
+				switch($this->view) {
+					case "agendaDay":
+						$this->view = "basicDay";
+					break;
+					case "agendaWeek":
+						$this->view = "basicWeek";
+					break;
+				}
+			}else{
+				switch($this->view) {
+					case "basicDay":
+						$this->view = "agendaDay";
+						break;
+					case "basicWeek":
+						$this->view = "agendaWeek";
+						break;
+				}
 			}
 		}
 		
@@ -197,9 +220,26 @@ class Calendar {
 	 * Load activities data to array
 	 */		
 	public function load_activities(){
+
+
 		$field_list = CalendarUtils::get_fields();
-		
-		foreach($this->acts_arr as $user_id => $acts){	
+
+		$i = 0;
+		foreach($this->acts_arr as $user_id => $acts){
+			if(isset($acts) && empty($acts)){
+				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
+				if(is_null($shared_calendar_separate)) {
+					$shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
+				}
+				//if no calendar items we add the user to the list.
+				if($shared_calendar_separate){
+					//$this->items[ $item['user_id'] ][] = $item;
+					$this->items[ $user_id ][] = array();
+				}else{
+					$this->items[ $GLOBALS['current_user']->id ][] = array();
+				}
+				continue;
+			}
 			foreach($acts as $act){
 											
 					$item = array();
@@ -208,7 +248,7 @@ class Calendar {
 					$item['type'] = strtolower($act->sugar_bean->object_name);
 					$item['assigned_user_id'] = $act->sugar_bean->assigned_user_id;
 					$item['record'] = $act->sugar_bean->id;		
-					$item['name'] = $act->sugar_bean->name;
+					$item['name'] = $act->sugar_bean->name . ' ' . $act->sugar_bean->assigned_user_name;
 					$item['description'] = $act->sugar_bean->description;
 
 					if(isset($act->sugar_bean->duration_hours)){
@@ -257,11 +297,26 @@ class Calendar {
 						$item['duration_hours'] = 0;
 					if(!isset($item['duration_minutes']) || empty($item['duration_minutes']))
 						$item['duration_minutes'] = 0;	
-						
-					$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean));			
-			
-					$this->items[] = $item;
+
+					if(isset($this->activityList[ $act->sugar_bean->module_name ]['start']) && !empty($this->activityList[ $act->sugar_bean->module_name ]['start'])){
+						$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean, $this->activityList[ $act->sugar_bean->module_name ]['start'], $this->activityList[ $act->sugar_bean->module_name ]['end']));
+					}else{
+						$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean));
+					}
+
+
+				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
+				if(is_null($shared_calendar_separate)) {
+					$shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
+				}
+				//if no calendar items we add the user to the list.
+				if($shared_calendar_separate){
+					$this->items[ $item['user_id'] ][] = $item;
+				}else{
+					$this->items[ $GLOBALS['current_user']->id ][] = $item;
+				}
 			}
+			$i++;
 		}
 	}	
 	
@@ -288,14 +343,14 @@ class Calendar {
 	 */
 	protected function calculate_grid_start_ts(){
 	
-		if($this->view == "week" || $this->view == "shared"){
+		if($this->view == "agendaWeek" || $this->view == "shared"){
 			$week_start = CalendarUtils::get_first_day_of_week($this->date_time);
 			$this->grid_start_ts = $week_start->format('U') + $week_start->getOffset(); 
 		}else if($this->view == "month"){
 			$month_start = $this->date_time->get_day_by_index_this_month(0);
 			$week_start = CalendarUtils::get_first_day_of_week($month_start);
 			$this->grid_start_ts = $week_start->format('U') + $week_start->getOffset(); // convert to timestamp, ignore tz
-		}else if($this->view == "day"){
+		}else if($this->view == "agendaDay"){
 			$this->grid_start_ts = $this->date_time->format('U') + $this->date_time->getOffset();
 		}	
 	}
@@ -319,10 +374,10 @@ class Calendar {
 	public function add_activities($user,$type='sugar'){
 		global $timedate;
 		$start_date_time = $this->date_time;
-		if($this->view == 'week' || $this->view == 'shared' || $this->view == 'mobile'){
+		if($this->view == 'agendaWeek' || $this->view == 'sharedWeek'){
 			$start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
 			$end_date_time = $start_date_time->get("+7 days");
-		}else if($this->view == 'month'){
+		}else if($this->view == 'month' || $this->view == "sharedMonth"){
 			$start_date_time = $this->date_time->get_day_by_index_this_month(0);	
 			$end_date_time = $start_date_time->get("+".$start_date_time->format('t')." days");
 			$start_date_time = CalendarUtils::get_first_day_of_week($start_date_time);
@@ -340,10 +395,12 @@ class Calendar {
 	    	}
 	    	else
 	    	{
-				$acts_arr = CalendarActivity::get_activities($user->id, $this->show_tasks, $start_date_time, $end_date_time, $this->view, $this->show_calls, $this->show_completed);
+				$acts_arr = CalendarActivity::get_activities($this->activityList, $user->id, $this->show_tasks, $start_date_time, $end_date_time, $this->view, $this->show_calls, $this->show_completed);
 	    	}
-	    	
-	    	$this->acts_arr[$user->id] = $acts_arr;	 
+
+
+	    	//$this->acts_arr[$user->id] = $acts_arr;
+	    	$this->acts_arr[$user->id] = $acts_arr;
 	}
 
 	/**
@@ -357,12 +414,12 @@ class Calendar {
 		else 
 			$sign = "+";
 			
-		if($this->view == 'month'){
+		if($this->view == 'month' || $this->view == "sharedMonth"){
             $day = $this->date_time->get_day_by_index_this_month(0)->get($sign."1 month")->get_day_begin(1);
-		}else if($this->view == 'week' || $this->view == 'shared'){
+		}else if($this->view == 'agendaWeek' || $this->view == 'sharedWeek' || $this->view == 'basicWeek'){
 			$day = CalendarUtils::get_first_day_of_week($this->date_time);
 			$day = $day->get($sign."7 days");
-		}else if($this->view == 'day'){
+		}else if($this->view == 'agendaDay' || $this->view == 'basicDay'){
 			$day = $this->date_time->get($sign."1 day")->get_day_begin();
 		}else if($this->view == 'year'){
             		$day = $this->date_time->get($sign."1 year")->get_day_begin();

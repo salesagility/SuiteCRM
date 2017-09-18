@@ -1,10 +1,11 @@
  {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,7 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 *}
 <div>&nbsp;
@@ -106,8 +107,7 @@
 			               </span>
 			           </td>
 			           <td align='right'>
-			               <a href='javascript:void(0)' onclick='SimpleList.editDropDownValue("{$name}", true)'>
-			               {$editImage}</a>
+			               <a class="editImage" href='javascript:void(0)' onclick='SimpleList.editDropDownValue("{$name}", true)'></a>
 			               &nbsp;
 			               <a href='javascript:void(0)' onclick='SimpleList.deleteDropDownValue("{$name}", true)'>
 			               {$deleteImage}</a>
@@ -117,6 +117,13 @@
 			    </li>
 			{/foreach}
 		   </ul>
+			{literal}
+			<script>
+				$(function(){
+					$('.editImage').html({/literal}{$editImage}{literal});
+				});
+			</script>
+			{/literal}
 		</td>
 	</tr>
 	<tr>
@@ -148,7 +155,7 @@ addToValidate('dropdown_form', 'dropdown_name', 'DBName', false, SUGAR.language.
 addToValidate('dropdown_form', 'drop_value', 'varchar', false, SUGAR.language.get("ModuleBuilder", "LBL_JS_VALIDATE_LABEL"));
 eval({/literal}{$ul_list}{literal});
 SimpleList.ul_list = list;
-SimpleList.init({/literal}'{$editImage}'{literal}, {/literal}'{$deleteImage}'{literal});
+SimpleList.init({/literal}{$editImage}{literal}, {/literal}'{$deleteImage}'{literal});
 ModuleBuilder.helpSetup('dropdowns','editdropdown');
 
 var addListenerFields = ['drop_name','drop_value' ]

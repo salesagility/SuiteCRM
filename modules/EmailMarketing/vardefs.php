@@ -39,8 +39,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$dictionary['EmailMarketing'] = array('table' => 'email_marketing'
-                               ,'fields' => array (
+$dictionary['EmailMarketing'] = array(
+	'table' => 'email_marketing',
+	'fields' => array (
  	'id' =>
   	array (
 	    'name' => 'id',
@@ -217,12 +218,14 @@ $dictionary['EmailMarketing'] = array('table' => 'email_marketing'
 //related fields.
 	'prospectlists'=> array (
 		'name' => 'prospectlists',
+		'vname' => 'LBL_PROSPECT_LISTS',
     	'type' => 'link',
     	'relationship' => 'email_marketing_prospect_lists',
     	'source'=>'non-db',
   	),
 	'emailtemplate'=> array (
 		'name' => 'emailtemplate',
+		'vname' => 'LBL_EMAIL_TEMPLATE',
     	'type' => 'link',
     	'relationship' => 'email_template_email_marketings',
     	'source'=>'non-db',
@@ -234,9 +237,15 @@ $dictionary['EmailMarketing'] = array('table' => 'email_marketing'
        array('name' =>'idx_emmkit_del', 'type'=>'index', 'fields'=>array('deleted')),
   ),
   'relationships' => array (
-	'email_template_email_marketings' => array('lhs_module'=> 'EmailTemplates', 'lhs_table'=> 'email_templates', 'lhs_key' => 'id',
-							  'rhs_module'=> 'EmailMarketing', 'rhs_table'=> 'email_marketing', 'rhs_key' => 'template_id',
-							  'relationship_type'=>'one-to-many'),
+	'email_template_email_marketings' => array(
+		'lhs_module'=> 'EmailTemplates',
+		'lhs_table'=> 'email_templates',
+		'lhs_key' => 'id',
+		'rhs_module'=> 'EmailMarketing',
+		'rhs_table'=> 'email_marketing',
+		'rhs_key' => 'template_id',
+		'relationship_type'=>'one-to-many'
+	),
   ),
 );
 ?>

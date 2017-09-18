@@ -38,69 +38,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+require_once "include/utils/additional_details.php";
 
-function additionalDetailsCall($fields) {
-    global $timedate;
-	static $mod_strings;
-	if(empty($mod_strings)) {
-		global $current_language;
-		$mod_strings = return_module_language($current_language, 'Calls');
-	}
-    $overlib_string = '';
-    $overlib_string .= '<input id="type" type="hidden" value="Call"/>';
 
-    if(!empty($fields['ID'])) {
-        $overlib_string .= '<input id="id" type="hidden" value="'. $fields['ID'];
-        $overlib_string .= '"/>';
-    }
-
-    $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name .'&imageName=Calls.gif"/> '.$mod_strings['LBL_CALL'].'</h2>';
-
-   if(!empty($fields['NAME'])) {
-        	$overlib_string .= '<b>'. $mod_strings['LBL_SUBJECT'] . '</b> ';
-            $url = 'index.php?action=DetailView&module=Calls&record='.$fields['ID'];
-            $overlib_string .= '<a href="'.$url.'">' . $fields['NAME'] . '</a>';
-        	$overlib_string .= '<br>';
-    }
-	if(!empty($fields['DATE_START'])) {
-        $data_date = $timedate->fromUser($fields['DATE_START'])->format('Y-m-d H:i:s');
-        $overlib_string .= '<span data-field="DATE_START" data-date="' . $data_date . '">';
-        $overlib_string .= '<b>' . $mod_strings['LBL_DATE_TIME'] . '</b> ' . $fields['DATE_START'] . ' <br>';
-        $overlib_string .= '</span>';
-    }
-	if(isset($fields['DURATION_HOURS']) || isset($fields['DURATION_MINUTES'])) {
-		$overlib_string .= '<b>'. $mod_strings['LBL_DURATION'] . '</b> ';
-        if(isset($fields['DURATION_HOURS'])) {
-            $overlib_string .= $fields['DURATION_HOURS'] . $mod_strings['LBL_HOURS_ABBREV'] . ' ';
-        }
-        if(isset($fields['DURATION_MINUTES'])) {
-            $overlib_string .=  $fields['DURATION_MINUTES'] . $mod_strings['LBL_MINSS_ABBREV'];
-        }
-        $overlib_string .=  '<br>';
-	}
-    if (!empty($fields['PARENT_ID']))
-    {
-            $overlib_string .= "<b>". $mod_strings['LBL_RELATED_TO'] . "</b> ".
-                    "<a href='index.php?module=".$fields['PARENT_TYPE']."&action=DetailView&record=".$fields['PARENT_ID']."'>".
-                    $fields['PARENT_NAME'] . "</a>";
-            $overlib_string .= '<br>';
-    }
-    if(!empty($fields['STATUS'])) {
-      	$overlib_string .= '<b>'. $mod_strings['LBL_STATUS'] . '</b> ' . $fields['STATUS'];
-      	$overlib_string .= '<br>';
-      }
-	if(!empty($fields['DESCRIPTION'])) {
-		$overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
-		if(strlen($fields['DESCRIPTION']) > 300) $overlib_string .= '...';
-		$overlib_string .= '<br>';
-	}
-    $overlib_string .= '<br>';
-	$editLink = "index.php?action=EditView&module=Calls&record={$fields['ID']}";
-	$viewLink = "index.php?action=DetailView&module=Calls&record={$fields['ID']}";
-
-	return array('fieldToAddTo' => 'NAME',
-				 'string' => $overlib_string,
-				 'editLink' => $editLink,
-				 'viewLink' => $viewLink);
+function additionalDetailsCall($fields, SugarBean $bean, $params = array()) {
+    return additional_details($fields, $bean, $params);
 }
 

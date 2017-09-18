@@ -19,6 +19,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'Calendar' => 'Calendar',
                 'Documents' => 'Documents',
                 'Emails' => 'Emails',
+                'Spots' => 'Spots',
                 'Campaigns' => 'Campaigns',
                 'Calls' => 'Calls',
                 'Meetings' => 'Meetings',
@@ -76,6 +77,8 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
                 'Bugs' => 'Bugs',
+                'ResourceCalendar' => 'ResourceCalendar',
+				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
                 'SecurityGroups' => 'SecurityGroups',
         );

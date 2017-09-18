@@ -218,11 +218,55 @@ function hideOverlay() {
 }
 
 
+var saveTabsState = function() {
+  var tabsState = [];
+  $('#EditView_tabs li').each(function(i,e) {
+    tabsState.push({
+      selected: $(e).hasClass('selected') ? true : false,
+      color: $(e).find('a em').css('color'),
+    });
+  });
+  return tabsState;
+};
+
+var getInvalidTabs = function () {
+  var invalidTabs = [];
+  $('.user-tab-content').each(function(i,e){
+    if($(e).find('.validation-message').length > 0) {
+      invalidTabs.push(i+1);
+    }
+  });
+  return invalidTabs;
+};
+
+var restoreTabsState = function(tabsState) {
+
+  var invalidTabs = getInvalidTabs();
+
+  $.each(tabsState, function(i,e) {
+    var tabElem = $('#EditView_tabs li:eq(' + i + ')');
+    if(e.selected && invalidTabs.length == 0) {
+      tabElem.click();
+    }
+    tabElem.find('a em').css('color', '');
+  });
+
+  if(invalidTabs.length > 0) {
+    $('#tab' + invalidTabs[0]).parent().click();
+    $('#tab' + invalidTabs[0] + ' em').css('color', 'red');
+  }
+
+};
+
 
 function verify_data(form)
 {
+
+    var tabsState = saveTabsState();
+
     // handles any errors in the email widget
     var isError = !check_form("EditView");
+
 	
     if (trim(form.last_name.value) == "") {
 		add_error_style('EditView',form.last_name.name,
@@ -243,26 +287,31 @@ function verify_data(form)
 	}
 	
  	if (isError == true) {
+        restoreTabsState(tabsState);
         return false;
     }
 	
 	if (document.EditView.return_id.value != '' && (typeof(form.reports_to_id)!="undefined") && (document.EditView.return_id.value == form.reports_to_id.value)) {
 		alert(SUGAR.language.get('app_strings','ERR_SELF_REPORTING'));
+    restoreTabsState(tabsState);
 		return false;
 	}
 	
 	if (document.EditView.dec_sep.value != '' && (document.EditView.dec_sep.value == "'")) {
 		alert(SUGAR.language.get('app_strings','ERR_NO_SINGLE_QUOTE') + SUGAR.language.get('Users','LBL_DECIMAL_SEP'));
+    restoreTabsState(tabsState);
 		return false;
 	}
     
 	if (document.EditView.num_grp_sep.value != '' && (document.EditView.num_grp_sep.value == "'")) {
 		alert(SUGAR.language.get('app_strings','ERR_NO_SINGLE_QUOTE') + SUGAR.language.get('Users','LBL_NUMBER_GROUPING_SEP'));
+    restoreTabsState(tabsState);
 		return false;
 	}
     
 	if (document.EditView.num_grp_sep.value == document.EditView.dec_sep.value) {
 		alert(SUGAR.language.get('app_strings','ERR_DECIMAL_SEP_EQ_THOUSANDS_SEP'));
+    restoreTabsState(tabsState);
 		return false;
 	}
 	if( document.getElementById("portal_only") && document.getElementById("portal_only")=='1' &&
@@ -270,11 +319,13 @@ function verify_data(form)
 		if(document.getElementById("new_password").value != '' || document.getElementById("confirm_pwd").value != '') {
 			if(document.getElementById("new_password").value != document.getElementById("confirm_pwd").value) {
 				alert(SUGAR.language.get('Users','ERR_PASSWORD_MISMATCH'));
+        restoreTabsState(tabsState);
 				return false;
 			}
 		}
 	}
-	
+
+  restoreTabsState(tabsState);
 	return true;
 }
     

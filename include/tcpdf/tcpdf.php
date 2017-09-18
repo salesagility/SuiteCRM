@@ -3782,6 +3782,7 @@ if (!class_exists('TCPDF', false)) {
 					} elseif ($page == $endpage) {
 						$this->y = $this->tMargin; // put cursor at the beginning of last page
 						$h = $currentY - $this->tMargin;
+                                                $this->currentY = $currentY;
 						$cborder = $this->getBorderMode($border, $position='end');
 					} else {
 						$this->y = $this->tMargin; // put cursor at the beginning of the current page
@@ -4540,20 +4541,6 @@ if (!class_exists('TCPDF', false)) {
 						} else {
 							$info = $this->_toJPEG($img);
 						}
-					} elseif (extension_loaded('imagick')) {
-						// ImageMagick library
-						$img = new Imagick();
-						$img->readImage($file);
-						if ($resize) {
-							$img->resizeImage($neww, $newh, 10, 1, false);
-						}
-						$img->setCompressionQuality($this->jpeg_quality);
-						$img->setImageFormat('jpeg');
-						$tempname = tempnam(K_PATH_CACHE, 'jpg_');
-						$img->writeImage($tempname);
-						$info = $this->_parsejpeg($tempname);
-						unlink($tempname);
-						$img->destroy();
 					}
 					else if ($type == 'jpeg') {
 						$info = $this->_parsejpeg($file);

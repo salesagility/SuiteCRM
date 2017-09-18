@@ -79,7 +79,7 @@
             'setup_site_guid' => '',
             'setup_site_admin_password' => '',
             'setup_site_admin_password_retype' => '',
-            'site_default_theme' => 'SuiteR',
+            'site_default_theme' => 'SuiteP',
             'disable_persistent_connections' => 'false',
             'default_language' => 'en_us',
             'default_charset' => 'UTF-8',
