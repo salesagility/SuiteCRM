@@ -71,7 +71,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 				var handleSuccess = function(o){
 
 					if(o.responseText !== undefined && o.responseText != "No Data"){	
-					var json = eval('('+o.responseText+')');
+					SUGAR.util.globalEval('json = ('+o.responseText+')');
 
 				var properties = $jit.util.splat(json.properties)[0];	
 				var marginBottom = (chartConfig["orientation"] == 'vertical' && json.values.length > 8) ? 20*4 : 20;
@@ -194,7 +194,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  } else {
 						value = "elem.value";
 					  }
-					  eval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+" + ' - ' + elem.percentage + '%' + drillDown");
+					  SUGAR.util.globalEval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+" + ' - ' + elem.percentage + '%' + drillDown");
 					}
 				  }
 				});
@@ -276,8 +276,8 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 				}	
 				var handleSuccess = function(o){
 
-					if(o.responseText !== undefined && o.responseText != "No Data"){	
-					var json = eval('('+o.responseText+')');
+					if(o.responseText !== undefined && o.responseText != "No Data"){
+                      SUGAR.util.globalEval('json = ('+o.responseText+')');
 
 				var properties = $jit.util.splat(json.properties)[0];	
 				//init Linecahrt
@@ -355,7 +355,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  }
 					  
 					  if(elem.collision) {
-					  	eval("var name = elem."+chartConfig["tip"]+";");
+                        SUGAR.util.globalEval("name = elem."+chartConfig["tip"]+";");
 					  	var content = '<table>';
 					  	
 					  	for(var i=0; i<name.length; i++) {
@@ -364,7 +364,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  	content += '</table>';
 					  	tip.innerHTML = content;
 					  } else {
-					  	eval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+" + ' - ' + elem.percentage + '%' + drillDown");	
+                        SUGAR.util.globalEval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+" + ' - ' + elem.percentage + '%' + drillDown");
 					  }
 					}
 				  }
@@ -447,8 +447,8 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 				}	
 				var handleSuccess = function(o){
 
-					if(o.responseText !== undefined){			
-					var json = eval('('+o.responseText+')');
+					if(o.responseText !== undefined){
+                      SUGAR.util.globalEval('json = ('+o.responseText+')');
 					var properties = $jit.util.splat(json.properties)[0];	
 
 						//init BarChart
@@ -519,7 +519,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  } else {
 						value = "elem.value";
 					  }
-					   eval("tip.innerHTML = '<b>' + elem.label + '</b>: ' + "+ value +" + ' - ' + elem.percentage + '%' + drillDown");
+                      SUGAR.util.globalEval("tip.innerHTML = '<b>' + elem.label + '</b>: ' + "+ value +" + ' - ' + elem.percentage + '%' + drillDown");
 					}
 				  }
 				});
@@ -588,8 +588,8 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 				}	
 				var handleSuccess = function(o){
 
-					if(o.responseText !== undefined && o.responseText != "No Data"){	
-					var json = eval('('+o.responseText+')');
+					if(o.responseText !== undefined && o.responseText != "No Data"){
+                      SUGAR.util.globalEval('json = ('+o.responseText+')');
 
 				var properties = $jit.util.splat(json.properties)[0];	
 
@@ -666,7 +666,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  } else {
 						value = "elem.value";
 					  }
-					  eval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+"  + ' - ' + elem.percentage + '%' +  drillDown");
+                      SUGAR.util.globalEval("tip.innerHTML = '<b>' + elem."+chartConfig["tip"]+" + '</b>: ' + "+value+"  + ' - ' + elem.percentage + '%' +  drillDown");
 					}
 				  }
 				});
@@ -748,8 +748,8 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 				}	
 				var handleSuccess = function(o){
 
-					if(o.responseText !== undefined){			
-					var json = eval('('+o.responseText+')');
+					if(o.responseText !== undefined){
+                      SUGAR.util.globalEval('json = ('+o.responseText+')');
 					var properties = $jit.util.splat(json.properties)[0];	
 
 						//init Gauge Chart
@@ -819,7 +819,7 @@ function loadSugarChart (chartId,jsonFilename,css,chartConfig) {
 					  } else {
 						value = "elem.value";
 					  }
-					   eval("tip.innerHTML = '<b>' + elem.label + '</b>: ' + "+ value +" + drillDown");
+                      SUGAR.util.globalEval("tip.innerHTML = '<b>' + elem.label + '</b>: ' + "+ value +" + drillDown");
 					}
 				  }
 				});
