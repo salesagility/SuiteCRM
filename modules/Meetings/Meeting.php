@@ -169,6 +169,8 @@ class Meeting extends SugarBean {
 		return false;
 	}
 
+    private static $remindersInSaving = false;
+
 	// save date_end by calculating user input
 	// this is for calendar
 	function save($check_notify = FALSE) {
@@ -277,11 +279,13 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
-		if(isset($_REQUEST['reminders_data'])) {
+		if(isset($_REQUEST['reminders_data']) && !self::$remindersInSaving) {
+            self::$remindersInSaving = true;
 			$reminderData = json_encode(
 				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
 			);
 			Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
+            self::$remindersInSaving = false;
 		}
 
 

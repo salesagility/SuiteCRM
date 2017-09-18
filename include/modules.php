@@ -44,6 +44,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+global $moduleList;
+global $beanList;
+global $beanFiles;
+global $modInvisList;
+global $adminOnlyList;
+global $report_include_modules;
+
 $moduleList = array();
 // this list defines the modules shown in the top tab list of the app
 //the order of this list is the default order displayed - do not change the order unless it is on purpose

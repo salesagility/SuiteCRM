@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require('config.php');
+
+require __DIR__ . '/../../config.php';
 global $sugar_config;
 global $timedate;
 global $mod_strings;
@@ -58,7 +59,7 @@ $EmailTemp->body_html = $mod_strings['advanced_password_new_account_email']['bod
 $EmailTemp->deleted = 0;
 $EmailTemp->published = 'off';
 $EmailTemp->text_only = 0;
-$id =$EmailTemp->save();
+$id = $EmailTemp->save();
 $sugar_config['passwordsetting']['generatepasswordtmpl'] = $id;
 
 //User generate a link to set a new password
@@ -72,7 +73,7 @@ $EmailTemp->body_html = $mod_strings['advanced_password_forgot_password_email'][
 $EmailTemp->deleted = 0;
 $EmailTemp->published = 'off';
 $EmailTemp->text_only = 0;
-$id =$EmailTemp->save();
+$id = $EmailTemp->save();
 $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
 
 // set all other default settings
@@ -87,5 +88,6 @@ $sugar_config['passwordsetting']['minpwdlength'] = 6;
 $sugar_config['passwordsetting']['oneupper'] = false;
 $sugar_config['passwordsetting']['onelower'] = false;
 $sugar_config['passwordsetting']['onenumber'] = false;
+$sugar_config['passwordsetting']['onespecial'] = false;
 
-write_array_to_file( "sugar_config", $sugar_config, "config.php");
+write_array_to_file('sugar_config', $sugar_config, 'config.php');

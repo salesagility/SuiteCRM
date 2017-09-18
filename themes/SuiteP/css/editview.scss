@@ -1191,6 +1191,8 @@ p.error {
 
 .error {
   border: none;
+  color: $danger;
+  background: transparent;
 }
 
 .error:empty {

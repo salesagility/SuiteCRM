@@ -1,0 +1,9 @@
+actor: DemoTester
+modules:
+    enabled:
+        - \Helper\Demo
+        - \SuiteCRM\Test\Driver\WebDriver
+    config:
+      \SuiteCRM\Test\Driver\WebDriver:
+        url: "https://demo.suiteondemand.com"
+        browser: chrome
