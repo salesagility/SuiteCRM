@@ -76,17 +76,18 @@
           right=$basicMaxColumns
           assign=modVal
     }
-	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 search_fields_basic">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 search_fields_basic">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 			{{if isset($colData.field.label)}}
 			<label for='{{$colData.field.name}}' >{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
 			{{elseif isset($fields[$colData.field.name])}}
 			<label for='{{$fields[$colData.field.name].name}}'> {sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
 			{{/if}}
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 		{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 		</div>
+		<div class="search-clear"></div>
 	</div>
 {{/foreach}}
 </div>
@@ -95,8 +96,8 @@
 		<div class="submitButtons">
 			{{sugar_button module="$module" id="search" view="searchView"}}
 			<input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
-			{if $HAS_ADVANCED_SEARCH}
-				&nbsp;&nbsp;<a id="advanced_search_link" href="javascript:void(0);" accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}" >{$APP.LNK_ADVANCED_SEARCH}</a>
+			{if $HAS_ADVANCED_SEARCH && !$searchFormInPopup}
+				&nbsp;&nbsp;<a id="advanced_search_link" href="javascript:void(0);" accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_ADVANCED_FILTER}</a>
 			{/if}
 		</div>
 		<div class="helpIcon" width="*"><img alt="Help" border='0' id="filterHelp" src='{sugar_getimagepath file="help-dashlet.gif"}'></div>

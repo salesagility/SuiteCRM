@@ -267,7 +267,14 @@ class Task extends SugarBean {
         $dd = $timedate->to_db_date($date_due, false);
         $taskClass = 'futureTask';
 		if ($dd < $today){
-            $taskClass = 'overdueTask';
+            if($task_fields['STATUS']=='Completed' || $task_fields['STATUS']=='Deferred')
+			{ 
+				$taskClass = '';
+			} 
+			else 
+			{ 
+				$taskClass = 'overdueTask'; 
+			}
 		}else if( $dd	== $today ){
             $taskClass = 'todaysTask';
 		}

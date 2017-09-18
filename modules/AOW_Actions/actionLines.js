@@ -71,11 +71,7 @@ function insertActionLine(){
     var a=tableBody.insertCell(0);
     var table = document.createElement("table");
     table.id = "aow_actions_table" + actln;
-    table.style.border = '1px grey solid';
-    table.style.borderRadius = '4px';
-    table.style.whiteSpace = 'nowrap';
-    table.border="1";
-    table.width = '950';
+    table.className = "action-table";
     a.appendChild(table);
 
     tablebody = document.createElement("tbody");
@@ -88,24 +84,28 @@ function insertActionLine(){
 
     var a1 = x.insertCell(0);
     a1.scope="row";
-    a1.innerHTML= SUGAR.language.get('AOW_Actions', 'LBL_SELECT_ACTION')+"&nbsp;:&nbsp;<select name='aow_actions_action[" + actln + "]' id='aow_actions_action" + actln + "' onchange='getView(" + actln + ");'>"+ app_list_actions +"</select>";
+    a1.setAttribute("field", "action");
+    a1.innerHTML= "<label>"+ SUGAR.language.get('AOW_Actions', 'LBL_SELECT_ACTION') +":</label><select name='aow_actions_action[" + actln + "]' id='aow_actions_action" + actln + "' onchange='getView(" + actln + ");'>"+ app_list_actions +"</select>";
 
     var b1 = x.insertCell(1);
     b1.scope="row";
-    b1.innerHTML= SUGAR.language.get('AOW_Actions', 'LBL_NAME')+"&nbsp;:&nbsp;<input name='aow_actions_name[" + actln + "]' id='aow_actions_name" + actln + "' type='text'>";
+    b1.setAttribute("field", "name");
+    b1.innerHTML= "<label>"+SUGAR.language.get('AOW_Actions', 'LBL_NAME')+":</label><input name='aow_actions_name[" + actln + "]' id='aow_actions_name" + actln + "' type='text'>";
 
     var c1 = x.insertCell(2);
     c1.scope="row";
-    c1.innerHTML = "<span style='float: right;'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")'><img src='themes/default/images/id-ff-clear.png' alt='X'></a></span>"
+    c1.setAttribute("field", "delete");
+  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-clear.png' alt='X'></a></span>";
     c1.innerHTML += "<input type='hidden' name='aow_actions_deleted[" + actln + "]' id='aow_actions_deleted" + actln + "' value='0'><input type='hidden' name='aow_actions_id[" + actln + "]' id='aow_actions_id" + actln + "' value=''>";
 
 
     var y = tablebody.insertRow(-1);
     y.id = 'action_parameter_line' + actln;
+  y.setAttribute('data-workflow-action-parameter', '');
 
     var a2 = y.insertCell(0);
     a2.colSpan = 2;
-    a2.innerHTML = "<div id ='action_parameter"+ actln+"' ></div>"
+  a2.innerHTML = "<div id ='action_parameter" + actln + "' ></div>";
 
 
 
@@ -139,7 +139,7 @@ function getView(ln, id){
                 eval(document.getElementById('aow_script'+ln).innerHTML);
             }
         }
-    }
+    };
 
     var action = document.getElementById('aow_actions_action' + ln).value;
     var module = document.getElementById('flow_module').value;

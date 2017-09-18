@@ -120,10 +120,11 @@ class SugarWidgetSubPanelTopSelectUsersButton extends SugarWidgetSubPanelTopSele
 			$this->module_name = $subpanel_name;
 		}
 
-		if ($subpanel_name == 'Project'){
+		if ($subpanel_name == 'Project') {
 			$link_field_name = 'project_users_1';
-		}
-		else{
+		} elseif ($subpanel_name == 'AM_ProjectTemplates') {
+			$link_field_name = 'am_projecttemplates_users_1';
+		} else {
 			$link_field_name = $subpanel_definition->get_data_source_name(true);
 		}
 

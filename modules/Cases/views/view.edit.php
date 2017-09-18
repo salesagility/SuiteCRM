@@ -59,7 +59,6 @@ class CasesViewEdit extends ViewEdit {
         self::__construct();
     }
 
-
     function display(){
         parent::display();
         global $sugar_config;
@@ -78,8 +77,5 @@ class CasesViewEdit extends ViewEdit {
             </script>
         <?php
         }
-        $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description', 'email_compose_light');
     }
-
 }

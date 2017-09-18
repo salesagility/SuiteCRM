@@ -129,6 +129,7 @@ function getTemplates()
         'published' => 'off',
         'description' => 'Template for informing a contact that their case has been closed.',
         'subject' => '$acase_name [CASE:$acase_case_number] closed',
+        'type' => 'system',
         'body' => 'Hi $contact_first_name $contact_last_name,
 
 					   Your case $acase_name (# $acase_case_number) has been closed on $acase_date_entered
@@ -147,6 +148,7 @@ function getTemplates()
         'published' => 'off',
         'description' => "Template used when informing a contact that they've been given an account on the joomla portal.",
         'subject' => 'Support Portal Account Created',
+        'type' => 'system',
         'body' => 'Hi $contact_name,
 					   An account has been created for you at $portal_address.
 					   You may login using this email address and the password $joomla_pass',
@@ -158,6 +160,7 @@ function getTemplates()
         'published' => 'off',
         'description' => "Template to send to a contact when a case is received from them.",
         'subject' => '$acase_name [CASE:$acase_case_number]',
+        'type' => 'system',
         'body' => 'Hi $contact_first_name $contact_last_name,
 
 					   We\'ve received your case $acase_name (# $acase_case_number) on $acase_date_entered
@@ -176,6 +179,7 @@ function getTemplates()
         'published' => 'off',
         'description' => "Template to send to a contact when their case is updated.",
         'subject' => '$acase_name update [CASE:$acase_case_number]',
+        'type' => 'system',
         'body' => 'Hi $user_first_name $user_last_name,
 
 					   You\'ve had an update to your case $acase_name (# $acase_case_number) on $aop_case_updates_date_entered:
@@ -191,6 +195,7 @@ function getTemplates()
         'published' => 'off',
         'description' => "Email template to send to a Sugar user when their case is updated.",
         'subject' => '$acase_name (# $acase_case_number) update',
+        'type' => 'system',
         'body' => 'Hi $user_first_name $user_last_name,
 
 					   You\'ve had an update to your case $acase_name (# $acase_case_number) on $aop_case_updates_date_entered:

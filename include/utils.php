@@ -1,49 +1,44 @@
 <?php
-/*
- *
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+/** 
+ * 
+ * SugarCRM Community Edition is a customer relationship management program developed by 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
+ * 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU Affero General Public License version 3 as published by the 
+ * Free Software Foundation with the addition of the following permission added 
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+ * details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with 
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
+ * 02110-1301 USA. 
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
+ * 
+ * The interactive user interfaces in modified source and object code versions 
+ * of this program must display Appropriate Legal Notices, as required under 
+ * Section 5 of the GNU Affero General Public License version 3. 
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
+ * these Appropriate Legal Notices must retain the display of the "Powered by 
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
  */
 
-/*********************************************************************************
- * Description:  Includes generic helper functions used throughout the application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
 
@@ -400,6 +395,75 @@ function get_sugar_config_defaults()
     $sugar_config_defaults = sugarArrayMerge($locale->getLocaleConfigDefaults(), $sugar_config_defaults);
 
     return $sugar_config_defaults;
+}
+
+
+/**
+ * Gets the username of the user under which the PHP script is currently running
+ * Notes:
+ * - works on Windows and Linux, tries a variety of methods to accommodate different systems and hosting restrictions
+ * - on Windows, return full username in form DOMAIN\USER
+ * - returns empty string if failed
+ */
+
+function getRunningUser()
+{
+    // works on Windows and Linux, but might return null on systems that include exec in
+    // disabled_functions in php.ini (typical in shared hosting)
+    $runningUser = exec('whoami');
+
+    if ($runningUser == null) {  // matches null, false and ""
+        if (is_windows()) {
+            $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
+        }
+        else {
+            $usr = posix_getpwuid(posix_geteuid());
+            $runningUser = $usr['name'];
+        }
+    }
+    return ($runningUser == null) ? '' : $runningUser;
+}
+
+/**
+ * Adds a username to the allowed_cron_users array in config.php
+ * Notes:
+ * - this is Linux only, does nothing on Windows
+ * - does not repeat the user if he is already there
+ * - creates the sub-array if previously unexisting
+ * - special treatment for user 'root' to require manual intervention from an admin to allow
+ * @param string $addUser the name of the user to add [usually obtained with getRunningUser()]
+ */
+
+function addCronAllowedUser($addUser)
+{
+    global $sugar_config;
+
+    if (is_windows() || !isset($sugar_config)|| !isset($addUser) || ($addUser == '')) {
+        return;
+    }
+    if (!array_key_exists('cron', $sugar_config)) {
+        $sugar_config['cron'] = array();
+    }
+    if (!array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+        $sugar_config['cron']['allowed_cron_users'] = array();
+    }
+    if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+        if ($addUser == 'root') {
+            $addUser = 'root_REMOVE_THIS_NOTICE_IF_YOU_REALLY_WANT_TO_ALLOW_ROOT';
+            if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+                $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+                $GLOBALS['log']->error("You're using 'root' as the web-server user. This should be avoided ".
+                    "for security reasons. Review allowed_cron_users configuration in config.php.");
+            }
+        } else {
+            $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+            $GLOBALS['log']->info("Web server user $addUser added to allowed_cron_users in config.php.");
+
+        }
+    }
+
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
 }
 
 /**
@@ -1575,6 +1639,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = '';
 
     //for setting null selection values to human readable --None--
+    get_select_empty_option();
     $pattern = "/'0?'></";
     $replacement = "''>".$app_strings['LBL_NONE'].'<';
     if ($massupdate) {
@@ -1607,6 +1672,76 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = preg_replace($pattern, $replacement, $select_options);
 
     return $select_options;
+}
+
+
+/**
+ * @param string $value
+ * @param bool $isSelected
+ * @param string $app_strings_label
+ * @return string as HTML eg <OPTION value="">--None--</OPTION>
+ */
+function get_select_empty_option($value = '', $isSelected = false, $app_strings_label = 'LBL_NONE')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>' .  $app_strings[$app_strings_label] . '</OPTION>';
+
+    return $response;
+}
+
+function get_select_full_option($value = '', $isSelected = false, $translatedLabel = '----')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>';
+    $response .= $translatedLabel;
+    $response .= '</OPTION>';
+
+    return $response;
+}
+
+/**
+ * @param array $option_list
+ * @param string $selected_key
+ * @return string as HTML <OPTION value="id1">apple</OPTION><OPTION value="id2">banana</OPTION>
+ */
+function get_select_full_options_with_id($option_list = array(), $selected_key = '')
+{
+    $response = '';
+
+    foreach ($option_list as $option_key => $option_value)
+    {
+        $isSelected = false;
+
+        if(empty($option_key)) {
+         continue;
+        }
+
+        if(empty($option_value)) {
+            continue;
+        }
+
+        if($option_key === $selected_key)
+        {
+            $isSelected = true;
+        }
+
+        $response .= get_select_full_option($option_key, $isSelected, $option_value);
+    }
+    return $response;
 }
 
 /**
@@ -2494,9 +2629,9 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+function clone_relationship(&$db, $tables, $from_column, $from_id, $to_id)
 {
-    foreach ($tables as $table) {
+    foreach ((array)$tables as $table) {
         if ($table == 'emails_beans') {
             $query = "SELECT * FROM $table WHERE $from_column='$from_id' and bean_module='Leads'";
         } else {
@@ -2668,9 +2803,15 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
+function get_bean_select_array($add_blank, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
 {
     global $beanFiles;
+
+    // set $add_blank = true by default
+    if (!is_bool($add_blank)) {
+        $add_blank = true;
+    }
+
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
     $user_array = array();
@@ -2965,64 +3106,43 @@ function decodeJavascriptUTF8($str)
 }
 
 /**
- * Will check if a given PHP version string is supported (tested on this ver),
- * unsupported (results unknown), or invalid (something will break on this
- * ver).  Do not pass in any pararameter to default to a check against the
+ * Will check if a given PHP version string is accepted or not.
+ * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @return 1 implies supported, 0 implies unsupported, -1 implies invalid
+ * @param string Version to check against, defaults to the current environment's.
+ *
+ * @return  integer  1 if version is greater than the recommended PHP version, 
+ *                   0 if version is between minimun and recomended PHP versions, 
+ *                   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '')
-{
-    $sys_php_version = empty($sys_php_version) ? constant('PHP_VERSION') : $sys_php_version;
-    // versions below $min_considered_php_version considered invalid by default,
-    // versions equal to or above this ver will be considered depending
-    // on the rules that follow
-    $min_considered_php_version = '5.3.0';
+function check_php_version($sys_php_version = '') {
+	if ($sys_php_version === '') {
+		$sys_php_version = constant('PHP_VERSION');
+	}
 
-    // only the supported versions,
-    // should be mutually exclusive with $invalid_php_versions
-    $supported_php_versions = array(
-        '5.3.0',
-    );
+	// versions below MIN_PHP_VERSION are not accepted, so return early.
+	if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+		return -1;
+	}
 
-    // invalid versions above the $min_considered_php_version,
-    // should be mutually exclusive with $supported_php_versions
+	// If there are some bug ridden versions, we should include them here
+	// and check immediately for one of this versions
+	$bug_php_versions = array();
 
-    // SugarCRM prohibits install on PHP 5.2.7 on all platforms
-    $invalid_php_versions = array('5.2.7');
+	foreach ($bug_php_versions as $v) {
+		if (version_compare($sys_php_version, $v, '=') === true) {
+			return -1;
+		}
+	}
 
-    // default unsupported
-    $retval = 0;
+	// If the checked version is between the minimum and recommended versions, return 0
+	if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+		return 0;
+	}
 
-    // versions below $min_considered_php_version are invalid
-    if (1 == version_compare($sys_php_version, $min_considered_php_version, '<')) {
-        $retval = -1;
-    }
-
-    // supported version check overrides default unsupported
-    foreach ($supported_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version, $ver) !== false) {
-            $retval = 1;
-            break;
-        }
-    }
-
-    // invalid version check overrides default unsupported
-    foreach ($invalid_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') && strpos($sys_php_version, $ver) !== false) {
-            $retval = -1;
-            break;
-        }
-    }
-
-    //allow a redhat distro to install, regardless of version.  We are assuming the redhat naming convention is followed
-    //and the php version contains 'rh' characters
-    if (strpos($sys_php_version, 'rh') !== false) {
-        $retval = 1;
-    }
-
-    return $retval;
+	// Everything else is fair game
+	return 1;
 }
 
 /**
@@ -4076,7 +4196,7 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
+function generate_search_where($field_list, $values, &$bean, $add_custom_fields = false, $module = '')
 {
     $where_clauses = array();
     $like_char = '%';
@@ -4414,29 +4534,6 @@ function code2utf($num)
     }
 
     return '';
-}
-
-function str_split_php4($string, $length = 1)
-{
-    $string_length = strlen($string);
-    $return = array();
-    $cursor = 0;
-    if ($length > $string_length) {
-        // use the string_length as the string is shorter than the length
-        $length = $string_length;
-    }
-    for ($cursor = 0; $cursor < $string_length; $cursor = $cursor + $length) {
-        $return[] = substr($string, $cursor, $length);
-    }
-
-    return $return;
-}
-
-if (version_compare(phpversion(), '5.0.0', '<')) {
-    function str_split($string, $length = 1)
-    {
-        return str_split_php4($string, $length);
-    }
 }
 
 /*
@@ -5378,4 +5475,16 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     } else {
         return strrpos($haystack, $needle, $offset);
     }
+}
+
+/**
+ * @param string $id
+ * @return bool
+ * @todo add to a separated common validator class
+ */
+function isValidId($id) {
+
+    $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id);
+
+    return $valid;
 }

@@ -52,7 +52,7 @@
 {assign var='place' value="_FOOTER"} <!-- to be used for id for buttons with custom code in def files-->
 {{if empty($form.button_location) || $form.button_location == 'bottom'}}
 
-{{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
+{{sugar_include type="smarty" file='include/EditView/actions_buttons.tpl'}}
 
 {{/if}}
 </form>

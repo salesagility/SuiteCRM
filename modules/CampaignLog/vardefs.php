@@ -203,6 +203,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
   			'function_params'=> array('related_id', 'related_type'),
   			'function_params_source'=>'this',  //valid values are 'parent' or 'this' default is parent.
   			'type'=>'function',
+            'vname'=>'LBL_RELATED_NAME',
   			'name'=>'related_name',
   		    'reportable'=>false,
   		),

@@ -34,6 +34,8 @@ header("Content-type: text/css; charset: UTF-8");
 
 h1, h2, h3, h4 {color: #<?php echo $sugar_config['theme_settings']['Suite7']['pageheader']; ?>;}
 
+.email-address-add-button,
+.email-address-remove-button,
 input[type=button],
 input[type=submit],
 input[type=reset],
@@ -51,6 +53,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#<?php echo $
 filter:none !important;
 }
 
+.email-address-add-button,
+.email-address-remove-button,
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover {
