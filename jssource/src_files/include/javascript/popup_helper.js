@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -61,7 +62,7 @@ function confirmDialog(arrayContents, formName) {
 	var newData = '';
 	var labels = '';
 	var oldData = '';
-	eval("var data = {" + arrayContents.join(",") + "}");
+  SUGAR.util.globalEval("var data = {" + arrayContents.join(",") + "}");
 	var opener = window.opener.document;
 	for (var key in data)
 	{
@@ -99,7 +100,7 @@ function send_back(module, id)
 	var associated_row_data = associated_javascript_data[id];
 
 	// cn: bug 12274 - stripping false-positive security envelope
-	eval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
+  SUGAR.util.globalEval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
 	if(temp_request_data.jsonObject) {
 		var request_data = temp_request_data.jsonObject;
 	} else {
@@ -114,8 +115,8 @@ function send_back(module, id)
 	}
 	var form_name = request_data.form_name;
 	var field_to_name_array = request_data.field_to_name_array;
-	
-	var call_back_function = eval("window.opener." + request_data.call_back_function);
+
+  SUGAR.util.globalEval("var call_back_function = window.opener." + request_data.call_back_function);
 	var array_contents = Array();
 
 	// constructs the array of values associated to the bean that the user clicked
@@ -157,8 +158,8 @@ function send_back(module, id)
 	}
 
 	var popupConfirm = confirmDialog(array_contents, form_name);
-	
-	eval("var name_to_value_array = {" + array_contents.join(",") + "}");
+
+  SUGAR.util.globalEval("var name_to_value_array = {" + array_contents.join(",") + "}");
 	
 	closePopup();
 
@@ -213,8 +214,8 @@ function send_back_teams(module, form, field, error_message, request_data, form_
 	var field_name = request_data.field_name;
 
 	closePopup();
-	
-	var call_back_function = eval("window.opener." + request_data.call_back_function);
+
+  SUGAR.util.globalEval("var call_back_function = window.opener." + request_data.call_back_function);
 	var result_data={"form_name":form_name,"field_name":field_name,"teams":array_teams,"passthru_data":passthru_data};
 	call_back_function(result_data);
 
@@ -237,11 +238,11 @@ function send_back_selected(module, form, field, error_message, request_data)
 		window.alert(error_message);	
 		return;
 	}
-	
-	eval("var selection_list_array = {" + array_contents.join(",") + "}");
+
+  SUGAR.util.globalEval("var selection_list_array = {" + array_contents.join(",") + "}");
 	
 	// cn: bug 12274 - stripping false-positive security envelope
-	eval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
+  SUGAR.util.globalEval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
 
 	if(temp_request_data.jsonObject) {
 		var request_data = temp_request_data.jsonObject;
@@ -260,8 +261,8 @@ function send_back_selected(module, form, field, error_message, request_data)
 	var field_to_name_array = request_data.field_to_name_array;
 	
 	closePopup();
-	
-	var call_back_function = eval("window.opener." + request_data.call_back_function);
+
+  SUGAR.util.globalEval("var call_back_function = window.opener." + request_data.call_back_function);
 	var result_data={"form_name":form_name,"selection_list":selection_list_array ,"passthru_data":passthru_data,"select_entire_list":form.select_entire_list.value,"current_query_by_page":form.current_query_by_page.value};
 	call_back_function(result_data);
 }
@@ -305,7 +306,7 @@ function toggleMore(spanId, img_id, module, action, params){
 				}
 				
 		success = function(data) {
-					eval(data.responseText);
+          SUGAR.util.globalEval(data.responseText);
 
 					SUGAR.util.additionalDetailsCache[spanId] = new Array();
 					SUGAR.util.additionalDetailsCache[spanId]['body'] = result['body'];

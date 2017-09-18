@@ -215,7 +215,7 @@ CAL.repeat_tab_handle = function (module_name) {
 CAL.GR_update_user = function (user_id) {
   var callback = {
     success: function (o) {
-      res = eval(o.responseText);
+      SUGAR.util.globalEval('res = (' + o.responseText + ')');
       GLOBAL_REGISTRY.focus.users_arr_hash = undefined;
     }
   };

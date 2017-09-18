@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -3368,7 +3368,7 @@ SUGAR.util = function () {
 				}
 
 				success = function (data) {
-					eval(data.responseText);
+                  SUGAR.util.globalEval(data.responseText);
 
 					SUGAR.util.additionalDetailsCache[id] = new Array();
 					SUGAR.util.additionalDetailsCache[id]['body'] = result['body'];
@@ -3523,7 +3523,8 @@ SUGAR.util = function () {
 				item = this._doWhenStack[i];
 				if (item) {
 					test = item.check;
-					if ((typeof(test) == "string" && eval(test)) || (typeof(test) == "function" && test())) {
+                  SUGAR.util.globalEval('e=('+test+')');
+					if ((typeof(test) == "string" && e) || (typeof(test) == "function" && test())) {
 						executeItem(this, item);
 						this._doWhenStack[i] = null;
 					}
