@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -64,7 +64,7 @@ document.createInviteeForm.email1.value=document.schedulerwidget.search_email.va
 SugarWidgetSchedulerSearch.hideCreateForm=function(module){document.getElementById('create-invitee-edit').style.display='none';document.getElementById('create-invitees-buttons').style.display='';document.forms['createInviteeForm'].reset();}
 SugarWidgetSchedulerSearch.resetSearchForm=function(){if(GLOBAL_REGISTRY.scheduler_search_obj&&document.forms[GLOBAL_REGISTRY.scheduler_search_obj.form_id]){document.forms[GLOBAL_REGISTRY.scheduler_search_obj.form_id].reset();}}
 SugarWidgetSchedulerSearch.createInvitee=function(form){if(!(check_form('createInviteeForm'))){return false;}
-document.getElementById('create-invitee-btn').setAttribute('disabled','disabled');document.getElementById('cancel-create-invitee-btn').setAttribute('disabled','disabled');ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var callback={success:function(response){var rObj=eval("("+response.responseText+")");ajaxStatus.hideStatus();if(typeof rObj.noAccess!='undefined'){var alertMsg=GLOBAL_REGISTRY['meeting_strings']['LBL_NO_ACCESS'];alertMsg=alertMsg.replace("\$module",rObj.module);SugarWidgetSchedulerSearch.hideCreateForm();alert(alertMsg);return false;}
+document.getElementById('create-invitee-btn').setAttribute('disabled','disabled');document.getElementById('cancel-create-invitee-btn').setAttribute('disabled','disabled');ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var callback={success:function(response){SUGAR.util.globalEval("e=("+response.responseText+")");var rObj=e;ajaxStatus.hideStatus();if(typeof rObj.noAccess!='undefined'){var alertMsg=GLOBAL_REGISTRY['meeting_strings']['LBL_NO_ACCESS'];alertMsg=alertMsg.replace("\$module",rObj.module);SugarWidgetSchedulerSearch.hideCreateForm();alert(alertMsg);return false;}
 GLOBAL_REGISTRY.focus.users_arr[GLOBAL_REGISTRY.focus.users_arr.length]=rObj;GLOBAL_REGISTRY.scheduler_attendees_obj.display();SugarWidgetSchedulerSearch.hideCreateForm();SugarWidgetSchedulerSearch.resetSearchForm();document.getElementById('create-invitee-btn').removeAttribute('disabled');document.getElementById('cancel-create-invitee-btn').removeAttribute('disabled');}};var fieldList=['id','full_name','email1','phone_work'];var t=[];for(i in fieldList){t.push("fieldList[]="+encodeURIComponent(fieldList[i]));}
 var postData=t.join("&");var url="index.php?module=Calendar&action=CreateInvitee&sugar_body_only=true";YAHOO.util.Connect.setForm(document.forms['createInviteeForm']);YAHOO.util.Connect.asyncRequest('POST',url,callback,postData);}
 SugarClass.inherit("SugarWidgetScheduler","SugarClass");SugarWidgetScheduler.popupControl=null;SugarWidgetScheduler.popupControlDelayTime=600;SugarWidgetScheduler.mouseX=0;SugarWidgetScheduler.mouseY=0;SugarWidgetScheduler.isMouseOverToolTip=false;function SugarWidgetScheduler(){this.init();}

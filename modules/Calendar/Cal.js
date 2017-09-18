@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 var CAL={};CAL.slot_height=14;CAL.dropped=0;CAL.records_openable=true;CAL.moved_from_cell="";CAL.deleted_id="";CAL.deleted_module="";CAL.tmp_header="";CAL.disable_creating=false;CAL.record_editable=false;CAL.shared_users={};CAL.shared_users_count=0;CAL.script_evaled=false;CAL.editDialog=false;CAL.settingsDialog=false;CAL.sharedDialog=false;CAL.basic={};CAL.basic.items={};CAL.update_dd=new YAHOO.util.CustomEvent("update_dd");CAL.dd_registry=new Object();CAL.resize_registry=new Object();CAL.print=false;CAL.dom=YAHOO.util.Dom;CAL.get=YAHOO.util.Dom.get;CAL.query=YAHOO.util.Selector.query;CAL.destroy_ui=function(id){if(CAL.items_resizable&&typeof CAL.resize_registry[id]!="undefined"){CAL.resize_registry[id].destroy();delete CAL.resize_registry[id];}
 if(CAL.items_draggable&&typeof CAL.dd_registry[id]!="undefined")
 CAL.dd_registry[id].unreg();delete CAL.dd_registry[id];}
@@ -66,7 +67,7 @@ CAL.get("edit_all_recurrences").value="true";if(typeof data.current_dow!="undefi
 CAL.get("repeat_dow_"+data.current_dow).checked=true;if(typeof data.default_repeat_until!="undefined"&&set_default_repeat_until)
 CAL.get("repeat_until_input").value=data.default_repeat_until;}
 CAL.repeat_tab_handle=function(module_name){clear_all_errors();toggle_repeat_type();}
-CAL.GR_update_user=function(user_id){var callback={success:function(o){res=eval(o.responseText);GLOBAL_REGISTRY.focus.users_arr_hash=undefined;}};var data={"users":user_id};var url="index.php?module=Calendar&action=GetGRUsers&sugar_body_only=true";YAHOO.util.Connect.asyncRequest('POST',url,callback,CAL.toURI(data));}
+CAL.GR_update_user=function(user_id){var callback={success:function(o){SUGAR.util.globalEval('res = ('+o.responseText+')');GLOBAL_REGISTRY.focus.users_arr_hash=undefined;}};var data={"users":user_id};var url="index.php?module=Calendar&action=GetGRUsers&sugar_body_only=true";YAHOO.util.Connect.asyncRequest('POST',url,callback,CAL.toURI(data));}
 CAL.GR_update_focus=function(module,record){if(record==""){GLOBAL_REGISTRY["focus"]={"module":module,users_arr:[],fields:{"id":"-1"}};SugarWidgetScheduler.update_time();}else{var callback={success:function(o){res=eval(o.responseText);SugarWidgetScheduler.update_time();if(CAL.record_editable){CAL.enable_buttons();}}};var url='index.php?module=Calendar&action=GetGR&sugar_body_only=true&type='+module+'&record='+record;YAHOO.util.Connect.asyncRequest('POST',url,callback,false);}}
 CAL.toggle_settings=function(){$('.modal-calendar-settings').modal('toggle')}
 CAL.fill_invitees=function(){CAL.get("user_invitees").value="";CAL.get("contact_invitees").value="";CAL.get("lead_invitees").value="";CAL.each(GLOBAL_REGISTRY['focus'].users_arr,function(i,v){var field_name="";if(v.module=="User")
@@ -155,7 +156,7 @@ $('#calendar'+user_id).fullCalendar({header:{left:'',center:'',right:''},lang:gl
 if($(view.target).hasClass('fc-day-top')&&date_duration<=86400000){var dateStr=$(view.target).attr('data-date');var dateMoment=new moment(dateStr);var url='index.php?module=Calendar&action=index&view=agendaDay&year='+dateMoment.format('YYYY')+'&month='+dateMoment.format('MM')+'&day='+dateMoment.format('DD')+'&hour=0';window.location.href=url;return false;}
 CAL.dialog_create(date_start,date_end,user_id);}},eventClick:function(calEvent,jsEvent,view){if(global_edit==true){CAL.load_form(calEvent.module,calEvent.record,false,calEvent);}},eventDrop:function(event,delta,revertFunc){event_datetime=event.start.format(global_datetime_format);var data={"current_module":event.module,"record":event.record,"datetime":event_datetime,"calendar_style":"basic"};if(event.allDay==true){data.allDay=true;data.enddatetime=event.start.add(1,'days').format(global_datetime_format);}
 var url="index.php?module=Calendar&action=Reschedule&sugar_body_only=true";$.ajax({method:"POST",url:url,data:data})},navLinks:true,navLinkDayClick:function(weekStart,jsEvent){if(global_edit==true){if($(jsEvent.currentTarget).hasClass('fc-day-number')){var dateStr=$(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');var dateMoment=new moment(dateStr);var url='index.php?module=Calendar&action=index&view=agendaDay&year='+dateMoment.format('YYYY')+'&month='+dateMoment.format('MM')+'&day='+dateMoment.format('DD')+'&hour=0';window.location.href=url;return false;}
-var dayHeader=$(jsEvent.currentTarget).closest('.fc-day-header');var momentObj=moment($(dayHeader).attr('data-date'));var url='index.php?module=Calendar&action=index&view=agendaDay&year='+momentObj.format('YYYY')+'&month='+momentObj.format('MM')+'&day='+momentObj.format('DD')+'&hour=0';window.location.href=url;return false;}},eventResize:function(event,delta,revertFunc){debugger;var url="index.php?module=Calendar&action=Resize&sugar_body_only=true";var hours=Math.floor(event.end.diff(event.start,'minutes')/ 60);var minutes=event.end.diff(event.start,'minutes')%60;var data={"current_module":event.module,"record":event.record,"duration_hours":hours,"duration_minutes":minutes};$.ajax({method:"POST",url:url,data:data})},events:all_events,eventRender:function(event,element){var url='index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean='+event.module+'&id='+event.id;var title='<div class="qtip-title-text">'+event.title+'</div>'
+var dayHeader=$(jsEvent.currentTarget).closest('.fc-day-header');var momentObj=moment($(dayHeader).attr('data-date'));var url='index.php?module=Calendar&action=index&view=agendaDay&year='+momentObj.format('YYYY')+'&month='+momentObj.format('MM')+'&day='+momentObj.format('DD')+'&hour=0';window.location.href=url;return false;}},eventResize:function(event,delta,revertFunc){var url="index.php?module=Calendar&action=Resize&sugar_body_only=true";var hours=Math.floor(event.end.diff(event.start,'minutes')/ 60);var minutes=event.end.diff(event.start,'minutes')%60;var data={"current_module":event.module,"record":event.record,"duration_hours":hours,"duration_minutes":minutes};$.ajax({method:"POST",url:url,data:data})},events:all_events,eventRender:function(event,element){var url='index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean='+event.module+'&id='+event.id;var title='<div class="qtip-title-text">'+event.title+'</div>'
 +'<div class="qtip-title-buttons">'
 +'</div>';var body=SUGAR.language.translate('app_strings','LBL_LOADING_PAGE');if($('#cal_module').val()!="Home"){element.qtip({content:{title:{text:title,button:true,},text:body,},events:{render:function(event,api){$.ajax(url).done(function(data){eval(data);var divCaption="#qtip-"+api.id+"-title";var divBody="#qtip-"+api.id+"-content";if(data.caption!=""){$(divCaption).html(result.caption);}
 api.set('content.text',result.body);}).fail(function(){$(divBody).html(SUGAR.language.translate('app_strings','LBL_EMAIL_ERROR_GENERAL_TITLE'));}).always(function(){});}},position:{my:'bottom left',at:'top left'},show:{solo:true},hide:{event:false},style:{width:224,padding:5,color:'black',textAlign:'left',border:{width:1,radius:3},tip:'bottomLeft',classes:{tooltip:'ui-widget',tip:'ui-widget',title:'ui-widget-header',content:'ui-widget-content'}}});}},}).ready(function(){$(window).resize();});if($('#calendar_title_'+user_id).length==0){var calendar=$("#calendar"+user_id+" > .fc-view-container");var calendarTitle="<div class='monthCalBody'><h5 class='calSharedUser' id='calendar_title_"+user_id+"'></h5></div><div id='calendar"+user_id+"'></div>";$(calendarTitle).prependTo(calendar);$.ajax({url:"index.php?module=Calendar&action=getUser&record="+user_id,}).done(function(data){data=jQuery.parseJSON(data);$("#calendar_title_"+user_id).html(data.full_name);});}}});

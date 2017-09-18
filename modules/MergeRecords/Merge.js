@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 var lbl_remove=SUGAR.language.get('app_strings','LBL_REMOVE');function remove_filter(spanfieldid){var selspan=document.getElementById(spanfieldid);selspan.setAttribute("style","visibility:hidden");selspan.innerHTML='';var ops=object_refs['field_avail_list'].options;var newoption=new Option(selspan.getAttribute("Value"),selspan.getAttribute("ValueId"),false,true);ops.add(newoption);}
 function ajax_fetch_sync(url,post_data)
@@ -45,7 +48,7 @@ if(method=='POST')
 global_xmlhttp.send(post_data);var ajax_response={"responseText":global_xmlhttp.responseText,"responseXML":global_xmlhttp.responseXML};return ajax_response;}
 function get_fields_to_dedup(parent_mod)
 {var rel_map_div_obj=document.getElementById('rel_map');if(parent_mod!='')
-{var request_id=1;var url=site_url+'/index.php?to_pdf=1&sugar_body_only=1&inline=1&parent_module='+parent_mod+'&module=MigrationMappings&action=GetRelationshipsToMap';var ajax_return_obj=ajax_fetch_sync(url);try{eval("var responseObj ="+ajax_return_obj['responseText']);}
+{var request_id=1;var url=site_url+'/index.php?to_pdf=1&sugar_body_only=1&inline=1&parent_module='+parent_mod+'&module=MigrationMappings&action=GetRelationshipsToMap';var ajax_return_obj=ajax_fetch_sync(url);try{SUGAR.util.globalEval("var responseObj ="+ajax_return_obj['responseText']);}
 catch(e){alert(ajax_return_obj['responseText']);}
 build_avail_rels_array(responseObj);rel_map_div_obj.innerHTML=responseObj['html_content'];}
 else
@@ -90,4 +93,4 @@ var fieldCount=0;function addFieldRow(colName,colLabel){var tableId='search_type
 var aElement=document.createElement("a");aElement.setAttribute("href","javascript:remove_filter('filter_"+colName+"')");aElement.setAttribute("class","listViewTdToolsS1");var imgElement=document.createElement("img");imgElement.setAttribute("src",delete_inline_image);imgElement.setAttribute("align","absmiddle");imgElement.setAttribute("alt",lbl_remove);imgElement.setAttribute("border","0");imgElement.setAttribute("height","12");imgElement.setAttribute("width","12");aElement.appendChild(imgElement);aElement.appendChild(document.createTextNode(" "));var div=document.getElementById('filter_def');var span1=document.getElementById('filter_'+colName);if(span1==null||span1==''||typeof(span1)=='undefined'){span1=document.createElement("span");}else{span1.setAttribute("style","visibility:visible");}
 span1.setAttribute("id",'filter_'+colName);span1.setAttribute("Value",colLabel);span1.setAttribute("ValueId",colName);var table=document.createElement("table");var row=table.insertRow(table.rows.length);table.setAttribute("width","100%");table.setAttribute("border","0");table.setAttribute("cellpadding","0");var td1=document.createElement("td");td1.setAttribute("width","2%");td1.appendChild(aElement);row.appendChild(td1)
 var td2=document.createElement("td");td2.setAttribute("width","20%");td2.appendChild(document.createTextNode(colLabel+':  '));row.appendChild(td2)
-var td3=document.createElement("td");td3.setAttribute("width","10%");td3.appendChild(selElement);row.appendChild(td3);var coldata;eval("coldata=bean_data."+colName+";");var edit=document.createElement("input");edit.setAttribute("type","text");edit.setAttribute("name",colName+'SearchField');edit.setAttribute("id",colName+'SearchField');edit.setAttribute("value",coldata);var td5=document.createElement("td");td5.setAttribute("width","68%");td5.appendChild(edit);row.appendChild(td5);span1.appendChild(table);div.appendChild(span1);}
+var td3=document.createElement("td");td3.setAttribute("width","10%");td3.appendChild(selElement);row.appendChild(td3);var coldata;SUGAR.util.globalEval("coldata=bean_data."+colName+";");var edit=document.createElement("input");edit.setAttribute("type","text");edit.setAttribute("name",colName+'SearchField');edit.setAttribute("id",colName+'SearchField');edit.setAttribute("value",coldata);var td5=document.createElement("td");td5.setAttribute("width","68%");td5.appendChild(edit);row.appendChild(td5);span1.appendChild(table);div.appendChild(span1);}
