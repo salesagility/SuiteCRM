@@ -44,23 +44,23 @@ global $current_user;
 
 
 if(!isset($_POST['dashName'])){
-    $html = "<form method='post' name='addpageform' id='addpageform' action='index.php?module=Home&action=AddDashboardPages'/>";
-    $html .= "<table>";
-    $html .= "<tr>";
-    $html .= "<td><label for='dashName'>".$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME']."</label></td>";
-    $html .= "<td><input name='dashName' id='dashName'/></td>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td><label for='numColumns'>".$GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS']." </label></td>";
-    $html .= "<td><select name='numColumns'>";
-    $html .= "<option value='1'>1</option>";
-    $html .= "<option value='2'>2</option>";
-    $html .= "<option value='3'>3</option>";
-    $html .="</select></td>";
-    $html .="</tr>";
-    $html .= "<td></td>";
-    $html .= "</tr></table>";
-    $html .="</form>";
+    $html  ='<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
+    $html .='<table>';
+    $html .='<tr>';
+    $html .='<td><label for="dashName">'.$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'].'</label></td>';
+    $html .='<td><input type="text" name="dashName" id="dashName"/></td>';
+    $html .='</tr>';
+    $html .='<tr>';
+    $html .='<td><label for="numColumns">'.$GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS'].' </label></td>';
+    $html .='<td><select name="numColumns">';
+    $html .='<option value="1">1</option>';
+    $html .='<option value="2">2</option>';
+    $html .='<option value="3">3</option>';
+    $html .='</select></td>';
+    $html .='</tr>';
+    $html .='<td></td>';
+    $html .='</tr></table>';
+    $html .='</form>';
 
     echo $html;
 }else{

@@ -62,7 +62,6 @@ function submitSearch(subpanel) {
     });
 
     var url = 'index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+id + '&layout_def_key='+submit_data.join('&');
-
     showSubPanel(subpanel,url,true);
 }
 

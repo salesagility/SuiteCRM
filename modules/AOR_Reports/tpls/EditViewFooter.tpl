@@ -300,11 +300,11 @@
         <h4 class="button">{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
     </div>
 </div>
+<div class="clear"></div>
 
 <div class="tab-panels">
 
     <div class="edit view edit508 " id="detailpanel_fields">
-        <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <table id="group_display_table" style="display: none;">
             <tbody>
                 <tr>
@@ -346,7 +346,6 @@
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
-        <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
         </div>
         <hr>
@@ -357,7 +356,6 @@
         </table>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_charts">
-        <h4><!-- {$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="chartLines">
             <table>
                 <thead id="chartHead" style="display: none;">
@@ -410,6 +408,23 @@
     });
 
     $(function(){
+
+        $('#EditView_tabs .clear').remove();
+        $('#EditView_tabs').attr('style', 'width: 78%;');
+
+        $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
+            ui.helper.css('margin-top', $(window).scrollTop() );
+        });
+        $( '#aor_condition_parenthesis_btn' ).bind( "sortbeforestop", function (event, ui) {
+            ui.helper.css('margin-top', 0 );
+        });
+
+        $(window).resize()
+        {
+            $('div.panel-heading a div').css({
+                width: $('div.panel-heading a').width() - 14
+            });
+        }
 
         var reportToggler = function(elem) {
             var marker = 'toggle-';

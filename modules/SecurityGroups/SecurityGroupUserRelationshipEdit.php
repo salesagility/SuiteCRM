@@ -32,7 +32,6 @@ safe_map('primary_group', $focus);
 
 $theme_path="themes/".$theme."/";
 $image_path=$theme_path."images/";
-require_once($theme_path.'layout_utils.php');
 
 $GLOBALS['log']->info("SecurityGroup User relationship");
 

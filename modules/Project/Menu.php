@@ -53,7 +53,7 @@ if (ACLController::checkAccess('Project', 'edit', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=EditView&return_module=Project&return_action=DetailView',
         isset($mod_strings['LNK_NEW_PROJECT']) ? $mod_strings['LNK_NEW_PROJECT'] : '',
-        'CreateProject'
+        'Create'
     );
 }
 
@@ -63,7 +63,7 @@ if (ACLController::checkAccess('Project', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=index',
         isset($mod_strings['LNK_PROJECT_LIST']) ? $mod_strings['LNK_PROJECT_LIST'] : '',
-        'Project'
+        'List'
     );
 }
 
@@ -72,7 +72,7 @@ if (ACLController::checkAccess('Project', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=ResourceList',
         isset($mod_strings['LBL_RESOURCE_CHART']) ? $mod_strings['LBL_RESOURCE_CHART'] : '',
-        'Project'
+        'Resource_Chart'
     );
 }
 
@@ -81,6 +81,6 @@ if (ACLController::checkAccess('ProjectTask', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=ProjectTask&action=index',
         isset($mod_strings['LNK_PROJECT_TASK_LIST']) ? $mod_strings['LNK_PROJECT_TASK_LIST'] : '',
-        'ProjectTask'
+        'View_Project_Tasks'
     );
 }

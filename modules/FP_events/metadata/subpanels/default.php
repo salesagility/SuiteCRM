@@ -50,24 +50,24 @@ $subpanel_layout = array(
 
 	'list_fields' => array(
 		'name'=>array(
-	 		'vname' => 'LBL_NAME',
+			'vname' => 'LBL_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
+			'width' => '45%',
 		),
 		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
+			'vname' => 'LBL_DATE_MODIFIED',
+			'width' => '45%',
 		),
 		'edit_button'=>array(
-            'vname' => 'LBL_EDIT_BUTTON',
+			'vname' => 'LBL_EDIT_BUTTON',
 			'widget_class' => 'SubPanelEditButton',
-		 	'module' => $module_name,
-	 		'width' => '4%',
+			'module' => $module_name,
+			'width' => '4%',
 		),
 		'remove_button'=>array(
-            'vname' => 'LBL_REMOVE',
+			'vname' => 'LBL_REMOVE',
 			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => $module_name,
+			'module' => $module_name,
 			'width' => '5%',
 		),
 	),

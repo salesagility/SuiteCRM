@@ -59,7 +59,7 @@
 		<input title="{APP.LBL_SEARCH_BUTTON_TITLE}"  class="button" type="submit" name="button" value="{APP.LBL_SEARCH_BUTTON_LABEL}" id="search_form_submit"/>
 		<input title="{APP.LBL_CLEAR_BUTTON_TITLE}"  onclick="clear_form(this.form);" class="button" type="button" name="clear" value=" {APP.LBL_CLEAR_BUTTON_LABEL} " id="search_form_clear"/>
 		<br>
-		<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{ADVANCED_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{APP.LNK_ADVANCED_SEARCH}</a>
+		<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{ADVANCED_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{APP.LNK_ADVANCED_FILTER}</a>
 		</td>
 	</tr>
 
@@ -87,7 +87,7 @@
 	<td width="20%" scope="row"><slot>{MOD.LBL_CASE_NUMBER}</slot></td>
 	<td width="25%" ><slot><input name='case_number' tabindex='2' size='15' type="text" value='{CASE_NUMBER}'></slot></td>
 	<td width="10%" rowspan="3" scope="row" align="right" ><slot><input title="{APP.LBL_SEARCH_BUTTON_TITLE}" class="button" type="submit" name="button" value="{APP.LBL_SEARCH_BUTTON_LABEL}"/>&nbsp;<input title="{APP.LBL_CLEAR_BUTTON_TITLE}" onclick="clear_form(this.form);" class="button" type="button" name="clear" value=" {APP.LBL_CLEAR_BUTTON_LABEL} "/>
-		<br><a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{BASIC_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{APP.LNK_BASIC_SEARCH}</a>
+		<br><a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{BASIC_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{APP.LNK_BASIC_FILTER}</a>
 		</slot></td>
 	</tr><tr>
 	<td scope="row"><slot>{MOD.LBL_ACCOUNT_NAME}</slot></td>

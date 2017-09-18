@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2015 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $id = '', $alt_type = '', $currency_id = '')
 {
@@ -257,7 +262,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['name'] = $aow_field;
-        if (empty($value) == "") {
+        if (empty($value)) {
             $value = str_replace("%", "", date($date_format));
         }
         $fieldlist[$fieldname]['value'] = $value;
@@ -304,6 +309,14 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 function saveField($field, $id, $module, $value)
 {
 
+    global $current_user;
+
+    if ($module == 'Users' && $field == 'is_admin' && !$current_user->is_admin) {
+        $err = 'SECURITY: Only admin user can change user type';
+        $GLOBALS['log']->fatal($err);
+        throw new RuntimeException($err);
+    }
+
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -317,18 +330,43 @@ function saveField($field, $id, $module, $value)
                 $bean->parent_type = $_REQUEST['parent_type'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
+        }else if ($bean->field_defs[$field]['type'] == "currency"){
+			if (stripos($field, 'usdollar')) {
+				$newfield = str_replace("_usdollar", "", $field);
+				$bean->$newfield = $value;
+			}
+			else{
+				$bean->$field = $value;
+			}
+            
         }else{
             $bean->$field = $value;
         }
 
-        if (($bean->fetched_row['assigned_user_id'] != $value) && ($bean->isOwner($bean->created_by))) {
-            $check_notify = TRUE;
-        }
-        else {
-            $check_notify = FALSE;
+        $check_notify = FALSE;
+
+        if (isset( $bean->fetched_row['assigned_user_id']) && $field == "assigned_user_name") {
+            $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
+            if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
+                $check_notify = TRUE;
+            }
         }
 
-        $bean->save($check_notify);
+        $adminOnlyModules = array('Users', 'Employees');
+
+        $enabled = true;
+        if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
+            $enabled = false;
+        }
+
+        if(($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
+            if(!$bean->save($check_notify)) {
+                $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
+            }
+        } else {
+            $GLOBALS['log']->fatal("ACLAccess denied to save this field.");
+        }
+        $bean->retrieve();
         return getDisplayValue($bean, $field);
     } else {
         return false;
@@ -345,7 +383,6 @@ function getDisplayValue($bean, $field, $method = "save")
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
 
-    $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
 
     $fieldlist[$field] = $bean->getFieldDefinition($field);
 
@@ -380,7 +417,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //If field is of type link and name.
-    if ($vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
+    if (isset($vardef['link']) && $vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
@@ -487,7 +524,15 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 	{
 		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
 	}
-
+	
+	if($vardef['type'] == "currency"){
+		if($_REQUEST['view'] != "DetailView"){			
+			$value = currency_format_number($value);		
+		}
+		else
+			$value = format_number($value);		
+	}
+	
     return $value;
 }
 

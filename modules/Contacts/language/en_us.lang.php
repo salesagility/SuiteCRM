@@ -81,7 +81,7 @@ $mod_strings = array(
     'LBL_BUSINESSCARD' => 'Business Card',
     'LBL_CITY' => 'City:',
     'LBL_CAMPAIGN_ID' => 'Campaign ID',
-    'LBL_CONTACT_INFORMATION' => 'Overview',
+    'LBL_CONTACT_INFORMATION' => 'OVERVIEW',
     'LBL_CONTACT_NAME' => 'Contact Name:',
     'LBL_CONTACT_OPP_FORM_TITLE' => 'Contact-Opportunity:',
     'LBL_CONTACT_ROLE' => 'Role:',
@@ -257,6 +257,11 @@ $mod_strings = array(
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
     'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_QUOTES' => 'Quotes',
+    'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
 );
 
 ?>

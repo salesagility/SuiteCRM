@@ -191,7 +191,6 @@ $layout_defs['Accounts'] = array(
                 array('widget_class' => 'SubPanelTopCreateAccountNameButton'),
                 array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
             ),
-
         ),
         'opportunities' => array(
             'order' => 40,

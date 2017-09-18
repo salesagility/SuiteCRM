@@ -2134,12 +2134,6 @@ YAHOO.register("get", YAHOO.util.Get, {version: "2.9.0", build: "2800"});
             'skinnable': true
         },
 
-        'charts': {
-            'type': 'js',
-            'path': 'charts/charts-min.js',
-            'requires': ['element', 'json', 'datasource', 'swf']
-        },
-
         'colorpicker': {
             'type': 'js',
             'path': 'colorpicker/colorpicker-min.js',
@@ -2437,13 +2431,7 @@ YAHOO.register("get", YAHOO.util.Get, {version: "2.9.0", build: "2800"});
             'path': 'swfdetect/swfdetect-min.js',
             'requires': ['yahoo']
         },
-
-        'swfstore': {
-            'type': 'js',
-            'path': 'swfstore/swfstore-min.js',
-            'requires': ['element', 'cookie', 'swf']
-        },
-
+        
         'tabview': {
             'type': 'js',
             'path': 'tabview/tabview-min.js',
@@ -2458,12 +2446,6 @@ YAHOO.register("get", YAHOO.util.Get, {version: "2.9.0", build: "2800"});
             'requires': ['event', 'dom'],
             'optional': ['json', 'animation', 'calendar'],
             'skinnable': true
-        },
-
-        'uploader': {
-            'type': 'js',
-            'path': 'uploader/uploader-min.js',
-            'requires': ['element']
         },
 
         'utilities': {

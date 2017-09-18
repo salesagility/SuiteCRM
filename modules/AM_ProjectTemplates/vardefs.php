@@ -190,8 +190,40 @@ $dictionary['AM_ProjectTemplates'] = array(
                 'side' => 'right',
                 'vname' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_TASKTEMPLATES_TITLE',
             ),
+        'am_projecttemplates_users_1' =>
+            array(
+                'name' => 'am_projecttemplates_users_1',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_users_1',
+                'source' => 'non-db',
+                'module' => 'Users',
+                'bean_name' => 'User',
+                'vname' => 'LBL_AM_PROJECTTEMPLATES_USERS_1_TITLE',
+            ),
+        'am_projecttemplates_contacts_1' =>
+            array(
+                'name' => 'am_projecttemplates_contacts_1',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_contacts_1',
+                'source' => 'non-db',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'vname' => 'LBL_AM_PROJECTTEMPLATES_CONTACTS_1_TITLE',
+            ),
+        'override_business_hours' => array(
+            'name' => 'override_business_hours',
+            'vname' => 'LBL_OVERRIDE_BUSINESS_HOURS',
+            'type' => 'bool',
+            'required' => false,
+            'reportable' => false,
+            'default' => '0',
+            'comment' => ''
+        ),
+
     ),
-    'relationships' => array(),
+    'relationships' => array(
+      			
+	),
     'optimistic_locking' => true,
     'unified_search' => true,
 );

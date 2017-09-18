@@ -91,7 +91,10 @@ class AuthenticationController
         }
 
         if (!empty($_REQUEST['no_saml']) 
-            && (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type)) {
+            && (
+				(is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
+				(is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
+			)) {
             $type = 'SugarAuthenticate';
         }
 
@@ -152,7 +155,8 @@ class AuthenticationController
 			// Check for running Admin Wizard
 			$config = new Administration();
 			$config->retrieveSettings();
-		    if ( is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard' ) {
+			$postSilentInstallAdminWizardCompleted = $GLOBALS['current_user']->getPreference('postSilentInstallAdminWizardCompleted');
+		    if ( (is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') ||($postSilentInstallAdminWizardCompleted !== NULL && !$postSilentInstallAdminWizardCompleted) ) {
 				$GLOBALS['module'] = 'Configurator';
 				$GLOBALS['action'] = 'AdminWizard';
 				ob_clean();

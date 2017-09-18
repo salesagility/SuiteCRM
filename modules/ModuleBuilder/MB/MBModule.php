@@ -306,6 +306,7 @@ class MBModule
             {
                 $this->createIcon () ;
             }
+
             $this->errors = array_merge ( $this->errors, $this->mbvardefs->errors ) ;
 
         }
@@ -419,8 +420,7 @@ class MBModule
         if (mkdir_recursive ( $path ))
         {
             $this->createClasses ( $path ) ;
-            if( $this->config['importable'] || in_array ( 'person', array_keys($this->config[ 'templates' ]) ) )
-                $this->createMenu ( $path ) ;
+            $this->createMenu ( $path );
             $this->copyCustomFiles ( $this->path , $path ) ;
             $this->copyMetaRecursive ( $this->path . '/metadata/', $path . '/metadata/', true ) ;
             $this->copyMetaRecursive ( $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
@@ -468,21 +468,17 @@ class MBModule
         $smarty->left_delimiter = '{{' ;
         $smarty->right_delimiter = '}}' ;
         $smarty->assign ( 'class', $class ) ;
-        //write sugar generated class
-        $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '_sugar.php', 'w' ) ;
-        fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/Class.tpl' ) ) ;
-        fclose ( $fp ) ;
+
+        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' )) {
+            $fp = sugar_fopen($path . '/' . $class ['name'] . '.php', 'w');
+            fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
+            fclose($fp);
+        }
         //write vardefs
         $fp = sugar_fopen ( $path . '/vardefs.php', 'w' ) ;
         fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/vardef.tpl' ) ) ;
         fclose ( $fp ) ;
-
-        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' ))
-        {
-            $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '.php', 'w' ) ;
-            fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/DeveloperClass.tpl' ) ) ;
-            fclose ( $fp ) ;
-        }
+        
         if (! file_exists ( $path . '/metadata' ))
             mkdir_recursive ( $path . '/metadata' ) ;
         if (! empty ( $this->config [ 'studio' ] ))
@@ -800,19 +796,52 @@ class MBModule
 
     }
 
-    function createIcon ()
-    {
-        $icondir = $this->package_path . "/icons" ;
-        mkdir_recursive ( $icondir ) ;
-        $template = "" ;
-        foreach ( $this->config [ 'templates' ] as $temp => $val )
-            $template = $temp ;
-        copy ( "themes/default/images/icon_$template.gif", "$icondir/icon_" . ucfirst ( $this->key_name ) . ".gif" ) ;
-        copy ( "include/SugarObjects/templates/$template/icons/$template.gif", "$icondir/" . $this->key_name . ".gif" ) ;
-        if (file_exists("include/SugarObjects/templates/$template/icons/Create$template.gif"))
-        	copy ( "include/SugarObjects/templates/$template/icons/Create$template.gif", "$icondir/Create" . $this->key_name . ".gif" ) ;
-        if (file_exists("include/SugarObjects/templates/$template/icons/{$template}_32.gif"))
-        	copy ( "include/SugarObjects/templates/$template/icons/{$template}_32.gif", "$icondir/icon_" . $this->key_name . "_32.gif" ) ;
+    function createIcon() {
+
+        $icondir = $this->package_path . "/icons";
+        mkdir_recursive($icondir);
+        mkdir_recursive($icondir . "/sub_panel/modules");
+        mkdir_recursive($icondir . "/sidebar/modules");
+
+        $template = "";
+        foreach ($this->config ['templates'] as $temp => $val) {
+            $template = $temp;
+        }
+
+        // GIF Version
+            copy("include/SugarObjects/templates/$template/icons/$template.gif", "$icondir/icon_" . ucfirst($this->key_name) . ".gif");
+            copy("include/SugarObjects/templates/$template/icons/$template.gif", "$icondir/" . $this->key_name . ".gif");
+            // SVG Version
+            if (file_exists("include/SugarObjects/templates/$template/icons/$template.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/$template.svg", "$icondir/" . $this->key_name . ".svg");
+            }
+            // GIF Version
+            if (file_exists("include/SugarObjects/templates/$template/icons/Create$template.gif")) {
+                copy("include/SugarObjects/templates/$template/icons/Create$template.gif", "$icondir/Create" . $this->key_name . ".gif");
+            }
+            // SVG Version
+            if (file_exists("include/SugarObjects/templates/$template/icons/Create$template.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/Create$template.svg", "$icondir/Create" . $this->key_name . ".svg");
+            }
+            // GIF Version
+            if (file_exists("include/SugarObjects/templates/$template/icons/{$template}_32.gif")) {
+                copy("include/SugarObjects/templates/$template/icons/{$template}_32.gif", "$icondir/icon_" . $this->key_name . "_32.gif");
+            }
+            // SVG Version
+            if (file_exists("include/SugarObjects/templates/$template/icons/{$template}_32.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/{$template}_32.svg", "$icondir/icon_" . $this->key_name . "_32.svg");
+            }
+
+            // SuiteP Support
+            if (file_exists("include/SugarObjects/templates/$template/icons/sidebar/modules/{$template}.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/sidebar/modules/{$template}.svg", "$icondir/sidebar/modules/" . $this->key_name . ".svg");
+            }
+            if (file_exists("include/SugarObjects/templates/$template/icons/sub_panel/{$template}.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/sub_panel/{$template}.svg", "$icondir/sub_panel/" . $this->key_name . ".svg");
+            }
+            if (file_exists("include/SugarObjects/templates/$template/icons/sub_panel/modules/{$template}.svg")) {
+                copy("include/SugarObjects/templates/$template/icons/sub_panel/modules/{$template}.svg", "$icondir/sub_panel/modules/" . $this->key_name . ".svg");
+            }
     }
 
     function removeFieldFromLayouts ( $fieldName )

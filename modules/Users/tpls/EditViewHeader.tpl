@@ -153,6 +153,6 @@ EditView_tabs.on('contentReady', function(e){
         <li><a id="tab5" href="#tab5" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'><em>{$MOD.LBL_EAPM_SUBPANEL_TITLE}</em></a></li>
         {/if}
     </ul>
-    <div class="yui-content">
+    <div class="yui-content user-tab-content">
         <div>
 <!-- BEGIN METADATA GENERATED CONTENT -->

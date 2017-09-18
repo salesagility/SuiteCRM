@@ -55,13 +55,13 @@
 <tr>
     <td valign='top' nowrap class='dataLabel'>{$titleLbl}</td>
     <td valign='top' class='dataField'>
-    	<input class="text" name="title" size='20' value='{$title}'>
+    	<input type="text" class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
 <tr>
     <td valign='top' nowrap class='dataLabel'>{$heightLbl}</td>
     <td valign='top' class='dataField'>
-    	<input class="text" name="height" size='3' value='{$height}'>
+    	<input type="text" class="text" name="height" size='3' value='{$height}'>
     </td>
 </tr>
 <tr>

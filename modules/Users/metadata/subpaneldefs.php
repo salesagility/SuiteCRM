@@ -41,7 +41,18 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $layout_defs['Users'] = array(
     // default subpanel provided by this SugarBean
-    'subpanel_setup' => array(),
+    'subpanel_setup' => array(
+        'aclroles' => array(
+            'module' => 'ACLRoles',
+            'order' => 30,
+            'sort_order' => 'asc',
+            'sort_by' => 'name',
+            'subpanel_name' => 'admin',
+            'title_key' => 'LBL_ROLES_SUBPANEL_TITLE',
+            'get_subpanel_data' => 'aclroles',
+            'add_subpanel_data' => 'aclroles',
+        ),
+    ),
     'default_subpanel_define' => array(
         'subpanel_title' => 'LBL_DEFAULT_SUBPANEL_TITLE',
         'sort_by' => 'name',

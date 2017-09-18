@@ -248,6 +248,7 @@ $dictionary['AOS_Invoices'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_lines',
@@ -340,7 +341,7 @@ $dictionary['AOS_Invoices'] = array(
         'discount_amount_usdollar' =>
             array(
                 'name' => 'discount_amount_usdollar',
-                'vname' => 'LBL_DISCOUNT__AMOUNT_USDOLLAR',
+                'vname' => 'LBL_DISCOUNT_AMOUNT_USDOLLAR',
                 'type' => 'currency',
                 'group' => 'discount_amount',
                 'disable_num_format' => true,
@@ -680,6 +681,7 @@ $dictionary['AOS_Invoices'] = array(
         'accounts' =>
             array(
                 'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
                 'type' => 'link',
                 'relationship' => 'account_aos_invoices',
                 'module' => 'Accounts',
@@ -689,6 +691,7 @@ $dictionary['AOS_Invoices'] = array(
         'contacts' =>
             array(
                 'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
                 'type' => 'link',
                 'relationship' => 'contact_aos_invoices',
                 'module' => 'Contacts',
@@ -698,6 +701,7 @@ $dictionary['AOS_Invoices'] = array(
         'aos_quotes_aos_invoices' =>
             array(
                 'name' => 'aos_quotes_aos_invoices',
+                'vname' => 'LBL_AOS_QUOTES_AOS_INVOICES',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_invoices',
                 'source' => 'non-db',
@@ -706,6 +710,7 @@ $dictionary['AOS_Invoices'] = array(
         'aos_products_quotes' =>
             array(
                 'name' => 'aos_products_quotes',
+                'vname' => 'LBL_AOS_PRODUCT_QUOTES',
                 'type' => 'link',
                 'relationship' => 'aos_invoices_aos_product_quotes',
                 'module' => 'AOS_Products_Quotes',
@@ -715,6 +720,7 @@ $dictionary['AOS_Invoices'] = array(
         'aos_line_item_groups' =>
             array(
                 'name' => 'aos_line_item_groups',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
                 'type' => 'link',
                 'relationship' => 'aos_invoices_aos_line_item_groups',
                 'module' => 'AOS_Line_Item_Groups',

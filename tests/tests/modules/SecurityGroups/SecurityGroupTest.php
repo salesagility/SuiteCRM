@@ -329,6 +329,7 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             'ACLRoles',
             'jjwg_Maps',
             'AOS_Product_Categories',
+            'Spots' => 'Spots',
                 );
 
         $actual = $securityGroup->getSecurityModules();

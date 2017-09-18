@@ -50,54 +50,84 @@ $emailInstances['module']++;
 <script type="text/javascript" language="javascript">
 var emailAddressWidgetLoaded = false;
 </script>
-<script type="text/javascript" src="include/SugarEmailAddress/SugarEmailAddress.js"></script>
+	<script type="text/javascript" src="include/SugarEmailAddress/SugarEmailAddress.js"></script>
 <script type="text/javascript">
 	var module = '{$module}';
 </script>
-<table style="border-spacing: 0pt;">
-	<tr>
-		<td  valign="top" NOWRAP>
-			<table id="{$module}emailAddressesTable{$index}" class="emailaddresses">
-				<tbody id="targetBody"></tbody>
-				<tr>
-					<td scope="row" NOWRAP>
-					    <input type=hidden id="{$module}_email_widget_id" name="{$module}_email_widget_id" value="">
-						<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
-                        {capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="javascript:SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
-                        <button type="button" {$other_attributes}>{sugar_getimage name="id-ff-add" alt="$app_strings.LBL_ID_FF_ADD" ext=".png"}</button>
-					</td>
-					<td scope="row" NOWRAP>
-					    &nbsp;
-					</td>
-					<td scope="row" NOWRAP>
-						{$app_strings.LBL_EMAIL_PRIMARY}
-					</td>
-					{if $useReplyTo == true}
-					<td scope="row" NOWRAP>
-						{$app_strings.LBL_EMAIL_REPLY_TO}
-					</td>
-					{/if}
-					{if $useOptOut == true}
-					<td scope="row" NOWRAP>
-						{$app_strings.LBL_EMAIL_OPT_OUT}
-					</td>
-					{/if}
-					{if $useInvalid == true}
-					<td scope="row" NOWRAP>
-						{$app_strings.LBL_EMAIL_INVALID}
-					</td>
-					{/if}
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
+
+<div class="col-xs-12">
+	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
+		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
+		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$other_attributes}>
+			<span class="glyphicon glyphicon-plus"></span><span></span>
+		</button>
+	</div>
+	<div class="col-xs-12 email-address-lines-container">
+		{*
+		@version > SuiteCRM 7.7.5
+		@description Template represents a single email line item
+
+		To customise the layout:
+		 ** keep the .template class in the most parent container of a line item
+		 ** keep the elements with id's
+		 ** don't change the id's of the elements.
+		 ** don't add js events inline. Instead bind the event in javascript.
+	 	*}
+		<div class="col-xs-12 template email-address-line-container hidden">
+			<div class="col-xs-12 col-sm-6  email-address-input-container {if $module == "Users"} email-address-users-profile{/if}">
+				<div class="input-group email-address-input-group">
+					<input type="email" id="email-address-input" value="" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
+					<input type="hidden" id="record-id">
+					<input type="hidden" id="verified-flag" class="verified-flag" value="true"/>
+					<input type="hidden" id="verified-email-value" class="verified-email-value" value=""/>
+					<input type=hidden id="{$module}_email_widget_id" name="{$module}_email_widget_id" value="">
+					<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
+					<span class="input-group-btn">
+					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" title="{$app_strings.LBL_ID_FF_REMOVE}" type="button">
+						<span class="glyphicon glyphicon-minus"></span>
+					</button>
+				</span>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 email-address-options-container">
+
+
+				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_PRIMARY}</label>
+					<div><input type="radio" name="" id="email-address-primary-flag" class="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true" title="{$app_strings.LBL_EMAIL_PRIM_TITLE}"></div>
+				</div>
+
+				{if $useReplyTo == true}
+				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<label class="text-sm  col-xs-12">{$app_strings.LBL_EMAIL_REPLY_TO}</label>
+					<div><input type="checkbox" name="" id="email-address-reply-to-flag" class="email-address-reply-to-flag" value="" enabled="true"></div>
+				</div>
+				{/if}
+
+				{if $useOptOut == true}
+				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
+					<div><input type="checkbox" name="" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
+				</div>
+				{/if}
+
+				{if $useInvalid == true}
+				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
+					<div><input type="checkbox" name="" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
+				</div>
+				{/if}
+			</div>
+		</div>
+
+	</div>
+</div>
 <input type="hidden" name="useEmailWidget" value="true">
 <script type="text/javascript" language="javascript">
 SUGAR_callsInProgress++;
 function init{$module}Email{$index}(){ldelim}
 	if(emailAddressWidgetLoaded || SUGAR.EmailAddressWidget){ldelim}
-		var table = YAHOO.util.Dom.get("{$module}emailAddressesTable{$index}");
+		{*var table = YAHOO.util.Dom.get("{$module}emailAddressesTable{$index}");*}
 	    var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
 		eaw.emailView = '{$emailView}';
 	    eaw.emailIsRequired = "{$required}";
@@ -108,7 +138,7 @@ function init{$module}Email{$index}(){ldelim}
 	    if(prefillEmailAddress == 'true') {ldelim}
 	        eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
 		{rdelim} else if(addDefaultAddress == 'true') {ldelim}
-	        eaw.addEmailAddress('{$module}emailAddressesTable{$index}');
+	        eaw.addEmailAddress('{$module}emailAddressesTable{$index}', '',true);
 		{rdelim}
 		if('{$module}_email_widget_id') {ldelim}
 		   document.getElementById('{$module}_email_widget_id').value = eaw.count;

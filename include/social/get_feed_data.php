@@ -57,7 +57,7 @@ $twitter_enabled = check_enabled($db, 'twitter');
 
 if ($twitter_enabled) {
 
-    require_once('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+    require_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
     /*
      * Pull in connector settings for creating the authentication between Suite and Twitter.

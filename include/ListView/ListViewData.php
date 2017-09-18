@@ -179,10 +179,10 @@ class ListViewData {
 	 *
 	 * @param unknown_type $baseName
 	 */
-	function setVariableName($baseName, $where, $listviewName = null){
+	function setVariableName($baseName, $where, $listviewName = null, $id = null){
         global $timedate;
         $module = (!empty($listviewName)) ? $listviewName: $_REQUEST['module'];
-        $this->var_name = $module .'2_'. strtoupper($baseName);
+        $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
 
 		$this->var_order_by = $this->var_name .'_ORDER_BY';
 		$this->var_offset = $this->var_name . '_offset';
@@ -244,8 +244,9 @@ class ListViewData {
 	 * @param string:'id' $id_field
 	 * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
 	 */
-	function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true) {
+	function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true, $id = null) {
         global $current_user;
+        require_once 'include/SearchForm/SearchForm2.php';
         SugarVCR::erase($seed->module_dir);
         $this->seed =& $seed;
         $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
@@ -254,7 +255,7 @@ class ListViewData {
             $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
         }
 
-        $this->setVariableName($seed->object_name, $where, $this->listviewName);
+        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
 
 		$this->seed->id = '[SELECT_ID_LIST]';
 

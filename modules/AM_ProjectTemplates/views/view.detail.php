@@ -48,6 +48,10 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
         global $app_strings, $mod_strings;
         parent::display();
 
+        echo '<link rel="stylesheet" type="text/css" href="modules/Project/qtip/jquery.qtip.min.css" />';
+        //echo '<script type="text/javascript" src="modules/Project/js/jquery.blockUI.js"></script>';
+        echo '<script type="text/javascript" src="modules/Project/qtip/jquery.qtip.min.js"></script>';
+      
         echo '<style>
                     .p_form { font-size: 62.5%; }
                     .p_form label, .p_form input { display:block; }
@@ -85,7 +89,69 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                                 addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
                                 addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
-                             <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
+							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
+                             <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
+							 <span style="position: relative;"  id="copy_all_tasks_help"><!--not_in_theme!--><img border="0" src="themes/SuiteR/images/info_inline.gif" alt="Help class="info" vertical-align="middle"></span>
+							<script type="text/javascript">
+
+									var help = $("#copy_all_tasks_help");
+									//set tooltip title
+									var title = "' . $mod_strings['LBL_TOOLTIP_TITLE'] . '" ;
+									var text = "' . $mod_strings['LBL_TOOLTIP_TEXT'] . '" ;
+									//console.log(title);
+
+									help.qtip({
+										content: {
+											text: text,
+											title: {
+												//button: true,
+												text: title
+											}
+										},
+										position: {
+											my: "bottom center",
+											at: "top center",
+											target: "mouse",
+											adjust: {
+												mouse: false,
+												scroll: false,
+												y: -10
+											}
+										},
+										show: {
+											event: "mouseover"
+										},
+										hide: {
+											event: "mouseout"
+										},
+										style: {
+											classes : "qtip-green qtip-shadow qtip_box", //qtip-rounded"
+											tip: {
+												offset: 10
+
+											}
+										}
+									});
+
+									//help.qtip("disable");
+
+							</script>
+                             <label for="tasks" id="tasks_label">'.$mod_strings['LBL_COPY_SEL_TASKS'].':</label>
+                             <select id="tasks" name="tasks[]" multiple style="margin-bottom:12px; width:95%; padding: .4em;" >';
+                                
+								$this->bean->load_relationship('am_tasktemplates_am_projecttemplates');
+								$task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+
+                                //From the query above, populates the select box
+                                foreach( $task_list as $task)
+                                {
+                                    echo '<option value="'.$task->id.'">'.$task->name.'</option>';
+                                }
+
+							 echo '</select><br />
+
+							 <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
+
                         </fieldset>
                      </form>
                 </p>

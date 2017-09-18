@@ -54,23 +54,6 @@ class Jjwg_MapsViewConfig extends SugarView {
         $unit_types = $GLOBALS['app_list_strings']['map_unit_type_list'];
         ?>
 
-        <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong>Please consider donating to this project!</strong></p>
-
-        <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; width: 790px;">
-            If you've found this project helpful, please donate!<br />
-            Donations from users like you will help keep this project alive.
-        </p>
-
-        <div style="margin: 15px 0px 15px 0px;">
-            <span style="font-size: 1.7em;"><strong>$5, $20, $100 or even $500 &nbsp;</strong></span>
-            <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="hosted_button_id" value="FZENX6PLHKX2L">
-                <input style="border:0;" type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
-        </div>
-
         <p>&nbsp;</p>
 
         <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_TITLE']; ?></strong></p>
@@ -91,7 +74,21 @@ class Jjwg_MapsViewConfig extends SugarView {
 
 <br /><br />
 
-<table class="edit view" cellpadding="0" cellspacing="12" border="0">
+<table class="edit view table" cellpadding="0" cellspacing="12" border="0">
+    <tr>
+        <td><strong><?php echo $GLOBALS['mod_strings']['LBL_GOOGLE_API_KEY']; ?> </strong></td>
+        <td><input type="text" name="google_maps_api_key" id="google_maps_api_key"
+                   value="<?php echo (isset($GLOBALS['jjwg_config']['google_maps_api_key'])) ?
+                       htmlspecialchars($GLOBALS['jjwg_config']['google_maps_api_key']) :
+                       htmlspecialchars($GLOBALS['jjwg_config_defaults']['google_maps_api_key']); ?>"
+                   title='' tabindex='139' size="70" maxlength="255">
+            <br />
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a href="https://developers.google.com/maps/documentation/javascript/" target="_blank"><?php echo $GLOBALS['mod_strings']['LBL_GET_GOOGLE_API_KEY']; ?></a></td>
+    </tr>
     <tr>
         <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_VALID_GEOCODE_MODULES']; ?> </strong></td>
         <td><input type="text" name="valid_geocode_modules" id="valid_geocode_modules"
@@ -420,7 +417,7 @@ class Jjwg_MapsViewConfig extends SugarView {
             value="<?php echo (isset($GLOBALS['jjwg_config']['geocoding_api_secret'])) ?
                 htmlspecialchars($GLOBALS['jjwg_config']['geocoding_api_secret']) :
                 htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']); ?>"
-            title='' tabindex='140' size="25" maxlength="32">
+            title='' tabindex='140' size="25" maxlength="255">
             &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?>
                 <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']) ?>
         </td>

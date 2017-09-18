@@ -100,7 +100,7 @@ $mod_strings = array(
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
-    'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites [Alt+I]',
+    'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites',
     'LBL_SEND_BUTTON_KEY' => 'I',
     'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
     'LBL_DATE_END' => 'End Date',
@@ -128,7 +128,7 @@ $mod_strings = array(
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
-    'LBL_CALL_INFORMATION' => 'Overview',
+    'LBL_CALL_INFORMATION' => 'OVERVIEW',
     'LBL_REMOVE' => 'rem',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
@@ -177,7 +177,11 @@ $mod_strings = array(
     'LBL_RESCHEDULE_ERROR1' => 'Please select a valid date',
     'LBL_RESCHEDULE_ERROR2' => 'Please select a reason',
     'LBL_RESCHEDULE_PANEL' => 'Reschedule',
-    'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History'
+    'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History',
+    'LBL_CANCEL' => 'Cancel',
+    'LBL_SAVE' => 'Save',
+
+    'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
 
 );
 
