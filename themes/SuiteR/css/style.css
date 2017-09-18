@@ -4984,6 +4984,10 @@ h3 span{
     fill: #3C8DBC;
     pointer-events: none;
 }
+#content a:link:after, 
+#content a:visited:after { 
+	display: none;
+}
 .inlineEdit{
     cursor: pointer !important;
 }
