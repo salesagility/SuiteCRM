@@ -55,7 +55,6 @@ class SchedulersViewEdit extends ViewEdit {
  	{
  		parent::__construct();
  		$this->useForSubpanel = true;
- 		//$this->useModuleQuickCreateTemplate = true;
  	}
 
     /**
@@ -68,19 +67,20 @@ class SchedulersViewEdit extends ViewEdit {
     	return "<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_MODULE_TITLE']."</a>";
     }
 
-
-    function display(){
-		global $mod_strings;
+    /**
+     * @see SugarView::display()
+     */
+    public function display(){
 		global $app_list_strings;
 
-		// job functions
+		// Job functions
 		$this->bean->job_function = $this->bean->job;
 		$this->ss->assign('JOB', $this->bean->job);
 		if(substr($this->bean->job, 0, 5) == "url::") {
 			$this->bean->job_url = substr($this->bean->job, 5);
 			$this->ss->assign('JOB', 'url::');
 		}
-		// interval
+		// Interval
 		if(!empty($this->bean->job_interval)) {
 			$exInterval = explode("::", $this->bean->job_interval);
 		} else {
@@ -128,10 +128,9 @@ class SchedulersViewEdit extends ViewEdit {
 		$this->ss->assign('basic_intervals', $ints);
 		$this->ss->assign('basic_periods', $app_list_strings['scheduler_period_dom']);
 		if($exInterval[0] == '*' && $exInterval[1] == '*') {
-		// hours
+		// Hours
 		} elseif(strpos($exInterval[1], '*/') !== false && $exInterval[0] == '0') {
-		// we have a "BASIC" type of hour setting
-			$exHours = explode('/', $exInterval[1]);
+		// We have a "BASIC" type of hour setting
 			$this->ss->assign('basic_interval', $exInterval[1]);
 			$this->ss->assign('basic_period', 'hour');
 		// Minutes
@@ -140,7 +139,7 @@ class SchedulersViewEdit extends ViewEdit {
 			$exMins = explode('/', $exInterval[0]);
 			$this->ss->assign('basic_interval', $exMins[1]);
 			$this->ss->assign('basic_period', 'min');
-		// we've got an advanced time setting
+		// We've got an advanced time setting
 		} else {
 			$this->ss->assign('basic_interval', 12);
 			$this->ss->assign('basic_period', 'hour');
