@@ -114,54 +114,13 @@
         true,
         false,
         {
-          "call_back_function": 'set_return',
+          "call_back_function": 'process_email_return',
           "form_name": "ComposeView",
           "field_to_name_array": fields
         },
         "single",
         false
       );
-
-      popupWindow.addEventListener("beforeunload", function () {
-        "use strict";
-        setTimeout(function () {
-          if (trim(contact_email_address.val()) === '') {
-            var mb = messageBox();
-            mb.hideHeader();
-            mb.setBody(SUGAR.language.translate('Emails', 'LBL_INSERT_ERROR_BLANK_EMAIL'));
-            mb.show();
-
-            mb.on('ok', function () {
-              "use strict";
-              mb.remove();
-            });
-
-            mb.on('cancel', function () {
-              "use strict";
-              mb.remove();
-            });
-          } else {
-            var formatted_email_address = '';
-            if (trim(contact_name.val()) !== '') {
-              // use name <email address> format
-              formatted_email_address = contact_name.val() + ' <' + contact_email_address.val() + '>';
-            } else {
-              // use email address
-              formatted_email_address = contact_email_address.val();
-            }
-
-            if (trim($(self.active_elementQTipBar).val()) === '') {
-              $(self.active_elementQTipBar).val(formatted_email_address);
-            } else {
-              $(self.active_elementQTipBar).val(
-                $(self.active_elementQTipBar).val() + ', ' +
-                formatted_email_address
-              );
-            }
-          }
-
-        }, 300);
-      });
     };
 
     /**
