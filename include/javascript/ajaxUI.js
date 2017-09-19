@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,18 +32,18 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 SUGAR.ajaxUI={loadingWindow:false,callback:function(o)
 {var cont;if(typeof window.onbeforeunload=="function")
 window.onbeforeunload=null;scroll(0,0);try{var r=YAHOO.lang.JSON.parse(o.responseText);cont=r.content;if(r.title)
 {document.title=html_entity_decode(r.title);}
 if(r.action)
 {action_sugar_grp1=r.action;}
-if (r.menu.module)
-{module_sugar_grp1 = r.menu.module;}
+if(r.menu.module)
+{module_sugar_grp1=r.menu.module;}
 if(r.favicon)
 {SUGAR.ajaxUI.setFavicon(r.favicon);}
 var c=document.getElementById("content");c.style.visibility='hidden';c.innerHTML=cont;SUGAR.util.evalScript(cont);c.style.visibility='visible';if(r.moduleList)
@@ -56,11 +60,13 @@ return false;if(typeof(SUGAR.config.addAjaxBannedModules)!='undefined'){bannedMo
 if(typeof(SUGAR.config.overrideAjaxBannedModules)!='undefined'){bannedModules=SUGAR.config.overrideAjaxBannedModules;}
 return SUGAR.util.arrayIndexOf(bannedModules,module)==-1;},loadContent:function(url,params)
 {if(YAHOO.lang.trim(url)!="")
-{var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(module&&SUGAR.ajaxUI.canAjaxLoadModule(module))
+{var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
+var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(module&&SUGAR.ajaxUI.canAjaxLoadModule(module))
 {YAHOO.util.History.navigate('ajaxUILoc',url);}else{window.location=url;}}},go:function(url)
 {if(YAHOO.lang.trim(url)!="")
-{var con=YAHOO.util.Connect,ui=SUGAR.ajaxUI;if(ui.lastURL==url)
-return;var inAjaxUI=/action=ajaxui/.exec(window.location);if(typeof(window.onbeforeunload)=="function"&&window.onbeforeunload())
+{var con=YAHOO.util.Connect,ui=SUGAR.ajaxUI;if(ui.lastURL==url){return;}
+var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
+var inAjaxUI=/action=ajaxui/.exec(window.location);if(typeof(window.onbeforeunload)=="function"&&window.onbeforeunload())
 {if(!confirm(window.onbeforeunload()))
 {if(!inAjaxUI)
 {window.location.hash="";}
@@ -69,7 +75,7 @@ else
 return;}
 window.onbeforeunload=null;}
 if(ui.lastCall&&con.isCallInProgress(ui.lastCall)){con.abort(ui.lastCall);}
-var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(!ui.canAjaxLoadModule(module)){window.location=url;return;}
+var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(!ui.canAjaxLoadModule(module)){window.location=url;}
 ui.lastURL=url;ui.cleanGlobals();var loadLanguageJS='';if(module&&typeof(SUGAR.language.languages[module])=='undefined'){loadLanguageJS='&loadLanguageJS=1';}
 if(!inAjaxUI){if(!SUGAR.isIE)
 window.location.replace("index.php?action=ajaxui#ajaxUILoc="+encodeURIComponent(url));else{window.location.hash="#";window.location.assign("index.php?action=ajaxui#ajaxUILoc="+encodeURIComponent(url));}}
