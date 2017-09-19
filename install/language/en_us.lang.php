@@ -443,7 +443,7 @@ After you log in using the above password, you may be required to reset the pass
 	),
 	'advanced_password_forgot_password_email' => array(
 		'subject' => 'Reset your account password',
-        'type' => 'system',
+		'type' => 'system',
         'description' => "This template is used to send a user a link to click to reset the user's account password.",
 		'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>You recently requested on $contact_user_pwd_last_changed to be able to reset your account password. </p><p>Click on the link below to reset your password:</p><p> $contact_user_link_guid </p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
 		'txt_body' =>
