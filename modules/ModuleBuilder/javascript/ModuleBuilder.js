@@ -426,7 +426,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				if (saveBtn) {
 					//After the save call completes, load the next page
 					ModuleBuilder.state.saving = true;
-					eval(saveBtn.getAttributeNode('onclick').value);
+					SUGAR.util.globalEval(saveBtn.getAttributeNode('onclick').value);
 				}
 				ModuleBuilder.state.popup_window.hide();
 			},
@@ -494,7 +494,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			
 			if (url.substring(0, 11) == "javascript:")
 			{
-				eval(url.substring(11));
+				SUGAR.util.globalEval(url.substring(11));
 				return;
 			}
 			
@@ -822,7 +822,8 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			ModuleBuilder.selected[list] = name;
 		},
 		buttonToForm: function(form, field, list){
-			var theField = eval('document.' + form + '.' + field);
+          SUGAR.util.globalEval('retValue = document.' + form + '.' + field);
+          var theField = retValue;
 			theField.value = ModuleBuilder.buttonGetSelected(list);
 		},
 
@@ -841,7 +842,8 @@ if (typeof(ModuleBuilder) == 'undefined') {
 		//Help Functions
 		helpRegister: function(name){
 			var formname = 'document.' + name;
-			var form = eval(formname);
+          SUGAR.util.globalEval('retValue = '+formname);
+			var form = retValue;
 			var i = 0;
 			for (i = 0; i < form.elements.length; i++) {
 				if (typeof(form.elements[i].type) != 'undefined' && typeof(form.elements[i].name) != 'undefined' && form.elements[i].type != 'hidden') {
