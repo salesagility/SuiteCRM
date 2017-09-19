@@ -413,12 +413,12 @@ class SugarBean
     public function __construct()
     {
         global $dictionary;
-        static $loaded_defs = array();
+        static $loaded_definitions = array();
         $this->db = DBManagerFactory::getInstance();
         if (empty($this->module_name)) {
             $this->module_name = $this->module_dir;
         }
-        if ((!$this->disable_vardefs && empty($loaded_defs[$this->object_name])) || !empty($GLOBALS['reload_vardefs'])) {
+        if ((!$this->disable_vardefs && empty($loaded_definitions[$this->object_name])) || !empty($GLOBALS['reload_vardefs'])) {
             VardefManager::loadVardef($this->module_dir, $this->object_name);
 
             // build $this->column_fields from the field_defs if they exist
@@ -447,17 +447,17 @@ class SugarBean
                     $this->optimistic_lock = true;
                 }
             }
-            $loaded_defs[$this->object_name]['column_fields'] =& $this->column_fields;
-            $loaded_defs[$this->object_name]['list_fields'] =& $this->list_fields;
-            $loaded_defs[$this->object_name]['required_fields'] =& $this->required_fields;
-            $loaded_defs[$this->object_name]['field_name_map'] =& $this->field_name_map;
-            $loaded_defs[$this->object_name]['field_defs'] =& $this->field_defs;
+            $loaded_definitions[$this->object_name]['column_fields'] =& $this->column_fields;
+            $loaded_definitions[$this->object_name]['list_fields'] =& $this->list_fields;
+            $loaded_definitions[$this->object_name]['required_fields'] =& $this->required_fields;
+            $loaded_definitions[$this->object_name]['field_name_map'] =& $this->field_name_map;
+            $loaded_definitions[$this->object_name]['field_defs'] =& $this->field_defs;
         } else {
-            $this->column_fields =& $loaded_defs[$this->object_name]['column_fields'];
-            $this->list_fields =& $loaded_defs[$this->object_name]['list_fields'];
-            $this->required_fields =& $loaded_defs[$this->object_name]['required_fields'];
-            $this->field_name_map =& $loaded_defs[$this->object_name]['field_name_map'];
-            $this->field_defs =& $loaded_defs[$this->object_name]['field_defs'];
+            $this->column_fields =& $loaded_definitions[$this->object_name]['column_fields'];
+            $this->list_fields =& $loaded_definitions[$this->object_name]['list_fields'];
+            $this->required_fields =& $loaded_definitions[$this->object_name]['required_fields'];
+            $this->field_name_map =& $loaded_definitions[$this->object_name]['field_name_map'];
+            $this->field_defs =& $loaded_definitions[$this->object_name]['field_defs'];
             $this->added_custom_field_defs = true;
 
             if (!isset($this->custom_fields) &&

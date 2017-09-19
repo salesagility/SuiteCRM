@@ -181,7 +181,7 @@ class MBLanguage{
                 'LNK_NEW_RECORD'=>$mod_strings['LBL_CREATE'] ." ". $this->label,
                 'LNK_LIST'=>$mod_strings['LBL_VIEW'] ." ". $this->label,
                 'LNK_IMPORT_'.strtoupper($this->key_name)=>translate('LBL_IMPORT') ." ". $this->label,
-                'LBL_SEARCH_FORM_TITLE'=>$mod_strings['LBL_SEARCH'] ." ". $this->label,
+                'LBL_SEARCH_FORM_TITLE'=>$mod_strings['LBL_SEARCH_BUTTON'] ." ". $this->label,
                 'LBL_HISTORY_SUBPANEL_TITLE'=>$mod_strings['LBL_HISTORY'],
                 'LBL_ACTIVITIES_SUBPANEL_TITLE'=>$mod_strings['LBL_ACTIVITIES'],
                 'LBL_'.strtoupper($this->key_name).'_SUBPANEL_TITLE'=>$this->label,
