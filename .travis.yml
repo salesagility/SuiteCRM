@@ -25,7 +25,7 @@ services:
 branches:
   only:
     - master
-    - hotfix
     - develop
+    - /hotfix.*/
     - /feature.*/
     - /fix.*/
