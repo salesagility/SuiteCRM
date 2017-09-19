@@ -130,8 +130,7 @@ function loadXML(){var gURL='index.php?module=Reports&action=fillUserCombo';if(w
 xmlhttp.open("GET",gURL,false);xmlhttp.onreadystatechange=loadUsers;xmlhttp.send(null);loadUsers();}
 else if(window.ActiveXObject){xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');if(xmlhttp){xmlhttp.onreadystatechange=loadUsers;xmlhttp.open('GET',gURL,false);xmlhttp.send();}}}
 function loadUsers(){if(xmlhttp.readyState==4){if(xmlhttp.status==200||xmlhttp.status==0){if(window.ActiveXObject)
-xmlhttp.responseXML.loadXML(xmlhttp.responseText);var acc=xmlhttp.responseXML.getElementsByTagName('data');var opts='';for(var i=0;i<acc.length;i++)
-{val=getNodeValue(acc[i],'datavalue');SUGAR.util.globalEval("users_array[users_array.length] = ("+val+")");}}}}
+xmlhttp.responseXML.loadXML(xmlhttp.responseText);var acc=xmlhttp.responseXML.getElementsByTagName('data');var opts='';for(var i=0;i<acc.length;i++){val=getNodeValue(acc[i],'datavalue');SUGAR.util.globalEval("users_array[users_array.length] = ("+val+")");}}}}
 function getNodeValue(obj,tag){return obj.getElementsByTagName(tag)[0].firstChild.nodeValue;}
 function addFilterInputText(row,filter){var cell=document.createElement("td");var new_input=document.createElement("input");new_input.type="text";if(typeof(filter.input_name0)=='undefined'){filter.input_name0='';}
 new_input.value=filter.input_name0;new_input.name="text_input";new_input.size="30";new_input.maxsize="255";new_input.visible="true";cell.appendChild(new_input);row.appendChild(cell);var filter_row=filters_arr[filters_count_map[current_filter_id]];filter_row.input_field0=new_input;filter_row.input_field1=null;}
@@ -247,8 +246,7 @@ else{document.EditView[sort_dir].value="d";}}
 else{document.EditView[sort_by].value=column_name;document.EditView[sort_dir].value="a";}
 document.EditView.to_pdf.value='';document.EditView.to_csv.value='';document.EditView['report_offset'].value=0;if(fill_form()==true){document.EditView.submit();}}
 function set_offset(offset){document.EditView['report_offset'].value=offset;document.EditView.to_pdf.value='';document.EditView.to_csv.value='';if(fill_form()==true){document.EditView.submit();}}
-function load_page(){reload_joins();current_module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;reload_join_rows('regular');all_fields=getAllFieldsMapped(current_module);if(form_submit!="true")
-{remakeGroups();reload_groups();reload_filters();}
+function load_page(){reload_joins();current_module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;reload_join_rows('regular');all_fields=getAllFieldsMapped(current_module);if(form_submit!="true"){remakeGroups();reload_groups();reload_filters();}
 reload_columns('regular');}
 function reload_joins(){for(var index in report_def.full_table_list){var curr_table=report_def.full_table_list[index];if(index!="self"){add_related(curr_table.parent,index);option_selectbox=document.getElementById('outer_'+index);if(option_selectbox!=null){if(curr_table.optional!=null&&curr_table.optional==true){option_selectbox.checked=true;}
 else{option_selectbox.checked=false;}}

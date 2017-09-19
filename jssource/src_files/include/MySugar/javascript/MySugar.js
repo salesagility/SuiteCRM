@@ -109,9 +109,9 @@ initMySugar = function () {
         // Show new dashlet position
         $('.dashletcontainer').find('.dashletPanel').css('display', 'block');
         // hide placeholder
-        $('.dashletcontainer').find('div').each(function(e,v) {
+        $('.dashletcontainer').find('div').each(function (e, v) {
 
-          if($(v).html() == '' && typeof $(v).attr('id') === 'undefined' && typeof $(v).attr('class') === 'undefined') {
+          if ($(v).html() == '' && typeof $(v).attr('id') === 'undefined' && typeof $(v).attr('class') === 'undefined') {
             $(this).css('display', 'none');
           }
         });

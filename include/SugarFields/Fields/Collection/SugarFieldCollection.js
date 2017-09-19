@@ -69,16 +69,8 @@ this.first=false;},js_more_detail:function(id){var more_img=document.getElementB
 divCount++;}}
 for(var j=0;j<divsToClean.length;j++){this.remove(divsToClean[j]);}
 return isFirstFieldEmpty;},show_arrow_label:function(show){var more_div=document.getElementById('more_div_'+this.field_element_name);if(more_div){more_div.style.display=show?'':'none';}},is_expanded:function(){var more_div=document.getElementById('more_div_'+this.field_element_name);if(more_div){return more_div.style.display=='';}
-return false;}};SUGAR.collection.safe_clone=function(e,recursive)
-{if(e.nodeName=="#text")
-{return document.createTextNode(e.data);}
-if(!e.tagName)return false;var newNode=document.createElement(e.tagName);if(!newNode)return false;var properties=['id','class','style','name','type','valign','border','width','height','top','bottom','left','right','scope','row','columns','src','href','className','align','nowrap'];if(SUGAR.isIE7&&e.tagName.toLowerCase()=='input')
-{var properties=['id','class','style','name','type','valign','border','width','top','bottom','left','right','scope','row','columns','src','href','className','align','nowrap'];}
-for(var i in properties)
-{if(e[properties[i]])
-{if((properties[i]!='style'||!SUGAR.isIE)&&(properties[i]!='href'||e.tagName=='a'||e.tagName=='iframe')){if(properties[i]=="type"){newNode.setAttribute(properties[i],e[properties[i]]);}else{newNode[properties[i]]=e[properties[i]];}}}}
-if(recursive)
-{for(var i in e.childNodes)
-{if(e.childNodes[i].nodeName&&(!e.className||e.className!="yui-ac-container"))
-{var child=SUGAR.collection.safe_clone(e.childNodes[i],true);if(child)newNode.appendChild(child);}}}
+return false;}};SUGAR.collection.safe_clone=function(e,recursive){if(e.nodeName=="#text"){return document.createTextNode(e.data);}
+if(!e.tagName)return false;var newNode=document.createElement(e.tagName);if(!newNode)return false;var properties=['id','class','style','name','type','valign','border','width','height','top','bottom','left','right','scope','row','columns','src','href','className','align','nowrap'];if(SUGAR.isIE7&&e.tagName.toLowerCase()=='input'){var properties=['id','class','style','name','type','valign','border','width','top','bottom','left','right','scope','row','columns','src','href','className','align','nowrap'];}
+for(var i in properties){if(e[properties[i]]){if((properties[i]!='style'||!SUGAR.isIE)&&(properties[i]!='href'||e.tagName=='a'||e.tagName=='iframe')){if(properties[i]=="type"){newNode.setAttribute(properties[i],e[properties[i]]);}else{newNode[properties[i]]=e[properties[i]];}}}}
+if(recursive){for(var i in e.childNodes){if(e.childNodes[i].nodeName&&(!e.className||e.className!="yui-ac-container")){var child=SUGAR.collection.safe_clone(e.childNodes[i],true);if(child)newNode.appendChild(child);}}}
 return newNode;}}
