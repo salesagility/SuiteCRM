@@ -1,0 +1,12 @@
+actor: V8restapiTester
+modules:
+    enabled:
+        - \Helper\V8restapi
+        - Filesystem
+        - PhpBrowser:
+            url: 'http://localhost/api'
+            curl:
+            CURLOPT_RETURNTRANSFER: true
+        - REST:
+            depends: PhpBrowser
+            url: 'http://localhost/api'
