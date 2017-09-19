@@ -139,7 +139,8 @@ public function notifyObservers($msg) {
     foreach( $this->_observers as $observer) {
 	    $limit = $observer->limit;
 	    $module = $observer->module;
-	    eval("\$limitMsg = \"$limitMsg\";");
+	    $limitMsg = str_replace('$limit', $limit, $limitMsg);
+	    $limitMsg = str_replace('$module', $module, $limitMsg);
 	    $GLOBALS['log']->fatal($limitMsg);
 	    $observer->notify($limitMsg);
     }
