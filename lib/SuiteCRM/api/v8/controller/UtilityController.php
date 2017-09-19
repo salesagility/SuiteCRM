@@ -61,7 +61,7 @@ class UtilityController extends Api
         $lib = new UtilityLib();
         $server_info = $lib->getServerInfo();
 
-        return $this->generateResponse($res, 200, $server_info, 'Success');
+        return $this->generateJwtResponse($res, 200, $server_info, 'Success');
     }
 
     /**
@@ -93,10 +93,10 @@ class UtilityController extends Api
 
             $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
 
-            return $this->generateResponse($res, 200, $jwt, 'Success');
+            return $this->generateJwtResponse($res, 200, $jwt, 'Success');
         }
 
-        return $this->generateResponse($res, 401, null, 'Unauthorised');
+        return $this->generateJwtResponse($res, 401, null, 'Unauthorised');
     }
 
 }

@@ -3,10 +3,9 @@ modules:
     enabled:
         - \Helper\V8restapi
         - Filesystem
+        - Asserts
         - PhpBrowser:
-            url: 'http://localhost/api'
-            curl:
-            CURLOPT_RETURNTRANSFER: true
+            url: 'http://localhost/api/v8/'
         - REST:
             depends: PhpBrowser
-            url: 'http://localhost/api'
+            url: 'http://localhost/api/v8/'

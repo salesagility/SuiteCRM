@@ -52,7 +52,7 @@ class Api
      *
      * @return Response
      */
-    public function generateResponse(Response $responseObject, $status, $data, $message)
+    public function generateJwtResponse(Response $responseObject, $status, $data, $message)
     {
         $response = array(
             'status' => $status,
