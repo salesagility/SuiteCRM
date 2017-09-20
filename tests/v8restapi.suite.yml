@@ -4,6 +4,7 @@ modules:
         - \Helper\V8restapi
         - Filesystem
         - Asserts
+        - \Helper\PhpBrowserDriverHelper
         - PhpBrowser:
             url: 'http://localhost/api/v8/'
         - REST:
