@@ -97,7 +97,6 @@ $app_list_strings = array(
             'Queues' => 'Queues',
             'EmailMarketing' => 'Email Marketing',
             'EmailTemplates' => 'Email - Templates',
-            'SNIP' => 'Email Archiving',
             'ProspectLists' => 'Targets - Lists',
             'SavedSearch' => 'Saved Searches',
             'UpgradeWizard' => 'Upgrade Wizard',
