@@ -101,7 +101,8 @@ class Popup_Picker
         global $audit;
         global $current_language;
 
-		$audit_list =  Audit::get_audit_list();
+        $auditObject = new Audit();
+		$audit_list =  $auditObject->get_audit_list();
         $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
 
 		$xtpl->assign('MOD', $mod_strings);
