@@ -142,7 +142,7 @@ class SpotsController extends SugarController
     public function action_createAccountsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
@@ -164,10 +164,10 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE'] = $row['account_type'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY'] = $row['industry'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY'] = $row['billing_address_country'];
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_NAME']} = $row['accountName'];
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE']} = $row['account_type'];
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY']} = $row['industry'];
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY']} = $row['billing_address_country'];
             $returnArray[] = $x;
         }
         file_put_contents($filepath, json_encode($returnArray));
@@ -198,7 +198,7 @@ EOF;
     public function action_createLeadsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -263,15 +263,15 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_LEADS_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_LEADS_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_LEADS_LEAD_SOURCE'] = $row['leadSource'];
-            $x->$mod_strings['LBL_AN_LEADS_CAMPAIGN_NAME'] = $row['campaignName'];
-            $x->$mod_strings['LBL_AN_LEADS_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_LEADS_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_LEADS_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_LEADS_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_LEADS_DAY'] = $row['day'];
+            $x->{$mod_strings['LBL_AN_LEADS_ASSIGNED_USER']} = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_LEADS_STATUS']} = $row['status'];
+            $x->{$mod_strings['LBL_AN_LEADS_LEAD_SOURCE']} = $row['leadSource'];
+            $x->{$mod_strings['LBL_AN_LEADS_CAMPAIGN_NAME']} = $row['campaignName'];
+            $x->{$mod_strings['LBL_AN_LEADS_YEAR']} = $row['year'];
+            $x->{$mod_strings['LBL_AN_LEADS_QUARTER']} = $row['quarter'];
+            $x->{$mod_strings['LBL_AN_LEADS_MONTH']} = $row['month'];
+            $x->{$mod_strings['LBL_AN_LEADS_WEEK']} = $row['week'];
+            $x->{$mod_strings['LBL_AN_LEADS_DAY']} = $row['day'];
 
             $returnArray[] = $x;
         }
@@ -303,7 +303,7 @@ EOF;
     public function action_createSalesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -388,22 +388,22 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SALES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_SALES_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE'] = $row['opportunity_type'];
-            $x->$mod_strings['LBL_AN_SALES_LEAD_SOURCE'] = $row['lead_source'];
-            $x->$mod_strings['LBL_AN_SALES_AMOUNT'] = $row['amount'];
-            $x->$mod_strings['LBL_AN_SALES_STAGE'] = $row['sales_stage'];
-            $x->$mod_strings['LBL_AN_SALES_PROBABILITY'] = $row['probability'];
-            $x->$mod_strings['LBL_AN_SALES_DATE'] = $row['date_closed'];
+            $x->{$mod_strings['LBL_AN_SALES_ACCOUNT_NAME']} = $row['accountName'];
+            $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME']} = $row['opportunityName'];
+            $x->{$mod_strings['LBL_AN_SALES_ASSIGNED_USER']} = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE']} = $row['opportunity_type'];
+            $x->{$mod_strings['LBL_AN_SALES_LEAD_SOURCE']} = $row['lead_source'];
+            $x->{$mod_strings['LBL_AN_SALES_AMOUNT']} = $row['amount'];
+            $x->{$mod_strings['LBL_AN_SALES_STAGE']} = $row['sales_stage'];
+            $x->{$mod_strings['LBL_AN_SALES_PROBABILITY']} = $row['probability'];
+            $x->{$mod_strings['LBL_AN_SALES_DATE']} = $row['expectedCloseDate'];
 
-            $x->$mod_strings['LBL_AN_SALES_QUARTER'] = $row['salesQuarter'];
-            $x->$mod_strings['LBL_AN_SALES_MONTH'] = $row['salesMonth'];
-            $x->$mod_strings['LBL_AN_SALES_WEEK'] = $row['salesWeek'];
-            $x->$mod_strings['LBL_AN_SALES_DAY'] = $row['salesDay'];
-            $x->$mod_strings['LBL_AN_SALES_YEAR'] = $row['salesYear'];
-            $x->$mod_strings['LBL_AN_SALES_CAMPAIGN'] = $row['campaign'];
+            $x->{$mod_strings['LBL_AN_SALES_QUARTER']} = $row['salesQuarter'];
+            $x->{$mod_strings['LBL_AN_SALES_MONTH']} = $row['salesMonth'];
+            $x->{$mod_strings['LBL_AN_SALES_WEEK']} = $row['salesWeek'];
+            $x->{$mod_strings['LBL_AN_SALES_DAY']} = $row['salesDay'];
+            $x->{$mod_strings['LBL_AN_SALES_YEAR']} = $row['salesYear'];
+            $x->{$mod_strings['LBL_AN_SALES_CAMPAIGN']} = $row['campaign'];
 
             $returnArray[] = $x;
         }
@@ -435,7 +435,7 @@ EOF;
     public function action_createServiceSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -506,17 +506,17 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SERVICE_ACCOUNT_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATE'] = $row['state'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_SERVICE_PRIORITY'] = $row['priority'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_DAY'] = $row['day'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_SERVICE_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_SERVICE_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_SERVICE_ACCOUNT_NAME']} = $row['name'];
+            $x->{$mod_strings['LBL_AN_SERVICE_STATE']} = $row['state'];
+            $x->{$mod_strings['LBL_AN_SERVICE_STATUS']} = $row['status'];
+            $x->{$mod_strings['LBL_AN_SERVICE_PRIORITY']} = $row['priority'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_DAY']} = $row['day'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_WEEK']} = $row['week'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_MONTH']} = $row['month'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_QUARTER']} = $row['quarter'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_YEAR']} = $row['year'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CONTACT_NAME']} = $row['contactName'];
+            $x->{$mod_strings['LBL_AN_SERVICE_ASSIGNED_TO']} = $row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -548,7 +548,7 @@ EOF;
     public function action_createActivitiesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlQueryCalls = <<<EOF
@@ -565,7 +565,7 @@ EOF;
 EOF;
 
         $mysqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -579,7 +579,7 @@ EOF;
 EOF;
 
         $mysqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name
@@ -605,7 +605,7 @@ EOF;
         WHERE calls.deleted = 0
 EOF;
         $mssqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -618,7 +618,7 @@ EOF;
         WHERE meetings.deleted = 0
 EOF;
         $mssqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name
@@ -653,10 +653,10 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACTIVITIES_TYPE'] = $row['type'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_TYPE']} = $row['type'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_NAME']} = $row['name'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_STATUS']} = $row['status'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_ASSIGNED_TO']} = $row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -688,7 +688,7 @@ EOF;
     public function action_createMarketingSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -762,16 +762,16 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETING_STATUS'] = $row['campaignStatus'];
-            $x->$mod_strings['LBL_AN_MARKETING_TYPE'] = $row['campaignType'];
-            $x->$mod_strings['LBL_AN_MARKETING_BUDGET'] = $row['campaignBudget'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_COST'] = $row['campaignExpectedCost'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE'] = $row['campaignExpectedRevenue'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'] = $row['opportunityAmount'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME'] = $row['accountsName'];
+            $x->{$mod_strings['LBL_AN_MARKETING_STATUS']} = $row['campaignStatus'];
+            $x->{$mod_strings['LBL_AN_MARKETING_TYPE']} = $row['campaignType'];
+            $x->{$mod_strings['LBL_AN_MARKETING_BUDGET']} = $row['campaignBudget'];
+            $x->{$mod_strings['LBL_AN_MARKETING_EXPECTED_COST']} = $row['campaignExpectedCost'];
+            $x->{$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE']} = $row['campaignExpectedRevenue'];
+            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME']} = $row['opportunityName'];
+            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT']} = $row['opportunityAmount'];
+            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE']} = $row['opportunitySalesStage'];
+            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO']} = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME']} = $row['accountsName'];
 
             $returnArray[] = $x;
         }
@@ -803,7 +803,7 @@ EOF;
     public function action_createMarketingActivitySpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
@@ -829,11 +829,11 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE'] = $row['related_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID'] = $row['related_id'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME']} = $row['name'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE']} = $row['activity_date'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE']} = $row['activity_type'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE']} = $row['related_type'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID']} = $row['related_id'];
 
             $returnArray[] = $x;
         }
@@ -865,7 +865,7 @@ EOF;
     public function action_createQuotesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -992,30 +992,30 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE'] = $row['opportunityType'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE'] = $row['opportunityLeadSource'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_QUOTES_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_NAME'] = $row['productName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TYPE'] = $row['itemType'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_CATEGORY'] = $row['categoryName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_QTY'] = $row['productQty'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_LIST_PRICE'] = $row['productListPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_SALE_PRICE'] = $row['productPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_COST_PRICE'] = $row['productCostPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE'] = $row['productDiscount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT'] = $row['discountAmount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TOTAL'] = $row['productTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL'] = $row['grandTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_QUOTES_DATE_CREATED'] = $row['dateCreated'];
-            $x->$mod_strings['LBL_AN_QUOTES_DAY_CREATED'] = $row['dateCreatedDay'];
-            $x->$mod_strings['LBL_AN_QUOTES_WEEK_CREATED'] = $row['dateCreatedWeek'];
-            $x->$mod_strings['LBL_AN_QUOTES_MONTH_CREATED'] = $row['dateCreatedMonth'];
-            $x->$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED'] = $row['dateCreatedQuarter'];
-            $x->$mod_strings['LBL_AN_QUOTES_YEAR_CREATED'] = $row['dateCreatedYear'];
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME']} = $row['opportunityName'];
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE']} = $row['opportunityType'];
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE']} = $row['opportunityLeadSource'];
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE']} = $row['opportunitySalesStage'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME']} = $row['accountName'];
+            $x->{$mod_strings['LBL_AN_QUOTES_CONTACT_NAME']} = $row['contactName'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_NAME']} = $row['productName'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_TYPE']} = $row['itemType'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_CATEGORY']} = $row['categoryName'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_QTY']} = $row['productQty'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_LIST_PRICE']} = $row['productListPrice'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_SALE_PRICE']} = $row['productPrice'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_COST_PRICE']} = $row['productCostPrice'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE']} = $row['productDiscount'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT']} = $row['discountAmount'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ITEM_TOTAL']} = $row['productTotal'];
+            $x->{$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL']} = $row['grandTotal'];
+            $x->{$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO']} = $row['assignedUser'];
+            $x->{$mod_strings['LBL_AN_QUOTES_DATE_CREATED']} = $row['dateCreated'];
+            $x->{$mod_strings['LBL_AN_QUOTES_DAY_CREATED']} = $row['dateCreatedDay'];
+            $x->{$mod_strings['LBL_AN_QUOTES_WEEK_CREATED']} = $row['dateCreatedWeek'];
+            $x->{$mod_strings['LBL_AN_QUOTES_MONTH_CREATED']} = $row['dateCreatedMonth'];
+            $x->{$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED']} = $row['dateCreatedQuarter'];
+            $x->{$mod_strings['LBL_AN_QUOTES_YEAR_CREATED']} = $row['dateCreatedYear'];
 
             $returnArray[] = $x;
         }

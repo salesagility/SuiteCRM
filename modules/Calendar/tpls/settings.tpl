@@ -191,7 +191,7 @@ $(function() {
 							<div id="subpanel_settings_color" class="panel-body panel-collapse collapse in">
 								<table class="table-responsive">
 									<tr>
-										<th>Module</th><th>Body</th><th>Border</th><th>Text</th>
+										<th>{$MOD.LBL_MODULE}</th><th>{$MOD.LBL_BODY}</th><th>{$MOD.LBL_BORDER}</th><th>{$MOD.LBL_TEXT}</th>
 									</tr>
 									{foreach from=$activity key=name item=def}
 										<tr>

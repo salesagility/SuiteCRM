@@ -71,21 +71,6 @@ class SubPanelTiles
 		$this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
 	}
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = ''){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($focus, $layout_def_key, $layout_def_override);
-    }
-
-
 	/*
 	 * Return the current selected or requested subpanel tab
 	 * @return	string	The identifier for the selected subpanel tab (e.g., 'Other')
@@ -216,8 +201,7 @@ class SubPanelTiles
                 unset($_COOKIE[$this->focus->module_dir . '_divs']);
                 $_SESSION['visited_details'][$this->focus->module_dir] = true;
             }
-            $default_div_display = 'none';
-        }
+            $default_div_display = 'none';}
         $div_cookies = get_sub_cookies($this->focus->module_dir . '_divs');
 
 
@@ -338,8 +322,10 @@ class SubPanelTiles
 
             if($div_display == 'none'){
                 $opp_display  = 'inline';
+                $tabs_properties[$t]['expanded_subpanels'] = false;
             } else{
                 $opp_display  = 'none';
+                $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
             if (!empty($this->layout_def_key) ) {
@@ -377,7 +363,7 @@ class SubPanelTiles
 
             $arr = array();
             // TODO: Remove x-template:
-            $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView('include/SubPanel/SubPanelDynamic.html', $arr);
+            $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView('include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
 
             // Get subpanel buttons
             $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
@@ -402,6 +388,7 @@ class SubPanelTiles
         $template->assign('tab_names', $tab_names);
         $template->assign('module_sub_panels', $module_sub_panels);
         $template->assign('module', $this->module);
+        $template->assign('APP', $app_strings);
 
         $template_body = $template->fetch('include/SubPanel/tpls/SubPanelTiles.tpl');
 

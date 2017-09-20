@@ -535,8 +535,8 @@ if(isset($lang_changed_string))
 	print($lang_changed_string);
 if ($install_type != "module" && $install_type != "langpack"){
     if( sizeof( $files_to_handle ) > 0 ){
-        echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'this.style.display="none"; toggleDisplay("more");\' id="all_text">' . SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']) . ' Show Details</div><div id=\'more\' style=\'display: none\'>
-            <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>' . SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']) . ' Hide Details</div><br>';
+        echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'this.style.display="none"; toggleDisplay("more");\' id="all_text">' . SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']) . ' '.$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
+            <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>' . SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']) .' '.$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
         print( "{$mod_strings['LBL_UW_FOLLOWING_FILES']} $file_action:<br>\n" );
         print( "<ul id=\"subMenu\">\n" );
         foreach( $files_to_handle as $file_to_copy ){

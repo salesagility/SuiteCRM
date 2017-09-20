@@ -71,32 +71,9 @@ class ProjectViewList extends ViewList{
         self::__construct();
     }
 
-
- 	/*
- 	 * Override listViewProcess with addition to where clause to exclude project templates
- 	 */
-    function listViewProcess()
-    {
-        $this->processSearchForm();
-
-
-        $this->lv->searchColumns = $this->searchForm->searchColumns;
-
-        if(!$this->headers)
-            return;
-
-        if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
-        {
-            $this->lv->setup($this->seed, 'modules/Project/tpls/ListViewGeneric.tpl', $this->where, $this->params);
-            $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
-            echo $this->lv->display();
-        }
-    }
-
     function preDisplay(){
         $this->lv = new ProjectListViewSmarty();
     }
-
 }
 
 ?>

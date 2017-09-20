@@ -40,37 +40,38 @@
  */
 class AOR_Field extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOR_Fields';
-    var $object_name = 'AOR_Field';
-    var $table_name = 'aor_fields';
-    var $tracker_visibility = false;
-    var $importable = true;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Fields';
+    public $object_name = 'AOR_Field';
+    public $table_name = 'aor_fields';
+    public $tracker_visibility = false;
+    public $importable = true;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $field_order;
-    var $field;
-    var $display;
-    var $label;
-    var $field_function;
-    var $sort_by;
-    var $sort_order;
-    var $group_by;
-    var $group_order;
-    var $group_display;
-    var $aor_report_id;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $field_order;
+    public $field;
+    public $display;
+    public $label;
+    public $field_function;
+    public $sort_by;
+    public $sort_order;
+    public $format;
+    public $group_by;
+    public $group_order;
+    public $group_display;
+    public $aor_report_id;
 
     function __construct()
     {

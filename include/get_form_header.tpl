@@ -13,9 +13,11 @@
         {assign var=match value=false}
 
         {foreach from=$keywords  item=left}
-            {assign var=found_match value=$left|strpos:$other_text}
-            {if $found_match !== false}
-                {assign var=match value=true}
+            {if $other_text}
+                {assign var=found_match value=$left|strpos:$other_text}
+                {if $found_match !== false}
+                    {assign var=match value=true}
+                {/if}
             {/if}
         {/foreach}
 

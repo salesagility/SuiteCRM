@@ -4,11 +4,13 @@
 
 
 
-function retrievePage(page_id){
-     retrieveData(page_id);
+function retrievePage(page_id, callback){
+     retrieveData(page_id, callback);
 }
 
-function retrieveData(page_id){
+function retrieveData(page_id, callback){
+    var _cb = typeof callback != 'undefined' ? callback : false;
+    $("#pageContainer").html('<img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">');
     $.ajax({
 
         url : "index.php?entryPoint=retrieve_dash_page",
@@ -21,11 +23,12 @@ function retrieveData(page_id){
         success : function(data) {
             var pageContent = data;
 
-            outputPage(page_id,pageContent)
+            outputPage(page_id,pageContent);
+            if(_cb) _cb();
         },
         error : function(request,error)
         {
-
+            if(_cb) _cb();
         }
     })
 }
@@ -34,18 +37,14 @@ function outputPage(page_id,pageContent) {
     $('#tab_content_'+page_id).html(pageContent);
 }
 
-$(document).ready(function () {
-    console.log('retrievePage')
-    retrievePage(0);
+var dashletsPageInit = function() {
     // events
 
     $('.modal-add-dashlet').on('show.bs.modal', function (e) {
-        console.log('add dashlet')
         SUGAR.mySugar.showDashletsDialog();
     })
 
     $('.modal-add-dashboard').on('show.bs.modal', function (e) {
-        console.log('add dashboard')
         addDashboardForm($('ul.nav-dashboard > li').length -1);
         $('.btn-add-dashboard').click(function() {
             //validate
@@ -60,7 +59,6 @@ $(document).ready(function () {
     })
 
     $('.modal-edit-dashboard').on('show.bs.modal', function (e) {
-        console.log('edit dashboard')
         var tabs = $('ul.nav-dashboard > li');
         var totalTabs = tabs.length -1;
 
@@ -77,7 +75,6 @@ $(document).ready(function () {
                 var removeButton = $('<button class="btn btn-xs btn-danger"><img src="themes/SuiteP/images/id-ff-remove-nobg.svg"></button>');
                 removeButton.click(function(a) {
                     var id = $(this).parents('.panel').index();
-                    console.log(id)
 
                     $.ajax({
 
@@ -89,7 +86,6 @@ $(document).ready(function () {
                         },
 
                         success: function (data) {
-                            console.log(data)
                             $.ajax({
 
                                 url: "index.php?module=Home&action=RemoveDashboardPages",
@@ -101,8 +97,6 @@ $(document).ready(function () {
                                 },
 
                                 success: function (data) {
-                                    console.log(data)
-
 
                                 },
                                 error: function (request, error) {
@@ -128,7 +122,14 @@ $(document).ready(function () {
         }
 
         $('.modal-edit-dashboard .modal-body').html(render);
-    })
+    });
+};
+
+$(document).ready(function () {
+    retrievePage(0, function(){
+        dashletsPageInit();
+    });
+
 });
 
 

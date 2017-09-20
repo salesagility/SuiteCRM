@@ -1,7 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-
 global $current_user, $sugar_config;
 global $mod_strings;
 global $app_list_strings;
@@ -23,7 +22,7 @@ echo getClassicModuleTitle(
 
 $sugar_smarty	= new Sugar_Smarty();
 $errors			= array();
-$days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+$days = array($mod_strings['LBL_MONDAY'],$mod_strings['LBL_TUESDAY'],$mod_strings['LBL_WEDNESDAY'],$mod_strings['LBL_THURSDAY'],$mod_strings['LBL_FRIDAY'],$mod_strings['LBL_SATURDAY'],$mod_strings['LBL_SUNDAY']);
 $businessHours = BeanFactory::getBean("AOBH_BusinessHours");
 
 if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
@@ -46,7 +45,7 @@ foreach($days as $day){
         $bh = $bh[0];
         $drops['open'] = $bh->open;
     }else{
-        $drops['open'] = $day != "Saturday" && $day != "Sunday";
+        $drops['open'] = $day != $mod_strings['LBL_SATURDAY'] && $day != $mod_strings['LBL_SUNDAY'];
     }
     $hours = get_select_options_with_id($app_list_strings['business_hours_list'], ($bh ? $bh->opening_hours : 9));
     $drops['opening'] = $hours;

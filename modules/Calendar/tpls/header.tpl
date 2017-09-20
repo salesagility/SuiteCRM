@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,23 +36,22 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 *}
 
 {if $controls}
 
 <div class="clear"></div>
 
-<div style='float:left; width: 50%;'>
+<div style='float:left; width: 70%;'>
 {foreach name=tabs from=$tabs key=k item=tab}
 	<input type="button" class="button" {if $view == $k} selected {/if} id="{$tabs_params[$k].id}" title="{$tabs_params[$k].title}" value="{$tabs_params[$k].title}" onclick="{$tabs_params[$k].link}">
 {/foreach}
 </div>
 
-<div style="float:left; text-align: right; width: 50%; font-size: 12px;">
+<div style="float:left; text-align: right; width: 30%; font-size: 12px;">
 	{if $view == "sharedWeek" || $view == "sharedMonth"}
-		<button id="userListButtonId" type="button" class="button" onclick="javascript: CAL.toggle_shared_edit('shared_cal_edit');">{$MOD.LBL_EDIT_USERLIST}</button>
+		<input id="userListButtonId" type="button" class="button" value="{$MOD.LBL_EDIT_USERLIST}" onclick="javascript: CAL.toggle_shared_edit('shared_cal_edit');">
 	{/if}
 	{if $view != 'year' && !$print}
 	<span class="dateTime">
@@ -81,7 +81,7 @@
 					</script>
 	</span>
 	{/if}
-	<input type="button" id="cal_settings" class="button" onclick="CAL.toggle_settings()" value="{$MOD.LBL_SETTINGS}">
+	<input type="button" id="cal_settings" class="btn btn-info" onclick="CAL.toggle_settings()" value="{$MOD.LBL_SETTINGS}">
 </div>
 
 <div style='clear: both;'></div>

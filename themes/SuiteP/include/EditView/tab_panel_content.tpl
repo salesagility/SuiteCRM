@@ -1,10 +1,12 @@
+    <!-- tab_panel_content.tpl -->
     <div class="row edit-view-row">
         {{foreach name=rowIteration from=$panel key=row item=rowData}}
             {*row*}
             {{counter name="columnCount" start=0 print=false assign="columnCount"}}
             {{foreach name=colIteration from=$rowData key=col item=colData}}
                 {*column*}
-                {{if $smarty.foreach.colIteration.total > 1}}
+                {*<!-- COLUMN -->*}
+                {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                     <div class="col-xs-12 col-sm-6 edit-view-row-item">
                 {{else}}
                     <div class="col-xs-12 col-sm-12 edit-view-row-item">
@@ -14,15 +16,19 @@
                 {{counter name="addressCount" start=0 print=false assign="addressCount"}}
                 {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
+                    {{if !(!isset($subField.name) || !$subField.name)}}
+                        {*<!-- [hide!!] -->*}
+
                     {{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
                         {*hide label*}
                         {{else}}
 
-                        {{if $smarty.foreach.colIteration.total > 1}}
-                            <div class="col-xs-12 col-sm-4 label">
+                        {*<!-- LABEL -->*}
+                        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+                            <div class="col-xs-12 col-sm-4 label" data-label="{{$fields[$colData.field.name].vname}}">
                         {{else}}
-                             <div class="col-xs-12 col-sm-2 label">
+                             <div class="col-xs-12 col-sm-2 label" data-label="{{$fields[$colData.field.name].vname}}">
                         {{/if}}
 
                                 {*label*}
@@ -56,7 +62,8 @@
                             </div>
                         {{/if}}
 
-                        {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
+                        {*<!-- VALUE -->*}
+                        {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true && $colData.colspan != 3}}
                             {{assign var="fieldClasses" value="col-xs-12 col-sm-12"}}
                         {{else}}
                             {{assign var="fieldClasses" value="col-xs-12 col-sm-8"}}
@@ -89,21 +96,21 @@
                                 {{foreach from=$colData.field.fields item=subField}}
                                     {{if $fields[$subField.name]}}
                                         {counter name="panelFieldCount" print=false}
-                                        {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name module=$module}}&nbsp;
+                                        {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$subfields.tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name module=$module}}&nbsp;
                                     {{/if}}
                                 {{/foreach}}
                             {{elseif !empty($colData.field.customCode) && empty($colData.field.customCodeRenderField)}}
                                 {counter name="panelFieldCount"  print=false}
-                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData  accesskey=$ACCKEY tabindex=$tabindex}}
+                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData  accesskey=$ACCKEY tabindex=$colData.field.tabindex}}
                             {{elseif $fields[$colData.field.name]}}
                                 {counter name="panelFieldCount" print=false}
                                 {{$colData.displayParams}}
-                                {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name module=$module}}
+                                {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$colData.field.tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name module=$module}}
                             {{/if}}
 
                             {{if !empty($colData.field.customCode) && !empty($colData.field.customCodeRenderField)}}
                                 {counter name="panelFieldCount"}
-                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$tabindex}}
+                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$colData.field.tabindex}}
                             {{/if}}
                             </div>
                     {{else}}
@@ -120,6 +127,9 @@
                         {{if $colData.field.type == 'address'}}
                              {{counter name="addressCount" print=false}}
                         {{/if}}
+                    {{/if}}
+
+                        <!-- [/hide] -->
                     {{/if}}
 
                     {{counter name="fieldCount" print=false}}

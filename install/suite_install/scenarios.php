@@ -9,7 +9,7 @@ $installation_scenarios = array(
     0 =>
         array(
             'key' => 'Sales',
-            'title' => 'Sales',
+            'title' => $app_strings['LBL_SCENARIO_SALES'],
             'description' => $app_strings['LBL_SCENARIO_SALES_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_SALES',
             'modules' =>
@@ -19,8 +19,8 @@ $installation_scenarios = array(
                 ),
             'modulesScenarioDisplayName' =>
                 array(
-                    0 => 'Opportunities',
-                    1 => 'Leads'
+                    0 => $app_strings['LBL_OPPORTUNITIES'],
+                    1 => $app_strings['LBL_LEADS']
                 ),
             'dashlets'=>
                 array(
@@ -31,7 +31,7 @@ $installation_scenarios = array(
     1 =>
         array(
             'key' => 'Marketing',
-            'title' => 'Marketing',
+            'title' => $app_strings['LBL_SCENARIO_MARKETING'],
             'description' => $app_strings['LBL_SCENARIO_MAKETING_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_MARKETING',
             'modules' =>
@@ -55,7 +55,7 @@ $installation_scenarios = array(
     2 =>
         array(
             'key' => 'Finance',
-            'title' => 'Finance',
+            'title' => $app_strings['LBL_SCENARIO_FINANCE'],
             'description' => $app_strings['LBL_SCENARIO_FINANCE_DESCRIPTION'],
             'groupedTabs'=> '',
             'modules' =>
@@ -79,7 +79,7 @@ $installation_scenarios = array(
     3 =>
         array(
             'key' => 'ServiceManagement',
-            'title' => 'Service Management',
+            'title' => $app_strings['LBL_SCENARIO_SERVICE'],
             'description' => $app_strings['LBL_SCENARIO_SERVICE_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_SUPPORT',
             'modules' =>
@@ -99,7 +99,7 @@ $installation_scenarios = array(
     4 =>
         array(
             'key' => 'ProjectManagement',
-            'title' => 'Project Management',
+            'title' => $app_strings['LBL_SCENARIO_PROJECT'],
             'description' => $app_strings['LBL_SCENARIO_PROJECT_DESCRIPTION'],
             'groupedTabs'=> '',
             'modules' =>

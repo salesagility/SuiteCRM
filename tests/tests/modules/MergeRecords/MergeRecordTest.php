@@ -269,10 +269,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $module = 'Accounts';
         $bean_id = 1;
         $expected = $table.".id IN (SELECT ear.bean_id FROM email_addresses ea
-									LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
-									WHERE ear.bean_module = '{$module}'
-									AND ear.bean_id != '{$bean_id}'
-									AND ear.deleted = 0";
+                                LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
+                                WHERE ear.bean_module = '{$module}'
+                                AND ear.bean_id != '{$bean_id}'
+                                AND ear.deleted = 0";
 
         $mergeRecord = new MergeRecord();
         $result = $mergeRecord->email_addresses_query($table, $module, $bean_id);
@@ -292,11 +292,11 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
         //test with type = like
         $result = $mergeRecord->release_name_query('like', 'test');
-        $this->assertSame(null, $result);
+        $this->assertSame('', $result);
 
         //test with type = start
         $result = $mergeRecord->release_name_query('start', 'test');
-        $this->assertSame(null, $result);
+        $this->assertSame('', $result);
     }
 
     public function testcreate_where_statement()

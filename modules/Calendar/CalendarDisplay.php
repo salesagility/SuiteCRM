@@ -48,34 +48,34 @@ class CalendarDisplay {
 	 */
 	public $activity_colors = array(
 		'Meetings' => array(
-			'border' => '#87719C',
-			'body' => '#6B5171',
-			'text' => '#E5E5E5'
+			'border' => '87719C',
+			'body' => '6B5171',
+			'text' => 'E5E5E5'
 		),
 		'Calls' => array(
-			'border' => '#487166',
-			'body' => '#72B3A1',
-			'text' => '#E5E5E5'
+			'border' => '487166',
+			'body' => '72B3A1',
+			'text' => 'E5E5E5'
 		),
 		'Tasks' => array(
-			'border' => '#515A71',
-			'body' => '#707C9C',
-			'text' => '#E5E5E5'
+			'border' => '515A71',
+			'body' => '707C9C',
+			'text' => 'E5E5E5'
 		),
 		'FP_events' => array(
-			'border' => '#C29B8A',
-			'body' => '#7D6459',
-			'text' => '#E5E5E5'
+			'border' => 'C29B8A',
+			'body' => '7D6459',
+			'text' => 'E5E5E5'
 		),
 		'Project' => array(
-			'border' => '#699DC9',
-			'body' => '#557FA3',
-			'text' => '#E5E5E5'
+			'border' => '699DC9',
+			'body' => '557FA3',
+			'text' => 'E5E5E5'
 		),
 		'ProjectTask' => array(
-			'border' => '#83C489',
-			'body' => '#659769',
-			'text' => '#E5E5E5'
+			'border' => '83C489',
+			'body' => '659769',
+			'text' => 'E5E5E5'
 		),
 	);
 	/**
@@ -130,16 +130,8 @@ class CalendarDisplay {
 		$ss->assign('CALENDAR_FDOW',$GLOBALS['current_user']->get_first_day_of_week());
 
 
-			switch($cal->view){
-				case "agendaDay":
-				case "agendaWeek":
-				case "sharedMonth":
-				case "sharedWeek":
-					$height = 650; break;
-				default:
-					$height = 650; break;
-			}
-		$ss->assign('basic_min_height',$height);
+
+		$ss->assign('basic_min_height',"'auto'");
 		
 		$ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
 
@@ -159,9 +151,15 @@ class CalendarDisplay {
 		$ss->assign('a_str',json_encode($cal->items));
 
 		$start = $current_user->getPreference('day_start_time');
+		if(is_null($start)) {
+			$start = SugarConfig::getInstance()->get('calendar.default_day_start',"08:00");
+		}
 		$ss->assign('day_start_time',$start);
 
 		$end = $current_user->getPreference('day_end_time');
+		if(is_null($end)) {
+			$end = SugarConfig::getInstance()->get('calendar.default_day_end',"19:00");
+		}
 		$ss->assign('day_end_time',$end);
 
 		$ss->assign('sugar_body_only',(isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
@@ -175,11 +173,12 @@ class CalendarDisplay {
 		$user_default_date_start  = $timedate->asUser($timedate->getNow());
 		$ss->assign('user_default_date_start',$user_default_date_start);
 		// end form
-		$location_array = "";
+		$location_array = array();
 		foreach($this->views as $view){
 			$location_array[] = $view;
 		}
-		$ss->assign("langprefix", explode("_",$GLOBALS['current_language'])[0] );
+		$current_language = explode("_",$GLOBALS['current_language']);
+		$ss->assign("langprefix", $current_language[0]);
 
 		$ss->assign('custom_views',$location_array);
 		if($_REQUEST['module'] == "Calendar"){
@@ -229,16 +228,20 @@ class CalendarDisplay {
 
 		}
 		foreach($activity as $key => $activityItem){
-			$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ){
+				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			}else{
+				unset($activity[ $key ]);
+			}
 		}
 		if(isset($activity) && !empty($activity)){
 			$this->activity_colors = $activity;
 		}
 		if(!empty($this->cal->activityList)){
 			foreach($this->cal->activityList as $key=>$value ){
-				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $GLOBALS['beanList'][$key] ])){
-					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
-					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $key ])){
+					$this->activity_colors[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+					$activity[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
 				}
 			}
 		}
@@ -489,7 +492,6 @@ class CalendarDisplay {
 		}else{
 			$str .= "<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet(\"".$this->dashlet_id."\", \"index.php?module=Home&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&".$this->cal->get_neighbor_date_str("next")."&id=".$this->dashlet_id."\")'>";
 		}
-			$str .= $cal_strings["LBL_NEXT_".strtoupper($this->cal->view)];
 
 		$str .= "&nbsp;&nbsp;".SugarThemeRegistry::current()->getImage("calendar_next", 'align="absmiddle" border="0"' ,null,null,'.gif', '') . "</a>"; //setting alt tag blank on purpose for 508 compliance
 		return $str;
@@ -508,7 +510,7 @@ class CalendarDisplay {
 			$str .= "<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet(\"".$this->dashlet_id."\", \"index.php?module=Home&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&".$this->cal->get_neighbor_date_str("previous")."&id=".$this->dashlet_id."\")'>";
 		}
 		$str .= SugarThemeRegistry::current()->getImage('calendar_previous','align="absmiddle" border="0"', null, null, '.gif', ''); //setting alt tag blank on purpose for 508 compliance
-		$str .= "&nbsp;&nbsp;".$cal_strings["LBL_PREVIOUS_".strtoupper($this->cal->view)] . "</a>";
+		$str .= "&nbsp;&nbsp;</a>";
 		return $str;
 	}
 
@@ -576,7 +578,7 @@ class CalendarDisplay {
 
 	public function convertPHPToMomentFormat($format)
 	{
-		$replacements = [
+		$replacements = array(
 			'd' => 'DD',
 			'D' => 'ddd',
 			'j' => 'D',
@@ -614,7 +616,7 @@ class CalendarDisplay {
 			'c' => '', // no equivalent
 			'r' => '', // no equivalent
 			'U' => 'X',
-		];
+		);
 		$momentFormat = strtr($format, $replacements);
 		return $momentFormat;
 	}

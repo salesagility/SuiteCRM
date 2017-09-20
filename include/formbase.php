@@ -114,7 +114,7 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 
 
 	    $type = !empty($def['custom_type']) ? $def['custom_type'] : $def['type'];
-		$sf = $sfh->getSugarField($type);
+		$sf = $sfh::getSugarField($type);
         if($sf != null){
             $sf->save($focus, $_POST, $field, $def, $prefix);
         } else {

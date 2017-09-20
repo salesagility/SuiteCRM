@@ -339,7 +339,7 @@
 				'func': func,
 				'campaignId': $('input[name="campaign_id"]').val(),
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-				'body_html': $('#email_template_editor').getMozaikValue(),
+				'body_html': SuiteEditor.getValue(),
 				'name': $('#template_name').val(),
 				'subject': $('#template_subject').val(),
 //				'attachmentsAdd': getAttachmentsForAdd(),
@@ -447,7 +447,7 @@
 <td  rowspan='2' width='100%' style="padding: 0;">
 <div id="wiz_message"></div>
 	{$msg}
-<div id=wizard>
+<div id=wizard class="wizard-unique-elem">
 	<div id='step1' class="edit view" style="display:none;  margin-top: 8px;">
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
@@ -456,7 +456,7 @@
 				</div>
 
 				<div id="emailTrackerDialog" class="hidden">
-					<h2>{$MOD.LBL_TRACKER_TITLE}</h2>
+					<h2 class="header-2">{$MOD.LBL_TRACKER_TITLE}</h2>
 					<div class="clear"></div>
 					<div class="template-container-full">
 						<div class="hidden">
@@ -490,7 +490,7 @@
 
 			<div class="template-panel-container panel">
 				<div class="template-container-full ">
-					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
+					<h4 class="header-4" style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
 					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT_OPTION}</label></div>
 					<style>
@@ -595,7 +595,7 @@
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
-					<h2>{$MOD.LBL_TRACKED_URLS}</h2>
+					<h2 class="header-2">{$MOD.LBL_TRACKED_URLS}</h2>
 					<div class="clear"></div>
 
 					<div class="form-group clear-block">
@@ -616,7 +616,7 @@
 
 				</div>
 				<div class="template-container">
-					<h2>{$MOD.LBL_EMAIL_VARIABLES}</h2>
+					<h2 class="header-2">{$MOD.LBL_EMAIL_VARIABLES}</h2>
 					<div class="clear"></div>
 					<script src="modules/EmailTemplates/EmailTemplate.js"></script>
 					<script type="text/javascript">
@@ -760,18 +760,30 @@
 						{/literal}
 						<div class="panel-toolbar">
 							<div class="template-container-full">
-								<h2>{$MOD.LBL_SUBJECT}</h2>
+								<h2 class="header-2">{$MOD.LBL_SUBJECT}</h2>
 								<div class="form-group clear-block">
 									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
 								</div>
 							</div>
 						</div>
+
+						{if !$hide_width_set}
+						<div class="panel-toolbar">
+							<div class="template-container">
+								<h2 class="header-2">{$MOD.LBL_WIDTH}</h2>
+								<input type="number" class="form-control input-sm" id="mozaik_width_set" onkeyup="mozaik.setWidth(parseInt(this.value)+'px');" onmouseup="mozaik.setWidth(parseInt(this.value)+'px'); "value="{$template_width}" >
+							</div>
+						</div>
+						{/if}
+
 						<div class="panel-toolbar">
 
 							<div class="template-container-full">
+								{if !$hide_width_set}
 								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
 								<br>
-								{$BODY_MOZAIK}
+								{/if}
+								{$BODY_EDITOR}
 							</div>
 							<!--
                             <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
@@ -783,7 +795,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="step2" style="display: none;">
+	<div id="step2" class="step2" style="display: none;">
 
 		<div class="template-panel">
 			<div class="template-panel-container panel">
@@ -792,7 +804,7 @@
 
 			<tr>
 				<td colspan="4">
-					<h4>{$MOD.LBL_MRKT_NAME}</h4>
+					<h4 class="header-4">{$MOD.LBL_MRKT_NAME}</h4>
 				</td>
 			</tr>
 			<tr>
@@ -802,17 +814,17 @@
 			</tr>
 			<tr>
 
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td ><slot><input id='marketing_name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
+				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+				<td ><span><input id='marketing_name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></span></td>
 			</tr>
 
 
 			<tr>
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_FROM_MAILBOX_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_FROM_MAILBOX_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
 				<td>
-					<slot>
+					<span>
 						<select  title='{$MOD.LBL_FROM_MAILBOX_TITLE}' id='inbound_email_id' name='wiz_step3_inbound_email_id' onchange='set_from_reply_info(this);'>{$MAILBOXES}</select>
-					</slot>
+					</span>
 					<!--
 					<br>
 					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
@@ -823,17 +835,17 @@
 					-->
 				</td>
 
-				<td style="display: none;" scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_STATUS_TEXT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td style="display: none;"><slot><select tabindex='2' id='status' title='{$MOD.LBL_STATUS_TEXT}' name='wiz_step3_status'>{$STATUS_OPTIONS}</select></slot></td>
+				<td style="display: none;" scope="col" NOWRAP valign="top"><span>{$MOD.LBL_STATUS_TEXT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+				<td style="display: none;"><span><select tabindex='2' id='status' title='{$MOD.LBL_STATUS_TEXT}' name='wiz_step3_status'>{$STATUS_OPTIONS}</select></span></td>
 
 			</tr>
 
 			<tr>
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_OUTBOUND_MAILBOX_NAME}</slot></td>
+				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_OUTBOUND_MAILBOX_NAME}</span></td>
 				<td>
-					<slot>
+					<span>
 						<select  title='{$MOD.LBL_OUTBOUND_MAILBOX_NAME}' id='outbound_email_id' name='wiz_step3_outbound_email_id' onchange='// set_from_reply_info(this);'>{$OUTBOUND_MAILBOXES}</select>
-					</slot>
+					</span>
 					<!--
 					<br>
 					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
@@ -849,9 +861,9 @@
 
 			<tr>
 
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_START_DATE_TIME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td  style="display:none;" class="datafield"><slot><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <img src="{sugar_getimagepath file='jscalendar.gif'}" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
-				<td  style="display:none;" nowrap><input type="text" size='5' maxlength='5' id='time_start'  name='wiz_step3_time_start' tabindex="1" value="{$MRKT_TIME_START}"/>{$TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{$USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{$TIME_FORMAT}</span></td></tr></table></slot>
+				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_START_DATE_TIME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+				<td  style="display:none;" class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <img src="{sugar_getimagepath file='jscalendar.gif'}" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td  style="display:none;" nowrap><input type="text" size='5' maxlength='5' id='time_start'  name='wiz_step3_time_start' tabindex="1" value="{$MRKT_TIME_START}"/>{$TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{$USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{$TIME_FORMAT}</span></td></tr></table></span>
 					<script type="text/javascript">
 						{literal}
 						$(function(){
@@ -1020,15 +1032,15 @@
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
 
 			<tr style="display: none;">
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MESSAGE_FOR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {$ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists' title="{$MOD.LBL_MESSAGE_FOR}">{$MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
+				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_MESSAGE_FOR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+				<td class="datafield"><span><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {$ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists' title="{$MOD.LBL_MESSAGE_FOR}">{$MOD.LBL_ALL_PROSPECT_LISTS}</span></td>
 
 			</tr>
 			<tr style="display: none;">
-				<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
-				<td width="35%" class="datafield"><slot><select {$MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]' title="{$MOD.LBL_MESSAGE_FOR}">{$SCOPE_OPTIONS}</select></slot></td>
-				<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
-				<td><slot>&nbsp;</slot></td>
+				<td  NOWRAP valign="top"><span>&nbsp;</span></td>
+				<td width="35%" class="datafield"><span><select {$MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]' title="{$MOD.LBL_MESSAGE_FOR}">{$SCOPE_OPTIONS}</select></span></td>
+				<td  NOWRAP valign="top"><span>&nbsp;</span></td>
+				<td><span>&nbsp;</span></td>
 			</tr>
 		</table>
 
@@ -1196,10 +1208,10 @@
 		{/if}
 
 		</div>
-	<div id='step3' data="summary-page" class="template-panel">
+	<div id='step3' data="summary-page" class="template-panel step3">
 		<div class="template-panel-container panel">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
 				<div class="clear">&nbsp;</div>
 				{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<div class="form-group">
@@ -1304,14 +1316,14 @@
 		</div>
 		<div class="template-panel-container panel-toolbar ">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
 				<div class="clear">&nbsp;</div>
 				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}
-					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
+					<div id='target_message' class="target_messege"><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
 					<br class="emptyRow">
 					{/if}
-					<div id="alert_messages"></div>
+					<div id="alert_messages" class="alert_message"></div>
 					{if $diagnose}
 					{$diagnose}
 					<br class="emptyRow">

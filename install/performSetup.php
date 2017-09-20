@@ -469,6 +469,7 @@ FP;
     $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+    $enabled_tabs[] = 'EmailTemplates';
 
 //Beginning of the scenario implementations
 //We need to load the tabs so that we can remove those which are scenario based and un-selected
@@ -494,34 +495,31 @@ if(!file_exists('custom/include')){
 
 require_once('modules/Home/dashlets.php');
 
-foreach($_SESSION['installation_scenarios'] as $scenario)
-{
-    //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
-    if(!in_array($scenario['key'],$_SESSION['scenarios']))
-    {
-        foreach($scenario['modules'] as $module)
-        {
-            if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
-                unset($enabled_tabs[$removeKey]);
+if(isset($_SESSION['installation_scenarios'])) {
+    foreach ($_SESSION['installation_scenarios'] as $scenario) {
+        //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
+        if (!in_array($scenario['key'], $_SESSION['scenarios'])) {
+            foreach ($scenario['modules'] as $module) {
+                if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
+                    unset($enabled_tabs[$removeKey]);
+                }
             }
-        }
 
-        //Loop through the dashlets to remove from the default home page based on this scenario
-        foreach($scenario['dashlets'] as $dashlet)
-        {
-            //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
-            //    unset($defaultDashlets[$removeKey]);
-            // }
-            if(isset($defaultDashlets[$dashlet]))
-                unset($defaultDashlets[$dashlet]);
-        }
+            //Loop through the dashlets to remove from the default home page based on this scenario
+            foreach ($scenario['dashlets'] as $dashlet) {
+                //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
+                //    unset($defaultDashlets[$removeKey]);
+                // }
+                if (isset($defaultDashlets[$dashlet]))
+                    unset($defaultDashlets[$dashlet]);
+            }
 
-        //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
-        if(isset($scenario['groupedTabs']))
-        {
-            unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
-        }
+            //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
+            if (isset($scenario['groupedTabs'])) {
+                unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
+            }
 
+        }
     }
 }
 
@@ -638,6 +636,13 @@ if(!empty($_SESSION['default_time_format'])) $sugar_config['default_time_format'
 if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
 if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
 //$configurator->handleOverride();
+
+
+
+// save current web-server user for the cron user check mechanism:
+installLog('addCronAllowedUser');
+addCronAllowedUser(getRunningUser());
+
 
 
 installLog('saveConfig');

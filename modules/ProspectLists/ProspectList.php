@@ -181,6 +181,8 @@ class ProspectList extends SugarBean {
 
 	function create_export_members_query($record_id)
 	{
+		global $beanList, $beanFiles;
+
 		$members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
@@ -190,11 +192,7 @@ class ProspectList extends SugarBean {
 
 		// query all custom fields in the fields_meta_data table for the modules which are being exported
 		$db = DBManagerFactory::getInstance();
-		$typeField = '`type`';
-		if($db->dbType=='mssql') {
-			$typeField = '[type]';
-		}
-		$result = $db->query("select name, custom_module, $typeField, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
+		$result = $db->query("select name, custom_module, type, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
 			implode("', '", array_keys($members)) . "')",
 			true,
 			"ProspectList::create_export_members_query() : error querying custom fields");
@@ -208,11 +206,14 @@ class ProspectList extends SugarBean {
 
 			foreach($members as $membername => &$memberarr)
 			{
+				$module_name = $beanList[$membername];
+				require_once($beanFiles[$module_name]);
+				$relatedBean = BeanFactory::getBean($membername);
 				// if the field belongs to this module, then query it in the cstm table
-				if ($membername == $val['custom_module'])
+				if ($membername === $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] !== 'non-db')
 				{
 					$memberarr['has_custom_fields'] = true;
-					if($val['type']=='relate') {
+					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
 					}

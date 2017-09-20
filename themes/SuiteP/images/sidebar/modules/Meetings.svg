@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="32"
-   height="32"
-   viewBox="0 0 32 32"
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
    version="1.1"
    id="svg2"
    inkscape:version="0.48.4 r9939"
@@ -43,7 +43,7 @@
      id="namedview22"
      showgrid="false"
      inkscape:zoom="11.9198"
-     inkscape:cx="15.904673"
+     inkscape:cx="5.921284"
      inkscape:cy="3.1130071"
      inkscape:window-x="65"
      inkscape:window-y="24"
@@ -59,11 +59,11 @@
   <g
      id="Page-1"
      style="fill:none;stroke:none"
-     transform="translate(0,-80)">
+     transform="translate(0,-92)">
     <g
        id="sb_schedule_meeting">
       <path
-         d="m 25.806035,106.56034 0.75431,0 0,-19.612064 -1.508621,0 0,6.034483 -6.034483,0 0,-6.034483 -6.034482,0 0,6.034483 -6.0344833,0 0,13.577581 18.8577593,0 z m -20.36638,-19.612064 1.5086207,0 0,19.612064 -1.5086207,0 0,-19.612064 z m 3.0172414,-1.508621 3.0172416,0 0,6.034483 -3.0172416,0 0,-6.034483 z m 12.0689656,0 3.017242,0 0,6.034483 -3.017242,0 0,-6.034483 z"
+         d="m 16.880201,108.77166 0.505625,0 0,-13.146235 -1.01125,0 0,4.044991 -4.044995,0 0,-4.044991 -4.0449931,0 0,4.044991 -4.0449952,0 0,9.101244 12.6406083,0 z M 3.2283439,95.625425 l 1.0112488,0 0,13.146235 -1.0112488,0 0,-13.146235 z m 2.0224975,-1.01125 2.0224975,0 0,4.044985 -2.0224975,0 0,-4.044985 z m 8.0899896,0 2.022498,0 0,4.044985 -2.022498,0 0,-4.044985 z"
          id="Combined-Shape"
          inkscape:connector-curvature="0"
          style="fill:#f5f5f5" />

@@ -149,7 +149,7 @@ class CallTest extends PHPUnit_Framework_TestCase
                 'SET_COMPLETE' => '~'
                                   .preg_quote('<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><img src="themes/'
                                     .$current_theme
-                                    .'/images/close_inline.png?v=')
+                                    .'/images/close_inline'). '\.\w+\?v='
                                   .'[\w-]+'
                                   .preg_quote('"     border=\'0\' alt="Close" /></a>').'~',
                 'DATE_START' => '<font class=\'overdueTask\'></font>',

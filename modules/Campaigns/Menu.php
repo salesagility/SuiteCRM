@@ -72,12 +72,12 @@ if(ACLController::checkAccess('Campaigns', 'list', true))
 if(ACLController::checkAccess('EmailTemplates', 'edit', true))
 	$module_menu[] = array(
 		"index.php?module=EmailTemplates&action=EditView&return_module=EmailTemplates&return_action=DetailView",
-		$mod_strings['LNK_NEW_EMAIL_TEMPLATE'],"CreateEmails","Emails"
+		$mod_strings['LNK_NEW_EMAIL_TEMPLATE'],"View_Create_Email_Templates","Emails"
 	);
 if(ACLController::checkAccess('EmailTemplates', 'list', true))
 	$module_menu[] = array(
 		"index.php?module=EmailTemplates&action=index",
-		$mod_strings['LNK_EMAIL_TEMPLATE_LIST'],"EmailFolder", 'Emails'
+		$mod_strings['LNK_EMAIL_TEMPLATE_LIST'],"View_Email_Templates", 'Emails'
 	);
 if (is_admin($GLOBALS['current_user']) || is_admin_for_module($GLOBALS['current_user'],'Campaigns'))
 	$module_menu[] = array(

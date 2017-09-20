@@ -140,7 +140,7 @@ class SugarTinyMCE {
 		if (!empty($targets)) {
 			$exTargets = explode(",", $targets);
 			foreach($exTargets as $instance) {
-				//$instantiateCall .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('{$instance}'));\n";
+				$instantiateCall .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('{$instance}'));\n";
 			}
 		}
 		$path = getJSPath('include/javascript/tiny_mce/tiny_mce.js');
@@ -149,21 +149,25 @@ class SugarTinyMCE {
 
 <script type="text/javascript" language="Javascript">
 <!--
-if (!SUGAR.util.isTouchScreen()) {
-    tinyMCE.init({$jsConfig});
-	{$instantiateCall}
-}
-else {
+$( document ).ready(function() {
+    if (!SUGAR.util.isTouchScreen()) {
+        if(tinyMCE.editors.length == 0 ){
+            tinyMCE.init({$jsConfig});
+        }else{
+           {$instantiateCall}
+        }      
+    } else {
 eoq;
-$exTargets = explode(",", $targets);
-foreach($exTargets as $instance) {
+    $exTargets = explode(",", $targets);
+    foreach($exTargets as $instance) {
 $ret .=<<<eoq
     document.getElementById('$instance').style.width = '100%';
     document.getElementById('$instance').style.height = '100px';
 eoq;
 }
 $ret .=<<<eoq
-}
+    }
+});
 -->
 </script>
 

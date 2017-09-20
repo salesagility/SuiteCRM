@@ -190,6 +190,13 @@ a, a:visited {
 a[href]:after {
     content: " (" attr(href) ")"}
 
+/* Fix issue no.1338 */
+@media print {
+    a[href]:after {
+        content: none !important;
+    }
+}
+
 abbr[title]:after {
     content: " (" attr(title) ")"}
 
@@ -1546,7 +1553,7 @@ pre code {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .container {
     width: 1170px;
 }
@@ -2059,7 +2066,7 @@ pre code {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
     float: left;
 }
@@ -4012,7 +4019,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 .navbar {
     position: relative;
     min-height: 90px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     border: 1px solid transparent;
 }
 
@@ -4178,7 +4185,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     margin-top: 4px;
 }
 
-@media (min-width:1251px) {
+@media (min-width:1130px) {
     .navbar-toggle {
     display: none;
 }
@@ -6601,7 +6608,7 @@ td.visible-md, th.visible-md {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg {
     display: block!important;
 }
@@ -6619,19 +6626,19 @@ td.visible-lg, th.visible-lg {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-block {
     display: block!important;
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-inline {
     display: inline!important;
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-inline-block {
     display: inline-block!important;
 }
@@ -6655,18 +6662,18 @@ td.visible-lg, th.visible-lg {
 
 }
 
-@media (max-width:1200px) {
+@media (max-width:1130px) {
     .hidden-md {
         display: none!important;
     }
 }
 
-@media (min-width:1201px) and (max-width:1250px) {
+@media (min-width:992px) and (max-width:1130px) {
     .hidden-mdlg {
         display: none !important;
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
 .hidden-lg {
     display: none!important;
 }

@@ -51,37 +51,45 @@ function updateTips( t ) {
 }
 
 function confirmation(id){
+
+    var CreateProject = SUGAR.language.get('AM_ProjectTemplates', 'LBL_NEW_PROJECT');
+    var Cancel = SUGAR.language.get('AM_ProjectTemplates', 'LBL_CANCEL_PROJECT');
+
     $( "#dialog-confirm" ).dialog({
         height: 400,
         width: 350,
         modal: false,
-        buttons: {
-            "Create Project": function() {
+        buttons: [
+            {
+                text: CreateProject,
+                click: function () {
+                    var name = $("#p_name");
+                    var start_date = $("#start_date"),
+                        allFields = $([]).add(name).add(start_date),
+                        tips = $(".validateTips");
 
-                var name = $( "#p_name" );
-                var start_date = $("#start_date"),
-                allFields = $( [] ).add( name).add( start_date ),
-                tips = $( ".validateTips" );
-
-                if ( check_form('project_form') ) {
-                    $( "#users tbody" ).append( "<tr>" +
-                        "<td>" + name.val() + "</td>" +
-                        "</tr>" );
-                    $("#project_form").submit()
+                    if (check_form('project_form')) {
+                        $("#users tbody").append("<tr>" +
+                            "<td>" + name.val() + "</td>" +
+                            "</tr>");
+                        $("#project_form").submit()
+                        $(this).dialog("close");
+                        name.removeClass("ui-state-error");
+                    }
+                },
+            },
+            {
+                text: Cancel,
+                click : function() {
+                    var name = $( "#p_name" );
+                    var start_date = $("#start_date");
+                    name.val('');
+                    start_date.val('');
                     $( this ).dialog( "close" );
                     name.removeClass( "ui-state-error" );
                 }
-            },
-            Cancel: function() {
-                var name = $( "#p_name" );
-                var start_date = $("#start_date");
-                name.val('');
-                start_date.val('');
-                $( this ).dialog( "close" );
-                name.removeClass( "ui-state-error" );
             }
-
-        }
+        ]
     });
 
 

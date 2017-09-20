@@ -42,6 +42,7 @@
 }
 
 div.screen div.edit.view {
+    height: initial;
     border-bottom: none !important;
 }
 
@@ -69,8 +70,7 @@ div.nav-buttons {
 #UserWizard input {
     border-radius: 0;
     border: 1px solid #CCC;
-    padding: 4px;
-
+    margin: 10px 0;
 }
 
 #welcome input[type=button] {

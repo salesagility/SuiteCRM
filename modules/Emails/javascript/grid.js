@@ -192,6 +192,10 @@ function gridInit() {
 			}
 			//dataModel.initPaging(urlBase, SUGAR.email2.userPrefs.emailSettings.showNumInList);
 
+			if(!SUGAR.email2.userPrefs) {
+				SUGAR.email2.userPrefs = userPrefs;
+			}
+
 			// create the Grid
 			var grid = SUGAR.email2.grid = new YAHOO.SUGAR.SelectionGrid('emailGrid', colModel, dataModel, {
 				MSG_EMPTY: SUGAR.language.get("Emails", "LBL_EMPTY_FOLDER"),

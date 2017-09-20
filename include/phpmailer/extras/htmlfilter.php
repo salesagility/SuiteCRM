@@ -46,7 +46,7 @@ function tln_tagprint($tagname, $attary, $tagtype)
         $fulltag = '<' . $tagname;
         if (is_array($attary) && sizeof($attary)) {
             $atts = array();
-            while (list($attname, $attvalue) = each($attary)) {
+            foreach($attary as $attname => $attvalue) {
                 array_push($atts, "$attname=$attvalue");
             }
             $fulltag .= ' ' . join(' ', $atts);
@@ -433,7 +433,7 @@ function tln_getnxtag($body, $offset)
  *
  * @param string $attvalue the by-ref value to check.
  * @param string $regex    the regular expression to check against.
- * @param boolean $hex        whether the entites are hexadecimal.
+ * @param boolean $hex        whether the entities are hexadecimal.
  * @return boolean            True or False depending on whether there were matches.
  */
 function tln_deent(&$attvalue, $regex, $hex = false)
@@ -461,7 +461,6 @@ function tln_deent(&$attvalue, $regex, $hex = false)
  * checks on them.
  *
  * @param string $attvalue A string to run entity check against.
- * @return             Void, modifies a reference value.
  */
 function tln_defang(&$attvalue)
 {
@@ -488,7 +487,6 @@ function tln_defang(&$attvalue)
  * be funny to make "java[tab]script" be just as good as "javascript".
  *
  * @param string $attvalue     The attribute value before extraneous spaces removed.
- * @return     Void, modifies a reference value.
  */
 function tln_unspace(&$attvalue)
 {
@@ -511,7 +509,7 @@ function tln_unspace(&$attvalue)
  * @param array $add_attr_to_tag See description for tln_sanitize
  * @param string $trans_image_path
  * @param boolean $block_external_images
- * @return					Array with modified attributes.
+ * @return array with modified attributes.
  */
 function tln_fixatts(
     $tagname,
@@ -522,7 +520,7 @@ function tln_fixatts(
     $trans_image_path,
     $block_external_images
 ) {
-    while (list($attname, $attvalue) = each($attary)) {
+    foreach($attary as $attname => $attvalue) {
         /**
          * See if this attribute should be removed.
          */
@@ -667,9 +665,7 @@ function tln_fixurl($attname, &$attvalue, $trans_image_path, $block_external_ima
 
 function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
 {
-    $me = 'tln_fixstyle';
     // workaround for </style> in between comments
-    $iCurrentPos = $pos;
     $content = '';
     $sToken = '';
     $bSucces = false;
@@ -740,8 +736,6 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
      */
     $content = preg_replace("|body(\s*\{.*?\})|si", ".bodyclass\\1", $content);
 
-    $trans_image_path = $trans_image_path;
-
     /**
     * Fix url('blah') declarations.
     */
@@ -778,7 +772,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     tln_defang($contentTemp);
     tln_unspace($contentTemp);
 
-    $match   = Array('/\/\*.*\*\//',
+    $match   = array('/\/\*.*\*\//',
                     '/expression/i',
                     '/behaviou*r/i',
                     '/binding/i',
@@ -786,7 +780,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                     '/javascript/i',
                     '/script/i',
                     '/position/i');
-    $replace = Array('','idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', '');
+    $replace = array('','idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', '');
     $contentNew = preg_replace($match, $replace, $contentTemp);
     if ($contentNew !== $contentTemp) {
         $content = $contentNew;
@@ -796,7 +790,6 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
 
 function tln_body2div($attary, $trans_image_path)
 {
-    $me = 'tln_body2div';
     $divattary = array('class' => "'bodyclass'");
     $text = '#000000';
     $has_bgc_stl = $has_txt_stl = false;
@@ -901,7 +894,7 @@ function tln_sanitize(
                 }
                 $trusted .= tln_tagprint($tagname, $attary, $tagtype);
                 $trusted .= $free_content;
-                $trusted .= tln_tagprint($tagname, false, 2);
+                $trusted .= tln_tagprint($tagname, null, 2);
             }
             continue;
         }

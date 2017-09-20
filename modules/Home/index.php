@@ -266,6 +266,8 @@ $i = 0;
 
 if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
+$dashboardActions = $GLOBALS['app_strings']['LBL_SUITE_DASHBOARD_ACTIONS'];
+
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('sugarFlavor', $sugar_flavor);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
@@ -283,6 +285,7 @@ $sugar_smarty->assign('theme', $theme);
 $sugar_smarty->assign('divPages', $divPages);
 $sugar_smarty->assign('activePage', $activePage);
 $sugar_smarty->assign('dashboardPages', $pageTabs);
+$sugar_smarty->assign('dashboardActions', $dashboardActions);
 $sugar_smarty->assign('current_user', $current_user->id);
 
 $sugar_smarty->assign('lblAdd', $GLOBALS['app_strings']['LBL_ADD_BUTTON']);
@@ -306,7 +309,7 @@ $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
 
 if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . '/tpls/MySugar.tpl');
 }
 else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
@@ -318,7 +321,7 @@ else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
 }
 else if(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . 'include/MySugar/tpls/MySugar.tpl');
 }
 else {
     $GLOBALS['log']->fatal('MySugar.tpl not found');
@@ -329,6 +332,4 @@ else {
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
 echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
 echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-
-
 ?>

@@ -49,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @author Collin Lee
  */
 
-function getEmployeeStatusOptions($focus, $name = 'employee_status', $value, $view = 'DetailView') {
+function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = null, $view = 'DetailView') {
 
 	
 	global $current_user, $app_list_strings;
@@ -78,7 +78,7 @@ function getEmployeeStatusOptions($focus, $name = 'employee_status', $value, $vi
 		
 }
 
-function getMessengerTypeOptions($focus, $name = 'messenger_type', $value, $view = 'DetailView') {
+function getMessengerTypeOptions($focus, $name = 'messenger_type', $value = null, $view = 'DetailView') {
    global $current_user, $app_list_strings;
    if($view == 'EditView' || $view == 'MassUpdate') {
    	  $messenger_type = "<select name=\"$name\">";
