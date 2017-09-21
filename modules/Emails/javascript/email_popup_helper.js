@@ -57,7 +57,8 @@ function send_back_selected(module, form, field, error_message, field_to_name_ar
 	}
 	var form_name = request_data.form_name;
 	var field_to_name_array = request_data.field_to_name_array;
-	var call_back_function = eval("window.opener." + request_data.call_back_function);
+	SUGAR.util.globalEval("retValue = window.opener." + request_data.call_back_function);
+	var call_back_function = retValue;
 	
 	var array_contents = Array();
 	var j=0;
@@ -82,7 +83,7 @@ function send_back_selected(module, form, field, error_message, field_to_name_ar
 						array_contents_row.push('"' + the_name + '":"' + the_value + '"');
 					}
 				}
-				eval("array_contents.push({" + array_contents_row.join(",") + "})");
+              SUGAR.util.globalEval("array_contents.push({" + array_contents_row.join(",") + "})");
 			}
 		}
 	}
@@ -108,7 +109,7 @@ function send_back(module, id)
 	var associated_row_data = associated_javascript_data[id];
 
 	// cn: bug 12274 - stripping false-positive security envelope
-	eval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
+  SUGAR.util.globalEval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
 	if(temp_request_data.jsonObject) {
 		var request_data = temp_request_data.jsonObject;
 	} else {
@@ -123,8 +124,9 @@ function send_back(module, id)
 	}
 	var form_name = request_data.form_name;
 	var field_to_name_array = request_data.field_to_name_array;
-	var call_back_function = eval("window.opener." + request_data.call_back_function);
-	var array_contents = Array();
+	SUGAR.util.globalEval("retValue = window.opener." + request_data.call_back_function);
+  var call_back_function = retValue;
+  var array_contents = Array();
 
 	// constructs the array of values associated to the bean that the user clicked
 	for(var the_key in field_to_name_array)
@@ -142,8 +144,8 @@ function send_back(module, id)
 			array_contents.push('"' + the_name + '":"' + the_value + '"');
 		}
 	}
-	
-	eval("var name_to_value_array = {'0' : {" + array_contents.join(",") + "}}");
+
+  SUGAR.util.globalEval("var name_to_value_array = {'0' : {" + array_contents.join(",") + "}}");
 
 	var result_data = {"form_name":form_name,"name_to_value_array":name_to_value_array,"passthru_data":passthru_data};
 	var close_popup = window.opener.get_close_popup();

@@ -1174,7 +1174,8 @@ function validate_form(formname, startsWith) {
 								}
 								break;
 							case 'in_array':
-								arr = eval(validate[formname][i][arrIndex]);
+								SUGAR.util.globalEval("retValue = " + validate[formname][i][arrIndex]);
+								arr = retValue;
 								operator = validate[formname][i][operatorIndex];
 								item1 = trim(form[validate[formname][i][nameIndex]].value);
 								if (operator.charAt(0) == 'u') {
@@ -1446,7 +1447,7 @@ function setPointer(theRow, theRowNum, theAction, theDefaultColor, thePointerCol
  * listbox redirection
  */
 function goToUrl(selObj, goToLocation) {
-	eval("document.location.href = '" + goToLocation + "pos=" + selObj.options[selObj.selectedIndex].value + "'");
+	SUGAR.util.globalEval("document.location.href = '" + goToLocation + "pos=" + selObj.options[selObj.selectedIndex].value + "'");
 }
 
 
@@ -2375,7 +2376,7 @@ sugarListView.get_checks = function () {
 
 sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
 	checks = sugarListView.get_checks();
-	eval('document.MassUpdate.' + moduleString + '.value = orderBy');
+  SUGAR.util.globalEval('document.MassUpdate.' + moduleString + '.value = orderBy');
 	document.MassUpdate.lvso.value = order;
 	if (typeof document.MassUpdate.massupdate != 'undefined') {
 		document.MassUpdate.massupdate.value = 'false';
@@ -2392,7 +2393,7 @@ sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
 sugarListView.prototype.save_checks = function (offset, moduleString) {
 	checks = sugarListView.get_checks();
 	if (typeof document.MassUpdate != 'undefined') {
-		eval('document.MassUpdate.' + moduleString + '.value = offset');
+      SUGAR.util.globalEval('document.MassUpdate.' + moduleString + '.value = offset');
 
 		if (typeof document.MassUpdate.massupdate != 'undefined') {
 			document.MassUpdate.massupdate.value = 'false';
@@ -4365,7 +4366,7 @@ SUGAR.contextMenu = function () {
 		onContextMenuItemClick: function (p_sType, p_aArguments, p_oItem) {
 			var oLI = SUGAR.contextMenu.getListItemFromEventTarget(this.parent.contextEventTarget);
 			id = this.parent.contextEventTarget.parentNode.id; // id of the target
-			funct = eval(SUGAR.contextMenu.objectTypes[SUGAR.contextMenu.objects[id]['objectType']]['menuItems'][this.index]['action']);
+			funct = SUGAR.util.globalEval(SUGAR.contextMenu.objectTypes[SUGAR.contextMenu.objects[id]['objectType']]['menuItems'][this.index]['action']);
 			funct(this.parent.contextEventTarget, SUGAR.contextMenu.objects[id]['metaData']);
 		},
 		/**

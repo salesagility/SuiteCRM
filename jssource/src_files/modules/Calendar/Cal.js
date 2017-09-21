@@ -230,7 +230,8 @@ CAL.GR_update_focus = function (module, record) {
   } else {
     var callback = {
       success: function (o) {
-        res = eval(o.responseText);
+        SUGAR.util.globalEval("retValue = "+o.responseText);
+        res = retValue;
         SugarWidgetScheduler.update_time();
         if (CAL.record_editable) {
           CAL.enable_buttons();
@@ -301,7 +302,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 
 		$.ajax(url)
 			.done(function (data) {
-				eval(data); // produces var result = {body:{}, caption:"", width:300}
+				SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
 				$('.modal-cal-tasks-edit .modal-body .container-fluid').html(result.body);
 			})
 			.fail(function () {
@@ -324,7 +325,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 
 		$.ajax(url)
 			.done(function (data) {
-				eval(data); // produces var result = {body:{}, caption:"", width:300}
+              SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
 				$('.modal-cal-events-edit .modal-body .container-fluid').html(result.body);
 			})
 			.fail(function () {
@@ -365,7 +366,8 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
     var callback = {
       success: function (o) {
         try {
-          res = eval("(" + o.responseText + ")");
+          SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+          res = retValue;
         } catch (err) {
           alert(CAL.lbl_error_loading);
           CAL.editDialog.cancel();
@@ -393,7 +395,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
           }
           CAL.get("radio_call").setAttribute("disabled", "disabled");
           CAL.get("radio_meeting").setAttribute("disabled", "disabled");
-          eval(res.gr);
+          SUGAR.util.globalEval(res.gr);
           SugarWidgetScheduler.update_time();
           if (CAL.record_editable) {
             CAL.enable_buttons();
@@ -481,7 +483,8 @@ CAL.load_create_form = function (params) {
   var callback = {
     success: function (o) {
       try {
-        res = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        res = retValue;
       } catch (err) {
         alert(CAL.lbl_error_loading);
         $('.modal-cal-edit').modal('hide');
@@ -626,7 +629,8 @@ CAL.dialog_save = function () {
   var callback = {
     success: function (o) {
       try {
-        res = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        res = retValue;
       } catch (err) {
         alert(CAL.lbl_error_saving);
         $('.modal-cal-edit').modal('hide');
@@ -738,7 +742,8 @@ CAL.refresh = function () {
   var callback = {
     success: function (o) {
       try {
-        var activities = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        var activities = retValue;
       } catch (err) {
         alert(CAL.lbl_error_saving);
         ajaxStatus.hideStatus();
@@ -1061,7 +1066,7 @@ $($.fullCalendar).ready(function () {
 							render: function(event, api) {
 								$.ajax(url)
 									.done(function (data) {
-										eval(data); // produces var result = {body:{}, caption:"", width:300}
+                                      SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
 										var divCaption = "#qtip-"+api.id+"-title";
 										var divBody = "#qtip-"+api.id+"-content";
 										if(data.caption != "") {
