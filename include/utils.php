@@ -1749,40 +1749,42 @@ EOQ;
 }
 
 /**
- * Very cool algorithm for sorting multi-dimensional arrays.  Found at http://us2.php.net/manual/en/function.array-multisort.php
- * Syntax: $new_array = array_csort($array [, 'col1' [, SORT_FLAG [, SORT_FLAG]]]...);
- * Explanation: $array is the array you want to sort, 'col1' is the name of the column
- * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
- * you can repeat the 'col',FLAG,FLAG, as often you want, the highest prioritiy is given to
- * the first - so the array is sorted by the last given column first, then the one before ...
+ * Sort Multi Dimensional Array by Column
+ *
+ * @param mixed ... &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]]
+ * @see http://php.net/manual/en/function.array-multisort.php
+ * @return array
+ *
  * Example: $array = array_csort($array,'town','age',SORT_DESC,'name');
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * $array is the array you want to sort, 'col1' is the name of the column
+ * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+ * you can repeat the 'col',FLAG,FLAG, as often you want, the highest priority is given to
+ * the first - so the array is sorted by the last given column first, then the one before ...
+ *
  */
 function array_csort()
 {
     $args = func_get_args();
-    $marray = array_shift($args);
-    $i = 0;
+    $argsShifted = array_shift($args);
+    $arrayMultiSortParameters = array();
+    $sorting = array();
 
-    $msortline = 'return(array_multisort(';
-    foreach ($args as $arg) {
-        ++$i;
-        if (is_string($arg)) {
-            foreach ($marray as $row) {
-                $sortarr[$i][] = $row[$arg];
+    for ($i = 0, $size = count($args); $i < $size; $i++) {
+        if (is_string($args[$i])) {
+            foreach ($argsShifted as $row) {
+                $sorting[$i][] = $row[$args[$i]];
             }
         } else {
-            $sortarr[$i] = $arg;
+            $sorting[$i] = $args[$i];
         }
-        $msortline .= '$sortarr['.$i.'],';
+        $arrayMultiSortParameters[] = $sorting[$i];
     }
-    $msortline .= '$marray));';
 
-    eval($msortline);
+    $arrayMultiSortParameters[] = $argsShifted;
+    call_user_func_array('array_multisort', $arrayMultiSortParameters);
 
-    return $marray;
+    return end($arrayMultiSortParameters);
 }
 
 /**

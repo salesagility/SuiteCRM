@@ -3368,8 +3368,8 @@ SUGAR.util = function () {
           $(".ui-dialog").appendTo("#content");
         }
 
-        success = function (data) {
-          SUGAR.util.globalEval(data.responseText);
+				success = function (data) {
+					SUGAR.util.globalEval(data.responseText);
 
           SUGAR.util.additionalDetailsCache[id] = new Array();
           SUGAR.util.additionalDetailsCache[id]['body'] = result['body'];
@@ -3519,21 +3519,20 @@ SUGAR.util = function () {
 
       var i, len, item, test;
 
-      // onAvailable onContentReady
-      for (i = 0, len = this._doWhenStack.length; i < len; i = i + 1) {
-        item = this._doWhenStack[i];
-        if (item) {
-          test = item.check;
-          SUGAR.util.globalEval('e=(' + test + ')');
-          if ((typeof(test) == "string" && e) || (typeof(test) == "function" && test())) {
-            executeItem(this, item);
-            this._doWhenStack[i] = null;
-          }
-          else {
-            notAvail.push(item);
-          }
-        }
-      }
+			// onAvailable onContentReady
+			for (i = 0, len = this._doWhenStack.length; i < len; i = i + 1) {
+				item = this._doWhenStack[i];
+				if (item) {
+					test = item.check;
+					SUGAR.util.globalEval('e=(' + test + ')');if ((typeof(test) == "string" && e) || (typeof(test) == "function" && test())) {
+						executeItem(this, item);
+						this._doWhenStack[i] = null;
+					}
+					else {
+						notAvail.push(item);
+					}
+				}
+			}
 
       this._doWhenretryCount--;
 
