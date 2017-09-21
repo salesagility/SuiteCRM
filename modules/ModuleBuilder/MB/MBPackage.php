@@ -804,11 +804,12 @@ class MBPackage
         $path = 'custom/modules/';
         if (!file_exists($path) || !is_dir($path)) {
             return array($mod_strings['LBL_EC_NOCUSTOM'] => '');
-        } else {
-            if ($module != false) {
+        }
+
+        if ($module !== false) {
                 $path = $path . $module . '/';
             }
-            $scanlisting = scandir($path);
+        $scanlisting = scandir($path, SCANDIR_SORT_ASCENDING);
             $dirlisting = array();
             foreach ($scanlisting as $value) {
                 if ($value !== '.' && $value !== '..' && is_dir($path . $value) === true) {
@@ -870,11 +871,9 @@ class MBPackage
                 }
 
                 return $return;
-            } else {
-                return $dirlisting;
             }
+            return $dirlisting;
         }
-    }
 
     /**
      * Get _custom_ extensions for module.
