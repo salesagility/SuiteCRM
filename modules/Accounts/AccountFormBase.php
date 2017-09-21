@@ -441,19 +441,16 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 					$get .= "&Accounts$field=".urlencode($focus->$field);
 				}
 			}
-            
-			
-			if($focus->hasCustomFields()) {
-				foreach($focus->field_defs as $name=>$field) {	
-					if (!empty($field['source']) && $field['source'] == 'custom_fields')
-					{
-						$get .= "&Accounts$name=".urlencode($focus->$name);
-					}			    
-				}
-			}
-			
-			
-			
+
+
+            if ($focus->hasCustomFields()) {
+                foreach ($focus->field_defs as $name => $field) {
+                    if (!empty($field['source']) && $field['source'] === 'custom_fields') {
+                        $get .= "&Accounts$name=" . urlencode(isset($focus->$name));
+                    }
+                }
+            }
+
 			$emailAddress = new SugarEmailAddress();
 			$get .= $emailAddress->getFormBaseURL($focus);
 
