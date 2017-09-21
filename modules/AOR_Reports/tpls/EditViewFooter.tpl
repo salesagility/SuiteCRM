@@ -268,6 +268,21 @@
             updateChartDimensionSelects();
 
         });
+        $('#addChartButton').css({
+            "font-size": "13px",
+            "font-weight": "500",
+            "background": "#F08377",
+            "color": "##F5F5F5",
+            "cursor": "pointer",
+            "padding": "0 20px 9px 20px",
+            "margin": "0 0 0 0",
+            "border": "none",
+            "border-radius": "3px",
+            "letter-spacing": "1px",
+            "line-height": "40px",
+            "height": "40px",
+            "text-transform": "uppercase"
+        });
 
         report_module = $('#report_module').val();
         loadTreeData($('#report_module').val());
