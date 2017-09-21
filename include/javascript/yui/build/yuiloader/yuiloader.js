@@ -2074,9 +2074,9 @@ YAHOO.register("get", YAHOO.util.Get, {version: "2.9.0", build: "2800"});
     // 'base': 'http://yui.yahooapis.com/2.5.2/build/',
 
     'root': VERSION + '/build/',
-    'base': 'http://yui.yahooapis.com/' + VERSION + '/build/',
+    'base': 'https://yui-s.yahooapis.com/' + VERSION + '/build/',
 
-    'comboBase': 'http://yui.yahooapis.com/combo?',
+    'comboBase': 'https://yui-s.yahooapis.com/combo?',
 
     'skin': {
         'defaultSkin': 'sam',
