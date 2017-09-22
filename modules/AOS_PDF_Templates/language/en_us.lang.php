@@ -78,10 +78,17 @@ $mod_strings = array (
   'LBL_PAGE' => 'Page',
   'LBL_PREPARED_FOR' => 'Prepared For',
   'LBL_PREPARED_BY' => 'Prepared By',
+  'LBL_QUOTE_SAMPLE' => 'Quote Sample',
+  'LBL_INVOICE_SAMPLE' => 'Invoice Sample',
+  'LBL_ACCOUNT_SAMPLE' => 'Account Sample',
+  'LBL_CONTACT_SAMPLE' => 'Contact Sample',
+  'LBL_LEAD_SAMPLE' => 'Lead Sample',
   'LBL_ANY_STREET' => 'Any Street',
   'LBL_ANY_TOWN' => 'Any Town',
   'LBL_ANY_WHERE' => 'Any Where',
-  
+
+  'LBL_QUOTE_GROUP_SAMPLE' => 'Quote Group Sample',
+  'LBL_INVOICE_GROUP_SAMPLE' => 'Invoice Group Sample',
   'LBL_MARGIN_LEFT' => 'Margin Left',
   'LBL_MARGIN_RIGHT' => 'Margin Right',
   'LBL_MARGIN_TOP' => 'Margin Top',
