@@ -38,8 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/module', function () use ($app) {
-
+$app->group('/v8/modules', function () use ($app) {
     $app->get('', 'SuiteCRM\api\v8\controller\ModuleController:getModules');
     $app->get('/menu', 'SuiteCRM\api\v8\controller\ModuleController:getModulesMenu');
     $app->get('/viewed', 'SuiteCRM\api\v8\controller\ModuleController:getRecordsViewed');
