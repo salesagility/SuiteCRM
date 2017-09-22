@@ -153,7 +153,7 @@ $vardef_meta_array = array (
 
 		'inc_override' => array(
 			'type' => array('team_list'),
-			'name' => array('assigned_user_id', 'time_start', 'date_start', 'email1', 'email2', 'date_due', 'is_optout'),
+			'name' => array('assigned_user_id', 'time_start', 'date_start', 'email1', 'email2', 'date_due', 'is_optout', 'is_optin'),
 		//end inc_override
 		),
 		'ex_override' => array(

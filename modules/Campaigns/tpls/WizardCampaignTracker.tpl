@@ -62,7 +62,18 @@
 		<tr>
 		<td width="15%" scope="row"><span>{$MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;</span></span></td>
 		<td width="25%" ><span><input id="tracker_name" type="text" size="30" name="tracker_name" title="{$MOD.LBL_EDIT_TRACKER_NAME}" value="{$TRACKER_NAME}"></span></td>
-		<td width="25%" scope="row"><span><input onclick="toggle_tracker_url(this);" name="is_optout" title="{$MOD.LBL_EDIT_OPT_OUT}" id="is_optout"  class="checkbox" type="checkbox" />&nbsp;{$MOD.LBL_EDIT_OPT_OUT_}</span></td>
+		<td width="25%" scope="row">
+			<span>
+				<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optout" title="{$MOD.LBL_EDIT_OPT_OUT}" id="is_optout"  class="checkbox" type="checkbox" />
+				&nbsp;{$MOD.LBL_EDIT_OPT_OUT_}
+			</span>
+		</td>
+		<td width="25%" scope="row">
+			<span>
+				<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optin" title="{$MOD.LBL_EDIT_OPT_IN}" id="is_optin"  class="checkbox" type="checkbox" />
+				&nbsp;{$MOD.LBL_EDIT_OPT_IN_}
+			</span>
+		</td>
 	    <td width="35%" ><span>&nbsp;</span></td>
 		</tr>
 		<tr>
@@ -77,7 +88,8 @@
 		<tr><td class='list view'>
 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr >
-			    <th width='15%' scope="col" nowrap>{$MOD.LBL_EDIT_OPT_OUT}</th>
+				<th width='15%' scope="col" nowrap>{$MOD.LBL_EDIT_OPT_OUT}</th>
+				<th width='15%' scope="col" nowrap>{$MOD.LBL_EDIT_OPT_IN}</th>
 				<th width='40%' scope="col">{$MOD.LBL_EDIT_TRACKER_NAME}</th>
 			    <th width='45%' scope="col" colspan="2">{$MOD.LBL_EDIT_TRACKER_URL}</th>
 		    </tr>
@@ -94,12 +106,15 @@
 		var image_path = '{$IMAGE_PATH}';
 		{literal}
 			//this function toggles the tracker values based on whether the opt out check box is selected
-			function toggle_tracker_url(isoptout) {
+			function toggle_tracker_url(isoptin, isoptout) {
 				tracker_url = document.getElementById('tracker_url');
-				if (isoptout.checked) {
-					tracker_url.disabled=true;
-					tracker_url.value="index.php?entryPoint=removeme";
-				} else {
+              if (isoptout.checked) {
+                tracker_url.disabled=true;
+                tracker_url.value="index.php?entryPoint=removeme";
+              } else if (isoptin.checked) {
+                tracker_url.disabled=true;
+                tracker_url.value="index.php?entryPoint=addme";
+              } else {
 					tracker_url.disabled=false;
 				}
 			}
@@ -119,14 +134,21 @@
 					//get the appropriate values from tracker form
 					var trkr_name = document.getElementById('tracker_name');
 					var trkr_url = document.getElementById('tracker_url');
-					var trkr_opt = document.getElementById('is_optout');
-					var trkr_opt_checked = '';
-					if(trkr_opt.checked){trkr_opt_checked = 'checked';	}
+
+                  var trkr_optout = document.getElementById('is_optout');
+                  var trkr_optout_checked = '';
+                  if(trkr_optout.checked){trkr_optout_checked = 'checked';	}
+
+                  var trkr_optin = document.getElementById('is_optin');
+                  var trkr_optin_checked = '';
+                  if(trkr_optin.checked){trkr_optin_checked = 'checked';	}
+
 			{/literal}
 					//construct html to display chosen tracker
 					var trkr_name_html = "<input id='tracker_name"+trackers_added +"' type='text' size='20' maxlength='255' name='wiz_step3_tracker_name"+trackers_added+"' title='{$MOD.LBL_EDIT_TRACKER_NAME}"+trackers_added+"' value='"+trkr_name.value+"' >";
 					var trkr_url_html = "<input type='text' size='60' maxlength='255' name='wiz_step3_tracker_url"+trackers_added+"' title='{$MOD.LBL_EDIT_TRACKER_URL}"+trackers_added+"' id='tracker_url"+trackers_added+"' value='"+trkr_url.value+"' >";
-					var trkr_opt_html = "<input name='wiz_step3_is_optout"+trackers_added+"' title='{$MOD.LBL_EDIT_OPT_OUT}"+trackers_added+"' id='is_optout"+trackers_added+"' class='checkbox' type='checkbox' "+trkr_opt_checked+" />";
+					var trkr_opt_html = "<input name='wiz_step3_is_optout"+trackers_added+"' title='{$MOD.LBL_EDIT_OPT_OUT}"+trackers_added+"' id='is_optout"+trackers_added+"' class='checkbox' type='checkbox' "+trkr_opt_checked+" />" +
+                                        "<input name='wiz_step3_is_optin"+trackers_added+"' title='{$MOD.LBL_EDIT_OPT_IN}"+trackers_added+"' id='is_optin"+trackers_added+"' class='checkbox' type='checkbox' "+trkr_opt_checked+" />";
 					//display the html
                     {capture assign='alt_remove' }{sugar_translate label='LBL_DELETE' module='CAMPAIGNS'}{/capture}
 					var trkr_html = "<div id='trkr_added_"+trackers_added+"'> <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td width='15%'>"+trkr_opt_html+"</td><td width='40%'>"+trkr_name_html+"</td><td width='40%'>"+trkr_url_html+"</td><td><a href='#' onclick=\"javascript:remove_tracker('trkr_added_"+trackers_added+"','"+trackers_added+"'); \" >  "+'{sugar_getimage name="delete_inline" ext=".gif" width="12" height="12" alt=$alt_remove other_attributes='align="absmiddle" border="0" '}'+"{$MOD.LBL_REMOVE}</a></td></tr></table></div>";
@@ -181,13 +203,20 @@
 				//iterate through list of added trackers
 				for(i=1;i<=count;i++){
 					//make sure all values exist
-					if( document.getElementById('tracker_name'+i)  &&  document.getElementById('is_optout'+i)  &&  document.getElementById('tracker_url'+i) ){
-						//make sure the check box value is int (0/1)
-						var opt_val = '0';
-						if(document.getElementById('is_optout'+i).checked){opt_val =1;}
-						//add values for this tracker entry into array of tracker entries
-						final_list_of_trackers_array[i] = document.getElementById('tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('tracker_url'+i).value;
-					}
+                  if( document.getElementById('tracker_name'+i)  &&  document.getElementById('is_optout'+i)  &&  document.getElementById('tracker_url'+i) ){
+                    //make sure the check box value is int (0/1)
+                    var opt_val = '0';
+                    if(document.getElementById('is_optout'+i).checked){opt_val =1;}
+                    //add values for this tracker entry into array of tracker entries
+                    final_list_of_trackers_array[i] = document.getElementById('tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('tracker_url'+i).value;
+                  }
+                  if( document.getElementById('tracker_name'+i)  &&  document.getElementById('is_optin'+i)  &&  document.getElementById('tracker_url'+i) ){
+                    //make sure the check box value is int (0/1)
+                    var opt_val = '0';
+                    if(document.getElementById('is_optin'+i).checked){opt_val =1;}
+                    //add values for this tracker entry into array of tracker entries
+                    final_list_of_trackers_array[i] = document.getElementById('tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('tracker_url'+i).value;
+                  }
 				}
 				//assign array of tracker entries to hidden input, which will be used by server to process array of trackers
 				document.getElementById('wiz_list_of_trackers').value = final_list_of_trackers_array.toString();
@@ -198,13 +227,20 @@
 				//iterate through list of existing trackers
 				for(i=0;i<count;i++){
 					//make sure all values exist
-					if( document.getElementById('existing_tracker_name'+i)  &&  document.getElementById('existing_is_optout'+i)  &&  document.getElementById('existing_tracker_url'+i) ){
-						//make sure the check box value is int (0/1)
-						var opt_val = '0';
-						if(document.getElementById('existing_is_optout'+i).checked){opt_val =1;}
-						//add values for this tracker entry into array of tracker entries
-						final_list_of_existing_trackers_array[i] = document.getElementById('existing_tracker_id'+i).value+"@@"+document.getElementById('existing_tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('existing_tracker_url'+i).value;
-					}
+                  if( document.getElementById('existing_tracker_name'+i)  &&  document.getElementById('existing_is_optout'+i)  &&  document.getElementById('existing_tracker_url'+i) ){
+                    //make sure the check box value is int (0/1)
+                    var opt_val = '0';
+                    if(document.getElementById('existing_is_optout'+i).checked){opt_val =1;}
+                    //add values for this tracker entry into array of tracker entries
+                    final_list_of_existing_trackers_array[i] = document.getElementById('existing_tracker_id'+i).value+"@@"+document.getElementById('existing_tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('existing_tracker_url'+i).value;
+                  }
+                  if( document.getElementById('existing_tracker_name'+i)  &&  document.getElementById('existing_is_optin'+i)  &&  document.getElementById('existing_tracker_url'+i) ){
+                    //make sure the check box value is int (0/1)
+                    var opt_val = '0';
+                    if(document.getElementById('existing_is_optin'+i).checked){opt_val =1;}
+                    //add values for this tracker entry into array of tracker entries
+                    final_list_of_existing_trackers_array[i] = document.getElementById('existing_tracker_id'+i).value+"@@"+document.getElementById('existing_tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('existing_tracker_url'+i).value;
+                  }
 				}
 				//assign array of tracker entries to hidden input, which will be used by server to process array of trackers
 				document.getElementById('wiz_list_of_existing_trackers').value = final_list_of_existing_trackers_array.toString();

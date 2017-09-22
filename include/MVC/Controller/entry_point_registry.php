@@ -57,6 +57,7 @@ $entry_point_registry = array(
     'WebToLeadCapture' => array('file' => 'modules/Campaigns/WebToLeadCapture.php', 'auth' => false),
 	'WebToPersonCapture' => array('file' => 'modules/Campaigns/WebToPersonCapture.php', 'auth' => false),
     'removeme' => array('file' => 'modules/Campaigns/RemoveMe.php', 'auth' => false),
+    'addme' => array('file' => 'modules/Campaigns/AddMe.php', 'auth' => false),
     'acceptDecline' => array('file' => 'modules/Contacts/AcceptDecline.php', 'auth' => false),
     'leadCapture' => array('file' => 'modules/Leads/Capture.php', 'auth' => false),
     'process_queue' => array('file' => 'process_queue.php', 'auth' => true),

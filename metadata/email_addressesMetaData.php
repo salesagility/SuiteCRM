@@ -72,12 +72,29 @@ $dictionary['email_addresses'] = array(
 			'default'		=> 0,
 		    'vname'         => 'LBL_INVALID_EMAIL',
 		),
-		'opt_out' => array(
-			'name'			=> 'opt_out',
-			'type'			=> 'bool',
-			'default'		=> 0,
-		    'vname'         => 'LBL_OPT_OUT',
-		),
+        'opt_out' => array(
+            'name'			=> 'opt_out',
+            'type'			=> 'bool',
+            'default'		=> 0,
+            'vname'         => 'LBL_OPT_OUT',
+        ),
+        'opt_in' => array(
+            'name'			=> 'opt_in',
+            'type'			=> 'bool',
+            'default'		=> 0,
+            'vname'         => 'LBL_OPT_IN',
+        ),
+        'opt_in_ip' =>array(
+            'name'			=> 'opt_in_ip',
+            'type'			=> 'varchar',
+            'vname'         => 'LBL_OPT_IN_IP',
+            'length'		=> 16,
+        ),
+        'opt_in_datetime' => array(
+            'name'			=> 'opt_in_datetime',
+            'type'			=> 'datetime',
+            'vname'         => 'LBL_OPT_IN_DATETIME',
+        ),
 		'date_created' => array(
 			'name'			=> 'date_created',
 			'type'			=> 'datetime',

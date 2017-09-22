@@ -70,8 +70,10 @@
 	<tr>
 	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
 	<td width="35%" ><span><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{TRACKER_NAME}"></span></td>
-	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_OPT_OUT}</span></td>
-    <td width="35%" ><span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' class="checkbox" type="checkbox" {IS_OPTOUT_CHECKED}/></span></td>
+		<td width="15%" scope="row"><span>{MOD.LBL_EDIT_OPT_OUT}</span></td>
+		<td width="35%" ><span><input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optout" id="is_optout" tabindex='2' class="checkbox" type="checkbox" {IS_OPTOUT_CHECKED}/></span></td>
+		<td width="15%" scope="row"><span>{MOD.LBL_EDIT_OPT_IN}</span></td>
+		<td width="35%" ><span><input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optin" id="is_optin" tabindex='2' class="checkbox" type="checkbox" {IS_OPTIN_CHECKED}/></span></td>
 	</tr>
 	<tr>
 	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_TRACKER_URL}&nbsp;<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
@@ -81,12 +83,15 @@
 </td></tr></table>
 {JAVASCRIPT}
 <script>
-	function toggle_tracker_url(isoptout) {
+	function toggle_tracker_url(isoptin, isoptout) {
 		tracker_url = document.getElementById('tracker_url');
-		if (isoptout.checked) {
-			tracker_url.disabled=true;
-			tracker_url.value="index.php?entryPoint=removeme";					
-		} else {
+      if (isoptout.checked) {
+        tracker_url.disabled=true;
+        tracker_url.value="index.php?entryPoint=removeme";
+      } else if (isoptin.checked) {
+        tracker_url.disabled=true;
+        tracker_url.value="index.php?entryPoint=addme";
+      } else {
 			tracker_url.disabled=false;			
 		}
 	}

@@ -740,17 +740,21 @@ class EmailMan extends SugarBean{
 				//load defined tracked_urls
 				$this->current_campaign->load_relationship('tracked_urls');
 				$query_array=$this->current_campaign->tracked_urls->getQuery(true);
-				$query_array['select']="SELECT tracker_name, tracker_key, id, is_optout ";
+				$query_array['select']="SELECT tracker_name, tracker_key, id, is_optout, is_optin ";
 				$result=$this->current_campaign->db->query(implode(' ',$query_array));
 
-				$this->has_optout_links=false;
+                $this->has_optout_links=false;
+                $this->has_optin_links=false;
 				$this->tracker_urls=array();
 				while (($row=$this->current_campaign->db->fetchByAssoc($result)) != null) {
 					$this->tracker_urls['{'.$row['tracker_name'].'}']=$row;
 					//has the user defined opt-out links for the campaign.
-					if ($row['is_optout']==1) {
-						$this->has_optout_links=true;
-					}
+                    if ($row['is_optout']==1) {
+                        $this->has_optout_links=true;
+                    }
+                    if ($row['is_optin']==1) {
+                        $this->has_optin_links=true;
+                    }
 				}
 			}
 
@@ -792,8 +796,9 @@ class EmailMan extends SugarBean{
             //parse and replace urls.
 			//this is new style of adding tracked urls to a campaign.
 			$tracker_url_template= $this->tracking_url . 'index.php?entryPoint=campaign_trackerv2&track=%s'.'&identifier='.$this->target_tracker_key;
-			$removeme_url_template=$this->tracking_url . 'index.php?entryPoint=removeme&identifier='.$this->target_tracker_key;
-			$template_data=  $this->current_emailtemplate->parse_tracker_urls($template_data,$tracker_url_template,$this->tracker_urls,$removeme_url_template);
+            $removeme_url_template=$this->tracking_url . 'index.php?entryPoint=removeme&identifier='.$this->target_tracker_key;
+            $addme_url_template=$this->tracking_url . 'index.php?entryPoint=addme&identifier='.$this->target_tracker_key;
+			$template_data=  $this->current_emailtemplate->parse_tracker_urls($template_data,$tracker_url_template,$this->tracker_urls,$removeme_url_template, $addme_url_template);
 			$mail->AddAddress($module->email1,$locale->translateCharsetMIME(trim($module->name), 'UTF-8', $OBCharset) );
 
             //refetch strings in case they have been changed by creation of email templates or other beans.
@@ -834,7 +839,24 @@ class EmailMan extends SugarBean{
 
                 //do not add the default remove me link if the campaign has a trackerurl of the opotout link
                 if ($this->has_optout_links==false) {
-                    $mail->Body .= "<br /><span style='font-size:0.8em'>{$mod_strings['TXT_REMOVE_ME']} <a href='". $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->target_tracker_key}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
+                    $mail->Body .= "
+                        <br />
+                        <span style='font-size:0.8em'>
+                            {$mod_strings['TXT_REMOVE_ME']} 
+                            <a href='". $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->target_tracker_key}'>
+                                {$mod_strings['TXT_REMOVE_ME_CLICK']}
+                            </a>
+                        </span>";
+                }
+                if ($this->has_optin_links==false) {
+                    $mail->Body .= "
+                        <br />
+                        <span style='font-size:0.8em'>
+                            {$mod_strings['TXT_ADD_ME']} 
+                            <a href='". $this->tracking_url . "index.php?entryPoint=addme&identifier={$this->target_tracker_key}'>
+                                {$mod_strings['TXT_ADD_ME_CLICK']}
+                            </a>
+                        </span>";
                 }
                 // cn: bug 11979 - adding single quote to comform with HTML email RFC
                 $mail->Body .= "<br /><img alt='' height='1' width='1' src='{$this->tracking_url}index.php?entryPoint=image&identifier={$this->target_tracker_key}' />";
@@ -845,6 +867,9 @@ class EmailMan extends SugarBean{
                 }
                 if ($this->has_optout_links==false) {
                     $mail->AltBody .="\n\n\n{$mod_strings['TXT_REMOVE_ME_ALT']} ". $this->tracking_url . "index.php?entryPoint=removeme&identifier=$this->target_tracker_key";
+                }
+                if ($this->has_optin_links==false) {
+                    $mail->AltBody .="\n\n\n{$mod_strings['TXT_ADD_ME_ALT']} ". $this->tracking_url . "index.php?entryPoint=addme&identifier=$this->target_tracker_key";
                 }
 
             }
