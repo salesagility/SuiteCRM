@@ -775,38 +775,30 @@ SugarWidgetScheduler.getScheduleDetails = function(beans, ids) {
     }
     // get requests
     var requests = getScheduleItems();
-    $.when.apply(null, requests).done(function() {
-        //console.log('parsing: getSchedule Items');
-        var containers = [];
-        // build results array
-        //console.log('arguments:');
-        //console.log(arguments);
-        // if just one result
-        if(typeof arguments[0] === "string") {
-                //console.log('found: single result');
-                var oldArgs = arguments;
-                arguments = new Array();
-                arguments[0] = oldArgs;
-        }
+  $.when.apply(null, requests).done(function () {
+    //console.log('parsing: getSchedule Items');
+    var containers = [];
+    // build results array
+    //console.log('arguments:');
+    //console.log(arguments);
+    // if just one result
+    if (typeof arguments[0] === "string") {
+      //console.log('found: single result');
+      var oldArgs = arguments;
+      arguments = new Array();
+      arguments[0] = oldArgs;
+    }
 
-        $.each(arguments, function(index, value) {
-                //console.log('value:');
-                //console.log(value);
-                eval(value[0]);
-                //console.log('div:');
-                var container = result.body;
-                //console.log(container);
-                containers.push(container);
-        });
-        // Sort
-        //console.log('SugarWidgetScheduler.sortByStartdate()');
-        containers.sort(SugarWidgetScheduler.sortByStartdate);
-        //console.log('SugarWidgetScheduler.sortByType()');
-        containers.sort(SugarWidgetScheduler.sortByType);
-        //console.log(containers);
-        $dialog.html(containers);
-        //console.log('\n\n');
+    $.each(arguments, function (index, value) {
+      SUGAR.util.evalScript(value[0]);
+      var container = result.body;
+      containers.push(container);
     });
+    // Sort
+    containers.sort(SugarWidgetScheduler.sortByStartdate);
+    containers.sort(SugarWidgetScheduler.sortByType);
+    $dialog.html(containers);
+  });
 }
 //////////////////////////////////////////////////
 // class: SugarWidgetSchedulerAttendees
