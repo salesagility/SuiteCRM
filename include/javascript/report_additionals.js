@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,10 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 var groups_arr=new Array();var chartTypesHolder=[];var groups_count=-1;var filters_arr=new Array();var filters_count_map=new Object();var filters_count=-1;var current_filter_id=-1;var groups_count_map=new Object();var current_group_id=-1;var join_refs=new Array();var group_field=null;var has_group=null;var global_report_def=null;var goto_anchor='';var all_fields=new Object();var full_table_list=new Object();full_table_list.self=new Object();full_table_list.self.parent='';full_table_list.self.value=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;full_table_list.self.module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;full_table_list.self.label=document.EditView.self.options[document.EditView.self.options.selectedIndex].text;full_table_list.self.children=new Object();function hideCheckGroups(){document.getElementById('checkGroups').style.display='none';}
 function table_changed(obj){if(document.EditView.report_type[1].checked){if(typeof hideCheckGroupsTimeout!='undefined')clearTimeout(hideCheckGroupsTimeout);document.getElementById('checkGroups').style.display='';hideCheckGroupsTimeout=window.setTimeout('hideCheckGroups()',6000);}
 current_module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;if(obj.options[obj.selectedIndex].value==''){delete_this_join(obj.id);return;}
@@ -126,8 +130,7 @@ function loadXML(){var gURL='index.php?module=Reports&action=fillUserCombo';if(w
 xmlhttp.open("GET",gURL,false);xmlhttp.onreadystatechange=loadUsers;xmlhttp.send(null);loadUsers();}
 else if(window.ActiveXObject){xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');if(xmlhttp){xmlhttp.onreadystatechange=loadUsers;xmlhttp.open('GET',gURL,false);xmlhttp.send();}}}
 function loadUsers(){if(xmlhttp.readyState==4){if(xmlhttp.status==200||xmlhttp.status==0){if(window.ActiveXObject)
-xmlhttp.responseXML.loadXML(xmlhttp.responseText);var acc=xmlhttp.responseXML.getElementsByTagName('data');var opts='';for(var i=0;i<acc.length;i++)
-{val=getNodeValue(acc[i],'datavalue');users_array[users_array.length]=eval("("+val+")");}}}}
+xmlhttp.responseXML.loadXML(xmlhttp.responseText);var acc=xmlhttp.responseXML.getElementsByTagName('data');var opts='';for(var i=0;i<acc.length;i++){val=getNodeValue(acc[i],'datavalue');SUGAR.util.globalEval("users_array[users_array.length] = ("+val+")");}}}}
 function getNodeValue(obj,tag){return obj.getElementsByTagName(tag)[0].firstChild.nodeValue;}
 function addFilterInputText(row,filter){var cell=document.createElement("td");var new_input=document.createElement("input");new_input.type="text";if(typeof(filter.input_name0)=='undefined'){filter.input_name0='';}
 new_input.value=filter.input_name0;new_input.name="text_input";new_input.size="30";new_input.maxsize="255";new_input.visible="true";cell.appendChild(new_input);row.appendChild(cell);var filter_row=filters_arr[filters_count_map[current_filter_id]];filter_row.input_field0=new_input;filter_row.input_field1=null;}
@@ -243,8 +246,7 @@ else{document.EditView[sort_dir].value="d";}}
 else{document.EditView[sort_by].value=column_name;document.EditView[sort_dir].value="a";}
 document.EditView.to_pdf.value='';document.EditView.to_csv.value='';document.EditView['report_offset'].value=0;if(fill_form()==true){document.EditView.submit();}}
 function set_offset(offset){document.EditView['report_offset'].value=offset;document.EditView.to_pdf.value='';document.EditView.to_csv.value='';if(fill_form()==true){document.EditView.submit();}}
-function load_page(){reload_joins();current_module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;reload_join_rows('regular');all_fields=getAllFieldsMapped(current_module);if(form_submit!="true")
-{remakeGroups();reload_groups();reload_filters();}
+function load_page(){reload_joins();current_module=document.EditView.self.options[document.EditView.self.options.selectedIndex].value;reload_join_rows('regular');all_fields=getAllFieldsMapped(current_module);if(form_submit!="true"){remakeGroups();reload_groups();reload_filters();}
 reload_columns('regular');}
 function reload_joins(){for(var index in report_def.full_table_list){var curr_table=report_def.full_table_list[index];if(index!="self"){add_related(curr_table.parent,index);option_selectbox=document.getElementById('outer_'+index);if(option_selectbox!=null){if(curr_table.optional!=null&&curr_table.optional==true){option_selectbox.checked=true;}
 else{option_selectbox.checked=false;}}

@@ -434,6 +434,16 @@ $dictionary['Email'] = array(
             ),
         ),
 
+        'is_only_plain_text' => array(
+            'name' => 'is_only_plain_text',
+            'type' => 'bool',
+            'default' => false,
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+            'source' => 'non-db',
+        ),
         /* relationship collection attributes */
         /* added to support InboundEmail */
         'accounts' => array(

@@ -280,39 +280,39 @@ function handleSubs($subs, $email, $json) {
             die();
         }
     	break;
-    case "getTemplateAttachments":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+      case 'getTemplateAttachments':
+          $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
+          if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+              global $db;
 
+              $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
+              $order = '';
+              $seed = new Note();
+              $fullList = $seed->get_full_list($order, $where, '');
+              $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
-            $where = "parent_id='{$_REQUEST['parent_id']}'";
-            $order = "";
-            $seed = new Note();
-            $fullList = $seed->get_full_list($order, $where, '');
-            $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
+              $js_fields_arr = array();
 
-            $js_fields_arr = array();
+              $i = 1; // js doesn't like 0 index?
+              if (!empty($fullList)) {
+                  foreach ($fullList as $note) {
+                      $js_fields_arr[$i] = array();
 
-            $i=1; // js doesn't like 0 index?
-            if (!empty($fullList)) {
-                foreach($fullList as $note) {
-                    $js_fields_arr[$i] = array();
+                      foreach ($all_fields as $field) {
+                          if (isset($note->$field)) {
+                              $note->$field = from_html($note->$field);
+                              $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
+                              $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
+                              $js_fields_arr[$i][$field] = addslashes($note->$field);
+                          }
+                      }
+                      $i++;
+                  }
+              }
 
-                    foreach($all_fields as $field) {
-                        if(isset($note->$field)) {
-                            $note->$field = from_html($note->$field);
-                            $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
-                            $note->$field = preg_replace('/\n/','<BR>',$note->$field);
-                            $js_fields_arr[$i][$field] = addslashes($note->$field);
-                        }
-                    }
-                    $i++;
-                }
-            }
-
-            $out = $json->encode($js_fields_arr);
-            echo $out;
-        }
+              $out = $json->encode($js_fields_arr);
+              echo $out;
+          }
         break;
         ////    END COMPOSE REPLY FORWARD
         ///////////////////////////////////////////////////////////////////////////
@@ -407,7 +407,7 @@ function handleSubs($subs, $email, $json) {
                 $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
             }
 
-            if (!$ie->importOneEmail($_REQUEST['uid'], $uid)) {
+            if (!$ie->returnImportedEmail($_REQUEST['uid'], $uid)) {
             	$ie->getDuplicateEmailId($_REQUEST['uid'], $uid);
             } // id
             $ie->email->retrieve($ie->email->id);
@@ -696,9 +696,9 @@ function handleSubs($subs, $email, $json) {
             	$uid = $msgNo;
                 if($ie->protocol == 'imap') {
                     $msgNo = imap_msgno($ie->conn, $msgNo);
-                    $status = $ie->importOneEmail($msgNo, $uid);
+                    $status = $ie->returnImportedEmail($msgNo, $uid);
                 } else {
-                	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
+                	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
                 } // else
             	$return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
             	$count++;
@@ -711,9 +711,9 @@ function handleSubs($subs, $email, $json) {
             $msgNo = $_REQUEST['uid'];
             if($ie->protocol == 'imap') {
                 $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
-                $status = $ie->importOneEmail($msgNo, $_REQUEST['uid']);
+                $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
             } else {
-            	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
+            	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
             } // else
             $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
 
@@ -1342,7 +1342,7 @@ eoq;
                     $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
                 }
 
-                if(!empty($_REQUEST['account_signature_id'])){
+                if(isset($_REQUEST['account_signature_id'])){
                     $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
                     $email_signatures = unserialize(base64_decode($email_signatures));
                     if(empty($email_signatures)) {
@@ -1436,12 +1436,18 @@ eoq;
             $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
             $email_signatures = unserialize(base64_decode($email_signatures));
 
-
             if(!empty($email_signatures) && isset($email_signatures[$ieId])) {
                 $ret['email_signatures'] = $email_signatures[$ieId];
             } else {
                 $ret['email_signatures'] = null;
             }
+
+            global $current_user;
+            $email_default_signatures = $current_user->getPreference('signature_default');
+            $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
+
+
+            $ret['email_account_signatures'] = $email_account_signatures;
 
 
             $out = $json->encode($ret);

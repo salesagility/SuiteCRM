@@ -261,7 +261,7 @@
             reset($data);
 
             //GETTING OFFSET
-            $offset = $this->getOffset($html_varName);
+            $offset = empty($this->getOffset($html_varName)) ? 0 : $this->getOffset($html_varName);
             //$totaltime = 0;
             $processed_ids = array();
 
@@ -504,7 +504,13 @@
                                         unset($_content);
                                     }
                                     else {
-                                        $button_contents[$aVal][] = '';
+                                        $doNotProcessTheseActions = array("edit_button", "close_button","remove_button");
+                                        if(!in_array($list_field['name'],$doNotProcessTheseActions) && '' != ($_content = $layout_manager->widgetDisplay($list_field))){
+                                            $button_contents[$aVal][] = $_content;
+                                            unset($_content);
+                                        }else{
+                                            $button_contents[$aVal][] = '';
+                                        }
                                     }
                                 }
                                 else {
@@ -539,7 +545,11 @@
             global $currentModule;
             global $app_strings;
 
-            $start_record = $current_offset + 1;
+            if(!isset($current_offset) || empty($current_offset))
+	    {
+  		$current_offset=0;
+	    }
+	    $start_record = $current_offset + 1;
 
             if (!is_numeric($col_count)) {
                 $col_count = 20;

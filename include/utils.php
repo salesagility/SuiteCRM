@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'php_version.php';
@@ -1639,6 +1639,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = '';
 
     //for setting null selection values to human readable --None--
+    get_select_empty_option();
     $pattern = "/'0?'></";
     $replacement = "''>".$app_strings['LBL_NONE'].'<';
     if ($massupdate) {
@@ -1671,6 +1672,76 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = preg_replace($pattern, $replacement, $select_options);
 
     return $select_options;
+}
+
+
+/**
+ * @param string $value
+ * @param bool $isSelected
+ * @param string $app_strings_label
+ * @return string as HTML eg <OPTION value="">--None--</OPTION>
+ */
+function get_select_empty_option($value = '', $isSelected = false, $app_strings_label = 'LBL_NONE')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>' .  $app_strings[$app_strings_label] . '</OPTION>';
+
+    return $response;
+}
+
+function get_select_full_option($value = '', $isSelected = false, $translatedLabel = '----')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>';
+    $response .= $translatedLabel;
+    $response .= '</OPTION>';
+
+    return $response;
+}
+
+/**
+ * @param array $option_list
+ * @param string $selected_key
+ * @return string as HTML <OPTION value="id1">apple</OPTION><OPTION value="id2">banana</OPTION>
+ */
+function get_select_full_options_with_id($option_list = array(), $selected_key = '')
+{
+    $response = '';
+
+    foreach ($option_list as $option_key => $option_value)
+    {
+        $isSelected = false;
+
+        if(empty($option_key)) {
+         continue;
+        }
+
+        if(empty($option_value)) {
+            continue;
+        }
+
+        if($option_key === $selected_key)
+        {
+            $isSelected = true;
+        }
+
+        $response .= get_select_full_option($option_key, $isSelected, $option_value);
+    }
+    return $response;
 }
 
 /**
@@ -1749,40 +1820,42 @@ EOQ;
 }
 
 /**
- * Very cool algorithm for sorting multi-dimensional arrays.  Found at http://us2.php.net/manual/en/function.array-multisort.php
- * Syntax: $new_array = array_csort($array [, 'col1' [, SORT_FLAG [, SORT_FLAG]]]...);
- * Explanation: $array is the array you want to sort, 'col1' is the name of the column
- * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
- * you can repeat the 'col',FLAG,FLAG, as often you want, the highest prioritiy is given to
- * the first - so the array is sorted by the last given column first, then the one before ...
+ * Sort Multi Dimensional Array by Column
+ *
+ * @param mixed ... &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]]
+ * @see http://php.net/manual/en/function.array-multisort.php
+ * @return array
+ *
  * Example: $array = array_csort($array,'town','age',SORT_DESC,'name');
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * $array is the array you want to sort, 'col1' is the name of the column
+ * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+ * you can repeat the 'col',FLAG,FLAG, as often you want, the highest priority is given to
+ * the first - so the array is sorted by the last given column first, then the one before ...
+ *
  */
 function array_csort()
 {
     $args = func_get_args();
-    $marray = array_shift($args);
-    $i = 0;
+    $argsShifted = array_shift($args);
+    $arrayMultiSortParameters = array();
+    $sorting = array();
 
-    $msortline = 'return(array_multisort(';
-    foreach ($args as $arg) {
-        ++$i;
-        if (is_string($arg)) {
-            foreach ($marray as $row) {
-                $sortarr[$i][] = $row[$arg];
+    for ($i = 0, $size = count($args); $i < $size; $i++) {
+        if (is_string($args[$i])) {
+            foreach ($argsShifted as $row) {
+                $sorting[$i][] = $row[$args[$i]];
             }
         } else {
-            $sortarr[$i] = $arg;
+            $sorting[$i] = $args[$i];
         }
-        $msortline .= '$sortarr['.$i.'],';
+        $arrayMultiSortParameters[] = $sorting[$i];
     }
-    $msortline .= '$marray));';
 
-    eval($msortline);
+    $arrayMultiSortParameters[] = $argsShifted;
+    call_user_func_array('array_multisort', $arrayMultiSortParameters);
 
-    return $marray;
+    return end($arrayMultiSortParameters);
 }
 
 /**
@@ -3041,37 +3114,37 @@ function decodeJavascriptUTF8($str)
  *
  * @param string Version to check against, defaults to the current environment's.
  *
- * @return  integer  1 if version is greater than the recommended PHP version, 
- *                   0 if version is between minimun and recomended PHP versions, 
- *                   -1 otherwise (less than minimum or buggy version)
+ * @return integer1 if version is greater than the recommended PHP version,
+ * 0 if version is between minimun and recomended PHP versions,
+ * -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '') {
-	if ($sys_php_version === '') {
-		$sys_php_version = constant('PHP_VERSION');
-	}
+function check_php_version($sys_php_version = ''){
+if ($sys_php_version === ''){
+    $sys_php_version =  constant('PHP_VERSION') ;
+    }
 
-	// versions below MIN_PHP_VERSION are not accepted, so return early.
-	if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-		return -1;
-	}
+    // versions below MIN_PHP_VERSION are not accepted, so return early.
+        if ( version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+            return - 1;
 
-	// If there are some bug ridden versions, we should include them here
+    }
+
+    // If there are some bug ridden versions, we should include them here
 	// and check immediately for one of this versions
 	$bug_php_versions = array();
+    foreach ($bug_php_versions as $v) {
+        if ( version_compare($sys_php_version, $v, '=') === true) {
+            return -1;
 
-	foreach ($bug_php_versions as $v) {
-		if (version_compare($sys_php_version, $v, '=') === true) {
-			return -1;
-		}
-	}
+        }
+    }
 
-	// If the checked version is between the minimum and recommended versions, return 0
-	if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
-		return 0;
-	}
+    //If the checked version is between the minimum and recommended versions, return 0
+    if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+        return 0;
+    }
 
-	// Everything else is fair game
-	return 1;
+    // Everything else is fair gamereturn 1;
 }
 
 /**
@@ -4922,13 +4995,13 @@ function verify_image_file($path, $jpeg = false)
             return false;
         }
         $data = '';
-        // read the whole file in chunks
+        // read the whole file in chunks
         while (!feof($fp)) {
             $data .= fread($fp, 8192);
         }
 
         fclose($fp);
-        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
+        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
             $data, $m)) {
             $GLOBALS['log']->fatal("Found {$m[0]} in $path, not allowing upload");
 

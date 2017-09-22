@@ -482,7 +482,7 @@ class ListViewDataEmails extends ListViewData
                 $ret = $emailHeader['from'];
                 break;
             case 'to_addrs_names':
-                $ret = $emailHeader['to'];
+                $ret = mb_decode_mimeheader($emailHeader['to']);
                 break;
             case 'has_attachments':
                 $ret = false;
@@ -665,7 +665,7 @@ class ListViewDataEmails extends ListViewData
                 if (!empty($where)) {
                     $where .= ' AND ';
                 }
-                $where .= ' emails.status LIKE "draft" ';
+                $where .= ' emails.status LIKE "draft" AND emails.deleted LIKE "0" ';
             }
 
 

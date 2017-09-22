@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,23 +34,23 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
-    'LBL_TEAM' => 'Team',
-    'LBL_TEAM_ID' => 'Team Id',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
     'LBL_DATE_ENTERED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_ID' => 'Modified By Id',
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DESCRIPTION' => 'Description',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
@@ -61,7 +62,6 @@ $mod_strings = array(
     'LBL_MODULE_NAME' => 'Activity Streams',
     'LBL_MODULE_TITLE' => 'Activity Streams',
     'LBL_DASHLET_DISABLED' => 'Warning: The Feed system is disabled, no new feed entries will be posted until it is activated',
-    'LBL_ADMIN_SETTINGS' => 'Feed Settings',
     'LBL_RECORDS_DELETED' => 'All previous Feed entries have been removed, if the Feed system is enabled, new entries will be generated automatically.',
     'LBL_CONFIRM_DELETE_RECORDS' => 'Are you sure you wish to delete all of the Feed entries?',
     'LBL_FLUSH_RECORDS' => 'Delete Feed Entries',
@@ -73,7 +73,6 @@ $mod_strings = array(
     'LBL_SEARCH_FORM_TITLE' => 'Search Feed',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_SUGAR_FEED_SUBPANEL_TITLE' => 'Feed',
     'LBL_NEW_FORM_TITLE' => 'New Feed',
     'LBL_ALL' => 'All',
     'LBL_USER_FEED' => 'User Feed',
@@ -106,24 +105,15 @@ $mod_strings = array(
     'WON_OPPORTUNITY' => 'has <b>WON</b> an {0}',
     'WITH' => 'with',
 
-    'LBL_LINK_TYPE_Link' => 'Link',
-    'LBL_LINK_TYPE_Image' => 'Image',
-    'LBL_LINK_TYPE_YouTube' => 'YouTube&#153;',
-
     'LBL_SELECT' => 'Select',
     'LBL_POST' => 'Post',
-    'LBL_EXTERNAL_PREFIX' => 'External: ',
-    'LBL_EXTERNAL_WARNING' => 'Items labeled "external" require an <a href="?module=EAPM">external account</a>.',
     'LBL_AUTHENTICATE' => 'Connect to',
     'LBL_AUTHENTICATION_PENDING' => 'Not all of the external accounts you have selected have been authenticated. Click \'Cancel\' to return to the Options window to authenticate the external accounts, or click \'Ok\' to proceed without authenticating.',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
-    'LBL_BASICSEARCH' => 'Basic Search' /*for 508 compliance fix*/,
     'LBL_SHOW_MORE_OPTIONS' => 'Show More Options',
     'LBL_HIDE_OPTIONS' => 'Hide Options',
     'LBL_VIEW' => 'View',
     'LBL_POST_TITLE' => 'Post Status Update for ',
     'LBL_URL_LINK_TITLE' => 'URL Link to use',
-    'LBL_TEAM_VISIBILITY_TITLE' => 'team that can see this post',
-    'LBL_SOCIAL' => 'Social',
 );
 ?>

@@ -78,39 +78,6 @@
                         </select>
                     </td>
                 </tr>
-                            {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-                            <tr id="mail_smtpserver_tr">
-                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
-                                <td width="30%" ><slot>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                             {if !empty($mail_smtpauth_req) }
-
-                            <tr id="mail_smtpuser_tr">
-                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            <tr id="mail_smtppass_tr">
-                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
-                                <td width="30%" ><slot>
-                                <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'>
-                                <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
-                                </slot></td>
-                                <td>&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            {/if}
-
-                            <tr id="test_outbound_settings_tr">
-                                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
-                                <td width="33%" >&nbsp;</td>
-                                <td width="17%">&nbsp;</td>
-                                <td width="33%" >&nbsp;</td>
-                            </tr>
-                            {/if}
                         </table>
                         <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings(); return false;"><img src="themes/default/images/icon_email_settings.gif" align="absmiddle" border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
             </div>
