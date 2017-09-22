@@ -20,9 +20,25 @@ class V8restapiTester extends \Codeception\Actor
 {
     use _generated\V8restapiTesterActions;
 
+    /**
+     * @var $string $token - Bearer token
+     */
+    private static $token;
+
+    /**
+     * Logins into API
+     * @param $username
+     * @param $password
+     */
     public function login($username, $password)
     {
+        global $sugar_config;
         $I = $this;
+
+        if(!empty(self::$token)) {
+            $I->sendJwtAuthorisation();
+            return;
+        }
 
         /**
          * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
@@ -48,8 +64,13 @@ class V8restapiTester extends \Codeception\Actor
         $I->assertEquals('200', $response['status']);
         $I->assertEquals('Success', $response['message']);
         $I->assertNotEmpty($response['data']);
+
+         self::$token = $response['data'];
     }
 
+    /**
+     * Login as admin
+     */
     public function loginAsAdmin()
     {
         $I = $this;
@@ -72,9 +93,70 @@ class V8restapiTester extends \Codeception\Actor
          * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
          */
         $I->sendPOST(
-            $I->getInstanceURL().'/api/v8/logout'
+            $I->getInstanceURL() . '/api/v8/logout'
         );
         $I->canSeeResponseCodeIs(401);
     }
 
+
+    /**
+     * Set the Jwt Token
+     */
+    public function sendJwtAuthorisation()
+    {
+        $I = $this;
+        $I->setHeader('Authorization', 'Bearer '. self::$token);
+    }
+
+    /**
+     * Set the Required Headers for authentication
+     */
+    public function sendJwtContentNegotiation()
+    {
+        $I = $this;
+        $I->setHeader('Content-Type', 'application/json');
+        $I->setHeader('Accept', 'application/json');
+    }
+
+    /**
+     * Test to ensure that the response is Jwt
+     */
+    public function seeJwtContent()
+    {
+        $I = $this;
+        $I->seeHttpHeader('Content-Type', 'application/json');
+
+    }
+
+    /**
+     * Set the Required Headers for the Json API content
+     */
+    public function sendJsonApiContentNegotiation()
+    {
+        $I = $this;
+        $I->setHeader('Content-Type', 'application/vnd.api+json');
+        $I->setHeader('Accept', 'application/vnd.api+json');
+    }
+
+    /**
+     * Test to ensure that the response is JSON Api
+     */
+    public function seeJsonApiContentNegotiation()
+    {
+        $I = $this;
+        $I->seeHttpHeader('Content-Type', 'application/vnd.api+json');
+    }
+
+    /**
+     * Test to ensure that the response is successful
+     */
+    public function seeJsonAPISuccess()
+    {
+        $I = $this;
+        $I->canSeeResponseIsJson();
+
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayNotHasKey('errors', $response);
+        $I->seeResponseCodeIs(200);
+    }
 }

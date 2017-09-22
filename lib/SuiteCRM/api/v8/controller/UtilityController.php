@@ -83,13 +83,15 @@ class UtilityController extends Api
 
         if ($login['loginApproved']) {
             $token = [
+                'iss' => $sugar_config['site_url'],
                 'userId' => $login['userId'],
+                'iat' => time(),
                 'exp' => time() + $expTime,
             ];
 
             //Create the token
             $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
-            setcookie('SUITECRM_REST_API_TOKEN', json_encode($jwt), null, null, null, isSSL(), true);
+            setcookie('Authorization:', 'bearer '.$jwt, null, null, null, isSSL(), true);
 
             $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
 

@@ -64,6 +64,9 @@ class UtilityLib
         return ['loginApproved' => false, 'userId' => null];
     }
 
+    /**
+     * @return array
+     */
     public function logout()
     {
         require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';

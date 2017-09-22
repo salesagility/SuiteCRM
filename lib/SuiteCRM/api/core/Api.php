@@ -40,7 +40,9 @@
 
 namespace SuiteCRM\api\core;
 
+use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
+use SuiteCRM\Utility\SuiteLogger;
 
 class Api
 {
@@ -65,4 +67,73 @@ class Api
             ->withHeader('Content-type', 'application/json')
             ->write(json_encode($response, JSON_PRETTY_PRINT));
     }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $responseArray
+     * @return Response
+     */
+    public function generateJsonApiResponse(Request $request, Response $response, $responseArray)
+    {
+        $negotiated = $this->negotiatedJsonApiContent($request, $response);
+        if(in_array($negotiated->getStatusCode(), array(415, 406), true)) {
+            // return error instead of response
+            return $negotiated;
+        }
+
+        return $response
+            ->withHeader('Content-type', 'application/vnd.api+json')
+            ->write(json_encode($responseArray));
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    private function negotiatedJsonApiContent(Request $request, Response $response)
+    {
+        $log = new SuiteLogger();
+        if($request->getContentType() !== 'application/vnd.api+json') {
+            $data = array(
+                'errors' => array(
+                    array(
+                        'status' => 415,
+                        'title' => 'Unsupported Media Type',
+                        'detail' => 'Json API expects the content type to be application/vnd.api+json'
+                    )
+                )
+            );
+
+            $log->error('Json API expects the content type to be application/vnd.api+json');
+
+            return $response
+                ->withStatus(415)
+                ->withHeader('Content-type', 'application/json')
+                ->write(json_encode($data));
+        }
+
+        $header = $request->getHeader('Accept');
+        if(count($header) === 1 && $header[0] !== 'application/vnd.api+json') {
+            $data = array(
+                'errors' => array(
+                    array(
+                        'status' => 406,
+                        'title' => 'Not Acceptable',
+                        'detail' => 'Json API expects the client to accept application/vnd.api+json'
+                    )
+                )
+            );
+            $log->error('Json API expects the client to accept application/vnd.api+json');
+            return $response
+                ->withStatus(406)
+                ->withHeader('Content-type', 'application/json')
+                ->write(json_encode($data));
+        }
+
+        $log->debug('Json Api negotiated content type Successfully');
+        return $response;
+    }
+
 }

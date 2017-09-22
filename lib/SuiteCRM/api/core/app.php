@@ -69,16 +69,113 @@ foreach ($services as $service => $closure) {
 
 $container['errorHandler'] = function ($container) {
     return function ($request, $response, $exception) use ($container) {
+        /**
+         * @var \Slim\Http\Request $request
+         * @var \Slim\Http\Response $response
+         * @var Exception $exception
+         */
+        $log = new \SuiteCRM\Utility\SuiteLogger();
+        $log->error($exception->getMessage().'\n' . $exception->getTraceAsString());
         return $response->withStatus(500)
-            ->withHeader('Content-Type', 'text/html')
-            ->write('There\'s been an error');
+            ->withHeader('Content-Type', 'application/vnd.api+json')
+            ->write(json_encode(array(
+                        'errors' => array(
+                            array(
+                                'status' => $response->getStatusCode(),
+                                'code' => $exception->getCode(),
+                                'title' => $exception->getMessage(),
+                                'detail' => $exception->getTraceAsString()
+                            )
+                        )
+                    )
+                )
+            );
+    };
+};
+
+
+$container['phpErrorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container) {
+        /**
+         * @var \Slim\Http\Request $request
+         * @var \Slim\Http\Response $response
+         * @var Exception $exception
+         */
+        $log = new \SuiteCRM\Utility\SuiteLogger();
+        $log->error($exception->getMessage().'\n' . $exception->getTraceAsString());
+        return $response->withStatus(500)
+            ->withHeader('Content-Type', 'application/vnd.api+json')
+            ->write(json_encode(array(
+                        'errors' => array(
+                            array(
+                                'status' => $response->getStatusCode(),
+                                'code' => $exception->getCode(),
+                                'title' => $exception->getMessage(),
+                                'detail' => $exception->getTraceAsString()
+                            )
+                        )
+                    )
+                )
+            );
+    };
+};
+
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+        /**
+         * @var \Slim\Http\Request $request
+         * @var \Slim\Http\Response $response
+         */
+        $log = new \SuiteCRM\Utility\SuiteLogger();
+        $log->error('Not Found' . $request->getUri());
+        return $response->withStatus(404)
+            ->withHeader('Content-Type', 'application/vnd.api+json')
+            ->write(json_encode(array(
+                        'errors' => array(
+                            array(
+                                'status' => $response->getStatusCode(),
+                                'code' => '404',
+                                'title' => 'Not Found',
+                                'detail' => ''
+                            )
+                        )
+                    )
+                )
+            );
+    };
+};
+
+
+$container['notAllowedHandler'] = function ($container) {
+    return function ($request, $response, $methods) use ($container) {
+        $log = new \SuiteCRM\Utility\SuiteLogger();
+        $log->error('Method must be one of: ' . implode(', ', $methods));
+        /**
+         * @var \Slim\Http\Request $request
+         * @var \Slim\Http\Response $response
+         * @var array $methods
+         */
+        return $response->withStatus(404)
+            ->withHeader('Content-Type', 'application/vnd.api+json')
+            ->write(json_encode(array(
+                        'errors' => array(
+                            array(
+                                'status' => $response->getStatusCode(),
+                                'code' => '405',
+                                'title' => 'Not Allowed',
+                                'detail' => 'Method must be one of: ' . implode(', ', $methods)
+                            )
+                        )
+                    )
+                )
+            );
     };
 };
 
 if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
-    $app->add(new \Slim\Middleware\JwtAuthentication([
+    $JwtAuthentication = new \Slim\Middleware\JwtAuthentication([
         'secure' => isSSL(),
-        "cookie" => "SUITECRM_REST_API_TOKEN",
+        "cookie" => "Authorization",
         'secret' => $sugar_config['unique_key'],
         'environment' => 'REDIRECT_HTTP_AUTHORIZATION',
         'rules' => [
@@ -95,9 +192,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
             $container['jwt'] = $token;
         },
         'error' => function ($request, $response, $arguments) use ($app) {
+            $log = new \SuiteCRM\Utility\SuiteLogger();
+            $log->error('Authentication Error: ' . implode(', ', $arguments));
             return $response->write('Authentication Error');
         },
-    ]));
+    ]);
+
+    $JwtAuthentication->setLogger(new \SuiteCRM\Utility\SuiteLogger());
+    $app->add($JwtAuthentication);
 }
 
 $app->run();
