@@ -5,15 +5,11 @@
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
-  "config": {
-    "vendor-dir": "vendor",
-    "platform": {
-      "php": "5.5"
-    }
-  },
   "require": {
-    "slim/slim": "3.8.1",
-    "tuupola/slim-jwt-auth": "^2.0"
+    "slim/slim": "^3.8",
+    "tuupola/slim-jwt-auth": "^2.0",
+    "league/url": "^3.3",
+    "psr/log": "^1.0"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -27,12 +23,11 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "": [
-        "lib/",
-        "tests/"
+      "SuiteCRM\\": [
+        "lib/SuiteCRM/",
+        "tests/SuiteCRM/"
       ]
     }
   },
   "extra": {}
 }
-
