@@ -132,6 +132,16 @@ class Favorites extends Basic
                 ++$i;
             }
 
+            $bean = BeanFactory::getBean($row['parent_type'],$row['parent_id']);
+            if (isset($bean->id)) {
+                $return_array[$i]['item_summary'] = $bean->name;
+                $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
+                $return_array[$i]['id'] = $row['parent_id'];
+                $return_array[$i]['module_name'] = $row['parent_type'];
+                $return_array[$i]['image'] = SugarThemeRegistry::current() ->getImage($row['parent_type'],'border="0" align="absmiddle"',null,null,'.gif',$bean->name);
+
+                $i++;
+            }
         }
 
         return $return_array;
