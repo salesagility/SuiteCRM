@@ -625,6 +625,14 @@ $mod_strings = array(
     'LBL_EC_EXPORTBTN' => 'Export',
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
+    'LBL_EC_VIEWS' => 'customized view(s)',
+    'LBL_EC_SUGARFEEDS' => 'customized SugarFeeds(s)',
+    'LBL_EC_DASHLETS' => 'customized Dashlets(s)',
+    'LBL_EC_CSS' => 'customized css(s)',
+    'LBL_EC_TPLS' => 'customized tpls(s)',
+    'LBL_EC_IMAGES' => 'customized image(s)',
+    'LBL_EC_JS' => 'customized js(s)',
+    'LBL_EC_QTIP' => 'customized qtip(s)',
 
 //AJAX STATUS
     'LBL_AJAX_FAILED_DATA' => 'Failed to retrieve data',
