@@ -137,6 +137,9 @@ $mod_strings = array (
     'LBL_FROM_ADDRESS_HELP'                     => 'When enabled, the assigning user\\\'s name and email address will be included in the From field of the email. This feature might not work with SMTP servers that do not allow sending from a different email account than the server account.',
 	'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE' => 'Opt-in confirmation email template',
+    'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
+    'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
 );
 
 ?>

@@ -465,6 +465,9 @@ $mod_strings = array (
 	'LBL_EMAIL_MARKETING' => 'Email Marketing',
 	'LBL_QUEUE_ITEMS' => 'Queue Items',
 	'LBL_PROSPECT_LISTS' => 'Prospect Lists',
+	'LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE' => 'Opt-in confirmation email template',
+    'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
+    'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
 );
 
 
