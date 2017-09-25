@@ -148,7 +148,6 @@ class ModulesLib
                 } else {
                     $fieldValue = $moduleBean->$fieldName;
                     $bean['attributes'][$fieldName] = $fieldValue;
-
                 }
                 $bean['attributes'][$fieldName] = $fieldValue;
 
