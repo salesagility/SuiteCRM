@@ -55,7 +55,7 @@ $version = $matches[1];
 
 $app = new \Slim\App();
 
-$routeFiles = (array) glob('lib/SuiteCRM/api/'.$version.'/route/*.php');
+$routeFiles = (array) glob('lib/SuiteCRM/API/'.$version.'/route/*.php');
 
 foreach ($routeFiles as $routeFile) {
     require $routeFile;

@@ -1,10 +1,13 @@
 <?php
 
-namespace SuiteCRM\api\JsonApi\v1;
+namespace SuiteCRM\API\JsonApi\v1;
+
+use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
  * Class Links
- * @package SuiteCRM\api\JsonApi\v1
+ * @package SuiteCRM\API\JsonApi\v1
+ * @see http://jsonapi.org/format/1.0/#document-meta
  */
 class Links
 {
@@ -17,6 +20,11 @@ class Links
      * @var string $first
      */
     private $first;
+
+    /**
+     * @var bool $hasPagination
+     */
+    private $hasPagination;
 
     /**
      * @var string $prev
@@ -49,12 +57,17 @@ class Links
     private $related;
 
     /**
+     * @var Logger Logger
+     */
+    private $logger;
+
+    /**
      * Links constructor.
      * @param Links|null $linksObject
      */
     public function __construct(Links $linksObject = null)
     {
-        if($linksObject !== null) {
+        if ($linksObject !== null) {
             $this->self = $linksObject->self;
             $this->first = $linksObject->first;
             $this->prev = $linksObject->prev;
@@ -62,9 +75,12 @@ class Links
             $this->last = $linksObject->last;
             $this->meta = $linksObject->meta;
         }
+
+        $this->logger = new Logger();
     }
 
-    public static function get() {
+    public static function get()
+    {
         return new self();
     }
 
@@ -72,8 +88,42 @@ class Links
      * @param string $url
      * @return Links
      */
-    public function withSelf($url) {
-        $this->self = $url;
+    public function withSelf($url)
+    {
+        if ($this->validateUrl($url)) {
+            $this->self = $url;
+        } else {
+            $this->logger->error('Invalid URL parameter: expected a valid url');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Tells Links that you intend to display pagination links even if you do not set the pagination values.
+     * @return Links
+     */
+    public function withPagination()
+    {
+        $this->hasPagination = true;
+
+        return $this;
+    }
+
+
+    /**
+     * @param string $url
+     * @return Links
+     */
+    public function withFirst($url)
+    {
+        $this->hasPagination = true;
+        if ($this->validateUrl($url)) {
+            $this->first = $url;
+        } else {
+            $this->logger->error('Invalid URL parameter: expected a valid url');
+        }
+
         return $this;
     }
 
@@ -81,17 +131,15 @@ class Links
      * @param string $url
      * @return Links
      */
-    public function withFirst($url) {
-        $this->first = $url;
-        return new self();
-    }
+    public function withPrev($url)
+    {
+        $this->hasPagination = true;
+        if ($this->validateUrl($url)) {
+            $this->prev = $url;
+        } else {
+            $this->logger->error('Invalid URL parameter: expected a valid url');
+        }
 
-    /**
-     * @param string $url
-     * @return Links
-     */
-    public function withPrev($url) {
-        $this->prev = $url;
         return $this;
     }
 
@@ -99,8 +147,15 @@ class Links
      * @param string $url
      * @return Links
      */
-    public function withNext($url) {
-        $this->next = $url;
+    public function withNext($url)
+    {
+        $this->hasPagination = true;
+        if ($this->validateUrl($url)) {
+            $this->next = $url;
+        } else {
+            $this->logger->error('Invalid URL parameter: expected a valid url');
+        }
+
         return $this;
     }
 
@@ -108,8 +163,15 @@ class Links
      * @param string $url
      * @return Links
      */
-    public function withLast($url) {
-        $this->last = $url;
+    public function withLast($url)
+    {
+        $this->hasPagination = true;
+        if ($this->validateUrl($url)) {
+            $this->last = $url;
+        } else {
+            $this->logger->error('Invalid URL parameter: expected a valid url');
+        }
+
         return $this;
     }
 
@@ -117,8 +179,9 @@ class Links
      * @param array $meta
      * @return Links
      */
-    public function withMeta($meta) {
-        if($this->meta === null) {
+    public function withMeta($meta)
+    {
+        if ($this->meta === null) {
             $this->meta = $meta;
         } else {
             $this->meta = array_merge($this->meta, $meta);
@@ -132,8 +195,10 @@ class Links
      * @param string $url
      * @return Links
      */
-    public function withHref($url) {
+    public function withHref($url)
+    {
         $this->href = $url;
+
         return $this;
     }
 
@@ -141,8 +206,10 @@ class Links
      * @param Links $related
      * @return Links
      */
-    public function withRelated(Links $related) {
+    public function withRelated(Links $related)
+    {
         $this->related = $related;
+
         return $this;
     }
 
@@ -152,28 +219,29 @@ class Links
     public function getArray()
     {
         $response = array();
-        if($this->hasSelf()) {
+        if ($this->hasSelf()) {
             $response['self'] = $this->self;
         }
 
-        if($this->hasHref()) {
+        if ($this->hasHref()) {
             $response['href'] = $this->self;
         }
 
-        if($this->hasMeta()) {
+        if ($this->hasMeta()) {
             $response['meta'] = $this->meta;
         }
 
-        if($this->hasPagination()) {
+        if ($this->hasPagination()) {
             $response['first'] = $this->first;
             $response['prev'] = $this->prev;
             $response['next'] = $this->next;
             $response['last'] = $this->last;
         }
 
-        if($this->hasRelated()) {
+        if ($this->hasRelated()) {
             $response['related'] = $this->relate->getArray();
         }
+
         return $response;
     }
 
@@ -182,10 +250,7 @@ class Links
      */
     private function hasPagination()
     {
-        return $this->first !== null ||
-            $this->prev !== null ||
-            $this->next !== null ||
-            $this->last !== null;
+        return $this->hasPagination;
     }
 
     /**
@@ -218,5 +283,19 @@ class Links
     private function hasRelated()
     {
         return $this->related !== null;
+    }
+
+    /**
+     * @param string $url
+     * @return bool true === valid, false === invalid
+     */
+    private function validateUrl($url)
+    {
+        $isValid = filter_var(
+            $url,
+            FILTER_VALIDATE_URL
+        );
+
+        return false !== $isValid;
     }
 }

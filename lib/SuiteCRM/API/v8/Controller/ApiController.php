@@ -38,13 +38,13 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\api\core;
+namespace SuiteCRM\API\v8\Controller;
 
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
-use SuiteCRM\Utility\SuiteLogger;
+use SuiteCRM\Utility\SuiteLogger as Logger;
 
-class Api
+class ApiController
 {
     /**
      * @param Response $responseObject
@@ -71,10 +71,10 @@ class Api
     /**
      * @param Request $request
      * @param Response $response
-     * @param array $responseArray
+     * @param array $payload
      * @return Response
      */
-    public function generateJsonApiResponse(Request $request, Response $response, $responseArray)
+    public function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
         $negotiated = $this->negotiatedJsonApiContent($request, $response);
         if(in_array($negotiated->getStatusCode(), array(415, 406), true)) {
@@ -84,7 +84,30 @@ class Api
 
         return $response
             ->withHeader('Content-type', 'application/vnd.api+json')
-            ->write(json_encode($responseArray));
+            ->write(json_encode($payload));
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param \Exception $exception
+     * @return Response
+     */
+    public function generateJsonApiExceptionResponse(Request $request, Response $response, \Exception $exception)
+    {
+        $log = new Logger();
+        $log->error($exception->getCode().' '. $exception->getMessage());
+        $payload = array(
+            'errors' => array(
+                array(
+                    'status' => $response->getStatusCode(),
+                    'code' => $exception->getCode(),
+                    'title' => $exception->getMessage(),
+                    'detail' => $exception->getTraceAsString()
+                )
+            )
+        );
+       return $this->generateJsonApiResponse($request, $response, $payload);
     }
 
     /**
@@ -94,23 +117,23 @@ class Api
      */
     private function negotiatedJsonApiContent(Request $request, Response $response)
     {
-        $log = new SuiteLogger();
+        $log = new Logger();
         if($request->getContentType() !== 'application/vnd.api+json') {
             $data = array(
                 'errors' => array(
                     array(
                         'status' => 415,
                         'title' => 'Unsupported Media Type',
-                        'detail' => 'Json API expects the content type to be application/vnd.api+json'
+                        'detail' => 'Json API expects the content type to be application/vnd.API+json'
                     )
                 )
             );
 
-            $log->error('Json API expects the content type to be application/vnd.api+json');
+            $log->error('Json API expects the content type to be application/vnd.API+json');
 
             return $response
                 ->withStatus(415)
-                ->withHeader('Content-type', 'application/json')
+                ->withHeader('Content-type', 'application/vnd.api+json')
                 ->write(json_encode($data));
         }
 
@@ -121,19 +144,18 @@ class Api
                     array(
                         'status' => 406,
                         'title' => 'Not Acceptable',
-                        'detail' => 'Json API expects the client to accept application/vnd.api+json'
+                        'detail' => 'Json API expects the client to accept application/vnd.API+json'
                     )
                 )
             );
-            $log->error('Json API expects the client to accept application/vnd.api+json');
+            $log->error('Json API expects the client to accept application/vnd.API+json');
             return $response
                 ->withStatus(406)
-                ->withHeader('Content-type', 'application/json')
+                ->withHeader('Content-type', 'application/vnd.api+json')
                 ->write(json_encode($data));
         }
 
-        $log->debug('Json Api negotiated content type Successfully');
+        $log->debug('Json ApiController negotiated content type Successfully');
         return $response;
     }
-
 }

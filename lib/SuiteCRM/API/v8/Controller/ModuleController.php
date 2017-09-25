@@ -38,67 +38,70 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\api\v8\controller;
+namespace SuiteCRM\API\v8\Controller;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use SuiteCRM\api\core\Api;
-use SuiteCRM\api\v8\library\UtilityLib;
+use SuiteCRM\API\v8\Library\ModulesLib;
 
-class UtilityController extends Api
+class ModuleController extends ApiController
 {
-    //default time in seconds that the token is valid for
-    const JWT_EXP_TIME = 14400;
-
     /**
+     * GET /api/v8/modules
      * @param Request $req
      * @param Response $res
-     * @param array $args
      * @return Response
      */
-    public function getServerInfo(Request $req, Response $res, array $args)
+    public function getModules(Request $req, Response $res)
     {
-        $lib = new UtilityLib();
-        $server_info = $lib->getServerInfo();
+        require_once __DIR__ . '/../../../../../include/modules.php';
+        global $moduleList;
 
-        return $this->generateJwtResponse($res, 200, $server_info, 'Success');
+        $payload = array(
+            'meta' => array('modules' => $moduleList)
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
+     * GET /api/v8/modules/{module_name}
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @return Response
      */
-    public function login(Request $req, Response $res, array $args)
+    public function getModuleRecords(Request $req, Response $res, array $args)
     {
         global $sugar_config;
+        $lib = new ModulesLib();
+        $payload = array(
+            'meta' => array(),
+            'links' => array(),
+            'data' => array()
+        );
 
-        $data = $req->getParsedBody();
-
-        $lib = new UtilityLib();
-        $login = $lib->login($data);
-
-        $expTime = !empty($sugar_config['api']['timeout']) ? (int)$sugar_config['api']['timeout'] : self::JWT_EXP_TIME;
-
-        if ($login['loginApproved']) {
-            $token = [
-                'iss' => $sugar_config['site_url'],
-                'userId' => $login['userId'],
-                'iat' => time(),
-                'exp' => time() + $expTime,
-            ];
-
-            //Create the token
-            $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
-            setcookie('Authorization:', 'bearer '.$jwt, null, null, null, isSSL(), true);
-
-            $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
-
-            return $this->generateJwtResponse($res, 200, $jwt, 'Success');
+        try {
+            $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
+            $payload['data'] = $paginatedModuleRecords['list'];
+        } catch (\Exception $e) {
+            return $this->generateJsonApiExceptionResponse($req, $res, $e);
         }
 
-        return $this->generateJwtResponse($res, 401, null, 'Unauthorised');
-    }
+        $links = $lib->generatePaginatedLinksFromModuleRecords($req, $res, $args, $paginatedModuleRecords);
+        $payload['links'] = $links->getArray();
 
+        $page = $req->getParam('page');
+        $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
+        $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
+        $limitOffset = ($limit <= 0) ? $sugar_config['list_max_entries_per_page'] : $limit;
+        $lastOffset = (integer)floor((integer)$paginatedModuleRecords['row_count'] / $limitOffset);
+
+        $payload['meta']['offsets'] = array(
+            'current' => $currentOffset,
+            'count' => $lastOffset
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
 }

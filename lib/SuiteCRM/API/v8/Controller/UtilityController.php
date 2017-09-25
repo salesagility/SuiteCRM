@@ -38,40 +38,66 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\api\v8\library;
+namespace SuiteCRM\API\v8\Controller;
 
-class UtilityLib
+use Slim\Http\Request;
+use Slim\Http\Response;
+use SuiteCRM\API\v8\Library\UtilityLib;
+
+class UtilityController extends ApiController
 {
+    //default time in seconds that the token is valid for
+    const JWT_EXP_TIME = 14400;
+
     /**
-     * @param $postData
-     *
-     * @return array
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
      */
-    public function login($postData)
+    public function getServerInfo(Request $req, Response $res, array $args)
     {
-        //Get the parameters
-        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
-        $authController = new \AuthenticationController();
-        $username = $postData['username'];
-        $password = $postData['password'];
+        $lib = new UtilityLib();
+        $server_info = $lib->getServerInfo();
 
-        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
-            $usr = new \user();
+        return $this->generateJwtResponse($res, 200, $server_info, 'Success');
+    }
 
-            return ['loginApproved' => true, 'userId' => $usr->retrieve_user_id($username)];
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     */
+    public function login(Request $req, Response $res, array $args)
+    {
+        global $sugar_config;
+
+        $data = $req->getParsedBody();
+
+        $lib = new UtilityLib();
+        $login = $lib->login($data);
+
+        $expTime = !empty($sugar_config['API']['timeout']) ? (int)$sugar_config['API']['timeout'] : self::JWT_EXP_TIME;
+
+        if ($login['loginApproved']) {
+            $token = [
+                'iss' => $sugar_config['site_url'],
+                'userId' => $login['userId'],
+                'iat' => time(),
+                'exp' => time() + $expTime,
+            ];
+
+            //Create the token
+            $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
+            setcookie('Authorization:', 'bearer '.$jwt, null, null, null, isSSL(), true);
+
+            $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
+
+            return $this->generateJwtResponse($res, 200, $jwt, 'Success');
         }
 
-        return ['loginApproved' => false, 'userId' => null];
+        return $this->generateJwtResponse($res, 401, null, 'Unauthorised');
     }
 
-    /**
-     * @return array
-     */
-    public function logout()
-    {
-        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
-        $authController = new \AuthenticationController();
-        $authController->logout();
-        return [];
-    }
 }

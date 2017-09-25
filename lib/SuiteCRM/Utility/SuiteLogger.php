@@ -7,9 +7,10 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 /**
+ * /**
  * PSR Complient logger
  * Class SuiteLogger
- * @package SuiteCRM\api\core
+ * @package SuiteCRM\Utility
  */
 class SuiteLogger implements LoggerInterface
 {

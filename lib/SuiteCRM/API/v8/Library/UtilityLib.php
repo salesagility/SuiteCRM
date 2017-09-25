@@ -38,65 +38,40 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\api\v8\library;
+namespace SuiteCRM\API\v8\Library;
 
-use Slim\Http\Request;
-use League\Url\Components\Query;
-/**
- * Class ModulesLib
- * @package SuiteCRM\api\v8\library
- */
-class ModulesLib
+class UtilityLib
 {
     /**
-     * @param Request $req
-     * @param null|integer $offset
-     * @param null|integer $limit
-     * @param null|array $filter
-     * @param null|array $sort
-     * @param null|array $fields eg array ('fields' => 'Accounts' => array('name', 'description'))
-     * @return string
+     * @param $postData
+     *
+     * @return array
      */
-    public function generatePaginationUrl(Request $req, $offset = null, $limit = null, $filter = null, $sort = null, $fields = null)
+    public function login($postData)
     {
-        global $sugar_config;
-        $query = new Query();
-        $pagination = array();
+        //Get the parameters
+        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
+        $username = $postData['username'];
+        $password = $postData['password'];
 
-        if($offset !== null) {
-            $pagination['page']['offset'] = $offset;
+        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
+            $usr = new \user();
+
+            return ['loginApproved' => true, 'userId' => $usr->retrieve_user_id($username)];
         }
 
-        if($limit !== null && $limit > 0 && $limit !== $sugar_config['list_max_entries_per_page']) {
-            $pagination['page']['limit'] = $offset;
-        }
-
-
-        if($filter !== null) {
-            $query->modify(array('filter' => $filter));
-        }
-
-        if($sort !== null) {
-            $query->modify(array('sort' => implode(",", $sort)));
-        }
-
-        if($fields !== null) {
-            $queryFields = array();
-            foreach ($fields['fields'] as $module => $moduleFields) {
-                $queryFields['fields'][$module] = implode(",", $fields['fields'][$module]);
-            }
-            $query->modify($queryFields);
-        }
-
-        $query->modify($pagination);
-        $queryString =  $query->get();
-        if($queryString !== null) {
-            return $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' .$queryString;
-        }
-
-        return $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath();
+        return ['loginApproved' => false, 'userId' => null];
     }
 
-
-
+    /**
+     * @return array
+     */
+    public function logout()
+    {
+        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
+        $authController->logout();
+        return [];
+    }
 }
