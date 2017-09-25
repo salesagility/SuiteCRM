@@ -384,7 +384,7 @@ document.MassUpdate.uid.value=uids.join(',');if(uids.length==0)return false;retu
 else return false;}
 sugarListView.prototype.order_checks=function(order,orderBy,moduleString){checks=sugarListView.get_checks();SUGAR.util.globalEval('document.MassUpdate.'+moduleString+'.value = orderBy');document.MassUpdate.lvso.value=order;if(typeof document.MassUpdate.massupdate!='undefined'){document.MassUpdate.massupdate.value='false';}
 document.MassUpdate.action.value=document.MassUpdate.return_action.value;document.MassUpdate.return_module.value='';document.MassUpdate.return_action.value='';document.MassUpdate.submit();return!checks;}
-sugarListView.prototype.save_checks=function(offset,moduleString){checks=sugarListView.get_checks();if(typeof document.MassUpdate!='undefined'){SUGAR.util.globalEval('document.MassUpdate.'+moduleString+'.value = offset');if(typeof document.MassUpdate.massupdate!='undefined'){document.MassUpdate.massupdate.value='false';}
+sugarListView.prototype.save_checks=function(offset,moduleString){checks=sugarListView.get_checks();if(typeof document.MassUpdate!='undefined'){eval('document.MassUpdate.'+moduleString+'.value = offset');if(typeof document.MassUpdate.massupdate!='undefined'){document.MassUpdate.massupdate.value='false';}
 document.MassUpdate.action.value=document.MassUpdate.return_action.value;document.MassUpdate.return_module.value='';document.MassUpdate.return_action.value='';document.MassUpdate.submit();return!checks;}
 else return false;}
 sugarListView.prototype.check_item=function(cb,form){if(cb.checked){sugarListView.update_count(1,true);}else{sugarListView.update_count(-1,true);if(typeof form!='undefined'&&form!=null){sugarListView.prototype.updateUid(cb,form);}}
