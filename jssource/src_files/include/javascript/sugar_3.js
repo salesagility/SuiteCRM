@@ -2393,7 +2393,7 @@ sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
 sugarListView.prototype.save_checks = function (offset, moduleString) {
   checks = sugarListView.get_checks();
   if (typeof document.MassUpdate != 'undefined') {
-    SUGAR.util.globalEval('document.MassUpdate.' + moduleString + '.value = offset');
+    eval('document.MassUpdate.' + moduleString + '.value = offset');
 
     if (typeof document.MassUpdate.massupdate != 'undefined') {
       document.MassUpdate.massupdate.value = 'false';
