@@ -204,6 +204,9 @@ HTML;
         $html = self::getFieldLabelHTML($fieldLabel, $isRequired, $webRequiredSymbol);
         $_type = $fieldName=='email1'||$fieldName=='email2' ? 'email' : 'text';
         $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"$_type\"$_required>";
+        if($_type == 'email') {
+            $html .= self::getOptInCheckboxHTML($fieldName);
+        }
         return $html;
     }
 
@@ -231,7 +234,12 @@ HTML;
         $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
         $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"email\"$_required>";
+        $html .= self::getOptInCheckboxHTML($fieldName);
         return $html;
+    }
+
+    private static function getOptInCheckboxHTML($fieldName) {
+        return "<label>opt-in</label><input type=\"checkbox\" id=\"opt_in_$fieldName\" name=\"opt_in_$fieldName\">";
     }
 
     // ----------------
