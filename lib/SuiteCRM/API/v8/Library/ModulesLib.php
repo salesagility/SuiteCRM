@@ -44,6 +44,7 @@ use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 use League\Url\Components\Query as Query;
 use SuiteCRM\API\JsonApi\v1\Links as Links;
+use SuiteCRM\API\v8\Exception\ModuleNotFound;
 
 /**
  * Class ModulesLib
@@ -56,7 +57,7 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
-     * @throws \Exception
+     * @throws ModuleNotFound
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
     {
@@ -99,7 +100,7 @@ class ModulesLib
 
         if($module === false) {
             $res = $res->withStatus(404);
-            throw new \Exception('Module "'.$args['module'].'" Not Found', 404);
+            throw new ModuleNotFound();
         }
         /**
          * @var array $moduleList
@@ -150,7 +151,6 @@ class ModulesLib
                     $bean['attributes'][$fieldName] = $fieldValue;
                 }
                 $bean['attributes'][$fieldName] = $fieldValue;
-
             }
 
             // add links object to $bean

@@ -10,16 +10,17 @@ use Psr\Log\LogLevel;
 
 /**
  * /**
- * PSR Complient logger
+ * PSR-3 Compliant logger
  * Class SuiteLogger
  * @package SuiteCRM\Utility
+ * @see http://www.php-fig.org/psr/psr-3/
  */
 class SuiteLogger extends AbstractLogger implements LoggerInterface
 {
     /**
      * @param LogLevel|string $level
-     * @param string $message
-     * @param array $context
+     * @param string $message eg 'hello {user}'
+     * @param array $context eg array(user => 'joe')
      * @throws InvalidArgumentException
      */
     public function log($level, $message, array $context = array())

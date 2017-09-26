@@ -2,6 +2,9 @@
 
 namespace SuiteCRM\API\JsonApi\v1;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use SuiteCRM\API\JsonApi\v1\Enumerator\LinksMessage;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
@@ -9,7 +12,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
  * @package SuiteCRM\API\JsonApi\v1
  * @see http://jsonapi.org/format/1.0/#document-meta
  */
-class Links
+class Links implements LoggerAwareInterface
 {
     /**
      * @var string $self
@@ -76,7 +79,7 @@ class Links
             $this->meta = $linksObject->meta;
         }
 
-        $this->logger = new Logger();
+        $this->setLogger(new Logger());
     }
 
     public static function get()
@@ -93,7 +96,7 @@ class Links
         if ($this->validateUrl($url)) {
             $this->self = $url;
         } else {
-            $this->logger->error('Invalid URL parameter: expected a valid url');
+            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return $this;
@@ -121,7 +124,7 @@ class Links
         if ($this->validateUrl($url)) {
             $this->first = $url;
         } else {
-            $this->logger->error('Invalid URL parameter: expected a valid url');
+            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return $this;
@@ -137,7 +140,7 @@ class Links
         if ($this->validateUrl($url)) {
             $this->prev = $url;
         } else {
-            $this->logger->error('Invalid URL parameter: expected a valid url');
+            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return $this;
@@ -153,7 +156,7 @@ class Links
         if ($this->validateUrl($url)) {
             $this->next = $url;
         } else {
-            $this->logger->error('Invalid URL parameter: expected a valid url');
+            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return $this;
@@ -169,7 +172,7 @@ class Links
         if ($this->validateUrl($url)) {
             $this->last = $url;
         } else {
-            $this->logger->error('Invalid URL parameter: expected a valid url');
+            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return $this;
@@ -297,5 +300,17 @@ class Links
         );
 
         return false !== $isValid;
+    }
+
+    /**
+     * Sets a logger instance on the object.
+     *
+     * @param LoggerInterface $logger
+     *
+     * @return void
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

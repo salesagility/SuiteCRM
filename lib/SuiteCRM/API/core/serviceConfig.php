@@ -38,17 +38,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry')) {
-    define('sugarEntry', true);
-}
-
-use SuiteCRM\API\v8\Controller;
+use SuiteCRM\API\v8\Controller\ApiController;
+use SuiteCRM\API\v8\Controller\UtilityController;
+use SuiteCRM\API\v8\Controller\ModuleController;
 use Firebase\JWT\JWT;
 
 return [
-    Controller\UtilityController::class => function ($container) {
+    'UtilityController' => function ($container) {
         /** @var \Interop\Container\ContainerInterface $container */
-        return new Controller\UtilityController(
+        return new UtilityController(
             $container->get('sugar_config'),
             $container->get('cookie'),
             $container->get('current_user'),
@@ -60,19 +58,23 @@ return [
         return new JWT();
     },
     AuthenticationController::class => function ($container) {
-        require_once __DIR__.'../../../../modules/Users/authentication/AuthenticationController.php';
+        require_once __DIR__ . '../../../../modules/Users/authentication/AuthenticationController.php';
+
         return new AuthenticationController();
     },
     'translations-config' => function ($container) {
         global $app_list_strings;
+
         return $app_list_strings;
     },
     'current_user' => function ($container) {
         global $current_user;
+
         return $current_user;
     },
     'sugar_config' => function ($container) {
         global $sugar_config;
+
         return $sugar_config;
     },
     'jwt' => function ($container) {
@@ -80,6 +82,13 @@ return [
     },
     'cookie' => function ($container) {
         $request = $container->get('request');
+
         return new \Slim\Http\Cookies($request->getCookieParams());
     },
+    'ApiController' => function ($container) {
+        return new ApiController();
+    },
+    'ModuleController' => function ($container) {
+        return new ModuleController();
+    }
 ];

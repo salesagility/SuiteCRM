@@ -40,17 +40,33 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
+use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\NotAcceptable;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
-class ApiController
+class ApiController implements LoggerAwareInterface
 {
+    const CONTENT_TYPE = 'application/vnd.api+json';
+    /**
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
+    public function construct()
+    {
+        $this->setLogger(new Logger());
+    }
+
     /**
      * @param Response $responseObject
-     * @param int      $status
-     * @param mixed    $data
-     * @param string   $message
+     * @param int $status
+     * @param mixed $data
+     * @param string $message
      *
      * @return Response
      */
@@ -64,7 +80,7 @@ class ApiController
 
         return $responseObject
             ->withStatus($status)
-            ->withHeader('Content-type', 'application/json')
+            ->withHeader('Content-type', self::CONTENT_TYPE)
             ->write(json_encode($response, JSON_PRETTY_PRINT));
     }
 
@@ -77,85 +93,99 @@ class ApiController
     public function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
         $negotiated = $this->negotiatedJsonApiContent($request, $response);
-        if(in_array($negotiated->getStatusCode(), array(415, 406), true)) {
+        if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
             // return error instead of response
             return $negotiated;
         }
 
         return $response
-            ->withHeader('Content-type', 'application/vnd.api+json')
+            ->withHeader('Content-Type', self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
 
     /**
      * @param Request $request
      * @param Response $response
-     * @param \Exception $exception
+     * @param \Exception|ApiException $exception
      * @return Response
      */
     public function generateJsonApiExceptionResponse(Request $request, Response $response, \Exception $exception)
     {
-        $log = new Logger();
-        $log->error($exception->getCode().' '. $exception->getMessage());
+
+        $logMessage = '';
+        $jsonError = array(
+            'code' => $exception->getCode(),
+            'title' => $exception->getMessage(),
+        );
+
+        if (null === $this->logger) {
+            $this->setLogger(new Logger());
+        }
+
+        if (is_subclass_of($exception, 'SuiteCRM\API\v8\Exception\ApiException')) {
+            $jsonError['detail'] = $exception->getDetail();
+            $jsonError['source'] = $exception->getSource();
+            $response = $response->withStatus($exception->getHttpStatus());
+            $logMessage =
+                ' Code: [' . $exception->getCode() . ']' .
+                ' Status: [' . $exception->getHttpStatus() . ']' .
+                ' Message: ' . $exception->getMessage() .
+                ' Detail: [' . $exception->getDetail() . ']' .
+                ' Source: [' . $exception->getSource()['pointer'] . ']';
+            $this->logger->log($exception->getLogLevel(), $logMessage);
+        } else {
+            $response = $response->withStatus(400);
+            $logMessage = $exception->getMessage();
+            $this->logger->error($logMessage);
+        }
+
+
+
+        $jsonError['status'] = $response->getStatusCode();
+
         $payload = array(
             'errors' => array(
-                array(
-                    'status' => $response->getStatusCode(),
-                    'code' => $exception->getCode(),
-                    'title' => $exception->getMessage(),
-                    'detail' => $exception->getTraceAsString()
-                )
+                $jsonError
             )
         );
-       return $this->generateJsonApiResponse($request, $response, $payload);
+
+        return $response
+            ->withHeader('Content-Type', self::CONTENT_TYPE)
+            ->write(json_encode($payload));
     }
 
     /**
      * @param Request $request
      * @param Response $response
      * @return Response
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     private function negotiatedJsonApiContent(Request $request, Response $response)
     {
-        $log = new Logger();
-        if($request->getContentType() !== 'application/vnd.api+json') {
-            $data = array(
-                'errors' => array(
-                    array(
-                        'status' => 415,
-                        'title' => 'Unsupported Media Type',
-                        'detail' => 'Json API expects the content type to be application/vnd.API+json'
-                    )
-                )
-            );
-
-            $log->error('Json API expects the content type to be application/vnd.API+json');
-
-            return $response
-                ->withStatus(415)
-                ->withHeader('Content-type', 'application/vnd.api+json')
-                ->write(json_encode($data));
+        if ($request->getContentType() !== self::CONTENT_TYPE) {
+            throw new UnsupportedMediaType();
         }
 
         $header = $request->getHeader('Accept');
-        if(count($header) === 1 && $header[0] !== 'application/vnd.api+json') {
-            $data = array(
-                'errors' => array(
-                    array(
-                        'status' => 406,
-                        'title' => 'Not Acceptable',
-                        'detail' => 'Json API expects the client to accept application/vnd.API+json'
-                    )
-                )
-            );
-            $log->error('Json API expects the client to accept application/vnd.API+json');
-            return $response
-                ->withStatus(406)
-                ->withHeader('Content-type', 'application/vnd.api+json')
-                ->write(json_encode($data));
+        if (empty($header) || count($header) !== 1 || $header[0] !== self::CONTENT_TYPE) {
+            throw new NotAcceptable();
         }
 
-        $log->debug('Json ApiController negotiated content type Successfully');
+        if (empty($this->logger)) {
+            $this->setLogger(new Logger());
+        }
+
+        $this->logger->debug('Json ApiController negotiated content type Successfully');
+
         return $response;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

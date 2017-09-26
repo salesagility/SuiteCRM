@@ -38,10 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry')) {
-    define('sugarEntry', true);
-}
-
 chdir(__DIR__.'/../../../../');
 require_once __DIR__.'/../../../../include/entryPoint.php';
 
@@ -68,107 +64,48 @@ foreach ($services as $service => $closure) {
 }
 
 $container['errorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container) {
+    return function ($request, $response, $exception) use ($container){
         /**
-         * @var \Slim\Http\Request $request
-         * @var \Slim\Http\Response $response
-         * @var Exception $exception
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $log = new \SuiteCRM\Utility\SuiteLogger();
-        $log->error($exception->getMessage().'\n' . $exception->getTraceAsString());
-        return $response->withStatus(500)
-            ->withHeader('Content-Type', 'application/vnd.api+json')
-            ->write(json_encode(array(
-                        'errors' => array(
-                            array(
-                                'status' => $response->getStatusCode(),
-                                'code' => $exception->getCode(),
-                                'title' => $exception->getMessage(),
-                                'detail' => $exception->getTraceAsString()
-                            )
-                        )
-                    )
-                )
-            );
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
-
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['phpErrorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container) {
+    return function ($request, $response, $exception) use ($container){
         /**
-         * @var \Slim\Http\Request $request
-         * @var \Slim\Http\Response $response
-         * @var Exception $exception
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $log = new \SuiteCRM\Utility\SuiteLogger();
-        $log->error($exception->getMessage().'\n' . $exception->getTraceAsString());
-        return $response->withStatus(500)
-            ->withHeader('Content-Type', 'application/vnd.api+json')
-            ->write(json_encode(array(
-                        'errors' => array(
-                            array(
-                                'status' => $response->getStatusCode(),
-                                'code' => $exception->getCode(),
-                                'title' => $exception->getMessage(),
-                                'detail' => $exception->getTraceAsString()
-                            )
-                        )
-                    )
-                )
-            );
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
 $container['notFoundHandler'] = function ($container) {
-    return function ($request, $response) use ($container) {
+    return function ($request, $response) use ($container){
         /**
-         * @var \Slim\Http\Request $request
-         * @var \Slim\Http\Response $response
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $log = new \SuiteCRM\Utility\SuiteLogger();
-        $log->error('Not Found' . $request->getUri());
-        return $response->withStatus(404)
-            ->withHeader('Content-Type', 'application/vnd.api+json')
-            ->write(json_encode(array(
-                        'errors' => array(
-                            array(
-                                'status' => $response->getStatusCode(),
-                                'code' => '404',
-                                'title' => 'Not Found',
-                                'detail' => ''
-                            )
-                        )
-                    )
-                )
-            );
+        $exception = new \SuiteCRM\API\v8\Exception\NotFound();
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
-
 $container['notAllowedHandler'] = function ($container) {
-    return function ($request, $response, $methods) use ($container) {
-        $log = new \SuiteCRM\Utility\SuiteLogger();
-        $log->error('Method must be one of: ' . implode(', ', $methods));
+    return function ($request, $response) use ($container){
         /**
-         * @var \Slim\Http\Request $request
-         * @var \Slim\Http\Response $response
-         * @var array $methods
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        return $response->withStatus(404)
-            ->withHeader('Content-Type', 'application/vnd.api+json')
-            ->write(json_encode(array(
-                        'errors' => array(
-                            array(
-                                'status' => $response->getStatusCode(),
-                                'code' => '405',
-                                'title' => 'Not Allowed',
-                                'detail' => 'Method must be one of: ' . implode(', ', $methods)
-                            )
-                        )
-                    )
-                )
-            );
+        $ApiController = $container->get('ApiController');
+        $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
