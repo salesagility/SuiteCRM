@@ -51,7 +51,7 @@ class Calendar {
 	public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Calls" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-								 "Tasks" => array("showCompleted" => true,"start" =>  "date_due", "end" => "date_due"),
+								 "Tasks" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"),
 //								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
 	//							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
 								 );
@@ -223,7 +223,7 @@ class Calendar {
 
 
 		$field_list = CalendarUtils::get_fields();
-
+        
 		$i = 0;
 		foreach($this->acts_arr as $user_id => $acts){
 			if(isset($acts) && empty($acts)){
@@ -241,7 +241,7 @@ class Calendar {
 				continue;
 			}
 			foreach($acts as $act){
-											
+                                           
 					$item = array();
 					$item['user_id'] = $user_id;
 					$item['module_name'] = $act->sugar_bean->module_dir;
@@ -299,11 +299,29 @@ class Calendar {
 						$item['duration_minutes'] = 0;	
 
 					if(isset($this->activityList[ $act->sugar_bean->module_name ]['start']) && !empty($this->activityList[ $act->sugar_bean->module_name ]['start'])){
-						$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean, $this->activityList[ $act->sugar_bean->module_name ]['start'], $this->activityList[ $act->sugar_bean->module_name ]['end']));
+					    $item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean, $this->activityList[ $act->sugar_bean->module_name ]['start'], $this->activityList[ $act->sugar_bean->module_name ]['end']));
 					}else{
 						$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean));
 					}
+                    
+                    ## START #DEV-224 for Task Durations
+                    if($act->sugar_bean->module_dir == 'Tasks')
+                    {
+                        #$tmp_date_start
+                        $tmp_date_start = $GLOBALS['timedate']->to_db($act->sugar_bean->date_start);
+                        $tmp_date_due = $GLOBALS['timedate']->to_db($act->sugar_bean->date_due);
+                        
+                        $diff = abs( strtotime( $tmp_date_due ) - strtotime( $tmp_date_start ) );
 
+                        $Days = intval( $diff / 86400 );
+                        $Hours = intval( ( $diff % 86400 ) / 3600) + $Days * 24;
+                        $Mins = intval( ( $diff / 60 ) % 60 );
+                        $Seconds = intval( $diff % 60 );
+                        
+                        $item['duration_hours'] = $Hours;
+                        $item['duration_minutes'] = $Mins;
+                    }
+                    ## END #DEV-224 for Task Durations
 
 				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
 				if(is_null($shared_calendar_separate)) {
