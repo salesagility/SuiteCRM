@@ -113,12 +113,16 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
+        $optInEmailFields = array();
+        $optInPrefix = 'opt_in_';
         if (!empty($person)) {
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
                 if ($k === 'client_id_address' || $k === 'req_id'
                     || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
+                } elseif(preg_match('/^' . $optInPrefix . '/', $k)) {
+                    $optInEmailFields[] = substr($k, strlen($optInPrefix));
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         $person->$k = $v;
@@ -184,6 +188,29 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
+
+        if(!empty($optInEmailFields)) {
+            foreach($optInEmailFields as $optInEmailField) {
+                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                    $sea = new SugarEmailAddress();
+                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    if($sea->retrieve($emailId)) {
+                        $sea->optIn();
+                        $sea->saveEmail($person->id, $moduleDir);
+                    } else {
+                        $msg = 'Error retrieving an email address.';
+                        $GLOBALS['log']->fatal($msg);
+                        throw new RuntimeException($msg);
+                    }
+                } else {
+                    $personClass = get_class($person);
+                    $msg = "Incorrect email field for opt-in at person. Person type: $personClass, field: $optInEmailField.";
+                    $GLOBALS['log']->fatal($msg);
+                    throw new RuntimeException($msg);
+                }
+            }
+        }
+
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];

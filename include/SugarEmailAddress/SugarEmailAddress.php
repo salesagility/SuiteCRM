@@ -59,7 +59,11 @@ class SugarEmailAddress extends SugarBean {
 	//allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
     var $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
     var $disable_custom_fields = true;
-    var $db;
+
+    /**
+     * @var DBManager
+     */
+    public $db;
     var $smarty;
     var $addresses = array(); // array of emails
     var $view = '';
@@ -1159,6 +1163,20 @@ class SugarEmailAddress extends SugarBean {
             }
         }
     }
+
+    public function optIn() {
+        if(!$this->id) {
+            $msg = 'Trying to update opt-in email address without email address ID.';
+            $GLOBALS['log']->fatal($msg);
+            throw new RuntimeException($msg);
+        }
+        $id = $this->db->quote($this->id);
+        $ip = $this->db->quote(query_client_ip());
+        $now = $this->db->now();
+        $query = "UPDATE email_addresses SET opt_in = 1, opt_in_ip = '$ip', opt_in_datetime = $now WHERE id = '$id'";
+        $this->db->query($query);
+    }
+
 } // end class def
 
 
