@@ -117,30 +117,44 @@ class SpotsDashlet extends Dashlet
      */
     public function display()
     {
-
-        //As the dashlet may point to a pivot that has been marked as deleted, check this here
-
-        if (is_null($this->spotId) || $this->spotId === '') {
-            return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
-        } else {
-            if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
-                return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
-            }
-
-            $ss = new Sugar_Smarty();
-            $ss->assign('id', $this->id);
-            $ss->assign('showUI', $this->showGui);
-            $ss->assign('spotToLoad', $this->spotId);
-
-            $spot = BeanFactory::getBean('Spots', $this->spotId);
-
-            $ss->assign('config', $spot->config);
-            $ss->assign('type', $spot->type);
-
-            $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
-
-            return parent::display().$str.'<br />'; // return parent::display for title and such
+        // Check if dashlet points to a pivot that has been marked as deleted
+        if ($this->spotId === null || $this->spotId === '') {
+            // return parent::display for title and such
+            return parent::display('') . '<span style="margin-left:10px;" class="dashletAnalyticMessage">' .
+                $this->dashletStrings['LBL_NO_SPOTS_SELECTED'] . '</span><br />';
         }
+
+        if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
+            // return parent::display for title and such
+            return parent::display('') . '<span style="margin-left:10px;" class="dashletAnalyticMessage">' .
+                $this->dashletStrings['LBL_SPOTS_POINTED_DELETED'] . '</span><br />';
+        }
+
+        if (!is_file($GLOBALS['sugar_config']['cache_dir'] . 'jsLanguage/Spots/' .
+            $GLOBALS['current_language'] . '.js')
+        ) {
+            require_once 'include/language/jsLanguage.php';
+            jsLanguage::createModuleStringsCache('Spots', $GLOBALS['current_language']);
+        }
+
+        echo '<script type="text/javascript" src="' . $GLOBALS['sugar_config']['cache_dir'] . 'jsLanguage/Spots/' .
+            $GLOBALS['current_language'] . '.js?s=' . $GLOBALS['js_version_key'] . '&c=' .
+            $GLOBALS['sugar_config']['js_custom_version'] . '&j=' . $GLOBALS['sugar_config']['js_lang_version'] .
+            '"></script>';
+
+        $ss = new Sugar_Smarty();
+        $ss->assign('id', $this->id);
+        $ss->assign('showUI', $this->showGui);
+        $ss->assign('spotToLoad', $this->spotId);
+
+        $spot = BeanFactory::getBean('Spots', $this->spotId);
+
+        $ss->assign('config', $spot->config);
+        $ss->assign('type', $spot->type);
+
+        $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
+
+        return parent::display() . $str . '<br />';
     }
 
     /**
