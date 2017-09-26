@@ -114,13 +114,13 @@ $dictionary['EmailTemplate'] = array(
         'body' => array(
             'name' => 'body',
             'vname' => 'LBL_BODY',
-            'type' => 'text',
+            'type' => 'longtext',
             'comment' => 'Plain text body to be used in resulting email'
         ),
         'body_html' => array(
             'name' => 'body_html',
             'vname' => 'LBL_PLAIN_TEXT',
-            'type' => 'html',
+            'type' => 'longtext',
             'comment' => 'HTML formatted email body to be used in resulting email'
         ),
         'deleted' => array(
