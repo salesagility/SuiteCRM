@@ -407,14 +407,6 @@ class SugarView
                 "URL" => ajaxLink($menu_item[0]),
                 "LABEL" => $menu_item[1],
                 "MODULE_NAME" => $menu_item[2],
-                "IMAGE" => $themeObject->getImage(
-                    $menu_item[2],
-                    "border='0' align='absmiddle'",
-                    null,
-                    null,
-                    '.gif',
-                    $menu_item[1]
-                ),
             );
         }
         $ss->assign("SHORTCUT_MENU", $shortcut_menu);
@@ -685,14 +677,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
@@ -721,14 +705,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
@@ -1639,10 +1615,12 @@ EOHTML;
         $iconPath = "";
         if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png', false))) {
             $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png');
-        } else {
-            if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
-                $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
-            }
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.svg', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.svg');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.svg', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.svg');
         }
 
         return $iconPath;
