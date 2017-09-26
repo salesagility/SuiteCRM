@@ -227,7 +227,7 @@ class Links implements LoggerAwareInterface
         }
 
         if ($this->hasHref()) {
-            $response['href'] = $this->self;
+            $response['href'] = $this->href;
         }
 
         if ($this->hasMeta()) {
