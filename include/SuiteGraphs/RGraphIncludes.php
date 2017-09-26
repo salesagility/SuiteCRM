@@ -56,7 +56,6 @@ $chart = <<<EOD
 
                 var text_size = Math.min(12, ($(window).width() / 1000) * 10 );
                 if(text_size > maxTextSize) text_size = maxTextSize;
-                //debugger;
                 if(typeof graph.__object__ !== "undefined") {
                     graph.__object__["properties"]["chart.text.size"] = text_size;
                     graph.__object__["properties"]["chart.key.text.size"] = text_size;
