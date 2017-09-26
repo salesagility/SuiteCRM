@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This class is an implemenatation class for all the rest services
@@ -113,10 +116,9 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
             self::$helperObject->setFaultObject($error);
             return;
-        }
-		else if(function_exists('mcrypt_cbc') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
-        		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN' ) )
-        {
+        } else if (function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
+            && (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN')
+        ) {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
             $authController->loggedIn = false; // reset login attempt to try again with decrypted password
             if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id']))

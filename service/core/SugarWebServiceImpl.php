@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 /**
@@ -524,52 +528,62 @@ function set_entries($session,$module_name, $name_value_lists){
  * 				 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name
  * @exception 'SoapFault' -- The SOAP error, if any
  */
-public function login($user_auth, $application, $name_value_list){
-	$GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
-	global $sugar_config, $system_config;
-	$error = new SoapError();
-	$user = new User();
-	$success = false;
-	if(!empty($user_auth['encryption']) && $user_auth['encryption'] === 'PLAIN'){
-		$user_auth['password'] = md5($user_auth['password']);
-	}
-	//rrs
-		$system_config = new Administration();
-	$system_config->retrieveSettings('system');
-	$authController = new AuthenticationController();
-	//rrs
-	$isLoginSuccess = $authController->login($user_auth['user_name'], $user_auth['password'], array('passwordEncrypted' => true));
-	$usr_id=$user->retrieve_user_id($user_auth['user_name']);
-	if($usr_id) {
-		$user->retrieve($usr_id);
-	}
-	if ($isLoginSuccess) {
-		if ($_SESSION['hasExpiredPassword'] =='1') {
-			$error->set_error('password_expired');
-			$GLOBALS['log']->fatal('password expired for user ' . $user_auth['user_name']);
-			LogicHook::initialize();
-			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
-			self::$helperObject->setFaultObject($error);
-			return;
-		} // if
-		if(!empty($user) && !empty($user->id) && !$user->is_group) {
-			$success = true;
-			global $current_user;
-			$current_user = $user;
-		} // if
-	} else if($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1')) {
-			$error->set_error('lockout_reached');
-			$GLOBALS['log']->fatal('Lockout reached for user ' . $user_auth['user_name']);
-			LogicHook::initialize();
-			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
-			self::$helperObject->setFaultObject($error);
-			return;
-	} else if(function_exists('mcrypt_cbc')){
-		$password = self::$helperObject->decrypt_string($user_auth['password']);
-		if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])){
-			$success = true;
-		} // if
-	} // else if
+    public function login($user_auth, $application, $name_value_list)
+    {
+        $GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
+        global $sugar_config, $system_config;
+        $error = new SoapError();
+        $user = new User();
+        $success = false;
+        if (!empty($user_auth['encryption']) && $user_auth['encryption'] === 'PLAIN') {
+            $user_auth['password'] = md5($user_auth['password']);
+        }
+        //rrs
+        $system_config = new Administration();
+        $system_config->retrieveSettings('system');
+        $authController = new AuthenticationController();
+        //rrs
+        $isLoginSuccess = $authController->login($user_auth['user_name'], $user_auth['password'],
+            array('passwordEncrypted' => true));
+        $usr_id = $user->retrieve_user_id($user_auth['user_name']);
+        if ($usr_id) {
+            $user->retrieve($usr_id);
+        }
+        if ($isLoginSuccess) {
+            if ($_SESSION['hasExpiredPassword'] == '1') {
+                $error->set_error('password_expired');
+                $GLOBALS['log']->fatal('password expired for user ' . $user_auth['user_name']);
+                LogicHook::initialize();
+                $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
+                self::$helperObject->setFaultObject($error);
+
+                return;
+            } // if
+            if (!empty($user) && !empty($user->id) && !$user->is_group) {
+                $success = true;
+                global $current_user;
+                $current_user = $user;
+            } // if
+        } else {
+            if ($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1')) {
+                $error->set_error('lockout_reached');
+                $GLOBALS['log']->fatal('Lockout reached for user ' . $user_auth['user_name']);
+                LogicHook::initialize();
+                $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
+                self::$helperObject->setFaultObject($error);
+
+                return;
+            } else {
+                if (function_exists('openssl_decrypt')) {
+                    $password = self::$helperObject->decrypt_string($user_auth['password']);
+                    if ($authController->login($user_auth['user_name'],
+                            $password) && isset($_SESSION['authenticated_user_id'])
+                    ) {
+                        $success = true;
+                    } // if
+                }
+            }
+        } // else if
 
 	if($success){
 		session_start();
