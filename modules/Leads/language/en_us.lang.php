@@ -95,6 +95,7 @@ $mod_strings = array(
     'LBL_DUPLICATE' => 'Similar Leads',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
+    'LBL_EMAIL_OPT_IN' => 'Email Opt In:',
     'LBL_EXISTING_ACCOUNT' => 'Used an existing account',
     'LBL_EXISTING_CONTACT' => 'Used an existing contact',
     'LBL_EXISTING_OPPORTUNITY' => 'Used an existing opportunity',

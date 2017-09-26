@@ -133,8 +133,22 @@ $field_defs_js = "var field_defs = {'Contacts':[";
 
 $xtpl->assign("WEB_POST_URL",$web_post_url);
 
-if (empty($focus->assigned_user_id) && empty($focus->id))  $focus->assigned_user_id = $current_user->id;
-if (empty($focus->assigned_name) && empty($focus->id))  $focus->assigned_user_name = $current_user->user_name;
+if(!isset($focus)) {
+    $focus = new stdClass();
+}
+
+if (
+    empty($focus->assigned_user_id) &&
+    empty($focus->id)
+) {
+    $focus->assigned_user_id = $current_user->id;
+}
+if (
+    empty($focus->assigned_name) &&
+    empty($focus->id)
+) {
+    $focus->assigned_user_name = $current_user->user_name;
+}
 $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 

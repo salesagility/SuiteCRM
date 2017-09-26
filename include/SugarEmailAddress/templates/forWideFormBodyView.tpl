@@ -79,6 +79,11 @@ value='{$app_strings.LBL_ADD_BUTTON}'>{sugar_getimage name="id-ff-add" alt=$app_
 						{$app_strings.LBL_EMAIL_OPT_OUT}
 					</td>
 					{/if}
+                    {if $useOptIn == true}
+					<td scope="row" NOWRAP>
+						{$app_strings.LBL_EMAIL_OPT_IN}
+					</td>
+                    {/if}
 					{if $useInvalid == true}
 					<td scope="row" NOWRAP>
 						{$app_strings.LBL_EMAIL_INVALID}

@@ -131,7 +131,7 @@ class ViewCampaignconfig extends SugarView
         
         $this->ss->assign("JAVASCRIPT",get_validate_record_js());
         include_once get_custom_file_if_exists("modules/Administration/OptInConfirmationEmailTemplateSelect.php");
-        getOptInConfirmationEmailTemplateSelect($this->ss, $emailTemplateList);
+        getOptInConfirmationEmailTemplateSelect($this->ss);
         $this->ss->display("modules/EmailMan/tpls/campaignconfig.tpl");
     }
 }

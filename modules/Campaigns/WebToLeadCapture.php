@@ -164,15 +164,18 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             }
 
             //in case there are forms out there still using email_opt_out
-            if(isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])){
-                    
+            if(isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out']) || isset($_POST['email_opt_in'])){
+
+                $outOut = isset($_POST['email_opt_out']) && $_POST['email_opt_out'];
+                $outIn = isset($_POST['email_opt_in']) && $_POST['email_opt_in'];
+
                 if(isset ($lead->email1) && !empty($lead->email1)){
                     $sea = new SugarEmailAddress();
-                    $sea->AddUpdateEmailAddress($lead->email1,0,1);
+                    $sea->AddUpdateEmailAddress($lead->email1,0,1 && !$optIn);
                 }   
                 if(isset ($lead->email2) && !empty($lead->email2)){
                     $sea = new SugarEmailAddress();
-                    $sea->AddUpdateEmailAddress($lead->email2,0,1);
+                    $sea->AddUpdateEmailAddress($lead->email2,0,1 && !$optIn);
                     
                 }
             }              

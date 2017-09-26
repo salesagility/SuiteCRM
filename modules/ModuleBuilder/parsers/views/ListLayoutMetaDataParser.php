@@ -178,6 +178,9 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             if (strtolower($key) == 'email_opt_out') {
                 continue;
             }
+            if (strtolower($key) == 'email_opt_in') {
+                continue;
+            }
 
             if (empty ($def ['default'])) {
                 if (isset($this->_fielddefs [$key])) {

@@ -267,6 +267,7 @@ class Importer
                     if ( $emailrow = $focus->db->fetchByAssoc($emailres) )
                     {
                         $focus->email_opt_out = $emailrow['opt_out'];
+                        $focus->email_opt_in = $emailrow['opt_in'];
                         $focus->invalid_email = $emailrow['invalid_email'];
                     }
                 }

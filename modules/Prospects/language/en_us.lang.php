@@ -98,6 +98,7 @@ $mod_strings = array(
     'LBL_ASSISTANT_PHONE' => 'Assistant Phone:',
     'LBL_DO_NOT_CALL' => 'Do Not Call:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
+    'LBL_EMAIL_OPT_IN' => 'Email Opt In:',
     'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
     'LBL_ALTERNATE_ADDRESS' => 'Other Address:',
     'LBL_ANY_ADDRESS' => 'Any Address:',

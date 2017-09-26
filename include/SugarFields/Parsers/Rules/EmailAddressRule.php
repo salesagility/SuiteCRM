@@ -81,7 +81,8 @@ function parsePanels(& $panels, $view) {
 	   	  	 	} else if(!is_array($column) && !empty($column)) {
 	   	  	 	   if(preg_match('/^email(s|2)$/si', $column) ||
 	   	  	 	      preg_match('/^invalid_email$/si', $column) ||
-	   	  	 	      preg_match('/^email_opt_out$/si', $column) ||
+                      preg_match('/^email_opt_out$/si', $column) ||
+                      preg_match('/^email_opt_in$/si', $column) ||
 	   	  	 	      preg_match('/^primary_email$/si', $column)) {
 	   	  	 	   	  $panels[$name][$rowCount][$key] = '';
 	   	  	 	   }

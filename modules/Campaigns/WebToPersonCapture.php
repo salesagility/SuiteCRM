@@ -140,7 +140,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $camplog->related_type = $person->module_dir;
             $camplog->activity_type = $person->object_name;
             $camplog->target_type = $person->module_dir;
-            $campaign_log->activity_date = $timedate->now();
+            $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
@@ -178,14 +178,18 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         }
 
         //in case there are forms out there still using email_opt_out
-        if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
+        if(isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out']) || isset($_POST['email_opt_in'])){
+
+            $outOut = isset($_POST['email_opt_out']) && $_POST['email_opt_out'];
+            $outIn = isset($_POST['email_opt_in']) && $_POST['email_opt_in'];
+
             if (isset($person->email1) && !empty($person->email1)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email1, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email1, 0, 1 && !$optIn);
             }
             if (isset($person->email2) && !empty($person->email2)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email2, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email2, 0, 1 && !$optIn);
             }
         }
 
@@ -195,8 +199,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $sea = new SugarEmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if($sea->retrieve($emailId)) {
+                        // TODO: config - they can get opt-in confirmation email instead checkbox on web-to-person form
                         $sea->optIn();
-                        $sea->saveEmail($person->id, $moduleDir);
+                        //$sea->saveEmail($person->id, $moduleDir);
                     } else {
                         $msg = 'Error retrieving an email address.';
                         $GLOBALS['log']->fatal($msg);
@@ -275,6 +280,12 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo 'Success';
             }
+
+            include_once get_custom_file_if_exists('module/Campaigns/OptInConfirmationEmailSender.php');
+            $optInConfirmationEmailSender = new OptInConfirmationEmailSender();
+            $optInConfirmationEmailSender->sendOptInConfiramtionEmail();
+
+
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
         sugar_cleanup();

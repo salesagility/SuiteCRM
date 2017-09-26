@@ -114,6 +114,14 @@ $dictionary['Account'] = array(
             'massupdate' => false,
             'studio' => 'false',
         ),
+        'email_opt_in' => array(
+            'name' => 'email_opt_in',
+            'vname' => 'LBL_EMAIL_OPT_IN',
+            'source' => 'non-db',
+            'type' => 'bool',
+            'massupdate' => false,
+            'studio' => 'false',
+        ),
         'invalid_email' => array(
             'name' => 'invalid_email',
             'vname' => 'LBL_INVALID_EMAIL',

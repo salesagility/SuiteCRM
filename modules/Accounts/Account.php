@@ -68,7 +68,8 @@ class Account extends Company {
 	var $description;
 	var $email1;
 	var $email2;
-	var $email_opt_out;
+    var $email_opt_out;
+    var $email_opt_in;
 	var $invalid_email;
 	var $employees;
 	var $id;

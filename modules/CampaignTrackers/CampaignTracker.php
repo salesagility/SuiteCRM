@@ -173,7 +173,7 @@ class CampaignTracker extends SugarBean {
         }
         if ($this->is_optout == 1) {
             $this->message_url .= '/index.php?entryPoint=removeme&identifier={MESSAGE_ID}';
-        } else if($this->is_optin == 1) {
+        } elseif($this->is_optin == 1) {
             $this->message_url .= '/index.php?entryPoint=addme&identifier={MESSAGE_ID}';
         } else {
             $this->message_url .= '/index.php?entryPoint=campaign_trackerv2&track=' . $this->id;

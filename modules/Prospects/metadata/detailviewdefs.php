@@ -196,9 +196,10 @@ array (
       ),
       'LBL_MORE_INFORMATION' => 
       array (
-        0 => 
+        0 =>
         array (
           0 => 'email_opt_out',
+          1 => 'email_opt_in',
           1 => 'do_not_call',
         ),
       ),

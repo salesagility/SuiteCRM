@@ -105,12 +105,19 @@ var emailAddressWidgetLoaded = false;
 				</div>
 				{/if}
 
-				{if $useOptOut == true}
-				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
-					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
-					<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_OPT_OUT}" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
-				</div>
-				{/if}
+                {if $useOptOut == true}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
+						<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_OPT_OUT}" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
+					</div>
+                {/if}
+
+                {if $useOptIn == true}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_IN}</label>
+						<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_OPT_IN}" id="email-address-opt-in-flag" class="email-address-opt-in-flag" value="" enabled="true"></div>
+					</div>
+                {/if}
 
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">

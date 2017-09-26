@@ -328,7 +328,8 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
 		}
     }
 
-	if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+    if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+    if (!isset($_POST[$prefix.'email_opt_in'])) $focus->email_opt_in = 0;
 	if (!isset($_POST[$prefix.'do_not_call'])) $focus->do_not_call = 0;
 
     if($do_save) {

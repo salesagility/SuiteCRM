@@ -548,9 +548,6 @@ class EmailMan extends SugarBean{
                 return false;
             }
 
-            if (!class_exists('EmailTemplate')) {
-
-            }
             $emailtemplate= new EmailTemplate();
 
             $ret=$emailtemplate->retrieve($email_marketing->template_id);
@@ -580,9 +577,7 @@ class EmailMan extends SugarBean{
 
 		//get tracking entities locations.
 		if (!isset($this->tracking_url)) {
-			if (!class_exists('Administration')) {
 
-			}
 			$admin=new Administration();
 			$admin->retrieveSettings('massemailer'); //retrieve all admin settings.
 		    if (isset($admin->settings['massemailer_tracking_entities_location_type']) and $admin->settings['massemailer_tracking_entities_location_type']=='2'  and isset($admin->settings['massemailer_tracking_entities_location']) ) {
@@ -604,10 +599,6 @@ class EmailMan extends SugarBean{
 		$class = $beanList[$this->related_type];
 		if (!class_exists($class)) {
 			require_once($beanFiles[$class]);
-		}
-
-		if (!class_exists('Email')) {
-
 		}
 
         //prepare variables for 'set_as_sent' function
@@ -633,14 +624,27 @@ class EmailMan extends SugarBean{
 			return true;
 		}
 
-        if ((!isset($module->email_opt_out)
+        if (
+            ((!isset($module->email_opt_out)
                     || ($module->email_opt_out !== 'on'
                         && $module->email_opt_out !== 1
                         && $module->email_opt_out !== '1'))
             && (!isset($module->invalid_email)
                     || ($module->invalid_email !== 'on'
                         && $module->invalid_email !== 1
-                        && $module->invalid_email !== '1'))){
+                        && $module->invalid_email !== '1'))
+            )
+            ||
+
+            !((!isset($module->email_opt_in)
+                    || ($module->email_opt_in !== 'on'
+                        && $module->email_opt_in !== 1
+                        && $module->email_opt_in !== '1'))
+                || (!isset($module->invalid_email)
+                    || ($module->invalid_email !== 'on'
+                        && $module->invalid_email !== 1
+                        && $module->invalid_email !== '1')))
+            ){
             $lower_email_address=strtolower($module->email1);
 			//test against indivdual address.
 			if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
@@ -687,9 +691,7 @@ class EmailMan extends SugarBean{
 			}
 			//fetch email template associate with the marketing message.
 			if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
-				if (!class_exists('EmailTemplate')) {
 
-				}
 				$this->current_emailtemplate= new EmailTemplate();
 
 				$this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
@@ -716,9 +718,6 @@ class EmailMan extends SugarBean{
 
 			// fetch mailbox details..
 			if(empty($this->current_mailbox)) {
-				if (!class_exists('InboundEmail')) {
-
-				}
 				$this->current_mailbox= new InboundEmail();
 			}
 			if (empty($this->current_mailbox->id) or $this->current_mailbox->id !== $this->current_emailmarketing->inbound_email_id) {
@@ -729,9 +728,6 @@ class EmailMan extends SugarBean{
 
 			// fetch campaign details..
 			if (empty($this->current_campaign)) {
-				if (!class_exists('Campaign')) {
-
-				}
 				$this->current_campaign= new Campaign();
 			}
 			if (empty($this->current_campaign->id) or $this->current_campaign->id !== $this->current_emailmarketing->campaign_id) {
@@ -905,9 +901,6 @@ class EmailMan extends SugarBean{
                      );
                     $this->newmessage = false;
                 }
-            }
-
-			if ($success) {
 				$this->set_as_sent($module->email1, true, $email_id, 'Emails', 'targeted');
 			} else {
 
@@ -928,7 +921,19 @@ class EmailMan extends SugarBean{
             $success = false;
             $this->target_tracker_key=create_guid();
 
-			if (isset($module->email_opt_out) && ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)) {
+			if (
+			        (
+			            isset($module->email_opt_out) &&
+                        ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)
+                    )
+
+                    ||
+
+                    !(
+                        isset($module->email_opt_in) &&
+                        ($module->email_opt_in === 'on' || $module->email_opt_in == '1' || $module->email_opt_in == 1)
+                    )
+                ) {
 				$this->set_as_sent($module->email1,true,null,null,'blocked');
 			} else {
 				if (isset($module->invalid_email) && ($module->invalid_email == 1 || $module->invalid_email == '1')) {

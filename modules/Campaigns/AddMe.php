@@ -85,9 +85,9 @@ if(!empty($_REQUEST['identifier'])) {
 		//no opt out for users.
 		if(preg_match('/^[0-9A-Za-z\-]*$/', $id) && $module != 'Users'){
             //record this activity in the campaing log table..
-            $ip = 'TODO: ip here..';
-            $datetime = 'TODO: datetime here...';
-			$query = "UPDATE email_addresses SET email_address.opt_out = 0, email_addresses.opt_in = 1, email_address.opt_in_ip = '$ip', email_address.opt_in_datetime = '$datetime' WHERE EXISTS(SELECT 1 FROM email_addr_bean_rel ear WHERE ear.bean_id = '$id' AND ear.deleted=0 AND email_addresses.id = ear.email_address_id)";
+            $ip = $db->quote(query_client_ip());
+            $datetime = TimeDate::getInstance()->nowDb();
+			$query = "UPDATE email_addresses SET email_addresses.opt_out = 0, email_addresses.opt_in = 1, email_addresses.opt_in_ip = '$ip', email_addresses.opt_in_datetime = '$datetime' WHERE EXISTS(SELECT 1 FROM email_addr_bean_rel ear WHERE ear.bean_id = '$id' AND ear.deleted=0 AND email_addresses.id = ear.email_address_id)";
 			$status=$db->query($query);
 			if($status){
 				echo "*";
