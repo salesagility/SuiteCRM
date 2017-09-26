@@ -2376,7 +2376,7 @@ sugarListView.get_checks = function () {
 
 sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
   checks = sugarListView.get_checks();
-  SUGAR.util.globalEval('document.MassUpdate.' + moduleString + '.value = orderBy');
+  document.MassUpdate.elements[moduleString].value = orderBy;
   document.MassUpdate.lvso.value = order;
   if (typeof document.MassUpdate.massupdate != 'undefined') {
     document.MassUpdate.massupdate.value = 'false';
@@ -2393,12 +2393,10 @@ sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
 sugarListView.prototype.save_checks = function (offset, moduleString) {
   checks = sugarListView.get_checks();
   if (typeof document.MassUpdate != 'undefined') {
-    SUGAR.util.globalEval('document.MassUpdate.' + moduleString + '.value = offset');
-
+    document.MassUpdate.elements[moduleString].value = offset
     if (typeof document.MassUpdate.massupdate != 'undefined') {
       document.MassUpdate.massupdate.value = 'false';
     }
-
     //we must first clear the action of massupdate, change it to index
     document.MassUpdate.action.value = document.MassUpdate.return_action.value;
     document.MassUpdate.return_module.value = '';
