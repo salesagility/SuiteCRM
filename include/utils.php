@@ -3225,7 +3225,7 @@ function pre_login_check()
 							document.getElementById("cant_login").value=1;
 							document.getElementById("login_button").disabled = true;
 							document.getElementById("user_name").disabled = true;
-							//document.getElementById("user_password").disabled = true;
+							//document.getElementById("username_password").disabled = true;
 						}
 						</script>';
         }
