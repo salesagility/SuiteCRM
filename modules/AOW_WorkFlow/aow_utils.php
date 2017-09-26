@@ -286,8 +286,23 @@ function getValidFieldsTypes($module, $field){
     return $valid_type;
 }
 
+/**
+ * This function retrieves a module's fields.
+ *
+ * @param string $module
+ * @param string $fieldname
+ * @param string $aow_field
+ * @param string $view name
+ * @param string $value
+ * @param string $alt_type
+ * @param string $currency_id
+ * @param array $params
+ * @param bool $reports_csv determines if returned field is for building a csv
+ * @return string module fields
+ */
 
-function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array()){
+function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array(), $reports_csv)
+{
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     // use the mod_strings for this module
@@ -565,7 +580,10 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
 
-    //$return = str_replace($fieldname,$ss->fetch($file));
+    //In the case of a csv being generated check if the field type is a checkbox. if so just return the value
+    if($report_csv && $vardefFields[$fieldname]['type'] === 'bool') {
+        return $value;
+    }
 
     return $ss->fetch($file);
 }
