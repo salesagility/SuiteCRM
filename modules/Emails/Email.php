@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -770,7 +771,7 @@ class Email extends Basic
          * PHPMAILER PREP
          */
         $mail = new SugarPHPMailer();
-        $mail = $this->setMailer($mail, '', $_REQUEST['fromAccount']);
+        $mail = $this->setMailer($mail, '', $request['fromAccount']);
         if (empty($mail->Host) && !$this->isDraftEmail($request)) {
             $this->status = 'send_error';
 
@@ -787,12 +788,12 @@ class Email extends Basic
         $mail->Subject = from_html($this->name);
 
         // work-around legacy code in SugarPHPMailer
-        if ($_REQUEST['setEditor'] == 1) {
-            $_REQUEST['description_html'] = $_REQUEST['sendDescription'];
-            $this->description_html = $_REQUEST['description_html'];
+        if ($request['setEditor'] == 1) {
+            $request['description_html'] = $request['sendDescription'];
+            $this->description_html = $request['description_html'];
         } else {
             $this->description_html = '';
-            $this->description = $_REQUEST['sendDescription'];
+            $this->description = $request['sendDescription'];
         }
         // end work-around
 
@@ -813,26 +814,26 @@ class Email extends Basic
         } else {
             /* Apply Email Templates */
             // do not parse email templates if the email is being saved as draft....
-            $toAddresses = $this->email2ParseAddresses($_REQUEST['sendTo']);
+            $toAddresses = $this->email2ParseAddresses($request['sendTo']);
             $sea = new SugarEmailAddress();
             $object_arr = array();
 
-            if (isset($_REQUEST['parent_type']) && !empty($_REQUEST['parent_type']) &&
-                isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id']) &&
-                ($_REQUEST['parent_type'] == 'Accounts' ||
-                    $_REQUEST['parent_type'] == 'Contacts' ||
-                    $_REQUEST['parent_type'] == 'Leads' ||
-                    $_REQUEST['parent_type'] == 'Users' ||
-                    $_REQUEST['parent_type'] == 'Prospects')
+            if (isset($request['parent_type']) && !empty($request['parent_type']) &&
+                isset($request['parent_id']) && !empty($request['parent_id']) &&
+                ($request['parent_type'] == 'Accounts' ||
+                    $request['parent_type'] == 'Contacts' ||
+                    $request['parent_type'] == 'Leads' ||
+                    $request['parent_type'] == 'Users' ||
+                    $request['parent_type'] == 'Prospects')
             ) {
-                if (isset($beanList[$_REQUEST['parent_type']]) && !empty($beanList[$_REQUEST['parent_type']])) {
-                    $className = $beanList[$_REQUEST['parent_type']];
+                if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
+                    $className = $beanList[$request['parent_type']];
                     if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
                         if (!class_exists($className)) {
                             require_once($beanFiles[$className]);
                         }
                         $bean = new $className();
-                        $bean->retrieve($_REQUEST['parent_id']);
+                        $bean->retrieve($request['parent_id']);
                         $object_arr[$bean->module_dir] = $bean->id;
                     } // if
                 } // if
@@ -865,8 +866,8 @@ class Email extends Basic
             }
         }
 
-        if (isset($_REQUEST['parent_type']) && empty($_REQUEST['parent_type']) &&
-            isset($_REQUEST['parent_id']) && empty($_REQUEST['parent_id'])
+        if (isset($request['parent_type']) && empty($request['parent_type']) &&
+            isset($request['parent_id']) && empty($request['parent_id'])
         ) {
             $this->parent_id = "";
             $this->parent_type = "";
@@ -1008,7 +1009,7 @@ class Email extends Basic
                     //$mail->AddAttachment($fileLocation, $filename, 'base64');
 
                     // only save attachments if we're archiving or drafting
-                    if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
+                    if ((($this->type === 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] === 1)) {
                         $note = new Note();
                         $note->id = create_guid();
                         $note->new_with_id = true; // duplicating the note with files
@@ -1048,7 +1049,7 @@ class Email extends Basic
                         $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset), 'base64', $mime_type);
 
                     // only save attachments if we're archiving or drafting
-                    if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
+                    if ((($this->type === 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] === 1)) {
                         $note = new Note();
                         $note->id = create_guid();
                         $note->new_with_id = true; // duplicating the note with files
@@ -1085,9 +1086,9 @@ class Email extends Basic
                         if (!$note->embed_flag) {
                             $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
                             // only save attachments if we're archiving or drafting
-                            if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
+                            if ((($this->type === 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] === 1)) {
 
-                                if ($note->parent_id != $this->id) {
+                                if ($note->parent_id !== $this->id) {
                                     $this->saveTempNoteAttachments($filename, $fileLocation, $mime_type);
                                 }
                             } // if
@@ -1106,8 +1107,8 @@ class Email extends Basic
                             $this->email2GetMime($fileLocation));
 
                         //If we are saving an email we were going to forward we need to save the attachments as well.
-                        if ((($this->type == 'draft') && !empty($this->id))
-                            || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)
+                        if ((($this->type === 'draft') && !empty($this->id))
+                            || (isset($request['saveToSugar']) && $request['saveToSugar'] === 1)
                         ) {
                             $mimeType = $this->email2GetMime($fileLocation);
                             $this->saveTempNoteAttachments($filename, $fileLocation, $mimeType);
@@ -1124,7 +1125,7 @@ class Email extends Basic
         /* save email to sugar? */
         $forceSave = false;
 
-        if ($this->type == 'draft' && !isset($request['saveDraft'])) {
+        if ($this->type === 'draft' && !isset($request['saveDraft'])) {
             // sending a draft email
             $this->type = 'out';
             $this->status = 'sent';
@@ -1153,7 +1154,7 @@ class Email extends Basic
         }
 
         if ((!(empty($orignialId) || isset($request['saveDraft']) || ($this->type == 'draft' && $this->status == 'draft'))) &&
-            (($_REQUEST['composeType'] == 'reply') || ($_REQUEST['composeType'] == 'replyAll') || ($_REQUEST['composeType'] == 'replyCase')) && ($orignialId != $this->id)
+            (($request['composeType'] == 'reply') || ($request['composeType'] == 'replyAll') || ($request['composeType'] == 'replyCase')) && ($orignialId != $this->id)
         ) {
             $originalEmail = new Email();
             $originalEmail->retrieve($orignialId);
@@ -1162,11 +1163,11 @@ class Email extends Basic
             $this->reply_to_status = 0;
         } // if
 
-        if ($_REQUEST['composeType'] == 'reply' || $_REQUEST['composeType'] == 'replyCase') {
-            if (isset($_REQUEST['ieId']) && isset($_REQUEST['mbox'])) {
+        if ($request['composeType'] === 'reply' || $request['composeType'] === 'replyCase') {
+            if (isset($request['ieId']) && isset($request['mbox'])) {
                 $emailFromIe = new InboundEmail();
-                $emailFromIe->retrieve($_REQUEST['ieId']);
-                $emailFromIe->mailbox = $_REQUEST['mbox'];
+                $emailFromIe->retrieve($request['ieId']);
+                $emailFromIe->mailbox = $request['mbox'];
                 if (isset($emailFromIe->id) && $emailFromIe->is_personal) {
                     if ($emailFromIe->isPop3Protocol()) {
                         $emailFromIe->mark_answered($this->uid, 'pop3');
@@ -1180,43 +1181,43 @@ class Email extends Basic
 
 
         if ($forceSave ||
-            $this->type == 'draft' ||
-            (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)
+            $this->type === 'draft' ||
+            (isset($request['saveToSugar']) && $request['saveToSugar'] === 1)
         ) {
 
             // saving a draft OR saving a sent email
             $decodedFromName = mb_decode_mimeheader($mail->FromName);
             $this->from_addr = "{$decodedFromName} <{$mail->From}>";
             $this->from_addr_name = $this->from_addr;
-            $this->to_addrs = $_REQUEST['sendTo'];
-            $this->to_addrs_names = $_REQUEST['sendTo'];
-            $this->cc_addrs = $_REQUEST['sendCc'];
-            $this->cc_addrs_names = $_REQUEST['sendCc'];
-            $this->bcc_addrs = $_REQUEST['sendBcc'];
-            $this->bcc_addrs_names = $_REQUEST['sendBcc'];
+            $this->to_addrs = $request['sendTo'];
+            $this->to_addrs_names = $request['sendTo'];
+            $this->cc_addrs = $request['sendCc'];
+            $this->cc_addrs_names = $request['sendCc'];
+            $this->bcc_addrs = $request['sendBcc'];
+            $this->bcc_addrs_names = $request['sendBcc'];
             $this->assigned_user_id = $current_user->id;
 
             $this->date_sent = $timedate->now();
             ///////////////////////////////////////////////////////////////////
             ////	LINK EMAIL TO SUGARBEANS BASED ON EMAIL ADDY
 
-            if (isset($_REQUEST['parent_type']) && !empty($_REQUEST['parent_type']) &&
-                isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])
+            if (isset($request['parent_type']) && !empty($request['parent_type']) &&
+                isset($request['parent_id']) && !empty($request['parent_id'])
             ) {
-                $this->parent_id = $_REQUEST['parent_id'];
-                $this->parent_type = $_REQUEST['parent_type'];
-                $q = "SELECT count(*) c FROM emails_beans WHERE  email_id = '{$this->id}' AND bean_id = '{$_REQUEST['parent_id']}' AND bean_module = '{$_REQUEST['parent_type']}'";
+                $this->parent_id = $request['parent_id'];
+                $this->parent_type = $request['parent_type'];
+                $q = "SELECT count(*) c FROM emails_beans WHERE  email_id = '{$this->id}' AND bean_id = '{$request['parent_id']}' AND bean_module = '{$request['parent_type']}'";
                 $r = $this->db->query($q);
                 $a = $this->db->fetchByAssoc($r);
                 if ($a['c'] <= 0) {
-                    if (isset($beanList[$_REQUEST['parent_type']]) && !empty($beanList[$_REQUEST['parent_type']])) {
-                        $className = $beanList[$_REQUEST['parent_type']];
+                    if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
+                        $className = $beanList[$request['parent_type']];
                         if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
                             if (!class_exists($className)) {
                                 require_once($beanFiles[$className]);
                             }
                             $bean = new $className();
-                            $bean->retrieve($_REQUEST['parent_id']);
+                            $bean->retrieve($request['parent_id']);
                             if ($bean->load_relationship('emails')) {
                                 $bean->emails->add($this->id);
                             } // if
@@ -1249,7 +1250,7 @@ class Email extends Basic
         }
 
         if (!empty($request['fromAccount'])) {
-            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype !== 'gmail') {
                 $sentFolder = $ie->get_stored_options("sentFolder");
                 if (!empty($sentFolder)) {
                     $data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
