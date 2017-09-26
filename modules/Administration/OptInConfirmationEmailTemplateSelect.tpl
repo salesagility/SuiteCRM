@@ -1,8 +1,23 @@
-<select id='opt_in_confirmation_email_template_id_select' name='opt_in_confirmation_email_template_id' onchange='show_edit_template_link(this);'>{$OPT_IN_CONFIRMATION_EMAIL_TEMPLATES}</select>
+<div>
+    <label>{$MOD.LBL_OPT_IN_CHECKBOX_ON_PERSON_FORM_ENABLED}</label>
+    <input type="hidden" name="opt_in_checkbox_on_person_form_enabled" value="0">
+    <input type="checkbox" id="opt_in_checkbox_on_person_form_enabled" name="opt_in_checkbox_on_person_form_enabled" {if $opt_in_checkbox_on_person_form_enabled}checked="checked"{/if} value="1">
+</div>
 
-<a href='javascript:open_email_template_form("opt_in_confirmation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-<span name='edit_template' id='opt_in_confirmation_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("opt_in_confirmation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+<div>
+    <label>{$MOD.LBL_OPT_IN_CONFIRMATION_EMAIL_ENABLED}</label>
+    <input type="hidden" name="opt_in_confirmation_email_enabled" value="0">
+    <input type="checkbox" id="opt_in_confirmation_email_enabled" name="opt_in_confirmation_email_enabled" {if $opt_in_confirmation_email_enabled}checked="checked"{/if} value="1">
+</div>
+
+<div>
+<label>{$MOD.LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE}</label>
+    <select id='opt_in_confirmation_email_template_id_select' name='opt_in_confirmation_email_template_id' onchange='show_edit_template_link(this);'>{$OPT_IN_CONFIRMATION_EMAIL_TEMPLATES}</select>
+
+    <a href='javascript:open_email_template_form("opt_in_confirmation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+    <span name='edit_template' id='opt_in_confirmation_email_template_id_edit_template_link' style='visibility: hidden;'>
+                    <a href='javascript:edit_email_template_form("opt_in_confirmation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+</div>
 <script>
 {literal}
 

@@ -274,16 +274,17 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 die();
             }
         } else {
-            if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
-                echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
-            } else {
-                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
-            }
+            echo "<p>{$mod_strings['LBL_THANKS_FOR_SUBMITTING']}</p>";
 
-            include_once get_custom_file_if_exists('module/Campaigns/OptInConfirmationEmailSender.php');
+            include_once get_custom_file_if_exists('modules/Campaigns/OptInConfirmationEmailSender.php');
             $optInConfirmationEmailSender = new OptInConfirmationEmailSender();
-            $optInConfirmationEmailSender->sendOptInConfiramtionEmail();
+            if ($optInConfirmationEmailSender->isOptInConfirmationEmailEnabled()) {
+                if(!$optInConfirmationEmailSender->sendOptInConfirmationEmail($person)) {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED']}</p>";
+                } else {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS']}</p>";
+                }
+            }
 
 
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);

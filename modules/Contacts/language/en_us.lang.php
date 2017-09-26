@@ -220,6 +220,9 @@ $mod_strings = array(
     'LBL_AOS_INVOICES' => 'Invoices',
     'LBL_AOS_QUOTES' => 'Quotes',
     'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
+    'LBL_THANKS_FOR_SUBMITTING' => 'Thanks for submitting.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
 
 ?>

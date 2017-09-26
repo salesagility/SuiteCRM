@@ -127,7 +127,6 @@ function change_state(radiobutton)
 				<tr>
 					<td scope="row">
 						<div id="rollover">
-                            {$MOD.LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE}
                             {sugar_include type="smarty" file='modules/Administration/OptInConfirmationEmailTemplateSelect.tpl'}
 						</div>
 					</td>

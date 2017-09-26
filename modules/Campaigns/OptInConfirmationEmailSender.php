@@ -50,7 +50,7 @@ class OptInConfirmationEmailSender {
     /**
      * @return bool
      */
-    private function isOptInConfirmationEmailEnabled() {
+    public function isOptInConfirmationEmailEnabled() {
         global $sugar_config;
 
         if(
@@ -84,6 +84,32 @@ class OptInConfirmationEmailSender {
     }
 
     /**
+     * @param string $email
+     * @param SugarPHPMailer $mailer
+     */
+    private function logEmail($email, SugarPHPMailer $mailer, $personId = null)
+    {
+        require_once get_custom_file_if_exists('modules/Emails/Email.php');
+        $emailObj = new Email();
+        $emailObj->to_addrs_names = $email;
+        $emailObj->type = 'out';
+        $emailObj->deleted = '0';
+        $emailObj->name = $mailer->Subject;
+        $emailObj->description = $mailer->AltBody;
+        $emailObj->description_html = $mailer->Body;
+        $emailObj->from_addr_name = $mailer->From;
+        if ($personId) {
+            $emailObj->parent_type = 'Persons';
+            $emailObj->parent_id = $personId;
+        }
+        $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+        $emailObj->modified_user_id = '1';
+        $emailObj->created_by = '1';
+        $emailObj->status = 'sent';
+        $emailObj->save();
+    }
+
+    /**
      * @param Person $person
      * @return bool
      * @throws \RuntimeException
@@ -106,8 +132,8 @@ class OptInConfirmationEmailSender {
             }
 
             $mailer->Subject = $emailTemplate->subject;
-            $mailer->Body = $emailTemplate->body_html;
-            $mailer->isHTML(true);
+            $mailer->Body = SugarCleaner::cleanHtml($emailTemplate->body_html);
+            $mailer->isHTML();
             $mailer->AltBody = $emailTemplate->body;
             $mailer->From = $emailTemplate->from_address;
             $mailer->FromName = $emailTemplate->from_name;

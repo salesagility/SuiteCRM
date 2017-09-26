@@ -239,7 +239,17 @@ HTML;
     }
 
     private static function getOptInCheckboxHTML($fieldName) {
-        return "<label>opt-in</label><input type=\"checkbox\" id=\"opt_in_$fieldName\" name=\"opt_in_$fieldName\">";
+        global $sugar_config, $mod_strings;
+
+        $html = '';
+        if(
+            isset($sugar_config['opt_in_checkbox_on_person_form_enabled']) &&
+            $sugar_config['opt_in_checkbox_on_person_form_enabled']
+        ) {
+            $html = "<label>{$mod_strings['LBL_OPT_IN']}</label><input type=\"checkbox\" id=\"opt_in_$fieldName\" name=\"opt_in_$fieldName\">";
+        }
+
+        return $html;
     }
 
     // ----------------
