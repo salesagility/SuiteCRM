@@ -804,50 +804,76 @@ class MBPackage
         $path = 'custom/modules/';
         if (!file_exists($path) || !is_dir($path)) {
             return array($mod_strings['LBL_EC_NOCUSTOM'] => '');
-        } else {
-            if (!$module) {
-                $path = $path . $module . '/';
-            }
-            $scanlisting = scandir($path);
-            $dirlisting = array();
-            foreach ($scanlisting as $value) {
-                if ($value !== '.' && $value !== '..' && is_dir($path . $value) === true) {
-                    $dirlisting[] = $value;
-                }
-            }
-            if (empty($dirlisting)) {
-                return array($mod_strings['LBL_EC_NOCUSTOM'] => '');
-            }
-            if (!$module) {
-                $return = array();
-                foreach ($dirlisting as $value) {
-                    if (!file_exists('modules/' . $value . '/metadata/studio.php')) {
-                        continue;
-                    }
-                    $custommodules[$value] = $this->getCustomModules($value);
-                    foreach ($custommodules[$value] as $va) {
-                        switch ($va) {
-                            case 'language':
-                            case 'Ext':
-                                $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
-                                break;
-                            case 'metadata':
-                                $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMLAYOUT'];
-                                break;
-                            case '':
-                                $return[$value . ' ' . $mod_strings['LBL_EC_EMPTYCUSTOM']] = '';
-                                break;
-                            default:
-                                $return[$value][$va] = $mod_strings['LBL_UNDEFINED'];
-                        }
-                    }
-                }
+        }
 
-                return $return;
-            } else {
-                return $dirlisting;
+        if ($module !== false) {
+            $path = $path . $module . '/';
+        }
+        $scanlisting = scandir($path, SCANDIR_SORT_ASCENDING);
+        $dirlisting = array();
+        foreach ($scanlisting as $value) {
+            if ($value !== '.' && $value !== '..' && is_dir($path . $value) === true) {
+                $dirlisting[] = $value;
             }
         }
+        if (empty($dirlisting)) {
+            return array($mod_strings['LBL_EC_NOCUSTOM'] => '');
+        }
+        if (!$module) {
+            $return = array();
+            foreach ($dirlisting as $value) {
+                if (!file_exists('modules/' . $value . '/metadata/studio.php')) {
+                    continue;
+                }
+                $custommodules[$value] = $this->getCustomModules($value);
+                foreach ($custommodules[$value] as $va) {
+                    switch ($va) {
+                        case 'language':
+                            $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
+                            break;
+                        case 'metadata':
+                            $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMLAYOUT'];
+                            break;
+                        case 'Ext':
+                            $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
+                            break;
+                        case '':
+                            $return[$value][$va] = $mod_strings['LBL_EC_EMPTYCUSTOM'];
+                            break;
+                        case 'views':
+                            $return[$value][$va] = $mod_strings['LBL_EC_VIEWS'];
+                            break;
+                        case 'SugarFeeds':
+                            $return[$value][$va] = $mod_strings['LBL_EC_SUGARFEEDS'];
+                            break;
+                        case 'Dashlets':
+                            $return[$value][$va] = $mod_strings['LBL_EC_DASHLETS'];
+                            break;
+                        case 'css':
+                            $return[$value][$va] = $mod_strings['LBL_EC_CSS'];
+                            break;
+                        case 'tpls':
+                            $return[$value][$va] = $mod_strings['LBL_EC_TPLS'];
+                            break;
+                        case 'images':
+                            $return[$value][$va] = $mod_strings['LBL_EC_IMAGES'];
+                            break;
+                        case 'js':
+                            $return[$value][$va] = $mod_strings['LBL_EC_JS'];
+                            break;
+                        case 'qtip':
+                            $return[$value][$va] = $mod_strings['LBL_EC_QTIP'];
+                            break;
+                        default:
+                            $return[$value][$va] = $mod_strings['LBL_UNDEFINED'];
+                    }
+                }
+            }
+
+            return $return;
+        }
+
+        return $dirlisting;
     }
 
     /**
