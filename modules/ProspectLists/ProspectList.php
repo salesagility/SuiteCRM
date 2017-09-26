@@ -396,7 +396,7 @@ FROM prospect_lists_prospects plp
 	{
 		$where_clauses = Array();
 		$the_query_string = $GLOBALS['db']->quote($the_query_string);
-		array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+		$where_clauses[] = "prospect_lists.name like '$the_query_string%'";
 
 		$the_where = "";
 		foreach($where_clauses as $clause)

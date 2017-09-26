@@ -148,18 +148,18 @@ class Prospect extends Person {
 		$where_clauses = Array();
 		$the_query_string = $GLOBALS['db']->quote($the_query_string);
 
-		array_push($where_clauses, "prospects.last_name like '$the_query_string%'");
-		array_push($where_clauses, "prospects.first_name like '$the_query_string%'");
-		array_push($where_clauses, "prospects.assistant like '$the_query_string%'");
+		$where_clauses[] = "prospects.last_name like '$the_query_string%'";
+		$where_clauses[] = "prospects.first_name like '$the_query_string%'";
+		$where_clauses[] = "prospects.assistant like '$the_query_string%'";
 
 		if (is_numeric($the_query_string))
 		{
-			array_push($where_clauses, "prospects.phone_home like '%$the_query_string%'");
-			array_push($where_clauses, "prospects.phone_mobile like '%$the_query_string%'");
-			array_push($where_clauses, "prospects.phone_work like '%$the_query_string%'");
-			array_push($where_clauses, "prospects.phone_other like '%$the_query_string%'");
-			array_push($where_clauses, "prospects.phone_fax like '%$the_query_string%'");
-			array_push($where_clauses, "prospects.assistant_phone like '%$the_query_string%'");
+			$where_clauses[] = "prospects.phone_home like '%$the_query_string%'";
+			$where_clauses[] = "prospects.phone_mobile like '%$the_query_string%'";
+			$where_clauses[] = "prospects.phone_work like '%$the_query_string%'";
+			$where_clauses[] = "prospects.phone_other like '%$the_query_string%'";
+			$where_clauses[] = "prospects.phone_fax like '%$the_query_string%'";
+			$where_clauses[] = "prospects.assistant_phone like '%$the_query_string%'";
 		}
 
 		$the_where = "";

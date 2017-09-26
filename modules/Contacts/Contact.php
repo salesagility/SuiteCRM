@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,16 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-/*********************************************************************************
-
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -470,20 +464,20 @@ class Contact extends Person {
 		$where_clauses = Array();
 		$the_query_string = $this->db->quote($the_query_string);
 
-		array_push($where_clauses, "contacts.last_name like '$the_query_string%'");
-		array_push($where_clauses, "contacts.first_name like '$the_query_string%'");
-		array_push($where_clauses, "accounts.name like '$the_query_string%'");
-		array_push($where_clauses, "contacts.assistant like '$the_query_string%'");
-		array_push($where_clauses, "ea.email_address like '$the_query_string%'");
+		$where_clauses[] = "contacts.last_name like '$the_query_string%'";
+		$where_clauses[] = "contacts.first_name like '$the_query_string%'";
+		$where_clauses[] = "accounts.name like '$the_query_string%'";
+		$where_clauses[] = "contacts.assistant like '$the_query_string%'";
+		$where_clauses[] = "ea.email_address like '$the_query_string%'";
 
 		if (is_numeric($the_query_string))
 		{
-			array_push($where_clauses, "contacts.phone_home like '%$the_query_string%'");
-			array_push($where_clauses, "contacts.phone_mobile like '%$the_query_string%'");
-			array_push($where_clauses, "contacts.phone_work like '%$the_query_string%'");
-			array_push($where_clauses, "contacts.phone_other like '%$the_query_string%'");
-			array_push($where_clauses, "contacts.phone_fax like '%$the_query_string%'");
-			array_push($where_clauses, "contacts.assistant_phone like '%$the_query_string%'");
+			$where_clauses[] = "contacts.phone_home like '%$the_query_string%'";
+			$where_clauses[] = "contacts.phone_mobile like '%$the_query_string%'";
+			$where_clauses[] = "contacts.phone_work like '%$the_query_string%'";
+			$where_clauses[] = "contacts.phone_other like '%$the_query_string%'";
+			$where_clauses[] = "contacts.phone_fax like '%$the_query_string%'";
+			$where_clauses[] = "contacts.assistant_phone like '%$the_query_string%'";
 		}
 
 		$the_where = "";

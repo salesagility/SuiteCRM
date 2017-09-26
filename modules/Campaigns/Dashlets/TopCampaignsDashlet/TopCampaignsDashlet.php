@@ -81,7 +81,7 @@ class TopCampaignsDashlet extends Dashlet
 		$row = $this->seedBean->db->fetchByAssoc($result);
 
 		while ($row != null){
-			array_push($this->top_campaigns, $row);
+			$this->top_campaigns[] = $row;
 			$row = $this->seedBean->db->fetchByAssoc($result);			
 		}
     }

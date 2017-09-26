@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once('include/MVC/SugarModule.php');
@@ -174,13 +178,11 @@ class quicksearchQuery
             switch ($operator)
             {
                 case self::CONDITION_CONTAINS:
-                    array_push(
-                        $conditionArray,
-                        sprintf(
-                            "%s like '%%%s%%'",
-                            $table_prefix . $db->getValidDBName($condition['name']),
-                            $db->quote($condition['value']
-                    )));
+                    $conditionArray[] = sprintf(
+                        "%s like '%%%s%%'",
+                        $table_prefix . $db->getValidDBName($condition['name']),
+                        $db->quote($condition['value']
+                ));
                     break;
 
                 case self::CONDITION_LIKE_CUSTOM:
@@ -198,39 +200,24 @@ class quicksearchQuery
                         $nameFormat = $locale->getLocaleFormatMacro($current_user);
 
                         if (strpos($nameFormat,'l') > strpos($nameFormat,'f')) {
-                            array_push(
-                                $conditionArray,
-                                $db->concat($table, array('first_name','last_name')) . " like '$like'"
-                            );
+                            $conditionArray[] = $db->concat($table, array('first_name','last_name')) . " like '$like'";
                         } else {
-                            array_push(
-                                $conditionArray,
-                                $db->concat($table, array('last_name','first_name')) . " like '$like'"
-                            );
+                            $conditionArray[] = $db->concat($table, array('last_name','first_name')) . " like '$like'";
                         }
                     }
                     else {
-                        array_push(
-                            $conditionArray,
-                            $table_prefix . $db->getValidDBName($condition['name']) . sprintf(" like '%s'", $like)
-                        );
+                        $conditionArray[] = $table_prefix . $db->getValidDBName($condition['name']) . sprintf(" like '%s'", $like);
                     }
                     break;
 
                 case self::CONDITION_EQUAL:
                     if ($condition['value']) {
-                        array_push(
-                            $conditionArray,
-                            sprintf("(%s = '%s')", $db->getValidDBName($condition['name']), $db->quote($condition['value']))
-                            );
+                        $conditionArray[] = sprintf("(%s = '%s')", $db->getValidDBName($condition['name']), $db->quote($condition['value']));
                     }
                     break;
 
                 default:
-                    array_push(
-                        $conditionArray,
-                        $table_prefix.$db->getValidDBName($condition['name']) . sprintf(" like '%s%%'", $db->quote($condition['value']))
-                    );
+                    $conditionArray[] = $table_prefix.$db->getValidDBName($condition['name']) . sprintf(" like '%s%%'", $db->quote($condition['value']));
             }
         }
 
@@ -264,7 +251,7 @@ class quicksearchQuery
         $data['totalCount'] = count($results);
         $data['fields']     = array();
 
-        for ($i = 0; $i < count($results); $i++) {
+        for ($i = 0, $iMax = count($results); $i < $iMax; $i++) {
             $data['fields'][$i] = array();
             $data['fields'][$i]['module'] = $results[$i]->object_name;
 
@@ -423,13 +410,11 @@ class quicksearchQuery
         $results['fields']     = array();
 
         foreach ($users as $id => $name) {
-            array_push(
-                $results['fields'],
-                array(
-                    'id' => (string) $id,
-                    'user_name' => $name,
-                    'module' => 'Users'
-            ));
+            $results['fields'][] = array(
+                'id' => (string) $id,
+                'user_name' => $name,
+                'module' => 'Users'
+        );
         }
 
         return $results;

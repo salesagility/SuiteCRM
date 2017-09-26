@@ -238,22 +238,26 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	}
 
 	/**
-	 * takes in a name and creates the appropriate search filter for that user name including any additional filters specified in the system settings page
+	 * takes in a name and creates the appropriate search filter for that user name.
+	 * This includes any additional filters specified in the system settings page.
+	 *
 	 * @param $name
 	 * @return String
 	 */
-	function getUserNameFilter($name){
-			$name_filter = "(" . $GLOBALS['ldap_config']->settings['ldap_login_attr']. "=" . $name . ")";
-			//add the additional user filter if it is specified
-			if(!empty($GLOBALS['ldap_config']->settings['ldap_login_filter'])){
-				$add_filter = $GLOBALS['ldap_config']->settings['ldap_login_filter'];
-				if(substr($add_filter, 0, 1) !== "("){
-					$add_filter = "(" . $add_filter . ")";
-				}
-				$name_filter = "(&" . $name_filter . $add_filter . ")";
-			}
-			return $name_filter;
-	}
+    function getUserNameFilter($name)
+    {
+        $name_filter = "(" . $GLOBALS['ldap_config']->settings['ldap_login_attr'] . "=" . $name . ")";
+        //add the additional user filter if it is specified
+        if (!empty($GLOBALS['ldap_config']->settings['ldap_login_filter'])) {
+            $add_filter = $GLOBALS['ldap_config']->settings['ldap_login_filter'];
+            if ($add_filter[0] !== "(") {
+                $add_filter = "(" . $add_filter . ")";
+            }
+            $name_filter = "(&" . $name_filter . $add_filter . ")";
+        }
+
+        return $name_filter;
+    }
 
 	/**
 	 * Creates a user with the given User Name and returns the id of that new user
