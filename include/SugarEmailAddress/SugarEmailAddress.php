@@ -1173,7 +1173,7 @@ class SugarEmailAddress extends SugarBean {
         $id = $this->db->quote($this->id);
         $ip = $this->db->quote(query_client_ip());
         $now = $this->db->now();
-        $query = "UPDATE email_addresses SET opt_in = 1, opt_in_ip = '$ip', opt_in_datetime = $now WHERE id = '$id'";
+        $query = "UPDATE email_addresses SET opt_in = 1, opt_in_ip = '$ip', opt_in_datetime = $now WHERE id = '$id' AND opt_in = 0";
         $this->db->query($query);
     }
 
