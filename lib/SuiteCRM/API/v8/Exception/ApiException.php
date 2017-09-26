@@ -20,6 +20,12 @@ class ApiException extends Exception
      * @see https://tools.ietf.org/html/rfc6901
      */
     private $source = array('pointer' => '');
+
+    /**
+     * @var string $detail
+     */
+    private $detail = 'Api Version: 8';
+
     /**
      * ApiException constructor.
      * @param string $message API Exception "$message"
@@ -38,7 +44,15 @@ class ApiException extends Exception
      */
     public function getDetail()
     {
-        return 'Api Version: 8';
+        return $this->detail;
+    }
+
+    /**
+     * @param string $detail
+     */
+    public function setDetail($detail)
+    {
+        $this->detail = $detail;
     }
 
     /**
