@@ -43,7 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $dictionary['EmailTemplate'] = array(
-    'table' => 'email_templates', 'comment' => 'Templates used in email processing',
+    'table' => 'email_templates',
+    'comment' => 'Templates used in email processing',
     'fields' => array(
         'id' => array(
             'name' => 'id',
@@ -210,11 +211,18 @@ $dictionary['EmailTemplate'] = array(
     ),
     'relationships' => array(
         'emailtemplates_assigned_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailTemplates', 'rhs_table' => 'email_templates', 'rhs_key' => 'assigned_user_id',
-                'relationship_type' => 'one-to-many')
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailTemplates',
+                'rhs_table' => 'email_templates',
+                'rhs_key' => 'assigned_user_id',
+                'relationship_type' => 'one-to-many'
+            )
     ),
 );
 
-VardefManager::createVardef('EmailTemplates', 'EmailTemplate', array('security_groups',
+VardefManager::createVardef('EmailTemplates', 'EmailTemplate', array(
+    'security_groups',
 ));
