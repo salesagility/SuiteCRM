@@ -74,17 +74,11 @@ foreach($focus->additional_column_fields as $field) {
 if (isset($_POST['is_optout']) && $_POST['is_optout'] =='on') {
     $focus->is_optout=1;
     $focus->tracker_url='index.php?entryPoint=removeme';
-} else if (isset($_POST['is_optin']) && $_POST['is_optin'] =='on') {
+} elseif (isset($_POST['is_optin']) && $_POST['is_optin'] =='on') {
     $focus->is_optin=1;
     $focus->tracker_url='index.php?entryPoint=addme';
 } else {
     $focus->is_optout=0;
-}
-if (isset($_POST['is_optin']) && $_POST['is_optin'] =='on') {
-    $focus->is_optin=1;
-    $focus->tracker_url='index.php?entryPoint=addme';
-} else {
-    $focus->is_optin=0;
 }
 
 $focus->save($check_notify);

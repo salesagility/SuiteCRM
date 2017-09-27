@@ -142,6 +142,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $camplog->target_type = $person->module_dir;
             $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
+            $camplog->target_tracker_key = create_guid();
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
             }
@@ -279,7 +280,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             include_once get_custom_file_if_exists('modules/Campaigns/OptInConfirmationEmailSender.php');
             $optInConfirmationEmailSender = new OptInConfirmationEmailSender();
             if ($optInConfirmationEmailSender->isOptInConfirmationEmailEnabled()) {
-                if(!$optInConfirmationEmailSender->sendOptInConfirmationEmail($person)) {
+                if(!$optInConfirmationEmailSender->sendOptInConfirmationEmail($person, $camplog)) {
                     echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED']}</p>";
                 } else {
                     echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS']}</p>";

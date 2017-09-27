@@ -110,11 +110,26 @@ class OptInConfirmationEmailSender {
     }
 
     /**
+     * @param $emailTemplate
+     * @param CampaignLog $campaignLog
+     */
+    private function replaceOptInLinkPlaceholder($emailTemplate, $campaignLog) {
+        global $sugar_config;
+        $pattern = '/\$emailaddress_opt_in_link\b/';
+        $link = $sugar_config['site_url'] . '/index.php?entryPoint=addme&identifier=' . $campaignLog->target_tracker_key;
+        $label = "<a href=\"$link\">Opt-out-label-here</a>";
+        $emailTemplate->body_html = preg_replace($pattern, $label, $emailTemplate->body_html);
+        $emailTemplate->body = preg_replace($pattern, $link, $emailTemplate->body);
+        $emailTemplate->subject = preg_replace($pattern, $link, $emailTemplate->subject);
+    }
+
+    /**
      * @param Person $person
+     * @param CampaignLog $campaignLog
      * @return bool
      * @throws \RuntimeException
      */
-    public function sendOptInConfirmationEmail($person)
+    public function sendOptInConfirmationEmail($person, $campaignLog)
     {
         global $log;
 
@@ -130,6 +145,8 @@ class OptInConfirmationEmailSender {
                 $log->fatal($msg);
                 throw new RuntimeException($msg);
             }
+
+            $this->replaceOptInLinkPlaceholder($emailTemplate, $campaignLog);
 
             $mailer->Subject = $emailTemplate->subject;
             $mailer->Body = SugarCleaner::cleanHtml($emailTemplate->body_html);
