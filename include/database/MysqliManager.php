@@ -282,7 +282,9 @@ class MysqliManager extends MysqlManager
 				$dbport=substr($configOptions['db_host_name'],$pos+1);
 			}
 
-			$this->database = @mysqli_connect($dbhost,$configOptions['db_user_name'],$configOptions['db_password'],isset($configOptions['db_name'])?$configOptions['db_name']:'',$dbport);
+			$dbsocket = isset($configOptions['db_socket']) ? $configOptions['db_socket'] : '';
+			
+			$this->database = @mysqli_connect($dbhost,$configOptions['db_user_name'],$configOptions['db_password'],isset($configOptions['db_name'])?$configOptions['db_name']:'',$dbport,$dbsocket);
 			if(empty($this->database)) {
 				$GLOBALS['log']->fatal("Could not connect to DB server ".$dbhost." as ".$configOptions['db_user_name'].". port " .$dbport . ": " . mysqli_connect_error());
 				if($dieOnError) {
