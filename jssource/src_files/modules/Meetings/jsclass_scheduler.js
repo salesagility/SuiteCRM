@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////
@@ -467,7 +468,8 @@ SugarWidgetSchedulerSearch.createInvitee = function(form){
 	var callback = {
 		success: function (response) {
 
-			var rObj = eval("("+response.responseText+")");
+          SUGAR.util.globalEval("e=("+response.responseText+")");
+			var rObj = e;
 
 			ajaxStatus.hideStatus();
 
@@ -773,38 +775,30 @@ SugarWidgetScheduler.getScheduleDetails = function(beans, ids) {
     }
     // get requests
     var requests = getScheduleItems();
-    $.when.apply(null, requests).done(function() {
-        //console.log('parsing: getSchedule Items');
-        var containers = [];
-        // build results array
-        //console.log('arguments:');
-        //console.log(arguments);
-        // if just one result
-        if(typeof arguments[0] === "string") {
-                //console.log('found: single result');
-                var oldArgs = arguments;
-                arguments = new Array();
-                arguments[0] = oldArgs;
-        }
+  $.when.apply(null, requests).done(function () {
+    //console.log('parsing: getSchedule Items');
+    var containers = [];
+    // build results array
+    //console.log('arguments:');
+    //console.log(arguments);
+    // if just one result
+    if (typeof arguments[0] === "string") {
+      //console.log('found: single result');
+      var oldArgs = arguments;
+      arguments = new Array();
+      arguments[0] = oldArgs;
+    }
 
-        $.each(arguments, function(index, value) {
-                //console.log('value:');
-                //console.log(value);
-                eval(value[0]);
-                //console.log('div:');
-                var container = result.body;
-                //console.log(container);
-                containers.push(container);
-        });
-        // Sort
-        //console.log('SugarWidgetScheduler.sortByStartdate()');
-        containers.sort(SugarWidgetScheduler.sortByStartdate);
-        //console.log('SugarWidgetScheduler.sortByType()');
-        containers.sort(SugarWidgetScheduler.sortByType);
-        //console.log(containers);
-        $dialog.html(containers);
-        //console.log('\n\n');
+    $.each(arguments, function (index, value) {
+      SUGAR.util.evalScript(value[0]);
+      var container = result.body;
+      containers.push(container);
     });
+    // Sort
+    containers.sort(SugarWidgetScheduler.sortByStartdate);
+    containers.sort(SugarWidgetScheduler.sortByType);
+    $dialog.html(containers);
+  });
 }
 //////////////////////////////////////////////////
 // class: SugarWidgetSchedulerAttendees

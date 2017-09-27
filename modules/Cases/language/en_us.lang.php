@@ -108,7 +108,7 @@ $mod_strings = array(
     'LBL_CASE_INFORMATION' => 'OVERVIEW',
 
     // SNIP
-    'LBL_UPDATE_TEXT' => 'Update Text',
+    'LBL_UPDATE_TEXT' => 'Updates - Text', //Field for Case updates with text only
     'LBL_INTERNAL' => 'Internal Update',
     'LBL_AOP_CASE_UPDATES' => 'Case Updates',
     'LBL_AOP_CASE_UPDATES_THREADED' => 'Case Updates Threaded',
@@ -126,6 +126,6 @@ $mod_strings = array(
     'LBL_SELECT_EXTERNAL_CASE_DOCUMENT' => 'External file',
     'LBL_CONTACT_CREATED_BY_NAME' => 'Created by contact',
     'LBL_CONTACT_CREATED_BY' => 'Created by',
-    'LBL_CASE_UPDATE_FORM' => 'Update attachment form',
+    'LBL_CASE_UPDATE_FORM' => 'Updates - Attachment form', //Form for attachements on case updates
 );
 
