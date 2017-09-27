@@ -364,7 +364,7 @@ class AOR_ReportsController extends SugarController
 
         $app_list_strings['aor_operator_list'];
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_operator_list'],
+            echo "<select type='text' style='width:117px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_operator_list'],
                     $value) . "</select>";
         } else {
             echo $app_list_strings['aor_operator_list'][$value];
@@ -446,7 +446,7 @@ class AOR_ReportsController extends SugarController
         }
 
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_condition_type_list'],
+            echo "<select type='text' style='width:117px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_condition_type_list'],
                     $value) . "</select>";
         } else {
             echo $app_list_strings['aor_condition_type_list'][$value];

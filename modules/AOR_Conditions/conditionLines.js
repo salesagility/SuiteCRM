@@ -522,7 +522,7 @@ function insertConditionLine(condition){
         }
 
         var b = x.insertCell(nxtCell++);
-        b.style.width = '15%';
+        b.style.width = '10%';
         b.className = 'condition-sortable-handle';
         var viewStyle = 'display:none';
         if (action_sugar_grp1 == 'EditView') {
@@ -538,7 +538,7 @@ function insertConditionLine(condition){
 
 
         var c = x.insertCell(nxtCell++);
-        c.style.width = '15%';
+        c.style.width = '10%';
         c.className = 'condition-sortable-handle';
         var viewStyle = 'display:none';
         if (action_sugar_grp1 == 'EditView') {
@@ -555,11 +555,11 @@ function insertConditionLine(condition){
 
         var d = x.insertCell(nxtCell++);
         d.id = 'aor_conditions_operatorInput' + condln;
-        d.style.width = '15%';
+        d.style.width = '11%';
 
         var e = x.insertCell(nxtCell++);
         e.id = 'aor_conditions_fieldTypeInput' + condln;
-        e.style.width = '15%';
+        e.style.width = '11%';
 
         var f = x.insertCell(nxtCell++);
         f.id = 'aor_conditions_fieldInput' + condln;
