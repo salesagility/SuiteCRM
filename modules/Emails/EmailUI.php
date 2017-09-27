@@ -1298,7 +1298,8 @@ eoq;
 				'email_address'		=> $address,
 				'primary_address'	=> 1,
 				'invalid_email'		=> 0,
-				'opt_out'			=> 0,
+                'opt_out'			=> 0,
+                'opt_in'			=> 0,
 				'reply_to_address'	=> 1
 			);
 

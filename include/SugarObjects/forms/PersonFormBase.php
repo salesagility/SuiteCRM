@@ -81,7 +81,7 @@ function buildTableForm($rows)
         $duplicateLabel = string_format($app_strings['MSG_DUPLICATE'], array(strtolower($this->objectName), $this->moduleName));
 		$form = '<table width="100%"><tr><td>'.$duplicateLabel.'</td></tr><tr><td height="20"></td></tr></table>';
 		$form .= "<form action='index.php' method='post' name='dup{$this->moduleName}'><input type='hidden' name='selected{$this->objectName}' value=''>";
-		$form .= getPostToForm('/emailAddress(PrimaryFlag|OptOutFlag|InvalidFlag)?[0-9]*?$/', true);
+		$form .= getPostToForm('/emailAddress(PrimaryFlag|OptOutFlag|OptInFlag|InvalidFlag)?[0-9]*?$/', true);
 	} else {
         $duplicateLabel = string_format($app_strings['MSG_SHOW_DUPLICATES'], array(strtolower($this->objectName), $this->moduleName));
 		$form = '<table width="100%"><tr><td>'.$duplicateLabel.'</td></tr><tr><td height="20"></td></tr></table>';

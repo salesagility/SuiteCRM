@@ -61,8 +61,9 @@
 		'<td nowrap="NOWRAP"><input type="text" title="email address 0" name="emailAddress{$index}" id="emailAddress0" size="30"/></td>' +
 		'<td><span>&nbsp;</span><img id="removeButton0" name="0" src="index.php?entryPoint=getImage&amp;themeName=Sugar&amp;imageName=delete_inline.gif"/></td>' +
 		'<td align="center"><input type="radio" name="emailAddressPrimaryFlag" id="emailAddressPrimaryFlag0" value="emailAddress0" enabled="true" checked="true"/></td>' +
-		'<td align="center"><input type="checkbox" name="emailAddressOptOutFlag[]" id="emailAddressOptOutFlag0" value="emailAddress0" enabled="true"/></td>' + 
-		'<td align="center"><input type="checkbox" name="emailAddressInvalidFlag[]" id="emailAddressInvalidFlag0" value="emailAddress0" enabled="true"/></td>' + 
+        '<td align="center"><input type="checkbox" name="emailAddressOptOutFlag[]" id="emailAddressOptOutFlag0" value="emailAddress0" enabled="true"/></td>' +
+        '<td align="center"><input type="checkbox" name="emailAddressOptInFlag[]" id="emailAddressOptInFlag0" value="emailAddress0" enabled="true"/></td>' +
+        '<td align="center"><input type="checkbox" name="emailAddressInvalidFlag[]" id="emailAddressInvalidFlag0" value="emailAddress0" enabled="true"/></td>' +
 		'<td><input type="hidden" name="emailAddressVerifiedFlag0" id="emailAddressVerifiedFlag0" value="true"/></td>' + 
 		'<td><input type="hidden" name="emailAddressVerifiedValue0" id="emailAddressVerifiedValue0" value=""/></td></tr>',
 		
@@ -78,7 +79,7 @@
 		prefillEmailAddresses: function(tableId, o){
 			for (i = 0; i < o.length; i++) {
 				o[i].email_address = o[i].email_address.replace('&#039;', "'");
-				this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].invalid_email, o[i].email_address_id);
+				this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].opt_in, o[i].invalid_email, o[i].email_address_id);
 			}
 		},
 		
@@ -361,10 +362,12 @@
 		    td3.setAttribute("align", "center");
 		    td3.setAttribute("class", "email-address-primary");
 		    td4.setAttribute("align", "center");
-				td5.setAttribute("align", "center");
-				td5.setAttribute("class", "email-address-opt-out");
-				td6.setAttribute("align", "center");
-				td6.setAttribute("class", "email-address-invalid");
+          td5.setAttribute("align", "center");
+          td5.setAttribute("class", "email-address-opt-out");
+          td6.setAttribute("align", "center");
+          td6.setAttribute("class", "email-address-opt-in");
+				td7.setAttribute("align", "center");
+				td7.setAttribute("class", "email-address-invalid");
 
 		    td1.appendChild(newContent);
 		    td1.appendChild(newContentRecordId);
@@ -377,10 +380,10 @@
 		    td3.appendChild(newContentPrimaryFlag);
 		    td4.appendChild(newContentReplyToFlag);
 		  td5.appendChild(newContentOptOutFlag);
-		  td5.appendChild(newContentOptInFlag);
-		    td6.appendChild(newContentInvalidFlag);
-		    td7.appendChild(newContentVerifiedFlag);
-		    td8.appendChild(newContentVerifiedValue);
+		  td6.appendChild(newContentOptInFlag);
+		    td7.appendChild(newContentInvalidFlag);
+		    td8.appendChild(newContentVerifiedFlag);
+		    td9.appendChild(newContentVerifiedValue);
 		    
 		    tr.appendChild(td1);
 		    tr.appendChild(td2);
@@ -425,7 +428,6 @@
             newContentOptOutFlag.setAttribute("checked", 'true');
             newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
           }
-
 
           if(optInFlag == '1') {
             newContentOptInFlag.setAttribute("checked", 'true');

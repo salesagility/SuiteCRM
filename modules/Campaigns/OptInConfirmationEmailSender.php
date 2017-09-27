@@ -114,10 +114,10 @@ class OptInConfirmationEmailSender {
      * @param CampaignLog $campaignLog
      */
     private function replaceOptInLinkPlaceholder($emailTemplate, $campaignLog) {
-        global $sugar_config;
+        global $sugar_config, $mod_strings;
         $pattern = '/\$emailaddress_opt_in_link\b/';
         $link = $sugar_config['site_url'] . '/index.php?entryPoint=addme&identifier=' . $campaignLog->target_tracker_key;
-        $label = "<a href=\"$link\">Opt-out-label-here</a>";
+        $label = "<a href=\"$link\">{$mod_string['LBL_CLICK']}</a>";
         $emailTemplate->body_html = preg_replace($pattern, $label, $emailTemplate->body_html);
         $emailTemplate->body = preg_replace($pattern, $link, $emailTemplate->body);
         $emailTemplate->subject = preg_replace($pattern, $link, $emailTemplate->subject);

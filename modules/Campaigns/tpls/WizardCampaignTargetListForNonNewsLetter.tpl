@@ -430,8 +430,7 @@
                     if(document.getElementById('existing_is_optout'+i).checked){opt_val =1;}
                     //add values for this target entry into array of target entries
                     final_list_of_existing_targets_array[i] = document.getElementById('existing_target_id'+i).value+"@@"+document.getElementById('existing_target_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('existing_target_url'+i).value;
-                  }
-                  if( document.getElementById('existing_target_name'+i)  &&  document.getElementById('existing_is_optin'+i)  &&  document.getElementById('existing_target_url'+i) ){
+                  }else if( document.getElementById('existing_target_name'+i)  &&  document.getElementById('existing_is_optin'+i)  &&  document.getElementById('existing_target_url'+i) ){
                     //make sure the check box value is int (0/1)
                     var opt_val = '0';
                     if(document.getElementById('existing_is_optin'+i).checked){opt_val =1;}

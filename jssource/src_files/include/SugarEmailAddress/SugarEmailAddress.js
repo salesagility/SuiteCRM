@@ -80,7 +80,7 @@
     prefillEmailAddresses: function (tableId, o) {
       for (i = 0; i < o.length; i++) {
         o[i].email_address = o[i].email_address.replace('&#039;', "'");
-        this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].invalid_email, o[i].email_address_id);
+        this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].opt_in, o[i].invalid_email, o[i].email_address_id);
       }
     },//prefillEmailAddresses
 

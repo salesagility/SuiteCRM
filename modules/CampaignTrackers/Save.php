@@ -79,6 +79,7 @@ if (isset($_POST['is_optout']) && $_POST['is_optout'] =='on') {
     $focus->tracker_url='index.php?entryPoint=addme';
 } else {
     $focus->is_optout=0;
+    $focus->is_optin=0;
 }
 
 $focus->save($check_notify);

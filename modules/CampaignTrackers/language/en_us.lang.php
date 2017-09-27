@@ -54,7 +54,8 @@ $mod_strings = array (
 	'LBL_CREATED_BY'=>'Created By',
 	'LBL_DELETED'=>'Deleted',
 	'LBL_CAMPAIGN'=>'Campaign',
-	'LBL_OPTOUT'=>'Opt-out',
+    'LBL_OPTOUT'=>'Opt-out',
+    'LBL_OPTIN'=>'Opt-in',
 	
 	'LBL_MODULE_NAME'=>'Campaign Trackers',
 	'LBL_EDIT_CAMPAIGN_NAME'=>'Campaign Name:',

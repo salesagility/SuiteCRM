@@ -287,7 +287,9 @@ if(!empty($mod)){
 		</tr>
 		</table>
 		<input type='hidden' name='${prefix}alt_address_city' value='{$prospect->alt_address_city}'><input type='hidden' name='${prefix}alt_address_state'   value='{$prospect->alt_address_state}'><input type='hidden' name='${prefix}alt_address_postalcode'   value='{$prospect->alt_address_postalcode}'><input type='hidden' name='${prefix}alt_address_country'  value='{$prospect->alt_address_country}'>
-		<input type='hidden' name='${prefix}do_not_call'  value='{$prospect->do_not_call}'><input type='hidden' name='${prefix}email_opt_out'  value='{$prospect->email_opt_out}'><input type='hidden' name='${prefix}email_opt_in'  value='{$prospect->email_opt_in}'>
+		<input type='hidden' name='${prefix}do_not_call'  value='{$prospect->do_not_call}'>
+		<input type='hidden' name='${prefix}email_opt_out'  value='{$prospect->email_opt_out}'>
+		<input type='hidden' name='${prefix}email_opt_in'  value='{$prospect->email_opt_in}'>
 EOQ;
 
 

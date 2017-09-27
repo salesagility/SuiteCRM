@@ -70,7 +70,7 @@
 		</td>
 		<td width="25%" scope="row">
 			<span>
-				<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optin" title="{$MOD.LBL_EDIT_OPT_IN}" id="is_optin"  class="checkbox" type="checkbox" />
+				<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optin'));" name="is_optin" title="{$MOD.LBL_EDIT_OPT_IN}" id="is_optin"  class="checkbox" type="checkbox" />
 				&nbsp;{$MOD.LBL_EDIT_OPT_IN_}
 			</span>
 		</td>
@@ -209,8 +209,7 @@
                     if(document.getElementById('is_optout'+i).checked){opt_val =1;}
                     //add values for this tracker entry into array of tracker entries
                     final_list_of_trackers_array[i] = document.getElementById('tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('tracker_url'+i).value;
-                  }
-                  if( document.getElementById('tracker_name'+i)  &&  document.getElementById('is_optin'+i)  &&  document.getElementById('tracker_url'+i) ){
+                  } else if( document.getElementById('tracker_name'+i)  &&  document.getElementById('is_optin'+i)  &&  document.getElementById('tracker_url'+i) ){
                     //make sure the check box value is int (0/1)
                     var opt_val = '0';
                     if(document.getElementById('is_optin'+i).checked){opt_val =1;}
@@ -233,8 +232,7 @@
                     if(document.getElementById('existing_is_optout'+i).checked){opt_val =1;}
                     //add values for this tracker entry into array of tracker entries
                     final_list_of_existing_trackers_array[i] = document.getElementById('existing_tracker_id'+i).value+"@@"+document.getElementById('existing_tracker_name'+i).value+"@@"+opt_val+"@@"+document.getElementById('existing_tracker_url'+i).value;
-                  }
-                  if( document.getElementById('existing_tracker_name'+i)  &&  document.getElementById('existing_is_optin'+i)  &&  document.getElementById('existing_tracker_url'+i) ){
+                  } else if( document.getElementById('existing_tracker_name'+i)  &&  document.getElementById('existing_is_optin'+i)  &&  document.getElementById('existing_tracker_url'+i) ){
                     //make sure the check box value is int (0/1)
                     var opt_val = '0';
                     if(document.getElementById('existing_is_optin'+i).checked){opt_val =1;}

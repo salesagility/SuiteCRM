@@ -322,7 +322,23 @@ eoq;
 								} // if
 
 							} // if
-	                    } // if
+	                    } elseif (!empty($_POST['optin_primary'])) {
+                            $optin_flag_value = 0;
+                            if ($_POST['optin_primary'] == 'true') {
+                                $optin_flag_value = 1;
+                            } // if
+                            if (isset($this->sugarbean->emailAddress)) {
+                                if (!empty($this->sugarbean->emailAddress->addresses)) {
+                                    foreach($this->sugarbean->emailAddress->addresses as $key =>$emailAddressRow) {
+                                        if ($emailAddressRow['primary_address'] == '1') {
+                                            $email_address_id = $emailAddressRow['email_address_id'];
+                                            break;
+                                        } // if
+                                    } // foreach
+                                } // if
+
+                            } // if
+                        } // if
 
 						// Fix for issue 1549: mass update the cases, and change the state value from open to close,
 						// Status value can still display New, Assigned, Pending Input (even though it should not)
@@ -347,7 +363,7 @@ eoq;
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
-	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
+	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value}, opt_in = {$optin_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
 	    					$GLOBALS['db']->query($query);
 
 						} // if
@@ -383,9 +399,10 @@ eoq;
 		$lang_oc_status = translate('LBL_OC_STATUS');
 		$lang_unsync = translate('LBL_UNSYNC');
 		$lang_archive = translate('LBL_ARCHIVE');
-		$lang_optout_primaryemail = $app_strings['LBL_OPT_OUT_FLAG_PRIMARY'];
+        $lang_optout_primaryemail = $app_strings['LBL_OPT_OUT_FLAG_PRIMARY'];
+        $lang_optin_primaryemail = $app_strings['LBL_OPT_IN_FLAG_PRIMARY'];
 
-		$field_count = 0;
+        $field_count = 0;
 
 		$html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE']."</h3></td></tr></table>";
 		$html .= "<div id='mass_update_div'><table cellpadding='0' cellspacing='1' border='0' width='100%' class='edit view' id='mass_update_table'>";
@@ -505,7 +522,33 @@ eoq;
 			$this->sugarbean->object_name == 'Lead' ||
 			$this->sugarbean->object_name == 'Prospect') {
 
-			$html .= "<tr><td width='15%'  scope='row' class='dataLabel'>$lang_optout_primaryemail</td><td width='35%' class='dataField'><select name='optout_primary'><option value=''>{$GLOBALS['app_strings']['LBL_NONE']}</option><option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option><option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option></select></td></tr>";
+            $html .= "
+				<tr>
+					<td width='15%'  scope='row' class='dataLabel'>
+						$lang_optout_primaryemail
+					</td>
+					<td width='35%' class='dataField'>
+						<select name='optout_primary'>
+							<option value=''>{$GLOBALS['app_strings']['LBL_NONE']}</option>
+							<option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option>
+							<option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option>
+						</select>
+					</td>
+				</tr>";
+
+            $html .= "
+				<tr>
+					<td width='15%'  scope='row' class='dataLabel'>
+						$lang_optin_primaryemail
+					</td>
+					<td width='35%' class='dataField'>
+						<select name='optin_primary'>
+							<option value=''>{$GLOBALS['app_strings']['LBL_NONE']}</option>
+							<option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option>
+							<option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option>
+						</select>
+					</td>
+				</tr>";
 
 			}
 		$html .="</table>";

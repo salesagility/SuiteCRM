@@ -43,7 +43,7 @@
 				{foreach from=$emailAddresses item=address}
 				<tr>
 					<td style="border:none;">
-						{if $address.key === 'opt_out' || $address.key === 'invalid' || $address.key === 'opt_out_invalid'}
+						{if $address.key === 'opt_out' || $address.key === 'opt_in' || $address.key === 'invalid' || $address.key === 'opt_out_invalid'}
 							<span style="text-decoration: line-through;">
 						{elseif $address.key === 'primary'}
 							<b>
