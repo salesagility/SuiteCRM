@@ -336,7 +336,8 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     ),
   'aos_products_quotes' =>
   array (
-  'name' => 'aos_products_quotes',
+    'name' => 'aos_products_quotes',
+    'vname' => 'AOS_PRODUCT_QUOTES',
     'type' => 'link',
     'relationship' => 'groups_aos_product_quotes',
     'module'=>'AOS_Products_Quotes',

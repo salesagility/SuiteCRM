@@ -54,6 +54,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
       'secret' =>
       array (
             'name' => 'secret',
+            'vname' => 'LBL_SECRET',
             'type' => 'varchar',
             'len' => 32,
             'required' => true,
@@ -62,6 +63,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
       'tstate' =>
       array (
             'name' => 'tstate',
+            'vname' => 'LBL_TSTATE',
             'type' => 'enum',
             'len' => 1,
             'options' => 'token_status',
@@ -79,6 +81,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
       'token_ts' =>
       array (
             'name' => 'token_ts',
+            'vname' => 'LBL_TOKEN_TS',
             'type' => 'long',
             'required' => true,
             'comment' => 'Token timestamp',
@@ -87,6 +90,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
       'verify' =>
       array (
             'name' => 'verify',
+            'vname' => 'LBL_VERIFY',
             'type' => 'varchar',
             'len' => 32,
             'comment' => 'Token verification info',
@@ -111,6 +115,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
 	'callback_url' =>
       array (
             'name' => 'callback_url',
+            'vname' => 'LBL_CALLBACK_URL',
             'type' => 'url',
             'len' => 255,
             'required' => false,

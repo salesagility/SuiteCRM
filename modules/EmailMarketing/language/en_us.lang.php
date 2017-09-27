@@ -107,7 +107,12 @@ $mod_strings = array (
   'LBL_SCHEDULE_BUTTON_KEY'=>'T',
 //    'LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT' => 'Use System Default',
 //    'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
-    'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
+  'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
+
+  'LBL_CAMPAIGN_ID' => 'Campaign ID',
+  'LBL_OUTBOUND_EMAIL_ACOUNT_ID' => 'Outbound Email Account ID',
+  'LBL_EMAIL_TEMPLATE' => 'Email Template',
+  'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 
 );
 ?>
