@@ -213,7 +213,7 @@
       return false;
     },//freezeEvent
 
-    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId) {
+    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, optInFlag, invalidFlag, emailId) {
       _eaw = this;
 
       if (_eaw.addInProgress) {
