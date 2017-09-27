@@ -926,8 +926,9 @@ $($.fullCalendar).ready(function () {
       maxTime: global_end_time,
       selectHelper: true,
       selectable: true,
-      selectOverlap: true, //overlap of events !
-      slotMinutes: global_timeslots,
+      // Overlap of events !
+      selectOverlap: true,
+      slotDuration: global_timeslots,
       defaultDate: global_year + "-" + global_month + "-" + global_day,
       editable: global_edit,
       //weekNumbers: true,
