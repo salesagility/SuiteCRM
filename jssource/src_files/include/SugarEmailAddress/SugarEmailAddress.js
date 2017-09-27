@@ -99,6 +99,10 @@
             if (optOutEl) {
               optOutEl.checked = email['opt_out'] == 1 ? true : false;
             }
+            var optInEl = $('#' + this.module + this.id + 'emailAddressOptInFlag' + targetNumber);
+            if (optInEl) {
+              optInEl.checked = email['opt_in'] == 1 ? true : false;
+            }
             var invalidEl = $('#' + this.module + this.id + 'emailAddressInvalidFlag' + targetNumber);
             if (invalidEl) {
               invalidEl.checked = email['invalid_email'] == 1 ? true : false;
@@ -321,6 +325,18 @@
         optOutCheckbox.prop("checked", (optOutFlag == '1'));
       }
 
+      // Opt In checkbox
+      var optInCheckbox = lineContainer.find('input#email-address-opt-in-flag');
+      if (optInCheckbox.length == 1) {
+        optInCheckbox.attr('name', this.module + _eaw.id + 'emailAddressOptInFlag[]');
+        optInCheckbox.attr('id', this.module + _eaw.id + 'emailAddressOptInFlag' + _eaw.totalEmailAddresses);
+        optInCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+        optInCheckbox.attr('tabindex', tabIndexCount);
+        optInCheckbox.attr('enabled', "true");
+        optInCheckbox.eaw = _eaw;
+        optInCheckbox.prop("checked", (optInFlag == '1'));
+      }
+
 
       // Invalid checkbox
       var invalidCheckbox = lineContainer.find('input#email-address-invalid-flag');
@@ -423,6 +439,11 @@
           $(value).find('input.email-address-opt-out-flag').first().prop('name', module + id + "emailAddressOptOutFlag[]");
           $(value).find('input.email-address-opt-out-flag').first().prop('id', module + id + "emailAddressOptOutFlag" + counter);
           $(value).find('input.email-address-opt-out-flag').first().prop('value', module + id + 'emailAddress' + counter);
+
+          // opt-in flag
+          $(value).find('input.email-address-opt-in-flag').first().prop('name', module + id + "emailAddressOptInFlag[]");
+          $(value).find('input.email-address-opt-in-flag').first().prop('id', module + id + "emailAddressOptInFlag" + counter);
+          $(value).find('input.email-address-opt-in-flag').first().prop('value', module + id + 'emailAddress' + counter);
 
           // remove button
           $(value).find('.email-address-remove-button').first().prop('name', counter);

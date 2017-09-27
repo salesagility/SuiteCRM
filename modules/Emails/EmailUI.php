@@ -631,7 +631,8 @@ eoq;
 		}
 
 		// prefill some REQUEST vars for emailAddress save
-		$_REQUEST['emailAddressOptOutFlag'] = $obj['optOut'];
+        $_REQUEST['emailAddressOptOutFlag'] = $obj['optOut'];
+        $_REQUEST['emailAddressOptInFlag'] = $obj['optIn'];
 		$_REQUEST['emailAddressInvalidFlag'] = $obj['invalid'];
 		$contact->emailAddress->saveEmail($obj['contact_id'], 'Contacts', $addresses, $obj['primary'], '');
 	}

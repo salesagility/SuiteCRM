@@ -93,10 +93,14 @@
 		           if(email != '' && /\d+$/.test(target)) {
 		               var matches = target.match(/\d+$/);
 		               var targetNumber = matches[0];
-		               var optOutEl = Dom.get(this.id + 'emailAddressOptOutFlag' + targetNumber);
-		               if(optOutEl) {
-		                   optOutEl.checked = email['opt_out'] == 1 ? true : false;
-		               }
+						var optOutEl = Dom.get(this.id + 'emailAddressOptOutFlag' + targetNumber);
+						if(optOutEl) {
+							optOutEl.checked = email['opt_out'] == 1 ? true : false;
+						}
+						var optInEl = Dom.get(this.id + 'emailAddressOptInFlag' + targetNumber);
+						if(optInEl) {
+                          optInEl.checked = email['opt_in'] == 1 ? true : false;
+						}
 		               var invalidEl = Dom.get(this.id + 'emailAddressInvalidFlag' + targetNumber);
 		               if(invalidEl) {
 		                   invalidEl.checked = email['invalid_email'] == 1 ? true : false;
@@ -226,6 +230,7 @@
 		    var newContentPrimaryFlag = document.createElement("input");
 		    var newContentReplyToFlag = document.createElement("input");
 		    var newContentOptOutFlag = document.createElement("input");
+          var newContentOptInFlag = document.createElement("input");
 		    var newContentInvalidFlag = document.createElement("input");
 		    var newContentVerifiedFlag = document.createElement("input");
 		    var newContentVerifiedValue = document.createElement("input");
@@ -310,8 +315,18 @@
 				newContentOptOutFlag.eaw = this;
 				newContentOptOutFlag.setAttribute("tabindex", tabIndexCount);
 		    newContentOptOutFlag['onClick'] = function(){this.eaw.toggleCheckbox(this)};
-	
-		    // set invalid flag
+
+          // set opt-in flag
+          newContentOptInFlag.setAttribute("type", "checkbox");
+          newContentOptInFlag.setAttribute("name", this.id + "emailAddressOptInFlag[]");
+          newContentOptInFlag.setAttribute("id", this.id + "emailAddressOptInFlag" + this.numberEmailAddresses);
+          newContentOptInFlag.setAttribute("value", this.id + "emailAddress" + this.numberEmailAddresses);
+          newContentOptInFlag.setAttribute("enabled", "true");
+          newContentOptInFlag.eaw = this;
+          newContentOptInFlag.setAttribute("tabindex", tabIndexCount);
+          newContentOptInFlag['onClick'] = function(){this.eaw.toggleCheckbox(this)};
+
+          // set invalid flag
 		    newContentInvalidFlag.setAttribute("type", "checkbox");
 		    newContentInvalidFlag.setAttribute("name", this.id + "emailAddressInvalidFlag[]");
 		    newContentInvalidFlag.setAttribute("id", this.id + "emailAddressInvalidFlag" + this.numberEmailAddresses);
@@ -361,7 +376,8 @@
 		       td2.appendChild(removeButton);
 		    td3.appendChild(newContentPrimaryFlag);
 		    td4.appendChild(newContentReplyToFlag);
-		    td5.appendChild(newContentOptOutFlag);
+		  td5.appendChild(newContentOptOutFlag);
+		  td5.appendChild(newContentOptInFlag);
 		    td6.appendChild(newContentInvalidFlag);
 		    td7.appendChild(newContentVerifiedFlag);
 		    td8.appendChild(newContentVerifiedValue);
@@ -404,13 +420,19 @@
 		    } else {
 		        this.replyToFlagObject[newContentReplyToFlag.id] = false;
 		    }
-		    
-		    if(optOutFlag == '1') {
-		        newContentOptOutFlag.setAttribute("checked", 'true');
-                newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
-		    }
-		    
-		    if(invalidFlag == '1') {
+
+          if(optOutFlag == '1') {
+            newContentOptOutFlag.setAttribute("checked", 'true');
+            newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
+          }
+
+
+          if(optInFlag == '1') {
+            newContentOptInFlag.setAttribute("checked", 'true');
+            newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
+          }
+
+          if(invalidFlag == '1') {
 		        newContentInvalidFlag.setAttribute("checked", "true");
                 newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_INV_TITLE'));
 		    }
@@ -456,13 +478,19 @@
                        Dom.get(this.id + 'emailAddressInvalidFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
                        Dom.get(this.id + 'emailAddressInvalidFlag' + x).setAttribute("id", this.id + "emailAddressInvalidFlag" + (x-1));
                    }
-                   
-                   if(Dom.get(this.id + 'emailAddressOptOutFlag' + x)){
-                       Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
-                       Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("id", this.id + "emailAddressOptOutFlag" + (x-1));
-                   }
-                   
-                   if(Dom.get(this.id + 'emailAddressPrimaryFlag' + x)) {
+
+                 if(Dom.get(this.id + 'emailAddressOptOutFlag' + x)){
+                   Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
+                   Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("id", this.id + "emailAddressOptOutFlag" + (x-1));
+                 }
+
+
+                 if(Dom.get(this.id + 'emailAddressOptInFlag' + x)){
+                   Dom.get(this.id + 'emailAddressOptInFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
+                   Dom.get(this.id + 'emailAddressOptInFlag' + x).setAttribute("id", this.id + "emailAddressOptInFlag" + (x-1));
+                 }
+
+                 if(Dom.get(this.id + 'emailAddressPrimaryFlag' + x)) {
                        Dom.get(this.id + 'emailAddressPrimaryFlag' + x).setAttribute("id", this.id + "emailAddressPrimaryFlag" + (x-1));
                    }
                    
