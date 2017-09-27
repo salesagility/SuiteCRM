@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
@@ -58,7 +54,7 @@
         });
 
         var selectedTopValue = $("#selectCountTop").attr("value");
-        if(typeof(selectedTopValue) != "undefined" && selectedTopValue != "0"){
+        if(typeof(selectedTopValue) !== "undefined" && selectedTopValue !== "0"){
         	sugarListView.prototype.toggleSelected();
         }
 	});
@@ -74,15 +70,21 @@
 	<div class="list view listViewEmpty">
 		{if $displayEmptyDataMesssages}
         {if strlen($query) == 0}
-                {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
-                {capture assign="importLink"}<a href="?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
-                {capture assign="helpLink"}<a target="_blank" href='?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
-                <p class="msg">
-                    {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
-                </p>
+                {capture assign="createLink"}<a href="index.php?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
+                {capture assign="importLink"}<a href="index.php?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
+                {capture assign="helpLink"}<a target="_blank" href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
+            <div class="filterContainer">
+                {if $showFilterIcon}
+                    {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
+                {/if}
+            </div>
+            <p class="msg">
+                {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
+            </p>
         {elseif $query == "-advanced_search"}
             <p class="msg">
                 {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
+                {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
             </p>
         {else}
             <p class="msg">
@@ -90,10 +92,13 @@
                 {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
             </p>
             <p class = "submsg">
-                <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
+                <a href="index.php?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
-
+                {$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+                {if $showFilterIcon}
+                    {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
+                {/if}
             </p>
         {/if}
     {else}
@@ -101,10 +106,6 @@
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
-		{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
-		{if $showFilterIcon}
-			{include file='include/ListView/ListViewSearchLink.tpl'}
-		{/if}
 	</div>
 {/if}
 {$multiSelectData}
@@ -116,15 +117,15 @@
     {assign var="actionsLink" value=$actionsLinkTop}
     {assign var="selectLink" value=$selectLinkTop}
     {assign var="action_menu_location" value="top"}
-	{include file='include/ListView/ListViewPagination.tpl'}
-	<tr height='20'>
+	{sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}
+	<tr>
 			{if $prerow}
 				<td width='1%' class="td_alt">
 					&nbsp;
 				</td>
 			{/if}
 			{if !empty($quickViewLinks)}
-			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
+			<td class='td_alt' width='1%' style="padding: 0;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
             {assign var='datahide' value="phone"}
@@ -133,15 +134,15 @@
                 {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
                 {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
 				{else}<th scope='col' data-hide="{$datahide}">{/if}
-					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+					<div style='white-space: normal; align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
-	                        <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'>
+                            <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'></a>
 	                    {else}
 	                        {if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
-	                            <a href='javascript:sListView.order_checks("{$pageData.ordering.sortOrder|default:ASCerror}", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
+                                <a href='javascript:sListView.order_checks("{$pageData.ordering.sortOrder|default:ASCerror}", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'></a>
 	                        {else}
-	                            <a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
+                                <a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'></a>
 	                        {/if}
 	                    {/if}
 	                    {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
@@ -161,13 +162,11 @@
 	                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
 							{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
 						{/if}
-	                    </a>
 					{else}
 	                    {if !isset($params.noHeader) || $params.noHeader == false}
 						  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
 	                    {/if}
 					{/if}
-					</div>
 				</th>
 				{counter name="colCounter"}
 			{/foreach}
@@ -184,7 +183,7 @@
 			{else}
 				{assign var='_rowColor' value=$rowColor[1]}
 			{/if}
-			<tr height='20' class='{$_rowColor}S1'>
+			<tr class='{$_rowColor}S1'>
 				{if $prerow}
 				<td width='1%' class='nowrap'>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
@@ -242,7 +241,7 @@
 				<td align='right'>{$pageData.additionalDetails.$id}</td>
 		    	</tr>
 		{foreachelse}
-		<tr height='20' class='{$rowColor[0]}S1'>
+		<tr class='{$rowColor[0]}S1'>
 		    <td colspan="{$colCount}">
 		        <em>{$APP.LBL_NO_DATA}</em>
 		    </td>
@@ -253,7 +252,7 @@
     {assign var="selectLink" value=$selectLinkBottom}
     {assign var="actionsLink" value=$actionsLinkBottom}
     {assign var="action_menu_location" value="bottom"}
-    {include file='include/ListView/ListViewPagination.tpl'}
+    {sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}
 	</table>
 {/if}
 {if $contextMenus}
@@ -261,14 +260,15 @@
 {$contextMenuScript}
 {literal}
 function lvg_nav(m,id,act,offset,t){
-    if(t.href.search(/#/) < 0){return;}
+    if(t.href.search(/#/) < 0) {
+    }
     else{
-        if(act=='pte'){
+        if(act==='pte'){
             act='ProjectTemplatesEditView';
         }
-        else if(act=='d'){
+        else if(act==='d'){
             act='DetailView';
-        }else if( act =='ReportsWizard'){
+        }else if( act ==='ReportsWizard'){
             act = 'ReportsWizard';
         }else{
             act='EditView';
