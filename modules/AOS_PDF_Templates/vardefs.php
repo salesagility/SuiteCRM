@@ -43,10 +43,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $dictionary['AOS_PDF_Templates'] = array(
-	'table'=>'aos_pdf_templates',
-	'audited'=>true,
-	'fields'=>array (
-  'active' =>
+    'table' => 'aos_pdf_templates',
+    'audited' => true,
+    'fields' => array(
+        'description' =>
+            array(
+                'name' => 'description',
+                'vname' => 'LBL_DESCRIPTION',
+                'type' => 'text',
+                'comment' => 'Full PDF text',
+                'rows' => 6,
+                'cols' => 80,
+                'dbType' => 'mediumtext',
+            ),
+        'active' =>
   array (
     'name' => 'active',
     'vname' => 'LBL_ACTIVE',
@@ -104,7 +114,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'size' => '20',
                 'studio' => 'visible',
             ),
-  'sample' => 
+  'sample' =>
   array (
     'required' => '0',
     'name' => 'sample',
@@ -138,7 +148,7 @@ $dictionary['AOS_PDF_Templates'] = array(
       'help' => '',
       'reportable' => 0,
   ),
-  'pdfheader' => 
+  'pdfheader' =>
   array (
     'required' => false,
     'name' => 'pdfheader',
@@ -157,7 +167,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'rows' => '4',
     'cols' => '20',
   ),
-  'pdffooter' => 
+  'pdffooter' =>
   array (
     'required' => false,
     'name' => 'pdffooter',
