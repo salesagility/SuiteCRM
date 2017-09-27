@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -55,13 +56,14 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	 * Does the actual authentication of the user and returns an id that will be used
 	 * to load the current user (loadUserOnSession)
 	 *
-	 * @param STRING $name
-	 * @param STRING $password
-	 * @return STRING id - used for loading the user
+	 * @param string $name
+	 * @param string $password
+	 * @param bool $fallback
+	 * @return string id - used for loading the user
 	 *
 	 * Contributions by Erik Mitchell erikm@logicpd.com
 	 */
-	function authenticateUser($name, $password) {
+	function authenticateUser($name, $password, $fallback = false) {
 
 		$server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
 		$port = $GLOBALS['ldap_config']->settings['ldap_port'];
@@ -282,9 +284,10 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	 *
 	 * @param STRING $name
 	 * @param STRING $password
-	 * @return boolean
+     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @return boolean
 	 */
-	function loadUserOnLogin($name, $password) {
+	function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = Array()) {
 
 	    global $mod_strings;
 
@@ -303,7 +306,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 		if(empty($name) || empty($password)) return false;
 		checkAuthUserStatus();
 
-		$user_id = $this->authenticateUser($name, $password);
+		$user_id = $this->authenticateUser($name, $password, $fallback = false);
 		if(empty($user_id)) {
 			//check if the user can login as a normal sugar user
 			$GLOBALS['log']->fatal('SECURITY: User authentication for '.$name.' failed');
@@ -441,5 +444,3 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 }
-
-?>
