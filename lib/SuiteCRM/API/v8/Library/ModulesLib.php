@@ -77,6 +77,8 @@ class ModulesLib
 
                 if ($sortValue[0] === '-') {
                     $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
+                } else if ($sortValue[0] === '+') {
+                    $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' ASC';
                 } else {
                     $sortField[$sortKey] = $db->quote($sortValue). ' ASC';
                 }
@@ -100,7 +102,7 @@ class ModulesLib
 
         if($module === false) {
             $res = $res->withStatus(404);
-            throw new ModuleNotFound();
+            throw new ModuleNotFound('"'.$args['module'].'"');
         }
         /**
          * @var array $moduleList

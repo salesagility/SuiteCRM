@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0",
+  "info": {
+    "version": "8.0",
+    "title": "json api"
+  },
+  "paths": {
+    "/api/v8/login": {
+      "get": {
+        "description": "Authenticates password grant",
+
+        "responses": {
+          "200" : {
+            "description": "",
+            "headers":[
+              {"Content-Type": "application/json"},
+              {"Accept": "application/json"}
+            ],
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v8/logout": {
+      "get": {
+        "description": ""
+      }
+    }
+  }
+}

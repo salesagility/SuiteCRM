@@ -9,13 +9,13 @@ class JwtCest
 {
     /**
      * As a Rest API Client, I want to ensure that I get the correct response when I send incorrect details
-     * @param V8restapiTester $I
+     * @param apiTester $I
      * @param \Helper\PhpBrowserDriverHelper $browserDriverHelper
      *
      * HTTP Verb: POST
      * URL: /api/v8/login
      */
-    public function TestScenarioInvalidLogin(V8restapiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
+    public function TestScenarioInvalidLogin(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
         $I->sendPOST(
             $browserDriverHelper->getInstanceURL().'/api/v8/login',
@@ -42,24 +42,24 @@ class JwtCest
 
     /**
      * As a Rest API Client, I want to login so that I can get a JWT token
-     * @param V8restapiTester $I
+     * @param apiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/v8/login
      */
-    public function TestScenarioLogin(V8restapiTester $I)
+    public function TestScenarioLogin(apiTester $I)
     {
        $I->loginAsAdmin();
     }
 
     /**
      * As a Rest API Client, I want to log so that I can clear my session
-     * @param V8restapiTester $I
+     * @param apiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/v8/logout
      */
-    public function TestScenarioLogout(V8restapiTester $I)
+    public function TestScenarioLogout(apiTester $I)
     {
         $I->logout();
     }

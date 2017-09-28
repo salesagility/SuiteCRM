@@ -16,9 +16,13 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class V8restapiTester extends \Codeception\Actor
+class apiTester extends \Codeception\Actor
 {
     use _generated\V8restapiTesterActions;
+
+    const CONTENT_TYPE = 'Content-Type';
+    const CONTENT_TYPE_JSON_API = 'application/vnd.api+json';
+    const CONTENT_TYPE_JSON = 'application/json';
 
     /**
      * @var $string $token - Bearer token
@@ -32,11 +36,9 @@ class V8restapiTester extends \Codeception\Actor
      */
     public function login($username, $password)
     {
-        global $sugar_config;
         $I = $this;
 
         if(!empty(self::$token)) {
-            $I->sendJwtAuthorisation();
             return;
         }
 
@@ -114,7 +116,7 @@ class V8restapiTester extends \Codeception\Actor
     public function sendJwtContentNegotiation()
     {
         $I = $this;
-        $I->setHeader('Content-Type', 'application/json');
+        $I->setHeader(self::CONTENT_TYPE, self::CONTENT_TYPE_JSON);
         $I->setHeader('Accept', 'application/json');
     }
 
@@ -124,7 +126,7 @@ class V8restapiTester extends \Codeception\Actor
     public function seeJwtContent()
     {
         $I = $this;
-        $I->seeHttpHeader('Content-Type', 'application/json');
+        $I->seeHttpHeader(self::CONTENT_TYPE, self::CONTENT_TYPE_JSON);
 
     }
 
@@ -134,7 +136,7 @@ class V8restapiTester extends \Codeception\Actor
     public function sendJsonApiContentNegotiation()
     {
         $I = $this;
-        $I->setHeader('Content-Type', 'application/vnd.api+json');
+        $I->setHeader(self::CONTENT_TYPE, self::CONTENT_TYPE_JSON_API);
         $I->setHeader('Accept', 'application/vnd.api+json');
     }
 
@@ -144,7 +146,7 @@ class V8restapiTester extends \Codeception\Actor
     public function seeJsonApiContentNegotiation()
     {
         $I = $this;
-        $I->seeHttpHeader('Content-Type', 'application/vnd.api+json');
+        $I->seeHttpHeader(self::CONTENT_TYPE, self::CONTENT_TYPE_JSON_API);
     }
 
     /**
@@ -157,6 +159,17 @@ class V8restapiTester extends \Codeception\Actor
 
         $response = json_decode($I->grabResponse(), true);
         $I->assertArrayNotHasKey('errors', $response);
-        $I->seeResponseCodeIs(200);
+    }
+
+    /**
+     * Test to ensure that the response is successful
+     */
+    public function seeJsonApiFailure()
+    {
+        $I = $this;
+        $I->canSeeResponseIsJson();
+
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('errors', $response);
     }
 }

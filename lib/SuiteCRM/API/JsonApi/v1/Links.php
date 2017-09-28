@@ -10,7 +10,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
 /**
  * Class Links
  * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-meta
+ * @see http://jsonapi.org/format/1.0/#document-links
  */
 class Links implements LoggerAwareInterface
 {
@@ -60,25 +60,15 @@ class Links implements LoggerAwareInterface
     private $related;
 
     /**
-     * @var Logger Logger
+     * @var LoggerInterface Logger
      */
     private $logger;
 
     /**
      * Links constructor.
-     * @param Links|null $linksObject
      */
-    public function __construct(Links $linksObject = null)
+    public function __construct()
     {
-        if ($linksObject !== null) {
-            $this->self = $linksObject->self;
-            $this->first = $linksObject->first;
-            $this->prev = $linksObject->prev;
-            $this->next = $linksObject->next;
-            $this->last = $linksObject->last;
-            $this->meta = $linksObject->meta;
-        }
-
         $this->setLogger(new Logger());
     }
 
@@ -235,10 +225,21 @@ class Links implements LoggerAwareInterface
         }
 
         if ($this->hasPagination()) {
-            $response['first'] = $this->first;
-            $response['prev'] = $this->prev;
-            $response['next'] = $this->next;
-            $response['last'] = $this->last;
+            if($this->first !== null) {
+                $response['first'] = $this->first;
+            }
+
+            if($this->prev !== null) {
+                $response['prev'] = $this->prev;
+            }
+
+            if($this->next !== null) {
+                $response['next'] = $this->next;
+            }
+
+            if($this->last !== null) {
+                $response['last'] = $this->last;
+            }
         }
 
         if ($this->hasRelated()) {

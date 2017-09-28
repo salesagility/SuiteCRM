@@ -37,7 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
+const APP_CONTROLLER = 'ApiController';
 chdir(__DIR__.'/../../../../');
 require_once __DIR__.'/../../../../include/entryPoint.php';
 
@@ -68,7 +68,7 @@ $container['errorHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $ApiController = $container->get('ApiController');
+        $ApiController = $container->get(APP_CONTROLLER);
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -82,7 +82,7 @@ $container['phpErrorHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $ApiController = $container->get('ApiController');
+        $ApiController = $container->get(APP_CONTROLLER);
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -93,7 +93,7 @@ $container['notFoundHandler'] = function ($container) {
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $exception = new \SuiteCRM\API\v8\Exception\NotFound();
-        $ApiController = $container->get('ApiController');
+        $ApiController = $container->get(APP_CONTROLLER);
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -103,7 +103,7 @@ $container['notAllowedHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $ApiController = $container->get('ApiController');
+        $ApiController = $container->get(APP_CONTROLLER);
         $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
         },
         'error' => function ($request, $response, $arguments) use ($app) {
             $log = new \SuiteCRM\Utility\SuiteLogger();
-            $log->error('Authentication Error: ' . implode(', ', $arguments));
+            $log->error('[Authentication Error] "' . implode(', ', $arguments). '""');
             return $response->write('Authentication Error');
         },
     ]);

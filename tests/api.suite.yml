@@ -1,7 +1,7 @@
-actor: V8restapiTester
+actor: apiTester
 modules:
     enabled:
-        - \Helper\V8restapi
+        - \Helper\api
         - Filesystem
         - Asserts
         - \Helper\PhpBrowserDriverHelper

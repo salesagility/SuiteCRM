@@ -62,17 +62,19 @@ $app->group('/v8/modules', function () use ($app) {
 
         $app->post('/{id}/action/{action}', 'SuiteCRM\API\v8\Controller\ModuleController:runAction');
 
-        $app->get('/{id}/{link}/{related_id}','SuiteCRM\API\v8\Controller\ModuleController:getRelationship');
-        $app->post('/{id}/{link}/{related_id}','SuiteCRM\API\v8\Controller\ModuleController:createRelationship');
-        $app->put('{id}/{link}/{related_id}','SuiteCRM\API\v8\Controller\ModuleController:updateRelationship');
-        $app->delete('/{id}/{link}/{related_id}','SuiteCRM\API\v8\Controller\ModuleController:deleteRelationship');
+        $relationship = '/{id}/{link}/{related_id}';
+        $app->get($relationship,'SuiteCRM\API\v8\Controller\ModuleController:getRelationship');
+        $app->post($relationship,'SuiteCRM\API\v8\Controller\ModuleController:createRelationship');
+        $app->patch('{id}/{link}/{related_id}','SuiteCRM\API\v8\Controller\ModuleController:updateRelationship');
+        $app->delete($relationship,'SuiteCRM\API\v8\Controller\ModuleController:deleteRelationship');
 
         $app->get('/{id}/{link}','SuiteCRM\API\v8\Controller\ModuleController:getModuleRelationships');
         $app->delete('/{id}/{link}','SuiteCRM\API\v8\Controller\ModuleController:deleteRelationships');
 
-        $app->get('/{id}', 'SuiteCRM\API\v8\Controller\ModuleController:getModuleRecord');
-        $app->put('/{id}', 'SuiteCRM\API\v8\Controller\ModuleController:updateModuleRecord');
-        $app->delete('/{id}', 'SuiteCRM\API\v8\Controller\ModuleController:deleteModuleRecord');
+        $id = '/{id}';
+        $app->get($id, 'SuiteCRM\API\v8\Controller\ModuleController:getModuleRecord');
+        $app->patch($id, 'SuiteCRM\API\v8\Controller\ModuleController:updateModuleRecord');
+        $app->delete($id, 'SuiteCRM\API\v8\Controller\ModuleController:deleteModuleRecord');
 
     });
 });

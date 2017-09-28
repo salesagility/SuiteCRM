@@ -40,11 +40,18 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
+use League\JsonGuard\Dereferencer;
+use League\JsonGuard\Loaders\FileLoader;
+use League\JsonGuard\RuleSets\DraftFour;
+use League\JsonGuard\Validator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
+use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\Utility\SuiteLogger as Logger;
@@ -89,6 +96,7 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param array $payload
      * @return Response
+     * @throws InvalidJsonApiResponse
      */
     public function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
@@ -98,10 +106,29 @@ class ApiController implements LoggerAwareInterface
             return $negotiated;
         }
 
+        // Validate Response
+        $jsonApi = new JsonApi();
+        $data = json_decode(json_encode($payload));
+
+        $ruleSet =  new DraftFour();
+        $dereferencer = new Dereferencer();
+        $schema = $dereferencer->dereference('file://'.$jsonApi->getSchemaPath());
+
+        $validator = new Validator($data, $schema, $ruleSet);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors() as $error) {
+                $exception = new InvalidJsonApiResponse($error->getMessage(). ' Keyword:'. $error->getKeyword());
+                $exception->setSource($error->getPointer());
+                throw $exception;
+            }
+        }
+
         return $response
             ->withHeader('Content-Type', self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
+
 
     /**
      * @param Request $request
@@ -122,7 +149,7 @@ class ApiController implements LoggerAwareInterface
             $this->setLogger(new Logger());
         }
 
-        if (is_subclass_of($exception, 'SuiteCRM\API\v8\Exception\ApiException')) {
+        if (is_subclass_of($exception, 'SuiteCRM\Exception\Exception')) {
             $jsonError['detail'] = $exception->getDetail();
             $jsonError['source'] = $exception->getSource();
             $response = $response->withStatus($exception->getHttpStatus());
@@ -130,7 +157,7 @@ class ApiController implements LoggerAwareInterface
                 ' Code: [' . $exception->getCode() . ']' .
                 ' Status: [' . $exception->getHttpStatus() . ']' .
                 ' Message: ' . $exception->getMessage() .
-                ' Detail: [' . $exception->getDetail() . ']' .
+                ' Detail: ' . $exception->getDetail() .
                 ' Source: [' . $exception->getSource()['pointer'] . ']';
             $this->logger->log($exception->getLogLevel(), $logMessage);
         } else {
@@ -161,7 +188,7 @@ class ApiController implements LoggerAwareInterface
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
      */
-    private function negotiatedJsonApiContent(Request $request, Response $response)
+    public function negotiatedJsonApiContent(Request $request, Response $response)
     {
         if ($request->getContentType() !== self::CONTENT_TYPE) {
             throw new UnsupportedMediaType();

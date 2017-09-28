@@ -40,17 +40,42 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Codeception\Exception\ContentNotFound;
+use Slim\Http\Request as Request;
+use Slim\Http\Response as Response;
+use SuiteCRM\API\JsonApi\v1\Links;
+use SuiteCRM\API\JsonApi\v1\Resource;
+use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\EmptyBody;
+use SuiteCRM\API\v8\Exception\Forbidden;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
+use SuiteCRM\API\v8\Exception\ModuleNotFound;
+use SuiteCRM\API\v8\Exception\NotAcceptable;
+use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\ModulesLib;
+use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\SuiteLogger;
 
 class ModuleController extends ApiController
 {
+    const FIELDS = 'fields';
+    const MISSING_ID = '["id" does not exist]';
+    const SOURCE_TYPE = '/data/attributes/type';
+    const MODULE = 'module';
+    const LINKS = 'links';
     /**
      * GET /api/v8/modules
      * @param Request $req
      * @param Response $res
      * @return Response
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function getModules(Request $req, Response $res)
     {
@@ -61,6 +86,7 @@ class ModuleController extends ApiController
             'meta' => array('modules' => $moduleList)
         );
 
+        $this->negotiatedJsonApiContent($req, $res);
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -70,6 +96,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws ModuleNotFound
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -81,15 +111,12 @@ class ModuleController extends ApiController
             'data' => array()
         );
 
-        try {
-            $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
-            $payload['data'] = $paginatedModuleRecords['list'];
-        } catch (\Exception $e) {
-            return $this->generateJsonApiExceptionResponse($req, $res, $e);
-        }
+        $this->negotiatedJsonApiContent($req, $res);
+        $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
+        $payload['data'] = $paginatedModuleRecords['list'];
 
         $links = $lib->generatePaginatedLinksFromModuleRecords($req, $res, $args, $paginatedModuleRecords);
-        $payload['links'] = $links->getArray();
+        $payload[self::LINKS] = $links->getArray();
 
         $page = $req->getParam('page');
         $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
@@ -104,4 +131,273 @@ class ModuleController extends ApiController
 
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
+
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws ApiException
+     * @throws ModuleNotFound
+     * @throws EmptyBody
+     * @throws Conflict
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     * @throws BadRequest
+     * @throws Forbidden
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws InvalidJsonApiRequest
+     * @throws InvalidJsonApiResponse
+     */
+    public function createModuleRecord(Request $req, Response $res, array $args)
+    {
+        global $sugar_config;
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $res = $res->withStatus(202);
+        $moduleName = $args[self::MODULE];
+        $module = \BeanFactory::newBean($moduleName);
+        $body = json_decode($req->getBody()->getContents(), true);
+        $payload = array();
+
+        // Validate module
+        if(empty($module)) {
+            throw new ModuleNotFound($moduleName);
+        }
+
+        // Validate JSON
+        if(empty($body)) {
+            throw new EmptyBody();
+        }
+
+        // Validate Type
+        if (!isset($body['data']['type'])) {
+            $exception = new Conflict('[Missing "type" key in data]');
+            $exception->setSource(SOURCE_TYPE);
+            throw $exception;
+        }
+
+        if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
+            $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
+            $exception->setSource(SOURCE_TYPE);
+            throw $exception;
+        }
+
+        // Validate ID
+        if (isset($body['data']['id'])) {
+            $exception = new Forbidden('[creating a record with client id not allowed] "'.$body['data']['id'].'"');
+            $exception->setSource('/data/attributes/id');
+            throw $exception;
+        }
+
+        // Handle Request
+        $resource = Resource::fromDataArray($body['data']);
+        $sugarBean = $resource->toSugarBean();
+        try {
+            $sugarBean->save();
+        } catch (Exception $e) {
+            throw new ApiException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        $links = new Links();
+        $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
+        $links = $links->withSelf($self);
+        $selectFields = $req->getParam(FIELDS);
+        $resource =  Resource::fromSugarBean($sugarBean);
+        if ($selectFields !== null && isset($selectFields[$moduleName])) {
+            $fields = explode(',', $selectFields[$moduleName]);
+            $payload['data'] = $resource->getArrayWithFields($fields);
+        } else {
+            $payload['data'] = $resource->getArray();
+        }
+        $payload[self::LINKS] = $links->getArray();
+        $res = $res->withStatus(201);
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws Conflict
+     * @throws NotFound
+     * @throws EmptyBody
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     * @throws InvalidJsonApiRequest
+     * @throws InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     */
+    public function getModuleRecord(Request $req, Response $res, array $args)
+    {
+        $this->negotiatedJsonApiContent($req, $res);
+        $res = $res->withStatus(202);
+        $moduleName = $args[self::MODULE];
+        $moduleId = $args['id'];
+        $module = \BeanFactory::newBean($moduleName);
+        $payload = array();
+
+        // Validate module
+        if(empty($module)) {
+            throw new ModuleNotFound($moduleName);
+        }
+
+        $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
+        if ($sugarBean ->new_with_id === true) {
+            $exception = new NotFound(self::MISSING_ID);
+            $exception->setSource('');
+            throw $exception;
+        }
+
+        // Handle Request
+        $resource = Resource::fromSugarBean($sugarBean);
+
+        // filter fields
+        $selectFields = $req->getParam(FIELDS);
+        if ($selectFields !== null && isset($selectFields[$moduleName])) {
+            $fields = explode(',', $selectFields[$moduleName]);
+            $payload['data'] = $resource->getArrayWithFields($fields);
+        } else {
+            $payload['data'] = $resource->getArray();
+        }
+
+        $res = $res->withStatus(200);
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws Conflict
+     * @throws NotFound
+     * @throws EmptyBody
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     * @throws InvalidJsonApiRequest
+     * @throws InvalidJsonApiResponse
+     */
+    public function updateModuleRecord(Request $req, Response $res, array $args)
+    {
+        $this->negotiatedJsonApiContent($req, $res);
+        $res = $res->withStatus(202);
+        $moduleName = $args[self::MODULE];
+        $moduleId = $args['id'];
+        $module = \BeanFactory::newBean($moduleName);
+        $body = json_decode($req->getBody()->getContents(), true);
+        $payload = array();
+
+        // Validate module
+        if(empty($module)) {
+            throw new ModuleNotFound($moduleName);
+        }
+
+        // Validate JSON
+        if(empty($body)) {
+            throw new EmptyBody();
+        }
+
+        // Validate Type
+        if (!isset($body['data']['type'])) {
+            $exception = new Conflict('[Missing "type" key in data]');
+            $exception->setSource(SOURCE_TYPE);
+            throw $exception;
+        }
+
+        if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
+            $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
+            $exception->setSource(SOURCE_TYPE);
+            throw $exception;
+        }
+
+        // Validate ID
+        $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
+        if ($sugarBean ->new_with_id === true) {
+            $exception = new NotFound('["id" does not exist]');
+            $exception->setSource('');
+            throw $exception;
+        }
+
+        // Handle Request
+        $resource = Resource::fromSugarBean($sugarBean);
+        try {
+            if (empty($sugarBean->save())) {
+                throw new ApiException('[Unable to update record]');
+            }
+        } catch (Exception $e) {
+            throw new ApiException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        $selectFields = $req->getParam(FIELDS);
+
+        if ($selectFields !== null && isset($selectFields[$moduleName])) {
+            $fields = explode(',', $selectFields[$moduleName]);
+            $payload['data'] = $resource->getArrayWithFields($fields);
+        } else {
+            $payload['data'] = $resource->getArray();
+        }
+
+        $res = $res->withStatus(200);
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws Conflict
+     * @throws NotFound
+     * @throws EmptyBody
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     */
+    public function deleteModuleRecord(Request $req, Response $res, array $args)
+    {
+        $this->negotiatedJsonApiContent($req, $res);
+        $res = $res->withStatus(202);
+        $moduleName = $args[self::MODULE];
+        $moduleId = $args['id'];
+        $module = \BeanFactory::newBean($moduleName);
+        $payload = array();
+
+        // Validate module
+        if(empty($module)) {
+            throw new ModuleNotFound($moduleName);
+        }
+
+        // Validate ID
+        $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
+        if ($sugarBean ->new_with_id === true) {
+            $exception = new NotFound(self::MISSING_ID);
+            $exception->setSource('');
+            throw $exception;
+        }
+
+        // Handle Request
+        $sugarBean->deleted = 1;
+
+        try {
+            if (empty($sugarBean->save())) {
+                throw new ApiException('[Unable to delete record]');
+            }
+        } catch (Exception $e) {
+            throw new ApiException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        $payload['meta'] = array(
+            'status' => 200
+        );
+        $res = $res->withStatus(200);
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+
 }

@@ -6,7 +6,7 @@ namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 /**
  * Class LinksMessage
  * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-meta
+ * @see http://jsonapi.org/format/1.0/#document-links
  */
 class LinksMessage
 {

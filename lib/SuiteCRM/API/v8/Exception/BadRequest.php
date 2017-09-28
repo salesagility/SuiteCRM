@@ -11,17 +11,17 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 use Throwable;
 
-class ModuleNotFound extends ApiException
+class BadRequest extends ApiException
 {
     /**
-     * ModuleNotFound constructor.
+     * BadRequest constructor.
      * @param string $message Module Not Found "$message"
      * @param int $code
      * @param Throwable|null $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, Throwable $previous = null)
     {
-        parent::__construct('[Module Not Found] '.$message, $code, $previous);
+        parent::__construct('[BadRequest] '.$message, $code, $previous);
     }
 
     /**
@@ -29,7 +29,7 @@ class ModuleNotFound extends ApiException
      */
     public function getHttpStatus()
     {
-        return 406;
+        return 400;
     }
 
     /**
@@ -37,6 +37,6 @@ class ModuleNotFound extends ApiException
      */
     public function getDetail()
     {
-        return 'Json API cannot find resource';
+        return 'Please ensure you fill in the fields required';
     }
 }

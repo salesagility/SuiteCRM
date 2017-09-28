@@ -41,6 +41,11 @@ class Exception extends \Exception
         return 'SuiteCRM Exception';
     }
 
+    /**
+     * Determines the output message in log files.
+     * @return string PSR-3 log level
+     * @see LogLevel
+     */
     public function getLogLevel()
     {
         return LogLevel::ERROR;
