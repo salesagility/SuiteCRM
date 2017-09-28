@@ -11,6 +11,33 @@ class ModulesCest
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
 
     /**
+     * Get list of modules
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules
+     *
+     */
+    public function TestScenarioListModules(apiTester $I)
+    {
+        $I->comment('Test list modules');
+        $I->sendJsonApiContentNegotiation();
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendGET(
+            $I->getInstanceURL() . '/api/v8/modules'
+        );
+        $I->seeResponseCodeIs(200);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('meta', $response);
+        $I->assertArrayHasKey('modules', $response['meta']);
+        $I->assertNotEmpty($response['meta']['modules']);
+    }
+
+    /**
      * Create a new entry with missing type
      * @param apiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
