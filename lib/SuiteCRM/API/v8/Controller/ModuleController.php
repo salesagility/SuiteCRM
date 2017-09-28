@@ -44,7 +44,7 @@ use Codeception\Exception\ContentNotFound;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 use SuiteCRM\API\JsonApi\v1\Links;
-use SuiteCRM\API\JsonApi\v1\Resource;
+use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource as Resource;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
