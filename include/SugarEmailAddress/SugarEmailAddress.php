@@ -1235,6 +1235,39 @@ class SugarEmailAddress extends SugarBean {
         $now = $this->db->now();
         $query = "UPDATE email_addresses SET opt_in = 1, opt_in_ip = '$ip', opt_in_datetime = $now WHERE id = '$id' AND opt_in = 0";
         $this->db->query($query);
+        $GLOBALS['log']->info("User Opt In, Email address: $id, IP: $ip");
+    }
+
+    /**
+     * @param null|string $id
+     * @return array
+     * @throws \RuntimeException
+     */
+    protected function getOptInInfo($id = null) {
+        if (null === $id) {
+            if(!$this->id) {
+                $msg = 'Trying to get opt-in info for email address without email address ID.';
+                $GLOBALS['log']->fatal($msg);
+                throw new RuntimeException($msg);
+            } else {
+                $id = $this->id;
+            }
+        }
+
+        $id = $this->db->quote($id);
+        $query = "SELECT id, opt_in, opt_in_ip, opt_in_datetime FROM email_addresses WHERE id = '$id'";
+        $this->db->query($query);
+        $results = $this->db->query($query);
+        $info = array();
+        while ($row = $this->db->fetchByAssoc($results)) {
+            if($info) {
+                $msg = 'Multiple email address ID.';
+                $GLOBALS['log']->fatal($msg);
+                throw new RuntimeException($msg);
+            }
+            $info = $row;
+        }
+        return $info;
     }
 
 } // end class def

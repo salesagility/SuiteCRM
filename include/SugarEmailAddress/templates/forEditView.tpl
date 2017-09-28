@@ -139,6 +139,8 @@ eaw.emailIsRequired = "{$required}";
 eaw.tabIndex = '{$tabindex}';
 var addDefaultAddress = '{$addDefaultAddress}';
 var prefillEmailAddress = '{$prefillEmailAddresses}';
+
+// ones prefill data
 var prefillData = {$prefillData};
 if(prefillEmailAddress == 'true') {ldelim}
 	eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);

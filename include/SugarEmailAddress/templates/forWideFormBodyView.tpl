@@ -105,6 +105,8 @@ value='{$app_strings.LBL_ADD_BUTTON}'>{sugar_getimage name="id-ff-add" alt=$app_
     eaw.emailIsRequired = "{$required}";
     var addDefaultAddress = '{$addDefaultAddress}';
     var prefillEmailAddress = '{$prefillEmailAddresses}';
+
+    // prefill data at second place
     var prefillData = {$prefillData};
     if(prefillEmailAddress == 'true') {ldelim}
         eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
