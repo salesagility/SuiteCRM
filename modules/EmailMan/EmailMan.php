@@ -566,6 +566,57 @@ class EmailMan extends SugarBean{
 
         return true;
     }
+
+    /**
+     * @param $request
+     * @return bool
+     */
+    private function hasEmailOptInLink($request) {
+        //fetch email marketing.
+        if (empty($this->current_emailmarketing) or !isset($this->current_emailmarketing)) {
+            if (!class_exists('EmailMarketing')) {
+
+            }
+
+            $this->current_emailmarketing=new EmailMarketing();
+
+        }
+        if (empty($this->current_emailmarketing->id) or $this->current_emailmarketing->id !== $this->marketing_id) {
+            $this->current_emailmarketing->retrieve($this->marketing_id);
+
+            $this->newmessage = true;
+        }
+        // fetch campaign details..
+        if (empty($this->current_campaign)) {
+            $this->current_campaign= new Campaign();
+        }
+        if (empty($this->current_campaign->id) or $this->current_campaign->id !== $this->current_emailmarketing->campaign_id) {
+            $this->current_campaign->retrieve($this->current_emailmarketing->campaign_id);
+
+            //load defined tracked_urls
+            $this->current_campaign->load_relationship('tracked_urls');
+            $query_array=$this->current_campaign->tracked_urls->getQuery(true);
+            $query_array['select']="SELECT tracker_name, tracker_key, id, is_optout, is_optin ";
+            $result=$this->current_campaign->db->query(implode(' ',$query_array));
+
+            $this->has_optout_links=false;
+            $this->has_optin_links=false;
+            $this->tracker_urls=array();
+            while (($row=$this->current_campaign->db->fetchByAssoc($result)) != null) {
+                $this->tracker_urls['{'.$row['tracker_name'].'}']=$row;
+                //has the user defined opt-out links for the campaign.
+                if ($row['is_optout']==1) {
+                    $this->has_optout_links=true;
+                }
+                if ($row['is_optin']==1) {
+                    $this->has_optin_links=true;
+                }
+            }
+        }
+        return $this->has_optin_links;
+    }
+
+
 	function sendEmail($mail,$save_emails=1,$testmode=false){
 	    $this->test=$testmode;
 
@@ -625,26 +676,31 @@ class EmailMan extends SugarBean{
 		}
 
         if (
-            ((!isset($module->email_opt_out)
-                    || ($module->email_opt_out !== 'on'
-                        && $module->email_opt_out !== 1
-                        && $module->email_opt_out !== '1'))
-            && (!isset($module->invalid_email)
-                    || ($module->invalid_email !== 'on'
-                        && $module->invalid_email !== 1
-                        && $module->invalid_email !== '1'))
-            )
+            // or it is an opt in email
+            $this->hasEmailOptInLink($_REQUEST)
+
             ||
 
-            !((!isset($module->email_opt_in)
+            (
+                // not opted out and not invalid
+                ((!isset($module->email_opt_out)
+                        || ($module->email_opt_out !== 'on'
+                            && $module->email_opt_out !== 1
+                            && $module->email_opt_out !== '1'))
+                    && (!isset($module->invalid_email)
+                        || ($module->invalid_email !== 'on'
+                            && $module->invalid_email !== 1
+                            && $module->invalid_email !== '1'))
+                )
+                &&
+                // and opted in
+                !(!isset($module->email_opt_in)
                     || ($module->email_opt_in !== 'on'
                         && $module->email_opt_in !== 1
                         && $module->email_opt_in !== '1'))
-                || (!isset($module->invalid_email)
-                    || ($module->invalid_email !== 'on'
-                        && $module->invalid_email !== 1
-                        && $module->invalid_email !== '1')))
-            ){
+            )
+
+        ) {
             $lower_email_address=strtolower($module->email1);
 			//test against indivdual address.
 			if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
