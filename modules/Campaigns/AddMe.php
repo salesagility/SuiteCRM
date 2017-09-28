@@ -87,8 +87,34 @@ if(!empty($_REQUEST['identifier'])) {
             //record this activity in the campaing log table..
             $ip = $db->quote(query_client_ip());
             $datetime = TimeDate::getInstance()->nowDb();
-			$query = "UPDATE email_addresses SET email_addresses.opt_out = 0, email_addresses.opt_in = 1, email_addresses.opt_in_ip = '$ip', email_addresses.opt_in_datetime = '$datetime' WHERE EXISTS(SELECT 1 FROM email_addr_bean_rel ear WHERE ear.bean_id = '$id' AND ear.deleted=0 AND email_addresses.id = ear.email_address_id)";
-			$status=$db->query($query);
+
+            $query =
+                "SELECT * FROM email_addr_bean_rel 
+                    WHERE bean_id = '$id' AND deleted=0";
+
+            $result = $db->query($query);
+
+            while($row = $db->fetchByAssoc($result)) {
+                $rows[] = $row;
+            }
+
+            $status = false;
+
+            foreach($rows as $row) {
+
+                $query =
+                    "UPDATE email_addresses SET 
+                        email_addresses.opt_out = 0, 
+                        email_addresses.opt_in = 1, 
+                        email_addresses.opt_in_ip = '$ip', 
+                        email_addresses.opt_in_datetime = '$datetime' 
+                    WHERE id = '{$row['email_address_id']}'";
+
+                $status = $db->query($query);
+
+            } 
+
+
 			if($status){
 				echo "*";
 			}
