@@ -129,7 +129,23 @@ class ApiController implements LoggerAwareInterface
             ->write(json_encode($payload));
     }
 
+    public function generateJsonApiListResponse(Request $request, Response $response, $payload)
+    {
+        $negotiated = $this->negotiatedJsonApiContent($request, $response);
+        if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
+            // return error instead of response
+            return $negotiated;
+        }
 
+        if (!isset($payload['data']) && !is_array($payload['data'])) {
+            throw new ApiException('[generateJsonApiListResponse expects a list]');
+        }
+
+
+        return $response
+            ->withHeader('Content-Type', self::CONTENT_TYPE)
+            ->write(json_encode($payload));
+    }
     /**
      * @param Request $request
      * @param Response $response

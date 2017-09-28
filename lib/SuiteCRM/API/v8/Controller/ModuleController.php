@@ -106,7 +106,7 @@ class ModuleController extends ApiController
         global $sugar_config;
         $lib = new ModulesLib();
         $payload = array(
-            'meta' => array(),
+//            'meta' => array(),
             'links' => array(),
             'data' => array()
         );
@@ -129,7 +129,8 @@ class ModuleController extends ApiController
             'count' => $lastOffset
         );
 
-        return $this->generateJsonApiResponse($req, $res, $payload);
+        // TODO: use generateJsonApiResponse instead
+        return $this->generateJsonApiListResponse($req, $res, $payload);
     }
 
 
