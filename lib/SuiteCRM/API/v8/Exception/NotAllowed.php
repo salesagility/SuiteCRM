@@ -11,6 +11,10 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 use Throwable;
 
+/**
+ * Class NotAllowed
+ * @package SuiteCRM\API\v8\Exception
+ */
 class NotAllowed extends ApiException
 {
     /**

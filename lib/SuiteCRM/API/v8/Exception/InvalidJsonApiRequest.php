@@ -11,6 +11,10 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 use Throwable;
 
+/**
+ * Class InvalidJsonApiRequest
+ * @package SuiteCRM\API\v8\Exception
+ */
 class InvalidJsonApiRequest extends ApiException
 {
     /**
