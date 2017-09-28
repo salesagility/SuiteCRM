@@ -18,7 +18,7 @@
 */
 class apiTester extends \Codeception\Actor
 {
-    use _generated\V8restapiTesterActions;
+    use _generated\apiTesterActions;
 
     const CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_JSON_API = 'application/vnd.api+json';
