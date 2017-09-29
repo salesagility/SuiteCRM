@@ -218,13 +218,13 @@ function log_campaign_activity($identifier, $activity, $update=true, $clicked_ur
     $row=$db->fetchByAssoc($current);
 
         if ($row==null) {
-            $query="select * from campaign_log where target_tracker_key='$identifier' and activity_type='targeted'";
+            $query="select * from campaign_log where target_tracker_key='$identifier'";
             $targeted=$db->query($query);
             $row=$db->fetchByAssoc($targeted);
 
             //if activity is removed and target type is users, then a user is trying to opt out
             //of emails.  This is not possible as Users Table does not have opt out column.
-            if ($row  && (strtolower($row['target_type']) == 'users' &&  $activity == 'removed' )) {
+            if ($row  && (strtolower($row['target_type']) == 'users' &&  ($activity == 'removed' || $activity == 'added' ) )) {
                 $return_array['target_id']= $row['target_id'];
                 $return_array['target_type']= $row['target_type'];
                 return $return_array;
@@ -262,7 +262,7 @@ function log_campaign_activity($identifier, $activity, $update=true, $clicked_ur
 
         }
         //check to see if this is a removal action
-        if ($row  && $activity == 'removed' ) {
+        if ($row  && ($activity == 'removed' ||  $activity == 'added' )) {
             //retrieve campaign and check it's type, we are looking for newsletter Campaigns
             $query = "SELECT campaigns.* FROM campaigns WHERE campaigns.id = '".$row['campaign_id']."' ";
             $result = $db->query($query);
