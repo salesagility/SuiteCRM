@@ -58,8 +58,11 @@ $mod_strings = return_module_language($sugar_config['default_language'], $module
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign_id = $_POST['campaign_id'];
     $campaign = new Campaign();
+    $campaign_id = $campaign->db->quote($_POST['campaign_id']);
+    if(!isValidId($campaign_id)) {
+        throw new RuntimeException('Invalid ID requested');
+    }
     $camp_query = "select name,id from campaigns where id='$campaign_id'";
     $camp_query .= ' and deleted=0';
     $camp_result = $campaign->db->query($camp_query);
