@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
+use Faker\Provider\DateTime;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
@@ -159,15 +160,15 @@ class SuiteBeanResource extends Resource
             if (isset($this->attributes[$field])) {
                 if ($definition['type'] === 'datetime' && !empty($this->attributes[$field])) {
                     // Convert to DB date
-                    $datetime = \DateTime::createFromFormat('c', $this->attributes[$field]);
+                    $datetime = \DateTime::createFromFormat(\DateTime::ATOM, $this->attributes[$field]);
                     if (empty($datetime)) {
                         $exception = new ApiException(
                             '[Unable to convert datetime field to SugarBean DbFormat] "' . $field . '"',
                             ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
                         );
                         $exception->setSource(ResourceEnum::DEFAULT_SOURCE . '/attributes/' . $field);
-                        $sugarBean->$field = $datetime->format('Y-m-d H:i:s');
                     }
+                    $sugarBean->$field = $datetime->format('Y-m-d H:i:s');
                 } else {
                     $sugarBean->$field = $this->attributes[$field];
                 }

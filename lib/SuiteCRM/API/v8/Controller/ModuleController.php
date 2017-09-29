@@ -43,7 +43,8 @@ namespace SuiteCRM\API\v8\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use SuiteCRM\API\JsonApi\v1\Links;
-use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource as Resource;
+use SuiteCRM\API\JsonApi\v1\Resource\Resource;
+use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
@@ -197,7 +198,7 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        $resource = Resource::fromDataArray($body['data']);
+        $resource = SuiteBeanResource::fromDataArray($body['data']);
         $sugarBean = $resource->toSugarBean();
         try {
             $sugarBean->save();
@@ -209,7 +210,7 @@ class ModuleController extends ApiController
         $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
         $links = $links->withSelf($self);
         $selectFields = $req->getParam(self::FIELDS);
-        $resource =  Resource::fromSugarBean($sugarBean);
+        $resource =  SuiteBeanResource::fromSugarBean($sugarBean);
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
             $payload['data'] = $resource->getArrayWithFields($fields);
@@ -259,7 +260,7 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        $resource = Resource::fromSugarBean($sugarBean);
+        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
 
         // filter fields
         $selectFields = $req->getParam(self::FIELDS);
@@ -288,6 +289,7 @@ class ModuleController extends ApiController
      * @throws InvalidJsonApiRequest
      * @throws InvalidJsonApiResponse
      * @throws ModuleNotFound
+     * @throws BadRequest
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
@@ -332,8 +334,10 @@ class ModuleController extends ApiController
             throw $exception;
         }
 
+        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
+        $resource->mergeAttributes(Resource::fromDataArray($body['data']));
+        $sugarBean = $resource->toSugarBean();
         // Handle Request
-        $resource = Resource::fromSugarBean($sugarBean);
         try {
             if (empty($sugarBean->save())) {
                 throw new ApiException('[Unable to update record]');
@@ -342,6 +346,7 @@ class ModuleController extends ApiController
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
+        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
         $selectFields = $req->getParam(self::FIELDS);
 
         if ($selectFields !== null && isset($selectFields[$moduleName])) {

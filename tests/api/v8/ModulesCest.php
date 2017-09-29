@@ -247,6 +247,9 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+
+        $newName = $faker->name();
+
         $I->sendPATCH(
             $I->getInstanceURL() . self::RESOURCE . '/' . self::$RECORD,
             json_encode(
@@ -255,7 +258,7 @@ class ModulesCest
                         'id' => self::$RECORD,
                         'type' => 'Accounts',
                         'attributes' => array(
-                            'name' => $faker->name()
+                            'name' => $newName
                         )
                     )
                 )
@@ -264,6 +267,12 @@ class ModulesCest
 
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+        $I->assertEquals($newName, $response['data']['attributes']['name']);
     }
 
     /**

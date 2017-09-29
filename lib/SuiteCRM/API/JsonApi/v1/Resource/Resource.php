@@ -106,7 +106,7 @@ class Resource implements LoggerAwareInterface
     /**
      * @param array $json
      * @param string $source rfc6901
-     * @return Resource|$this
+     * @return Resource
      * @throws Conflict
      * @throws BadRequest
      * @see https://tools.ietf.org/html/rfc6901
@@ -151,6 +151,15 @@ class Resource implements LoggerAwareInterface
 
         // TODO: Relationships
         return $resource;
+    }
+
+    /**
+     * @param Resource $resource
+     */
+    public function mergeAttributes(Resource $resource)
+    {
+        $resourceArray = $resource->getArray();
+        $this->attributes = array_merge($this->attributes, $resourceArray['attributes']);
     }
 
     /**
