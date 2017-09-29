@@ -150,10 +150,40 @@ class ApiController implements LoggerAwareInterface
             return $negotiated;
         }
 
+        $payload = json_decode(json_encode($payload), true);
+
         if (!isset($payload['data']) && !is_array($payload['data'])) {
-            throw new ApiException('[generateJsonApiListResponse expects a list]');
+            throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list]');
         }
 
+        if (!empty($payload['data'])) {
+            if(!isset($payload['data'][0]['id'])) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with an id]');
+            }
+            if (!isset($payload['data'][0]['type'])) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with a type]');
+            }
+
+            if (array_key_exists('self', $payload['links']) === false) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a links with self]');
+            }
+
+            if (array_key_exists('first', $payload['links']) === false) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with first]');
+            }
+
+            if (array_key_exists('last', $payload['links']) === false) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with last]');
+            }
+
+            if (array_key_exists('next', $payload['links']) === false) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with next]');
+            }
+
+            if (array_key_exists('prev', $payload['links']) === false) {
+                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with prev]');
+            }
+        }
 
         return $response
             ->withHeader('Content-Type', self::CONTENT_TYPE)

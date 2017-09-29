@@ -265,21 +265,10 @@ class Links implements LoggerAwareInterface
         }
 
         if ($this->hasPagination()) {
-            if($this->first !== null) {
-                $response['first'] = $this->first;
-            }
-
-            if($this->prev !== null) {
-                $response['prev'] = $this->prev;
-            }
-
-            if($this->next !== null) {
-                $response['next'] = $this->next;
-            }
-
-            if($this->last !== null) {
-                $response['last'] = $this->last;
-            }
+            $response['first'] = $this->first;
+            $response['prev'] = $this->prev;
+            $response['next'] = $this->next;
+            $response['last'] = $this->last;
         }
 
         if ($this->hasRelated()) {

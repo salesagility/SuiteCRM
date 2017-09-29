@@ -162,7 +162,7 @@ class apiTester extends \Codeception\Actor
     }
 
     /**
-     * Test to ensure that the response is successful
+     * Test to ensure that the response isn't successful
      */
     public function seeJsonApiFailure()
     {
