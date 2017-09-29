@@ -12,6 +12,11 @@
     }
   },
   "require": {
+    "slim/slim": "^3.8",
+    "tuupola/slim-jwt-auth": "^2.0",
+    "league/url": "^3.3",
+    "psr/log": "^1.0",
+    "league/json-guard": "^0.5.2"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -26,7 +31,8 @@
   "autoload": {
     "psr-4": {
       "SuiteCRM\\": [
-        "tests/SuiteCRM"
+        "lib/SuiteCRM/",
+        "tests/SuiteCRM/"
       ]
     }
   },
