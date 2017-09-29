@@ -315,5 +315,20 @@ class ModulesCest
         $I->seeResponseCodeIs(200);
         $I->seeJsonApiContentNegotiation();
         $I->seeJsonAPISuccess();
+
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertTrue(is_array($response['data']));
+
+        if(!empty($response['data'])) {
+            $I->assertTrue(isset($response['data']['0']));
+            $I->assertTrue(isset($response['data']['0']['id']));
+            $I->assertTrue(isset($response['data']['0']['type']));
+            $I->assertTrue(isset($response['data']['0']['attributes']));
+            $I->assertTrue(is_array($response['data']['0']['attributes']));
+        }
+
+        $I->assertArrayHasKey('links', $response);
+        $I->assertArrayHasKey('self', $response['links']);
     }
 }
