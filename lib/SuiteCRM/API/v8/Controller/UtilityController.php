@@ -42,7 +42,10 @@ namespace SuiteCRM\API\v8\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use SuiteCRM\API\v8\Exception\NotAcceptable;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\UtilityLib;
+use \Firebase\JWT\JWT;
 
 class UtilityController extends ApiController
 {
@@ -54,6 +57,9 @@ class UtilityController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws \InvalidArgumentException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function getServerInfo(Request $req, Response $res, array $args)
     {
@@ -68,6 +74,9 @@ class UtilityController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws \InvalidArgumentException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function login(Request $req, Response $res, array $args)
     {
@@ -89,7 +98,7 @@ class UtilityController extends ApiController
             ];
 
             //Create the token
-            $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
+            $jwt = JWT::encode($token, $sugar_config['unique_key']);
             setcookie('Authorization:', 'bearer '.$jwt, null, null, null, isSSL(), true);
 
             $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');

@@ -40,7 +40,7 @@
 const APP_CONTROLLER = 'ApiController';
 chdir(__DIR__.'/../../../../');
 require_once __DIR__.'/../../../../include/entryPoint.php';
-
+global $sugar_config;
 preg_match("/\/api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);
 
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
@@ -57,12 +57,17 @@ foreach ($routeFiles as $routeFile) {
     require $routeFile;
 }
 
-$services = require_once __DIR__ . '/serviceConfig.php';
+require_once __DIR__ . '/serviceConfig.php';
+$services = getServiceConfig();
 $container = $app->getContainer();
 foreach ($services as $service => $closure) {
     $container[$service] = $closure;
 }
 
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['errorHandler'] = function ($container) {
     return function ($request, $response, $exception) use ($container){
         /**
@@ -87,6 +92,10 @@ $container['phpErrorHandler'] = function ($container) {
     };
 };
 
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['notFoundHandler'] = function ($container) {
     return function ($request, $response) use ($container){
         /**
@@ -98,6 +107,10 @@ $container['notFoundHandler'] = function ($container) {
     };
 };
 
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['notAllowedHandler'] = function ($container) {
     return function ($request, $response) use ($container){
         /**
@@ -109,10 +122,10 @@ $container['notAllowedHandler'] = function ($container) {
     };
 };
 
-if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
+if ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
     $JwtAuthentication = new \Slim\Middleware\JwtAuthentication([
         'secure' => isSSL(),
-        "cookie" => "Authorization",
+        'cookie' => 'Authorization',
         'secret' => $sugar_config['unique_key'],
         'environment' => 'REDIRECT_HTTP_AUTHORIZATION',
         'rules' => [
@@ -121,16 +134,31 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
                 'passthrough' => ['/'.$version.'/login', '/'.$version.'/token'],
             ]),
         ],
-        'callback' => function ($request, $response, $arguments) use ($container) {
+        'callback' =>
+        /**
+         * @param \Slim\Http\Request $request
+         * @param \Slim\Http\Response $response
+         * @param array $arguments
+         */
+            function ($request, $response, $arguments) use ($container) {
             global $current_user;
             $token = $arguments['decoded'];
             $current_user = new \user();
             $current_user->retrieve($token->userId);
-            $container['jwt'] = $token;
+                /** @noinspection OnlyWritesOnParameterInspection */
+                $container['jwt'] = $token;
         },
-        'error' => function ($request, $response, $arguments) use ($app) {
+        'error' =>
+        /**
+         * @param \Slim\Http\Request $request
+         * @param \Slim\Http\Response $response
+         * @param array $arguments
+         */
+        function ($request, $response, $arguments) {
             $log = new \SuiteCRM\Utility\SuiteLogger();
             $log->error('[Authentication Error] "' . implode(', ', $arguments). '""');
+
+            /** @noinspection PhpUndefinedMethodInspection */
             return $response->write('Authentication Error');
         },
     ]);

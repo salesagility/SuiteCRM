@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Exception;
 
 use SuiteCRM\Enumerator\ExceptionCode;
-use Throwable;
 
 /**
  * Class NotAllowed
@@ -53,9 +52,9 @@ class NotAllowed extends ApiException
      * NotAllowed constructor.
      * @param string $message Module Not Found "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
         parent::__construct('[Not Allowed] '.$message, $code, $previous);
     }

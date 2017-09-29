@@ -109,6 +109,9 @@ class Links implements LoggerAwareInterface
         $this->setLogger(new Logger());
     }
 
+    /**
+     * @return Links
+     */
     public static function get()
     {
         return new self();
@@ -280,7 +283,7 @@ class Links implements LoggerAwareInterface
         }
 
         if ($this->hasRelated()) {
-            $response['related'] = $this->relate->getArray();
+            $response['related'] = $this->related->getArray();
         }
 
         return $response;

@@ -43,7 +43,6 @@ namespace SuiteCRM\Utility;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 /**
@@ -53,7 +52,7 @@ use Psr\Log\LogLevel;
  * @package SuiteCRM\Utility
  * @see http://www.php-fig.org/psr/psr-3/
  */
-class SuiteLogger extends AbstractLogger implements LoggerInterface
+class SuiteLogger extends AbstractLogger
 {
     /**
      * @param LogLevel|string $level
@@ -67,27 +66,35 @@ class SuiteLogger extends AbstractLogger implements LoggerInterface
         $message = $this->interpolate($message, $context);
         switch ($level) {
             case LogLevel::EMERGENCY:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->fatal('[EMERGENCY] ' . $message);
                 break;
             case LogLevel::ALERT:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->fatal('[ALERT] ' . $message);
                 break;
             case LogLevel::CRITICAL:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->fatal('[CRITICAL] ' . $message);
                 break;
             case LogLevel::ERROR:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->fatal('[ERROR] ' . $message);
                 break;
             case LogLevel::WARNING:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->warn($message);
                 break;
             case LogLevel::NOTICE:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->warn('[NOTICE] ' . $message);
                 break;
             case LogLevel::INFO:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->info($message);
                 break;
             case LogLevel::DEBUG:
+                /** @noinspection PhpUndefinedMethodInspection */
                 $log->debug($message);
                 break;
             default:

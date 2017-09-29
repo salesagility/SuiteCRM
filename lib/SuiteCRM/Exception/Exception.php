@@ -44,7 +44,6 @@ namespace SuiteCRM\Exception;
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
-use Throwable;
 
 /**
  * Class Exception
@@ -56,9 +55,9 @@ class Exception extends \Exception
      * ApiException constructor.
      * @param string $message API Exception "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
     {
         parent::__construct('[SuiteCRM] '.$message.'', $code, $previous);
     }

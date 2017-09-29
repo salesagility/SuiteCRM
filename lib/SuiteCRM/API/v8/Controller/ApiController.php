@@ -45,8 +45,8 @@ use League\JsonGuard\RuleSets\DraftFour;
 use League\JsonGuard\Validator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Slim\Http\Request as Request;
-use Slim\Http\Response as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
@@ -72,8 +72,10 @@ class ApiController implements LoggerAwareInterface
      * @param int $status
      * @param mixed $data
      * @param string $message
-     *
      * @return Response
+     * @throws \InvalidArgumentException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function generateJwtResponse(Response $responseObject, $status, $data, $message)
     {
@@ -95,6 +97,9 @@ class ApiController implements LoggerAwareInterface
      * @param array $payload
      * @return Response
      * @throws InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
      */
     public function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
@@ -115,11 +120,11 @@ class ApiController implements LoggerAwareInterface
         $validator = new Validator($data, $schema, $ruleSet);
 
         if ($validator->fails()) {
-            foreach ($validator->errors() as $error) {
-                $exception = new InvalidJsonApiResponse($error->getMessage(). ' Keyword:'. $error->getKeyword());
-                $exception->setSource($error->getPointer());
-                throw $exception;
-            }
+            $errors = $validator->errors();
+            $error = $errors[0];
+            $exception = new InvalidJsonApiResponse($error->getMessage(). ' Keyword:'. $error->getKeyword());
+            $exception->setSource($error->getPointer());
+            throw $exception;
         }
 
         return $response
@@ -127,6 +132,16 @@ class ApiController implements LoggerAwareInterface
             ->write(json_encode($payload));
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $payload
+     * @return $this|Response
+     * @throws ApiException
+     * @throws \InvalidArgumentException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     */
     public function generateJsonApiListResponse(Request $request, Response $response, $payload)
     {
         $negotiated = $this->negotiatedJsonApiContent($request, $response);
@@ -144,16 +159,16 @@ class ApiController implements LoggerAwareInterface
             ->withHeader('Content-Type', self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
+
     /**
      * @param Request $request
      * @param Response $response
      * @param \Exception|ApiException $exception
      * @return Response
+     * @throws \InvalidArgumentException
      */
     public function generateJsonApiExceptionResponse(Request $request, Response $response, \Exception $exception)
     {
-
-        $logMessage = '';
         $jsonError = array(
             'code' => $exception->getCode(),
             'title' => $exception->getMessage(),
@@ -213,7 +228,7 @@ class ApiController implements LoggerAwareInterface
             throw new NotAcceptable();
         }
 
-        if (empty($this->logger)) {
+        if ($this->logger === null) {
             $this->setLogger(new Logger());
         }
 

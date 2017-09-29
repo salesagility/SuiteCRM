@@ -74,4 +74,12 @@ class UtilityLib
         $authController->logout();
         return [];
     }
+
+    /**
+     * @return array
+     */
+    public function getServerInfo()
+    {
+        return array();
+    }
 }

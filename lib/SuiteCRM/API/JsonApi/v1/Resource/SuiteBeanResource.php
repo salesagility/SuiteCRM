@@ -37,18 +37,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-use SuiteCRM\API\v8\Exception\EmptyBody;
 use SuiteCRM\Enumerator\ExceptionCode;
-use phpDocumentor\Reflection\Types\This;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
-use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
  * Class SuiteBeanResource
@@ -61,7 +57,7 @@ class SuiteBeanResource extends Resource
     /**
      * @param \SugarBean $sugarBean
      * @param string $source rfc6901
-     * @return Resource|$this
+     * @return SuiteBeanResource
      * @throws ApiException
      * @see https://tools.ietf.org/html/rfc6901
      */
@@ -92,21 +88,21 @@ class SuiteBeanResource extends Resource
             if (!empty($sugarBean->$field) && $definition['type'] === 'datetime') {
                 // Convert to DB date
                 $datetime = $timedate->fromUser($sugarBean->$field);
-                if(empty($datetime)) {
+                if (empty($datetime)) {
                     $datetime = $timedate->fromDb($sugarBean->$field);
                 }
 
-                if(empty($datetime)) {
+                if (empty($datetime)) {
                     throw new ApiException(
-                        '[Unable to convert datetime field using SugarBean] "'.$field.'"',
+                        '[Unable to convert datetime field using SugarBean] "' . $field . '"',
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
                     );
                 }
 
                 $datetimeISO8601 = $datetime->format('c');
-                if($datetime === false) {
+                if ($datetime === false) {
                     throw new ApiException(
-                        '[Unable to convert datetime field to ISO 8601] "'.$field.'"',
+                        '[Unable to convert datetime field to ISO 8601] "' . $field . '"',
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
                 $resource->attributes[$field] = $datetimeISO8601;
@@ -116,12 +112,15 @@ class SuiteBeanResource extends Resource
 
             // Validate Required fields
             // Skip "id" as this method may be used to populate a new bean before the bean is saved
-            if ($field !== 'id' && $definition['required'] === true) {
-                if (!isset( $resource->attributes[$field]) && empty($sugarBean->$field)) {
-                    $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
-                    $exception->setSource($resource->source . '/attributes/' . $field);
-                    throw $exception;
-                }
+            if (
+                empty($sugarBean->$field) &&
+                $field !== 'id' &&
+                $definition['required'] === true &&
+                !isset($resource->attributes[$field])
+            ) {
+                $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
+                $exception->setSource($resource->source . '/attributes/' . $field);
+                throw $exception;
             }
         }
 
@@ -146,7 +145,7 @@ class SuiteBeanResource extends Resource
         }
 
         foreach ($sugarBean->field_defs as $field => $definition) {
-            if(!isset($definition)) {
+            if ($definition === null) {
                 throw new ApiException('Unable to read variable definitions');
             }
             // Filter security sensitive information from attributes
@@ -158,15 +157,15 @@ class SuiteBeanResource extends Resource
             }
 
             if (isset($this->attributes[$field])) {
-                if ($definition['type'] === 'datetime' &&  !empty($this->attributes[$field])) {
+                if ($definition['type'] === 'datetime' && !empty($this->attributes[$field])) {
                     // Convert to DB date
                     $datetime = \DateTime::createFromFormat('c', $this->attributes[$field]);
-                    if(empty($datetime)) {
-                       $exception = new ApiException(
-                           '[Unable to convert datetime field to SugarBean DbFormat] "'.$field.'"',
-                           ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
-                       );
-                       $exception->setSource(ResourceEnum::DEFAULT_SOURCE . '/attributes/' . $field);
+                    if (empty($datetime)) {
+                        $exception = new ApiException(
+                            '[Unable to convert datetime field to SugarBean DbFormat] "' . $field . '"',
+                            ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                        );
+                        $exception->setSource(ResourceEnum::DEFAULT_SOURCE . '/attributes/' . $field);
                         $sugarBean->$field = $datetime->format('Y-m-d H:i:s');
                     }
                 } else {
@@ -182,30 +181,41 @@ class SuiteBeanResource extends Resource
                 !isset($this->attributes[$field]) &&
                 empty($this->attributes[$field])
             ) {
-                    $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
-                    $exception->setSource($this->source . '/attributes/' . $field);
-                    throw $exception;
-                }
+                $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
+                $exception->setSource($this->source . '/attributes/' . $field);
+                throw $exception;
             }
+        }
 
         // TODO: Set the relationships
 
         return $sugarBean;
     }
 
+    /**
+     * @param array $json
+     * @param string $source
+     * @return SuiteBeanResource
+     * @throws BadRequest
+     * @throws Conflict
+     */
     public static function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         return self::fromResource(parent::fromDataArray($json, $source));
     }
 
+    /**
+     * @param Resource $resource
+     * @return SuiteBeanResource
+     */
     private static function fromResource(Resource $resource)
     {
         $sugarBeanResource = new self();
         $objValues = get_object_vars($resource); // return array of object values
-        foreach($objValues AS $key=>$value)
-        {
+        foreach ($objValues AS $key => $value) {
             $sugarBeanResource->$key = $value;
         }
+
         return $sugarBeanResource;
     }
 }

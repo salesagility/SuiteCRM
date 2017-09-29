@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Exception;
 
 use SuiteCRM\Enumerator\ExceptionCode;
-use Throwable;
 
 /**
  * Class EmptyBody
@@ -53,9 +52,9 @@ class EmptyBody extends ApiException
      * EmptyBody constructor.
      * @param string $message Module Not Found "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, $previous = null)
     {
         parent::__construct('[EmptyBody] '.$message, $code, $previous);
     }

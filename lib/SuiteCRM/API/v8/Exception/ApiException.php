@@ -41,11 +41,9 @@
 namespace SuiteCRM\API\v8\Exception;
 
 
-use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
-use Throwable;
 
 /**
  * Class ApiException
@@ -68,9 +66,9 @@ class ApiException extends Exception
      * ApiException constructor.
      * @param string $message API Exception "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_EXCEPTION, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_EXCEPTION, $previous = null)
     {
         parent::__construct('[API] '.$message.'', $code, $previous);
     }

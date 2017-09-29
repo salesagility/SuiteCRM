@@ -43,52 +43,60 @@ use SuiteCRM\API\v8\Controller\UtilityController;
 use SuiteCRM\API\v8\Controller\ModuleController;
 use Firebase\JWT\JWT;
 
-return [
-    'UtilityController' => function ($container) {
-        /** @var \Interop\Container\ContainerInterface $container */
-        return new UtilityController(
-            $container->get('sugar_config'),
-            $container->get('cookie'),
-            $container->get('current_user'),
-            $container->get(AuthenticationController::class),
-            $container->get(JWT::class)
-        );
-    },
-    JWT::class => function ($container) {
-        return new JWT();
-    },
-    AuthenticationController::class => function ($container) {
-        require_once __DIR__ . '../../../../modules/Users/authentication/AuthenticationController.php';
+/**
+ * @return array
+ */
+function getServiceConfig()
+{
+    return [
+        'UtilityController' => function ($container) {
+            /** @var \Interop\Container\ContainerInterface $container */
+            return new UtilityController(
+                $container->get('sugar_config'),
+                $container->get('cookie'),
+                $container->get('current_user'),
+                $container->get(AuthenticationController::class),
+                $container->get(JWT::class)
+            );
+        },
+        JWT::class => function () {
+            return new JWT();
+        },
+        AuthenticationController::class => function () {
+            require_once __DIR__ . '../../../../modules/Users/authentication/AuthenticationController.php';
 
-        return new AuthenticationController();
-    },
-    'translations-config' => function ($container) {
-        global $app_list_strings;
+            return new AuthenticationController();
+        },
+        'translations-config' => function () {
+            global $app_list_strings;
 
-        return $app_list_strings;
-    },
-    'current_user' => function ($container) {
-        global $current_user;
+            return $app_list_strings;
+        },
+        'current_user' => function () {
+            global $current_user;
 
-        return $current_user;
-    },
-    'sugar_config' => function ($container) {
-        global $sugar_config;
+            return $current_user;
+        },
+        'sugar_config' => function () {
+            global $sugar_config;
 
-        return $sugar_config;
-    },
-    'jwt' => function ($container) {
-        return new stdClass();
-    },
-    'cookie' => function ($container) {
-        $request = $container->get('request');
+            return $sugar_config;
+        },
+        'jwt' => function () {
+            return new stdClass();
+        },
+        'cookie' => function ($container) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $request = $container->get('request');
 
-        return new \Slim\Http\Cookies($request->getCookieParams());
-    },
-    'ApiController' => function ($container) {
-        return new ApiController();
-    },
-    'ModuleController' => function ($container) {
-        return new ModuleController();
-    }
-];
+            /** @noinspection PhpUndefinedMethodInspection */
+            return new \Slim\Http\Cookies($request->getCookieParams());
+        },
+        'ApiController' => function () {
+            return new ApiController();
+        },
+        'ModuleController' => function () {
+            return new ModuleController();
+        }
+    ];
+}

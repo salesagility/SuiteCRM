@@ -40,10 +40,10 @@
 
 namespace SuiteCRM\API\v8\Library;
 
-use Slim\Http\Request as Request;
-use Slim\Http\Response as Response;
-use League\Url\Components\Query as Query;
-use SuiteCRM\API\JsonApi\v1\Links as Links;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use League\Url\Components\Query;
+use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
 
 /**
@@ -58,6 +58,7 @@ class ModulesLib
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
      * @throws ModuleNotFound
+     * @throws \InvalidArgumentException
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
     {
@@ -101,7 +102,6 @@ class ModulesLib
         $module = \BeanFactory::newBean($args['module']);
 
         if($module === false) {
-            $res = $res->withStatus(404);
             throw new ModuleNotFound('"'.$args['module'].'"');
         }
         /**
@@ -141,8 +141,8 @@ class ModulesLib
 
                 // Convert date, datetime, times to ISO 8601
                 if(
-                    isset($moduleBean->field_defs[$fieldName]) &&
                     !empty($moduleBean->$fieldName) &&
+                    isset($moduleBean->field_defs[$fieldName]) &&
                     $moduleBean->field_defs[$fieldName]['type'] === 'datetime'
                 ) {
                         $date = $timedate->fromUser($moduleBean->$fieldName);
@@ -285,7 +285,7 @@ class ModulesLib
         }
 
         if ($sort !== null) {
-            $query->modify(array('sort' => implode(",", $sort)));
+            $query->modify(array('sort' => implode(',', $sort)));
         }
 
 

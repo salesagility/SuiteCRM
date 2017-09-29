@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Exception;
 
 use SuiteCRM\Enumerator\ExceptionCode;
-use Throwable;
 
 /**
  * Class InvalidJsonApiResponse
@@ -53,19 +52,11 @@ class InvalidJsonApiResponse extends ApiException
      * InvalidJsonApiResponse constructor.
      * @param string $message Module Not Found "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, $previous = null)
     {
         parent::__construct('[InvalidJsonApiResponse] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 500;
     }
 
     /**

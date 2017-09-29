@@ -40,9 +40,8 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
-use Codeception\Exception\ContentNotFound;
-use Slim\Http\Request as Request;
-use Slim\Http\Response as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource as Resource;
 use SuiteCRM\API\v8\Exception\ApiException;
@@ -59,7 +58,6 @@ use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
-use SuiteCRM\Utility\SuiteLogger;
 
 class ModuleController extends ApiController
 {
@@ -76,6 +74,10 @@ class ModuleController extends ApiController
      * @throws ApiException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
+     * @throws ModuleNotFound
+     * @throws InvalidJsonApiResponse
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function getModules(Request $req, Response $res)
     {
@@ -100,6 +102,7 @@ class ModuleController extends ApiController
      * @throws ApiException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
+     * @throws \InvalidArgumentException
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -176,13 +179,13 @@ class ModuleController extends ApiController
         // Validate Type
         if (!isset($body['data']['type'])) {
             $exception = new Conflict('[Missing "type" key in data]');
-            $exception->setSource(SOURCE_TYPE);
+            $exception->setSource(self::SOURCE_TYPE);
             throw $exception;
         }
 
         if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
             $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
-            $exception->setSource(SOURCE_TYPE);
+            $exception->setSource(self::SOURCE_TYPE);
             throw $exception;
         }
 
@@ -205,7 +208,7 @@ class ModuleController extends ApiController
         $links = new Links();
         $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
         $links = $links->withSelf($self);
-        $selectFields = $req->getParam(FIELDS);
+        $selectFields = $req->getParam(self::FIELDS);
         $resource =  Resource::fromSugarBean($sugarBean);
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
@@ -229,6 +232,7 @@ class ModuleController extends ApiController
      * @throws ApiException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
+     * @throws ModuleNotFound
      * @throws InvalidJsonApiRequest
      * @throws InvalidJsonApiResponse
      * @throws \InvalidArgumentException
@@ -258,7 +262,7 @@ class ModuleController extends ApiController
         $resource = Resource::fromSugarBean($sugarBean);
 
         // filter fields
-        $selectFields = $req->getParam(FIELDS);
+        $selectFields = $req->getParam(self::FIELDS);
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
             $payload['data'] = $resource->getArrayWithFields($fields);
@@ -283,6 +287,9 @@ class ModuleController extends ApiController
      * @throws UnsupportedMediaType
      * @throws InvalidJsonApiRequest
      * @throws InvalidJsonApiResponse
+     * @throws ModuleNotFound
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function updateModuleRecord(Request $req, Response $res, array $args)
     {
@@ -307,13 +314,13 @@ class ModuleController extends ApiController
         // Validate Type
         if (!isset($body['data']['type'])) {
             $exception = new Conflict('[Missing "type" key in data]');
-            $exception->setSource(SOURCE_TYPE);
+            $exception->setSource(self::SOURCE_TYPE);
             throw $exception;
         }
 
         if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
             $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
-            $exception->setSource(SOURCE_TYPE);
+            $exception->setSource(self::SOURCE_TYPE);
             throw $exception;
         }
 
@@ -335,7 +342,7 @@ class ModuleController extends ApiController
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $selectFields = $req->getParam(FIELDS);
+        $selectFields = $req->getParam(self::FIELDS);
 
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
@@ -359,6 +366,9 @@ class ModuleController extends ApiController
      * @throws ApiException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
+     * @throws ModuleNotFound
+     * @throws InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
      */
     public function deleteModuleRecord(Request $req, Response $res, array $args)
     {

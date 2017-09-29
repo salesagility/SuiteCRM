@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Exception;
 
 use SuiteCRM\Enumerator\ExceptionCode;
-use Throwable;
 
 /**
  * Class Conflict
@@ -53,9 +52,9 @@ class Conflict extends ApiException
      * Conflict constructor.
      * @param string $message Module Not Found "$message"
      * @param int $code
-     * @param Throwable|null $previous
+     * @param $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, Throwable $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, $previous = null)
     {
         parent::__construct('[Conflict] '.$message, $code, $previous);
     }
