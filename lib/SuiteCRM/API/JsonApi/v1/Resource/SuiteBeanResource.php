@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-use Faker\Provider\DateTime;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
@@ -100,7 +99,7 @@ class SuiteBeanResource extends Resource
                     );
                 }
 
-                $datetimeISO8601 = $datetime->format('c');
+                $datetimeISO8601 = $datetime->format(\DateTime::ATOM);
                 if ($datetime === false) {
                     throw new ApiException(
                         '[Unable to convert datetime field to ISO 8601] "' . $field . '"',
