@@ -72,6 +72,6 @@ class NotAcceptable extends ApiException
      */
     public function getDetail()
     {
-        return 'Json API expects the "Accept" header to be application/vnd.API+json';
+        return 'Json API expects the "Accept" header to be application/vnd.api+json';
     }
 }

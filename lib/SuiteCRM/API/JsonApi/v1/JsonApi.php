@@ -46,7 +46,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
 /**
  * Class JsonApi
  * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-meta
+ * @see http://jsonapi.org/format/1.0/#document-jsonapi-object
  */
 class JsonApi implements LoggerAwareInterface
 {

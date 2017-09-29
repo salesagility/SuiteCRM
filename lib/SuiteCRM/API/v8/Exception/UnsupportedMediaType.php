@@ -72,6 +72,6 @@ class UnsupportedMediaType extends ApiException
      */
     public function getDetail()
     {
-        return 'Json API expects the "Content-Type" header to be application/vnd.API+json';
+        return 'Json API expects the "Content-Type" header to be application/vnd.api+json';
     }
 }

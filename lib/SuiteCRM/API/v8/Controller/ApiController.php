@@ -141,6 +141,7 @@ class ApiController implements LoggerAwareInterface
      * @throws \InvalidArgumentException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
+     * @throws InvalidJsonApiResponse
      */
     public function generateJsonApiListResponse(Request $request, Response $response, $payload)
     {

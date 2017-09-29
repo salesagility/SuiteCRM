@@ -69,7 +69,7 @@ class Exception extends \Exception
      */
     public function getDetail()
     {
-        return 'SuiteCRM Exception';
+        return 'SuiteCRM has encountered an exception which has not been handled';
     }
 
     /**
@@ -79,6 +79,6 @@ class Exception extends \Exception
      */
     public function getLogLevel()
     {
-        return LogLevel::ERROR;
+        return LogLevel::CRITICAL;
     }
 }
