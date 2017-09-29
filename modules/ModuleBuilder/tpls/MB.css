@@ -51,7 +51,7 @@ button, .button {
 
 .mbLBL {
     vertical-align: top;
-    text-align: right;
+    text-align: left;
     width: 1%;
     font-weight: bold;
     white-space: nowrap;
