@@ -470,6 +470,7 @@ $mod_strings = array (
 	'LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE' => 'Opt-in confirmation email template',
     'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
     'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
+	'LBL_OPT_IN' => 'Opt In'
 );
 
 
