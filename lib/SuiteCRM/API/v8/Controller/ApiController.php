@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Controller;
 
 use League\JsonGuard\Dereferencer;
-use League\JsonGuard\Loaders\FileLoader;
 use League\JsonGuard\RuleSets\DraftFour;
 use League\JsonGuard\Validator;
 use Psr\Log\LoggerAwareInterface;
@@ -50,7 +49,6 @@ use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
@@ -165,7 +163,7 @@ class ApiController implements LoggerAwareInterface
             $this->setLogger(new Logger());
         }
 
-        if (is_subclass_of($exception, 'SuiteCRM\Exception\Exception')) {
+        if (is_subclass_of($exception, ApiException::class)) {
             $jsonError['detail'] = $exception->getDetail();
             $jsonError['source'] = $exception->getSource();
             $response = $response->withStatus($exception->getHttpStatus());
