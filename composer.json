@@ -5,6 +5,12 @@
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
+  "config": {
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "5.5"
+    }
+  },
   "require": {
     "slim/slim": "^3.8",
     "tuupola/slim-jwt-auth": "^2.0",
