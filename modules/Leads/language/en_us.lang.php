@@ -223,5 +223,8 @@ $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
     'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
     'LBL_FP_EVENTS_LEADS_1_FROM_FP_EVENTS_TITLE' => 'Events',
+    'LBL_THANKS_FOR_SUBMITTING' => 'Thanks for submitting.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
 ?>
