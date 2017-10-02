@@ -2235,6 +2235,13 @@ table.view {
   background-opacity: 0.6;
 }
 
+#template_dialog {
+  padding: 25px;
+  overflow: hidden;
+  text-align: center;
+  z-index: 3;
+}
+
 #overlay {
   display: none;
   position: fixed;
