@@ -38,43 +38,46 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
+namespace SuiteCRM\API\OAuth2\Repositories;
 
-    $app->group('/{module}', function () use ($app) {
+use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\ClientEntity;
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+class ClientRepository implements ClientRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
+    {
+        // TODO: Manage Clients in a more secure fashion
+        $clients = [
+            'suitecrm_client' => [
+                'secret'          => '',
+                'name'            => 'SuiteCRM Front end',
+                'redirect_uri'    => 'http://foo/bar',
+                'is_confidential' => false,
+            ],
+        ];
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+        // Check if client is registered
+        if (array_key_exists($clientIdentifier, $clients) === false) {
+            return;
+        }
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
+        if (
+            $mustValidateSecret === true
+            && $clients[$clientIdentifier]['is_confidential'] === true
+            && password_verify($clientSecret, $clients[$clientIdentifier]['secret']) === false
+        ) {
+            return;
+        }
 
-        $app->post('/action/{action}', 'ModuleController:runAction');
+        $client = new ClientEntity();
+        $client->setIdentifier($clientIdentifier);
+        $client->setName($clients[$clientIdentifier]['name']);
+        $client->setRedirectUri($clients[$clientIdentifier]['redirect_uri']);
 
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
-
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+        return $client;
+    }
+}

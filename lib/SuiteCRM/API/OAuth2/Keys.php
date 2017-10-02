@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,43 +39,67 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
+namespace SuiteCRM\API\OAuth2;
 
-    $app->group('/{module}', function () use ($app) {
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+use SuiteCRM\API\v8\Exception\ApiException;
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+class Keys
+{
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
+    /**
+     * @return bool|string
+     * @throws ApiException
+     */
+    public function getPublicKey()
+    {
+        $path = __DIR__.'/public.key';
+        if(!file_exists($path)) {
+            $this->setUpKeys();
+        }
+        return file_get_contents($path);
+    }
 
-        $app->post('/action/{action}', 'ModuleController:runAction');
+    /**
+     * @return bool|string
+     * @throws ApiException
+     */
+    public function getPrivateKey()
+    {
+        $path = __DIR__.'/private.key';
+        if(!file_exists($path)) {
+            $this->setUpKeys();
+        }
+        return file_get_contents($path);
+    }
 
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
+    /**
+     * @throws ApiException
+     */
+    private function setUpKeys()
+    {
+            $config = array(
+                'digest_alg' => 'sha512',
+                'private_key_bits' => '2048',
+                'private_key_type' => OPENSSL_KEYTYPE_RSA,
+            );
 
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
+            // Create the private and public key
+            $resource = openssl_pkey_new($config);
 
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
+            if($resource === false) {
+                throw new ApiException('[OAuth] Unable to generate private key');
+            }
 
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
+            // Extract the private key from $res to $privKey
+            openssl_pkey_export($resource, $privateKey);
+            openssl_pkey_export_to_file($privateKey, __DIR__.'/private.key');
 
-    });
-});
+            // Extract the public key from $res to $pubKey
+            $publicKey = openssl_pkey_get_details($resource);
+            if(!isset($publicKey['key'])) {
+                    throw new ApiException('[OAuth] Unable to generate public key');
+            }
+            file_put_contents(__DIR__.'/public.key', $publicKey['key']);
+    }
+}

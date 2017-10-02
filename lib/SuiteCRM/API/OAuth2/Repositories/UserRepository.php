@@ -38,43 +38,32 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
 
-    $app->group('/{module}', function () use ($app) {
+namespace SuiteCRM\API\OAuth2\Repositories;
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\UserEntity;
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+class UserRepository implements UserRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserEntityByUserCredentials(
+        $username,
+        $password,
+        $grantType,
+        ClientEntityInterface $clientEntity
+    ) {
+        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
+        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
+            $usr = new \User();
+            return new UserEntity($usr->retrieve_user_id($username));
+        }
 
-        $app->post('/action/{action}', 'ModuleController:runAction');
-
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
-
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+        return null;
+    }
+}

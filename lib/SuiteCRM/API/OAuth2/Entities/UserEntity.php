@@ -38,43 +38,26 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
+namespace SuiteCRM\API\OAuth2\Entities;
 
-    $app->group('/{module}', function () use ($app) {
+use League\OAuth2\Server\Entities\UserEntityInterface;
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+class UserEntity implements UserEntityInterface
+{
+    private $id;
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
-
-        $app->post('/action/{action}', 'ModuleController:runAction');
-
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
-
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+    /**
+     * Return the user's identifier.
+     *
+     * @return mixed
+     */
+    public function getIdentifier()
+    {
+        return $this->id;
+    }
+}

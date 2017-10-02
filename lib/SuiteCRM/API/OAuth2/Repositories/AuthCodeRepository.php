@@ -38,43 +38,46 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
 
-    $app->group('/{module}', function () use ($app) {
+namespace SuiteCRM\API\OAuth2\Repositories;
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
+use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\AuthCodeEntity;
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+class AuthCodeRepository implements AuthCodeRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
+    {
+        // Some logic to persist the auth code to a database
+        xdebug_break();
+        $test = 1;
+    }
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
+    /**
+     * {@inheritdoc}
+     */
+    public function revokeAuthCode($codeId)
+    {
+        // Some logic to revoke the auth code in a database
+    }
 
-        $app->post('/action/{action}', 'ModuleController:runAction');
+    /**
+     * {@inheritdoc}
+     */
+    public function isAuthCodeRevoked($codeId)
+    {
+        return false; // The auth code has not been revoked
+    }
 
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
-
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+    /**
+     * {@inheritdoc}
+     */
+    public function getNewAuthCode()
+    {
+        return new AuthCodeEntity();
+    }
+}

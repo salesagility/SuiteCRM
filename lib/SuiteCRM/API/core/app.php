@@ -37,32 +37,51 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-const APP_CONTROLLER = 'ApiController';
 chdir(__DIR__.'/../../../../');
 require_once __DIR__.'/../../../../include/entryPoint.php';
 global $sugar_config;
+global $version;
+
+
 preg_match("/\/api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);
 
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 
 $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
-$version = $matches[1];
-
+$version = 8;
+const API_PATH = 'lib/SuiteCRM/API/v8';
 $app = new \Slim\App();
 
-$routeFiles = (array) glob('lib/SuiteCRM/API/'.$version.'/route/*.php');
-
-foreach ($routeFiles as $routeFile) {
-    require $routeFile;
-}
-
-require_once __DIR__ . '/serviceConfig.php';
-$services = getServiceConfig();
+// Load Containers
 $container = $app->getContainer();
-foreach ($services as $service => $closure) {
-    $container[$service] = $closure;
+$containerFiles = (array) glob(API_PATH.'/container/*.php');
+
+foreach ($containerFiles as $containerFile) {
+    require $containerFile;
 }
+
+$container['notAllowedHandler'] = function ($container) {
+    return function ($request, $response) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $ApiController = $container->get('ApiController');
+        $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
+
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $exception = new \SuiteCRM\API\v8\Exception\NotFound();
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
 
 /**
  * @param \Psr\Container\ContainerInterface $container
@@ -73,10 +92,11 @@ $container['errorHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $ApiController = $container->get(APP_CONTROLLER);
+        $ApiController = $container->get('ApiController');
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
+
 
 /**
  * @param \Psr\Container\ContainerInterface $container
@@ -87,84 +107,23 @@ $container['phpErrorHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $ApiController = $container->get(APP_CONTROLLER);
+        $ApiController = $container->get('ApiController');
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
-/**
- * @param \Psr\Container\ContainerInterface $container
- * @return Closure
- */
-$container['notFoundHandler'] = function ($container) {
-    return function ($request, $response) use ($container){
-        /**
-         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
-         */
-        $exception = new \SuiteCRM\API\v8\Exception\NotFound();
-        $ApiController = $container->get(APP_CONTROLLER);
-        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
-    };
-};
+// Load Routes
+$routeFiles = (array) glob(API_PATH.'/route/*.php');
 
-/**
- * @param \Psr\Container\ContainerInterface $container
- * @return Closure
- */
-$container['notAllowedHandler'] = function ($container) {
-    return function ($request, $response) use ($container){
-        /**
-         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
-         */
-        $ApiController = $container->get(APP_CONTROLLER);
-        $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
-        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
-    };
-};
+foreach ($routeFiles as $routeFile) {
+    require $routeFile;
+}
 
-if ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
-    $JwtAuthentication = new \Slim\Middleware\JwtAuthentication([
-        'secure' => isSSL(),
-        'cookie' => 'Authorization',
-        'secret' => $sugar_config['unique_key'],
-        'environment' => 'REDIRECT_HTTP_AUTHORIZATION',
-        'rules' => [
-            new Slim\Middleware\JwtAuthentication\RequestPathRule([
-                'path' => '/'.$version,
-                'passthrough' => ['/'.$version.'/login', '/'.$version.'/token'],
-            ]),
-        ],
-        'callback' =>
-        /**
-         * @param \Slim\Http\Request $request
-         * @param \Slim\Http\Response $response
-         * @param array $arguments
-         */
-            function ($request, $response, $arguments) use ($container) {
-            global $current_user;
-            $token = $arguments['decoded'];
-            $current_user = new \user();
-            $current_user->retrieve($token->userId);
-                /** @noinspection OnlyWritesOnParameterInspection */
-                $container['jwt'] = $token;
-        },
-        'error' =>
-        /**
-         * @param \Slim\Http\Request $request
-         * @param \Slim\Http\Response $response
-         * @param array $arguments
-         */
-        function ($request, $response, $arguments) {
-            $log = new \SuiteCRM\Utility\SuiteLogger();
-            $log->error('[Authentication Error] "' . implode(', ', $arguments). '""');
+// Load Callables
+$callableFiles = (array) glob(API_PATH.'/callable/*.php');
 
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $response->write('Authentication Error');
-        },
-    ]);
-
-    $JwtAuthentication->setLogger(new \SuiteCRM\Utility\SuiteLogger());
-    $app->add($JwtAuthentication);
+foreach ($callableFiles as $callableFile) {
+    require $callableFile;
 }
 
 $app->run();

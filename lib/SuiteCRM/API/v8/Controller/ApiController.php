@@ -43,10 +43,11 @@ namespace SuiteCRM\API\v8\Controller;
 use League\JsonGuard\Dereferencer;
 use League\JsonGuard\RuleSets\DraftFour;
 use League\JsonGuard\Validator;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
@@ -57,14 +58,18 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
 class ApiController implements LoggerAwareInterface
 {
     const CONTENT_TYPE = 'application/vnd.api+json';
+
     /**
      * @var LoggerInterface $logger
      */
     private $logger;
 
-    public function construct()
+    protected $container;
+
+    public function __construct($container)
     {
-        $this->setLogger(new Logger());
+        $this->container = $container;
+        $this->setLogger($this->container->get('Logger'));
     }
 
     /**

@@ -40,8 +40,8 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Resource\Resource;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;

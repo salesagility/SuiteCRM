@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8', function () use ($app) {
-    $app->post('/login', 'SuiteCRM\API\v8\Controller\UtilityController:login');
-    $app->post('/logout', 'SuiteCRM\API\v8\Controller\UtilityController:logout');
-});
+$container['sugar_config'] = function () {
+    global $sugar_config;
+    return $sugar_config;
+};

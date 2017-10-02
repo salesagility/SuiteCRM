@@ -38,43 +38,60 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
 
-    $app->group('/{module}', function () use ($app) {
+namespace SuiteCRM\API\OAuth2\Repositories;
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\AccessTokenEntity;
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+class AccessTokenRepository implements AccessTokenRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
+    {
+       // Used by password grand
+        // Some logic here to save the access token to a database
+        $id = $accessTokenEntity->getIdentifier();
+        $client = $accessTokenEntity->getClient();
+        $scopes = $accessTokenEntity->getScopes();
+        $expires = $accessTokenEntity->getExpiryDateTime();
+        $userId = $accessTokenEntity->getUserIdentifier();
+        xdebug_break();
+        $test = 1;
+    }
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
+    /**
+     * {@inheritdoc}
+     */
+    public function revokeAccessToken($tokenId)
+    {
+        // Some logic here to revoke the access token
+    }
 
-        $app->post('/action/{action}', 'ModuleController:runAction');
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccessTokenRevoked($tokenId)
+    {
+        return false; // Access token hasn't been revoked
+    }
 
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
+    /**
+     * {@inheritdoc}
+     */
+    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
+    {
+        $accessToken = new AccessTokenEntity();
+        $accessToken->setClient($clientEntity);
+        foreach ($scopes as $scope) {
+            $accessToken->addScope($scope);
+        }
+        $accessToken->setUserIdentifier($userIdentifier);
 
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+        return $accessToken;
+    }
+}

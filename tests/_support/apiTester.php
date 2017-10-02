@@ -25,9 +25,24 @@ class apiTester extends \Codeception\Actor
     const CONTENT_TYPE_JSON = 'application/json';
 
     /**
-     * @var $string $token - Bearer token
+     * @var $string $accessToken
      */
-    private static $token;
+    private static $accessToken;
+
+    /**
+     * @var $string $refreshToken
+     */
+    private static $refreshToken;
+
+    /**
+     * @var $string $tokenType - eg Bearer
+     */
+    private static $tokenType;
+
+    /**
+     * @var int $tokenExpiresIn - eg 3600
+     */
+    private static $tokenExpiresIn;
 
     /**
      * Logins into API
@@ -46,28 +61,23 @@ class apiTester extends \Codeception\Actor
          * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
          */
         $I->sendPOST(
-            $I->getInstanceURL().'/api/v8/login',
+            $I->getInstanceURL().'/api/oauth/access_token',
             array(
                 'username' => $username,
-                'password' => $password
+                'password' => $password,
+                'grant_type' => 'password',
+                'scope' => '',
+                'client_id' => $I->getClientID()
             )
         );
 
         $I->canSeeResponseIsJson();
 
         $response = json_decode($I->grabResponse(), true);
-        // http status code
-        $I->assertArrayHasKey('status', $response);
-        // sesssion id
-        $I->assertArrayHasKey('data', $response);
-        // status code as a string
-        $I->assertArrayHasKey('message', $response);
-
-        $I->assertEquals('200', $response['status']);
-        $I->assertEquals('Success', $response['message']);
-        $I->assertNotEmpty($response['data']);
-
-         self::$token = $response['data'];
+        self::$tokenType = $response['token_type'];
+        self::$tokenExpiresIn =  (int)$response['expires_in'];
+        self::$accessToken = $response['access_token'];
+        self::$refreshToken = $response['refresh_token'];
     }
 
     /**
@@ -90,14 +100,7 @@ class apiTester extends \Codeception\Actor
      */
     public function logout()
     {
-        $I = $this;
-        /**
-         * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
-         */
-        $I->sendPOST(
-            $I->getInstanceURL() . '/api/v8/logout'
-        );
-        $I->canSeeResponseCodeIs(401);
+
     }
 
 
@@ -107,7 +110,7 @@ class apiTester extends \Codeception\Actor
     public function sendJwtAuthorisation()
     {
         $I = $this;
-        $I->setHeader('Authorization', 'Bearer '. self::$token);
+        $I->setHeader('Authorization', self::$tokenType.' '. self::$accessToken);
     }
 
     /**

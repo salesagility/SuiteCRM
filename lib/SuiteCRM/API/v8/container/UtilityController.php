@@ -38,65 +38,17 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\API\v8\Controller\UtilityController;
-use SuiteCRM\API\v8\Controller\ModuleController;
-use Firebase\JWT\JWT;
-
 /**
- * @return array
+ * @param $container
+ * @return \SuiteCRM\API\v8\Controller\UtilityController
  */
-function getServiceConfig()
-{
-    return [
-        'UtilityController' => function ($container) {
-            /** @var \Interop\Container\ContainerInterface $container */
-            return new UtilityController(
-                $container->get('sugar_config'),
-                $container->get('cookie'),
-                $container->get('current_user'),
-                $container->get(AuthenticationController::class),
-                $container->get(JWT::class)
-            );
-        },
-        JWT::class => function () {
-            return new JWT();
-        },
-        AuthenticationController::class => function () {
-            require_once __DIR__ . '../../../../modules/Users/authentication/AuthenticationController.php';
-
-            return new AuthenticationController();
-        },
-        'translations-config' => function () {
-            global $app_list_strings;
-
-            return $app_list_strings;
-        },
-        'current_user' => function () {
-            global $current_user;
-
-            return $current_user;
-        },
-        'sugar_config' => function () {
-            global $sugar_config;
-
-            return $sugar_config;
-        },
-        'jwt' => function () {
-            return new stdClass();
-        },
-        'cookie' => function ($container) {
-            /** @noinspection PhpUndefinedMethodInspection */
-            $request = $container->get('request');
-
-            /** @noinspection PhpUndefinedMethodInspection */
-            return new \Slim\Http\Cookies($request->getCookieParams());
-        },
-        'ApiController' => function () {
-            return new ApiController();
-        },
-        'ModuleController' => function () {
-            return new ModuleController();
-        }
-    ];
-}
+$container['UtilityController'] = function ($container) {
+    /** @var \Interop\Container\ContainerInterface $container */
+    return new \SuiteCRM\API\v8\Controller\UtilityController(
+        $container->get('sugar_config'),
+        $container->get('cookie'),
+        $container->get('current_user'),
+        $container->get('AuthenticationController'),
+        $container->get('JWT')
+    );
+};

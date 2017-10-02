@@ -38,43 +38,31 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('/menu', 'ModuleController:getModulesMenu');
-    $app->get('/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('/favorites', 'ModuleController:getFavorites');
+$container['AuthorizationServer'] = function () {
+    $keys = new \SuiteCRM\API\OAuth2\Keys();
+    // Setup the authorization server
+    $server = new \SuiteCRM\API\OAuth2\Middleware\AuthorizationServer(
+        new SuiteCRM\API\OAuth2\Repositories\ClientRepository(),
+        new SuiteCRM\API\OAuth2\Repositories\AccessTokenRepository(),
+        new SuiteCRM\API\OAuth2\Repositories\ScopeRepository(),
+        $keys->getPrivateKey(),
+        $keys->getPublicKey()
+    );
 
-    $app->group('/{module}', function () use ($app) {
+    $grant = new League\OAuth2\Server\Grant\PasswordGrant(
+        new SuiteCRM\API\OAuth2\Repositories\UserRepository(),
+        new  SuiteCRM\API\OAuth2\Repositories\RefreshTokenRepository()
+    );
 
-        $app->get('', 'ModuleController:getModuleRecords');
-        $app->post('', 'ModuleController:createModuleRecord');
+    // refresh tokens will expire after 1 month
+    $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
 
-        $app->get('/language', 'ModuleController:getLanguageDefinition');
-        $app->get('/fields', 'ModuleController:getModuleFields');
-        $app->get('/links', 'ModuleController:getModuleLinks');
-        $app->get('/menu', 'ModuleController:getModuleMenu');
-        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('/favorites', 'ModuleController:getModuleFavorites');
+    // Enable the password grant on the server with a token TTL of 1 hour
+    // access tokens will expire after 1 hour
+    $server->enableGrantType(
+        $grant,
+        new \DateInterval('PT1H')
+    );
 
-        $app->get('/view/{view}', 'ModuleController:getModuleLayout');
-
-        $app->post('/action/{action}', 'ModuleController:runAction');
-
-        $app->post('/{id}/action/{action}', 'ModuleController:runAction');
-
-        $relationship = '/{id}/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch('{id}/{link}/{related_id}','ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/{link}','ModuleController:deleteRelationships');
-
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
-
-    });
-});
+    return $server;
+};

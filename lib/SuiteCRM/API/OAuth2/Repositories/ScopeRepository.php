@@ -38,75 +38,51 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Controller;
+namespace SuiteCRM\API\OAuth2\Repositories;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use SuiteCRM\API\v8\Exception\NotAcceptable;
-use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
-use SuiteCRM\API\v8\Library\UtilityLib;
-use \Firebase\JWT\JWT;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\ScopeEntity;
 
-class UtilityController extends ApiController
+class ScopeRepository implements ScopeRepositoryInterface
 {
-    //default time in seconds that the token is valid for
-    const JWT_EXP_TIME = 14400;
-
     /**
-     * @param Request $req
-     * @param Response $res
-     * @param array $args
-     * @return Response
-     * @throws \InvalidArgumentException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * {@inheritdoc}
      */
-    public function getServerInfo(Request $req, Response $res, array $args)
+    public function getScopeEntityByIdentifier($scopeIdentifier)
     {
-        $lib = new UtilityLib();
-        $server_info = $lib->getServerInfo();
+        $scopes = [
+            'basic' => [
+                'description' => 'Basic details about you',
+            ],
+        ];
 
-        return $this->generateJwtResponse($res, 200, $server_info, 'Success');
-    }
-
-    /**
-     * @param Request $req
-     * @param Response $res
-     * @param array $args
-     * @return Response
-     * @throws \InvalidArgumentException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     */
-    public function login(Request $req, Response $res, array $args)
-    {
-        global $sugar_config;
-
-        $data = $req->getParsedBody();
-
-        $lib = new UtilityLib();
-        $login = $lib->login($data);
-
-        $expTime = !empty($sugar_config['API']['timeout']) ? (int)$sugar_config['API']['timeout'] : self::JWT_EXP_TIME;
-
-        if ($login['loginApproved']) {
-            $token = [
-                'iss' => $sugar_config['site_url'],
-                'userId' => $login['userId'],
-                'iat' => time(),
-                'exp' => time() + $expTime,
-            ];
-
-            //Create the token
-            $jwt = JWT::encode($token, $sugar_config['unique_key']);
-            setcookie('Authorization:', 'bearer '.$jwt, null, null, null, isSSL(), true);
-
-            $res = $res->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
-
-            return $this->generateJwtResponse($res, 200, $jwt, 'Success');
+        if (array_key_exists($scopeIdentifier, $scopes) === false) {
+            return;
         }
 
-        return $this->generateJwtResponse($res, 401, null, 'Unauthorised');
+        $scope = new ScopeEntity();
+        $scope->setIdentifier($scopeIdentifier);
+
+        return $scope;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function finalizeScopes(
+        array $scopes,
+        $grantType,
+        ClientEntityInterface $clientEntity,
+        $userIdentifier = null
+    ) {
+        // Example of programatically modifying the final scope of the access token
+        if ((int) $userIdentifier === 1) {
+            $scope = new ScopeEntity();
+            $scope->setIdentifier('email');
+            $scopes[] = $scope;
+        }
+
+        return $scopes;
+    }
 }

@@ -151,8 +151,8 @@ class PhpBrowserDriverHelper extends \Codeception\Module
      */
     public function getAdminUser()
     {
-        $envDatabasePassword = getenv('INSTANCE_ADMIN_USER');
-        if($envDatabasePassword === false) {
+        $env = getenv('INSTANCE_ADMIN_USER');
+        if($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
             if(empty($config['INSTANCE_ADMIN_USER'])) {
@@ -162,7 +162,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
                 return $config['instance_admin_user'];
             }
         } else {
-            return $envDatabasePassword;
+            return $env;
         }
     }
 
@@ -172,8 +172,8 @@ class PhpBrowserDriverHelper extends \Codeception\Module
      */
     public function getAdminPassword()
     {
-        $envDatabasePassword = getenv('INSTANCE_ADMIN_PASSWORD');
-        if($envDatabasePassword === false) {
+        $env = getenv('INSTANCE_ADMIN_PASSWORD');
+        if($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
             if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
@@ -183,10 +183,25 @@ class PhpBrowserDriverHelper extends \Codeception\Module
                 return $config['instance_admin_password'];
             }
         } else {
-            return $envDatabasePassword;
+            return $env;
         }
     }
 
     // Add other methods to get environmental variables here...
-
+    public function getClientId()
+    {
+        $env = getenv('INSTANCE_CLIENT_ID');
+        if($env === false) {
+            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
+            $config = $webDriver->_getConfig();
+            if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
+                // return default
+                return 'admin';
+            } else {
+                return $config['instance_admin_password'];
+            }
+        } else {
+            return $env;
+        }
+    }
 }
