@@ -134,10 +134,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             //create campaign log
             $camplog = new CampaignLog();
-            if(!isValidId($_POST['campaign_id'])) {
-                throw new RuntimeException('Invalid ID requested in Lead Capture');
-            }
-            $camplog->campaign_id = $_POST['campaign_id'];
+            $camplog->campaign_id = $campaign_id;
             $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
             $camplog->activity_type = $person->object_name;
