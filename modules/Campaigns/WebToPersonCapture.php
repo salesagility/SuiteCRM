@@ -61,7 +61,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $campaign = new Campaign();
     $campaign_id = $campaign->db->quote($_POST['campaign_id']);
     if(!isValidId($campaign_id)) {
-        throw new RuntimeException('Invalid ID requested');
+        throw new RuntimeException('Invalid ID requested in Person Capture');
     }
     $camp_query = "select name,id from campaigns where id='$campaign_id'";
     $camp_query .= ' and deleted=0';
@@ -134,6 +134,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             //create campaign log
             $camplog = new CampaignLog();
+            if(!isValidId($_POST['campaign_id'])) {
+                throw new RuntimeException('Invalid ID requested in Lead Capture');
+            }
             $camplog->campaign_id = $_POST['campaign_id'];
             $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
