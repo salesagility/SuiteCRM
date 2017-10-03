@@ -6,7 +6,6 @@
  */
 class OneLogin_Saml2_LogoutRequest
 {
-
     /**
     * Contains the ID of the Logout Request
     * @var string
@@ -39,8 +38,9 @@ class OneLogin_Saml2_LogoutRequest
      * @param string|null             $nameId       The NameID that will be set in the LogoutRequest.
      * @param string|null             $sessionIndex The SessionIndex (taken from the SAML Response in the SSO process).
      * @param string|null             $nameIdFormat The NameID Format will be set in the LogoutRequest.
+     * @param string|null             $nameIdNameQualifier The NameID NameQualifier will be set in the LogoutRequest.
      */
-    public function __construct(OneLogin_Saml2_Settings $settings, $request = null, $nameId = null, $sessionIndex = null, $nameIdFormat = null)
+    public function __construct(OneLogin_Saml2_Settings $settings, $request = null, $nameId = null, $sessionIndex = null, $nameIdFormat = null, $nameIdNameQualifier = null)
     {
         $this->_settings = $settings;
 
@@ -50,7 +50,6 @@ class OneLogin_Saml2_LogoutRequest
         }
 
         if (!isset($request) || empty($request)) {
-
             $spData = $this->_settings->getSPData();
             $idpData = $this->_settings->getIdPData();
             $security = $this->_settings->getSecurityData();
@@ -63,7 +62,13 @@ class OneLogin_Saml2_LogoutRequest
 
             $cert = null;
             if (isset($security['nameIdEncrypted']) && $security['nameIdEncrypted']) {
-                $cert = $idpData['x509cert'];
+                $existsMultiX509Enc = isset($idpData['x509certMulti']) && isset($idpData['x509certMulti']['encryption']) && !empty($idpData['x509certMulti']['encryption']);
+
+                if ($existsMultiX509Enc) {
+                    $cert = $idpData['x509certMulti']['encryption'][0];
+                } else {
+                    $cert = $idpData['x509cert'];
+                }
             }
 
             if (!empty($nameId)) {
@@ -81,11 +86,13 @@ class OneLogin_Saml2_LogoutRequest
                 $nameId,
                 $spNameQualifier,
                 $nameIdFormat,
-                $cert
+                $cert,
+                $nameIdNameQualifier
             );
 
             $sessionIndexStr = isset($sessionIndex) ? "<samlp:SessionIndex>{$sessionIndex}</samlp:SessionIndex>" : "";
 
+            $spEntityId = htmlspecialchars($spData['entityId'], ENT_QUOTES);
             $logoutRequest = <<<LOGOUTREQUEST
 <samlp:LogoutRequest
     xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
@@ -94,7 +101,7 @@ class OneLogin_Saml2_LogoutRequest
     Version="2.0"
     IssueInstant="{$issueInstant}"
     Destination="{$idpData['singleLogoutService']['url']}">
-    <saml:Issuer>{$spData['entityId']}</saml:Issuer>
+    <saml:Issuer>{$spEntityId}</saml:Issuer>
     {$nameIdObj}
     {$sessionIndexStr}
 </samlp:LogoutRequest>
@@ -182,7 +189,10 @@ LOGOUTREQUEST;
             $encryptedData = $encryptedDataNodes->item(0);
 
             if (empty($key)) {
-                throw new Exception("Key is required in order to decrypt the NameID");
+                throw new OneLogin_Saml2_Error(
+                    "Private Key is required in order to decrypt the NameID, check settings",
+                    OneLogin_Saml2_Error::PRIVATE_KEY_NOT_FOUND
+                );
             }
 
             $seckey = new XMLSecurityKey(XMLSecurityKey::RSA_1_5, array('type'=>'private'));
@@ -198,7 +208,10 @@ LOGOUTREQUEST;
         }
 
         if (!isset($nameId)) {
-            throw new Exception("Not NameID found in the Logout Request");
+            throw new OneLogin_Saml2_ValidationError(
+                "NameID not found in the Logout Request",
+                OneLogin_Saml2_ValidationError::NO_NAMEID
+            );
         }
 
         $nameIdData = array();
@@ -282,7 +295,7 @@ LOGOUTREQUEST;
      *
      * @return bool If the Logout Request is or not valid
      */
-    public function isValid($retrieveParametersFromServer=false)
+    public function isValid($retrieveParametersFromServer = false)
     {
         $this->_error = null;
         try {
@@ -298,7 +311,10 @@ LOGOUTREQUEST;
                 if ($security['wantXMLValidation']) {
                     $res = OneLogin_Saml2_Utils::validateXML($dom, 'saml-schema-protocol-2.0.xsd', $this->_settings->isDebugActive());
                     if (!$res instanceof DOMDocument) {
-                        throw new Exception("Invalid SAML Logout Request. Not match the saml-schema-protocol-2.0.xsd");
+                        throw new OneLogin_Saml2_ValidationError(
+                            "Invalid SAML Logout Request. Not match the saml-schema-protocol-2.0.xsd",
+                            OneLogin_Saml2_ValidationError::INVALID_XML_FORMAT
+                        );
                     }
                 }
 
@@ -308,7 +324,10 @@ LOGOUTREQUEST;
                 if ($dom->documentElement->hasAttribute('NotOnOrAfter')) {
                     $na = OneLogin_Saml2_Utils::parseSAML2Time($dom->documentElement->getAttribute('NotOnOrAfter'));
                     if ($na <= time()) {
-                        throw new Exception('Timing issues (please check your clock settings)');
+                        throw new OneLogin_Saml2_ValidationError(
+                            "Could not validate timestamp: expired. Check system clock.",
+                            OneLogin_Saml2_ValidationError::RESPONSE_EXPIRED
+                        );
                     }
                 }
 
@@ -317,7 +336,10 @@ LOGOUTREQUEST;
                     $destination = $dom->documentElement->getAttribute('Destination');
                     if (!empty($destination)) {
                         if (strpos($destination, $currentURL) === false) {
-                            throw new Exception("The LogoutRequest was received at $currentURL instead of $destination");
+                            throw new OneLogin_Saml2_ValidationError(
+                                "The LogoutRequest was received at $currentURL instead of $destination",
+                                OneLogin_Saml2_ValidationError::WRONG_DESTINATION
+                            );
                         }
                     }
                 }
@@ -327,56 +349,29 @@ LOGOUTREQUEST;
                 // Check issuer
                 $issuer = $this->getIssuer($dom);
                 if (!empty($issuer) && $issuer != $idPEntityId) {
-                    throw new Exception("Invalid issuer in the Logout Request");
+                    throw new OneLogin_Saml2_ValidationError(
+                        "Invalid issuer in the Logout Request",
+                        OneLogin_Saml2_ValidationError::WRONG_ISSUER
+                    );
                 }
 
                 if ($security['wantMessagesSigned']) {
                     if (!isset($_GET['Signature'])) {
-                        throw new Exception("The Message of the Logout Request is not signed and the SP require it");
+                        throw new OneLogin_Saml2_ValidationError(
+                            "The Message of the Logout Request is not signed and the SP require it",
+                            OneLogin_Saml2_ValidationError::NO_SIGNED_MESSAGE
+                        );
                     }
                 }
             }
 
             if (isset($_GET['Signature'])) {
-
-                if (!isset($_GET['SigAlg'])) {
-                    $signAlg = XMLSecurityKey::RSA_SHA1;
-                } else {
-                    $signAlg = $_GET['SigAlg'];
-                }
-
-                if ($retrieveParametersFromServer) {
-                    $signedQuery = 'SAMLRequest='.OneLogin_Saml2_Utils::extractOriginalQueryParam('SAMLRequest');
-                    if (isset($_GET['RelayState'])) {
-                        $signedQuery .= '&RelayState='.OneLogin_Saml2_Utils::extractOriginalQueryParam('RelayState');
-                    }
-                    $signedQuery .= '&SigAlg='.OneLogin_Saml2_Utils::extractOriginalQueryParam('SigAlg');
-                } else {
-                    $signedQuery = 'SAMLRequest='.urlencode($_GET['SAMLRequest']);
-                    if (isset($_GET['RelayState'])) {
-                        $signedQuery .= '&RelayState='.urlencode($_GET['RelayState']);
-                    }
-                    $signedQuery .= '&SigAlg='.urlencode($signAlg);
-                }
-
-                if (!isset($idpData['x509cert']) || empty($idpData['x509cert'])) {
-                    throw new Exception('In order to validate the sign on the Logout Request, the x509cert of the IdP is required');
-                }
-                $cert = $idpData['x509cert'];
-
-                $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA1, array('type' => 'public'));
-                $objKey->loadKey($cert, false, true);
-
-                if ($signAlg != XMLSecurityKey::RSA_SHA1) {
-                    try {
-                        $objKey = OneLogin_Saml2_Utils::castKey($objKey, $signAlg, 'public');
-                    } catch (Exception $e) {
-                        throw new Exception('Invalid signAlg in the recieved Logout Request');
-                    }
-                }
-
-                if (!$objKey->verifySignature($signedQuery, base64_decode($_GET['Signature']))) {
-                    throw new Exception('Signature validation failed. Logout Request rejected');
+                $signatureValid = OneLogin_Saml2_Utils::validateBinarySign("SAMLRequest", $_GET, $idpData, $retrieveParametersFromServer);
+                if (!$signatureValid) {
+                    throw new OneLogin_Saml2_ValidationError(
+                        "Signature validation failed. Logout Request rejected",
+                        OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
+                    );
                 }
             }
 
@@ -398,5 +393,16 @@ LOGOUTREQUEST;
     public function getError()
     {
         return $this->_error;
+    }
+
+    /**
+     * Returns the XML that will be sent as part of the request
+     * or that was received at the SP
+     *
+     * @return string
+     */
+    public function getXML()
+    {
+        return $this->_logoutRequest;
     }
 }
