@@ -227,4 +227,3 @@ $mod_strings = array(
     'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
     'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
-?>

@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 $mod_strings = array(
     'ERR_DELETE_RECORD' => 'Specify the record number to delete the contact.',
     'LBL_ACCOUNT_ID' => 'Account ID:',
@@ -225,4 +226,3 @@ $mod_strings = array(
     'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
 
-?>

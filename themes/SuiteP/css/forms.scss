@@ -315,17 +315,17 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .removeFileButton {
-   font-size: $page-font-size;
-   font-weight: 500;
-   cursor: pointer;
-   padding: 0 20px 0 20px;
-   border-style: none;
-   border-radius: 4px;
-   letter-spacing: 1px;
-   line-height: $input-line-height;
-   height: $input-line-height;
-   text-transform: uppercase;
- }
+  font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  border-style: none;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+}
 
 .removeFileButton {
   background-color: $danger-btn-bg;

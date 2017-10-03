@@ -45,15 +45,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class OptInConfirmationEmailSender
  */
-class OptInConfirmationEmailSender {
+class OptInConfirmationEmailSender
+{
 
     /**
      * @return bool
      */
-    public function isOptInConfirmationEmailEnabled() {
+    public function isOptInConfirmationEmailEnabled()
+    {
         global $sugar_config;
 
-        if(
+        if (
             isset($sugar_config['opt_in_confirmation_email_enabled']) &&
             $sugar_config['opt_in_confirmation_email_enabled']
         ) {
@@ -68,10 +70,11 @@ class OptInConfirmationEmailSender {
      * @return string
      * @throws \RuntimeException
      */
-    private function getOptInConfirmationEmailTemplateId() {
+    private function getOptInConfirmationEmailTemplateId()
+    {
         global $sugar_config, $log;
 
-        if(
+        if (
             !isset($sugar_config['opt_in_confirmation_email_template_id']) ||
             !$sugar_config['opt_in_confirmation_email_template_id']
         ) {
@@ -113,7 +116,8 @@ class OptInConfirmationEmailSender {
      * @param $emailTemplate
      * @param CampaignLog $campaignLog
      */
-    private function replaceOptInLinkPlaceholder($emailTemplate, $campaignLog) {
+    private function replaceOptInLinkPlaceholder($emailTemplate, $campaignLog)
+    {
         global $sugar_config, $mod_strings;
         $pattern = '/\$emailaddress_opt_in_link\b/';
         $link = $sugar_config['site_url'] . '/index.php?entryPoint=addme&identifier=' . $campaignLog->target_tracker_key;
@@ -133,14 +137,14 @@ class OptInConfirmationEmailSender {
     {
         global $log;
 
-        if($this->isOptInConfirmationEmailEnabled()) {
+        if ($this->isOptInConfirmationEmailEnabled()) {
             require_once get_custom_file_if_exists('include/SugarPHPMailer.php');
             $mailer = new SugarPHPMailer();
             $mailer->prepForOutbound();
             $mailer->setMailerForSystem();
             $emailTemplate = new EmailTemplate();
             $emailTemplate->retrieve($this->getOptInConfirmationEmailTemplateId());
-            if(!$emailTemplate) {
+            if (!$emailTemplate) {
                 $msg = 'optInConfirmationEmail template is empty';
                 $log->fatal($msg);
                 throw new RuntimeException($msg);

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,56 +34,62 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 // TODO add user to campaign opt-in list
 require_once('modules/Campaigns/utils.php');
 
-if (!empty($_REQUEST['add'])) clean_string($_REQUEST['add'], "STANDARD");
-if (!empty($_REQUEST['to'])) clean_string($_REQUEST['to'], "STANDARD");
+if (!empty($_REQUEST['add'])) {
+    clean_string($_REQUEST['add'], "STANDARD");
+}
+if (!empty($_REQUEST['to'])) {
+    clean_string($_REQUEST['to'], "STANDARD");
+}
 
-if(!empty($_REQUEST['identifier'])) {
+if (!empty($_REQUEST['identifier'])) {
     global $beanFiles, $beanList, $current_user;
 
     //user is most likely not defined, retrieve admin user so that team queries are bypassed
-    if(empty($current_user) || empty($current_user->id)){
-            $current_user = new User();
-            $current_user->retrieve('1');
+    if (empty($current_user) || empty($current_user->id)) {
+        $current_user = new User();
+        $current_user->retrieve('1');
     }
-    
-    $keys=log_campaign_activity($_REQUEST['identifier'],'added');
+
+    $keys = log_campaign_activity($_REQUEST['identifier'], 'added');
     global $current_language;
     $mod_strings = return_module_language($current_language, 'Campaigns');
 
-    
-    if (!empty($keys) && $keys['target_type'] == 'Users'){
+
+    if (!empty($keys) && $keys['target_type'] == 'Users') {
         //Users cannot opt out of receiving emails, print out warning message.
         echo $mod_strings['LBL_USERS_CANNOT_OPTIN'];
-     }elseif(!empty($keys) && isset($keys['campaign_id']) && !empty($keys['campaign_id'])){
+    } elseif (!empty($keys) && isset($keys['campaign_id']) && !empty($keys['campaign_id'])) {
         //we need to unsubscribe the user from this particular campaign
         $beantype = $beanList[$keys['target_type']];
         require_once($beanFiles[$beantype]);
         $focus = new $beantype();
         $focus->retrieve($keys['target_id']);
         subscribe($keys['campaign_id'], $focus);
-    
-    }elseif(!empty($keys)){
-		$id = $keys['target_id'];
-		$module = trim($keys['target_type']);
-		$class = $beanList[$module];
-		require_once($beanFiles[$class]);
-		$mod = new $class();
-		$db = DBManagerFactory::getInstance();
 
-		$id = $db->quote($id);
+    } elseif (!empty($keys)) {
+        $id = $keys['target_id'];
+        $module = trim($keys['target_type']);
+        $class = $beanList[$module];
+        require_once($beanFiles[$class]);
+        $mod = new $class();
+        $db = DBManagerFactory::getInstance();
 
-		//no opt out for users.
-		if(preg_match('/^[0-9A-Za-z\-]*$/', $id) && $module != 'Users'){
+        $id = $db->quote($id);
+
+        //no opt out for users.
+        if (preg_match('/^[0-9A-Za-z\-]*$/', $id) && $module != 'Users') {
             //record this activity in the campaing log table..
             $ip = $db->quote(query_client_ip());
             $datetime = TimeDate::getInstance()->nowDb();
@@ -94,13 +100,13 @@ if(!empty($_REQUEST['identifier'])) {
 
             $result = $db->query($query);
 
-            while($row = $db->fetchByAssoc($result)) {
+            while ($row = $db->fetchByAssoc($result)) {
                 $rows[] = $row;
             }
 
             $status = false;
 
-            foreach($rows as $row) {
+            foreach ($rows as $row) {
 
                 $query =
                     "UPDATE email_addresses SET 
@@ -112,17 +118,16 @@ if(!empty($_REQUEST['identifier'])) {
 
                 $status = $db->query($query);
 
-            } 
+            }
 
 
-			if($status){
-				echo "*";
-			}
-		}
+            if ($status) {
+                echo "*";
+            }
+        }
     }
-		//Print Confirmation Message.
-		echo $mod_strings['LBL_ELECTED_TO_OPTIN'];
-	
+    //Print Confirmation Message.
+    echo $mod_strings['LBL_ELECTED_TO_OPTIN'];
+
 }
 sugar_cleanup();
-?>
