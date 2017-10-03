@@ -461,11 +461,14 @@ class AOW_WorkFlow extends Basic {
 
 
         if($this->flow_run_on){
-
-            // database time correction with the user's time-zoneqq
-            $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
-            $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
-            $thisDateEnteredTimestamp = strtotime($this->date_entered);
+		
+	    // strtotime not working with d/m/Y format, need convert to db format to make sure feature working expected.
+            // Keep db format to stable with strtotime
+            $beanDateEnteredTimestamp = strtotime($bean->date_entered);
+            $beanDateModifiedTimestamp = strtotime($bean->date_modified);
+		
+            // Convert user date format to db format to stable with strtotime
+            $thisDateEnteredTimestamp = strtotime($timedate->fromUser($this->date_entered)->asDb());
 
             switch($this->flow_run_on){
                 case'New_Records':
