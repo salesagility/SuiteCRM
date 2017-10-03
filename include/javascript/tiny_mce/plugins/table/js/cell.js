@@ -17,8 +17,8 @@ function init() {
 
 	// Get table cell data
 	var celltype = tdElm.nodeName.toLowerCase();
-	var align = ed.dom.getAttrib(tdElm, 'align');
-	var valign = ed.dom.getAttrib(tdElm, 'valign');
+	var align = ed.dom.getAttrib(tdElm, 'align') || getStyle(tdElm, 'text-align');
+	var valign = ed.dom.getAttrib(tdElm, 'valign') || getStyle(tdElm, 'vertical-align');
 	var width = trimSize(getStyle(tdElm, 'width', 'width'));
 	var height = trimSize(getStyle(tdElm, 'height', 'height'));
 	var bordercolor = convertRGBToHex(getStyle(tdElm, 'bordercolor', 'borderLeftColor'));
@@ -201,8 +201,6 @@ function updateCell(td, skip_id) {
 	if (!skip_id)
 		dom.setAttrib(td, 'id', formObj.id.value);
 
-	dom.setAttrib(td, 'align', formObj.align.value);
-	dom.setAttrib(td, 'vAlign', formObj.valign.value);
 	dom.setAttrib(td, 'lang', formObj.lang.value);
 	dom.setAttrib(td, 'dir', getSelectValue(formObj, 'dir'));
 	dom.setAttrib(td, 'style', ed.dom.serializeStyle(ed.dom.parseStyle(formObj.style.value)));
@@ -210,6 +208,8 @@ function updateCell(td, skip_id) {
 	dom.setAttrib(td, 'class', getSelectValue(formObj, 'class'));
 
 	// Clear deprecated attributes
+	ed.dom.setAttrib(td, 'align', '');
+	ed.dom.setAttrib(td, 'vAlign', '');
 	ed.dom.setAttrib(td, 'width', '');
 	ed.dom.setAttrib(td, 'height', '');
 	ed.dom.setAttrib(td, 'bgColor', '');
@@ -219,13 +219,9 @@ function updateCell(td, skip_id) {
 	// Set styles
 	td.style.width = getCSSSize(formObj.width.value);
 	td.style.height = getCSSSize(formObj.height.value);
-	if (formObj.bordercolor.value != "") {
-		td.style.borderColor = formObj.bordercolor.value;
-		td.style.borderStyle = td.style.borderStyle == "" ? "solid" : td.style.borderStyle;
-		td.style.borderWidth = td.style.borderWidth == "" ? "1px" : td.style.borderWidth;
-	} else
-		td.style.borderColor = '';
-
+	td.style.textAlign = formObj.align.value;
+	td.style.verticalAlign = formObj.valign.value;
+	td.style.borderColor = formObj.bordercolor.value;
 	td.style.backgroundColor = formObj.bgcolor.value;
 
 	if (formObj.backgroundimage.value != "")
@@ -314,6 +310,12 @@ function changedStyle() {
 		formObj.bordercolor.value = st['border-color'];
 		updateColor('bordercolor_pick','bordercolor');
 	}
+
+	if (st['text-align'])
+		formObj.align.value = st['text-align'];
+
+	if (st['vertical-align'])
+		formObj.valign.value = st['vertical-align'];
 }
 
 tinyMCEPopup.onInit.add(init);
