@@ -222,7 +222,7 @@ class json_config {
 	}
 
 	// HAS MEETING SPECIFIC CODE:
-	function populateBean(&$focus) {
+	public function populateBean(&$focus) {
 		require_once('include/utils/db_utils.php');
 		$all_fields = $focus->column_fields;
 		// MEETING SPECIFIC
@@ -254,7 +254,7 @@ class json_config {
      *
      * @return array
      */
-    protected function listFilter($module, $fields)
+    public function listFilter($module, $fields)
     {
         $currentUser = $this->getCurrentUser();
 
@@ -273,6 +273,8 @@ class json_config {
                 'sugar_login' => true,
                 'authenticate_id' => true,
                 'pwd_last_changed' => true,
+                'is_admin' => true,
+                'user_name' => true,
                 'user_hash' => true,
                 'password' => true,
                 'last_login' => true,
