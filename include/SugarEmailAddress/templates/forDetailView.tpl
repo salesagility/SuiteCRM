@@ -44,7 +44,7 @@
 				<tr>
 					<td style="border:none;">
 						{if $address.key === 'opt_out' || $address.key === 'opt_in' || $address.key === 'invalid' || $address.key === 'opt_out_invalid'}
-							<span style="text-decoration: line-through;">
+							<span style="{if $address.key != 'opt_in'}text-decoration: line-through;{/if}">
 						{elseif $address.key === 'primary'}
 							<b>
 						{elseif $address.key === 'reply_to' && $item.key != 0}
@@ -60,7 +60,7 @@
 						{elseif $address.key === 'opt_out'}
 							</span>&nbsp;<i class='error'>&#x28;{$app_strings.LBL_EMAIL_OPT_OUT}&#x29;&#x200E;</i>
                         {elseif $address.key === 'opt_in'}
-							</span>&nbsp;<i class='error'>&#x28;{$app_strings.LBL_EMAIL_OPT_IN}&#x29;&#x200E;</i>
+							</span>&nbsp;<i>&#x28;{$app_strings.LBL_EMAIL_OPT_IN}&#x29;&#x200E;</i>
 						{elseif $address.key === 'invalid'}
 							</span>&nbsp;<i>({$app_strings.LBL_EMAIL_INVALID}&#x29;&#x200E;</i>
 						{elseif $address.key === 'opt_out_invalid'}
