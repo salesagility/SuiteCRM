@@ -468,6 +468,9 @@ class AOW_WorkFlow extends Basic {
             $beanDateModifiedTimestamp = strtotime($bean->date_modified);
 		
             // Convert user date format to db format to stable with strtotime
+	    if(empty($this->date_created)) {
+		    return false;
+	    }
             $thisDateEnteredTimestamp = strtotime($timedate->fromUser($this->date_entered)->asDb());
 
             switch($this->flow_run_on){
