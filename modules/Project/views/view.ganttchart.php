@@ -61,6 +61,28 @@ class ProjectViewGanttChart extends ViewDetail
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
         $ss->assign('charset', $charset);
         $ss->assign('CALENDAR_DATEFORMAT', $timedate->get_cal_date_format());
+        $ss->assign(
+            'assign_user_select',
+            SugarThemeRegistry::current()->getImage(
+                'id-ff-select',
+                '',
+                null,
+                null,
+                '.png',
+                $mod_strings['LBL_SELECT']
+            )
+        );
+        $ss->assign(
+            'assign_user_clear',
+            SugarThemeRegistry::current()->getImage(
+                'id-ff-clear',
+                '',
+                null,
+                null,
+                '.gif',
+                $mod_strings['LBL_ID_FF_CLEAR']
+            )
+        );
 
         $access = false;
 

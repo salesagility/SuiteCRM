@@ -116,16 +116,6 @@
                                                                        class="text ui-widget-content ui-corner-all">
                                 {$durationDropDown}</select>
 
-
-                            <label for="assigned_user_name">{$mod.LBL_ASSIGNED_USER_ID}</label>
-                            <input name="assigned_user_name" id="assigned_user_name" class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
-                            <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
-
-                            <input name="btn_assigned_user_name" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"popup_form","field_to_name_array":{"id":"assigned_user_id","user_name":"assigned_user_name"}}{/literal}, "single", true);' type="button">
-                            <input name="btn_clr_assigned_user_name" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button" value="{$app.LBL_CLEAR_BUTTON_LABEL}" onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';" type="button">
-
-
-
                             <label for="Complete">{$mod.LBL_PERCENT_COMPLETE}</label>
                             <input type="text" name="Complete" id="Complete" value="0"
                                    class="text ui-widget-content ui-corner-all"/>
@@ -133,6 +123,18 @@
                             <input type="text" name="Actual_duration" id="Actual_duration" value=""
                                    class="text ui-widget-content ui-corner-all"/>
                             <input type="hidden" name="Notes" id="Notes"/>
+
+                            <label for="assigned_user_name">{$mod.LBL_ASSIGNED_USER_ID}</label>
+                            <input name="assigned_user_name" id="assigned_user_name" class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
+                            <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
+
+                            <span class="id-ff multiple">
+                            <button type="button" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"popup_form","field_to_name_array":{"id":"assigned_user_id","user_name":"assigned_user_name"}}{/literal}, "single", true);'>
+                                {sugar_getimage name="id-ff-select" alt=$app_strings.LBL_ID_FF_CLEAR ext=".png" other_attributes=''}
+                                <button type="button" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button" value="{$app.LBL_CLEAR_BUTTON_LABEL}" onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';">
+                                    {sugar_getimage name="id-ff-clear" alt=$app_strings.LBL_ID_FF_CLEAR ext=".png" other_attributes=''}
+
+                            </span>
 
                         </td>
                     </tr>
