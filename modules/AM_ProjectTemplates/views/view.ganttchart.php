@@ -19,17 +19,21 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/views/view.detail.php');
+
 class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 {
 
-    //Constructor
+    /**
+     * AM_ProjectTemplatesViewGanttChart constructor.
+     */
     public function __construct()
     {
-        parent::SugarView();
+        parent::__construct();
     }
 
 
@@ -105,6 +109,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         $ss->display('modules/AM_ProjectTemplates/tpls/PopupBody.tpl');
 
     }
+
     /**
      * This function rturns the time span between two dates in years months and days
      *

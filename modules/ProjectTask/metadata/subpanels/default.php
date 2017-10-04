@@ -70,7 +70,7 @@ $subpanel_layout = array(
             'width' => '3%',
         ),
         'edit_button' =>
-            array (
+            array(
                 'vname' => 'LBL_EDIT_BUTTON',
                 'widget_class' => 'SubPanelEditButton',
                 'module' => 'Project',

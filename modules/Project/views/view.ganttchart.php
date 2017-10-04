@@ -49,7 +49,8 @@ class ProjectViewGanttChart extends ViewDetail
         $ss->assign('currentUserName', $current_user->name);
         $ss->assign('projectID', $project->id);
         $ss->assign('projectBusinessHours', $project->override_business_hours);
-        $ss->assign('relationshipDropdown',
+        $ss->assign(
+            'relationshipDropdown',
             get_select_options_with_id($app_list_strings['relationship_type_list'], ''));
         $ss->assign('durationDropDown', get_select_options_with_id($app_list_strings['duration_unit_dom'], ''));
         $ss->assign('projectTasks', $_REQUEST['record']);

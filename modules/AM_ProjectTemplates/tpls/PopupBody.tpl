@@ -52,7 +52,8 @@
                     <tr>
                         <td>
 
-                            <input type="hidden" name="project_template_id" id="project_template_id" value="{$projectID}">
+                            <input type="hidden" name="project_template_id" id="project_template_id"
+                                   value="{$projectID}">
                             <input type="hidden" name="consider_business_hours" id="consider_business_hours"
                                    value="{$projectBusinessHours}">
                             <input type="hidden" name="task_id" style="display: none; visibility: collapse;"
@@ -82,13 +83,18 @@
                                     class="text ui-widget-content ui-corner-all">{$relationshipDropdown}</select>
 
                             <label for="assigned_user_name">{$mod.LBL_ASSIGNED_USER_ID}</label>
-                            <input name="assigned_user_name" id="assigned_user_name" class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
+                            <input name="assigned_user_name" id="assigned_user_name"
+                                   class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
                             <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
 
                             <span class="id-ff multiple">
-                            <button type="button" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"popup_form","field_to_name_array":{"id":"assigned_user_id","user_name":"assigned_user_name"}}{/literal}, "single", true);'>
+                            <button type="button" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button"
+                                    value="{$app.LBL_SELECT_BUTTON_LABEL}"
+                                    onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"popup_form","field_to_name_array":{"id":"assigned_user_id","user_name":"assigned_user_name"}}{/literal}, "single", true);'>
                                 {sugar_getimage name="id-ff-select" alt=$app_strings.LBL_ID_FF_CLEAR ext=".png" other_attributes=''}
-                            <button type="button" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button" value="{$app.LBL_CLEAR_BUTTON_LABEL}" onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';">
+                                <button type="button" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button"
+                                        value="{$app.LBL_CLEAR_BUTTON_LABEL}"
+                                        onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';">
                                 {sugar_getimage name="id-ff-clear" alt=$app_strings.LBL_ID_FF_CLEAR ext=".png" other_attributes=''}
                             </span>
                         </td>
@@ -97,8 +103,10 @@
                             <label for="Duration">{$mod.LBL_DURATION_TITLE}</label>
                             <input type="text" name="Duration" id="Duration"
                                    class="text ui-widget-content ui-corner-all"/>
-                            <select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all">
-                                <option value="Days">Days</option></select>
+                            <select id="Duration_unit" name="Duration_unit"
+                                    class="text ui-widget-content ui-corner-all">
+                                <option value="Days">Days</option>
+                            </select>
 
                             <label for="Complete">{$mod.LBL_PERCENT_COMPLETE}</label>
                             <input type="text" name="Complete" id="Complete" value="0"
@@ -122,8 +130,10 @@
 
 <div id="wrapper">
     {if $showButton === true}
-        <div><button id="add_button" class="gantt_button">{$mod.LBL_ADD_NEW_TASK}</button></div>
-        <input id="is_editable" name="is_editable" type="hidden" value="1" >
+        <div>
+            <button id="add_button" class="gantt_button">{$mod.LBL_ADD_NEW_TASK}</button>
+        </div>
+        <input id="is_editable" name="is_editable" type="hidden" value="1">
     {/if}
 
     <input id="project_template_id" type="hidden" name="project_template_id" value="{$projectTasks}"/>

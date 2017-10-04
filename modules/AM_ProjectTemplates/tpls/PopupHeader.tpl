@@ -45,8 +45,8 @@
     {$ieCompatMode}
     <meta http-equiv="Content-Type" content="text/html; charset="{$charset}">
 
-    <link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/qtip/jquery.qtip.min.css" />
+    <link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/qtip/jquery.qtip.min.css"/>
     <script type="text/javascript" src="modules/AM_ProjectTemplates/js/splitter.js"></script>
     <script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.blockUI.js"></script>
     <script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.validate.min.js"></script>

@@ -77,8 +77,7 @@ if (isset($_REQUEST['save_type'])) {
     if ($_REQUEST['save_type'] === 'TemplateToProject') {
         $sugarbean->name = $_REQUEST['project_name'];
         $sugarbean->is_template = 0;
-    }
-    elseif ($_REQUEST['save_type'] === 'ProjectToTemplate') {
+    } elseif ($_REQUEST['save_type'] === 'ProjectToTemplate') {
         $sugarbean->name = $_REQUEST['template_name'];
         $sugarbean->is_template = true;
     }
@@ -95,8 +94,8 @@ if (isset($_REQUEST['email_id'])) {
 }
 
 if (!$sugarbean->ACLAccess('Save')) {
-        ACLController::displayNoAccess(true);
-        sugar_cleanup(true);
+    ACLController::displayNoAccess(true);
+    sugar_cleanup(true);
 }
 
 if (isset($GLOBALS['check_notify'])) {
@@ -110,26 +109,27 @@ $return_id = $sugarbean->id;
 if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     for ($i = 0, $iMax = count($projectTasks); $i < $iMax; $i++) {
         if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) &&
-                $_REQUEST['duplicateSave'] === "true")) {
+                $_REQUEST['duplicateSave'] === "true")
+        ) {
             $projectTasks[$i]->id = '';
             $projectTasks[$i]->project_id = $sugarbean->id;
         }
-        if ($sugarbean->is_template){
+        if ($sugarbean->is_template) {
             $projectTasks[$i]->assigned_user_id = '';
         }
         $projectTasks[$i]->team_id = $sugarbean->team_id;
         if (empty($projectTasks[$i]->duration_unit)) {
             $projectTasks[$i]->duration_unit = ' ';
         }
-        //Since duration_unit cannot be null.
+        // Since duration_unit cannot be null.
         $projectTasks[$i]->save(false);
     }
 }
 
-if ($sugarbean->is_template){
+if ($sugarbean->is_template) {
     header("Location: index.php?action=ProjectTemplatesDetailView&module=Project&record=
     $return_id&return_module=Project&return_action=ProjectTemplatesEditView");
 } else {
-	$_REQUEST['return_url'] = "index.php?module=Project&action=DetailView&record=" . $return_id;
+    $_REQUEST['return_url'] = "index.php?module=Project&action=DetailView&record=" . $return_id;
     handleRedirect($return_id, 'Project');
 }
