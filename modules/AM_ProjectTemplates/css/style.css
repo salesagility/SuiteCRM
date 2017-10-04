@@ -347,6 +347,7 @@
     margin-bottom:12px;
     width:80%;
     padding: .4em;
+    color: #222;
 }
 #Milestone, #Milestone_label, #Subtask, #Subtask_label {
     display: inline-block!important;

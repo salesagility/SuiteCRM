@@ -347,6 +347,7 @@
     margin-bottom:12px;
     width:80%;
     padding: .4em;
+    color: #222;
 }
 input[type=radio]#Milestone, label#Milestone_label, input[type=radio]#Subtask, label#Subtask_label {
     display: inline-block;
