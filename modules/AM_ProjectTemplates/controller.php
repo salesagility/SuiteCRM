@@ -329,7 +329,6 @@ class AM_ProjectTemplatesController extends SugarController {
         $resource = $_POST['resource'];
         $percent = $_POST['percent'];
         $note = $_POST['note'];
-        //$actual_duration = $_POST['actual_duration'];
 
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';

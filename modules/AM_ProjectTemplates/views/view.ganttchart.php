@@ -63,7 +63,6 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                 ''
             )
         );
-        $ss->assign('durationDropDown', get_select_options_with_id($app_list_strings['duration_unit_dom'], ''));
         $ss->assign('projectTasks', $_REQUEST['record']);
         $ieCompatMode = false;
         if (isset($sugar_config['meta_tags']['meta_tags']['ieCompatMode'])) {

@@ -70,21 +70,13 @@ array (
             'name' => 'order_number',
             'label' => 'LBL_ORDER_NUMBER',
           ),
+            2 =>
+                array (
+                    'name' => 'percent_complete',
+                    'label' => 'LBL_PERCENT_COMPLETE',
+                ),
         ),
-        3 => 
-        array (
-          0 => 
-          array (
-            'name' => 'predecessors',
-            'label' => 'LBL_PREDECESSORS',
-          ),
-          1 => 
-          array (
-            'name' => 'percent_complete',
-            'label' => 'LBL_PERCENT_COMPLETE',
-          ),
-        ),
-        4 => 
+        3 =>
         array (
           0 => 
           array (
@@ -98,7 +90,7 @@ array (
             'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
         ),
-        5 => 
+        4 =>
         array (
           0 => 
           array (
@@ -112,7 +104,7 @@ array (
             'label' => 'LBL_UTILIZATION',
           ),
         ),
-        6 => 
+        5 =>
         array (
           0 => 'assigned_user_name',
           1 => 
@@ -121,7 +113,7 @@ array (
             'label' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_PROJECTTEMPLATES_TITLE',
           ),
         ),
-        7 => 
+        6 =>
         array (
           0 => 
           array (
@@ -134,4 +126,3 @@ array (
     ),
   ),
 );
-?>

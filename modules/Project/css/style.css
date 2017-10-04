@@ -372,9 +372,8 @@ input[type=text]#Lag {
     margin-bottom:12px;
 }
 #Predecessor {
-    width: 60%;
-    padding: .3em;
-    margin-bottom:12px;
+    display: inline;
+    margin-bottom: 12px;
 }
 
 #relation_type {

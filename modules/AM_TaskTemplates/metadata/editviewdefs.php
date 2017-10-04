@@ -58,21 +58,14 @@ array (
             'studio' => 'visible',
             'label' => 'LBL_PRIORITY',
           ),
+            3 =>
+                array (
+                    'name' => 'percent_complete',
+                    'label' => 'LBL_PERCENT_COMPLETE',
+                ),
+
         ),
-        2 => 
-        array (
-          0 => 
-          array (
-            'name' => 'percent_complete',
-            'label' => 'LBL_PERCENT_COMPLETE',
-          ),
-          1 => 
-          array (
-            'name' => 'predecessors',
-            'label' => 'LBL_PREDECESSORS',
-          ),
-        ),
-        3 => 
+        2 =>
         array (
           0 => 
           array (
@@ -86,7 +79,7 @@ array (
             'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
         ),
-        4 => 
+        3 =>
         array (
           0 => 
           array (
@@ -99,7 +92,7 @@ array (
             'label' => 'LBL_ORDER_NUMBER',
           ),
         ),
-        5 => 
+        4 =>
         array (
           0 => 
           array (
@@ -113,7 +106,7 @@ array (
             'label' => 'LBL_UTILIZATION',
           ),
         ),
-        6 => 
+        5 =>
         array (
           0 => 
           array (
@@ -121,7 +114,7 @@ array (
           ),
           1 => 'assigned_user_name',
         ),
-        7 => 
+        6 =>
         array (
           0 => 'description',
         ),
@@ -129,4 +122,3 @@ array (
     ),
   ),
 );
-?>

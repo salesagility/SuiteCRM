@@ -81,18 +81,6 @@
                             <select id="relation_type" name="relation_type"
                                     class="text ui-widget-content ui-corner-all">{$relationshipDropdown}</select>
 
-                            <label for="Lag">{$mod.LBL_LAG}</label>
-                            <input type="text" name="Lag" value="0" id="Lag"
-                                   class="text ui-widget-content ui-corner-all"/>
-
-                            <label for="Lag_unit"></label><select id="Lag_unit" name="Lag_unit" class="text ui-widget-content ui-corner-all">
-                                <option value="Days">{$mod.LBL_DAYS}</option>
-                            </select>
-
-                            <label for="Start">{$mod.LBL_START}</label>
-                            <input type="text" name="Start" id="Start" value=""
-                                   class="text ui-widget-content ui-corner-all"/>
-
                             <script type="text/javascript">
                               Calendar.setup({literal}{{/literal}
                                 inputField: "Start",
@@ -112,10 +100,8 @@
                             <label for="Duration">{$mod.LBL_DURATION_TITLE}</label>
                             <input type="text" name="Duration" id="Duration"
                                    class="text ui-widget-content ui-corner-all"/>
-                            <label for="Duration_unit"></label><select id="Duration_unit" name="Duration_unit"
-                                                                       class="text ui-widget-content ui-corner-all">
-                                {$durationDropDown}</select>
-
+                            <label for="Duration_unit"></label><select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all">
+                                <option value="Days">Days</option></select>
 
                             <label for="assigned_user_name">{$mod.LBL_ASSIGNED_USER_ID}</label>
                             <input name="assigned_user_name" id="assigned_user_name" class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
@@ -125,12 +111,8 @@
                             <input name="btn_clr_assigned_user_name" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button" value="{$app.LBL_CLEAR_BUTTON_LABEL}" onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';" type="button">
 
 
-
                             <label for="Complete">{$mod.LBL_PERCENT_COMPLETE}</label>
                             <input type="text" name="Complete" id="Complete" value="0"
-                                   class="text ui-widget-content ui-corner-all"/>
-                            <label for="Actual_duration">{$mod.LBL_ACTUAL_DURATION}</label>
-                            <input type="text" name="Actual_duration" id="Actual_duration" value=""
                                    class="text ui-widget-content ui-corner-all"/>
                             <input type="hidden" name="Notes" id="Notes"/>
 
