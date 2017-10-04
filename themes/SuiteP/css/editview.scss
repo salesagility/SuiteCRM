@@ -3473,19 +3473,19 @@ select#sales_stage_advanced {
   }
 
   textarea#billing_address_street {
-    width: 100%;
+    max-width: 446px;
   }
 
   textarea#shipping_address_street {
-    width: 100%;
+    max-width: 376px;
   }
 
   textarea#primary_address_street {
-    width: 100%;
+    max-width: 446px;
   }
 
   textarea#alt_address_street {
-    width: 100%;
+    max-width: 376px;
   }
 
   textarea#description {
@@ -3544,19 +3544,19 @@ select#sales_stage_advanced {
   }
 
   textarea#billing_address_street {
-    width: 100%;
+    max-width: 446px;
   }
 
   textarea#shipping_address_street {
-    width: 100%;
+    max-width: 376px;
   }
 
   textarea#primary_address_street {
-    width: 100%;
+    max-width: 446px;
   }
 
   textarea#alt_address_street {
-    width: 100%;
+    max-width: 376px;
   }
 
   textarea#description {
@@ -3579,11 +3579,11 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 100%;
+    max-width: 100%;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea {
-    width: 45%;
+    max-width: -webkit-fill-available;
   }
 
   [field=bool].col-sm-8.edit-view-field {
@@ -3651,15 +3651,15 @@ select#sales_stage_advanced {
   }
 
   textarea#shipping_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   textarea#primary_address_street {
-    width: 90%;
+    max-width: 446px;
   }
 
   textarea#alt_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   textarea#description {
@@ -3686,7 +3686,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea {
-    width: 45%;
+    max-width: -webkit-fill-available;
   }
 
   [field=bool].col-sm-8.edit-view-field {
@@ -3791,19 +3791,19 @@ select#sales_stage_advanced {
   }
 
   textarea#shipping_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   textarea#primary_address_street {
-    width: 90%;
+    max-width: 446px;
   }
 
   textarea#alt_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 120%;
+    max-width: webkit-fill-available;
   }
 
   #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
@@ -3847,19 +3847,19 @@ select#sales_stage_advanced {
   }
 
   textarea#billing_address_street {
-    width: 90%;
+    max-width: 446px;
   }
 
   textarea#shipping_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   textarea#primary_address_street {
-    width: 90%;
+    max-width: 446px;
   }
 
   textarea#alt_address_street {
-    width: 90%;
+    max-width: 376px;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
