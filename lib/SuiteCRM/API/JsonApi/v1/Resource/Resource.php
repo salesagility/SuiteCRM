@@ -221,7 +221,7 @@ class Resource implements LoggerAwareInterface
     {
         $this->id = $id;
 
-        return $this;
+        return clone $this;
     }
 
     /**
@@ -240,7 +240,7 @@ class Resource implements LoggerAwareInterface
     {
         $this->type = $type;
 
-        return $this;
+        return clone $this;
     }
 
     /**
@@ -250,7 +250,7 @@ class Resource implements LoggerAwareInterface
     public function withLinks(Links $links) {
         $this->links = $links;
 
-        return $this;
+        return clone $this;
     }
 
     /**

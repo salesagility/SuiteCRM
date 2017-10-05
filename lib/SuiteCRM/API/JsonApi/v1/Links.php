@@ -129,7 +129,7 @@ class Links implements LoggerAwareInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -140,7 +140,7 @@ class Links implements LoggerAwareInterface
     {
         $this->hasPagination = true;
 
-        return $this;
+       return clone $this;
     }
 
 
@@ -157,7 +157,7 @@ class Links implements LoggerAwareInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -173,7 +173,7 @@ class Links implements LoggerAwareInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -189,7 +189,7 @@ class Links implements LoggerAwareInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -205,7 +205,7 @@ class Links implements LoggerAwareInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -220,7 +220,7 @@ class Links implements LoggerAwareInterface
             $this->meta = array_merge($this->meta, $meta);
         }
 
-        return $this;
+       return clone $this;
     }
 
 
@@ -232,7 +232,7 @@ class Links implements LoggerAwareInterface
     {
         $this->href = $url;
 
-        return $this;
+       return clone $this;
     }
 
     /**
@@ -243,7 +243,7 @@ class Links implements LoggerAwareInterface
     {
         $this->related = $related;
 
-        return $this;
+       return clone $this;
     }
 
     /**
