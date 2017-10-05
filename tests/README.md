@@ -193,6 +193,7 @@ export DATABASE_PASSWORD=automated_tests
 export INSTANCE_URL=http://path/to/instance
 export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
+export INSTANCE_CLIENT_ID: suitecrm_client
 </pre>
 
 Setup environment variables  (Command Prompt):
@@ -205,6 +206,7 @@ set DATABASE_PASSWORD=automated_tests
 set INSTANCE_URL=http://path/to/instance
 set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
+set INSTANCE_CLIENT_ID: suitecrm_client
 </pre>
 
 #### For Docker Compose
@@ -218,6 +220,7 @@ DATABASE_PASSWORD=automated_tests
 INSTANCE_URL=http://path/to/instance
 INSTANCE_ADMIN_USER=admin
 INSTANCE_ADMIN_PASSWORD=admin
+INSTANCE_CLIENT_ID: suitecrm_client
 </pre>
 
 and then reference it in your php container (docker-compose.yml):
@@ -238,6 +241,7 @@ services:
        - INSTANCE_URL: $INSTANCE_URL
        - INSTANCE_ADMIN_USER: $INSTANCE_ADMIN_USER
        - INSTANCE_ADMIN_PASSWORD: $INSTANCE_ADMIN_PASSWORD
+       - INSTANCE_CLIENT_ID: suitecrm_client
 </pre>
 
 ## Test Environments
