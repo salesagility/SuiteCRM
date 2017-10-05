@@ -3,7 +3,7 @@
 
 ### **Code of Conduct**
 
-This project and all community members are expected to upload the [SuiteCRM Code of Conduct](CODE_OF_CONDUCT.md).
+This project and all community members are expected to uphold the [SuiteCRM Code of Conduct](CODE_OF_CONDUCT.md).
 
 #### **Bug Reporting**
 
