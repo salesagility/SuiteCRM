@@ -570,8 +570,16 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 }
 
 
-
-function getDateField($module, $aow_field, $view='EditView', $value, $field_option = true){
+/**
+ * @param string $module
+ * @param string $aow_field
+ * @param string $view
+ * @param $value
+ * @param bool $field_option
+ * @return string
+ */
+function getDateField($module, $aow_field, $view='EditView', $value = null, $field_option = true)
+{
     global $app_list_strings;
 
     $value = json_decode(html_entity_decode_utf8($value), true);
