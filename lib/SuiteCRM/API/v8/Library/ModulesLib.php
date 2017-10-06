@@ -46,7 +46,7 @@ use League\Url\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
-use SuiteCRM\Utility\SuiteLogger;
+use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
  * Class ModulesLib
@@ -172,7 +172,7 @@ class ModulesLib
                 // Skip the reserved keywords which can be safely skipped
                 if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
                     $exception = new ReservedKeywordNotAllowed();
-                    $logger = new SuiteLogger();
+                    $logger = new Logger();
                     $logMessage =
                         ' Code: [' . $exception->getCode() . ']' .
                         ' Status: [' . $exception->getHttpStatus() . ']' .
