@@ -48,11 +48,17 @@ class ClientEntity implements ClientEntityInterface
 {
     use EntityTrait, ClientTrait;
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @param string $uri
+     */
     public function setRedirectUri($uri)
     {
         $this->redirectUri = $uri;

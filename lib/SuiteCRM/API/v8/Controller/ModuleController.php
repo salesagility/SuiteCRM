@@ -104,6 +104,7 @@ class ModuleController extends ApiController
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
      * @throws \InvalidArgumentException
+     * @throws InvalidJsonApiResponse
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {

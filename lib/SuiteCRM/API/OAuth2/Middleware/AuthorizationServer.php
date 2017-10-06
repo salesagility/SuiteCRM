@@ -156,6 +156,7 @@ class AuthorizationServer implements EmitterAwareInterface
      *
      * @param GrantTypeInterface $grantType
      * @param null|\DateInterval $accessTokenTTL
+     * @throws \Exception
      */
     public function enableGrantType(GrantTypeInterface $grantType, \DateInterval $accessTokenTTL = null)
     {

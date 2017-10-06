@@ -38,48 +38,36 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\API\v8\Exception;
 
-namespace SuiteCRM\API\OAuth2\Repositories;
 
-use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
-use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\AuthCodeEntity;
-use SuiteCRM\API\v8\Exception\NotImplementedException;
+use SuiteCRM\API\v8\Controller\ApiController;
+use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\Exception\Exception;
 
-class AuthCodeRepository implements AuthCodeRepositoryInterface
+/**
+ * Class NotImplementedException
+ * @package SuiteCRM\API\v8\Exception
+ */
+class NotImplementedException extends ApiException
 {
     /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
+     * NotImplementedException constructor.
+     * @param string $message API Exception "$message"
+     * @param int $code
+     * @param $previous
      */
-    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
+    public function __construct($message = '', $code = ExceptionCode::API_NOT_IMPLEMENTED, $previous = null)
     {
-        throw new NotImplementedException();
+        parent::__construct('[NotImplementedException] '.$message.'', $code, $previous);
     }
 
     /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
+     * @return int http status code that should be returned back to the client
+     * @see ApiController::generateJsonApiExceptionResponse()
      */
-    public function revokeAuthCode($codeId)
+    public function getHttpStatus()
     {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAuthCodeRevoked($codeId)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
-     */
-    public function getNewAuthCode()
-    {
-        return new AuthCodeEntity();
+        return 500;
     }
 }

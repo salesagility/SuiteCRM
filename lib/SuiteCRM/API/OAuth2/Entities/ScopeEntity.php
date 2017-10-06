@@ -47,6 +47,9 @@ class ScopeEntity implements ScopeEntityInterface
 {
     use EntityTrait;
 
+    /**
+     * @return mixed
+     */
     public function jsonSerialize()
     {
         return $this->getIdentifier();

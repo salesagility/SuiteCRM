@@ -44,6 +44,8 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer as OAuthResourceServer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 class ResourceServer
@@ -73,6 +75,13 @@ class ResourceServer
         try {
             if ($request->getUri()->getPath() !== 'oauth/access_token') {
                 $request = $this->server->validateAuthenticatedRequest($request);
+
+                // validate user is still active
+                $user = new \User();
+                $user->retrieve($request->getAttribute('oauth_user_id'));
+                if($user->status === 'Inactive') {
+                    throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
+                }
             }
         } catch (OAuthServerException $exception) {
             $log = new Logger();

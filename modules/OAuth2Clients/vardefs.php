@@ -38,17 +38,68 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * @param $container
- * @return \SuiteCRM\API\v8\Controller\UtilityController
- */
-$container['UtilityController'] = function ($container) {
-    /** @var \Interop\Container\ContainerInterface $container */
-    return new \SuiteCRM\API\v8\Controller\UtilityController(
-        $container->get('sugar_config'),
-        $container->get('cookie'),
-        $container->get('current_user'),
-        $container->get('AuthenticationController'),
-        $container->get('JWT')
-    );
-};
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+
+$dictionary['OAuth2Clients'] = array(
+    'table' => 'oauth2clients',
+    'audited' => false,
+    'comment' => 'Provides tokens for security services',
+    'fields' => array(
+        'id' => array (
+            'name' => 'id',
+            'vname' => 'LBL_ID',
+            'type' => 'id',
+            'required' => true,
+            'reportable' => false,
+        ),
+        'name' => array (
+            'name' => 'name',
+            'vname' => 'LBL_NAME',
+            'type' => 'varchar',
+            'required' => true,
+            'reportable' => false,
+            'api-visible' => false,
+            'duplicate_merge' => 'disabled',
+        ),
+        'secret' => array (
+            'name' => 'secret',
+            'vname' => 'LBL_SECRET',
+            'type' => 'varchar',
+            'required'=>true,
+            'reportable' => false,
+            'api-visible' => false,
+            'len' => '4098',
+        ),
+        'redirect_url' => array (
+            'name' => 'redirect_url',
+            'vname' => 'LBL_REDIRECT_URL',
+            'type' => 'varchar',
+            'required' => false,
+            'reportable' => false,
+            'api-visible' => false,
+        ),
+        'is_confidential' => array (
+            'name' => 'is_confidential',
+            'vname' => 'LBL_IS_CONFIDENTIAL',
+            'type' => 'bool',
+            'required'=>true,
+            'reportable' => false,
+            'api-visible' => false,
+        ),
+    ),
+    'optimistic_locking' => true,
+);
+if (!class_exists('VardefManager')){
+    require_once('include/SugarObjects/VardefManager.php');
+}
+
+VardefManager::createVardef(
+    'OAuth2Clients',
+    'OAuth2Clients',
+    array(
+        'default',
+    )
+);

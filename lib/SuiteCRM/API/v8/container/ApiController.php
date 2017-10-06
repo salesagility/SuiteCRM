@@ -36,8 +36,19 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $container
+ * @return \SuiteCRM\API\v8\Controller\ApiController
  */
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
+use Slim\Exception\ContainerValueNotFoundException;
 
+/**
+ * @param ContainerInterface $container
+ * @throws ContainerException
+ * @throws ContainerValueNotFoundException
+ * @return \SuiteCRM\API\v8\Controller\ApiController
+ */
 $container['ApiController'] = function ($container) {
     return new \SuiteCRM\API\v8\Controller\ApiController($container);
 };

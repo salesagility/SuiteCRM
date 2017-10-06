@@ -53,7 +53,7 @@ class apiTester extends \Codeception\Actor
     {
         $I = $this;
 
-        if(!empty(self::$token)) {
+        if(!empty(self::$accessToken)) {
             return;
         }
 

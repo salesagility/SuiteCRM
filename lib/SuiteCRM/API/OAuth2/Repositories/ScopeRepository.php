@@ -48,6 +48,7 @@ class ScopeRepository implements ScopeRepositoryInterface
 {
     /**
      * {@inheritdoc}
+     * @return null|ScopeEntity
      */
     public function getScopeEntityByIdentifier($scopeIdentifier)
     {
@@ -58,7 +59,7 @@ class ScopeRepository implements ScopeRepositoryInterface
         ];
 
         if (array_key_exists($scopeIdentifier, $scopes) === false) {
-            return;
+            return null;
         }
 
         $scope = new ScopeEntity();
@@ -69,6 +70,7 @@ class ScopeRepository implements ScopeRepositoryInterface
 
     /**
      * {@inheritdoc}
+     * @return null|ScopeEntity
      */
     public function finalizeScopes(
         array $scopes,
@@ -79,7 +81,7 @@ class ScopeRepository implements ScopeRepositoryInterface
         // Example of programatically modifying the final scope of the access token
         if ((int) $userIdentifier === 1) {
             $scope = new ScopeEntity();
-            $scope->setIdentifier('email');
+            $scope->setIdentifier('basic');
             $scopes[] = $scope;
         }
 

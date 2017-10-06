@@ -38,48 +38,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-namespace SuiteCRM\API\OAuth2\Repositories;
-
-use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
-use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\AuthCodeEntity;
-use SuiteCRM\API\v8\Exception\NotImplementedException;
-
-class AuthCodeRepository implements AuthCodeRepositoryInterface
-{
-    /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
-     */
-    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
-     */
-    public function revokeAuthCode($codeId)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAuthCodeRevoked($codeId)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws NotImplementedException
-     */
-    public function getNewAuthCode()
-    {
-        return new AuthCodeEntity();
-    }
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+
+$mod_strings = array (
+    'LBL_MODULE_NAME' => 'OAuth2Clients',
+    'LBL_MODULE_TITLE' => 'OAuth2Clients',
+    'LBL_MODULE_ID'=> 'OAuth2Clients',
+);

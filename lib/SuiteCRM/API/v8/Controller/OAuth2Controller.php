@@ -46,7 +46,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\OAuth2\Middleware\AuthorizationServer;
-
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use SuiteCRM\API\v8\Exception\NotImplementedException;
 
 class OAuth2Controller extends ApiController
 {
@@ -54,6 +57,9 @@ class OAuth2Controller extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
+     * @throws ContainerException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {

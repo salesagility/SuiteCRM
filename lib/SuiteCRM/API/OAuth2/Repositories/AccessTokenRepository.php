@@ -41,6 +41,7 @@
 
 namespace SuiteCRM\API\OAuth2\Repositories;
 
+use Faker\Provider\DateTime;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
@@ -48,20 +49,20 @@ use SuiteCRM\API\OAuth2\Entities\AccessTokenEntity;
 
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
+    const ACCESS_TOKEN_FIELD = 'access_token';
     /**
      * {@inheritdoc}
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
-       // Used by password grand
+        // Used by password grand
         // Some logic here to save the access token to a database
-        $id = $accessTokenEntity->getIdentifier();
-        $client = $accessTokenEntity->getClient();
-        $scopes = $accessTokenEntity->getScopes();
-        $expires = $accessTokenEntity->getExpiryDateTime();
-        $userId = $accessTokenEntity->getUserIdentifier();
-        xdebug_break();
-        $test = 1;
+        $token = new \OAuth2Tokens();
+        $token->token_is_revoked = false;
+        $token->access_token = $accessTokenEntity->getIdentifier();
+        $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
+        $token->client = $accessTokenEntity->getClient()->getIdentifier();
+        $token->save();
     }
 
     /**
@@ -70,18 +71,53 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     public function revokeAccessToken($tokenId)
     {
         // Some logic here to revoke the access token
+        $token = new \OAuth2Tokens();
+        $tokens =$token->get_list(
+            '',
+            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+        );
+        /**
+         * @var \OAuth2Tokens $token
+         */
+        foreach ($tokens['list'] as $token) {
+            $token->token_is_revoked = true;
+            $token->save();
+        }
     }
 
     /**
      * {@inheritdoc}
+     * @return bool
      */
     public function isAccessTokenRevoked($tokenId)
     {
-        return false; // Access token hasn't been revoked
+        global $timedate;
+
+        $token = new \OAuth2Tokens();
+        $tokens =$token->get_list(
+            '',
+            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+        );
+        /**
+         * @var \OAuth2Tokens $token
+         */
+        foreach ($tokens['list'] as $token) {
+            $expires = $timedate->fromUser($token->access_token_expires);
+            if(!empty($expires)) {
+                $now = new \DateTime('now', $expires->getTimezone());
+                if($now > $expires || (bool)$token->token_is_revoked === true) {
+                    $token->token_is_revoked = true;
+                    $token->save();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
      * {@inheritdoc}
+     * @return AccessTokenEntity
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
     {

@@ -46,6 +46,10 @@ class UserEntity implements UserEntityInterface
 {
     private $id;
 
+    /**
+     * UserEntity constructor.
+     * @param string $id
+     */
     public function __construct($id)
     {
         $this->id = $id;

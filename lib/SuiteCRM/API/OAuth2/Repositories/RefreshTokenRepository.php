@@ -15,14 +15,24 @@ use SuiteCRM\API\OAuth2\Entities\RefreshTokenEntity;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
+    const ACCESS_TOKEN_FIELD = 'access_token';
+
     /**
      * {@inheritdoc}
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntityInterface)
     {
-        // Used by password grand
-        // Some logic to persist the refresh token in a database
-        $test = 1;
+        $token = new \OAuth2Tokens();
+        $tokens =$token->get_list(
+            '',
+            self::ACCESS_TOKEN_FIELD.' = "'.$refreshTokenEntityInterface->getAccessToken()->getIdentifier().'"'
+        );
+        foreach ($tokens['list'] as $token) {
+            $token->token_is_revoked = false;
+            $token->refresh_token = $refreshTokenEntityInterface->getIdentifier();
+            $token->refresh_token_expires = $refreshTokenEntityInterface->getExpiryDateTime()->format('Y-m-d H:i:s');
+            $token->save();
+        }
     }
 
     /**
@@ -30,19 +40,54 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function revokeRefreshToken($tokenId)
     {
-        // Some logic to revoke the refresh token in a database
+        $token = new \OAuth2Tokens();
+        $tokens =$token->get_list(
+            '',
+            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+        );
+        /**
+         * @var \OAuth2Tokens $token
+         */
+        foreach ($tokens['list'] as $token) {
+            $token->token_is_revoked = true;
+            $token->save();
+        }
     }
 
     /**
      * {@inheritdoc}
+     * @return bool
      */
     public function isRefreshTokenRevoked($tokenId)
     {
-        return false; // The refresh token has not been revoked
+        global $timedate;
+
+        $token = new \OAuth2Tokens();
+        $tokens =$token->get_list(
+            '',
+            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+        );
+
+        /**
+         * @var \OAuth2Tokens $token
+         */
+        foreach ($tokens['list'] as $token) {
+            $expires = $timedate->fromUser($token->refresh_token_expires);
+            if(!empty($expires)) {
+                $now = new \DateTime('now', $expires->getTimezone());
+                if($now > $expires || (bool)$token->token_is_revoked === true) {
+                    $token->token_is_revoked = true;
+                    $token->save();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
      * {@inheritdoc}
+     * @return RefreshTokenEntity
      */
     public function getNewRefreshToken()
     {

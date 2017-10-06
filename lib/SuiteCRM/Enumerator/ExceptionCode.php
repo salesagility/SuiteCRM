@@ -56,4 +56,6 @@ class ExceptionCode
     const API_MODULE_NOT_FOUND = 8015;
     const API_MISSING_REQUIRED = 8020;
     const API_DATE_CONVERTION_SUGARBEAN = 8030;
+    const API_USER_NOT_ACTIVE = 8035;
+    const API_NOT_IMPLEMENTED = 8040;
 }

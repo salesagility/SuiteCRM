@@ -47,37 +47,29 @@ class ClientRepository implements ClientRepositoryInterface
 {
     /**
      * {@inheritdoc}
+     * @return null|ClientEntity
      */
     public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
     {
-        // TODO: Manage Clients in a more secure fashion
-        $clients = [
-            'suitecrm_client' => [
-                'secret'          => '',
-                'name'            => 'SuiteCRM Front end',
-                'redirect_uri'    => 'http://foo/bar',
-                'is_confidential' => false,
-            ],
-        ];
-
-        // Check if client is registered
-        if (array_key_exists($clientIdentifier, $clients) === false) {
-            return;
+        $client = new \OAuth2Clients();
+        $client->retrieve($clientIdentifier);
+        if(empty($client->id)) {
+            return null;
         }
 
         if (
             $mustValidateSecret === true
-            && $clients[$clientIdentifier]['is_confidential'] === true
-            && password_verify($clientSecret, $clients[$clientIdentifier]['secret']) === false
+            && (bool)$client->is_confidential === true
+            && password_verify($clientSecret, $client->secret) === false
         ) {
-            return;
+            return null;
         }
 
-        $client = new ClientEntity();
-        $client->setIdentifier($clientIdentifier);
-        $client->setName($clients[$clientIdentifier]['name']);
-        $client->setRedirectUri($clients[$clientIdentifier]['redirect_uri']);
+        $clientEntity = new ClientEntity();
+        $clientEntity->setIdentifier($clientIdentifier);
+        $clientEntity->setName($client->name);
+        $clientEntity->setRedirectUri($client->redirect_uri);
 
-        return $client;
+        return $clientEntity;
     }
 }

@@ -48,6 +48,9 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
@@ -58,7 +61,8 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
 class ApiController implements LoggerAwareInterface
 {
     const CONTENT_TYPE = 'application/vnd.api+json';
-
+    const CONTENT_TYPE_HEADER = 'Content-Type';
+    const LINKS = 'links';
     /**
      * @var LoggerInterface $logger
      */
@@ -66,34 +70,17 @@ class ApiController implements LoggerAwareInterface
 
     protected $container;
 
+    /**
+     * ApiController constructor.
+     * @param ContainerInterface $container
+     * @throws ContainerException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
     public function __construct($container)
     {
         $this->container = $container;
         $this->setLogger($this->container->get('Logger'));
-    }
-
-    /**
-     * @param Response $responseObject
-     * @param int $status
-     * @param mixed $data
-     * @param string $message
-     * @return Response
-     * @throws \InvalidArgumentException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     */
-    public function generateJwtResponse(Response $responseObject, $status, $data, $message)
-    {
-        $response = array(
-            'status' => $status,
-            'data' => $data,
-            'message' => $message,
-        );
-
-        return $responseObject
-            ->withStatus($status)
-            ->withHeader('Content-type', self::CONTENT_TYPE)
-            ->write(json_encode($response, JSON_PRETTY_PRINT));
     }
 
     /**
@@ -106,7 +93,7 @@ class ApiController implements LoggerAwareInterface
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
      */
-    public function generateJsonApiResponse(Request $request, Response $response, $payload)
+    protected function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
         $negotiated = $this->negotiatedJsonApiContent($request, $response);
         if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
@@ -133,7 +120,7 @@ class ApiController implements LoggerAwareInterface
         }
 
         return $response
-            ->withHeader('Content-Type', self::CONTENT_TYPE)
+            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
 
@@ -148,7 +135,7 @@ class ApiController implements LoggerAwareInterface
      * @throws UnsupportedMediaType
      * @throws InvalidJsonApiResponse
      */
-    public function generateJsonApiListResponse(Request $request, Response $response, $payload)
+    protected function generateJsonApiListResponse(Request $request, Response $response, $payload)
     {
         $negotiated = $this->negotiatedJsonApiContent($request, $response);
         if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
@@ -170,29 +157,29 @@ class ApiController implements LoggerAwareInterface
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with a type]');
             }
 
-            if (array_key_exists('self', $payload['links']) === false) {
+            if (array_key_exists('self', $payload[self::LINKS]) === false) {
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a links with self]');
             }
 
-            if (array_key_exists('first', $payload['links']) === false) {
+            if (array_key_exists('first', $payload[self::LINKS]) === false) {
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with first]');
             }
 
-            if (array_key_exists('last', $payload['links']) === false) {
+            if (array_key_exists('last', $payload[self::LINKS]) === false) {
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with last]');
             }
 
-            if (array_key_exists('next', $payload['links']) === false) {
+            if (array_key_exists('next', $payload[self::LINKS]) === false) {
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with next]');
             }
 
-            if (array_key_exists('prev', $payload['links']) === false) {
+            if (array_key_exists('prev', $payload[self::LINKS]) === false) {
                 throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with prev]');
             }
         }
 
         return $response
-            ->withHeader('Content-Type', self::CONTENT_TYPE)
+            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
 
@@ -242,7 +229,7 @@ class ApiController implements LoggerAwareInterface
         );
 
         return $response
-            ->withHeader('Content-Type', self::CONTENT_TYPE)
+            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
 
@@ -253,7 +240,7 @@ class ApiController implements LoggerAwareInterface
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
      */
-    public function negotiatedJsonApiContent(Request $request, Response $response)
+    protected function negotiatedJsonApiContent(Request $request, Response $response)
     {
         if ($request->getContentType() !== self::CONTENT_TYPE) {
             throw new UnsupportedMediaType();
