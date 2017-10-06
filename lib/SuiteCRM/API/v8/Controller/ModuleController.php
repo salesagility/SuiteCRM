@@ -135,7 +135,7 @@ class ModuleController extends ApiController
         );
 
         // TODO: use generateJsonApiResponse instead
-        return $this->generateJsonApiListResponse($req, $res, $payload);
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
 

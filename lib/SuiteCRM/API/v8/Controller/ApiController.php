@@ -68,6 +68,7 @@ class ApiController implements LoggerAwareInterface
     const VERSION_MINOR = 0;
     const VERSION_PATCH = 0;
     const VERSION_STABILITY = 'ALPHA';
+
     /**
      * @var LoggerInterface $logger
      */
@@ -117,92 +118,17 @@ class ApiController implements LoggerAwareInterface
         $payload['jsonapi'] = $jsonAPI->getArray();
 
         // Validate Response
-        $jsonApi = new JsonApi();
         $data = json_decode(json_encode($payload));
 
-        $ruleSet =  new DraftFour();
-        $dereferencer = new Dereferencer();
-        $schema = $dereferencer->dereference('file://'.$jsonApi->getSchemaPath());
+        $validator = new \JsonSchema\Validator();
+        $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
 
-        $validator = new Validator($data, $schema, $ruleSet);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            $error = $errors[0];
-            $exception = new InvalidJsonApiResponse($error->getMessage(). ' Keyword:'. $error->getKeyword());
-            $exception->setSource($error->getPointer());
-            throw $exception;
-        }
-
-        return $response
-            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
-            ->write(json_encode($payload));
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param $payload
-     * @return $this|Response
-     * @throws ApiException
-     * @throws \InvalidArgumentException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws InvalidJsonApiResponse
-     */
-    protected function generateJsonApiListResponse(Request $request, Response $response, $payload)
-    {
-        $negotiated = $this->negotiatedJsonApiContent($request, $response);
-        if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
-            // return error instead of response
-            return $negotiated;
-        }
-
-        $payload['meta']['suiteapi'] = array(
-            'major' => self::VERSION_MAJOR,
-            'minor' => self::VERSION_MINOR,
-            'patch' => self::VERSION_PATCH,
-            'stability' => self::VERSION_STABILITY,
-        );
-
-        $jsonAPI = new JsonApi();
-        $payload['jsonapi'] = $jsonAPI->getArray();
-
-        $payload = json_decode(json_encode($payload), true);
-
-        if (!isset($payload['data']) && !is_array($payload['data'])) {
-            throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list]');
-        }
-
-        if (!empty($payload['data'])) {
-            if(!isset($payload['data'][0]['id'])) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with an id]');
-            }
-            if (!isset($payload['data'][0]['type'])) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with a type]');
-            }
-
-            if (array_key_exists('self', $payload[self::LINKS]) === false) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a links with self]');
-            }
-
-            if (array_key_exists('first', $payload[self::LINKS]) === false) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with first]');
-            }
-
-            if (array_key_exists('last', $payload[self::LINKS]) === false) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with last]');
-            }
-
-            if (array_key_exists('next', $payload[self::LINKS]) === false) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with next]');
-            }
-
-            if (array_key_exists('prev', $payload[self::LINKS]) === false) {
-                throw new InvalidJsonApiResponse('[generateJsonApiListResponse expects a list with prev]');
+        if (!$validator->isValid()) {
+            echo "JSON does not validate. Violations:\n";
+            foreach ($validator->getErrors() as $error) {
+                throw new InvalidJsonApiResponse($error['property']. ' ' .$error['message']);
             }
         }
-
         return $response
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));

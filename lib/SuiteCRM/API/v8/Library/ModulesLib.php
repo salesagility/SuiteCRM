@@ -45,6 +45,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use League\Url\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
+use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
+use SuiteCRM\Utility\SuiteLogger;
 
 /**
  * Class ModulesLib
@@ -52,6 +54,32 @@ use SuiteCRM\API\v8\Exception\ModuleNotFound;
  */
 class ModulesLib
 {
+    private static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
+        'id',
+        'type',
+    );
+
+    private static $JSON_API_RESERVED_KEYWORDS = array(
+        'id',
+        'type',
+        'data',
+        'meta',
+        'jsonapi',
+        'links',
+        'included',
+        'self',
+        'related',
+        'attributes',
+        'relationships',
+        'href',
+        'first',
+        'last',
+        'prev',
+        'next',
+        'related',
+        'errors',
+    );
+
     /**
      * @param Request $req
      * @param Response $res
@@ -78,10 +106,12 @@ class ModulesLib
 
                 if ($sortValue[0] === '-') {
                     $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
-                } else if ($sortValue[0] === '+') {
-                    $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' ASC';
                 } else {
-                    $sortField[$sortKey] = $db->quote($sortValue). ' ASC';
+                    if ($sortValue[0] === '+') {
+                        $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' ASC';
+                    } else {
+                        $sortField[$sortKey] = $db->quote($sortValue) . ' ASC';
+                    }
                 }
             }
             $orderBy = implode(',', $sortField);
@@ -101,8 +131,8 @@ class ModulesLib
          */
         $module = \BeanFactory::newBean($args['module']);
 
-        if($module === false) {
-            throw new ModuleNotFound('"'.$args['module'].'"');
+        if ($module === false) {
+            throw new ModuleNotFound('"' . $args['module'] . '"');
         }
         /**
          * @var array $moduleList
@@ -132,21 +162,43 @@ class ModulesLib
             // add attributes
             foreach ($fields['fields'][$moduleBean->module_name] as $fieldName) {
                 // Filter security sensitive information from attributes
-                if(
+                if (
                     isset($sugar_config['filter_module_fields'][$moduleBean->module_name]) &&
                     in_array($fieldName, $sugar_config['filter_module_fields'][$moduleBean->module_name], true)
                 ) {
                     continue;
                 }
 
+                // Skip the reserved keywords which can be safely skipped
+                if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
+                    $exception = new ReservedKeywordNotAllowed();
+                    $logger = new SuiteLogger();
+                    $logMessage =
+                        ' Code: [' . $exception->getCode() . ']' .
+                        ' Status: [' . $exception->getHttpStatus() . ']' .
+                        ' Message: ' . $exception->getMessage() .
+                        ' Detail: ' . 'Reserved keyword not allowed in attribute field name.' .
+                        ' Source: [' . '/data/attributes/' . $fieldName . ']';
+                    $logger->warning($logMessage);
+                    continue;
+                }
+
+                // Throw when the field names match the reserved keywords
+                if (in_array($fieldName, self::$JSON_API_RESERVED_KEYWORDS)) {
+                    $exception = new ReservedKeywordNotAllowed();
+                    $exception->setDetail('Reserved keyword not allowed in attribute field name.');
+                    $exception->setSource('/data/attributes/' . $fieldName);
+                    throw $exception;
+                }
+
                 // Convert date, datetime, times to ISO 8601
-                if(
+                if (
                     !empty($moduleBean->$fieldName) &&
                     isset($moduleBean->field_defs[$fieldName]) &&
                     $moduleBean->field_defs[$fieldName]['type'] === 'datetime'
                 ) {
-                        $date = $timedate->fromUser($moduleBean->$fieldName);
-                        $fieldValue = $date->format('c');
+                    $date = $timedate->fromUser($moduleBean->$fieldName);
+                    $fieldValue = $date->format('c');
 
                 } else {
                     $fieldValue = $moduleBean->$fieldName;

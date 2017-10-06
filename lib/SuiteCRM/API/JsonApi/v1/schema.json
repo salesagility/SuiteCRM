@@ -13,6 +13,7 @@
       "$ref": "#/definitions/info"
     }
   ],
+
   "definitions": {
     "success": {
       "type": "object",
@@ -94,6 +95,7 @@
       },
       "additionalProperties": false
     },
+
     "meta": {
       "description": "Non-standard meta-information that can not be represented as an attribute or relationship.",
       "type": "object",
@@ -101,11 +103,7 @@
     },
     "data": {
       "description": "The document's \"primary data\" is a representation of the resource or collection of resources targeted by a request.",
-      "type": "object",
       "oneOf": [
-        {
-          "$ref": "#/definitions/resource"
-        },
         {
           "description": "An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.",
           "type": "array",
@@ -113,6 +111,9 @@
             "$ref": "#/definitions/resource"
           },
           "uniqueItems": true
+        },
+        {
+          "$ref": "#/definitions/resource"
         },
         {
           "description": "null if the request is one that might correspond to a single resource, but doesn't currently.",
@@ -149,6 +150,7 @@
       },
       "additionalProperties": false
     },
+
     "relationshipLinks": {
       "description": "A resource object **MAY** contain references to other resource objects (\"relationships\"). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.",
       "type": "object",
@@ -195,6 +197,7 @@
         }
       ]
     },
+
     "attributes": {
       "description": "Members of the attributes object (\"attributes\") represent information about the resource object in which it's defined.",
       "type": "object",
@@ -205,6 +208,7 @@
       },
       "additionalProperties": false
     },
+
     "relationships": {
       "description": "Members of the relationships object (\"relationships\") represent references from the resource object in which it's defined to other resource objects.",
       "type": "object",
@@ -230,21 +234,9 @@
             }
           },
           "anyOf": [
-            {
-              "required": [
-                "data"
-              ]
-            },
-            {
-              "required": [
-                "meta"
-              ]
-            },
-            {
-              "required": [
-                "links"
-              ]
-            }
+            {"required": ["data"]},
+            {"required": ["meta"]},
+            {"required": ["links"]}
           ],
           "additionalProperties": false
         }
@@ -300,53 +292,34 @@
         "first": {
           "description": "The first page of data",
           "oneOf": [
-            {
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "type": "null"
-            }
+            { "type": "string", "format": "uri-reference" },
+            { "type": "null" }
           ]
         },
         "last": {
           "description": "The last page of data",
           "oneOf": [
-            {
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "type": "null"
-            }
+            { "type": "string", "format": "uri-reference" },
+            { "type": "null" }
           ]
         },
         "prev": {
           "description": "The previous page of data",
           "oneOf": [
-            {
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "type": "null"
-            }
+            { "type": "string", "format": "uri-reference" },
+            { "type": "null" }
           ]
         },
         "next": {
           "description": "The next page of data",
           "oneOf": [
-            {
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "type": "null"
-            }
+            { "type": "string", "format": "uri-reference" },
+            { "type": "null" }
           ]
         }
       }
     },
+
     "jsonapi": {
       "description": "An object describing the server's implementation",
       "type": "object",
@@ -360,6 +333,7 @@
       },
       "additionalProperties": false
     },
+
     "error": {
       "type": "object",
       "properties": {
