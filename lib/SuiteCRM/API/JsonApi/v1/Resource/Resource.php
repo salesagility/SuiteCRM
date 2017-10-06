@@ -54,6 +54,32 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
  */
 class Resource implements LoggerAwareInterface
 {
+    protected static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
+        'id',
+        'type',
+    );
+
+    protected static $JSON_API_RESERVED_KEYWORDS = array(
+        'id',
+        'type',
+        'data',
+        'meta',
+        'jsonapi',
+        'links',
+        'included',
+        'self',
+        'related',
+        'attributes',
+        'relationships',
+        'href',
+        'first',
+        'last',
+        'prev',
+        'next',
+        'related',
+        'errors',
+    );
+
     /**
      * @var LoggerInterface Logger
      */

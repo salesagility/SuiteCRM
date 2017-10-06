@@ -61,7 +61,6 @@ $dictionary['OAuth2Clients'] = array(
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
-            'api-visible' => false,
             'duplicate_merge' => 'disabled',
         ),
         'secret' => array (
@@ -79,7 +78,7 @@ $dictionary['OAuth2Clients'] = array(
             'type' => 'varchar',
             'required' => false,
             'reportable' => false,
-            'api-visible' => false,
+            
         ),
         'is_confidential' => array (
             'name' => 'is_confidential',

@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
+use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
@@ -76,25 +77,47 @@ class SuiteBeanResource extends Resource
         }
 
         // Set the attributes
-        foreach ($sugarBean->field_defs as $field => $definition) {
+        foreach ($sugarBean->field_defs as $fieldName => $definition) {
             // Filter security sensitive information from attributes
             if (
                 isset($sugar_config['filter_module_fields'][$sugarBean->module_name]) &&
-                in_array($field, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
+                in_array($fieldName, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
             ) {
                 continue;
             }
 
-            if (!empty($sugarBean->$field) && $definition['type'] === 'datetime') {
+
+            // Skip the reserved keywords which can be safely skipped
+            if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
+                $exception = new ReservedKeywordNotAllowed();
+                $logMessage =
+                    ' Code: [' . $exception->getCode() . ']' .
+                    ' Status: [' . $exception->getHttpStatus() . ']' .
+                    ' Message: ' . $exception->getMessage() .
+                    ' Detail: ' . 'Reserved keyword not allowed in attribute field name.' .
+                    ' Source: [' . '/data/attributes/' . $fieldName . ']';
+                $resource->logger->warning($logMessage);
+                continue;
+            }
+
+            // Throw when the field names match the reserved keywords
+            if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
+                $exception = new ReservedKeywordNotAllowed();
+                $exception->setDetail('Reserved keyword not allowed in attribute field name.');
+                $exception->setSource('/data/attributes/' . $fieldName);
+                throw $exception;
+            }
+
+            if (!empty($sugarBean->$fieldName) && $definition['type'] === 'datetime') {
                 // Convert to DB date
-                $datetime = $timedate->fromUser($sugarBean->$field);
+                $datetime = $timedate->fromUser($sugarBean->$fieldName);
                 if (empty($datetime)) {
-                    $datetime = $timedate->fromDb($sugarBean->$field);
+                    $datetime = $timedate->fromDb($sugarBean->$fieldName);
                 }
 
                 if (empty($datetime)) {
                     throw new ApiException(
-                        '[Unable to convert datetime field using SugarBean] "' . $field . '"',
+                        '[Unable to convert datetime field using SugarBean] "' . $fieldName . '"',
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
                     );
                 }
@@ -102,24 +125,24 @@ class SuiteBeanResource extends Resource
                 $datetimeISO8601 = $datetime->format(\DateTime::ATOM);
                 if ($datetime === false) {
                     throw new ApiException(
-                        '[Unable to convert datetime field to ISO 8601] "' . $field . '"',
+                        '[Unable to convert datetime field to ISO 8601] "' . $fieldName . '"',
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
-                $resource->attributes[$field] = $datetimeISO8601;
+                $resource->attributes[$fieldName] = $datetimeISO8601;
             } else {
-                $resource->attributes[$field] = $sugarBean->$field;
+                $resource->attributes[$fieldName] = $sugarBean->$fieldName;
             }
 
             // Validate Required fields
             // Skip "id" as this method may be used to populate a new bean before the bean is saved
             if (
-                empty($sugarBean->$field) &&
-                $field !== 'id' &&
+                empty($sugarBean->$fieldName) &&
+                $fieldName !== 'id' &&
                 $definition['required'] === true &&
-                !isset($resource->attributes[$field])
+                !isset($resource->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
-                $exception->setSource($resource->source . '/attributes/' . $field);
+                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception->setSource($resource->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
         }
@@ -149,10 +172,24 @@ class SuiteBeanResource extends Resource
                 throw new ApiException('Unable to read variable definitions');
             }
             // Filter security sensitive information from attributes
+            xdebug_break();
             if (
                 isset($sugar_config['filter_module_fields'][$sugarBean->module_name]) &&
                 in_array($field, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
             ) {
+                continue;
+            }
+
+            // Skip the reserved keywords which can be safely skipped
+            if (in_array($field, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
+                $exception = new ReservedKeywordNotAllowed();
+                $logMessage =
+                    ' Code: [' . $exception->getCode() . ']' .
+                    ' Status: [' . $exception->getHttpStatus() . ']' .
+                    ' Message: ' . $exception->getMessage() .
+                    ' Detail: ' . 'Reserved keyword not allowed in attribute field name.' .
+                    ' Source: [' . '/data/attributes/' . $field . ']';
+                $this->logger->warning($logMessage);
                 continue;
             }
 
