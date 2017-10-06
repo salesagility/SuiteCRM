@@ -55,6 +55,7 @@ use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
@@ -67,6 +68,7 @@ class ModuleController extends ApiController
     const SOURCE_TYPE = '/data/attributes/type';
     const MODULE = 'module';
     const LINKS = 'links';
+
     /**
      * GET /api/v8/modules
      * @param Request $req
@@ -90,6 +92,7 @@ class ModuleController extends ApiController
         );
 
         $this->negotiatedJsonApiContent($req, $res);
+
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -111,7 +114,6 @@ class ModuleController extends ApiController
         global $sugar_config;
         $lib = new ModulesLib();
         $payload = array(
-//            'meta' => array(),
             'links' => array(),
             'data' => array()
         );
@@ -134,7 +136,6 @@ class ModuleController extends ApiController
             'count' => $lastOffset
         );
 
-        // TODO: use generateJsonApiResponse instead
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -169,12 +170,12 @@ class ModuleController extends ApiController
         $payload = array();
 
         // Validate module
-        if(empty($module)) {
+        if (empty($module)) {
             throw new ModuleNotFound($moduleName);
         }
 
         // Validate JSON
-        if(empty($body)) {
+        if (empty($body)) {
             throw new EmptyBody();
         }
 
@@ -193,7 +194,7 @@ class ModuleController extends ApiController
 
         // Validate ID
         if (isset($body['data']['id'])) {
-            $exception = new Forbidden('[creating a record with client id not allowed] "'.$body['data']['id'].'"');
+            $exception = new Forbidden('[creating a record with client id not allowed] "' . $body['data']['id'] . '"');
             $exception->setSource('/data/attributes/id');
             throw $exception;
         }
@@ -211,7 +212,7 @@ class ModuleController extends ApiController
         $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
         $links = $links->withSelf($self);
         $selectFields = $req->getParam(self::FIELDS);
-        $resource =  SuiteBeanResource::fromSugarBean($sugarBean);
+        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
             $payload['data'] = $resource->getArrayWithFields($fields);
@@ -220,6 +221,7 @@ class ModuleController extends ApiController
         }
         $payload[self::LINKS] = $links->getArray();
         $res = $res->withStatus(201);
+
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -249,12 +251,12 @@ class ModuleController extends ApiController
         $payload = array();
 
         // Validate module
-        if(empty($module)) {
+        if (empty($module)) {
             throw new ModuleNotFound($moduleName);
         }
 
         $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
-        if ($sugarBean ->new_with_id === true) {
+        if ($sugarBean->new_with_id === true) {
             $exception = new NotFound(self::MISSING_ID);
             $exception->setSource('');
             throw $exception;
@@ -273,6 +275,7 @@ class ModuleController extends ApiController
         }
 
         $res = $res->withStatus(200);
+
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -305,12 +308,12 @@ class ModuleController extends ApiController
         $payload = array();
 
         // Validate module
-        if(empty($module)) {
+        if (empty($module)) {
             throw new ModuleNotFound($moduleName);
         }
 
         // Validate JSON
-        if(empty($body)) {
+        if (empty($body)) {
             throw new EmptyBody();
         }
 
@@ -329,7 +332,7 @@ class ModuleController extends ApiController
 
         // Validate ID
         $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
-        if ($sugarBean ->new_with_id === true) {
+        if ($sugarBean->new_with_id === true) {
             $exception = new NotFound('["id" does not exist]');
             $exception->setSource('');
             throw $exception;
@@ -358,6 +361,7 @@ class ModuleController extends ApiController
         }
 
         $res = $res->withStatus(200);
+
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -386,13 +390,13 @@ class ModuleController extends ApiController
         $payload = array();
 
         // Validate module
-        if(empty($module)) {
+        if (empty($module)) {
             throw new ModuleNotFound($moduleName);
         }
 
         // Validate ID
         $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
-        if ($sugarBean ->new_with_id === true) {
+        if ($sugarBean->new_with_id === true) {
             $exception = new NotFound(self::MISSING_ID);
             $exception->setSource('');
             throw $exception;
@@ -413,8 +417,57 @@ class ModuleController extends ApiController
             'status' => 200
         );
         $res = $res->withStatus(200);
+
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
+    public function getModulesMenuModules(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
 
+    public function getModulesMenuFilters(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getRecordsViewed(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getLanguageDefinition(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleFields(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleLinks(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleMenu(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleRecordsViewed(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleFavorites(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    public function getModuleLayout(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -199,7 +199,7 @@ class Resource implements LoggerAwareInterface
 
     /**
      * @param array $fields
-     * @return array
+     * @return array - Return only the fields which exist in the $fields
      */
     public function getArrayWithFields(array $fields)
     {

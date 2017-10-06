@@ -46,8 +46,6 @@ use League\Url\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
-use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
-use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
  * Class ModulesLib
