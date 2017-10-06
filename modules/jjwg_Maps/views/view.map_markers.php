@@ -195,7 +195,8 @@ var markerClusterer = null;
 var markerClustererToggle = null;
 var clusterControlDiv = null;
 // Clusterer Images - Protocol Independent
-MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+// MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "modules/jjwg_Maps/images/m";
 
 // Drawing Controls
 var drawingManager = null;
