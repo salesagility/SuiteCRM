@@ -69,8 +69,7 @@ class JsonApi implements LoggerAwareInterface
      */
     public function getArray()
     {
-        $response = array();
-        $response['jsonapi'] = array(
+        $response = array(
             'version' => self::VERSION
         );
         return $response;

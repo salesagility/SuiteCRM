@@ -63,6 +63,11 @@ class ApiController implements LoggerAwareInterface
     const CONTENT_TYPE = 'application/vnd.api+json';
     const CONTENT_TYPE_HEADER = 'Content-Type';
     const LINKS = 'links';
+
+    const VERSION_MAJOR = 8;
+    const VERSION_MINOR = 0;
+    const VERSION_PATCH = 0;
+    const VERSION_STABILITY = 'ALPHA';
     /**
      * @var LoggerInterface $logger
      */
@@ -100,6 +105,16 @@ class ApiController implements LoggerAwareInterface
             // return error instead of response
             return $negotiated;
         }
+
+        $payload['meta']['suiteapi'] = array(
+          'major' => self::VERSION_MAJOR,
+          'minor' => self::VERSION_MINOR,
+          'patch' => self::VERSION_PATCH,
+          'stability' => self::VERSION_STABILITY,
+        );
+
+        $jsonAPI = new JsonApi();
+        $payload['jsonapi'] = $jsonAPI->getArray();
 
         // Validate Response
         $jsonApi = new JsonApi();
@@ -142,6 +157,16 @@ class ApiController implements LoggerAwareInterface
             // return error instead of response
             return $negotiated;
         }
+
+        $payload['meta']['suiteapi'] = array(
+            'major' => self::VERSION_MAJOR,
+            'minor' => self::VERSION_MINOR,
+            'patch' => self::VERSION_PATCH,
+            'stability' => self::VERSION_STABILITY,
+        );
+
+        $jsonAPI = new JsonApi();
+        $payload['jsonapi'] = $jsonAPI->getArray();
 
         $payload = json_decode(json_encode($payload), true);
 
@@ -227,6 +252,17 @@ class ApiController implements LoggerAwareInterface
                 $jsonError
             )
         );
+
+        $payload['meta']['suiteapi'] = array(
+            'major' => self::VERSION_MAJOR,
+            'minor' => self::VERSION_MINOR,
+            'patch' => self::VERSION_PATCH,
+            'stability' => self::VERSION_STABILITY,
+        );
+
+        $jsonAPI = new JsonApi();
+        $payload['jsonapi'] = $jsonAPI->getArray();
+
 
         return $response
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
