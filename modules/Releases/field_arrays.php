@@ -57,4 +57,3 @@ $fields_array['Release'] = array ('column_fields' => Array("id"
         'list_fields' =>  Array('id', 'name', 'list_order', 'status'),
     'required_fields' =>  array("name"=>1,'list_order'=>1,'status'=>1),
 );
-?>

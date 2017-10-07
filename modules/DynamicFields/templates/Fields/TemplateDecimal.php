@@ -72,5 +72,3 @@ class TemplateDecimal extends TemplateFloat{
 		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision);
 	}
 }
-
-?>

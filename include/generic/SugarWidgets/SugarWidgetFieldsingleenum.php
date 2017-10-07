@@ -70,4 +70,3 @@ class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum {
         return $str;
     }
 }
-?>

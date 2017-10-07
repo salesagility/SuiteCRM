@@ -444,4 +444,3 @@ class SubPanelTiles
         return $widget_contents;
 	}
 }
-?>

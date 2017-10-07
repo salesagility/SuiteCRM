@@ -352,5 +352,3 @@ function delete_adjust_order($parent_id){
 //End Delete Functions/////////////////////////
 //end class Controller
 }
-
-?>

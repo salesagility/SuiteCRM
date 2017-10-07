@@ -208,4 +208,3 @@ $mod_strings = array (
 'LBL_RENAME_MOD_SAVE_HELP' => 'Click <b>Save</b> to apply the changes.'
 
 );
-?>

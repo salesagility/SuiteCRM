@@ -219,5 +219,3 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
         return $cell;
     }
 }
-
-?>

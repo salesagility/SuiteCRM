@@ -126,5 +126,3 @@ class CalendarDashlet extends Dashlet {
 
 
 }
-
-?>

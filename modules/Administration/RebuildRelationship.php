@@ -142,4 +142,3 @@ if (isset ( $_SESSION [ 'rebuild_relationships' ] ))
 
 if (empty ( $_REQUEST [ 'silent' ] ))
     echo $mod_strings [ 'LBL_DONE' ] ;
-?>

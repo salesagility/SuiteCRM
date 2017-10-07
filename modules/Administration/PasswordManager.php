@@ -210,4 +210,3 @@ $sugar_smarty->assign("TMPL_DRPDWN_LOST", $TMPL_DRPDWN_LOST);
 $sugar_smarty->assign("TMPL_DRPDWN_GENERATE", $TMPL_DRPDWN_GENERATE);
 
 $sugar_smarty->display('modules/Administration/PasswordManager.tpl');
-?>

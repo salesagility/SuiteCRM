@@ -174,5 +174,3 @@ require_once 'modules/vCals/HTTP_WebDAV_Server_vCal.php';
         }
 
     }
-
-?>

@@ -59,5 +59,3 @@ if(!empty($_REQUEST['layout']) && !empty($_REQUEST['layoutModule'])) {
 else {
     echo 'oops';
 }
-
-?>

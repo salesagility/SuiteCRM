@@ -262,4 +262,3 @@ class ImportController extends SugarController
         $this->view = 'revokeaccess';
     }
 }
-?>

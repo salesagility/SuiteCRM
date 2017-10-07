@@ -538,6 +538,3 @@ class PredefinedChart{
 		else return false;
 	}
 }
-
-
-?>

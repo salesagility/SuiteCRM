@@ -79,5 +79,3 @@ class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
 
 	}
 }
-
-?>

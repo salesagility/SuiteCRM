@@ -136,4 +136,3 @@ $out .= <<<EOQ2
 </html>
 EOQ2;
 echo $out;
-?>

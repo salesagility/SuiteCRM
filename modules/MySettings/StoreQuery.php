@@ -259,5 +259,3 @@ class StoreQuery
         return $current_user->getPreference($module . 'Q');
     }
 }
-
-?>

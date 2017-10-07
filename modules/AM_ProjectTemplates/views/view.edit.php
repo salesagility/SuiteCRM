@@ -70,4 +70,3 @@ class AM_ProjectTemplatesViewEdit extends ViewEdit {
 
  	}
 }
-?>

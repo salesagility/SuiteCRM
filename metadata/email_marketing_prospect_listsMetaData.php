@@ -98,5 +98,4 @@ $dictionary['email_marketing_prospect_lists'] = array (
 											'join_key_rhs'=>'prospect_list_id', 
 		),
 	)
-)
-?>
+);

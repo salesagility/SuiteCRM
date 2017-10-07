@@ -76,4 +76,3 @@ class MyContactsDashlet extends DashletGeneric {
 
 }
 
-?>

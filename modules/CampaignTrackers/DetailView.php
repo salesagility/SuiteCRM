@@ -118,4 +118,3 @@ if (!empty($focus->is_optout) && $focus->is_optout == 1) {
 
 $xtpl->parse("main");
 $xtpl->out("main");
-?>

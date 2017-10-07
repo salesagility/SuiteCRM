@@ -71,4 +71,3 @@ class PackageManagerDownloader{
 		return $save_dir . $file_name;
 	}
 }
-?>

@@ -64,5 +64,3 @@ $mod_strings = array (
   'LBL_REVERSE' => 'Reverse' ,
   'LBL_DELETED' => 'Deleted',
 );
-  
-?>

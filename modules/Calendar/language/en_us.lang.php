@@ -230,4 +230,3 @@ $mod_list_strings = array(
 			"December",
 		),
 );
-?>

@@ -777,4 +777,3 @@ class ConnectorsController extends SugarController {
 	}
 
 }
-?>

@@ -61,4 +61,3 @@ $module_name = 'AOS_Product_Categories';
 						),
 					),
  			   );
-?>

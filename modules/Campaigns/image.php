@@ -48,4 +48,3 @@ sugar_cleanup();
 Header("Content-Type: image/gif");
 $fn=sugar_fopen(SugarThemeRegistry::current()->getImageURL("blank.gif",false),"r");
 fpassthru($fn);
-?>

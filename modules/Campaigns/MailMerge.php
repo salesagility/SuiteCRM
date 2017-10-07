@@ -44,5 +44,3 @@ $_SESSION['MAILMERGE_RECORDS'] = array($_REQUEST['record']);
 $header_URL = 'Location: index.php?module=MailMerge&action=index';
 
 SugarApplication::headerRedirect($header_URL);
-
-?>

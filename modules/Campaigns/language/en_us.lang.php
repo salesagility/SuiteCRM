@@ -541,6 +541,3 @@ $mod_strings = array (
 	'LBL_QUEUE_ITEMS' => 'Queue Items',
 	'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 );
-
-
-?>

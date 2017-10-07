@@ -51,4 +51,3 @@ class smpl_Lead_Sample{
 			return '';
 		}
 }
-?>

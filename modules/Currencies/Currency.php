@@ -644,4 +644,3 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
 	}
 }
 
-?>

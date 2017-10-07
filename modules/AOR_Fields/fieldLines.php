@@ -76,5 +76,3 @@ function display_field_lines($focus, $field, $value, $view){
     }
     return $html;
 }
-
-?>

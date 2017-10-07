@@ -285,4 +285,3 @@ if (!empty($alltabs)) {
     }
 }
 echo $subpanel->display();
-?>

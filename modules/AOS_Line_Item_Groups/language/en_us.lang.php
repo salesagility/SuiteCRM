@@ -48,4 +48,3 @@ $mod_strings = array (
 
     'AOS_PRODUCT_QUOTES' => 'Product Quotes',
 );
-?>

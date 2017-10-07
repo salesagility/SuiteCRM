@@ -126,4 +126,4 @@ $mod_strings = array(
     'LBL_TEAM_VISIBILITY_TITLE' => 'team that can see this post',
     'LBL_SOCIAL' => 'Social',
 );
-?>
+

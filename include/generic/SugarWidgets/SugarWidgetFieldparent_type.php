@@ -74,5 +74,3 @@ class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
         return $value;
     }
 }
-
-?>

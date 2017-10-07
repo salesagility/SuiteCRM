@@ -88,4 +88,3 @@ $viewdefs['Documents']['QuickCreate'] = array(
 )
 
 );
-?>

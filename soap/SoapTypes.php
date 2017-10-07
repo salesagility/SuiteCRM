@@ -830,4 +830,3 @@ $server->wsdl->addComplexType(
 	)
 );
 
-?>

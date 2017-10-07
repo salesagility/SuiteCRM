@@ -263,5 +263,3 @@ $ListView->setHeaderTitle($display_title . $header_text );
 $ListView->setQuery($where, '', 'date_sent, date_entered DESC', 'EMAIL');
 $ListView->setAdditionalDetails();
 $ListView->processListView($focus, 'main', 'EMAIL');
-
-?>

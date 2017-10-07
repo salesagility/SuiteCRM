@@ -84,4 +84,3 @@ function preParse($panels, $view) {
 }
 
 }
-?>

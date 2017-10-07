@@ -343,5 +343,3 @@ var personModules = {$PERSON_MODULE_LIST};
 EOJAVASCRIPT;
     }
 }
-
-?>

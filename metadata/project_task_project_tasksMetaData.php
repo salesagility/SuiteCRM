@@ -93,5 +93,3 @@ $dictionary['project_task_project_tasks'] = array(
         ),
     ),
 );
-
-?>

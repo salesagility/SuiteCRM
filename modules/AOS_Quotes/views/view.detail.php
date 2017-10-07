@@ -129,4 +129,3 @@ class AOS_QuotesViewDetail extends ViewDetail {
 		}
 	}
 }
-?>

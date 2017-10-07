@@ -191,6 +191,3 @@ $mod_strings = array (
 
 	'LBL_AOS_CONTRACTS' => 'Contracts',
 );
-
-
-?>

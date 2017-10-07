@@ -436,4 +436,3 @@ class Campaign extends SugarBean {
         return (int)$result['count'];
     }
 }
-?>

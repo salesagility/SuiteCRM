@@ -50,7 +50,3 @@ function get_new_record_form () {
 
 }
 
-
-
-
-?>

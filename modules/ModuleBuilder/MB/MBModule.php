@@ -920,4 +920,3 @@ class MBModule
     }
 
 }
-?>

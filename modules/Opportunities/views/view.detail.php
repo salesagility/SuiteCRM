@@ -90,4 +90,3 @@ class OpportunitiesViewDetail extends ViewDetail {
  		parent::display();
  	}
 }
-?>

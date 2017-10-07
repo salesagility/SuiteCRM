@@ -44,5 +44,3 @@ require_once "include/utils/additional_details.php";
 function additionalDetailsMeeting($fields = array(), SugarBean $bean, $params = array()) {
     return additional_details($fields, $bean, $params);
 }
-
-?>

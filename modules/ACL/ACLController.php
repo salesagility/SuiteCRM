@@ -247,13 +247,3 @@ class ACLController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-?>

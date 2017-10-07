@@ -159,4 +159,3 @@ $xtpl->assign("MODULE_OPTIONS", get_select_options_with_id($security_modules, "A
 $xtpl->parse("main");
 
 $xtpl->out("main");
-?>

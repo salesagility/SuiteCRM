@@ -214,4 +214,3 @@ $campaign_id = $focus->id;
 	$smarty->assign('chartResources', $resources);
 
 echo $smarty->fetch('modules/Campaigns/RoiDetailView.tpl');
-?>

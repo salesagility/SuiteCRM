@@ -137,4 +137,3 @@ class smpl_Invoice_Group_Sample{
 </table>';
     }
 }
-?>

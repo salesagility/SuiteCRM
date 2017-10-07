@@ -50,4 +50,3 @@ $dashletMeta['CampaignROIChartDashlet'] = array('title'       => 'LBL_TITLE',
                                                     'icon'		  => 'icon_Charts_GroupBy_32.gif', 
                                                     'category'    => 'Charts',
                                                     'module'	  => 'Campaigns',);
-?>

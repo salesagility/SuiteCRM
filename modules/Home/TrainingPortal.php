@@ -64,5 +64,3 @@ $iframe_url = add_http("www.sugarcrm.com/network/redirect.php?to=training&tmpl=n
 $sugar_smarty->assign('iframeURL', $iframe_url);
 
 echo $sugar_smarty->fetch('modules/Home/TrainingPortal.tpl');
-
-?>

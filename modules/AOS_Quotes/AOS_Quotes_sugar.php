@@ -125,4 +125,3 @@ class AOS_Quotes_sugar extends Basic {
 }
 
 }
-?>

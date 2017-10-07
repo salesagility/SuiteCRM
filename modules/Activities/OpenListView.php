@@ -328,4 +328,3 @@ foreach($open_activity_list as $activity) {
 $xtpl->parse("open_activity");
 if (count($open_activity_list)>0) $xtpl->out("open_activity");
 else echo "<i>".$current_module_strings['NTC_NONE_SCHEDULED']."</i>";
-?>

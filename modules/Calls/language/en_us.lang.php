@@ -184,6 +184,3 @@ $mod_strings = array(
     'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
 
 );
-
-
-?>

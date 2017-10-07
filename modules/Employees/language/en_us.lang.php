@@ -166,6 +166,3 @@ $mod_strings = array (
   'LBL_SECURITYGROUPS' => 'Security Groups',
   'LBL_PROSPECT_LIST' => 'Prospect List',
 );
-
-
-?>

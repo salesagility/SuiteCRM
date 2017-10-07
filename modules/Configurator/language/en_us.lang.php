@@ -444,6 +444,3 @@ BSOFR',
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
 	
 );
-
-
-?>

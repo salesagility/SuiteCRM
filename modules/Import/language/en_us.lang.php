@@ -369,4 +369,3 @@ $mod_strings = array (
 );
 
 global $timedate;
-?>

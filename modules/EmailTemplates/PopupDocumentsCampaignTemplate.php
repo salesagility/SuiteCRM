@@ -163,14 +163,3 @@ $output_html .= insert_popup_footer();
 
 
 echo $output_html;
-
-
-
-
-
-
-
-
-
-
-?>

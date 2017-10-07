@@ -146,4 +146,3 @@ class SugarpdfFactory{
             return new Sugarpdf($bean, $sugarpdf_object_map);
     }
 }
-?>

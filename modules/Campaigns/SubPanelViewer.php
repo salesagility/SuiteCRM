@@ -104,5 +104,3 @@ if(empty($_REQUEST['inline']))
 {
 	insert_popup_footer($theme);
 }
-
-?>

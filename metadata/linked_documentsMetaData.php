@@ -73,4 +73,3 @@ $dictionary['linked_documents'] = array ( 'table' => 'linked_documents'
 				   'relationship_role_column_value'=>'ContracTemplates'),
 			),
    );
-?>

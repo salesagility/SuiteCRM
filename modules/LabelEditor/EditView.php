@@ -86,10 +86,6 @@ if(isset($_REQUEST['module_name'])){
 	$xtpl->out("main");
 
 }
-else{
-	echo 'No Module Selected';
-}	
-
-
-
-?>
+else {
+    echo 'No Module Selected';
+}

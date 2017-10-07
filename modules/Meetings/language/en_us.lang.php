@@ -200,4 +200,4 @@ $mod_strings = array (
 	'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
 	'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
 );
-?>
+

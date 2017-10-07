@@ -139,4 +139,3 @@ class smpl_Quote_Sample{
 </table>';
 		}
 }
-?>

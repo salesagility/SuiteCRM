@@ -78,5 +78,3 @@ class AOS_ContractsController extends SugarController {
         
     }
 }
-
-?> 

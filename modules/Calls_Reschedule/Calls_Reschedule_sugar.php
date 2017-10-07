@@ -98,4 +98,3 @@ class Calls_Reschedule_sugar extends Basic {
 }
 
 }
-?>

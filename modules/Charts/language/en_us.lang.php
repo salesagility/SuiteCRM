@@ -114,6 +114,3 @@ $mod_strings = array (
     'LBL_CHART_MODULES_USED_DIRECT_REPORTS_30_DAYS' => 'Modules Used By My Direct Reports (Last 30 Days)',
     'LBL_CHART_DCE_ACTIONS_MONTH' => 'DCE Actions By Types (Current Month)',
 );
-
-
-?>

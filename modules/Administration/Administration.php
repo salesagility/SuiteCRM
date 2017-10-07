@@ -199,4 +199,3 @@ class Administration extends SugarBean {
             : Array(false, false);
     }
 }
-?>

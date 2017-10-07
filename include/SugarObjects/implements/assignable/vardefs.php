@@ -92,4 +92,3 @@ $vardefs = array(
    'rhs_module'=> $module , 'rhs_table'=> $table_name, 'rhs_key' => 'assigned_user_id',
    'relationship_type'=>'one-to-many')
 ));
-?>

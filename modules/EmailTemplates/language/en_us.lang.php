@@ -119,4 +119,4 @@ $mod_strings = array (
 	'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
 );
-?>
+

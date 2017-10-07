@@ -213,4 +213,3 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 	    return $contents;
     }
 }
-?>

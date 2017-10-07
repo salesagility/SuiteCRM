@@ -106,4 +106,3 @@ $mod_strings = array (
 	'LBL_MARKETING_ID' => 'Marketing Id',
 	'LBL_RELATED_NAME' => 'Related Name',
 );
-?>

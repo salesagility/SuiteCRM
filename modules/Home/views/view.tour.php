@@ -66,4 +66,4 @@ class HomeViewTour extends SugarView
     }
 
 }
-?>
+

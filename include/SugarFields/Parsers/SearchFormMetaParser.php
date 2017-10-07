@@ -284,5 +284,3 @@ function applyRules($moduleDir, $section=array()) {
 }
 
 }
-?>
-

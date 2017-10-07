@@ -360,5 +360,3 @@ class Note extends SugarBean {
 		return false;
 	}
 }
-
-?>

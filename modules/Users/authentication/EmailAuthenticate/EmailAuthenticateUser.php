@@ -150,5 +150,3 @@ class EmailAuthenticateUser extends SugarAuthenticateUser {
 
 
 }
-
-?>

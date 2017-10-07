@@ -442,4 +442,3 @@ class vCard
 	}
 }
 
-?>

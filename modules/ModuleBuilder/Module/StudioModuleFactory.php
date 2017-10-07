@@ -68,4 +68,3 @@ class StudioModuleFactory
         return $sm;
 	}
 }
-?>

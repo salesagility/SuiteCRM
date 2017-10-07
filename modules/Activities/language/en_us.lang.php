@@ -131,6 +131,3 @@ $mod_strings = array (
 
 	'LBL_ACCEPT' => 'Accept' /*for 508 compliance fix*/,
 );
-
-
-?>

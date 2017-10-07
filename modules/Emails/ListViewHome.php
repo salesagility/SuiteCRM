@@ -77,4 +77,3 @@ $ListView->processListView($focus, 'main', 'EMAIL');
 //echo $focus->quickCreateJS();
 
 $sugar_config['list_max_entries_per_page'] = $currentMax;
-?>

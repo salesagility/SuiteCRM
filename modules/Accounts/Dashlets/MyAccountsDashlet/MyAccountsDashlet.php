@@ -99,5 +99,3 @@ class MyAccountsDashlet extends DashletGeneric {
     	parent::process($lvsParams);
     }
 }
-
-?>

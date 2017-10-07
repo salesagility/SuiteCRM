@@ -51,4 +51,3 @@ interface MetaDataParserInterface
     public function getHistory () ;
 
 }
-?>

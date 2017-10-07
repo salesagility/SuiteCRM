@@ -88,4 +88,3 @@ class DashletCacheBuilder {
         write_array_to_file('dashletsFiles', $dashletFiles, $cacheDir . 'dashlets.php');
     }
 }
-?>

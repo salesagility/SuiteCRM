@@ -110,4 +110,3 @@ var $upload_file;
         return $return_id;
 	}
 }
-?>

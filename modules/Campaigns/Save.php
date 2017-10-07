@@ -147,6 +147,3 @@ if($focus->campaign_type =='NewsLetter'){
 }//finish newsletter processing
 
 handleRedirect($focus->id, 'Campaigns');
-
-
-?>

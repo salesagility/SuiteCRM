@@ -82,6 +82,3 @@ $mod_strings = array (
   'LBL_CREATED_BY' => 'Created By',
 	'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 );
-
-
-?>

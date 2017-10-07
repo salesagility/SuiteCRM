@@ -631,4 +631,3 @@ if(count($errors) > 0) {
 	}
 	echo "FAILED\n";
 }
-?>

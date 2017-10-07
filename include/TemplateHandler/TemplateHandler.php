@@ -575,4 +575,3 @@ class TemplateHandler {
         return array();
     }
 }
-?>

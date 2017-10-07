@@ -106,4 +106,4 @@ $viewdefs [$module_name] =
                     ),
             ),
     );
-?>
+

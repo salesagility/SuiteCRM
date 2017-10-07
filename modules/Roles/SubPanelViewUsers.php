@@ -98,5 +98,3 @@ $ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME'] );
 $ListView->setQuery("", "", "user_name", "USER");
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "USER");
-
-?>

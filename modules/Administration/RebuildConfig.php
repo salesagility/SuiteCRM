@@ -87,4 +87,3 @@ $xtpl->assign('DISABLE_CONFIG_REBUILD', $disable_config_rebuild);
 $xtpl->assign('BTN_PERFORM_REBUILD', $btn_rebuild_config);
 $xtpl->parse('main');
 $xtpl->out('main');
-?>

@@ -215,4 +215,3 @@ $mod_strings = array(
  	'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
 
 );
-?>

@@ -113,5 +113,3 @@ if ($locale->invalidLocaleNameFormatUpgrade()) {
 $sugar_smarty->assign('getNameJs', $locale->getNameJs());
 
 $sugar_smarty->display('modules/Administration/Locale.tpl');
-
-?>

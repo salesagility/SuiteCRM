@@ -131,6 +131,3 @@ $mod_strings = array(
     'COLUMN_TITLE_INLINE_EDIT_TEXT' => 'Inline Edit',
     'COLUMN_TITLE_PARENT_ENUM' => 'Parent DropDown',
 );
-
-
-?>

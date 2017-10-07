@@ -43,5 +43,3 @@ class SugarWidgetFieldNum extends SugarWidgetFieldInt
 {
 
 }
-
-?>

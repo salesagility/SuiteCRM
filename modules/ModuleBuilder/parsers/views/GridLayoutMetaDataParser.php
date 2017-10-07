@@ -925,5 +925,3 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         return iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->_viewdefs['panels'][$targetPanel])));
     }
 }
-
-?>

@@ -609,5 +609,3 @@ $mod_strings = array(
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
 ); // END STRINGS DEFS
-
-?>

@@ -467,4 +467,3 @@ class campaign_charts {
 		return $return;
 	}
 }// end charts class
-?>

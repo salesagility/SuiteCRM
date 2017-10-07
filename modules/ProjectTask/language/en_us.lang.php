@@ -128,5 +128,3 @@ $mod_strings = array (
 	'LBL_HOURS' => 'Hours',
 	'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
 );
-
-?>

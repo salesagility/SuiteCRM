@@ -56,4 +56,3 @@ class SugarFieldPassword extends SugarFieldBase
         return $value;
     }
 }
-?>

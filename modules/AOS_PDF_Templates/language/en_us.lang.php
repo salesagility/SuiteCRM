@@ -86,4 +86,3 @@ $mod_strings = array (
   'LBL_PAGE_SIZE' => 'Page Size',
   'LBL_ORIENTATION' => 'Orientation',
 );
-?>

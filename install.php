@@ -798,5 +798,3 @@ installerHook('pre_installFileRequire', array('the_file' => $the_file));
 require('install/' . $the_file);
 
 installerHook('post_installFileRequire', array('the_file' => $the_file));
-
-?>

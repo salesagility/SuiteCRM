@@ -47,4 +47,3 @@
  	'searchfields'	  =>    'modules/Project/metadata/SearchFields.php',
 
  );
-?>

@@ -782,5 +782,3 @@ class parseCSV {
 	}
 
 }
-
-?>

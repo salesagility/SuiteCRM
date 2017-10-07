@@ -255,4 +255,4 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addAllFields('');
 echo $javascript->getScript();
-?>
+

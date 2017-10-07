@@ -112,5 +112,3 @@ class SugarFieldBool extends SugarFieldBase {
     }
 
 }
-
-?>

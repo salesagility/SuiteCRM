@@ -83,4 +83,3 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                                         'default' => true),
                                                                         );
 
-?>

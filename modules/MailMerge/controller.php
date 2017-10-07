@@ -131,4 +131,3 @@ class MailMergeController extends SugarController{
         print $json_response;
     }
 }
-?>

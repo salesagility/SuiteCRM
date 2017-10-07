@@ -52,4 +52,3 @@ $module_menu = array(
 
 );
 }
-?>

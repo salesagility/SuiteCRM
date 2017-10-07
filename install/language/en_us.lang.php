@@ -684,5 +684,3 @@ $contact_user_link_guid',
 
 
 );
-
-?>

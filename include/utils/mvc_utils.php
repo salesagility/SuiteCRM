@@ -138,5 +138,3 @@ function ajaxLink($url)
         return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
     }
 }
-
-?>

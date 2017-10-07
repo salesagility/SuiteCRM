@@ -163,5 +163,3 @@ class SugarFieldImage extends SugarFieldFile
         }
     }
 }
-
-?>

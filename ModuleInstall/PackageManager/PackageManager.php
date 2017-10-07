@@ -889,4 +889,3 @@ class PackageManager{
 		return $packages;
     }
  }
-?>

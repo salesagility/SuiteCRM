@@ -85,5 +85,3 @@ else
 }
 
 print "<a href=\"index.php?module=Administration&action=index\">" . $mod_strings['LBL_DIAGNOSTIC_DELETE_RETURN'] . "</a><br>";
-
-?>

@@ -91,4 +91,3 @@ $mod_strings = array (
   'LBL_PRIMARY_GROUP' => 'Primary Group',
 
 );
-?>

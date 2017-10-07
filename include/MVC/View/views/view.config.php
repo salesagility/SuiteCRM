@@ -139,4 +139,3 @@ $view_config = array(
                        ),
 		),
 );
-?>

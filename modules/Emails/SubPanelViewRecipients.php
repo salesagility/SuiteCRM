@@ -149,5 +149,3 @@ foreach($focus_contacts_list as $contact)
 
 $xtpl->parse("contacts");
 $xtpl->out("contacts");
-
-?>

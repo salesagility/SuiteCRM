@@ -102,4 +102,3 @@ class AM_TaskTemplates_sugar extends Basic {
 }
 
 }
-?>

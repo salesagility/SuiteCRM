@@ -321,4 +321,3 @@ echo '
 	}
 	switchMsg();
 </script>'
-?>

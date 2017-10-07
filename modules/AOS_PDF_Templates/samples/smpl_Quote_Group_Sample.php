@@ -137,4 +137,3 @@ class smpl_Quote_Group_Sample{
 </table>';
 		}
 }
-?>

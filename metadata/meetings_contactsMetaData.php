@@ -106,4 +106,3 @@ $dictionary['meetings_contacts'] = array(
 		),
 	),
 );
-?>

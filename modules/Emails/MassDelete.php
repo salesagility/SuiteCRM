@@ -60,5 +60,3 @@ if(!empty($_REQUEST['grabbed'])) {
 	$error = $mod_strings['LBL_MASS_DELETE_ERROR'];
 	header('Location: index.php?module=Emails&action=ListViewGroup&error='.$error);
 }
-
-?>

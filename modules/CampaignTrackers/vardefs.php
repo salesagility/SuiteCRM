@@ -157,4 +157,3 @@ $dictionary['CampaignTracker'] = array('table' => 'campaign_trkrs',
       array('name' => 'campaign_tracker_key_idx', 'type'=>'index', 'fields'=>array('tracker_key')),
  )
 );
-?>

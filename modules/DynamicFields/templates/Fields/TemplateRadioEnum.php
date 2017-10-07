@@ -135,5 +135,3 @@ class TemplateRadioEnum extends TemplateEnum{
 	
 }
 
-
-?>

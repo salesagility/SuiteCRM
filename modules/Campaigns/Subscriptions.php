@@ -261,5 +261,3 @@ function manageSubscriptions($focus){
     }
 
 }
-
-?>

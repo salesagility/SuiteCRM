@@ -178,4 +178,4 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
 					array('name' => 'idx_eman_relid_reltype_id', 'type' => 'index', 'fields'=> array('related_id', 'related_type', 'campaign_id')),
 					)
 );
-?>
+

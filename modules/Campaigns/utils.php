@@ -1015,6 +1015,3 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
 
         return $qsProspectList;
     }
-
-
-?>

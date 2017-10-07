@@ -49,4 +49,3 @@ $module_name = 'AOBH_BusinessHours';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
-?>

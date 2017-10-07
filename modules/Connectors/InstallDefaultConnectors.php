@@ -110,4 +110,3 @@ if(!write_array_to_file('modules_sources', $default_modules_sources, 'custom/mod
    $GLOBALS['log']->fatal('Cannot write file custom/modules/Connectors/metadata/display_config.php');
 }
 
-?>

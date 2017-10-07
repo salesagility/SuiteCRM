@@ -129,4 +129,3 @@ class ExtNode {
 		return $ret;
  	}
 }
-?>

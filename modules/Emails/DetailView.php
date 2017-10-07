@@ -519,4 +519,3 @@ if ($show_subpanels) {
     $subpanel = new SubPanelTiles($focus, 'Emails');
     echo $subpanel->display();
 }
-?>

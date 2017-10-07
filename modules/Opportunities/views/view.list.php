@@ -28,5 +28,3 @@ class OpportunitiesViewList extends ViewList {
 		$this->lv = new OpportunitiesListViewSmarty();
 	}
 }
-
-?>

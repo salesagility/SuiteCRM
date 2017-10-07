@@ -151,4 +151,3 @@ class ManyToOneRelationship extends AbstractRelationship
         $this->one_to_many->setRelationship_only();
     }
 }
-?>

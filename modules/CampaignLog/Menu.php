@@ -49,4 +49,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $mod_strings, $app_strings;
 $module_menu = Array(
 	);
-?>

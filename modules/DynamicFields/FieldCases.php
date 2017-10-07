@@ -150,4 +150,3 @@ function get_widget($type)
 
 	return $local_temp;
 }
-?>

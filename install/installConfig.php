@@ -1891,5 +1891,3 @@ $installConfigLayout->show(get_defined_vars());
 // DisplayErrors::restore();
 
 // TODO--low: add Name Format 	[default_locale_name_format]	[Dr. David Livingstone]	-- ???
-
-?>

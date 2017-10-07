@@ -58,4 +58,3 @@ $fields_array['EmailMarketing'] = array ('column_fields' => array (
 		'template_id'=>1, 'status'=>1,
 	),
 );
-?>

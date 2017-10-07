@@ -55,4 +55,3 @@
     $quote->opportunities->add($opportunity->id);
 	ob_clean();
 	header('Location: index.php?module=Opportunities&action=EditView&record='.$opportunity->id);
-?>

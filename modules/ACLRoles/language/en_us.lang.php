@@ -58,5 +58,4 @@ $mod_strings = array (
 'LBL_DUPLICATE_OF'=>'Duplicate Of ',
 
 'LBL_SECURITYGROUPS' => 'Security Groups',
-)
-?>
+);

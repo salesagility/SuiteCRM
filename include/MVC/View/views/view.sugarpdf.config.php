@@ -56,4 +56,3 @@ $view_config = array(
         ),
     ),
 );
-?>

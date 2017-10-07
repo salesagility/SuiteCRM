@@ -91,5 +91,3 @@ class ext_rest_twitter extends ext_rest
         return null;
     }
 }
-
-?>

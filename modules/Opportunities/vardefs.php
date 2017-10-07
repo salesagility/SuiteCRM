@@ -489,4 +489,3 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
 );
 VardefManager::createVardef('Opportunities', 'Opportunity', array('default', 'assignable', 'security_groups',
 ));
-?>

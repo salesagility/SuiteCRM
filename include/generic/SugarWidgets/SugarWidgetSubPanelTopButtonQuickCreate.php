@@ -200,4 +200,3 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 		 return $relationship_name;
 	}
 }
-?>

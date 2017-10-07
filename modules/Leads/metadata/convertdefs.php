@@ -354,6 +354,3 @@ $viewdefs['Tasks']['ConvertLead'] = array(
         )
     ),
 );
-
-
-?>

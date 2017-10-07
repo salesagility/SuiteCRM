@@ -330,4 +330,3 @@ class ParserModifyListView extends ModuleBuilderParser
 		TemplateHandler::clearCache ( $this->module_name, "ListView.tpl" ) ; // not currently cached, but here for the future
 	}
 }
-?>

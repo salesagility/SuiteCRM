@@ -139,4 +139,3 @@ class smpl_Invoice_Sample{
 </table>';
 		}
 }
-?>

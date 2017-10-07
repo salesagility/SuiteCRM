@@ -90,4 +90,3 @@ $fields_array['Job'] = array (
 		'execute_time' => 1
 	)
 );
-?>

@@ -43,5 +43,3 @@ $mod_strings = array(
 'LBL_KEY'=>'Key:',
 'LBL_VALUE'=>'Value:',
 );
-
-?>

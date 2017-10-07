@@ -58,4 +58,3 @@ else
 	$step = '1';
 }
 include ('modules/MailMerge/Step'. intval($step). '.php');
-?>

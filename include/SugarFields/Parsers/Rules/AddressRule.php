@@ -153,5 +153,3 @@ function removeStreetFieldOverride($panels, $street) {
 }
 
 }
-
-?>

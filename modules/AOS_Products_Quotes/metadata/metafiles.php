@@ -34,4 +34,3 @@ $module_name = 'AOS_Products_Quotes';
  $metafiles[$module_name] = array(
 
  );
-?>

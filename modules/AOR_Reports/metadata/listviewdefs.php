@@ -64,4 +64,3 @@ array (
     'default' => true,
   ),
 );
-?>

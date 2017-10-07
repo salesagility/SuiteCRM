@@ -63,6 +63,3 @@ $mod_strings = array (
   'LNK_NEW_TASK' => 'Create Task',
   'ERR_DELETE_RECORD' => 'A record number must be specified to delete the account.',
 );
-
-
-?>

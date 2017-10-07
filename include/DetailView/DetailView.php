@@ -461,4 +461,3 @@ class DetailView extends ListView {
     }
 
 	}
-?>

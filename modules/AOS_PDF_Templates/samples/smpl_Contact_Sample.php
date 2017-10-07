@@ -43,4 +43,3 @@ class smpl_Contact_Sample{
 			return '';
 		}
 }
-?>

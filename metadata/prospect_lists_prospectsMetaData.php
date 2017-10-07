@@ -168,5 +168,4 @@ $dictionary['prospect_lists_prospects'] = array (
 								)
 	)
 	
-)
-?>
+);

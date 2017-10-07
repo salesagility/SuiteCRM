@@ -81,4 +81,3 @@ class AOS_Quotes extends AOS_Quotes_sugar {
 		parent::mark_deleted($id);
 	}
 }
-?>

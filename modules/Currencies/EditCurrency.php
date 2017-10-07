@@ -53,5 +53,3 @@ echo $lc->getTable();
 			}else{
 				echo 'Admin\'s Only';	
 			}
-
-?>

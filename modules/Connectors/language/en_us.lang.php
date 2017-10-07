@@ -123,5 +123,3 @@ $mod_strings = array(
     'LBL_CLOSE' => 'Close' /*for 508 compliance fix*/,
 
 );
-
-?>

@@ -94,5 +94,3 @@ $mod_strings = array (
 	'LBL_CREATED_BY_NAME' => 'Created by Name',
 );
 
-
-?>

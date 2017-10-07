@@ -44,4 +44,3 @@ $action_file_map['deleterelationship'] = 'include/generic/DeleteRelationship.php
 $action_file_map['import'] = 'modules/Import/index.php';
 $action_file_map['viewsugarfieldcollection'] = 'include/SugarFields/Fields/Collection/view.sugarfieldcollection.php';
 $action_file_map['subpanelsearch'] = 'include/SubPanel/SubPanelSearchDisplay.php';
-?>

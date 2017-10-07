@@ -172,5 +172,3 @@ class MyCallsDashlet extends DashletGeneric {
         return $this->configureSS->fetch($this->configureTpl);
     }
 }
-
-?>

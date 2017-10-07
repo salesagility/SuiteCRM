@@ -256,5 +256,3 @@ class QuickSearchDefaults
 	}
     // END QuickSearch functions for 4.5.x backwards compatibility support
 }
-
-?>

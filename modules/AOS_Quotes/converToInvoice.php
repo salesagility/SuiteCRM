@@ -125,4 +125,3 @@
 	}
 	ob_clean();
 	header('Location: index.php?module=AOS_Invoices&action=EditView&record='.$invoice->id);
-?>

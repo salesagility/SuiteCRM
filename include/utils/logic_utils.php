@@ -122,5 +122,3 @@ function build_logic_file($hook_array){
 
 //end function build_logic_file
 }
-
-?>

@@ -97,4 +97,3 @@ class AOD_IndexEvent_sugar extends Basic {
 }
 
 }
-?>

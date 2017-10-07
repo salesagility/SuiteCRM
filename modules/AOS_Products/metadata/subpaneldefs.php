@@ -59,7 +59,3 @@ $layout_defs['AOS_Products'] = array(
 
 	),
 );
-
-
-
-?>

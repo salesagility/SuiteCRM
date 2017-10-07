@@ -69,5 +69,3 @@ class AM_ProjectTemplatesListViewSmarty extends ListViewSmarty {
     }
 
 }
-
-?>

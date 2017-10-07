@@ -130,4 +130,3 @@ include('metadata/securitygroups_usersMetaData.php');
 if(file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')){
 	include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');
 }
-?>

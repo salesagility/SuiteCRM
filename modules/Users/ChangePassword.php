@@ -103,5 +103,3 @@ if ($current_user->system_generated_password == '1')
 	$sugar_smarty->assign('EXPIRATION_TYPE', $mod_strings['LBL_PASSWORD_EXPIRATION_GENERATED']);*/
 if(isset($_REQUEST['error_password'])) $sugar_smarty->assign('EXPIRATION_TYPE', $_REQUEST['error_password']);
 $sugar_smarty->display('modules/Users/Changenewpassword.tpl');
-
-?>

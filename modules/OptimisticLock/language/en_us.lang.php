@@ -56,5 +56,3 @@ $mod_strings = array (
    'LBL_NO_LOCKED_OBJECTS' => 'No Locked Objects',
    
 );
-
-?>

@@ -214,4 +214,4 @@ class SugarFieldParent extends SugarFieldRelate {
     	return isset($args[$key]) ? $args[$key] : '';
     }    
 }
-?>
+

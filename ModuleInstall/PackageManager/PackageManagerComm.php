@@ -308,5 +308,3 @@ class PackageManagerComm{
      ////////// END: Base Functions for Communicating with the depot
      ////////////////////////////////////////////////////////
 }
-
-?>

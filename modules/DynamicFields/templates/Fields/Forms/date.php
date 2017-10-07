@@ -46,5 +46,3 @@ function get_body(&$ss, $vardef){
 	$ss->assign('default_values', array_flip($td->dateStrings));
 	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/date.tpl');
 }
-
-?>

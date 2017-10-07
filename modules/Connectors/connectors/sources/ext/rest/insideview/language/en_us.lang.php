@@ -52,5 +52,3 @@ $connector_strings = array (
     'LBL_ENGAGE' => 'Engage Customers',
     'LBL_ENGAGE_SUB' => 'with conversation starters',
 );
-
-?>

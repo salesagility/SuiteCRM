@@ -642,5 +642,3 @@ class SpritePlacement
 		return $val;
 	}
 }
-
-?>

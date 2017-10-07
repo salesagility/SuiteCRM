@@ -349,4 +349,3 @@ eoq;
     $out = $php_verison_warning;
 }
 echo $out;
-?>

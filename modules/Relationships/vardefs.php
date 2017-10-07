@@ -171,6 +171,3 @@ $dictionary['Relationship'] =
        array('name' =>'idx_rel_name', 'type' =>'index', 'fields'=>array('relationship_name')),
     )
 );
-
-
-?>

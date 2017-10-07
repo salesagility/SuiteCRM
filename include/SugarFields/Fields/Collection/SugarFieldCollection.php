@@ -231,4 +231,3 @@ class SugarFieldCollection extends SugarFieldBase {
     }
 
 }
-?>

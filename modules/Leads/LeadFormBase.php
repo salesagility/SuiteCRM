@@ -397,6 +397,3 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
 
 
 }
-
-
-?>

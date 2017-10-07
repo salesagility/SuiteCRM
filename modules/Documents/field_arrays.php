@@ -84,4 +84,3 @@ $fields_array['Document'] = array ('column_fields' => Array("id"
 		),
         'required_fields' => Array("document_name"=>1,"active_date"=>1,"revision"=>1),
 );
-?>

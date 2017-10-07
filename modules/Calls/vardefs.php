@@ -612,4 +612,3 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
 
 VardefManager::createVardef('Calls', 'Call', array('default', 'assignable', 'security_groups',
 ));
-?>

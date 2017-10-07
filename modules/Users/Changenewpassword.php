@@ -266,4 +266,3 @@ $sugar_smarty->assign('SUBMIT_BUTTON','<input title="'.$mod_strings['LBL_LOGIN_B
 if(!empty($_REQUEST['guid'])) $sugar_smarty->assign("GUID", $_REQUEST['guid']);
 $sugar_smarty->display('modules/Users/Changenewpassword.tpl');
 $view->displayFooter();
-?>

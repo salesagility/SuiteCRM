@@ -254,4 +254,3 @@ class ViewFactory{
 			return new SugarView($bean, $view_object_map);
 	}
 }
-?>

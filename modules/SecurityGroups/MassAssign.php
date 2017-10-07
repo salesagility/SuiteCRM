@@ -113,5 +113,3 @@ if(isset($_POST['mass']) && is_array($_POST['mass'])){
 
 
 header("Location: index.php?action={$_POST['return_action']}&module={$_POST['return_module']}");
-
-?>

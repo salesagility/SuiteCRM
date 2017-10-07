@@ -328,4 +328,3 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 	}
 
 }
-?>

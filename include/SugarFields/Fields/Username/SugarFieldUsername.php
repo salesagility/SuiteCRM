@@ -46,4 +46,3 @@ class SugarFieldUsername extends SugarFieldBase {
         return $this->fetch($this->findTemplate('DetailView'));
     }
 }
-?>

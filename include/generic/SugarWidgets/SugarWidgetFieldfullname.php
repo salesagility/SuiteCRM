@@ -51,5 +51,3 @@ class SugarWidgetFieldFullname extends SugarWidgetFieldName
         $this->reporter = $this->layout_manager->getAttribute('reporter');  
     }*/
 }
-
-?>

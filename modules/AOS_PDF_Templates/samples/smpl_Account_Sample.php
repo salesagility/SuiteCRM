@@ -42,4 +42,3 @@ class smpl_Account_Sample{
 			return '';
 		}
 }
-?>

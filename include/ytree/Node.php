@@ -125,4 +125,3 @@ class Node {
 		return $ret;
  	}
 }
-?>

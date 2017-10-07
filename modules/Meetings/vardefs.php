@@ -573,4 +573,3 @@ $dictionary['Meeting'] = array('table' => 'meetings',
 
 VardefManager::createVardef('Meetings', 'Meeting', array('default', 'assignable', 'security_groups',
 ));
-?>

@@ -89,6 +89,4 @@ $dictionary['roles_users'] = array (
 							  'relationship_type'=>'many-to-many',
 							  'join_table'=> 'roles_users', 'join_key_lhs'=>'role_id', 'join_key_rhs'=>'user_id')),
 	
-)
-                                  
-?>
+);

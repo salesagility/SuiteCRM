@@ -908,4 +908,3 @@ class EmailTemplate extends SugarBean
 
 }
 
-?>

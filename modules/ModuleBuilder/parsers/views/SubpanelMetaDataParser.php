@@ -196,4 +196,3 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     }
 
 }
-?>

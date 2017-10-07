@@ -152,5 +152,3 @@ $moduleFilters = array(
 		),
 	),
 );
-
-?>

@@ -66,5 +66,3 @@ class RemindersController extends SugarController {
     }
 
 }
-
-?>

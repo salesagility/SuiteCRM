@@ -81,4 +81,3 @@ array('customCode'=> '<input title="{$APP.LBL_EXPORT}"  class="button" type="but
 
 
 );
-?>

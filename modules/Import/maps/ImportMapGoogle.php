@@ -97,6 +97,3 @@ class ImportMapGoogle extends ImportMapOther
         return $return_array;
     }
 }
-
-
-?>

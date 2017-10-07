@@ -84,4 +84,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	$server = new HTTP_WebDAV_Server_vCal();
 	$server->ServeRequest();
 	sugar_cleanup();
-?>

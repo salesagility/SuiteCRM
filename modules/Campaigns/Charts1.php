@@ -105,4 +105,3 @@ class charts {
         }
     }
     }// end charts class
-?>

@@ -455,5 +455,3 @@ foreach($history_list as $activity)
 
 $xtpl->parse("history");
 $xtpl->out("history");
-
-?>

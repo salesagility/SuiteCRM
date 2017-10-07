@@ -44,5 +44,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $action_file_map['subpanelviewer'] = 'modules/Campaigns/SubPanelViewer.php';
-
-?>

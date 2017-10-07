@@ -131,5 +131,3 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 		),
 	), /* end indices */
 );
-
-?>

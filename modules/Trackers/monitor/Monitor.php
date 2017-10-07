@@ -257,5 +257,3 @@ class Monitor implements Trackable {
  		return $this->enabled;
  	}
 }
-
-?>

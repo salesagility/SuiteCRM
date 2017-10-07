@@ -126,4 +126,3 @@ $xtpl->assign("RETURN_ACTION", "index");
 
 $xtpl->parse("main");
 $xtpl->out("main");
-?>

@@ -55,5 +55,4 @@ $mod_strings = array (
 'LBL_SECONDS'=>'seconds',
 'LBL_ADDING'=>'Adding for ',
 
-)
-?>
+);

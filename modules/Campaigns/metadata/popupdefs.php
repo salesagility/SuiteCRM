@@ -78,4 +78,3 @@ $popupMeta = array(
 		'end_date'
 	)
 );
-?>

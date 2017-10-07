@@ -90,4 +90,3 @@ function getMessengerTypeOptions($focus, $name = 'messenger_type', $value, $view
    return $app_list_strings['messenger_type_dom'][$focus->messenger_type];
 }
 
-?>

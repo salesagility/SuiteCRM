@@ -222,4 +222,3 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         return $out;
     }
 }
-?>

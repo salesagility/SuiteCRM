@@ -50,5 +50,3 @@ class SugarWidgetFielduser_name extends SugarWidgetFieldname
  		return $str;
  }
 }
-
-?>

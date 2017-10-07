@@ -216,4 +216,4 @@ EOHTML;
 		insert_popup_footer();
     }
 } // end of class Popup_Picker
-?>
+
