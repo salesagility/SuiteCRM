@@ -70,7 +70,7 @@ class ModuleController extends ApiController
     const LINKS = 'links';
 
     /**
-     * GET /api/v8/modules
+     * GET /api/v8/modules/meta/list
      * @param Request $req
      * @param Response $res
      * @return Response
@@ -82,18 +82,66 @@ class ModuleController extends ApiController
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
-    public function getModules(Request $req, Response $res)
+    public function getModulesMetaList(Request $req, Response $res)
     {
         require_once __DIR__ . '/../../../../../include/modules.php';
         global $moduleList;
 
         $payload = array(
-            'meta' => array('modules' => $moduleList)
+            'meta' => array('modules' => array('list' => $moduleList))
         );
 
         $this->negotiatedJsonApiContent($req, $res);
 
         return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+    /**
+     * GET /api/v8/modules/meta/Menu/modules
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/meta/menu/filters
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/meta/viewed
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModulesMetaViewed(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/meta/favorites
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModulesMetaFavorites(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
     }
 
     /**
@@ -421,52 +469,86 @@ class ModuleController extends ApiController
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
-    public function getModulesMenuModules(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/language
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getModulesMenuFilters(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/attributes
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getRecordsViewed(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/links
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaLinks(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getLanguageDefinition(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/menu
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getModuleFields(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/viewed
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaRecordsViewed(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getModuleLinks(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/favorites
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaFavorites(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
-    public function getModuleMenu(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
-    }
-
-    public function getModuleRecordsViewed(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
-    }
-
-    public function getModuleFavorites(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
-    }
-
-    public function getModuleLayout(Request $req, Response $res, array $args)
+    /**
+     * GET /api/v8/modules/{id}/meta/view/{view}
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }

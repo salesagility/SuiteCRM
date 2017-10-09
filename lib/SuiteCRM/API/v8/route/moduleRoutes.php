@@ -39,33 +39,36 @@
  */
 
 $app->group('/v8/modules', function () use ($app) {
-    $app->get('', 'ModuleController:getModules');
-    $app->get('meta/menu/modules', 'ModuleController:getModulesMenuModules');
-    $app->get('meta/menu/filters', 'ModuleController:getModulesMenuFilters');
-    $app->get('meta/viewed', 'ModuleController:getRecordsViewed');
-    $app->get('meta/favorites', 'ModuleController:getFavorites');
+    $app->group('/meta', function () use ($app) {
+        $app->get('/list', 'ModuleController:getModulesMetaList');
+        $app->get('/menu/modules', 'ModuleController:getModulesMetaMenuModules');
+        $app->get('/menu/filters', 'ModuleController:getModulesMetaMenuFilters');
+        $app->get('/viewed', 'ModuleController:getModulesMetaViewed');
+        $app->get('/favorites', 'ModuleController:getModulesMetaFavorites');
+    });
 
     $app->group('/{module}', function () use ($app) {
 
         $app->get('', 'ModuleController:getModuleRecords');
         $app->post('', 'ModuleController:createModuleRecord');
 
-        $app->get('meta/language', 'ModuleController:getLanguageDefinition');
-        $app->get('meta/fields', 'ModuleController:getModuleFields');
-        $app->get('meta/links', 'ModuleController:getModuleLinks');
-        $app->get('meta/menu', 'ModuleController:getModuleMenu');
-        $app->get('meta/viewed', 'ModuleController:getModuleRecordsViewed');
-        $app->get('meta/favorites', 'ModuleController:getModuleFavorites');
-        $app->get('meta/view/{view}', 'ModuleController:getModuleLayout');
+        $app->group('/meta', function () use ($app) {
+            $app->get('/language', 'ModuleController:getModuleMetaLanguage');
+            $app->get('/attributes', 'ModuleController:getModuleMetaFields');
+            $app->get('/links', 'ModuleController:getModuleMetaLinks');
+            $app->get('/menu', 'ModuleController:getModuleMetaMenu');
+            $app->get('/viewed', 'ModuleController:getModuleMetaRecordsViewed');
+            $app->get('/favorites', 'ModuleController:getModuleMetaFavorites');
+            $app->get('/view/{view}', 'ModuleController:getModuleMetaLayout');
+        });
 
-        $relationship = '/{id}/relationships/{link}/{related_id}';
-        $app->get($relationship,'ModuleController:getRelationship');
-        $app->post($relationship,'ModuleController:createRelationship');
-        $app->patch($relationship,'ModuleController:updateRelationship');
-        $app->delete($relationship,'ModuleController:deleteRelationship');
-
-        $app->get('/{id}/relationships/{link}','ModuleController:getModuleRelationships');
-        $app->delete('/{id}/relationships/{link}','ModuleController:deleteRelationships');
+        $app->group('/{module}/{id}/relationships/{link}', function () use ($app) {
+            $app->get('/{relatedId}', 'ModuleController:getRelationship');
+            $app->get('', 'ModuleController:getModuleRelationships');
+            $app->post('', 'ModuleController:createRelationship');
+            $app->patch('', 'ModuleController:updateRelationship');
+            $app->delete('', 'ModuleController:deleteRelationship');
+        });
 
         $id = '/{id}';
         $app->get($id, 'ModuleController:getModuleRecord');

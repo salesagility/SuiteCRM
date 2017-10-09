@@ -26,7 +26,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendGET(
-            $I->getInstanceURL() . '/api/v8/modules'
+            $I->getInstanceURL() . '/api/v8/modules/meta/list'
         );
         $I->seeResponseCodeIs(200);
         $I->seeJsonApiContentNegotiation();
@@ -35,6 +35,8 @@ class ModulesCest
         $I->assertArrayHasKey('meta', $response);
         $I->assertArrayHasKey('modules', $response['meta']);
         $I->assertNotEmpty($response['meta']['modules']);
+        $I->assertArrayHasKey('list', $response['meta']['modules']);
+        $I->assertNotEmpty($response['meta']['modules']['list']);
     }
 
     /**
