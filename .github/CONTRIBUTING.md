@@ -52,6 +52,8 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * By using [GitHub search](https://help.github.com/articles/searching-issues/) you can use labels to help find issues and pull requests that you are interested in. If for example, you are interested in which PR's will be included in the next release of SuiteCRM, you can use the [open issues "Resolved: Next Release"](https://github.com/salesagility/SuiteCRM/issues?q=is%3Aopen+is%3Aissue+label%3A%22Resolved%3A+Next+Release%22) label.
 
+* We encourage users whom feel an issue should be raised as a higher priority for a next release that they should make a comment to that affect. This also applies to incorrect labelling.
+
 #### Types of Issue Labels
 
 | Label name | `salesagility/SuiteCRM` | Description |
