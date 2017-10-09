@@ -473,6 +473,8 @@ class AM_ProjectTemplatesController extends SugarController
 
     function create_task(
         $name,
+        $start,
+        $end,
         $project_id,
         $milestone_flag,
         $status,
@@ -480,11 +482,14 @@ class AM_ProjectTemplatesController extends SugarController
         $predecessors,
         $rel_type,
         $duration,
+        $duration_unit,
         $resource,
         $percent_complete,
         $description,
+        $actual_duration,
         $order_number
     ) {
+
 
         $task = new AM_TaskTemplates();
         $task->name = $name;
@@ -512,14 +517,19 @@ class AM_ProjectTemplatesController extends SugarController
     function update_task(
         $id,
         $name,
+        $start,
+        $end,
+        $project_id,
         $milestone_flag,
         $status,
         $predecessors,
         $rel_type,
         $duration,
+        $duration_unit,
         $resource,
         $percent_complete,
-        $description
+        $description,
+        $actual_duration
     ) {
 
         $task = new AM_TaskTemplates();
