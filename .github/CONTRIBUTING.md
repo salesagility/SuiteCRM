@@ -23,11 +23,18 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.8.x then use the hotfix-7.8.x branch. If however, your bug is specific to hotfix, then you can use the hotfix branch.
 
+* Separate each issue fix into a new branch in your repository (Either from the hotfix-7.8.x or hotfix branch) and name it with the issue ID e.g. bugfix_3062 or issue-1234.
+
+* When committing to your individual bugfix branch, please try and use the following as your commit message 
+```Fixed #1234 - <the subject of the issue>```. E.g. ```Fixed #1436 - Reports with nested Parentheses are removing parameters```. By using this format we can easily include all bug fixes within major and minor release notes on our [Wiki](https://suitecrm.com/wiki/index.php/Main_Page).
+
+* If you are new to Writing Commit Messages in git follow the guide [here](http://chris.beams.io/posts/git-commit/#seven-rules)
+
 * After you have made your commits and pushed them up to your forked repository you then create a [Pull Request](https://help.github.com/articles/about-pull-requests/) to be reviewed and merged into the SuiteCRM repository. Make a new Pull Request for each issue you fix – do not combine multiple bugfixes into one Pull Request.
   Ensure that in your Pull Request that the base fork is salesagility/SuiteCRM and base branch is either hotfix or hotfix-7.8.x. and the head fork is your repository and the base branch is your unique bugfix branch e.g. bugfix_1234
   We will automatically reject any Pull Requests made to the wrong branch!
 
-* If you have not signed our CLA [Contributor License Agreement](https://www.clahub.com/agreements/salesagility/SuiteCRM) then your Pull Request will fail a check and unable to be merged into the project. You will only required to sign this once.
+* If you have not signed our CLA [Contributor License Agreement](https://www.clahub.com/agreements/salesagility/SuiteCRM) then your pull request will fail a check and we will be unable to merge it into the project. You will only be required to sign this once.
 
 * When a new Pull Request is opened, Travis CI will test the merging of the origin and upstream branch and update the Pull Request. If this check fails you can review the test results and resolve accordingly. To test prior to making a Pull Request install PHPUnit via composer into your develop environment then cd into the tests directory and run: ```$ sh runtests.sh```
 
