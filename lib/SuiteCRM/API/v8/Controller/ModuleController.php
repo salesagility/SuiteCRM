@@ -189,6 +189,7 @@ class ModuleController extends ApiController
 
 
     /**
+     * POST /api/v8/modules/{module}
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -274,6 +275,7 @@ class ModuleController extends ApiController
     }
 
     /**
+     * GET /api/v8/modules/{module}/{id}
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -328,6 +330,7 @@ class ModuleController extends ApiController
     }
 
     /**
+     *  PATCH /api/v8/modules/{module}/{id}
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -414,6 +417,7 @@ class ModuleController extends ApiController
     }
 
     /**
+     *  DELETE /api/v8/modules/{module}/{id}
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -549,6 +553,42 @@ class ModuleController extends ApiController
      * @throws NotImplementedException
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/{id}/relationships/{link}
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function getModuleRelationship(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/{id}/relationships/{link}
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function createModuleRelationship(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * GET /api/v8/modules/{id}/relationships/{link}
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function updateModuleRelationship(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }

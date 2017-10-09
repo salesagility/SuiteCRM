@@ -62,18 +62,19 @@ $app->group('/v8/modules', function () use ($app) {
             $app->get('/view/{view}', 'ModuleController:getModuleMetaLayout');
         });
 
-        $app->group('/{module}/{id}/relationships/{link}', function () use ($app) {
-            $app->get('/{relatedId}', 'ModuleController:getRelationship');
-            $app->get('', 'ModuleController:getModuleRelationships');
-            $app->post('', 'ModuleController:createRelationship');
-            $app->patch('', 'ModuleController:updateRelationship');
-            $app->delete('', 'ModuleController:deleteRelationship');
+        $app->group('/{id}', function () use ($app) {
+            $app->get('', 'ModuleController:getModuleRecord');
+            $app->patch('', 'ModuleController:updateModuleRecord');
+            $app->delete('', 'ModuleController:deleteModuleRecord');
+
+            $app->group('/relationships/{link}', function () use ($app) {
+                $app->get('', 'ModuleController:getModuleRelationship');
+                $app->post('', 'ModuleController:createModuleRelationship');
+                $app->patch('', 'ModuleController:updateModuleRelationship');
+                $app->delete('', 'ModuleController:deleteModuleRelationship');
+            });
         });
 
-        $id = '/{id}';
-        $app->get($id, 'ModuleController:getModuleRecord');
-        $app->patch($id, 'ModuleController:updateModuleRecord');
-        $app->delete($id, 'ModuleController:deleteModuleRecord');
 
     });
 });
