@@ -170,7 +170,7 @@ class ProjectController extends SugarController {
 	
 		$enddate = $startdate;
 
-		$h = 0;		
+		$h = 8;
 		$d = 0;
 		if( $duration_unit == 'Hours' ){
 
