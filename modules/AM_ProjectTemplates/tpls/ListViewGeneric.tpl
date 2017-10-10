@@ -133,7 +133,7 @@
                 {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
                 {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
 				{else}<th scope='col' data-hide="{$datahide}">{/if}
-					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+					<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
 	                        <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'>
