@@ -53,7 +53,7 @@
 		{foreach from=$displayColumns key=colHeader item=params}
             {if $colCounter == '1'}<th scope='col' width='{$params.width}%' data-toggle="true">
             {else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
-				<span sugar="sugar{$colCounter}"><div style='white-space: nowrap;'width='100%' align='{$params.align|default:'left'}'>
+				<span sugar="sugar{$colCounter}"><div style='white-space: nowrap; width:100%; text-align:{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
 	                <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
 					{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
