@@ -47,7 +47,7 @@
 		{foreach from=$displayColumns key=colHeader item=params}
 			{if $params.show}
 			<th scope='col' width='{$params.width}%'>
-				<span sugar="sugar{$colCounter}"><div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+				<span sugar="sugar{$colCounter}"><div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'};'>
 					{sugar_translate label=$params.label module='Administration'}
 				</div></span sugar='sugar{$colCounter}'>
 			</th>
