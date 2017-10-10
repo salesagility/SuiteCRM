@@ -164,6 +164,7 @@ class ModuleController extends ApiController
          * @var ModulesLib $lib;
          */
         $lib = $this->containers->get('ModuleLib');
+
         $payload = array(
             'links' => array(),
             'data' => array()
@@ -584,11 +585,73 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $config = $this->containers->get('ConfigurationManager');
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array(
+            'data' => array()
+        );
+        $sugarBean = \BeanFactory::getBean($args['module'], $args['id']);
+
+        if ($sugarBean->load_relationship($args['link']) === false) {
+            throw new NotFound('Relationship does not exist');
+        }
+
+        /**
+         * @var array $relatedIds
+         */
+        $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
+
+        if(strpos($relationshipType, 'one-to') !== false) {
+            $relatedIds = $sugarBean->{$args['link']}->get();
+            $relatedDefinition = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->def;
+
+            foreach ($relatedIds as $id) {
+                // only needs one result
+                $data = array(
+                    'type' => $relatedDefinition['lhs_module'],
+                    'id' => $id
+                );
+
+                $links = new Links();
+                $data['links'] = $links->withHref(
+                    $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
+                    $relatedDefinition['lhs_module'].'/'.$id
+                )->getArray();
+
+                $payload['data'] = $data;
+
+            }
+        } else {
+            $relatedIds = $sugarBean->{$args['link']}->get();
+            $relatedDefinition = $sugarBean->field_defs[$args['link']];
+
+            foreach ($relatedIds as $id) {
+                $data = array(
+                    'type' => $relatedDefinition['module'],
+                    'id' => $id
+                );
+                $links = new Links();
+                $a = $req->getUri();
+                $data['links'] = $links->withHref(
+                    $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
+                    $relatedDefinition['module'].'/'.$id
+                )->getArray();
+
+                $payload['data'][] = $data;
+            }
+        }
+
+        $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**

@@ -76,6 +76,15 @@ class SuiteBeanResource extends Resource
         $this->type = $sugarBean->module_name;
         $this->source = $source;
 
+        /**
+         * @var ServerRequestInterface $request;
+         */
+        $request = $this->containers->get(ServerRequestInterface::class);
+        /**
+         * @var Links $links
+         */
+        $links = $this->containers->get('Links');
+
         // Set the attributes
         foreach ($sugarBean->field_defs as $fieldName => $definition) {
             // Filter security sensitive information from attributes
@@ -128,7 +137,7 @@ class SuiteBeanResource extends Resource
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
-            } elseif (strpos($fieldName, 'parent_') === 0) {
+            } elseif  ($definition['type'] === 'link') {
                 /**
                  * @var ServerRequestInterface $request;
                  */
@@ -137,25 +146,6 @@ class SuiteBeanResource extends Resource
                  * @var Links $links
                  */
                 $links = $this->containers->get('Links');
-                $links->withRelated(
-                    $config['site_url'] . '/api/' . $request->getUri()->getPath().
-                    '/'.$this->id.'/relationships/parent'
-                );
-                $this->relationships[$definition['name']]['links'] = $links->withRelated(
-                    $config['site_url'] . '/api/' . $request->getUri()->getPath().
-                    '/'.$this->id.'/relationships/parent'
-                )->getArray();
-                continue;
-            } elseif  ($definition['type'] === 'link' || $definition['type'] === 'relate') {
-                /**
-                 * @var ServerRequestInterface $request;
-                 */
-                $request = $this->containers->get(ServerRequestInterface::class);
-                /**
-                 * @var Links $links
-                 */
-                $links = $this->containers->get('Links');
-
                 $this->relationships[$definition['name']]['links'] =  $links->withRelated(
                     $config['site_url'] . '/api/' . $request->getUri()->getPath().
                     '/'.$this->id. '/relationships/'.$definition['name']

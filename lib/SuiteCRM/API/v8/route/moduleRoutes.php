@@ -67,6 +67,13 @@ $app->group('/v8/modules', function () use ($app) {
             $app->patch('', 'ModuleController:updateModuleRecord');
             $app->delete('', 'ModuleController:deleteModuleRecord');
 
+            $app->group('/{link}', function () use ($app) {
+                $app->get('', 'ModuleController:getModuleRelationship');
+                $app->post('', 'ModuleController:createModuleRelationship');
+                $app->patch('', 'ModuleController:updateModuleRelationship');
+                $app->delete('', 'ModuleController:deleteModuleRelationship');
+            });
+
             $app->group('/relationships', function () use ($app) {
                 $app->get('/parent', 'ModuleController:getModuleRelationship');
                 $app->post('/parent', 'ModuleController:createModuleRelationship');
@@ -80,6 +87,7 @@ $app->group('/v8/modules', function () use ($app) {
                     $app->delete('', 'ModuleController:deleteModuleRelationship');
                 });
             });
+
         });
     });
 });
