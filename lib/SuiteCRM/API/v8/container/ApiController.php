@@ -50,5 +50,7 @@ use Slim\Exception\ContainerValueNotFoundException;
  * @return \SuiteCRM\API\v8\Controller\ApiController
  */
 $container['ApiController'] = function ($container) {
-    return new \SuiteCRM\API\v8\Controller\ApiController($container);
+    $controller = new \SuiteCRM\API\v8\Controller\ApiController($container);
+    $controller->setLogger($container->get(\Psr\Log\LoggerInterface::class));
+    return $controller;
 };

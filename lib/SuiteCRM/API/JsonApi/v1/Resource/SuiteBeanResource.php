@@ -40,12 +40,16 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
+use League\Url\Components\Query;
 
 /**
  * Class SuiteBeanResource
@@ -62,19 +66,13 @@ class SuiteBeanResource extends Resource
      * @throws ApiException
      * @see https://tools.ietf.org/html/rfc6901
      */
-    public static function fromSugarBean($sugarBean, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromSugarBean($sugarBean, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         global $sugar_config;
         global $timedate;
-        $resource = new self();
-        $resource->id = $sugarBean->id;
-        $resource->type = $sugarBean->module_name;
-        $resource->source = $source;
-        try {
-            $resource::validateResource($resource);
-        } catch (ApiException $e) {
-            throw $e;
-        }
+        $this->id = $sugarBean->id;
+        $this->type = $sugarBean->module_name;
+        $this->source = $source;
 
         // Set the attributes
         foreach ($sugarBean->field_defs as $fieldName => $definition) {
@@ -86,7 +84,6 @@ class SuiteBeanResource extends Resource
                 continue;
             }
 
-
             // Skip the reserved keywords which can be safely skipped
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
                 $exception = new ReservedKeywordNotAllowed();
@@ -96,7 +93,7 @@ class SuiteBeanResource extends Resource
                     ' Message: ' . $exception->getMessage() .
                     ' Detail: ' . 'Reserved keyword not allowed in attribute field name.' .
                     ' Source: [' . '/data/attributes/' . $fieldName . ']';
-                $resource->logger->warning($logMessage);
+                $this->logger->warning($logMessage);
                 continue;
             }
 
@@ -108,7 +105,7 @@ class SuiteBeanResource extends Resource
                 throw $exception;
             }
 
-            if (!empty($sugarBean->$fieldName) && $definition['type'] === 'datetime') {
+            if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName)) {
                 // Convert to DB date
                 $datetime = $timedate->fromUser($sugarBean->$fieldName);
                 if (empty($datetime)) {
@@ -128,9 +125,30 @@ class SuiteBeanResource extends Resource
                         '[Unable to convert datetime field to ISO 8601] "' . $fieldName . '"',
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
-                $resource->attributes[$fieldName] = $datetimeISO8601;
+                $this->attributes[$fieldName] = $datetimeISO8601;
+            } elseif (strpos($fieldName, 'parent_') === 0) {
+                // TODO: Handle relationships
+                /**
+                 * @var ServerRequestInterface $request;
+                 */
+                $request = $this->containers->get(ServerRequestInterface::class);
+                $links = $this->containers->get('Links');
+                $uri = $request->getUri();
+                continue;
+            } elseif  ($definition['type'] === 'link') {
+                // TODO: Handle relationships
+                $request = $this->containers->get(ServerRequestInterface::class);
+                $links = $this->containers->get('Links');
+                $uri = $request->getUri();
+                continue;
+            } elseif ( $definition['type'] === 'relate') {
+                // TODO: Handle relationships
+                $request = $this->containers->get(ServerRequestInterface::class);
+                $links = $this->containers->get('Links');
+                $uri = $request->getUri();
+                continue;
             } else {
-                $resource->attributes[$fieldName] = $sugarBean->$fieldName;
+                $this->attributes[$fieldName] = $sugarBean->$fieldName;
             }
 
             // Validate Required fields
@@ -139,18 +157,21 @@ class SuiteBeanResource extends Resource
                 empty($sugarBean->$fieldName) &&
                 $fieldName !== 'id' &&
                 $definition['required'] === true &&
-                !isset($resource->attributes[$fieldName])
+                !isset($this->attributes[$fieldName])
             ) {
                 $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
-                $exception->setSource($resource->source . '/attributes/' . $fieldName);
+                $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
         }
 
-        // TODO: Set the relationships
+        try {
+            $this->validateResource();
+        } catch (ApiException $e) {
+            throw $e;
+        }
 
-
-        return $resource;
+        return clone $this;
     }
 
     /**
@@ -167,64 +188,78 @@ class SuiteBeanResource extends Resource
             $sugarBean = \BeanFactory::newBean($this->type);
         }
 
-        foreach ($sugarBean->field_defs as $field => $definition) {
+        foreach ($sugarBean->field_defs as $fieldName => $definition) {
             if ($definition === null) {
                 throw new ApiException('Unable to read variable definitions');
             }
             // Filter security sensitive information from attributes
-            xdebug_break();
             if (
                 isset($sugar_config['filter_module_fields'][$sugarBean->module_name]) &&
-                in_array($field, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
+                in_array($fieldName, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
             ) {
                 continue;
             }
 
             // Skip the reserved keywords which can be safely skipped
-            if (in_array($field, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
+            if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
                 $exception = new ReservedKeywordNotAllowed();
                 $logMessage =
                     ' Code: [' . $exception->getCode() . ']' .
                     ' Status: [' . $exception->getHttpStatus() . ']' .
                     ' Message: ' . $exception->getMessage() .
                     ' Detail: ' . 'Reserved keyword not allowed in attribute field name.' .
-                    ' Source: [' . '/data/attributes/' . $field . ']';
+                    ' Source: [' . '/data/attributes/' . $fieldName . ']';
                 $this->logger->warning($logMessage);
                 continue;
             }
 
-            if (isset($this->attributes[$field])) {
-                if ($definition['type'] === 'datetime' && !empty($this->attributes[$field])) {
+            if (isset($this->attributes[$fieldName])) {
+                if ($definition['type'] === 'datetime' && !empty($this->attributes[$fieldName])) {
                     // Convert to DB date
-                    $datetime = \DateTime::createFromFormat(\DateTime::ATOM, $this->attributes[$field]);
+                    $datetime = \DateTime::createFromFormat(\DateTime::ATOM, $this->attributes[$fieldName]);
                     if (empty($datetime)) {
                         $exception = new ApiException(
-                            '[Unable to convert datetime field to SugarBean DbFormat] "' . $field . '"',
+                            '[Unable to convert datetime field to SugarBean DbFormat] "' . $fieldName . '"',
                             ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
                         );
-                        $exception->setSource(ResourceEnum::DEFAULT_SOURCE . '/attributes/' . $field);
+                        $exception->setSource(ResourceEnum::DEFAULT_SOURCE . '/attributes/' . $fieldName);
+                        $logMessage =
+                            ' Code: [' . $exception->getCode() . ']' .
+                            ' Status: [' . $exception->getHttpStatus() . ']' .
+                            ' Message: ' . $exception->getMessage() .
+                            ' Detail: ' . $exception->getDetail() .
+                            ' Source: [' . $exception->getSource()['pointer'] . ']';
+                        $this->logger->warning($logMessage);
+                        continue;
                     }
-                    $sugarBean->$field = $datetime->format('Y-m-d H:i:s');
+                    $sugarBean->$fieldName = $datetime->format('Y-m-d H:i:s');
+                }  elseif (strpos($fieldName, 'parent_') === 0) {
+                    // TODO: Handle relationships
+                    continue;
+                } elseif  ($definition['type'] === 'link') {
+                    // TODO: Handle relationships
+                    continue;
+                } elseif ( $definition['type'] === 'relate') {
+                    // TODO: Handle relationships
+                    continue;
                 } else {
-                    $sugarBean->$field = $this->attributes[$field];
+                    $sugarBean->$fieldName = $this->attributes[$fieldName];
                 }
             }
 
             // Validate Required fields
             // Skip "id" as this method may be used to populate a new bean before the bean is saved
             if (
-                $field !== 'id' &&
+                $fieldName !== 'id' &&
                 $definition['required'] === true &&
-                !isset($this->attributes[$field]) &&
-                empty($this->attributes[$field])
+                !isset($this->attributes[$fieldName]) &&
+                empty($this->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $field . '"');
-                $exception->setSource($this->source . '/attributes/' . $field);
+                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
         }
-
-        // TODO: Set the relationships
 
         return $sugarBean;
     }
@@ -236,18 +271,18 @@ class SuiteBeanResource extends Resource
      * @throws BadRequest
      * @throws Conflict
      */
-    public static function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
     {
-        return self::fromResource(parent::fromDataArray($json, $source));
+        return $this->fromResource(parent::fromDataArray($json, $source));
     }
 
     /**
      * @param Resource $resource
      * @return SuiteBeanResource
      */
-    private static function fromResource(Resource $resource)
+    private function fromResource(Resource $resource)
     {
-        $sugarBeanResource = new self();
+        $sugarBeanResource = clone $this;
         $objValues = get_object_vars($resource); // return array of object values
         foreach ($objValues AS $key => $value) {
             $sugarBeanResource->$key = $value;

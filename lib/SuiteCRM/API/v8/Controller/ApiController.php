@@ -72,21 +72,23 @@ class ApiController implements LoggerAwareInterface
     /**
      * @var LoggerInterface $logger
      */
-    private $logger;
+    protected $logger;
 
-    protected $container;
+    /**
+     * @var ContainerInterface $containers
+     */
+    protected $containers;
 
     /**
      * ApiController constructor.
-     * @param ContainerInterface $container
+     * @param ContainerInterface $containers
      * @throws ContainerException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
-    public function __construct($container)
+    public function __construct(ContainerInterface $containers)
     {
-        $this->container = $container;
-        $this->setLogger($this->container->get('Logger'));
+        $this->containers = $containers;
     }
 
     /**
@@ -114,7 +116,7 @@ class ApiController implements LoggerAwareInterface
           'stability' => self::VERSION_STABILITY,
         );
 
-        $jsonAPI = new JsonApi();
+        $jsonAPI = $this->containers->get('JsonApi');
         $payload['jsonapi'] = $jsonAPI->getArray();
 
         // Validate Response
@@ -186,7 +188,7 @@ class ApiController implements LoggerAwareInterface
             'stability' => self::VERSION_STABILITY,
         );
 
-        $jsonAPI = new JsonApi();
+        $jsonAPI = $this->containers->get('JsonApi');
         $payload['jsonapi'] = $jsonAPI->getArray();
 
 

@@ -37,7 +37,15 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$container['Logger'] = function () {
-    return new \SuiteCRM\Utility\SuiteLogger();
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
+use Slim\Exception\ContainerValueNotFoundException;
+/**
+ * @param ContainerInterface $container
+ * @throws ContainerException
+ * @throws ContainerValueNotFoundException
+ * @return \SuiteCRM\API\v8\Library\ModulesLib
+ */
+$container['ModuleLib'] = function ($container) {
+    return new \SuiteCRM\API\v8\Library\ModulesLib($container);
 };

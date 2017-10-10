@@ -48,5 +48,7 @@ use Slim\Exception\ContainerValueNotFoundException;
  */
 $container['OAuth2Controller'] = function ($container) {
     /** @var \Interop\Container\ContainerInterface $container */
-    return new \SuiteCRM\API\v8\Controller\OAuth2Controller($container);
+    $class = new \SuiteCRM\API\v8\Controller\OAuth2Controller($container);
+    $class->setLogger($container->get(\Psr\Log\LoggerInterface::class));
+    return $class;
 };

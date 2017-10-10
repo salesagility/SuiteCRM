@@ -51,7 +51,8 @@ $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 $version = 8;
 const API_PATH = 'lib/SuiteCRM/API/v8';
-$app = new \Slim\App();
+$container = new \Slim\Container;
+$app = new \Slim\App($container);
 
 // Load Containers
 $container = $app->getContainer();

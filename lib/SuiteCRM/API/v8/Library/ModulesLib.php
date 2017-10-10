@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\API\v8\Library;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use League\Url\Components\Query;
@@ -54,6 +55,19 @@ use SuiteCRM\API\v8\Exception\ModuleNotFound;
 class ModulesLib
 {
 
+    /**
+     * @var ContainerInterface
+     */
+    private $containers;
+
+    /**
+     * ModulesLib constructor.
+     * @param ContainerInterface $containers
+     */
+    public function __construct($containers)
+    {
+        $this->containers = $containers;
+    }
 
     /**
      * @param Request $req
@@ -129,7 +143,11 @@ class ModulesLib
             }
 
             // add attributes
-            $resource = SuiteBeanResource::fromSugarBean($moduleBean);
+            /**
+             * @var SuiteBeanResource $resource
+             */
+            $resource = $this->containers->get('SuiteBeanResource');
+            $resource = $resource->fromSugarBean($moduleBean);
             $bean = $resource->getArrayWithFields($fields['fields'][$moduleBean->module_name]);
             // add links object to $bean
             $bean['links'] = Links::get()->withSelf($sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->getArray();

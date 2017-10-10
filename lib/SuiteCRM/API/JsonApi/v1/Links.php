@@ -39,6 +39,7 @@
  */
 namespace SuiteCRM\API\JsonApi\v1;
 
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\LinksMessage;
@@ -92,7 +93,7 @@ class Links implements LoggerAwareInterface
     private $meta;
 
     /**
-     * @var Links related
+     * @var string related
      */
     private $related;
 
@@ -106,7 +107,7 @@ class Links implements LoggerAwareInterface
      */
     public function __construct()
     {
-        $this->setLogger(new Logger());
+
     }
 
     /**
@@ -236,10 +237,10 @@ class Links implements LoggerAwareInterface
     }
 
     /**
-     * @param Links $related
+     * @param string $related
      * @return Links
      */
-    public function withRelated(Links $related)
+    public function withRelated($related)
     {
         $this->related = $related;
 
@@ -283,7 +284,7 @@ class Links implements LoggerAwareInterface
         }
 
         if ($this->hasRelated()) {
-            $response['related'] = $this->related->getArray();
+            $response['related'] = $this->related;
         }
 
         return $response;
