@@ -77,7 +77,7 @@ $container['notFoundHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $exception = new \SuiteCRM\API\v8\Exception\NotFound();
+        $exception = new \SuiteCRM\API\v8\Exception\NotFound('[Resource]');
         $ApiController = $container->get('ApiController');
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };

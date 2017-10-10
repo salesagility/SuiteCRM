@@ -478,11 +478,25 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
      */
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $currentLanguage = $this->container->get('CurrentLanguage');
+        $moduleLanguage = $this->container->get('ModuleLanguage');
+        $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
+
+        $payload['meta']['module_language_strings'] = $moduleLanguageStrings;
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**

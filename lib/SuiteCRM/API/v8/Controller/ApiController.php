@@ -74,6 +74,9 @@ class ApiController implements LoggerAwareInterface
      */
     private $logger;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**
