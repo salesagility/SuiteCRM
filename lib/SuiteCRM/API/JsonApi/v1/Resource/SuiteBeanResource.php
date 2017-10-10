@@ -40,7 +40,7 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-use Psr\Container\ContainerInterface;
+
 use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
@@ -49,7 +49,6 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
-use League\Url\Components\Query;
 
 /**
  * Class SuiteBeanResource
@@ -63,13 +62,16 @@ class SuiteBeanResource extends Resource
      * @param \SugarBean $sugarBean
      * @param string $source rfc6901
      * @return SuiteBeanResource
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws ApiException
      * @see https://tools.ietf.org/html/rfc6901
      */
     public function fromSugarBean($sugarBean, $source = ResourceEnum::DEFAULT_SOURCE)
     {
-        global $sugar_config;
-        global $timedate;
+        $config = $this->containers->get('ConfigurationManager');
+        $dateTimeConverter  = $this->containers->get('DateTimeConverter');
         $this->id = $sugarBean->id;
         $this->type = $sugarBean->module_name;
         $this->source = $source;
@@ -78,8 +80,8 @@ class SuiteBeanResource extends Resource
         foreach ($sugarBean->field_defs as $fieldName => $definition) {
             // Filter security sensitive information from attributes
             if (
-                isset($sugar_config['filter_module_fields'][$sugarBean->module_name]) &&
-                in_array($fieldName, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
+                isset($config['filter_module_fields'][$sugarBean->module_name]) &&
+                in_array($fieldName, $config['filter_module_fields'][$sugarBean->module_name], true)
             ) {
                 continue;
             }
@@ -107,9 +109,9 @@ class SuiteBeanResource extends Resource
 
             if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName)) {
                 // Convert to DB date
-                $datetime = $timedate->fromUser($sugarBean->$fieldName);
+                $datetime = $dateTimeConverter->fromUser($sugarBean->$fieldName);
                 if (empty($datetime)) {
-                    $datetime = $timedate->fromDb($sugarBean->$fieldName);
+                    $datetime = $dateTimeConverter->fromDb($sugarBean->$fieldName);
                 }
 
                 if (empty($datetime)) {
@@ -127,25 +129,37 @@ class SuiteBeanResource extends Resource
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
             } elseif (strpos($fieldName, 'parent_') === 0) {
-                // TODO: Handle relationships
                 /**
                  * @var ServerRequestInterface $request;
                  */
                 $request = $this->containers->get(ServerRequestInterface::class);
+                /**
+                 * @var Links $links
+                 */
                 $links = $this->containers->get('Links');
-                $uri = $request->getUri();
+                $links->withRelated(
+                    $config['site_url'] . '/api/' . $request->getUri()->getPath().
+                    '/'.$this->id.'/relationships/parent'
+                );
+                $this->relationships[$definition['name']]['links'] = $links->withRelated(
+                    $config['site_url'] . '/api/' . $request->getUri()->getPath().
+                    '/'.$this->id.'/relationships/parent'
+                )->getArray();
                 continue;
-            } elseif  ($definition['type'] === 'link') {
-                // TODO: Handle relationships
+            } elseif  ($definition['type'] === 'link' || $definition['type'] === 'relate') {
+                /**
+                 * @var ServerRequestInterface $request;
+                 */
                 $request = $this->containers->get(ServerRequestInterface::class);
+                /**
+                 * @var Links $links
+                 */
                 $links = $this->containers->get('Links');
-                $uri = $request->getUri();
-                continue;
-            } elseif ( $definition['type'] === 'relate') {
-                // TODO: Handle relationships
-                $request = $this->containers->get(ServerRequestInterface::class);
-                $links = $this->containers->get('Links');
-                $uri = $request->getUri();
+
+                $this->relationships[$definition['name']]['links'] =  $links->withRelated(
+                    $config['site_url'] . '/api/' . $request->getUri()->getPath().
+                    '/'.$this->id. '/relationships/'.$definition['name']
+                )->getArray();
                 continue;
             } else {
                 $this->attributes[$fieldName] = $sugarBean->$fieldName;
@@ -181,7 +195,7 @@ class SuiteBeanResource extends Resource
      */
     public function toSugarBean()
     {
-        global $sugar_config;
+        $config = $this->containers->get('ConfigurationManager');
         $sugarBean = \BeanFactory::getBean($this->type, $this->id);
 
         if (empty($sugarBean)) {
@@ -194,8 +208,8 @@ class SuiteBeanResource extends Resource
             }
             // Filter security sensitive information from attributes
             if (
-                isset($sugar_config['filter_module_fields'][$sugarBean->module_name]) &&
-                in_array($fieldName, $sugar_config['filter_module_fields'][$sugarBean->module_name], true)
+                isset($config['filter_module_fields'][$sugarBean->module_name]) &&
+                in_array($fieldName, $config['filter_module_fields'][$sugarBean->module_name], true)
             ) {
                 continue;
             }
@@ -236,10 +250,7 @@ class SuiteBeanResource extends Resource
                 }  elseif (strpos($fieldName, 'parent_') === 0) {
                     // TODO: Handle relationships
                     continue;
-                } elseif  ($definition['type'] === 'link') {
-                    // TODO: Handle relationships
-                    continue;
-                } elseif ( $definition['type'] === 'relate') {
+                } elseif  ($definition['type'] === 'link' || $definition['type'] === 'relate') {
                     // TODO: Handle relationships
                     continue;
                 } else {

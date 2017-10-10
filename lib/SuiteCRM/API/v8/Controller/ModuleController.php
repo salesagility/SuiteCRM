@@ -158,7 +158,8 @@ class ModuleController extends ApiController
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
-        global $sugar_config;
+        $config = $this->containers->get('ConfigurationManager');
+
         /**
          * @var ModulesLib $lib;
          */
@@ -178,7 +179,7 @@ class ModuleController extends ApiController
         $page = $req->getParam('page');
         $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
         $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
-        $limitOffset = ($limit <= 0) ? $sugar_config['list_max_entries_per_page'] : $limit;
+        $limitOffset = ($limit <= 0) ? $config['list_max_entries_per_page'] : $limit;
         $lastOffset = (integer)floor((integer)$paginatedModuleRecords['row_count'] / $limitOffset);
 
         $payload['meta']['offsets'] = array(
@@ -211,7 +212,7 @@ class ModuleController extends ApiController
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
-        $sugar_config = $this->containers->get('sugar_config');
+        $config = $this->containers->get('ConfigurationManager');
         $this->negotiatedJsonApiContent($req, $res);
 
         $res = $res->withStatus(202);
@@ -266,7 +267,7 @@ class ModuleController extends ApiController
          * @var Links $links
          */
         $links = $this->containers->get('Links');
-        $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
+        $self = $config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
         $links = $links->withSelf($self);
         $selectFields = $req->getParam(self::FIELDS);
         $resource = $resource->fromSugarBean($sugarBean);

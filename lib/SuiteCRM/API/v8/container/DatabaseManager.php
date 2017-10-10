@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$container['translations-config'] = function () {
-    global $app_list_strings;
-    return $app_list_strings;
+$container['DatabaseManager'] = function () {
+    global $db;
+    return $db;
 };

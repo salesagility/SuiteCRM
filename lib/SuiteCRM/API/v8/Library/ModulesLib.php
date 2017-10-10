@@ -79,9 +79,10 @@ class ModulesLib
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
     {
-        global $sugar_config;
-        global $db;
-        global $timedate;
+        $config = $this->containers->get('ConfigurationManager');
+        $db = $this->containers->get('DatabaseManager');
+        $timedate = $this->containers->get('DateTimeConverter');
+
         $response = array();
         $page = $req->getParam('page');
         $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
@@ -150,7 +151,7 @@ class ModulesLib
             $resource = $resource->fromSugarBean($moduleBean);
             $bean = $resource->getArrayWithFields($fields['fields'][$moduleBean->module_name]);
             // add links object to $bean
-            $bean['links'] = Links::get()->withSelf($sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->getArray();
+            $bean['links'] = Links::get()->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->getArray();
             // append bean to data
             $response['list'][] = $bean;
         }
@@ -170,7 +171,7 @@ class ModulesLib
      */
     public function generatePaginatedLinksFromModuleRecords(Request $req, Response $res, $args, $paginatedModuleRecords)
     {
-        global $sugar_config;
+        $config = $this->containers->get('ConfigurationManager');
         $page = $req->getParam('page');
         $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
         $sort = $req->getParam('sort');
@@ -178,7 +179,7 @@ class ModulesLib
         $fields = $req->getParam('fields');
         $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
         $firstOffset = 0;
-        $limitOffset = ($limit <= 0) ? $sugar_config['list_max_entries_per_page'] : $limit;
+        $limitOffset = ($limit <= 0) ? $config['list_max_entries_per_page'] : $limit;
         $lastOffset = (integer)floor((integer)$paginatedModuleRecords['row_count'] / $limitOffset);
         $prevOffset = $currentOffset - 1 < $firstOffset ? $firstOffset : $currentOffset - 1;
         $nextOffset = $currentOffset + 1 > $lastOffset ? $lastOffset : $currentOffset + 1;
@@ -260,7 +261,7 @@ class ModulesLib
         $sort = null,
         $fields = null
     ) {
-        global $sugar_config;
+        $config = $this->containers->get('ConfigurationManager');
         $query = new Query();
         $pagination = array();
 
@@ -268,7 +269,7 @@ class ModulesLib
             $pagination['page']['offset'] = $offset;
         }
 
-        if ($limit !== null && $limit > 0 && $limit !== $sugar_config['list_max_entries_per_page']) {
+        if ($limit !== null && $limit > 0 && $limit !== $config['list_max_entries_per_page']) {
             $pagination['page']['limit'] = $offset;
         }
 
@@ -293,9 +294,9 @@ class ModulesLib
         $query->modify($pagination);
         $queryString = $query->get();
         if ($queryString !== null) {
-            return $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
+            return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }
 
-        return $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath();
+        return $config['site_url'] . '/api/' . $req->getUri()->getPath();
     }
 }

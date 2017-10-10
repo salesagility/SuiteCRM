@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$container['sugar_config'] = function () {
+$container['ConfigurationManager'] = function () {
     global $sugar_config;
     return $sugar_config;
 };

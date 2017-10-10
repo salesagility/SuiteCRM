@@ -181,6 +181,8 @@ class Resource implements LoggerAwareInterface
             $this->attributes[$attributeName] = $attributeValue;
         }
 
+        $this->relationships = $json['relationships'];
+
         // TODO: Relationships
         return clone $this;
     }
@@ -227,12 +229,12 @@ class Resource implements LoggerAwareInterface
             $response['meta'] = $this->meta;
         }
 
-        if($this->relationships !== null) {
-            $response['data']['relationships'] = $this->meta;
-        }
-
         if($this->links !== null) {
             $response['links'] = $this->links->getArray();
+        }
+
+        if($this->relationships !== null) {
+            $response['relationships'] = $this->relationships;
         }
 
         return $response;
