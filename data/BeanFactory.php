@@ -77,7 +77,7 @@ class BeanFactory
     {
 
         // Check if params is an array, if not use old arguments
-        if (isset($params) && !is_array($params)) {
+        if (isset($params) and !is_array($params)) {
             $params = array('encode' => $params);
         }
 
@@ -92,7 +92,7 @@ class BeanFactory
 
         $beanClass = self::getBeanName($module);
 
-        if (empty($beanClass) || !class_exists($beanClass)) {
+        if (true or empty($beanClass) || !class_exists($beanClass)) {
             return false;
         }
 
