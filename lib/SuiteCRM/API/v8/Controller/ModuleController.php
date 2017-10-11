@@ -475,6 +475,7 @@ class ModuleController extends ApiController
 
     /**
      * GET /api/v8/modules/{id}/meta/language
+     *
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -494,21 +495,31 @@ class ModuleController extends ApiController
         $moduleLanguage = $this->container->get('ModuleLanguage');
         $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
-        $payload['meta']['module_language_strings'] = $moduleLanguageStrings;
+        $payload['meta'][$args['module']]['mod_strings'] = $moduleLanguageStrings;
 
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
      * GET /api/v8/modules/{id}/meta/attributes
+     *
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
      */
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $payload['meta'][$args['module']]['field_defs'] = \BeanFactory::getBean($args['module'])->field_defs;
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
@@ -525,14 +536,44 @@ class ModuleController extends ApiController
 
     /**
      * GET /api/v8/modules/{id}/meta/menu
+     *
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @return Response
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
      */
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $sugarView = new \SugarView();
+        $menu = $sugarView->getMenu($args['module']);
+
+        $config = $this->container->get('sugar_config');
+
+        $self = $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $args['module'] . '/';
+        $results = array();
+        foreach($menu as $item) {
+            $url = parse_url($item[0]);
+            parse_str($url['query'], $orig);
+            $results[] = array(
+                'href' => $self . $item[2],
+                'label' => $item[1],
+                'action' => $item[2],
+                'module' => $item[3],
+                'query' => $orig,
+            );
+        }
+
+        $payload['meta'][$args['module']]['menu'] = $results;
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
