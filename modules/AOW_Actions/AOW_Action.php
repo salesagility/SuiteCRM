@@ -1,5 +1,5 @@
 <?php
-
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -106,7 +106,7 @@ class AOW_Action extends Basic
                 foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {
-                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' and is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
                         }
                     }
                     $params[$param_name] = $param_value;
