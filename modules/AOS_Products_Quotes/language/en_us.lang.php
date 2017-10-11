@@ -45,12 +45,12 @@ $mod_strings = array (
     'LBL_MODULE_TITLE' => 'Products Quotes: Home',
     'LBL_HOMEPAGE_TITLE' => 'My Products Quotes',
     'LNK_NEW_RECORD' => 'Create Product Quote',
-    'LNK_LIST' => 'Products_Quotes',
-    'LBL_SEARCH_FORM_TITLE' => 'Search Products_Quotes',
+    'LNK_LIST' => 'Products Quotes',
+    'LBL_SEARCH_FORM_TITLE' => 'Search Products Quotes',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_AOS_PRODUCTS_SUBPANEL_TITLE' => 'Products_Quotes',
-    'LBL_NEW_FORM_TITLE' => 'New Product_Quote',
+    'LBL_AOS_PRODUCTS_SUBPANEL_TITLE' => 'Products Quotes',
+    'LBL_NEW_FORM_TITLE' => 'New Product Quote',
     'LBL_PRODUCT_NAME' => 'Name',
     'LBL_PRODUCT_QTY' => 'Quantity',
     'LBL_PRODUCT_COST_PRICE' => 'Cost Price',
@@ -82,5 +82,11 @@ $mod_strings = array (
     'LBL_PRODUCT_DISCOUNT_AMOUNT_USDOLLAR' => 'Discount Amount (Default Currency)',
     'LBL_VAT_AMT_USDOLLAR' => 'Tax Amount (Default Currency)',
     'LBL_PRODUCTS_SERVICES' => 'Product / Service',
+    'LBL_PRODUCT_ID' => 'Product ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_PRODUCTS' => 'Products',
+    'LBL_AOS_QUOTES' => 'Quotes',
 );
 ?>

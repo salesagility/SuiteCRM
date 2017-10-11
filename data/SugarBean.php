@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * Description:  Defines the base class for all data entities used throughout the
@@ -1956,9 +1960,8 @@ class SugarBean
 
             if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
                 $this->$key = SugarCleaner::cleanHtml($this->$key, true);
-            } elseif ((strpos($type, 'char') !== false ||
-                    strpos($type, 'text') !== false ||
-                    $type == 'enum') &&
+            } elseif (
+                (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                 !empty($this->$key)
             ) {
                 $this->$key = SugarCleaner::cleanHtml($this->$key);
@@ -4068,7 +4071,7 @@ class SugarBean
                     }
 
                     if ($type == 'date') {
-                        if ($this->$field == '0000-00-00') {
+                        if ($this->$field == '0000-00-00' || empty($this->$field)) {
                             $this->$field = '';
                         } elseif (!empty($this->field_name_map[$field]['rel_field'])) {
                             $rel_field = $this->field_name_map[$field]['rel_field'];
@@ -4084,7 +4087,7 @@ class SugarBean
                             }
                         }
                     } elseif ($type == 'datetime' || $type == 'datetimecombo') {
-                        if ($this->$field == '0000-00-00 00:00:00') {
+                        if ($this->$field == '0000-00-00 00:00:00' || empty($this->$field)) {
                             $this->$field = '';
                         } else {
                             if (empty($disable_date_format)) {
@@ -4092,7 +4095,7 @@ class SugarBean
                             }
                         }
                     } elseif ($type == 'time') {
-                        if ($this->$field == '00:00:00') {
+                        if ($this->$field == '00:00:00' || empty($this->$field)) {
                             $this->$field = '';
                         } else {
                             if (empty($this->field_name_map[$field]['rel_field']) && empty($disable_date_format)) {
@@ -4330,7 +4333,7 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
-                if (array_search('relate', $properties) === 'type') {
+                if (array_search('relate', $properties, true) === 'type') {
                     $related_fields[$name] = $properties;
                 }
             }
