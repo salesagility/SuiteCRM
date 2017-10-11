@@ -134,7 +134,17 @@ class ListViewDisplay {
         $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
 	 * @param string:'id' $id_field
 	 */
-	function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id', $id = null) {
+    function setup(
+        $seed,
+        $file,
+        $where,
+        $params = array(),
+        $offset = 0,
+        $limit = -1,
+        $filter_fields = array(),
+        $id_field = 'id',
+        $id = null
+    ) {
         $this->should_process = true;
         if(isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)){
         		return false;
