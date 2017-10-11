@@ -152,7 +152,7 @@ function getView(ln, id){
         success: function(result) {
             document.getElementById('action_parameter' + ln).innerHTML = result.responseText;
             if(document.getElementById('aow_script'+ln) != null){
-              SUGAR.util.evalScript(document.getElementById('aow_script'+ln).innerHTML);
+              SUGAR.util.evalScript(result.responseText);
             }
         }
     };
