@@ -647,20 +647,18 @@ class User extends Person {
 
     /**
      * retrieves an User bean
-     * preformat name & full_name attribute with first/last
+     * pre-format name & full_name attribute with first/last
      * loads User's preferences
      *
-     * @param string id ID of the User
-     * @param bool encode encode the result
-     * @return object User bean
-     * @return null null if no User found
+     * @param string|integer $id ID of the User
+     * @param bool $encode encode the result
+     * @param bool $deleted
+     * @return User|SugarBean|null null if no User found
      */
-	function retrieve($id = -1, $encode = true, $deleted = true) {
+	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret) {
-			if (isset ($_SESSION)) {
+		if ($ret && $_SESSION !== null) {
 				$this->loadPreferences();
-			}
 		}
 		return $ret;
 	}
