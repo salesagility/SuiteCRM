@@ -60,6 +60,10 @@ use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
 
+/**
+ * Class ModuleController
+ * @package SuiteCRM\API\v8\Controller
+ */
 class ModuleController extends ApiController
 {
     const FIELDS = 'fields';
@@ -83,12 +87,19 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaList(Request $req, Response $res)
     {
+        $config = $this->containers->get('ConfigurationManager');
         require_once __DIR__ . '/../../../../../include/modules.php';
         global $moduleList;
 
         $payload = array(
-            'meta' => array('modules' => array('list' => $moduleList))
+            'meta' => array('modules' => array('list' => array()))
         );
+
+
+        foreach ($moduleList as $module) {
+            $payload['meta']['modules']['list'][$module]['links'] =
+                $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.$module;
+        }
 
         $this->negotiatedJsonApiContent($req, $res);
 
@@ -171,6 +182,9 @@ class ModuleController extends ApiController
         );
 
         $this->negotiatedJsonApiContent($req, $res);
+
+
+
         $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
         $payload['data'] = $paginatedModuleRecords['list'];
 
@@ -240,7 +254,10 @@ class ModuleController extends ApiController
         }
 
         if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
-            $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
+            $exception = new Conflict(
+                '["type" does not match resource type] '.$body['data']['type']. ' !== ' . $moduleName,
+                ExceptionCode::API_MODULE_NOT_FOUND
+            );
             $exception->setSource(self::SOURCE_TYPE);
             throw $exception;
         }
@@ -303,6 +320,14 @@ class ModuleController extends ApiController
      */
     public function getModuleRecord(Request $req, Response $res, array $args)
     {
+        if(isset($query['include'])) {
+            throw new BadRequest('include query param is not implemented', ExceptionCode::API_NOT_IMPLEMENTED);
+        }
+
+        if(isset($query['filter'])) {
+            throw new BadRequest('filter query param is not implemented', ExceptionCode::API_NOT_IMPLEMENTED);
+        }
+
         $this->negotiatedJsonApiContent($req, $res);
         $res = $res->withStatus(202);
         $moduleName = $args[self::MODULE];
@@ -592,9 +617,20 @@ class ModuleController extends ApiController
      * @throws \SuiteCRM\API\v8\Exception\NotFound
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
+        $query = $req->getQueryParams('include');
+
+        if(isset($query['include'])) {
+            throw new BadRequest('include query param is not implemented', ExceptionCode::API_NOT_IMPLEMENTED);
+        }
+
+        if(isset($query['filter'])) {
+            throw new BadRequest('filter query param is not implemented', ExceptionCode::API_NOT_IMPLEMENTED);
+        }
+
         $config = $this->containers->get('ConfigurationManager');
         $this->negotiatedJsonApiContent($req, $res);
         $payload = array(
@@ -629,7 +665,6 @@ class ModuleController extends ApiController
                 )->getArray();
 
                 $payload['data'] = $data;
-
             }
         } else {
             $relatedIds = $sugarBean->{$args['link']}->get();
@@ -641,21 +676,27 @@ class ModuleController extends ApiController
                     'id' => $id
                 );
                 $links = new Links();
-                $a = $req->getUri();
                 $data['links'] = $links->withHref(
                     $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
                     $relatedDefinition['module'].'/'.$id
                 )->getArray();
-
                 $payload['data'][] = $data;
             }
         }
+
+        $payload['meta']['relationships']['type'] = $relationshipType;
+
+        $links = new Links();
+        $payload['links'] = $links->withSelf(
+            $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
+            $args['module'].'/'.$args['id'].'/relationships/'.$args['link']
+        )->getArray();
 
         $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
-     * GET /api/v8/modules/{id}/relationships/{link}
+     * POST /api/v8/modules/{id}/relationships/{link}
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -667,13 +708,25 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/{id}/relationships/{link}
+     * PATCH /api/v8/modules/{id}/relationships/{link}/{id}
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @throws NotImplementedException
      */
     public function updateModuleRelationship(Request $req, Response $res, array $args)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * DELETE /api/v8/modules/{id}/relationships/{link}/{id}
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @throws NotImplementedException
+     */
+    public function deleteModuleRelationship(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }

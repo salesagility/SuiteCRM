@@ -126,11 +126,13 @@ class ApiController implements LoggerAwareInterface
         $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
 
         if (!$validator->isValid()) {
-            echo "JSON does not validate. Violations:\n";
-            foreach ($validator->getErrors() as $error) {
-                throw new InvalidJsonApiResponse($error['property']. ' ' .$error['message']);
+            $errors = $validator->getErrors();
+            $this->logger->error( '[Invalid Payload Response]'. json_encode($payload));
+            foreach ($errors as $error) {
+                throw new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']);
             }
-        }
+            }
+
         return $response
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));

@@ -7,8 +7,32 @@
  */
 class ModulesCest
 {
-    const RESOURCE = '/api/v8/modules/Accounts';
+    const ACCOUNT_RESOURCE = '/api/v8/modules/Accounts';
+    const PRODUCT_RESOURCE = '/api/v8/modules/AOS_Products';
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
+    private static $RECORD_TYPE = 'Accounts';
+    /**
+     * @var Faker\Generator $fakeData
+     */
+    protected $fakeData;
+
+    /**
+     * @var integer $fakeDataSeed
+     */
+    protected $fakeDataSeed;
+
+
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function _before(AcceptanceTester $I)
+    {
+        if(!$this->fakeData) {
+            $this->fakeData = Faker\Factory::create();
+            $this->fakeDataSeed = rand(0, 2048);
+        }
+        $this->fakeData->seed($this->fakeDataSeed);
+    }
 
     /**
      * Get list of modules
@@ -56,7 +80,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::RESOURCE,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -86,7 +110,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::RESOURCE,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -118,7 +142,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::RESOURCE,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -151,7 +175,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::RESOURCE,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -195,7 +219,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::RESOURCE,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -227,9 +251,16 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendGET($I->getInstanceURL() . self::RESOURCE .  '/' . self::$RECORD);
+        $I->sendGET($I->getInstanceURL() . self::ACCOUNT_RESOURCE .  '/' . self::$RECORD);
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
+        $response = $I->grabResponse();
+
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('id', $response);
+        $I->assertArrayHasKey('type', $response);
+        $I->assertArrayHasKey('attributes', $response);
+        $I->assertArrayHasKey('relationships', $response);
     }
 
     /**
@@ -253,7 +284,7 @@ class ModulesCest
         $newName = $faker->name();
 
         $I->sendPATCH(
-            $I->getInstanceURL() . self::RESOURCE . '/' . self::$RECORD,
+            $I->getInstanceURL() . self::ACCOUNT_RESOURCE . '/' . self::$RECORD,
             json_encode(
                 array(
                     'data' => array(
@@ -291,7 +322,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendDELETE($I->getInstanceURL() . self::RESOURCE . '/' . self::$RECORD);
+        $I->sendDELETE($I->getInstanceURL() . self::ACCOUNT_RESOURCE . '/' . self::$RECORD);
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
     }
@@ -311,7 +342,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendGET($I->getInstanceURL() . self::RESOURCE);
+        $I->sendGET($I->getInstanceURL() . self::ACCOUNT_RESOURCE);
 
         // Validate Response
         $I->seeResponseCodeIs(200);
@@ -332,5 +363,169 @@ class ModulesCest
 
         $I->assertArrayHasKey('links', $response);
         $I->assertArrayHasKey('self', $response['links']);
+    }
+
+    /**
+     * Create a relationship (One To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#fetching-resources-responses
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioCreateOneToManyRelationships (apiTester $I)
+    {
+        // Create AOS_Products
+        // Create AOS_Product_Categories
+        // Relate Modules Together
+        // Send Request
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    'type' => 'AOS_Products',
+                    'attributes' => array(
+                        'name' => $this->fakeData->name(),
+                        'price' => $this->fakeData->randomDigit()
+                    ),
+                    'relationships' => array(
+                        'aos_product_category' => array(
+                            'data' => array(
+                                'type' => 'AOS_Product_Categories',
+                                'attributes' => array(
+                                    'name' => $this->fakeData->name()
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::PRODUCT_RESOURCE,
+            $payload
+        );
+
+        $I->seeResponseCodeIs(201);
+
+        // Delete objects created
+    }
+
+    /**
+     * Retrieve a relationship (One To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioRetrieveOneToManyRelationships (apiTester $I)
+    {
+        // Create AOS_Product
+        // Create 1 AOS_Product_Categories records
+        // Relate Modules Together
+        // Retrieve Product
+        // Retrieve relationship
+        // Delete objects created
+    }
+
+    /**
+     * Update a relationship (One To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/#crud-updating-relationships
+     *
+     * HTTP Verb: PATCH
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioUpdateOneToManyRelationships (apiTester $I)
+    {
+        // Create AOS_Product
+        // Create 2 AOS_Product_Categories records
+        // Relate Modules Together
+        // Update AOS_Product->AOS_Product_Categories Together
+        // Delete objects created
+    }
+
+    /**
+     * Delete a relationship (One To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-deleting
+     *
+     * HTTP Verb: DELETE
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioDeleteOneToManyRelationships (apiTester $I)
+    {
+
+        // Create AOS_Product
+        // Create 2 AOS_Product_Categories records
+        // Relate Modules Together
+        // Update AOS_Product->AOS_Product_Categories Together
+        // Delete objects created
+        // TODO: POST {"data": null}
+    }
+
+
+    /**
+     * Retrieve a relationship (Many To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/#fetching-relationships
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioRetrieveManyToManyRelationships (apiTester $I)
+    {
+
+    }
+
+    /**
+     * Replaces a relationship
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
+     *
+     * HTTP Verb: PATCH
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioUpdateManyToManyRelationships (apiTester $I)
+    {
+        // TODO: Replace the relationships
+    }
+
+    /**
+     * Removes a relationship
+     * @param apiTester $I
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-deleting
+     *
+     * HTTP Verb: DELETE
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioDeleteManyToManyRelationships (apiTester $I)
+    {
+        // TODO: POST single resource
+    }
+
+    /**
+     * Clears all related items
+     * @param apiTester $I
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-deleting
+     *
+     * HTTP Verb: DELETE
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioDeleteAllManyToManyRelationships (apiTester $I)
+    {
+        // TODO: POST {"data": []} to clear all relationships
     }
 }

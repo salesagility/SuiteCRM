@@ -182,8 +182,6 @@ class Resource implements LoggerAwareInterface
         }
 
         $this->relationships = $json['relationships'];
-
-        // TODO: Relationships
         return clone $this;
     }
 

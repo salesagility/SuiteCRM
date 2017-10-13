@@ -110,7 +110,7 @@ class SuiteBeanResource extends Resource
 
             // Throw when the field names match the reserved keywords
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
-                $exception = new ReservedKeywordNotAllowed();
+                $exception = new ReservedKeywordNotAllowed($fieldName);
                 $exception->setDetail('Reserved keyword not allowed in attribute field name.');
                 $exception->setSource('/data/attributes/' . $fieldName);
                 throw $exception;
@@ -237,14 +237,30 @@ class SuiteBeanResource extends Resource
                         continue;
                     }
                     $sugarBean->$fieldName = $datetime->format('Y-m-d H:i:s');
-                }  elseif (strpos($fieldName, 'parent_') === 0) {
-                    // TODO: Handle relationships
-                    continue;
-                } elseif  ($definition['type'] === 'link' || $definition['type'] === 'relate') {
-                    // TODO: Handle relationships
+                } elseif ($definition['type'] === 'link' || $definition['type'] === 'relate') {
                     continue;
                 } else {
                     $sugarBean->$fieldName = $this->attributes[$fieldName];
+                }
+            }
+
+            // TODO: Handle relationships
+            foreach ($this->relationships as $relationshipName => $relationship) {
+
+                $sugarBean->load_relationship($relationshipName);
+
+                // Lets only focus on the relationships which need to be updated
+                if(!isset($relationship['data'])) {
+                    continue;
+                }
+
+                $data = $relationship['data'];
+                if (empty($data)) {
+                    // clear relationship
+                } else {
+                    // Detect relationship type
+                    // create/update relationship
+                    // only support resource identifiers and not full resources
                 }
             }
 
