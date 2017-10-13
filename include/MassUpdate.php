@@ -462,6 +462,7 @@ eoq;
 						case "account_name":$even = !$even; $newhtml .= $this->addAccountID($displayname,  $field["id_name"]); break;
 						case "bool": $even = !$even; $newhtml .= $this->addBool($displayname,  $field["name"]); break;
 						case "enum":
+						case "dynamicenum":
 						case "multienum":
 							if(!empty($field['isMultiSelect']))
 							{
@@ -1321,23 +1322,24 @@ EOQ;
                 if(isset($field['custom_type']))$field['type'] = $field['custom_type'];
                 if(isset($field['type']))
                 {
-                    switch($field["type"]){
-                    case "relate":
-                    case "parent":
-                    case "int":
-                    case "contact_id":
-                    case "assigned_user_name":
-                    case "account_id":
-                    case "account_name":
-                    case "bool":
-                    case "enum":
-                    case "multienum":
-                    case "radioenum":
-                    case "datetimecombo":
-                    case "datetime":
-                    case "date":
-                        return true;
-                        break;
+                    switch ($field["type"]) {
+                        case "relate":
+                        case "parent":
+                        case "int":
+                        case "contact_id":
+                        case "assigned_user_name":
+                        case "account_id":
+                        case "account_name":
+                        case "bool":
+                        case "enum":
+                        case "dynamicenum":
+                        case "multienum":
+                        case "radioenum":
+                        case "datetimecombo":
+                        case "datetime":
+                        case "date":
+                            return true;
+                            break;
                     }
                 }
             }

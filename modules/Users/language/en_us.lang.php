@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,20 +36,18 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
- * Description:    Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
-$mod_strings = array (
-    'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-	'LBL_DELETE_GROUP_CONFIRM'          => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
-	'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
+$mod_strings = array(
+    'LBL_DELETE_USER_CONFIRM' => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
+
+    'LBL_DELETE_GROUP_CONFIRM' => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
+    'LBL_DELETE_PORTAL_CONFIRM' => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
 
 
     'LNK_IMPORT_USERS' => 'Import Users',
@@ -60,15 +58,15 @@ $mod_strings = array (
     'ERR_ENTER_NEW_PASSWORD' => 'Please enter your new password.',
     'ERR_ENTER_OLD_PASSWORD' => 'Please enter your current password.',
     'ERR_IE_FAILURE1' => '[Click here to return]',
-    'ERR_IE_FAILURE2' => 'There was a problem connecting to the Email Account.  Please check your settings and try again.',
+    'ERR_IE_FAILURE2' => 'There was a problem connecting to the Email Account. Please check your settings and try again.',
     'ERR_IE_MISSING_REQUIRED' => "Inbound Email settings are missing required information.\n  Please check your settings and try again.\n\nIf you are not setting up Inbound Email, please clear all fields in that section.",
     'ERR_INVALID_PASSWORD' => 'You must specify a valid username and password.',
     'ERR_NO_LOGIN_MOBILE' => 'Your first login to this application must be completed with a non-mobile browser or in normal mode. Please return with a full browser or click on the normal link below. We apologize for any inconvenience.',
     'ERR_LAST_ADMIN_1' => 'The user name "',
-    'ERR_LAST_ADMIN_2' => '" is the last user with administrator access.	At least one user must be an administrator.',
+    'ERR_LAST_ADMIN_2' => '" is the last user with administrator access. At least one user must be an administrator.',
     'ERR_PASSWORD_CHANGE_FAILED_1' => 'User password change failed for ',
-    'ERR_PASSWORD_CHANGE_FAILED_2' => ' failed.	The new password must be set.',
-    'ERR_PASSWORD_CHANGE_FAILED_3' => '.	The new password is invalid.',
+    'ERR_PASSWORD_CHANGE_FAILED_2' => ' failed. The new password must be set.',
+    'ERR_PASSWORD_CHANGE_FAILED_3' => '. The new password is invalid.',
     'ERR_PASSWORD_INCORRECT_OLD_1' => 'Incorrect current password for user ',
     'ERR_PASSWORD_INCORRECT_OLD_2' => '. Re-enter password information.',
     'ERR_PASSWORD_MISMATCH' => 'The passwords do not match.',
@@ -76,17 +74,17 @@ $mod_strings = array (
     'ERR_PASSWORD_LINK_EXPIRED' => 'Your link has expired, please generate a new one',
     'ERR_REENTER_PASSWORDS' => 'The New Password and Confirm Password values do not match.',
     'ERR_REPORT_LOOP' => 'The system detected a reporting loop. A user cannot report to themselves, nor can any of their managers report to them.',
-    'ERR_RULES_NOT_MET' => 'The password you entered did not meet the password requirements.  Please try again.',
+    'ERR_RULES_NOT_MET' => 'The password you entered did not meet the password requirements. Please try again.',
     'ERR_USER_INFO_NOT_FOUND' => 'User Information not found',
     'ERR_USER_NAME_EXISTS_1' => 'The user name ',
-    'ERR_USER_NAME_EXISTS_2' => ' already exists.	Duplicate user names are not allowed.	Change the user name to be unique.',
+    'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed. Change the user name to be unique.',
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
 
     'LBL_PASSWORD_SENT' => 'Password Updated',
     'LBL_CANNOT_SEND_PASSWORD' => 'Cannot send password',
     'ERR_EMAIL_NOT_SENT_ADMIN' => 'System is unable to process your request. Please check:',
     'ERR_SMTP_URL_SMTP_PORT' => 'SMTP Server URL and Port',
-    'ERR_SMTP_USERNAME_SMTP_PASSWORD' => 'SMTP Username and  SMTP Password',
+    'ERR_SMTP_USERNAME_SMTP_PASSWORD' => 'SMTP Username and SMTP Password',
     'ERR_RECIPIENT_EMAIL' => 'Recipient Email Address',
     'ERR_SERVER_STATUS' => 'Your server status',
     'ERR_SERVER_SMTP_EMPTY' => 'The system is unable to send an email to the user. Please check the Outgoing Mail Configuration in <a href="index.php?module=EmailMan&action=config">Email Settings</a>.',
@@ -126,7 +124,7 @@ $mod_strings = array (
 
 
     'LBL_CONFIRM_PASSWORD' => 'Confirm Password',
-    'LBL_CONFIRM_REGULAR_USER' => 'You have changed the user type from System Administrator User to Regular User.  After saving this change, the user will no longer have system administrator privileges.\n\nClick OK to proceed.\nClick Cancel to return to the record.',
+    'LBL_CONFIRM_REGULAR_USER' => 'You have changed the user type from System Administrator User to Regular User. After saving this change, the user will no longer have system administrator privileges.\n\nClick OK to proceed.\nClick Cancel to return to the record.',
     'LBL_COUNTRY' => 'Country',
     'LBL_CURRENCY_TEXT' => 'Select the currency that will be displayed by default when you create new records. This is also the currency that will be displayed in the Amount columns in the Opportunities ListView.',
     'LBL_CURRENCY' => 'Currency',
@@ -168,12 +166,12 @@ $mod_strings = array (
     'LBL_EMAIL_SHOW_COUNTS' => 'Show email counts?',
     'LBL_EMAIL_SIGNATURE_ERROR1' => 'This signature requires a name.',
     'LBL_EMAIL_SMTP_SSL' => 'Enable SMTP over SSL',
-    'LBL_EMAIL_TEMPLATE_MISSING' => 'No email template is selected for the email containing the password that will be sent to the user.  Please select an email template in the Password Management page.',
+    'LBL_EMAIL_TEMPLATE_MISSING' => 'No email template is selected for the email containing the password that will be sent to the user. Please select an email template in the Password Management page.',
     'LBL_EMPLOYEE_STATUS' => 'Employee Status',
     'LBL_EMPLOYEE_INFORMATION' => 'Employee Information',
     'LBL_ERROR' => 'Error',
     'LBL_EXPORT_CHARSET' => 'Import/Export Character Set',
-    'LBL_EXPORT_CHARSET_DESC' => 'Choose the character set used in your locale.  This property will be used for data imports, .csv exports and for vCard generation.',
+    'LBL_EXPORT_CHARSET_DESC' => 'Choose the character set used in your locale. This property will be used for data imports, .csv exports and for vCard generation.',
     'LBL_EXPORT_DELIMITER' => 'Export Delimiter',
     'LBL_EXPORT_DELIMITER_DESC' => 'Specify the character(s) used to delimit exported data.',
     'LBL_FAX_PHONE' => 'Fax',
@@ -184,7 +182,7 @@ $mod_strings = array (
     'LBL_GENERATE_PASSWORD_BUTTON_LABEL' => 'Reset Password',
     'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
     'LBL_GENERATE_PASSWORD' => 'Reset Password',
-    'LBL_GROUP_DESC' => 'Use for assigning items to a group (example: for Inbound Email).  This type cannot login through the SuiteCRM web interface.',
+    'LBL_GROUP_DESC' => 'Use for assigning items to a group (example: for Inbound Email). This type cannot login through the SuiteCRM web interface.',
     'LBL_GROUP_USER_STATUS' => 'Group User',
     'LBL_GROUP_USER' => 'Group User',
     'LBL_HIDE_TABS' => 'Hide Modules',
@@ -290,7 +288,7 @@ $mod_strings = array (
     'LBL_PSW_MODIFIED' => 'Password Last Changed',
     'LBL_PHONE' => 'Phone',
     'LBL_PICK_TZ_WELCOME' => 'Welcome to SuiteCRM.',
-    'LBL_PICK_TZ_DESCRIPTION' => 'Before continuing, please confirm your time zone.  Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
+    'LBL_PICK_TZ_DESCRIPTION' => 'Before continuing, please confirm your time zone. Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
     'LBL_PORTAL_ONLY_DESC' => 'Use for the Portal API. This type cannot login through the SuiteCRM web interface.',
     'LBL_PORTAL_ONLY_USER' => 'Portal API User',
     'LBL_POSTAL_CODE' => 'Postal Code',
@@ -365,8 +363,8 @@ $mod_strings = array (
     'LBL_SUBPANEL_TABS_DESCRIPTION' => 'In Detail Views, group Subpanels into tabs and display one tab at a time.',
     'LBL_SUGAR_LOGIN' => 'Is SuiteCRM User',
     'LBL_SUPPORTED_THEME_ONLY' => 'Only affects themes that support this option.',
-    'LBL_SWAP_LAST_VIEWED_DESCRIPTION' => 'Display the Last Viewed bar on the side if checked.  Otherwise it goes on top.',
-    'LBL_SWAP_SHORTCUT_DESCRIPTION' => 'Display the Shortcuts bar on top if checked.  Otherwise it goes on the side.',
+    'LBL_SWAP_LAST_VIEWED_DESCRIPTION' => 'Display the Last Viewed bar on the side if checked. Otherwise it goes on top.',
+    'LBL_SWAP_SHORTCUT_DESCRIPTION' => 'Display the Shortcuts bar on top if checked. Otherwise it goes on the side.',
     'LBL_SWAP_LAST_VIEWED_POSITION' => 'Last Viewed on side',
     'LBL_SWAP_SHORTCUT_POSITION' => 'Shortcuts on top',
     'LBL_TAB_TITLE_EMAIL' => 'Email Settings',
@@ -385,7 +383,7 @@ $mod_strings = array (
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_USER_INFORMATION' => 'User Profile',
     'LBL_USER_LOCALE' => 'Locale Settings',
-    'LBL_USER_NAME' => 'User Name',
+    'LBL_USER_NAME' => 'Username',
     'LBL_USER_SETTINGS' => 'User Settings',
     'LBL_USER_TYPE' => 'User Type',
     'LBL_USER_ACCESS' => 'Access',
@@ -420,7 +418,7 @@ $mod_strings = array (
     'LBL_FIND_OPTIMUM_TITLE' => 'Find Optimum Configuration',
     'LBL_FORCE' => 'Force Negative',
     'LBL_FORCE_DESC' => 'Some IMAP/POP3 servers require special switches. Check to force a negative switch when connecting (i.e., /notls)',
-    'LBL_FOUND_OPTIMUM_MSG' => '<br>Found optimum settings.	Press the button below to apply them to your Mailbox.',
+    'LBL_FOUND_OPTIMUM_MSG' => '<br>Found optimum settings. Press the button below to apply them to your Mailbox.',
     'LBL_EMAIL_INBOUND_TITLE' => 'Inbound Email Settings',
     'LBL_EMAIL_OUTBOUND_TITLE' => 'Outbound Email Settings',
     'LBL_LOGIN' => 'User Name',
@@ -492,7 +490,7 @@ $mod_strings = array (
     'LBL_LAST_ADMIN_NOTICE' => 'You have selected yourself. You cannot change the User Type or Status of yourself.',
     'LBL_MAIL_SMTPSERVER' => 'SMTP Mail Server',
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
     'LBL_MAIL_SMTPTYPE' => 'SMTP Server Type:',
@@ -549,10 +547,10 @@ $mod_strings = array (
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
 
-	//Wizard Scenarios
-	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
-	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+    //Wizard Scenarios
+    'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+    'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+    'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation. These options can be changed post-install.',
 
     'LBL_WIZARD_SMTP' => 'Your Email Account',
     'LBL_WIZARD_PERSONALINFO_DESC' => 'Provide information about yourself. The information you provide about yourself will be visible to other SuiteCRM users.<br />Fields marked with <span class="required">*</span> are required.',
@@ -590,9 +588,9 @@ $mod_strings = array (
     'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
     'LBL_SUITE_TOP' => "Back to top",
     'LBL_SUITE_PRINT' => "Print this page",
-    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by SalesAgility, one of the worlds most knowledgeable SugarCRM consultancies.',
-    'LBL_SUITE_DESC2' => 'SuiteCRM is intended to deliver on the promise of SugarCRM - a freely available open source CRM project that combines great functionality, with community and commitment.',
-    'LBL_SUITE_DESC3' => 'There will be no licenced software as part of the project managed by SalesAgility. All the code is free. All the code is available for free download. There is no hidden agenda to charge for access to the code. It is and always will be free and open source. There will be no paid-for versions.',
+    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
+    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
+    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
     'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
@@ -604,7 +602,12 @@ $mod_strings = array (
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
-	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+    'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+
+    'LBL_CONTACTS_SYNC' => 'Contacts Sync',
+    'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
+    'LBL_ROLES' => 'Roles',
+    'LBL_SECURITYGROUPS' => 'Security Groups',
 ); // END STRINGS DEFS
 
 ?>

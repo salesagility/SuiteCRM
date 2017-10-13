@@ -83,7 +83,7 @@ $mod_strings = array (
 
     // for outbound email dialog
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
     'LBL_MAIL_SMTPPASS'					=> 'SMTP Password:',
     'LBL_MAIL_SMTPPORT'					=> 'SMTP Port:',
@@ -100,4 +100,8 @@ $mod_strings = array (
     'LBL_EXCHANGE_SMTPUSER'					=> 'Exchange Username:',
     'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port:',
     'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server:',
+
+    'LBL_TYPE' => 'Type',
+    'LBL_MAIL_SENDTYPE' => 'Mail Send Type',
+    'LBL_MAIL_SMTPSSL' => 'Mail SMTP/SSL',
 );

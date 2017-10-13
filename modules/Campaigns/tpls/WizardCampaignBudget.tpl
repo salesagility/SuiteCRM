@@ -46,7 +46,7 @@
 		<div class="template-container-full">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-		<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
+		<th colspan="4" align="left" ><h4 class="header-4">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 		</tr>
 		<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td class="emptyField">&nbsp;</td></tr>
 		<tr class="emptyRow"><td class="datalabel" colspan="4">&nbsp;</td></tr>

@@ -224,7 +224,7 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
     {
 
         //test with invalid job id
-        $result = SchedulersJob::runJobId('1');
+        $result = SchedulersJob::runJobId('1','');
         $this->assertEquals('Job 1 not found.', $result);
 
         //test with valid job id
@@ -232,7 +232,7 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $schedulersJob->status = SchedulersJob::JOB_STATUS_DONE;
         $schedulersJob->save();
 
-        $result = SchedulersJob::runJobId($schedulersJob->id);
+        $result = SchedulersJob::runJobId($schedulersJob->id, '');
         $this->assertEquals('Job '.$schedulersJob->id.' is not marked as running.', $result);
 
         //test with valid job id and status but mismatch client

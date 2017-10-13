@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,153 +34,176 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Users/UserViewHelper.php');
 
-class UsersViewDetail extends ViewDetail {
+class UsersViewDetail extends ViewDetail
+{
 
- 	public function __construct(){
- 		parent::__construct();
- 	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function UsersViewDetail(){
+    public function UsersViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function preDisplay() {
+    function preDisplay()
+    {
         global $current_user, $app_strings, $sugar_config;
 
-        if(!isset($this->bean->id) ) {
+        if (!isset($this->bean->id)) {
             // No reason to set everything up just to have it fail in the display() call
             return;
         }
-
-        parent::preDisplay();
-
+        /**
+         *  taken from parent::preDisplay by change the template file.
+         */
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new DetailView2();
+        $this->dv->ss =& $this->ss;
+        $this->dv->setup($this->module, $this->bean, $metadataFile,
+            get_custom_file_if_exists('modules/Users/tpls/DetailView.tpl'));
+        /****/
         $viewHelper = new UserViewHelper($this->ss, $this->bean, 'DetailView');
         $viewHelper->setupAdditionalFields();
 
         $errors = "";
         $msgGood = false;
-        if (isset($_REQUEST['pwd_set']) && $_REQUEST['pwd_set']!= 0){
-            if ($_REQUEST['pwd_set']=='4'){
+        if (isset($_REQUEST['pwd_set']) && $_REQUEST['pwd_set'] != 0) {
+            if ($_REQUEST['pwd_set'] == '4') {
                 require_once('modules/Users/password_utils.php');
-                $errors.=canSendPassword();
-            }
-            else {
-                $errors.=translate('LBL_NEW_USER_PASSWORD_'.$_REQUEST['pwd_set'],'Users');
+                $errors .= canSendPassword();
+            } else {
+                $errors .= translate('LBL_NEW_USER_PASSWORD_3' . $_REQUEST['pwd_set'], 'Users');
                 $msgGood = true;
             }
-        }else{
+        } else {
             //IF BEAN USER IS LOCKOUT
-            if($this->bean->getPreference('lockout')=='1') {
-                $errors.=translate('ERR_USER_IS_LOCKED_OUT','Users');
+            if ($this->bean->getPreference('lockout') == '1') {
+                $errors .= translate('ERR_USER_IS_LOCKED_OUT', 'Users');
             }
         }
         $this->ss->assign("ERRORS", $errors);
-        $this->ss->assign("ERROR_MESSAGE", $msgGood ? translate('LBL_PASSWORD_SENT','Users') : translate('LBL_CANNOT_SEND_PASSWORD','Users'));
+        $this->ss->assign("ERROR_MESSAGE",
+            $msgGood ? translate('LBL_PASSWORD_SENT', 'Users') : translate('LBL_CANNOT_SEND_PASSWORD', 'Users'));
         $buttons = array();
+
         if ((is_admin($current_user) || $_REQUEST['record'] == $current_user->id
-                )
+            )
             && !empty($sugar_config['default_user_name'])
             && $sugar_config['default_user_name'] == $this->bean->user_name
             && isset($sugar_config['lock_default_user_name'])
             && $sugar_config['lock_default_user_name']) {
-            $buttons[] = "<input id='edit_button' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".$this->bean->id."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>";
-
+            $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' =>"<input id='edit_button' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
         }
         elseif (is_admin($current_user)|| ($GLOBALS['current_user']->isAdminForModule('Users')&& !$this->bean->is_admin)
-                || $_REQUEST['record'] == $current_user->id) {
-            $buttons[] = "<input title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' id='edit_button' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".$this->bean->id."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>";
+            || $_REQUEST['record'] == $current_user->id) {
+            $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' id='edit_button' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
             if ((is_admin($current_user)|| $GLOBALS['current_user']->isAdminForModule('Users')
-                    )) {
-                if (!$current_user->is_group){
-                    $buttons[] = "<input id='duplicate_button' title='".$app_strings['LBL_DUPLICATE_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_DUPLICATE_BUTTON_KEY']."' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='".$app_strings['LBL_DUPLICATE_BUTTON_LABEL']."'>";
+            )) {
 
-                    if($this->bean->id != $current_user->id) {
-                        $buttons[] ="<input id='delete_button' type='button' class='button' onclick='confirmDelete();' value='".$app_strings['LBL_DELETE_BUTTON_LABEL']."' />";
+                if (!$current_user->is_group) {
+                    $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='duplicate_button' title='" . $app_strings['LBL_DUPLICATE_BUTTON_TITLE'] . "' accessKey='" . $app_strings['LBL_DUPLICATE_BUTTON_KEY'] . "' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='" . $app_strings['LBL_DUPLICATE_BUTTON_LABEL'] . "'>");
+
+                    if ($this->bean->id != $current_user->id) {
+                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='delete_button' type='button' class='button' onclick='confirmDelete();' value='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' />");
                     }
 
                     if (!$this->bean->portal_only && !$this->bean->is_group && !$this->bean->external_auth_only
                         && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON']) && $sugar_config['passwordsetting']['SystemGeneratedPasswordON']){
-                        $buttons[] = "<input title='".translate('LBL_GENERATE_PASSWORD_BUTTON_TITLE','Users')."' class='button' LANGUAGE=javascript onclick='generatepwd(\"".$this->bean->id."\");' type='button' name='password' value='".translate('LBL_GENERATE_PASSWORD_BUTTON_LABEL','Users')."'>";
+                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_GENERATE_PASSWORD_BUTTON_TITLE','Users').'" class="button" LANGUAGE=javascript onclick="generatepwd(\'{$fields.id.value}\');" type="button" name="password" value="'.translate('LBL_GENERATE_PASSWORD_BUTTON_LABEL','Users').'">"');
                     }
                 }
             }
         }
 
-        $buttons = array_merge($buttons, $this->ss->get_template_vars('BUTTONS_HEADER'));
+        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_PREFERENCES','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_PREFERENCES_WARNING_USER','Users').'\')) window.location=\'index.php?module=Users&action=resetPreferences&reset_preferences=true&record={$fields.id.value}\';" type="button" name="password" value="'.translate('LBL_RESET_PREFERENCES','Users').'">"');
+        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_HOMEPAGE','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_HOMEPAGE_WARNING','Users').'\')) window.location=\'index.php?module=Users&action=DetailView&reset_homepage=true&record={$fields.id.value}\';" type="button" name="password" value="'.translate('LBL_RESET_HOMEPAGE','Users').'">"');
 
-        $this->ss->assign('EDITBUTTONS',$buttons);
+        $show_roles = (!($this->bean->is_group == '1' || $this->bean->portal_only == '1'));
+        if (is_admin($this->bean)) {
+            $show_roles = false;
+        }
 
-        $show_roles = (!($this->bean->is_group=='1' || $this->bean->portal_only=='1'));
         $this->ss->assign('SHOW_ROLES', $show_roles);
         //Mark whether or not the user is a group or portal user
-        $this->ss->assign('IS_GROUP_OR_PORTAL', ($this->bean->is_group=='1' || $this->bean->portal_only=='1') ? true : false);
-        if ( $show_roles ) {
+        $this->ss->assign('IS_GROUP_OR_PORTAL',
+            ($this->bean->is_group == '1' || $this->bean->portal_only == '1') ? true : false);
+        if ($show_roles) {
             ob_start();
-            echo "<div>";
-            require_once('modules/ACLRoles/DetailUserRole.php');
-            echo "</div></div>";
+
+            require_once('modules/ACLRoles/DetailUserAccess.php');
 
 
             $role_html = ob_get_contents();
             ob_end_clean();
-            $this->ss->assign('ROLE_HTML',$role_html);
+            $this->ss->assign('ROLE_HTML', $role_html);
         }
 
     }
 
-    public function getMetaDataFile() {
+    public function getMetaDataFile()
+    {
         $userType = 'Regular';
-        if($this->bean->is_group == 1){
+        if ($this->bean->is_group == 1) {
             $userType = 'Group';
         }
 
-        if ( $userType != 'Regular' ) {
+        if ($userType != 'Regular') {
             $oldType = $this->type;
-            $this->type = $oldType.'group';
+            $this->type = $oldType . 'group';
         }
         $metadataFile = parent::getMetaDataFile();
-        if ( $userType != 'Regular' ) {
+        if ($userType != 'Regular') {
             $this->type = $oldType;
         }
+
         return $metadataFile;
     }
 
-    function display() {
-        if ($this->bean->portal_only == 1 || $this->bean->is_group == 1 ) {
+    function display()
+    {
+        if ($this->bean->portal_only == 1 || $this->bean->is_group == 1) {
             $this->options['show_subpanels'] = false;
             $this->dv->formName = 'DetailViewGroup';
             $this->dv->view = 'DetailViewGroup';
         }
 
-	    //handle request to reset the homepage
-        if(isset($_REQUEST['reset_homepage'])){
+        //handle request to reset the homepage
+        if (isset($_REQUEST['reset_homepage'])) {
             $this->bean->resetPreferences('Home');
             global $current_user;
-            if($this->bean->id == $current_user->id) {
+            if ($this->bean->id == $current_user->id) {
                 $_COOKIE[$current_user->id . '_activePage'] = '0';
-                setcookie($current_user->id . '_activePage','0',3000,null,null,false,true);
+                setcookie($current_user->id . '_activePage', '0', 3000, null, null, false, true);
             }
         }
 
-        return parent::display();
+        if (empty($this->bean->id)) {
+            sugar_die($GLOBALS['app_strings']['ERROR_NO_RECORD']);
+        }
+        $this->dv->process();
+        echo $this->dv->display();
     }
 
 
@@ -198,11 +221,11 @@ class UsersViewDetail extends ViewDetail {
     {
         $theTitle = '';
 
-        if($GLOBALS['current_user']->isAdminForModule('Users')
+        if ($GLOBALS['current_user']->isAdminForModule('Users')
         ) {
-        $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-        $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-        $theTitle = <<<EOHTML
+            $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
+            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            $theTitle = <<<EOHTML
 &nbsp;
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'>
 <a href="{$url}" class="utilsLink">
@@ -210,7 +233,7 @@ class UsersViewDetail extends ViewDetail {
 </a>
 EOHTML;
         }
+
         return $theTitle;
     }
-
 }

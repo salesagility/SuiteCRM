@@ -11,7 +11,7 @@
         {/literal}
     </script>
     {*{if $show_subpanel_tabs}*}
-        <ul class="noBullet" id="subpanel_list">
+        <ul id="subpanel_list" class="noBullet subpanel_list">
             {foreach from=$subpanel_tabs key=i item=subpanel_tab}
                 <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
                     <!--subpanel-title -->
@@ -22,7 +22,7 @@
                     <!--subpanel-body -->
                     <div cookie_name="{$subpanel_tabs_properties.$i.cookie_name}" id="subpanel_{$subpanel_tab}" style="display:{$subpanel_tabs_properties.$i.div_display}">
 
-                        <script>document.getElementById("subpanel_{$subpanel_tab}" ).cookie_name="{$subpanel_tab.cookie_name}";</script>
+                        <script>document.getElementById("subpanel_{$subpanel_tab}" ).cookie_name="{$subpanel_tabs_properties.$i.cookie_name}";</script>
 
                         {if $tabs_properties.$i.div_display != 'none'}
                             <script>SUGAR.util.doWhen("typeof(markSubPanelLoaded) != 'undefined'", function() {literal}{ markSubPanelLoaded('{/literal}{$subpanel_tab}{literal}');}{/literal});</script>

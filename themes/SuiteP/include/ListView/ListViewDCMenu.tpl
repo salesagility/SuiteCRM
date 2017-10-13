@@ -77,7 +77,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		{if $prerow}
 			<th scope='col' nowrap="nowrap" width='1%' class="selectCol">
 				<div>
-			        <input type='checkbox'  title="{sugar_translate label='LBL_SELECT_ALL_TITLE'}"  class='checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, "mass[]", this.checked);' />
+					<label class="hidden glyphicon bootstrap-checkbox glyphicon-unchecked"></label><input type='checkbox'  title="{sugar_translate label='LBL_SELECT_ALL_TITLE'}"  class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, "mass[]", this.checked);' />
 				{$selectLink}
 				</div>
 			</th>
