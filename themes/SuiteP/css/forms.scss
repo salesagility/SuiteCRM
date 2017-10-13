@@ -315,17 +315,17 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .removeFileButton {
-   font-size: $page-font-size;
-   font-weight: 500;
-   cursor: pointer;
-   padding: 0 20px 0 20px;
-   border-style: none;
-   border-radius: 4px;
-   letter-spacing: 1px;
-   line-height: $input-line-height;
-   height: $input-line-height;
-   text-transform: uppercase;
- }
+  font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  border-style: none;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+}
 
 .removeFileButton {
   background-color: $danger-btn-bg;
@@ -1116,6 +1116,13 @@ div.col-sm-6 #email1_span td.email-address-input {
 }
 
 #email1_span td.email-address-opt-out {
+  display: inline-block;
+  line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+}
+
+#email1_span td.email-address-opt-in {
   display: inline-block;
   line-height: $input-line-height + 8;
   width: $input-line-height + 12;

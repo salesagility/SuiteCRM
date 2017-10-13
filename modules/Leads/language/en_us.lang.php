@@ -95,6 +95,7 @@ $mod_strings = array(
     'LBL_DUPLICATE' => 'Similar Leads',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
+    'LBL_EMAIL_OPT_IN' => 'Email Opt In:',
     'LBL_EXISTING_ACCOUNT' => 'Used an existing account',
     'LBL_EXISTING_CONTACT' => 'Used an existing contact',
     'LBL_EXISTING_OPPORTUNITY' => 'Used an existing opportunity',
@@ -222,5 +223,7 @@ $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
     'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
     'LBL_FP_EVENTS_LEADS_1_FROM_FP_EVENTS_TITLE' => 'Events',
+    'LBL_THANKS_FOR_SUBMITTING' => 'Thanks for submitting.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
-?>

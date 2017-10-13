@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,9 +34,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 
 require_once 'include/formbase.php';
 
@@ -69,7 +70,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing = new EmailMarketing();
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
-        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
+        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
         array('id')
     );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
@@ -113,12 +114,17 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
+        $optInEmailFields = array();
+        $optInPrefix = 'opt_in_';
         if (!empty($person)) {
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
                 if ($k === 'client_id_address' || $k === 'req_id'
-                    || $k === 'moduleDir' || $k === 'dup_checked') {
+                    || $k === 'moduleDir' || $k === 'dup_checked'
+                ) {
                     continue;
+                } elseif (preg_match('/^' . $optInPrefix . '/', $k)) {
+                    $optInEmailFields[] = substr($k, strlen($optInPrefix));
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         $person->$k = $v;
@@ -136,8 +142,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $camplog->related_type = $person->module_dir;
             $camplog->activity_type = $person->object_name;
             $camplog->target_type = $person->module_dir;
-            $campaign_log->activity_date = $timedate->now();
+            $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
+            $camplog->target_tracker_key = create_guid();
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
             }
@@ -147,16 +154,14 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             if (isset($_POST['email1']) && $_POST['email1'] != null) {
                 $person->email1 = $_POST['email1'];
-            }
-            //in case there are old forms used webtolead_email1
+            } //in case there are old forms used webtolead_email1
             elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null) {
                 $person->email1 = $_POST['webtolead_email1'];
             }
 
             if (isset($_POST['email2']) && $_POST['email2'] != null) {
                 $person->email2 = $_POST['email2'];
-            }
-            //in case there are old forms used webtolead_email2
+            } //in case there are old forms used webtolead_email2
             elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null) {
                 $person->email2 = $_POST['webtolead_email2'];
             }
@@ -174,16 +179,44 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         }
 
         //in case there are forms out there still using email_opt_out
-        if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
+        if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out']) || isset($_POST['email_opt_in'])) {
+
+            $outOut = isset($_POST['email_opt_out']) && $_POST['email_opt_out'];
+            $outIn = isset($_POST['email_opt_in']) && $_POST['email_opt_in'];
+
             if (isset($person->email1) && !empty($person->email1)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email1, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email1, 0, 1 && !$optIn);
             }
             if (isset($person->email2) && !empty($person->email2)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email2, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email2, 0, 1 && !$optIn);
             }
         }
+
+        if (!empty($optInEmailFields)) {
+            foreach ($optInEmailFields as $optInEmailField) {
+                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                    $sea = new SugarEmailAddress();
+                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    if ($sea->retrieve($emailId)) {
+                        // TODO: config - they can get opt-in confirmation email instead checkbox on web-to-person form
+                        $sea->optIn();
+                        //$sea->saveEmail($person->id, $moduleDir);
+                    } else {
+                        $msg = 'Error retrieving an email address.';
+                        $GLOBALS['log']->fatal($msg);
+                        throw new RuntimeException($msg);
+                    }
+                } else {
+                    $personClass = get_class($person);
+                    $msg = "Incorrect email field for opt-in at person. Person type: $personClass, field: $optInEmailField.";
+                    $GLOBALS['log']->fatal($msg);
+                    throw new RuntimeException($msg);
+                }
+            }
+        }
+
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
@@ -205,7 +238,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 } else {
                     $query_string .= '&';
                 }
-                $query_string .= "{$param}=".urlencode($value);
+                $query_string .= "{$param}=" . urlencode($value);
             }
             if (empty($person)) {
                 if ($first_iteration) {
@@ -216,17 +249,17 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $query_string .= 'error=1';
             }
 
-            $redirect_url = $redirect_url.$query_string;
+            $redirect_url = $redirect_url . $query_string;
 
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
             if (headers_sent() || strlen($redirect_url) > 2083) {
-                echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
-                echo '<form name="redirect" action="'.$_POST['redirect_url'].'" method="GET">';
+                echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
+                echo '<form name="redirect" action="' . $_POST['redirect_url'] . '" method="GET">';
 
                 foreach ($_POST as $param => $value) {
                     if ($param != 'redirect_url' || $param != 'submit') {
-                        echo '<input type="hidden" name="'.$param.'" value="'.$value.'">';
+                        echo '<input type="hidden" name="' . $param . '" value="' . $value . '">';
                     }
                 }
                 if (empty($person)) {
@@ -242,13 +275,20 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 die();
             }
         } else {
-            if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
-                echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
-            } else {
-                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+            echo "<p>{$mod_strings['LBL_THANKS_FOR_SUBMITTING']}</p>";
+
+            include_once get_custom_file_if_exists('modules/Campaigns/OptInConfirmationEmailSender.php');
+            $optInConfirmationEmailSender = new OptInConfirmationEmailSender();
+            if ($optInConfirmationEmailSender->isOptInConfirmationEmailEnabled()) {
+                if (!$optInConfirmationEmailSender->sendOptInConfirmationEmail($person, $camplog)) {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED']}</p>";
+                } else {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS']}</p>";
+                }
             }
-            header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
+
+
+            header($_SERVER['SERVER_PROTOCOL'] . '201', true, 201);
         }
         sugar_cleanup();
         // die to keep code from running into redirect case below
@@ -260,8 +300,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
 if (!empty($_POST['redirect'])) {
     if (headers_sent()) {
-        echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
-        echo '<form name="redirect" action="'.$_POST['redirect'].'" method="GET">';
+        echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
+        echo '<form name="redirect" action="' . $_POST['redirect'] . '" method="GET">';
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
     } else {

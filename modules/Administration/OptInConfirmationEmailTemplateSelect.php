@@ -38,18 +38,36 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-    'LBL_EMAIL_ADDRESS_ID' => 'ID',
-    'LBL_EMAIL_ADDRESS' => 'Email Address',
-    'LBL_EMAIL_ADDRESS_CAPS' => 'Email Address caps',
-    'LBL_INVALID_EMAIL' => 'Invalid Email',
-    'LBL_OPT_OUT' => 'Opted Out',
-    'LBL_OPT_IN' => 'Opted IN',
-    'LBL_DATE_CREATE' => 'Date Create',
-    'LBL_DATE_MODIFIED' => 'Date Modified',
-    'LBL_DELETED' => 'Delete',
-);
+
+function getOptInConfirmationEmailTemplateSelect($sugarSmarty, $emailTemplateList = null, $configurator = null)
+{
+    if (null === $configurator) {
+        $configurator = new Configurator();
+    } else {
+        $configurator = $configurator;
+    }
+
+    if (null == $emailTemplateList) {
+        $emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
+    } else {
+        $emailTemplateList = $emailTemplateList;
+    }
+
+    if (!array_key_exists('opt_in_confirmation_email_template_id', $configurator->config)) {
+        $configurator->config['opt_in_confirmation_email_template_id'] = '';
+    }
+
+    $sugarSmarty->assign('opt_in_checkbox_on_person_form_enabled',
+        $configurator->config['opt_in_checkbox_on_person_form_enabled']);
+    $sugarSmarty->assign('opt_in_confirmation_email_enabled',
+        $configurator->config['opt_in_confirmation_email_enabled']);
+    $sugarSmarty->assign('OPT_IN_CONFIRMATION_EMAIL_TEMPLATES',
+        get_select_options_with_id($emailTemplateList, $configurator->config['opt_in_confirmation_email_template_id']));
+
+    return $sugarSmarty;
+}

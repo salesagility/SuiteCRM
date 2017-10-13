@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 var focus_obj=false;var label=SUGAR.language.get('app_strings','LBL_DEFAULT_LINK_TEXT');function remember_place(obj){focus_obj=obj;}
 function showVariable(form){if(!form){form='EditView';}
@@ -84,14 +84,14 @@ function EmailTrackerController(action,campaignId){var _campaignId=campaignId;va
 var create=function(){var trackerName=$('#url_text').val();var trackerURL=$('#tracker_url_add').val();if($('#url_text').val()==''||$('#tracker_url_add').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));return;}
 if(!trackerName){errors.push({field:'tracker_name',message:SUGAR.language.translate('Campaigns','ERR_REQUIRED_TRACKER_NAME')});}
 if(!trackerURL){errors.push({field:'tracker_url',message:SUGAR.language.translate('Campaigns','ERR_REQUIRED_TRACKER_URL')});}
-hideFieldErrorMessages();window.parent.$('.ui-dialog-content:visible').dialog('close');$.post('index.php?entryPoint=campaignTrackerSave',{module:'CampaignTrackers',record:'',action:'Save',campaign_id:_campaignId,tracker_name:trackerName,tracker_url:trackerURL,is_optout:$('#is_optout').prop('checked')?'on':'',response_json:true},function(resp){resp=JSON.parse(resp);if(resp.data.id){$('select[name="tracker_url"]').append('<option value="{'+trackerName+'}" data-id="'+resp.data.id+'" data-url="'+trackerURL+'">'+trackerName+' : '+trackerURL+'</option>');$('select[name="tracker_url"]').val('{'+trackerName+'}');$('#url_text').val('{'+trackerName+'}');}
+hideFieldErrorMessages();window.parent.$('.ui-dialog-content:visible').dialog('close');$.post('index.php?entryPoint=campaignTrackerSave',{module:'CampaignTrackers',record:'',action:'Save',campaign_id:_campaignId,tracker_name:trackerName,tracker_url:trackerURL,is_optout:$('#is_optout').prop('checked')?'on':'',is_optin:$('#is_optin').prop('checked')?'on':'',response_json:true},function(resp){resp=JSON.parse(resp);if(resp.data.id){$('select[name="tracker_url"]').append('<option value="{'+trackerName+'}" data-id="'+resp.data.id+'" data-url="'+trackerURL+'">'+trackerName+' : '+trackerURL+'</option>');$('select[name="tracker_url"]').val('{'+trackerName+'}');$('#url_text').val('{'+trackerName+'}');}
 setTrackerUrlSelectVisibility();});}
 var save=function(){var trackerName=$('#url_text').val();var trackerURL=$('#tracker_url_add').val();if($('#url_text').val()==''||$('#tracker_url_add').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));return;}
 if(!trackerName){errors.push({field:'tracker_name',message:SUGAR.language.translate('Campaigns','ERR_REQUIRED_TRACKER_NAME')});}
 if(!trackerURL){errors.push({field:'tracker_url',message:SUGAR.language.translate('Campaigns','ERR_REQUIRED_TRACKER_URL')});}
-hideFieldErrorMessages();window.parent.$('.ui-dialog-content:visible').dialog('close');$.post('index.php?entryPoint=campaignTrackerSave',{module:'CampaignTrackers',record:$('select[name="tracker_url"] option:selected').attr('data-id'),action:'Save',campaign_id:_campaignId,tracker_name:trackerName,tracker_url:trackerURL,is_optout:$('#is_optout').prop('checked')?'on':'',response_json:true},function(resp){resp=JSON.parse(resp);if(resp.data.id){$('select[name="tracker_url"] option:selected').text(trackerName+' : '+trackerURL);$('select[name="tracker_url"] option:selected').attr(trackerName+' : '+trackerURL);$('select[name="tracker_url"] option:selected').val('{'+trackerName+'}');}
+hideFieldErrorMessages();window.parent.$('.ui-dialog-content:visible').dialog('close');$.post('index.php?entryPoint=campaignTrackerSave',{module:'CampaignTrackers',record:$('select[name="tracker_url"] option:selected').attr('data-id'),action:'Save',campaign_id:_campaignId,tracker_name:trackerName,tracker_url:trackerURL,is_optout:$('#is_optout').prop('checked')?'on':'',is_optin:$('#is_optin').prop('checked')?'on':'',response_json:true},function(resp){resp=JSON.parse(resp);if(resp.data.id){$('select[name="tracker_url"] option:selected').text(trackerName+' : '+trackerURL);$('select[name="tracker_url"] option:selected').attr(trackerName+' : '+trackerURL);$('select[name="tracker_url"] option:selected').val('{'+trackerName+'}');}
 setTrackerUrlSelectVisibility();});}
-switch(action){case"create":$('#url_text').val('');$('#tracker_name').val('');$('#tracker_url_add').val('');$('#is_optout').attr('checked',false);$('#tracker_url_add').removeAttr('disabled')
+switch(action){case"create":$('#url_text').val('');$('#tracker_name').val('');$('#tracker_url_add').val('');$('#is_optout').attr('checked',false);$('#is_optin').attr('checked',false);$('#tracker_url_add').removeAttr('disabled')
 createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));$('#templateManagerActionOK').val($('#LBL_CREATE_TRACKER_BTN').val());$('#templateManagerDialog').children('div').addClass('hidden');$('#emailTrackerDialog').removeClass('hidden');$('#templateManagerDialogActions').removeClass('hidden');$('#templateManagerActionOK').val(SUGAR.language.translate('Campaigns','LBL_CREATE_TRACKER_BTN'));$('#templateManagerActionOK').unbind();$('#templateManagerActionCancel').unbind();$('#templateManagerActionOK').click(create);$('#templateManagerActionCancel').click(revertValues);$('#templateManagerDialog').show();break;case"insert":if($('#trackerUrlSelect').val()=='-1'){alert(SUGAR.language.translate('Campaigns','LBL_SELECT_EMAIL_TRACKER'));return;}
 var text=$('select[name="tracker_url"] option:selected').val();text=text.replace('{','');text=text.replace('}','');insert_variable_html_link(text,$('select[name="tracker_url"] option:selected').val());break;case"edit":if($('#trackerUrlSelect').val()=='-1'){alert(SUGAR.language.translate('Campaigns','LBL_SELECT_EMAIL_TRACKER'));return;}
 var text=$('select[name="tracker_url"] option:selected').val();text=text.replace('{','');text=text.replace('}','');$('#url_text').val(text);$('#tracker_url_add').val($('select[name="tracker_url"] option:selected').attr('data-url'));$('#tracker_name').val('');$('#template_subject').val('');$('#templateManagerActionOK').val(SUGAR.language.translate('Campaigns','LBL_EDIT_TRACKER_BTN'));createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));$('#templateManagerDialog').children('div').addClass('hidden');$('#emailTrackerDialog').removeClass('hidden');$('#templateManagerDialogActions').removeClass('hidden');$('#templateManagerActionOK').unbind();$('#templateManagerActionCancel').unbind();$('#templateManagerActionOK').click(save);$('#templateManagerActionCancel').click(revertValues);$('#templateManagerDialog').show();break;default:break;}}

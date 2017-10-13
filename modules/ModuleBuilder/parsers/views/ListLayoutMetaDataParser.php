@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 require_once 'modules/ModuleBuilder/parsers/views/AbstractMetaDataParser.php';
 require_once 'modules/ModuleBuilder/parsers/views/MetaDataParserInterface.php';
 
@@ -176,6 +177,9 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         foreach ($this->_viewdefs as $key => $def) {
             //#25322
             if (strtolower($key) == 'email_opt_out') {
+                continue;
+            }
+            if (strtolower($key) == 'email_opt_in') {
                 continue;
             }
 
