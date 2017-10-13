@@ -920,7 +920,7 @@ $($.fullCalendar).ready(function () {
         center: '',
         right: ''
       },
-      lang: global_langPrefix,
+      locale: global_langPrefix,
       views: views,
       minTime: global_start_time,
       maxTime: global_end_time,
@@ -942,35 +942,6 @@ $($.fullCalendar).ready(function () {
           var date_start = date.format(global_datetime_format);
           var date_end = jsEvent.format(global_datetime_format);
           var date_duration = jsEvent.diff(date);
-
-     $('#calendar' + user_id).fullCalendar({
-       header: {
-         left: '',
-         center: '',
-         right: ''
-       },
-       locale: global_langPrefix,
-       views: views,
-       minTime: global_start_time,
-       maxTime: global_end_time,
-       selectHelper: true,
-       selectable: true,
-       selectOverlap: true, //overlap of events !
-       slotMinutes: global_timeslots,
-       defaultDate: global_year + "-" + global_month + "-" + global_day,
-       editable: global_edit,
-       //weekNumbers: true,
-       disableDragging: global_items_draggable,
-       eventLimit: true, // allow "more" link when too many events
-       defaultView: global_view,
-       firstDay: global_start_week_day,
-       height: global_basic_min_height,
-       columnFormat: headerFormat,
-       select: function (date, jsEvent, view) {
-         if (global_edit == true) {
-           var date_start = date.format(global_datetime_format);
-           var date_end = jsEvent.format(global_datetime_format);
-           var date_duration = jsEvent.diff(date);
 
            if (date.hasTime() == false) {
              var date_end = date.add(1, 'days').format(global_datetime_format);
