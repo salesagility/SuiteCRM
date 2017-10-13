@@ -86,16 +86,7 @@ $dictionary['email_addresses'] = array(
             'name' => 'opt_in_link',
             'vname' => 'LBL_OPT_IN_LINK',
             'type' => 'function',
-//            'function_class' => 'OptInLink',
-//            'function_name' => 'getOptInLink',
-//            'function_params' =>
-//                array (
-//                    0 => '$this',
-//                ),
             'source' => 'function',
-//            'reportable' => false,
-//            'comment' => 'Email Opt-in link',
-//            'importable' => false,
         ),
         'opt_in' => array(
             'name' => 'opt_in',

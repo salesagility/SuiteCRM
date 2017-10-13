@@ -635,9 +635,7 @@ class EmailMan extends SugarBean
     {
         //fetch email marketing.
         if (empty($this->current_emailmarketing) or !isset($this->current_emailmarketing)) {
-            if (!class_exists('EmailMarketing')) {
 
-            }
 
             $this->current_emailmarketing = new EmailMarketing();
 
@@ -801,9 +799,6 @@ class EmailMan extends SugarBean
 
             //fetch email marketing.
             if (empty($this->current_emailmarketing) or !isset($this->current_emailmarketing)) {
-                if (!class_exists('EmailMarketing')) {
-
-                }
 
                 $this->current_emailmarketing = new EmailMarketing();
 
