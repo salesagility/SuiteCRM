@@ -39,6 +39,8 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
+use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\JsonApi\v1\Links;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -79,6 +81,11 @@ class Resource implements LoggerAwareInterface
         'related',
         'errors',
     );
+
+    /**
+     * @var ContainerInterface $containers
+     */
+    protected $containers;
 
     /**
      * @var LoggerInterface Logger
@@ -124,9 +131,9 @@ class Resource implements LoggerAwareInterface
     /**
      * Resource constructor.
      */
-    public function __construct()
+    public function __construct(ContainerInterface $containers)
     {
-        $this->setLogger(new Logger());
+        $this->containers = $containers;
     }
 
     /**
@@ -137,17 +144,16 @@ class Resource implements LoggerAwareInterface
      * @throws BadRequest
      * @see https://tools.ietf.org/html/rfc6901
      */
-    public static function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         global $sugar_config;
-        $resource = new self();
         if(isset($json['id'])) {
-            $resource->id = $json['id'];
+            $this->id = $json['id'];
         }
-        $resource->type = $json['type'];
-        $resource->source = $source;
+        $this->type = $json['type'];
+        $this->source = $source;
 
-        if ($resource->type === null) {
+        if ($this->type === null) {
             $exception = new Conflict('[Missing "type" key in data]');
             $exception->setSource('/data/attributes/type');
             throw $exception;
@@ -160,23 +166,25 @@ class Resource implements LoggerAwareInterface
         }
 
         foreach ($json['attributes'] as $attributeName => $attributeValue) {
-            if ($resource->attributes === null) {
-                $resource->attributes = array();
+            if ($this->attributes === null) {
+                $this->attributes = array();
             }
 
             // Filter security sensitive information from attributes
             if (
-                isset($sugar_config['filter_module_fields'][$resource->type]) &&
-                in_array($attributeName, $sugar_config['filter_module_fields'][$resource->type], true)
+                isset($sugar_config['filter_module_fields'][$this->type]) &&
+                in_array($attributeName, $sugar_config['filter_module_fields'][$this->type], true)
             ) {
                 continue;
             }
 
-            $resource->attributes[$attributeName] = $attributeValue;
+            $this->attributes[$attributeName] = $attributeValue;
         }
 
+        $this->relationships = $json['relationships'];
+
         // TODO: Relationships
-        return $resource;
+        return clone $this;
     }
 
     /**
@@ -221,12 +229,12 @@ class Resource implements LoggerAwareInterface
             $response['meta'] = $this->meta;
         }
 
-        if($this->relationships !== null) {
-            $response['relationships'] = $this->meta;
-        }
-
         if($this->links !== null) {
             $response['links'] = $this->links->getArray();
+        }
+
+        if($this->relationships !== null) {
+            $response['relationships'] = $this->relationships;
         }
 
         return $response;
@@ -280,23 +288,21 @@ class Resource implements LoggerAwareInterface
     }
 
     /**
-     * @param self|Resource $resource
      * @throws Conflict
-     * @internal param $this|Resource $resource
      */
-    protected static function validateResource($resource)
+    protected function validateResource()
     {
         // Validate ID
-        if ($resource->id === null) {
+        if ($this->id === null) {
             $exception = new Conflict('[Missing "id" key in data]"');
-            $exception->setSource($resource->source . '/attributes/id');
+            $exception->setSource($this->source . '/attributes/id');
             throw $exception;
         }
 
         // Validate Type
-        if ($resource->type === null) {
+        if ($this->type === null) {
             $exception = new Conflict('[Missing "type" key in data]');
-            $exception->setSource($resource->source . '/attributes/type');
+            $exception->setSource($this->source . '/attributes/type');
             throw $exception;
         }
     }

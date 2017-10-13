@@ -64,7 +64,7 @@ class OAuth2Controller extends ApiController
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {
         /** @var AuthorizationServer $server */
-        $server = $this->container->get('AuthorizationServer');
+        $server = $this->containers->get('AuthorizationServer');
 
         try {
             return $server->respondToAccessTokenRequest($request, $response);

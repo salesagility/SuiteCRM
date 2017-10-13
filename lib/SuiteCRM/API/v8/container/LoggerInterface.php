@@ -38,6 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$container['Logger'] = function () {
+$container[\Psr\Log\LoggerInterface::class] = function () {
     return new \SuiteCRM\Utility\SuiteLogger();
 };

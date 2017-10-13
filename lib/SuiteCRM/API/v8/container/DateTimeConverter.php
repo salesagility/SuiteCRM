@@ -37,52 +37,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-namespace SuiteCRM\API\JsonApi\v1;
 
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
-use SuiteCRM\Utility\SuiteLogger as Logger;
-
-/**
- * Class JsonApi
- * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-jsonapi-object
- */
-class JsonApi implements LoggerAwareInterface
-{
-    const VERSION = '1.0';
-    /**
-     * @var LoggerInterface Logger
-     */
-    private $logger;
-
-    /**
-     * @return array
-     */
-    public function getArray()
-    {
-        return array(
-            'version' => self::VERSION
-        );
-    }
-
-    /**
-     * Sets a logger instance on the object.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSchemaPath() {
-        return __DIR__ . '/schema.json';
-    }
-}
+$container['DateTimeConverter'] = function () {
+    global $timedate;
+    return $timedate;
+};

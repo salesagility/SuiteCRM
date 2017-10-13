@@ -43,7 +43,6 @@ namespace SuiteCRM\API\v8\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use SuiteCRM\API\JsonApi\v1\Links;
-use SuiteCRM\API\JsonApi\v1\Resource\Resource;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\BadRequest;
@@ -159,8 +158,13 @@ class ModuleController extends ApiController
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
-        global $sugar_config;
-        $lib = new ModulesLib();
+        $config = $this->containers->get('ConfigurationManager');
+
+        /**
+         * @var ModulesLib $lib;
+         */
+        $lib = $this->containers->get('ModuleLib');
+
         $payload = array(
             'links' => array(),
             'data' => array()
@@ -176,7 +180,7 @@ class ModuleController extends ApiController
         $page = $req->getParam('page');
         $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
         $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
-        $limitOffset = ($limit <= 0) ? $sugar_config['list_max_entries_per_page'] : $limit;
+        $limitOffset = ($limit <= 0) ? $config['list_max_entries_per_page'] : $limit;
         $lastOffset = (integer)floor((integer)$paginatedModuleRecords['row_count'] / $limitOffset);
 
         $payload['meta']['offsets'] = array(
@@ -209,7 +213,7 @@ class ModuleController extends ApiController
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
-        global $sugar_config;
+        $config = $this->containers->get('ConfigurationManager');
         $this->negotiatedJsonApiContent($req, $res);
 
         $res = $res->withStatus(202);
@@ -249,19 +253,25 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        $resource = SuiteBeanResource::fromDataArray($body['data']);
-        $sugarBean = $resource->toSugarBean();
+        /**
+         * @var SuiteBeanResource $resource
+         */
+        $resource = $this->containers->get('SuiteBeanResource');
+        $sugarBean = $resource->fromDataArray($body['data'])->toSugarBean();
         try {
             $sugarBean->save();
         } catch (Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $links = new Links();
-        $self = $sugar_config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
+        /**
+         * @var Links $links
+         */
+        $links = $this->containers->get('Links');
+        $self = $config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
         $links = $links->withSelf($self);
         $selectFields = $req->getParam(self::FIELDS);
-        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
+        $resource = $resource->fromSugarBean($sugarBean);
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
             $payload['data'] = $resource->getArrayWithFields($fields);
@@ -313,7 +323,11 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
+        /**
+         * @var SuiteBeanResource $resource
+         */
+        $resource = $this->containers->get('SuiteBeanResource');
+        $resource = $resource->fromSugarBean($sugarBean);
 
         // filter fields
         $selectFields = $req->getParam(self::FIELDS);
@@ -383,15 +397,23 @@ class ModuleController extends ApiController
 
         // Validate ID
         $sugarBean = \BeanFactory::getBean($moduleName, $moduleId);
-        if ($sugarBean->new_with_id === true) {
+        if ($sugarBean->new_with_id === true || $sugarBean === false) {
             $exception = new NotFound('["id" does not exist]');
             $exception->setSource('');
             throw $exception;
         }
 
-        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
-        $resource->mergeAttributes(Resource::fromDataArray($body['data']));
-        $sugarBean = $resource->toSugarBean();
+        /**
+         * @var Resource $resource
+         */
+        $resource = $this->containers->get('Resource');
+        /**
+         * @var SuiteBeanResource $sugarBeanResource
+         */
+        $sugarBeanResource = $this->containers->get('SuiteBeanResource');
+        $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
+        $sugarBeanResource->mergeAttributes($resource->fromDataArray($body['data']));
+        $sugarBean = $sugarBeanResource->toSugarBean();
         // Handle Request
         try {
             if (empty($sugarBean->save())) {
@@ -401,14 +423,15 @@ class ModuleController extends ApiController
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $resource = SuiteBeanResource::fromSugarBean($sugarBean);
+        $sugarBeanResource = $this->containers->get('SuiteBeanResource');
+        $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
         $selectFields = $req->getParam(self::FIELDS);
 
         if ($selectFields !== null && isset($selectFields[$moduleName])) {
             $fields = explode(',', $selectFields[$moduleName]);
-            $payload['data'] = $resource->getArrayWithFields($fields);
+            $payload['data'] = $sugarBeanResource->getArrayWithFields($fields);
         } else {
-            $payload['data'] = $resource->getArray();
+            $payload['data'] = $sugarBeanResource->getArray();
         }
 
         $res = $res->withStatus(200);
@@ -617,11 +640,73 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $config = $this->containers->get('ConfigurationManager');
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array(
+            'data' => array()
+        );
+        $sugarBean = \BeanFactory::getBean($args['module'], $args['id']);
+
+        if ($sugarBean->load_relationship($args['link']) === false) {
+            throw new NotFound('Relationship does not exist');
+        }
+
+        /**
+         * @var array $relatedIds
+         */
+        $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
+
+        if(strpos($relationshipType, 'one-to') !== false) {
+            $relatedIds = $sugarBean->{$args['link']}->get();
+            $relatedDefinition = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->def;
+
+            foreach ($relatedIds as $id) {
+                // only needs one result
+                $data = array(
+                    'type' => $relatedDefinition['lhs_module'],
+                    'id' => $id
+                );
+
+                $links = new Links();
+                $data['links'] = $links->withHref(
+                    $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
+                    $relatedDefinition['lhs_module'].'/'.$id
+                )->getArray();
+
+                $payload['data'] = $data;
+
+            }
+        } else {
+            $relatedIds = $sugarBean->{$args['link']}->get();
+            $relatedDefinition = $sugarBean->field_defs[$args['link']];
+
+            foreach ($relatedIds as $id) {
+                $data = array(
+                    'type' => $relatedDefinition['module'],
+                    'id' => $id
+                );
+                $links = new Links();
+                $a = $req->getUri();
+                $data['links'] = $links->withHref(
+                    $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
+                    $relatedDefinition['module'].'/'.$id
+                )->getArray();
+
+                $payload['data'][] = $data;
+            }
+        }
+
+        $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
