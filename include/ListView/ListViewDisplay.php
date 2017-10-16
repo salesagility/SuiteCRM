@@ -118,22 +118,22 @@ class ListViewDisplay {
 		return true;
 	}
 
-	/**
-	 * Setup the class
-	 * @param seed SugarBean Seed SugarBean to use
-	 * @param file File Template file to use
-	 * @param string $where
-	 * @param offset:0 int offset to start at
-	 * @param int:-1 $limit
-	 * @param string[]:array() $filter_fields
-	 * @param array:array() $params
-	 * 	Potential $params are
-		$params['distinct'] = use distinct key word
-		$params['include_custom_fields'] = (on by default)
-		$params['massupdate'] = true by default;
-        $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
-	 * @param string:'id' $id_field
-	 */
+    /**
+     * Setup the class
+     * @param seed SugarBean Seed SugarBean to use
+     * @param file File Template file to use
+     * @param string $where
+     * @param offset :0 int offset to start at
+     * @param int :-1 $limit
+     * @param string []:array() $filter_fields
+     * @param array :array() $params
+     * Potential $params are:
+     * $params['distinct'] = use distinct key word
+     * $params['include_custom_fields'] = (on by default)
+     * $params['massupdate'] = true by default;
+     * $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
+     * @param string :'id' $id_field
+     */
     function setup(
         $seed,
         $file,
