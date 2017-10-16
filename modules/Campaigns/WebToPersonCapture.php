@@ -44,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/formbase.php';
 
+
+require_once('modules/Campaigns/utils.php');
+
 $moduleDir = '';
 if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null) {
     $moduleDir = $_REQUEST['moduleDir'];
@@ -114,6 +117,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
         if (!empty($person)) {
+
+            $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
+            $possiblePersonCaptureFields = array();
+            foreach($filteredFieldsFromPersonBean[0]->fields as $field) {
+                $possiblePersonCaptureFields[] = $field[1];
+            }
+
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
                 if ($k === 'client_id_address' || $k === 'req_id'
@@ -121,7 +131,11 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     continue;
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
-                        $person->$k = $v;
+                        if(in_array($k, $possiblePersonCaptureFields)) {
+                            $person->$k = $v;
+                        } else {
+                            $GLOBALS['log']->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
+                        }
                     }
                 }
             }
