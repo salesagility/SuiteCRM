@@ -118,7 +118,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         if (!empty($person)) {
 
             $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
-            $possiblePersonCaptureFields = array();
+            $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
             foreach($filteredFieldsFromPersonBean[0]->fields as $field) {
                 $possiblePersonCaptureFields[] = $field[1];
             }
