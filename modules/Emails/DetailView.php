@@ -237,7 +237,7 @@ if ($focus->type=='campaign' and !empty($_REQUEST['parent_id']) and !empty($_REQ
     $parent_id=$_REQUEST['parent_id'];
 
 	// cn: bug 14300 - emails_beans schema refactor - fixing query
-	$query="SELECT * FROM emails_beans WHERE email_id='{$focus->id}' AND bean_id='{$parent_id}' AND bean_module = '{$_REQUEST['parent_module']}' " ;
+	$query="SELECT * FROM emails_beans WHERE email_id='{$focus->db->quote($focus->id)}' AND bean_id='{$focus->db->quote($parent_id)}' AND bean_module = '{$focus->db->quote($_REQUEST['parent_module'])}' " ;
 
     $res=$focus->db->query($query);
     $row=$focus->db->fetchByAssoc($res);
