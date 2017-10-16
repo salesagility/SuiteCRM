@@ -66,6 +66,7 @@ $mod_strings = array(
     'LBL_MONTH' => 'Month',
     'LBL_AGENDADAY' => 'Day',
     'LBL_YEAR' => 'Year',
+
     'LBL_AGENDAWEEK' => 'Week',
     'LBL_PREVIOUS_MONTH' => 'Previous Month',
     'LBL_PREVIOUS_DAY' => 'Previous Day',
@@ -110,7 +111,7 @@ $mod_strings = array(
     'LBL_EDIT_RECORD' => 'Edit Activity',
     'LBL_ERROR_SAVING' => 'Error while saving',
     'LBL_ERROR_LOADING' => 'Error while loading',
-    'LBL_GOTO_DATE' => 'Goto Date',
+    'LBL_GOTO_DATE' => 'Go to Date',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
     'LBL_STYLE_BASIC' => 'BASIC',
     'LBL_STYLE_ADVANCED' => 'ADVANCED',

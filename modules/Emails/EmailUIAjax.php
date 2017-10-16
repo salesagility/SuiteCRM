@@ -269,66 +269,64 @@ if (isset($_REQUEST['emailUIAction'])) {
             }
             break;
 
-        case "deleteSignature":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteSignature");
-            if (isset($_REQUEST['id'])) {
-                require_once("modules/Users/UserSignature.php");
-                $us = new UserSignature();
-                $us->mark_deleted($_REQUEST['id']);
-                $signatureArray = $current_user->getSignaturesArray();
-                // clean "none"
-                foreach ($signatureArray as $k => $v) {
-                    if ($k == "") {
-                        $sigs[$k] = $app_strings['LBL_NONE'];
-                    } else {
-                        if (is_array($v) && isset($v['name'])) {
-                            $sigs[$k] = $v['name'];
-                        } else {
-                            $sigs[$k] = $v;
+    case "deleteSignature":
+        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteSignature");
+        if(isset($_REQUEST['id'])) {
+  			require_once("modules/Users/UserSignature.php");
+        	$us = new UserSignature();
+        	$us->mark_deleted($_REQUEST['id']);
+            $signatureArray = $current_user->getSignaturesArray();
+	        // clean "none"
+	        foreach($signatureArray as $k => $v) {
+	            if($k == "") {
+                 $sigs[$k] = $app_strings['LBL_NONE'];
+	            } else {if (is_array($v) && isset($v['name'])){
+	                $sigs[$k] = $v['name'];
+	            } else{
+	                $sigs[$k] = $v;}
+	            }
+	        }
+	        $out['signatures'] = $signatureArray;
+            $ret = $json->encode($out);
+            echo $ret;
+        } else {
+            die();
+        }
+    	break;
+    case 'getTemplateAttachments':
+        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
+        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {global $db;
+
+
+            $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
+            $order = '';
+            $seed = new Note();
+            $fullList = $seed->get_full_list($order, $where, '');
+            $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
+
+            $js_fields_arr = array();
+
+            $i=1; // js doesn't like 0 index?
+            if (!empty($fullList)) {
+                foreach($fullList as $note) {
+                    $js_fields_arr[$i] = array();
+
+                    foreach($all_fields as $field) {
+                        if(isset($note->$field)) {
+                            $note->$field = from_html($note->$field);
+                            $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
+                            $note->$field = preg_replace('/\n/','<BR>',$note->$field);
+                            $js_fields_arr[$i][$field] = addslashes($note->$field);
                         }
                     }
+                    $i++;
                 }
-                $out['signatures'] = $signatureArray;
-                $ret = $json->encode($out);
-                echo $ret;
-            } else {
-                die();
             }
-            break;
-        case "getTemplateAttachments":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-            if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
 
-
-                $where = "parent_id='{$_REQUEST['parent_id']}'";
-                $order = "";
-                $seed = new Note();
-                $fullList = $seed->get_full_list($order, $where, '');
-                $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
-
-                $js_fields_arr = array();
-
-                $i = 1; // js doesn't like 0 index?
-                if (!empty($fullList)) {
-                    foreach ($fullList as $note) {
-                        $js_fields_arr[$i] = array();
-
-                        foreach ($all_fields as $field) {
-                            if (isset($note->$field)) {
-                                $note->$field = from_html($note->$field);
-                                $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
-                                $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
-                                $js_fields_arr[$i][$field] = addslashes($note->$field);
-                            }
-                        }
-                        $i++;
-                    }
-                }
-
-                $out = $json->encode($js_fields_arr);
-                echo $out;
-            }
-            break;
+            $out = $json->encode($js_fields_arr);
+            echo $out;
+        }
+        break;
         ////    END COMPOSE REPLY FORWARD
         ///////////////////////////////////////////////////////////////////////////
 

@@ -46,7 +46,6 @@ $mod_strings = array (
 	'LBL_ACCEPT_THIS'=>'Accept?',
 	'LBL_ADD_BUTTON'=> 'Add',
 	'LBL_ADD_INVITEE' => 'Add Invitees',
-	'LBL_COLON' => ':',
 	'LBL_CONTACT_NAME' => 'Contact:',
 	'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
 	'LBL_CREATED_BY'=>'Created by',
@@ -54,8 +53,6 @@ $mod_strings = array (
 	'LBL_DATE_TIME' => 'Start Date & Time:',
 	'LBL_DATE' => 'Start Date:',
 	'LBL_DEFAULT_SUBPANEL_TITLE' => 'Meetings',
-	'LBL_DEL'=> 'Del',
-	'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
 	'LBL_DESCRIPTION' => 'Description:',
     'LBL_DIRECTION' => 'Direction:',
 	'LBL_DURATION_HOURS' => 'Duration Hours:',
@@ -81,10 +78,8 @@ $mod_strings = array (
 	'LBL_LIST_RELATED_TO' => 'Related to',
 	'LBL_LIST_STATUS'=>'Status',
 	'LBL_LIST_SUBJECT' => 'Subject',
-	'LBL_LIST_TIME' => 'Start Time',
 	'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
 	'LBL_LOCATION' => 'Location:',
-	'LBL_MEETING' => 'Meeting:',
 	'LBL_MINSS_ABBREV' => 'm',
 	'LBL_MODIFIED_BY'=>'Modified by',
 	'LBL_MODULE_NAME' => 'Meetings',
@@ -98,7 +93,6 @@ $mod_strings = array (
     'LBL_EMAIL_REMINDER_SENT' => 'Email reminder sent',
 	'LBL_REMINDER' => 'Reminders:',
 	'LBL_REMINDER_POPUP' => 'Popup',
-	'LBL_REMINDER_EMAIL' => 'Email',
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
@@ -126,14 +120,11 @@ $mod_strings = array (
 	'LNK_NEW_MEETING'=>'Schedule Meeting',
 	'LNK_IMPORT_MEETINGS' => 'Import Meetings',
 
-	'NTC_REMOVE_INVITEE' => 'Are you sure you want to remove this invitee from the meeting?',
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
     'LBL_MEETING_INFORMATION' => 'OVERVIEW',
 	'LBL_LIST_JOIN_MEETING' => 'Join Meeting',
-	'LBL_JOIN_EXT_MEETING' => 'Join Meeting',
-	'LBL_HOST_EXT_MEETING' => 'Start Meeting',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
     // You are not invited to the meeting messages
@@ -141,7 +132,6 @@ $mod_strings = array (
     'LBL_EXTNOT_RECORD_LINK' => 'View Meeting',
 
     //cannot start messages
-    'LBL_EXTNOSTART_HEADER' => 'Error: Cannot Start Meeting',
     'LBL_EXTNOSTART_MAIN' => 'You cannot start this meeting because you are not an Administrator or the owner of the meeting.',
 
     // create invitee functionallity
