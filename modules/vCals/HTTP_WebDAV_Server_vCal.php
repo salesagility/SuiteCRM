@@ -112,14 +112,6 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             $current_language = $sugar_config['default_language'];
 
 
-            // check authentication
-            if (!$this->_check_auth()) {
-                $this->http_status('401 Unauthorized');
-                header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
-
-                return;
-            }
-
             // set root directory, defaults to webserver document root if not set
             if ($base) {
                 $this->base = realpath($base); // TODO throw if not a directory
@@ -196,24 +188,13 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                 print $errorMessage;
             }
 
-            /**
-             * @var User|SugarBean|null $current_user
-             */
-            $current_user = BeanFactory::getBean('Users', $_SESSION['authenticated_user_id']);
 
+            // check authentication
+            if (!$this->_check_auth()) {
+                $this->http_status('401 Unauthorized');
+                header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
 
-
-            /**
-             * Fake a response so that it is not different from when a user is found
-             */
-            if($this->user_focus->id === null) {
-                $this->user_focus->last_name = $query_arr['user_name'];
-            } elseif (
-                !$current_user->isAdmin() &&
-                $current_user->user_name !== $this->user_focus->user_name
-            ) {
-                $this->user_focus = BeanFactory::newBean('Users');
-                $this->user_focus->last_name = $query_arr['user_name'];
+                return;
             }
 
             parent::ServeRequest();
