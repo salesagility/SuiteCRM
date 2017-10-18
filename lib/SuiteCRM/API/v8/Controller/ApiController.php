@@ -53,6 +53,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
@@ -131,7 +132,7 @@ class ApiController implements LoggerAwareInterface
             foreach ($errors as $error) {
                 throw new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']);
             }
-            }
+        }
 
         return $response
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
@@ -224,6 +225,26 @@ class ApiController implements LoggerAwareInterface
         $this->logger->debug('Json ApiController negotiated content type Successfully');
 
         return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @throws InvalidJsonApiRequest
+     */
+    protected function validateRequestWithJsonApiSchema(Request $request)
+    {
+        // Validate Response
+        $jsonAPI = $this->containers->get('JsonApi');
+        $data = json_decode($request->getBody());
+
+        $validator = new \JsonSchema\Validator();
+        $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
+
+        if (!$validator->isValid()) {
+            $errors = $validator->getErrors();
+            $this->logger->error( '[Invalid Payload Request]'. $request->getBody());
+            throw new InvalidJsonApiRequest($errors[0]['property']. ' ' .$errors[0]['message']);
+        }
     }
 
     /**

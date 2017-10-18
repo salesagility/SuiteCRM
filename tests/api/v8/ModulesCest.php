@@ -7,10 +7,15 @@
  */
 class ModulesCest
 {
-    const ACCOUNT_RESOURCE = '/api/v8/modules/Accounts';
-    const PRODUCT_RESOURCE = '/api/v8/modules/AOS_Products';
+    private static $ACCOUNT_RESOURCE = '/api/v8/modules/Accounts';
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
     private static $RECORD_TYPE = 'Accounts';
+    private static $PRODUCT_RESOURCE = '/api/v8/modules/AOS_Products';
+    private static $PRODUCT_RECORD_TYPE = 'AOS_Products';
+    private static $PRODUCT_RECORD_ID = '11111111-1111-1111-1111-111111111111';
+    private static $PRODUCT_CATEGORY_RESOURCE = '/api/v8/modules/AOS_Product_Categories';
+    private static $PRODUCT_CATEGORY_RECORD_TYPE = 'AOS_Product_Categories';
+    private static $PRODUCT_CATEGORY_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     /**
      * @var Faker\Generator $fakeData
      */
@@ -80,7 +85,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -110,7 +115,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -142,7 +147,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -175,10 +180,11 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
+                        'id' => '',
                         'type' => 'Accounts',
                         'attributes' => array(
                             'name' => $faker->name()
@@ -219,7 +225,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         $I->sendPOST(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
                 array(
                     'data' => array(
@@ -251,16 +257,16 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendGET($I->getInstanceURL() . self::ACCOUNT_RESOURCE .  '/' . self::$RECORD);
+        $I->sendGET($I->getInstanceURL() . self::$ACCOUNT_RESOURCE .  '/' . self::$RECORD);
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
-        $response = $I->grabResponse();
+        $response = json_decode($I->grabResponse(), true);
 
         $I->assertArrayHasKey('data', $response);
-        $I->assertArrayHasKey('id', $response);
-        $I->assertArrayHasKey('type', $response);
-        $I->assertArrayHasKey('attributes', $response);
-        $I->assertArrayHasKey('relationships', $response);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+        $I->assertArrayHasKey('relationships', $response['data']);
     }
 
     /**
@@ -284,7 +290,7 @@ class ModulesCest
         $newName = $faker->name();
 
         $I->sendPATCH(
-            $I->getInstanceURL() . self::ACCOUNT_RESOURCE . '/' . self::$RECORD,
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE . '/' . self::$RECORD,
             json_encode(
                 array(
                     'data' => array(
@@ -322,7 +328,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendDELETE($I->getInstanceURL() . self::ACCOUNT_RESOURCE . '/' . self::$RECORD);
+        $I->sendDELETE($I->getInstanceURL() . self::$ACCOUNT_RESOURCE . '/' . self::$RECORD);
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
     }
@@ -342,7 +348,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendGET($I->getInstanceURL() . self::ACCOUNT_RESOURCE);
+        $I->sendGET($I->getInstanceURL() . self::$ACCOUNT_RESOURCE);
 
         // Validate Response
         $I->seeResponseCodeIs(200);
@@ -376,18 +382,40 @@ class ModulesCest
      */
     public function TestScenarioCreateOneToManyRelationships (apiTester $I)
     {
-        // Create AOS_Products
-        // Create AOS_Product_Categories
-        // Relate Modules Together
-        // Send Request
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+        // Create AOS_Product_Categories
+        $payloadProductCategory = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName()
+                    ),
+                )
+            )
+        );
 
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE,
+            $payloadProductCategory
+        );
+
+        $I->seeResponseCodeIs(201);
+        $responseProductCategory = json_decode($I->grabResponse(), true);
+        $responseProductCategory['data']['id'];
+        self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
+
+        // Create AOS_Products
+        // Relate Modules Together
+        // Send Request
         $payload = json_encode(
             array (
                 'data' => array(
-                    'type' => 'AOS_Products',
+                    'id' => '',
+                    'type' => self::$PRODUCT_RECORD_TYPE,
                     'attributes' => array(
                         'name' => $this->fakeData->name(),
                         'price' => $this->fakeData->randomDigit()
@@ -395,10 +423,8 @@ class ModulesCest
                     'relationships' => array(
                         'aos_product_category' => array(
                             'data' => array(
-                                'type' => 'AOS_Product_Categories',
-                                'attributes' => array(
-                                    'name' => $this->fakeData->name()
-                                )
+                                'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
+                                'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE
                             )
                         )
                     )
@@ -407,13 +433,13 @@ class ModulesCest
         );
 
         $I->sendPOST(
-            $I->getInstanceURL() . self::PRODUCT_RESOURCE,
+            $I->getInstanceURL() . self::$PRODUCT_RESOURCE,
             $payload
         );
 
         $I->seeResponseCodeIs(201);
-
-        // Delete objects created
+        $respsonseProduct = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_RECORD_ID = $respsonseProduct['data']['id'];
     }
 
     /**
@@ -482,9 +508,23 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
+    public function TestScenarioCreateManyToManyRelationships (apiTester $I)
+    {
+        // Create Subcategories of Product Categories
+    }
+
+    /**
+     * Retrieve a relationship (Many To Many)
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/#fetching-relationships
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{module_name}
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
     public function TestScenarioRetrieveManyToManyRelationships (apiTester $I)
     {
-
+        // Get Subcategories of Product Categories
     }
 
     /**
