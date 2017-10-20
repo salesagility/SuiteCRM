@@ -781,6 +781,101 @@ class ModuleController extends ApiController
 
         if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
             $data = $requestPayload['data'];
+            $links = array();
+            foreach ($data as $link) {
+                $links[] = $link['id'];
+            }
+            $sugarBeanRelationship->add($links);
+
+        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+            $sugarBeanRelationship->add($requestPayload['data']['id']);
+        } else {
+            throw new Forbidden('[ModuleController] [Invalid Relationship type]');
+        }
+
+
+        /** @var SuiteBeanResource $sugarBeanResource */
+        $sugarBeanResource = $this->containers->get('SuiteBeanResource');
+        $sugarBeanResource = $sugarBeanResource
+            ->fromSugarBean($sugarBean);
+
+        $sugarBean = $sugarBeanResource->toSugarBean();
+        $sugarBean->retrieve($sugarBeanResource->getId());
+
+        $responsePayload = array();
+        $responsePayload['data'] = $sugarBeanResource
+            ->fromSugarBean($sugarBean)
+            ->toJsonApiResponse();
+
+        return $this->generateJsonApiResponse($req, $res, $responsePayload);
+    }
+
+    /**
+     * Replaces related items with request
+     * PATCH /api/v8/modules/{id}/relationships/{link}/{id}
+     * Note: Clear all related links with empty data payload such as null, [] etc.
+     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\Forbidden
+     * @throws BadRequest
+     * @throws InvalidJsonApiRequest
+     * @throws NotFound
+     * @throws NotImplementedException
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\Conflict
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     */
+    public function updateModuleRelationship(Request $req, Response $res, array $args)
+    {
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $sugarBean = \BeanFactory::getBean($args['module'], $args['id']);
+
+        if ($sugarBean->new_with_id === true) {
+            $exception = new NotFound(self::MISSING_ID);
+            $exception->setSource('');
+            throw $exception;
+        }
+
+        if ($sugarBean === false) {
+            $exception = new NotFound('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
+            $exception->setDetail('Please ensure that the module name and the id is correct.');
+            $exception->setSource('');
+            throw $exception;
+        }
+
+        if ($sugarBean->load_relationship($args['link']) === false) {
+            throw new NotFound(
+                '[ModuleController] [Relationship does not exist] ' . $args['link'],
+                ExceptionCode::API_RELATIONSHIP_NOT_FOUND
+            );
+        }
+
+        /** @var \Link2 $sugarBeanRelationship */
+        $sugarBeanRelationship =$sugarBean->{$args['link']};
+
+        $requestPayload = json_decode($req->getBody(), true);
+
+        /** @var Relationship $relationship */
+        $relationship = $this->containers->get('Relationship');
+        $relationship->setRelationshipName($args['link']);
+        $relationship->setRelationshipType(
+            SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
+        );
+
+        /** @var RelationshipRepository $relationshipRepository */
+        $relationshipRepository = $this->containers->get('RelationshipRepository');
+
+        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+            $data = $requestPayload['data'];
             foreach ($data as $link) {
                 /** @var ResourceIdentifier $resourceIdentifier */
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
@@ -818,21 +913,6 @@ class ModuleController extends ApiController
             ->toJsonApiResponse();
 
         return $this->generateJsonApiResponse($req, $res, $responsePayload);
-    }
-
-    /**
-     * Replaces related items with request
-     * PATCH /api/v8/modules/{id}/relationships/{link}/{id}
-     * Note: Clear all related links with empty data payload such as null, [] etc.
-     * @param Request $req
-     * @param Response $res
-     * @param array $args
-     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
-     * @throws NotImplementedException
-     */
-    public function updateModuleRelationship(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
     }
 
     /**
