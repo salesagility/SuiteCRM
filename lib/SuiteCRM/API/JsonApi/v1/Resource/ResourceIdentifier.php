@@ -37,26 +37,95 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-namespace SuiteCRM\API\JsonApi\v1;
+namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-use Psr\Container\ContainerInterface;
+use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResourceIdentifier;
+use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
+use SuiteCRM\API\JsonApi\v1\Links;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
+use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
+use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
- * Class JsonApi
- * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-jsonapi-object
+ * Class ResourceIdentifier
+ * @package SuiteCRM\API\JsonApi\v1\Resource
+ * @see http://jsonapi.org/format/1.0/#document-resource-identifier-objects
  */
-class JsonApi implements LoggerAwareInterface, JsonApiResponseInterface
+class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterface, JsonApiResourceIdentifier
 {
-    const VERSION = '1.0';
+    /**
+     * @var ContainerInterface $containers
+     */
+    protected $containers;
+
     /**
      * @var LoggerInterface Logger
      */
-    private $logger;
+    protected $logger;
+
+    /**
+     * @var string $id
+     */
+    protected $id;
+
+    /**
+     * @var string $type
+     */
+    protected $type;
+
+    /**
+     * Resource constructor.
+     * @param ContainerInterface $containers
+     */
+    public function __construct(ContainerInterface $containers)
+    {
+        $this->containers = $containers;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     * @return Resource|$this
+     */
+    public function withId($id)
+    {
+        $this->id = $id;
+
+        return clone $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return Resource|$this
+     */
+    public function withType($type)
+    {
+        $this->type = $type;
+
+        return clone $this;
+    }
 
     /**
      * Sets a logger instance on the object.
@@ -71,16 +140,15 @@ class JsonApi implements LoggerAwareInterface, JsonApiResponseInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getSchemaPath() {
-        return __DIR__ . '/schema.json';
-    }
-
     public function toJsonApiResponse()
     {
-        return array(
-            'version' => self::VERSION
-        );
+        $response = array();
+        $response['id'] = $this->id;
+        $response['type'] = $this->type;
+        return $response;
     }
+
+
 }

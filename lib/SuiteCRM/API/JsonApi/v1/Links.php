@@ -43,6 +43,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\LinksMessage;
+use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
@@ -50,7 +51,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
  * @package SuiteCRM\API\JsonApi\v1
  * @see http://jsonapi.org/format/1.0/#document-links
  */
-class Links implements LoggerAwareInterface
+class Links implements LoggerAwareInterface, JsonApiResponseInterface
 {
     /**
      * @var string $self
@@ -250,7 +251,7 @@ class Links implements LoggerAwareInterface
     /**
      * @return array
      */
-    public function getArray()
+    public function toJsonApiResponse()
     {
         $response = array();
         if ($this->hasSelf()) {

@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/**
+ * @param $container
+ * @return mixed
+ */
 $container[\Psr\Http\Message\ServerRequestInterface::class] = function ($container) {
     return $container->get('response');
 };

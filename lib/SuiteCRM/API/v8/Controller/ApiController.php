@@ -118,7 +118,7 @@ class ApiController implements LoggerAwareInterface
         );
 
         $jsonAPI = $this->containers->get('JsonApi');
-        $payload['jsonapi'] = $jsonAPI->getArray();
+        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
 
         // Validate Response
         $data = json_decode(json_encode($payload));
@@ -191,8 +191,9 @@ class ApiController implements LoggerAwareInterface
             'stability' => self::VERSION_STABILITY,
         );
 
+        /** @var JsonApi $jsonAPI */
         $jsonAPI = $this->containers->get('JsonApi');
-        $payload['jsonapi'] = $jsonAPI->getArray();
+        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
 
 
         return $response
@@ -245,6 +246,38 @@ class ApiController implements LoggerAwareInterface
             $this->logger->error( '[Invalid Payload Request]'. $request->getBody());
             throw new InvalidJsonApiRequest($errors[0]['property']. ' ' .$errors[0]['message']);
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionMajor()
+    {
+        return self::VERSION_MAJOR;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionMinor()
+    {
+        return self::VERSION_MINOR;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionPatch()
+    {
+        return self::VERSION_PATCH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersionStability()
+    {
+        return self::VERSION_STABILITY;
     }
 
     /**

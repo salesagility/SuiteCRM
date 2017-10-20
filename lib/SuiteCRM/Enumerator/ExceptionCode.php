@@ -59,4 +59,5 @@ class ExceptionCode
     const API_USER_NOT_ACTIVE = 8035;
     const API_NOT_IMPLEMENTED = 8040;
     const API_RESERVED_KEYWORD_NOT_ALLOWED = 8050;
+    const API_RELATIONSHIP_NOT_FOUND = 8060;
 }

@@ -55,7 +55,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
  * @package SuiteCRM\API\JsonApi\v1\Resource
  * @see http://jsonapi.org/format/1.0/#document-resource-objects
  */
-class Resource implements LoggerAwareInterface
+class Resource extends ResourceIdentifier
 {
     protected static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
         'id',
@@ -89,26 +89,6 @@ class Resource implements LoggerAwareInterface
     const ATTRIBUTES = 'attributes';
 
     /**
-     * @var ContainerInterface $containers
-     */
-    protected $containers;
-
-    /**
-     * @var LoggerInterface Logger
-     */
-    protected $logger;
-
-    /**
-     * @var string $id
-     */
-    protected $id;
-
-    /**
-     * @var string $type
-     */
-    protected $type;
-
-    /**
      * @var array $attributes
      */
     protected $attributes;
@@ -133,14 +113,6 @@ class Resource implements LoggerAwareInterface
      * @see https://tools.ietf.org/html/rfc6901
      */
     protected $source;
-
-    /**
-     * Resource constructor.
-     */
-    public function __construct(ContainerInterface $containers)
-    {
-        $this->containers = $containers;
-    }
 
     /**
      * @param array $data
@@ -181,16 +153,16 @@ class Resource implements LoggerAwareInterface
      */
     public function mergeAttributes(Resource $resource)
     {
-        $resourceArray = $resource->getArray();
+        $resourceArray = $resource->toJsonApiResponse();
         $this->attributes = array_merge($this->attributes, $resourceArray[self::ATTRIBUTES]);
     }
 
     /**
      * @return array
      */
-    public function getArray()
+    public function toJsonApiResponse()
     {
-        return $this->getArrayWithFields(array_keys($this->attributes));
+        return $this->toJsonApiResponseWithFields(array_keys($this->attributes));
     }
 
 
@@ -198,7 +170,7 @@ class Resource implements LoggerAwareInterface
      * @param array $fields
      * @return array - Return only the fields which exist in the $fields
      */
-    public function getArrayWithFields(array $fields)
+    public function toJsonApiResponseWithFields(array $fields)
     {
         $response = array();
 
@@ -219,7 +191,7 @@ class Resource implements LoggerAwareInterface
         }
 
         if($this->links !== null) {
-            $response[self::LINKS] = $this->links->getArray();
+            $response[self::LINKS] = $this->links->toJsonApiResponse();
         }
 
         if($this->relationships !== null) {
@@ -227,43 +199,6 @@ class Resource implements LoggerAwareInterface
         }
 
         return $response;
-    }
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     * @return Resource|$this
-     */
-    public function withId($id)
-    {
-        $this->id = $id;
-
-        return clone $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $type
-     * @return Resource|$this
-     */
-    public function withType($type)
-    {
-        $this->type = $type;
-
-        return clone $this;
     }
 
     /**
@@ -273,6 +208,16 @@ class Resource implements LoggerAwareInterface
     public function withLinks(Links $links) {
         $this->links = $links;
 
+        return clone $this;
+    }
+
+    /**
+     * @param Relationship $relationship
+     * @return Resource
+     */
+    public function withRelationship(Relationship $relationship) {
+        $relationshipName = $relationship->getRelatationshipName();
+        $this->relationships[$relationshipName] = $relationship->toJsonApiResponse();
         return clone $this;
     }
 
@@ -294,18 +239,6 @@ class Resource implements LoggerAwareInterface
             $exception->setSource($this->source . '/attributes/type');
             throw $exception;
         }
-    }
-
-    /**
-     * Sets a logger instance on the object.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /**

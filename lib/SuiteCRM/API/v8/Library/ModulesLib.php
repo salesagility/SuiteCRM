@@ -144,14 +144,12 @@ class ModulesLib
             }
 
             // add attributes
-            /**
-             * @var SuiteBeanResource $resource
-             */
+            /** @var SuiteBeanResource $resource */
             $resource = $this->containers->get('SuiteBeanResource');
             $resource = $resource->fromSugarBean($moduleBean);
-            $bean = $resource->getArrayWithFields($fields['fields'][$moduleBean->module_name]);
+            $bean = $resource->toJsonApiResponseWithFields($fields['fields'][$moduleBean->module_name]);
             // add links object to $bean
-            $bean['links'] = Links::get()->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->getArray();
+            $bean['links'] = Links::get()->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->toJsonApiResponse();
             // append bean to data
             $response['list'][] = $bean;
         }

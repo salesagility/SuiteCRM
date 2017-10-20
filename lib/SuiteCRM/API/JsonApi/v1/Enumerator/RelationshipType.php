@@ -36,13 +36,16 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *
  */
+namespace SuiteCRM\API\JsonApi\v1\Enumerator;
+
 
 /**
- * @param $container
- * @return mixed
+ * Class RelationshipType
+ * @package SuiteCRM\API\JsonApi\v1
  */
-$container[\Psr\Http\Message\ServerRequestInterface::class] = function ($container) {
-    return $container->get('request');
-};
+class RelationshipType
+{
+    const TO_ONE = 'TO_ONE';
+    const TO_MANY = 'TO_MANY';
+}
