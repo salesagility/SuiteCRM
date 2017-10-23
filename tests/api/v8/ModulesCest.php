@@ -532,7 +532,23 @@ class ModulesCest
         // Validate response
         $I->seeResponseCodeIs(200);
         $responseProduct = json_decode($I->grabResponse(), true);
-        self::$PRODUCT_RECORD_ID = $responseProduct['data']['id'];
+
+        // Verify that the product category has changed
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+
+        // Verify that the link has been deleted
+        $I->sendGET(
+            $url
+        );
+
+        $responseProductCategories = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProductCategories);
+        $I->assertNotEmpty($responseProductCategories['data']);
+        $I->assertArrayHasKey('id', $responseProductCategories['data']);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RECORD_ID, $responseProductCategories['data']['id']);
+        $I->assertArrayHasKey('type', $responseProductCategories['data']);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RECORD_TYPE, $responseProductCategories['data']['type']);
     }
 
     /**
@@ -541,33 +557,74 @@ class ModulesCest
      * @see http://jsonapi.org/format/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
-     * URL: /api/v8/modules/{module_name}
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
     public function TestScenarioUpdateOneToManyRelationship (apiTester $I)
     {
-        // Create AOS_Product
-        // Create 2 AOS_Product_Categories records
-        // Relate Modules Together
-        // Update AOS_Product->AOS_Product_Categories Together
-        // Delete objects created
-    }
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        // Create AOS_Product_Categories
+        $payloadProductCategory = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName()
+                    ),
+                )
+            )
+        );
 
-    /**
-     * Update a relationship (One To Many)
-     * @param apiTester $I
-     * @see http://jsonapi.org/format/#crud-updating-relationships
-     *
-     * HTTP Verb: PATCH
-     * URL: /api/v8/modules/{module_name}
-     */
-    public function TestScenarioClearOneToManyRelationshipUsingModuleLink (apiTester $I)
-    {
-        // Create AOS_Product
-        // Create 2 AOS_Product_Categories records
-        // Relate Modules Together
-        // Update AOS_Product->AOS_Product_Categories Together
-        // Delete objects created
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE,
+            $payloadProductCategory
+        );
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProductCategory = json_decode($I->grabResponse(), true);
+        $responseProductCategory['data']['id'];
+        self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
+
+        // Create AOS_Products and Relate to AOS_Product_Categories
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                )
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+        // Send Request
+        $I->sendPATCH(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseProduct = json_decode($I->grabResponse(), true);
+
+        // Verify that the product category has changed
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+
+        // Verify that the link has been deleted
+        $I->sendGET(
+            $url
+        );
+
+        $responseProductCategories = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProductCategories);
+        $I->assertNotEmpty($responseProductCategories['data']);
+        $I->assertArrayHasKey('id', $responseProductCategories['data']);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RECORD_ID, $responseProductCategories['data']['id']);
+        $I->assertArrayHasKey('type', $responseProductCategories['data']);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RECORD_TYPE, $responseProductCategories['data']['type']);
     }
 
     /**
@@ -580,11 +637,38 @@ class ModulesCest
      */
     public function TestScenarioClearOneToManyRelationshipUsingRelationshipLink (apiTester $I)
     {
-        // Create AOS_Product
-        // Create 2 AOS_Product_Categories records
-        // Relate Modules Together
-        // Update AOS_Product->AOS_Product_Categories Together
-        // Delete objects created
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        // Clear AOS_Product_Categories relationship
+        $payload = json_encode(
+            array (
+                'data' => array()
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+
+        // Send Request
+        $I->sendPATCH(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseProduct = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProduct);
+
+        // Verify that the link has been deleted
+        $I->sendGET(
+            $url
+        );
+
+        $responseProductCategories = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProductCategories);
+        $I->assertEmpty($responseProductCategories['data']);
     }
 
     /**
@@ -598,12 +682,59 @@ class ModulesCest
     public function TestScenarioDeleteOneToManyRelationship (apiTester $I)
     {
 
-        // Create AOS_Product
-        // Create 2 AOS_Product_Categories records
-        // Relate Modules Together
-        // Update AOS_Product->AOS_Product_Categories Together
-        // Delete objects created
-        // TODO: POST {"data": null}
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        // Create AOS_Product_Categories
+        $payloadProductCategory = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE,
+            $payloadProductCategory
+        );
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProductCategory = json_decode($I->grabResponse(), true);
+        $responseProductCategory['data']['id'];
+        self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
+
+        // Create AOS_Products and Relate to AOS_Product_Categories
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                )
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+        // Send Request
+        $I->sendPOST(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+
+        // Delete Relationship
+        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+            self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
+
+        $I->sendDELETE($url, $payload);
+        $I->seeResponseCodeIs(204);
     }
 
 

@@ -288,9 +288,9 @@ class SuiteBeanResource extends Resource
 
             if (empty($relationship['data'])) {
                 // clear relationship
-                /** @var \SugarRelationship $sugarBeanRelationship */
-                $sugarBeanRelationship = $sugarBean->{$relationshipName};
-                $sugarBeanRelationship->removeAll($relationshipName);
+                /** @var \Link2 $sugarBeanRelationship */
+                $sugarBeanRelationship = &$sugarBean->{$relationshipName};
+                $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
             } else {
                 // Detect relationship type
                 $relationshipRepository = new RelationshipRepository();

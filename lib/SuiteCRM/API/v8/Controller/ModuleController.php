@@ -654,6 +654,13 @@ class ModuleController extends ApiController
         );
         $sugarBean = \BeanFactory::getBean($args['module'], $args['id']);
 
+        if(empty($sugarBean)) {
+            throw new NotFound(
+                '[ModuleController] [Record does not exist] ' . $args['link'],
+                ExceptionCode::API_RECORD_NOT_FOUND
+            );
+        }
+
         if ($sugarBean->load_relationship($args['link']) === false) {
             throw new NotFound(
                 '[ModuleController] [Relationship does not exist] ' . $args['link'],
@@ -889,12 +896,20 @@ class ModuleController extends ApiController
         } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
             /** @var ResourceIdentifier $resourceIdentifier */
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
-            $relationship = $relationship
-                ->withResourceIdentifier(
-                    $resourceIdentifier
-                        ->withId($requestPayload['data']['id'])
-                        ->withType($requestPayload['data']['type'])
-                );
+
+            if(empty($requestPayload['data'])) {
+                $relationship = $relationship
+                    ->withResourceIdentifier(
+                        $resourceIdentifier
+                    );
+            } else {
+                $relationship = $relationship
+                    ->withResourceIdentifier(
+                        $resourceIdentifier
+                            ->withId($requestPayload['data']['id'])
+                            ->withType($requestPayload['data']['type'])
+                    );
+            }
         }
 
 
@@ -908,9 +923,7 @@ class ModuleController extends ApiController
         $sugarBean->retrieve($sugarBeanResource->getId());
 
         $responsePayload = array();
-        $responsePayload['data'] = $sugarBeanResource
-            ->fromSugarBean($sugarBean)
-            ->toJsonApiResponse();
+        $responsePayload['data'] = $relationship->toJsonApiResponse();
 
         return $this->generateJsonApiResponse($req, $res, $responsePayload);
     }
