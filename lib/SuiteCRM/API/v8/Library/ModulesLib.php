@@ -297,4 +297,16 @@ class ModulesLib
 
         return $config['site_url'] . '/api/' . $req->getUri()->getPath();
     }
+
+    /**
+     * @param Request $request
+     * @return \User
+     */
+    public function getCurrentUser(Request $request)
+    {
+        $id = $request->getAttribute('oauth_user_id');
+        $user = new \User();
+        $user->retrieve($id);
+        return $user;
+    }
 }
