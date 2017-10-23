@@ -523,6 +523,24 @@ class ModuleController extends ApiController
     }
 
     /**
+     * see: getModuleMetaAttributes
+     *
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     */
+    public function getModuleMetaFields(Request $req, Response $res, array $args) {
+        return $this->getModuleMetaAttributes($req, $res, $args);
+    }
+
+    /**
      * GET /api/v8/modules/{id}/meta/links
      * @param Request $req
      * @param Response $res
