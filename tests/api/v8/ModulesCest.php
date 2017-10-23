@@ -735,6 +735,15 @@ class ModulesCest
 
         $I->sendDELETE($url, $payload);
         $I->seeResponseCodeIs(204);
+
+        // Verify that the link has been deleted
+        $I->sendGET(
+            $url
+        );
+
+        $responseProductCategories = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProductCategories);
+        $I->assertEmpty($responseProductCategories['data']);
     }
 
 
