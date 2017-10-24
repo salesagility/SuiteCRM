@@ -16,6 +16,7 @@ class ModulesCest
     private static $PRODUCT_CATEGORY_RESOURCE = '/api/v8/modules/AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_TYPE = 'AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_ID = '11111111-1111-1111-1111-111111111111';
+    private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = array();
     /**
      * @var Faker\Generator $fakeData
      */
@@ -179,6 +180,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
@@ -224,6 +226,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
@@ -384,6 +387,8 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+
+        $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array (
@@ -404,9 +409,9 @@ class ModulesCest
         // Validate response
         $I->seeResponseCodeIs(201);
         $responseProductCategory = json_decode($I->grabResponse(), true);
-        $responseProductCategory['data']['id'];
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
+        $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
             array (
@@ -489,6 +494,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         // Create AOS_Product_Categories
+        $this->fakeData->seed(rand(0, 2148));
         $payloadProductCategory = json_encode(
             array (
                 'data' => array(
@@ -508,7 +514,6 @@ class ModulesCest
         // Validate response
         $I->seeResponseCodeIs(201);
         $responseProductCategory = json_decode($I->grabResponse(), true);
-        $responseProductCategory['data']['id'];
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
         // Create AOS_Products and Relate to AOS_Product_Categories
@@ -564,6 +569,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array (
@@ -584,7 +590,6 @@ class ModulesCest
         // Validate response
         $I->seeResponseCodeIs(201);
         $responseProductCategory = json_decode($I->grabResponse(), true);
-        $responseProductCategory['data']['id'];
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
         // Create AOS_Products and Relate to AOS_Product_Categories
@@ -685,6 +690,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array (
@@ -705,7 +711,6 @@ class ModulesCest
         // Validate response
         $I->seeResponseCodeIs(201);
         $responseProductCategory = json_decode($I->grabResponse(), true);
-        $responseProductCategory['data']['id'];
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
         // Create AOS_Products and Relate to AOS_Product_Categories
@@ -753,12 +758,121 @@ class ModulesCest
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{module_name}
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
     public function TestScenarioCreateManyToManyRelationships (apiTester $I)
     {
-        // Create Subcategories of Product Categories
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        // Create Products of Product Categories
+        // Create AOS_Product #1
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct1 = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName(),
+                        'price' => $this->fakeData->randomDigit()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_RESOURCE,
+            $payloadProduct1
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProduct1 = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct1['data']['id'];
+
+        // Create AOS_Product #2
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct2 = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName(),
+                        'price' => $this->fakeData->randomDigit()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_RESOURCE,
+            $payloadProduct2
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProduct2 = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct2['data']['id'];
+
+
+        // Create AOS_Product_Categories Parent
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE,
+            $payloadProduct
+        );
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProductCategory = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
+
+
+        // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                        ),
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                    )
+                )
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+            self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
+
+        // Send Request
+        $I->sendPOST(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseParentCategory = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseParentCategory);
+        $I->assertNotEmpty($responseParentCategory['data']);
+
     }
 
     /**
@@ -767,12 +881,35 @@ class ModulesCest
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{module_name}
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
     public function TestScenarioRetrieveManyToManyRelationships (apiTester $I)
     {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        //
+        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+            self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
         // Get Subcategories of Product Categories
+        $I->sendGET(
+            $url
+        );
+
+        $I->seeResponseCodeIs(200);
+        $responseProducts = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProducts);
+        $I->assertNotEmpty($responseProducts['data']);
+
+        // Validate product #1
+        $I->assertArrayHasKey('id', $responseProducts['data'][0]);
+        $I->assertArrayHasKey('type', $responseProducts['data'][0]);
+        $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
+
+        // Validate product #2
+        $I->assertArrayHasKey('id', $responseProducts['data'][1]);
+        $I->assertArrayHasKey('type', $responseProducts['data'][1]);
+        $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][1]['type']);
     }
 
     /**
@@ -781,39 +918,268 @@ class ModulesCest
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
-     * URL: /api/v8/modules/{module_name}
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
     public function TestScenarioUpdateManyToManyRelationships (apiTester $I)
     {
-        // TODO: Replace the relationships
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        // Replace the relationships with just one of the related items
+        // We should only see the the item we have posted in the responses
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                    )
+                )
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+            self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
+
+        // Send Request
+        $I->sendPATCH(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseParentCategory = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseParentCategory);
+        $I->assertNotEmpty($responseParentCategory['data']);
+
+        // Validate that the relationship has been replaced
+        $I->sendGET(
+            $url
+        );
+
+        $I->seeResponseCodeIs(200);
+        $responseProducts = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProducts);
+        $I->assertNotEmpty($responseProducts['data']);
+        $I->assertCount(1, $responseProducts['data']);
+
+        // Validate product #2 which will now be the first in the data array (index === 0)
+        $I->assertArrayHasKey('id', $responseProducts['data'][0]);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1], $responseProducts['data'][0]['id']);
+        $I->assertArrayHasKey('type', $responseProducts['data'][0]);
+        $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
+    }
+
+
+    /**
+     * Clears all related items
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
+     *
+     * HTTP Verb: PATCH
+     * URL: /api/v8/modules/{module_name}/relationships/{link}
+     */
+    public function TestScenarioClearManyToManyRelationships (apiTester $I)
+    {
+        // PATCH {"data": []} to clear all relationships
+
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        // Replace the relationships with just one of the related items
+        // We should only see the the item we have posted in the responses
+        $payload = json_encode(
+            array (
+                'data' => array()
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+            self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
+
+        // Send Request
+        $I->sendPATCH(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseParentCategory = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseParentCategory);
+        $I->assertEmpty($responseParentCategory['data']);
+
+        // Validate that the relationship has been replaced
+        $I->sendGET(
+            $url
+        );
+
+        $I->seeResponseCodeIs(200);
+        $responseProducts = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProducts);
+        $I->assertEmpty($responseProducts['data']);
     }
 
     /**
      * Removes a relationship
      * @param apiTester $I
-     * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-deleting
+     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
     public function TestScenarioDeleteManyToManyRelationships (apiTester $I)
     {
-        // TODO: POST single resource
-    }
+        // TODO: DELETE single resource
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
 
-    /**
-     * Clears all related items
-     * @param apiTester $I
-     * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-deleting
-     *
-     * HTTP Verb: DELETE
-     * URL: /api/v8/modules/{module_name}/relationships/{link}
-     */
-    public function TestScenarioDeleteAllManyToManyRelationships (apiTester $I)
-    {
-        // TODO: POST {"data": []} to clear all relationships
+        // Create Products of Product Categories
+        // Create AOS_Product #1
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct1 = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName(),
+                        'price' => $this->fakeData->randomDigit()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_RESOURCE,
+            $payloadProduct1
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProduct1 = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct1['data']['id'];
+
+        // Create AOS_Product #2
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct2 = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName(),
+                        'price' => $this->fakeData->randomDigit()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_RESOURCE,
+            $payloadProduct2
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProduct2 = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct2['data']['id'];
+
+
+        // Create AOS_Product_Categories Parent
+        $this->fakeData->seed(rand(0, 2148));
+        $payloadProduct = json_encode(
+            array (
+                'data' => array(
+                    'id' => '',
+                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => array(
+                        'name' => $this->fakeData->colorName()
+                    ),
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE,
+            $payloadProduct
+        );
+        // Validate response
+        $I->seeResponseCodeIs(201);
+        $responseProductCategory = json_decode($I->grabResponse(), true);
+        self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
+
+
+        // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
+        $payload = json_encode(
+            array (
+                'data' => array(
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                    ),
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                    )
+                )
+            )
+        );
+
+        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+            self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
+
+        // Send Request
+        $I->sendPOST(
+            $url,
+            $payload
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(200);
+        $responseParentCategory = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseParentCategory);
+        $I->assertNotEmpty($responseParentCategory['data']);
+
+        // Delete first product
+        $payloadDelete = json_encode(
+            array (
+                'data' => array(
+                    array(
+                        'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
+                        'type' => self::$PRODUCT_RECORD_TYPE
+                    )
+                )
+            )
+        );
+
+        // Send Request
+        $I->sendDELETE(
+            $url,
+            $payloadDelete
+        );
+
+        // Validate response
+        $I->seeResponseCodeIs(204);
+
+        // Verify deletion
+        $I->sendGET(
+            $url
+        );
+
+        $I->seeResponseCodeIs(200);
+        $responseProducts = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $responseProducts);
+        $I->assertNotEmpty($responseProducts['data']);
+        $I->assertCount(1, $responseProducts['data']);
+
+        // Validate product #2 which will now be the first in the data array (index === 0)
+        $I->assertArrayHasKey('id', $responseProducts['data'][0]);
+        $I->assertEquals(self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1], $responseProducts['data'][0]['id']);
+        $I->assertArrayHasKey('type', $responseProducts['data'][0]);
+        $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
 }

@@ -101,7 +101,6 @@ class ModuleController extends ApiController
             'meta' => array('modules' => array('list' => array()))
         );
 
-
         foreach ($moduleList as $module) {
             $payload['meta']['modules']['list'][$module]['links'] =
                 $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.$module;
@@ -668,12 +667,15 @@ class ModuleController extends ApiController
                 );
         }
 
-        /**
-         * @var array $relatedIds
-         */
         $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
 
-        if(strpos($relationshipType, 'one-to') !== false) {
+        /**
+         * @var \Link2 $sugarBeanRelationship
+         */
+        $sugarBeanRelationship = $sugarBean->{$args['link']};
+
+        if($sugarBeanRelationship->getType() === 'one') {
+            // to one
             $relatedIds = $sugarBean->{$args['link']}->get();
             $relatedDefinition = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->def;
 
@@ -693,14 +695,15 @@ class ModuleController extends ApiController
 
                 $payload['data'] = $data;
             }
-        } else {
+        } elseif($sugarBeanRelationship->getType() === 'many') {
+            // to many
             $relatedIds = $sugarBean->{$args['link']}->get();
             $relatedDefinition = $sugarBean->field_defs[$args['link']];
-
+            $relatedType = $sugarBeanRelationship->getRelatedModuleName();
             foreach ($relatedIds as $id) {
                 $data = array(
-                    'type' => $relatedDefinition['module'],
-                    'id' => $id
+                    'id' => $id,
+                    'type' => $relatedType
                 );
                 $links = new Links();
                 $data['links'] = $links
@@ -710,6 +713,8 @@ class ModuleController extends ApiController
                     ->toJsonApiResponse();
                 $payload['data'][] = $data;
             }
+        } else {
+            throw new  BadRequest('[ModuleController] [Relationship type not supported]');
         }
 
         $payload['meta']['relationships']['type'] = $relationshipType;
@@ -799,7 +804,10 @@ class ModuleController extends ApiController
                             ->withType($link['type'])
                     );
             }
-            $sugarBeanRelationship->add($links);
+            $added = $sugarBeanRelationship->add($links);
+            if($added !== true) {
+                throw new Conflict('[ModuleController] [Unable to add relationships (to many)]' . json_encode($added));
+            }
 
         } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
@@ -1010,15 +1018,28 @@ class ModuleController extends ApiController
         $relationshipRepository = $this->containers->get('RelationshipRepository');
 
         if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
-            $data = $requestPayload['data'];
-            $links = array();
-            foreach ($data as $link) {
-                $links[] = $link['id'];
-            }
-            $sugarBeanRelationship->remove($links);
+            if(empty($requestPayload['data'])) {
+                $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
+            } else {
+                $data = $requestPayload['data'];
+                $links = array();
+                foreach ($data as $link) {
+                    $links[] = $link['id'];
+                }
 
+                $removed = $sugarBeanRelationship->remove($links);
+                if($removed !== true) {
+                    throw new Conflict(
+                        '[ModuleController] [Unable to remove relationships (to many)]' . json_encode($removed)
+                    );
+                }
+            }
         } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
-            $sugarBeanRelationship->remove($requestPayload['data']['id']);
+            if(empty($requestPayload['data'])) {
+                $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
+            } else {
+                $sugarBeanRelationship->remove($requestPayload['data']['id']);
+            }
         } else {
             throw new Forbidden('[ModuleController] [Invalid Relationship type]');
         }

@@ -321,10 +321,22 @@ class SuiteBeanResource extends Resource
                         $relatedResourceIdsToAdd[] = $toManyRelationship['id'];
                     }
                     // add new relationships
-                    $toManySugarBeanLink->add($relatedResourceIdsToAdd);
+                    $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd);
+                    if($added !== true) {
+                        throw new Conflict(
+                            '[SugarBeanResource] [Unable to add relationships (to many)] while converting toSugarBean()'.
+                            json_encode($added)
+                        );
+                    }
                     // Remove missing relationships
                     $relatedResourceIdsToRemove = array_diff($relatedSugarBeanIds, $relatedResourceIds);
-                    $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
+                    $removed = $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
+                    if($removed !== true) {
+                        throw new Conflict(
+                            '[SugarBeanResource] [Unable to remove relationships (to many)] while converting toSugarBean()'.
+                            json_encode($removed)
+                        );
+                    }
 
                 } else {
                     // detected to one
@@ -346,7 +358,13 @@ class SuiteBeanResource extends Resource
                         throw $exception;
                     }
 
-                    $toOneSugarBeanLink->add($relatedBean);
+                    $added = $toOneSugarBeanLink->add($relatedBean);
+                    if($added !== true) {
+                        throw new Conflict(
+                            '[SugarBeanResource] [Unable to add relationships (to one}] while converting toSugarBean()'.
+                            json_encode($added)
+                        );
+                    }
                 }
             }
         }
