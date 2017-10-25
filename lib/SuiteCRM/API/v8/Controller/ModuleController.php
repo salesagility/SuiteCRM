@@ -553,8 +553,8 @@ class ModuleController extends ApiController
     {
         $this->negotiatedJsonApiContent($req, $res);
 
-        $currentLanguage = $this->container->get('CurrentLanguage');
-        $moduleLanguage = $this->container->get('ModuleLanguage');
+        $currentLanguage = $this->containers->get('CurrentLanguage');
+        $moduleLanguage = $this->containers->get('ModuleLanguage');
         $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
         $payload['meta'][$args['module']]['mod_strings'] = $moduleLanguageStrings;
@@ -635,7 +635,7 @@ class ModuleController extends ApiController
         $sugarView = new \SugarView();
         $menu = $sugarView->getMenu($args['module']);
 
-        $config = $this->container->get('sugar_config');
+        $config = $this->containers->get('ConfigurationManager');
 
         $self = $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $args['module'] . '/';
         $results = array();
