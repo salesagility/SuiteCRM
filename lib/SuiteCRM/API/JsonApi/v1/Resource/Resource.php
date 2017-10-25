@@ -39,12 +39,15 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
+use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\JsonApi\v1\Links;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
@@ -52,7 +55,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
  * @package SuiteCRM\API\JsonApi\v1\Resource
  * @see http://jsonapi.org/format/1.0/#document-resource-objects
  */
-class Resource implements LoggerAwareInterface
+class Resource extends ResourceIdentifier
 {
     protected static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
         'id',
@@ -63,14 +66,14 @@ class Resource implements LoggerAwareInterface
         'id',
         'type',
         'data',
-        'meta',
+        self::META,
         'jsonapi',
-        'links',
+        self::LINKS,
         'included',
         'self',
         'related',
-        'attributes',
-        'relationships',
+        self::ATTRIBUTES,
+        self::RELATIONSHIPS,
         'href',
         'first',
         'last',
@@ -79,21 +82,11 @@ class Resource implements LoggerAwareInterface
         'related',
         'errors',
     );
-
-    /**
-     * @var LoggerInterface Logger
-     */
-    protected $logger;
-
-    /**
-     * @var string $id
-     */
-    protected $id;
-
-    /**
-     * @var string $type
-     */
-    protected $type;
+    const DATA_RELATIONSHIPS = '/data/relationships/';
+    const RELATIONSHIPS = 'relationships';
+    const LINKS = 'links';
+    const META = 'meta';
+    const ATTRIBUTES = 'attributes';
 
     /**
      * @var array $attributes
@@ -122,61 +115,37 @@ class Resource implements LoggerAwareInterface
     protected $source;
 
     /**
-     * Resource constructor.
-     */
-    public function __construct()
-    {
-        $this->setLogger(new Logger());
-    }
-
-    /**
-     * @param array $json
+     * @param array $data
      * @param string $source rfc6901
      * @return Resource
      * @throws Conflict
      * @throws BadRequest
      * @see https://tools.ietf.org/html/rfc6901
      */
-    public static function fromDataArray($json, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromDataArray($data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
-        global $sugar_config;
-        $resource = new self();
-        if(isset($json['id'])) {
-            $resource->id = $json['id'];
+        if(isset($data['id'])) {
+            $this->id = $data['id'];
         }
-        $resource->type = $json['type'];
-        $resource->source = $source;
+        $this->type = $data['type'];
+        $this->source = $source;
 
-        if ($resource->type === null) {
+        if ($this->type === null) {
             $exception = new Conflict('[Missing "type" key in data]');
             $exception->setSource('/data/attributes/type');
             throw $exception;
         }
 
-        if(!isset($json['attributes'] )) {
+        if(!isset($data[self::ATTRIBUTES] )) {
             $exception = new BadRequest('[Missing attributes]');
             $exception->setSource('/data/attributes');
             throw $exception;
         }
 
-        foreach ($json['attributes'] as $attributeName => $attributeValue) {
-            if ($resource->attributes === null) {
-                $resource->attributes = array();
-            }
+        $this->attributesFromDataArray($data);
+        $this->relationshipFromDataArray($data);
 
-            // Filter security sensitive information from attributes
-            if (
-                isset($sugar_config['filter_module_fields'][$resource->type]) &&
-                in_array($attributeName, $sugar_config['filter_module_fields'][$resource->type], true)
-            ) {
-                continue;
-            }
-
-            $resource->attributes[$attributeName] = $attributeValue;
-        }
-
-        // TODO: Relationships
-        return $resource;
+        return clone $this;
     }
 
     /**
@@ -184,16 +153,16 @@ class Resource implements LoggerAwareInterface
      */
     public function mergeAttributes(Resource $resource)
     {
-        $resourceArray = $resource->getArray();
-        $this->attributes = array_merge($this->attributes, $resourceArray['attributes']);
+        $resourceArray = $resource->toJsonApiResponse();
+        $this->attributes = array_merge($this->attributes, $resourceArray[self::ATTRIBUTES]);
     }
 
     /**
      * @return array
      */
-    public function getArray()
+    public function toJsonApiResponse()
     {
-        return $this->getArrayWithFields(array_keys($this->attributes));
+        return $this->toJsonApiResponseWithFields(array_keys($this->attributes));
     }
 
 
@@ -201,7 +170,7 @@ class Resource implements LoggerAwareInterface
      * @param array $fields
      * @return array - Return only the fields which exist in the $fields
      */
-    public function getArrayWithFields(array $fields)
+    public function toJsonApiResponseWithFields(array $fields)
     {
         $response = array();
 
@@ -213,60 +182,23 @@ class Resource implements LoggerAwareInterface
                 continue;
             }
             if(in_array($attribute, $fields) === true) {
-                $response['attributes'][$attribute] = $this->attributes[$attribute];
+                $response[self::ATTRIBUTES][$attribute] = $this->attributes[$attribute];
             }
         }
 
         if($this->meta !== null) {
-            $response['meta'] = $this->meta;
-        }
-
-        if($this->relationships !== null) {
-            $response['relationships'] = $this->meta;
+            $response[self::META] = $this->meta;
         }
 
         if($this->links !== null) {
-            $response['links'] = $this->links->getArray();
+            $response[self::LINKS] = $this->links->toJsonApiResponse();
+        }
+
+        if($this->relationships !== null) {
+            $response[self::RELATIONSHIPS] = $this->relationships;
         }
 
         return $response;
-    }
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     * @return Resource|$this
-     */
-    public function withId($id)
-    {
-        $this->id = $id;
-
-        return clone $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $type
-     * @return Resource|$this
-     */
-    public function withType($type)
-    {
-        $this->type = $type;
-
-        return clone $this;
     }
 
     /**
@@ -280,36 +212,167 @@ class Resource implements LoggerAwareInterface
     }
 
     /**
-     * @param self|Resource $resource
-     * @throws Conflict
-     * @internal param $this|Resource $resource
+     * @param Relationship $relationship
+     * @return Resource
      */
-    protected static function validateResource($resource)
+    public function withRelationship(Relationship $relationship) {
+        $relationshipName = $relationship->getRelatationshipName();
+        $this->relationships[$relationshipName] = $relationship->toJsonApiResponse();
+        return clone $this;
+    }
+
+    /**
+     * @throws Conflict
+     */
+    protected function validateResource()
     {
         // Validate ID
-        if ($resource->id === null) {
+        if ($this->id === null) {
             $exception = new Conflict('[Missing "id" key in data]"');
-            $exception->setSource($resource->source . '/attributes/id');
+            $exception->setSource($this->source . '/attributes/id');
             throw $exception;
         }
 
         // Validate Type
-        if ($resource->type === null) {
+        if ($this->type === null) {
             $exception = new Conflict('[Missing "type" key in data]');
-            $exception->setSource($resource->source . '/attributes/type');
+            $exception->setSource($this->source . '/attributes/type');
             throw $exception;
         }
     }
 
     /**
-     * Sets a logger instance on the object.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return void
+     * @param array $data
+     * @throws BadRequest
      */
-    public function setLogger(LoggerInterface $logger)
+    private function relationshipFromDataArray($data)
     {
-        $this->logger = $logger;
+        if (isset($data[self::RELATIONSHIPS])) {
+            $dataRelationships = $data[self::RELATIONSHIPS];
+            // Validate relationships
+            foreach ($dataRelationships as $relationshipName => $relationship) {
+
+                if (isset($relationship['data']) === false) {
+                    $exception = new BadRequest('[Resource] [missing relationship data]');
+                    $exception->setSource('/data/relationships/{link}/data');
+                    throw $exception;
+                }
+
+                if (empty($relationship['data'])) {
+                    // ignore as it us an indication that we need remove the related items
+                    continue;
+                }
+
+                // Detect Relationship type
+                if (isset($relationship['data'][0])) {
+                    // detected to many
+                    $toManyRelationships = $relationship['data'];
+                    /** @var array $toManyRelationships */
+                    foreach ($toManyRelationships as $toManyRelationshipName => $toManyRelationship) {
+                        // validate relationship
+                        $this->validateToManyRelationshipFromDataArray(
+                            $toManyRelationship,
+                            $relationshipName,
+                            $toManyRelationshipName
+                        );
+                    }
+
+                } else {
+                    // detected to one
+                    $toOneRelationship = $relationship['data'];
+                    $this->validateToOneRelationshipFromDataArray($toOneRelationship, $relationshipName);
+                }
+            }
+            $this->relationships = $dataRelationships;
+        }
+    }
+
+    /**
+     * @param $data
+     */
+    private function attributesFromDataArray($data)
+    {
+        global $sugar_config;
+        foreach ($data[self::ATTRIBUTES] as $attributeName => $attributeValue) {
+            if ($this->attributes === null) {
+                $this->attributes = array();
+            }
+
+            // Filter security sensitive information from attributes
+            if (
+                isset($sugar_config['filter_module_fields'][$this->type]) &&
+                in_array($attributeName, $sugar_config['filter_module_fields'][$this->type], true)
+            ) {
+                continue;
+            }
+
+            $this->attributes[$attributeName] = $attributeValue;
+        }
+    }
+
+    /**
+     * @param $toOneRelationship
+     * @param $relationshipName
+     * @throws BadRequest
+     */
+    private function validateToOneRelationshipFromDataArray($toOneRelationship, $relationshipName)
+    {
+    // validate relationship
+        if (isset($toOneRelationship['id']) === false || empty($toOneRelationship['id'])) {
+            $exception = new BadRequest('[Resource] [missing "to one" relationship field] "id"');
+            $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/id');
+            throw $exception;
+        }
+
+        if (isset($toOneRelationship['type']) === false || empty($toOneRelationship['type'])) {
+            $exception = new BadRequest('[Resource] [missing "to one" relationship field] "type"');
+            $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/type');
+            throw $exception;
+        }
+
+        if (isset($toOneRelationship[self::ATTRIBUTES]) === true) {
+            $exception = new BadRequest('[Resource] [invalid "to one" relationship field] "attributes"');
+            $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/attributes');
+            $exception->setDetail('A related item\'s cannot be updated in the relationships object');
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param $toManyRelationship
+     * @param $relationshipName
+     * @param $toManyRelationshipName
+     * @throws BadRequest
+     */
+    private function validateToManyRelationshipFromDataArray(
+        $toManyRelationship,
+        $relationshipName,
+        $toManyRelationshipName
+    ) {
+        if (isset($toManyRelationship['id']) === false || empty($toManyRelationship['id'])) {
+            $exception = new BadRequest('[Resource] [missing "to many" relationship field] "id"');
+            $exception->setSource(
+                self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/id'
+            );
+            throw $exception;
+        }
+
+        if (isset($toManyRelationship['type']) === false || empty($toManyRelationship['type'])) {
+            $exception = new BadRequest('[Resource] [missing "to many" relationship field] "type"');
+            $exception->setSource(
+                self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/type'
+            );
+            throw $exception;
+
+        }
+
+        if (isset($toManyRelationship[self::ATTRIBUTES]) === true) {
+            $exception = new BadRequest('[Resource] [invalid "to many" relationship field] "attributes"');
+            $exception->setSource(
+                self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/attributes'
+            );
+            $exception->setDetail('A related item\'s cannot be updated in the relationships object');
+            throw $exception;
+        }
     }
 }

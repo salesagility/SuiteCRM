@@ -72,6 +72,7 @@ class apiTester extends \Codeception\Actor
         );
 
         $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(200);
 
         $response = json_decode($I->grabResponse(), true);
         self::$tokenType = $response['token_type'];

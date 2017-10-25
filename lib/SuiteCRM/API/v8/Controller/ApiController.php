@@ -53,6 +53,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
@@ -72,24 +73,23 @@ class ApiController implements LoggerAwareInterface
     /**
      * @var LoggerInterface $logger
      */
-    private $logger;
+    protected $logger;
 
     /**
-     * @var ContainerInterface
+     * @var ContainerInterface $containers
      */
-    protected $container;
+    protected $containers;
 
     /**
      * ApiController constructor.
-     * @param ContainerInterface $container
+     * @param ContainerInterface $containers
      * @throws ContainerException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
-    public function __construct($container)
+    public function __construct(ContainerInterface $containers)
     {
-        $this->container = $container;
-        $this->setLogger($this->container->get('Logger'));
+        $this->containers = $containers;
     }
 
     /**
@@ -117,8 +117,8 @@ class ApiController implements LoggerAwareInterface
           'stability' => self::VERSION_STABILITY,
         );
 
-        $jsonAPI = new JsonApi();
-        $payload['jsonapi'] = $jsonAPI->getArray();
+        $jsonAPI = $this->containers->get('JsonApi');
+        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
 
         // Validate Response
         $data = json_decode(json_encode($payload));
@@ -127,11 +127,13 @@ class ApiController implements LoggerAwareInterface
         $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
 
         if (!$validator->isValid()) {
-            echo "JSON does not validate. Violations:\n";
-            foreach ($validator->getErrors() as $error) {
-                throw new InvalidJsonApiResponse($error['property']. ' ' .$error['message']);
+            $errors = $validator->getErrors();
+            $this->logger->error( '[Invalid Payload Response]'. json_encode($payload));
+            foreach ($errors as $error) {
+                throw new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']);
             }
         }
+
         return $response
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));
@@ -189,8 +191,9 @@ class ApiController implements LoggerAwareInterface
             'stability' => self::VERSION_STABILITY,
         );
 
-        $jsonAPI = new JsonApi();
-        $payload['jsonapi'] = $jsonAPI->getArray();
+        /** @var JsonApi $jsonAPI */
+        $jsonAPI = $this->containers->get('JsonApi');
+        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
 
 
         return $response
@@ -223,6 +226,58 @@ class ApiController implements LoggerAwareInterface
         $this->logger->debug('Json ApiController negotiated content type Successfully');
 
         return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @throws InvalidJsonApiRequest
+     */
+    protected function validateRequestWithJsonApiSchema(Request $request)
+    {
+        // Validate Response
+        $jsonAPI = $this->containers->get('JsonApi');
+        $data = json_decode($request->getBody());
+
+        $validator = new \JsonSchema\Validator();
+        $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
+
+        if (!$validator->isValid()) {
+            $errors = $validator->getErrors();
+            $this->logger->error( '[Invalid Payload Request]'. $request->getBody());
+            throw new InvalidJsonApiRequest($errors[0]['property']. ' ' .$errors[0]['message']);
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionMajor()
+    {
+        return self::VERSION_MAJOR;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionMinor()
+    {
+        return self::VERSION_MINOR;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersionPatch()
+    {
+        return self::VERSION_PATCH;
+    }
+
+    /**
+     * @return string<<<<<<< feature/restapi_7_relationship
+     */
+    public function getVersionStability()
+    {
+        return self::VERSION_STABILITY;
     }
 
     /**

@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$container['translations-config'] = function () {
-    global $app_list_strings;
-    return $app_list_strings;
+$container[\Psr\Log\LoggerInterface::class] = function () {
+    return new \SuiteCRM\Utility\SuiteLogger();
 };

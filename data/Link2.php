@@ -505,6 +505,53 @@ class Link2
         return true;
     }
 
+
+    /**
+     * @param $rel_keys
+     * @param array $additional_values
+     * @return array|bool
+     */
+    public function remove($rel_keys)
+    {
+        if (!is_array($rel_keys)) {
+            $rel_keys = array($rel_keys);
+        }
+
+        $failures = array();
+
+        foreach ($rel_keys as $key) {
+            //We must use beans for LogicHooks and other business logic to fire correctly
+            if (!($key instanceof SugarBean)) {
+                $key = $this->getRelatedBean($key);
+                if (!($key instanceof SugarBean)) {
+                    $GLOBALS['log']->error('Unable to load related bean by id');
+
+                    return false;
+                }
+            }
+
+            if (empty($key->id) || empty($this->focus->id)) {
+                return false;
+            }
+
+            if ($this->getSide() == REL_LHS) {
+                $success = $this->relationship->remove($this->focus, $key);
+            } else {
+                $success = $this->relationship->remove($key, $this->focus);
+            }
+
+            if ($success == false) {
+                $failures[] = $key->id;
+            }
+        }
+
+        if (!empty($failures)) {
+            return $failures;
+        }
+
+        return true;
+    }
+
     /**
      * Marks the relationship deleted for this given record pair.
      *

@@ -47,5 +47,7 @@ use Slim\Exception\ContainerValueNotFoundException;
  * @return \SuiteCRM\API\v8\Controller\ModuleController
  */
 $container['ModuleController'] = function ($container) {
-    return new \SuiteCRM\API\v8\Controller\ModuleController($container);
+    $class = new \SuiteCRM\API\v8\Controller\ModuleController($container);
+    $class->setLogger($container->get(\Psr\Log\LoggerInterface::class));
+    return $class;
 };

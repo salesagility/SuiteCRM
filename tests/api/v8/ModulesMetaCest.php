@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class ModulesCest
+ * Class ModulesMetaCest
  * Tests /api/v8/modules API
  * @see https://tools.ietf.org/html/rfc7519
  */
-class ModulesCest
+class ModulesMetaCest
 {
     const RESOURCE = '/api/v8/modules/Accounts';
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
@@ -29,7 +29,6 @@ class ModulesCest
         $I->sendGET($url);
 
         $I->seeResponseCodeIs(200);
-        $I->seeJsonApiContentNegotiation();
 
         $response = $I->grabResponse();
         $decodedResponse = json_decode($response, true);
@@ -94,9 +93,7 @@ class ModulesCest
         $url = $I->getInstanceURL() . self::RESOURCE . '/meta/menu';
         $I->sendGET($url);
 
-
         $I->seeResponseCodeIs(200);
-        $I->seeJsonApiContentNegotiation();
 
         $response = $I->grabResponse();
         $decodedResponse = json_decode($response, true);

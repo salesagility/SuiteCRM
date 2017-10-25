@@ -66,4 +66,13 @@ class InvalidJsonApiRequest extends ApiException
     {
         return 'Unable to validate the Json Api Payload Request';
     }
+
+    /**
+     * @return int http status code that should be returned back to the client
+     * @see ApiController::generateJsonApiExceptionResponse()
+     */
+    public function getHttpStatus()
+    {
+        return 400;
+    }
 }

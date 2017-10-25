@@ -13,7 +13,7 @@ class OAuth2Cest
      * @param \Helper\PhpBrowserDriverHelper $browserDriverHelper
      *
      * HTTP Verb: POST
-     * URL: /api/v8/login
+     * URL: /api/oauth/access_token
      */
     public function TestScenarioInvalidLogin(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
@@ -32,10 +32,10 @@ class OAuth2Cest
      * @param apiTester $I
      *
      * HTTP Verb: POST
-     * URL: /api/v8/login
+     * URL: /api/oauth/access_token
      */
     public function TestScenarioLogin(apiTester $I)
     {
-
+       $I->loginAsAdmin();
     }
 }

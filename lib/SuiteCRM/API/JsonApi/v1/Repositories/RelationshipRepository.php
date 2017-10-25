@@ -37,50 +37,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-namespace SuiteCRM\API\JsonApi\v1;
 
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
-use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
-use SuiteCRM\Utility\SuiteLogger as Logger;
+namespace SuiteCRM\API\JsonApi\v1\Repositories;
 
-/**
- * Class JsonApi
- * @package SuiteCRM\API\JsonApi\v1
- * @see http://jsonapi.org/format/1.0/#document-jsonapi-object
- */
-class JsonApi implements LoggerAwareInterface, JsonApiResponseInterface
+use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
+
+class RelationshipRepository
 {
-    const VERSION = '1.0';
     /**
-     * @var LoggerInterface Logger
-     */
-    private $logger;
-
-    /**
-     * Sets a logger instance on the object.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
+     * @param array $dataArray
      * @return string
      */
-    public function getSchemaPath() {
-        return __DIR__ . '/schema.json';
-    }
-
-    public function toJsonApiResponse()
-    {
-        return array(
-            'version' => self::VERSION
-        );
+    public function getRelationshipTypeFromDataArray($dataArray) {
+        return isset($dataArray['data'][0]) === true ? RelationshipType::TO_MANY : RelationshipType::TO_ONE;
     }
 }
