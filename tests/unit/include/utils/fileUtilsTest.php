@@ -150,6 +150,8 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'ModuleBuilder' => 'ModuleBuilder',
                 'MySettings' => 'MySettings',
                 'Notes' => 'Notes',
+                'OAuth2Clients',
+                'OAuth2Tokens',
                 'OAuthKeys' => 'OAuthKeys',
                 'OAuthTokens' => 'OAuthTokens',
                 'Opportunities' => 'Opportunities',
