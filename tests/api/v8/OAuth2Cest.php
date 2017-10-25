@@ -36,7 +36,6 @@ class OAuth2Cest
      */
     public function TestScenarioLogin(apiTester $I)
     {
-       $I->logout();
-       $I->seeResponseCodeIs(200);
+
     }
 }
