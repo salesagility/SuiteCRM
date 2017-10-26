@@ -137,7 +137,7 @@ var $selectedCategories = array();
         self::__construct($id, $def);
     }
 
-	function process($lvsParams = array()) {
+	function process($lvsParams = array(), $id=NULL) {
         global $current_user;
 
         $currentSearchFields = array();

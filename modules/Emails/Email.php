@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -285,16 +286,6 @@ class Email extends Basic
      * @var string $replyDelimiter
      */
     public $replyDelimiter = "> ";
-
-    /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
 
     /**
      * @var string $emailRawSource
@@ -1383,7 +1374,12 @@ class Email extends Basic
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
-            $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+
+            if ($this->cleanEmails($this->from_addr_name) === '') {
+                $this->from_addr_name = $this->cleanEmails($this->from_name);
+            } else {
+                $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+            }
             $this->to_addrs_names = $this->cleanEmails($this->to_addrs_names);
             $this->cc_addrs_names = $this->cleanEmails($this->cc_addrs_names);
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
@@ -2697,7 +2693,8 @@ class Email extends Basic
 
         $mailTemp = clone $mail;
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // use personal email by default
 
@@ -2718,6 +2715,8 @@ class Email extends Basic
         // FROM NAME
         if (!empty($this->from_name)) {
             $mail->FromName = $this->from_name;
+        } elseif (!empty($this->from_addr_name)) {
+            $mail->FromName = $this->from_addr_name;
         } else {
             $mail->FromName = $current_user->getPreference('mail_fromname');
             $this->from_name = $mail->FromName;
@@ -3911,15 +3910,19 @@ eoq;
             $bean = BeanFactory::getBean('Emails');
         }
 
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             $bean = $bean->retrieve($_REQUEST['id']);
         }
 
 
-        foreach ($_REQUEST as $fieldName => $field) {
+        foreach ($request as $fieldName => $field) {
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }
+        }
+
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
         }
 
 
@@ -4012,14 +4015,13 @@ eoq;
         }
 
 
-        if (empty($bean->to_addrs)) {
-            if (!empty($request['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
-            }
 
-            if (!empty($bean->to_addrs_names)) {
-                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
-            }
+        if (!empty($request['to_addrs_names'])) {
+            $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+        }
+
+        if (!empty($bean->to_addrs_names)) {
+            $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
         }
 
 
@@ -4035,8 +4037,9 @@ eoq;
             // Strip out name from email address
             // eg Angel Mcmahon <sales.vegan@example.it>
             if (count($matches) > 3) {
-                $display = trim($matches[1]);
                 $email = $matches[2];
+                $display = (str_replace($email, '', $address));
+                $display = (trim(str_replace('"', '', $display)));
             } else {
                 $email = $address;
                 $display = '';
@@ -4050,7 +4053,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => $display,
+                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
             );
         }
 
@@ -4157,6 +4160,18 @@ eoq;
         if (empty($bean->description)) {
             if (!empty($request['description'])) {
                 $bean->description = $request['description'];
+            }
+        }
+
+        // When use is sending email after selecting forward or reply to
+        // We need to generate a new id
+        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+            $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
+            if(in_array($_REQUEST['refer_action'], $referActions)) {
+                $bean->id = create_guid();
+                $bean->new_with_id = true;
+                $bean->type = 'out';
+                $bean->status = 'draft';
             }
         }
 
