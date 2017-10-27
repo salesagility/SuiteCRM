@@ -594,7 +594,20 @@ class User extends Person
 
     function save($check_notify = false)
     {
+        global $current_user;
+        
         $isUpdate = !empty($this->id) && !$this->new_with_id;
+        
+        // only admin user can change 2 factor authentication settings
+        if($isUpdate && !is_admin($current_user)) {
+            $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                $msg .= 'Current user is not able to change two factor authentication settings.'; 
+                $GLOBALS['log']->warn($msg);
+            }
+            $this->factor_auth = $tmpUser->factor_auth;
+            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+        }
 
 
         $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();
