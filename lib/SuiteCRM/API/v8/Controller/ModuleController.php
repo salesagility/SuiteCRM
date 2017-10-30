@@ -601,19 +601,7 @@ class ModuleController extends ApiController
     public function getModuleMetaFields(Request $req, Response $res, array $args) {
         return $this->getModuleMetaAttributes($req, $res, $args);
     }
-
-    /**
-     * GET /api/v8/modules/{id}/meta/links
-     * @param Request $req
-     * @param Response $res
-     * @param array $args
-     * @throws NotImplementedException
-     */
-    public function getModuleMetaLinks(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
-    }
-
+   
     /**
      * GET /api/v8/modules/{id}/meta/menu
      *

@@ -55,7 +55,6 @@ $app->group('/v8/modules', function () use ($app) {
         $app->group('/meta', function () use ($app) {
             $app->get('/language', 'ModuleController:getModuleMetaLanguage');
             $app->get('/attributes', 'ModuleController:getModuleMetaFields');
-            $app->get('/links', 'ModuleController:getModuleMetaLinks');
             $app->get('/menu', 'ModuleController:getModuleMetaMenu');
             $app->get('/viewed', 'ModuleController:getModuleMetaRecordsViewed');
             $app->get('/favorites', 'ModuleController:getModuleMetaFavorites');

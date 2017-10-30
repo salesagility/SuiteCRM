@@ -8,15 +8,14 @@
 class ModulesMetaCest
 {
     const RESOURCE = '/api/v8/modules/Accounts';
-    private static $RECORD = '11111111-1111-1111-1111-111111111111';
 
     /**
      * Get list of modules
      * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-creating
+     * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{id}/meta/language
+     * URL: /api/v8/modules/meta/language
      *
      */
     public function TestScenarioGetModuleMetaLanguages(apiTester $I)
@@ -44,10 +43,10 @@ class ModulesMetaCest
     /**
      * Get list of fields/attributes of a given module
      * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-creating
+     * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{id}/meta/attributes
+     * URL: /api/v8/modules/meta/attributes
      *
      */
     public function TestScenarioGetModuleMetaAttributes(apiTester $I)
@@ -78,10 +77,10 @@ class ModulesMetaCest
     /**
      * Get menu metadata of a given module
      * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-creating
+     * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{id}/meta/menu
+     * URL: /api/v8/modules/meta/menu
      *
      */
     public function TestScenarioGetModuleMetaMenu(apiTester $I)
@@ -120,10 +119,10 @@ class ModulesMetaCest
     /**
      * Get layout metadata of module view
      * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-creating
+     * @see http://jsonapi.org/format/1.0/#document-meta
      * 
      * HTTP Verb: GET
-     * URL: /api/v8/modules/{id}/meta/view/{view}
+     * URL: /api/v8/modules/meta/view/{view}
      * @see \MBConstants for posible {view} values
      */
     public function TestScenarioGetMetaLayout(apiTester $I)
