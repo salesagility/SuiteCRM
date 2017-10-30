@@ -42,7 +42,7 @@ class ModulesMetaCest
     }
 
     /**
-     * Get list of modules
+     * Get list of fields/attributes of a given module
      * @param apiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
@@ -76,7 +76,7 @@ class ModulesMetaCest
 
 
     /**
-     * Get list of modules
+     * Get menu metadata of a given module
      * @param apiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
@@ -118,13 +118,13 @@ class ModulesMetaCest
     }
 
     /**
-     * Get list of modules
+     * Get layout metadata of module view
      * @param apiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      * 
      * HTTP Verb: GET
      * URL: /api/v8/modules/{id}/meta/view/{view}
-     * @see \MBConstants for {view}
+     * @see \MBConstants for posible {view} values
      */
     public function TestScenarioGetMetaLayout(apiTester $I)
     {
