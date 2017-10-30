@@ -681,16 +681,50 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/view/{view}
+     * GET /api/v8/modules/{module}/meta/view/{view}
+     * @see \MBConstants for {view}
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        /** @var \SugarBean $bean */
+        $sugarBean = \BeanFactory::newBean($args['module']);
+        
+        if(empty($sugarBean)) {
+            throw new NotFound(
+                '[ModuleController] [Module does not exist] ' . $args['module'],
+                ExceptionCode::API_MODULE_NOT_FOUND
+            );
+        }
+
+        require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
+        $parser = \ParserFactory::getParser($args['view'], $args['module']);
+        $viewdefs = $parser->_viewdefs;
+
+        if(empty($viewdefs)) {
+            throw new NotFound(
+                '[ModuleController] [ViewDefinitions does not exist] ' . $args['view'],
+                ExceptionCode::API_VIEWDEF_NOT_FOUND
+            );
+        }
+
+        $payload['meta'][$args['module']]['view'][$args['view']] = $viewdefs;
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
+
 
     /**
      * GET /api/v8/modules/{id}/relationships/{link}

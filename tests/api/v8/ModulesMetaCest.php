@@ -117,4 +117,32 @@ class ModulesMetaCest
         $I->assertArrayHasKey('return_action', $decodedResponse['meta']['Accounts']['menu'][0]['query']);
     }
 
+    /**
+     * Get list of modules
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     * 
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{id}/meta/view/{view}
+     * @see \MBConstants for {view}
+     */
+    public function TestScenarioGetMetaLayout(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        
+        // Edit View
+        $url = $I->getInstanceURL() . self::RESOURCE . '/meta/view/editview';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('meta', $decodedResponse);
+        $I->assertArrayHasKey('Accounts', $decodedResponse['meta']);
+        $I->assertArrayHasKey('view', $decodedResponse['meta']['Accounts']);
+        $I->assertArrayHasKey('editview', $decodedResponse['meta']['Accounts']['view']);
+    }
 }

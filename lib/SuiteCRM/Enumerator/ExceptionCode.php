@@ -61,4 +61,5 @@ class ExceptionCode
     const API_RESERVED_KEYWORD_NOT_ALLOWED = 8050;
     const API_RELATIONSHIP_NOT_FOUND = 8060;
     const API_RECORD_NOT_FOUND = 8070;
+    const API_VIEWDEF_NOT_FOUND = 8080;
 }
