@@ -112,7 +112,7 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/meta/Menu/modules
+     * GET /api/v8/modules/meta/menu/modules
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -120,7 +120,52 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        global $current_user;
+        global $sugar_config;
+        global $app_strings;
+
+        $config = $this->containers->get('ConfigurationManager');
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $payload = array();
+
+        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        $groupedTabsClass = new \GroupedTabStructure();
+        $modules = query_module_access_list($current_user);
+
+
+        $sugarView = new \SugarView();
+        foreach($modules as $moduleKey => $module) {
+            $moduleName = $module;
+            $menu = $sugarView->getMenu($moduleName);
+
+            $self = $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/';
+            $actions = array();
+            foreach($menu as $item) {
+                $url = parse_url($item[0]);
+                parse_str($url['query'], $orig);
+                $actions[] = array(
+                    'href' => $self . $item[2],
+                    'label' => $item[1],
+                    'action' => $item[2],
+                    'module' => $item[3],
+                    'type' => $item[3],
+                    'query' => $orig,
+                );
+            }
+
+            $modules[$moduleKey] = array(
+                'type' => $moduleName,
+                'href' => $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/',
+                'menu' => $actions
+            );
+        }
+
+        $payload['meta']['menu']['modules'] = array(
+            'all' => $modules,
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
@@ -141,6 +186,7 @@ class ModuleController extends ApiController
         global $sugar_config;
         global $app_strings;
 
+        $config = $this->containers->get('ConfigurationManager');
         $this->negotiatedJsonApiContent($req, $res);
 
         $payload = array();
@@ -168,7 +214,17 @@ class ModuleController extends ApiController
         // Setup the default group tab.
         $allGroup = $app_strings['LBL_TABGROUP_ALL'];
 
-        $payload['meta']['filters'] = array(
+        // Add url  to modules
+        foreach($modules as $moduleKey => $module) {
+            $moduleName = $module;
+            $modules[$moduleKey] = array(
+                'type' => $moduleName,
+                'href' => $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/',
+                'label' => $moduleKey
+            );
+        }
+
+        $payload['meta']['menu']['filters'] = array(
             'all' => $modules,
             'tabs' => $groupTabs
         );
@@ -732,6 +788,7 @@ class ModuleController extends ApiController
                 'label' => $item[1],
                 'action' => $item[2],
                 'module' => $item[3],
+                'type' => $item[3],
                 'query' => $orig,
             );
         }

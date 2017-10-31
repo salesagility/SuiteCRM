@@ -454,8 +454,39 @@ class ModulesMetaCest
 
         $I->assertNotEmpty($decodedResponse);
         $I->assertArrayHasKey('meta', $decodedResponse);
-        $I->assertArrayHasKey('filters', $decodedResponse['meta']);
-        $I->assertArrayHasKey('all', $decodedResponse['meta']['filters']);
-        $I->assertArrayHasKey('tabs', $decodedResponse['meta']['filters']);
+        $I->assertArrayHasKey('menu', $decodedResponse['meta']);
+        $I->assertArrayHasKey('filters', $decodedResponse['meta']['menu']);
+        $I->assertArrayHasKey('all', $decodedResponse['meta']['menu']['filters']);
+        $I->assertArrayHasKey('tabs', $decodedResponse['meta']['menu']['filters']);
     }
+
+    /**
+     * Get the module menus
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-compound-documents
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/meta/filters
+     */
+
+    public function TestScenarioModuleMenus(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $I->comment('Get emnu filters');
+        $url = $I->getInstanceURL() . '/api/v8/modules/meta/menu/modules';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('meta', $decodedResponse);
+        $I->assertArrayHasKey('menu', $decodedResponse['meta']);
+        $I->assertArrayHasKey('modules', $decodedResponse['meta']['menu']);
+        $I->assertArrayHasKey('all', $decodedResponse['meta']['menu']['modules']);
+    }
+
 }
