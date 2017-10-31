@@ -176,10 +176,8 @@ class ModuleController extends ApiController
     {
         $config = $this->containers->get('ConfigurationManager');
 
-        /**
-         * @var ModulesLib $lib;
-         */
-        $lib = $this->containers->get('ModuleLib');
+        /** @var \SuiteCRM\API\v8\Library\ModulesLib $lib; */
+        $lib = $this->containers->get('ModulesLib');
 
         $payload = array(
             'links' => array(),
@@ -187,8 +185,6 @@ class ModuleController extends ApiController
         );
 
         $this->negotiatedJsonApiContent($req, $res);
-
-
 
         $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
         $payload['data'] = $paginatedModuleRecords['list'];
@@ -360,9 +356,7 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        /**
-         * @var SuiteBeanResource $resource
-         */
+        /** @var SuiteBeanResource $resource */
         $resource = $this->containers->get('SuiteBeanResource');
         $resource = $resource->fromSugarBean($sugarBean);
 
@@ -440,13 +434,9 @@ class ModuleController extends ApiController
             throw $exception;
         }
 
-        /**
-         * @var Resource $resource
-         */
+        /** @var Resource $resource */
         $resource = $this->containers->get('Resource');
-        /**
-         * @var SuiteBeanResource $sugarBeanResource
-         */
+        /** @var SuiteBeanResource $sugarBeanResource */
         $sugarBeanResource = $this->containers->get('SuiteBeanResource');
         $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
         $sugarBeanResource->mergeAttributes(
@@ -645,27 +635,34 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/viewed
+     * GET /api/v8/modules/viewed
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @throws NotImplementedException
      */
-    public function getModuleMetaRecordsViewed(Request $req, Response $res, array $args)
+    public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
         throw new NotImplementedException();
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/favorites
+     * GET /api/v8/modules/favorites
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws \SuiteCRM\Exception\Exception
      */
-    public function getModuleMetaFavorites(Request $req, Response $res, array $args)
+    public function getModuleFavorites(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array();
+
+        /** @var \Favorites $favoritesBean */
+        $favoritesBean = \BeanFactory::newBean('Favorites');
+        $payload['data'] = $favoritesBean->getCurrentUserFavoritesForModule($args['module']);
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
@@ -709,7 +706,6 @@ class ModuleController extends ApiController
         }
 
         $payload['meta'][$args['module']]['view'][$args['view']] = $viewdefs;
-
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -764,9 +760,7 @@ class ModuleController extends ApiController
 
         $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
 
-        /**
-         * @var \Link2 $sugarBeanRelationship
-         */
+        /** @var \Link2 $sugarBeanRelationship */
         $sugarBeanRelationship = $sugarBean->{$args['link']};
 
         if($sugarBeanRelationship->getType() === 'one') {

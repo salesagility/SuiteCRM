@@ -46,6 +46,6 @@ use Slim\Exception\ContainerValueNotFoundException;
  * @throws ContainerValueNotFoundException
  * @return \SuiteCRM\API\v8\Library\ModulesLib
  */
-$container['ModuleLib'] = function ($container) {
+$container['ModulesLib'] = function ($container) {
     return new \SuiteCRM\API\v8\Library\ModulesLib($container);
 };

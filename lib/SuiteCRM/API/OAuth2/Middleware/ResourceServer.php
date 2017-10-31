@@ -72,6 +72,7 @@ class ResourceServer
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
+        global $current_user;
         try {
             if ($request->getUri()->getPath() !== 'oauth/access_token') {
                 $request = $this->server->validateAuthenticatedRequest($request);
@@ -82,6 +83,7 @@ class ResourceServer
                 if($user->status === 'Inactive') {
                     throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
                 }
+                $current_user  = $user;
             }
         } catch (OAuthServerException $exception) {
             $log = new Logger();

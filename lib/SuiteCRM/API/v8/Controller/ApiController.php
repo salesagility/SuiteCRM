@@ -273,7 +273,7 @@ class ApiController implements LoggerAwareInterface
     }
 
     /**
-     * @return string<<<<<<< feature/restapi_7_relationship
+     * @return string
      */
     public function getVersionStability()
     {

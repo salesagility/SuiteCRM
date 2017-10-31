@@ -8,6 +8,27 @@
 class ModulesMetaCest
 {
     const RESOURCE = '/api/v8/modules/Accounts';
+    private static $RECORD = '11111111-1111-1111-1111-111111111111';
+    private static $RECORD_TYPE = 'Accounts';
+    private static $FAVORITE_RESOURCE = '/api/v8/modules/Favorites';
+    /** @var Faker\Generator $fakeData */
+    protected $fakeData;
+
+    /** @var integer $fakeDataSeed */
+    protected $fakeDataSeed;
+
+
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function _before(AcceptanceTester $I)
+    {
+        if(!$this->fakeData) {
+            $this->fakeData = Faker\Factory::create();
+            $this->fakeDataSeed = rand(0, 2048);
+        }
+        $this->fakeData->seed($this->fakeDataSeed);
+    }
 
     /**
      * Get list of modules
@@ -120,7 +141,7 @@ class ModulesMetaCest
      * Get layout metadata of module view
      * @param apiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
-     * 
+     *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/view/{view}
      * @see \MBConstants for posible {view} values
@@ -130,7 +151,7 @@ class ModulesMetaCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        
+
         // Edit View
         $url = $I->getInstanceURL() . self::RESOURCE . '/meta/view/editview';
         $I->sendGET($url);
@@ -143,5 +164,101 @@ class ModulesMetaCest
         $I->assertArrayHasKey('Accounts', $decodedResponse['meta']);
         $I->assertArrayHasKey('view', $decodedResponse['meta']['Accounts']);
         $I->assertArrayHasKey('editview', $decodedResponse['meta']['Accounts']['view']);
+    }
+
+    /**
+     * Get favorites of the current user for a module
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-meta
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{module}/favorites
+     * @see global $moduleList for posible {module} values
+     */
+    public function TestScenarioGetModuleFavorites(apiTester $I) {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        // Create account
+        $I->comment('Create Account');
+        $url = $I->getInstanceURL() . self::RESOURCE;
+        $accountName = 'Test'. $this->fakeData->name();
+
+        $I->sendPost(
+            $url,
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Accounts',
+                    'attributes' => array(
+                        'name' => $accountName
+                    )
+                )
+            )
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        self::$RECORD = $response['data']['id'];
+
+        // Create Favorite
+        $I->comment('Create Favorite');
+        $url = $I->getInstanceURL() . self::$FAVORITE_RESOURCE;
+        $I->sendPost(
+            $url,
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Favorites',
+                    'attributes' => array(
+                        'name' => 'Accounts ' . self::$RECORD,
+                        'assigned_user_id' => 1,
+                        'assigned_user_name' => 'admin',
+                        'parent_id' => self::$RECORD,
+                        'parent_type'=> 'Accounts'
+                    )
+                )
+            )
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+        $I->assertArrayHasKey('attributes', $decodedResponse['data']);
+        $I->assertArrayHasKey('assigned_user_id', $decodedResponse['data']['attributes']);
+        $I->assertEquals('1', (string)  $decodedResponse['data']['attributes']['assigned_user_id']);
+
+        // Get Favorite
+        $I->comment('Get Favorite');
+        $url = $I->getInstanceURL() . self::RESOURCE . '/favorites';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+
+        if(isset($decodedResponse['data'][0])) {
+            // response has many results
+            $I->assertArrayHasKey('type', $decodedResponse['data'][0]);
+            $I->assertEquals('Accounts', $decodedResponse['data'][0]['type']);
+            $I->assertArrayHasKey('id', $decodedResponse['data'][0]);
+        } else {
+            $I->assertArrayHasKey('type', $decodedResponse['data']);
+            $I->assertEquals('Accounts', $decodedResponse['data']['type']);
+            $I->assertArrayHasKey('id', $decodedResponse['data']);
+            $I->assertEquals(self::$RECORD, $decodedResponse['data']['id']);
+
+        }
     }
 }
