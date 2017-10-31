@@ -127,12 +127,53 @@ class ModuleController extends ApiController
      * GET /api/v8/modules/meta/menu/filters
      * @param Request $req
      * @param Response $res
-     * @param array $args
-     * @throws NotImplementedException
+     * @param array $args 
+     * @throws ModuleNotFound
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws InvalidJsonApiResponse
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        global $current_user;
+        global $sugar_config;
+        global $app_strings;
+
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $payload = array();
+
+        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        $groupedTabsClass = new \GroupedTabStructure();
+        $modules = query_module_access_list($current_user);
+        //handle with submoremodules
+        $max_tabs = $current_user->getPreference('max_tabs');
+        // If the max_tabs isn't set incorrectly, set it within the range, to the default max sub tabs size
+        if (!isset($max_tabs) || $max_tabs <= 0 || $max_tabs > 10) {
+            // We have a default value. Use it
+            if (isset($sugar_config['default_max_tabs'])) {
+                $max_tabs = $sugar_config['default_max_tabs'];
+            } else {
+                $max_tabs = 8;
+            }
+        }
+
+        $subMoreModules = false;
+        $groupTabs = $groupedTabsClass->get_tab_structure(get_val_array($modules));
+        // We need to put this here, so the "All" group is valid for the user's preference.
+        $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
+
+        // Setup the default group tab.
+        $allGroup = $app_strings['LBL_TABGROUP_ALL'];
+
+        $payload['meta']['filters'] = array(
+            'all' => $modules,
+            'tabs' => $groupTabs
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**

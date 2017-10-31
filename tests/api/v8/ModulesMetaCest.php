@@ -429,4 +429,33 @@ class ModulesMetaCest
             $I->assertArrayHasKey('id', $decodedResponse['included']);
         }
     }
+
+    /**
+     * Get the module filters
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-compound-documents
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/meta/filters
+     */
+
+    public function TestScenarioModuleFilters(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $I->comment('Get emnu filters');
+        $url = $I->getInstanceURL() . '/api/v8/modules/meta/menu/filters';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('meta', $decodedResponse);
+        $I->assertArrayHasKey('filters', $decodedResponse['meta']);
+        $I->assertArrayHasKey('all', $decodedResponse['meta']['filters']);
+        $I->assertArrayHasKey('tabs', $decodedResponse['meta']['filters']);
+    }
 }
