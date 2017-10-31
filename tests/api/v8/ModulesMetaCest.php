@@ -168,7 +168,7 @@ class ModulesMetaCest
     }
 
     /**
-     * Get favorites of the current user for a module
+     * Get the current user's favorites for a single module
      * @param \apiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
@@ -259,13 +259,12 @@ class ModulesMetaCest
             $I->assertEquals('Accounts', $decodedResponse['data']['type']);
             $I->assertArrayHasKey('id', $decodedResponse['data']);
             $I->assertEquals(self::$RECORD, $decodedResponse['data']['id']);
-
         }
     }
     /**
-     * Get favorites of the current user all module
+     * Get the current user's favorite records for all modules
      * @param \apiTester $I
-     * @see http://jsonapi.org/format/1.0/#document-meta
+     * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/favorites
@@ -355,4 +354,42 @@ class ModulesMetaCest
         }
     }
 
+    /**
+     * Get the current user recently viewed records for all modules
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-compound-documents
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/viewed
+     */
+
+    public function TestScenarioGetAllModulesRecentlyViewed(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $I->comment('Get Recently Viewed');
+        $url = $I->getInstanceURL() . '/api/v8/modules/viewed';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+        $I->assertArrayHasKey('included', $decodedResponse);
+
+        if (isset($decodedResponse['included'][0])) {
+            // response has many results
+            $I->assertArrayHasKey('type', $decodedResponse['included'][0]);
+            $I->assertArrayHasKey('id', $decodedResponse['included'][0]);
+        } elseif (empty($decodedResponse['included'])) {
+            $I->comment('There are not recently viewed items');
+        } else {
+            $I->assertArrayHasKey('type', $decodedResponse['included']);
+            $I->assertArrayHasKey('id', $decodedResponse['included']);
+        }
+
+    }
 }
