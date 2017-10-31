@@ -374,15 +374,24 @@ class EmailsController extends SugarController
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
+                $oe = new OutboundEmail();
+                $oe->retrieve($storedOptions['outbound_email']);
+                
                 $dataAddress = array(
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'from' => $storedOptions['from_addr']
+                        'from' => $storedOptions['from_addr'],
+                        'name' => $inboundEmail->name,
+                        'oe' => $oe->mail_smtpuser,
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                    'isGroupEmailAccount' => $isGroupEmailAccount
+                    'isGroupEmailAccount' => $isGroupEmailAccount,
+                    'outboundEmail' => array(
+                        'id' => $oe->id,
+                        'name' => $oe->name,
+                    ),
                 );
 
                 // Include signature
@@ -643,6 +652,20 @@ class EmailsController extends SugarController
         global $db;
         global $mod_strings;
 
+                
+        global $current_user;
+        $email = new Email();
+        $email->email2init();
+        $ie = new InboundEmail();
+        $ie->email = $email;
+        $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        if(!$accounts) {
+            $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
+            SugarApplication::appendErrorMessage(
+                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>");
+        }
+        
+        
         if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
         } else {

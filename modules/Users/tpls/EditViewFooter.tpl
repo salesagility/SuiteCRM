@@ -488,3 +488,13 @@ onUserEditView();
         </td>
     </tr>
 </table>
+        
+        {if $showEmailSettingsPopup}
+        <script>
+            {literal}
+            $(function(){
+                SUGAR.email2.settings.showSettings();
+            });
+            {/literal}
+        </script>
+        {/if}
