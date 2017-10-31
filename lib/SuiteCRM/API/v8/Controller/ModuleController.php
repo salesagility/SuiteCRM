@@ -156,7 +156,27 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array(
+            'data' => array(),
+            'included' => array(),
+        );
+
+        /** @var \Favorites $favoritesBean */
+        $favoritesBean = \BeanFactory::newBean('Favorites');
+        $favorites = $favoritesBean->getCurrentUserSidebarFavorites(null);
+
+        foreach($favorites as $favorite) {
+            $payload['included'][] = array(
+                'id' => $favorite['id'],
+                'type' => $favorite['module_name'],
+                'attributes' => array(
+                    'name' => $favorite['item_summary']
+                )
+            );
+        }
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
@@ -686,7 +706,7 @@ class ModuleController extends ApiController
         $this->negotiatedJsonApiContent($req, $res);
         /** @var \SugarBean $bean */
         $sugarBean = \BeanFactory::newBean($args['module']);
-        
+
         if(empty($sugarBean)) {
             throw new NotFound(
                 '[ModuleController] [Module does not exist] ' . $args['module'],

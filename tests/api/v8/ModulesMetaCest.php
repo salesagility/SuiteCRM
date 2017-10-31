@@ -11,6 +11,7 @@ class ModulesMetaCest
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
     private static $RECORD_TYPE = 'Accounts';
     private static $FAVORITE_RESOURCE = '/api/v8/modules/Favorites';
+    private static $ALL_FAVORITE_RESOURCE = '/api/v8/modules/favorites';
     /** @var Faker\Generator $fakeData */
     protected $fakeData;
 
@@ -261,4 +262,97 @@ class ModulesMetaCest
 
         }
     }
+    /**
+     * Get favorites of the current user all module
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-meta
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/favorites
+     * @see global $moduleList for posible {module} values
+     */
+    public function TestScenarioGetAllModulesFavorites(apiTester $I) {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        // Create account
+        $I->comment('Create Account');
+        $url = $I->getInstanceURL() . self::RESOURCE;
+        $accountName = 'Test'. $this->fakeData->name();
+
+        $I->sendPost(
+            $url,
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Accounts',
+                    'attributes' => array(
+                        'name' => $accountName
+                    )
+                )
+            )
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        self::$RECORD = $response['data']['id'];
+
+        // Create Favorite
+        $I->comment('Create Favorite');
+        $url = $I->getInstanceURL() . self::$FAVORITE_RESOURCE;
+        $I->sendPost(
+            $url,
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Favorites',
+                    'attributes' => array(
+                        'name' => 'Accounts ' . self::$RECORD,
+                        'assigned_user_id' => 1,
+                        'assigned_user_name' => 'admin',
+                        'parent_id' => self::$RECORD,
+                        'parent_type'=> 'Accounts'
+                    )
+                )
+            )
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+        $I->assertArrayHasKey('attributes', $decodedResponse['data']);
+        $I->assertArrayHasKey('assigned_user_id', $decodedResponse['data']['attributes']);
+        $I->assertEquals('1', (string)  $decodedResponse['data']['attributes']['assigned_user_id']);
+
+        // Get Favorite
+        $I->comment('Get Favorite');
+        $url = $I->getInstanceURL() . self::$ALL_FAVORITE_RESOURCE;
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+        $I->assertArrayHasKey('included', $decodedResponse);
+
+        if(isset($decodedResponse['included'][0])) {
+            // response has many results
+            $I->assertArrayHasKey('type', $decodedResponse['included'][0]);
+            $I->assertArrayHasKey('id', $decodedResponse['included'][0]);
+        } else {
+            $I->assertArrayHasKey('type', $decodedResponse['included']);
+            $I->assertArrayHasKey('id', $decodedResponse['included']);
+        }
+    }
+
 }
