@@ -701,7 +701,7 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/viewed
+     * GET /api/v8/modules/{module}/viewed
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -709,6 +709,53 @@ class ModuleController extends ApiController
      */
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
+        $this->negotiatedJsonApiContent($req, $res);
+
+        global $current_user;
+        $dateTimeConverter  = $this->containers->get('DateTimeConverter');
+
+        /** @var \Tracker $tracker */
+        $tracker = \BeanFactory::newBean('Trackers');
+
+         $payload = array(
+            'data' => array(),
+            'included' => array(),
+        );
+
+        $recentlyViewedSugarBeans = $tracker->get_recently_viewed($current_user->id, $args['module']);
+        foreach($recentlyViewedSugarBeans as $viewed) {
+            // Convert to DB date
+            $datetime = $dateTimeConverter->fromUser($viewed['date_modified']);
+            if (empty($datetime)) {
+                $datetime = $dateTimeConverter->fromDb($viewed['date_modified']);
+            }
+
+            if (empty($datetime)) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field from recently viewed] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                );
+            }
+
+            $datetimeISO8601 = $datetime->format(\DateTime::ATOM);
+            if ($datetime === false) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field to ISO 8601] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+            }
+
+            $payload['included'][] = array(
+                'id' => $viewed['item_id'],
+                'type' => $viewed['module_name'],
+                'attributes' => array(
+                    'name' => $viewed['item_summary'],
+                    'order'=> $viewed['id'],
+                    'date_modified' => $datetimeISO8601
+                )
+            );
+        }
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
         throw new NotImplementedException();
     }
 

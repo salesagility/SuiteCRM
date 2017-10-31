@@ -363,6 +363,44 @@ class ModulesMetaCest
      * URL: /api/v8/modules/viewed
      */
 
+    public function TestScenarioGetModuleRecentlyViewed(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $I->comment('Get Recently Viewed');
+        $url = $I->getInstanceURL() . '/api/v8/modules/Accounts/viewed';
+        $I->sendGET($url);
+        $I->seeResponseCodeIs(200);
+        $response = $I->grabResponse();
+        $decodedResponse = json_decode($response, true);
+
+        $I->assertNotEmpty($decodedResponse);
+        $I->assertArrayHasKey('data', $decodedResponse);
+        $I->assertArrayHasKey('included', $decodedResponse);
+
+        if (isset($decodedResponse['included'][0])) {
+            // response has many results
+            $I->assertArrayHasKey('type', $decodedResponse['included'][0]);
+            $I->assertArrayHasKey('id', $decodedResponse['included'][0]);
+        } elseif (empty($decodedResponse['included'])) {
+            $I->comment('There are not recently viewed items');
+        } else {
+            $I->assertArrayHasKey('type', $decodedResponse['included']);
+            $I->assertArrayHasKey('id', $decodedResponse['included']);
+        }
+    }
+
+    /**
+     * Get the current user recently viewed records for all modules
+     * @param \apiTester $I
+     * @see http://jsonapi.org/format/1.0/#document-compound-documents
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/viewed
+     */
+
     public function TestScenarioGetAllModulesRecentlyViewed(apiTester $I)
     {
         $I->loginAsAdmin();
@@ -390,6 +428,5 @@ class ModulesMetaCest
             $I->assertArrayHasKey('type', $decodedResponse['included']);
             $I->assertArrayHasKey('id', $decodedResponse['included']);
         }
-
     }
 }
