@@ -15,7 +15,7 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * If you're unable to find an open issue that relates to your problem, [open a new one.](https://github.com/salesagility/SuiteCRM/issues/new) Please be sure to follow the issue template as much as possible.
 
-* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://www.suitecrm.com/forum/suite-forum.)
+* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://www.suitecrm.com/forum/suite-forum)
 
 #### **Did you fix a bug?**
 
