@@ -44,23 +44,23 @@ admin	<!--
 <!-- BEGIN: notes -->
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	<tr height="20" >
-	<td scope="col" scope="col" width="40%" ><slot>{MOD.LBL_LIST_SUBJECT}</slot></td>
-	<td scope="col" width="20%" ><slot>{MOD.LBL_LIST_FILENAME}</slot></td>
-	<td scope="col" width="15%" ><slot>{MOD.LBL_LIST_CONTACT_NAME}</slot></td>
-	<td scope="col" width="15%" ><slot>{MOD.LBL_LIST_DATE_MODIFIED}</slot></td>
-	<td scope="col" width="10%" ><slot>&nbsp;</slot></td>
+	<td scope="col" scope="col" width="40%" ><span>{MOD.LBL_LIST_SUBJECT}</span></td>
+	<td scope="col" width="20%" ><span>{MOD.LBL_LIST_FILENAME}</span></td>
+	<td scope="col" width="15%" ><span>{MOD.LBL_LIST_CONTACT_NAME}</span></td>
+	<td scope="col" width="15%" ><span>{MOD.LBL_LIST_DATE_MODIFIED}</span></td>
+	<td scope="col" width="10%" ><span>&nbsp;</span></td>
 	</tr>
 	
 
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-    	<td scope="row" valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Notes&record={NOTE.ID}{RETURN_URL}" >{NOTE.NAME}</a></slot></td>
-    	<td valign=TOP><slot><a href="{NOTE.FILEURL}" target="_blank" >{NOTE.FILENAME}</a></slot></td>
-		<td valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={NOTE.CONTACT_ID}{RETURN_URL}">{NOTE.CONTACT_NAME}</a></slot></td>
-    	<td nowrap valign=TOP><slot>{NOTE.DATE_MODIFIED}</slot></td>
+    	<td scope="row" valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Notes&record={NOTE.ID}{RETURN_URL}" >{NOTE.NAME}</a></span></td>
+    	<td valign=TOP><span><a href="{NOTE.FILEURL}" target="_blank" >{NOTE.FILENAME}</a></span></td>
+		<td valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={NOTE.CONTACT_ID}{RETURN_URL}">{NOTE.CONTACT_NAME}</a></span></td>
+    	<td nowrap valign=TOP><span>{NOTE.DATE_MODIFIED}</span></td>
     	
-     			<td nowrap align="center" valign=TOP><slot><a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Notes&record={NOTE.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Notes&record={NOTE.ID}{RETURN_URL}">{APP.LNK_EDIT}</a>&nbsp;&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_RECORD}')" href="{URL_PREFIX}index.php?action=Delete&module=Notes&record={NOTE.ID}{RETURN_URL}">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_RECORD}')" href="{URL_PREFIX}index.php?action=Delete&module=Notes&record={NOTE.ID}{RETURN_URL}">{APP.LNK_DELETE}</a></slot></td>
+     			<td nowrap align="center" valign=TOP><span><a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Notes&record={NOTE.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Notes&record={NOTE.ID}{RETURN_URL}">{APP.LNK_EDIT}</a>&nbsp;&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_RECORD}')" href="{URL_PREFIX}index.php?action=Delete&module=Notes&record={NOTE.ID}{RETURN_URL}">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_RECORD}')" href="{URL_PREFIX}index.php?action=Delete&module=Notes&record={NOTE.ID}{RETURN_URL}">{APP.LNK_DELETE}</a></span></td>
 	  	
 </tr>
 <!-- END: row -->
