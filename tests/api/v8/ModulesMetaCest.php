@@ -438,7 +438,6 @@ class ModulesMetaCest
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/filters
      */
-
     public function TestScenarioModuleFilters(apiTester $I)
     {
         $I->loginAsAdmin();
@@ -468,7 +467,6 @@ class ModulesMetaCest
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/filters
      */
-
     public function TestScenarioModuleMenus(apiTester $I)
     {
         $I->loginAsAdmin();
