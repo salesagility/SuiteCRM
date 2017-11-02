@@ -710,7 +710,7 @@ class ModuleController extends ApiController
         $moduleLanguage = $this->containers->get('ModuleLanguage');
         $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
-        $payload['meta'][$args['module']]['mod_strings'] = $moduleLanguageStrings;
+        $payload['meta'][$args['module']]['language'] = $moduleLanguageStrings;
 
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
@@ -733,7 +733,7 @@ class ModuleController extends ApiController
     {
         $this->negotiatedJsonApiContent($req, $res);
 
-        $payload['meta'][$args['module']]['field_defs'] = \BeanFactory::getBean($args['module'])->field_defs;
+        $payload['meta'][$args['module']]['attributes'] = \BeanFactory::getBean($args['module'])->field_defs;
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -996,23 +996,41 @@ class ModuleController extends ApiController
                 $payload['data'] = $data;
             }
         } elseif($sugarBeanRelationship->getType() === 'many') {
-            // to many
-            $relatedIds = $sugarBean->{$args['link']}->get();
+             // to many
+            /** @var Resource $resource */
+            $resource = $this->containers->get('Resource');
+            $related = $sugarBeanRelationship->query(
+                 array(
+                      'include_middle_table_fields' => true
+                 )
+            );
             $relatedDefinition = $sugarBean->field_defs[$args['link']];
             $relatedType = $sugarBeanRelationship->getRelatedModuleName();
-            foreach ($relatedIds as $id) {
-                $data = array(
-                    'id' => $id,
+            foreach ($related['rows'] as $row) {
+               $data = array(
+                    'id' => $row['id'],
                     'type' => $relatedType
-                );
+               );
+               $meta = array(
+                    'middle_table' => array(
+                         'data' => array(
+                            'id' => '',
+                            'type' => $RelationshipType,
+                            'attributes' => $row
+                         )
+                    )
+               );
+
                 $links = new Links();
                 $data['links'] = $links
                     ->withHref(
                         $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                        $relatedDefinition['module'].'/'.$id)
+                        $relatedDefinition['module'] . '/' . $row['id'])
                     ->toJsonApiResponse();
+                $data['meta'] = $meta;
                 $payload['data'][] = $data;
             }
+            $payload['meta']['attributes'] = $sugarBeanRelationship->relationship->def['fields'];
         } else {
             throw new  BadRequest('[ModuleController] [Relationship type not supported]');
         }

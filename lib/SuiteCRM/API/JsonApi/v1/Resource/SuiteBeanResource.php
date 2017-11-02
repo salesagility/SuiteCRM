@@ -46,6 +46,7 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository;
 use SuiteCRM\API\v8\Controller\ApiController;
+use SuiteCRM\API\v8\JsonApi\Resource\Relationship;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
@@ -151,6 +152,7 @@ class SuiteBeanResource extends Resource
                             $config['site_url'] . '/api/v' . $apiController->getVersionMajor().'/modules/' .
                             $sugarBean->module_name . '/'.$this->id. '/relationships/'.$definition['name'])
                         ->toJsonApiResponse();
+                // TODO: Add withMeta for middle table fields
 
                 // remove data element from relationship
                 if(isset($this->relationships[$definition['name']]['data'])) {
@@ -274,7 +276,7 @@ class SuiteBeanResource extends Resource
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
 
-        // TODO: Handle relationships
+        //  Handle relationships
         foreach ($this->relationships as $relationshipName => $relationship) {
 
             // Lets only focus on the relationships which need to be updated
@@ -302,14 +304,15 @@ class SuiteBeanResource extends Resource
                     if ($toManySugarBeanLink->getType() !== 'many') {
                         throw new Conflict(
                             '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
-                            'expected to many relationship from'.
+                            'expected to many relationship from '.
                             $relationshipName
                         );
                     }
                     $relatedSugarBeanIds = $toManySugarBeanLink->get();
                     $toManyRelationships = $relationship['data'];
                     $relatedResourceIds = array();
-                    $relatedResourceIdsToAdd= array();
+                    $relatedResourceIdsToAdd = array();
+                    $middleTableFields = array();
                     /** @var array $toManyRelationships */
                     foreach ($toManyRelationships as $toManyRelationshipName => $toManyRelationship) {
                         $relatedResourceIds[] = $toManyRelationship['id'];
@@ -321,6 +324,8 @@ class SuiteBeanResource extends Resource
                         $relatedResourceIdsToAdd[] = $toManyRelationship['id'];
                     }
                     // add new relationships
+                    // TODO: Add support for middle fields
+
                     $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd);
                     if($added !== true) {
                         throw new Conflict(

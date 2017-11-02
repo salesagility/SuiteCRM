@@ -17,6 +17,8 @@ class ModulesCest
     private static $PRODUCT_CATEGORY_RECORD_TYPE = 'AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = array();
+    private static $MEETINGS_RESOURCE = '/api/v8/modules/Meetings';
+    private static $MEETINGS_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     /**
      * @var Faker\Generator $fakeData
      */
@@ -1032,7 +1034,7 @@ class ModulesCest
      */
     public function TestScenarioDeleteManyToManyRelationships (apiTester $I)
     {
-        // TODO: DELETE single resource
+        // DELETE single resource
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -1181,5 +1183,18 @@ class ModulesCest
         $I->assertEquals(self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1], $responseProducts['data'][0]['id']);
         $I->assertArrayHasKey('type', $responseProducts['data'][0]);
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
+    }
+
+
+    public function TestScenarioMeetingsContactsMiddleTableFields(apiTester $I)
+    {
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+
+        $url = $I->getInstanceURL() . self::$MEETINGS_RESOURCE;
+
+        $I->comment('Create a meeting with invitees');
+        $I->comment('Set the accept_status field');
     }
 }

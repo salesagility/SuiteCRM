@@ -57,9 +57,9 @@ class ModulesMetaCest
         $I->assertNotEmpty($decodedResponse);
         $I->assertArrayHasKey('meta', $decodedResponse);
         $I->assertArrayHasKey('Accounts', $decodedResponse['meta']);
-        $I->assertArrayHasKey('mod_strings', $decodedResponse['meta']['Accounts']);
+        $I->assertArrayHasKey('language', $decodedResponse['meta']['Accounts']);
 
-        $I->assertNotEmpty($decodedResponse['meta']['Accounts']['mod_strings']);
+        $I->assertNotEmpty($decodedResponse['meta']['Accounts']['language']);
     }
 
     /**
@@ -90,9 +90,9 @@ class ModulesMetaCest
         $I->assertNotEmpty($decodedResponse);
         $I->assertArrayHasKey('meta', $decodedResponse);
         $I->assertArrayHasKey('Accounts', $decodedResponse['meta']);
-        $I->assertArrayHasKey('field_defs', $decodedResponse['meta']['Accounts']);
+        $I->assertArrayHasKey('attributes', $decodedResponse['meta']['Accounts']);
 
-        $I->assertNotEmpty($decodedResponse['meta']['Accounts']['field_defs']);
+        $I->assertNotEmpty($decodedResponse['meta']['Accounts']['attributes']);
     }
 
 
