@@ -42,10 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-function getModuleFields($module, $view='EditView', $value = '', $valid = array())
-{
+function getModuleFields(
+    $module,
+    $view = 'EditView',
+    $value = '',
+    $valid = array(),
+    $overrideArray = array(
+        "email1",
+        "email2"
+    )
+) {
     global $app_strings, $beanList, $current_user;
-
 
     $blockedModuleFields = array(
         // module = array( ... fields )
@@ -83,9 +90,15 @@ function getModuleFields($module, $view='EditView', $value = '', $valid = array(
                             continue;
                         }
                     }
-                    if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
-                                $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
-                    ) {
+                    if ($arr['type'] != 'link' &&
+                        ((!isset($arr['source']) || $arr['source'] != 'non-db' || in_array($name, $overrideArray)) ||
+                         ($arr['type'] == 'relate' && isset($arr['id_name']))) &&
+                        (empty($valid) || in_array(
+                                $arr['type'],
+                                $valid
+                            )) &&
+                        $name != 'currency_name' &&
+                        $name != 'currency_symbol') {
                         if (isset($arr['vname']) && $arr['vname'] !== '') {
                             $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
                         } else {
