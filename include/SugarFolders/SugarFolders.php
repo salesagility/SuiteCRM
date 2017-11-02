@@ -571,8 +571,7 @@ class SugarFolder
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
             if (!empty($a['folder_type']) &&
-                $a['folder_type'] !== $myArchiveTypeString &&
-                $a['created_by'] === $current_user->id
+                $a['folder_type'] !== $myArchiveTypeString 
             ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;

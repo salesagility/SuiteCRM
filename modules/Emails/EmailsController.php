@@ -466,7 +466,12 @@ class EmailsController extends SugarController
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list('', "mailbox_id = '" . $db->quote($_REQUEST['inbound_email_record']) . "' AND uid = '{$db->quote($_REQUEST['uid'])}'");
+        
+        $inboundEmailRecordIdQuoted = $db->quote($_REQUEST['inbound_email_record']);
+        $uidQuoted = $db->quote($_REQUEST['uid']);
+        
+        $result = $emails->get_full_list('', "mailbox_id = '" . $inboundEmailRecordIdQuoted . "' AND uid = '" . $uidQuoted . "'");
+
         if (empty($result)) {
             $this->view = 'detailnonimported';
         } else {
