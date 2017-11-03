@@ -107,7 +107,6 @@ class ModuleController extends ApiController
         }
 
         $this->negotiatedJsonApiContent($req, $res);
-
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -1015,7 +1014,7 @@ class ModuleController extends ApiController
                     'middle_table' => array(
                          'data' => array(
                             'id' => '',
-                            'type' => $RelationshipType,
+                            'type' => $relationshipType,
                             'attributes' => $row
                          )
                     )

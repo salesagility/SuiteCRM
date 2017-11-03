@@ -215,7 +215,7 @@ class Resource extends ResourceIdentifier
      * @param Relationship $relationship
      * @return Resource
      */
-    public function withRelationship(Relationship $relationship) {
+    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
         $relationshipName = $relationship->getRelatationshipName();
         $this->relationships[$relationshipName] = $relationship->toJsonApiResponse();
         return clone $this;

@@ -14,3 +14,50 @@ extensions:
         - Codeception\Extension\RunFailed
 params:
     - env
+
+coverage:
+     enabled: true
+     include:
+        - data/*
+        - modules/*
+        - custom/*
+        - include/*
+        - metadata/*
+        - install/*
+        - ModuleInstall/*
+        - campaign_tracker.php
+        - cron.php
+        - emailmandelivery.php
+        - ical_server.php
+        - json_server.php
+        - SugarSecurity.php
+        - TreeData.php
+        - dictionary.php
+        - export.php
+        - index.php
+        - maintenance.php
+        - run_job.php
+        - vcal_server.php
+        - download.php
+        - HandleAjaxCall.php
+        - install.php
+        - pdf.php
+        - soap.php
+        - vCard.php
+     exclude:
+       - cache/*
+       - jssource/*
+       - Zend/*
+       - XTemplate/*
+       - include/Smarty/*
+       - include/tcpdf/*
+       - include/reCaptcha/*
+       - include/nusoap/*
+       - include/phpmailer/*
+       - include/Pear/*
+       - include/pclzip/*
+       - include/HTTP_WebDAV_Server/*
+       - include/HTMLPurifier/*
+       - include/javascript/*
+     low_limit: 30
+     high_limit: 60

@@ -46,7 +46,6 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository;
 use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\API\v8\JsonApi\Resource\Relationship;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
@@ -408,7 +407,7 @@ class SuiteBeanResource extends Resource
      * @param Relationship $relationship
      * @return SuiteBeanResource
      */
-    public function withRelationship(Relationship $relationship) {
+    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
         $relationshipName = $relationship->getRelationshipName();
         $this->relationships[$relationshipName]['data'] = $relationship->toJsonApiResponse();
         return clone $this;
