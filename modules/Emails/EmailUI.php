@@ -1051,13 +1051,18 @@ eoq;
     /**
      * returns an array of nodes that correspond to IMAP mailboxes.
      * @param bool $forceRefresh
+     * @param User|null $user User
      * @return object TreeView object
      */
-    function getMailboxNodes()
+    function getMailboxNodes($forceRefresh = false, $user = null)
     {
         global $sugar_config;
         global $current_user;
         global $app_strings;
+        
+        if(!$user) {
+            $user = $current_user;
+        }
 
         $tree = new Tree("frameFolders");
         $tree->tree_style = 'include/ytree/TreeView/css/check/tree.css';
@@ -1070,15 +1075,15 @@ eoq;
         $rootNode->dynamicloadfunction = '';
         $rootNode->expanded = true;
         $rootNode->dynamic_load = true;
-        $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+        $showFolders = sugar_unserialize(base64_decode($user->getPreference('showFolders', 'Emails')));
 
         if (empty($showFolders)) {
             $showFolders = array();
         }
 
         // INBOX NODES
-        if ($current_user->hasPersonalEmail()) {
-            $personals = $ie->retrieveByGroupId($current_user->id);
+        if ($user->hasPersonalEmail()) {
+            $personals = $ie->retrieveByGroupId($user->id);
 
             foreach ($personals as $k => $personalAccount) {
                 if (in_array($personalAccount->id, $showFolders)) {
@@ -1119,7 +1124,7 @@ eoq;
         }
 
         // GROUP INBOX NODES
-        $beans = $ie->retrieveAllByGroupId($current_user->id, false);
+        $beans = $ie->retrieveAllByGroupId($user->id, false);
         foreach ($beans as $k => $groupAccount) {
             if (in_array($groupAccount->id, $showFolders)) {
                 // check for cache value

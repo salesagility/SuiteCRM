@@ -49,18 +49,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param array $subs
  * @param Email $email
  * @param JSON $json
+ * @param User|null $user
  * @return string JSON
  */
-function handleSubs($subs, $email, $json)
+function handleSubs($subs, $email, $json, $user = null)
 {
 
     // flows into next case statement
     global $db;
     global $current_user;
-
+    
+    if(!$user) {
+        $user = $current_user;
+    }
+    
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
     $viewFolders = $subs;
-    $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
+    $user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
     $tree = $email->et->getMailboxNodes(false);
     $return = $tree->generateNodesRaw();
     $out = $json->encode($return);
@@ -76,7 +81,7 @@ function handleSubs($subs, $email, $json)
         }
     }
 
-    $email->et->folder->setSubscriptions($sub);
+    $email->et->folder->setSubscriptions($sub, $user);
 
     return $out;
 }
@@ -1073,7 +1078,14 @@ eoq;
             break;
 
         case "setFolderViewSelection":
-            $out = handleSubs($_REQUEST['ieIdShow'], $email, $json);
+            
+            $user = 
+                isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
+                    BeanFactory::getBean('Users', $_REQUEST['user']) : 
+                    $current_user;  
+            
+            $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
+            
             echo $out;
             break;
 
