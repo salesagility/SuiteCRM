@@ -750,7 +750,13 @@ class EmailTemplate extends SugarBean
         foreach ($replacement as $key => $value) {
             // @see defect #48641
             if ('multienum' == $field_def['type']) {
-                $value = implode(', ', unencodeMultienum($value));
+                // Issue #2802
+                 $mVals = unencodeMultienum($value);
+                 $translatedVals = array();
+                 foreach($mVals as $mVal){
+                     $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
+                 }
+                 $value = implode(", ", $translatedVals);
             }
             $data[$key] = $value;
         }
