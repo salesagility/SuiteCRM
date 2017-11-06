@@ -45,39 +45,51 @@
 class SugarView
 {
     /**
+     * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
      * the controller and the view.  The bean will automatically be set for us, but this
      * is meant to hold anything else.
      */
     public $view_object_map = array();
+
     /**
+     * @var string module
      * The name of the current module.
      */
     public $module = '';
+
     /**
+     * @var string action
      * The name of the current action.
      */
     public $action = '';
+
     /**
      * @var SugarBean
      */
     public $bean;
+
     /**
      * @var Sugar_Smarty
      * Sugar_Smarty. This is useful if you have a view and a subview you can
      * share the same smarty object.
      */
     public $ss;
+
     /**
+     * @var array $errors
      * Any errors that occurred this can either be set by the view or the controller or the model
      */
     public $errors = array();
+
     /**
+     * @var boolean $suppressDisplayErrors
      * Set to true if you do not want to display errors from SugarView::displayErrors(); instead they will be returned
      */
     public $suppressDisplayErrors = false;
 
     /**
+     * @var array $options
      * Options for what UI elements to hide/show/
      */
     public $options = array(
@@ -89,8 +101,23 @@ class SugarView
         'show_javascript' => true,
         'view_print' => false,
     );
+
+    /**
+     * @var string $type
+     * Represents which view to use for loading metadata definitions eg 'edit', 'detail' or list etc.
+     */
     public $type;
+
+    /**
+     * @var float $responseTime
+     * Measure time it takes to process view
+     */
     public $responseTime;
+
+    /**
+     * @var integer $fileResources
+     *  Print out the resources used in constructing the page.
+     */
     public $fileResources;
 
     /**
@@ -131,6 +158,9 @@ class SugarView
         $this->_initSmarty();
     }
 
+    /**
+     * Set up smarty template
+     */
     protected function _initSmarty()
     {
         $this->ss = new Sugar_Smarty();
@@ -374,7 +404,7 @@ class SugarView
         $shortcut_menu = array();
         foreach ($this->getMenu() as $key => $menu_item) {
             $shortcut_menu[$key] = array(
-                "URL" => $menu_item[0],
+                "URL" => ajaxLink($menu_item[0]),
                 "LABEL" => $menu_item[1],
                 "MODULE_NAME" => $menu_item[2],
                 "IMAGE" => $themeObject->getImage(
@@ -652,7 +682,7 @@ class SugarView
                 $mod_strings = return_module_language($current_language, $module_key);
                 foreach ($this->getMenu($module_key) as $key => $menu_item) {
                     $shortcutTopMenu[$module_key][$key] = array(
-                        "URL" => $menu_item[0],
+                        "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
                         "IMAGE" => $themeObject->getImage(
@@ -688,7 +718,7 @@ class SugarView
                 $mod_strings = return_module_language($current_language, $module_key);
                 foreach ($this->getMenu($module_key) as $key => $menu_item) {
                     $shortcutExtraMenu[$module_key][$key] = array(
-                        "URL" => $menu_item[0],
+                        "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
                         "IMAGE" => $themeObject->getImage(
@@ -1325,13 +1355,13 @@ EOHTML;
             $module_menu[] = array(
                 "index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView",
                 $GLOBALS['mod_strings']['LNK_NEW_RECORD'],
-                "{$GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL']}$module",
+                'Create',
                 $module
             );
             $module_menu[] = array(
                 "index.php?module=$module&action=index",
                 $GLOBALS['mod_strings']['LNK_LIST'],
-                $module,
+                'List',
                 $module
             );
             if (($this->bean instanceof SugarBean) && !empty($this->bean->importable)) {

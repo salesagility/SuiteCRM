@@ -46,7 +46,7 @@ function tln_tagprint($tagname, $attary, $tagtype)
         $fulltag = '<' . $tagname;
         if (is_array($attary) && sizeof($attary)) {
             $atts = array();
-            while (list($attname, $attvalue) = each($attary)) {
+            foreach($attary as $attname => $attvalue) {
                 array_push($atts, "$attname=$attvalue");
             }
             $fulltag .= ' ' . join(' ', $atts);
@@ -433,7 +433,7 @@ function tln_getnxtag($body, $offset)
  *
  * @param string $attvalue the by-ref value to check.
  * @param string $regex    the regular expression to check against.
- * @param boolean $hex        whether the entites are hexadecimal.
+ * @param boolean $hex        whether the entities are hexadecimal.
  * @return boolean            True or False depending on whether there were matches.
  */
 function tln_deent(&$attvalue, $regex, $hex = false)
@@ -520,7 +520,7 @@ function tln_fixatts(
     $trans_image_path,
     $block_external_images
 ) {
-    while (list($attname, $attvalue) = each($attary)) {
+    foreach($attary as $attname => $attvalue) {
         /**
          * See if this attribute should be removed.
          */
@@ -772,7 +772,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     tln_defang($contentTemp);
     tln_unspace($contentTemp);
 
-    $match   = Array('/\/\*.*\*\//',
+    $match   = array('/\/\*.*\*\//',
                     '/expression/i',
                     '/behaviou*r/i',
                     '/binding/i',
@@ -780,7 +780,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                     '/javascript/i',
                     '/script/i',
                     '/position/i');
-    $replace = Array('','idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', '');
+    $replace = array('','idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', '');
     $contentNew = preg_replace($match, $replace, $contentTemp);
     if ($contentNew !== $contentTemp) {
         $content = $contentNew;
