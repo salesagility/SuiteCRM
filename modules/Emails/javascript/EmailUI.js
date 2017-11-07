@@ -2198,8 +2198,19 @@
 
       if (a_active_accnts == "")
         a_active_accnts = "&ieIdShow[]=";
+      
+      getRequestedParameter = function (name) {
+        if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+          return decodeURIComponent(name[1]);
+      }
 
-      var query = "&emailUIAction=setFolderViewSelection" + a_active_accnts;
+      var currentUserRecord = getRequestedParameter('record');
+      
+      if(typeof currentUserRecord === 'undefined') {
+        currentUserRecord = $('input[name="record"]').val();
+      }
+
+      var query = "&emailUIAction=setFolderViewSelection" + a_active_accnts + '&user=' + currentUserRecord;
 
       AjaxObject.startRequest(callbackFolders, urlStandard + query);
     },
