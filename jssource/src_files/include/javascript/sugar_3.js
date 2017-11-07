@@ -944,9 +944,9 @@ function validate_form(formname, startsWith) {
         var bail = false;
 
 
-        //If a field is not required and it is blank or is binarydependant, skip validation.
+        //If a field is not required and it is blank or is binarydependant or is callback, skip validation.
         //Example of binary dependant fields would be the hour/min/meridian dropdowns in a date time combo widget, which require further processing than a blank check
-        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep')) {
+        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep' && validate[formname][i][jstypeIndex]  != 'callback')) {
           continue;
         }
 
@@ -1277,6 +1277,7 @@ function validate_form(formname, startsWith) {
       isError = false;
     }
   }
+
 
 //END BUG# 15102
 

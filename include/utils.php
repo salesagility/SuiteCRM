@@ -3989,7 +3989,7 @@ function getJSONobj()
     static $json = null;
     if (!isset($json)) {
         require_once 'include/JSON.php';
-        $json = new JSON(JSON_LOOSE_TYPE);
+        $json = new JSON();
     }
 
     return $json;
