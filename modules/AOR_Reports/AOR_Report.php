@@ -980,8 +980,8 @@ class AOR_Report extends Basic
                     if ($att['function'] != '' || $att['params'] != '') {
                         $csv .= $this->encloseForCSV($row[$name]);
                     } else {
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
-                            $att['field'], 'DetailView', $row[$name], '', $currency_id))));
+                        $module_field = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name], '', '', '', true);
+                        $csv .= $this->encloseForCSV(trim(strip_tags($module_field)));
                     }
                     $csv .= $delimiter;
                 }
