@@ -79,6 +79,11 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
      */
     protected $type;
 
+     /**
+     * @var array $meta
+     */
+    protected $meta;
+
     /**
      * Resource constructor.
      * @param ContainerInterface $containers
@@ -128,6 +133,16 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
     }
 
     /**
+     * @param array $meta
+     * @return ResourceIdentifier
+     */
+    public function withMeta($meta)
+    {
+        $this->meta = $meta;
+        return clone $this;
+    }
+
+    /**
      * Sets a logger instance on the object.
      *
      * @param LoggerInterface $logger
@@ -150,6 +165,10 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
         if(empty($this->getType()) === false) {
             $response['id'] = $this->id;
             $response['type'] = $this->type;
+        }
+
+        if($this->meta !== null) {
+            $response['meta'] = $this->meta;
         }
 
         return $response;

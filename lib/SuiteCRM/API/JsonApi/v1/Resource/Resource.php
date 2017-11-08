@@ -104,11 +104,6 @@ class Resource extends ResourceIdentifier
     protected $links;
 
     /**
-     * @var array $meta
-     */
-    protected $meta;
-
-    /**
      * @var string $source rfc6901
      * @see https://tools.ietf.org/html/rfc6901
      */
@@ -117,12 +112,12 @@ class Resource extends ResourceIdentifier
     /**
      * @param array $data
      * @param string $source rfc6901
-     * @return Resource
+     * @return Resource|$this
      * @throws Conflict
      * @throws BadRequest
      * @see https://tools.ietf.org/html/rfc6901
      */
-    public function fromDataArray($data, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromJsonApiRequest($data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         if(isset($data['id'])) {
             $this->id = $data['id'];
@@ -213,12 +208,17 @@ class Resource extends ResourceIdentifier
 
     /**
      * @param Relationship $relationship
-     * @return Resource
+     * @return Resource|$this
      */
     public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
         $relationshipName = $relationship->getRelatationshipName();
         $this->relationships[$relationshipName] = $relationship->toJsonApiResponse();
         return clone $this;
+    }
+
+    public function getRelationshipByName($link)
+    {
+        return $this->relationships[$link]['data'];
     }
 
     /**

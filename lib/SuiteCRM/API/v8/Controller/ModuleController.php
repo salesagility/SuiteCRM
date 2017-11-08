@@ -440,7 +440,7 @@ class ModuleController extends ApiController
         /** @var SuiteBeanResource $resource */
         $sugarBeanResource = $this->containers->get('SuiteBeanResource');
         $sugarBean = $sugarBeanResource
-            ->fromDataArray($body['data'])
+            ->fromJsonApiRequest($body['data'])
             ->toSugarBean();
 
 
@@ -602,7 +602,7 @@ class ModuleController extends ApiController
         $sugarBeanResource = $this->containers->get('SuiteBeanResource');
         $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
         $sugarBeanResource->mergeAttributes(
-            $resource->fromDataArray($body['data'])
+            $resource->fromJsonApiRequest($body['data'])
         );
         $sugarBean = $sugarBeanResource->toSugarBean();
         // Handle Request
@@ -881,6 +881,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @return Response
      * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
      * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
      * @throws \InvalidArgumentException
@@ -889,7 +890,6 @@ class ModuleController extends ApiController
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws \SuiteCRM\API\v8\Exception\BadRequest
-
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
@@ -1010,11 +1010,12 @@ class ModuleController extends ApiController
                     'id' => $row['id'],
                     'type' => $relatedType
                );
+
                $meta = array(
                     'middle_table' => array(
                          'data' => array(
                             'id' => '',
-                            'type' => $relationshipType,
+                            'type' => 'Link',
                             'attributes' => $row
                          )
                     )
@@ -1024,12 +1025,16 @@ class ModuleController extends ApiController
                 $data['links'] = $links
                     ->withHref(
                         $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                        $relatedDefinition['module'] . '/' . $row['id'])
+                        $args['module'] . '/' . $row['id'])
                     ->toJsonApiResponse();
+
                 $data['meta'] = $meta;
                 $payload['data'][] = $data;
             }
-            $payload['meta']['attributes'] = $sugarBeanRelationship->relationship->def['fields'];
+
+            if(isset($sugarBeanRelationship->relationship->def['fields'])) {
+                $payload['meta']['attributes'] = $middleTableFieldDefs =  $sugarBeanRelationship->relationship->def['fields'];
+            }
         } else {
             throw new  BadRequest('[ModuleController] [Relationship type not supported]');
         }
@@ -1098,6 +1103,11 @@ class ModuleController extends ApiController
 
         $requestPayload = json_decode($req->getBody(), true);
 
+        // Validate JSON
+        if (empty($requestPayload)) {
+            throw new EmptyBody();
+        }
+
         /** @var Relationship $relationship */
         $relationship = $this->containers->get('Relationship');
         $relationship->setRelationshipName($args['link']);
@@ -1105,28 +1115,55 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             $data = $requestPayload['data'];
             $links = array();
+
+
+            // if a single ResourceIdentifier has been posted
+            if(!isset($data[0])) {
+                // convert to array
+                $data = array($data);
+            }
+
             foreach ($data as $link) {
                 $links[] = $link['id'];
+                /** @var ResourceIdentifier $resourceIdentifier */
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
+
+                $meta = null;
+                $additional_fields = array();
+                if (
+                    isset($link['meta']['middle_table']['data']['attributes']) &&
+                    !empty($link['meta']['middle_table']['data']['attributes'])
+                ) {
+                    $additional_fields = $link['meta']['middle_table']['data']['attributes'];
+                    $meta = array(
+                        'middle_table' => array(
+                            'data' => array(
+                                'id' => '',
+                                'type' => 'Link',
+                                'attributes' => $link['meta']['middle_table']['data']['attributes']
+                            )
+                        )
+                    );
+                }
+
                 $relationship = $relationship
                     ->withResourceIdentifier(
                         $resourceIdentifier
                             ->withId($link['id'])
                             ->withType($link['type'])
+                            ->withMeta($meta)
                     );
             }
-            $added = $sugarBeanRelationship->add($links);
+
+            $added = $sugarBeanRelationship->add($links, $additional_fields);
             if($added !== true) {
-                throw new Conflict('[ModuleController] [Unable to add relationships (to many)]' . json_encode($added));
+                throw new Conflict('[ModuleController] [Unable to add relationships (to many)] ' . json_encode($added));
             }
 
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
 
             if(empty($requestPayload['data'])) {
@@ -1142,7 +1179,16 @@ class ModuleController extends ApiController
                             ->withType($requestPayload['data']['type'])
                     );
             }
-            $sugarBeanRelationship->add($requestPayload['data']['id']);
+
+            $additional_fields = array();
+            if (
+                isset($link['meta']['middle_table']['data']['attributes']) &&
+                !empty($link['meta']['middle_table']['data']['attributes'])
+            ) {
+                $additional_fields = $link['meta']['middle_table']['data']['attributes'];
+            }
+
+            $sugarBeanRelationship->add($requestPayload['data']['id'], $additional_fields);
         } else {
             throw new Forbidden('[ModuleController] [Invalid Relationship type]');
         }
@@ -1215,6 +1261,11 @@ class ModuleController extends ApiController
 
         $requestPayload = json_decode($req->getBody(), true);
 
+        // Validate JSON
+        if (empty($requestPayload)) {
+            throw new EmptyBody();
+        }
+
         /** @var Relationship $relationship */
         $relationship = $this->containers->get('Relationship');
         $relationship->setRelationshipName($args['link']);
@@ -1222,22 +1273,42 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             $data = $requestPayload['data'];
+            // if a single ResourceIdentifier has been posted
+            if(!isset($data[0])) {
+                // convert to array
+                $data = array($data);
+            }
             foreach ($data as $link) {
                 /** @var ResourceIdentifier $resourceIdentifier */
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
+
+                $meta = null;
+                if (
+                    isset($link['meta']['middle_table']['data']['attributes']) &&
+                    !empty($link['meta']['middle_table']['data']['attributes'])
+                ) {
+                    $meta = array(
+                        'middle_table' => array(
+                            'data' => array(
+                                'id' => '',
+                                'type' => 'Link',
+                                'attributes' => $link['meta']['middle_table']['data']['attributes']
+                            )
+                        )
+                    );
+                }
+
                 $relationship = $relationship
                     ->withResourceIdentifier(
                         $resourceIdentifier
                             ->withId($link['id'])
                             ->withType($link['type'])
+                            ->withMeta($meta)
                     );
             }
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             /** @var ResourceIdentifier $resourceIdentifier */
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
 
@@ -1267,7 +1338,7 @@ class ModuleController extends ApiController
         $sugarBean->retrieve($sugarBeanResource->getId());
 
         $responsePayload = array();
-        $responsePayload['data'] = $relationship->toJsonApiResponse();
+        $responsePayload['data'] = $sugarBeanResource->getRelationshipByName($args['link']);
 
         return $this->generateJsonApiResponse($req, $res, $responsePayload);
     }
@@ -1331,14 +1402,16 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             if(empty($requestPayload['data'])) {
                 $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
             } else {
                 $data = $requestPayload['data'];
+                // if a single ResourceIdentifier has been posted
+                if(!isset($data[0])) {
+                    // convert to array
+                    $data = array($data);
+                }
                 $links = array();
                 foreach ($data as $link) {
                     $links[] = $link['id'];
@@ -1351,7 +1424,7 @@ class ModuleController extends ApiController
                     );
                 }
             }
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             if(empty($requestPayload['data'])) {
                 $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
             } else {

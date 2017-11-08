@@ -45,10 +45,10 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 class RelationshipRepository
 {
     /**
-     * @param array $dataArray
+     * @param array $jsonApiRequest
      * @return string
      */
-    public function getRelationshipTypeFromDataArray($dataArray) {
-        return isset($dataArray['data'][0]) === true ? RelationshipType::TO_MANY : RelationshipType::TO_ONE;
+    public function getRelationshipTypeFromDataArray($jsonApiRequest) {
+        return isset($jsonApiRequest['data'][0]) === true ? RelationshipType::TO_MANY : RelationshipType::TO_ONE;
     }
 }

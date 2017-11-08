@@ -54,8 +54,7 @@ use SuiteCRM\API\v8\Exception\Forbidden;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
-/**
- * Class ResourceIdentifier
+/** Class ResourceIdentifier
  * @package SuiteCRM\API\JsonApi\v1\Resource
  * @see http://jsonapi.org/format/1.0/#document-resource-identifier-objects
  */
@@ -93,7 +92,7 @@ class Relationship extends ResourceIdentifier
 
     public function setRelationshipType($type = RelationshipType::TO_ONE) {
         if($type !== RelationshipType::TO_ONE && $type !== RelationshipType::TO_MANY) {
-            throw new ApiException('[Relationship] [Unsupported Relationship Type]');
+            throw new ApiException('[Relationship] [Unsupported Relationship Type] '. $type);
         }
         $this->relationshipType = $type;
     }
@@ -105,22 +104,7 @@ class Relationship extends ResourceIdentifier
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
     public function withResourceIdentifier(ResourceIdentifier $related) {
-        if($this->getType() === null) {
-            $this->type = $related->getType();
-        } elseif ($this->getType() !== $related->getType()) {
-            throw new Forbidden('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
-        }
-
-        $this->id = $related->getId();
-
-        if ($this->relationshipType === RelationshipType::TO_ONE) {
-            $this->link = $related;
-        } elseif ($this->relationshipType === RelationshipType::TO_MANY) {
-            $this->link[] = $related;
-        } else {
-            throw new ApiException('[Relationship] [Unsupported Relationship Type]');
-        }
-
+        $this->withResourceObject($related);
         return clone $this;
     }
 
@@ -140,5 +124,36 @@ class Relationship extends ResourceIdentifier
             }
         }
         return $payload;
+    }
+
+    /**
+     * Sets the link property up
+     * @parm Resource|ResourceIdentiifer
+     */
+    private function withResourceObject($related)
+    {
+        if($this->getType() === null) {
+            $this->type = $related->getType();
+        } elseif ($this->getType() !== $related->getType()) {
+            throw new Forbidden('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+        }
+
+        $this->id = $related->getId();
+
+        if ($this->relationshipType === RelationshipType::TO_ONE) {
+            $this->link = $related;
+        } elseif ($this->relationshipType === RelationshipType::TO_MANY) {
+            $this->link[] = $related;
+        } else {
+            throw new ApiException('[Relationship] [Unsupported Relationship Type]');
+        }
+
+        if($this->getType() === null) {
+            $this->type = $related->getType();
+        } elseif ($this->getType() !== $related->getType()) {
+            throw new Forbidden('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+        }
+
+        return clone $this;
     }
 }
