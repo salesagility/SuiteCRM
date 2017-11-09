@@ -129,6 +129,7 @@ class Relationship extends ResourceIdentifier
     /**
      * Sets the link property up
      * @parm Resource|ResourceIdentiifer
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
     private function withResourceObject($related)
     {
@@ -145,7 +146,10 @@ class Relationship extends ResourceIdentifier
         } elseif ($this->relationshipType === RelationshipType::TO_MANY) {
             $this->link[] = $related;
         } else {
-            throw new ApiException('[Relationship] [Unsupported Relationship Type]');
+            throw new ApiException(
+                '[Relationship] [Unsupported Relationship Type] ' .
+                $this->relationshipType
+            );
         }
 
         if($this->getType() === null) {
