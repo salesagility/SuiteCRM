@@ -39,26 +39,27 @@
  */
 
 $app->group('/v8/modules', function () use ($app) {
+    $app->get('/viewed', 'ModuleController:getModulesMetaViewed');
+    $app->get('/favorites', 'ModuleController:getModulesMetaFavorites');
+
     $app->group('/meta', function () use ($app) {
         $app->get('/list', 'ModuleController:getModulesMetaList');
         $app->get('/menu/modules', 'ModuleController:getModulesMetaMenuModules');
         $app->get('/menu/filters', 'ModuleController:getModulesMetaMenuFilters');
-        $app->get('/viewed', 'ModuleController:getModulesMetaViewed');
-        $app->get('/favorites', 'ModuleController:getModulesMetaFavorites');
+
     });
 
     $app->group('/{module}', function () use ($app) {
 
         $app->get('', 'ModuleController:getModuleRecords');
         $app->post('', 'ModuleController:createModuleRecord');
+        $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');
+        $app->get('/favorites', 'ModuleController:getModuleFavorites');
 
         $app->group('/meta', function () use ($app) {
             $app->get('/language', 'ModuleController:getModuleMetaLanguage');
             $app->get('/attributes', 'ModuleController:getModuleMetaFields');
-            $app->get('/links', 'ModuleController:getModuleMetaLinks');
             $app->get('/menu', 'ModuleController:getModuleMetaMenu');
-            $app->get('/viewed', 'ModuleController:getModuleMetaRecordsViewed');
-            $app->get('/favorites', 'ModuleController:getModuleMetaFavorites');
             $app->get('/view/{view}', 'ModuleController:getModuleMetaLayout');
         });
 

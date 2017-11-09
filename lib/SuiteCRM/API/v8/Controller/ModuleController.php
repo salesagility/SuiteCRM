@@ -107,12 +107,11 @@ class ModuleController extends ApiController
         }
 
         $this->negotiatedJsonApiContent($req, $res);
-
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
-     * GET /api/v8/modules/meta/Menu/modules
+     * GET /api/v8/modules/meta/menu/modules
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -120,23 +119,120 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        global $current_user;
+        global $sugar_config;
+        global $app_strings;
+
+        $config = $this->containers->get('ConfigurationManager');
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $payload = array();
+
+        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        $groupedTabsClass = new \GroupedTabStructure();
+        $modules = query_module_access_list($current_user);
+
+
+        $sugarView = new \SugarView();
+        foreach($modules as $moduleKey => $module) {
+            $moduleName = $module;
+            $menu = $sugarView->getMenu($moduleName);
+
+            $self = $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/';
+            $actions = array();
+            foreach($menu as $item) {
+                $url = parse_url($item[0]);
+                parse_str($url['query'], $orig);
+                $actions[] = array(
+                    'href' => $self . $item[2],
+                    'label' => $item[1],
+                    'action' => $item[2],
+                    'module' => $item[3],
+                    'type' => $item[3],
+                    'query' => $orig,
+                );
+            }
+
+            $modules[$moduleKey] = array(
+                'type' => $moduleName,
+                'href' => $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/',
+                'menu' => $actions
+            );
+        }
+
+        $payload['meta']['menu']['modules'] = array(
+            'all' => $modules,
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
      * GET /api/v8/modules/meta/menu/filters
      * @param Request $req
      * @param Response $res
-     * @param array $args
-     * @throws NotImplementedException
+     * @param array $args 
+     * @throws ModuleNotFound
+     * @throws ApiException
+     * @throws NotAcceptable
+     * @throws UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws InvalidJsonApiResponse
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        global $current_user;
+        global $sugar_config;
+        global $app_strings;
+
+        $config = $this->containers->get('ConfigurationManager');
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $payload = array();
+
+        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        $groupedTabsClass = new \GroupedTabStructure();
+        $modules = query_module_access_list($current_user);
+        //handle with submoremodules
+        $max_tabs = $current_user->getPreference('max_tabs');
+        // If the max_tabs isn't set incorrectly, set it within the range, to the default max sub tabs size
+        if (!isset($max_tabs) || $max_tabs <= 0 || $max_tabs > 10) {
+            // We have a default value. Use it
+            if (isset($sugar_config['default_max_tabs'])) {
+                $max_tabs = $sugar_config['default_max_tabs'];
+            } else {
+                $max_tabs = 8;
+            }
+        }
+
+        $subMoreModules = false;
+        $groupTabs = $groupedTabsClass->get_tab_structure(get_val_array($modules));
+        // We need to put this here, so the "All" group is valid for the user's preference.
+        $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
+
+        // Setup the default group tab.
+        $allGroup = $app_strings['LBL_TABGROUP_ALL'];
+
+        // Add url  to modules
+        foreach($modules as $moduleKey => $module) {
+            $moduleName = $module;
+            $modules[$moduleKey] = array(
+                'type' => $moduleName,
+                'href' => $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/' . $moduleName . '/',
+                'label' => $moduleKey
+            );
+        }
+
+        $payload['meta']['menu']['filters'] = array(
+            'all' => $modules,
+            'tabs' => $groupTabs
+        );
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
-     * GET /api/v8/modules/meta/viewed
+     * GET /api/v8/modules/viewed
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -144,11 +240,57 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaViewed(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+
+        global $current_user;
+        $dateTimeConverter  = $this->containers->get('DateTimeConverter');
+
+        /** @var \Tracker $tracker */
+        $tracker = \BeanFactory::newBean('Trackers');
+
+         $payload = array(
+            'data' => array(),
+            'included' => array(),
+        );
+
+        $recentlyViewedSugarBeans = $tracker->get_recently_viewed($current_user->id);
+        foreach($recentlyViewedSugarBeans as $viewed) {
+            // Convert to DB date
+            $datetime = $dateTimeConverter->fromUser($viewed['date_modified']);
+            if (empty($datetime)) {
+                $datetime = $dateTimeConverter->fromDb($viewed['date_modified']);
+            }
+
+            if (empty($datetime)) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field from recently viewed] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                );
+            }
+
+            $datetimeISO8601 = $datetime->format(\DateTime::ATOM);
+            if ($datetime === false) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field to ISO 8601] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+            }
+
+            $payload['included'][] = array(
+                'id' => $viewed['item_id'],
+                'type' => $viewed['module_name'],
+                'attributes' => array(
+                    'name' => $viewed['item_summary'],
+                    'order'=> $viewed['id'],
+                    'date_modified' => $datetimeISO8601
+                )
+            );
+        }
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
-     * GET /api/v8/modules/meta/favorites
+     * GET /api/v8/modules/favorites
      * @param Request $req
      * @param Response $res
      * @param array $args
@@ -156,7 +298,27 @@ class ModuleController extends ApiController
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array(
+            'data' => array(),
+            'included' => array(),
+        );
+
+        /** @var \Favorites $favoritesBean */
+        $favoritesBean = \BeanFactory::newBean('Favorites');
+        $favorites = $favoritesBean->getCurrentUserSidebarFavorites(null);
+
+        foreach($favorites as $favorite) {
+            $payload['included'][] = array(
+                'id' => $favorite['id'],
+                'type' => $favorite['module_name'],
+                'attributes' => array(
+                    'name' => $favorite['item_summary']
+                )
+            );
+        }
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
@@ -176,10 +338,8 @@ class ModuleController extends ApiController
     {
         $config = $this->containers->get('ConfigurationManager');
 
-        /**
-         * @var ModulesLib $lib;
-         */
-        $lib = $this->containers->get('ModuleLib');
+        /** @var \SuiteCRM\API\v8\Library\ModulesLib $lib; */
+        $lib = $this->containers->get('ModulesLib');
 
         $payload = array(
             'links' => array(),
@@ -187,8 +347,6 @@ class ModuleController extends ApiController
         );
 
         $this->negotiatedJsonApiContent($req, $res);
-
-
 
         $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
         $payload['data'] = $paginatedModuleRecords['list'];
@@ -282,7 +440,7 @@ class ModuleController extends ApiController
         /** @var SuiteBeanResource $resource */
         $sugarBeanResource = $this->containers->get('SuiteBeanResource');
         $sugarBean = $sugarBeanResource
-            ->fromDataArray($body['data'])
+            ->fromJsonApiRequest($body['data'])
             ->toSugarBean();
 
 
@@ -360,9 +518,7 @@ class ModuleController extends ApiController
         }
 
         // Handle Request
-        /**
-         * @var SuiteBeanResource $resource
-         */
+        /** @var SuiteBeanResource $resource */
         $resource = $this->containers->get('SuiteBeanResource');
         $resource = $resource->fromSugarBean($sugarBean);
 
@@ -440,17 +596,13 @@ class ModuleController extends ApiController
             throw $exception;
         }
 
-        /**
-         * @var Resource $resource
-         */
+        /** @var Resource $resource */
         $resource = $this->containers->get('Resource');
-        /**
-         * @var SuiteBeanResource $sugarBeanResource
-         */
+        /** @var SuiteBeanResource $sugarBeanResource */
         $sugarBeanResource = $this->containers->get('SuiteBeanResource');
         $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
         $sugarBeanResource->mergeAttributes(
-            $resource->fromDataArray($body['data'])
+            $resource->fromJsonApiRequest($body['data'])
         );
         $sugarBean = $sugarBeanResource->toSugarBean();
         // Handle Request
@@ -557,7 +709,7 @@ class ModuleController extends ApiController
         $moduleLanguage = $this->containers->get('ModuleLanguage');
         $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
-        $payload['meta'][$args['module']]['mod_strings'] = $moduleLanguageStrings;
+        $payload['meta'][$args['module']]['language'] = $moduleLanguageStrings;
 
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
@@ -580,7 +732,7 @@ class ModuleController extends ApiController
     {
         $this->negotiatedJsonApiContent($req, $res);
 
-        $payload['meta'][$args['module']]['field_defs'] = \BeanFactory::getBean($args['module'])->field_defs;
+        $payload['meta'][$args['module']]['attributes'] = \BeanFactory::getBean($args['module'])->field_defs;
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
@@ -601,19 +753,7 @@ class ModuleController extends ApiController
     public function getModuleMetaFields(Request $req, Response $res, array $args) {
         return $this->getModuleMetaAttributes($req, $res, $args);
     }
-
-    /**
-     * GET /api/v8/modules/{id}/meta/links
-     * @param Request $req
-     * @param Response $res
-     * @param array $args
-     * @throws NotImplementedException
-     */
-    public function getModuleMetaLinks(Request $req, Response $res, array $args)
-    {
-        throw new NotImplementedException();
-    }
-
+   
     /**
      * GET /api/v8/modules/{id}/meta/menu
      *
@@ -647,6 +787,7 @@ class ModuleController extends ApiController
                 'label' => $item[1],
                 'action' => $item[2],
                 'module' => $item[3],
+                'type' => $item[3],
                 'query' => $orig,
             );
         }
@@ -657,40 +798,127 @@ class ModuleController extends ApiController
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/viewed
+     * GET /api/v8/modules/{module}/viewed
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @throws NotImplementedException
      */
-    public function getModuleMetaRecordsViewed(Request $req, Response $res, array $args)
+    public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
+        $this->negotiatedJsonApiContent($req, $res);
+
+        global $current_user;
+        $dateTimeConverter  = $this->containers->get('DateTimeConverter');
+
+        /** @var \Tracker $tracker */
+        $tracker = \BeanFactory::newBean('Trackers');
+
+         $payload = array(
+            'data' => array(),
+            'included' => array(),
+        );
+
+        $recentlyViewedSugarBeans = $tracker->get_recently_viewed($current_user->id, $args['module']);
+        foreach($recentlyViewedSugarBeans as $viewed) {
+            // Convert to DB date
+            $datetime = $dateTimeConverter->fromUser($viewed['date_modified']);
+            if (empty($datetime)) {
+                $datetime = $dateTimeConverter->fromDb($viewed['date_modified']);
+            }
+
+            if (empty($datetime)) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field from recently viewed] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                );
+            }
+
+            $datetimeISO8601 = $datetime->format(\DateTime::ATOM);
+            if ($datetime === false) {
+                throw new ApiException(
+                    '[ModulesController] [Unable to convert datetime field to ISO 8601] "date_modified"',
+                    ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+            }
+
+            $payload['included'][] = array(
+                'id' => $viewed['item_id'],
+                'type' => $viewed['module_name'],
+                'attributes' => array(
+                    'name' => $viewed['item_summary'],
+                    'order'=> $viewed['id'],
+                    'date_modified' => $datetimeISO8601
+                )
+            );
+        }
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
         throw new NotImplementedException();
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/favorites
+     * GET /api/v8/modules/favorites
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws \SuiteCRM\Exception\Exception
      */
-    public function getModuleMetaFavorites(Request $req, Response $res, array $args)
+    public function getModuleFavorites(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        $payload = array();
+
+        /** @var \Favorites $favoritesBean */
+        $favoritesBean = \BeanFactory::newBean('Favorites');
+        $payload['data'] = $favoritesBean->getCurrentUserFavoritesForModule($args['module']);
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
 
     /**
-     * GET /api/v8/modules/{id}/meta/view/{view}
+     * GET /api/v8/modules/{module}/meta/view/{view}
+     * @see \MBConstants for {view}
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
-        throw new NotImplementedException();
+        $this->negotiatedJsonApiContent($req, $res);
+        /** @var \SugarBean $bean */
+        $sugarBean = \BeanFactory::newBean($args['module']);
+
+        if(empty($sugarBean)) {
+            throw new NotFound(
+                '[ModuleController] [Module does not exist] ' . $args['module'],
+                ExceptionCode::API_MODULE_NOT_FOUND
+            );
+        }
+
+        require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
+        $parser = \ParserFactory::getParser($args['view'], $args['module']);
+        $viewdefs = $parser->_viewdefs;
+
+        if(empty($viewdefs)) {
+            throw new NotFound(
+                '[ModuleController] [ViewDefinitions does not exist] ' . $args['view'],
+                ExceptionCode::API_VIEWDEF_NOT_FOUND
+            );
+        }
+
+        $payload['meta'][$args['module']]['view'][$args['view']] = $viewdefs;
+        return $this->generateJsonApiResponse($req, $res, $payload);
     }
+
 
     /**
      * GET /api/v8/modules/{id}/relationships/{link}
@@ -742,9 +970,7 @@ class ModuleController extends ApiController
 
         $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
 
-        /**
-         * @var \Link2 $sugarBeanRelationship
-         */
+        /** @var \Link2 $sugarBeanRelationship */
         $sugarBeanRelationship = $sugarBean->{$args['link']};
 
         if($sugarBeanRelationship->getType() === 'one') {
@@ -769,22 +995,45 @@ class ModuleController extends ApiController
                 $payload['data'] = $data;
             }
         } elseif($sugarBeanRelationship->getType() === 'many') {
-            // to many
-            $relatedIds = $sugarBean->{$args['link']}->get();
+             // to many
+            /** @var Resource $resource */
+            $resource = $this->containers->get('Resource');
+            $related = $sugarBeanRelationship->query(
+                 array(
+                      'include_middle_table_fields' => true
+                 )
+            );
             $relatedDefinition = $sugarBean->field_defs[$args['link']];
             $relatedType = $sugarBeanRelationship->getRelatedModuleName();
-            foreach ($relatedIds as $id) {
-                $data = array(
-                    'id' => $id,
+            foreach ($related['rows'] as $row) {
+               $data = array(
+                    'id' => $row['id'],
                     'type' => $relatedType
-                );
+               );
+
+               $meta = array(
+                    'middle_table' => array(
+                         'data' => array(
+                            'id' => '',
+                            'type' => 'Link',
+                            'attributes' => $row
+                         )
+                    )
+               );
+
                 $links = new Links();
                 $data['links'] = $links
                     ->withHref(
                         $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                        $relatedDefinition['module'].'/'.$id)
+                        $args['module'] . '/' . $row['id'])
                     ->toJsonApiResponse();
+
+                $data['meta'] = $meta;
                 $payload['data'][] = $data;
+            }
+
+            if(isset($sugarBeanRelationship->relationship->def['fields'])) {
+                $payload['meta']['attributes'] = $middleTableFieldDefs =  $sugarBeanRelationship->relationship->def['fields'];
             }
         } else {
             throw new  BadRequest('[ModuleController] [Relationship type not supported]');
@@ -854,6 +1103,11 @@ class ModuleController extends ApiController
 
         $requestPayload = json_decode($req->getBody(), true);
 
+        // Validate JSON
+        if (empty($requestPayload)) {
+            throw new EmptyBody();
+        }
+
         /** @var Relationship $relationship */
         $relationship = $this->containers->get('Relationship');
         $relationship->setRelationshipName($args['link']);
@@ -861,28 +1115,55 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             $data = $requestPayload['data'];
             $links = array();
+
+
+            // if a single ResourceIdentifier has been posted
+            if(!isset($data[0])) {
+                // convert to array
+                $data = array($data);
+            }
+
             foreach ($data as $link) {
                 $links[] = $link['id'];
+                /** @var ResourceIdentifier $resourceIdentifier */
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
+
+                $meta = null;
+                $additional_fields = array();
+                if (
+                    isset($link['meta']['middle_table']['data']['attributes']) &&
+                    !empty($link['meta']['middle_table']['data']['attributes'])
+                ) {
+                    $additional_fields = $link['meta']['middle_table']['data']['attributes'];
+                    $meta = array(
+                        'middle_table' => array(
+                            'data' => array(
+                                'id' => '',
+                                'type' => 'Link',
+                                'attributes' => $link['meta']['middle_table']['data']['attributes']
+                            )
+                        )
+                    );
+                }
+
                 $relationship = $relationship
                     ->withResourceIdentifier(
                         $resourceIdentifier
                             ->withId($link['id'])
                             ->withType($link['type'])
+                            ->withMeta($meta)
                     );
             }
-            $added = $sugarBeanRelationship->add($links);
+
+            $added = $sugarBeanRelationship->add($links, $additional_fields);
             if($added !== true) {
-                throw new Conflict('[ModuleController] [Unable to add relationships (to many)]' . json_encode($added));
+                throw new Conflict('[ModuleController] [Unable to add relationships (to many)] ' . json_encode($added));
             }
 
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
 
             if(empty($requestPayload['data'])) {
@@ -898,7 +1179,16 @@ class ModuleController extends ApiController
                             ->withType($requestPayload['data']['type'])
                     );
             }
-            $sugarBeanRelationship->add($requestPayload['data']['id']);
+
+            $additional_fields = array();
+            if (
+                isset($link['meta']['middle_table']['data']['attributes']) &&
+                !empty($link['meta']['middle_table']['data']['attributes'])
+            ) {
+                $additional_fields = $link['meta']['middle_table']['data']['attributes'];
+            }
+
+            $sugarBeanRelationship->add($requestPayload['data']['id'], $additional_fields);
         } else {
             throw new Forbidden('[ModuleController] [Invalid Relationship type]');
         }
@@ -971,6 +1261,11 @@ class ModuleController extends ApiController
 
         $requestPayload = json_decode($req->getBody(), true);
 
+        // Validate JSON
+        if (empty($requestPayload)) {
+            throw new EmptyBody();
+        }
+
         /** @var Relationship $relationship */
         $relationship = $this->containers->get('Relationship');
         $relationship->setRelationshipName($args['link']);
@@ -978,22 +1273,42 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             $data = $requestPayload['data'];
+            // if a single ResourceIdentifier has been posted
+            if(!isset($data[0])) {
+                // convert to array
+                $data = array($data);
+            }
             foreach ($data as $link) {
                 /** @var ResourceIdentifier $resourceIdentifier */
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
+
+                $meta = null;
+                if (
+                    isset($link['meta']['middle_table']['data']['attributes']) &&
+                    !empty($link['meta']['middle_table']['data']['attributes'])
+                ) {
+                    $meta = array(
+                        'middle_table' => array(
+                            'data' => array(
+                                'id' => '',
+                                'type' => 'Link',
+                                'attributes' => $link['meta']['middle_table']['data']['attributes']
+                            )
+                        )
+                    );
+                }
+
                 $relationship = $relationship
                     ->withResourceIdentifier(
                         $resourceIdentifier
                             ->withId($link['id'])
                             ->withType($link['type'])
+                            ->withMeta($meta)
                     );
             }
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             /** @var ResourceIdentifier $resourceIdentifier */
             $resourceIdentifier = $this->containers->get('ResourceIdentifier');
 
@@ -1023,7 +1338,7 @@ class ModuleController extends ApiController
         $sugarBean->retrieve($sugarBeanResource->getId());
 
         $responsePayload = array();
-        $responsePayload['data'] = $relationship->toJsonApiResponse();
+        $responsePayload['data'] = $sugarBeanResource->getRelationshipByName($args['link']);
 
         return $this->generateJsonApiResponse($req, $res, $responsePayload);
     }
@@ -1087,14 +1402,16 @@ class ModuleController extends ApiController
             SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
         );
 
-        /** @var RelationshipRepository $relationshipRepository */
-        $relationshipRepository = $this->containers->get('RelationshipRepository');
-
-        if($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_MANY) {
+        if(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
             if(empty($requestPayload['data'])) {
                 $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
             } else {
                 $data = $requestPayload['data'];
+                // if a single ResourceIdentifier has been posted
+                if(!isset($data[0])) {
+                    // convert to array
+                    $data = array($data);
+                }
                 $links = array();
                 foreach ($data as $link) {
                     $links[] = $link['id'];
@@ -1107,7 +1424,7 @@ class ModuleController extends ApiController
                     );
                 }
             }
-        } elseif($relationshipRepository->getRelationshipTypeFromDataArray($requestPayload) === RelationshipType::TO_ONE) {
+        } elseif(SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
             if(empty($requestPayload['data'])) {
                 $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
             } else {

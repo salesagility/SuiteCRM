@@ -184,12 +184,13 @@ class Link2
     }
 
     /**
+     * @param array $params
      * @return array ids of records related through this link
      */
-    public function get()
+    public function get($params = array())
     {
         if (!$this->loaded) {
-            $this->load();
+            $this->load($params);
         }
 
         return array_keys($this->rows);

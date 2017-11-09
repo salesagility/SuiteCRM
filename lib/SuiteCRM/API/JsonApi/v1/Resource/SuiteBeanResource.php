@@ -151,14 +151,15 @@ class SuiteBeanResource extends Resource
                             $config['site_url'] . '/api/v' . $apiController->getVersionMajor().'/modules/' .
                             $sugarBean->module_name . '/'.$this->id. '/relationships/'.$definition['name'])
                         ->toJsonApiResponse();
-
                 // remove data element from relationship
                 if(isset($this->relationships[$definition['name']]['data'])) {
                     unset($this->relationships[$definition['name']]['data']);
                 }
                 continue;
             } else {
-                $this->attributes[$fieldName] = $sugarBean->$fieldName;
+                if(property_exists($sugarBean, $fieldName)) {
+                    $this->attributes[$fieldName] = isset($sugarBean->$fieldName) ? $sugarBean->$fieldName : '';
+                }
             }
 
             // Validate Required fields
@@ -166,7 +167,7 @@ class SuiteBeanResource extends Resource
             if (
                 empty($sugarBean->$fieldName) &&
                 $fieldName !== 'id' &&
-                isset($definition['required']) === false &&
+                isset($definition['required']) === true &&
                 $definition['required'] === true &&
                 !isset($this->attributes[$fieldName])
             ) {
@@ -257,7 +258,7 @@ class SuiteBeanResource extends Resource
             // Validate Required fields
             // Skip "id" as this method may be used to populate a new bean before the bean is saved
             if (
-                $fieldName !== 'id' &&
+                $fieldName !== 'id' && isset($definition['required']) &&
                 $definition['required'] === true &&
                 !isset($this->attributes[$fieldName]) &&
                 empty($this->attributes[$fieldName])
@@ -271,99 +272,126 @@ class SuiteBeanResource extends Resource
         try {
             $sugarBean->save();
         } catch (Exception $e) {
-            throw new ApiException($e->getMessage(), $e->getCode(), $e);
+            throw new ApiException(
+                '[SugarBeanResource] [Unable to save bean while converting toSugarBean()] ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         }
 
-        // TODO: Handle relationships
-        foreach ($this->relationships as $relationshipName => $relationship) {
+        //  Handle relationships
+        if(empty($this->relationships) === false) {
+            foreach ($this->relationships as $relationshipName => $relationship) {
 
-            // Lets only focus on the relationships which need to be updated
-            if(!isset($relationship['data'])) {
-                continue;
-            }
+                // Lets only focus on the relationships which need to be updated
+                if(!isset($relationship['data'])) {
+                    continue;
+                }
 
-            if ($sugarBean->load_relationship($relationshipName) === false) {
-                throw new Conflict('[Relationship does not exist] '. $relationshipName);
-            }
+                if ($sugarBean->load_relationship($relationshipName) === false) {
+                    throw new Conflict('[Relationship does not exist] '. $relationshipName);
+                }
 
-            if (empty($relationship['data'])) {
-                // clear relationship
-                /** @var \Link2 $sugarBeanRelationship */
-                $sugarBeanRelationship = &$sugarBean->{$relationshipName};
-                $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
-            } else {
-                // Detect relationship type
-                $relationshipRepository = new RelationshipRepository();
-                if (
-                    $relationshipRepository->getRelationshipTypeFromDataArray($relationship) === RelationshipType::TO_MANY
-                ) {
-                    /** @var \Link2 $toManySugarBeanLink */
-                    $toManySugarBeanLink = $sugarBean->{$relationshipName};
-                    if ($toManySugarBeanLink->getType() !== 'many') {
-                        throw new Conflict(
-                            '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
-                            'expected to many relationship from'.
-                            $relationshipName
-                        );
-                    }
-                    $relatedSugarBeanIds = $toManySugarBeanLink->get();
-                    $toManyRelationships = $relationship['data'];
-                    $relatedResourceIds = array();
-                    $relatedResourceIdsToAdd= array();
-                    /** @var array $toManyRelationships */
-                    foreach ($toManyRelationships as $toManyRelationshipName => $toManyRelationship) {
-                        $relatedResourceIds[] = $toManyRelationship['id'];
-                        // skip existing
-                        if(in_array($toManyRelationship['id'], $relatedSugarBeanIds)) {
-                            continue;
+                if (empty($relationship['data'])) {
+                    // clear relationship
+                    /** @var \Link2 $sugarBeanRelationship */
+                    $sugarBeanRelationship = &$sugarBean->{$relationshipName};
+                    $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
+                } else {
+                    // Detect relationship type
+                    $relationshipRepository = new RelationshipRepository();
+                    if (
+                        $relationshipRepository->getRelationshipTypeFromDataArray($relationship) === RelationshipType::TO_MANY
+                    ) {
+                        /** @var \Link2 $toManySugarBeanLink */
+                        $toManySugarBeanLink = $sugarBean->{$relationshipName};
+                        if ($toManySugarBeanLink->getType() !== 'many') {
+                            throw new Conflict(
+                                '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
+                                'expected to many relationship from '.
+                                $relationshipName
+                            );
+                        }
+                        $relatedSugarBeanIds = $toManySugarBeanLink->get();
+
+                        // if a single ResourceIdentifier has been set
+                        if(!isset($relationship['data'][0])) {
+                            // convert to array
+                            $relationship['data'] = array($relationship['data']);
                         }
 
-                        $relatedResourceIdsToAdd[] = $toManyRelationship['id'];
-                    }
-                    // add new relationships
-                    $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd);
-                    if($added !== true) {
-                        throw new Conflict(
-                            '[SugarBeanResource] [Unable to add relationships (to many)] while converting toSugarBean()'.
-                            json_encode($added)
-                        );
-                    }
-                    // Remove missing relationships
-                    $relatedResourceIdsToRemove = array_diff($relatedSugarBeanIds, $relatedResourceIds);
-                    $removed = $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
-                    if($removed !== true) {
-                        throw new Conflict(
-                            '[SugarBeanResource] [Unable to remove relationships (to many)] while converting toSugarBean()'.
-                            json_encode($removed)
-                        );
-                    }
+                        $toManyRelationships = $relationship['data'];
 
-                } else {
-                    // detected to one
-                    $toOneRelationship = $relationship['data'];
-                    /** @var \Link2 $toOneSugarBeanLink */
-                    $toOneSugarBeanLink = $sugarBean->{$relationshipName};
-                    if ($toOneSugarBeanLink->getType() !== 'one') {
-                        throw new Conflict(
-                            '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
-                            'expected to one relationship from'.
-                            $relationshipName
-                        );
-                    }
-                    // add relationship
-                    $relatedBean = \BeanFactory::getBean($toOneRelationship['type'], $toOneRelationship['id']);
-                    if ($relatedBean->new_with_id === true) {
-                        $exception = new NotFound('["id" does not exist] "' . $toOneRelationship['id']. '"');
-                        $exception->setSource('/data/relationships/'.$relationshipName.'/id');
-                        throw $exception;
-                    }
+                        $relatedResourceIds = array();
+                        $relatedResourceIdsToAdd = array();
+                        $added = false;
 
-                    $added = $toOneSugarBeanLink->add($relatedBean);
-                    if($added !== true) {
-                        throw new Conflict(
-                            '[SugarBeanResource] [Unable to add relationships (to one}] while converting toSugarBean()'.
-                            json_encode($added)
-                        );
+                        /** @var array $toManyRelationships */
+                        foreach ($toManyRelationships as $toManyRelationshipName => $toManyRelationship) {
+                            $resourceIdentifier = $this->containers->get('ResourceIdentifier');
+                            $relatedResourceIds[] = $toManyRelationship['id'];
+
+                            $relatedResourceIdsToAdd[] = $toManyRelationship['id'];
+
+                            $middleTableFields = array();
+                            if (isset($toManyRelationship['meta']['middle_table']['data']['attributes'])) {
+                                $middleTableFields = $toManyRelationship['meta']['middle_table']['data']['attributes'];
+                            }
+
+                            // add new relationships
+                            $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd, $middleTableFields);
+                            if($added !== true) {
+                                throw new Conflict(
+                                    '[SugarBeanResource] [Unable to add relationships (to many)] while converting toSugarBean()'.
+                                    json_encode($added)
+                                );
+                            }
+                        }
+
+                        // Remove missing relationships
+                        $relatedResourceIdsToRemove = array_diff($relatedSugarBeanIds, $relatedResourceIds);
+                        if(empty($relatedResourceIdsToRemove)  === false)  {
+                            $removed = $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
+                            if($removed !== true) {
+                                throw new Conflict(
+                                    '[SugarBeanResource] [Unable to remove relationships (to many)] while converting toSugarBean()'.
+                                    json_encode($removed)
+                                );
+                            }
+                        }
+
+                    } elseif ($relationshipRepository->getRelationshipTypeFromDataArray($relationship) === RelationshipType::TO_ONE) {
+                        // detected to one
+                        $toOneRelationship = $relationship['data'];
+                        /** @var \Link2 $toOneSugarBeanLink */
+                        $toOneSugarBeanLink = $sugarBean->{$relationshipName};
+                        if ($toOneSugarBeanLink->getType() !== 'one') {
+                            throw new Conflict(
+                                '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
+                                'expected to one relationship from'.
+                                $relationshipName
+                            );
+                        }
+                        // add relationship
+                        $relatedBean = \BeanFactory::getBean($toOneRelationship['type'], $toOneRelationship['id']);
+                        if ($relatedBean->new_with_id === true) {
+                            $exception = new NotFound('["id" does not exist] "' . $toOneRelationship['id']. '"');
+                            $exception->setSource('/data/relationships/'.$relationshipName.'/id');
+                            throw $exception;
+                        }
+
+                        $middleTableFields = array();
+                        if (isset($toManyRelationship['meta']['middle_table']['data']['attributes'])) {
+                            $middleTableFields = $toManyRelationship['meta']['middle_table']['data']['attributes'];
+                        }
+
+                        $added = $toOneSugarBeanLink->add($relatedBean, $middleTableFields);
+                        if($added !== true) {
+                            throw new Conflict(
+                                '[SugarBeanResource] [Unable to add relationships (to one}] while converting toSugarBean()'.
+                                json_encode($added)
+                            );
+                        }
                     }
                 }
             }
@@ -379,9 +407,9 @@ class SuiteBeanResource extends Resource
      * @throws BadRequest
      * @throws Conflict
      */
-    public function fromDataArray($data, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromJsonApiRequest($data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
-        return $this->fromResource(parent::fromDataArray($data, $source));
+        return $this->fromResource(parent::fromJsonApiRequest($data, $source));
     }
 
     /**
@@ -403,7 +431,7 @@ class SuiteBeanResource extends Resource
      * @param Relationship $relationship
      * @return SuiteBeanResource
      */
-    public function withRelationship(Relationship $relationship) {
+    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
         $relationshipName = $relationship->getRelationshipName();
         $this->relationships[$relationshipName]['data'] = $relationship->toJsonApiResponse();
         return clone $this;
