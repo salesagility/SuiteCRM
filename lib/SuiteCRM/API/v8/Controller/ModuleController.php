@@ -1300,11 +1300,15 @@ class ModuleController extends ApiController
                     );
                 }
 
+                // The following removes PHP notice: Undefined index
+                $linkId = isset($link['id']) ? $link['id'] : null;
+                $linkType = isset($link['type']) ? $link['type'] : null;
+
                 $relationship = $relationship
                     ->withResourceIdentifier(
                         $resourceIdentifier
-                            ->withId($link['id'])
-                            ->withType($link['type'])
+                            ->withId($linkId)
+                            ->withType($linkType)
                             ->withMeta($meta)
                     );
             }
