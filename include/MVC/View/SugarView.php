@@ -917,6 +917,29 @@ EOHTML;
                 echo "<script>\n" . implode("\n", $config_js) . "</script>\n";
             }
 
+            // Output user config
+            require("include/json_config.php");
+            $jc=new json_config();
+            $userConfigJSON=$jc->getUserConfigJSON();
+            echo "<script>
+            if(typeof(GLOBAL_REGISTRY) == 'undefined') {
+                var GLOBAL_REGISTRY = {};
+            }
+            $userConfigJSON
+            function userDateToISO(_date)
+            {
+                var s=_date;
+                var d=_date.split(/[-/.]/);
+                var f=GLOBAL_REGISTRY.current_user.fields.date_time_format.date.replace(/[-/.]/g,'');
+                switch (f) {
+                case 'dmY': s=d[2]+'-'+d[1]+'-'+d[0]; break;
+                case 'mdY': s=d[2]+'-'+d[0]+'-'+d[1]; break;
+                case 'Ymd': s=d[0]+'-'+d[1]+'-'+d[2]; break;
+                }
+                return s;
+            }
+            </script>\n";
+
             if (isset($sugar_config['email_sugarclient_listviewmaxselect'])) {
                 echo "<script>SUGAR.config.email_sugarclient_listviewmaxselect = {$GLOBALS['sugar_config']['email_sugarclient_listviewmaxselect']};</script>";
             }

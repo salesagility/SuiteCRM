@@ -24,70 +24,78 @@
 $(document).ready(function () {
 
   $('#download_pdf_button_old').click(function () {
-    //Update the Detail view form to have the parameter info and reload the page
-    var _form = $('#formDetailView');
-    $('#formDetailView :input[name="action"]').val("DownloadPDF");
-    //Add each parameter to the form in turn
-    $('.aor_conditions_id').each(function (index, elem) {
-      $elem = $(elem);
-      var ln = $elem.attr('id').substr(17);
-      var id = $elem.val();
-      _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
-      var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
-      _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
-      var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
-      _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
-      var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
-      _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
-    });
+	//Update the Detail view form to have the parameter info and reload the page
+	var _form = $('#formDetailView');
+	$('#formDetailView :input[name="action"]').val("DownloadPDF");
+	//Add each parameter to the form in turn
+	$('.aor_conditions_id').each(function (index, elem) {
+	  $elem = $(elem);
+	  var ln = $elem.attr('id').substr(17);
+	  var id = $elem.val();
+	  _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
+	  var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
+	  _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
+	  var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
+	  _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
+	  var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+	  // Fix for issue #1082 - change local date format to db date format
+	  if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+		fieldInput = userDateToISO(fieldInput);
+	  }
+	  _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
+	});
 
-    //Get the data url of each of the rgraph canvases for PDF generation on the server
-    var encodedGraphs = [];
-    var rgraphs = document.getElementsByClassName('resizableCanvas');
-    for (var i = 0; i < rgraphs.length; i++) {
-      //encodedGraphs.push(rgraphs[i].toDataURL());
+	//Get the data url of each of the rgraph canvases for PDF generation on the server
+	var encodedGraphs = [];
+	var rgraphs = document.getElementsByClassName('resizableCanvas');
+	for (var i = 0; i < rgraphs.length; i++) {
+	  //encodedGraphs.push(rgraphs[i].toDataURL());
 
-      _form.append('<input type="hidden" id="graphsForPDF" name="graphsForPDF[]" value=' + rgraphs[i].toDataURL() + '>');
-    }
+	  _form.append('<input type="hidden" id="graphsForPDF" name="graphsForPDF[]" value=' + rgraphs[i].toDataURL() + '>');
+	}
 
-    //$('#formDetailView :input[name="encodedGraphs"]').val(JSON.stringify(encodedGraphs));
-    //var graphString = JSON.stringify(encodedGraphs);
+	//$('#formDetailView :input[name="encodedGraphs"]').val(JSON.stringify(encodedGraphs));
+	//var graphString = JSON.stringify(encodedGraphs);
 
-    _form.submit();
+	_form.submit();
 
-    //$('#graphsForPDF').remove();
-    $("#formDetailView #graphsForPDF").remove();
+	//$('#graphsForPDF').remove();
+	$("#formDetailView #graphsForPDF").remove();
   });
 
   $('#download_csv_button_old').click(function () {
-    //Update the Detail view form to have the parameter info and reload the page
-    var _form = $('#formDetailView');
-    $('#formDetailView :input[name="action"]').val("Export");
-    //Add each parameter to the form in turn
-    $('.aor_conditions_id').each(function (index, elem) {
-      $elem = $(elem);
-      var ln = $elem.attr('id').substr(17);
-      var id = $elem.val();
-      _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
-      var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
-      _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
-      var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
-      _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
-      var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
-      _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
-    });
-    _form.submit();
+	//Update the Detail view form to have the parameter info and reload the page
+	var _form = $('#formDetailView');
+	$('#formDetailView :input[name="action"]').val("Export");
+	//Add each parameter to the form in turn
+	$('.aor_conditions_id').each(function (index, elem) {
+	  $elem = $(elem);
+	  var ln = $elem.attr('id').substr(17);
+	  var id = $elem.val();
+	  _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
+	  var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
+	  _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
+	  var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
+	  _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
+	  var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+	  // Fix for issue #1082 - change local date format to db date format
+	  if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+		fieldInput = userDateToISO(fieldInput);
+	  }
+	  _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
+	});
+	_form.submit();
   });
 });
 
 function openProspectPopup() {
 
   var popupRequestData = {
-    "call_back_function": "setProspectReturn",
-    "form_name": "EditView",
-    "field_to_name_array": {
-      "id": "prospect_id"
-    }
+	"call_back_function": "setProspectReturn",
+	"form_name": "EditView",
+	"field_to_name_array": {
+	  "id": "prospect_id"
+	}
   };
 
   open_popup('ProspectLists', '600', '400', '', true, false, popupRequestData);
@@ -97,13 +105,13 @@ function openProspectPopup() {
 function setProspectReturn(popup_reply_data) {
 
   var callback = {
-    success: function (result) {
-      //report_rel_modules = result.responseText;
-      //alert('pass '+result.responseText);
-    },
-    failure: function (result) {
-      //alert('fail '+result.responseText);
-    }
+	success: function (result) {
+	  //report_rel_modules = result.responseText;
+	  //alert('pass '+result.responseText);
+	},
+	failure: function (result) {
+	  //alert('fail '+result.responseText);
+	}
   }
 
   var prospect_id = popup_reply_data.name_to_value_array.prospect_id;
@@ -118,21 +126,25 @@ function changeReportPage(record, offset, group_value, table_id) {
   var paginationButtonCaller = $(this);
   var query = "?module=AOR_Reports&action=changeReportPage&record=" + record + "&offset=" + offset + "&group=" + group_value;
   $('.aor_conditions_id').each(function (index, elem) {
-    $elem = $(elem);
-    var ln = $elem.attr('id').substr(17);
-    var id = $elem.val();
-    query += "&parameter_id[]=" + id;
-    var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
-    query += "&parameter_operator[]=" + operator;
-    var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
-    query += "&parameter_type[]=" + fieldType;
-    var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
-    query += "&parameter_value[]=" + fieldInput;
+	$elem = $(elem);
+	var ln = $elem.attr('id').substr(17);
+	var id = $elem.val();
+	query += "&parameter_id[]=" + id;
+	var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
+	query += "&parameter_operator[]=" + operator;
+	var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
+	query += "&parameter_type[]=" + fieldType;
+	var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+	// Fix for issue #1082 - change local date format to db date format
+	if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+	  fieldInput = userDateToISO(fieldInput);
+	}
+	query += "&parameter_value[]=" + fieldInput;
   });
 
   $.get(query).done(
-    function (data) {
-      $('#report_table_' + table_id).replaceWith(data);
-    }
+	function (data) {
+	  $('#report_table_' + table_id).replaceWith(data);
+	}
   );
 }

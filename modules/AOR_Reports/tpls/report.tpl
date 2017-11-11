@@ -87,6 +87,12 @@
                   var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
                   _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
                   var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+                  // Fix for issue #1082 - change local date format to db date format
+                  if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
+                      if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+                          fieldInput = userDateToISO(fieldInput);
+                      }
+                  }
                   _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
 
                   // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
@@ -103,6 +109,15 @@
 
                 });
                 _form.submit();
+              });
+
+              // Make sure to change dates back to the user format
+              $('.aor_conditions_id').each(function(index, elem){
+                  if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) {
+                      var dateValue = new Date( $('#aor_conditions_value\\['+index+'\\]').val() );
+                      var dateValueinUserFormat = dateValue.toLocaleFormat(cal_date_format);
+                      $('#aor_conditions_value\\['+index+'\\]').val(dateValueinUserFormat)
+                  }
               });
             });
             {/literal}
