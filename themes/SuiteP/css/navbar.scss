@@ -2392,10 +2392,12 @@
   max-height: 200px;
 }
 
-.mobileheader ul {
+.mobileheader.dropdown-menu ul {
   height: 200px;
   max-height: 200px;
 }
+
+
 
 .mobile_menu {
   height: 200px;
@@ -2487,7 +2489,7 @@
       max-height: 280px;
     }
 
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       height: 280px;
       max-height: 280px;
     }
@@ -2541,7 +2543,7 @@
       height: auto;
       max-height: 380px;
     }
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       height: auto;
       max-height: 380px;
     }
@@ -2607,7 +2609,7 @@
       max-height: 620px;
     }
 
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       max-height: 620px;
     }
 

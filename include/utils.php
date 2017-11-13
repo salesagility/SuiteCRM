@@ -290,6 +290,40 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'filter_module_fields' => array(
+            'Users' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            ),
+            'Employees' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            )
+        ),
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
@@ -1951,6 +1985,21 @@ function unTranslateNum($num)
     $num = preg_replace("'".preg_quote($dec_sep)."'", '.', $num);
 
     return $num;
+}
+
+/**
+ * @return bool
+ */
+function isSSL()
+{
+    if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+    ) {
+        return true;
+    }
+
+    return false;
 }
 
 function add_http($url)
