@@ -43,6 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
+    //DON'T CONVERT THESE THEY ARE MAPPINGS
+    'db_last_name' => 'LBL_LIST_LAST_NAME',
+    'db_first_name' => 'LBL_LIST_FIRST_NAME',
+    'db_title' => 'LBL_LIST_TITLE',
+    'db_email1' => 'LBL_LIST_EMAIL_ADDRESS',
+    'db_account_name' => 'LBL_LIST_ACCOUNT_NAME',
+    'db_email2' => 'LBL_LIST_EMAIL_ADDRESS',
+    //END DON'T CONVERT
+
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the lead.',
     'LBL_ACCOUNT_DESCRIPTION' => 'Account Description',
     'LBL_ACCOUNT_ID' => 'Account ID',
@@ -179,6 +188,7 @@ $mod_strings = array(
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
     'LNK_SELECT_ACCOUNTS' => ' <b>OR</b> Select Account',
+    'LNK_SELECT_CONTACTS' => ' <b>OR</b> Select Contact',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this lead from this case?',
     'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE' => 'Campaigns',

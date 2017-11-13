@@ -75,4 +75,4 @@
 
 <main>
     <div id="content" {if !$AUTHENTICATED}class="noLeftColumn" {/if}>
-        <table style=""" id="contentTable"><tr><td>
+        <table style="" id="contentTable"><tr><td>
