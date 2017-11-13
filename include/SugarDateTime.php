@@ -42,6 +42,8 @@
 /**
  * Sugar DateTime container
  * Extends regular PHP DateTime with useful services
+ * @property mixed ts
+ * @property mixed ts
  * @api
  */
 class SugarDateTime extends DateTime
