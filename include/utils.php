@@ -334,6 +334,40 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'filter_module_fields' => array(
+            'Users' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            ),
+            'Employees' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            )
+        ),
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
@@ -1316,7 +1350,7 @@ function return_mod_list_strings_language($language, $module)
     }
 
     if (file_exists("modules/$module/language/$language.lang.php.override")) {
-        echo 'Please Change:<br>' . "modules/$module/language/$language.lang.php.override" . '<br>to<br>' . 'Please Change:<br>' . "modules/$module/language/$language.lang.override.php";
+        echo 'Please Change:<br>'."modules/$module/language/$language.lang.php.override".'<br>to<br>'.'Please Change:<br>'."modules/$module/language/$language.lang.override.php";
         include "modules/$module/language/$language.lang.php.override";
     }
 
@@ -2026,6 +2060,21 @@ function unTranslateNum($num)
     $num = preg_replace("'" . preg_quote($dec_sep) . "'", '.', $num);
 
     return $num;
+}
+
+/**
+ * @return bool
+ */
+function isSSL()
+{
+    if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+    ) {
+        return true;
+    }
+
+    return false;
 }
 
 function add_http($url)
@@ -3216,6 +3265,9 @@ function check_php_version($sys_php_version = '')
 	// If there are some bug ridden versions, we should include them here
 	// and check immediately for one of this versions
 	$bug_php_versions = array();
+    foreach ($bug_php_versions as $v) {
+        if ( version_compare($sys_php_version, $v, '=') === true) {
+            return -1;
 
 	foreach ($bug_php_versions as $v) {
 		if (version_compare($sys_php_version, $v, '=') === true) {
@@ -4509,6 +4561,7 @@ function _getIcon($iconFileName)
     }
 
 
+
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {
         $iconName = 'icon_' . strtolower(substr($iconFileName, 0, 1)) . substr($iconFileName, 1) . '.gif';
@@ -5595,8 +5648,7 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
 function isValidId($id)
 {
 
-    $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i',
-            $id);
+    $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
 
     return $valid;
 }

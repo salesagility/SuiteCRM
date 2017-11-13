@@ -47,6 +47,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
+
 class Email extends Basic
 {
     /**
@@ -398,6 +399,16 @@ class Email extends Basic
      * @var Link2 $notes
      */
     public $notes;
+
+    /**
+     * @var mixed
+     */
+    public $msgNo;
+
+    /**
+     * @var string
+     */
+    public $to_name;
 
     /**
      * @var string
@@ -2631,12 +2642,10 @@ class Email extends Basic
         if ($alwaysSendEmailsInPlainText === true) {
             // plain text only
             $this->handleBodyInPlainTextFormat($mail);
+        } elseif ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
         } else {
-            if ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
-                $this->handleBodyInPlainTextFormat($mail);
-            } else {
-                $this->handleBodyInHTMLformat($mail);
-            }
+            $this->handleBodyInHTMLformat($mail);
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -3758,8 +3767,8 @@ eoq;
 				<div id="user_select" style="width:200px;position:absolute;left:2;top:2;visibility:hidden;z-index:1000;">
 				<table cellpadding="0" cellspacing="0" border="0" class="list view">
 					<tr height="20">
-						<td  colspan="' . $colspan . ';">
-							<a; href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage('close',
+						<td  colspan="' . $colspan . '" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
+							<a href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage('close',
                 'border="0"', null, null, ".gif", $mod_strings['LBL_CLOSE']) . '</a>
 							' . $mod_strings['LBL_USER_SELECT'] . '
 						</td>
