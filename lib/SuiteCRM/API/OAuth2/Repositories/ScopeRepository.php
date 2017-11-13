@@ -53,8 +53,35 @@ class ScopeRepository implements ScopeRepositoryInterface
     public function getScopeEntityByIdentifier($scopeIdentifier)
     {
         $scopes = [
-            'basic' => [
-                'description' => 'Basic details about you',
+            'admin:access' => [
+                'description' => 'access to the administrative operations',
+            ],
+            'standard:create' => [
+                'description' => 'standard user can create records',
+            ],
+            'standard:read' => [
+                'description' => 'standard user can read records',
+            ],
+            'standard:update' => [
+                'description' => 'standard user can update records',
+            ],
+            'standard:delete' => [
+                'description' => 'standard user can delete records',
+            ],
+            'standard:meta' => [
+                'description' => 'standard user can access meta information',
+            ],
+            'standard:relationship:create' => [
+                'description' => 'standard user can create relationship links',
+            ],
+            'standard:relationship:read' => [
+                'description' => 'standard user can read relationship links',
+            ],
+            'standard:relationship:update' => [
+                'description' => 'standard user can update relationship links',
+            ],
+            'standard:relationship:delete' => [
+                'description' => 'standard user can delete relationship links',
             ],
         ];
 
@@ -78,13 +105,6 @@ class ScopeRepository implements ScopeRepositoryInterface
         ClientEntityInterface $clientEntity,
         $userIdentifier = null
     ) {
-        // Example of programatically modifying the final scope of the access token
-        if ((int) $userIdentifier === 1) {
-            $scope = new ScopeEntity();
-            $scope->setIdentifier('basic');
-            $scopes[] = $scope;
-        }
-
         return $scopes;
     }
 }

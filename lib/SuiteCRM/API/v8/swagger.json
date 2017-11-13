@@ -2,16 +2,63 @@
   "openapi": "3.0",
   "info": {
     "version": "8.0",
-    "title": "json api"
+    "title": "SuiteCRM (JSON API v1.0.0)",
+    "license": {
+      "name": "GNU AFFERO GENERAL PUBLIC LICENSE VERSION 3",
+      "url": "https://github.com/salesagility/SuiteCRM/blob/master/LICENSE.txt"
+    }
   },
+  "schema" : "http",
   "paths": {
-    "/api/v8/login": {
+    "/api/v8/modules/viewed": {
       "get": {
-        "description": "Authenticates password grant",
-
+        "summary": "List recently viewed records",
+        "description": "List recently viewed records of the currently logged in user for all modules",
         "responses": {
           "200" : {
-            "description": "",
+            "description": "successful result",
+            "produces": ["application/vnd.api+json"],
+            "headers":[
+              {"Content-Type": "application/json"},
+              {"Accept": "application/json"}
+            ],
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": '#/components/schemas/User'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v8/modules/favorite": {
+      "get": {
+        "summary": "List favorite records",
+        "description": "List favorite records of the currently logged in user for all modules"
+      }
+    },
+    "/api/v8/modules/meta/list": {
+      "get": {
+        "summary": "List available modules modules",
+        "description": "",
+        "responses": {
+          "200" : {
+            "description": "success login",
+            "consumes": ["multipart/form-data"],
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "body",
+                "description": "Pet object that needs to be added to the store",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/oauth2"
+                }
+              }
+            ],
             "headers":[
               {"Content-Type": "application/json"},
               {"Accept": "application/json"}
@@ -27,10 +74,158 @@
         }
       }
     },
-    "/api/v8/logout": {
+    "/api/v8/modules/meta/menu/modules": {
       "get": {
-        "description": ""
+        "summary": "List modules menu (non-filter)",
+        "description": "Get the list of modules with their actions"
       }
+    },
+    "/api/v8/modules/meta/menu/filters": {
+      "get": {
+        "summary": "List modules menu (filter)",
+        "description": "Get the list of filters"
+      }
+    },
+    "/api/v8/modules/{module}": {
+      "get": {
+        "summary": "List records for a single module",
+        "description": "List a paginated list of records for a single module",
+        "responses": {}
+      },
+      "post": {
+        "summary": "Create module record",
+        "description": "Create a record for a single module",
+        "responses": {}
+      }
+    },
+    "/api/v8/modules/{module}/viewed": {
+      "get": {
+        "summary": "List recently viewed records (module)",
+        "description": "List recently viewed records of the currently logged in user for a single module",
+        "responses": {}
+      }
+    },
+    "/api/v8/modules/{module}/favorites": {
+      "get": {
+        "summary": "List favorite records (module)",
+        "description": "List favorite records of the currently logged in user for a single module",
+        "responses": {}
+      }
+    },
+    "/api/v8/modules/{modules}/meta/language": {
+      "get": {
+        "summary": "List available modules modules",
+        "description": "",
+        "responses": {
+          "200" : {
+            "description": "success login",
+            "consumes": ["multipart/form-data"],
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "body",
+                "description": "Pet object that needs to be added to the store",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/oauth2"
+                }
+              }
+            ],
+            "headers":[
+              {"Content-Type": "application/json"},
+              {"Accept": "application/json"}
+            ],
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v8/modules/{modules}/meta/attributes": {
+      "get": {
+        "summary": "List modules menu (non-filter)",
+        "description": "Get the list of modules with their actions"
+      }
+    },
+    "/api/v8/modules/{modules}/meta/menu": {
+      "get": {
+        "summary": "List modules menu (filter)",
+        "description": "Get the list of filters"
+      }
+    },
+    "/api/v8/modules/{modules}/meta/view": {
+      "get": {
+        "summary": "List modules menu (filter)",
+        "description": "Get the list of filters"
+      }
+    },
+    "/api/v8/modules/{modules}/{id}": {
+      "get": {
+        "summary": "List modules menu (filter)",
+        "description": "Get the list of filters"
+      }
+    },
+    "/api/v8/modules/{modules}/{id}/relationships/{link}": {
+      "get": {
+        "summary": "List modules menu (filter)",
+        "description": "Get the list of filters"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "suitecrm_api_auth": {
+      "type": "oauth2",
+      "flows": {
+        "password": {
+          "authorizationUrl": "/oauth/access_token",
+          "in": "header",
+          "scheme": "http",
+          "bearerFormat": "bearer",
+          "scopes": {
+            "admin:access": "access to the administrative operations",
+            "standard:create": "standard user can create records",
+            "standard:read": "standard user can read records",
+            "standard:update": "standard user can update records",
+            "standard:delete": "standard user can delete records",
+            "standard:meta": "standard user can access meta information",
+            "standard:relationship:create": "standard user can create relationship links",
+            "standard:relationship:read": "standard user can read relationship links",
+            "standard:relationship:update": "standard user can update relationship links",
+            "standard:relationship:delete": "standard user can delete relationship links"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "resource_identifier": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "resource": {},
+      "relationships": {},
+      "meta": {},
+      "links": {},
+      "json_api": {},
+      "included": {},
+      "error": {}
     }
   }
 }
