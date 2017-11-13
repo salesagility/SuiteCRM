@@ -37,6 +37,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+
+
 *}
 <form name="ConfigurePasswordSettings" method="POST" action="index.php">
     <input type='hidden' name='action' value='PasswordManager'/>
@@ -168,12 +171,23 @@
                     </tr>
                 </table>
 
+                <!-- PASSWORD SECURITY SETTINGS -->
+                <table id="pwdsec_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+                    <tr>
+                        <td>{include file="modules/Administration/PasswordManagerSecurity.tpl"}</td>
+                    </tr>
+                </table>
+                <!-- END PASSWORD SECURITY SETTINGS -->
+
+
                 <table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1"
                        cellpadding="0" class="edit view">
                     <tr>
                         <th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_PASSWORD_USER_RESET}</h4>
                         </th>
                     </tr>
+                </table>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
 
                         <td width="25%" scope="row">{$MOD.LBL_PASSWORD_FORGOT_FEATURE}
@@ -193,7 +207,22 @@
                             {assign var='smtp_warning_2' value='none'}
                         {/if}
                     </tr>
+                    {if !($VALID_PUBLIC_KEY)}
+                        <tr>
+                            <td scope="row"><span class='error'>{$MOD.ERR_PUBLIC_CAPTCHA_KEY}</span></td>
+                        </tr>
+                    {/if}
+                </table>
+
+
+                <table id="emailTemplatesId" name="emailTemplatesName" width="100%" border="0" cellspacing="1"
+                       cellpadding="0" class="edit view">
                     <tr>
+                        <th align="left" scope="row" colspan="4">
+                            <h4>
+                                {$MOD.LBL_PASSWORD_TEMPLATE}
+                            </h4>
+                        </th>
                         <td colspan="4" id="SystemGeneratedPassword_warning2" scope="row"
                             style='display:{$smtp_warning_2}' ;>
                             <i>{if $SMTP_SERVER_NOT_SET}&nbsp;&nbsp;&nbsp;&nbsp;{$MOD.ERR_SMTP_SERVER_NOT_SET}<br>{/if}
