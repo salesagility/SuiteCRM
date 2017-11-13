@@ -116,7 +116,7 @@ class User extends Person
 
     var $new_schema = true;
 
-    /**
+	/**
      * @var bool
      */
     public $factor_auth;
@@ -124,12 +124,8 @@ class User extends Person
     /**
      * @var string
      */
-    public $factor_auth_interface;
-
-
-    function __construct()
-    {
-        parent::__construct();
+    public $factor_auth_interface;function __construct()
+		{parent::__construct();
 
         $this->_loadUserPreferencesFocus();
     }
@@ -196,9 +192,22 @@ class User extends Person
         return isset($signatures[$id]) ? $signatures[$id] : false;
     }
 
-    function getSignaturesArray()
+    /**
+     * @param bool $useRequestedRecord
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getSignaturesArray($useRequestedRecord = false)
     {
-        $q = 'SELECT * FROM users_signatures WHERE user_id = \'' . $this->id . '\' AND deleted = 0 ORDER BY name ASC';
+
+        if ($useRequestedRecord) {
+            $user = $this->getRequestedUserRecord();
+            $uid = $user->id;
+        } else {
+            $uid = $this->id;
+        }
+
+        $q = 'SELECT * FROM users_signatures WHERE user_id = \'' . $uid . '\' AND deleted = 0 ORDER BY name ASC';
         $r = $this->db->query($q);
 
         // provide "none"
@@ -213,14 +222,22 @@ class User extends Person
 
     /**
      * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
      */
     public function getSignatures(
         $live = false,
         $defaultSig = '',
         $forSettings = false,
-        $elementId = 'signature_id'
+        $elementId = 'signature_id',
+        $useRequestedRecord = false
     ) {
-        $sig = $this->getSignaturesArray();
+        $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
         foreach ($sig as $key => $arr) {
             $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
@@ -242,14 +259,22 @@ class User extends Person
 
     /**
      * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
         $live = false,
         $defaultSig = '',
         $forSettings = false,
-        $elementId = 'account_signature_id'
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
     ) {
-        $sig = $this->getSignaturesArray();
+        $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
         foreach ($sig as $key => $arr) {
             $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
@@ -457,6 +482,27 @@ class User extends Person
     }
 
     /**
+     * @return bool|SugarBean
+     * @throws \RuntimeException
+     */
+    public function getRequestedUserRecord()
+    {
+        if (!isset($_REQUEST['record']) || !$_REQUEST['record']) {
+            throw new RuntimeException('Error: requested record is not set');
+        }
+        $user = BeanFactory::getBean('Users', $_REQUEST['record']);
+        if (!$user) {
+            throw new RuntimeException('Error: retrieve requested user record');
+        }
+        $uid = $user->id;
+        if (!$uid) {
+            throw new RuntimeException('Error: retrieve requested user ID');
+        }
+
+        return $user;
+    }
+
+    /**
      * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
      *
      * @see UserPreference::getPreference()
@@ -464,6 +510,7 @@ class User extends Person
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
      * @return mixed the value of the preference (string, array, int etc)
+     * @internal param bool $useRequestedRecord
      */
     public function getPreference(
         $name,
@@ -538,14 +585,14 @@ class User extends Person
     function save($check_notify = false)
     {
         global $current_user;
-        
+
         $isUpdate = !empty($this->id) && !$this->new_with_id;
-        
+
         // only admin user can change 2 factor authentication settings
         if($isUpdate && !is_admin($current_user)) {
             $tmpUser = BeanFactory::getBean('Users', $this->id);
             if($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
-                $msg .= 'Current user is not able to change two factor authentication settings.'; 
+                $msg .= 'Current user is not able to change two factor authentication settings.';
                 $GLOBALS['log']->warn($msg);
             }
             $this->factor_auth = $tmpUser->factor_auth;
@@ -688,15 +735,15 @@ class User extends Person
 
     /**
      * retrieves an User bean
-     * preformat name & full_name attribute with first/last
+     * pre-format name & full_name attribute with first/last
      * loads User's preferences
      *
-     * @param string id ID of the User
-     * @param bool encode encode the result
-     * @return object User bean
-     * @return null null if no User found
+     * @param string|integer $id ID of the User
+     * @param bool $encode encode the result
+     * @param bool $deleted
+     * @return User|SugarBean|null null if no User found
      */
-    function retrieve($id = -1, $encode = true, $deleted = true)
+    public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         $ret = parent::retrieve($id, $encode, $deleted);
         if ($ret) {

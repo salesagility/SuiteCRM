@@ -24,11 +24,10 @@ try {
     ob_end_clean();
 } catch(\Exception $e) {
     echo "\nINSTALLATION FAILED! file: " . $e->getFile() . ' - line: ' . $e->getLine()
-         . "\n" . $e->getMessage()
-         . "\n" . str_repeat('-', 120)
-         . "\n" . print_r($e->getTrace(), true)
-         . "\n" . str_repeat('-', 120)
-         . "\n";
+        . "\n" . $e->getMessage()
+        . "\n" . str_repeat('-', 120)
+        . "\n" . print_r($e->getTrace(), true)
+        . "\n" . str_repeat('-', 120)
+        . "\n";
 }
-
 

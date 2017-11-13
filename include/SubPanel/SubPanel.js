@@ -19,6 +19,7 @@ function showSearchPanel(subpanel){
 
 function buildSearchPanel(subpanel){
     var tables = document.getElementById("list_subpanel_"+subpanel).getElementsByTagName("table");
+    var module = get_module_name();
 
     var row = tables[0].insertRow(1);
     row.id = subpanel+'_search';
@@ -33,7 +34,7 @@ function buildSearchPanel(subpanel){
     var table = document.createElement('table');
     table.width = "100%";
 
-    $.ajax({url:"index.php?module=Accounts&action=SubPanelSearch&subpanel="+subpanel,
+    $.ajax({url:"index.php?module="+module+"&action=SubPanelSearch&subpanel="+subpanel,
         success:function(result){
             table.innerHTML += result;
             SUGAR.util.evalScript(result);

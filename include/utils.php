@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -1895,40 +1895,42 @@ EOQ;
 }
 
 /**
- * Very cool algorithm for sorting multi-dimensional arrays.  Found at http://us2.php.net/manual/en/function.array-multisort.php
- * Syntax: $new_array = array_csort($array [, 'col1' [, SORT_FLAG [, SORT_FLAG]]]...);
- * Explanation: $array is the array you want to sort, 'col1' is the name of the column
- * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
- * you can repeat the 'col',FLAG,FLAG, as often you want, the highest prioritiy is given to
- * the first - so the array is sorted by the last given column first, then the one before ...
+ * Sort Multi Dimensional Array by Column
+ *
+ * @param mixed ... &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]]
+ * @see http://php.net/manual/en/function.array-multisort.php
+ * @return array
+ *
  * Example: $array = array_csort($array,'town','age',SORT_DESC,'name');
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * $array is the array you want to sort, 'col1' is the name of the column
+ * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+ * you can repeat the 'col',FLAG,FLAG, as often you want, the highest priority is given to
+ * the first - so the array is sorted by the last given column first, then the one before ...
+ *
  */
 function array_csort()
 {
     $args = func_get_args();
-    $marray = array_shift($args);
-    $i = 0;
+    $argsShifted = array_shift($args);
+    $arrayMultiSortParameters = array();
+    $sorting = array();
 
-    $msortline = 'return(array_multisort(';
-    foreach ($args as $arg) {
-        ++$i;
-        if (is_string($arg)) {
-            foreach ($marray as $row) {
-                $sortarr[$i][] = $row[$arg];
+    for ($i = 0, $size = count($args); $i < $size; $i++) {
+        if (is_string($args[$i])) {
+            foreach ($argsShifted as $row) {
+                $sorting[$i][] = $row[$args[$i]];
             }
         } else {
-            $sortarr[$i] = $arg;
+            $sorting[$i] = $args[$i];
         }
-        $msortline .= '$sortarr[' . $i . '],';
+        $arrayMultiSortParameters[] = $sorting[$i];
     }
-    $msortline .= '$marray));';
 
-    eval($msortline);
+    $arrayMultiSortParameters[] = $argsShifted;
+    call_user_func_array('array_multisort', $arrayMultiSortParameters);
 
-    return $marray;
+    return end($arrayMultiSortParameters);
 }
 
 /**
@@ -3197,38 +3199,37 @@ function decodeJavascriptUTF8($str)
  *
  * @param string Version to check against, defaults to the current environment's.
  *
- * @return  integer  1 if version is greater than the recommended PHP version,
- *                   0 if version is between minimun and recomended PHP versions,
- *                   -1 otherwise (less than minimum or buggy version)
+ * @return integer1 if version is greater than the recommended PHP version,
+ * 0 if version is between minimun and recomended PHP versions,
+ * -1 otherwise (less than minimum or buggy version)
  */
 function check_php_version($sys_php_version = '')
-{
-    if ($sys_php_version === '') {
-        $sys_php_version = constant('PHP_VERSION');
-    }
+	{if ($sys_php_version === '') {
+		$sys_php_version = constant('PHP_VERSION');
+	}
 
-    // versions below MIN_PHP_VERSION are not accepted, so return early.
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-        return -1;
-    }
+	// versions below MIN_PHP_VERSION are not accepted, so return early.
+	if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+		return -1;
+	}
 
-    // If there are some bug ridden versions, we should include them here
-    // and check immediately for one of this versions
-    $bug_php_versions = array();
+	// If there are some bug ridden versions, we should include them here
+	// and check immediately for one of this versions
+	$bug_php_versions = array();
 
-    foreach ($bug_php_versions as $v) {
-        if (version_compare($sys_php_version, $v, '=') === true) {
-            return -1;
-        }
-    }
+	foreach ($bug_php_versions as $v) {
+		if (version_compare($sys_php_version, $v, '=') === true) {
+			return -1;
 
-    // If the checked version is between the minimum and recommended versions, return 0
+	}}
+
+    //If the checked version is between the minimum and recommended versions, return 0
     if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
         return 0;
     }
 
-    // Everything else is fair game
-    return 1;
+	// Everything else is fair game
+	return 1;
 }
 
 /**
@@ -5091,13 +5092,13 @@ function verify_image_file($path, $jpeg = false)
             return false;
         }
         $data = '';
-        // read the whole file in chunks
+        // read the whole file in chunks
         while (!feof($fp)) {
             $data .= fread($fp, 8192);
         }
 
         fclose($fp);
-        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
+        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
             $data, $m)) {
             $GLOBALS['log']->fatal("Found {$m[0]} in $path, not allowing upload");
 
