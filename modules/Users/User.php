@@ -49,11 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'include/SugarObjects/templates/person/Person.php';
 
 // User is used to store customer information.
-/**
- * @property string pwd_last_changed
- * @property string pwd_last_changed
- * @property string pwd_last_changed
- */class User extends Person
+class User extends Person
 	{// Stored fields
 	public $name = '';
 	public $full_name;
@@ -125,7 +121,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
 	/**
      * User constructor.
      */
-    publicfunction __construct()
+    public function __construct()
 		{parent::__construct();
 
         $this->_loadUserPreferencesFocus();
@@ -172,7 +168,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
      * convenience function to get user's default signature
      * return array
 	 */
-	publicfunction getDefaultSignature()
+	public function getDefaultSignature()
 		{if($defaultId = $this->getPreference('signature_default')) {
 			return $this->getSignature($defaultId);
 		} else {
@@ -305,7 +301,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
 	* @param bool $defaultDisplay
      * @return string
      */
-    publicfunction getSignatureButtons($jscall='', $defaultDisplay=false)
+    public function getSignatureButtons($jscall='', $defaultDisplay=false)
 		{global $mod_strings;
 
         $jscall = empty($jscall) ? 'open_email_signature_form' : $jscall;
@@ -343,7 +339,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
 	/**
      * @return mixed
      */
-    publicfunction getUserPrivGuid()
+    public function getUserPrivGuid()
     {    $userPrivGuid = $this->getPreference('userPrivGuid',  $this);
 		if ($userPrivGuid) {
 			return $userPrivGuid;
@@ -359,7 +355,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
 		}
 	}
 
-	publicfunction setUserPrivGuid()
+	public function setUserPrivGuid()
 		{$privGuid = create_guid();
 		//($name, $value, $nosession=0)
 		$this->setPreference('userPrivGuid', $privGuid,  $this);
@@ -586,7 +582,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
      * @param bool $check_notify
      * @return mixed
      */
-    publicfunction save($check_notify = false)
+    public function save($check_notify = false)
 		{$isUpdate = !empty($this->id) && !$this->new_with_id;
 
 
@@ -640,7 +636,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
 	* All Rights Reserved..
 	* Contributor(s): ______________________________________..
 	*/
-	publicfunction check_role_membership($role_name, $user_id = ''){
+	public function check_role_membership($role_name, $user_id = ''){
 
         global $current_user;
 
@@ -755,7 +751,7 @@ require_once 'include/SugarObjects/templates/person/Person.php';
      * @param $email
      * @return object|string
      */
-    publicfunction retrieve_by_email_address($email) {
+    public function retrieve_by_email_address($email) {
 
         $email1 = strtoupper($email);
         $q = <<<EOQ
@@ -780,7 +776,7 @@ EOQ;
      * @param $interface
      * @return bool
      */
-    publicfunction bean_implements($interface)
+    public function bean_implements($interface)
     {    switch($interface){
             case 'ACL':return true;
         }
@@ -795,7 +791,7 @@ EOQ;
 	 * @param bool $password_encoded Is password md5-encoded or plain text?
 	 * @return $ this|null -- this if load was successul and null if load failed.
 	 */
-	publicfunction load_user($user_password, $password_encoded = false)
+	public function load_user($user_password, $password_encoded = false)
 	{
 		global $login_error;
 		unset($GLOBALS['login_error']);
@@ -852,7 +848,8 @@ EOQ;
 	        }
 	        // plain crypt cuts password to 8 chars, which is not enough
 	        // fall back to old md5
-	        return strtolower(md5($password));}
+	        return strtolower(md5($password));
+	    }
 
 	    return @crypt(strtolower(md5($password)));
 	}
@@ -941,7 +938,7 @@ EOQ;
      * @param string $system_generated
 	 * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
 	 */
-	publicfunction change_password($user_password, $new_password, $system_generated = '0')
+	public function change_password($user_password, $new_password, $system_generated = '0')
 	{
 	    global $mod_strings;
 		global $current_user;
@@ -1015,15 +1012,15 @@ EOQ;
     /**
      * @return bool
      */
-    publicfunction is_authenticated()
+    public function is_authenticated()
 		{return $this->authenticated;
 	}
 
-	publicfunction fill_in_additional_list_fields()
+	public function fill_in_additional_list_fields()
 		{$this->fill_in_additional_detail_fields();
 	}
 
-	publicfunction fill_in_additional_detail_fields() {
+	public function fill_in_additional_detail_fields() {
         // jmorais@dri Bug #56269
         parent::fill_in_additional_detail_fields();
         // ~jmorais@dri
@@ -1065,7 +1062,7 @@ EOQ;
 	 * All Rights Reserved..
 	 * Contributor(s): ______________________________________..
 	 */
-	publicfunction verify_data($ieVerified=true)
+	public function verify_data($ieVerified=true)
 		{global $mod_strings, $current_user;
 		$verified = true;
 
@@ -1133,7 +1130,7 @@ EOQ;
 	/**
      * @return array
      */
-    publicfunction get_list_view_data() {
+    public function get_list_view_data() {
 
         global $mod_strings;
 
@@ -1177,7 +1174,7 @@ EOQ;
      * @param $list_form
      * @return mixed
      */
-    publicfunction list_view_parse_additional_sections(&$list_form)
+    public function list_view_parse_additional_sections(&$list_form)
 		{return $list_form;
 	}
 
@@ -1222,7 +1219,7 @@ EOQ;
      * @param string $relate_link_join
      * @return string
      */
-    publicfunction create_export_query($order_by, $where, $relate_link_join = '') {
+    public function create_export_query($order_by, $where, $relate_link_join = '') {
 		include'modules/Users/field_arrays.php';
 
         $cols = '';
@@ -1260,7 +1257,7 @@ EOQ;
 	 * All Rights Reserved..
 	 * Contributor(s): ______________________________________..
 	*/
-	publicfunction get_meetings()
+	public function get_meetings()
 		{// First, get the list of IDs.
 		$query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 		return $this->build_related_list($query, new Meeting());
@@ -1268,7 +1265,7 @@ EOQ;
 	/**
      * @return array
      */
-    publicfunction get_calls()
+    public function get_calls()
 		{// First, get the list of IDs.
 		$query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
 		return $this->build_related_list($query, new Call());
@@ -1277,7 +1274,7 @@ EOQ;
 	/**
 	 * generates Javascript to display I-E mail counts, both personal and group
 	 */
-	publicfunction displayEmailCounts()
+	public function displayEmailCounts()
 		{global $theme;
 		$new = translate('LBL_NEW', 'Emails');
 		$default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$this->id;
@@ -1343,7 +1340,7 @@ EOQ;
 	/**
      * @return array
      */
-    publicfunction getPreferredEmail()
+    public function getPreferredEmail()
 		{$ret = array ();
 		$nameEmail = $this->getUsersNameAndEmail();
 		$prefAddr = $nameEmail['email'];
@@ -1362,7 +1359,7 @@ EOQ;
 	/**
      * @return array
      */
-    publicfunction getUsersNameAndEmail()
+    public function getUsersNameAndEmail()
 	{
 	    // Bug #48555 Not User Name Format of User's locale.
 	    $this->_create_proper_name_field();
@@ -1380,7 +1377,7 @@ EOQ;
 	/**
      * @return array
      */
-    publicfunction getSystemDefaultNameAndEmail() {
+    public function getSystemDefaultNameAndEmail() {
 
         $email = new Email();
         $return = $email->getSystemDefaultEmail();
@@ -1394,7 +1391,7 @@ EOQ;
 	 * sets User email default in config.php if not already set by install - i.
 	 * e., upgrades
 	 */
-	publicfunction setDefaultsInConfig()
+	public function setDefaultsInConfig()
 		{global $sugar_config;
 		$sugar_config['email_default_client'] = 'sugar';
 		$sugar_config['email_default_editor'] = 'html';
@@ -1463,7 +1460,7 @@ EOQ;
 	 * @internalparam $return_id
 	 * @internalparam $class
 	 */
-	publicfunction getEmailLink2($emailAddress, &$focus,  $class='') {
+	public function getEmailLink2($emailAddress, &$focus,  $class='') {
 		$emailLink = '';
 		global $sugar_config;
 
@@ -1519,7 +1516,7 @@ EOQ;
 	 * @internalparam $return_id
 	 * @internalparam $class
 	 */
-	publicfunction getEmailLink($attribute, &$focus,  $class='') {
+	public function getEmailLink($attribute, &$focus,  $class='') {
         require_once'modules/Emails/EmailUI.php';
 	    $emailLink = '';
 		global $sugar_config;
@@ -1554,8 +1551,9 @@ EOQ;
 	 * gets a human-readable explanation of the format macro
 	 * @return string Human readable name format
 	 */
-	publicfunction getLocaleFormatDesc()
-		{global $locale;
+	public function getLocaleFormatDesc()
+    {
+		global $locale;
 		global $mod_strings;
 		global $app_strings;
 
@@ -1808,7 +1806,7 @@ EOQ;
      * @param bool $ifListForExport
      * @return string
      */
-    publicfunction create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false,$ifListForExport = false
+    public function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false,$ifListForExport = false
    ){	//call parent method, specifying for array to be returned
    	$ret_array = parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, true,$parentbean, $singleSelect,$ifListForExport);
 
