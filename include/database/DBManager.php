@@ -508,38 +508,45 @@ protected function checkQuery($sql, $object_name = false)
 	public function insertParams($table, $field_defs, $data, $field_map = null, $execute = true)
 	{
 		$values = array();
-		foreach ($field_defs as $field => $fieldDef)
-		{
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db')  continue;
-			//custom fields handle there save seperatley
-			if(!empty($field_map) && !empty($field_map[$field]['custom_type'])) continue;
+        if(!is_array($field_defs) && !is_object($field_defs)) {
+            $GLOBALS['log']->fatal('$filed_defs should be an array');
+        } else {
+            foreach ((array)$field_defs as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }
+                //custom fields handle there save seperatley
+                if (!empty($field_map) && !empty($field_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-			if(isset($data[$field])) {
-				// clean the incoming value..
-				$val = from_html($data[$field]);
-			} else {
-				if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-					$val = $fieldDef['default'];
-				} else {
-					$val = null;
-				}
-			}
+                if (isset($data[$field])) {
+                    // clean the incoming value..
+                    $val = from_html($data[$field]);
+                } else {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-			//handle auto increment values here - we may have to do something like nextval for oracle
-			if (!empty($fieldDef['auto_increment'])) {
-				$auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
-				if(!empty($auto)) {
-					$values[$field] = $auto;
-				}
-			} elseif ($fieldDef['name'] == 'deleted') {
-				$values['deleted'] = (int)$val;
-			} else {
-				// need to do some thing about types of values
-				if(!is_null($val) || !empty($fieldDef['required'])) {
-					$values[$field] = $this->massageValue($val, $fieldDef);
-				}
-			}
-		}
+                //handle auto increment values here - we may have to do something like nextval for oracle
+                if (!empty($fieldDef['auto_increment'])) {
+                    $auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
+                    if (!empty($auto)) {
+                        $values[$field] = $auto;
+                    }
+                } elseif ($fieldDef['name'] == 'deleted') {
+                    $values['deleted'] = (int)$val;
+                } else {
+                    // need to do some thing about types of values
+                    if (!is_null($val) || !empty($fieldDef['required'])) {
+                        $values[$field] = $this->massageValue($val, $fieldDef);
+                    }
+                }
+            }
+        }
 
 		if (empty($values))
 			return $execute?true:''; // no columns set
@@ -1930,52 +1937,66 @@ protected function checkQuery($sql, $object_name = false)
 		$columns = array();
         $fields = $bean->getFieldDefinitions();
 		// get column names and values
-		foreach ($fields as $field => $fieldDef) {
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db')  continue;
-			// Do not write out the id field on the update statement.
-    		// We are not allowed to change ids.
-    		if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) continue;
+        if(!is_array($fields) && !is_object($fields)) {
+            $GLOBALS['log']->fatal('Field Definition should be an array.');
+        } else {
+            foreach ((array)$fields as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }
+                // Do not write out the id field on the update statement.
+                // We are not allowed to change ids.
+                if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) {
+                    continue;
+                }
 
-    		// If the field is an auto_increment field, then we shouldn't be setting it.  This was added
-    		// specially for Bugs and Cases which have a number associated with them.
-    		if (!empty($bean->field_name_map[$field]['auto_increment'])) continue;
+                // If the field is an auto_increment field, then we shouldn't be setting it.  This was added
+                // specially for Bugs and Cases which have a number associated with them.
+                if (!empty($bean->field_name_map[$field]['auto_increment'])) {
+                    continue;
+                }
 
-    		//custom fields handle their save separately
-    		if(isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type']))  continue;
+                //custom fields handle their save separately
+                if (isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-    		// no need to clear deleted since we only update not deleted records anyway
-    		if($fieldDef['name'] == 'deleted' && empty($bean->deleted)) continue;
+                // no need to clear deleted since we only update not deleted records anyway
+                if ($fieldDef['name'] == 'deleted' && empty($bean->deleted)) {
+                    continue;
+                }
 
-    		if(isset($bean->$field)) {
-    			$val = from_html($bean->$field);
-    		} else {
-    			continue;
-    		}
+                if (isset($bean->$field)) {
+                    $val = from_html($bean->$field);
+                } else {
+                    continue;
+                }
 
-    		if(!empty($fieldDef['type']) && $fieldDef['type'] == 'bool'){
-    			$val = $bean->getFieldValue($field);
-    		}
+                if (!empty($fieldDef['type']) && $fieldDef['type'] == 'bool') {
+                    $val = $bean->getFieldValue($field);
+                }
 
-    		if(strlen($val) == 0) {
-    			if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-    				$val = $fieldDef['default'];
-    			} else {
-    				$val = null;
-    			}
-    		}
+                if (strlen($val) == 0) {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-    		if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
-			    $val = $this->truncate($val, $fieldDef['len']);
-			}
-		$columnName = $this->quoteIdentifier($fieldDef['name']);
-    		if(!is_null($val) || !empty($fieldDef['required'])) {
-    			$columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
-    		} elseif($this->isNullable($fieldDef)) {
-    			$columns[] = "{$columnName}=NULL";
-    		} else {
-    		    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
-    		}
-		}
+                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+                    $val = $this->truncate($val, $fieldDef['len']);
+                }
+                $columnName = $this->quoteIdentifier($fieldDef['name']);
+                if (!is_null($val) || !empty($fieldDef['required'])) {
+                    $columns[] = "{$columnName}=" . $this->massageValue($val, $fieldDef);
+                } elseif ($this->isNullable($fieldDef)) {
+                    $columns[] = "{$columnName}=NULL";
+                } else {
+                    $columns[] = "{$columnName}=" . $this->emptyValue($fieldDef['type']);
+                }
+            }
+        }
 
 		if ( sizeof($columns) == 0 )
 			return ""; // no columns set
@@ -2443,7 +2464,12 @@ protected function checkQuery($sql, $object_name = false)
 	 */
 	protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
 	{
-		$name = $fieldDef['name'];
+	    if(!isset($fieldDef['name'])) {
+	        $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
+	        $name = null;
+        } else {
+            $name = $fieldDef['name'];
+        }
 		$type = $this->getFieldType($fieldDef);
         $colType = $this->getColumnType($type);
 

@@ -36,11 +36,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testretrieve()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         //preset variables required
@@ -55,11 +50,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testload_merge_bean()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -83,11 +73,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testload_merge_bean2()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         //test without merge_id
@@ -110,11 +95,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testfill_in_additional_list_fields()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
@@ -131,11 +111,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testfill_in_additional_detail_fields()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
@@ -151,11 +126,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -182,11 +152,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_generic_where_clause()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -231,11 +196,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testpopulate_search_params()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Meetings');
@@ -253,11 +213,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testget_inputs_for_search_params()
     {
         error_reporting(E_ERROR | E_PARSE);
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -290,11 +245,6 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     public function testrelease_name_query()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
-
         $mergeRecord = new MergeRecord();
 
         //test with type = like
@@ -311,7 +261,8 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
@@ -319,7 +270,11 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $mergeRecord->load_merge_bean('Contacts');
         $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
-        $expected = array("contacts.id='1'",  "contacts.name='test'", "contacts.id !=''");
+        $expected = array(
+            0 => "contacts.id='1'",
+            1 => "contacts.name='test'",
+            2 => "contacts.id !=''",
+        );
 
         $actual = $mergeRecord->create_where_statement();
 
