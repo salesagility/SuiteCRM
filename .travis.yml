@@ -9,15 +9,12 @@ matrix:
 sudo: required
 dist: trusty
 services:
-  # TODO: use docker to support different databases
   - mysql
 
 install:
   - composer self-update && composer --version
 
 before_script:
-  # Use php built in web server
-  - php -S localhost:8080 -c ./build/php.ini > $(pwd)/webserver.log 2>&1 &
   # configure database
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
@@ -25,14 +22,12 @@ before_script:
   - composer install
 script:
   - php tests/install.php
-  - ./vendor/bin/pscss -f compressed themes/SuiteP/css/style.scss >  themes/SuiteP/css/style.css
   - ./vendor/bin/codecept run -f unit --debug -vvv
   - cat sugarcrm.log
 
 after_script:
   - cat suitecrm.log
   - cat sugarcrm.log
-  - cat webserver.log
 
 branches:
   only:
