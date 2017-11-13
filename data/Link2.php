@@ -98,8 +98,10 @@ class Link2
                     $this->def = $this->def[0];
                 } elseif (isset($this->def[1]['side']) && $this->def[1]['side'] == 'left') {
                     $this->def = $this->def[1];
-                } else {
+                } elseif (isset($this->def[0])){
                     $this->def = $this->def[0];
+                } else {
+                    $GLOBALS['log']->fatal('Link definition not found for: ' . $linkName);
                 }
             }
             if (empty($this->def['name'])) {
@@ -180,7 +182,12 @@ class Link2
      */
     public function query($params)
     {
-        return $this->relationship->load($this, $params);
+        if(is_object($this->relationship) && method_exists($this->relationship, 'load')) {
+            return $this->relationship->load($this, $params);
+        } else {
+            $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
+            return null;
+        }
     }
 
     /**
@@ -423,15 +430,19 @@ class Link2
             }
 
             //now load from the rows
-            foreach ($rows as $id => $vals) {
-                if (empty($this->beans[$id])) {
-                    $tmpBean = BeanFactory::getBean($rel_module, $id);
-                    if ($tmpBean !== false) {
-                        $result[$id] = $tmpBean;
+            if(is_array($rows) || is_object($rows)) {
+                foreach ((array)$rows as $id => $vals) {
+                    if (empty($this->beans[$id])) {
+                        $tmpBean = BeanFactory::getBean($rel_module, $id);
+                        if ($tmpBean !== false) {
+                            $result[$id] = $tmpBean;
+                        }
+                    } else {
+                        $result[$id] = $this->beans[$id];
                     }
-                } else {
-                    $result[$id] = $this->beans[$id];
                 }
+            } else {
+                $GLOBALS['log']->fatal('"rows" should be an array or object');
             }
 
             //If we did a complete load, cache the result in $this->beans
