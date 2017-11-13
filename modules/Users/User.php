@@ -128,7 +128,7 @@ class User extends Person
 /**
      * User constructor.
      */
-public function __construct()
+    public function __construct()
 		{parent::__construct();
 
         $this->_loadUserPreferencesFocus();
@@ -579,16 +579,19 @@ public function __construct()
     * Get WHERE clause that fetches all users counted for licensing purposes
     * @return string
     */
-    public static function getLicensedUsersWhere()
-    {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name',
-                'length') . ">0";
+	public static function getLicensedUsersWhere()
+	{
+		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".$GLOBALS['db']->convert('user_name', 'length').'>0';
+	    return '1<>1';
+	}
 
-        return "1<>1";
-    }
+	/**
+     * @param bool $check_notify
+     * @return mixed
+     */
+    public function save($check_notify = false)
+		{$isUpdate = !empty($this->id) && !$this->new_with_id;
 
-    function save($check_notify = false)
-    {
         global $current_user;
 
         $isUpdate = !empty($this->id) && !$this->new_with_id;
@@ -774,20 +777,24 @@ public function __construct()
         $q = <<<EOQ
 
 		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
 
         $res = $this->db->query($q);
-        $row = $this->db->fetchByAssoc($res);
-
-        if (!empty($row['id'])) {
-            return $this->retrieve($row['id']);
+        $rows = array();
+		while($row = $this->db->fetchByAssoc($res)) {
+		    $rows[] = $row;
         }
 
-        return '';
-    }
+		if(count($rows) > 1) {
+		    $GLOBALS['log']->fatal('ambiguous user email address');
+        }if (!empty($rows[0]['id'])) {
+			return $this->retrieve($rows[0]['id']);
+		}
+		return '';
+	}
 
    /**
      * @param $interface
@@ -885,7 +892,7 @@ EOQ;
 
     /**
      * Check that md5-encoded password matches existing hash
-     * @param string $password MD5-encoded password
+     * @param string $password_md5 MD5-encoded password
      * @param string $user_hash DB hash
      * @return bool Match or not?
      * @internal param string $password MD5-encoded password
@@ -903,32 +910,46 @@ EOQ;
         return crypt(strtolower($password_md5), $user_hash) == $user_hash;
     }
 
-    /**
-     * Find user with matching password
-     * @param string $name Username
-     * @param string $password MD5-encoded password
-     * @param string $where Limiting query
-     * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return the matching User of false if not found
-     */
-    public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
-    {
-        global $db;
-        $name = $db->quote($name);
-        $query = "SELECT * from users where user_name='$name'";
-        if (!empty($where)) {
-            $query .= " AND $where";
-        }
-        $result = $db->limitQuery($query, 0, 1, false);
-        if (!empty($result)) {
-            $row = $db->fetchByAssoc($result);
-            if (!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
-                return $row;
-            }
+	/**
+	 * Find user with matching password
+	 * @param string $name Username
+	 * @param string $password MD5-encoded password
+	 * @param string $where Limiting query
+	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
+	 * @return bool|array the matching User of false if not found
+	 */
+	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
+	{
+
+        if (!$name) {
+            $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+            return false;
         }
 
-        return false;
-    }
+	    global $db;
+
+        $before = $name;
+
+		$name = $db->quote($name);
+
+        if ($before && !$name) {
+            $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+            return false;
+        }
+
+		$query = "SELECT * from users where user_name='$name'";
+		if(!empty($where)) {
+		    $query .= " AND $where";
+		}
+		$result = $db->limitQuery($query,0,1,false);
+		if(!empty($result)) {
+		    $row = $db->fetchByAssoc($result);
+		    if(!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
+		        return $row;}
+		    }
+
+		return false;
+	}
 
     /**
      * Sets new password and resets password expiration timers
@@ -1075,40 +1096,39 @@ EOQ;
         return $userFocus->id;
     }
 
-    /**
-     * @return -- returns a list of all users in the system.
-     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-     * All Rights Reserved..
-     * Contributor(s): ______________________________________..
-     */
-    function verify_data($ieVerified = true)
-    {
-        global $mod_strings, $current_user;
-        $verified = true;
+	/*** @param bool $ieVerified
+	 * @return bool-- returns a list of all users in the system.
+	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+	 * All Rights Reserved..
+	 * Contributor(s): ______________________________________..
+	 */
+	public function verify_data($ieVerified=true)
+		{global $mod_strings, $current_user;
+		$verified = true;
 
-        if (!empty ($this->id)) {
-            // Make sure the user doesn't report to themselves.
-            $reports_to_self = 0;
-            $check_user = $this->reports_to_id;
-            $already_seen_list = array();
-            while (!empty ($check_user)) {
-                if (isset ($already_seen_list[$check_user])) {
-                    // This user doesn't actually report to themselves
-                    // But someone above them does.
-                    $reports_to_self = 1;
-                    break;
-                }
-                if ($check_user == $this->id) {
-                    $reports_to_self = 1;
-                    break;
-                }
-                $already_seen_list[$check_user] = 1;
-                $query = "SELECT reports_to_id FROM users WHERE id='" . $this->db->quote($check_user) . "'";
-                $result = $this->db->query($query, true, "Error checking for reporting-loop");
-                $row = $this->db->fetchByAssoc($result);
-                echo("fetched: " . $row['reports_to_id'] . " from " . $check_user . "<br>");
-                $check_user = $row['reports_to_id'];
-            }
+		if (!empty ($this->id)) {
+			// Make sure the user doesn't report to themselves.
+			$reports_to_self = 0;
+			$check_user = $this->reports_to_id;
+			$already_seen_list = array ();
+			while (!empty ($check_user)) {
+				if (isset ($already_seen_list[$check_user])) {
+					// This user doesn't actually report to themselves
+					// But someone above them does.
+					$reports_to_self = 1;
+					break;
+				}
+				if ($check_user == $this->id) {
+					$reports_to_self = 1;
+					break;
+				}
+				$already_seen_list[$check_user] = 1;
+				$query = "SELECT reports_to_id FROM users WHERE id='".$this->db->quote($check_user)."'";
+				$result = $this->db->query($query, true, 'Error checking for reporting-loop');
+				$row = $this->db->fetchByAssoc($result);
+				echo ('fetched: '.$row['reports_to_id'].' from '.$check_user.'<br>');
+				$check_user = $row['reports_to_id'];
+			}
 
             if ($reports_to_self == 1) {
                 $this->error_string .= $mod_strings['ERR_REPORT_LOOP'];
@@ -1530,7 +1550,7 @@ EOQ;
      * @param return_id
      * @param class
      */
-    function getEmailLink(
+    public function getEmailLink(
         $attribute,
         &$focus,
         $contact_id = '',
@@ -1591,17 +1611,16 @@ EOQ;
 
         $macro = $locale->getLocaleFormatMacro();
 
-        $ret1 = '';
-        $ret2 = '';
-        for ($i = 0; $i < strlen($macro); $i++) {
-            if (array_key_exists($macro{$i}, $format)) {
-                $ret1 .= "<i>" . $format[$macro{$i}] . "</i>";
-                $ret2 .= "<i>" . $name[$macro{$i}] . "</i>";
-            } else {
-                $ret1 .= $macro{$i};
-                $ret2 .= $macro{$i};
-            }
-        }
+		$ret1 = '';
+		$ret2 = '';
+		for($i=0, $iMax =strlen($macro); $i< $iMax; $i++) {
+			if(array_key_exists($macro{$i}, $format)) {
+				$ret1 .= '<i>'.$format[$macro{$i}].'</i>';
+				$ret2 .= '<i>'.$name[$macro{$i}].'</i>';
+			} else {
+				$ret1 .= $macro{$i};
+				$ret2 .= $macro{$i};}
+			}
 
         return $ret1 . "<br />" . $ret2;
     }

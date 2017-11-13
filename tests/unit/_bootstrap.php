@@ -8,9 +8,13 @@ if (!defined('sugarEntry')) {
 /* bootstrap composer's autoloader */
 require_once __DIR__.'/../../vendor/autoload.php';
 global $sugar_config, $db;
+
+require_once __DIR__ .'/../../include/database/DBManagerFactory.php';
+
 require_once __DIR__ .'/../../include/utils.php';
 require_once __DIR__ .'/../../include/modules.php';
 require_once __DIR__ .'/../../include/entryPoint.php';
+$db = DBManagerFactory::getInstance();
 //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
 $GLOBALS['current_language'] = 'en_us';
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);

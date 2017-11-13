@@ -4831,8 +4831,12 @@ function load_link_class($properties)
 {
     $class = 'Link2';
     if (!empty($properties['link_class']) && !empty($properties['link_file'])) {
-        require_once $properties['link_file'];
-        $class = $properties['link_class'];
+        if(!file_exists($properties['link_file'])) {
+            $GLOBALS['log']->fatal('File not found: ' . $properties['link_file']);
+        } else {
+            require_once $properties['link_file'];
+            $class = $properties['link_class'];
+        }
     }
 
     return $class;

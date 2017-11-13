@@ -1,6 +1,6 @@
 <?php
 
-include_once 'tests/TestLogger.php';
+use SuiteCRM\Test\TestLogger;
 
 class SugarControllerTest extends PHPUnit_Framework_TestCase
 {
