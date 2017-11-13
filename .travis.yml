@@ -1,18 +1,24 @@
 language: php
+php:
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
 matrix:
-  allow_failures:
-    - php: 5.4
+  fast_finish: true
+sudo: required
+dist: trusty
+services:
+  # TODO: use docker to support different databases
+  - mysql
 
-  include:
-    - php: 5.4 # lowest versions of all dependencies
-    - php: 5.5
-    - php: 5.6
-    - php: 7.0
-    - php: 7.1
 install:
   - composer self-update && composer --version
 
 before_script:
+  # Use php built in web server
+  - php -S localhost:8080 -c ./build/php.ini > $(pwd)/webserver.log 2>&1 &
+  # configure database
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
@@ -22,9 +28,12 @@ script:
   - ./vendor/bin/pscss -f compressed themes/SuiteP/css/style.scss >  themes/SuiteP/css/style.css
   - ./vendor/bin/codecept run -f unit --debug -vvv
   - cat sugarcrm.log
+
+after_script:
   - cat suitecrm.log
-services:
-  - mysql
+  - cat sugarcrm.log
+  - cat webserver.log
+
 branches:
   only:
     - master
