@@ -432,11 +432,11 @@ class TemplateHandler
                 $field = $f;
                 $name = $qsd->form_name . '_' . $field['name'];
 
-                if ($field['type'] === 'relate' &&
-                    isset($field['module']) &&
-                    !empty($field['module']) &&
-                    !empty($field['quicksearch']) ||
-                    preg_match('/_name$|_c$/si', $name)
+                if (($field['type'] === 'relate' &&
+                        isset($field['module']) &&
+                        !empty($field['module']) &&
+                        preg_match('/_name$|_c$/si', $name)) ||
+                    !empty($field['quicksearch'])
                 ) {
                     if (preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)) {
 

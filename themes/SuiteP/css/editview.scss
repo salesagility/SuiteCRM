@@ -563,7 +563,7 @@ table.view {
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
-  padding: 0 0 0 8px;
+  padding: 0;
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
@@ -622,7 +622,7 @@ slot {
   text-align: left;
   min-height: 48px;
   vertical-align: baseline;
-  white-space: nowrap;
+  white-space: inherit;
 }
 
 .detail-view-field a {
@@ -750,7 +750,7 @@ option[selected] {
 }
 
 .edit tr td[scope=row] {
-  padding: 0 10px 0 10px;
+  padding: 0 10px 0 0;
   line-height: 40px;
   text-align: left;
   height: 40px;
@@ -4562,25 +4562,6 @@ object {
   color: $danger;
 }
 
-#report-editview-footer {
-  float: left;
-  width: 70%;
-}
-
-#detailpanel_fields,
-#detailpanel_conditions,
-#detailpanel_charts {
-  border-top: 1px solid lightgray;
-}
-
-#detailpanel_fields_select {
-  margin-right: 20px;
-  float: left;
-  overflow-y: auto;
-  width: 20%;
-  height: 640px;
-}
-
 @media (max-width: 767px) {
 
   .col-sm-8.edit-view-field {
@@ -4602,56 +4583,6 @@ object {
     background: none;
     width: 100%;
   }
-}
-
-.aor_dragbox {
-  overflow: scroll;
-  height: 250px;
-}
-
-#report-editview-footer .tab-togglers {
-  width: 80%;
-}
-
-#report-editview-footer .tab-toggler {
-  display: block;
-  padding: 0 4px;
-  float: left;
-}
-
-#report-editview-footer .tab-toggler.active .button {
-  background-color: $danger-btn-bg;
-}
-
-#report-editview-footer .parentheses-btn {
-  display: block;
-  border: 1px solid lightgray;
-  width: 100%;
-  min-height: 30px;
-}
-
-#report-editview-footer .condition-sortable-handle {
-  cursor: move;
-}
-
-#report-editview-footer .parenthesis-line strong {
-  font-size: 18px
-}
-
-#report-editview-footer .drop-area.highlighted {
-  background-color: #f7f7f7;
-}
-
-#report-editview-footer .tab-panels {
-  width: 110%;
-}
-
-.noGraphDataPoints {
-  padding: 10px;
-}
-
-.rgraph_chart_tooltips_css {
-  font-family: 'Lato', Arial;
 }
 
 @media (min-width: 320px) and (max-width: 978px) {

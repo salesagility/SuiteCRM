@@ -31,9 +31,10 @@ $chart = <<<EOD
                     if(dataPoints !== undefined && dataPoints.length > 0)
                         largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
 
-                    if(largest === null || largest < maxYForSmallNumbers)
-                        largest = maxYForSmallNumbers;
-                    return(largest);
+                    if (largest === null || largest < maxYForSmallNumbers) {
+                      return maxYForSmallNumbers;
+                    }
+                    return(null);
                 }
 
             function resizeGraph(graph)
