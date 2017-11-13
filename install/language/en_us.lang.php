@@ -311,7 +311,6 @@ $mod_strings = array(
 	'LBL_SPRITE_SUPPORT'                => 'Sprite Support',
 	'LBL_SYSTEM_CREDS'                  => 'System Credentials',
 	'LBL_SYSTEM_ENV'                    => 'System Environment',
-	'LBL_START'							=> 'Start',
 	'LBL_SHOW_PASS'                     => 'Show Passwords',
 	'LBL_HIDE_PASS'                     => 'Hide Passwords',
 	'LBL_HIDDEN'                        => '<i>(hidden)</i>',

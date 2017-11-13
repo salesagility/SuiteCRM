@@ -228,21 +228,63 @@ class ConnectorsController extends SugarController {
         }
     }
 
+    private function remoteFileExists($url) {
+        $curl = curl_init($url);
+
+        //don't fetch the actual page, you only want to check the connection is ok
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+
+        //do request
+        $result = curl_exec($curl);
+
+
+        $ret = false;
+
+        //if request did not fail
+        if ($result !== false) {
+            //if request was ok, check response code
+            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            if ($statusCode == 200) {
+                $ret = true;
+            }
+        }
+
+        curl_close($curl);
+
+        return $ret;
+    }
+
 	function action_CallRest() {
 		$this->view = 'ajax';
 
-		if(false === ($result=@file_get_contents($_REQUEST['url']))) {
-           echo '';
-		} else if(!empty($_REQUEST['xml'])){
-		   $values = array();
-		   $p = xml_parser_create();
-		   xml_parse_into_struct($p, $result, $values);
-		   xml_parser_free($p);
-		   $json = getJSONobj();
-		   echo $json->encode($values);
-		} else {
-		   echo $result;
-		}
+		$url = $_REQUEST['url'];
+
+        if(!preg_match('/^http[s]{0,1}\:\/\//', $url)) {
+            throw new RuntimeException('Illegal request');
+        }
+
+        if(!$this->remoteFileExists($url)) {
+            throw new RuntimeException('Requested URL is not exists.');
+        }
+
+
+        if (false === ($result = @file_get_contents($_REQUEST['url']))) {
+            echo '';
+        } else {
+            if (!empty($_REQUEST['xml'])) {
+                $values = array();
+                $p = xml_parser_create();
+                xml_parse_into_struct($p, $result, $values);
+                xml_parser_free($p);
+                $json = getJSONobj();
+                echo $json->encode($values);
+            } else {
+                echo $result;
+            }
+        }
+
+
 	}
 
 	function action_CallSoap() {
