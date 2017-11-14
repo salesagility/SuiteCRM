@@ -712,38 +712,35 @@ class User extends Person
     }
 
 	/**
-	 * @deprecated
-	* @param string $user_password - Must be non null and at least 1 character.
-	* @return string encrypted password for storage in DB and comparison against DB password.
+     * @deprecated
+     * @param string $user_password - Must be non null and at least 1 character.
+     * @return string encrypted password for storage in DB and comparison against DB password.
      * @internalparam string $user_name - Must be non null and at least 2 characters
-	* @desc Take an unencrypted username and password and return the encrypted password
-	* /
-	public
-	function encrypt_password($user_password)
-	{
-		// encrypt the password.
-		$salt = substr($this->user_name, 0, 2);
+     * @desc Take an unencrypted username and password and return the encrypted password
+     */
+    public function encrypt_password($user_password) {
+        // encrypt the password.
+        $salt = substr($this->user_name, 0, 2);
 
 
         return crypt($user_password, $salt);
     }
 
-	/**
-	 * Authenicates the user; returns true if successful
-	 *
-	 * @param string $password MD5-encoded password
-	 * @return bool
-	 */
-	public function authenticate_user($password)
-	{
-	    $row = self::findUserPassword($this->user_name, $password);
-	    if(null ===$row) {
-	        return false;
-		} else {
-			$this->id = $row['id'];
-			return true;
-		}
-	}
+    /**
+     * Authenicates the user; returns true if successful
+     *
+     * @param string $password MD5-encoded password
+     * @return bool
+     */
+    public function authenticate_user($password) {
+        $row = self::findUserPassword($this->user_name, $password);
+        if (null === $row) {
+            return false;
+        } else {
+            $this->id = $row['id'];
+            return true;
+        }
+    }
 
     /**
      * retrieves an User bean
