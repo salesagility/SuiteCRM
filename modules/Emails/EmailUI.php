@@ -936,19 +936,6 @@ eoq;
     {
         global $current_user;
 
-    ///////////////////////////////////////////////////////////////////////////
-    ////	FOLDER FUNCTIONS
-
-		$this->folder->save();
-		return array(
-			'action' => 'newFolderSave',
-			'id' => $this->folder->id,
-			'name' => $this->folder->name,
-			'is_group' => $this->folder->is_group,
-			'is_dynamic' => $this->folder->is_dynamic
-		);
-	}
-
         $this->folder->name = $nodeLabel;
         $this->folder->is_group = $isGroup;
         $this->folder->parent_folder = ($parentId == 'Home') ? "" : $parentId;
@@ -1968,15 +1955,6 @@ eoq;
 
         return true;
     }
-
-	/**
-	 * returns the metadata defining a single email message for display.  Uses cache file if it exists
-	 * @return array
-	 */
-function getSingleMessage($ie) {
-
-        return $counts;
-    } // fn
 
     function getLastRobin($ie)
     {
