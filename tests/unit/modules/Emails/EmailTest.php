@@ -52,21 +52,6 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $email->safeAttachmentName('test.cgi'));
     }
 
-    public function testemail2ParseAddresses()
-    {
-        $email = new Email();
-
-        $email->email2init();
-        $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
-        $expected = array(
-            array('email' => 'abc@xyz.com', 'display' => 'abc'),
-            array('email' => 'xyz@abc.com', 'display' => 'xyz')
-        );
-
-        $result = $email->email2ParseAddresses($addresses);
-        $this->assertSame($expected, $result);
-    }
-
     public function testemail2ParseAddressesForAddressesOnly()
     {
         $email = new Email();
