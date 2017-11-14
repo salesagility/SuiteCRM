@@ -923,6 +923,10 @@ eoq;
 
         return $userPreferences;
     }
+    
+    function getUserPrefsJS($useRequestedRecord = false) {
+        return $this->getUserPreferencesJS($useRequestedRecord);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     ////	FOLDER FUNCTIONS

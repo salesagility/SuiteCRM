@@ -236,102 +236,93 @@ class SugarAuthenticate{
 
 
 
-	/**
-	 * Called after a session is authenticated - if this returns false the sessionAuthenticate will return false and destroy the session
-	 * and it will load the  current user
-	 * @return boolean
-	 */
+    /**
+     * Called after a session is authenticated - if this returns false the sessionAuthenticate will return false and destroy the session
+     * and it will load the  current user
+     * @return boolean
+     */
+    function postSessionAuthenticate() {
 
-	function postSessionAuthenticate(){
+        global $action, $allowed_actions, $sugar_config;
+        $_SESSION['userTime']['last'] = time();
+        $user_unique_key = (isset($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
+        $server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
 
-		global $action, $allowed_actions, $sugar_config;
-		$_SESSION['userTime']['last'] = time();
-		$user_unique_key = (isset ($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
-		$server_unique_key = (isset ($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
+        //CHECK IF USER IS CROSSING SITES
+        if (($user_unique_key != $server_unique_key) && (!in_array($action, $allowed_actions)) && (!isset($_SESSION['login_error']))) {
 
-		//CHECK IF USER IS CROSSING SITES
-		if (($user_unique_key != $server_unique_key) && (!in_array($action, $allowed_actions)) && (!isset ($_SESSION['login_error']))) {
+            $GLOBALS['log']->debug('Destroying Session User has crossed Sites');
+            session_destroy();
+            header("Location: index.php?action=Login&module=Users" . $GLOBALS['app']->getLoginRedirect());
+            sugar_cleanup(true);
+        }
+        if (!$this->userAuthenticate->loadUserOnSession($_SESSION['authenticated_user_id'])) {
+            session_destroy();
+            header("Location: index.php?action=Login&module=Users&loginErrorMessage=LBL_SESSION_EXPIRED");
+            $GLOBALS['log']->debug('Current user session does not exist redirecting to login');
+            sugar_cleanup(true);
+        }
 
-			$GLOBALS['log']->debug('Destroying Session User has crossed Sites');
-		    session_destroy();
-			header("Location: index.php?action=Login&module=Users".$GLOBALS['app']->getLoginRedirect());
-			sugar_cleanup(true);
-		}
-		if (!$this->userAuthenticate->loadUserOnSession($_SESSION['authenticated_user_id'])) {
-			session_destroy();
-			header("Location: index.php?action=Login&module=Users&loginErrorMessage=LBL_SESSION_EXPIRED");
-			$GLOBALS['log']->debug('Current user session does not exist redirecting to login');
-			sugar_cleanup(true);
-		}
-
-        $GLOBALS['log']->fatal('DEBUG: -------------------------------------------------------------');
-		$GLOBALS['log']->fatal('DEBUG: --------------------- CHECK FACTOR AUtH ---------------------');
-        $GLOBALS['log']->fatal('DEBUG: -------------------------------------------------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: --------------------- CHECK FACTOR AUtH ---------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
 
         //session_destroy(); die();
 
-        if(!$this->userAuthenticate->isUserLogoutRequest()) {
-            $GLOBALS['log']->fatal('DEBUG: User needs factor auth, request is not Logout');
+        if (!$this->userAuthenticate->isUserLogoutRequest()) {
+            $GLOBALS['log']->debug('FACTOR AUTH: User needs factor auth, request is not Logout');
 
             if ($this->userAuthenticate->isUserNeedFactorAuthentication()) {
-                $GLOBALS['log']->fatal('DEBUG: User needs factor auth, set on User Profile page');
+                $GLOBALS['log']->debug('FACTOR AUTH: User needs factor auth, set on User Profile page');
 
                 if (!$this->userAuthenticate->isUserFactorAuthenticated()) {
-                    $GLOBALS['log']->fatal('DEBUG: User is not factor authenticated yet');
+                    $GLOBALS['log']->debug('FACTOR AUTH: User is not factor authenticated yet');
 
                     if ($this->userAuthenticate->isUserFactorTokenReceived()) {
-                        $GLOBALS['log']->fatal('DEBUG: User sent back a token in request');
+                        $GLOBALS['log']->debug('FACTOR AUTH: User sent back a token in request');
 
                         if (!$this->userAuthenticate->factorAuthenticateCheck()) {
-                            $GLOBALS['log']->fatal('DEBUG: User factor auth failed so we show token input form');
+                            $GLOBALS['log']->debug('FACTOR AUTH: User factor auth failed so we show token input form');
 
                             self::addFactorMessage('Two Factor Authentication failed');
                             $this->userAuthenticate->showFactorTokenInput();
-
                         } else {
-                            $GLOBALS['log']->fatal('DEBUG: User factor auth success!');
-
+                            $GLOBALS['log']->debug('FACTOR AUTH: User factor auth success!');
                         }
-
                     } else {
-                        $GLOBALS['log']->fatal('DEBUG: User did not sent back the token so we send a new one and redirect to token input form');
+                        $GLOBALS['log']->debug('FACTOR AUTH: User did not sent back the token so we send a new one and redirect to token input form');
 
-                       // if(!$this->userAuthenticate->isFactorTokenSent()) {
-                       //     $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
+                        // if(!$this->userAuthenticate->isFactorTokenSent()) {
+                        //     $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
 
-                            if ($this->userAuthenticate->sendFactorTokenToUser()) {
-                                $GLOBALS['log']->fatal('DEBUG: Factor Token sent to User');
+                        if ($this->userAuthenticate->sendFactorTokenToUser()) {
+                            $GLOBALS['log']->debug('FACTOR AUTH: Factor Token sent to User');
 
-                                $this->userAuthenticate->showFactorTokenInput();
+                            self::addFactorMessage('Two factor authentication code sent.');
+
+                            $this->userAuthenticate->showFactorTokenInput();
+
+                            //$this->userAuthenticate->redirectToLogout(); // todo : maybe its not needed - just a conflict merge issue...??
+                        } else {
+                            $GLOBALS['log']->debug('FACTOR AUTH: failed to send factor token to user so just redirect to the logout url and kick off ');
 
                             self::addFactorMessage('Two factor authentication code sending error.');
 
                             $this->userAuthenticate->redirectToLogout();
                         }
-                            } else {
-                                $GLOBALS['log']->fatal('DEBUG: failed to send factor token to user so just redirect to the logout url and kick off ');
 
-                                $this->userAuthenticate->redirectToLogout();
-                            }
-
-                       // } else {
-                       //     $GLOBALS['log']->fatal('DEBUG: token already sent');
-                       // }
-
+                        // } else {
+                        //     $GLOBALS['log']->fatal('DEBUG: token already sent');
+                        // }
                     }
-
                 } else {
-                    $GLOBALS['log']->fatal('DEBUG: User factor authenticated already');
-
+                    $GLOBALS['log']->debug('FACTOR AUTH: User factor authenticated already');
                 }
-
             } else {
-                $GLOBALS['log']->fatal('DEBUG: User does`nt need factor auth');
-
+                $GLOBALS['log']->debug('FACTOR AUTH: User does`nt need factor auth');
             }
-
         } else {
-            $GLOBALS['log']->fatal('DEBUG: User Logout requested');
+            $GLOBALS['log']->debug('FACTOR AUTH: User Logout requested');
         }
 
 

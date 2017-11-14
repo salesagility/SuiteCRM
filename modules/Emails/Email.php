@@ -424,8 +424,7 @@ class Email extends Basic
      * @var string
      */
     public $AltBody;
-     * @var mixed
-     */
+    
     public $msgNo;
 
     /**
