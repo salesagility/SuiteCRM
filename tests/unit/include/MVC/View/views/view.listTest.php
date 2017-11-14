@@ -113,29 +113,4 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ListViewSmarty', $view->lv);
     }
 
-    public function testdisplay()
-    {
-        $view = new ViewList();
-
-        //test without setting bean attibute. it shuold return no access html.
-        ob_start();
-        $view->display();
-        $renderedContent1 = ob_get_contents();
-        ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent1));
-
-        //test with bean, seed and other arrtibutes set. it shuold return html. 
-        $view->bean = new User();
-        $view->seed = new User();
-        $view->module = 'Users';
-        $view->prepareSearchForm();
-        $view->preDisplay();
-
-        ob_start();
-
-        $view->display();
-        $renderedContent2 = ob_get_contents();
-        ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent2));
-    }
 }
