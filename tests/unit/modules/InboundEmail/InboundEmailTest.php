@@ -862,22 +862,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testsyncEmail()
-    {
-        global $current_user;
-        $current_user = new User('1');
-
-        $inboundEmail = new InboundEmail();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $inboundEmail->syncEmail();
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail();
-        }
-    }
-
     public function testdeleteCachedMessages()
     {
         $inboundEmail = new InboundEmail();
