@@ -93,16 +93,12 @@ function to_html($string, $encode=true){
 	global $toHTML;
 
 	if($encode && is_string($string)){
-		/*
-		 * cn: bug 13376 - handle ampersands separately
-		 * credit: ashimamura via bug portal
-		 */
-		//$string = str_replace("&", "&amp;", $string);
-
-        if(is_array($toHTML))
-        { // cn: causing errors in i18n test suite ($toHTML is non-array)
+		if(is_array($toHTML))
+        {
             $string = str_ireplace($GLOBALS['toHTML_keys'],$GLOBALS['toHTML_values'],$string);
-		}
+		} else {
+		    $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+        }
 	}
 
     return $string;
@@ -130,7 +126,7 @@ function from_html($string, $encode=true) {
     }
 
     // Bug 36261 - Decode &amp; so we can handle double encoded entities
-	$string = str_ireplace("&amp;", "&", $string);
+	$string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
 
     if (!isset($cache[$string])) {
         $cache[$string] = str_ireplace($toHTML_values, $toHTML_keys, $string);

@@ -6,19 +6,28 @@
   "authors": [],
   "minimum-stability": "dev",
   "config": {
-    "vendor-dir": "vendor"
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "5.5"
+    }
   },
-  "require": {},
+  "require": {
+  },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^3.7",
-    "mikey179/vfsStream": "1.4.*"
+    "mikey179/vfsStream": "1.4.*",
+    "codeception/codeception": "^2.0",
+    "fzaninotto/Faker": "^1.6",
+    "jeroendesloovere/vcard": "v1.5",
+    "browserstack/browserstack-local": "dev-master"
   },
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
-    "psr-0": {
-      "": "src/"
+    "psr-4": {
+      "SuiteCRM\\": [
+        "tests/SuiteCRM"
+      ]
     }
   },
   "extra": {}

@@ -133,6 +133,14 @@ class EmailUI
         $this->preflightUserCache();
         $ie = new InboundEmail();
 
+		// focus listView
+		$list = array(
+			'mbox' => 'Home',
+			'ieId' => '',
+			'name' => 'Home',
+			'unreadChecked' => 0,
+			'out' => array(),
+		);
 
         $this->_generateComposeConfigData('email_compose');
 
@@ -1059,7 +1067,7 @@ eoq;
         global $sugar_config;
         global $current_user;
         global $app_strings;
-        
+
         if(!$user) {
             $user = $current_user;
         }
@@ -1814,7 +1822,7 @@ eoq;
                 }
 
                 if (!empty($msgNo)) {
-                    if ($ie->returnImportedEmail($msgNo, $uid)) {
+                    if ($ie->importOneEmail($msgNo, $uid)) {
                         $emailIds[] = $ie->email->id;
                         $ie->deleteMessageOnMailServer($uid);
                         //$ie->retrieve($ieid);

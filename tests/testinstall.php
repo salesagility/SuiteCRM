@@ -9,7 +9,7 @@ $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
 $_SERVER['SERVER_SOFTWARE'] = 'Apache';
 $_SERVER['SERVER_NAME'] = 'travis';
-$_SERVER['SERVER_PORT'] = '80';
+$_SERVER['SERVER_PORT'] = '8080';
 
 $_REQUEST['goto'] = 'SilentInstall';
 $_REQUEST['cli'] = true;
@@ -30,4 +30,3 @@ try {
         . "\n" . str_repeat('-', 120)
         . "\n";
 }
-
