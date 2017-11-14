@@ -96,21 +96,6 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
-    {
-        $emailMan = new EmailMan();
-
-        $expected = array(
-            'IN_QUEUE' => '0',
-            'SEND_ATTEMPTS' => '0',
-            'DELETED' => '0',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
-        );
-
-        $actual = $emailMan->get_list_view_data();
-        $this->assertSame($expected, $actual);
-    }
-
     public function testset_as_sent()
     {
         $emailMan = new EmailMan();
