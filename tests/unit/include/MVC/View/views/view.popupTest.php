@@ -21,28 +21,4 @@ class ViewPopupTest extends PHPUnit_Framework_TestCase
         unset($view);
     }
 
-    public function testdisplay()
-    {
-
-        //error_reporting(E_ERROR | E_PARSE |E_ALL);
-
-        //execute the method with required child objects preset. it should return some html. 
-        $view = new ViewPopup();
-        $view->module = 'Accounts';
-
-        try {
-            $view->bean = new Account();
-        } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
-        }
-
-        ob_start();
-
-        $view->display();
-
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertGreaterThan(0, strlen($renderedContent));
-    }
 }
