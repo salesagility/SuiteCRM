@@ -145,6 +145,13 @@ class AOW_WorkFlow extends Basic {
      * Select and run all active flows for the specified bean
      */
     function run_bean_flows(SugarBean &$bean){
+
+        // Removes aow error from installer log
+        if(isset($GLOBALS['install_script']) && $GLOBALS['install_script'] === true) {
+            return true;
+        }
+
+
         if(!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import'){
 
             $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
