@@ -92,33 +92,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testget_list_view_data()
-    {
-
-        $employee = new Employee();
-
-        $expected = array(
-            'SUGAR_LOGIN' => '1',
-            'FULL_NAME' => ' ',
-            'NAME' => ' ',
-            'IS_ADMIN' => '0',
-            'EXTERNAL_AUTH_ONLY' => '0',
-            'RECEIVE_NOTIFICATIONS' => '1',
-            'DELETED' => 0,
-            'PORTAL_ONLY' => '0',
-            'SHOW_ON_EMPLOYEES' => '1',
-            'ENCODED_NAME' => ' ',
-            'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Employees" data-record-id="" data-module-name=" "  data-email-address="">',
-            'MESSENGER_TYPE' => '',
-            'REPORTS_TO_NAME' => null,
-        );
-
-        $actual = $employee->get_list_view_data();
-        $this->assertSame($expected, $actual);
-
-    }
-
     public function testlist_view_parse_additional_sections()
     {
 
