@@ -936,19 +936,6 @@ eoq;
     {
         global $current_user;
 
-    ///////////////////////////////////////////////////////////////////////////
-    ////	FOLDER FUNCTIONS
-
-		$this->folder->save();
-		return array(
-			'action' => 'newFolderSave',
-			'id' => $this->folder->id,
-			'name' => $this->folder->name,
-			'is_group' => $this->folder->is_group,
-			'is_dynamic' => $this->folder->is_dynamic
-		);
-	}
-
         $this->folder->name = $nodeLabel;
         $this->folder->is_group = $isGroup;
         $this->folder->parent_folder = ($parentId == 'Home') ? "" : $parentId;
