@@ -28,16 +28,6 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('archived', 'type', $email);
     }
 
-    public function testemail2init()
-    {
-        error_reporting(E_ERROR | E_PARSE);
-
-        $email = new Email();
-        $email->email2init();
-
-        $this->assertInstanceOf('EmailUI', $email->et);
-    }
-
     public function testbean_implements()
     {
         $email = new Email();
