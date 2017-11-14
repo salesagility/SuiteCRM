@@ -407,6 +407,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             70 => 'securitygroup_noninherit_id',
             71 => 'securitygroup_noninheritable',
             72 => 'securitygroup_primary_group',
+            73 => 'factor_auth',
+            74 => 'factor_auth_interface',
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
@@ -521,6 +523,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             70 => 'securitygroup_noninherit_id',
             71 => 'securitygroup_noninheritable',
             72 => 'securitygroup_primary_group',
+            73 => 'factor_auth',
+            74 => 'factor_auth_interface',
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
