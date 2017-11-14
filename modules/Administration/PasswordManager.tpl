@@ -640,7 +640,6 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
-	-->
 }
 
 function testregex(customregex)
