@@ -862,21 +862,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testdeleteCachedMessages()
-    {
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $inboundEmail->deleteCachedMessages('1,2', 'test');
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail();
-        }
-    }
-
     public function testgetOverviewsFromCacheFile()
     {
         $inboundEmail = new InboundEmail();
