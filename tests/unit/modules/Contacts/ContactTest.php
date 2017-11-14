@@ -164,39 +164,6 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	public function testget_list_view_data() {
-
-		$contact = new Contact();
-
-		//test with attributes preset and verify attributes are set accordingly
-		$contact->first_name = "first";
-		$contact->last_name = "last";
-
-		$expected = array (
-					  'NAME' => 'first last',
-					  'DELETED' => 0,
-					  'FIRST_NAME' => 'first',
-					  'LAST_NAME' => 'last',
-					  'FULL_NAME' => 'first last',
-					  'DO_NOT_CALL' => '0',
-					  'PORTAL_USER_TYPE' => 'Single user',
-					  'ENCODED_NAME' => 'first last',
-					  'EMAIL1' => '',
-					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Contacts\\u0026parent_id=\\u0026parent_name=first+last\\u0026to_addrs_ids=\\u0026to_addrs_names=first+last\\u0026to_addrs_emails=\\u0026to_email_addrs=first+last%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Contacts\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Contacts","parent_id":"","parent_name":"first last","to_addrs_ids":"","to_addrs_names":"first last","to_addrs_emails":"","to_email_addrs":"first last \\u003C\\u003E","return_module":"Contacts","return_action":"ListView","return_id":""}});\' class=\'\'>',
-					  'EMAIL_AND_NAME1' => 'first last &lt;&gt;',
-					);
-
-		$actual = $contact->get_list_view_data();
-		//$this->assertSame($expected, $actual);
-		$this->assertEquals($expected['NAME'], $actual['NAME']);
-		$this->assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
-		$this->assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);
-		$this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
-		$this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
-		$this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
-
-	}
-
 
 	public function testbuild_generic_where_clause ()
 	{
