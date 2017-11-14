@@ -195,9 +195,16 @@ class SugarAuthenticateUser{
 
 		$ret = true;
 
-		$token = rand(1000, 9999);
+            $min = 10000;
+            $max = 99999;
 
-		$emailTemplate = new EmailTemplate();
+            if (function_exists('random_int')) {
+                $token = random_int($min, $max);
+            } else {
+                $token = rand($min, $max);
+            }
+
+        $emailTemplate = new EmailTemplate();
 		$emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
 		$emailTemplate->retrieve($emailTemplateId);
 
