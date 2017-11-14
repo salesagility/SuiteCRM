@@ -1504,67 +1504,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getEmailAddressWidgetDetailView() method.
-     */
-    public function testGetEmailAddressWidgetDetailView()
-    {
-        $db = DBManagerFactory::getInstance();
-
-        $i = 1;
-        $q = /** @lang sql */
-            "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
-          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
-        ";
-        $db->query($q);
-        $q = /** @lang sql */
-            "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
-        $db->query($q);
-        $q = /** @lang sql */
-            "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
-        $db->query($q);
-
-
-        // test
-        $result = $this->ea->getEmailAddressWidgetDetailView(null);
-        self::assertEquals('', $result);
-
-        // test
-        $c = BeanFactory::getBean('Contacts');
-        $result = $this->ea->getEmailAddressWidgetDetailView($c);
-        self::assertEquals('', $result);
-
-        // test
-        $c = BeanFactory::getBean('Contacts');
-        $c->id = 'an-non-exists-id';
-        $result = $this->ea->getEmailAddressWidgetDetailView($c);
-        self::assertNotFalse(strpos($result, '--None--'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
-
-        // test
-        $c->id = "test_contact_{$i}";
-        $result = $this->ea->getEmailAddressWidgetDetailView($c);
-        self::assertFalse(strpos($result, '--None--'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
-
-
-        // test
-        $q = /** @lang sql */
-            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
-        $db->query($q);
-        $q = /** @lang sql */
-            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
-        $db->query($q);
-        $q = /** @lang sql */
-            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
-        $db->query($q);
-    }
-
-    /**
      * Test for getEmailAddressWidgetDuplicatesView() method.
      */
     public function testGetEmailAddressWidgetDuplicatesView()
