@@ -725,7 +725,7 @@ class User extends Person
      */
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret && $_SESSION !== null) {
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
 		}
 		return $ret;
