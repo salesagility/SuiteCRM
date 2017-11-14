@@ -1126,8 +1126,7 @@ function return_module_language($language, $module, $refresh = false)
 
     // Jenny - Bug 8119: Need to check if $module is not empty
     if (empty($module)) {
-        $stack = debug_backtrace();
-        $GLOBALS['log']->warn('Variable module is not in return_module_language '.var_export($stack, true));
+        $GLOBALS['log']->warn('Variable module is not in return_module_language, see more info: debug_backtrace()');
 
         return array();
     }
@@ -4698,8 +4697,12 @@ function load_link_class($properties)
 {
     $class = 'Link2';
     if (!empty($properties['link_class']) && !empty($properties['link_file'])) {
-        require_once $properties['link_file'];
-        $class = $properties['link_class'];
+        if(!file_exists($properties['link_file'])) {
+            $GLOBALS['log']->fatal('File not found: ' . $properties['link_file']);
+        } else {
+            require_once $properties['link_file'];
+            $class = $properties['link_class'];
+        }
     }
 
     return $class;

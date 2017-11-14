@@ -738,20 +738,24 @@ class User extends Person
         $q = <<<EOQ
 
 		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
 
         $res = $this->db->query($q);
-        $row = $this->db->fetchByAssoc($res);
-
-        if (!empty($row['id'])) {
-            return $this->retrieve($row['id']);
+        $rows = array();
+		while($row = $this->db->fetchByAssoc($res)) {
+		    $rows[] = $row;
         }
 
-        return '';
-    }
+		if(count($rows) > 1) {
+		    $GLOBALS['log']->fatal('ambiguous user email address');
+        }if (!empty($rows[0]['id'])) {
+			return $this->retrieve($rows[0]['id']);
+		}
+		return '';
+	}
 
     function bean_implements($interface)
     {
@@ -864,32 +868,37 @@ EOQ;
         return crypt(strtolower($password_md5), $user_hash) == $user_hash;
     }
 
-    /**
-     * Find user with matching password
-     * @param string $name Username
-     * @param string $password MD5-encoded password
-     * @param string $where Limiting query
-     * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return the matching User of false if not found
-     */
-    public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
-    {
-        global $db;
-        $name = $db->quote($name);
-        $query = "SELECT * from users where user_name='$name'";
-        if (!empty($where)) {
-            $query .= " AND $where";
+	/**
+	 * Find user with matching password
+	 * @param string $name Username
+	 * @param string $password MD5-encoded password
+	 * @param string $where Limiting query
+	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
+	 * @return bool|arraythe matching User of false if not found
+	 */
+	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
+	{
+	if (!$name) {
+            $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+            return false;
+        }    global $db;
+		$before = $name;$name = $db->quote($name);if ($before && !$name) {
+            $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+            return false;
         }
-        $result = $db->limitQuery($query, 0, 1, false);
-        if (!empty($result)) {
-            $row = $db->fetchByAssoc($result);
-            if (!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
-                return $row;
-            }
-        }
-
-        return false;
-    }
+		$query = "SELECT * from users where user_name='$name'";
+		if(!empty($where)) {
+		    $query .= " AND $where";
+		}
+		$result = $db->limitQuery($query,0,1,false);
+		if(!empty($result)) {
+		    $row = $db->fetchByAssoc($result);
+		    if(!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
+		        return $row;
+		    }
+		}
+		return false;
+	}
 
     /**
      * Sets new password and resets password expiration timers
