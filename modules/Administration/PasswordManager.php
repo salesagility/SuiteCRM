@@ -206,7 +206,7 @@ $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','n
 $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 $TMPL_DRPDWN_LOST =get_select_options_with_id($email_templates_arr, $res['lostpasswordtmpl']); 
 $TMPL_DRPDWN_GENERATE =get_select_options_with_id($email_templates_arr, $res['generatepasswordtmpl']);
-$TMPL_DRPDWN_FACTOR =get_select_options_with_id($email_templates_arr, $res['factoremailtmpl']);
+$TMPL_DRPDWN_FACTOR =get_select_options_with_id($email_templates_arr, isset($res['factoremailtmpl']) ? $res['factoremailtmpl'] : null);
 
 $sugar_smarty->assign("TMPL_DRPDWN_LOST", $TMPL_DRPDWN_LOST);
 $sugar_smarty->assign("TMPL_DRPDWN_GENERATE", $TMPL_DRPDWN_GENERATE);
