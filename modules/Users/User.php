@@ -953,7 +953,11 @@ EOQ;
             }
         }
 
-	public function passwordValidationCheck($newPassword) {
+        $this->setNewPassword($new_password, $system_generated);
+        return true;
+    }
+    
+    public function passwordValidationCheck($newPassword) {
         global $sugar_config, $mod_strings;
 
         $messages = array();
@@ -988,10 +992,6 @@ EOQ;
 
         return $message;
 
-    }
-
-
-        return true;
     }
 
 
