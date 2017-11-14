@@ -1,5 +1,5 @@
 /**** Panels ****/
-@import 'variables';
+@import 'variables.scss';
 
 
 .panel {
@@ -20,8 +20,9 @@
   padding: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 52px/$panel-height-divisor;
+  height: 40px/$panel-height-divisor;
   vertical-align: middle;
+  line-height:40px/$panel-height-divisor;
 }
 
 .panel-default > .panel-heading > div {
@@ -53,27 +54,32 @@
 
 .panel-default > .panel-heading > a {
   display: block;
-  font-size: 14px ;
+  font-size: 12px ;
   font-weight: 500;
   color: $default-btn-color;
   padding: 15px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 52px;
+  height: 40px;
   text-decoration: none;
   text-decoration: none;
   //background-color: $panel-expanded-bg;
 }
+
+#EditView_tabs .panel-default > .panel-heading > a {
+	padding-top:0px;
+}
+
 
 .panel-default.sub-panel > .panel-heading  > a {
   display: block;
   font-size: 14px ;
   font-weight: 500;
   color: $default-btn-color;
-  padding: 10px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
+  padding: 0 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 52px/$panel-height-divisor;
+  height: 40px/$panel-height-divisor;
   text-decoration: none;
   //background-color: $panel-expanded-bg;
 }
@@ -111,12 +117,12 @@
   font-family: 'Glyphicons Halflings';
   content: "\2212";
   font-weight: 100;
-  line-height: 26px/$panel-height-divisor;
+  line-height: 40px/$panel-height-divisor;
 }
 
 
 .sub-panel > .panel-body > .tab-content > div {
-  margin-bottom: 25px ;
+  /*margin-bottom: 25px ;*/
   border: none;
 }
 
@@ -173,8 +179,8 @@ div.sub-panel {
 .sub-panel tbody tr td .sugar_action_button > a:link {
   border-bottom: none;
   color: $list-view-button-color;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .sub-panel .sugar_action_button > a:hover {
@@ -194,7 +200,7 @@ div.sub-panel {
 }
 
 .sub-panel tbody tr td ul.clickMenu > li > span {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 
@@ -288,7 +294,8 @@ div.sub-panel {
 
 .subpanel-table.list tr.pagination span.pageNumbers {
   position: relative;
-  top: -7px;
+  /*top: -7px;*/
+  top:5px;
 }
 
 

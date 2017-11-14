@@ -1,5 +1,5 @@
 /*** MAIN ***/
-@import 'variables';
+@import 'variables.scss';
 
 html {
   height: 100%;
@@ -32,6 +32,7 @@ a {
 a:hover {
   color: $link-color-hover;
 }
+
 
 
 h4 {
