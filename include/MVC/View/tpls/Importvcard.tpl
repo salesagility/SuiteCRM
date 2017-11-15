@@ -66,7 +66,7 @@ function validate_vcard()
         <input type='hidden' name='module' value='{$MODULE}'>
         <input type='hidden' name='from' value='ImportVCard'>
         <input size="60" name="vcard" id="vcard_file" type="file" />
-        <input class='button' type="button" onclick='validate_vcard()' value="{$APP.LBL_IMPORT_VCARD_BUTTON_LABEL}"
+        <input id="import_vcard_button" class='button' type="button" onclick='validate_vcard()' value="{$APP.LBL_IMPORT_VCARD_BUTTON_LABEL}"
                title="{$APP.LBL_IMPORT_VCARD_BUTTON_TITLE}" />
     </form>
     <div class="error">{$ERROR}</div>

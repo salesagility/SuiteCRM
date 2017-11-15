@@ -72,6 +72,12 @@ $mod_strings = array(
     'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed. Change the user name to be unique.',
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
 
+    'ERR_PASSWORD_MINPWDLENGTH' => 'Password min chars is %d.',
+    'ERR_PASSWORD_ONEUPPER' => 'Password should contains uppercase chars.',
+    'ERR_PASSWORD_ONEUPPER' => 'Password should contains lowercase chars.',
+    'ERR_PASSWORD_ONENUMBER' => 'Password should contains numbers.',
+    'ERR_PASSWORD_SPECCHARS' => 'Password should contains special chars.',
+
     'LBL_PASSWORD_SENT' => 'Password Updated',
     'LBL_CANNOT_SEND_PASSWORD' => 'Cannot send password',
     'ERR_EMAIL_NOT_SENT_ADMIN' => 'System is unable to process your request. Please check:',
@@ -694,6 +700,10 @@ $mod_strings = array(
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
+
+    'LBL_FACTOR_AUTH' => 'Two Factor Authentication:',
+    'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
+
 ); // END STRINGS DEFS
 
 ?>

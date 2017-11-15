@@ -188,7 +188,7 @@
 <complexType name="X509IssuerSerialType"> 
   <sequence> 
     <element name="X509IssuerName" type="string"/> 
-    <element name="X509SerialNumber" type="integer"/> 
+    <element name="X509SerialNumber" type="string"/> 
   </sequence>
 </complexType>
 

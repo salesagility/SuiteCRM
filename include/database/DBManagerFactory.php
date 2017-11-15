@@ -56,7 +56,7 @@ require_once('include/database/DBManager.php');
  */
 class DBManagerFactory
 {
-    static $instances = array();
+    public static $instances = array();
 
     /**
      * Returns a reference to the DB object of specific type
@@ -126,7 +126,7 @@ class DBManagerFactory
      * instance if one is not specified
      *
      * @param  string $instanceName optional, name of the instance
-     * @return object DBManager instance
+     * @return DBManager instance
      */
 	public static function getInstance($instanceName = '')
     {
