@@ -63,6 +63,7 @@ $dictionary['User'] = array(
                 'basic_search' => false,
                 'advanced_search' => false,
             ),
+            'api-visible' => false,
         ),
         'user_hash' => array(
             'name' => 'user_hash',
@@ -77,6 +78,7 @@ $dictionary['User'] = array(
                 'listview' => false,
                 'searchview' => false,
             ),
+            'api-visible' => false,
         ),
         'system_generated_password' => array(
             'name' => 'system_generated_password',
@@ -91,6 +93,7 @@ $dictionary['User'] = array(
                 'editview' => false,
                 'quickcreate' => false,
             ),
+            'api-visible' => false,
         ),
 
         'pwd_last_changed' => array(
@@ -100,6 +103,7 @@ $dictionary['User'] = array(
             'required' => false,
             'massupdate' => false,
             'studio' => array('formula' => false),
+            'api-visible' => false,
         ),
         /**
          * authenticate_id is used by authentication plugins so they may place a quick lookup key for looking up a given user after authenticating through the plugin
@@ -112,6 +116,7 @@ $dictionary['User'] = array(
             'reportable' => false,
             'importable' => 'false',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         /**
          * sugar_login will force the user to use sugar authentication
@@ -126,6 +131,7 @@ $dictionary['User'] = array(
             'massupdate' => false,
             'importable' => false,
             'studio' => array('listview' => false, 'searchview' => false, 'formula' => false),
+            'api-visible' => false,
         ),
         'first_name' => array(
             'name' => 'first_name',
@@ -181,6 +187,7 @@ $dictionary['User'] = array(
             'type' => 'bool',
             'default' => '0',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         'external_auth_only' => array(
             'name' => 'external_auth_only',
@@ -190,6 +197,7 @@ $dictionary['User'] = array(
             'massupdate' => false,
             'default' => '0',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         'receive_notifications' => array(
             'name' => 'receive_notifications',
@@ -328,6 +336,7 @@ $dictionary['User'] = array(
             'options' => 'user_status_dom',
             'importable' => 'required',
             'required' => true,
+            'api-visible' => false,
         ),
         'address_street' => array(
             'name' => 'address_street',
@@ -721,6 +730,19 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_PRIMARY_GROUP',
             ),
+        'factor_auth' => array(
+            'name' => 'factor_auth',
+            'type' => 'bool',
+            'vname' => 'LBL_FACTOR_AUTH',
+            'massupdate' => false,
+        ),
+        'factor_auth_interface' => array(
+            'name' => 'factor_auth_interface',
+            'vname' => 'LBL_FACTOR_AUTH_INTERFACE',
+            'type' => 'enum',
+            'options' => 'user_factor_auth_interface_dom',
+        ),
+
     ),
     'indices' => array(
         array(

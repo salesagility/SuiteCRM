@@ -914,6 +914,7 @@ $mod_strings = array(
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contains special characters',
     'LBL_PWDSEC_DAYS' => 'Days',
     'LBL_PWDSEC_CHARS' => 'Character',
+    'LBL_TWO_FACTOR_AUTH_EMAIL_TPL' => 'Email Template containing system-generated code for two factor authentication',
 
 );
 

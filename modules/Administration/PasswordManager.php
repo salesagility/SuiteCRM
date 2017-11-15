@@ -54,6 +54,7 @@ function clearPasswordSettings() {
 	    $_POST['passwordsetting_SystemGeneratedPasswordON'] = '';
 	    $_POST['passwordsetting_generatepasswordtmpl'] = '';
 	    $_POST['passwordsetting_lostpasswordtmpl'] = '';
+	    $_POST['passwordsetting_factoremailtmpl'] = '';
 	    $_POST['passwordsetting_forgotpasswordON'] = '0';
 	    $_POST['passwordsetting_linkexpiration'] = '1';
 	    $_POST['passwordsetting_linkexpirationtime'] = '30';
@@ -205,9 +206,11 @@ $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','n
 $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 $TMPL_DRPDWN_LOST =get_select_options_with_id($email_templates_arr, $res['lostpasswordtmpl']); 
 $TMPL_DRPDWN_GENERATE =get_select_options_with_id($email_templates_arr, $res['generatepasswordtmpl']);
+$TMPL_DRPDWN_FACTOR =get_select_options_with_id($email_templates_arr, isset($res['factoremailtmpl']) ? $res['factoremailtmpl'] : null);
 
 $sugar_smarty->assign("TMPL_DRPDWN_LOST", $TMPL_DRPDWN_LOST);
 $sugar_smarty->assign("TMPL_DRPDWN_GENERATE", $TMPL_DRPDWN_GENERATE);
+$sugar_smarty->assign("TMPL_DRPDWN_FACTOR", $TMPL_DRPDWN_FACTOR);
 
 $sugar_smarty->display('modules/Administration/PasswordManager.tpl');
 ?>

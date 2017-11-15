@@ -116,11 +116,28 @@ class User extends Person
 
     var $new_schema = true;
 
-    function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var bool
+     */
+	public $factor_auth;
+
+    /**
+     * @var string
+     */
+    public $factor_auth_interface;
+
+
+	function __construct() {
+		parent::__construct();
 
         $this->_loadUserPreferencesFocus();
+    }
+
+	public function __set($key, $value) {
+	    $this->$key = $value;
+	    if($key == 'id' && $value == '1') {
+	        $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to '. $value);
+        }
     }
 
     /**
@@ -577,7 +594,20 @@ class User extends Person
 
     function save($check_notify = false)
     {
+        global $current_user;
+        
         $isUpdate = !empty($this->id) && !$this->new_with_id;
+        
+        // only admin user can change 2 factor authentication settings
+        if($isUpdate && !is_admin($current_user)) {
+            $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                $msg .= 'Current user is not able to change two factor authentication settings.'; 
+                $GLOBALS['log']->warn($msg);
+            }
+            $this->factor_auth = $tmpUser->factor_auth;
+            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+        }
 
 
         $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();

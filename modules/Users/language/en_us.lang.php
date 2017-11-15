@@ -700,6 +700,10 @@ $mod_strings = array(
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
+
+    'LBL_FACTOR_AUTH' => 'Two Factor Authentication:',
+    'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
+
 ); // END STRINGS DEFS
 
 ?>
