@@ -355,6 +355,14 @@ function export($type, $records = null, $members = false, $sample=false) {
 
         $customRelateFields = array();
         $selects = array();
+        
+        ## HACK DEV-407 Target list Export is not working
+        if($members == true)
+        {
+        } ## END IF $members != true 
+        ## HACK DEV-407 Target list Export is not working
+        else{
+        
         foreach($records as $record) {
             foreach($record as $recordKey => $recordValue) {
                 if(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $recordValue, $matches)) {
@@ -432,6 +440,8 @@ function export($type, $records = null, $members = false, $sample=false) {
             }
             $i++;
         }
+        
+        } ## END ELSE IF $members != true
 
 
         foreach($records as $record)
