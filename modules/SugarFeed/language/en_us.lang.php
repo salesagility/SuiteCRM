@@ -105,6 +105,10 @@ $mod_strings = array(
     'WON_OPPORTUNITY' => 'has <b>WON</b> an {0}',
     'WITH' => 'with',
 
+    'LBL_LINK_TYPE_Link' => 'Link',
+    'LBL_LINK_TYPE_Image' => 'Image',
+    'LBL_LINK_TYPE_YouTube' => 'YouTube&#153;',
+
     'LBL_SELECT' => 'Select',
     'LBL_POST' => 'Post',
     'LBL_AUTHENTICATE' => 'Connect to',

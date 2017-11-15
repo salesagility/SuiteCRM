@@ -87,5 +87,6 @@ $sugar_config['passwordsetting']['minpwdlength'] = 6;
 $sugar_config['passwordsetting']['oneupper'] = false;
 $sugar_config['passwordsetting']['onelower'] = false;
 $sugar_config['passwordsetting']['onenumber'] = false;
+$sugar_config['passwordsetting']['onespecial'] = false;
 
 write_array_to_file( "sugar_config", $sugar_config, "config.php");

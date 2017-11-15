@@ -3100,6 +3100,358 @@ fieldset[disabled] .btn-primary.active {
   display: block;
   width: 100%; }
 
+#conditionLines {
+  display: block; }
+
+#conditionLines > thead {
+  display: block; }
+
+#conditionLines > thead td {
+  background-color: #BFCAD3;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #534D64;
+  font-weight: bold;
+  font-size: 13px; }
+
+.detail-view-field #conditionLines thead td:first-of-type {
+  height: 36px; }
+
+#conditionLines thead td:first-of-type {
+  height: 32px;
+  border-top-left-radius: 4px; }
+
+#conditionLines thead td:last-of-type {
+  padding-left: 8px;
+  border-top-right-radius: 4px;
+  width: 26%; }
+
+#conditionLines > thead > tr {
+  display: block; }
+
+#conditionLines > tbody {
+  display: block; }
+
+#conditionLines > tbody > tr {
+  display: block;
+  background-color: #f5f5f5;
+  border-bottom: 5px #FFFFFF solid; }
+
+#conditionLines > tbody > tr > td {
+  vertical-align: top; }
+
+#conditionLines td:first-of-type {
+  display: inline-block;
+  width: 48px; }
+
+#conditionLines td:not(:first-of-type) {
+  display: inline-block;
+  width: 16.667%; }
+
+#conditionLines tbody td {
+  background-color: #F5F5F5;
+  margin-bottom: 4px;
+  min-height: 64px; }
+
+#conditionLines tbody td:first-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px; }
+
+#conditionLines tbody td:last-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 26%; }
+
+#conditionLines td:first-of-type button {
+  margin-top: 8px;
+  height: 48px; }
+
+#conditionLines input {
+  margin-top: 8px; }
+
+#conditionLines input.sqsEnabled {
+  width: 62.5%; }
+
+#conditionLines input[type=checkbox] {
+  margin-top: 24px; }
+
+#conditionLines textarea {
+  margin-top: 8px;
+  width: 95%; }
+
+#conditionLines select {
+  width: 95%;
+  margin-top: 8px; }
+
+@media (max-width: 1800px) {
+  #conditionLines select[id$="][0]"] {
+    width: 45%;
+    margin-bottom: 4px; }
+
+  #conditionLines select[id$="][1]"] {
+    width: 45%;
+    margin-bottom: 4px; }
+
+  #conditionLines input[id$="][2]"] {
+    width: 45%;
+    margin-bottom: 4px; }
+
+  #conditionLines select[id$="][3]"] {
+    width: 45%;
+    margin-bottom: 4px; } }
+@media (min-width: 1800px) {
+  #conditionLines select[id$="][0]"] {
+    width: 24%; }
+
+  #conditionLines select[id$="][1]"] {
+    width: 24%; }
+
+  #conditionLines input[id$="][2]"] {
+    width: 24%; }
+
+  #conditionLines select[id$="][3]"] {
+    width: 24%; } }
+[field="action_lines"] {
+  display: block;
+  width: 100%; }
+
+#conditionLines [type="button"] {
+  background-color: #F08377;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid #F08377;
+  border-radius: 4px; }
+
+#actionLines [type="button"] {
+  background-color: #F08377;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid #F08377;
+  border-radius: 4px; }
+
+#actionLines {
+  display: block; }
+
+#actionLines > tr {
+  display: block; }
+
+#actionLines > tr > td {
+  display: block; }
+
+#actionLines td[field] label {
+  margin-right: 8px; }
+
+#actionLines > tr > td {
+  border: 1px solid #BFCAD3;
+  border-radius: 4px;
+  margin-bottom: 4px; }
+
+#actionLines .action-table {
+  display: block;
+  width: 100%; }
+
+#actionLines .action-table tbody {
+  display: block;
+  width: 100%; }
+
+#actionLines .action-table tr {
+  display: block;
+  width: 100%; }
+
+[data-workflow-action-parameter] input.sqsEnabled {
+  margin-top: 0px;
+  width: 50%; }
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="create-record"] input.sqsEnabled {
+  width: 65%; }
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="modify-record"] input.sqsEnabled {
+  width: 65%; }
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] input.sqsEnabled {
+  width: 10%; }
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] .id-ff.multiple > button {
+  margin-left: 0; }
+
+#actionLines .action-table td {
+  display: inline-block; }
+
+#actionLines .action-table > tbody > tr:first-of-type > td:first-of-type {
+  padding-left: 8px; }
+
+#actionLines .action-table > tbody > tr:first-of-type > td {
+  border-bottom: 1px solid #BFCAD3;
+  padding-top: 4px; }
+
+#actionLines td[field=action] {
+  width: 65%;
+  height: 64px; }
+
+#actionLines td[field=action] select {
+  margin-left: 20px; }
+
+#actionLines td[field=name] {
+  width: 30%;
+  height: 64px; }
+
+#actionLines td[field=name] input[type=text] {
+  width: 80%; }
+
+#actionLines td[field=delete] {
+  width: 5%;
+  height: 64px; }
+
+#actionLines td[field=delete] .delete-btn {
+  float: right; }
+
+#actionLines td[field=delete] .delete-btn .btn {
+  padding: 0 0 0 0; }
+
+.edit tr td [data-workflow-action] td {
+  vertical-align: middle; }
+
+[data-workflow-action-line] {
+  vertical-align: top; }
+
+[data-workflow-action-line] td:first-of-type {
+  width: 48px; }
+
+[data-workflow-action-line] td:nth-of-type(3) select {
+  width: auto; }
+
+[data-workflow-action-line] select[id$="][0]"] {
+  width: 45%;
+  margin-bottom: 4px; }
+
+[data-workflow-action-line] select[id$="][1]"] {
+  width: 45%;
+  margin-bottom: 4px; }
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
+  width: 45%;
+  margin-bottom: 4px; }
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"][type=checkbox] {
+  width: 16px; }
+
+[data-workflow-action-line] select[id$="][3]"] {
+  width: 45%;
+  margin-bottom: 4px; }
+
+[data-workflow-action="send-email"] > tbody > tr > td {
+  line-height: 40px; }
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(1) > td {
+  width: 20%; }
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) {
+  width: 100%; }
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td:nth-of-type(1) {
+  padding-left: 4px; }
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%; }
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
+  width: auto; }
+
+#relate_label {
+  line-height: 40px; }
+
+#deleteGroup img {
+  background-color: #F08377;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid #F08377;
+  border-radius: 4px; }
+
+.btn-danger {
+  background-color: #F08377; }
+
+.btn-danger:hover {
+  background-color: #D66C60; }
+
+.btn-danger:active {
+  background-color: #F08377; }
+
+.btn-danger:focus {
+  background-color: #F08377; }
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px;
+  padding-left: 8px;
+  padding-right: 8px; }
+
+[data-workflow-action] .relationship tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+  min-height: 64px; }
+
+[data-workflow-action] .email-line tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px; }
+
+[data-workflow-action] .email-line tbody > tr > td select {
+  margin-left: 8px;
+  margin-right: 8px; }
+
+[data-workflow-action] .email-line tbody > tr > td button {
+  margin-left: 8px;
+  margin-right: 8px; }
+
+[data-workflow-action] .email-line tbody > tr > td input {
+  margin-left: 8px;
+  margin-right: 8px; }
+
+[data-workflow-action] .name_label {
+  width: 70%; }
+
+[data-workflow-action] .name_label {
+  width: 30%; }
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px; }
+
+[data-workflow-action] .lines tbody > tr > td:first-of-type button {
+  margin-top: 8px;
+  height: 48px; }
+
+[data-workflow-action] .lines select {
+  margin-top: 8px; }
+
+[data-workflow-action] .lines tbody > tr > td input {
+  margin-top: 8px; }
+
+[data-workflow-action] .lines tbody > tr > td input.sqsEnabled {
+  width: 62.5%; }
+
+[data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
+  margin-top: 24px; }
+
+[data-workflow-action] .lines tbody > tr > td textarea {
+  margin-top: 8px;
+  width: 95%; }
+
+[data-workflow-action-parameter] [colspan="4"] {
+  display: block;
+  width: 100%; }
+
+[data-workflow-action-parameter] > td {
+  display: block;
+  width: 100%; }
+
 /** EditView action buttons ***/
 .buttons .primary {
   background-color: #F08377; }
@@ -4014,496 +4366,6 @@ font[color=red] {
 
   .email-address-input-group .email-address-remove-button {
     margin-left: 8px; } }
-#aow_conditionLines {
-  display: block; }
-
-#aow_conditionLines > thead {
-  display: block; }
-
-#aow_conditionLines > thead td {
-  background-color: #BFCAD3;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 4px;
-  padding-right: 4px;
-  color: #534D64;
-  font-weight: bold;
-  font-size: 13px; }
-
-.detail-view-field #aow_conditionLines thead td:first-of-type {
-  height: 36px; }
-
-#aow_conditionLines thead td:first-of-type {
-  height: 32px;
-  border-top-left-radius: 4px; }
-
-#aow_conditionLines thead td:last-of-type {
-  padding-left: 8px;
-  border-top-right-radius: 4px;
-  width: 26%; }
-
-#aow_conditionLines > thead > tr {
-  display: block; }
-
-#aow_conditionLines > tbody {
-  display: block; }
-
-#aow_conditionLines > tbody > tr {
-  display: block;
-  background-color: #f5f5f5;
-  border-bottom: 5px #FFFFFF solid; }
-
-#aow_conditionLines > tbody > tr > td {
-  vertical-align: top; }
-
-#aow_conditionLines td:first-of-type {
-  display: inline-block;
-  width: 48px; }
-
-#aow_conditionLines td:not(:first-of-type) {
-  display: inline-block;
-  width: 16.667%; }
-
-#aow_conditionLines tbody td {
-  background-color: #F5F5F5;
-  margin-bottom: 4px;
-  min-height: 64px; }
-
-#aow_conditionLines tbody td:first-of-type {
-  padding-left: 8px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px; }
-
-#aow_conditionLines tbody td:last-of-type {
-  padding-left: 8px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  width: 26%; }
-
-#aow_conditionLines td:first-of-type button {
-  margin-top: 8px;
-  height: 48px; }
-
-#aow_conditionLines input {
-  margin-top: 8px; }
-
-#aow_conditionLines input.sqsEnabled {
-  width: 62.5%; }
-
-#aow_conditionLines input[type=checkbox] {
-  margin-top: 24px; }
-
-#aow_conditionLines textarea {
-  margin-top: 8px;
-  width: 95%; }
-
-#aow_conditionLines select {
-  width: 95%;
-  margin-top: 8px; }
-
-@media (max-width: 1800px) {
-  #aow_conditionLines select[id$="][0]"] {
-    width: 45%;
-    margin-bottom: 4px; }
-
-  #aow_conditionLines select[id$="][1]"] {
-    width: 45%;
-    margin-bottom: 4px; }
-
-  #aow_conditionLines input[id$="][2]"] {
-    width: 45%;
-    margin-bottom: 4px; }
-
-  #aow_conditionLines select[id$="][3]"] {
-    width: 45%;
-    margin-bottom: 4px; } }
-@media (min-width: 1800px) {
-  #aow_conditionLines select[id$="][0]"] {
-    width: 24%; }
-
-  #aow_conditionLines select[id$="][1]"] {
-    width: 24%; }
-
-  #aow_conditionLines input[id$="][2]"] {
-    width: 24%; }
-
-  #aow_conditionLines select[id$="][3]"] {
-    width: 24%; } }
-[field="action_lines"] {
-  display: block;
-  width: 100%; }
-
-#aow_conditionLines [type="button"] {
-  background-color: #F08377;
-  padding: 0;
-  margin-right: 4px;
-  border: 1px solid #F08377;
-  border-radius: 4px; }
-
-#actionLines [type="button"] {
-  background-color: #F08377;
-  padding: 0;
-  margin-right: 4px;
-  border: 1px solid #F08377;
-  border-radius: 4px; }
-
-#actionLines {
-  display: block; }
-
-#actionLines > tr {
-  display: block; }
-
-#actionLines > tr > td {
-  display: block; }
-
-#actionLines td[field] label {
-  margin-right: 8px; }
-
-#actionLines > tr > td {
-  border: 1px solid #BFCAD3;
-  border-radius: 4px;
-  margin-bottom: 4px; }
-
-#actionLines .action-table {
-  display: block;
-  width: 100%; }
-
-#actionLines .action-table tbody {
-  display: block;
-  width: 100%; }
-
-#actionLines .action-table tr {
-  display: block;
-  width: 100%; }
-
-[data-workflow-action-parameter] input.sqsEnabled {
-  margin-top: 0px;
-  width: 50%; }
-
-.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="create-record"] input.sqsEnabled {
-  width: 65%; }
-
-.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="modify-record"] input.sqsEnabled {
-  width: 65%; }
-
-.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] input.sqsEnabled {
-  width: 10%; }
-
-.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] .id-ff.multiple > button {
-  margin-left: 0; }
-
-#actionLines .action-table td {
-  display: inline-block; }
-
-#actionLines .action-table > tbody > tr:first-of-type > td:first-of-type {
-  padding-left: 8px; }
-
-#actionLines .action-table > tbody > tr:first-of-type > td {
-  border-bottom: 1px solid #BFCAD3;
-  padding-top: 4px; }
-
-#actionLines td[field=action] {
-  width: 65%;
-  height: 64px; }
-
-#actionLines td[field=action] select {
-  margin-left: 20px; }
-
-#actionLines td[field=name] {
-  width: 30%;
-  height: 64px; }
-
-#actionLines td[field=name] input[type=text] {
-  width: 80%; }
-
-#actionLines td[field=delete] {
-  width: 5%;
-  height: 64px; }
-
-#actionLines td[field=delete] .delete-btn {
-  float: right; }
-
-#actionLines td[field=delete] .delete-btn .btn {
-  padding: 0 0 0 0; }
-
-.edit tr td [data-workflow-action] td {
-  vertical-align: middle; }
-
-[data-workflow-action-line] {
-  vertical-align: top; }
-
-[data-workflow-action-line] td:first-of-type {
-  width: 48px; }
-
-[data-workflow-action-line] td:nth-of-type(3) select {
-  width: auto; }
-
-[data-workflow-action-line] select[id$="][0]"] {
-  width: 45%;
-  margin-bottom: 4px; }
-
-[data-workflow-action-line] select[id$="][1]"] {
-  width: 45%;
-  margin-bottom: 4px; }
-
-.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
-  width: 45%;
-  margin-bottom: 4px; }
-
-.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"][type=checkbox] {
-  width: 16px; }
-
-[data-workflow-action-line] select[id$="][3]"] {
-  width: 45%;
-  margin-bottom: 4px; }
-
-[data-workflow-action="send-email"] > tbody > tr > td {
-  line-height: 40px; }
-
-[data-workflow-action="send-email"] > tbody > tr:nth-of-type(1) > td {
-  width: 20%; }
-
-[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) {
-  width: 100%; }
-
-[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td:nth-of-type(1) {
-  padding-left: 4px; }
-
-[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
-  padding-bottom: 8px;
-  padding-top: 8px;
-  width: 100%; }
-
-[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
-  width: auto; }
-
-#relate_label {
-  line-height: 40px; }
-
-#deleteGroup img {
-  background-color: #F08377;
-  padding: 0;
-  margin-right: 4px;
-  border: 1px solid #F08377;
-  border-radius: 4px; }
-
-.btn-danger {
-  background-color: #F08377; }
-
-.btn-danger:hover {
-  background-color: #D66C60; }
-
-.btn-danger:active {
-  background-color: #F08377; }
-
-.btn-danger:focus {
-  background-color: #F08377; }
-
-[data-workflow-action] .lines tbody > tr > td {
-  margin-bottom: 4px;
-  min-height: 64px;
-  padding-left: 8px;
-  padding-right: 8px; }
-
-[data-workflow-action] .relationship tbody > tr > td {
-  padding-left: 8px;
-  padding-right: 8px;
-  min-height: 64px; }
-
-[data-workflow-action] .email-line tbody > tr > td {
-  padding-left: 8px;
-  padding-right: 8px; }
-
-[data-workflow-action] .email-line tbody > tr > td select {
-  margin-left: 8px;
-  margin-right: 8px; }
-
-[data-workflow-action] .email-line tbody > tr > td button {
-  margin-left: 8px;
-  margin-right: 8px; }
-
-[data-workflow-action] .email-line tbody > tr > td input {
-  margin-left: 8px;
-  margin-right: 8px; }
-
-[data-workflow-action] .name_label {
-  width: 70%; }
-
-[data-workflow-action] .name_label {
-  width: 30%; }
-
-[data-workflow-action] .lines tbody > tr > td {
-  margin-bottom: 4px;
-  min-height: 64px; }
-
-[data-workflow-action] .lines tbody > tr > td:first-of-type button {
-  margin-top: 8px;
-  height: 48px; }
-
-[data-workflow-action] .lines select {
-  margin-top: 8px; }
-
-[data-workflow-action] .lines tbody > tr > td input {
-  margin-top: 8px; }
-
-[data-workflow-action] .lines tbody > tr > td input.sqsEnabled {
-  width: 62.5%; }
-
-[data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
-  margin-top: 24px; }
-
-[data-workflow-action] .lines tbody > tr > td textarea {
-  margin-top: 8px;
-  width: 95%; }
-
-[data-workflow-action-parameter] [colspan="4"] {
-  display: block;
-  width: 100%; }
-
-[data-workflow-action-parameter] > td {
-  display: block;
-  width: 100%; }
-
-.aor-tab-content {
-  background-color: #FFFFFF; }
-
-#report-editview-footer {
-  width: 100%; }
-
-#detailpanel_fields_select {
-  border-right: 2px solid #E6E6E6;
-  display: inline-block;
-  padding: 8px;
-  width: 20%; }
-
-#detailpanel_fields_display {
-  position: absolute;
-  display: inline-block;
-  padding: 8px;
-  width: 75%; }
-
-.aor_dragbox {
-  overflow: scroll;
-  height: 250px; }
-
-#report-editview-footer .tab-togglers {
-  margin-left: 20%; }
-
-#report-editview-footer .tab-toggler.active .button {
-  background-color: #F08377; }
-
-#report-editview-footer .parentheses-btn {
-  display: block; }
-
-#report-editview-footer .condition-sortable-handle {
-  cursor: move; }
-
-#report-editview-footer .parenthesis-line strong {
-  font-size: 18px; }
-
-#report-editview-footer .drop-area.highlighted {
-  background-color: #f7f7f7; }
-
-.noGraphDataPoints {
-  padding: 10px; }
-
-.rgraph_chart_tooltips_css {
-  font-family: 'Lato', Arial; }
-
-.aor-tab-content #group_display_table {
-  margin-bottom: 8px; }
-.aor-tab-content #fieldLines_head td, .aor-tab-content #aor_conditionLines_head td, .aor-tab-content #chartHead td {
-  background-color: #778591;
-  color: #FFFFFF;
-  height: 32px;
-  font-weight: 700; }
-.aor-tab-content #fieldLines_head td:first-of-type, .aor-tab-content #aor_conditionLines_head td:first-of-type, .aor-tab-content #chartHead td:first-of-type {
-  border-top-left-radius: 4px; }
-.aor-tab-content #fieldLines_head td:last-of-type, .aor-tab-content #aor_conditionLines_head td:last-of-type, .aor-tab-content #chartHead td:last-of-type {
-  border-top-right-radius: 4px; }
-.aor-tab-content #fieldLines tbody tr {
-  height: 64px; }
-  .aor-tab-content #fieldLines tbody tr td {
-    background-color: #F5F5F5; }
-    .aor-tab-content #fieldLines tbody tr td [type=text] {
-      margin-right: 4px; }
-  .aor-tab-content #fieldLines tbody tr td:first-of-type {
-    padding-left: 4px; }
-    .aor-tab-content #fieldLines tbody tr td:first-of-type .button {
-      padding: 6px 6px 18px 6px;
-      line-height: 10px;
-      height: 0px;
-      font-size: 32px; }
-.aor-tab-content #fieldLines tbody:nth-of-type(2n) tr td {
-  background-color: #FFFFFF; }
-.aor-tab-content #aor_conditionLines .logic-select {
-  margin-right: 4px; }
-.aor-tab-content #aor_conditionLines tbody tr {
-  height: 64px; }
-  .aor-tab-content #aor_conditionLines tbody tr td {
-    background-color: #F5F5F5; }
-    .aor-tab-content #aor_conditionLines tbody tr td [type=text] {
-      margin-right: 4px; }
-  .aor-tab-content #aor_conditionLines tbody tr td:first-of-type {
-    padding-left: 4px; }
-    .aor-tab-content #aor_conditionLines tbody tr td:first-of-type .button {
-      padding: 6px 6px 18px 6px;
-      line-height: 10px;
-      height: 0px;
-      font-size: 32px; }
-.aor-tab-content #aor_conditionLines tbody tr:nth-of-type(2n) td {
-  background-color: #FFFFFF; }
-.aor-tab-content #aor_conditionLines #aor_conditionLines_head td:nth-of-type(2),
-.aor-tab-content #aor_conditionLines #aor_conditionLines_head td:last-of-type {
-  padding-right: 8px; }
-.aor-tab-content #detailpanel_charts tbody tr {
-  height: 64px; }
-  .aor-tab-content #detailpanel_charts tbody tr td {
-    background-color: #F5F5F5; }
-    .aor-tab-content #detailpanel_charts tbody tr td [type=text] {
-      margin-right: 4px; }
-    .aor-tab-content #detailpanel_charts tbody tr td select {
-      margin-right: 4px; }
-  .aor-tab-content #detailpanel_charts tbody tr td:first-of-type {
-    padding-left: 4px; }
-    .aor-tab-content #detailpanel_charts tbody tr td:first-of-type .removeChartButton {
-      margin-right: 4px;
-      padding: 6px 6px 18px 6px;
-      line-height: 10px;
-      height: 0px;
-      font-size: 32px; }
-.aor-tab-content #detailpanel_charts tbody tr:nth-of-type(2n) td {
-  background-color: #FFFFFF; }
-
-#aor_condition_parenthesis_table {
-  border: none;
-  border: none;
-  margin-bottom: 8px; }
-  #aor_condition_parenthesis_table tbody {
-    border: none;
-    border: none; }
-    #aor_condition_parenthesis_table tbody tr {
-      border: none;
-      border: none; }
-  #aor_condition_parenthesis_table #aor_condition_parenthesis_btn {
-    font-weight: 700; }
-
-.parentheses-btn {
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: #AA9DCC;
-  color: #F5F5F5;
-  font-weight: 700; }
-
-.parentheses-btn:hover {
-  background-color: #9589B3;
-  cursor: grab; }
-
-.parentheses-btn .condition-sortable-handle {
-  padding: 5px 10px 5px 10px; }
-
 /**** Dashboard ***/
 .modal-add-dashlet div.modal-content {
   width: 80%; }
@@ -11871,6 +11733,22 @@ object {
   font-weight: bold;
   color: #F08377; }
 
+#report-editview-footer {
+  float: left;
+  width: 70%; }
+
+#detailpanel_fields,
+#detailpanel_conditions,
+#detailpanel_charts {
+  border-top: 1px solid lightgray; }
+
+#detailpanel_fields_select {
+  margin-right: 20px;
+  float: left;
+  overflow-y: auto;
+  width: 20%;
+  height: 640px; }
+
 @media (max-width: 767px) {
   .col-sm-8.edit-view-field {
     width: 100%; }
@@ -11890,6 +11768,45 @@ object {
     display: block;
     background: none;
     width: 100%; } }
+.aor_dragbox {
+  overflow: scroll;
+  height: 250px; }
+
+#report-editview-footer .tab-togglers {
+  width: 80%; }
+
+#report-editview-footer .tab-toggler {
+  display: block;
+  padding: 0 4px;
+  float: left; }
+
+#report-editview-footer .tab-toggler.active .button {
+  background-color: #F08377; }
+
+#report-editview-footer .parentheses-btn {
+  display: block;
+  border: 1px solid lightgray;
+  width: 100%;
+  min-height: 30px; }
+
+#report-editview-footer .condition-sortable-handle {
+  cursor: move; }
+
+#report-editview-footer .parenthesis-line strong {
+  font-size: 18px; }
+
+#report-editview-footer .drop-area.highlighted {
+  background-color: #f7f7f7; }
+
+#report-editview-footer .tab-panels {
+  width: 110%; }
+
+.noGraphDataPoints {
+  padding: 10px; }
+
+.rgraph_chart_tooltips_css {
+  font-family: 'Lato', Arial; }
+
 @media (min-width: 320px) and (max-width: 978px) {
   .col-sm-3 {
     display: none; }

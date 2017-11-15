@@ -169,11 +169,15 @@ $sugar_smarty->assign('error', $errors);
 $cBean = BeanFactory::getBean('Cases');
 $statusDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], '');
 $currentStatuses = '';
-foreach (json_decode($cfg->config['aop']['case_status_changes'], true) as $if => $then) {
-    $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $if);
-    $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $then);
-    $currentStatuses .= getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown) . "\n";
+
+if($cfg->config['aop']['case_status_changes']) {
+    foreach (json_decode($cfg->config['aop']['case_status_changes'], true) as $if => $then) {
+        $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $if);
+        $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $then);
+        $currentStatuses .= getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown) . "\n";
+    }
 }
+
 
 $sugar_smarty->assign('currentStatuses', $currentStatuses);
 

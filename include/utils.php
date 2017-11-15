@@ -197,6 +197,7 @@ function make_sugar_config(&$sugar_config)
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
             'forgotpasswordON' => true,
             'linkexpiration' => '1',
             'linkexpirationtime' => '30',
@@ -395,6 +396,7 @@ function get_sugar_config_defaults()
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
             'forgotpasswordON' => false,
             'linkexpiration' => '1',
             'linkexpirationtime' => '30',
@@ -1160,8 +1162,7 @@ function return_module_language($language, $module, $refresh = false)
 
     // Jenny - Bug 8119: Need to check if $module is not empty
     if (empty($module)) {
-        $stack = debug_backtrace();
-        $GLOBALS['log']->warn('Variable module is not in return_module_language '.var_export($stack, true));
+        $GLOBALS['log']->warn('Variable module is not in return_module_language, see more info: debug_backtrace()');
 
         return array();
     }
@@ -1854,40 +1855,42 @@ EOQ;
 }
 
 /**
- * Very cool algorithm for sorting multi-dimensional arrays.  Found at http://us2.php.net/manual/en/function.array-multisort.php
- * Syntax: $new_array = array_csort($array [, 'col1' [, SORT_FLAG [, SORT_FLAG]]]...);
- * Explanation: $array is the array you want to sort, 'col1' is the name of the column
- * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
- * you can repeat the 'col',FLAG,FLAG, as often you want, the highest prioritiy is given to
- * the first - so the array is sorted by the last given column first, then the one before ...
+ * Sort Multi Dimensional Array by Column
+ *
+ * @param mixed ... &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]]
+ * @see http://php.net/manual/en/function.array-multisort.php
+ * @return array
+ *
  * Example: $array = array_csort($array,'town','age',SORT_DESC,'name');
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * $array is the array you want to sort, 'col1' is the name of the column
+ * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+ * you can repeat the 'col',FLAG,FLAG, as often you want, the highest priority is given to
+ * the first - so the array is sorted by the last given column first, then the one before ...
+ *
  */
 function array_csort()
 {
     $args = func_get_args();
-    $marray = array_shift($args);
-    $i = 0;
+    $argsShifted = array_shift($args);
+    $arrayMultiSortParameters = array();
+    $sorting = array();
 
-    $msortline = 'return(array_multisort(';
-    foreach ($args as $arg) {
-        ++$i;
-        if (is_string($arg)) {
-            foreach ($marray as $row) {
-                $sortarr[$i][] = $row[$arg];
+    for ($i = 0, $size = count($args); $i < $size; $i++) {
+        if (is_string($args[$i])) {
+            foreach ($argsShifted as $row) {
+                $sorting[$i][] = $row[$args[$i]];
             }
         } else {
-            $sortarr[$i] = $arg;
+            $sorting[$i] = $args[$i];
         }
-        $msortline .= '$sortarr['.$i.'],';
+        $arrayMultiSortParameters[] = $sorting[$i];
     }
-    $msortline .= '$marray));';
 
-    eval($msortline);
+    $arrayMultiSortParameters[] = $argsShifted;
+    call_user_func_array('array_multisort', $arrayMultiSortParameters);
 
-    return $marray;
+    return end($arrayMultiSortParameters);
 }
 
 /**
@@ -4036,7 +4039,7 @@ function getJSONobj()
     static $json = null;
     if (!isset($json)) {
         require_once 'include/JSON.php';
-        $json = new JSON(JSON_LOOSE_TYPE);
+        $json = new JSON();
     }
 
     return $json;
@@ -4730,8 +4733,12 @@ function load_link_class($properties)
 {
     $class = 'Link2';
     if (!empty($properties['link_class']) && !empty($properties['link_file'])) {
-        require_once $properties['link_file'];
-        $class = $properties['link_class'];
+        if(!file_exists($properties['link_file'])) {
+            $GLOBALS['log']->fatal('File not found: ' . $properties['link_file']);
+        } else {
+            require_once $properties['link_file'];
+            $class = $properties['link_class'];
+        }
     }
 
     return $class;
@@ -5533,7 +5540,7 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
  */
 function isValidId($id) {
 
-    $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id);
+    $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
 
     return $valid;
 }

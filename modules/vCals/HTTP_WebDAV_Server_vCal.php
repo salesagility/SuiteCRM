@@ -99,8 +99,9 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          */
         function ServeRequest($base = false)
         {
-
-            global $sugar_config,$current_language;
+            global $sugar_config;
+            global $current_language;
+            global $log;
 
             if (!empty($sugar_config['session_dir']))
             {
@@ -108,23 +109,16 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             }
 
             session_start();
-
-            // clean_incoming_data();
-
-
             $current_language = $sugar_config['default_language'];
 
-            // special treatment for litmus compliance test
-            // reply on its identifier header
-            // not needed for the test itself but eases debugging
-/*
-            foreach(apache_request_headers() as $key => $value) {
-                if(stristr($key,"litmus")) {
-                    error_log("Litmus test $value");
-                    header("X-Litmus-reply: ".$value);
-                }
+
+            // check authentication
+            if (!$this->_check_auth()) {
+                $this->http_status('401 Unauthorized');
+                header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
+
+                return;
             }
-*/
 
             // set root directory, defaults to webserver document root if not set
             if ($base) {
@@ -178,49 +172,50 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
               $this->publish_key = $query_arr['key'];
             }
 
+
             // select user by email
-            if ( ! empty($query_arr['email']))
+            if ( ! empty($query_arr['user_id']))
             {
+                $this->user_focus->retrieve(clean_string($query_arr['user_id']));
+                $this->user_focus->loadPreferences();
+            } else if ( ! empty($query_arr['email'])) {
+                // clean the string!
+                $query_arr['email'] = clean_string($query_arr['email']);
+                //get user info
+                $this->user_focus->retrieve_by_email_address( $query_arr['email']);
+            } else if ( ! empty($query_arr['user_name'])) {
+                // clean the string!
+                $query_arr['user_name'] = clean_string($query_arr['user_name']);
 
-
-              // clean the string!
-              $query_arr['email'] = clean_string($query_arr['email']);
-              //get user info
-              $this->user_focus->retrieve_by_email_address( $query_arr['email']);
-
-            }
-            // else select user by user_name
-            else if ( ! empty($query_arr['user_name']))
-            {
-              // clean the string!
-              $query_arr['user_name'] = clean_string($query_arr['user_name']);
-
-              //get user info
-              $arr = array('user_name'=>$query_arr['user_name']);
-              $this->user_focus->retrieve_by_string_fields($arr);
-            }
-            // else select user by user id
-            else if ( ! empty($query_arr['user_id']))
-            {
-                $this->user_focus->retrieve($query_arr['user_id']);
+                //get user info
+                $arr = array('user_name' => $query_arr['user_name']);
+                $this->user_focus->retrieve_by_string_fields($arr);
+            } else {
+                $errorMessage = 'vCal Server - Invalid request.';
+                $log->warning($errorMessage);
+                print $errorMessage;
             }
 
-            // if we haven't found a user, then return 404
-            if ( empty($this->user_focus->id) || $this->user_focus->id == -1)
-            {
-                $this->http_status('401 Unauthorized');
-                if (!isset($query_arr['noAuth'])) {
-                    header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
-                }
-                return;
+            /**
+             * @var User|SugarBean|null $current_user
+             */
+            $current_user = BeanFactory::getBean('Users', $_SESSION['authenticated_user_id']);
+
+
+
+            /**
+             * Fake a response so that it is not different from when a user is found
+             */
+            if($this->user_focus->id === null) {
+                $this->user_focus->last_name = $query_arr['user_name'];
+            } elseif (
+                !$current_user->isAdmin() &&
+                $current_user->user_name !== $this->user_focus->user_name
+            ) {
+                $this->user_focus = BeanFactory::newBean('Users');
+                $this->user_focus->last_name = $query_arr['user_name'];
             }
 
-//            if(empty($this->user_focus->user_preferences))
-//            {
-                     $this->user_focus->loadPreferences();
-//            }
-
-            // let the base class do all the work
             parent::ServeRequest();
         }
 
@@ -228,20 +223,27 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * No authentication is needed here
          *
          * @access private
-         * @param  string  HTTP Authentication type (Basic, Digest, ...)
-         * @param  string  Username
-         * @param  string  Password
+         * @param  string $type HTTP Authentication type (Basic, Digest, ...)
+         * @param  string $user Username
+         * @param  string $password Password
          * @return bool    true on successful authentication
          */
-        function check_auth($type, $user, $pass)
+        function check_auth($type, $user, $password)
         {
             if(isset($_SESSION['authenticated_user_id'])) {
                 // allow logged in users access to freebusy info
                 return true;
             }
+
             if(!empty($this->publish_key) && !empty($this->user_focus) && $this->user_focus->getPreference('calendar_publish_key' ) == $this->publish_key) {
                 return true;
             }
+
+            if($type === 'basic' || $type === null) {
+                $authController = new AuthenticationController();
+                return $authController->authController->loginAuthenticate($user, $password);
+            }
+
             return false;
         }
 
@@ -261,13 +263,16 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         */
         function http_GET()
         {
+            global $log;
 
            if ($this->vcal_type == 'vfb')
            {
              $this->http_status("200 OK");
              echo $this->vcal_focus->get_vcal_freebusy($this->user_focus);
            } else {
-             $this->http_status("404 Not Found");
+               $errorMessage = 'vCal Server - Invalid request.';
+               $log->warning($errorMessage);
+               print $errorMessage;
            }
 
         }
