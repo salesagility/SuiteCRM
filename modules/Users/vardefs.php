@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['User'] = array(
     'table' => 'users',
@@ -63,6 +67,7 @@ $dictionary['User'] = array(
                 'basic_search' => false,
                 'advanced_search' => false,
             ),
+            'api-visible' => false,
         ),
         'user_hash' => array(
             'name' => 'user_hash',
@@ -77,6 +82,7 @@ $dictionary['User'] = array(
                 'listview' => false,
                 'searchview' => false,
             ),
+            'api-visible' => false,
         ),
         'system_generated_password' => array(
             'name' => 'system_generated_password',
@@ -91,6 +97,7 @@ $dictionary['User'] = array(
                 'editview' => false,
                 'quickcreate' => false,
             ),
+            'api-visible' => false,
         ),
 
         'pwd_last_changed' => array(
@@ -100,6 +107,7 @@ $dictionary['User'] = array(
             'required' => false,
             'massupdate' => false,
             'studio' => array('formula' => false),
+            'api-visible' => false,
         ),
         /**
          * authenticate_id is used by authentication plugins so they may place a quick lookup key for looking up a given user after authenticating through the plugin
@@ -112,6 +120,7 @@ $dictionary['User'] = array(
             'reportable' => false,
             'importable' => 'false',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         /**
          * sugar_login will force the user to use sugar authentication
@@ -126,6 +135,7 @@ $dictionary['User'] = array(
             'massupdate' => false,
             'importable' => false,
             'studio' => array('listview' => false, 'searchview' => false, 'formula' => false),
+            'api-visible' => false,
         ),
         'first_name' => array(
             'name' => 'first_name',
@@ -181,6 +191,7 @@ $dictionary['User'] = array(
             'type' => 'bool',
             'default' => '0',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         'external_auth_only' => array(
             'name' => 'external_auth_only',
@@ -190,6 +201,7 @@ $dictionary['User'] = array(
             'massupdate' => false,
             'default' => '0',
             'studio' => array('listview' => false, 'searchview' => false, 'related' => false),
+            'api-visible' => false,
         ),
         'receive_notifications' => array(
             'name' => 'receive_notifications',
@@ -328,6 +340,7 @@ $dictionary['User'] = array(
             'options' => 'user_status_dom',
             'importable' => 'required',
             'required' => true,
+            'api-visible' => false,
         ),
         'address_street' => array(
             'name' => 'address_street',
@@ -721,6 +734,19 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_PRIMARY_GROUP',
             ),
+        'factor_auth' => array(
+            'name' => 'factor_auth',
+            'type' => 'bool',
+            'vname' => 'LBL_FACTOR_AUTH',
+            'massupdate' => false,
+        ),
+        'factor_auth_interface' => array(
+            'name' => 'factor_auth_interface',
+            'vname' => 'LBL_FACTOR_AUTH_INTERFACE',
+            'type' => 'enum',
+            'options' => 'user_factor_auth_interface_dom',
+        ),
+
     ),
     'indices' => array(
         array(
@@ -744,7 +770,15 @@ $dictionary['User'] = array(
         ),
     ),
     'relationships' => array(
-        'user_direct_reports' => array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id', 'rhs_module' => 'Users', 'rhs_table' => 'users', 'rhs_key' => 'reports_to_id', 'relationship_type' => 'one-to-many'),
+        'user_direct_reports' => array(
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Users',
+            'rhs_table' => 'users',
+            'rhs_key' => 'reports_to_id',
+            'relationship_type' => 'one-to-many'
+        ),
         'users_users_signatures' =>
             array(
                 'lhs_module' => 'Users',
@@ -757,18 +791,31 @@ $dictionary['User'] = array(
             ),
         'users_email_addresses' =>
             array(
-                'lhs_module' => "Users", 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses', 'rhs_table' => 'email_addresses', 'rhs_key' => 'id',
+                'lhs_module' => "Users",
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailAddresses',
+                'rhs_table' => 'email_addresses',
+                'rhs_key' => 'id',
                 'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel', 'join_key_lhs' => 'bean_id', 'join_key_rhs' => 'email_address_id',
+                'join_table' => 'email_addr_bean_rel',
+                'join_key_lhs' => 'bean_id',
+                'join_key_rhs' => 'email_address_id',
                 'relationship_role_column' => 'bean_module',
                 'relationship_role_column_value' => "Users"
             ),
         'users_email_addresses_primary' =>
-            array('lhs_module' => "Users", 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses', 'rhs_table' => 'email_addresses', 'rhs_key' => 'id',
+            array(
+                'lhs_module' => "Users",
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailAddresses',
+                'rhs_table' => 'email_addresses',
+                'rhs_key' => 'id',
                 'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel', 'join_key_lhs' => 'bean_id', 'join_key_rhs' => 'email_address_id',
+                'join_table' => 'email_addr_bean_rel',
+                'join_key_lhs' => 'bean_id',
+                'join_key_rhs' => 'email_address_id',
                 'relationship_role_column' => 'primary_address',
                 'relationship_role_column_value' => '1'
             ),
