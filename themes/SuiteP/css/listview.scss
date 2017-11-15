@@ -1,5 +1,5 @@
 /**** List view ***/
-@import 'variables';
+@import 'variables.scss';
 
 .list {
   padding: 0;
@@ -283,7 +283,7 @@ tr#pagination {
 
 .list tr th {
   font-size: 13px;
-  padding: 16px 10px 16px 10px;
+  padding: 10px 10px 10px 10px;
   border-left: none;
   border-right: none;
   text-align: left;
@@ -295,7 +295,7 @@ tr#pagination {
 .list tr td[scope=col] {
   font-size: 13px;
   font-weight: 800;
-  padding: 16px 10px 16px 10px;
+  padding: 10px 10px 10px 10px;
   border-left: none;
   border-right: none;
   text-align: left;
@@ -306,7 +306,7 @@ tr#pagination {
 .edit .list tr th {
   font-size: 13px;
   font-weight: 800;
-  padding: 16px 10px 16px 10px;
+  padding: 10px 10px 10px 10px;
   border-left: none;
   border-right: none;
   text-align: left;
@@ -316,7 +316,7 @@ tr#pagination {
 .edit .list tr td[scope=col] {
   font-size: 13px;
   font-weight: 800;
-  padding: 16px 10px 16px 10px;
+  padding: 10px 10px 10px 10px;
   border-left: none;
   border-right: none;
   text-align: left;
@@ -397,7 +397,7 @@ a.listViewTdToolsS1 {
   white-space: nowrap;
   word-wrap: normal;
   text-align: left;
-  min-width: 55px;
+  /*min-width: 55px;*/
 }
 
 .list tr .nowrap {
@@ -520,10 +520,13 @@ a.listViewTdToolsS1 {
 }
 
 .table-responsive.list > tbody > tr > td {
+ /*
   padding-top: 15px;
   padding-bottom: 12px;
   padding-left: 10px;
   padding-right: 10px;
+  */
+  padding:3px 5px;
 }
 
 .table-responsive.list > tbody > tr > td > a {
@@ -532,6 +535,10 @@ a.listViewTdToolsS1 {
   border-bottom-color: $list-view-link-color;
   border-bottom-style: dashed;
   border-bottom-width: 1px;
+}
+
+.table-responsive.list > tbody > tr > td svg {
+	width:20px;
 }
 
 .table-responsive.list > tbody > tr > td a:hover {
@@ -718,6 +725,7 @@ a.listViewTdToolsS1 {
 #massassign_form table td {
   float: left;
   width: auto;
+  line-height:45px;
 }
 
 .listViewButtons .button:hover {
@@ -737,6 +745,10 @@ a.listViewTdToolsS1 {
 
 #massassign_form .button {
   margin-right: 10px;
+  input {
+	  height:25px;
+	  line-height:25px;
+  }
 }
 
 #massassign_form .tabForm {
@@ -1358,8 +1370,8 @@ a.listViewTdToolsS1 {
 
 form#MassAssign_SecurityGroups {
   background-color: #e6e6e6;
-  padding: 10px 20px 10px 20px;
-  margin: 20px 0 20px 0;
+  padding: 0px 20px 0px 20px;
+  margin: 10px 0 20px 0;
   border-radius: 3px;
   float: left;
   width: 100%;
@@ -1858,8 +1870,8 @@ div.qtip.qtip-default {
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 40px;
-  min-height: 40px;
+  height: 20px;
+  min-height: 20px;
   padding: 5px;
   line-height: 20px;
 }
@@ -1993,8 +2005,8 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 40px;
-  min-height: 40px;
+  height: 20px;
+  min-height: 20px;
   padding: 5px;
   line-height: 20px;
 }
@@ -2932,17 +2944,19 @@ ul#selectLink.clickMenu > li > a {
 }
 
 .list tr.oddListRowS1 td {
-  padding-top: 15px;
+  /*padding-top: 15px;
   padding-bottom: 12px;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 10px;*/
+  padding:5px;
 }
 
 .list tr.evenListRowS1 td {
-  padding-top: 15px;
+  /*padding-top: 15px;
   padding-bottom: 12px;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 10px;*/
+  padding:5px;
 }
 
 div.list-view-rounded-corners > table {
@@ -3406,16 +3420,16 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup input[type="text"] {
   border: none;
-  height: 40px;
-  min-height: 40px;
+  height: 20px;
+  min-height: 20px;
   padding: 5px;
   line-height: 20px;
 }
 
 .search_form.non-popup select {
   border: none;
-  height: 40px;
-  min-height: 40px;
+  height: 20px;
+  min-height: 20px;
   padding: 5px;
   line-height: 20px;
 }

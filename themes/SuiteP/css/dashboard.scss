@@ -1,5 +1,5 @@
 /**** Dashboard ***/
-@import 'variables';
+@import 'variables.scss';
 
 .modal-add-dashlet div.modal-content {
   width: 80%;
@@ -474,6 +474,9 @@ td.dashlet-title > h3 > span {
   padding-bottom: $dashlet-header-height/2;
   padding-left: $dashlet-header-padding;
   padding-right: $dashlet-header-padding;
+  
+  padding-top: $dashlet-header-padding;
+  padding-bottom: $dashlet-header-padding;
 }
 
 
@@ -670,7 +673,7 @@ td.dashlet-title > h3 > span {
 }
 
 .dashletNonTable {
-  padding: 0 5px 0 10px;
+  padding: 10px 5px 10px 10px;
 }
 
 #add_dashlets {
