@@ -5,34 +5,6 @@
         <th align="left" scope="row" colspan="3"><h4>{$MOD.LBL_PWDSEC_SETS}</h4></th>
     </tr>
 
-    <!-- Expiry Period
-    <tr>
-        <td width="25%" scope="row" valign="middle">
-            {$MOD.LBL_PWDSEC_EXPIRY}
-            {sugar_help text=$MOD.LBL_PWDSEC_EXPIRY_DESC}
-        </td>
-        <td valign="middle">
-            <input name="passwordsetting_expirydays" id="passwordsetting_expirydays" type="number" value="{$config.passwordsetting.expirydays}">
-            {$MOD.LBL_PWDSEC_DAYS}
-        </td>
-        <td>&nbsp;</td><td>&nbsp;</td>
-    </tr>
-    -->
-
-    <!-- Block After Inactivity --> <!-- TODO: Im not 100% sure, is this a password settings?
-    <tr>
-        <td width="25%" scope="row" valign="middle">
-            {$MOD.LBL_PWDSEC_BLOCK_AFTER}
-            {sugar_help text=$MOD.LBL_PWDSEC_BLOCK_AFTER_DESC}
-        </td>
-        <td valign="middle">
-            <input name="passwordsetting_blockafterdays" id="passwordsetting_blockafterdays" type="number" value="{$config.passwordsetting.blockafterdays}">
-            {$MOD.LBL_PWDSEC_DAYS}
-        </td>
-        <td>&nbsp;</td><td>&nbsp;</td>
-    </tr>
-    -->
-
     <!-- Password Min Length -->
     <tr>
         <td width="25%" scope="row" valign="middle">
