@@ -148,7 +148,16 @@
 										</tr>
 									</table>
 
-						<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+			<!-- PASSWORD SECURITY SETTINGS -->
+			<table id="pwdsec_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+				<tr>
+					<td>{include file="modules/Administration/PasswordManagerSecurity.tpl"}</td>
+				</tr>
+			</table>
+			<!-- END PASSWORD SECURITY SETTINGS -->
+
+
+			<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_PASSWORD_USER_RESET}</h4>
 								</th>
@@ -646,6 +655,7 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
+        
 }
 
 function testregex(customregex)
