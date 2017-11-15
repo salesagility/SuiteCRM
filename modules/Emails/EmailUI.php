@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /*********************************************************************************
+
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
  * Reserved. Contributor(s): ______________________________________..
@@ -133,6 +134,14 @@ class EmailUI
         $this->preflightUserCache();
         $ie = new InboundEmail();
 
+		// focus listView
+		$list = array(
+			'mbox' => 'Home',
+			'ieId' => '',
+			'name' => 'Home',
+			'unreadChecked' => 0,
+			'out' => array(),
+		);
 
         $this->_generateComposeConfigData('email_compose');
 
@@ -534,6 +543,13 @@ eoq;
         $ie1 = new InboundEmail();
 
         //Signatures
+        $defsigID = $current_user->getPreference('signature_default');
+		$defaultSignature = $current_user->getDefaultSignature();
+		$sigJson = !empty($defaultSignature) ? json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) : "new Object()";
+		$this->smarty->assign('defaultSignature', $sigJson);
+		$this->smarty->assign('signatureDefaultId', (isset($defaultSignature['id'])) ? $defaultSignature['id'] : "");
+		//User Preferences
+		$this->smarty->assign('userPrefs', json_encode($this->getUserPrefsJS()));
 
         $useRequestedRecord = false;
         if (isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
@@ -887,6 +903,7 @@ eoq;
         );
 
 
+
         // current_user
         $user = array(
             'emailAddresses' => $user->emailAddress->getAddressesByGUID($user->id, 'Users'),
@@ -907,8 +924,6 @@ eoq;
         return $userPreferences;
     }
 
-
-
     ///////////////////////////////////////////////////////////////////////////
     ////	FOLDER FUNCTIONS
 
@@ -920,6 +935,19 @@ eoq;
     function saveNewFolder($nodeLabel, $parentId, $isGroup = 0)
     {
         global $current_user;
+
+    ///////////////////////////////////////////////////////////////////////////
+    ////	FOLDER FUNCTIONS
+
+		$this->folder->save();
+		return array(
+			'action' => 'newFolderSave',
+			'id' => $this->folder->id,
+			'name' => $this->folder->name,
+			'is_group' => $this->folder->is_group,
+			'is_dynamic' => $this->folder->is_dynamic
+		);
+	}
 
         $this->folder->name = $nodeLabel;
         $this->folder->is_group = $isGroup;
@@ -1941,14 +1969,11 @@ eoq;
         return true;
     }
 
-    function getAssignedEmailsCountForUsers($userIds)
-    {
-        $counts = array();
-        foreach ($userIds as $id) {
-            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = '$id' AND status = 'unread'");
-            $a = $this->db->fetchByAssoc($r);
-            $counts[$id] = $a['c'];
-        } // foreach
+	/**
+	 * returns the metadata defining a single email message for display.  Uses cache file if it exists
+	 * @return array
+	 */
+function getSingleMessage($ie) {
 
         return $counts;
     } // fn
@@ -2078,7 +2103,6 @@ eoq;
     function getListEmails($ieId, $mbox, $folderListCacheOffset, $forceRefresh = 'false')
     {
         global $sugar_config;
-
 
         $ie = new InboundEmail();
         $ie->retrieve($ieId);
@@ -2984,6 +3008,7 @@ eoq;
                     $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS'];
                 }
             }
+           
 
             $type = $mod_strings['LBL_MAILBOX_TYPE_GROUP_FOLDER'];
             $ieAccountsShowOptionsMeta[] = array(

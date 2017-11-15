@@ -1,5 +1,5 @@
 /**** Edit view ***/
-@import 'variables';
+@import 'variables.scss';
 
 /*Import VCard*/
 .import-vcard {
@@ -256,6 +256,15 @@ div.noBullet li,
   padding: $page-content-spacing 3% 40px 3%;
   width: 100%;
 }
+
+
+
+@media (max-width: 750px) {
+  .content {
+    padding-top:50px;
+  }
+}
+
 
 .bootstrap-container.col-md-offset-2 {
 }
@@ -525,26 +534,28 @@ table.view {
 
 .detail-view-row {
   margin: 0 0 2px 0;
+  margin:0;
   min-width: 48px;
-  min-height: 24px;
+  /*min-height: 24px;*/
 }
 
 .detail-view-row-item {
-  margin: 0 0 2px 0;
+  /*margin: 0 0 2px 0;*/
+  margin:0;
   min-width: 48px;
-  min-height: 24px;
+  min-height: 30px;
 }
 
 .edit-view-row {
   margin: 0 0 8px 0;
   min-width: 48px;
-  min-height: 24px;
+  min-height: 30px;
 }
 
 .edit-view-row-item {
   margin: 0 0 8px 0;
   min-width: 48px;
-  min-height: 24px;
+  min-height: 30px;
 }
 
 .detail-view-row .label {
@@ -552,7 +563,7 @@ table.view {
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
-  padding: 0 0 0 8px;
+  padding: 0 0 10px 8px;
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
@@ -567,6 +578,7 @@ table.view {
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
+  line-height: 10px;
 }
 
 #lineItems {
@@ -594,7 +606,7 @@ slot {
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
-  line-height: 48px;
+  line-height: 30px;
   text-align: left;
   vertical-align: baseline;
 }
@@ -605,8 +617,8 @@ slot {
 }
 
 .dataField {
-  line-height: 48px;
-  min-height: 48px;
+  line-height: 30px;
+  min-height: 30px;
 }
 
 .detail-view-field {
@@ -615,12 +627,12 @@ slot {
   font-weight: 400;
   background-color: $detail-view-field-bg;
   color: $main-font-color;
-  padding: 12px;
+  padding: 0px 10px;
   border: 1px solid transparent;
   border-radius: 4px;
-  line-height: 20px;
+  line-height: 38px;
   text-align: left;
-  min-height: 48px;
+  min-height: 38px;
   vertical-align: baseline;
   white-space: inherit;
 }
@@ -1168,7 +1180,8 @@ li.noBullet {
 .error {
   background-color: $danger-btn-bg;
   color: $default-btn-color;
-  padding: 10px;
+  padding: 7px 10px;
+  font-size:12px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -1191,6 +1204,8 @@ p.error {
 
 .error {
   border: none;
+  color: $danger;
+  background: transparent;
 }
 
 .error:empty {
@@ -2067,7 +2082,8 @@ ul.clickMenu > li > span {
 
 @-moz-document url-prefix() {
   ul.clickMenu:first-child > li > span {
-    margin-right: -7px;
+    /*margin-right: -7px;*/
+    margin-right:0;
   }
 }
 
@@ -2574,6 +2590,12 @@ dl {
   top: 10px;
 }
 
+
+.search .col-xs-12 label {
+  margin-bottom: 0;
+  line-height: 30px;
+}
+
 #EditView_tabs span.id-ff.multiple [type="button"] img {
   content: none;
 }
@@ -2622,19 +2644,19 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #billing_address_street{
-  height: 54px;
+  height: 100px;
 }
 
 #shipping_address_street{
-  height: 54px;
+  height: 100px;
 }
 
 #primary_address_street{
-  height: 54px;
+  height: 100px;
 }
 
 #alt_address_street {
-  height: 54px;
+  height: 100px;
 }
 
 #primary_address_street,
@@ -4088,7 +4110,7 @@ select#sales_stage_advanced {
   background: #E6E6E6;
   border: 1px solid #778591;
   border-radius: 4px;
-  height: 48px;
+  height: 30px;
 
 }
 
@@ -4560,6 +4582,25 @@ object {
   color: $danger;
 }
 
+#report-editview-footer {
+  float: left;
+  width: 70%;
+}
+
+#detailpanel_fields,
+#detailpanel_conditions,
+#detailpanel_charts {
+  border-top: 1px solid lightgray;
+}
+
+#detailpanel_fields_select {
+  margin-right: 20px;
+  float: left;
+  overflow-y: auto;
+  width: 20%;
+  height: 640px;
+}
+
 @media (max-width: 767px) {
 
   .col-sm-8.edit-view-field {
@@ -4581,6 +4622,56 @@ object {
     background: none;
     width: 100%;
   }
+}
+
+.aor_dragbox {
+  overflow: scroll;
+  height: 250px;
+}
+
+#report-editview-footer .tab-togglers {
+  width: 80%;
+}
+
+#report-editview-footer .tab-toggler {
+  display: block;
+  padding: 0 4px;
+  float: left;
+}
+
+#report-editview-footer .tab-toggler.active .button {
+  background-color: $danger-btn-bg;
+}
+
+#report-editview-footer .parentheses-btn {
+  display: block;
+  border: 1px solid lightgray;
+  width: 100%;
+  min-height: 30px;
+}
+
+#report-editview-footer .condition-sortable-handle {
+  cursor: move;
+}
+
+#report-editview-footer .parenthesis-line strong {
+  font-size: 18px
+}
+
+#report-editview-footer .drop-area.highlighted {
+  background-color: #f7f7f7;
+}
+
+#report-editview-footer .tab-panels {
+  width: 110%;
+}
+
+.noGraphDataPoints {
+  padding: 10px;
+}
+
+.rgraph_chart_tooltips_css {
+  font-family: 'Lato', Arial;
 }
 
 @media (min-width: 320px) and (max-width: 978px) {

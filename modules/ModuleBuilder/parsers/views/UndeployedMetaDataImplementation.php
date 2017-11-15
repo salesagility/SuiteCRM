@@ -168,6 +168,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      *
      * @param string $view           The view type, that is, EditView, DetailView etc
      * @param string $moduleName     The name of the module that will use this layout
+     * @param string $packageName
      * @param string $type
      * @return string               The file name
      */

@@ -44,6 +44,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+global $moduleList;
+global $beanList;
+global $beanFiles;
+global $modInvisList;
+global $adminOnlyList;
+global $report_include_modules;
+
 $moduleList = array();
 // this list defines the modules shown in the top tab list of the app
 //the order of this list is the default order displayed - do not change the order unless it is on purpose
@@ -506,6 +513,15 @@ $beanFiles['TemplateSectionLine'] = 'modules/TemplateSectionLine/TemplateSection
 $modules_exempt_from_availability_check['TemplateSectionLine'] = 'TemplateSectionLine';
 $report_include_modules['TemplateSectionLine'] = 'TemplateSectionLine';
 $modInvisList[] = 'TemplateSectionLine';
+
+$beanList['OAuth2Tokens'] = 'OAuth2Tokens';
+$beanFiles['OAuth2Tokens'] = 'modules/OAuth2Tokens/OAuth2Tokens.php';
+$modInvisList[] = 'OAuth2Tokens';
+
+$beanList['OAuth2Clients'] = 'OAuth2Clients';
+$beanFiles['OAuth2Clients'] = 'modules/OAuth2Clients/OAuth2Clients.php';
+$modInvisList[] = 'OAuth2Clients';
+
 
 if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';

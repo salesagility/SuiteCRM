@@ -1,0 +1,11 @@
+modules:
+  enabled:
+    - \SuiteCRM\Test\Driver\WebDriver
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      width: 768
+      height: 1024
+      capabilities:
+        'browserName': 'iPhone'
+        'platform': 'MAC'
+        'device': 'iPad Air 2'
