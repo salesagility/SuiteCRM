@@ -730,6 +730,19 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_PRIMARY_GROUP',
             ),
+        'factor_auth' => array(
+            'name' => 'factor_auth',
+            'type' => 'bool',
+            'vname' => 'LBL_FACTOR_AUTH',
+            'massupdate' => false,
+        ),
+        'factor_auth_interface' => array(
+            'name' => 'factor_auth_interface',
+            'vname' => 'LBL_FACTOR_AUTH_INTERFACE',
+            'type' => 'enum',
+            'options' => 'user_factor_auth_interface_dom',
+        ),
+
     ),
     'indices' => array(
         array(

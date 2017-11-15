@@ -51,6 +51,11 @@
             {/foreach}
             <th data-type="html"><!-- extra th for the button --></th>
         </tr>
+        <tr id="{$SUBPANEL_ID}_search" class="pagination" style="{$DISPLAY_SPS}">
+            <td align="right" colspan="20">
+                {$SUBPANEL_SEARCH}
+            </td>
+        </tr>
     </thead>
     <tbody>
     {foreach from=$ROWS key=rowHeader item=row}

@@ -193,8 +193,19 @@
                     {/if}
                     {* END SUGARCRM flav=pro ONLY *}
                     <span id='le_label_{$idCount}'>
-                        {sugar_translate label=$col.label}
-                    </span>
+                    {if !empty($translate) && isset($col.label) && !empty($col.label)}
+                        {eval var=$col.label data1=$col assign='label'}
+                        {sugar_translate label=$label module=$language}
+                    {else}
+                        {assign var='label' value=$col.label}
+		                {if !empty($current_mod_strings[$label])}
+		                    {$current_mod_strings[$label]}
+		                {elseif !empty($mod[$label])}
+		                    {$mod[$label]}
+		                {else}
+		                	{$label}
+		                {/if}
+		            {/if}</span>
                     <span class='field_name'>{$col.name}</span>
                     <span class='field_label'>{$col.label}</span>
                     <span id='le_tabindex_{$idCount}' class='field_tabindex'>{$col.tabindex}</span>

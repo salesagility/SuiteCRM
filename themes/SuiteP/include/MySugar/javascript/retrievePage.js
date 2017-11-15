@@ -52,8 +52,7 @@ var dashletsPageInit = function() {
                 return;
             }
 
-            $.post($('#addpageform').attr('action'), { dashName: $('#dashName').val(), numColumns: $('[name=numColumns] option:selected').val() } );
-            location.reload();
+	    $.post($('#addpageform').attr('action'), { dashName: $('#dashName').val(), numColumns: $('[name=numColumns] option:selected').val() } ).then(function() { location.reload(); });
 
         })
     })

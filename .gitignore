@@ -64,6 +64,10 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+# Microsoft Visual Studio
+*.sln
+*.suo
+*.phpproj
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -71,10 +75,15 @@ SuiteCRM.kdev4
 
 #Ignore composer vendor folder
 vendor/
-/public/
+public/
 
 #Ingore composer files
 composer.lock
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
 
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
