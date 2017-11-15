@@ -184,9 +184,8 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
         $expected = array(
                 'address' => 'washington D.C',
                 'status' => 'OK',
-            // add it if lng and lat needed for W D.C:
-            //    'lat' => 38.90719229999999839719748706556856632232666015625,
-            //    'lng' => -77.0368706999999943718648864887654781341552734375,
+                'lat' => 38.90719229999999839719748706556856632232666015625,
+                'lng' => -77.0368706999999943718648864887654781341552734375,
         );
         $actual = $jjwgMaps->getGoogleMapsGeocode('washington D.C');
         $this->assertSame($expected, $actual);

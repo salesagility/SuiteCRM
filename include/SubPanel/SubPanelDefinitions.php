@@ -100,7 +100,7 @@ class aSubPanel
         }
         $this->search_query = '';
         if ((!isset($instance_properties['type']) || $instance_properties['type'] != 'collection')) {
-            if (isset($this->_instance_properties['module'])) {
+            if(isset($this->_instance_properties['module'])) {
                 $this->search_query = $this->buildSearchQuery($this->_instance_properties['module']);
             }
         }
