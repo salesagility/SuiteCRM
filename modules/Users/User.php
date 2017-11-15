@@ -116,11 +116,28 @@ class User extends Person
 
     var $new_schema = true;
 
-    function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var bool
+     */
+	public $factor_auth;
+
+    /**
+     * @var string
+     */
+    public $factor_auth_interface;
+
+
+	function __construct() {
+		parent::__construct();
 
         $this->_loadUserPreferencesFocus();
+    }
+
+	public function __set($key, $value) {
+	    $this->$key = $value;
+	    if($key == 'id' && $value == '1') {
+	        $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to '. $value);
+        }
     }
 
     /**
@@ -577,7 +594,20 @@ class User extends Person
 
     function save($check_notify = false)
     {
+        global $current_user;
+        
         $isUpdate = !empty($this->id) && !$this->new_with_id;
+        
+        // only admin user can change 2 factor authentication settings
+        if($isUpdate && !is_admin($current_user)) {
+            $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                $msg .= 'Current user is not able to change two factor authentication settings.'; 
+                $GLOBALS['log']->warn($msg);
+            }
+            $this->factor_auth = $tmpUser->factor_auth;
+            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+        }
 
 
         $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();
@@ -725,7 +755,7 @@ class User extends Person
      */
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret && $_SESSION !== null) {
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
 		}
 		return $ret;
@@ -932,10 +962,12 @@ EOQ;
         global $current_user;
         $GLOBALS['log']->debug("Starting password change for $this->user_name");
 
-        if (!isset ($new_password) || $new_password == "") {
-            $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'] . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
-
-            return false;
+		if (!isset ($new_password) || $new_password == "") {
+			$this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'].$current_user->user_name.$mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
+			return false;
+		}
+		if($this->error_string = $this->passwordValidationCheck($new_password)) {
+		    return false;
         }
 
 
@@ -952,8 +984,44 @@ EOQ;
         }
 
         $this->setNewPassword($new_password, $system_generated);
-
         return true;
+    }
+    
+    public function passwordValidationCheck($newPassword) {
+        global $sugar_config, $mod_strings;
+
+        $messages = array();
+
+        $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        $onelower = $sugar_config['passwordsetting']['onelower'];
+        $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        $onespecial = $sugar_config['passwordsetting']['onespecial'];
+
+        if($minpwdlength && strlen($newPassword) < $minpwdlength) {
+            $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
+        }
+
+        if($oneupper && strtolower($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onelower && strtoupper($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onenumber && !preg_match('/[0-9]/', $newPassword)) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
+        }
+
+        if($onespecial && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
+            $messages[] = $mod_strings['ERR_PASSWORD_SPECCHARS'];
+        }
+
+        $message = implode('<br>', $messages);
+
+        return $message;
+
     }
 
 

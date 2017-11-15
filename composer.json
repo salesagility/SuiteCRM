@@ -8,10 +8,21 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "5.5"
+      "php": "5.5.9"
     }
   },
   "require": {
+    "php": ">=5.5.9",
+    "ext-json": "*",
+    "ext-gd": "*",
+    "ext-curl": "*",
+    "ext-openssl": "*",
+    "slim/slim": "^3.8",
+    "tuupola/slim-jwt-auth": "^2.0",
+    "league/url": "^3.3",
+    "psr/log": "^1.0",
+    "league/oauth2-server": "^5.1",
+    "justinrainbow/json-schema": "^5.2"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -26,7 +37,8 @@
   "autoload": {
     "psr-4": {
       "SuiteCRM\\": [
-        "tests/SuiteCRM"
+        "lib/SuiteCRM/",
+        "tests/SuiteCRM/"
       ]
     }
   },

@@ -380,8 +380,11 @@ $app_list_strings = array(
         'Administrator' => 'Administrator',
     ),
     'user_status_dom' => array(
-        'Active' => 'Active',
-        'Inactive' => 'Inactive',
+            'Active' => 'Active',
+            'Inactive' => 'Inactive',
+        ),
+    'user_factor_auth_interface_dom' => array(
+        'FactorAuthEmailCode' => 'Email Code',
     ),
     'employee_status_dom' => array(
         'Active' => 'Active',
@@ -1050,6 +1053,9 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
+    'LBL_EMAIL_CODE' => 'Email Code:',
+    'LBL_SEND' => 'Send',
+    'LBL_LOGOUT' => 'Logout',
     'LBL_TOUR_NEXT' => 'Next',
     'LBL_TOUR_SKIP' => 'Skip',
     'LBL_TOUR_BACK' => 'Back',
@@ -1692,6 +1698,8 @@ $app_strings = array(
     'LBL_LOCALE_NAME_EXAMPLE_TITLE' => 'Code Monkey Extraordinaire',
     'LBL_LOGIN_TO_ACCESS' => 'Please sign in to access this area.',
     'LBL_LOGOUT' => 'Log Out',
+    'LBL_CANCEL' => 'Cancel',
+    'LBL_VERIFY' => 'Verify',
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',

@@ -150,6 +150,8 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'ModuleBuilder' => 'ModuleBuilder',
                 'MySettings' => 'MySettings',
                 'Notes' => 'Notes',
+                'OAuth2Clients' => 'OAuth2Clients',
+                'OAuth2Tokens' => 'OAuth2Tokens',
                 'OAuthKeys' => 'OAuthKeys',
                 'OAuthTokens' => 'OAuthTokens',
                 'Opportunities' => 'Opportunities',
@@ -289,8 +291,8 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
                 'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
-                'data/Relationships/M2MRelationship.php' => '3c19c005121d5d53e7592ee566963c5a',
-                'data/Relationships/One2MBeanRelationship.php' => 'c09fe92826b4c8a3944694098de35027',
+                'data/Relationships/M2MRelationship.php' => 'b9bfd3c44abe19429fc9eff422df8ef7',
+                'data/Relationships/One2MBeanRelationship.php' => '4c3cb4510b4ae737103f7f10e1e21009',
                 'data/Relationships/One2MRelationship.php' => '588ad87910bd9d885fe27da77ad13e30',
                 'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
                 'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
