@@ -1,5 +1,5 @@
 /**** Tabs ***/
-@import 'variables';
+@import 'variables.scss';
 
 .content {
 
@@ -144,10 +144,10 @@
   #tab-actions > a {
     background-color: $action-tab-bg;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-position: right ($tab-height/2) top (($tab-height/4)*3);
+    background-position: right ($tab-height/2) top (($tab-height/4)*4);
     background-repeat: no-repeat;
     cursor: pointer;
-    padding-right: $tab-height;
+    padding-right: ($tab-height/2)*5;
     border-color: $action-tab-bg;
     border-bottom: $action-tab-seperator;
   }
@@ -241,7 +241,7 @@
 
 .dashboard .tab-content {
   background-color: $tab-bg;
-  padding: 24px;
+  padding: 0px 24px 24px 24px ;
   margin-bottom: 30px;
   border: 1px solid transparent;
   border-top-right-radius: 4px;
