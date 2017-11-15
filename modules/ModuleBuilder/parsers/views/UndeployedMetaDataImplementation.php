@@ -102,14 +102,14 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
                 if ($def['module'] == $module->key_name) {
             	   $GLOBALS [ 'mod_strings' ][$def['system_label']] = $def['display_label'];
 
-            	}
+                }
             }
         }
 
         $loaded = null ;
-        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type )
-    	{
-            $this->_sourceFilename = $this->getFileNameInPackage($view, $moduleName, $packageName, $type);
+        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type ){
+
+			$this->_sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName , $type ) ;
 			if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 				$layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
 			}else{
@@ -123,13 +123,12 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 			}
 		}
 
-        if ($loaded === null)
-        {
-            throw new Exception ( get_class ( $this ) . ": view definitions for View $this->_view and Module $this->_moduleName are missing" ) ;
+        if ($loaded === null) {
+            throw new Exception (get_class($this) . ": view definitions for View $this->_view and Module $this->_moduleName are missing");
         }
 
         $this->_viewdefs = $loaded ;
-        $sourceFilename = $this->getFileNameInPackage($view, $moduleName, $packageName, MB_BASEMETADATALOCATION);
+        $sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
         if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 			$layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
 		}else{
@@ -159,8 +158,8 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
     		$this->_history->append ( $this->_sourceFilename ) ;
         }
         $filename = $this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION);
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . "->deploy(): writing to " . $filename ) ;
-        $this->_saveToFile ( $filename, $defs ) ;
+        $GLOBALS ['log']->debug(get_class($this) . "->deploy(): writing to " . $filename);
+        $this->_saveToFile($filename, $layoutDefinitions);
     }
 
     /**
