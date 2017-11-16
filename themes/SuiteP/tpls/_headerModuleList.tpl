@@ -176,7 +176,7 @@
                                     {/foreach}
 
 
-                                    {* check, is there any favorit items *}
+                                    {* check, is there any favorite items *}
                                     {assign var=foundFavorits value=false}
                                     {foreach from=$favoriteRecords item=item name=lastViewed}
                                         {if $item.module_name == $name}
@@ -330,7 +330,6 @@
                                 <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 <span class="notCurrentTabRight">&nbsp;</span>
                                 <ul class="dropdown-menu" role="menu">
-                                    {*<li class="action-links-title"><a><strong>{$APP.LBL_LINK_ACTIONS}</strong></a></li>*}
                                     <li>
                                         <ul>
                                             {if count($shortcutTopMenu) > 0}
@@ -508,8 +507,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -533,8 +531,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>
@@ -607,8 +604,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -625,8 +621,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>
@@ -693,7 +688,7 @@
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
                     <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                        Search
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -706,8 +701,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -724,8 +718,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>
