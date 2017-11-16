@@ -135,10 +135,10 @@ div.action_buttons form {
 }
 
 div.action_buttons .button {
-  background-color: $default-btn-bg;
+  background-color: $danger-btn-bg;
 }
 div.action_buttons .button:hover {
-  background-color: $default-btn-bg-hover;
+  background-color: $danger-btn-bg-hover;
 }
 
 #subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
