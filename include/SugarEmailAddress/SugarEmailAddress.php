@@ -1232,9 +1232,7 @@ class SugarEmailAddress extends SugarBean
     function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
     {
         if (null === $id) {
-            $GLOBALS['log']->fatal('Invalid Argument: ID');
-
-            return false;
+            $GLOBALS['log']->debug('ID is null so it should be a create and NOT an update');
         }
         if (null === $module) {
             $GLOBALS['log']->fatal('Invalid Argument: module');
