@@ -717,10 +717,9 @@ button[disabled] {
   border: none;
   border-radius: 3px;
   letter-spacing: 1px;
-  line-height: $input-line-height;
-  height: $input-line-height;
+  line-height: 32px;
+  height: 32px;
   text-transform: uppercase;
-  //padding: 0 20px 0 20px;
 }
 
 input[type="submit"][disabled] {
