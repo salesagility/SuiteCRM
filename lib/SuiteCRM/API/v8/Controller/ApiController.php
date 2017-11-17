@@ -62,6 +62,7 @@ use SuiteCRM\Utility\SuiteLogger as Logger;
 class ApiController implements LoggerAwareInterface
 {
     const CONTENT_TYPE = 'application/vnd.api+json';
+    const CONTENT_TYPE_JSON = 'application/vnd.api+json';
     const CONTENT_TYPE_HEADER = 'Content-Type';
     const LINKS = 'links';
 
