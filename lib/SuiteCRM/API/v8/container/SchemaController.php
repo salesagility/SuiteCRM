@@ -36,42 +36,21 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $container
+ * @return \SuiteCRM\API\v8\Controller\ApiController
  */
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
+use Slim\Exception\ContainerValueNotFoundException;
 
-namespace SuiteCRM\API\OAuth2\Repositories;
-
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-
-class ClientRepository implements ClientRepositoryInterface
-{
-    /**
-     * {@inheritdoc}
-     * @return null|ClientEntity
-     */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
-    {
-        $client = new \OAuth2Clients();
-        $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
-            return null;
-        }
-
-        if (
-            $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
-        ) {
-            return null;
-        }
-
-        $clientEntity = new ClientEntity();
-        $clientEntity->setIdentifier($clientIdentifier);
-        $clientEntity->setName($client->name);
-
-        $redirect_url = isset($client->redirect_uri) ? $client->redirect_uri : '';
-        $clientEntity->setRedirectUri($redirect_url);
-
-        return $clientEntity;
-    }
-}
+/**
+ * @param ContainerInterface $container
+ * @throws ContainerException
+ * @throws ContainerValueNotFoundException
+ * @return \SuiteCRM\API\v8\Controller\SchemaController
+ */
+$container['SchemaController'] = function ($container) {
+    $controller = new \SuiteCRM\API\v8\Controller\SchemaController($container);
+    $controller->setLogger($container->get(\Psr\Log\LoggerInterface::class));
+    return $controller;
+};
