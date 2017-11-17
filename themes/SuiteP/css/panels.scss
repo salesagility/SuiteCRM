@@ -57,7 +57,7 @@
   font-size: 12px ;
   font-weight: 500;
   color: $default-btn-color;
-  padding: 15px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
+  padding: 0 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   height: 40px;
@@ -141,10 +141,10 @@ div.action_buttons form {
 }
 
 div.action_buttons .button {
-  background-color: $default-btn-bg;
+  background-color: $danger-btn-bg;
 }
 div.action_buttons .button:hover {
-  background-color: $default-btn-bg-hover;
+  background-color: $danger-btn-bg-hover;
 }
 
 #subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
