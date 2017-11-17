@@ -748,11 +748,11 @@ class SugarEmailAddress extends SugarBean
                 $widget_id = $_REQUEST[$module . '_email_widget_id'];
             }
 
-            if (empty($widget_id)) {
-                $GLOBALS['log']->fatal('Widget not found');
 
-                return false;
+            if (empty($widget_id)) {
+                $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
             }
+
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while (isset($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount])) {
@@ -1232,9 +1232,7 @@ class SugarEmailAddress extends SugarBean
     function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
     {
         if (null === $id) {
-            $GLOBALS['log']->fatal('Invalid Argument: ID');
-
-            return false;
+            $GLOBALS['log']->debug('ID is null so it should be a create and NOT an update');
         }
         if (null === $module) {
             $GLOBALS['log']->fatal('Invalid Argument: module');
