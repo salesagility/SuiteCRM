@@ -717,8 +717,8 @@ button[disabled] {
   border: none;
   border-radius: 3px;
   letter-spacing: 1px;
-  line-height: 32px;
-  height: 32px;
+  line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
 }
 
