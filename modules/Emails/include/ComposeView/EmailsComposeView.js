@@ -456,7 +456,7 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
-      var html = $(self).find('#description_html').html();
+      var html = $(self).find('#description_html').val();
 
       editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
