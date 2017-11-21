@@ -38,42 +38,65 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\Exception\Exception;
 
-class Operator
+class ValueValidator implements ValidatorInterface
 {
-    private static $operatorTag = '[operator]';
-    protected static $regexValidation = '/\[[A-Za-z\_\-]+\]/';
-    /**
-     * Convert string to operator tag
-     * @param $tag
-     * @return mixed
-     */
-    public function toFilterTag($operator)
-    {
-        return str_replace('operator', $operator, self::$operatorTag);
-    }
 
     /**
-     * @param string $operator
-     * @return bool
-     * @throws \SuiteCRM\Exception\Exception
+     * @var array
      */
-    public function isValid($operator)
+    private static $BANNED_RESERVED_CHARACTERS = array(
+        // commented out characters are the allowed
+        '+',
+        // ',',
+        '.',
+        // '[',
+        // ']',
+        '!',
+        '"',
+        '#',
+        '$',
+        '%',
+        '&',
+        "'",
+        '(',
+        ')',
+        '*',
+        '/',
+//        ':',
+//        ';',
+        '<',
+        '=',
+        '>',
+        '?',
+        '@',
+        "\\",
+        '^',
+//        '`',
+        '{',
+        '|',
+        '}',
+        '~',
+//        ' '
+    );
+
+    public function isValid($value)
     {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Operator][expected type to be string] $operator');
+        if(!is_string($value)) {
+            throw new Exception('[JsonApi][v1][ValueValidator][expected type to be string] $value');
         }
 
-        // Since these values could be stored in json
-        // Should not use numbers, special characters
-        // Should be abbreviated like 'eq'
-        if (preg_match(self::$regexValidation, $operator, $matches) === 1) {
-            return true;
+        // $fieldKey should not contain reserved words
+        foreach (self::$BANNED_RESERVED_CHARACTERS as $reservedCharacter) {
+            if (strpos($value, $reservedCharacter) !== false) {
+                return false;
+            }
         }
 
-        return false;
+        return true;
     }
 }

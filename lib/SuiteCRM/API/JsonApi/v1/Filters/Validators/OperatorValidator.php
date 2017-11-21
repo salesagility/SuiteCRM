@@ -38,42 +38,18 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\Exception;
 
-class Operator
+class OperatorValidator implements ValidatorInterface
 {
-    private static $operatorTag = '[operator]';
-    protected static $regexValidation = '/\[[A-Za-z\_\-]+\]/';
-    /**
-     * Convert string to operator tag
-     * @param $tag
-     * @return mixed
-     */
-    public function toFilterTag($operator)
+
+    public function isValid($value)
     {
-        return str_replace('operator', $operator, self::$operatorTag);
-    }
-
-    /**
-     * @param string $operator
-     * @return bool
-     * @throws \SuiteCRM\Exception\Exception
-     */
-    public function isValid($operator)
-    {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Operator][expected type to be string] $operator');
-        }
-
-        // Since these values could be stored in json
-        // Should not use numbers, special characters
-        // Should be abbreviated like 'eq'
-        if (preg_match(self::$regexValidation, $operator, $matches) === 1) {
-            return true;
-        }
-
-        return false;
+        $operator = new Operator();
+        $operator->isValid($value);
     }
 }
