@@ -37,37 +37,67 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-chdir(__DIR__.'/../../../../');
-require_once __DIR__.'/../../../../include/entryPoint.php';
-global $sugar_config;
-global $version;
+
+// file has been separated out for testing and mocking purposes
 global $container;
-
-preg_match("/\/api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);
-
-$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
-
-$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
-
 $version = 8;
 const API_PATH = 'lib/SuiteCRM/API/v8';
 
-require_once __DIR__.'/containers.php';
+$container = new \Slim\Container;
+// Load Containers
+$containerFiles = (array) glob(API_PATH.'/container/*.php');
 
-$app = new \Slim\App($container);
-
-// Load Routes
-$routeFiles = (array) glob(API_PATH.'/route/*.php');
-
-foreach ($routeFiles as $routeFile) {
-    require $routeFile;
+foreach ($containerFiles as $containerFile) {
+    require $containerFile;
 }
 
-// Load Callables
-$callableFiles = (array) glob(API_PATH.'/callable/*.php');
+$container['notAllowedHandler'] = function ($container) {
+    return function ($request, $response) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $ApiController = $container->get('ApiController');
+        $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
 
-foreach ($callableFiles as $callableFile) {
-    require $callableFile;
-}
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $exception = new \SuiteCRM\API\v8\Exception\NotFound('[Resource]');
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
 
-$app->run();
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
+$container['errorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
+
+
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
+$container['phpErrorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container){
+        /**
+         * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
+         */
+        $ApiController = $container->get('ApiController');
+        return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
+    };
+};
