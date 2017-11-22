@@ -282,17 +282,17 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
       url = '' + url;
     }
 
-		current_subpanel_url = url;
-		// http_fetch_async(url,got_data,request_id++);
-		var returnstuff = http_fetch_sync(url+ '&inline=' + inline + '&ajaxSubpanel=true');
-		request_id++;
-		got_data(returnstuff, inline);
-		if (SUGAR.themes.theme_name=="SuiteP"){$('#whole_subpanel_'+child_field+' .table-responsive').footable();}
-	}
-	else{
+    current_subpanel_url = url;
+    var returnstuff = http_fetch_sync(url + '&inline=' + inline + '&ajaxSubpanel=true');
+    request_id++;
+    got_data(returnstuff, inline);
+    if ($('#whole_subpanel_' + child_field).hasClass('panel panel-default sub-panel')) {
+      $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
+    }
+  } else {
 
-		var subpanel = document.getElementById('subpanel_'+child_field);
-		subpanel.style.display = '';
+    var subpanel = document.getElementById('subpanel_' + child_field);
+    subpanel.style.display = '';
 
     set_div_cookie(subpanel.cookie_name, '');
 
