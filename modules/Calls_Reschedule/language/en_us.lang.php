@@ -69,7 +69,7 @@ $mod_strings = array (
   'LBL_CALLS_RESCHEDUAL_SUBPANEL_TITLE' => 'Reschedule',
   'LBL_NEW_FORM_TITLE' => 'New Reschedule',
   'LBL_REASON' => 'Reason',
-  'LBL_CALLS' => 'calls',
+  'LBL_CALLS' => 'Calls',
   'LNK_IMPORT_CALLS_RESCHEDULE' => 'Import Reschedule',
   'LBL_CALLS_RESCHEDULE_SUBPANEL_TITLE' => 'Reschedule',
 );

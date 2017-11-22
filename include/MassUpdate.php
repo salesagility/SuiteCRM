@@ -453,7 +453,7 @@ eoq;
 						case "int":
 							if(!empty($field['massupdate']) && empty($field['auto_increment']))
 							{
-								$even = !$even; $newhtml .=$this->addInputType($displayname, $field);
+								$even = !$even; $newhtml .=$this->addInputType($displayname, $field['name']);
 							}
 							 break;
 						case "contact_id":$even = !$even; $newhtml .=$this->addContactID($displayname, $field["name"]); break;

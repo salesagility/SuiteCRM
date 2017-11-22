@@ -523,6 +523,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
         'calls_reschedule' =>
             array(
                 'name' => 'calls_reschedule',
+                'vname' => 'LBL_CALLS_RESCHEDULE',
                 'type' => 'link',
                 'relationship' => 'calls_reschedule',
                 'module' => 'Calls_Reschedule',
