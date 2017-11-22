@@ -751,6 +751,7 @@ class SugarEmailAddress extends SugarBean
 
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
+                $widget_id = null;
             }
 
 
@@ -1309,6 +1310,8 @@ class SugarEmailAddress extends SugarBean
         }
         if ($moduleFound) {
             $vardefs = $dictionary[$beanList[$passedModule]]['fields'];
+        } else {
+            return false;
         }
         if (!empty($vardefs['email1']) && isset($vardefs['email1']['required']) && $vardefs['email1']['required']) {
             $required = true;

@@ -116,11 +116,13 @@ function query_client_ip()
         return $_SERVER['HTTP_FORWARDED_FOR'];
     } elseif (isset($_SERVER['HTTP_FORWARDED'])) {
         return $_SERVER['HTTP_FORWARDED'];
+    } elseif (isset($_SERVER['HTTP_FROM'])) {
+        return $_SERVER['HTTP_FROM'];
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         return $_SERVER['REMOTE_ADDR'];
     } else {
         $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
-        return false;
+        return null;
     }
 }
 

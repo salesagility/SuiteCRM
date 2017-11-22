@@ -571,7 +571,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
+        self::assertEquals(null, $results);
 
         // test
         unset($_REQUEST);
@@ -1261,31 +1261,9 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module', true);
 
-        /** @noinspection PhpIllegalStringOffsetInspection */
-        self::assertNotFalse(strpos($result['html'], 'non-exists-module'));
-        /** @noinspection PhpIllegalStringOffsetInspection */
-        self::assertNotFalse(
-            strpos(
-                $result['html'],
-                '[{"email_address":true,"primary_address":false,"invalid_email":false,"opt_out":false,"reply_to_address":false}]'
-            )
-        );
+        self::assertFalse($result);
 
-        self::assertCount(2, $result);
-        /** @noinspection PhpIllegalStringOffsetInspection */
-        self::assertSame(array(
-            0 => array(
-                'email_address' => true,
-                'primary_address' => false,
-                'invalid_email' => false,
-                'opt_out' => false,
-                'reply_to_address' => false,
-            ),
-        ), $result['prefillData']);
-        /** @noinspection PhpIllegalStringOffsetInspection */
-        $expected = !empty($result['html']) && is_string($result['html']);
-        self::assertTrue($expected);
-
+        
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
@@ -1297,16 +1275,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(
-            strpos(
-                $result,
-                '[{"email_address":true,"primary_address":false,"invalid_email":false,"opt_out":false,"reply_to_address":false}]'
-            )
-        );
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
 
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
@@ -1318,16 +1287,10 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(
-            strpos(
-                $result,
-                '[{"email_address":true,"primary_address":false,"invalid_email":false,"opt_out":false,"reply_to_address":false}]'
-            )
-        );
+        self::assertEquals($result, false);
 
         $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertNotTrue($expected);
 
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
@@ -1336,33 +1299,24 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
-
+        self::assertEquals($result, false);
+        
         // test
         $_POST['is_converted'] = true;
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
+        self::assertEquals($result, false);
 
         $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($expected, false);
         self::assertCount(10, $GLOBALS['log']->calls['fatal']);
 
         // test
         $_POST['is_converted'] = true;
         $_POST['return_id'] = 'any-non-exists-id';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
-
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
+        
         self::assertCount(12, $GLOBALS['log']->calls['fatal']);
 
         // test
@@ -1370,32 +1324,15 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_POST['return_module'] = 'any-non-exists-module';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
+        
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
-
-        // test
-        $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Contacts');
-
-        self::assertNotFalse(strpos($result, 'Contacts'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
-
-        $noModuleResult = $result;
 
         // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
-        self::assertNotFalse(strpos($result, 'Users'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
+        self::assertTrue(is_string($result));
 
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
         self::assertNotEquals($noModuleResult, $result);
 
         // test
@@ -1403,25 +1340,21 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
-        self::assertNotFalse(strpos($result, 'Contacts'));
+        self::assertEquals($result, false);
+        
         self::assertFalse(strpos($result,
             '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"},{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"1","deleted":"0"}]'));
 
-        self::assertNotEquals($noModuleResult, $result);
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
 
         // test
         $_POST['return_id'] = 'non-exists-id';
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
-        self::assertNotFalse(strpos($result, 'Contacts'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
+        self::assertEquals($result, false);
 
         self::assertEquals($noModuleResult, $result);
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
 
         // test
         $_REQUEST['full_form'] = true;
@@ -1432,11 +1365,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module');
 
-        self::assertNotFalse(strpos($result, 'non-exists-module'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
 
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
@@ -1451,11 +1380,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'Contacts');
 
-        self::assertNotFalse(strpos($result, 'Contacts'));
-        self::assertNotFalse(strpos($result, 'new Object()'));
-
-        $expected = !empty($result) && is_string($result);
-        self::assertTrue($expected);
+        self::assertEquals($result, false);
 
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];

@@ -103,13 +103,13 @@ class AOW_WorkFlowTest extends PHPUnit_Framework_TestCase
     }
 
     public function testget_flow_beans()
-    {
+    {        
         $aowWorkFlow = new AOW_WorkFlow();
-
+        
         //test for AOS_Quotes. it will return null as no test data is available
         $aowWorkFlow->flow_module = 'AOS_Quotes';
         $result = $aowWorkFlow->get_flow_beans();
-        $this->assertEquals(null, $result);
+        $this->assertEquals(count($result), 1);
     }
 
     public function testbuild_flow_query_join()
