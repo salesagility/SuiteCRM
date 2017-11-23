@@ -87,15 +87,17 @@
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
                                     {if count($shortcutTopMenu.$name) > 0}
-                                       <ul>
-                                           {foreach from=$shortcutTopMenu.$name item=item}
-                                               {if $item.URL == "-"}
-                                                   <li class="mobile-action"><a></a><span>&nbsp;</span></li>
-                                               {else}
-                                                   <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                               {/if}
-                                           {/foreach}
-                                       </ul>
+                                        <li class="mobile-current-actions" role="presentation">
+                                           <ul class="mobileCurrentTab">
+                                               {foreach from=$shortcutTopMenu.$name item=item}
+                                                   {if $item.URL == "-"}
+                                                       <li class="mobile-action"><a></a><span>&nbsp;</span></li>
+                                                   {else}
+                                                       <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                                   {/if}
+                                               {/foreach}
+                                           </ul>
+                                        </li>
                                     {else}
                                         <li class="mobile-action"><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
@@ -174,7 +176,7 @@
                                     {/foreach}
 
 
-                                    {* check, is there any favorit items *}
+                                    {* check, is there any favorite items *}
                                     {assign var=foundFavorits value=false}
                                     {foreach from=$favoriteRecords item=item name=lastViewed}
                                         {if $item.module_name == $name}
@@ -184,7 +186,7 @@
                                     {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
 
                                         <ul class="dropdown-menu" role="menu">
-                                            <li>
+                                            <li class="current-module-action-links">
                                                 <ul>
                                                     {if count($shortcutTopMenu.$name) > 0}
                                                         {foreach from=$shortcutTopMenu.$name item=item}
@@ -206,7 +208,7 @@
                                                     {counter name="submoduleRecentRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
-                                                <li>
+                                                <li class="current-module-recent-links">
                                                     <ul>
                                                         {* when records are found for the current submodule show the first 3 records *}
                                                         {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
@@ -237,7 +239,7 @@
                                                     {counter name="submoduleFavoriteRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
-                                            <li>
+                                            <li class="current-module-favorite-links">
                                                 <ul>
                                                     {* when records are found for the current submodule show the first 3 records *}
                                                     {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
@@ -328,7 +330,6 @@
                                 <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 <span class="notCurrentTabRight">&nbsp;</span>
                                 <ul class="dropdown-menu" role="menu">
-                                    {*<li class="action-links-title"><a><strong>{$APP.LBL_LINK_ACTIONS}</strong></a></li>*}
                                     <li>
                                         <ul>
                                             {if count($shortcutTopMenu) > 0}
@@ -504,10 +505,9 @@
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
-                                       placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
+                                       placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -531,8 +531,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>
@@ -605,8 +604,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -623,8 +621,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>
@@ -691,7 +688,7 @@
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
                     <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                        Search
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -704,8 +701,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
+                                <button type="submit" class="btn btn-default">Search</button>
                             </span>
                             </div>
                         </form>
@@ -722,8 +718,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                         </div>
                     </form>

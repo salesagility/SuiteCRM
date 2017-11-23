@@ -1,5 +1,5 @@
 /**** NAVBAR ****/
-@import 'variables';
+@import 'variables.scss';
 
 // Mix ins:
 @mixin alertButton() {
@@ -18,11 +18,12 @@
     display: inline-block;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
     background-position: 14px ($navbar-height / 3);
+    background-position: 0px 8px;
     background-repeat: no-repeat;
     color: $navbar-menu-link-color;
     padding: 0;
     overflow: hidden;
-    width: 48px;
+    width: 28px;
     line-height: $navbar-height;
     text-indent: -9999px;
     content: '';
@@ -55,7 +56,7 @@
         font-size: 14px;
         background-color: $navbar-main-menu-bg;
         color: $navbar-menu-link-color;
-        padding: 12px 15px 12px 15px;
+        padding: 7px 10px 7px 10px;
         margin: 0;
         border-bottom: 1px solid $navbar-menu-seperator;
         letter-spacing: 0;
@@ -106,7 +107,7 @@
 
     > .topnav {
       margin: 0;
-      font-size: 13px;
+      font-size: 12px;
       height: $navbar-height;
       letter-spacing: 2px;
       line-height: $navbar-height;
@@ -151,7 +152,7 @@
       font-size: 13px;
       height: $navbar-height;
       letter-spacing: 2px;
-      line-height: 90px;
+      line-height: 60px;
       padding: 0 0 0 0;
       text-transform: uppercase;
       clear: both;
@@ -326,11 +327,11 @@
 }
 
 .mobileheader .dropdown-menu li.recent-links-title a {
-  padding: 12px 15px 5px 15px;
+  padding: 12px 10px 5px 10px;
 }
 
 .mobileheader .dropdown-menu li.favorite-links-title a {
-  padding: 12px 15px 5px 15px;
+  padding: 12px 10px 5px 10px;
 }
 
 
@@ -925,18 +926,29 @@
   font-size: 13px;
   background-color: $navbar-quick-create-btn-bg;
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-position: 80px 2px;
+  background-position: 80px 0px;
   background-repeat: no-repeat;
   color: $navbar-quick-create-link-color;
-  padding: 10px 32px 14px 12px;
+  padding: 8px 32px 8px 10px;
   border-radius: 3px;
   letter-spacing: 2px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.create.quickcreatetop .dropdown-toggle {
+	height:40px;
+	line-height:37px;
+	padding-top:0;
+	padding-bottom:0;
+	
 }
 
 .quickcreatetop .dropdown-toggle:hover {
   text-decoration: none;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .quickcreatetop .dropdown-menu li a:hover {
@@ -968,7 +980,7 @@
   font-size: 14px;
   background-color: $navbar-quick-create-menu-bg;
   background-image: none;
-  padding: 12px 15px 12px 15px;
+  padding: 10px;
   margin: 0;
   border-bottom: 1px solid $navbar-quick-create-menu-seperator;
   border-radius: 0;
@@ -984,10 +996,11 @@
 
 .quickcreatetop .dropdown-menu li a:hover {
   color: $navbar-quick-create-menu-color-hover;
+  background-color:darken($navbar-quick-create-menu-bg,10%);
 }
 
 .quickcreatetop .dropdown-menu {
-  margin-top: 0;
+  margin-top: -2px;
 }
 
 .quickcreatetop .dropdown-menu li a {
@@ -1249,10 +1262,18 @@
 
   .quickcreatetop .dropdown-toggle {
     background-color: $navbar-quick-create-mobile-btn-bg;
-    background-position: 80px -5px;
+    background-position: 80px -7px;
     padding: 5px 32px 5px 12px;
     text-decoration: none;
+ 
   }
+  
+  .create.quickcreatetop .dropdown-toggle {
+	height:auto;
+	line-height:100%;
+	padding: 5px 32px 5px 12px;
+	
+}
 
   .quickcreatetop .dropdown-toggle:hover {
     text-decoration: none;
@@ -1319,6 +1340,7 @@
   .searchformdropdown .btn {
     background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-color: $navbar-search-bg;
+
   }
 
   .searchformdropdown .btn:hover {
@@ -1529,6 +1551,9 @@
 
 @media (min-width: 751px) {
 
+	.navbar-toggle {
+		height:60px;
+	}
   .mobile-bar {
     visibility: collapse;
     display: none;
@@ -1539,7 +1564,7 @@
     visibility: visible;
     width: 49%;
     text-align: right;
-    line-height: 90px;
+    line-height: 60px;
   }
 
   .tablet-bar > .toolbar {
@@ -1557,6 +1582,11 @@
     width: $navbar-toolbar-height;
     padding: 0;
     line-height: normal;
+    background-size: 40px auto;
+  }
+
+  .tablet-bar > .toolbar > li > .btn.searchbutton {
+	  background-size: 25px auto;
   }
 
   .tablet-bar > .toolbar > li > a {
@@ -1610,7 +1640,8 @@
     top: 0;
     left: 0;
     margin-top: 0;
-
+    line-height: 38px;
+    min-height: 38px;
   }
 
   .navbar-search .input-group-btn {
@@ -1622,7 +1653,7 @@
 
   .quickcreatetop .dropdown-menu {
     background-position: 80px 2px;
-    padding: 11px 32px 12px 12px;
+    padding: 0px 0px 0px 0px;
   }
 
   .quickcreatetop .dropdown-menu:hover {
@@ -1725,7 +1756,7 @@
 
 
   .navbar-search {
-    margin-right: 8px;
+    margin-right: 0px;
   }
   #Icon_5_ {
     fill: $navbar-menu-link-color;
@@ -1740,10 +1771,17 @@
     overflow: hidden;
     text-indent: -9999px;
     background-size: 25px auto;
-    background-position: 15px -46px;
-    width: 48px;
-    height: 48px;
+    background-position: center -47px;
+    width: 40px;
+    height: 40px;
   }
+  
+  .navbar-search .btn-default.searchbutton {
+    background-size: 25px auto;
+    width: 40px;
+    height: 40px;
+  }
+    
 
   .navbar-search .btn-default.searchbutton:active {
     background-color: transparent;
@@ -1752,11 +1790,10 @@
     padding: 0;
     border: none;
     overflow: hidden;
-    width: 26px;
     text-indent: -9999px;
     background-size: 25px auto;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
   }
 
   .navbar-search .btn-default.searchbutton:hover {
@@ -1766,12 +1803,13 @@
     padding: 0;
     border: none;
     overflow: hidden;
-    width: 26px;
     text-indent: -9999px;
     background-size: 25px auto;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
   }
+  
+  
 
   .desktop-bar .navbar-search.open .dropdown-menu {
     top: -(($navbar-toolbar-height / 4) - 12px);
@@ -1792,6 +1830,12 @@
     background-position: 0 0;
   }
 
+  .navbar-search.open .searchformdropdown button {
+    height: 38px;
+    width: 38px;
+    background-position: 5px 5px;
+  }
+
   .tablet-bar .navbar-search.open .dropdown-menu {
     top: 0;
     right: $navbar-toolbar-height;
@@ -1805,7 +1849,7 @@
     padding: 0;
   }
 
-  .navbar-search.open .btn-default.searchbutton {
+  .tablet-bar > .toolbar > li.open .searchbutton {
     background-color: transparent;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
     background-position: 0 0;
@@ -1818,7 +1862,7 @@
     text-indent: -9999px;
   }
 
-  .navbar-search.open .btn-default.searchbutton:hover {
+  .tablet-bar > .toolbar > li.open .searchbutton:hover {
     background-color: transparent;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
     background-position: 0 0;
@@ -2055,10 +2099,18 @@
     visibility: visible;
     text-align: right;
     width: 28%;
+    float:right;
+    padding-top:9px;
+    padding-right: 0.5%;
   }
 
   .desktop-toolbar .navbar-brand-container {
-    margin-left: 30px;
+    margin-left: 10px;
+  }
+  
+  .navbar-brand {
+	  height:30px;
+	  top:4px;
   }
 
   .desktop-bar > .toolbar {
@@ -2074,7 +2126,13 @@
     height: $navbar-toolbar-height;
     width: $navbar-toolbar-height;
     padding: 0;
+    background-size: 39px auto;
   }
+
+  .desktop-bar > .toolbar > li > .btn.searchbutton {
+    background-size: 25px auto;
+  }
+
 
   .globalLinks-mobile .dropdown-toggle {
     background-color: transparent;
@@ -2086,6 +2144,7 @@
     width: 42px;
     height: 42px;
   }
+
   .tablet-bar {
     display: none;
     visibility: collapse;
@@ -2099,12 +2158,50 @@
     visibility: collapse;
     float: none;
   }
+
   .desktop-toolbar {
     display: inline-block;
   }
-  .desktop-toolbar {
-    display: inline-block;
+
+  .desktop-bar > .toolbar > li.navbar-search.open .dropdown-menu {
+    top: 0;
+    right: $navbar-toolbar-height;
+    bottom: auto;
+    left: auto;
+    background-color: $navbar-bg;
+    min-width: 480px;
+    min-height: $navbar-toolbar-height;
+    height: $navbar-toolbar-height;
+    overflow: visible;
+    padding: 0;
   }
+
+  .desktop-bar > .toolbar > li.navbar-search.open .btn-default.searchbutton {
+    background-color: transparent;
+    background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
+    background-position: 0 0;
+    background-size: 38px 38px;
+    background-repeat: no-repeat;
+    padding: 12px 0 12px 0;
+    border: none;
+    overflow: hidden;
+    width: $navbar-toolbar-height;
+    text-indent: -9999px;
+  }
+
+  .desktop-bar > .toolbar > li.navbar-search.open .btn-default.searchbutton:hover {
+    background-color: transparent;
+    background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
+    background-position: 0 0;
+    background-size: 38px 38px;
+    background-repeat: no-repeat;
+    padding: 12px 0 12px 0;
+    border: none;
+    overflow: hidden;
+    width: $navbar-toolbar-height;
+    text-indent: -9999px;
+  }
+
   .usermenucollapsed.btn-default {
     display: inline-block;
     margin: 0 0 0 5px;
@@ -2161,9 +2258,7 @@
   .navbar-inverse .nav > .topnav {
     padding: 0 0 0 0;
   }
-}
 
-@media (max-width: 1399px) {
   .usermenu {
     display: none;
   }
@@ -2322,7 +2417,8 @@
     border-radius: 3px;
     letter-spacing: 1px;
     width: 200px;
-    height: auto;
+    min-height: 38px;
+    line-height: 38px;
   }
 
   .globalLinks-desktop .dropdown-toggle {
@@ -2392,10 +2488,12 @@
   max-height: 200px;
 }
 
-.mobileheader ul {
+.mobileheader.dropdown-menu ul {
   height: 200px;
   max-height: 200px;
 }
+
+
 
 .mobile_menu {
   height: 200px;
@@ -2487,7 +2585,7 @@
       max-height: 280px;
     }
 
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       height: 280px;
       max-height: 280px;
     }
@@ -2541,7 +2639,7 @@
       height: auto;
       max-height: 380px;
     }
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       height: auto;
       max-height: 380px;
     }
@@ -2607,7 +2705,7 @@
       max-height: 620px;
     }
 
-    .mobileheader ul {
+    .mobileheader ul.dropdown-menu {
       max-height: 620px;
     }
 

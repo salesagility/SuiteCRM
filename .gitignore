@@ -59,6 +59,7 @@ nbproject/
 .*.sw[a-z]
 *.un~
 Session.vim
+tags
 # Windows
 Thumbs.db
 Desktop.ini
@@ -77,6 +78,13 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+#Ingore composer files
+composer.lock
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
 
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
@@ -93,3 +101,9 @@ themes/SuiteP/css/*.css
 !themes/SuiteP/css/fonts.css
 !themes/SuiteP/css/footable.core.css
 !themes/SuiteP/css/style.css
+tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err

@@ -180,7 +180,10 @@ class AuthenticationController
 			//kbrill bug #13225
 			LogicHook::initialize();
 			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
-			$GLOBALS['log']->fatal('FAILED LOGIN:attempts[' .$_SESSION['loginAttempts'] .'] - '. $username);
+			$GLOBALS['log']->fatal(
+			    'FAILED LOGIN:attempts[' . $_SESSION['loginAttempts'] . '], ' .
+                'ip[' . query_client_ip() . '], username[' . $username . ']'
+            );
 		}
 		// if password has expired, set a session variable
 

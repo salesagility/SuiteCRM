@@ -176,7 +176,7 @@ class ViewResetmodule extends SugarView
         foreach($sources as $view)
         {
             $deployedMetaDataImplementation = new DeployedMetaDataImplementation($view, $this->module);
-            $file = $deployedMetaDataImplementation->getFileName($view['type'], $this->module);
+            $file = $deployedMetaDataImplementation->getFileName($view['type'], $this->module, null);
             if (file_exists($file)) {
                 unlink($file);
                 $out .= "Removed layout {$view['type']}.php<br/>";

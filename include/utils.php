@@ -197,6 +197,7 @@ function make_sugar_config(&$sugar_config)
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
             'forgotpasswordON' => true,
             'linkexpiration' => '1',
             'linkexpirationtime' => '30',
@@ -290,6 +291,40 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'filter_module_fields' => array(
+            'Users' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            ),
+            'Employees' => array(
+                'show_on_employees',
+                'portal_only',
+                'is_group',
+                'system_generated_password',
+                'external_auth_only',
+                'sugar_login',
+                'authenticate_id',
+                'pwd_last_changed',
+                'is_admin',
+                'user_name',
+                'user_hash',
+                'password',
+                'last_login',
+                'oauth_tokens',
+            )
+        ),
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
@@ -361,13 +396,14 @@ function get_sugar_config_defaults()
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
             'forgotpasswordON' => false,
             'linkexpiration' => '1',
             'linkexpirationtime' => '30',
             'linkexpirationtype' => '1',
-            'systexpiration' => '0',
-            'systexpirationtime' => '',
-            'systexpirationtype' => '0',
+            'systexpiration' => '1',
+            'systexpirationtime' => '7',
+            'systexpirationtype' => '1',
             'systexpirationlogin' => '',
         ) : $passwordsetting,
         'use_real_names' => true,
@@ -1126,8 +1162,7 @@ function return_module_language($language, $module, $refresh = false)
 
     // Jenny - Bug 8119: Need to check if $module is not empty
     if (empty($module)) {
-        $stack = debug_backtrace();
-        $GLOBALS['log']->warn('Variable module is not in return_module_language '.var_export($stack, true));
+        $GLOBALS['log']->warn('Variable module is not in return_module_language, see more info: debug_backtrace()');
 
         return array();
     }
@@ -1951,6 +1986,21 @@ function unTranslateNum($num)
     $num = preg_replace("'".preg_quote($dec_sep)."'", '.', $num);
 
     return $num;
+}
+
+/**
+ * @return bool
+ */
+function isSSL()
+{
+    if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+    ) {
+        return true;
+    }
+
+    return false;
 }
 
 function add_http($url)
@@ -4683,8 +4733,12 @@ function load_link_class($properties)
 {
     $class = 'Link2';
     if (!empty($properties['link_class']) && !empty($properties['link_file'])) {
-        require_once $properties['link_file'];
-        $class = $properties['link_class'];
+        if(!file_exists($properties['link_file'])) {
+            $GLOBALS['log']->fatal('File not found: ' . $properties['link_file']);
+        } else {
+            require_once $properties['link_file'];
+            $class = $properties['link_class'];
+        }
     }
 
     return $class;

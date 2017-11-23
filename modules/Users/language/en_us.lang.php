@@ -72,6 +72,12 @@ $mod_strings = array(
     'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed. Change the user name to be unique.',
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
 
+    'ERR_PASSWORD_MINPWDLENGTH' => 'Password min chars is %d.',
+    'ERR_PASSWORD_ONEUPPER' => 'Password should contains uppercase chars.',
+    'ERR_PASSWORD_ONEUPPER' => 'Password should contains lowercase chars.',
+    'ERR_PASSWORD_ONENUMBER' => 'Password should contains numbers.',
+    'ERR_PASSWORD_SPECCHARS' => 'Password should contains special chars.',
+
     'LBL_PASSWORD_SENT' => 'Password Updated',
     'LBL_CANNOT_SEND_PASSWORD' => 'Cannot send password',
     'ERR_EMAIL_NOT_SENT_ADMIN' => 'System is unable to process your request. Please check:',
@@ -384,6 +390,36 @@ $mod_strings = array(
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
 
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>
+below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
+<table cellpadding=0 cellspacing=0>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com
+<img src=include/images/suitecrm_login.png style="margin-right: 5px;">
+</td><td><a href="http://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
+</table>',
+
+    'LBL_WIZARD_FINISH1' => 'What would you like to do next?',
+    'LBL_WIZARD_FINISH2' => 'Start Using SuiteCRM',
+    'LBL_WIZARD_FINISH3' => 'Import Data ',
+    'LBL_WIZARD_FINISH4' => 'Import data from external sources into the application.',
+    'LBL_WIZARD_FINISH5' => 'Create Users',
+    'LBL_WIZARD_FINISH6' => 'Create new user accounts for people to use to access the application.',
+    'LBL_WIZARD_FINISH7' => 'View and Manage Application Settings',
+    'LBL_WIZARD_FINISH8' => 'Manage advanced settings, including default application settings.',
+    'LBL_WIZARD_FINISH9' => 'Configure the Application ',
+    'LBL_WIZARD_FINISH10' => 'Use Studio to create and manage application fields and layouts.',
+    'LBL_WIZARD_FINISH11' => 'Visit SuiteCRM Site ',
+    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a
+    system administrator or end user of the application.',
+    'LBL_WIZARD_FINISH14' => 'Documentation ',
+    'LBL_WIZARD_FINISH15' => 'Product Guides and Release Notes ',
+    'LBL_WIZARD_FINISH16' => 'Knowledge Base ',
+    'LBL_WIZARD_FINISH17' => 'Tips from SuiteCRM',
+    'LBL_WIZARD_FINISH18' => 'Forums ',
+    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community
+    to discuss topics of interest with each other and with SuiteCRM Developers ',
+    'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
+    'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
 
     //Wizard Scenarios
@@ -694,6 +730,10 @@ $mod_strings = array(
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
+
+    'LBL_FACTOR_AUTH' => 'Two Factor Authentication:',
+    'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
+
 ); // END STRINGS DEFS
 
 ?>

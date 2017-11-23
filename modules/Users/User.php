@@ -116,11 +116,28 @@ class User extends Person
 
     var $new_schema = true;
 
-    function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var bool
+     */
+	public $factor_auth;
+
+    /**
+     * @var string
+     */
+    public $factor_auth_interface;
+
+
+	function __construct() {
+		parent::__construct();
 
         $this->_loadUserPreferencesFocus();
+    }
+
+	public function __set($key, $value) {
+	    $this->$key = $value;
+	    if($key == 'id' && $value == '1') {
+	        $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to '. $value);
+        }
     }
 
     /**
@@ -577,7 +594,20 @@ class User extends Person
 
     function save($check_notify = false)
     {
+        global $current_user;
+        
         $isUpdate = !empty($this->id) && !$this->new_with_id;
+        
+        // only admin user can change 2 factor authentication settings
+        if($isUpdate && !is_admin($current_user)) {
+            $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                $msg .= 'Current user is not able to change two factor authentication settings.'; 
+                $GLOBALS['log']->warn($msg);
+            }
+            $this->factor_auth = $tmpUser->factor_auth;
+            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+        }
 
 
         $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();
@@ -725,7 +755,7 @@ class User extends Person
      */
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret && $_SESSION !== null) {
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
 		}
 		return $ret;
@@ -738,20 +768,24 @@ class User extends Person
         $q = <<<EOQ
 
 		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
 
         $res = $this->db->query($q);
-        $row = $this->db->fetchByAssoc($res);
-
-        if (!empty($row['id'])) {
-            return $this->retrieve($row['id']);
+        $rows = array();
+		while($row = $this->db->fetchByAssoc($res)) {
+		    $rows[] = $row;
         }
 
-        return '';
-    }
+		if(count($rows) > 1) {
+		    $GLOBALS['log']->fatal('ambiguous user email address');
+        }if (!empty($rows[0]['id'])) {
+			return $this->retrieve($rows[0]['id']);
+		}
+		return '';
+	}
 
     function bean_implements($interface)
     {
@@ -864,32 +898,37 @@ EOQ;
         return crypt(strtolower($password_md5), $user_hash) == $user_hash;
     }
 
-    /**
-     * Find user with matching password
-     * @param string $name Username
-     * @param string $password MD5-encoded password
-     * @param string $where Limiting query
-     * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return the matching User of false if not found
-     */
-    public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
-    {
-        global $db;
-        $name = $db->quote($name);
-        $query = "SELECT * from users where user_name='$name'";
-        if (!empty($where)) {
-            $query .= " AND $where";
+	/**
+	 * Find user with matching password
+	 * @param string $name Username
+	 * @param string $password MD5-encoded password
+	 * @param string $where Limiting query
+	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
+	 * @return bool|arraythe matching User of false if not found
+	 */
+	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
+	{
+	if (!$name) {
+            $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+            return false;
+        }    global $db;
+		$before = $name;$name = $db->quote($name);if ($before && !$name) {
+            $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+            return false;
         }
-        $result = $db->limitQuery($query, 0, 1, false);
-        if (!empty($result)) {
-            $row = $db->fetchByAssoc($result);
-            if (!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
-                return $row;
-            }
-        }
-
-        return false;
-    }
+		$query = "SELECT * from users where user_name='$name'";
+		if(!empty($where)) {
+		    $query .= " AND $where";
+		}
+		$result = $db->limitQuery($query,0,1,false);
+		if(!empty($result)) {
+		    $row = $db->fetchByAssoc($result);
+		    if(!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
+		        return $row;
+		    }
+		}
+		return false;
+	}
 
     /**
      * Sets new password and resets password expiration timers
@@ -923,10 +962,12 @@ EOQ;
         global $current_user;
         $GLOBALS['log']->debug("Starting password change for $this->user_name");
 
-        if (!isset ($new_password) || $new_password == "") {
-            $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'] . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
-
-            return false;
+		if (!isset ($new_password) || $new_password == "") {
+			$this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'].$current_user->user_name.$mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
+			return false;
+		}
+		if($this->error_string = $this->passwordValidationCheck($new_password)) {
+		    return false;
         }
 
 
@@ -943,8 +984,44 @@ EOQ;
         }
 
         $this->setNewPassword($new_password, $system_generated);
-
         return true;
+    }
+    
+    public function passwordValidationCheck($newPassword) {
+        global $sugar_config, $mod_strings;
+
+        $messages = array();
+
+        $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        $onelower = $sugar_config['passwordsetting']['onelower'];
+        $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        $onespecial = $sugar_config['passwordsetting']['onespecial'];
+
+        if($minpwdlength && strlen($newPassword) < $minpwdlength) {
+            $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
+        }
+
+        if($oneupper && strtolower($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onelower && strtoupper($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onenumber && !preg_match('/[0-9]/', $newPassword)) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
+        }
+
+        if($onespecial && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
+            $messages[] = $mod_strings['ERR_PASSWORD_SPECCHARS'];
+        }
+
+        $message = implode('<br>', $messages);
+
+        return $message;
+
     }
 
 
