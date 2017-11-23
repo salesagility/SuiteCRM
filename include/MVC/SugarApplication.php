@@ -106,93 +106,91 @@ class SugarApplication
 		sugar_cleanup();
 	}
 
-	/**
-	 * Load the authenticated user. If there is not an authenticated user then redirect to login screen.
-	 */
-	function loadUser(){
-		global $authController, $sugar_config;
-		// Double check the server's unique key is in the session.  Make sure this is not an attempt to hijack a session
-		$user_unique_key = (isset($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
-		$server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
-		$allowed_actions = (!empty($this->controller->allowed_actions)) ? $this->controller->allowed_actions : $allowed_actions = array('Authenticate', 'Login', 'LoggedOut');
+    /**
+     * Load the authenticated user. If there is not an authenticated user then redirect to login screen.
+     */
+    function loadUser() {
+        global $authController, $sugar_config;
+        // Double check the server's unique key is in the session.  Make sure this is not an attempt to hijack a session
+        $user_unique_key = (isset($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
+        $server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
+        $allowed_actions = (!empty($this->controller->allowed_actions)) ? $this->controller->allowed_actions : $allowed_actions = array('Authenticate', 'Login', 'LoggedOut');
 
         $authController = new AuthenticationController();
 
-		if(($user_unique_key != $server_unique_key) && (!in_array($this->controller->action, $allowed_actions)) &&
-		   (!isset($_SESSION['login_error'])))
-		   {
-			session_destroy();
+        if (($user_unique_key != $server_unique_key) && (!in_array($this->controller->action, $allowed_actions)) &&
+                (!isset($_SESSION['login_error']))) {
+            session_destroy();
 
-			if(!empty($this->controller->action)){
-			    if(strtolower($this->controller->action) == 'delete')
-			        $this->controller->action = 'DetailView';
-			    elseif(strtolower($this->controller->action) == 'save')
-			        $this->controller->action = 'EditView';
-                elseif(strtolower($this->controller->action) == 'quickcreate') {
+            if (!empty($this->controller->action)) {
+                if (strtolower($this->controller->action) == 'delete')
+                    $this->controller->action = 'DetailView';
+                elseif (strtolower($this->controller->action) == 'save')
+                    $this->controller->action = 'EditView';
+                elseif (strtolower($this->controller->action) == 'quickcreate') {
                     $this->controller->action = 'index';
                     $this->controller->module = 'home';
-                }
-			    elseif(isset($_REQUEST['massupdate'])|| isset($_GET['massupdate']) || isset($_POST['massupdate']))
-			        $this->controller->action = 'index';
-			    elseif($this->isModifyAction())
-			        $this->controller->action = 'index';
-                elseif ($this->controller->action == $this->default_action
-                    && $this->controller->module == $this->default_module) {
+                } elseif (isset($_REQUEST['massupdate']) || isset($_GET['massupdate']) || isset($_POST['massupdate']))
+                    $this->controller->action = 'index';
+                elseif ($this->isModifyAction())
+                    $this->controller->action = 'index';
+                elseif ($this->controller->action == $this->default_action && $this->controller->module == $this->default_module) {
                     $this->controller->action = '';
                     $this->controller->module = '';
+                } elseif (strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
+                    echo 'lost password';
+                    if(preg_match('\bentryPoint=Changenewpassword\b', $_SERVER['HTTP_REFERER'])) {
+                        echo ' - change new password';
+                    }
+                    exit();
                 }
-				elseif(strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
-					echo 'lost session';
-					exit();
-				}
-			}
+            }
 
             $authController->authController->redirectToLogin($this);
-		}
+        }
 
-		$GLOBALS['current_user'] = new User();
-		if(isset($_SESSION['authenticated_user_id'])){
-			// set in modules/Users/Authenticate.php
-			if(!$authController->sessionAuthenticate()){
-				 // if the object we get back is null for some reason, this will break - like user prefs are corrupted
-				$GLOBALS['log']->fatal('User retrieval for ID: ('.$_SESSION['authenticated_user_id'].') does not exist in database or retrieval failed catastrophically.  Calling session_destroy() and sending user to Login page.');
-				session_destroy();
-				SugarApplication::redirect('index.php?action=Login&module=Users');
-				die();
-			}//fi
-		}elseif(!($this->controller->module == 'Users' && in_array($this->controller->action, $allowed_actions))){
-			session_destroy();
-			SugarApplication::redirect('index.php?action=Login&module=Users');
-			die();
-		}
-		$GLOBALS['log']->debug('Current user is: '.$GLOBALS['current_user']->user_name);
+        $GLOBALS['current_user'] = new User();
+        if (isset($_SESSION['authenticated_user_id'])) {
+            // set in modules/Users/Authenticate.php
+            if (!$authController->sessionAuthenticate()) {
+                // if the object we get back is null for some reason, this will break - like user prefs are corrupted
+                $GLOBALS['log']->fatal('User retrieval for ID: (' . $_SESSION['authenticated_user_id'] . ') does not exist in database or retrieval failed catastrophically.  Calling session_destroy() and sending user to Login page.');
+                session_destroy();
+                SugarApplication::redirect('index.php?action=Login&module=Users');
+                die();
+            }//fi
+        } elseif (!($this->controller->module == 'Users' && in_array($this->controller->action, $allowed_actions))) {
+            session_destroy();
+            SugarApplication::redirect('index.php?action=Login&module=Users');
+            die();
+        }
+        $GLOBALS['log']->debug('Current user is: ' . $GLOBALS['current_user']->user_name);
 
-		//set cookies
-		if(isset($_SESSION['authenticated_user_id'])){
-			$GLOBALS['log']->debug("setting cookie ck_login_id_20 to ".$_SESSION['authenticated_user_id']);
-			self::setCookie('ck_login_id_20', $_SESSION['authenticated_user_id'], time() + 86400 * 90);
-		}
-		if(isset($_SESSION['authenticated_user_theme'])){
-			$GLOBALS['log']->debug("setting cookie ck_login_theme_20 to ".$_SESSION['authenticated_user_theme']);
-			self::setCookie('ck_login_theme_20', $_SESSION['authenticated_user_theme'], time() + 86400 * 90);
-		}
-		if(isset($_SESSION['authenticated_user_theme_color'])){
-			$GLOBALS['log']->debug("setting cookie ck_login_theme_color_20 to ".$_SESSION['authenticated_user_theme_color']);
-			self::setCookie('ck_login_theme_color_20', $_SESSION['authenticated_user_theme_color'], time() + 86400 * 90);
-		}
-		if(isset($_SESSION['authenticated_user_theme_font'])){
-			$GLOBALS['log']->debug("setting cookie ck_login_theme_font_20 to ".$_SESSION['authenticated_user_theme_font']);
-			self::setCookie('ck_login_theme_font_20', $_SESSION['authenticated_user_theme_font'], time() + 86400 * 90);
-		}
-		if(isset($_SESSION['authenticated_user_language'])){
-			$GLOBALS['log']->debug("setting cookie ck_login_language_20 to ".$_SESSION['authenticated_user_language']);
-			self::setCookie('ck_login_language_20', $_SESSION['authenticated_user_language'], time() + 86400 * 90);
-		}
-		//check if user can access
+        //set cookies
+        if (isset($_SESSION['authenticated_user_id'])) {
+            $GLOBALS['log']->debug("setting cookie ck_login_id_20 to " . $_SESSION['authenticated_user_id']);
+            self::setCookie('ck_login_id_20', $_SESSION['authenticated_user_id'], time() + 86400 * 90);
+        }
+        if (isset($_SESSION['authenticated_user_theme'])) {
+            $GLOBALS['log']->debug("setting cookie ck_login_theme_20 to " . $_SESSION['authenticated_user_theme']);
+            self::setCookie('ck_login_theme_20', $_SESSION['authenticated_user_theme'], time() + 86400 * 90);
+        }
+        if (isset($_SESSION['authenticated_user_theme_color'])) {
+            $GLOBALS['log']->debug("setting cookie ck_login_theme_color_20 to " . $_SESSION['authenticated_user_theme_color']);
+            self::setCookie('ck_login_theme_color_20', $_SESSION['authenticated_user_theme_color'], time() + 86400 * 90);
+        }
+        if (isset($_SESSION['authenticated_user_theme_font'])) {
+            $GLOBALS['log']->debug("setting cookie ck_login_theme_font_20 to " . $_SESSION['authenticated_user_theme_font']);
+            self::setCookie('ck_login_theme_font_20', $_SESSION['authenticated_user_theme_font'], time() + 86400 * 90);
+        }
+        if (isset($_SESSION['authenticated_user_language'])) {
+            $GLOBALS['log']->debug("setting cookie ck_login_language_20 to " . $_SESSION['authenticated_user_language']);
+            self::setCookie('ck_login_language_20', $_SESSION['authenticated_user_language'], time() + 86400 * 90);
+        }
+        //check if user can access
+    }
 
-	}
-
-	function ACLFilter(){
+    function ACLFilter(){
 		ACLController :: filterModuleList($GLOBALS['moduleList']);
 	}
 
