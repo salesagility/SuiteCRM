@@ -744,6 +744,7 @@ class AOR_Report extends Basic
                     if ($att['function'] == 'COUNT' || !empty($att['params'])) {
                         $html .= $row[$name];
                     } else {
+                        $att['params']['record_id'] = $row[$att['alias'].'_id'];
                         $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name],
                             '', $currency_id);
                     }
