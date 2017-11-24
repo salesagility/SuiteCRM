@@ -1,5 +1,5 @@
 /**** Detail view ***/
-@import 'variables';
+@import 'variables.scss';
 
 .favorite_icon_fill svg {
   height: 28px;
@@ -11,6 +11,10 @@
   height: 28px;
   width: 28px;
 
+}
+
+p.msg {
+	padding:10px;
 }
 
 .moduleTitle .module-title-text {
@@ -108,7 +112,8 @@
 
   .moduleTitle {
     display: inline-block;
-    padding-left: 30%;
+    text-align:center;
+    width:100%;
   }
 
   .favorite {
@@ -209,7 +214,7 @@
 
 // Fix subpanel button
 .subpanel-table .SugarActionMenu .sugar_action_button {
-  min-height: 32px;
+  /*min-height: 32px;*/
 }
 
 .subpanel-table .SugarActionMenu .single a {
@@ -226,10 +231,10 @@
     margin-top: 0;
   }
 
+
   .btn {
     @include hideWhenPrinting();
   }
-
 
   .button {
     @include hideWhenPrinting();
@@ -302,6 +307,7 @@
     width: 100%;
   }
 
+
   .favorite {
     @include hideWhenPrinting();
   }
@@ -326,6 +332,7 @@
   .tab-inline-pagination {
     @include hideWhenPrinting()
   }
+  
 
   .tab-content > .active.tab-pane-NOBOOTSTRAPTOGGLER {
     display: block !important;

@@ -138,6 +138,65 @@ class Favorites extends Basic
     }
 
     /**
+     * @parm string $module
+     * @return array Representing an array of \SuiteCRM\API\JsonApi\Resource\Resource
+     */ 
+    public function getCurrentUserFavoritesForModule($module)
+    {
+        global $db;
+        global $current_user;
+        global $moduleList;
+
+        if (empty($module)) {
+            throw new \SuiteCRM\Exception\Exception(
+                '[Favorites] [module not specified]',
+                \SuiteCRM\Enumerator\ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR
+            );
+        }
+
+        if (in_array($module, $moduleList) === false) {
+            throw new \SuiteCRM\Exception\Exception(
+                '[Favorites] [module not found] ' . $module,
+                \SuiteCRM\Enumerator\ExceptionCode::APPLICTAION_MODULE_NOT_FOUND
+            );
+        }
+
+        $response = array();
+
+        $dbResult = $db->query(
+            "SELECT parent_id, parent_type FROM favorites " .
+            " WHERE assigned_user_id = '" . $current_user->id . "'" .
+            " AND deleted = 0 " .
+            " AND parent_type = '" . $db->quote($module) . "'" .
+            " ORDER BY date_entered DESC "
+        );
+
+        while ($row = $db->fetchByAssoc($dbResult)) {
+            /** @var \SugarBean $sugarBean */
+            $sugarBean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
+            if ($sugarBean !== false) {
+                $response[] = array(
+                    'id' => $sugarBean->id,
+                    'type' => $sugarBean->module_name,
+                    'attributes' => array(
+                        'name' => $sugarBean->name
+                    )
+                );
+            }
+        }
+
+        return $response;
+    }
+
+    public function save($notify = false) {
+        global $current_user;
+
+        if(empty($this->assigned_user_id)) {
+            $this->assigned_user_id = $current_user->id;
+        }
+        parent::save($notify);
+    }
+    /**
      * @param string $interface
      * @return bool
      */

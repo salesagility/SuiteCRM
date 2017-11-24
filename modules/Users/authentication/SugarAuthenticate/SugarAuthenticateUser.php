@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
+include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthFactory.php');
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -132,6 +132,139 @@ class SugarAuthenticateUser{
 		return false;
 
 	}
+
+
+
+	public function isUserNeedFactorAuthentication() {
+		global $current_user;
+		$ret = false;
+		if ($current_user->factor_auth) {
+			$ret = true;
+		}
+		return $ret;
+	}
+
+    public function isUserFactorAuthenticated() {
+		$ret = true;
+        if (!isset($_SESSION['user_factor_authenticated']) || !$_SESSION['user_factor_authenticated']) {
+            $ret = false;
+        }
+        return $ret;
+    }
+
+	public function isUserFactorTokenReceived() {
+		$ret = false;
+		if (isset($_REQUEST['factor_token'])) {
+			$ret = true;
+		}
+		return $ret;
+	}
+
+	public function factorAuthenticateCheck() {
+		if($_SESSION['user_factor_authenticated'] || $_REQUEST['factor_token'] == $_SESSION['factor_token']) {
+			$_SESSION['user_factor_authenticated'] = true;
+		} else {
+            $_SESSION['user_factor_authenticated'] = false;
+		}
+		return $_SESSION['user_factor_authenticated'];
+	}
+
+	public function showFactorTokenInput() {
+		global $current_user;
+
+        $GLOBALS['log']->fatal('DEBUG: redirect to factor token input.....');
+
+        $factorAuthClass = $current_user->factor_auth_interface;
+        $factory = new FactorAuthFactory();
+        $factorAuth = $factory->getFactorAuth($factorAuthClass);
+        $factorAuth->showTokenInput();
+
+        die();
+	}
+
+	public function isFactorTokenSent() {
+		$ret = false;
+		if(isset($_SESSION['factor_token']) && $_SESSION['factor_token']) {
+			$ret = true;
+		}
+		return $ret;
+	}
+
+	public function sendFactorTokenToUser() {
+		global $current_user, $sugar_config;
+
+		$ret = true;
+
+            $min = 10000;
+            $max = 99999;
+
+            if (function_exists('random_int')) {
+                $token = random_int($min, $max);
+            } else {
+                $token = rand($min, $max);
+            }
+
+        $emailTemplate = new EmailTemplate();
+		$emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
+		$emailTemplate->retrieve($emailTemplateId);
+
+		include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
+        $mailer = new SugarPHPMailer();
+        $mailer->setMailerForSystem();
+
+        $emailObj = new Email();
+        $defaults = $emailObj->getSystemDefaultEmail();
+
+        $mailer->From = $defaults['email'];
+        $mailer->FromName = $defaults['name'];
+
+        $mailer->Subject = from_html($emailTemplate->subject);
+
+        $mailer->Body = from_html($emailTemplate->body_html);
+        $mailer->Body_html = from_html($emailTemplate->body_html);
+        $mailer->AltBody = from_html($emailTemplate->body);
+
+        $mailer->addAddress($current_user->email1, $current_user->full_name);
+
+        $mailer->replace('code', $token);
+
+        if(!$mailer->send()) {
+            $ret = false;
+            $GLOBALS['log']->fatal(
+            	'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
+				$mailer->ErrorInfo
+			);
+		} else {
+			$ret = true;
+            $GLOBALS['log']->fatal(
+            	'DEBUG: token sent to user: ' .
+				$current_user->id . ', token: ' . $token . ' so we store it in the session'
+			);
+
+            $_SESSION['user_factor_authenticated'] = false;
+            $_SESSION['factor_token'] = $token;
+
+        }
+        return $ret;
+	}
+
+	public function redirectToLogout()
+	{
+        $GLOBALS['log']->fatal('DEBUG: session destroy and redirect to logout.....');
+		session_destroy();
+		header('Location: index.php?action=Logout&module=Users');
+		sugar_cleanup(true);
+		die();
+	}
+
+	public function isUserLogoutRequest() {
+		$logout = false;
+		if($_REQUEST['module'] == 'Users' && $_REQUEST['action'] == 'Logout') {
+			$logout = true;
+		}
+		return $logout;
+	}
+
 
 }
 

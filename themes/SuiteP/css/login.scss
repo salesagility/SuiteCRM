@@ -1,6 +1,6 @@
 
 /**** LOGIN **/
-@import 'variables';
+@import 'variables.scss';
 
 .login {
   padding: 10px 6px 12px 10px ;
@@ -18,9 +18,13 @@ div.p_login {
 
 div.p_login .p_login_top {
   background-color: $login-top-bar-bg;
-  padding: 20px 2% 20px 2%;
+  padding: 10px 2% 10px 2%;
   float: left;
   width: 100%;
+}
+
+div.p_login .error {
+	border-radius:0;
 }
 
 div.p_login .p_login_top a {
@@ -43,7 +47,7 @@ div.p_login .p_login_bottom {
   bottom: 0;
   left: 0;
   background-color: $footer-btn-bg;
-  padding: 20px 2% 20px 2%;
+  padding: 15px 2% 15px 2%;
   float: left;
   width: 100%;
 }
@@ -80,11 +84,12 @@ div.p_login #loginform .input-group {
 div.p_login #loginform .input-group input {
   background-color: $main-alternate-bg;
   color: $default-input-group-color;
-  padding: 0 2% 0 60px;
+  padding: 0 2% 0 50px;
   border: none;
   border-radius: 3px;
-  line-height: 50px;
-  height: 50px;
+  line-height: 40px;
+  height: 40px;
+  min-height: 0px;
 }
 
 div.p_login #loginform .input-group input#fp_user_name,
@@ -99,13 +104,13 @@ div.p_login #loginform .input-group input#user_password {
 div.p_login #loginform .input-group input#fp_user_name,
 div.p_login #loginform .input-group input#user_name {
   background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
-  background-position: 12px 9px;
+  background-position: 5px 3px;
   background-repeat: no-repeat;
 }
 
 div.p_login #loginform .input-group input#user_password {
   background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
-  background-position: 12px -51px;
+  background-position: 5px -57px;
   background-repeat: no-repeat;
 }
 
@@ -120,6 +125,10 @@ div.p_login #loginform .glyphicon {
   top: 0;
 }
 
+div.p_login br {
+	height:10px;
+}
+
 div.p_login #loginform span.error {
   display: block;
   background-color: transparent;
@@ -131,16 +140,17 @@ div.p_login #loginform span.error {
 }
 
 div.p_login #loginform #bigbutton {
-  font-size: 20px;
+  font-size: 16px;
   padding: 0;
   border-radius: 3px;
   letter-spacing: 3px;
-  line-height: 50px;
-  height: 50px;
+  line-height: 40px;
+  height: 40px;
 }
 
 div.p_login #loginform #bigbutton:hover {
   background-color: $danger-btn-bg-hover;
+  border:none;
 }
 
 #forgotpasslink {

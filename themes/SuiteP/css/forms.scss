@@ -1,5 +1,5 @@
 /**** FORM ****/
-@import 'variables';
+@import 'variables.scss';
 
 
 fieldset {
@@ -1038,8 +1038,8 @@ input[type=reset]{
 }
 
 input[type=submit] {
-  margin-bottom: 4px;
-  margin-right: 4px;
+  margin-bottom: 0px;
+  margin-right: 0px;
 }
 
 .button {
@@ -1160,10 +1160,9 @@ button[disabled] {
   border: none;
   border-radius: 3px;
   letter-spacing: 1px;
-  line-height: $input-line-height;
-  height: $input-line-height;
+  line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
-  //padding: 0 20px 0 20px;
 }
 
 input[type="submit"][disabled] {
@@ -1403,7 +1402,8 @@ select[size] {
   border-radius: 4px;
   line-height: $input-line-height + 8;
   outline: 0;
-  height: $input-line-height + 8;
+  /*height: $input-line-height + 8;*/
+  height:100%;
   -webkit-appearance: none;
   appearance: none;
   scrollbar-base-color: $input-select-bg;

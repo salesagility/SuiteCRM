@@ -920,7 +920,7 @@ $($.fullCalendar).ready(function () {
         center: '',
         right: ''
       },
-      lang: global_langPrefix,
+      locale: global_langPrefix,
       views: views,
       minTime: global_start_time,
       maxTime: global_end_time,
@@ -943,9 +943,9 @@ $($.fullCalendar).ready(function () {
           var date_end = jsEvent.format(global_datetime_format);
           var date_duration = jsEvent.diff(date);
 
-          if (date.hasTime() == false) {
-            var date_end = date.add(1, 'days').format(global_datetime_format);
-          }
+           if (date.hasTime() == false) {
+             var date_end = date.add(1, 'days').format(global_datetime_format);
+           }
 
           /*
            * When user clicks on the top of the date in the month view
