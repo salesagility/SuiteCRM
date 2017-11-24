@@ -2014,7 +2014,7 @@ EOQ;
             $hasRecipients = true;
         }
         if ($hasRecipients) {
-            $result['status'] = @$mail->Send();
+            $result['status'] = $mail->Send();
         }
 
         if ($result['status'] == true) {
