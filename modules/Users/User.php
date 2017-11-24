@@ -594,7 +594,7 @@ class User extends Person
 
     function save($check_notify = false)
     {
-        global $current_user;
+        global $current_user, $sugar_config, $mod_strings;
         
         $isUpdate = !empty($this->id) && !$this->new_with_id;
         
@@ -607,6 +607,25 @@ class User extends Person
             }
             $this->factor_auth = $tmpUser->factor_auth;
             $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+        }
+        
+        if($this->factor_auth && $isUpdate && is_admin($current_user)) {
+            $tmpUser = BeanFactory::getBean('Users', $this->id);
+            $emailTpl = false;
+            if(isset($sugar_config['passwordsetting']['factoremailtmpl']) && $sugar_config['passwordsetting']['factoremailtmpl']) {
+                $emailTpl = BeanFactory::getBean('EmailTemplates', $sugar_config['passwordsetting']['factoremailtmpl']);
+            }
+            if(!isset($sugar_config['passwordsetting']['factoremailtmpl']) || !$sugar_config['passwordsetting']['factoremailtmpl'] || !$emailTpl) {
+                $msg .= 'Two factor email template is not set, change settings on password management page.'; 
+                $GLOBALS['log']->warn($msg);
+                SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL']);
+                $this->factor_auth = false;
+            } elseif($emailTpl && !preg_match('$code', $emailTpl->body_html)) {
+                $msg .= 'Two factor email template should contains a $code at least.'; 
+                $GLOBALS['log']->warn($msg);
+                SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL_CODE']);
+                $this->factor_auth = false;
+            }
         }
 
 
