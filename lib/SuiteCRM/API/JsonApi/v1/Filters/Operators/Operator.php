@@ -44,16 +44,39 @@ use SuiteCRM\Exception\Exception;
 
 class Operator
 {
-    private static $operatorTag = '[operator]';
-    protected static $regexValidation = '/\[[A-Za-z\_\-]+\]/';
+    /**
+     * string representation of what an operator looks like
+     * @var string $tag
+     */
+    protected $tag = '[[operator]]';
+
+    /**
+     * Represents an the full operator format
+     * @var string $operatorFormatRegex
+     */
+    protected $operatorFormatRegex = '\[\[[A-Za-z\_\-]+\]\]';
+
     /**
      * Convert string to operator tag
-     * @param $tag
-     * @return mixed
+     * @param string $operator
+     * @return string
      */
     public function toFilterTag($operator)
     {
-        return str_replace('operator', $operator, self::$operatorTag);
+        return str_replace('operator', $operator, $this->tag);
+    }
+
+    /**
+     * Convert operator tag simple string
+     * @param string $operator
+     * @return string
+     */
+    public function stripFilterTag($operator)
+    {
+        $operatorAsArray = str_split($operator);
+        $operatorTagAsArray = str_split($this->toFilterTag(' '));
+        $arrayDiff = array_diff($operatorAsArray, $operatorTagAsArray);
+        return implode('', $arrayDiff);
     }
 
     /**
@@ -64,16 +87,43 @@ class Operator
     public function isValid($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Operator][expected type to be string] $operator');
+            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator');
         }
 
-        // Since these values could be stored in json
-        // Should not use numbers, special characters
-        // Should be abbreviated like 'eq'
-        if (preg_match(self::$regexValidation, $operator, $matches) === 1) {
+        if (preg_match('/^'.$this->operatorFormatRegex.'$/', $operator, $matches) === 1) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param string $operator
+     * @return bool
+     */
+    public function isOperator($operator)
+    {
+        return $this->toFilterOperator() === $operator;
+    }
+
+    public function hasOperator($filter)
+    {
+        if(!is_string($filter)) {
+            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][hasOperator][expected type to be string] $operator');
+        }
+
+        if (preg_match('/'.$this->operatorFormatRegex.'/', $filter, $matches) === 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return int total number of operators or values after the operator
+     */
+    public function totalOperands()
+    {
+        return 1;
     }
 }

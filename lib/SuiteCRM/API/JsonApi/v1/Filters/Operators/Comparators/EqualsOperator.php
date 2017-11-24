@@ -62,4 +62,20 @@ class EqualsOperator extends Operator implements OperatorInterface
     {
         return '=';
     }
+
+    /**
+     * @param string $operator
+     * @return bool
+     * @throws \SuiteCRM\Exception\Exception
+     */
+    public function isValid($operator)
+    {
+        if(!is_string($operator)) {
+            throw new Exception('[JsonApi][v1][Filters][Operators][Comparators]'.
+                '[EqualsOperator][isValid][expected type to be string] $operator'
+            );
+        }
+
+        return parent::isValid($operator);
+    }
 }

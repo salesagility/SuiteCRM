@@ -41,50 +41,11 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\Exception\Exception;
 
 class FieldValidator implements ValidatorInterface
 {
-    /**
-     * @var array
-     */
-    private static $BANNED_RESERVED_CHARACTERS = array(
-        // commented out characters are the allowed
-        '+',
-        ',',
-        // '.'
-        '[',
-        ']',
-        '!',
-        '"',
-        '#',
-        '$',
-        '%',
-        '&',
-        "'",
-        '(',
-        ')',
-        '*',
-        '/',
-        ':',
-        ';',
-        '<',
-        '=',
-        '>',
-        '?',
-        '@',
-        "\\",
-        '^',
-        '`',
-        '{',
-        '|',
-        '}',
-        '~',
-        ' ' // spaces are not recommended
-    );
-
-    protected static $regexAllowed = '/\[[A-Za-z\_\-]+\]/';
-
     /**
      * @param string $fieldKey
      * @return bool
@@ -93,21 +54,12 @@ class FieldValidator implements ValidatorInterface
     public function isValid($fieldKey)
     {
         if(!is_string($fieldKey)) {
-            throw new Exception('[JsonApi][v1][FieldValidator][expected type to be string] $fieldKey');
+            throw new Exception(
+                '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
+            );
         }
 
-        // $fieldKey should not contain reserved words
-        foreach (self::$BANNED_RESERVED_CHARACTERS as $reservedCharacter) {
-            if (strpos($fieldKey, $reservedCharacter) !== false) {
-                return false;
-            }
-        }
-
-        $allowedCharacters= '/^[\[\]\:\+A-Za-z0-9\-\_]+\]$/';
-        if (preg_match($allowedCharacters, $fieldKey, $matches) !== 1) {
-            return false;
-        }
-
-        return true;
+        $fieldOperator = new FieldOperator();
+        return $fieldOperator->isValid($fieldKey);
     }
 }

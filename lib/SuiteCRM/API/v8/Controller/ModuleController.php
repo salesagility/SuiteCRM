@@ -62,6 +62,7 @@ use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\NotFound;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\API\v8\Library\FiltersLib;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
@@ -338,8 +339,8 @@ class ModuleController extends ApiController
     {
         $config = $this->containers->get('ConfigurationManager');
 
-        /** @var \SuiteCRM\API\v8\Library\ModulesLib $lib; */
-        $lib = $this->containers->get('ModulesLib');
+        /** @var \SuiteCRM\API\v8\Library\ModulesLib $modulesLib; */
+        $modulesLib = $this->containers->get('ModulesLib');
 
         $payload = array(
             'links' => array(),
@@ -348,10 +349,10 @@ class ModuleController extends ApiController
 
         $this->negotiatedJsonApiContent($req, $res);
 
-        $paginatedModuleRecords = $lib->generatePaginatedModuleRecords($req, $res, $args);
+        $paginatedModuleRecords = $modulesLib->generatePaginatedModuleRecords($req, $res, $args);
         $payload['data'] = $paginatedModuleRecords['list'];
 
-        $links = $lib->generatePaginatedLinksFromModuleRecords($req, $res, $args, $paginatedModuleRecords);
+        $links = $modulesLib->generatePaginatedLinksFromModuleRecords($req, $res, $args, $paginatedModuleRecords);
         $payload[self::LINKS] = $links->toJsonApiResponse();
 
         $page = $req->getParam('page');

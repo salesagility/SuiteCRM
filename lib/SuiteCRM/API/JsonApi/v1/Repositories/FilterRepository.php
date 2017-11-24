@@ -38,44 +38,60 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings;
+namespace SuiteCRM\API\JsonApi\v1\Repositories;
 
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
+use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
 
-class NotLikeOperator extends Operator implements OperatorInterface
+class FilterRepository
 {
     /**
-     * Return filter operator
-     * @return string
+     * @var ContainerInterface
      */
-    public function toFilterOperator()
+    private $containers;
+
+    private $filterParser;
+
+    /**
+     * FilterRepository constructor.
+     * @param ContainerInterface $containers
+     */
+    public function __construct(ContainerInterface $containers)
     {
-        return $this->toFilterTag('nli');
+        $this->containers = $containers;
+        $this->filterParser = new FilterParser($containers);
     }
 
     /**
-     * Return SQL operator
-     * @return string
+     * @param Request $request
+     * @return array
      */
-    public function toSqlOperator()
+    public function fromRequest(Request $request)
     {
-        return 'NOT LIKE';
-    }
-
-    /**
-     * @param string $operator
-     * @return bool
-     * @throws \SuiteCRM\Exception\Exception
-     */
-    public function isValid($operator)
-    {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Strings]'.
-                '[NotLikeOperator][isValid][expected type to be string] $operator'
-            );
+        /** @var OperatorInterface[] $filterOperators */
+        // Parse Filters from request
+        $queries = $request->getQueryParams();
+        if(empty($queries)) {
+            return array();
         }
 
-        return parent::isValid($operator);
+        $response = array();
+        if(isset($queries['filters'])) {
+            /** @var array $filters */
+            $filters = $queries['filters'];
+            foreach ($filters as $filterKey => $filter) {
+                $response[] = $this->filterParser->parseFilter($filterKey, $filter);
+            }
+        }
+
+        return $response;
+    }
+
+    public function toSuiteBeanResource()
+    {
+        return new SuiteBeanResource($this->containers);
     }
 }

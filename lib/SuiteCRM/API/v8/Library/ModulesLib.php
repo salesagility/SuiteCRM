@@ -45,6 +45,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use League\Url\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Links;
+use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
 
@@ -108,6 +109,9 @@ class ModulesLib
         }
 
         // TODO: handle filtering
+        /** @var FilterRepository $filterRepository */
+        $filterRepository = $this->containers->get('FilterRepository');
+        $filterRepository->fromRequest($req);
         $filter = $req->getParam('filter');
 
         // handle deleted field

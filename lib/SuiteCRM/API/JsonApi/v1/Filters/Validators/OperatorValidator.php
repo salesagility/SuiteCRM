@@ -49,6 +49,12 @@ class OperatorValidator implements ValidatorInterface
 
     public function isValid($value)
     {
+        if(!is_string(value)) {
+            throw new Exception(
+                '[JsonApi][v1][Filters][Validators][OperatorValidator][expected type to be string] $fieldKey'
+            );
+        }
+
         $operator = new Operator();
         $operator->isValid($value);
     }

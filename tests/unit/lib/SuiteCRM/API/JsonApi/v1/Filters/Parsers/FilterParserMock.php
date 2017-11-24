@@ -38,44 +38,50 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Parsers;
 
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
-
-class NotLikeOperator extends Operator implements OperatorInterface
+/**
+ * Class FilterParserMock
+ * For testing purposes only. Enables access to protected methods without the
+ * need for reflection.
+ */
+class FilterParserMock extends FilterParser
 {
     /**
-     * Return filter operator
-     * @return string
+     * tests FilterParser::parseFieldKey
+     * @param string $fieldKey
+     * @return array
      */
-    public function toFilterOperator()
-    {
-        return $this->toFilterTag('nli');
+    public function parseFieldKeyAdapter($fieldKey) {
+        return $this->parseFieldKey($fieldKey);
     }
 
     /**
-     * Return SQL operator
-     * @return string
+     * tests FilterParser::parseFieldKey
+     * @param string $fieldKey
+     * @return array
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
      */
-    public function toSqlOperator()
-    {
-        return 'NOT LIKE';
+    public function splitFieldKeysAdapter($fieldKey) {
+        return $this->splitFieldKeys($fieldKey);
     }
 
     /**
-     * @param string $operator
-     * @return bool
-     * @throws \SuiteCRM\Exception\Exception
+     * @param string $fieldKey
+     * @param string $delimiter
+     * @return array
+     * @throws Exception
      */
-    public function isValid($operator)
-    {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Strings]'.
-                '[NotLikeOperator][isValid][expected type to be string] $operator'
-            );
-        }
+    public function splitValuesAdapter($fieldKey, $delimiter = ',') {
+        return $this->splitValues($fieldKey, $delimiter);
+    }
 
-        return parent::isValid($operator);
+    /**
+     * @param string $filters
+     * @return array
+     */
+    public function parseFieldFilterAdapter($filters)
+    {
+        return $this->parseFieldFilter($filters);
     }
 }

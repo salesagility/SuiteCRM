@@ -25,7 +25,9 @@ class ValueValidatorTest extends \Codeception\Test\Unit
     public function testIsValidWithWrongDataType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][ValueValidator][expected type to be string] $value'),
+            new \SuiteCRM\Exception\Exception(
+                '[JsonApi][v1][Filters][Validators][ValueValidator][isValid][expected type to be string] $value'
+            ),
             function() {
                 self::$valueValidator->isValid(array());
             }

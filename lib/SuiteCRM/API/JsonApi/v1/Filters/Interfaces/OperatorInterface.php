@@ -53,4 +53,10 @@ interface OperatorInterface
      * @return string
      */
     public function toSqlOperator();
+
+    /**
+     * @param string $operator
+     * @return bool
+     */
+    public function isOperator($operator);
 }

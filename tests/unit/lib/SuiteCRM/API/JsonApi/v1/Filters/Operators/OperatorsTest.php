@@ -8,6 +8,9 @@ class OperatorsTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator $operator
+     */
     private static $operator;
 
     protected function _before()
@@ -24,13 +27,19 @@ class OperatorsTest extends \Codeception\Test\Unit
     public function testToFilterOperator()
     {
         $tag = self::$operator->toFilterTag('test');
-        $this->assertEquals('[test]', $tag);
+        $this->assertEquals('[[test]]', $tag);
+    }
+
+    public function testStripFilterTag()
+    {
+        $tag = self::$operator->stripFilterTag('[[test]]');
+        $this->assertEquals('test', $tag);
     }
 
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Operator][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'),
             function() {
                 self::$operator->isValid(array());
             }
@@ -53,5 +62,15 @@ class OperatorsTest extends \Codeception\Test\Unit
         $this->assertTrue(self::$operator->isValid(self::$operator->toFilterTag('equalsUser')));
         $this->assertTrue(self::$operator->isValid(self::$operator->toFilterTag('eq_user')));
         $this->assertTrue(self::$operator->isValid(self::$operator->toFilterTag('eq-user')));
+    }
+
+    public function testIsOperatorWithInvalidType()
+    {
+        $this->tester->expectException(
+            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'),
+            function() {
+                self::$operator->isValid(array());
+            }
+        );
     }
 }

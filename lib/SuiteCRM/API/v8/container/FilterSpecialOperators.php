@@ -37,45 +37,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings;
-
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
-
-class NotLikeOperator extends Operator implements OperatorInterface
-{
-    /**
-     * Return filter operator
-     * @return string
-     */
-    public function toFilterOperator()
-    {
-        return $this->toFilterTag('nli');
-    }
-
-    /**
-     * Return SQL operator
-     * @return string
-     */
-    public function toSqlOperator()
-    {
-        return 'NOT LIKE';
-    }
-
-    /**
-     * @param string $operator
-     * @return bool
-     * @throws \SuiteCRM\Exception\Exception
-     */
-    public function isValid($operator)
-    {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Strings]'.
-                '[NotLikeOperator][isValid][expected type to be string] $operator'
-            );
-        }
-
-        return parent::isValid($operator);
-    }
-}
+use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerInterface;
+use Slim\Exception\ContainerValueNotFoundException;
+/**
+ * @param ContainerInterface $container
+ * @throws ContainerException
+ * @throws ContainerValueNotFoundException
+ * @return SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]
+ */
+$container['FilterSpecialOperators'] = function ($container) {
+    return array(
+        new \SuiteCRM\API\JsonApi\v1\Filters\Operators\SpecialOperator($container)
+    );
+};

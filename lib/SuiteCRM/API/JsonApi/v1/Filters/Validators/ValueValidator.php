@@ -87,7 +87,9 @@ class ValueValidator implements ValidatorInterface
     public function isValid($value)
     {
         if(!is_string($value)) {
-            throw new Exception('[JsonApi][v1][ValueValidator][expected type to be string] $value');
+            throw new Exception(
+                '[JsonApi][v1][Filters][Validators][ValueValidator][isValid][expected type to be string] $value'
+            );
         }
 
         // $fieldKey should not contain reserved words

@@ -38,44 +38,36 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
+use SuiteCRM\Exception\Exception;
 
-class NotLikeOperator extends Operator implements OperatorInterface
+class FilterValidator implements ValidatorInterface
 {
     /**
-     * Return filter operator
-     * @return string
-     */
-    public function toFilterOperator()
-    {
-        return $this->toFilterTag('nli');
-    }
-
-    /**
-     * Return SQL operator
-     * @return string
-     */
-    public function toSqlOperator()
-    {
-        return 'NOT LIKE';
-    }
-
-    /**
-     * @param string $operator
+     * @param string $fieldKey
      * @return bool
      * @throws \SuiteCRM\Exception\Exception
      */
-    public function isValid($operator)
+    public function isValid($fieldKey)
     {
-        if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Strings]'.
-                '[NotLikeOperator][isValid][expected type to be string] $operator'
+        if(!is_string($fieldKey)) {
+            throw new Exception(
+                '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             );
         }
 
-        return parent::isValid($operator);
+        /**
+         *  valid cases
+         *  operand
+         *  [[operator]]operand
+         *  [field.fieldname]
+         *  [[operator]][field.fieldname]
+         *  [[[special_operator]]]
+         *  [[operator]][[[special_operator]]]
+         */
+        return true;
     }
 }

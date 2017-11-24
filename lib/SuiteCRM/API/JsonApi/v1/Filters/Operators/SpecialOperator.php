@@ -38,29 +38,33 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
+use SuiteCRM\Exception\Exception;
 
-class NotLikeOperator extends Operator implements OperatorInterface
+class SpecialOperator extends Operator
 {
     /**
-     * Return filter operator
-     * @return string
+     * string representation of what an operator looks like
+     * @var string $tag
      */
-    public function toFilterOperator()
-    {
-        return $this->toFilterTag('nli');
-    }
+    protected $tag = '[[[operator]]]';
 
     /**
-     * Return SQL operator
-     * @return string
+     * Represents an the full operator format
+     * @var string $operatorFormatRegex
      */
-    public function toSqlOperator()
+    protected $operatorFormatRegex = '\[\[\[[A-Za-z\_\-]+\]\]\]';
+
+
+    /**
+     * Convert string to operator tag
+     * @param $operator
+     * @return mixed
+     */
+    public function toFilterTag($operator)
     {
-        return 'NOT LIKE';
+        return parent::toFilterTag($operator);
     }
 
     /**
@@ -71,11 +75,37 @@ class NotLikeOperator extends Operator implements OperatorInterface
     public function isValid($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Strings]'.
-                '[NotLikeOperator][isValid][expected type to be string] $operator'
+            throw new Exception(
+                '[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'
             );
         }
 
         return parent::isValid($operator);
+    }
+
+    /**
+     * @param string $operator
+     * @return bool
+     * @throws Exception
+     */
+    public function isOperator($operator)
+    {
+        if(!is_string($operator)) {
+            throw new Exception('[JsonApi][v1][Filters][Operators][SpecialOperator][isOperator][expected type to be string] $operator');
+        }
+
+        if (preg_match('/'.$this->operatorFormatRegex.'/', $operator, $matches) === 1) {
+            return true;
+        }
+
+        return $this->isValid($operator);
+    }
+
+    /**
+     * @return int total number of operators or values after the operator
+     */
+    public function totalOperands()
+    {
+        return 0;
     }
 }
