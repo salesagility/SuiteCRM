@@ -751,7 +751,6 @@ class SugarEmailAddress extends SugarBean
 
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
-                $widget_id = null;
             }
 
 
