@@ -386,17 +386,22 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
-        if( $view == 'EditView' &&  ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')){
-            $contents = str_replace('"'.$vardef['id_name'].'"','{/literal}"{$fields.'.$vardef['name'].'.id_name}"{literal}', $contents);
-            $contents = str_replace('"'.$vardef['name'].'"','{/literal}"{$fields.'.$vardef['name'].'.name}"{literal}', $contents);
+        if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+            $contents = str_replace('"' . $vardef['id_name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
+            $contents = str_replace('"' . $vardef['name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+        }
+        if ($view == 'DetailView' && $vardef['type'] == 'image') {
+            $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
+        }
+        // hack to disable one of the js calls in this control
+        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }
 
-        // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) && ( $vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
-            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
-
         // Save it to the cache file
-        if($fh = @sugar_fopen($file, 'w')) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             fputs($fh, $contents);
             fclose($fh);
         }
@@ -559,15 +564,17 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     }
 
     $ss->assign("QS_JS", $quicksearch_js);
-    $ss->assign("fields",$fieldlist);
-    $ss->assign("form_name",$view);
-    $ss->assign("bean",$focus);
+    $ss->assign("fields", $fieldlist);
+    $ss->assign("form_name", $view);
+    $ss->assign("bean", $focus);
 
-    // add in any additional strings
+    // Add in any additional strings
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
-
-    //$return = str_replace($fieldname,$ss->fetch($file));
+    $ss->assign("module", $module);
+    if ($params['record_id']) {
+        $ss->assign("record_id", $params['record_id']);
+    }
 
     return $ss->fetch($file);
 }
