@@ -62,7 +62,7 @@
 			{foreach from=$displayColumns key=colHeader item=params}
 				{if $colCounter == '0'}<th scope='col'  data-toggle="true">
 				{else}<th scope='col'  data-hide="phone,tablet">{/if}
-					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+					<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
                                 <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
 						{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
