@@ -36,3 +36,4 @@ branches:
     - /hotfix.*/
     - /feature.*/
     - /fix.*/
+    - /staging.*/
