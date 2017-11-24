@@ -1,5 +1,5 @@
 /**** SIDEBAR ****/
-@import 'variables';
+@import 'variables.scss';
 
 .sidebar {
   display: block;
@@ -13,7 +13,7 @@
   z-index: 1000;
 
   .actionMenuSidebar {
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
 
   .actionMenuSidebar_top {
@@ -168,7 +168,7 @@
   }
 
   .actionMenuSidebar li a .actionmenulink {
-    padding: 16px 8px 16px 0;
+    padding: 10px 8px 10px 0;
     line-height: 24px;
     width: 100%;
     min-height: 48px;
@@ -204,11 +204,11 @@
   }
 
   .favoritelinks img {
-    margin-right: 5px;
+    margin-right: 7px;
   }
 
   .recentlinks img {
-    margin-right: 5px;
+    margin-right: 7px;
   }
 
 }
@@ -220,7 +220,7 @@
 
 .button-toggle-collapsed {
   position: fixed;
-  top: 100px;
+  top: 72px;
   background: $sidebar-bg;
   background-image: none, url("../../../../themes/SuiteP/images/p_show_sidebar.svg"), url("../../../../themes/SuiteP/images/p_show_sidebar.png");
   background-position: center center;
@@ -230,11 +230,12 @@
   width: 30px;
   height: 30px;
   z-index: 1000;
+  cursor: pointer;
 }
 
 .button-toggle-expanded {
   position: fixed;
-  top: 100px;
+  top: 72px;
   background: $sidebar-bg;
   background-image: none, url("../../../../themes/SuiteP/images/p_hide_sidebar.svg"), url("../../../../themes/SuiteP/images/p_hide_sidebar.png");
   background-position: center center;
@@ -244,6 +245,7 @@
   width: 30px;
   height: 30px;
   z-index: 1000;
+  cursor: pointer;
 }
 
 
@@ -376,7 +378,7 @@ footer {
   border: 1px solid transparent;
   border-radius: 4px;
   clear: both;
-  line-height: 48px;
+  line-height: 38px;
   width: 100%;
 }
 
@@ -421,19 +423,19 @@ footer.collapsedSidebar {
   }
 
   .recentlyViewedSidebar .recent-links-detail {
-    padding: 8px 1% 8px 15%;
+    padding: 5px 1% 5px 7%;
   }
 
   .favoritesSidebar .favorite-links-detail {
-    padding: 8px 1% 8px 15%;
+    padding: 5px 1% 5px 7%;
   }
 
   .recentlyViewedSidebar .recent_h3 {
-    padding: 0 1% 0 15%;
+    padding: 0 1% 0 7%;
   }
 
   .favoritesSidebar .recent_h3 {
-    padding: 0 1% 0 15%;
+    padding: 0 1% 0 7%;
   }
 }
 
@@ -663,4 +665,9 @@ footer.collapsedSidebar {
   .sidebar {
     display: none;
   }
+}
+
+.test {
+	
+	
 }

@@ -456,16 +456,16 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     }
 
     /**
-     * @param array $def
+     * @param array $fieldDefinitions
      * @return array
      */
-    public static function _trimFieldDefs($def)
+    public static function _trimFieldDefs($fieldDefinitions)
     {
-        if (isset ($def ['vname'])) {
-            $def ['label'] = $def ['vname'];
+        if (isset ($fieldDefinitions ['vname'])) {
+            $fieldDefinitions ['label'] = $fieldDefinitions ['vname'];
         }
 
-        return array_intersect_key($def, array(
+        return array_intersect_key($fieldDefinitions, array(
             'type' => true,
             'studio' => true,
             'label' => true,
