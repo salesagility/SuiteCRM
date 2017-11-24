@@ -56,7 +56,7 @@ function get_node_data($params,$get_array=false) {
 	foreach ($nodes as $node) {
 		$ret['nodes'][]=$node->get_definition();
 	}
-	$json = new JSON(JSON_LOOSE_TYPE);
+	$json = new JSON();
 	$str=$json->encode($ret);
 	return $str;
 }

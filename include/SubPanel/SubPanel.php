@@ -189,8 +189,8 @@ class SubPanel
 		if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace']))
 		{
 			$exploded = explode('/', $xTemplatePath);
-			$file_name = $exploded[sizeof($exploded) - 1];
-			$mod_name =  $exploded[sizeof($exploded) - 2];
+			$file_name = $exploded[count($exploded) - 1];
+			$mod_name =  $exploded[count($exploded) - 2];
 			$header_text= "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=$file_name&from_module=$mod_name&mod_lang="
 				.$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif','Edit Layout')."</a>";
 		}
