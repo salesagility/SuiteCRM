@@ -66,6 +66,7 @@ use SuiteCRM\API\v8\Library\FiltersLib;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\Paths;
 
 /**
  * Class ModuleController
@@ -95,7 +96,7 @@ class ModuleController extends ApiController
     public function getModulesMetaList(Request $req, Response $res)
     {
         $config = $this->containers->get('ConfigurationManager');
-        require_once __DIR__ . '/../../../../../include/modules.php';
+        require_once $this->paths->getProjectPath().'/include/modules.php';
         global $moduleList;
 
         $payload = array(
@@ -129,7 +130,7 @@ class ModuleController extends ApiController
 
         $payload = array();
 
-        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        require_once $this->paths->getProjectPath().'/include/GroupedTabs/GroupedTabStructure.php';
         $groupedTabsClass = new \GroupedTabStructure();
         $modules = query_module_access_list($current_user);
 
@@ -191,7 +192,7 @@ class ModuleController extends ApiController
 
         $payload = array();
 
-        require_once('include/GroupedTabs/GroupedTabStructure.php');
+        require_once $this->paths->getProjectPath().'/include/GroupedTabs/GroupedTabStructure.php';
         $groupedTabsClass = new \GroupedTabStructure();
         $modules = query_module_access_list($current_user);
         //handle with submoremodules
@@ -905,7 +906,7 @@ class ModuleController extends ApiController
             );
         }
 
-        require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
+        require_once $this->paths->getProjectPath().'/modules/ModuleBuilder/parsers/ParserFactory.php';
         $parser = \ParserFactory::getParser($args['view'], $args['module']);
         $viewdefs = $parser->_viewdefs;
 

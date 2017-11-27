@@ -80,81 +80,45 @@ class ModulesLib
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
     {
-        $config = $this->containers->get('ConfigurationManager');
-        $db = $this->containers->get('DatabaseManager');
-        $timedate = $this->containers->get('DateTimeConverter');
-
+        /** @var array $response */
         $response = array();
-        $page = $req->getParam('page');
-        $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
-        $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
 
-        // Handle Sorting
-        $orderBy = '';
-        if (!empty($req->getParam('sort'))) {
-            $sortField = explode(',', $req->getParam('sort'));
-            foreach ($sortField as $sortKey => $sortValue) {
-
-                if ($sortValue[0] === '-') {
-                    $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
-                } else {
-                    if ($sortValue[0] === '+') {
-                        $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' ASC';
-                    } else {
-                        $sortField[$sortKey] = $db->quote($sortValue) . ' ASC';
-                    }
-                }
-            }
-            $orderBy = implode(',', $sortField);
-        }
-
-        // TODO: handle filtering
-        /** @var FilterRepository $filterRepository */
-        $filterRepository = $this->containers->get('FilterRepository');
-        $filterRepository->fromRequest($req);
-        $filter = $req->getParam('filter');
-
-        // handle deleted field
-        $show_deleted = 0;
-        if (isset($filter['deleted'])) {
-            $show_deleted = (integer)$filter['deleted'];
-        }
-
-        /**
-         * @var \SugarBean $module
-         */
+        /** @var \SugarBean $module */
         $module = \BeanFactory::newBean($args['module']);
 
         if ($module === false) {
             throw new ModuleNotFound('"' . $args['module'] . '"');
         }
-        /**
-         * @var array $moduleList
-         */
-        $moduleList = $module->get_list($orderBy, '', $currentOffset, $limit, -1, $show_deleted);
+
+        $moduleList = $this->getModuleList($req, $module);
 
         $fields = array('fields' => array());
         $selectFields = $req->getParam('fields');
+
+        /** @var array $config */
+        $config = $this->containers->get('ConfigurationManager');
+
+        /** @var \SugarBean $moduleBean */
         foreach ($moduleList['list'] as $moduleBean) {
-            /**
-             * @var \SugarBean $moduleBean
-             */
             // Create data item
             if (isset($selectFields[$moduleBean->module_name])) {
-                // only return the fields requested
+                // Only return the fields requested
                 $fields['fields'][$moduleBean->module_name] = explode(',', $selectFields[$moduleBean->module_name]);
             } else {
                 $fields['fields'][$moduleBean->module_name] = $moduleBean->column_fields;
             }
 
-            // add attributes
+            // Add attributes
             /** @var SuiteBeanResource $resource */
             $resource = $this->containers->get('SuiteBeanResource');
             $resource = $resource->fromSugarBean($moduleBean);
             $bean = $resource->toJsonApiResponseWithFields($fields['fields'][$moduleBean->module_name]);
-            // add links object to $bean
-            $bean['links'] = Links::get()->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)->toJsonApiResponse();
-            // append bean to data
+            // Add links object to $bean
+            $bean['links'] =
+                Links::get()
+                ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
+                ->toJsonApiResponse();
+            // Append bean to resource object in the response
             $response['list'][] = $bean;
         }
         $response['current_offset'] = $moduleList['current_offset'];
@@ -244,6 +208,75 @@ class ModulesLib
         }
 
         return $links;
+    }
+
+    /**
+     * Handle sorting in the request
+     * @param Request $req
+     * @return string
+     */
+    protected function getSorting(Request $req)
+    {
+        $db = $this->containers->get('DatabaseManager');
+        $orderBy = '';
+        if (!empty($req->getParam('sort'))) {
+            $sortField = explode(',', $req->getParam('sort'));
+            foreach ($sortField as $sortKey => $sortValue) {
+
+                if ($sortValue[0] === '-') {
+                    $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
+                } else {
+                    if ($sortValue[0] === '+') {
+                        $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' ASC';
+                    } else {
+                        $sortField[$sortKey] = $db->quote($sortValue) . ' ASC';
+                    }
+                }
+            }
+            $orderBy = implode(',', $sortField);
+        }
+
+        return $orderBy;
+    }
+
+    /**
+     * @param Request $req
+     * @param \SugarBean $module
+     * @return array
+     */
+    protected function getModuleList(Request $req, \SugarBean $module)
+    {
+        /** @var array $page */
+        $page = $req->getParam('page');
+
+        // Order by (sorting)
+        $orderBy = $this->getSorting($req);
+
+        // Filtering (where clause in SQL)
+        /** @var FilterRepository $filterRepository */
+        $filterRepository = $this->containers->get('FilterRepository');
+        $filterRepository->fromRequest($req);
+        $where = '';
+
+        // Pagination (offset)
+        $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
+
+        // Pagination (page limit)
+        $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
+
+        // Maximum results (-1 === Unlimited)
+        $maximumResults = -1;
+
+        // Show deleted results
+        $filter = $req->getParam('filter');
+        $show_deleted = 0;
+        if (isset($filter['deleted'])) {
+            $show_deleted = (integer)$filter['deleted'];
+        }
+
+        // Get list of module records
+        /** @var array $moduleList */
+        return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
     }
 
     /**

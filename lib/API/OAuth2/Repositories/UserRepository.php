@@ -38,7 +38,35 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$container['AuthenticationController'] = function () {
-    require_once __DIR__ . '../../../../modules/Users/authentication/AuthenticationController.php';
-    return new AuthenticationController();
-};
+
+namespace SuiteCRM\API\OAuth2\Repositories;
+
+use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
+use SuiteCRM\API\OAuth2\Entities\UserEntity;
+use SuiteCRM\Utility\Paths;
+
+class UserRepository implements UserRepositoryInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserEntityByUserCredentials(
+        $username,
+        $password,
+        $grantType,
+        ClientEntityInterface $clientEntity
+    ) {
+        $paths = new Paths();
+
+        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
+
+        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
+            $usr = new \User();
+            return new UserEntity($usr->retrieve_user_id($username));
+        }
+
+        return null;
+    }
+}

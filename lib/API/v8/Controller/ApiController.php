@@ -57,6 +57,7 @@ use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 class ApiController implements LoggerAwareInterface
@@ -81,6 +82,12 @@ class ApiController implements LoggerAwareInterface
      */
     protected $containers;
 
+
+    /**
+     * @var Paths $paths
+     */
+    protected $paths;
+
     /**
      * ApiController constructor.
      * @param ContainerInterface $containers
@@ -91,6 +98,7 @@ class ApiController implements LoggerAwareInterface
     public function __construct(ContainerInterface $containers)
     {
         $this->containers = $containers;
+        $this->paths = new Paths();
     }
 
     /**

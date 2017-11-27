@@ -38,32 +38,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace lib\SuiteCRM\API\JsonApi\v1\Filters\Interpreters;
 
-namespace SuiteCRM\API\OAuth2\Repositories;
-
-use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Repositories\UserRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\UserEntity;
-
-class UserRepository implements UserRepositoryInterface
+class SuiteInterpreter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserEntityByUserCredentials(
-        $username,
-        $password,
-        $grantType,
-        ClientEntityInterface $clientEntity
-    ) {
-        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
-        $authController = new \AuthenticationController();
+    public function InterpretFiltersToSQL()
+    {
 
-        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
-            $usr = new \User();
-            return new UserEntity($usr->retrieve_user_id($username));
-        }
-
-        return null;
     }
 }

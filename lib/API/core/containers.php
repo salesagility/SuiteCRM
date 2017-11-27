@@ -41,7 +41,9 @@
 // file has been separated out for testing and mocking purposes
 global $container;
 $version = 8;
-const API_PATH = 'lib/SuiteCRM/API/v8';
+
+
+const API_PATH = 'lib/API/v8';
 
 $container = new \Slim\Container;
 // Load Containers

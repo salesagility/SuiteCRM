@@ -6,6 +6,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\Paths;
 
 class FilterParserTest extends \Codeception\Test\Unit
 {
@@ -32,9 +33,10 @@ class FilterParserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$filterParser === null) {
+            $paths = new Paths();
             // load PSR 11 interface
             global $container;
-            require_once 'lib/SuiteCRM/API/core/containers.php';
+            require_once $paths->getContainersPath();
             // Load mock class
             self::$filterParser = new FilterParserMock($container);
         }

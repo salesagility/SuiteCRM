@@ -37,37 +37,53 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-chdir(__DIR__.'/../../../../');
-require_once __DIR__.'/../../../../include/entryPoint.php';
-global $sugar_config;
-global $version;
-global $container;
 
-preg_match("/\/api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);
+namespace SuiteCRM\API\v8\Library;
 
-$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
+use SuiteCRM\Utility\Paths;
 
-$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
+class UtilityLib
+{
+    /**
+     * @param $postData
+     *
+     * @return array
+     */
+    public function login($postData)
+    {
+        $paths = new Paths();
+        //Get the parameters
+        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
+        $username = $postData['username'];
+        $password = $postData['password'];
 
-$version = 8;
-const API_PATH = 'lib/SuiteCRM/API/v8';
+        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
+            $usr = new \user();
 
-require_once __DIR__.'/containers.php';
+            return ['loginApproved' => true, 'userId' => $usr->retrieve_user_id($username)];
+        }
 
-$app = new \Slim\App($container);
+        return ['loginApproved' => false, 'userId' => null];
+    }
 
-// Load Routes
-$routeFiles = (array) glob(API_PATH.'/route/*.php');
+    /**
+     * @return array
+     */
+    public function logout()
+    {
+        $paths = new Paths();
+        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        $authController = new \AuthenticationController();
+        $authController->logout();
+        return [];
+    }
 
-foreach ($routeFiles as $routeFile) {
-    require $routeFile;
+    /**
+     * @return array
+     */
+    public function getServerInfo()
+    {
+        return array();
+    }
 }
-
-// Load Callables
-$callableFiles = (array) glob(API_PATH.'/callable/*.php');
-
-foreach ($callableFiles as $callableFile) {
-    require $callableFile;
-}
-
-$app->run();

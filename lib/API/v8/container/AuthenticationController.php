@@ -38,48 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Library;
-
-class UtilityLib
-{
-    /**
-     * @param $postData
-     *
-     * @return array
-     */
-    public function login($postData)
-    {
-        //Get the parameters
-        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
-        $authController = new \AuthenticationController();
-        $username = $postData['username'];
-        $password = $postData['password'];
-
-        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
-            $usr = new \user();
-
-            return ['loginApproved' => true, 'userId' => $usr->retrieve_user_id($username)];
-        }
-
-        return ['loginApproved' => false, 'userId' => null];
-    }
-
-    /**
-     * @return array
-     */
-    public function logout()
-    {
-        require_once __DIR__.'/../../../../../modules/Users/authentication/AuthenticationController.php';
-        $authController = new \AuthenticationController();
-        $authController->logout();
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getServerInfo()
-    {
-        return array();
-    }
-}
+$container['AuthenticationController'] = function () {
+    $paths = new \SuiteCRM\Utility\Paths();
+    require_once $paths->getProjectPath(). '/modules/Users/authentication/AuthenticationController.php';
+    return new AuthenticationController();
+};
