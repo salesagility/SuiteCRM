@@ -729,7 +729,7 @@ $app_list_strings = array(
 
     'dom_editor_type' => array(
         'none' => 'Direct HTML',
-        'tinymce' => 'Tiny MCE',
+        'tinymce' => 'TinyMCE',
         'mozaik' => 'Mozaik',
     ),
 

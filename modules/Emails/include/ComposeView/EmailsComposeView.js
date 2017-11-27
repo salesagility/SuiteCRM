@@ -435,13 +435,28 @@
         }
       }
     };
+    
+    self.updateFromInfos = function () {
+      var infos = $('#from_addr_name').find('option:selected').attr('infos');
+      if(infos === undefined) {
+        console.warn('Unable to retrieve selected infos in the "From" field.');
+        return false;
+      } 
+      
+      if(!$('#from_addr_name_infos').length) {
+          $('#from_addr_name').parent().append('<span id="from_addr_name_infos"></span>');
+      }
+      
+      $('#from_addr_name_infos').html(infos);
+      
+    };
 
     /**
      *
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
-      var html = $(self).find('#description_html').html();
+      var html = $(self).find('#description_html').val();
 
       editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
@@ -1095,7 +1110,8 @@
               var selectOption = $('<option></option>');
               selectOption.attr('value', v.attributes.from);
               selectOption.attr('inboundId', v.id);
-              selectOption.html(v.attributes.from);
+              selectOption.attr('infos', '(<b>Reply-to:</b> ' + v.attributes.from + ', <b>From:</b> ' + v.attributes.oe + ')');
+              selectOption.html(v.attributes.name);
               selectOption.appendTo(selectFrom);
 
               // include signature for account
@@ -1130,9 +1146,12 @@
             $(selectFrom).change(function (e) {
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
               self.updateSignature();
+              self.updateFromInfos();
             });
 
             $(self).trigger('emailComposeViewGetFromFields');
+            
+            self.updateFromInfos();
 
           }
 

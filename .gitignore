@@ -59,6 +59,7 @@ nbproject/
 .*.sw[a-z]
 *.un~
 Session.vim
+tags
 # Windows
 Thumbs.db
 Desktop.ini

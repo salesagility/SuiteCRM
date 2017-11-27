@@ -376,7 +376,8 @@
 {literal}
 <script type="text/javascript">
 
-    setModuleFieldsPendingFinishedCallback(function(){
+  function setModuleFieldsPendingFinishedCallback(){
+    'use strict';
         var parenthesisBtnHtml;
         $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
             handle: '.condition-sortable-handle',
@@ -405,7 +406,7 @@
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
         FieldLineHandler.makeGroupDisplaySelectOptions();
-    });
+    };
 
     $(function(){
 

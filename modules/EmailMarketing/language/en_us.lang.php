@@ -91,7 +91,16 @@ $mod_strings = array(
     'LBL_RELATED_PROSPECT_LISTS' => 'All Target List(s) related to this message.',
     'LBL_PROSPECT_LIST_NAME' => 'Target List Name',
 
-    'LBL_CAMPAIGN_ID' => 'Campaign ID',
+    'LBL_LIST_PROSPECT_LIST_NAME'=>'Targeted Lists',
+    'LBL_MODULE_SEND_TEST'=>'Campaign: Send Test',
+    'LBL_MODULE_SEND_EMAILS'=>'Campaign: Send Emails',
+    'LBL_SCHEDULE_MESSAGE_TEST'=>'Please select the campaign messages that you would like to test:',
+    'LBL_SCHEDULE_MESSAGE_EMAILS'=>'Please select the campaign messages that you would like to schedule for distribution on the specified start date and time:',
+    'LBL_SCHEDULE_BUTTON_TITLE'=>'Send',
+    'LBL_SCHEDULE_BUTTON_LABEL'=>'Send',
+    'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
+
+  'LBL_CAMPAIGN_ID' => 'Campaign ID',
     'LBL_OUTBOUND_EMAIL_ACOUNT_ID' => 'Outbound Email Account ID',
     'LBL_EMAIL_TEMPLATE' => 'Email Template',
     'LBL_PROSPECT_LISTS' => 'Prospect Lists',

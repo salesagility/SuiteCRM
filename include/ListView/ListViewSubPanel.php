@@ -261,7 +261,7 @@
             reset($data);
 
             //GETTING OFFSET
-            $offset = empty($this->getOffset($html_varName)) ? 0 : $this->getOffset($html_varName);
+            $offset = ($this->getOffset($html_varName)) === false ? 0 : $this->getOffset($html_varName);
             //$totaltime = 0;
             $processed_ids = array();
 

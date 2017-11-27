@@ -73,28 +73,31 @@ function getModuleFields($module, $view='EditView', $value = '', $valid = array(
             $mod = new $beanList[$module]();
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
-
-                    if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
-                        if (in_array($arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
-                            ) && !$current_user->isAdmin()
+                    if (isset($arr['reportable']) && $arr['reportable'] === false ) {
+                        continue;
+                    }
+                        if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
+                            if (in_array($arr['name'],
+                                    $blockedModuleFields[$mod->module_dir]
+                                ) && !$current_user->isAdmin()
+                            ) {
+                                $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
+                                continue;
+                            }
+                        }
+                        if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
+                                    $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
                         ) {
-                            $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
-                            continue;
+                            if (isset($arr['vname']) && $arr['vname'] !== '') {
+                                $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
+                            } else {
+                                $fields[$name] = $name;
+                            }
+                            if ($arr['type'] === 'relate' && isset($arr['id_name']) && $arr['id_name'] !== '') {
+                                $unset[] = $arr['id_name'];
+                            }
                         }
-                    }
-                    if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
-                                $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
-                    ) {
-                        if (isset($arr['vname']) && $arr['vname'] !== '') {
-                            $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
-                        } else {
-                            $fields[$name] = $name;
-                        }
-                        if ($arr['type'] === 'relate' && isset($arr['id_name']) && $arr['id_name'] !== '') {
-                            $unset[] = $arr['id_name'];
-                        }
-                    }
+
                 }
             } //End loop.
 
@@ -384,17 +387,22 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
-        if( $view == 'EditView' &&  ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')){
-            $contents = str_replace('"'.$vardef['id_name'].'"','{/literal}"{$fields.'.$vardef['name'].'.id_name}"{literal}', $contents);
-            $contents = str_replace('"'.$vardef['name'].'"','{/literal}"{$fields.'.$vardef['name'].'.name}"{literal}', $contents);
+        if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+            $contents = str_replace('"' . $vardef['id_name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
+            $contents = str_replace('"' . $vardef['name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+        }
+        if ($view == 'DetailView' && $vardef['type'] == 'image') {
+            $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
+        }
+        // hack to disable one of the js calls in this control
+        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }
 
-        // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) && ( $vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
-            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
-
         // Save it to the cache file
-        if($fh = @sugar_fopen($file, 'w')) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             fputs($fh, $contents);
             fclose($fh);
         }
@@ -557,15 +565,17 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     }
 
     $ss->assign("QS_JS", $quicksearch_js);
-    $ss->assign("fields",$fieldlist);
-    $ss->assign("form_name",$view);
-    $ss->assign("bean",$focus);
+    $ss->assign("fields", $fieldlist);
+    $ss->assign("form_name", $view);
+    $ss->assign("bean", $focus);
 
-    // add in any additional strings
+    // Add in any additional strings
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
-
-    //$return = str_replace($fieldname,$ss->fetch($file));
+    $ss->assign("module", $module);
+    if ($params['record_id']) {
+        $ss->assign("record_id", $params['record_id']);
+    }
 
     return $ss->fetch($file);
 }
