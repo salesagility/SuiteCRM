@@ -1,41 +1,41 @@
 <?php
-/**
- *
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+/** 
+ * 
+ * SugarCRM Community Edition is a customer relationship management program developed by 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
+ * 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU Affero General Public License version 3 as published by the 
+ * Free Software Foundation with the addition of the following permission added 
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+ * details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with 
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
+ * 02110-1301 USA. 
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
+ * 
+ * The interactive user interfaces in modified source and object code versions 
+ * of this program must display Appropriate Legal Notices, as required under 
+ * Section 5 of the GNU Affero General Public License version 3. 
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
+ * these Appropriate Legal Notices must retain the display of the "Powered by 
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -468,194 +468,194 @@ below to save your settings and to begin using SuiteCRM. For more information on
 
 
     'LBL_EMAIL_INFORMATION' => 'EMAIL',
-    'LBL_FW'					=> 'FW:',
-    'LBL_RE'					=> 'RE:',
+    'LBL_FW'                    => 'FW:',
+    'LBL_RE'                    => 'RE:',
 
-    'LBL_BUTTON_CREATE'					=> 'Create',
-    'LBL_BUTTON_EDIT'					=> 'Edit',
+    'LBL_BUTTON_CREATE'                    => 'Create',
+    'LBL_BUTTON_EDIT'                    => 'Edit',
     'LBL_QS_DISABLED'                   => '(QuickSearch is not availible for this module. Please use the select button.)',
 
 
-    'LBL_ENTER_FOLDER_NAME'		=> 'Please enter a folder name',
+    'LBL_ENTER_FOLDER_NAME'        => 'Please enter a folder name',
 
     'LBL_ERROR_SELECT_MODULE'   => 'Please select a module for the Related to field',
 
-    'ERR_ARCHIVE_EMAIL'			=> 'Error: Select emails to archive.',
+    'ERR_ARCHIVE_EMAIL'            => 'Error: Select emails to archive.',
     'LBL_ACCOUNTS_SUBPANEL_TITLE'=> 'Accounts',
     'LBL_ADD_DASHLETS'          => 'Add SuiteCRM Dashlets',
-    'LBL_ADD_DOCUMENT'			=> 'Add Documents',
+    'LBL_ADD_DOCUMENT'            => 'Add Documents',
     'LBL_ADD_ENTRIES'           => 'Add Entries',
-    'LBL_ADD_FILE'				=> 'Add Files',
-    'LBL_ATTACHMENTS'			=> 'Attachments:',
-    'LBL_HAS_ATTACHMENT'		=> 'Has Attachment?:',
-    'LBL_BCC'					=> 'Bcc:',
-    'LBL_BODY'					=> 'Body:',
-    'LBL_BUGS_SUBPANEL_TITLE'	=> 'Bugs',
-    'LBL_CC'					=> 'Cc:',
-    'LBL_COMPOSE_MODULE_NAME'	=> 'Compose Email',
-    'LBL_CONTACT_NAME'			=> 'Contact:',
+    'LBL_ADD_FILE'                => 'Add Files',
+    'LBL_ATTACHMENTS'            => 'Attachments:',
+    'LBL_HAS_ATTACHMENT'        => 'Has Attachment?:',
+    'LBL_BCC'                    => 'Bcc:',
+    'LBL_BODY'                    => 'Body:',
+    'LBL_BUGS_SUBPANEL_TITLE'    => 'Bugs',
+    'LBL_CC'                    => 'Cc:',
+    'LBL_COMPOSE_MODULE_NAME'    => 'Compose Email',
+    'LBL_CONTACT_NAME'            => 'Contact:',
     'LBL_CONTACTS_SUBPANEL_TITLE'=> 'Contacts',
-    'LBL_CREATED_BY'			=> 'Created by',
-    'LBL_DATE_SENT'				=> 'Date Sent:',
-    'LBL_DATE'					=> 'Date Sent:',
+    'LBL_CREATED_BY'            => 'Created by',
+    'LBL_DATE_SENT'                => 'Date Sent:',
+    'LBL_DATE'                    => 'Date Sent:',
     'LBL_DELETE_FROM_SERVER'    => 'Delete message from server',
-    'LBL_DESCRIPTION'			=> 'Description',
-    'LBL_EDIT_ALT_TEXT'			=> 'Edit Plain Text',
-    'LBL_SEND_IN_PLAIN_TEXT'	=> 'Send in Plain Text',
-    'LBL_EMAIL_ATTACHMENT'		=> 'Email Attachment',
+    'LBL_DESCRIPTION'            => 'Description',
+    'LBL_EDIT_ALT_TEXT'            => 'Edit Plain Text',
+    'LBL_SEND_IN_PLAIN_TEXT'    => 'Send in Plain Text',
+    'LBL_EMAIL_ATTACHMENT'        => 'Email Attachment',
     'LBL_EMAIL_SELECTOR_SELECT' => 'Select',
     'LBL_EMAIL_SELECTOR_CLEAR'  => 'Clear',
-    'LBL_EMAILS_ACCOUNTS_REL'	=> 'Emails:Accounts',
-    'LBL_EMAILS_BUGS_REL'		=> 'Emails:Bugs',
-    'LBL_EMAILS_CASES_REL'		=> 'Emails:Cases',
-    'LBL_EMAILS_CONTACTS_REL'	=> 'Emails:Contacts',
-    'LBL_EMAILS_LEADS_REL'		=> 'Emails:Leads',
+    'LBL_EMAILS_ACCOUNTS_REL'    => 'Emails:Accounts',
+    'LBL_EMAILS_BUGS_REL'        => 'Emails:Bugs',
+    'LBL_EMAILS_CASES_REL'        => 'Emails:Cases',
+    'LBL_EMAILS_CONTACTS_REL'    => 'Emails:Contacts',
+    'LBL_EMAILS_LEADS_REL'        => 'Emails:Leads',
     'LBL_EMAILS_OPPORTUNITIES_REL'=> 'Emails:Opportunities',
     'LBL_EMAILS_NOTES_REL'      => 'Emails:Notes',
-    'LBL_EMAILS_PROJECT_REL'	=> 'Emails:Project',
+    'LBL_EMAILS_PROJECT_REL'    => 'Emails:Project',
     'LBL_EMAILS_PROJECT_TASK_REL'=> 'Emails:ProjectTask',
-    'LBL_EMAILS_PROSPECT_REL'	=> 'Emails:Prospect',
-    'LBL_EMAILS_CONTRACTS_REL'	=> 'Emails:Contract',
-    'LBL_EMAILS_TASKS_REL'		=> 'Emails:Tasks',
-    'LBL_EMAILS_USERS_REL'		=> 'Emails:Users',
+    'LBL_EMAILS_PROSPECT_REL'    => 'Emails:Prospect',
+    'LBL_EMAILS_CONTRACTS_REL'    => 'Emails:Contract',
+    'LBL_EMAILS_TASKS_REL'        => 'Emails:Tasks',
+    'LBL_EMAILS_USERS_REL'        => 'Emails:Users',
     'LBL_EMPTY_FOLDER'          => 'No Emails to display',
     'LBL_SELECT_FOLDER'         => 'Select Folder',
-    'LBL_ERROR_SENDING_EMAIL'	=> 'Error Sending email',
-    'LBL_ERROR_SAVING_DRAFT'	=> 'Error Saving Draft',
-    'LBL_FROM_NAME'				=> 'From Name',
-    'LBL_FROM'					=> 'From:',
-    'LBL_REPLY_TO'				=> 'Reply To:',
-    'LBL_HTML_BODY'				=> 'HTML Body',
-    'LBL_INVITEE'				=> 'Recipients',
-    'LBL_LEADS_SUBPANEL_TITLE'	=> 'Leads',
-    'LBL_MESSAGE_SENT'			=> 'Message Sent',
+    'LBL_ERROR_SENDING_EMAIL'    => 'Error Sending email',
+    'LBL_ERROR_SAVING_DRAFT'    => 'Error Saving Draft',
+    'LBL_FROM_NAME'                => 'From Name',
+    'LBL_FROM'                    => 'From:',
+    'LBL_REPLY_TO'                => 'Reply To:',
+    'LBL_HTML_BODY'                => 'HTML Body',
+    'LBL_INVITEE'                => 'Recipients',
+    'LBL_LEADS_SUBPANEL_TITLE'    => 'Leads',
+    'LBL_MESSAGE_SENT'            => 'Message Sent',
     'LBL_MY_EMAILS'            => 'My Emails',
     'LBL_NONE'                  => 'None',
-    'LBL_NOT_SENT'				=> 'Send Error',
-    'LBL_NOTES_SUBPANEL_TITLE'	=> 'Attachments',
+    'LBL_NOT_SENT'                => 'Send Error',
+    'LBL_NOTES_SUBPANEL_TITLE'    => 'Attachments',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_PROJECT_SUBPANEL_TITLE'=> 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE'=> 'Project Tasks',
     'LBL_RAW'                  => 'Raw Email',
     'LBL_SAVE_AS_DRAFT_BUTTON_TITLE'=> 'Save Draft',
-    'LBL_SEND_ANYWAYS'			=> 'This email has no subject. Send/save anyway?',
-    'LBL_SEND_BUTTON_LABEL'		=> 'Send',
-    'LBL_SEND_BUTTON_TITLE'		=> 'Send',
-    'LBL_SEND'					=> 'SEND',
-    'LBL_SENT_MODULE_NAME'		=> 'Sent Emails',
-    'LBL_SHOW_ALT_TEXT'			=> 'Show Plain Text',
-    'LBL_SUBJECT'				=> 'Subject:',
-    'LBL_TEXT_BODY'				=> 'Text Body',
-    'LBL_TIME'					=> 'Time Sent:',
-    'LBL_TO_ADDRS'				=> 'To',
-    'LBL_USERS_SUBPANEL_TITLE'	=> 'Users',
-    'LBL_USERS'					=> 'Users',
+    'LBL_SEND_ANYWAYS'            => 'This email has no subject. Send/save anyway?',
+    'LBL_SEND_BUTTON_LABEL'        => 'Send',
+    'LBL_SEND_BUTTON_TITLE'        => 'Send',
+    'LBL_SEND'                    => 'SEND',
+    'LBL_SENT_MODULE_NAME'        => 'Sent Emails',
+    'LBL_SHOW_ALT_TEXT'            => 'Show Plain Text',
+    'LBL_SUBJECT'                => 'Subject:',
+    'LBL_TEXT_BODY'                => 'Text Body',
+    'LBL_TIME'                    => 'Time Sent:',
+    'LBL_TO_ADDRS'                => 'To',
+    'LBL_USERS_SUBPANEL_TITLE'    => 'Users',
+    'LBL_USERS'                    => 'Users',
 
-    'LNK_CALL_LIST'				=> 'Calls',
+    'LNK_CALL_LIST'                => 'Calls',
     'LBL_EMAIL_RELATE'          => 'Related To',
-    'LNK_EMAIL_TEMPLATE_LIST'	=> 'View Email Templates',
-    'LNK_MEETING_LIST'			=> 'Meetings',
-    'LNK_NEW_CALL'				=> 'Log Call',
-    'LNK_NEW_EMAIL_TEMPLATE'	=> 'Create Email Template',
-    'LNK_NEW_EMAIL'				=> 'Send Email',
-    'LNK_NEW_MEETING'			=> 'Schedule Meeting',
-    'LNK_NEW_NOTE'				=> 'Create Note or Attachment',
-    'LNK_NEW_SEND_EMAIL'		=> 'Compose',
-    'LNK_NEW_TASK'				=> 'Create Task',
-    'LNK_NOTE_LIST'				=> 'Notes',
-    'LNK_SENT_EMAIL_LIST'		=> 'Sent Emails',
-    'LNK_TASK_LIST'				=> 'Tasks',
-    'LNK_VIEW_CALENDAR'			=> 'Today',
+    'LNK_EMAIL_TEMPLATE_LIST'    => 'View Email Templates',
+    'LNK_MEETING_LIST'            => 'Meetings',
+    'LNK_NEW_CALL'                => 'Log Call',
+    'LNK_NEW_EMAIL_TEMPLATE'    => 'Create Email Template',
+    'LNK_NEW_EMAIL'                => 'Send Email',
+    'LNK_NEW_MEETING'            => 'Schedule Meeting',
+    'LNK_NEW_NOTE'                => 'Create Note or Attachment',
+    'LNK_NEW_SEND_EMAIL'        => 'Compose',
+    'LNK_NEW_TASK'                => 'Create Task',
+    'LNK_NOTE_LIST'                => 'Notes',
+    'LNK_SENT_EMAIL_LIST'        => 'Sent Emails',
+    'LNK_TASK_LIST'                => 'Tasks',
+    'LNK_VIEW_CALENDAR'            => 'Today',
 
-    'LBL_LIST_ASSIGNED'			=> 'Assigned',
-    'LBL_LIST_CONTACT_NAME'		=> 'Contact Name',
-    'LBL_LIST_DATE_SENT'		=> 'Date Sent',
-    'LBL_LIST_DATE'				=> 'Date Sent',
+    'LBL_LIST_ASSIGNED'            => 'Assigned',
+    'LBL_LIST_CONTACT_NAME'        => 'Contact Name',
+    'LBL_LIST_DATE_SENT'        => 'Date Sent',
+    'LBL_LIST_DATE'                => 'Date Sent',
     'LBL_LIST_FORM_DRAFTS_TITLE'=> 'Draft',
-    'LBL_LIST_FORM_SENT_TITLE'	=> 'Sent Emails',
-    'LBL_LIST_FROM_ADDR'		=> 'From',
-    'LBL_LIST_RELATED_TO'		=> 'Recipient Type',
-    'LBL_LIST_SUBJECT'			=> 'Subject',
-    'LBL_LIST_TO_ADDR'			=> 'To',
-    'LBL_LIST_TYPE'				=> 'Type',
+    'LBL_LIST_FORM_SENT_TITLE'    => 'Sent Emails',
+    'LBL_LIST_FROM_ADDR'        => 'From',
+    'LBL_LIST_RELATED_TO'        => 'Recipient Type',
+    'LBL_LIST_SUBJECT'            => 'Subject',
+    'LBL_LIST_TO_ADDR'            => 'To',
+    'LBL_LIST_TYPE'                => 'Type',
 
-    'WARNING_SETTINGS_NOT_CONF'	=> 'Warning: Your email settings are not configured to send email.',
+    'WARNING_SETTINGS_NOT_CONF'    => 'Warning: Your email settings are not configured to send email.',
 
     // for All emails
     'LBL_BUTTON_RAW_LABEL'   => 'Show Raw',
     'LBL_BUTTON_RAW_LABEL_HIDE' => 'Hide Raw',
 
     // for InboundEmail
-    'LBL_BUTTON_CHECK'			=> 'Check Mail',
-    'LBL_BUTTON_CHECK_TITLE'	=> 'Check For New Email',
-    'LBL_BUTTON_FORWARD'		=> 'Forward',
-    'LBL_BUTTON_REPLY_TITLE'	=> 'Reply',
-    'LBL_BUTTON_REPLY_ALL'		=> 'Reply All',
-    'LBL_CASES_SUBPANEL_TITLE'	=> 'Cases',
-    'LBL_INTENT'				=> 'Intent',
-    'LBL_MESSAGE_ID'			=> 'Message ID',
-    'LBL_REPLY_HEADER_1'		=> 'On ',
-    'LBL_REPLY_HEADER_2'		=> 'wrote:',
-    'LBL_REPLY_TO_ADDRESS'		=> 'Reply-to Address',
-    'LBL_REPLY_TO_NAME'			=> 'Reply-to Name',
+    'LBL_BUTTON_CHECK'            => 'Check Mail',
+    'LBL_BUTTON_CHECK_TITLE'    => 'Check For New Email',
+    'LBL_BUTTON_FORWARD'        => 'Forward',
+    'LBL_BUTTON_REPLY_TITLE'    => 'Reply',
+    'LBL_BUTTON_REPLY_ALL'        => 'Reply All',
+    'LBL_CASES_SUBPANEL_TITLE'    => 'Cases',
+    'LBL_INTENT'                => 'Intent',
+    'LBL_MESSAGE_ID'            => 'Message ID',
+    'LBL_REPLY_HEADER_1'        => 'On ',
+    'LBL_REPLY_HEADER_2'        => 'wrote:',
+    'LBL_REPLY_TO_ADDRESS'        => 'Reply-to Address',
+    'LBL_REPLY_TO_NAME'            => 'Reply-to Name',
 
-    'LBL_LIST_BUG'				=> 'Bugs',
-    'LBL_LIST_CASE'				=> 'Cases',
-    'LBL_LIST_CONTACT'			=> 'Contacts',
-    'LBL_LIST_LEAD'				=> 'Leads',
-    'LBL_LIST_TASK'				=> 'Tasks',
+    'LBL_LIST_BUG'                => 'Bugs',
+    'LBL_LIST_CASE'                => 'Cases',
+    'LBL_LIST_CONTACT'            => 'Contacts',
+    'LBL_LIST_LEAD'                => 'Leads',
+    'LBL_LIST_TASK'                => 'Tasks',
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
 
     // for Inbox
-    'LBL_ALL'					=> 'All',
-    'LBL_ASSIGN_WARN'			=> 'Ensure that all 2 options are selected.',
-    'LBL_BACK_TO_GROUP'			=> 'Back to Group Inbox',
+    'LBL_ALL'                    => 'All',
+    'LBL_ASSIGN_WARN'            => 'Ensure that all 2 options are selected.',
+    'LBL_BACK_TO_GROUP'            => 'Back to Group Inbox',
     'LBL_BUTTON_DISTRIBUTE_TITLE'=> 'Assign',
-    'LBL_BUTTON_DISTRIBUTE'		=> 'Assign',
-    'LBL_BUTTON_GRAB_TITLE'		=> 'Take from Group',
-    'LBL_BUTTON_GRAB'			=> 'Take from Group',
-    'LBL_CREATE_BUG'			=> 'Create Bug',
-    'LBL_CREATE_CASE'			=> 'Create Case',
-    'LBL_CREATE_CONTACT'		=> 'Create Contact',
-    'LBL_CREATE_LEAD'			=> 'Create Lead',
-    'LBL_CREATE_TASK'			=> 'Create Task',
-    'LBL_DIST_TITLE'			=> 'Assignment',
-    'LBL_LOCK_FAIL_DESC'		=> 'The chosen item is unavailable currently.',
-    'LBL_LOCK_FAIL_USER'		=> ' has taken ownership.',
-    'LBL_MASS_DELETE_ERROR'		=> 'No checked items were passed for deletion.',
-    'LBL_NEW'					=> 'New',
-    'LBL_NEXT_EMAIL'			=> 'Next Free Item',
-    'LBL_REPLIED'				=> 'Replied',
-    'LBL_TO'					=> 'To: ',
-    'LBL_TOGGLE_ALL'			=> 'Toggle All',
-    'LBL_UNKNOWN'				=> 'Unknown',
-    'LBL_USE'					=> 'Assign:',
+    'LBL_BUTTON_DISTRIBUTE'        => 'Assign',
+    'LBL_BUTTON_GRAB_TITLE'        => 'Take from Group',
+    'LBL_BUTTON_GRAB'            => 'Take from Group',
+    'LBL_CREATE_BUG'            => 'Create Bug',
+    'LBL_CREATE_CASE'            => 'Create Case',
+    'LBL_CREATE_CONTACT'        => 'Create Contact',
+    'LBL_CREATE_LEAD'            => 'Create Lead',
+    'LBL_CREATE_TASK'            => 'Create Task',
+    'LBL_DIST_TITLE'            => 'Assignment',
+    'LBL_LOCK_FAIL_DESC'        => 'The chosen item is unavailable currently.',
+    'LBL_LOCK_FAIL_USER'        => ' has taken ownership.',
+    'LBL_MASS_DELETE_ERROR'        => 'No checked items were passed for deletion.',
+    'LBL_NEW'                    => 'New',
+    'LBL_NEXT_EMAIL'            => 'Next Free Item',
+    'LBL_REPLIED'                => 'Replied',
+    'LBL_TO'                    => 'To: ',
+    'LBL_TOGGLE_ALL'            => 'Toggle All',
+    'LBL_UNKNOWN'                => 'Unknown',
+    'LBL_USE'                    => 'Assign:',
     'LBL_ASSIGN_SELECTED_RESULTS_TO' => 'Assign Selected Results To: ',
-    'LBL_USER_SELECT'			=> 'Select Users',
-    'LBL_USING_RULES'			=> 'Using Rules:',
-    'LBL_WARN_NO_DIST'			=> 'No Distribution Method Selected',
-    'LBL_WARN_NO_USERS'			=> 'No Users are selected',
-    'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
-    'LBL_INDICATOR'         	=> 'Indicator',
+    'LBL_USER_SELECT'            => 'Select Users',
+    'LBL_USING_RULES'            => 'Using Rules:',
+    'LBL_WARN_NO_DIST'            => 'No Distribution Method Selected',
+    'LBL_WARN_NO_USERS'            => 'No Users are selected',
+    'LBL_IMPORT_STATUS_TITLE'    => 'Status',
+    'LBL_INDICATOR'             => 'Indicator',
     'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
-    'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
-    'LBL_LIST_TITLE_MY_INBOX'	=> 'My Inbox',
-    'LBL_LIST_TITLE_MY_SENT'	=> 'My Sent Email',
+    'LBL_LIST_TITLE_MY_DRAFTS'    => 'My Drafts',
+    'LBL_LIST_TITLE_MY_INBOX'    => 'My Inbox',
+    'LBL_LIST_TITLE_MY_SENT'    => 'My Sent Email',
     'LBL_LIST_TITLE_MY_ARCHIVES'=> 'My Archived Emails',
 
-    'LNK_MY_DRAFTS'				=> 'My Drafts',
-    'LNK_MY_INBOX'				=> 'My Email',
-    'LNK_VIEW_MY_INBOX'			=> 'View My Email',
-    'LNK_QUICK_REPLY'			=> 'Reply',
+    'LNK_MY_DRAFTS'                => 'My Drafts',
+    'LNK_MY_INBOX'                => 'My Email',
+    'LNK_VIEW_MY_INBOX'            => 'View My Email',
+    'LNK_QUICK_REPLY'            => 'Reply',
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' =>'No Primary Team specified',
 
     // advanced search
-    'LBL_ASSIGNED_TO'			=> 'Assigned To:',
-    'LBL_MEMBER_OF'				=> 'Parent',
-    'LBL_QUICK_CREATE'			=> 'Quick Create',
-    'LBL_EMAIL_FLAGGED'			=> 'Flagged:',
-    'LBL_EMAIL_REPLY_TO_STATUS'	=> 'Reply To Status:',
-    'LBL_TYPE'					=> 'Type:',
+    'LBL_ASSIGNED_TO'            => 'Assigned To:',
+    'LBL_MEMBER_OF'                => 'Parent',
+    'LBL_QUICK_CREATE'            => 'Quick Create',
+    'LBL_EMAIL_FLAGGED'            => 'Flagged:',
+    'LBL_EMAIL_REPLY_TO_STATUS'    => 'Reply To Status:',
+    'LBL_TYPE'                    => 'Type:',
     //#20680 EmialTemplate Ext.Message.show;
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_TITLE' => 'Please check!',
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_MSG' => 'Selecting this template will overwrite any data already entered within the email body. Do you wish to continue?',
@@ -696,12 +696,12 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_EMPTY_EMAIL_BODY'  => '<p><span style="color: #888888;"><em>This Message Has No Content</em></span></p>',
     'LBL_TEST_EMAIL_SUBJECT' => 'Test Email from SuiteCRM',
     'LBL_NO_SUBJECT' =>'(no subject)',
-    'LBL_CHECKING_ACCOUNT'	=> 'Checking Account',
-    'LBL_OF'	=> 'of',
+    'LBL_CHECKING_ACCOUNT'    => 'Checking Account',
+    'LBL_OF'    => 'of',
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
-    'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
+    'LBL_MAIL_SMTPAUTH_REQ'                => 'Use SMTP Authentication?',
 
     'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_ATTACHMENT' => 'Attachment' /*for 508 compliance fix*/,
@@ -737,5 +737,3 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
 
 ); // END STRINGS DEFS
-
-?>

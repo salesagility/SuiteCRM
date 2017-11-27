@@ -1,69 +1,72 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class Configurator {
-
-    var $config = '';
-    var $override = '';
-    var $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu', 'enable_line_editing_list', 'enable_line_editing_detail', 'hide_subpanels');
-    var $errors = array('main' => '');
-    var $logger = NULL;
-    var $previous_sugar_override_config_array = array();
-    var $useAuthenticationClass = false;
+class Configurator
+{
+    public $config = '';
+    public $override = '';
+    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu', 'enable_line_editing_list', 'enable_line_editing_detail', 'hide_subpanels');
+    public $errors = array('main' => '');
+    public $logger = null;
+    public $previous_sugar_override_config_array = array();
+    public $useAuthenticationClass = false;
     protected $error = null;
 
-    function __construct() {
+    public function __construct()
+    {
         $this->loadConfig();
     }
 
-    function loadConfig() {
+    public function loadConfig()
+    {
         $this->logger = LoggerManager::getLogger();
         global $sugar_config;
         $this->config = $sugar_config;
     }
 
-    function populateFromPost() {
+    public function populateFromPost()
+    {
         $sugarConfig = SugarConfig::getInstance();
         foreach ($_POST as $key => $value) {
             if ($key == "logger_file_ext") {
@@ -90,7 +93,8 @@ class Configurator {
         }
     }
 
-    function handleOverride($fromParseLoggerSettings = false) {
+    public function handleOverride($fromParseLoggerSettings = false)
+    {
         global $sugar_config, $sugar_version;
         $sc = SugarConfig::getInstance();
         $overrideArray = $this->readOverride();
@@ -115,7 +119,7 @@ class Configurator {
         //Bug#53013: Clean the tpl cache if action menu style has been changed.
         if (isset($overrideArray['enable_action_menu']) &&
                 (!isset($this->previous_sugar_override_config_array['enable_action_menu']) ||
-                $overrideArray['enable_action_menu'] != $this->previous_sugar_override_config_array['enable_action_menu'] )
+                $overrideArray['enable_action_menu'] != $this->previous_sugar_override_config_array['enable_action_menu'])
         ) {
             require_once('modules/Administration/QuickRepairAndRebuild.php');
             $repair = new RepairAndClear;
@@ -139,12 +143,14 @@ class Configurator {
         $overideString .= '/***CONFIGURATOR***/';
 
         $this->saveOverride($overideString);
-        if (isset($this->config['logger']['level']) && $this->logger)
+        if (isset($this->config['logger']['level']) && $this->logger) {
             $this->logger->setLevel($this->config['logger']['level']);
+        }
     }
 
     //bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
-    function clearCache() {
+    public function clearCache()
+    {
         global $sugar_config, $sugar_version;
         $currentConfigArray = $this->readOverride();
         foreach ($currentConfigArray as $key => $val) {
@@ -160,7 +166,8 @@ class Configurator {
         }
     }
 
-    function saveConfig() {
+    public function saveConfig()
+    {
         if ($this->saveImages() === false) {
             return false;
         }
@@ -170,7 +177,8 @@ class Configurator {
         $this->clearCache();
     }
 
-    function readOverride() {
+    public function readOverride()
+    {
         $sugar_config = array();
         if (file_exists('config_override.php')) {
             if (!is_readable('config_override.php')) {
@@ -182,7 +190,8 @@ class Configurator {
         return $sugar_config;
     }
 
-    function saveOverride($override) {
+    public function saveOverride($override)
+    {
         require_once('install/install_utils.php');
         if (!file_exists('config_override.php')) {
             touch('config_override.php');
@@ -196,7 +205,8 @@ class Configurator {
         fclose($fp);
     }
 
-    function overrideClearDuplicates($array_name, $key) {
+    public function overrideClearDuplicates($array_name, $key)
+    {
         if (!empty($this->override)) {
             $pattern = '/.*CONFIGURATOR[^\$]*\$' . $array_name . '\[\'' . $key . '\'\][\ ]*=[\ ]*[^;]*;\n/';
             $this->override = preg_replace($pattern, '', $this->override);
@@ -205,14 +215,16 @@ class Configurator {
         }
     }
 
-    function replaceOverride($array_name, $key, $value) {
+    public function replaceOverride($array_name, $key, $value)
+    {
         $GLOBALS[$array_name][$key] = $value;
         $this->overrideClearDuplicates($array_name, $key);
         $new_entry = '/***CONFIGURATOR***/' . override_value_to_string($array_name, $key, $value);
         $this->override = str_replace('?>', "$new_entry\n?>", $this->override);
     }
 
-    function restoreConfig() {
+    public function restoreConfig()
+    {
         $this->readOverride();
         $this->overrideClearDuplicates('sugar_config', '[a-zA-Z0-9\_]+');
         $this->saveOverride();
@@ -220,7 +232,8 @@ class Configurator {
         header('Location: index.php?action=EditView&module=Configurator');
     }
 
-    function saveImages() {
+    public function saveImages()
+    {
         if (!empty($_POST['company_logo'])) {
             if ($this->saveCompanyLogo("upload://" . $_POST['company_logo']) === false) {
                 return false;
@@ -228,7 +241,8 @@ class Configurator {
         }
     }
 
-    function checkTempImage($path) {
+    public function checkTempImage($path)
+    {
         if (!verify_uploaded_image($path)) {
             $error = translate('LBL_ALERT_TYPE_IMAGE');
             $GLOBALS['log']->fatal("A user ({$GLOBALS['current_user']->id}) attempted to use an invalid file for the logo - {$path}");
@@ -238,7 +252,8 @@ class Configurator {
         return $path;
     }
 
-    public function getError() {
+    public function getError()
+    {
         $e = $this->error;
         $this->error = null;
         return $e;
@@ -249,7 +264,8 @@ class Configurator {
      *
      * @param string $path path to the image to set as the company logo image
      */
-    function saveCompanyLogo($path) {
+    public function saveCompanyLogo($path)
+    {
         $path = $this->checkTempImage($path);
         if ($path === false) {
             return false;
@@ -267,7 +283,8 @@ class Configurator {
      * Parses the old logger settings from the log4php.properties files.
      *
      */
-    function parseLoggerSettings() {
+    public function parseLoggerSettings()
+    {
         if (!function_exists('setDeepArrayValue')) {
             require('include/utils/array_utils.php');
         }
@@ -321,7 +338,4 @@ class Configurator {
         }
         $this->handleOverride(true);
     }
-
 }
-
-?>
