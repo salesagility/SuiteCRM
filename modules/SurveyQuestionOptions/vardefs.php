@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,83 +37,85 @@
  ********************************************************************************/
 
 $dictionary['SurveyQuestionOptions'] = array(
-	'table'=>'surveyquestionoptions',
-	'audited'=>true,
-    'inline_edit'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
+    'table'              => 'surveyquestionoptions',
+    'audited'            => true,
+    'inline_edit'        => true,
+    'duplicate_merge'    => true,
+    'fields'             => array(
 
-		    'sort_order' =>
-  array (
-    'required' => false,
-    'name' => 'sort_order',
-    'vname' => 'LBL_SORT_ORDER',
-    'type' => 'int',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => false,
-    'inline_edit' => true,
-    'reportable' => true,
-    'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => '255',
-    'size' => '20',
-    'enable_range_search' => false,
-    'disable_num_format' => '',
-    'min' => false,
-    'max' => false,
-  ),
-  "surveyquestionoptions_surveyquestionresponses" => array (
-    'name' => 'surveyquestionoptions_surveyquestionresponses',
-    'type' => 'link',
-    'relationship' => 'surveyquestionoptions_surveyquestionresponses',
-    'source' => 'non-db',
-    'module' => 'SurveyQuestionResponses',
-    'bean_name' => 'SurveyQuestionResponses',
-    'vname' => 'LBL_SURVEYQUESTIONOPTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
-  ),
-  "survey_question" => array (
-    'name' => 'survey_question',
-    'type' => 'link',
-    'relationship' => 'surveyquestions_surveyquestionoptions',
-    'source' => 'non-db',
-    'module' => 'SurveyQuestions',
-    'bean_name' => 'SurveyQuestions',
-    'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONS_TITLE',
-    'id_name' => 'survey_question_id',
-    'link_type'=>'one',
-    'side' => 'left',
-  ),
-  "surveyquestions_surveyquestionoptions_name" => array (
-    'name' => 'surveyquestions_surveyquestionoptions_name',
-    'type' => 'relate',
-    'source' => 'non-db',
-    'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONS_TITLE',
-    'save' => true,
-    'id_name' => 'survey_question_id',
-    'link' => 'survey_question',
-    'table' => 'surveyquestions',
-    'module' => 'SurveyQuestions',
-    'rname' => 'name',
-  ),
-  "survey_question_id" => array (
-    'name' => 'survey_question_id',
-    'type' => 'id',
-    'reportable' => false,
-    'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONOPTIONS_TITLE',
-  ),
-),
-	'relationships'=>array (
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+        'sort_order'                                    => array(
+            'required'                  => false,
+            'name'                      => 'sort_order',
+            'vname'                     => 'LBL_SORT_ORDER',
+            'type'                      => 'int',
+            'massupdate'                => 0,
+            'no_default'                => false,
+            'comments'                  => '',
+            'help'                      => '',
+            'importable'                => 'true',
+            'duplicate_merge'           => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited'                   => false,
+            'inline_edit'               => true,
+            'reportable'                => true,
+            'unified_search'            => false,
+            'merge_filter'              => 'disabled',
+            'len'                       => '255',
+            'size'                      => '20',
+            'enable_range_search'       => false,
+            'disable_num_format'        => '',
+            'min'                       => false,
+            'max'                       => false,
+        ),
+        "surveyquestionoptions_surveyquestionresponses" => array(
+            'name'         => 'surveyquestionoptions_surveyquestionresponses',
+            'type'         => 'link',
+            'relationship' => 'surveyquestionoptions_surveyquestionresponses',
+            'source'       => 'non-db',
+            'module'       => 'SurveyQuestionResponses',
+            'bean_name'    => 'SurveyQuestionResponses',
+            'vname'        => 'LBL_SURVEYQUESTIONOPTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
+        ),
+        "survey_question"                               => array(
+            'name'         => 'survey_question',
+            'type'         => 'link',
+            'relationship' => 'surveyquestions_surveyquestionoptions',
+            'source'       => 'non-db',
+            'module'       => 'SurveyQuestions',
+            'bean_name'    => 'SurveyQuestions',
+            'vname'        => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONS_TITLE',
+            'id_name'      => 'survey_question_id',
+            'link_type'    => 'one',
+            'side'         => 'left',
+        ),
+        "surveyquestions_surveyquestionoptions_name"    => array(
+            'name'    => 'surveyquestions_surveyquestionoptions_name',
+            'type'    => 'relate',
+            'source'  => 'non-db',
+            'vname'   => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONS_TITLE',
+            'save'    => true,
+            'id_name' => 'survey_question_id',
+            'link'    => 'survey_question',
+            'table'   => 'surveyquestions',
+            'module'  => 'SurveyQuestions',
+            'rname'   => 'name',
+        ),
+        "survey_question_id"                            => array(
+            'name'       => 'survey_question_id',
+            'type'       => 'id',
+            'reportable' => false,
+            'vname'      => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONOPTIONS_TITLE',
+        ),
+    ),
+    'relationships'      => array(),
+    'optimistic_locking' => true,
+    'unified_search'     => true,
+);
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('SurveyQuestionOptions','SurveyQuestionOptions', array('basic','assignable','security_groups'));
+VardefManager::createVardef(
+    'SurveyQuestionOptions',
+    'SurveyQuestionOptions',
+    array('basic', 'assignable', 'security_groups')
+);

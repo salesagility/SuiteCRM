@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,18 +39,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/SurveyQuestions/SurveyQuestions.php');
 
-class SurveyQuestionsDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/SurveyQuestions/metadata/dashletviewdefs.php');
+class SurveyQuestionsDashlet extends DashletGeneric
+{
+    function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/SurveyQuestions/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'SurveyQuestions');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'SurveyQuestions');
+        }
 
         $this->searchFields = $dashletData['SurveyQuestionsDashlet']['searchFields'];
         $this->columns = $dashletData['SurveyQuestionsDashlet']['columns'];

@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,37 +36,37 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Zugewiesene BenutzerID',
-  'LBL_ASSIGNED_TO_NAME' => 'Zugewiesen an',
-  'LBL_SECURITYGROUPS' => 'Berechtigungsgruppen',
-  'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Berechtigungsgruppen',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Erstellt am',
-  'LBL_DATE_MODIFIED' => 'Geändert am',
-  'LBL_MODIFIED' => 'Geändert von',
-  'LBL_MODIFIED_ID' => 'Geändert von ID',
-  'LBL_MODIFIED_NAME' => 'Geändert von Name',
-  'LBL_CREATED' => 'Erstellt von:',
-  'LBL_CREATED_ID' => 'Erstellt von ID:',
-  'LBL_DESCRIPTION' => 'Beschreibung',
-  'LBL_DELETED' => 'Gelöscht',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Erstellt von Benutzer:',
-  'LBL_MODIFIED_USER' => 'Geändert von',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_EDIT_BUTTON' => 'Bearbeiten',
-  'LBL_REMOVE' => 'Entfernen',
-  'LBL_LIST_FORM_TITLE' => 'Survey Question Options Liste',
-  'LBL_MODULE_NAME' => 'Survey Question Options',
-  'LBL_MODULE_TITLE' => 'Survey Question Options',
-  'LBL_HOMEPAGE_TITLE' => 'Mein Survey Question Options',
-  'LNK_NEW_RECORD' => 'Erstellen Survey Question Options',
-  'LNK_LIST' => 'Ansicht Survey Question Options',
-  'LNK_IMPORT_SURVEYQUESTIONOPTIONS' => 'Import Survey Question Options',
-  'LBL_SEARCH_FORM_TITLE' => 'Suchen Survey Question Options',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'Verlauf anzeigen',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Aktivitäten',
-  'LBL_SURVEYQUESTIONOPTIONS_SUBPANEL_TITLE' => 'Survey Question Options',
-  'LBL_NEW_FORM_TITLE' => 'Neue Survey Question Options',
+$mod_strings = array(
+    'LBL_ASSIGNED_TO_ID'                       => 'Zugewiesene BenutzerID',
+    'LBL_ASSIGNED_TO_NAME'                     => 'Zugewiesen an',
+    'LBL_SECURITYGROUPS'                       => 'Berechtigungsgruppen',
+    'LBL_SECURITYGROUPS_SUBPANEL_TITLE'        => 'Berechtigungsgruppen',
+    'LBL_ID'                                   => 'ID',
+    'LBL_DATE_ENTERED'                         => 'Erstellt am',
+    'LBL_DATE_MODIFIED'                        => 'Geändert am',
+    'LBL_MODIFIED'                             => 'Geändert von',
+    'LBL_MODIFIED_ID'                          => 'Geändert von ID',
+    'LBL_MODIFIED_NAME'                        => 'Geändert von Name',
+    'LBL_CREATED'                              => 'Erstellt von:',
+    'LBL_CREATED_ID'                           => 'Erstellt von ID:',
+    'LBL_DESCRIPTION'                          => 'Beschreibung',
+    'LBL_DELETED'                              => 'Gelöscht',
+    'LBL_NAME'                                 => 'Name',
+    'LBL_CREATED_USER'                         => 'Erstellt von Benutzer:',
+    'LBL_MODIFIED_USER'                        => 'Geändert von',
+    'LBL_LIST_NAME'                            => 'Name',
+    'LBL_EDIT_BUTTON'                          => 'Bearbeiten',
+    'LBL_REMOVE'                               => 'Entfernen',
+    'LBL_LIST_FORM_TITLE'                      => 'Survey Question Options Liste',
+    'LBL_MODULE_NAME'                          => 'Survey Question Options',
+    'LBL_MODULE_TITLE'                         => 'Survey Question Options',
+    'LBL_HOMEPAGE_TITLE'                       => 'Mein Survey Question Options',
+    'LNK_NEW_RECORD'                           => 'Erstellen Survey Question Options',
+    'LNK_LIST'                                 => 'Ansicht Survey Question Options',
+    'LNK_IMPORT_SURVEYQUESTIONOPTIONS'         => 'Import Survey Question Options',
+    'LBL_SEARCH_FORM_TITLE'                    => 'Suchen Survey Question Options',
+    'LBL_HISTORY_SUBPANEL_TITLE'               => 'Verlauf anzeigen',
+    'LBL_ACTIVITIES_SUBPANEL_TITLE'            => 'Aktivitäten',
+    'LBL_SURVEYQUESTIONOPTIONS_SUBPANEL_TITLE' => 'Survey Question Options',
+    'LBL_NEW_FORM_TITLE'                       => 'Neue Survey Question Options',
 );

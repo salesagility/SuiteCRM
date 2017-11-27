@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,37 +36,37 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => '负责人ID',
-  'LBL_ASSIGNED_TO_NAME' => '负责人',
-  'LBL_SECURITYGROUPS' => '用户组列表',
-  'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => '用户组',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => '创建日期',
-  'LBL_DATE_MODIFIED' => '修改日期',
-  'LBL_MODIFIED' => '修改人',
-  'LBL_MODIFIED_ID' => '修改人ID',
-  'LBL_MODIFIED_NAME' => '修改人',
-  'LBL_CREATED' => '创建人',
-  'LBL_CREATED_ID' => '创建人ID',
-  'LBL_DESCRIPTION' => '说明',
-  'LBL_DELETED' => '已删除',
-  'LBL_NAME' => '名称',
-  'LBL_CREATED_USER' => '创建人',
-  'LBL_MODIFIED_USER' => '修改人',
-  'LBL_LIST_NAME' => '名称',
-  'LBL_EDIT_BUTTON' => '编辑',
-  'LBL_REMOVE' => '移除',
-  'LBL_LIST_FORM_TITLE' => 'Survey Responses 列表',
-  'LBL_MODULE_NAME' => 'Survey Responses',
-  'LBL_MODULE_TITLE' => 'Survey Responses',
-  'LBL_HOMEPAGE_TITLE' => '我的 Survey Responses',
-  'LNK_NEW_RECORD' => '创建 Survey Responses',
-  'LNK_LIST' => '查看 Survey Responses',
-  'LNK_IMPORT_SURVEYRESPONSES' => 'Import Survey Responses',
-  'LBL_SEARCH_FORM_TITLE' => '搜索 Survey Responses',
-  'LBL_HISTORY_SUBPANEL_TITLE' => '查看历史记录',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => '活动',
-  'LBL_SURVEYRESPONSES_SUBPANEL_TITLE' => 'Survey Responses',
-  'LBL_NEW_FORM_TITLE' => '新建 Survey Responses',
+$mod_strings = array(
+    'LBL_ASSIGNED_TO_ID'                 => '负责人ID',
+    'LBL_ASSIGNED_TO_NAME'               => '负责人',
+    'LBL_SECURITYGROUPS'                 => '用户组列表',
+    'LBL_SECURITYGROUPS_SUBPANEL_TITLE'  => '用户组',
+    'LBL_ID'                             => 'ID',
+    'LBL_DATE_ENTERED'                   => '创建日期',
+    'LBL_DATE_MODIFIED'                  => '修改日期',
+    'LBL_MODIFIED'                       => '修改人',
+    'LBL_MODIFIED_ID'                    => '修改人ID',
+    'LBL_MODIFIED_NAME'                  => '修改人',
+    'LBL_CREATED'                        => '创建人',
+    'LBL_CREATED_ID'                     => '创建人ID',
+    'LBL_DESCRIPTION'                    => '说明',
+    'LBL_DELETED'                        => '已删除',
+    'LBL_NAME'                           => '名称',
+    'LBL_CREATED_USER'                   => '创建人',
+    'LBL_MODIFIED_USER'                  => '修改人',
+    'LBL_LIST_NAME'                      => '名称',
+    'LBL_EDIT_BUTTON'                    => '编辑',
+    'LBL_REMOVE'                         => '移除',
+    'LBL_LIST_FORM_TITLE'                => 'Survey Responses 列表',
+    'LBL_MODULE_NAME'                    => 'Survey Responses',
+    'LBL_MODULE_TITLE'                   => 'Survey Responses',
+    'LBL_HOMEPAGE_TITLE'                 => '我的 Survey Responses',
+    'LNK_NEW_RECORD'                     => '创建 Survey Responses',
+    'LNK_LIST'                           => '查看 Survey Responses',
+    'LNK_IMPORT_SURVEYRESPONSES'         => 'Import Survey Responses',
+    'LBL_SEARCH_FORM_TITLE'              => '搜索 Survey Responses',
+    'LBL_HISTORY_SUBPANEL_TITLE'         => '查看历史记录',
+    'LBL_ACTIVITIES_SUBPANEL_TITLE'      => '活动',
+    'LBL_SURVEYRESPONSES_SUBPANEL_TITLE' => 'Survey Responses',
+    'LBL_NEW_FORM_TITLE'                 => '新建 Survey Responses',
 );

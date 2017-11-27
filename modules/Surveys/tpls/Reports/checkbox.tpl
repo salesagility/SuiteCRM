@@ -13,24 +13,24 @@
 <canvas width="600" height="300" id='{$question.id}Chart' class=''></canvas>
 <script>
     {literal}
-    $(document).ready(function(){
-        var chartData = {/literal}{$question.chartData|@json_encode}{literal};
-        var chartLabels = {/literal}{$question.chartLabels|@json_encode}{literal};
-        new RGraph.Pie({
-            id: '{/literal}{$question.id}{literal}Chart',
-            data: chartData,
-            options: {
-                title: '{/literal}{$question.name}{literal}',
-                textSize:10,
-                titleSize:10,
-                colors: ['#434348','#7CB5EC'],
-                tooltips: function(ind) {
-                    return chartLabels[ind] + " - " + chartData[ind];
-                },
-                tooltipsEvent:'onmousemove',
-                labels: chartLabels,
-            }
-        }).draw();
+    $(document).ready(function () {
+      var chartData = {/literal}{$question.chartData|@json_encode}{literal};
+      var chartLabels = {/literal}{$question.chartLabels|@json_encode}{literal};
+      new RGraph.Pie({
+        id: '{/literal}{$question.id}{literal}Chart',
+        data: chartData,
+        options: {
+          title: '{/literal}{$question.name}{literal}',
+          textSize: 10,
+          titleSize: 10,
+          colors: ['#434348', '#7CB5EC'],
+          tooltips: function (ind) {
+            return chartLabels[ind] + " - " + chartData[ind];
+          },
+          tooltipsEvent: 'onmousemove',
+          labels: chartLabels,
+        }
+      }).draw();
     });
     {/literal}
 </script>

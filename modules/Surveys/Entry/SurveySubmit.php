@@ -1,13 +1,13 @@
 <?php
-if(empty($_REQUEST['id'])){
+if (empty($_REQUEST['id'])) {
     do404();
 }
 $surveyId = $_REQUEST['id'];
-$survey = BeanFactory::getBean('Surveys',$surveyId);
-if(empty($survey->id)){
+$survey = BeanFactory::getBean('Surveys', $surveyId);
+if (empty($survey->id)) {
     do404();
 }
-if($survey->status != 'Public'){
+if ($survey->status != 'Public') {
     do404();
 }
 $contactId = !empty($_REQUEST['contact']) ? $_REQUEST['contact'] : '';
@@ -15,12 +15,13 @@ $contactId = !empty($_REQUEST['contact']) ? $_REQUEST['contact'] : '';
 $trackerId = !empty($_REQUEST['tracker']) ? $_REQUEST['tracker'] : '';
 
 require_once 'modules/Campaigns/utils.php';
-if($trackerId){
+if ($trackerId) {
     log_campaign_activity($trackerId, 'Survey');
 }
-processSurvey($survey, $trackerId,$contactId, $_REQUEST);
+processSurvey($survey, $trackerId, $contactId, $_REQUEST);
 
-function getCampaignIdFromTracker($trackerId){
+function getCampaignIdFromTracker($trackerId)
+{
     global $db;
     $trackerId = $db->quote($trackerId);
     $sql = <<<EOF
@@ -29,24 +30,26 @@ function getCampaignIdFromTracker($trackerId){
 EOF;
 
     $row = $db->fetchOne($sql);
-    if($row) {
+    if ($row) {
         return $row['campaign_id'];
     }
+
     return false;
 
 }
 
-function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
+function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
+{
     $contactName = 'Unknown Contact';
     $accountId = '';
     $campaignId = '';
-    if($trackerId){
+    if ($trackerId) {
         $campaignId = getCampaignIdFromTracker($trackerId);
     }
 
-    if($contactId){
-        $contact = BeanFactory::getBean('Contacts',$contactId);
-        if(!empty($contact->id)){
+    if ($contactId) {
+        $contact = BeanFactory::getBean('Contacts', $contactId);
+        if (!empty($contact->id)) {
             $contactName = $contact->name;
             $accountId = $contact->account_id;
         }
@@ -54,7 +57,7 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
     $response = BeanFactory::newBean('SurveyResponses');
     $response->id = create_guid();
     $response->new_with_id = true;
-    $response->name = $survey->name . ' - '.$contactName;
+    $response->name = $survey->name . ' - ' . $contactName;
     $response->contact_id = $contactId;
     $response->account_id = $accountId;
     $response->survey_id = $survey->id;
@@ -62,9 +65,9 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
     $response->happiness = -1;
     $response->happiness_text = '';
 
-    foreach($survey->get_linked_beans('surveys_surveyquestions','SurveyQuestions','sort_order') as $question){
+    foreach ($survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions', 'sort_order') as $question) {
         $userResponse = $request['question'][$question->id];
-        switch($question->type){
+        switch ($question->type) {
             case "Checkbox":
                 $qr = BeanFactory::newBean('SurveyQuestionResponses');
                 $qr->surveyresponse_id = $response->id;
@@ -82,7 +85,7 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
                 $qr->surveyquestionoptions_surveyquestionresponses->add($userResponse);
                 break;
             case "Multiselect":
-                foreach($userResponse as $selected) {
+                foreach ($userResponse as $selected) {
                     $qr = BeanFactory::newBean('SurveyQuestionResponses');
                     $qr->surveyresponse_id = $response->id;
                     $qr->surveyquestion_id = $question->id;
@@ -92,15 +95,15 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
                 }
                 break;
             case "Matrix":
-                foreach($userResponse as $key => $val) {
-                    $qo = BeanFactory::getBean('SurveyQuestionOptions',$key);
+                foreach ($userResponse as $key => $val) {
+                    $qo = BeanFactory::getBean('SurveyQuestionOptions', $key);
                     $qr = BeanFactory::newBean('SurveyQuestionResponses');
                     $qr->surveyresponse_id = $response->id;
                     $qr->surveyquestion_id = $question->id;
                     $qr->answer = $val;
-                    if($val == 2){//Dissatisfied
+                    if ($val == 2) {//Dissatisfied
                         $response->happiness = 0;
-                        $response->happiness_text .= $qo->name ." - Dissatisfied<br>";
+                        $response->happiness_text .= $qo->name . " - Dissatisfied<br>";
                     }
                     $qr->save();
                     $qr->load_relationship('surveyquestionoptions_surveyquestionresponses');
@@ -123,7 +126,7 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
                 $qr->save();
                 break;
             case "Textbox":
-                if($userResponse) {
+                if ($userResponse) {
                     $response->happiness = 0;
                     $response->happiness_text .= $question->name . " - " . $userResponse . "<br>";
                 }
@@ -143,10 +146,14 @@ function processSurvey(Surveys $survey,$trackerId,$contactId, $request){
     header('Location: modules/Surveys/Entry/Thanks.php');
 }
 
-function do404(){
+function do404()
+{
     header("HTTP/1.0 404 Not Found");
     ?>
-<html><head></head><body><h1>Page not found</h1></body></html>
+    <html>
+    <head></head>
+    <body><h1>Page not found</h1></body>
+    </html>
     <?php
     exit();
 }

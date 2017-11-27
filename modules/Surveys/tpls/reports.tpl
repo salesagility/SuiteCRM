@@ -1,4 +1,3 @@
-
 <h1>{$survey.name}</h1>
 <table>
     <tr>
@@ -14,7 +13,6 @@
         <td>{$surveysSentDistinct}</td>
     </tr>
 </table>
-
 
 
 {foreach from=$data item=question}
@@ -35,9 +33,8 @@
             {/if}
         </div>
     </div>
-
 {/foreach}
-<script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js' ></script>
+<script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.effects.js'></script>
@@ -45,7 +42,7 @@
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.context.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.annotate.js'></script>
 
-<script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js' ></script>
+<script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.drawing.text.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.pie.js'></script>
@@ -56,13 +53,13 @@
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.rose.js'></script>
 <script>
     {literal}
-    $(document).ready(function(){
-        $(".showAllResponsesButton").click(function(e){
-            var target = $(e.target);
-            var id = target.data('question-id');
-            $('#'+id+'List').show();
-            return false;
-        });
+    $(document).ready(function () {
+      $(".showAllResponsesButton").click(function (e) {
+        var target = $(e.target);
+        var id = target.data('question-id');
+        $('#' + id + 'List').show();
+        return false;
+      });
     });
     {/literal}
 </script>

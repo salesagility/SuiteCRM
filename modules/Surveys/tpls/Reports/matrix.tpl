@@ -15,36 +15,36 @@
     <canvas width="600" height="400" id='{$responseId}Chart' class=''></canvas>
     <script>
         {literal}
-        $(document).ready(function(){
-            var chartData = {/literal}{$response.chartData|@array_values|@json_encode}{literal};
-            var chartLabels = {/literal}{$response.chartLabels|@array_values|@json_encode}{literal};
-            var max = Math.max.apply(null, chartData);
-            new RGraph.Bar({
-                id: '{/literal}{$responseId}{literal}Chart',
-                data: chartData,
-                options: {
-                    title: '{/literal}{$question.name} - {$response.label}{literal}',
-                    textSize:10,
-                    titleSize:10,
-                    textAngle : 30,
-                    colorsSequential: true,
-                    colors: ['#82CA9D','#FFF79A','#F7977A'],
-                    gutterBottom: 110,
-                    gutterLeft: 50,
-                    tooltips: function(ind) {
-                        return chartLabels[ind] + " - " + chartData[ind];
-                    },
-                    tooltipsEvent:'onmousemove',
-                    labels: chartLabels,
-                    {/literal}
-                    {if $response.chartData|@array_values|@max < 10}
-                        numyticks : max,
-                        ylabelsCount : max,
-                        ymax : max,
-                    {/if}
-                    {literal}
-                }
-            }).draw();
+        $(document).ready(function () {
+          var chartData = {/literal}{$response.chartData|@array_values|@json_encode}{literal};
+          var chartLabels = {/literal}{$response.chartLabels|@array_values|@json_encode}{literal};
+          var max = Math.max.apply(null, chartData);
+          new RGraph.Bar({
+            id: '{/literal}{$responseId}{literal}Chart',
+            data: chartData,
+            options: {
+              title: '{/literal}{$question.name} - {$response.label}{literal}',
+              textSize: 10,
+              titleSize: 10,
+              textAngle: 30,
+              colorsSequential: true,
+              colors: ['#82CA9D', '#FFF79A', '#F7977A'],
+              gutterBottom: 110,
+              gutterLeft: 50,
+              tooltips: function (ind) {
+                return chartLabels[ind] + " - " + chartData[ind];
+              },
+              tooltipsEvent: 'onmousemove',
+              labels: chartLabels,
+                {/literal}
+                {if $response.chartData|@array_values|@max < 10}
+              numyticks: max,
+              ylabelsCount: max,
+              ymax: max,
+                {/if}
+                {literal}
+            }
+          }).draw();
         });
         {/literal}
     </script>

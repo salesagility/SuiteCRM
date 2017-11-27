@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,81 +37,87 @@
  ********************************************************************************/
 
 require_once 'modules/AOP_Case_Updates/util.php';
-class SurveyResponses extends Basic {
-	
-	var $new_schema = true;
-	var $module_dir = 'SurveyResponses';
-	var $object_name = 'SurveyResponses';
-	var $table_name = 'surveyresponses';
-	var $importable = false;
-	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-	var $id;
-	var $name;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $modified_by_name;
-	var $created_by;
-	var $created_by_name;
-	var $description;
-	var $deleted;
-	var $created_by_link;
-	var $modified_user_link;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $assigned_user_link;
-	var $SecurityGroups;
+class SurveyResponses extends Basic
+{
 
-	function __construct(){
-		parent::__construct();
-	}
+    var $new_schema = true;
+    var $module_dir = 'SurveyResponses';
+    var $object_name = 'SurveyResponses';
+    var $table_name = 'surveyresponses';
+    var $importable = false;
+    var $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-	function bean_implements($interface){
-		switch($interface){
-			case 'ACL': return true;
-		}
-		return false;
-	}
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $assigned_user_link;
+    var $SecurityGroups;
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
 
     public function save($check_notify = false)
     {
         global $sugar_config;
         $res = parent::save($check_notify);
 
-        if($this->email_response_sent){
-           return $res;
-        }
-
-        if(!$this->contact_id){
+        if ($this->email_response_sent) {
             return $res;
         }
 
-        $contact = BeanFactory::getBean('Contacts',$this->contact_id);
+        if (!$this->contact_id) {
+            return $res;
+        }
 
-        if(empty($contact->id)){
+        $contact = BeanFactory::getBean('Contacts', $this->contact_id);
+
+        if (empty($contact->id)) {
             return $res;
         }
         $email = $contact->emailAddress->getPrimaryAddress($contact);
-        if(!$email){
+        if (!$email) {
             return $res;
         }
 
-        if($this->happiness > 7 || $this->happiness == -1){
+        if ($this->happiness > 7 || $this->happiness == -1) {
             $templateId = $sugar_config['survey_positive_confirmation_email'];
-        }else{
+        } else {
             $templateId = $sugar_config['survey_negative_confirmation_email'];
             //Create case
             $case = BeanFactory::newBean('Cases');
             $case->name = 'SurveyFollowup';
-            $case->description = "Received the following dissatisfied response from ".$contact->name."<br>";
+            $case->description = "Received the following dissatisfied response from " . $contact->name . "<br>";
             $case->description .= $this->happiness_text;
             $case->from_negative_survey = true;
             $case->status = 'Open_New';
             $case->priority = 'P1';
             $case->type = 'User';
             //$account = BeanFactory::getBean('Accounts',$contact->account_id);
-            if(!empty($contact->assigned_user_id)){
+            if (!empty($contact->assigned_user_id)) {
                 $case->assigned_user_id = $contact->assigned_user_id;
                 $case->auto_assigned = true;
             }
@@ -120,19 +125,21 @@ class SurveyResponses extends Basic {
             $case->load_relationship('contacts');
             $case->contacts->add($contact);
         }
-        if(!$templateId){
+        if (!$templateId) {
             return $res;
         }
-        if($this->sendEmail($contact,$email,$templateId, $case)){
+        if ($this->sendEmail($contact, $email, $templateId, $case)) {
             $this->email_response_sent = true;
             $this->save();
         }
+
         return $res;
     }
 
-    private function sendEmail($contact,$email, $emailTemplateId, $case){
-	    require_once("include/SugarPHPMailer.php");
-        $mailer=new SugarPHPMailer();
+    private function sendEmail($contact, $email, $emailTemplateId, $case)
+    {
+        require_once("include/SugarPHPMailer.php");
+        $mailer = new SugarPHPMailer();
         $admin = new Administration();
         $admin->retrieveSettings();
 
@@ -142,8 +149,9 @@ class SurveyResponses extends Basic {
         $email_template = new EmailTemplate();
         $email_template = $email_template->retrieve($emailTemplateId);
 
-        if(!$email_template){
+        if (!$email_template) {
             $GLOBALS['log']->warn("SurveyResponse: Email template is empty");
+
             return false;
         }
 
@@ -152,39 +160,52 @@ class SurveyResponses extends Basic {
         $mailer->Body = $text['body'];
         $mailer->IsHTML(true);
         $mailer->AltBody = $text['body_alt'];
-        $mailer->From     = $admin->settings['notify_fromaddress'];
+        $mailer->From = $admin->settings['notify_fromaddress'];
         $mailer->FromName = $admin->settings['notify_fromname'];
 
         $mailer->AddAddress($email);
-        if (!$mailer->Send()){
+        if (!$mailer->Send()) {
             $GLOBALS['log']->info("SurveyResponse: Could not send email:  " . $mailer->ErrorInfo);
+
             return false;
-        }else{
+        } else {
             $this->logEmail($email, $mailer, $contact->id);
+
             return true;
         }
     }
 
-    private function populateTemplate(EmailTemplate $template, $contact, $case){
+    private function populateTemplate(EmailTemplate $template, $contact, $case)
+    {
         global $sugar_config;
         $beans = array(
             "Contacts" => $contact->id,
         );
-        if($case){
+        if ($case) {
             $beans['Cases'] = $case->id;
         }
         $ret = array();
-        $ret['subject'] = from_html(aop_parse_template($template->subject,$beans));
-        $ret['body'] = from_html(aop_parse_template(str_replace("\$sugarurl",$sugar_config['site_url'],$template->body_html),$beans));
-        $ret['body_alt'] = strip_tags(from_html(aop_parse_template(str_replace("\$sugarurl",$sugar_config['site_url'],$template->body),$beans)));
+        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
+        $ret['body'] =
+            from_html(
+                aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body_html), $beans)
+            );
+        $ret['body_alt'] =
+            strip_tags(
+                from_html(
+                    aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body), $beans)
+                )
+            );
+
         return $ret;
     }
 
-    private function logEmail($email, $mailer, $contactId = null){
+    private function logEmail($email, $mailer, $contactId = null)
+    {
         require_once('modules/Emails/Email.php');
         $emailObj = new Email();
         $emailObj->to_addrs = $email;
-        $emailObj->type= 'out';
+        $emailObj->type = 'out';
         $emailObj->deleted = '0';
         $emailObj->name = $mailer->Subject;
         $emailObj->description = $mailer->AltBody;
@@ -202,4 +223,5 @@ class SurveyResponses extends Basic {
     }
 
 }
+
 ?>

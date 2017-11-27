@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,10 +39,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 global $app_strings;
 
-$dashletMeta['SurveyQuestionResponsesDashlet'] = array('module'		=> 'SurveyQuestionResponses',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'SurveyQuestionResponses'),
-                                          'description' => 'A customizable view into SurveyQuestionResponses',
-                                          'category'    => 'Module Views');
+$dashletMeta['SurveyQuestionResponsesDashlet'] = array(
+    'module'      => 'SurveyQuestionResponses',
+    'title'       => translate('LBL_HOMEPAGE_TITLE', 'SurveyQuestionResponses'),
+    'description' => 'A customizable view into SurveyQuestionResponses',
+    'category'    => 'Module Views'
+);

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,8 +39,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 global $mod_strings, $app_strings, $sugar_config;
- 
-if(ACLController::checkAccess('SurveyResponses', 'edit', true))$module_menu[]=Array("index.php?module=SurveyResponses&action=EditView&return_module=SurveyResponses&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Add", 'SurveyResponses');
-if(ACLController::checkAccess('SurveyResponses', 'list', true))$module_menu[]=Array("index.php?module=SurveyResponses&action=index&return_module=SurveyResponses&return_action=DetailView", $mod_strings['LNK_LIST'],"View", 'SurveyResponses');
+
+if (ACLController::checkAccess('SurveyResponses', 'edit', true)) {
+    $module_menu[] =
+        Array(
+            "index.php?module=SurveyResponses&action=EditView&return_module=SurveyResponses&return_action=DetailView",
+            $mod_strings['LNK_NEW_RECORD'],
+            "Add",
+            'SurveyResponses'
+        );
+}
+if (ACLController::checkAccess('SurveyResponses', 'list', true)) {
+    $module_menu[] =
+        Array(
+            "index.php?module=SurveyResponses&action=index&return_module=SurveyResponses&return_action=DetailView",
+            $mod_strings['LNK_LIST'],
+            "View",
+            'SurveyResponses'
+        );
+}

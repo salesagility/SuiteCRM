@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 require_once 'include/DetailView/DetailView2.php';
 
 class SurveysViewReports extends SugarView
@@ -10,7 +12,8 @@ class SurveysViewReports extends SugarView
         parent::__construct();
     }
 
-    private function getSurveyStats(){
+    private function getSurveyStats()
+    {
         global $db;
         $quotedId = $db->quote($this->bean->id);
         $sentQuery = <<<EOF
@@ -24,29 +27,32 @@ WHERE campaigns.survey_id = '$quotedId' AND campaigns.deleted = 0
 EOF;
 
         $surveysSent = $db->fetchOne($sentQuery);
+
         return $surveysSent;
     }
 
-    public function display(){
+    public function display()
+    {
         global $mod_strings, $timedate;
         parent::display();
-        $this->ss->assign('mod',$mod_strings);
-        $this->ss->assign('survey',$this->bean->toArray());
-        $responses = $this->bean->get_linked_beans('surveys_surveyresponses', 'SurveyResponses','surveyresponses.date_created');
+        $this->ss->assign('mod', $mod_strings);
+        $this->ss->assign('survey', $this->bean->toArray());
+        $responses =
+            $this->bean->get_linked_beans('surveys_surveyresponses', 'SurveyResponses', 'surveyresponses.date_created');
         $this->ss->assign('responsesCount', count($responses));
 
         $surveysSent = $this->getSurveyStats();
-        if($surveysSent){
+        if ($surveysSent) {
             $sentCount = $surveysSent['sent'];
             $distinctCount = $surveysSent['distinct_sent'];
         }
 
         $data = $this->generateSkeletonData($this->bean);
 
-        foreach($responses as $response){
-            foreach($response->get_linked_beans('surveyresponses_surveyquestionresponses') as $questionResponse){
+        foreach ($responses as $response) {
+            foreach ($response->get_linked_beans('surveyresponses_surveyquestionresponses') as $questionResponse) {
                 $questionId = $questionResponse->surveyquestion_id;
-                switch($data[$questionId]['type']){
+                switch ($data[$questionId]['type']) {
                     case "Checkbox":
                         $answerBool = !empty($questionResponse->answer_bool) ? 1 : 0;
                         $data[$questionId]['responses'][$answerBool]['count']++;
@@ -55,23 +61,29 @@ EOF;
                     case "DateTime":
                     case "Date":
                         $dateStr = $questionResponse->answer_datetime;
-                        if($data[$questionId]['type'] == 'Date') {
+                        if ($data[$questionId]['type'] == 'Date') {
                             $date = $timedate->fromUser($questionResponse->answer_datetime);
                             if ($date) {
                                 $date = $timedate->tzGMT($date);
                                 $dateStr = $timedate->asUserDate($date);
                             }
                         }
-                        $data[$questionId]['responses'][] =  array(
-                                'answer' => $dateStr,
-                                'contact' => !empty($response->contact_id) ? array('id' => $response->contact_id, 'name' =>
-                                    $response->contact_name) : false,
-                                'time' => $questionResponse->date_entered,
-                            );
+                        $data[$questionId]['responses'][] = array(
+                            'answer'  => $dateStr,
+                            'contact' => !empty($response->contact_id) ? array(
+                                'id'   => $response->contact_id,
+                                'name' => $response->contact_name
+                            ) : false,
+                            'time'    => $questionResponse->date_entered,
+                        );
 
                         break;
                     case "Matrix":
-                        $options = $questionResponse->get_linked_beans('surveyquestionoptions_surveyquestionresponses', 'SurveyQuestionOptions');
+                        $options =
+                            $questionResponse->get_linked_beans(
+                                'surveyquestionoptions_surveyquestionresponses',
+                                'SurveyQuestionOptions'
+                            );
                         foreach ($options as $option) {
                             $data[$questionId]['responses'][$option->id]['options'][$questionResponse->answer]['count']++;
                             $data[$questionId]['responses'][$option->id]['chartData'][$questionResponse->answer]++;
@@ -80,7 +92,11 @@ EOF;
                     case "Multiselect":
                     case "Radio":
                     case "Dropdown":
-                        $options = $questionResponse->get_linked_beans('surveyquestionoptions_surveyquestionresponses', 'SurveyQuestionOptions');
+                        $options =
+                            $questionResponse->get_linked_beans(
+                                'surveyquestionoptions_surveyquestionresponses',
+                                'SurveyQuestionOptions'
+                            );
                         foreach ($options as $option) {
                             $data[$questionId]['responses'][$option->id]['count']++;
                             $data[$questionId]['chartData'][$option->id]++;
@@ -94,12 +110,14 @@ EOF;
                     case "Textbox":
                     case "Text":
                     default:
-                        $data[$questionId]['responses'][] =  array(
-                                'answer' => $questionResponse->answer,
-                                'contact' => !empty($response->contact_id) ? array('id' => $response->contact_id, 'name' =>
-                                    $response->contact_name) : false,
-                                'time' => $questionResponse->date_entered,
-                            );
+                        $data[$questionId]['responses'][] = array(
+                            'answer'  => $questionResponse->answer,
+                            'contact' => !empty($response->contact_id) ? array(
+                                'id'   => $response->contact_id,
+                                'name' => $response->contact_name
+                            ) : false,
+                            'time'    => $questionResponse->date_entered,
+                        );
                         break;
                 }
 
@@ -109,71 +127,79 @@ EOF;
         $this->ss->assign('data', $data);
         $this->ss->assign('surveysSent', $sentCount);
         $this->ss->assign('surveysSentDistinct', $distinctCount);
-        $html =  $this->ss->fetch('modules/Surveys/tpls/reports.tpl');
+        $html = $this->ss->fetch('modules/Surveys/tpls/reports.tpl');
         echo $html;
 
     }
 
-    private function getCheckboxQuestionSkeleton($arr){
+    private function getCheckboxQuestionSkeleton($arr)
+    {
         global $mod_strings;
         $arr['chartData'] = array(0 => 0, 1 => 0);
-        $arr['chartLabels'] = array($mod_strings['LBL_UNCHECKED'],$mod_strings['LBL_CHECKED']);
-        $arr['responses'][0] =
-            array(
-                'count' => 0,
-                'label' => $mod_strings['LBL_UNCHECKED']
-            );
-        $arr['responses'][1] =
-            array(
-                'count' => 0,
-                'label' => $mod_strings['LBL_CHECKED']
-            );
+        $arr['chartLabels'] = array($mod_strings['LBL_UNCHECKED'], $mod_strings['LBL_CHECKED']);
+        $arr['responses'][0] = array(
+            'count' => 0,
+            'label' => $mod_strings['LBL_UNCHECKED']
+        );
+        $arr['responses'][1] = array(
+            'count' => 0,
+            'label' => $mod_strings['LBL_CHECKED']
+        );
+
         return $arr;
     }
 
-    private function getMatrixQuestionSkeleton($arr,$options){
+    private function getMatrixQuestionSkeleton($arr, $options)
+    {
         global $app_list_strings;
-        foreach($options as $option){
+        foreach ($options as $option) {
             $arr['responses'][$option->id] = array(
                 'options' => array(),
                 'label'   => $option->name,
                 'order'   => $option->sort_order
             );
-            foreach($app_list_strings['surveys_matrix_options'] as $key => $val) {
-                $arr['responses'][$option->id]['options'][$key] = array('count' => 0,'label' => $val);
-                $arr['responses'][$option->id]['chartLabels'][$key] = $val ."  ";
+            foreach ($app_list_strings['surveys_matrix_options'] as $key => $val) {
+                $arr['responses'][$option->id]['options'][$key] = array('count' => 0, 'label' => $val);
+                $arr['responses'][$option->id]['chartLabels'][$key] = $val . "  ";
                 $arr['responses'][$option->id]['chartData'][$key] = 0;
             }
         }
+
         return $arr;
     }
 
-    private function getChoiceQuestionSkeleton($arr, $options){
-        foreach($options as $option){
+    private function getChoiceQuestionSkeleton($arr, $options)
+    {
+        foreach ($options as $option) {
             $arr['chartLabels'][$option->id] = $option->name;
             $arr['chartData'][$option->id] = 0;
-            $arr['responses'][$option->id] =
-                array(
-                    'count' => 0,
-                    'label' => $option->name,
-                    'order' => $option->sort_order);
+            $arr['responses'][$option->id] = array(
+                'count' => 0,
+                'label' => $option->name,
+                'order' => $option->sort_order
+            );
         }
+
         return $arr;
     }
 
-    private function getRatingQuestionSkeleton($arr){
-        for($x = 1; $x <= 5; $x++){
-            $arr['chartLabels'][$x] = $x .' Stars';
+    private function getRatingQuestionSkeleton($arr)
+    {
+        for ($x = 1; $x <= 5; $x++) {
+            $arr['chartLabels'][$x] = $x . ' Stars';
             $arr['chartData'][$x] = 0;
-            $arr['responses'][$x] =
-                array(
-                    'count' => 0,
-                    'label' => $x . ' Stars',
-                    'order' => $x);
+            $arr['responses'][$x] = array(
+                'count' => 0,
+                'label' => $x . ' Stars',
+                'order' => $x
+            );
         }
+
         return $arr;
     }
-    private function getScaleQuestionSkeleton($arr) {
+
+    private function getScaleQuestionSkeleton($arr)
+    {
         for ($x = 1; $x <= 10; $x++) {
             $arr['chartLabels'][$x] = $x;
             $arr['chartData'][$x] = 0;
@@ -183,33 +209,45 @@ EOF;
                 'order' => $x
             );
         }
+
         return $arr;
     }
 
-    private function generateSkeletonData(Surveys $survey){
+    private function generateSkeletonData(Surveys $survey)
+    {
         $data = array();
-        $questions = $survey->get_linked_beans('surveys_surveyquestions','SurveyQuestions','sort_order');
-        foreach($questions as $question){
+        $questions = $survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions', 'sort_order');
+        foreach ($questions as $question) {
             $data[$question->id] = array(
-                    'id' => $question->id,
-                    'name' => $question->name,
-                    'type' => $question->type,
-                    'order' => $question->sort_order,
-                    'responses' => array(),
-                );
-            switch($question->type){
+                'id'        => $question->id,
+                'name'      => $question->name,
+                'type'      => $question->type,
+                'order'     => $question->sort_order,
+                'responses' => array(),
+            );
+            switch ($question->type) {
                 case "Checkbox":
                     $data[$question->id] = $this->getCheckboxQuestionSkeleton($data[$question->id]);
                     break;
                 case "Matrix":
-                    $options = $question->get_linked_beans('surveyquestions_surveyquestionoptions','SurveyQuestionOptions','sort_order');
-                    $data[$question->id] = $this->getMatrixQuestionSkeleton($data[$question->id],$options);
+                    $options =
+                        $question->get_linked_beans(
+                            'surveyquestions_surveyquestionoptions',
+                            'SurveyQuestionOptions',
+                            'sort_order'
+                        );
+                    $data[$question->id] = $this->getMatrixQuestionSkeleton($data[$question->id], $options);
                     break;
                 case "Multiselect":
                 case "Radio":
                 case "Dropdown":
-                    $options = $question->get_linked_beans('surveyquestions_surveyquestionoptions','SurveyQuestionOptions','sort_order');
-                    $data[$question->id] = $this->getChoiceQuestionSkeleton($data[$question->id],$options);
+                    $options =
+                        $question->get_linked_beans(
+                            'surveyquestions_surveyquestionoptions',
+                            'SurveyQuestionOptions',
+                            'sort_order'
+                        );
+                    $data[$question->id] = $this->getChoiceQuestionSkeleton($data[$question->id], $options);
                     break;
                 case "Rating":
                     $data[$question->id] = $this->getRatingQuestionSkeleton($data[$question->id]);
@@ -224,6 +262,7 @@ EOF;
                     break;
             }
         }
+
         return $data;
     }
 }
