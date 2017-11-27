@@ -596,14 +596,29 @@ class User extends Person
     {
         global $current_user, $sugar_config, $mod_strings;
         
+        $msg = '';
+        
         $isUpdate = !empty($this->id) && !$this->new_with_id;
+            
+        //No SMTP server is set up Error.
+        $admin = new Administration();
+        $smtp_error = $admin->checkSmtpError();
         
         // only admin user can change 2 factor authentication settings
-        if ($isUpdate && !is_admin($current_user)) {
+        if ($smtp_error || $isUpdate && !is_admin($current_user)) {
+            
             $tmpUser = BeanFactory::getBean('Users', $this->id);
-            if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
-                $msg .= 'Current user is not able to change two factor authentication settings.';
+            
+            if($smtp_error) {
+                $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
+                SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+            } else {
+                if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                    $msg .= 'Current user is not able to change two factor authentication settings.';
+                    $GLOBALS['log']->warn($msg);
+                    SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
+                }
             }
             $this->factor_auth = $tmpUser->factor_auth;
             $this->factor_auth_interface = $tmpUser->factor_auth_interface;

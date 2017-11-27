@@ -1,6 +1,8 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry)
+    die('Not A Valid Entry Point');
+/* * *******************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
@@ -36,19 +38,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * ****************************************************************************** */
 
-/*********************************************************************************
+/* * *******************************************************************************
 
  * Description:  TODO: To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ * ****************************************************************************** */
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
 class Administration extends SugarBean {
+
     var $settings;
     var $table_name = "config";
     var $object_name = "Administration";
@@ -65,10 +68,9 @@ class Administration extends SugarBean {
         'ldap',
         'captcha',
         'sugarpdf',
-
     );
     var $disable_custom_fields = true;
-    var $checkbox_fields = Array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled','captcha_on');
+    var $checkbox_fields = Array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on');
 
     function __construct() {
         parent::__construct();
@@ -76,39 +78,59 @@ class Administration extends SugarBean {
         $this->setupCustomFields('Administration');
     }
 
+    public function checkSmtpError($displayWarning = true) {
+        
+        global $sugar_config;
+        
+        $smtp_error = false;
+        $this->retrieveSettings();
+
+        //If sendmail has been configured by setting the config variable ignore this warning
+        $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
+
+        if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
+            if ($this->settings['notify_on']) {
+                $smtp_error = true;
+            }
+        }
+
+        if ($displayWarning && $smtp_error) {
+            displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+        }
+
+        return $smtp_error;
+    }
+
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Administration(){
+    function Administration() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
-
-    function retrieveSettings($category = FALSE, $clean=false) {
+    function retrieveSettings($category = FALSE, $clean = false) {
         // declare a cache for all settings
         $settings_cache = sugar_cache_retrieve('admin_settings_cache');
 
-        if($clean) {
+        if ($clean) {
             $settings_cache = array();
         }
 
         // Check for a cache hit
-        if(!empty($settings_cache)) {
+        if (!empty($settings_cache)) {
             $this->settings = $settings_cache;
-            if (!empty($this->settings[$category]))
-            {
+            if (!empty($this->settings[$category])) {
                 return $this;
             }
         }
 
-        if ( ! empty($category) ) {
+        if (!empty($category)) {
             $query = "SELECT category, name, value FROM {$this->table_name} WHERE category = '{$category}'";
         } else {
             $query = "SELECT category, name, value FROM {$this->table_name}";
@@ -116,20 +138,20 @@ class Administration extends SugarBean {
 
         $result = $this->db->query($query, true, "Unable to retrieve system settings");
 
-        if(empty($result)) {
+        if (empty($result)) {
             return NULL;
         }
 
-        while($row = $this->db->fetchByAssoc($result)) {
-            if($row['category']."_".$row['name'] == 'ldap_admin_password' || $row['category']."_".$row['name'] == 'proxy_password')
-                $this->settings[$row['category']."_".$row['name']] = $this->decrypt_after_retrieve($row['value']);
+        while ($row = $this->db->fetchByAssoc($result)) {
+            if ($row['category'] . "_" . $row['name'] == 'ldap_admin_password' || $row['category'] . "_" . $row['name'] == 'proxy_password')
+                $this->settings[$row['category'] . "_" . $row['name']] = $this->decrypt_after_retrieve($row['value']);
             else
-                $this->settings[$row['category']."_".$row['name']] = $row['value'];
+                $this->settings[$row['category'] . "_" . $row['name']] = $row['value'];
             $this->settings[$row['category']] = true;
         }
         $this->settings[$category] = true;
 
-        if(!isset($this->settings["mail_sendtype"])) {
+        if (!isset($this->settings["mail_sendtype"])) {
             // outbound email settings
             $oe = new OutboundEmail();
             $oe->getSystemMailerSettings();
@@ -141,7 +163,7 @@ class Administration extends SugarBean {
         }
 
         // At this point, we have built a new array that should be cached.
-        sugar_cache_put('admin_settings_cache',$this->settings);
+        sugar_cache_put('admin_settings_cache', $this->settings);
         return $this;
     }
 
@@ -151,16 +173,16 @@ class Administration extends SugarBean {
         // outbound email settings
         $oe = new OutboundEmail();
 
-        foreach($_POST as $key => $val) {
+        foreach ($_POST as $key => $val) {
             $prefix = $this->get_config_prefix($key);
-            if(in_array($prefix[0], $this->config_categories)) {
-                if(is_array($val)){
-                    $val=implode(",",$val);
+            if (in_array($prefix[0], $this->config_categories)) {
+                if (is_array($val)) {
+                    $val = implode(",", $val);
                 }
                 $this->saveSetting($prefix[0], $prefix[1], $val);
             }
-            if(strpos($key, "mail_") !== false) {
-                if(in_array($key, $oe->field_defs)) {
+            if (strpos($key, "mail_") !== false) {
+                if (in_array($key, $oe->field_defs)) {
                     $oe->$key = $val;
                 }
             }
@@ -180,13 +202,12 @@ class Administration extends SugarBean {
         $row = $this->db->fetchByAssoc($result);
         $row_count = $row['the_count'];
 
-        if($category."_".$key == 'ldap_admin_password' || $category."_".$key == 'proxy_password')
+        if ($category . "_" . $key == 'ldap_admin_password' || $category . "_" . $key == 'proxy_password')
             $value = $this->encrpyt_before_save($value);
 
-        if( $row_count == 0){
+        if ($row_count == 0) {
             $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$value','$category', '$key')");
-        }
-        else{
+        } else {
             $result = $this->db->query("UPDATE config SET value = '{$value}' WHERE category = '{$category}' AND name = '{$key}'");
         }
         sugar_cache_clear('admin_settings_cache');
@@ -194,9 +215,9 @@ class Administration extends SugarBean {
     }
 
     function get_config_prefix($str) {
-        return $str
-            ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1))
-            : Array(false, false);
+        return $str ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_") + 1)) : Array(false, false);
     }
+
 }
+
 ?>

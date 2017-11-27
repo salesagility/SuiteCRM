@@ -5544,3 +5544,8 @@ function isValidId($id) {
 
     return $valid;
 }
+
+function displayAdminError($errorString) {
+    $output = '<p class="error">' . $errorString . '</p>';
+    echo $output;
+}
