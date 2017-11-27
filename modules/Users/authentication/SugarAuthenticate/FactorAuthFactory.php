@@ -15,17 +15,21 @@ class FactorAuthFactory {
      * @return FactorAuthInterface
      * @throws SuiteException
      */
-    public function getFactorAuth() {
-        global $current_user;
-        if (!$current_user->id) {
+    public function getFactorAuth($user = null) {
+        if(null === $user) {
+            global $current_user;
+            $user = $current_user;
+        }
+        if (!$user->id) {
             throw new SuiteException('User is not identified for factor authentication.');
         }
-        if (!$current_user->factor_auth) {
+        if (!$user->factor_auth) {
             throw new SuiteException('User factor auth is not set. See user profile page.');
         }
-        $factorAuthClass = $current_user->factor_auth_interface ?: self::DEFAULT_FACTOR_AUTH_INTERFACE;
+        $factorAuthClass = $user->factor_auth_interface ?: self::DEFAULT_FACTOR_AUTH_INTERFACE;
         if (!isset(self::$instances[$factorAuthClass])) {
-            include_once __DIR__ . DIRECTORY_SEPARATOR . $factorAuthClass . '.php';
+            $factorAuthClassFile = __DIR__ . DIRECTORY_SEPARATOR . $factorAuthClass . '.php';
+            include_once $factorAuthClassFile;
             self::$instances[$factorAuthClass] = new $factorAuthClass();
         }
         return self::$instances[$factorAuthClass];

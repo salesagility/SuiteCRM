@@ -1,9 +1,7 @@
 <?php
 
-
 include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthInterface.php');
 include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
-
 
 class FactorAuthEmailCode implements FactorAuthInterface {
 
@@ -12,8 +10,7 @@ class FactorAuthEmailCode implements FactorAuthInterface {
      * (like login page for pwd)
      * @throws \RuntimeException
      */
-    public function showTokenInput()
-    {
+    public function showTokenInput() {
         global $app_strings;
 
         $ss = new Sugar_Smarty();
@@ -22,12 +19,12 @@ class FactorAuthEmailCode implements FactorAuthInterface {
 
         $cssPath = $theme->getCSSPath();
         $css = $theme->getCSS();
-        $favicon = $theme->getImageURL('sugar_icon.ico',false);
+        $favicon = $theme->getImageURL('sugar_icon.ico', false);
 
         $ss->assign('APP', $app_strings);
         $ss->assign('cssPath', $cssPath);
         $ss->assign('css', $css);
-        $ss->assign('favicon',getJSPath($favicon));
+        $ss->assign('favicon', getJSPath($favicon));
 
         $factorMessage = SugarAuthenticate::getFactorMessages();
         $ss->assign('factor_message', $factorMessage);
@@ -77,16 +74,37 @@ class FactorAuthEmailCode implements FactorAuthInterface {
         if (!$mailer->send()) {
             $ret = false;
             $GLOBALS['log']->fatal(
-                'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
-                $mailer->ErrorInfo
+                    'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
+                    $mailer->ErrorInfo
             );
         } else {
             $GLOBALS['log']->debug('FACTOR AUTH: token sent to user: ' .
-                $current_user->id . ', token: ' . '{$token}' . ' so we store it in the session'
+                    $current_user->id . ', token: ' . '{$token}' . ' so we store it in the session'
             );
         }
 
         return $ret;
+    }
+
+    public function validateTokenMessage() {
+        global $sugar_config, $mod_strings;
+        $msg = '';
+        $emailTpl = false;
+        if (isset($sugar_config['passwordsetting']['factoremailtmpl']) && $sugar_config['passwordsetting']['factoremailtmpl']) {
+            $emailTpl = BeanFactory::getBean('EmailTemplates', $sugar_config['passwordsetting']['factoremailtmpl']);
+        }
+        if (!isset($sugar_config['passwordsetting']['factoremailtmpl']) || !$sugar_config['passwordsetting']['factoremailtmpl'] || !$emailTpl) {
+            $msg .= 'Two factor email template is not set, change settings on password management page.';
+            $GLOBALS['log']->warn($msg);
+            SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL']);
+            return false;
+        } elseif ($emailTpl && !preg_match('/\$code\b/', $emailTpl->body_html)) {
+            $msg .= 'Two factor email template should contains a $code at least.';
+            $GLOBALS['log']->warn($msg);
+            SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL_CODE']);
+            return false;
+        }
+        return true;
     }
 
 }

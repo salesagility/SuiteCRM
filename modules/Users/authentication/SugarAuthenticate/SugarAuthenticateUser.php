@@ -257,7 +257,10 @@ class SugarAuthenticateUser {
 
     public function isUserLogoutRequest() {
         $logout = false;
-        if ($_REQUEST['module'] == 'Users' && $_REQUEST['action'] == 'Logout') {
+        if (
+                isset($_REQUEST['module']) && $_REQUEST['module'] == 'Users' &&
+                isset($_REQUEST['action']) && $_REQUEST['action'] == 'Logout'
+        ) {
             $logout = true;
         }
         return $logout;
