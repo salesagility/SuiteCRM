@@ -173,11 +173,19 @@ class SugarAuthenticateUser {
         global $current_user;
 
         $GLOBALS['log']->debug('Redirect to factor token input.....');
-
-        $factorAuthClass = $current_user->factor_auth_interface;
+        
         $factory = new FactorAuthFactory();
         $factorAuth = $factory->getFactorAuth();
-        $factorAuth->showTokenInput();
+        if(!$factorAuth->validateTokenMessage()) {
+            $msg = 'Factor Authentication message is invalid.';
+            $GLOBALS['log']->warn($msg);
+            global $app_strings;
+            SugarApplication::appendErrorMessage($app_strings['ERR_FACTOR_TPL_INVALID']);
+            SugarAuthenticate::addFactorMessage($app_strings['ERR_FACTOR_TPL_INVALID']);
+            $factorAuth->showTokenInput();
+        } else {
+            $factorAuth->showTokenInput();
+        }
 
         die();
     }

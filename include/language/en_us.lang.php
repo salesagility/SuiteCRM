@@ -2348,6 +2348,7 @@ $app_strings = array(
 
     'LBL_CATEGORY' => 'Category',
     'LBL_LIST_CATEGORY' => 'Category',
+    'ERR_FACTOR_TPL_INVALID' => 'Factor Authentication message is invalid, please contact to your administrator.',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
