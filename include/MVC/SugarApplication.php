@@ -143,7 +143,7 @@ class SugarApplication {
                     $this->controller->module = '';
                 } elseif (strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
                     echo 'lost password';
-                    if (preg_match('\bentryPoint=Changenewpassword\b', $_SERVER['HTTP_REFERER'])) {
+                    if (preg_match('/\bentryPoint=Changenewpassword\b/', $_SERVER['HTTP_REFERER'])) {
                         echo ' - change new password';
                     }
                     exit();

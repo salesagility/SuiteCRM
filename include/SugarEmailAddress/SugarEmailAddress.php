@@ -1,43 +1,48 @@
 <?php
+/** 
+ * 
+ * SugarCRM Community Edition is a customer relationship management program developed by 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
+ * 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU Affero General Public License version 3 as published by the 
+ * Free Software Foundation with the addition of the following permission added 
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+ * details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with 
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
+ * 02110-1301 USA. 
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
+ * 
+ * The interactive user interfaces in modified source and object code versions 
+ * of this program must display Appropriate Legal Notices, as required under 
+ * Section 5 of the GNU Affero General Public License version 3. 
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
+ * these Appropriate Legal Notices must retain the display of the "Powered by 
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+ */
+
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+
 
 /*********************************************************************************
  * Description:
@@ -51,24 +56,24 @@ require_once("include/JSON.php");
 
 class SugarEmailAddress extends SugarBean
 {
-    var $table_name = 'email_addresses';
-    var $module_name = "EmailAddresses";
-    var $module_dir = 'EmailAddresses';
-    var $object_name = 'EmailAddress';
+    public $table_name = 'email_addresses';
+    public $module_name = "EmailAddresses";
+    public $module_dir = 'EmailAddresses';
+    public $object_name = 'EmailAddress';
 
     //bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
     //allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
-    var $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
-    var $disable_custom_fields = true;
-    var $db;
-    var $smarty;
-    var $addresses = array(); // array of emails
-    var $view = '';
+    public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
+    public $disable_custom_fields = true;
+    public $db;
+    public $smarty;
+    public $addresses = array(); // array of emails
+    public $view = '';
     private $stateBeforeWorkflow;
 
     public $email_address;
 
-    static $count = 0;
+    public static $count = 0;
 
     /**
      * @var int
@@ -105,7 +110,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $id
      * @param string $module
      */
-    function handleLegacySave($bean, $prefix = "")
+    public function handleLegacySave($bean, $prefix = "")
     {
         if (!isset($_REQUEST) || !isset($_REQUEST['useEmailWidget'])) {
             if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
@@ -143,17 +148,18 @@ class SugarEmailAddress extends SugarBean
      * @param array $request $_REQUEST
      * @return bool
      */
-    public function saveAtUserProfile($request) {
+    public function saveAtUserProfile($request)
+    {
 
         // validate the request first
 
-        if(!$this->isUserProfileEditViewPageSaveAction($request)) {
+        if (!$this->isUserProfileEditViewPageSaveAction($request)) {
             $GLOBALS['log']->error('Invalid Referrer: '.
                 'expected the Save action to be called from the User\'s Profile Edit View');
             return false;
         }
 
-        if(!$request) {
+        if (!$request) {
             $GLOBALS['log']->error('This function requires a request array');
             return false;
         }
@@ -161,13 +167,13 @@ class SugarEmailAddress extends SugarBean
         // first grab the needed information from a messy request
 
         $neededRequest = array();
-        foreach($request as $key => $value) {
-            if(preg_match('/^Users\d+emailAddress/', $key)) {
+        foreach ($request as $key => $value) {
+            if (preg_match('/^Users\d+emailAddress/', $key)) {
                 $neededRequest[$key] = $value;
             }
         }
 
-        if(!$neededRequest) {
+        if (!$neededRequest) {
             $GLOBALS['log']->error('Email info is not found in request');
             return false;
         }
@@ -175,8 +181,8 @@ class SugarEmailAddress extends SugarBean
         // re-parsing the request and convert into a useful format
 
         $usefulRequest = array();
-        foreach($neededRequest as $key => $value) {
-            if(preg_match('/^Users(\d+)emailAddress(\d+)/', $key, $matches)) {
+        foreach ($neededRequest as $key => $value) {
+            if (preg_match('/^Users(\d+)emailAddress(\d+)/', $key, $matches)) {
                 $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]] = array(
                     'email' => $neededRequest["Users{$matches[1]}emailAddress{$matches[2]}"],
                     'id' => $neededRequest["Users{$matches[1]}emailAddressId{$matches[2]}"],
@@ -186,12 +192,12 @@ class SugarEmailAddress extends SugarBean
             }
         }
 
-        if(!$usefulRequest) {
+        if (!$usefulRequest) {
             $GLOBALS['log']->error('Cannot find valid email address(es) in request');
             return false;
         }
 
-        if(!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
+        if (!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
             $GLOBALS['log']->error('Cannot find valid user in request');
             return false;
         }
@@ -200,9 +206,8 @@ class SugarEmailAddress extends SugarBean
 
         $primary = null;
         $replyTo = null;
-        foreach($usefulRequest['Users'] as $ukey => $user) {
-
-            if(
+        foreach ($usefulRequest['Users'] as $ukey => $user) {
+            if (
                 !$primary &&
                 isset($neededRequest["Users{$ukey}emailAddressPrimaryFlag"]) &&
                 $neededRequest["Users{$ukey}emailAddressPrimaryFlag"]
@@ -210,7 +215,7 @@ class SugarEmailAddress extends SugarBean
                 $primary = $neededRequest["Users{$ukey}emailAddressPrimaryFlag"];
             }
 
-            if(
+            if (
                 !$replyTo &&
                 isset($neededRequest["Users{$ukey}emailAddressReplyToFlag"]) &&
                 $neededRequest["Users{$ukey}emailAddressReplyToFlag"]
@@ -219,38 +224,38 @@ class SugarEmailAddress extends SugarBean
             }
 
             // founds?
-            if($primary && $replyTo) {
+            if ($primary && $replyTo) {
                 break;
             }
         }
 
         // add primary and replyTo into useful formatted request
 
-        if($primary && preg_match('/^Users(\d+)emailAddress(\d+)$/', $primary, $matches)) {
+        if ($primary && preg_match('/^Users(\d+)emailAddress(\d+)$/', $primary, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['primary'] = true;
         } else {
             $GLOBALS['log']->warn("Primary email is not selected.");
         }
 
-        if($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
+        if ($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['replyTo'] = true;
         } else {
             $GLOBALS['log']->warn("Reply-to email is not selected.");
         }
 
-        if(count($usefulRequest['Users']) < 1) {
+        if (count($usefulRequest['Users']) < 1) {
             $GLOBALS['log']->error("Cannot find valid user in request");
             return false;
         }
 
-        if(count($usefulRequest['Users']) > 1) {
+        if (count($usefulRequest['Users']) > 1) {
             $GLOBALS['log']->warn("Expected only one user in request");
         }
 
         $return = true;
-        foreach($usefulRequest['Users'] as $user) {
-            foreach($user['emailAddress'] as $email) {
-                if(!$this->handleEmailSaveAtUserProfile($email['id'], $email['email'], $email['primary'], $email['replyTo'])) {
+        foreach ($usefulRequest['Users'] as $user) {
+            foreach ($user['emailAddress'] as $email) {
+                if (!$this->handleEmailSaveAtUserProfile($email['id'], $email['email'], $email['primary'], $email['replyTo'])) {
                     $GLOBALS['log']->warn("Some emails were not saved or updated: {$email['id']} ({$email['email']})");
                     $return = false;
                 }
@@ -274,29 +279,29 @@ class SugarEmailAddress extends SugarBean
      * @param bool $replyTo
      * @return bool
      */
-    protected function handleEmailSaveAtUserProfile($id, $address, $primary, $replyTo) {
-
+    protected function handleEmailSaveAtUserProfile($id, $address, $primary, $replyTo)
+    {
         global $current_user;
 
         // first validations
 
-        if(!$id) {
+        if (!$id) {
             $GLOBALS['log']->error("Missing email ID");
             return false;
         }
 
-        if(!$address) {
+        if (!$address) {
             $GLOBALS['log']->error("Missing email address");
             return false;
         }
 
-        if(!$this->isValidEmail($address)) {
+        if (!$this->isValidEmail($address)) {
             $GLOBALS['log']->error("Invalid email address format");
             return false;
         }
 
         $email = new SugarEmailAddress();
-        if(!$email->retrieve($id)) {
+        if (!$email->retrieve($id)) {
             $GLOBALS['log']->error('Email retrieve error, please ensure that the email ID is correct');
             return false;
         }
@@ -311,14 +316,14 @@ class SugarEmailAddress extends SugarBean
         $requests = $db->query($query);
         $row = $requests->fetch_assoc();
 
-        if(!$row) {
+        if (!$row) {
             $GLOBALS['log']->error("Missing Email ID ($id)");
             return false;
         }
 
         // do we have to update the address?
 
-        if($email->email_address != $address) {
+        if ($email->email_address != $address) {
             $_address = $db->quote($address);
             $_addressCaps = $db->quote(strtoupper($address));
             $query =
@@ -373,7 +378,8 @@ class SugarEmailAddress extends SugarBean
      * @param string $email
      * @return mixed
      */
-    protected function isValidEmail($email) {
+    protected function isValidEmail($email)
+    {
         $return = filter_var($email, FILTER_VALIDATE_EMAIL);
         return $return;
     }
@@ -388,7 +394,8 @@ class SugarEmailAddress extends SugarBean
      * @param array $request $_REQUEST
      * @return bool
      */
-    protected function isUserProfileEditViewPageSaveAction($request) {
+    protected function isUserProfileEditViewPageSaveAction($request)
+    {
         $return =
             (isset($request['page']) && $request['page'] == 'EditView') &&
             (isset($request['module']) && $request['module'] == 'Users') &&
@@ -404,7 +411,7 @@ class SugarEmailAddress extends SugarBean
      * @param string module
      * @return object
      */
-    function handleLegacyRetrieve(&$bean)
+    public function handleLegacyRetrieve(&$bean)
     {
         $module_dir = $this->getCorrectedModule($bean->module_dir);
         $this->addresses = $this->getAddressesByGUID($bean->id, $module_dir);
@@ -416,7 +423,7 @@ class SugarEmailAddress extends SugarBean
         return;
     }
 
-    function populateLegacyFields(&$bean)
+    public function populateLegacyFields(&$bean)
     {
         $primary_found = false;
         $alternate_found = false;
@@ -568,10 +575,8 @@ class SugarEmailAddress extends SugarBean
         //delete link to dropped email address.
         // for lead conversion, do not delete email addresses
         if (!empty($current_links) && !$isConversion) {
-
             $delete = "";
             foreach ($current_links as $eabr) {
-
                 $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
             }
 
@@ -590,7 +595,7 @@ class SugarEmailAddress extends SugarBean
      * @return int                 Count of records found
      * @throws \InvalidArgumentException
      */
-    function getCountEmailAddressByBean(
+    public function getCountEmailAddressByBean(
         $email,
         $bean,
         $addressType
@@ -633,7 +638,7 @@ class SugarEmailAddress extends SugarBean
      * @param   string $email      the email address to match
      * @param   string $table      which table to query
      */
-    function getRelatedId($email, $module)
+    public function getRelatedId($email, $module)
     {
         $email = $this->db->quote(trim(strtoupper($email)));
         $module = $this->db->quote(ucfirst($module));
@@ -660,7 +665,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $email Address to match
      * @return array
      */
-    function getBeansByEmailAddress($email)
+    public function getBeansByEmailAddress($email)
     {
         global $beanList;
         global $beanFiles;
@@ -711,7 +716,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $replyTo GUID of reply-to address
      * @param string $invalid GUID of invalid address
      */
-    function populateAddresses(
+    public function populateAddresses(
         $id,
         $module,
         $new_addrs = array(),
@@ -737,7 +742,6 @@ class SugarEmailAddress extends SugarBean
         $email_ids = array();
 
         if (isset($_REQUEST) && isset($_REQUEST[$module . '_email_widget_id'])) {
-
             $fromRequest = false;
             // determine which array to process
             foreach ($_REQUEST as $k => $v) {
@@ -751,7 +755,6 @@ class SugarEmailAddress extends SugarBean
 
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
-                $widget_id = null;
             }
 
 
@@ -899,7 +902,7 @@ class SugarEmailAddress extends SugarBean
      * @param bool $primary Default false
      * @param bool $replyTo Default false
      */
-    function addAddress($addr, $primary = false, $replyTo = false, $invalid = false, $optOut = false, $email_id = null)
+    public function addAddress($addr, $primary = false, $replyTo = false, $invalid = false, $optOut = false, $email_id = null)
     {
         $addr = html_entity_decode($addr, ENT_QUOTES);
         if (preg_match($this->regex, $addr)) {
@@ -937,7 +940,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * Updates invalid_email and opt_out flags for each address
      */
-    function updateFlags()
+    public function updateFlags()
     {
         if (!empty($this->addresses)) {
             foreach ($this->addresses as $addressMeta) {
@@ -971,7 +974,6 @@ class SugarEmailAddress extends SugarBean
                             WHERE id = '{$id}'";
 
                         $this->db->query($qUpdate);
-
                     }
                 }
             }
@@ -995,7 +997,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $addr Dirty email address
      * @return string clean email address
      */
-    function _cleanAddress($addr)
+    public function _cleanAddress($addr)
     {
         $addr = trim(from_html($addr));
 
@@ -1013,7 +1015,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $addr Address in focus, must be RFC compliant
      * @return string $id email_addresses ID
      */
-    function getEmailGUID($addr)
+    public function getEmailGUID($addr)
     {
         $address = $this->db->quote($this->_cleanAddress($addr));
         $addressCaps = strtoupper($address);
@@ -1131,9 +1133,8 @@ class SugarEmailAddress extends SugarBean
      * @param object $focus Object in focus
      * @return string email
      */
-    function getPrimaryAddress($focus, $parent_id = null, $parent_type = null)
+    public function getPrimaryAddress($focus, $parent_id = null, $parent_type = null)
     {
-
         $parent_type = empty($parent_type) ? $focus->module_dir : $parent_type;
         // Bug63174: Email address is not shown in the list view for employees
         $parent_type = $this->getCorrectedModule($parent_type);
@@ -1166,7 +1167,7 @@ class SugarEmailAddress extends SugarBean
      * @param bool $replyToOnly
      * @return string
      */
-    function getReplyToAddress($focus, $replyToOnly = false)
+    public function getReplyToAddress($focus, $replyToOnly = false)
     {
         $q = "SELECT ea.email_address FROM email_addresses ea
                 LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
@@ -1202,7 +1203,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $module Parent's module
      * @return array
      */
-    function getAddressesByGUID($id, $module)
+    public function getAddressesByGUID($id, $module)
     {
         $return = array();
         $module = $this->getCorrectedModule($module);
@@ -1230,7 +1231,7 @@ class SugarEmailAddress extends SugarBean
      * @param bool asMetadata Default false
      * @return string HTML/JS for widget
      */
-    function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
+    public function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
     {
         if (null === $id) {
             $GLOBALS['log']->debug('ID is null so it should be a create and NOT an update');
@@ -1241,7 +1242,7 @@ class SugarEmailAddress extends SugarBean
             return false;
         }
 
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 
@@ -1375,9 +1376,9 @@ class SugarEmailAddress extends SugarBean
      * @param object $focus Bean in focus
      * @return string HTML/JS for widget
      */
-    function getEmailAddressWidgetDetailView($focus, $tpl = '')
+    public function getEmailAddressWidgetDetailView($focus, $tpl = '')
     {
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 
@@ -1418,9 +1419,9 @@ class SugarEmailAddress extends SugarBean
      * @param object $focus Bean in focus
      * @return string HTML that contains hidden input values based off of HTML request
      */
-    function getEmailAddressWidgetDuplicatesView($focus)
+    public function getEmailAddressWidgetDuplicatesView($focus)
     {
-        if (!($this->smarty instanceOf Sugar_Smarty)) {
+        if (!($this->smarty instanceof Sugar_Smarty)) {
             $this->smarty = new Sugar_Smarty();
         }
 
@@ -1560,7 +1561,7 @@ class SugarEmailAddress extends SugarBean
      * getFormBaseURL
      *
      */
-    function getFormBaseURL($focus)
+    public function getFormBaseURL($focus)
     {
         $get = "";
         $count = 0;
@@ -1623,10 +1624,9 @@ class SugarEmailAddress extends SugarBean
         } //foreach
 
         return $get;
-
     }
 
-    function setView($view)
+    public function setView($view)
     {
         $this->view = $view;
     }
@@ -1636,7 +1636,7 @@ class SugarEmailAddress extends SugarBean
      * @param object $focus SugarBean
      * @return string The value for the bean_module column in the email_addr_bean_rel table
      */
-    function getCorrectedModule(&$module)
+    public function getCorrectedModule(&$module)
     {
         return ($module == "Employees") ? "Users" : $module;
     }
