@@ -23,6 +23,9 @@ $contactId = $_REQUEST['contact'];
 
 $trackerId = !empty($_REQUEST['tracker']) ? $_REQUEST['tracker'] : '';
 
+$themeObject = SugarThemeRegistry::current();
+$companyLogoURL = $themeObject->getImageURL('company_logo.png');
+
 require_once 'modules/Campaigns/utils.php';
 if($trackerId){
     $surveyLinkTracker = getSurveyLinkTracker($trackerId);
@@ -68,7 +71,7 @@ EOF;
     <div class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <img height=100 src="modules/Surveys/Entry/survey_logo.jpg"/>
+                <img src="<?php echo $companyLogoURL?>"/>
             </div>
         </div>
           <div class="row well">
