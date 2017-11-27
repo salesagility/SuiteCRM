@@ -620,7 +620,7 @@ class User extends Person
                 $GLOBALS['log']->warn($msg);
                 SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL']);
                 $this->factor_auth = false;
-            } elseif($emailTpl && !preg_match('$code', $emailTpl->body_html)) {
+            } elseif($emailTpl && !preg_match('/\$code\b/', $emailTpl->body_html)) {
                 $msg .= 'Two factor email template should contains a $code at least.'; 
                 $GLOBALS['log']->warn($msg);
                 SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL_CODE']);
