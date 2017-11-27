@@ -88,4 +88,6 @@ $mod_strings = array (
   'LBL_SATISFIED_TEXT' => 'Satisfied Text',
   'LBL_NEITHER_TEXT' => 'Neither Text',
   'LBL_DISSATISFIED_TEXT' => 'Dissatisfied Text',
+  'LBL_SURVEYS_SURVEYQUESTIONS_FROM_SURVEYQUESTIONS_TITLE' => 'Survey Questions',
+  'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
 );

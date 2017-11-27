@@ -1,10 +1,11 @@
 <?php
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,40 +38,28 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_SECURITYGROUPS' => 'Security Groups',
-  'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_EDIT_BUTTON' => 'Edit',
-  'LBL_REMOVE' => 'Remove',
-  'LBL_LIST_FORM_TITLE' => 'Survey Question Responses List',
-  'LBL_MODULE_NAME' => 'Survey Question Responses',
-  'LBL_MODULE_TITLE' => 'Survey Question Responses',
-  'LBL_HOMEPAGE_TITLE' => 'My Survey Question Responses',
-  'LNK_NEW_RECORD' => 'Create Survey Question Responses',
-  'LNK_LIST' => 'View Survey Question Responses',
-  'LNK_IMPORT_SURVEYQUESTIONRESPONSES' => 'Import Survey Question Responses',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Survey Question Responses',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_SURVEYQUESTIONRESPONSES_SUBPANEL_TITLE' => 'Survey Question Responses',
-  'LBL_NEW_FORM_TITLE' => 'New Survey Question Responses',
-  'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
-  'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONS_TITLE' => 'Survey Questions',
-  'LBL_SURVEYQUESTIONOPTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONOPTIONS_TITLE' => 'Survey Question Options',
+
+$layout_defs['Surveys'] = array(
+    // sets up which panels to show, in which order, and with what linked_fields
+    'subpanel_setup' => array(
+        'surveys_surveyresponses' => array (
+            'order' => 100,
+            'module' => 'SurveyResponses',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE',
+            'get_subpanel_data' => 'surveys_surveyresponses',
+            'top_buttons' => array (
+                0 => array (
+                    'widget_class' => 'SubPanelTopButtonQuickCreate',
+                ),
+                1 => array (
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'mode' => 'MultiSelect',
+                ),
+            ),
+        ),
+    ),
 );
+?>
