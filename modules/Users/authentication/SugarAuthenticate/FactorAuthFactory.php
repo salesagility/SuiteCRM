@@ -20,7 +20,7 @@ class FactorAuthFactory {
             global $current_user;
             $user = $current_user;
         }
-        if (!$user->id) {
+        if (!$user || !$user->id) {
             throw new SuiteException('User is not identified for factor authentication.');
         }
         if (!$user->factor_auth) {

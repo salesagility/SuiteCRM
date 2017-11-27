@@ -45,6 +45,12 @@ class FactorAuthEmailCode implements FactorAuthInterface {
      */
     public function sendToken($token) {
         global $current_user, $sugar_config;
+        
+        if(!$this->validateTokenMessage()) {
+            $msg = 'Factor Authentication mail is invalid';
+            $GLOBALS['log']->warn($msg);
+            SugarApplication::appendErrorMessage($msg_strings['ERR_FACTOR_VALIDATION']);
+        }
 
         $ret = true;
 
