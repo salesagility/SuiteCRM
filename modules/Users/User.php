@@ -2026,4 +2026,20 @@ EOQ;
 
         return $editorType;
     }
+    
+    public function getSubThemes() {
+        $sugarTheme = new SugarTheme(array());
+        $subThemes = $sugarTheme->getSubThemes();
+        return $subThemes;
+    }
+    
+    public function getSubTheme() {
+        $subTheme = $this->getPreference('subtheme');
+        if(!$subTheme) {
+            $sugarTheme = new SugarTheme(array());
+            $subTheme = $sugarTheme->getSubThemeDefault();
+        }
+        return $subTheme;
+    }
+    
 }

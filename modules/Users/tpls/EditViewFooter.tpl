@@ -302,6 +302,16 @@
             <tr>
                 <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_LAYOUT_OPTIONS}</h4></th>
             </tr>
+            {if $SUBTHEMES}
+            <tr>
+                <td>
+                    <span>{$MOD.LBL_SUBTHEME}:</span>
+                </td>
+                <td>
+                    {html_options name=subtheme options=$SUBTHEMES selected=$SUBTHEME}
+                </td>
+            <tr>
+            {/if}
             <tr id="use_group_tabs_row" style="display: {$DISPLAY_GROUP_TAB};">
                 <td scope="row"><span>{$MOD.LBL_USE_GROUP_TABS}
                         :</span>&nbsp;{sugar_help text=$MOD.LBL_NAVIGATION_PARADIGM_DESCRIPTION }</td>
