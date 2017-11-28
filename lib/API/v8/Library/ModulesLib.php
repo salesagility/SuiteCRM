@@ -100,6 +100,7 @@ class ModulesLib
 
         /** @var \SugarBean $moduleBean */
         foreach ($moduleList['list'] as $moduleBean) {
+
             // Create data item
             if (isset($selectFields[$moduleBean->module_name])) {
                 // Only return the fields requested
@@ -113,11 +114,13 @@ class ModulesLib
             $resource = $this->containers->get('SuiteBeanResource');
             $resource = $resource->fromSugarBean($moduleBean);
             $bean = $resource->toJsonApiResponseWithFields($fields['fields'][$moduleBean->module_name]);
+
             // Add links object to $bean
             $bean['links'] =
                 Links::get()
                 ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
                 ->toJsonApiResponse();
+
             // Append bean to resource object in the response
             $response['list'][] = $bean;
         }
