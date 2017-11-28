@@ -16,6 +16,23 @@ class EqualsOperatorTest extends \Codeception\Test\Unit
     {
     }
 
+    public function testIsValidTagWithInvalidType()
+    {
+        $operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\EqualsOperator();
+        $this->tester->expectException(
+            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Comparators][EqualsOperator][isValid][expected type to be string] $operator'),
+            function() use($operator) {
+                $operator->isValid(array());
+            }
+        );
+    }
+
+    public function testIsValidTagWithInvalidName()
+    {
+        $operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\EqualsOperator();
+        $this->assertFalse($operator->isValid($operator->toFilterTag('eq2')));
+    }
+
     public function testToFilterOperator()
     {
         $operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\EqualsOperator();

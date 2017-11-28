@@ -56,7 +56,7 @@ class UnsupportedMediaType extends ApiException
      */
     public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
-        parent::__construct('Unsupported Media Type '.$message, $code, $previous);
+        parent::__construct('[Unsupported Media Type] '.$message, $code, $previous);
     }
 
     /**

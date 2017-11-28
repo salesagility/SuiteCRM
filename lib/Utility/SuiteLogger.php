@@ -83,19 +83,19 @@ class SuiteLogger extends AbstractLogger
                 break;
             case LogLevel::WARNING:
                 /** @noinspection PhpUndefinedMethodInspection */
-                $log->warn($message);
+                $log->fatal('[WARNING] ' . $message);
                 break;
             case LogLevel::NOTICE:
                 /** @noinspection PhpUndefinedMethodInspection */
-                $log->warn('[NOTICE] ' . $message);
+                $log->fatal('[NOTICE] ' . $message);
                 break;
             case LogLevel::INFO:
                 /** @noinspection PhpUndefinedMethodInspection */
-                $log->info($message);
+                $log->fatal('[INFO] ' . $message);
                 break;
             case LogLevel::DEBUG:
                 /** @noinspection PhpUndefinedMethodInspection */
-                $log->debug($message);
+                $log->fatal('[DEBUG] ' . $message);
                 break;
             default:
                 throw new InvalidArgumentException();
