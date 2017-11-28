@@ -65,8 +65,8 @@ EOF;
         <title><?= $survey->name ?></title>
 
         <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
-        <link href="custom/include/javascript/rating/rating.min.css" rel="stylesheet">
-        <link href="custom/include/javascript/datetimepicker/jquery-ui-timepicker-addon.css" rel="stylesheet">
+        <link href="modules/Surveys/javascript/rating/rating.min.css" rel="stylesheet">
+        <link href="modules/Surveys/javascript/datetimepicker/jquery-ui-timepicker-addon.css" rel="stylesheet">
         <link href="include/javascript/jquery/themes/base/jquery.ui.all.css" rel="stylesheet">
     </head>
     <body>
@@ -85,8 +85,8 @@ EOF;
     </div>
     <script src="include/javascript/jquery/jquery-min.js"></script>
     <script src="include/javascript/jquery/jquery-ui-min.js"></script>
-    <script src="custom/include/javascript/datetimepicker/jquery-ui-timepicker-addon.js"></script>
-    <script src="custom/include/javascript/rating/rating.min.js"></script>
+    <script src="modules/Surveys/javascript/datetimepicker/jquery-ui-timepicker-addon.js"></script>
+    <script src="modules/Surveys/javascript/rating/rating.min.js"></script>
     <script>
 
       $(function () {
