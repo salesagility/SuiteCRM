@@ -192,6 +192,7 @@ class FilterParser
     /**
      * @param string $filters
      * @return array
+     * @throws Exception
      */
     protected function parseFieldFilter($filters)
     {
