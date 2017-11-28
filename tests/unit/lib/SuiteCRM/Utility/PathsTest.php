@@ -1,7 +1,7 @@
 <?php
 
 
-class FieldOperatorTest extends \Codeception\Test\Unit
+class PathsTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
