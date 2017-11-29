@@ -970,12 +970,14 @@ EOHTML;
     public function getCSSURL($cssFileName, $returnURL = true)
     {
         
-        global $current_user;
-        $subThemeIndex = $current_user->getSubTheme();
-        $subThemes = $current_user->getSubThemes();
-        $subTheme = $subThemes[$subThemeIndex];
-        $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
-        $cssFileName = 'subthemes/' . $subTheme . '/' . $cssFileName;
+        if (preg_match('/.css^/', $cssFileName)) {
+            global $current_user;
+            $subThemeIndex = $current_user->getSubTheme();
+            $subThemes = $current_user->getSubThemes();
+            $subTheme = $subThemes[$subThemeIndex];
+            $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
+            $cssFileName = 'subthemes/' . $subTheme . '/' . $cssFileName;
+        }
         
         if ( isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
             if ( $returnURL )
