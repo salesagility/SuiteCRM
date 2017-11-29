@@ -1,0 +1,178 @@
+/*
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+
+/*
+.dashboardTabList {
+    border: none 0;
+    width: 100%;
+    height: 30px;
+    background-color:pink;
+}
+
+.dashboardTabList li {
+    margin: 0 !important;
+}
+
+.dashboardTabList li {
+    float: left;
+    margin-top: 6px;
+    
+    color: #534d64;
+    float: left;
+    font-size: 26px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 20px;
+    text-transform: uppercase;
+    
+}
+
+.dashboardTabList li.active {
+    float: left;
+    
+}
+
+.dashboardTabList a {
+    color: #777777;
+
+}
+
+.dashboardTabList a:hover {
+    text-decoration: none;
+    list-style: none;
+}
+
+.dashboardTabList img {
+    height: 9px;
+    width: 9px;
+
+}
+
+.dashboardTabList img:hover {
+    background-color: #a8a8a8;
+
+}
+
+.addButton {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 10px;
+    line-height: 10px;
+    margin-top: 9px !important;
+    float: right !important;
+}
+
+.addButton a:hover {
+    color: #000000;
+}
+
+.dashboardTabList {
+    padding: 0 !important;
+    margin-left: 0 !important;
+}
+
+*/
+
+ul.dashboardTabList {
+	margin:0;
+	padding:0;
+	list-style: none;
+	float:left;
+	width:100%;
+}
+
+ul.dashboardTabList li {position:relative;opacity:0.4;float:left;padding-right:20px;}
+ul.dashboardTabList li#pageNum_0 {border-left:none;}
+ul.dashboardTabList li.active {opacity:1;}
+
+ul.dashboardTabList li a {
+	float:left;
+	color:#534d64;
+	font-size:24px;
+	font-weight:300;
+	letter-spacing:2px;
+	text-transform: uppercase;
+}
+
+ul.dashboardTabList li a:hover {text-decoration: none;}
+
+ul.dashboardTabList li span.glyphicon-remove {font-size:12px;position:absolute;top:0;}
+
+ul.dashboardTabList li#pageNum_0 a#pageNum_0_anchor {}
+
+ul.dashboardTabList li#pageNum_0 a#pageNum_0_anchor span {}
+
+
+
+
+ul.dashboardTabList li.addButton {
+	float:right;
+	padding-right:0;
+	opacity:1;
+}
+
+ul.dashboardTabList li.addButton a {
+	background-color:#aa9dcc;
+	color:#fff;
+	font-size:13px;
+	border-radius:3px;
+	height:40px;
+	line-height:40px;
+	letter-spacing:1px;
+	padding:0 20px 0 20px;
+	text-transform: uppercase;
+	display:inline-block;
+	margin:0 0 0 5px;
+	font-weight:normal;
+	letter-spacing:0;
+}
+
+ul.dashboardTabList li.addButton a:hover {background-color:#9589b3;text-decoration: none;} 
+
+
+
+
+
+
+
+

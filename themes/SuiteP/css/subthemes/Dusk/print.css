@@ -1,4 +1,3 @@
-<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,38 +37,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+#header, #mass_update_table, #massupdate_form, #massupdate_header, #leftHandle, .subpanelTablist {
+    display: none;
 }
 
-$themedef = array(
-    'name' => 'Suite P',
-    'description' => 'SuiteCRM Responsive Theme',
-    'version' => array(
-        'regex_matches' => array('.*'),
-    ),
-    'group_tabs' => true,
-    'classic' => true,
-    'configurable' => true,
-    'config_options' => array(
-
-        'display_sidebar' => array(
-            'vname' => 'LBL_DISPLAY_SIDEBAR',
-            'type' => 'bool',
-            'default' => true,
-        ),
-        'sub_themes' => array(
-            'vname' => 'LBL_SUBTHEME_OPTIONS',
-            'type' => 'select',
-            'options' => array('Dawn', 'Day', 'Dusk'),
-            'default' => 0,
-        ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
-
-    ),
-);
+.listViewPaginationTdS1, .listViewButtons, .search_form, .tablist, .utilsLink, .button, .tabForm {
+    display: none;
+}

@@ -1,4 +1,3 @@
-<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,38 +37,43 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+#welcome {
+    border-right: none !important;
 }
 
-$themedef = array(
-    'name' => 'Suite P',
-    'description' => 'SuiteCRM Responsive Theme',
-    'version' => array(
-        'regex_matches' => array('.*'),
-    ),
-    'group_tabs' => true,
-    'classic' => true,
-    'configurable' => true,
-    'config_options' => array(
+div.screen div.edit.view {
+    height: initial;
+    border-bottom: none !important;
+}
 
-        'display_sidebar' => array(
-            'vname' => 'LBL_DISPLAY_SIDEBAR',
-            'type' => 'bool',
-            'default' => true,
-        ),
-        'sub_themes' => array(
-            'vname' => 'LBL_SUBTHEME_OPTIONS',
-            'type' => 'select',
-            'options' => array('Dawn', 'Day', 'Dusk'),
-            'default' => 0,
-        ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
+div.screen div.edit.view td,
+div.screen div.edit.view th {
+    background: transparent;
+}
 
-    ),
-);
+div.nav-buttons {
+    background-color: #F6F6F6;
+    padding: 1em;
+    margin-top: 0;
+}
+
+#welcome, #personalinfo, #locale, #finish {
+    border: 1px solid #cccccc !important;
+    margin: 0 auto;
+}
+
+#UserWizard {
+    font-size: 12px;
+    width: 100%;
+}
+
+#UserWizard input {
+    border-radius: 0;
+    border: 1px solid #CCC;
+    margin: 10px 0;
+}
+
+#welcome input[type=button] {
+    font-size: 12px;
+    cursor: pointer;
+}

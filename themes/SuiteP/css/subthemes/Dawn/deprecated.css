@@ -1,4 +1,3 @@
-<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,38 +37,74 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+/** DEPRECATED STYLES **/
+
+.tabForm {
+    background: none;
 }
 
-$themedef = array(
-    'name' => 'Suite P',
-    'description' => 'SuiteCRM Responsive Theme',
-    'version' => array(
-        'regex_matches' => array('.*'),
-    ),
-    'group_tabs' => true,
-    'classic' => true,
-    'configurable' => true,
-    'config_options' => array(
+.dataLabel {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+    padding: 5px;
+}
 
-        'display_sidebar' => array(
-            'vname' => 'LBL_DISPLAY_SIDEBAR',
-            'type' => 'bool',
-            'default' => true,
-        ),
-        'sub_themes' => array(
-            'vname' => 'LBL_SUBTHEME_OPTIONS',
-            'type' => 'select',
-            'options' => array('Dawn', 'Day', 'Dusk'),
-            'default' => 0,
-        ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
+.dataField {
+    font-size: 12px;
+    font-weight: normal;
+}
 
-    ),
-);
+.tabDetailView {
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border-bottom-color: #ABC3D7;
+    border-top-color: #4E8CCF;
+}
+
+.tabDetailView td table td {
+    border: 0;
+    background: white;
+}
+
+.tabDetailView tr.pagination td {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #CBDAE6;
+}
+
+.tabDetailView tr.pagination td table td {
+    border: none;
+}
+
+.tabDetailViewDL {
+    background-color: #F6F6F6;
+    color: #000000;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 6px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.tabDetailViewDF {
+    background-color: #FFFFFF;
+    color: #444444;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 10px 5px 8px;
+    vertical-align: top;
+}
+
+.listViewThS1 {
+    background: #EBEBED none repeat scroll 0 0;
+    border-color: #CCCCCC -moz-use-text-color;
+    border-style: solid none;
+    border-width: 1px medium;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 5px;
+    text-align: left;
+}
