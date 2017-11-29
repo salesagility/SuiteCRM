@@ -1,0 +1,470 @@
+
+#aow_conditionLines {
+  display: block;
+}
+
+#aow_conditionLines > thead {
+  display: block;
+}
+
+#aow_conditionLines > thead td {
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: $main-font-color;
+  font-weight: bold;
+  font-size: $page-font-size;
+}
+
+.detail-view-field #aow_conditionLines thead td:first-of-type {
+  height: 36px;
+}
+
+
+#aow_conditionLines thead td:first-of-type {
+  height: 32px;
+  border-top-left-radius: 4px;
+}
+
+
+#aow_conditionLines thead td:last-of-type {
+  padding-left: 8px;
+  border-top-right-radius: 4px;
+  width: 26%;
+}
+
+
+#aow_conditionLines > thead > tr {
+  display: block;
+}
+
+
+#aow_conditionLines > tbody {
+  display: block;
+}
+
+#aow_conditionLines > tbody > tr {
+  display: block;
+  background-color: #f5f5f5;
+  border-bottom: 5px $main-alternate-bg solid;
+}
+
+#aow_conditionLines > tbody > tr > td {
+  vertical-align: top;
+}
+
+
+#aow_conditionLines td:first-of-type {
+  display: inline-block;
+  width: 48px;
+}
+
+#aow_conditionLines td:not(:first-of-type) {
+  display: inline-block;
+  width: 16.667%; // 100 / 6 columns
+}
+
+#aow_conditionLines tbody td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+#aow_conditionLines tbody td:first-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#aow_conditionLines tbody td:last-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 26%;
+}
+
+
+#aow_conditionLines td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+#aow_conditionLines input {
+  margin-top: 8px;
+
+}
+
+#aow_conditionLines input.sqsEnabled {
+  width: 62.5%;
+}
+
+#aow_conditionLines input[type=checkbox] {
+  margin-top: 24px;
+}
+
+
+#aow_conditionLines textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
+
+#aow_conditionLines select {
+  width: 95%;
+  margin-top: 8px;
+}
+
+@media (max-width: 1800px) {
+  // Date type
+  #aow_conditionLines select[id$="][0]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #aow_conditionLines select[id$="][1]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #aow_conditionLines input[id$="][2]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #aow_conditionLines select[id$="][3]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+}
+
+@media (min-width: 1800px) {
+  // Date type
+  #aow_conditionLines select[id$="][0]"] {
+    width: 24%;
+  }
+
+  #aow_conditionLines select[id$="][1]"] {
+    width: 24%;
+  }
+
+  #aow_conditionLines input[id$="][2]"] {
+    width: 24%;
+  }
+
+  #aow_conditionLines select[id$="][3]"] {
+    width: 24%;
+  }
+
+}
+
+[field="action_lines"] {
+  display: block;
+  width: 100%;
+}
+
+#aow_conditionLines [type="button"] {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: 4px;
+}
+
+#actionLines [type="button"] {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: 4px;
+}
+
+#actionLines {
+  display: block;
+}
+
+#actionLines > tr {
+  display: block;
+}
+
+#actionLines > tr > td {
+  display: block;
+}
+
+#actionLines td[field] label {
+  margin-right: 8px;
+}
+
+#actionLines > tr > td {
+  border: 1px solid $workflow-action-bg;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+#actionLines .action-table {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tbody {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tr {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action-parameter] input.sqsEnabled {
+  margin-top: 0px;
+  width: 50%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="create-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="modify-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] input.sqsEnabled {
+  width: 10%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] .id-ff.multiple > button{
+  margin-left: 0;
+}
+
+
+
+#actionLines .action-table td {
+  display: inline-block;
+}
+
+#actionLines .action-table > tbody > tr:first-of-type > td:first-of-type {
+  padding-left: 8px;
+}
+
+#actionLines .action-table > tbody > tr:first-of-type > td {
+  border-bottom: 1px solid $workflow-action-bg;
+  padding-top: 4px;
+}
+
+#actionLines td[field=action] {
+  width: 65%;
+  height: 64px;
+}
+
+#actionLines td[field=action] select {
+  margin-left: 20px;
+}
+
+#actionLines td[field=name] {
+  width: 30%;
+  height: 64px;
+}
+
+#actionLines td[field=name] input[type=text] {
+  width: 80%;
+}
+
+#actionLines td[field=delete] {
+  width: 5%;
+  height: 64px;
+}
+
+#actionLines td[field=delete] .delete-btn {
+  float: right;
+}
+
+#actionLines td[field=delete] .delete-btn .btn {
+  padding: 0 0 0 0;
+}
+
+.edit tr td [data-workflow-action] td {
+  vertical-align: middle;
+}
+
+[data-workflow-action-line] {
+  vertical-align: top;
+}
+
+[data-workflow-action-line] td:first-of-type {
+  width: 48px;
+}
+
+
+[data-workflow-action-line] td:nth-of-type(3) select {
+  width: auto;
+}
+
+[data-workflow-action-line] select[id$="][0]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action-line] select[id$="][1]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"][type=checkbox] {
+  width: 16px;
+}
+
+[data-workflow-action-line] select[id$="][3]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr > td {
+  line-height: $input-line-height;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(1) > td {
+  width: 20%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) {
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td:nth-of-type(1) {
+  padding-left: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
+  width: auto;
+}
+
+#relate_label {
+  line-height: $input-line-height;
+}
+
+#deleteGroup img {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: 4px;
+}
+
+.btn-danger {
+  background-color: $danger-btn-bg;
+}
+
+.btn-danger:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.btn-danger:active {
+  background-color: $danger-btn-bg;
+}
+
+.btn-danger:focus {
+  background-color: $danger-btn-bg;
+}
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+[data-workflow-action] .relationship tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+  min-height: 64px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td select {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td input {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+
+
+[data-workflow-action] .name_label {
+  width: 70%;
+}
+
+[data-workflow-action] .name_label {
+  width: 30%;
+}
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+[data-workflow-action] .lines tbody > tr > td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+[data-workflow-action] .lines select {
+  margin-top: 8px;
+}
+
+[data-workflow-action] .lines tbody > tr > td input {
+  margin-top: 8px;
+}
+
+[data-workflow-action] .lines tbody > tr > td input.sqsEnabled {
+  width: 62.5%;
+}
+
+[data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
+  margin-top: 24px;
+}
+
+[data-workflow-action] .lines tbody > tr > td textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
+
+
+[data-workflow-action-parameter] [colspan="4"] {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action-parameter] > td {
+  display: block;
+  width: 100%;
+}

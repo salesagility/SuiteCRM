@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,38 +37,29 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    header('Content-Type: text/css');
+// config|_override.php
+if (is_file('../../../config.php')) {
+    require_once '../../../config.php';
 }
 
-$themedef = array(
-    'name' => 'Suite P',
-    'description' => 'SuiteCRM Responsive Theme',
-    'version' => array(
-        'regex_matches' => array('.*'),
-    ),
-    'group_tabs' => true,
-    'classic' => true,
-    'configurable' => true,
-    'config_options' => array(
+// load up the config_override.php file.  This is used to provide default user settings
+if (is_file('../../../config_override.php')) {
+    require_once '../../../config_override.php';
+}
 
-        'display_sidebar' => array(
-            'vname' => 'LBL_DISPLAY_SIDEBAR',
-            'type' => 'bool',
-            'default' => true,
-        ),
-        'sub_themes' => array(
-            'vname' => 'LBL_SUBTHEME_OPTIONS',
-            'type' => 'select',
-            'options' => array('Dawn', 'Day', 'Dusk', 'Night'),
-            'default' => 0,
-        ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
+if (!isset($sugar_config['theme_settings']['SuiteP'])) {
+    return;
+}
 
-    ),
-);
+//set file type back to css from php
+header('Content-type: text/css; charset: UTF-8');
+
+?>
+
+<?php
+// TODO add theme color settings here: for e.g:
+//.navbar-inverse {
+//background:#< ? php echo $sugar_config['theme_settings']['SuiteP']['navbar']; ? > !important;
+//}
+?>
