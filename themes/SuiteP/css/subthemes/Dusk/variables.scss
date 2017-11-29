@@ -25,7 +25,7 @@ $page-font-family: 'Lato', Lato, Arial, sans-serif;
 $page-font-size: 13px;
 $page-p-size: 14px;
 $page-title-space: 40px; // normal 40px
-$main-font-color: #efefef;
+$main-font-color: #555555;
 
 $link-color: $danger;
 $link-color-hover: $danger-hover;
@@ -83,7 +83,7 @@ $navbar-search-btn-bg: #829EB5;
 $navbar-search-text-color: #A2A5AF;
 $navbar-search-color: #afaabf;
 
-$navbar-quick-create-link-color: #8B8B8B;
+$navbar-quick-create-link-color: #ffffff;
 $navbar-quick-create-mobile-btn-bg: #ff5449;
 $navbar-quick-create-btn-bg: #ff5449;
 $navbar-quick-create-menu-bg: #ff5449;
@@ -203,13 +203,13 @@ $campaign-progression-bg-active: #808F9C;
 
 // Cases
 $case-internal-bg: #a5e6e6;
-$case-internal-color: #efefef;
+$case-internal-color: #555555;
 $case-internal-border-color: transparent;
 $case-user-bg: #BBE6A5;
-$case-user-color: #efefef;
+$case-user-color: #555555;
 $case-user-border-color: transparent;
 $case-contact-bg: #E6D5A5;
-$case-contact-color: #efefef;
+$case-contact-color: #555555;
 $case-contact-border-color: transparent;
 
 // Calendar

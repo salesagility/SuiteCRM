@@ -45,7 +45,7 @@
     float: left
 }
 #toolbox {
-    background: #fff;
+    background: #ffffff;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -63,7 +63,7 @@
     width: 100%
 }
 .le_panel {
-    background: #D3D3D3;
+    background: #d3d3d3;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -84,7 +84,7 @@
     width: 150px
 }
 #toolbox .special:nth-of-type(3) {
-    background: #D3D3D3;
+    background: #d3d3d3;
     color: #f5f5f5;
     padding: 5px;
     margin: 2px 3px;

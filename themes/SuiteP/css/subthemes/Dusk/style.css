@@ -5,7 +5,7 @@ body {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 13px;
     background: #f5f5f5;
-    color: #efefef;
+    color: #555555;
     margin: 0;
     overflow: auto;
     height: 100%
@@ -79,11 +79,11 @@ a:hover {
 }
 ::selection {
     background: #f08377;
-    color: #fff
+    color: #535050
 }
 ::-moz-selection {
     background: #f08377;
-    color: #fff
+    color: #535050
 }
 @media (max-width: 750px) {
     .bootstrap-container.col-sm-offset-3 {
@@ -237,13 +237,13 @@ a:hover {
     display: block;
     font-size: 13px;
     background-color: #787878;
-    color: #fff;
+    color: #535050;
     margin: 0 0 1px 0;
     clear: both
 }
 .sidebar .actionMenuSidebar ul li a:hover {
     background-color: #8499ab;
-    color: #fff
+    color: #535050
 }
 .sidebar .actionMenuSidebar li a div {
     display: block;
@@ -637,7 +637,7 @@ footer.collapsedSidebar {
     background-position: 14px 20px;
     background-position: 0px 8px;
     background-repeat: no-repeat;
-    color: #fff;
+    color: #535050;
     padding: 0;
     overflow: hidden;
     width: 28px;
@@ -669,7 +669,7 @@ footer.collapsedSidebar {
     display: block;
     font-size: 14px;
     background-color: #5d5670;
-    color: #fff;
+    color: #535050;
     padding: 7px 10px 7px 10px;
     margin: 0;
     border-bottom: 1px solid #757083;
@@ -1015,7 +1015,7 @@ footer.collapsedSidebar {
     height: 20px
 }
 .topnav a {
-    color: #fff
+    color: #535050
 }
 .topnav:hover {
     background-color: #5d5670;
@@ -1079,7 +1079,7 @@ footer.collapsedSidebar {
     height: 28px
 }
 .mobile_menu a:hover .glyphicon-plus {
-    color: #fff
+    color: #535050
 }
 .usermenu a {
     font-size: 14px;
@@ -1090,10 +1090,10 @@ footer.collapsedSidebar {
     padding-right: 0
 }
 .usermenu a:hover {
-    color: #fff
+    color: #535050
 }
 .globalLinks-desktop .user-dropdown li a {
-    color: #fff
+    color: #535050
 }
 .globalLinks-desktop .user-dropdown li a:hover {
     color: #f08377
@@ -1102,7 +1102,7 @@ footer.collapsedSidebar {
     color: #f5f5f5
 }
 .globalLinks-desktop ul li a {
-    color: #fff
+    color: #535050
 }
 .globalLinks-desktop ul li a:hover {
     color: #f08377
@@ -1208,7 +1208,7 @@ footer.collapsedSidebar {
     background-image: none, url("../../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../../themes/SuiteP/images/p_search_button.png");
     background-position: 14px 8px;
     background-repeat: no-repeat;
-    color: #fff;
+    color: #535050;
     padding: 10px 10px 10px 10px;
     margin-left: -50px;
     border: none;
@@ -1284,7 +1284,7 @@ footer.collapsedSidebar {
     width: 20%
 }
 .navbar-fixed-top .recentlinks_topedit a:focus {
-    color: #fff
+    color: #535050
 }
 .navbar-fixed-top .recentlinks_top a {
     width: 100%;
@@ -1297,7 +1297,7 @@ footer.collapsedSidebar {
     display: block
 }
 .modulename a {
-    color: #fff
+    color: #535050
 }
 .grouptab:visited {
     background: none
@@ -1328,21 +1328,21 @@ footer.collapsedSidebar {
 }
 .navbar-inverse .navbar-nav > .open > a {
     background: none;
-    color: #fff
+    color: #535050
 }
 .navbar-inverse .navbar-nav > .open > a:hover {
     background: none;
-    color: #fff
+    color: #535050
 }
 .navbar-inverse .navbar-nav > .open > a:focus {
     background: none;
-    color: #fff
+    color: #535050
 }
 .mobileheader .modulelinks ul li a {
     font-size: 14px
 }
 .modulelinks {
-    color: #fff;
+    color: #535050;
     display: inline-block
 }
 .navbar-right ~ .navbar-right {
@@ -1355,7 +1355,7 @@ footer.collapsedSidebar {
     background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 80px 0px;
     background-repeat: no-repeat;
-    color: #fff;
+    color: #535050;
     padding: 8px 32px 8px 10px;
     border-radius: 3px;
     letter-spacing: 2px;
@@ -1412,15 +1412,15 @@ footer.collapsedSidebar {
     border-bottom: none
 }
 .quickcreatetop .dropdown-menu li a:hover {
-    color: #fff;
-    background-color: #8499aa
+    color: #535050;
+    background-color: #ff2416
 }
 .quickcreatetop .dropdown-menu {
     margin-top: -2px
 }
 .quickcreatetop .dropdown-menu li a {
     opacity: 1;
-    color: #fff
+    color: #535050
 }
 .quickcreatetop .dropdown-menu li a:hover {
     opacity: 1
@@ -1457,7 +1457,7 @@ footer.collapsedSidebar {
     left: 24px;
     font-size: 10px;
     background-color: #f08377;
-    color: #fff;
+    color: #535050;
     border-radius: 30px;
     float: left;
     line-height: 20px;
@@ -1490,14 +1490,14 @@ footer.collapsedSidebar {
     color: inherit
 }
 .desktop_notifications .close span {
-    color: #fff;
+    color: #535050;
     margin-bottom: 0;
     margin-right: 0
 }
 .desktop_notifications .dropdown-menu {
     font-size: 12px;
     background-color: #f08377;
-    color: #fff;
+    color: #535050;
     padding: 8px;
     margin: 0;
     border-radius: 0
@@ -1508,18 +1508,18 @@ footer.collapsedSidebar {
 }
 .desktop_notifications .has-alerts .alert-info {
     background-color: inherit;
-    color: #fff;
+    color: #535050;
     padding: 0;
     border: 1px solid #757083;
     border-radius: 2px
 }
 .desktop_notifications .has-alerts .text-info {
-    color: #fff
+    color: #535050
 }
 .desktop_notifications .has-alerts p {
     font-size: 12px;
     background-color: #f5f5f5;
-    color: #efefef;
+    color: #555555;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     line-height: 20px;
@@ -1859,7 +1859,7 @@ footer.collapsedSidebar {
     }
     .searchmobile .query_string {
         box-shadow: none;
-        color: #fff;
+        color: #535050;
         border: none;
         border-radius: 0;
         float: left;
@@ -2045,7 +2045,7 @@ footer.collapsedSidebar {
         margin-right: 0px
     }
     #Icon_5_ {
-        fill: #fff
+        fill: #535050
     }
     .navbar-search .searchbutton {
         background-color: transparent;
@@ -2245,10 +2245,10 @@ footer.collapsedSidebar {
 }
 @media (max-width: 980px) {
     ul.navbar-nav li a {
-        color: #fff
+        color: #535050
     }
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
-        color: #fff
+        color: #535050
     }
 }
 @media (min-width: 1024px) {
@@ -2301,7 +2301,7 @@ footer.collapsedSidebar {
     .mobile_menu a {
         display: block;
         font-size: 14px;
-        color: #fff;
+        color: #535050;
         padding: 12px 15px
     }
     .mobile_menu a:hover {
@@ -2568,7 +2568,7 @@ footer.collapsedSidebar {
         background-image: none, url("../../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../../themes/SuiteP/images/p_search_button.png");
         background-position: 13px 10px;
         background-repeat: no-repeat;
-        color: #fff;
+        color: #535050;
         padding: 12px 12px 12px 12px;
         margin-left: -50px;
         border: none;
@@ -2588,7 +2588,7 @@ footer.collapsedSidebar {
         background-image: none, url("../../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../../themes/SuiteP/images/p_search_button.png");
         background-position: 13px 10px;
         background-repeat: no-repeat;
-        color: #fff;
+        color: #535050;
         padding: 12px 12px 12px 12px;
         margin-left: -50px;
         border: none;
@@ -2603,7 +2603,7 @@ footer.collapsedSidebar {
         background-image: none, url("../../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../../themes/SuiteP/images/p_search_button.png");
         background-position: 5px 10px;
         background-repeat: no-repeat;
-        color: #fff;
+        color: #535050;
         padding: 0;
         margin-left: -50px;
         border: none;
@@ -2676,13 +2676,13 @@ footer.collapsedSidebar {
         visibility: visible;
         background-color: #efefef;
         border: none;
-        color: #fff;
+        color: #535050;
         padding-left: 0
     }
     .usermenucollapsed .caret {
         display: inline-block;
         visibility: visible;
-        color: #fff
+        color: #535050
     }
 }
 .modulelinks > ul {
@@ -3017,7 +3017,7 @@ div.p_login #loginform .input-group {
     border-radius: 2px
 }
 div.p_login #loginform .input-group input {
-    background-color: #fff;
+    background-color: #EFEFEF;
     color: #c4c3c7;
     padding: 0 2% 0 50px;
     border: none;
@@ -3307,7 +3307,7 @@ fieldset[disabled] .btn-primary.active {
     border-color: #808f9c
 }
 .button-primary .badge {
-    background-color: #fff;
+    background-color: #EFEFEF;
     color: #f08377;
     padding: 5px
 }
@@ -3361,12 +3361,12 @@ fieldset[disabled] .btn-primary.active {
     display: block
 }
 #conditionLines > thead td {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding-top: 8px;
     padding-bottom: 8px;
     padding-left: 4px;
     padding-right: 4px;
-    color: #efefef;
+    color: #555555;
     font-weight: bold;
     font-size: 13px
 }
@@ -3391,7 +3391,7 @@ fieldset[disabled] .btn-primary.active {
 #conditionLines > tbody > tr {
     display: block;
     background-color: #f5f5f5;
-    border-bottom: 5px #fff solid
+    border-bottom: 5px #535050 solid
 }
 #conditionLines > tbody > tr > td {
     vertical-align: top
@@ -3506,7 +3506,7 @@ fieldset[disabled] .btn-primary.active {
     margin-right: 8px
 }
 #actionLines > tr > td {
-    border: 1px solid #D3D3D3;
+    border: 1px solid #d3d3d3;
     border-radius: 4px;
     margin-bottom: 4px
 }
@@ -3545,7 +3545,7 @@ fieldset[disabled] .btn-primary.active {
     padding-left: 8px
 }
 #actionLines .action-table > tbody > tr:first-of-type > td {
-    border-bottom: 1px solid #D3D3D3;
+    border-bottom: 1px solid #d3d3d3;
     padding-top: 4px
 }
 #actionLines td[field=action] {
@@ -4233,10 +4233,10 @@ textarea {
     width: 50%
 }
 select[size] {
-    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
-    background-color: #fff;
+    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #EFEFEF;
+    background-color: #EFEFEF;
     background-size: 52px 52px;
-    color: #efefef;
+    color: #555555;
     padding: 0 52px 0 5px;
     border-color: #a5e8d6;
     border-style: solid;
@@ -4252,10 +4252,10 @@ select[size] {
     -moz-appearance: none
 }
 select.form-control {
-    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
-    background-color: #fff;
+    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #EFEFEF;
+    background-color: #EFEFEF;
     background-size: 52px 52px;
-    color: #efefef;
+    color: #555555;
     padding: 0 52px 0 5px;
     border-color: #a5e8d6;
     border-style: solid;
@@ -4271,10 +4271,10 @@ select.form-control {
     -moz-appearance: none
 }
 select {
-    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
-    background-color: #fff;
+    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #EFEFEF;
+    background-color: #EFEFEF;
     background-size: 52px 52px;
-    color: #efefef;
+    color: #555555;
     padding: 0 52px 0 5px;
     border-color: #a5e8d6;
     border-style: solid;
@@ -4309,15 +4309,15 @@ select#user_theme_picker {
 }
 select:checked {
     background: #a5e8d6;
-    color: #efefef
+    color: #555555
 }
 option:checked {
     background: #a5e8d6;
-    color: #efefef
+    color: #555555
 }
 .saved_search_select {
-    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
-    background-color: #fff;
+    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #EFEFEF;
+    background-color: #EFEFEF;
     background-size: 52px 52px;
     padding: 16px 55px 16px 5px;
     border-color: #a5e8d6;
@@ -4334,10 +4334,10 @@ select[multiple] {
     vertical-align: text-top
 }
 select.ui-widget-content {
-    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
-    background-color: #fff;
+    background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #EFEFEF;
+    background-color: #EFEFEF;
     background-size: 52px 52px;
-    color: #efefef;
+    color: #555555;
     padding: 0 52px 0 5px;
     border-color: #a5e8d6;
     border-style: solid;
@@ -4444,7 +4444,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 #email1_span i.error {
     background: inherit;
-    color: #efefef
+    color: #555555
 }
 .email-address-line-container {
     margin-bottom: 8px
@@ -4655,7 +4655,7 @@ font[color=red] {
     background: #66727d
 }
 #pageContainer .dashletcontainer .pagination td {
-    background-color: #D3D3D3
+    background-color: #d3d3d3
 }
 #pageContainer .dashletcontainer .pagination span {
     display: inline-block
@@ -4732,7 +4732,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -4742,7 +4742,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a:link {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -4752,7 +4752,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a:hover {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -4762,7 +4762,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a:visited {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -4772,7 +4772,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a:active {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -4782,7 +4782,7 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li a:focus {
     font-weight: 400;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
@@ -5072,8 +5072,8 @@ td.dashlet-title > h3 > span {
     font-family: Lato, Lato, Arial, sans-serif;
     font-size: 18px;
     font-weight: bold;
-    background: #fff;
-    color: #efefef;
+    background: #EFEFEF;
+    color: #555555;
     padding: 15px 15px 42px 19px;
     margin: 0;
     border-bottom: solid 1px #ddd;
@@ -5245,11 +5245,11 @@ tr#pagination {
     padding-right: 5px
 }
 .list #pagination td .paginationTable .paginationActionButtons {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 5px 0 5px 0
 }
 .list #pagination td .paginationTable .paginationChangeButtons {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 5px 5px 5px 0
 }
 .list #pagination td .paginationTable .pageNumbers {
@@ -5369,7 +5369,7 @@ tr#pagination {
 }
 .list .pagination td table td {
     padding: 3px 7px 3px 5px;
-    background: #D3D3D3 none repeat scroll 0 0
+    background: #d3d3d3 none repeat scroll 0 0
 }
 .list .pagination td table td button {
     width: 25px
@@ -5418,7 +5418,7 @@ tr#pagination {
     top: -8px
 }
 .selectedRecords.label {
-    color: #fff
+    color: #535050
 }
 .selectedRecords.value {
     margin-right: 8px
@@ -5548,10 +5548,10 @@ a.listViewTdToolsS1 {
     min-width: 75px
 }
 .list .pagination .buttons .clickMenu:hover > li > a:link {
-    color: #fff
+    color: #535050
 }
 .list .pagination .buttons .clickMenu:hover > li > a {
-    color: #fff
+    color: #535050
 }
 .list tr th a:link {
     font-size: 13px;
@@ -6380,10 +6380,10 @@ select#saved_search_select {
     border-radius: 3px
 }
 .search_form input[type=text] {
-    background: #fff
+    background: #EFEFEF
 }
 .search_form textarea {
-    background: #fff
+    background: #EFEFEF
 }
 .search_fields_basic {
     line-height: 48px
@@ -6565,7 +6565,7 @@ div.modal-content {
 }
 div.modal-header > h4 {
     font-size: 19px;
-    color: #efefef;
+    color: #555555;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 300
@@ -6952,7 +6952,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     width: 100%
 }
 .popupBody .list .pagination a:hover {
-    color: #fff;
+    color: #535050;
     border-bottom-color: #d66c60
 }
 .popupBody .list tbody > tr > td {
@@ -7063,7 +7063,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 .inbound-email .list.view .pagination input[type=button] {
     background-color: #787878;
     color: #f5f5f5;
-    color: #fff;
+    color: #535050;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
@@ -7157,7 +7157,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     width: 100%
 }
 .inbound-email .list .pagination a:hover {
-    color: #fff;
+    color: #535050;
     border-bottom-color: #d66c60
 }
 .inbound-email .list tbody > tr > td {
@@ -7409,11 +7409,11 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     padding: 0px
 }
 .list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 5px 0px 5px 0px
 }
 .list tr.pagination-unique td table.paginationTable td.paginationChangeButtons {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 5px 5px 5px 0px
 }
 listViewLinkButton {
@@ -7803,14 +7803,14 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#sele
     text-decoration: none;
     float: left;
     margin: 0 5px 0 0;
-    color: #fff;
+    color: #535050;
 }
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
     padding: 0;
     width: auto;
     background-color: #4c4c4c;
     line-height: 24px;
-    color: #fff;
+    color: #535050;
     left: 0;
     right: auto
 }
@@ -7819,10 +7819,10 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.sub
     background-color: #4c4c4c;
     width: 100%;
     line-height: 24px;
-    color: #fff;
+    color: #535050;
 }
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-    color: #fff;
+    color: #535050;
     width: 100%;
     background-color: #4c4c4c;
     line-height: 24px;
@@ -8418,7 +8418,7 @@ p.msg {
     }
 }
 .import-vcard {
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding: 16px;
     border-radius: 4px
 }
@@ -8448,7 +8448,7 @@ div#searchResults {
 }
 #scheduler .schedulerDiv {
     background-color: #fafafa;
-    color: #efefef;
+    color: #555555;
     padding: 20px 20px 10px 20px;
     border: 1px solid #e6e6e6;
     border-radius: 4px;
@@ -8511,15 +8511,15 @@ div#searchResults {
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
     background-color: #6a80e6;
-    border-color: #fff
+    border-color: #535050
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
     background-color: #e67c73;
-    border-color: #fff
+    border-color: #535050
 }
 #create-invitees {
     background-color: #fafafa;
-    color: #efefef;
+    color: #555555;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
     border: 1px solid #e6e6e6;
@@ -8530,7 +8530,7 @@ div#searchResults {
 }
 .schedulerInvitees {
     background-color: #fafafa;
-    color: #efefef;
+    color: #555555;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
     border: 1px solid #e6e6e6;
@@ -8592,8 +8592,8 @@ div#searchResults {
     text-transform: uppercase
 }
 #list_div_win {
-    background-color: #fff;
-    color: #efefef;
+    background-color: #EFEFEF;
+    color: #555555;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
     border: 1px solid #e6e6e6;
@@ -8603,7 +8603,7 @@ div#searchResults {
     border-collapse: collapse
 }
 #list_div_win .list tr th {
-    color: #efefef
+    color: #555555
 }
 #ygddfdiv {
     background: #aa9dcc;
@@ -8637,12 +8637,12 @@ a#powered_by {
 }
 a#admin_options {
     font-size: 12px;
-    color: #efefef;
+    color: #555555;
     cursor: pointer
 }
 a#powered_by {
     font-size: 12px;
-    color: #efefef;
+    color: #555555;
     cursor: pointer
 }
 a#admin_options:hover {
@@ -8869,7 +8869,7 @@ table.view {
     display: inline;
     font-size: 14px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     padding: 0 0 10px 8px;
     text-align: left;
     vertical-align: baseline;
@@ -8879,7 +8879,7 @@ table.view {
     display: inline;
     font-size: 14px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     padding: 0;
     text-align: left;
     vertical-align: baseline;
@@ -8890,7 +8890,7 @@ table.view {
     display: inline;
     font-size: 11px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     padding: 0 0 0 8px;
     text-align: left;
     vertical-align: baseline;
@@ -8899,7 +8899,7 @@ table.view {
 slot {
     font-size: 14px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     line-height: 48px;
     text-align: left;
     vertical-align: baseline;
@@ -8908,7 +8908,7 @@ slot {
 #lead_queries_Div td {
     font-size: 14px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     line-height: 30px;
     text-align: left;
     vertical-align: baseline
@@ -8926,7 +8926,7 @@ slot {
     font-size: 14px;
     font-weight: 400;
     background-color: #f5f5f5;
-    color: #efefef;
+    color: #555555;
     padding: 0px 10px;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -8984,42 +8984,42 @@ slot {
 }
 #EditView .edit tr td {
     font-weight: 700;
-    color: #efefef
+    color: #555555
 }
 #EditView .edit input:not([type=button]) {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 #EditView .edit textarea {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 #EditView .edit select {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 #EditView .edit option {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 select {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 option[selected] {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 .sqsEnabled {
     font-weight: normal;
-    color: #efefef
+    color: #555555
 }
 .edit {
     padding: 0 6px 12px 10px
 }
 .label {
     font-size: 14px;
-    color: #efefef
+    color: #555555
 }
 .edit > table {
     padding: 3px 3px 3px 10px;
@@ -9073,7 +9073,7 @@ fieldset td {
 fieldset label {
     font-size: 14px;
     font-weight: 700;
-    color: #efefef;
+    color: #555555;
     border: none
 }
 .validation-message {
@@ -9416,10 +9416,10 @@ div.content p.error {
     text-decoration: underline
 }
 .required a:hover {
-    color: #efefef
+    color: #555555
 }
 .error a:hover {
-    color: #efefef
+    color: #555555
 }
 .success {
     color: #bbe6a5
@@ -9566,12 +9566,12 @@ td.edit.view td[align=right] {
     border-collapse: collapse
 }
 #importOptions #chooser_choose_index_text {
-    background: #fff;
+    background: #EFEFEF;
     border: 0;
     text-align: left
 }
 #importOptions #chooser_ignore_index {
-    background: #fff;
+    background: #EFEFEF;
     border: 0;
     text-align: left
 }
@@ -9734,7 +9734,7 @@ div.confirmTable {
     display: block;
     font-size: 26px;
     font-weight: 300;
-    color: #efefef;
+    color: #555555;
     margin: 0 0 12px 0;
     float: left;
     letter-spacing: 2px;
@@ -9869,7 +9869,7 @@ a.tabFormAdvLink:hover {
 }
 .evenListRowS1 td,
 .oddListRowS1 td {
-    color: #efefef
+    color: #555555
 }
 .evenListRowS1 td {
     background: #f5f5f5
@@ -9966,7 +9966,7 @@ a.tabFormAdvLink:visited {
 #ajaxStatusDiv {
     position: fixed;
     top: 7px;
-    background: #fff;
+    background: #EFEFEF;
     color: #f08377;
     padding: 5px;
     border: 1px solid #aaa;
@@ -10261,7 +10261,7 @@ span.crumbLink {
     padding: 3px
 }
 .tabForm {
-    background: #fff;
+    background: #EFEFEF;
     border: none
 }
 #create_image {
@@ -10556,10 +10556,10 @@ input#btn_ActionLine.button[type="button"] {
     width: 60%
 }
 .edit-view-row-item table {
-    background-color: #fff
+    background-color: #EFEFEF
 }
 .edit-view-row-item table {
-    background-color: #fff
+    background-color: #EFEFEF
 }
 #conditionLines_head {
     background: none
@@ -10931,7 +10931,7 @@ table#lineItems tr td table tfoot tr td span {
     height: 14px
 }
 .hr {
-    background: #fff;
+    background: #EFEFEF;
     color: #757083;
     height: 1px
 }
@@ -10940,7 +10940,7 @@ table#lineItems tr td table tfoot tr td span {
     border-radius: 4px
 }
 .converted_account td {
-    background-color: #D3D3D3
+    background-color: #d3d3d3
 }
 .converted_account > tbody > tr > td {
     padding: 10px;
@@ -11058,7 +11058,7 @@ table legend {
     list-style: none
 }
 .ui-widget-header {
-    background: #fff;
+    background: #EFEFEF;
     color: #565656;
     border: none
 }
@@ -11602,7 +11602,7 @@ select#sales_stage_advanced {
     display: inherit;
     font-size: 14px;
     background-clip: padding-box;
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     color: #f5f5f5;
     padding: 8px;
     border: 1px solid transparent;
@@ -11664,7 +11664,7 @@ hr {
     padding: 8px
 }
 #fieldChoices {
-    background: #fff;
+    background: #EFEFEF;
     padding: 16px 8px 8px 8px;
     border: 1px solid transparent;
     border-radius: 4px
@@ -12920,8 +12920,8 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content .nav-tabs > li > a:hover {
     font-size: 13px;
     font-weight: 400;
-    background-color: #D3D3D3;
-    color: #fff;
+    background-color: #d3d3d3;
+    color: #535050;
     cursor: pointer;
     margin: 0 2px 0 2px;
     border-color: #eee #eee #fff;
@@ -12934,7 +12934,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     font-size: 13px;
     font-weight: 400;
     background-color: #4c4c4c;
-    color: #fff;
+    color: #535050;
     cursor: pointer;
     margin-top: 0;
     margin-bottom: 0;
@@ -12980,7 +12980,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 }
 .content .nav > li > a.first-tab-xs {
     background-color: #4c4c4c;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 7.5px;
     background-repeat: no-repeat;
     padding-right: 10px;
@@ -13008,12 +13008,12 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content .dropdown-menu > li > a:focus,
 .content .dropdown-menu > li > a:hover {
     background-color: #f08377;
-    color: #fff;
+    color: #535050;
     text-decoration: none
 }
 .content #tab-actions > a {
     background-color: #f08377;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 10px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -13024,7 +13024,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content #tab-actions > a:hover {
     background-color: #f08377;
     border-color: #f08377;
-    color: #fff;
+    color: #535050;
     cursor: pointer
 }
 .content #tab-actions:only-child > .dropdown-menu {
@@ -13075,7 +13075,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border: none
 }
 .content #EditView_tabs .tab-content {
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding: 24px;
     margin-bottom: 5px;
     border: 1px solid transparent;
@@ -13084,7 +13084,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border-bottom-right-radius: 4px
 }
 .content .detail-view .tab-content {
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding: 24px;
     margin-bottom: 5px;
     border: 1px solid transparent;
@@ -13093,7 +13093,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border-bottom-right-radius: 4px
 }
 .dashboard .tab-content {
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding: 0px 24px 24px 24px;
     margin-bottom: 30px;
     border: 1px solid transparent;
@@ -13135,7 +13135,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     padding: 0
 }
 .panel-default > .panel-heading-collapse {
-    background: #D3D3D3
+    background: #d3d3d3
 }
 .collapse,
 .collapsing,
@@ -13187,7 +13187,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     padding: 0 0 0 0
 }
 .panel-heading a.collapsed {
-    background-color: #D3D3D3
+    background-color: #d3d3d3
 }
 .panel-heading a.collapsed:before {
     content: "\2b"
@@ -13242,20 +13242,20 @@ div.sub-panel {
 }
 .sub-panel tbody tr td .sugar_action_button > a:link {
     border-bottom: none;
-    color: #fff;
+    color: #535050;
     padding-top: 0px;
     padding-bottom: 0px
 }
 .sub-panel .sugar_action_button > a:hover {
     border-bottom: none;
-    color: #fff
+    color: #535050
 }
 .sub-panel .table-responsive.list > tbody > tr > td ul.subnav a {
-    color: #fff;
+    color: #535050;
     width: 100%
 }
 .sub-panel .table-responsive.list > tbody > tr > td ul.subnav a:hover {
-    color: #fff;
+    color: #535050;
     width: 100%
 }
 .sub-panel tbody tr td ul.clickMenu > li > span {
@@ -13682,14 +13682,14 @@ table.subpanelTabForm {
 }
 .other.view td:nth-of-type(1) {
     display: block;
-    background-color: #fff;
+    background-color: #EFEFEF;
     float: left;
     width: 100%;
     text-wrap: normal
 }
 .other.view td:nth-of-type(2) {
     display: block;
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding-bottom: 10px;
     padding-left: 52px;
     float: right;
@@ -13802,7 +13802,7 @@ table.subpanelTabForm {
     width: 100%
 }
 #edittabs #groupTable {
-    background: #fff;
+    background: #EFEFEF;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -14133,7 +14133,7 @@ div.target-list-table {
 }
 .icon-btn-lst .icon-btn a {
     display: block;
-    color: #fff;
+    color: #535050;
     padding: 10px;
     width: 100%;
     height: 100%
@@ -14448,7 +14448,7 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
 }
 .yui-ac-content {
     position: absolute;
-    background: #fff;
+    background: #EFEFEF;
     border: 1px solid #808080;
     overflow: hidden;
     width: 100%;
@@ -14488,7 +14488,7 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
 }
 .yui-ac-content li.yui-ac-highlight {
     background: #f08377;
-    color: #fff
+    color: #535050
 }
 .yui-calcontainer {
     position: relative;
@@ -14586,7 +14586,7 @@ p#clear {
     clear: left
 }
 .yui-calcontainer {
-    background-color: #fff;
+    background-color: #EFEFEF;
     padding: 10px;
     border: 1px solid #808080
 }
@@ -14650,7 +14650,7 @@ p#clear {
     top: 0;
     bottom: 0;
     left: -10px;
-    background: url("../../../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent;
+    background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent;
     cursor: pointer;
     margin-left: 0.4em;
     width: 25px;
@@ -14660,7 +14660,7 @@ p#clear {
     top: 0;
     bottom: 0;
     right: -10px;
-    background: url("../../../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent;
+    background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent;
     cursor: pointer;
     margin-right: 0.4em;
     width: 25px;
@@ -15239,7 +15239,7 @@ span.yui-carousel-first-button-disabled {
 .yui-module .bd,
 .yui-panel .bd,
 .yui-panel .ft {
-    background-color: #fff
+    background-color: #EFEFEF
 }
 .container-close {
     margin: 4px 0 0 0
@@ -15250,7 +15250,7 @@ span.yui-carousel-first-button-disabled {
     font-weight: bold;
     background: #4c4c4c none repeat scroll 0 0;
     background-color: #4c4c4c;
-    color: #fff;
+    color: #535050;
     padding: 3px 6px;
     line-height: 2;
     line-height: 1.8
@@ -15341,7 +15341,7 @@ span.yui-carousel-first-button-disabled {
     position: relative;
     top: 0;
     left: 0;
-    background-color: #fff;
+    background-color: #EFEFEF;
     color: #000;
     padding: 2px 5px;
     border-width: 1px;
@@ -15481,7 +15481,7 @@ th.yui-dt-hidden .yui-dt-resizer {
     margin: 0;
     border: none;
     border-right: 1px solid #cbcbcb;
-    border-color: #fff #ededed #e7e7e7;
+    border-color: #535050 #ededed #e7e7e7;
     border-bottom: 1px solid #e7e7e7;
     text-align: left
 }
@@ -16674,7 +16674,7 @@ div.yuimenu li.selected a.selected {
     width: 100%
 }
 .yui-editor-panel .yui-toolbar-container .bd {
-    background-color: #fff
+    background-color: #EFEFEF
 }
 .yui-editor-blankimage {
     background-image: url(blankimage.png)
@@ -16780,13 +16780,13 @@ body.yui-layout {
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
-    background: -o-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: #fff;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #EFEFEF 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -moz-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: #EFEFEF;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EFEFEF), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
     width: 100%;
     zoom: 1
 }
@@ -16948,13 +16948,13 @@ div.yui-layout-hd h2 {
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-hd {
-    background: #fff;
-    background: -moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -o-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
+    background: #EFEFEF;
+    background: -moz-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EFEFEF), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #EFEFEF 0%, #e5e5e5 100%);
     border: 1px solid #ccc;
     border-width: 0
 }
@@ -16971,7 +16971,7 @@ div.yui-layout-hd h2 {
     margin-right: 5px
 }
 .yui-layout .yui-layout-unit div.yui-layout-bd {
-    background-color: #fff;
+    background-color: #EFEFEF;
     border: 1px solid #808080;
     border-top: none;
     border-top-width: 0;
@@ -18837,7 +18837,7 @@ div.yuimenu li.selected a.selected {
     width: 100%
 }
 .yui-editor-panel .yui-toolbar-container .bd {
-    background-color: #fff
+    background-color: #EFEFEF
 }
 .yui-editor-blankimage {
     background-image: url(blankimage.png)
@@ -18926,7 +18926,7 @@ div.yuimenu li.selected a.selected {
     zoom: 1
 }
 .yui-navset .yui-content {
-    background: #fff;
+    background: #EFEFEF;
     color: #000;
     zoom: 1
 }
@@ -19037,7 +19037,7 @@ div.yuimenu li.selected a.selected {
     outline: 0
 }
 .yui-navset .selected a em {
-    background: #fff;
+    background: #EFEFEF;
     color: #333;
     padding: 8px
 }
@@ -19105,24 +19105,24 @@ div.bodywrapper {
     padding: 0.2em 0.75em;
     top: auto;
     left: -1px;
-    background: #fff;
-    background: -moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -o-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
+    background: #EFEFEF;
+    background: -moz-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EFEFEF), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #EFEFEF 0%, #e5e5e5 100%);
 }
 .yui-navset-right .yui-nav a em {
     left: auto;
     right: -1px;
-    background: #fff;
-    background: -moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -o-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
+    background: #EFEFEF;
+    background: -moz-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EFEFEF), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #EFEFEF 0%, #e5e5e5 100%);
     border-width: 0 1px 0 0
 }
 .yui-navset-left .yui-nav a,
@@ -19158,13 +19158,13 @@ div.bodywrapper {
     border-width: 0 0 1px;
     top: auto;
     bottom: -1px;
-    background: #fff;
-    background: -moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
-    background: -webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -o-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: -ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);
-    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
+    background: #EFEFEF;
+    background: -moz-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EFEFEF), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #EFEFEF 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #EFEFEF 0%, #e5e5e5 100%);
 }
 .yui-navset-bottom .yui-content,
 .yui-navset .yui-navset-bottom .yui-content {
@@ -19374,7 +19374,7 @@ a.sugar-tab-close,
 }
 #caseStyleUser {
     background: #bbe6a5;
-    color: #efefef;
+    color: #555555;
     padding: 10px;
     margin: 10px;
     border: 1px solid transparent;
@@ -19382,7 +19382,7 @@ a.sugar-tab-close,
 }
 #caseStyleContact {
     background: #e6d5a5;
-    color: #efefef;
+    color: #555555;
     padding: 10px;
     margin: 10px;
     border: 1px solid transparent;
@@ -19390,7 +19390,7 @@ a.sugar-tab-close,
 }
 #caseStyleInternal {
     background: #a5e6e6;
-    color: #efefef;
+    color: #555555;
     padding: 10px;
     margin: 10px 60px 10px 10px;
     border: 1px solid transparent;
@@ -19476,7 +19476,7 @@ button#goto_date_trigger_div_nav_submit {
     text-transform: uppercase
 }
 table#goto_date_trigger_div_t thead {
-    background: #D3D3D3
+    background: #d3d3d3
 }
 .yui-calendar .calweekdaycell {
     font-weight: normal
@@ -19556,10 +19556,10 @@ table#goto_date_trigger_div_t thead {
     padding: 0 10px 0 10px
 }
 .yui-calendar .calbody td {
-    background: #fff
+    background: #EFEFEF
 }
 .yui-calendar td.calcell a {
-    background: #fff;
+    background: #EFEFEF;
     color: #f08377;
     line-height: 32px;
     width: 32px;
@@ -19662,7 +19662,7 @@ h5.calSharedUser {
     -moz-box-sizing: border-box
 }
 div.monthFooter {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     line-height: 32px
 }
 .monthCalBody td {
@@ -19684,10 +19684,10 @@ div.monthFooter {
     border: none
 }
 .yearCalBodyMonth #daily_cal_table {
-    border-top: #D3D3D3
+    border-top: #d3d3d3
 }
 .yearCalBodyMonth #daily_cal_table .monthCalBodyTHDay {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yearCalBodyMonth > a {
     color: #f08377
@@ -19696,46 +19696,46 @@ h5.calSharedUser {
     color: #4c4c4c
 }
 .olCgClass td {
-    border-bottom-color: #D3D3D3
+    border-bottom-color: #d3d3d3
 }
 .olBgClass {
-    background-color: #D3D3D3
+    background-color: #d3d3d3
 }
 .yui-navset .yui-nav {
-    border-bottom: 1px solid #D3D3D3
+    border-bottom: 1px solid #d3d3d3
 }
 .yui-navset .yui-navset-top .yui-nav {
-    border-bottom: 1px solid #D3D3D3
+    border-bottom: 1px solid #d3d3d3
 }
 .yui-layout .yui-layout-hd {
-    border-bottom: 1px solid #D3D3D3
+    border-bottom: 1px solid #d3d3d3
 }
 .yui-layout .yui-layout-unit div.yui-layout-bd {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-content {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-navset-top .yui-content {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-nav .selected a {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-nav .selected a em {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-nav a {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-nav a em {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-nav a {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 .yui-navset .yui-navset-top .yui-nav a {
-    border-color: #D3D3D3
+    border-color: #d3d3d3
 }
 a.sugar-tab-close {
     background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
@@ -19834,17 +19834,17 @@ ul.yui-nav li.selected {
     color: #f08377
 }
 td.fc-widget-header {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 0;
     border: none
 }
 td.fc-widget-header table > thead {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 0;
     border: none
 }
 td.fc-widget-header table > thead > tr > th {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
     padding: 0;
     border: none
 }
@@ -20128,7 +20128,7 @@ iframe.teamNoticeBox {
     width: 95%
 }
 .modal-calendar-user-list .modal-content select {
-    color: #efefef
+    color: #555555
 }
 @media (min-width: 1350px) {
     .modal-cal-edit .modal-content {
@@ -20190,7 +20190,7 @@ iframe.teamNoticeBox {
 .panel-email-compose {
     margin: 5px 0 0 0;
     background-color: #b3c0c7;
-    color: #fff;
+    color: #535050;
     line-height: 24px
 }
 .panel-email-compose .panel-body:focus {
@@ -20205,7 +20205,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20217,7 +20217,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20229,7 +20229,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20241,7 +20241,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20253,7 +20253,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20265,7 +20265,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20277,7 +20277,7 @@ iframe.teamNoticeBox {
     border: none;
     border-image-width: 0;
     border-color: transparent;
-    color: #fff;
+    color: #535050;
     margin: 6px 6px;
     padding: 4px;
     line-height: 18px;
@@ -20288,7 +20288,7 @@ iframe.teamNoticeBox {
     background-color: transparent;
     border: none;
     border-image-width: 0;
-    color: #fff;
+    color: #535050;
     border-color: transparent;
     margin: 0;
     outline: none;
@@ -20298,7 +20298,7 @@ iframe.teamNoticeBox {
     background-color: transparent;
     border: none;
     border-image-width: 0;
-    color: #fff;
+    color: #535050;
     border-color: transparent;
     margin: 0;
     outline: none;
@@ -20308,7 +20308,7 @@ iframe.teamNoticeBox {
     background-color: transparent;
     border: none;
     border-image-width: 0;
-    color: #fff;
+    color: #535050;
     border-color: transparent;
     margin: 0;
     outline: none;
@@ -20337,10 +20337,10 @@ iframe.teamNoticeBox {
 .panel-email-compose .panel-body .vertical-seperator {
     background-color: transparent;
     border-bottom: none;
-    border-left: 1px solid #fff;
+    border-left: 1px solid #535050;
     border-right: none;
     border-top: none;
-    color: #fff;
+    color: #535050;
     cursor: default;
     font-size: 18px;
     margin: 6px 6px;
@@ -20379,7 +20379,7 @@ iframe.teamNoticeBox {
     display: none
 }
 .file-attachments {
-    background: #fff;
+    background: #EFEFEF;
     border: 1px solid #ddd;
     border-radius: 4px;
     line-height: 26px;
@@ -20450,7 +20450,7 @@ iframe.teamNoticeBox {
     cursor: pointer
 }
 .file-attachments a.attachment-remove {
-    color: #fff
+    color: #535050
 }
 .file-attachments .attachment-blank {
     background-color: #5d5670;
@@ -20466,7 +20466,7 @@ iframe.teamNoticeBox {
     display: none
 }
 .document-attachments {
-    background: #fff;
+    background: #EFEFEF;
     border: 1px solid #ddd;
     border-radius: 4px;
     line-height: 26px;
@@ -20541,7 +20541,7 @@ iframe.teamNoticeBox {
     cursor: pointer
 }
 .document-attachments a.attachment-remove {
-    color: #fff
+    color: #535050
 }
 .document-attachments .attachment-blank {
     background-color: #5d5670;
@@ -20653,7 +20653,7 @@ iframe.teamNoticeBox {
     display: block;
     font-size: 26px;
     font-weight: 300;
-    color: #efefef;
+    color: #555555;
     margin: 0 0 0 0;
     float: left;
     letter-spacing: 2px;
@@ -21187,7 +21187,7 @@ iframe.teamNoticeBox {
 }
 @font-face {
     font-family: "suitepicon";
-    src: url("../../../../../../themes/SuiteP/css/suitepicon.eot#iefix") format("embedded-opentype"), url("../../../../../../themes/SuiteP/css/suitepicon.woff") format("woff"), url("../../../../../../themes/SuiteP/css/suitepicon.ttf") format("truetype"), url("../../../../../../themes/SuiteP/css/suitepicon.svg#suitepicon") format("svg");
+    src: url("../../../../themes/SuiteP/css/suitepicon.eot#iefix") format("embedded-opentype"), url("../../../../themes/SuiteP/css/suitepicon.woff") format("woff"), url("../../../../themes/SuiteP/css/suitepicon.ttf") format("truetype"), url("../../../../themes/SuiteP/css/suitepicon.svg#suitepicon") format("svg");
 }
 .suitepicon {
     line-height: 1

@@ -1413,7 +1413,7 @@ footer.collapsedSidebar {
 }
 .quickcreatetop .dropdown-menu li a:hover {
     color: #fff;
-    background-color: #8499aa
+    background-color: #393737
 }
 .quickcreatetop .dropdown-menu {
     margin-top: -2px
@@ -6308,7 +6308,7 @@ a.listViewTdToolsS1 {
     border-radius: 4px
 }
 form#MassAssign_SecurityGroups {
-    background-color: #416F81;
+    background-color: #416f81;
     padding: 0px 20px 0px 20px;
     margin: 10px 0 20px 0;
     border-radius: 3px;
@@ -6370,7 +6370,7 @@ form#MassAssign_SecurityGroups {
 .search_form .view {
     width: 100%;
     margin: 0;
-    background-color: #416F81;
+    background-color: #416f81;
     border-radius: 3px;
     font-size: 13px;
     padding: 5px 0px 0px 30px
@@ -8450,7 +8450,7 @@ div#searchResults {
     background-color: #fafafa;
     color: #416f81;
     padding: 20px 20px 10px 20px;
-    border: 1px solid #416F81;
+    border: 1px solid #416f81;
     border-radius: 4px;
     text-align: left;
     width: 100%;
@@ -8522,7 +8522,7 @@ div#searchResults {
     color: #416f81;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
-    border: 1px solid #416F81;
+    border: 1px solid #416f81;
     border-radius: 4px;
     text-align: left;
     width: 100%;
@@ -8533,7 +8533,7 @@ div#searchResults {
     color: #416f81;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
-    border: 1px solid #416F81;
+    border: 1px solid #416f81;
     border-radius: 4px;
     text-align: left;
     width: 100%;
@@ -8596,7 +8596,7 @@ div#searchResults {
     color: #416f81;
     padding: 20px 20px 10px 20px;
     margin-top: 5px;
-    border: 1px solid #416F81;
+    border: 1px solid #416f81;
     border-radius: 4px;
     text-align: left;
     width: 100%;
@@ -11649,7 +11649,7 @@ select#sales_stage_advanced {
     margin-bottom: 20px
 }
 .ui-state-highlight {
-    background: #416F81;
+    background: #416f81;
     border: 1px solid #2e4f5c;
     border-radius: 4px;
     height: 30px
