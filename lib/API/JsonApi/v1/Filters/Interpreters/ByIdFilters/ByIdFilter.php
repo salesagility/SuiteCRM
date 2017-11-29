@@ -38,69 +38,31 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Repositories;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
-use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByIdFilterInterpreter;
 
-class FilterRepository
+class ByIdFilter implements ByIdFilterInterpreter
 {
     /**
-     * @var ContainerInterface
+     * @return string
      */
-    private $containers;
-
-    private $filterParser;
-
-    /**
-     * FilterRepository constructor.
-     * @param ContainerInterface $containers
-     */
-    public function __construct(ContainerInterface $containers)
+    public function getByIdFilter($filterStructure)
     {
-        $this->containers = $containers;
-        $this->filterParser = new FilterParser($containers);
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
-     */
-    public function fromRequest(Request $request)
-    {
-        /** @var OperatorInterface[] $filterOperators */
-        // Parse Filters from request
-        $queries = $request->getQueryParams();
-        if(empty($queries)) {
-            return array();
-        }
-
-        $response = array();
-        if(isset($queries['filter'])) {
-            /** @var array $filters */
-            $filters = $queries['filter'];
-
-            if(is_array($filters)) {
-                foreach ($filters as $filterKey => $filter) {
-                    $response[] = $this->filterParser->parseFilter($filterKey, $filter);
-                }
-            } else if(is_string($filters)) {
-                $response = array($filters);
-            } else {
-                throw new BadRequest('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
+        $filter = '';
+        $idFilter = array();
+        /** @var array $identifiers */
+        $identifiers = $filterStructure['[id]'];
+        foreach ($identifiers as $id) {
+            if(empty($id)) {
+                continue;
             }
+
+            $idFilter[] = '"'. $id .'"';
         }
 
-        return $response;
-    }
+        $filter = 'id IN ('. implode(',', $idFilter) .')';
 
-    public function toSuiteBeanResource()
-    {
-        return new SuiteBeanResource($this->containers);
+        return $filter;
     }
 }

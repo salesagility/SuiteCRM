@@ -88,6 +88,11 @@ class FilterParser
     }
 
 
+    /**
+     * @param string $filterKey
+     * @param string $filterValue
+     * @return array
+     */
     public function parseFilter($filterKey, $filterValue)
     {
         if(empty($filterKey)) {

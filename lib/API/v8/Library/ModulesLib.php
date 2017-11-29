@@ -44,9 +44,12 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use League\Url\Components\Query;
+use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter;
+use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
+use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
 
 /**
@@ -256,10 +259,21 @@ class ModulesLib
         $orderBy = $this->getSorting($req);
 
         // Filtering (where clause in SQL)
+        $where = '';
         /** @var FilterRepository $filterRepository */
         $filterRepository = $this->containers->get('FilterRepository');
-        $filterRepository->fromRequest($req);
-        $where = '';
+        $filterStructure = $filterRepository->fromRequest($req);
+        /** @var FilterInterpreter $filterInterpreter */
+        $filterInterpreter = $this->containers->get('FilterInterpreter');
+        if($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+            $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
+        } elseif ($filterInterpreter->isFilterById($filterStructure)) {
+            $where = $filterInterpreter->getFilterById($filterStructure);
+        } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
+            $where = $filterInterpreter->getFilterByAttributes($filterStructure);
+        } else {
+            throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        }
 
         // Pagination (offset)
         $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
@@ -271,7 +285,6 @@ class ModulesLib
         $maximumResults = -1;
 
         // Show deleted results
-        $filter = $req->getParam('filter');
         $show_deleted = 0;
         if (isset($filter['deleted'])) {
             $show_deleted = (integer)$filter['deleted'];

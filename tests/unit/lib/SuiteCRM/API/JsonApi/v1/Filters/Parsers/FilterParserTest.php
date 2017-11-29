@@ -33,10 +33,8 @@ class FilterParserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$filterParser === null) {
-            $paths = new Paths();
             // load PSR 11 interface
-            global $container;
-            require_once $paths->getContainersPath();
+            $container = $this->tester->getContainerInterface();
             // Load mock class
             self::$filterParser = new FilterParserMock($container);
         }

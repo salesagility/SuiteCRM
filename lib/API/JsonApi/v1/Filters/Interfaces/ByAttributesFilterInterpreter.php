@@ -38,12 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace lib\SuiteCRM\API\JsonApi\v1\Filters\Interpreters;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
-class SuiteInterpreter
+interface ByAttributesFilterInterpreter
 {
-    public function InterpretFiltersToSQL()
-    {
-
-    }
+    public function hasByAttributesFilter($name);
+    public function getByAttributesFilter($filterStructure);
 }

@@ -38,69 +38,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Repositories;
+namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
-use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByPreMadeFilterInterpreter;
 
-class FilterRepository
+class Today implements ByPreMadeFilterInterpreter
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $containers;
-
-    private $filterParser;
 
     /**
-     * FilterRepository constructor.
-     * @param ContainerInterface $containers
+     * @param string $name
+     * @return bool
      */
-    public function __construct(ContainerInterface $containers)
+    public function hasByPreMadeFilter($name)
     {
-        $this->containers = $containers;
-        $this->filterParser = new FilterParser($containers);
+        return 'Today' === $name;
     }
 
     /**
-     * @param Request $request
-     * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @return string
      */
-    public function fromRequest(Request $request)
+    public function getByPreMadeFilter()
     {
-        /** @var OperatorInterface[] $filterOperators */
-        // Parse Filters from request
-        $queries = $request->getQueryParams();
-        if(empty($queries)) {
-            return array();
-        }
-
-        $response = array();
-        if(isset($queries['filter'])) {
-            /** @var array $filters */
-            $filters = $queries['filter'];
-
-            if(is_array($filters)) {
-                foreach ($filters as $filterKey => $filter) {
-                    $response[] = $this->filterParser->parseFilter($filterKey, $filter);
-                }
-            } else if(is_string($filters)) {
-                $response = array($filters);
-            } else {
-                throw new BadRequest('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
-            }
-        }
-
-        return $response;
-    }
-
-    public function toSuiteBeanResource()
-    {
-        return new SuiteBeanResource($this->containers);
+        $today = new \DateTime();
+        $today = $today->setTime(0,0,0);
+        return 'data_created >= "'. $today->format(DATE_ATOM) . '"';
     }
 }
