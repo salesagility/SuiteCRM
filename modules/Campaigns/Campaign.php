@@ -75,6 +75,7 @@ class Campaign extends SugarBean {
 
 	// These are related
 	var $assigned_user_name;
+    var $note_id;
 
 	// module name definitions and table relations
 	var $table_name = "campaigns";
@@ -85,19 +86,19 @@ class Campaign extends SugarBean {
 
   	// This is used to retrieve related fields from form posts.
 	var $additional_column_fields = array(
-				'assigned_user_name', 'assigned_user_id',
+				'assigned_user_name', 'assigned_user_id', 'note_id',
 	);
 
-	var $relationship_fields = Array('prospect_list_id'=>'prospect_lists');
+	var $relationship_fields = Array('prospect_list_id'=>'prospect_lists', 'note_id'=>'notes',);
 
 	var $new_schema = true;
-        
+
         /**
          *
          * @var string
          */
         public $survey_id;
-        
+
         /**
          *
          * @var string
@@ -253,7 +254,7 @@ class Campaign extends SugarBean {
 		if($this->campaign_type != 'NewsLetter') {
 		    $this->frequency = '';
 		}
-		
+
 		return parent::save($check_notify);
 
 	}
