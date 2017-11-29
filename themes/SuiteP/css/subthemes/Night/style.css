@@ -4,6 +4,75 @@ Code licensed under the BSD License:
 http://developer.yahoo.com/yui/license.html
 version: 2.9.0
 */
+body{margin:10px}h1{font-size:138.5%}h2{font-size:123.1%}h3{font-size:108%}h1,h2,h3{margin:1em 0}h1,h2,h3,h4,h5,h6,strong,dt{font-weight:bold}optgroup{font-weight:normal}abbr,acronym{border-bottom:1px dotted #000;cursor:help}em{font-style:italic}del{text-decoration:line-through}blockquote,ul,ol,dl{margin:1em}ol,ul,dl{margin-left:2em}ol{list-style:decimal outside}ul{list-style:disc outside}dl dd{margin-left:1em}th,td{border:1px solid #000;padding:.5em}th{font-weight:bold;text-align:center}caption{margin-bottom:.5em;text-align:center}sup{vertical-align:super}sub{vertical-align:sub}p,fieldset,table,pre{margin-bottom:1em}button,input[type="checkbox"],input[type="radio"],input[type="reset"],input[type="submit"]{padding:1px}img{-ms-interpolation-mode:bicubic}/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
 /**
  * YUI Base
  * @module base
@@ -1629,7 +1698,7 @@ footer.collapsedSidebar {
     padding: 0
 }
 .usermenu a .caret {
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     margin-left: 10px;
@@ -1639,7 +1708,7 @@ footer.collapsedSidebar {
 }
 .usermenu a .user_icon {
     display: inline-block;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
     background-position: 0 -1;
     background-repeat: no-repeat;
     margin-right: 11px;
@@ -1683,7 +1752,7 @@ footer.collapsedSidebar {
     border-color: transparent
 }
 .mobileheader .modulename a {
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 92.5% 5px;
     background-repeat: no-repeat;
     padding: 15px 32px 18px 0
@@ -1870,7 +1939,7 @@ footer.collapsedSidebar {
     display: inline-block;
     font-size: 13px;
     background-color: #1F4351;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 80px 0px;
     background-repeat: no-repeat;
     color: #fff;
@@ -2225,11 +2294,11 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png")
+        background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png")
     }
     .open.globalLinks > .btn-default:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2240,7 +2309,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default:active:hover {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2251,7 +2320,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default.focus:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2262,7 +2331,7 @@ footer.collapsedSidebar {
     }
     .globalLinks-mobile > .btn-default.usermenucollapsed {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2273,7 +2342,7 @@ footer.collapsedSidebar {
     }
     .desktop_notifications > button {
         background-color: #535050;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         width: 28px;
         height: 28px;
@@ -2281,23 +2350,23 @@ footer.collapsedSidebar {
     }
     .desktop_notifications > button:hover {
         background-color: #535050;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050;
         border: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
@@ -2305,7 +2374,7 @@ footer.collapsedSidebar {
     .desktop_notifications .btn-success.active,
     .desktop_notifications .btn-success:active,
     .desktop_notifications.open > .dropdown-toggle.btn-success {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050;
         border: none
@@ -2482,7 +2551,7 @@ footer.collapsedSidebar {
     }
     .usermenucollapsed.btn-default {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-left: 0;
@@ -2507,17 +2576,17 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
     .globalLinks-desktop .btn-default.active,
     .globalLinks-desktop .btn-default:active,
     .globalLinks-desktop .open > .dropdown-toggle.btn-default {
         background-color: #416f81;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
     .open.globalLinks > .btn-default:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2528,7 +2597,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default:active:hover {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2539,7 +2608,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default.focus:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2550,7 +2619,7 @@ footer.collapsedSidebar {
     }
     .globalLinks-mobile > .btn-default.usermenucollapsed {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2665,42 +2734,42 @@ footer.collapsedSidebar {
         text-indent: -9999px
     }
     .desktop_notifications .btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications .btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications .btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2716,7 +2785,7 @@ footer.collapsedSidebar {
     #desktop_notifications .btn-success:active.focus,
     #desktop_notifications .btn-success:active:focus,
     #desktop_notifications .btn-success:active:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2728,14 +2797,14 @@ footer.collapsedSidebar {
     #desktop_notifications.open > .dropdown-toggle.btn-success.focus,
     #desktop_notifications.open > .dropdown-toggle.btn-success:focus,
     #desktop_notifications.open > .dropdown-toggle.btn-success:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications > .btn-success {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2747,14 +2816,14 @@ footer.collapsedSidebar {
         border: none
     }
     .desktop_notifications > .btn-success:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications > .btn-success:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2987,7 +3056,7 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
 }
 .topnav #overflow-menu > li.with-actions .dropdown-menu {
@@ -4943,12 +5012,12 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     width: 52px;
 }
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
     width: 32px;
     height: 32px
 }
 .emailaddresses button {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
     width: 34px;
     height: 34px
 }
@@ -6927,7 +6996,7 @@ a#advanced_search_link {
     font-size: 13px;
     font-weight: 500;
     background-color: #aa9dcc;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 173px 2px;
     background-repeat: no-repeat;
     color: #fff;
@@ -6949,7 +7018,7 @@ a#basic_search_link {
     font-size: 13px;
     font-weight: 500;
     background-color: #aa9dcc;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_up_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_up_arrow.png");
     background-position: 136px 13px;
     background-repeat: no-repeat;
     color: #fff;
@@ -9183,7 +9252,7 @@ a#powered_by:hover {
 }
 .footer_right a {
     font-size: 12px;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.png");
     background-position: right 3px;
     background-repeat: no-repeat;
     color: #fff;
@@ -9832,7 +9901,7 @@ li.noBullet {
 }
 #MorePanelHandle {
     display: inline;
-    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=more.gif') no-repeat bottom left;
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=more.gif') no-repeat bottom left;
     color: #444;
     cursor: pointer;
     margin-bottom: 2px;
@@ -10206,7 +10275,7 @@ div.confirmTable {
 }
 .buttonSlide.yui-module .yui-hd .toggle em {
     display: inline;
-    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_more.png');
+    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_more.png');
     background-repeat: no-repeat;
     float: right;
     overflow: hidden;
@@ -10216,7 +10285,7 @@ div.confirmTable {
     text-indent: 9999px
 }
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_less.png')
+    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_less.png')
 }
 .view {
     border-top: 2px solid;
@@ -10987,22 +11056,22 @@ dl {
     margin-top: 20px
 }
 #EditView_tabs .id-ff-remove img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #EditView_tabs .edit [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #conditionLines [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #actionLines [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
@@ -11010,7 +11079,7 @@ dl {
     content: none
 }
 #actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
 }
 #search_form span.id-ff.multiple {
     position: relative;
@@ -11035,7 +11104,7 @@ input#btn_ActionLine.button[type="button"] {
     padding: 0 10px
 }
 #deleteGroup img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-clear.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-clear.png');
     width: 32px;
     height: 32px
 }
@@ -11651,10 +11720,10 @@ span.id-ff button img {
     height: 32px
 }
 span.id-ff button:first-of-type img {
-    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
 }
 span.id-ff button:last-of-type img {
-    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
 }
 a.tabFormAdvLink {
     text-transform: uppercase
@@ -13498,7 +13567,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 }
 .content .nav > li > a.first-tab-xs {
     background-color: #2e4f5c;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 7.5px;
     background-repeat: no-repeat;
     padding-right: 10px;
@@ -13531,7 +13600,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 }
 .content #tab-actions > a {
     background-color: #f08377;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 10px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -13611,13 +13680,13 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border-bottom-right-radius: 4px
 }
 .dashboard .tab-content {
-    background-color: #fff;
+    background-color: transparent;
     padding: 0px 24px 24px 24px;
     margin-bottom: 30px;
     border: 1px solid transparent;
     border-top-right-radius: 4px;
     border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px
+    border-bottom-right-radius: 4px;
 }
 .tab-content .tab-pane-NOBOOTSTRAPTOGGLER:not(.active) {
     display: none
@@ -15787,7 +15856,7 @@ span.yui-carousel-first-button-disabled {
     right: 0;
     width: 25px;
     height: 15px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=dashletclose.png') no-repeat;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=dashletclose.png') no-repeat;
     cursor: pointer
 }
 .yui-panel-container .underlay {
@@ -16043,10 +16112,10 @@ th.yui-dt-sortable .yui-dt-label {
     margin-right: 10px
 }
 th.yui-dt-asc .yui-dt-liner {
-    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_up.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_up.gif') no-repeat right
 }
 th.yui-dt-desc .yui-dt-liner {
-    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_down.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_down.gif') no-repeat right
 }
 tbody .yui-dt-editable {
     cursor: pointer
@@ -17420,7 +17489,7 @@ div.yui-layout-hd h2 {
     height: 5px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
     right: 10px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
@@ -17429,7 +17498,7 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-left .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-clip-left .collapse:hover,
 .yui-layout .yui-layout-clip-right .collapse {
@@ -17439,7 +17508,7 @@ div.yui-layout-hd h2 {
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse {
     left: 5px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
     top: 4px;
@@ -17447,22 +17516,22 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-right .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
 }
 .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
     right: 5px
 }
 .yui-layout .yui-layout-clip-bottom .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-hd {
@@ -17543,7 +17612,7 @@ div.yui-layout-hd h2 {
     width: 6px;
     top: 45%;
     left: 0;
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px
 }
 .yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob,
 .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob {
@@ -17551,7 +17620,7 @@ div.yui-layout-hd h2 {
     height: 6px;
     width: 16px;
     left: 45%;
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0
 }
 .yui-log {
     font-family: monospace;
@@ -17864,7 +17933,7 @@ a.yuimenuitemlabel:hover {
     margin-top: -1.45em
 }
 .yuimenuitem-hassubmenu > a {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png);
     background-position: right -126px;
     background-repeat: no-repeat
 }
@@ -18289,7 +18358,7 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-r,
 .yui-resize .yui-resize-handle-inner-l {
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px;
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px;
     height: 16px;
     width: 5px;
     position: absolute;
@@ -18297,29 +18366,29 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-t,
 .yui-resize .yui-resize-handle-inner-b {
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0;
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0;
     height: 5px;
     width: 16px;
     position: absolute;
     left: 50%
 }
 .yui-resize .yui-resize-handle-br {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -62px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tr {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -42px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tl {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -82px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-bl {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -23px;
     background-repeat: no-repeat
 }
@@ -19843,7 +19912,7 @@ div.bodywrapper {
     width: 100%
 }
 .sugar-progress-bar {
-    background: #ddd url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+    background: #ddd url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
     width: 0
 }
@@ -19855,7 +19924,7 @@ a.sugar-tab-close,
     position: relative;
     top: -3px;
     width: 9px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
 }
 .sugar-message-prompt {
     margin-left: 5px
@@ -20256,13 +20325,13 @@ h5.calSharedUser {
     border-color: #396070
 }
 a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav .selected a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-nav {
     overflow-y: hidden
