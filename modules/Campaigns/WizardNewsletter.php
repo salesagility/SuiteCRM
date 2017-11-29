@@ -148,8 +148,8 @@ $popup_request_data = array(
     'call_back_function' => 'set_return',
     'form_name' => 'wizform',
     'field_to_name_array' => array(
-        'id' => 'sa_survey_id',
-        'name' => 'sa_survey_name',
+        'id' => 'survey_id',
+        'name' => 'survey_name',
         ),
     );
 $ss->assign('encoded_surveys_popup_request_data', $json->encode($popup_request_data));

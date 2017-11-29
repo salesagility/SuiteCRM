@@ -79,8 +79,8 @@
 							<td width="15%" scope="col"><span sugar='slot3'>{$MOD.LBL_CAMPAIGN_SURVEY} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span sugar='slot'></td>
 							<td width="35%" >
 								<span sugar='slot2b'>
-									<input class="sqsEnabled" autocomplete="off" id="sa_survey_name" name="wiz_step1_survey_name"  title='{$MOD.LBL_CAMPAIGN_SURVEY}' type="text" value="{$SA_SURVEY_NAME}">
-									<input id='sa_survey_id' name='wiz_step1_survey_id' type="hidden" value="{$SA_SURVEY_ID}"  title='{$MOD.LBL_CAMPAIGN_SURVEY}'/>
+									<input class="sqsEnabled" autocomplete="off" id="survey_name" name="wiz_step1_survey_name"  title='{$MOD.LBL_CAMPAIGN_SURVEY}' type="text" value="{$SURVEY_NAME}">
+									<input id='survey_id' name='wiz_step1_survey_id' type="hidden" value="{$SURVEY_ID}"  title='{$MOD.LBL_CAMPAIGN_SURVEY}'/>
 									<input title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button" class="button" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name=btn1 onclick='open_popup("Surveys", 600, 400, "", true, false, {$encoded_surveys_popup_request_data});' />
 								</span sugar='slot'>
 							</td>
