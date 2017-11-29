@@ -140,7 +140,7 @@ class CampaignsViewDetail extends ViewDetail
         if (!empty($alltabs)) {
             //iterate through list, and filter out all but 3 subpanels
             foreach ($alltabs as $key=>$name) {
-                if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls'
+                if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls' && $name != 'history'
                 /* BEGIN - SECURITY GROUPS */
                     && $name != 'securitygroups'
                 /* END - SECURITY GROUPS */
