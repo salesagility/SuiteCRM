@@ -313,7 +313,7 @@ a#powered_by:hover {
 
 .footer_right a {
   font-size: 12px;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
+  background-image: none, url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
   background-position: right 3px;
   background-repeat: no-repeat;
   color: #4D4D4D;
@@ -2069,7 +2069,7 @@ ul.clickMenu li a:hover {
 
 ul.clickMenu > li > span {
   display: inline-block;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 0% 0%;
   background-repeat: no-repeat;
   background-size: 12px auto;
@@ -2127,13 +2127,13 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled {
   display: inline-block;
-  background-color: #4eb69c;
+  background-color: #4E869C;
   border-radius: 3px;
   vertical-align: bottom;
 }
 
 .selectActionsDisabled span {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px 7px;
   background-repeat: no-repeat;
   background-size: 12px auto;
@@ -2175,7 +2175,7 @@ ul#detailViewActions.clickMenu {
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
-  background-color: #4eb69c;
+  background-color: #4E869C;
   padding: 0 8px;
 }
 
