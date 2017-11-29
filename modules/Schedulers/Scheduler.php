@@ -399,7 +399,7 @@ class Scheduler extends SugarBean {
 		// derive minutes
 		//$currentMin = date('i');
         	$minName = array();
-		$currentMin = $timedate->getNow()->min*1;
+		$currentMin = (int) $timedate->getNow()->min;
 		if($mins == '*') {
 			$GLOBALS['log']->debug('----->got * mins');
 			for($i=0; $i<60; $i++) {
@@ -411,7 +411,7 @@ class Scheduler extends SugarBean {
 			}
 		} elseif(strstr($mins,'*/')) {
 			$mult = str_replace('*/','',$mins);
-			$startMin = $timedate->fromDb($focus->date_time_start)->min*1;
+			$startMin = (int) $timedate->fromDb($focus->date_time_start)->min;
 			$startFrom = ($startMin % $mult);
 			for($i=$startFrom; $i<=59; $i) {
 				if(($currentMin + $i) > 59) {
