@@ -970,25 +970,26 @@ EOHTML;
     public function getCSSURL($cssFileName, $returnURL = true)
     {
         
+        $cssFileNameSubStyle = $cssFileName;
         if (preg_match('/.css$/', $cssFileName)) {
             global $current_user;
             $subThemeIndex = $current_user->getSubTheme();
             $subThemes = $current_user->getSubThemes();
             $subTheme = $subThemes[$subThemeIndex];
             $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
-            $cssFileName = 'subthemes/' . $subTheme . '/' . $cssFileName;
+            $cssFileNameSubStyle = 'subthemes/' . $subTheme . '/' . $cssFileName;
         }
         
-        if ( isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
+        if ( isset($this->_cssCache[$cssFileNameSubStyle]) && is_file(sugar_cached($this->_cssCache[$cssFileNameSubStyle])) ) {
             if ( $returnURL )
-                return getJSPath("cache/".$this->_cssCache[$cssFileName]);
+                return getJSPath("cache/".$this->_cssCache[$cssFileNameSubStyle]);
             else
-                return sugar_cached($this->_cssCache[$cssFileName]);
+                return sugar_cached($this->_cssCache[$cssFileNameSubStyle]);
         }
 
         $cssFileContents = '';
         $defaultFileName = $this->getDefaultCSSPath().'/'.$cssFileName;
-        $fullFileName = $this->getCSSPath().'/'.$cssFileName;
+        $fullFileName = $this->getCSSPath().'/'.$cssFileNameSubStyle;
         if (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName,false)) != '')
@@ -1035,7 +1036,7 @@ EOHTML;
         // now write the css to cache
         sugar_file_put_contents($cssFilePath,$cssFileContents);
 
-        $this->_cssCache[$cssFileName] = $fullFileName;
+        $this->_cssCache[$cssFileNameSubStyle] = $fullFileName;
 
         if ( $returnURL )
             return getJSPath("cache/".$fullFileName);

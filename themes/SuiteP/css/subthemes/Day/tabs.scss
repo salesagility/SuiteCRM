@@ -101,7 +101,7 @@
 
   .nav > li > a.first-tab-xs {
     background-color: $active-tab-bg;
-    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right ($tab-height/2) top (($tab-height/4)*3);
     background-repeat: no-repeat;
     padding-right: $tab-height;
@@ -143,7 +143,7 @@
 
   #tab-actions > a {
     background-color: $action-tab-bg;
-    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right ($tab-height/2) top (($tab-height/4)*4);
     background-repeat: no-repeat;
     cursor: pointer;

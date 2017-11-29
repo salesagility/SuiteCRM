@@ -313,7 +313,7 @@ a#powered_by:hover {
 
 .footer_right a {
   font-size: 12px;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
+  background-image: none, url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
   background-position: right 3px;
   background-repeat: no-repeat;
   color: #4D4D4D;
@@ -1109,7 +1109,7 @@ li.noBullet {
 
 #MorePanelHandle {
   display: inline;
-  background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
+  background: url('../../../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
   color: #444;
   cursor: pointer;
   margin-bottom: 2px;
@@ -1578,7 +1578,7 @@ div.confirmTable {
 
 .buttonSlide.yui-module .yui-hd .toggle em {
   display: inline;
-  background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
+  background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
   background-repeat: no-repeat;
   float: right;
   overflow: hidden;
@@ -1589,7 +1589,7 @@ div.confirmTable {
 }
 
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-  background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
+  background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
 }
 
 .view {
@@ -2069,7 +2069,7 @@ ul.clickMenu li a:hover {
 
 ul.clickMenu > li > span {
   display: inline-block;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 0% 0%;
   background-repeat: no-repeat;
   background-size: 12px auto;
@@ -2133,7 +2133,7 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled span {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px 7px;
   background-repeat: no-repeat;
   background-size: 12px auto;
@@ -2553,25 +2553,25 @@ dl {
 }
 
 #EditView_tabs .id-ff-remove img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
   width: 32px;
   height: 32px;
 }
 
 #EditView_tabs .edit [type="button"] img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
   width: 32px;
   height: 32px;
 }
 
 #conditionLines [type="button"] img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
   width: 32px;
   height: 32px;
 }
 
 #actionLines [type="button"] img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
   width: 32px;
   height: 32px;
 }
@@ -2581,7 +2581,7 @@ dl {
 }
 
 #actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
 }
 
 #search_form span.id-ff.multiple {
@@ -2614,7 +2614,7 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #deleteGroup img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
   width: 32px;
   height: 32px;
 }

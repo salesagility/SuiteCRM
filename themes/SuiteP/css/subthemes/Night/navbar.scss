@@ -16,7 +16,7 @@
 
   .with-home-icon {
     display: inline-block;
-    background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
+    background-image: url('../../../../../../themes/SuiteP/images/p_icon_home.png');
     background-position: 14px ($navbar-height / 3);
     background-position: 0px 8px;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@
   }
 
   a:hover.with-home-icon {
-    background-image: url('../../../../themes/SuiteP/images/p_icon_home_hover.png');
+    background-image: url('../../../../../../themes/SuiteP/images/p_icon_home_hover.png');
   }
 
   .dropdown-menu > li > a {

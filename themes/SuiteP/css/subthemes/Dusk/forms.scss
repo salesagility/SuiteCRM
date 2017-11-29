@@ -34,7 +34,7 @@ textarea {
 
 .checkbox {
   display: inline-block;
-  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  background: url('../../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -46,7 +46,7 @@ textarea {
 
 input[type=checkbox] {
   display: inline-block;
-  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  background: url('../../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -58,7 +58,7 @@ input[type=checkbox] {
 
 input[type=radio] {
   display: inline-block;
-  background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
+  background: url('../../../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
   padding: 0;
   margin: 0;
   width: 16px;
@@ -1392,7 +1392,7 @@ textarea {
 }
 
 select[size] {
-  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
   color: $main-font-color;
@@ -1413,7 +1413,7 @@ select[size] {
 }
 
 select.form-control {
-  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
   color: $main-font-color;
@@ -1433,7 +1433,7 @@ select.form-control {
 }
 
 select {
-  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
   color: $main-font-color;
@@ -1485,7 +1485,7 @@ option:checked {
 }
 
 .saved_search_select {
-  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
   padding: 16px 55px 16px 5px;
@@ -1505,7 +1505,7 @@ select[multiple] {
 }
 
 select.ui-widget-content {
-  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
   color: $main-font-color;
@@ -1618,14 +1618,14 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
   width: 32px;
   height: 32px;
 }
 
 
 .emailaddresses button {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+  content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
   width: 34px;
   height: 34px;
 }

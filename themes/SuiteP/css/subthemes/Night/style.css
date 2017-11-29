@@ -633,7 +633,7 @@ footer.collapsedSidebar {
 }
 .navbar-inverse .with-home-icon {
     display: inline-block;
-    background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
+    background-image: url('../../../../../../themes/SuiteP/images/p_icon_home.png');
     background-position: 14px 20px;
     background-position: 0px 8px;
     background-repeat: no-repeat;
@@ -646,7 +646,7 @@ footer.collapsedSidebar {
     content: ''
 }
 .navbar-inverse a:hover.with-home-icon {
-    background-image: url('../../../../themes/SuiteP/images/p_icon_home_hover.png')
+    background-image: url('../../../../../../themes/SuiteP/images/p_icon_home_hover.png')
 }
 .navbar-inverse .dropdown-menu > li > a {
     line-height: normal
@@ -3143,7 +3143,7 @@ textarea {
 }
 .checkbox {
     display: inline-block;
-    background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+    background: url('../../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -3154,7 +3154,7 @@ textarea {
 }
 input[type=checkbox] {
     display: inline-block;
-    background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+    background: url('../../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -3165,7 +3165,7 @@ input[type=checkbox] {
 }
 input[type=radio] {
     display: inline-block;
-    background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
+    background: url('../../../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
     padding: 0;
     margin: 0;
     width: 16px;
@@ -4425,12 +4425,12 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     width: 52px;
 }
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
     width: 32px;
     height: 32px
 }
 .emailaddresses button {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
     width: 34px;
     height: 34px
 }
@@ -9314,7 +9314,7 @@ li.noBullet {
 }
 #MorePanelHandle {
     display: inline;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
+    background: url('../../../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
     color: #444;
     cursor: pointer;
     margin-bottom: 2px;
@@ -9688,7 +9688,7 @@ div.confirmTable {
 }
 .buttonSlide.yui-module .yui-hd .toggle em {
     display: inline;
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
+    background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
     background-repeat: no-repeat;
     float: right;
     overflow: hidden;
@@ -9698,7 +9698,7 @@ div.confirmTable {
     text-indent: 9999px
 }
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png')
+    background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png')
 }
 .view {
     border-top: 2px solid;
@@ -10469,22 +10469,22 @@ dl {
     margin-top: 20px
 }
 #EditView_tabs .id-ff-remove img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #EditView_tabs .edit [type="button"] img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #conditionLines [type="button"] img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #actionLines [type="button"] img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
@@ -10492,7 +10492,7 @@ dl {
     content: none
 }
 #actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
 }
 #search_form span.id-ff.multiple {
     position: relative;
@@ -10517,7 +10517,7 @@ input#btn_ActionLine.button[type="button"] {
     padding: 0 10px
 }
 #deleteGroup img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
     width: 32px;
     height: 32px
 }
@@ -15269,7 +15269,7 @@ span.yui-carousel-first-button-disabled {
     right: 0;
     width: 25px;
     height: 15px;
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
     cursor: pointer
 }
 .yui-panel-container .underlay {
@@ -15525,10 +15525,10 @@ th.yui-dt-sortable .yui-dt-label {
     margin-right: 10px
 }
 th.yui-dt-asc .yui-dt-liner {
-    background: url('../../../../index.php?entryPoint=getImage&imageName=arrow_up.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&imageName=arrow_up.gif') no-repeat right
 }
 th.yui-dt-desc .yui-dt-liner {
-    background: url('../../../../index.php?entryPoint=getImage&imageName=arrow_down.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&imageName=arrow_down.gif') no-repeat right
 }
 tbody .yui-dt-editable {
     cursor: pointer
@@ -16902,7 +16902,7 @@ div.yui-layout-hd h2 {
     height: 5px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
     right: 10px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
@@ -16911,7 +16911,7 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-left .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-clip-left .collapse:hover,
 .yui-layout .yui-layout-clip-right .collapse {
@@ -16921,7 +16921,7 @@ div.yui-layout-hd h2 {
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse {
     left: 5px;
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
     top: 4px;
@@ -16929,22 +16929,22 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-right .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
 }
 .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
     right: 5px
 }
 .yui-layout .yui-layout-clip-bottom .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-hd {
@@ -19325,7 +19325,7 @@ div.bodywrapper {
     width: 100%
 }
 .sugar-progress-bar {
-    background: #ddd url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+    background: #ddd url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
     width: 0
 }
@@ -19337,7 +19337,7 @@ a.sugar-tab-close,
     position: relative;
     top: -3px;
     width: 9px;
-    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
 }
 .sugar-message-prompt {
     margin-left: 5px
@@ -19738,13 +19738,13 @@ h5.calSharedUser {
     border-color: #396070
 }
 a.sugar-tab-close {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav a.sugar-tab-close {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav .selected a.sugar-tab-close {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-nav {
     overflow-y: hidden

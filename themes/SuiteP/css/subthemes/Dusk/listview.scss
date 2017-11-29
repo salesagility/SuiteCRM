@@ -65,7 +65,7 @@ tr#pagination {
 }
 
 #listViewStartButton_top {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px -29px;
   background-repeat: no-repeat;
   margin-right: 2px;
@@ -73,7 +73,7 @@ tr#pagination {
 }
 
 #listViewStartButton_bottom {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px -29px;
   background-repeat: no-repeat;
   margin-right: 2px;
@@ -129,14 +129,14 @@ tr#pagination {
 }
 
 #listViewPrevButton_top {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px -50px;
   background-repeat: no-repeat;
   width: 26px;
 }
 
 #listViewPrevButton_bottom {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 9px -50px;
   background-repeat: no-repeat;
   width: 26px;
@@ -151,14 +151,14 @@ tr#pagination {
 }
 
 #listViewNextButton_top {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 10px -132px;
   background-repeat: no-repeat;
   width: 26px;
 }
 
 #listViewNextButton_bottom {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 10px -132px;
   background-repeat: no-repeat;
   width: 26px;
@@ -173,7 +173,7 @@ tr#pagination {
 }
 
 #listViewEndButton_top {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 10px -112px;
   background-repeat: no-repeat;
   margin-left: 2px;
@@ -181,7 +181,7 @@ tr#pagination {
 }
 
 #listViewEndButton_bottom {
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
   background-position: 10px -112px;
   background-repeat: no-repeat;
   margin-left: 2px;
@@ -1495,7 +1495,7 @@ a#advanced_search_link {
   font-size: 13px;
   font-weight: 500;
   background-color: $info-btn-bg;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+  background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
   background-position: 173px 2px;
   background-repeat: no-repeat;
   color: #fff;
@@ -1519,7 +1519,7 @@ a#basic_search_link {
   font-size: 13px;
   font-weight: 500;
   background-color: $info-btn-bg;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_up_arrow.png");
+  background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_up_arrow.png");
   background-position: 136px 13px;
   background-repeat: no-repeat;
   color: #fff;
@@ -1747,7 +1747,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 }
 
 .preloading {
-  background-image: url("../../../../themes/SuiteP/images/loading.gif");
+  background-image: url("../../../../../../themes/SuiteP/images/loading.gif");
   width: 48px;
   height: 48px;
 }
@@ -1886,7 +1886,7 @@ div.qtip.qtip-default {
 
   .modal-preload-hidden {
     min-height: 100px;
-    background-image: url("../../../../themes/SuiteP/images/loading.gif");
+    background-image: url("../../../../../../themes/SuiteP/images/loading.gif");
     background-position: center;
     background-repeat: no-repeat;
   }
@@ -3358,7 +3358,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .modal-preload-hidden {
   min-height: 100px;
-  background-image: url("../../../../themes/SuiteP/images/loading.gif");
+  background-image: url("../../../../../../themes/SuiteP/images/loading.gif");
   background-position: center;
   background-repeat: no-repeat;
 }
