@@ -61,7 +61,6 @@ $mod_strings = array(
     'LBL_DATE_START' => 'Start Date:',
     'LBL_DATE_END' => 'End Date:',
     'LBL_PRIORITY' => 'Priority:',
-    'LBL_STATUS' => 'Status:',
     'LBL_MY_PROJECTS' => 'My Projects',
     'LBL_MY_PROJECT_TASKS' => 'My Project Tasks',
     'LBL_TOTAL_ESTIMATED_EFFORT' => 'Total Estimated Effort (hrs):',
@@ -98,7 +97,6 @@ $mod_strings = array(
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_QUICK_NEW_PROJECT' => 'New Project',
-    'LBL_PROJECT_TASKS_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
@@ -142,7 +140,6 @@ $mod_strings = array(
     'LBL_DURATION_TITLE' => 'Edit Duration',
     'LBL_PERCENTAGE_COMPLETE_TITLE' => 'Edit % Complete',
     'LBL_ACTUAL_DURATION_TITLE' => 'Edit Actual Duration',
-    'LBL_DESCRIPTION' => 'Notes',
     'LBL_LAG' => 'Lag',
     'LBL_DAYS' => 'Days',
     'LBL_HOURS' => 'Hours',
@@ -212,6 +209,10 @@ $mod_strings = array(
 	'LBL_RESOURCE_CHART_MONTH' => 'Month',
 	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
  	'LBL_ALL_RESOURCES' => 'All Resources',
+
+ 	'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+ 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
+ 	'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
 
 );
 ?>

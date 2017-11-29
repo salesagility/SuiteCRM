@@ -10,6 +10,7 @@ function retrievePage(page_id, callback){
 
 function retrieveData(page_id, callback){
     var _cb = typeof callback != 'undefined' ? callback : false;
+    $("#pageContainer").html('<img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">');
     $.ajax({
 
         url : "index.php?entryPoint=retrieve_dash_page",
@@ -51,8 +52,7 @@ var dashletsPageInit = function() {
                 return;
             }
 
-            $.post($('#addpageform').attr('action'), { dashName: $('#dashName').val(), numColumns: $('[name=numColumns] option:selected').val() } );
-            location.reload();
+	    $.post($('#addpageform').attr('action'), { dashName: $('#dashName').val(), numColumns: $('[name=numColumns] option:selected').val() } ).then(function() { location.reload(); });
 
         })
     })
@@ -127,9 +127,6 @@ var dashletsPageInit = function() {
 $(document).ready(function () {
     retrievePage(0, function(){
         dashletsPageInit();
-        setTimeout(function(){
-            retrievePage(0);
-        }, 500);
     });
 
 });

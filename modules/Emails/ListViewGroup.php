@@ -147,8 +147,8 @@ if (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
 	$search_form = new XTemplate ('modules/Emails/SearchFormGroupInbox.html');
 	$search_form->assign('MOD', $mod_strings);
 	$search_form->assign('APP', $app_strings);
-	$search_form->assign('ADVANCED_SEARCH_PNG', SugarThemeRegistry::current()->getImage('advanced_search','border="0"', null,null,'.gif',$app_strings['LNK_ADVANCED_SEARCH']));
-	$search_form->assign('BASIC_SEARCH_PNG', SugarThemeRegistry::current()->getImage('basic_search','border="0"', null,null,'.gif',$app_strings['LNK_BASIC_SEARCH']));
+	$search_form->assign('ADVANCED_SEARCH_PNG', SugarThemeRegistry::current()->getImage('advanced_search','border="0"', null,null,'.gif',$app_strings['LNK_ADVANCED_FILTER']));
+	$search_form->assign('BASIC_SEARCH_PNG', SugarThemeRegistry::current()->getImage('basic_search','border="0"', null,null,'.gif',$app_strings['LNK_BASIC_FILTER']));
 	$search_form->assign('TYPE_OPTIONS', $types);
 	$search_form->assign('ASSIGNED_TO_OPTIONS', $assigned_to);
 	$search_form->assign('STATUS_OPTIONS', $email_status);

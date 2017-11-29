@@ -38,15 +38,21 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<label style='{$DISPLAY_STYLE}' id='selectedRecordsTop'>
-    <span id="selectedRecordsTopLabel">{$APP.LBL_LISTVIEW_SELECTED_OBJECTS}</span><span id="selectedRecordsTopValue">{$TOTAL_ITEMS_SELECTED}</span>
-    <input type='hidden' id='selectCountTop' name='selectCount[]' value='{$TOTAL_ITEMS_SELECTED}' />
-</label>
+<div class="selectedRecords label hidden">{$APP.LBL_LISTVIEW_SELECTED_OBJECTS}</div><div class="selectedRecords value hidden">{$TOTAL_ITEMS_SELECTED}</div>
+<input type='hidden' id='selectCountTop' name='selectCount[]' value='{$TOTAL_ITEMS_SELECTED}' />
+
 <script>
 {literal}
     $(document).ready(function () {
         function update_selectedRecordsTopValue() {
-            $('#selectedRecordsTopValue').html(sugarListView.get_num_selected())
+            var selectedNum = sugarListView.get_num_selected();
+            if(!selectedNum) {
+                $('.selectedRecords').addClass('hidden');
+            }
+            else {
+                $('.selectedRecords').removeClass('hidden');
+            }
+            $('.selectedRecords.value').html(selectedNum);
         }
         setInterval(update_selectedRecordsTopValue, 100);
     });

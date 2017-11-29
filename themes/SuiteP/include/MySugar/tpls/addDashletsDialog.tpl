@@ -129,33 +129,23 @@
 
 {if $moduleName == 'Home'}
 <div id="webDashlets" style="height:400px;display:none;">
-	<h3>{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</h3>
 	<div id="webDashletsList">
 	<table width="95%">
 	    <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
+	        <td scope="row">{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</td>
+	        <td>
+				<input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/>
+				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
+			</td>
         </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
-            </td>
-        </tr>
+		<tr>
+			<td scope="row">{sugar_translate label='LBL_RSS_TITLE' module='Home'}</td>
+			<td>
+				<input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" />
+				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
+			</td>
+		</tr>
     </table>
-    <h3>{sugar_translate label='LBL_RSS_TITLE' module='Home'}</h3>
-	<table width="95%">
-        <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
-            </td>
-        </tr>
-	</table>
 	</div>
 </div>
 {/if}

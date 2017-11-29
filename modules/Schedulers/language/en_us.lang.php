@@ -1,11 +1,10 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2017 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -45,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
 // OOTB Scheduler Job Names:
@@ -130,7 +132,7 @@ $mod_strings = array(
     'LBL_TIME_TO' => 'Active To',
     'LBL_WARN_CURL_TITLE' => 'cURL Warning:',
     'LBL_WARN_CURL' => 'Warning:',
-    'LBL_WARN_NO_CURL' => 'This system does not have the cURL libraries enabled/compiled into the PHP module (--with-curl=/path/to/curl_library).  Please contact your administrator to resolve this issue.  Without the cURL functionality, the Scheduler cannot thread its jobs.',
+    'LBL_WARN_NO_CURL' => 'This system does not have the cURL libraries enabled/compiled into the PHP module (--with-curl=/path/to/curl_library). Please contact your administrator to resolve this issue. Without the cURL functionality, the Scheduler cannot thread its jobs.',
     'LBL_BASIC_OPTIONS' => 'Basic Setup',
     'LBL_ADV_OPTIONS' => 'Advanced Options',
     'LBL_TOGGLE_ADV' => 'Show Advanced Options',
@@ -140,7 +142,7 @@ $mod_strings = array(
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
     'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
-    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'.  To shutdown the service 'shutdown'.\n",
+    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'. To shutdown the service 'shutdown'.\n",
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the schedule.',
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
@@ -148,8 +150,10 @@ $mod_strings = array(
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
-    'LBL_CRON_LINUX_DESC' => 'Note: In order to run SuiteCRM Schedulers, add the following line to the crontab file: ',
-    'LBL_CRON_WINDOWS_DESC' => 'Note: In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
+    'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
+    'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
+    'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
+    'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
     'LBL_NO_PHP_CLI' => 'If your host does not have the PHP binary available, you can use wget or curl to launch your Jobs.<br>for wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1</b><br>for curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
@@ -174,6 +178,8 @@ $mod_strings = array(
     'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
+
+    'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
 );
 
 global $sugar_config;

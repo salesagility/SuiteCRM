@@ -66,6 +66,7 @@ function additionalDetailsEmail($fields) {
 		$descH = strip_tags(nl2br($fields['DESCRIPTION']));
 		$desc = str_replace($newLines, ' ', $descH);
 		$overlib_string .= substr($desc, 0, 300);
+		$overlib_string .= substr($desc, 0, 300);
 		if(strlen($descH) > 300) $overlib_string .= '...';
 	}
 	

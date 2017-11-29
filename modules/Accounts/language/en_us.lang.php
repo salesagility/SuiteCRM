@@ -62,7 +62,7 @@ $mod_strings = array (
 
 	'ACCOUNT_REMOVE_PROJECT_CONFIRM' => 'Are you sure you want to remove this account from the project?',
 	'ERR_DELETE_RECORD' => 'You must specify a record number in order to delete the account.',
-	'LBL_ACCOUNT_INFORMATION' => 'Overview',
+	'LBL_ACCOUNT_INFORMATION' => 'OVERVIEW',
 	'LBL_ACCOUNT_NAME' => 'Account Name:',
 	'LBL_ACCOUNT' => 'Account:',
 	'LBL_ACTIVITIES_SUBPANEL_TITLE'=>'Activities',
@@ -191,5 +191,9 @@ $mod_strings = array (
     // SNIP
     'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
 	'LBL_PRODUCTS_SERVICES_PURCHASED_SUBPANEL_TITLE' => 'Products and Services Purchased',
+
+	'LBL_AOS_CONTRACTS' => 'Contracts',
+	'LBL_AOS_INVOICES' => 'Invoices',
+	'LBL_AOS_QUOTES' => 'Quotes',
 );
 ?>

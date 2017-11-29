@@ -79,7 +79,7 @@
     <section class="resultNull">
         <h1>{$appStrings.LBL_EMAIL_SEARCH_NO_RESULTS}</h1>
         <div style="float:right;">
-            <a href="index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}">{$appStrings.LNK_ADVANCED_SEARCH}</a>
+            <a href="index.php?module=Home&action=UnifiedSearch&search_form=false&advanced=false&query_string={$queryEncoded}">{$appStrings.LNK_ADVANCED_FILTER}</a>
         </div>
     </section>
 {/if}

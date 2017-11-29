@@ -98,11 +98,11 @@ $mod_strings = array (
     'ERR_REMOVING_ATTACHMENT'=>'Failed to remove attachment...',
     'LBL_CREATED_BY'=>'Created By',
     'LBL_MODIFIED_BY'=>'Modified By',
-    'LBL_SEND_ANYWAYS'=> 'This email has no subject.  Send/save anyway?',
+    'LBL_SEND_ANYWAYS'=> 'This email has no subject. Send/save anyway?',
 	'LBL_LIST_EDIT_BUTTON' => 'Edit',
 	'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
 	'LBL_PANEL_DETAILS' => 'Details',
-	'LBL_NOTE_INFORMATION' => 'Overview',
+	'LBL_NOTE_INFORMATION' => 'OVERVIEW',
 	'LBL_MY_NOTES_DASHLETNAME' => 'My Notes',
 	'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     //For export labels

@@ -447,7 +447,7 @@
 <td  rowspan='2' width='100%' style="padding: 0;">
 <div id="wiz_message"></div>
 	{$msg}
-<div id=wizard>
+<div id=wizard class="wizard-unique-elem">
 	<div id='step1' class="edit view" style="display:none;  margin-top: 8px;">
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
@@ -456,7 +456,7 @@
 				</div>
 
 				<div id="emailTrackerDialog" class="hidden">
-					<h2>{$MOD.LBL_TRACKER_TITLE}</h2>
+					<h2 class="header-2">{$MOD.LBL_TRACKER_TITLE}</h2>
 					<div class="clear"></div>
 					<div class="template-container-full">
 						<div class="hidden">
@@ -490,7 +490,7 @@
 
 			<div class="template-panel-container panel">
 				<div class="template-container-full ">
-					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
+					<h4 class="header-4" style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
 					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT_OPTION}</label></div>
 					<style>
@@ -595,7 +595,7 @@
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
-					<h2>{$MOD.LBL_TRACKED_URLS}</h2>
+					<h2 class="header-2">{$MOD.LBL_TRACKED_URLS}</h2>
 					<div class="clear"></div>
 
 					<div class="form-group clear-block">
@@ -616,7 +616,7 @@
 
 				</div>
 				<div class="template-container">
-					<h2>{$MOD.LBL_EMAIL_VARIABLES}</h2>
+					<h2 class="header-2">{$MOD.LBL_EMAIL_VARIABLES}</h2>
 					<div class="clear"></div>
 					<script src="modules/EmailTemplates/EmailTemplate.js"></script>
 					<script type="text/javascript">
@@ -760,7 +760,7 @@
 						{/literal}
 						<div class="panel-toolbar">
 							<div class="template-container-full">
-								<h2>{$MOD.LBL_SUBJECT}</h2>
+								<h2 class="header-2">{$MOD.LBL_SUBJECT}</h2>
 								<div class="form-group clear-block">
 									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
 								</div>
@@ -783,7 +783,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="step2" style="display: none;">
+	<div id="step2" class="step2" style="display: none;">
 
 		<div class="template-panel">
 			<div class="template-panel-container panel">
@@ -792,7 +792,7 @@
 
 			<tr>
 				<td colspan="4">
-					<h4>{$MOD.LBL_MRKT_NAME}</h4>
+					<h4 class="header-4">{$MOD.LBL_MRKT_NAME}</h4>
 				</td>
 			</tr>
 			<tr>
@@ -1196,10 +1196,10 @@
 		{/if}
 
 		</div>
-	<div id='step3' data="summary-page" class="template-panel">
+	<div id='step3' data="summary-page" class="template-panel step3">
 		<div class="template-panel-container panel">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
 				<div class="clear">&nbsp;</div>
 				{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<div class="form-group">
@@ -1304,14 +1304,14 @@
 		</div>
 		<div class="template-panel-container panel-toolbar ">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
 				<div class="clear">&nbsp;</div>
 				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}
-					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
+					<div id='target_message' class="target_messege"><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
 					<br class="emptyRow">
 					{/if}
-					<div id="alert_messages"></div>
+					<div id="alert_messages" class="alert_message"></div>
 					{if $diagnose}
 					{$diagnose}
 					<br class="emptyRow">

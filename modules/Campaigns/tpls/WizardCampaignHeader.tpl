@@ -50,7 +50,7 @@
 			<div class="template-container-full">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<th  colspan="4"><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h4></th>
+						<th  colspan="4"><h4 class="header-4">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h4></th>
 					</tr>
 		<tr>
 			<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></td>
@@ -118,7 +118,7 @@
 				<div class="template-container-full">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
+								<th colspan="4" align="left" ><h4 class="header-4">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 							</tr>
 							<tr class="emptyRow"><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
 							<tr class="emptyRow"><td class="datalabel" colspan="4">&nbsp;</td></tr>

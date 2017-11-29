@@ -55,7 +55,7 @@
                                 <td scope="row" width="17%">
                                 {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
                                 </td>
-                                <td>
+                                <td width="83%">
                                     {$NEW_EMAIL}
                                 </td>
                             </tr>
@@ -374,7 +374,6 @@
                         </tr>
                     </table>
         </div>
-
         <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
             <tr>

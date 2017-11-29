@@ -433,6 +433,7 @@ $dictionary['Project'] = array(
         'aos_quotes_project' =>
             array(
                 'name' => 'aos_quotes_project',
+                'vname' => 'LBL_AOS_QUOTES_PROJECT',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_project',
                 'source' => 'non-db',

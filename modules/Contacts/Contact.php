@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +35,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 /*********************************************************************************
 
@@ -45,105 +44,128 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once('include/SugarObjects/templates/person/Person.php');
 // Contact is used to store customer information.
 class Contact extends Person {
-    var $field_name_map;
-	// Stored fields
-	var $id;
-	var $name = '';
-	var $lead_source;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
+    public $field_name_map;
+    // Stored fields
+    public $id;
+    public $name = '';
+    public $lead_source;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
 
-	var $description;
-	var $salutation;
-	var $first_name;
-	var $last_name;
-	var $title;
-	var $department;
-	var $birthdate;
-	var $reports_to_id;
-	var $do_not_call;
-	var $phone_home;
-	var $phone_mobile;
-	var $phone_work;
-	var $phone_other;
-	var $phone_fax;
-	var $email1;
-	var $email_and_name1;
-	var $email_and_name2;
-	var $email2;
-	var $assistant;
-	var $assistant_phone;
-	var $email_opt_out;
-	var $primary_address_street;
-	var $primary_address_city;
-	var $primary_address_state;
-	var $primary_address_postalcode;
-	var $primary_address_country;
-	var $alt_address_street;
-	var $alt_address_city;
-	var $alt_address_state;
-	var $alt_address_postalcode;
-	var $alt_address_country;
-	var $portal_name;
-	var $portal_app;
-	var $portal_active;
-	var $contacts_users_id;
-	// These are for related fields
-	var $bug_id;
-	var $account_name;
-	var $account_id;
-	var $report_to_name;
-	var $opportunity_role;
-	var $opportunity_rel_id;
-	var $opportunity_id;
-	var $case_role;
-	var $case_rel_id;
-	var $case_id;
-	var $task_id;
-	var $note_id;
-	var $meeting_id;
-	var $call_id;
-	var $email_id;
-	var $assigned_user_name;
-	var $accept_status;
-    var $accept_status_id;
-    var $accept_status_name;
-    var $alt_address_street_2;
-    var $alt_address_street_3;
-    var $opportunity_role_id;
-    var $portal_password;
-    var $primary_address_street_2;
-    var $primary_address_street_3;
-    var $campaign_id;
-    var $sync_contact;
-	var $full_name; // l10n localized name
-	var $invalid_email;
-	var $table_name = "contacts";
-	var $rel_account_table = "accounts_contacts";
-	//This is needed for upgrade.  This table definition moved to Opportunity module.
-	var $rel_opportunity_table = "opportunities_contacts";
+    public $description;
+    public $salutation;
+    public $first_name;
+    public $last_name;
+    public $title;
+    public $department;
+    public $birthdate;
+    public $reports_to_id;
+    public $do_not_call;
+    public $phone_home;
+    public $phone_mobile;
+    public $phone_work;
+    public $phone_other;
+    public $phone_fax;
+    public $email1;
+    public $email_and_name1;
+    public $email_and_name2;
+    public $email2;
+    public $assistant;
+    public $assistant_phone;
+    public $email_opt_out;
+    public $primary_address_street;
+    public $primary_address_city;
+    public $primary_address_state;
+    public $primary_address_postalcode;
+    public $primary_address_country;
+    public $alt_address_street;
+    public $alt_address_city;
+    public $alt_address_state;
+    public $alt_address_postalcode;
+    public $alt_address_country;
+    public $portal_name;
+    public $portal_app;
+    public $portal_active;
+    public $contacts_users_id;
+    // These are for related fields
+    public $bug_id;
+    public $account_name;
+    public $account_id;
+    public $report_to_name;
+    public $opportunity_role;
+    public $opportunity_rel_id;
+    public $opportunity_id;
+    public $case_role;
+    public $case_rel_id;
+    public $case_id;
+    public $task_id;
+    public $note_id;
+    public $meeting_id;
+    public $call_id;
+    public $email_id;
+    public $assigned_user_name;
+    public $accept_status;
+    public $accept_status_id;
+    public $accept_status_name;
+    public $alt_address_street_2;
+    public $alt_address_street_3;
+    public $opportunity_role_id;
+    public $portal_password;
+    public $primary_address_street_2;
+    public $primary_address_street_3;
+    public $campaign_id;
+    public $sync_contact;
+    public $full_name; // l10n localized name
+    public $invalid_email;
+    public $table_name = "contacts";
+    public $rel_account_table = "accounts_contacts";
+    //This is needed for upgrade.  This table definition moved to Opportunity module.
+    public $rel_opportunity_table = "opportunities_contacts";
 
-	var $object_name = "Contact";
-	var $module_dir = 'Contacts';
-	var $emailAddress;
-	var $new_schema = true;
-	var $importable = true;
+    public $object_name = "Contact";
+    public $module_dir = 'Contacts';
+    public $new_schema = true;
+    public $importable = true;
 
-	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('bug_id', 'assigned_user_name', 'account_name', 'account_id', 'opportunity_id', 'case_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
-	);
+    // This is used to retrieve related fields from form posts.
+    public $additional_column_fields = Array(
+        'bug_id',
+        'assigned_user_name',
+        'account_name',
+        'account_id',
+        'opportunity_id',
+        'case_id',
+        'task_id',
+        'note_id',
+        'meeting_id',
+        'call_id',
+        'email_id'
+    );
 
-	var $relationship_fields = Array('account_id'=> 'accounts','bug_id' => 'bugs', 'call_id'=>'calls','case_id'=>'cases','email_id'=>'emails',
-								'meeting_id'=>'meetings','note_id'=>'notes','task_id'=>'tasks', 'opportunity_id'=>'opportunities', 'contacts_users_id' => 'user_sync'
-								);
+    public $relationship_fields = Array(
+        'account_id'        => 'accounts',
+        'bug_id'            => 'bugs',
+        'call_id'           => 'calls',
+        'case_id'           => 'cases',
+        'email_id'          => 'emails',
+        'meeting_id'        => 'meetings',
+        'note_id'           => 'notes',
+        'task_id'           => 'tasks',
+        'opportunity_id'    => 'opportunities',
+        'contacts_users_id' => 'user_sync'
+    );
 
 	public function __construct() {
 		parent::__construct();
