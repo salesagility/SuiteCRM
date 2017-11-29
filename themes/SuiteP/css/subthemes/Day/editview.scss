@@ -2127,7 +2127,7 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled {
   display: inline-block;
-  background-color: #94A6B5;
+  background-color: #707d84;
   border-radius: 3px;
   vertical-align: bottom;
 }
@@ -2175,12 +2175,12 @@ ul#detailViewActions.clickMenu {
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
-  background-color: #94A6B5;
+  background-color: #707d84;
   padding: 0 8px;
 }
 
 ul.clickMenu.SugarActionMenu li.single a:hover {
-  background-color: #778591;
+  background-color: #929798;
 }
 
 .view {
@@ -3180,7 +3180,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 
 .converted_account td {
-  background-color: #BFCAD3;
+  background-color: #C2C3C4;
 }
 
 .converted_account > tbody > tr > td {
@@ -4050,7 +4050,7 @@ select#sales_stage_advanced {
   display: inherit;
   font-size: 14px;
   background-clip: padding-box;
-  background-color: #BFCAD3;
+  background-color: #C2C3C4;
   color: $default-btn-color;
   padding: 8px;
   border: 1px solid transparent;
@@ -4107,7 +4107,7 @@ select#sales_stage_advanced {
 
 .ui-state-highlight {
   background: #E6E6E6;
-  border: 1px solid #778591;
+  border: 1px solid #929798;
   border-radius: 4px;
   height: 30px;
 

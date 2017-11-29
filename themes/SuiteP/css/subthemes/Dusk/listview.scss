@@ -2039,7 +2039,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 
 .popupBody .list.view > thead > tr > th {
   border: 1px solid transparent;
-  border-bottom-color: #778591;
+  border-bottom-color: #4c4c4c;
 }
 
 .popupBody .list.view > thead > tr > th:first-of-type {
@@ -2261,7 +2261,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 
 .inbound-email .list.view > thead > tr > th {
   border: 1px solid transparent;
-  border-bottom-color: #778591;
+  border-bottom-color: #4c4c4c;
 }
 
 .inbound-email .list.view > thead > tr > th:first-of-type {
@@ -3175,7 +3175,7 @@ table.subpanel-table .pagination li.sugar_action_button.hover > form > a {
 }
 
 table.subpanel-table .pagination .sugar_action_button.hover > form > a {
-  background-color: $list-view-header-bg; /* ??? #778591; */
+  background-color: $list-view-header-bg; /* ??? #4c4c4c; */
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
@@ -3186,7 +3186,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg; /* ??? #94A6B5; */
+  background-color: $list-view-action-button-bg; /* ??? #787878; */
   border: 1px solid transparent;
   border-radius: 4px;
   padding-right: 4px;
@@ -3198,7 +3198,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover 
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
-  background-color: $list-view-header-bg; /* ??? #778591; */
+  background-color: $list-view-header-bg; /* ??? #4c4c4c; */
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
@@ -3222,7 +3222,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.sub
   width: auto;
   background-color: $list-view-action-menu-bg; /* ??? #7b8a96; */
   line-height: 24px;
-  color: $list-view-button-color; /* ??? #ffffff; */
+  color: $list-view-button-color; /* ??? #8B8B8B; */
   left: 0;
   right: auto;
 }
@@ -3232,7 +3232,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.sub
   background-color: $list-view-action-menu-bg; /* ??? #7b8a96; */
   width: 100%;
   line-height: 24px;
-  color: $list-view-button-color; /* ??? #ffffff; */
+  color: $list-view-button-color; /* ??? #8B8B8B; */
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {

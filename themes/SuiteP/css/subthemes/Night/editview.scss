@@ -2127,7 +2127,7 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled {
   display: inline-block;
-  background-color: #94A6B5;
+  background-color: #4eb69c;
   border-radius: 3px;
   vertical-align: bottom;
 }
@@ -2175,12 +2175,12 @@ ul#detailViewActions.clickMenu {
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
-  background-color: #94A6B5;
+  background-color: #4eb69c;
   padding: 0 8px;
 }
 
 ul.clickMenu.SugarActionMenu li.single a:hover {
-  background-color: #778591;
+  background-color: #2e4f5c;
 }
 
 .view {
@@ -3180,7 +3180,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 
 .converted_account td {
-  background-color: #BFCAD3;
+  background-color: #396070;
 }
 
 .converted_account > tbody > tr > td {
@@ -4050,7 +4050,7 @@ select#sales_stage_advanced {
   display: inherit;
   font-size: 14px;
   background-clip: padding-box;
-  background-color: #BFCAD3;
+  background-color: #396070;
   color: $default-btn-color;
   padding: 8px;
   border: 1px solid transparent;
@@ -4106,8 +4106,8 @@ select#sales_stage_advanced {
 }
 
 .ui-state-highlight {
-  background: #E6E6E6;
-  border: 1px solid #778591;
+  background: #416F81;
+  border: 1px solid #2e4f5c;
   border-radius: 4px;
   height: 30px;
 
@@ -5549,7 +5549,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td span i
 }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td select {
-  border: 3px solid #A5E8D6;
+  border: 3px solid #213843;
 }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="from_name"]#from_name {

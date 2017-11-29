@@ -6,7 +6,7 @@ $lg-breakpoint: 1200px;
 
 
 // Page
-$primary: #778591;
+$primary: #929798;
 $danger: #F08377;
 $danger-hover: #F08377;
 $success: #BBE6A5;
@@ -25,7 +25,7 @@ $page-font-family: 'Lato', Lato, Arial, sans-serif;
 $page-font-size: 13px;
 $page-p-size: 14px;
 $page-title-space: 40px; // normal 40px
-$main-font-color: #534D64;
+$main-font-color: #4b97c4;
 
 $link-color: $danger;
 $link-color-hover: $danger-hover;
@@ -40,7 +40,7 @@ $footer-btn-bg: #ddd;
 $scroll-bar-thumb-color: rgba(165, 232, 214, 1);
 
 // Login
-$login-top-bar-bg: #534D64;
+$login-top-bar-bg: #4b97c4;
 
 
 // Buttons
@@ -49,11 +49,11 @@ $default-text-disabled-bg: #F8F8F8;
 $default-text-disabled-color: #F8F8F8;
 $default-text-disabled-border-color: #E2E7EB;
 $default-input-group-color: #C4C3C7;
-$default-btn-bg: #94A6B5;
-$default-btn-bg-hover: #94A6B5;
+$default-btn-bg: #707d84;
+$default-btn-bg-hover: #707d84;
 
 $primary-btn-bg: $primary;
-$primary-btn-bg-hover: #778591;
+$primary-btn-bg-hover: #929798;
 
 $info-btn-bg: $info;
 $info-btn-bg-hover: #9589B3;
@@ -69,7 +69,7 @@ $disabled-btn-bg: #777777;
 
 
 // Navbar
-$navbar-bg: #534D64;
+$navbar-bg: #4b97c4;
 $navbar-link-color: #FFFFFF;
 $navbar-link-color-hover: #F08377;
 $navbar-main-menu-bg: #5D5670;
@@ -84,12 +84,12 @@ $navbar-search-text-color: #A2A5AF;
 $navbar-search-color: #afaabf;
 
 $navbar-quick-create-link-color: #FFFFFF;
-$navbar-quick-create-mobile-btn-bg: #A2B2BF;
-$navbar-quick-create-btn-bg: #A2B2BF;
-$navbar-quick-create-menu-bg: #A2B2BF;
+$navbar-quick-create-mobile-btn-bg: #3e7291;
+$navbar-quick-create-btn-bg: #3e7291;
+$navbar-quick-create-menu-bg: #3e7291;
 $navbar-quick-create-menu-color: #FFFFFF;
 $navbar-quick-create-menu-color-hover: #FFFFFF;
-$navbar-quick-create-menu-seperator: #778591;
+$navbar-quick-create-menu-seperator: #929798;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
 $navbar-alert-count-link-color: #FFFFFF;
@@ -99,7 +99,7 @@ $navbar-alert-title-bg: #5D5670;
 $navbar-alert-seperator: $navbar-menu-seperator;
 $navbar-alert-count-bg: #F08377;
 
-$mobile-navbar-toolbar-bg: #A2B2BF;
+$mobile-navbar-toolbar-bg: #3e7291;
 
 $navbar-height: 60px; /// 90px normal or 80px small
 $navbar-mobile-height: 60px; // 60px normal
@@ -109,8 +109,8 @@ $navbar-links-padding: 14px; /// 14px normal or 8px small
 $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 
 // Sidebar
-$sidebar-bg: #778591;
-$sidebar-btn-bg: #94A6B5;
+$sidebar-bg: #929798;
+$sidebar-btn-bg: #707d84;
 $sidebar-btn-bg-hover: #8499AB;
 $sidebar-btn-color: #FFFFFF;
 $side-bar-header-color: #F5F5F5;
@@ -118,11 +118,11 @@ $side-bar-link-color-hover: $sidebar-bg;
 $side-bar-link-color-hover: #677785;
 
 // Tabs
-$active-tab-bg: #778591;
-$active-tab-bg-hover:#778591;
+$active-tab-bg: #929798;
+$active-tab-bg-hover:#929798;
 $active-tab-color-hover:#FFFFFF;
-$default-tab-bg: #BFCAD3;
-$default-tab-bg-hover: #BFCAD3;
+$default-tab-bg: #C2C3C4;
+$default-tab-bg-hover: #C2C3C4;
 $default-tab-color-hover: #FFFFFF;
 $default-tab-color: #FFFFFF;
 $action-tab-bg: #F08377;
@@ -135,7 +135,7 @@ $tab-height: 10px; // 32p normal 24px small
 $tab-margin-bottom: 5px;
 
 // Panels
-$panel-collapsed-bg: #BFCAD3;
+$panel-collapsed-bg: #C2C3C4;
 $panel-expanded-bg: #66727D;
 $panel-height-divisor: 1; // 1 normal  1.25 small
 
@@ -144,14 +144,14 @@ $detail-view-field-bg: #F5F5F5;
 $detail-view-module-title-space: 12px;
 
 // List View
-$list-view-toolbar-bg: #BFCAD3;
-$list-view-header-bg: #778591;
+$list-view-toolbar-bg: #C2C3C4;
+$list-view-header-bg: #929798;
 $list-view-button-color: #FFFFFF;
 $list-view-link-color: #E56455;
 $list-view-link-hover-color: #D66C60;
 $list-view-action-button-disabled-bg: #C9D2DA;
-$list-view-action-button-bg: #94A6B5;
-$list-view-action-menu-bg: #778591;
+$list-view-action-button-bg: #707d84;
+$list-view-action-menu-bg: #929798;
 $list-view-action-menu-link-bg: #677785;
 $list-view-action-menu-separator: #93A0AB;
 $list-view-choose-columns-displayed: #CCE8E2;
@@ -176,17 +176,17 @@ $input-border: #A5E8D6;
 
 
 // tables
-$table-header-bg: #778591;
-$table-nav-bg: #BFCAD3;
+$table-header-bg: #929798;
+$table-nav-bg: #C2C3C4;
 $table-focus-bg: #FAF7CF;
 $table-alternate-row-bg: #FFFFFF;
 
 
 // Dashlets
 $dashlet-title-bg: #66727D;
-$dashlet-toolbar-bg: #BFCAD3;
-$dashlet-pagination-bg: #94A6B5;
-$dashlet-header-bg: #778591;
+$dashlet-toolbar-bg: #C2C3C4;
+$dashlet-pagination-bg: #707d84;
+$dashlet-header-bg: #929798;
 
 $dashlet-title-height: 30px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
@@ -203,26 +203,26 @@ $campaign-progression-bg-active: #808F9C;
 
 // Cases
 $case-internal-bg: #a5e6e6;
-$case-internal-color: #534D64;
+$case-internal-color: #4b97c4;
 $case-internal-border-color: transparent;
 $case-user-bg: #BBE6A5;
-$case-user-color: #534D64;
+$case-user-color: #4b97c4;
 $case-user-border-color: transparent;
 $case-contact-bg: #E6D5A5;
-$case-contact-color: #534D64;
+$case-contact-color: #4b97c4;
 $case-contact-border-color: transparent;
 
 // Calendar
 $calendar-slot-bg: #F5F5F5;
 $calendar-month-slot-height: 52px;
 $calendar-today-bg: #fcf8e3;
-$calendar-title-bg: #778591;
+$calendar-title-bg: #929798;
 $calendar-title-height: 48px;
 $calendar-user-height: 32px;
 $calendar-user-bg: #ABC3D7;
 $calendar-user-height: 40px;
-$calendar-header-bg: #BFCAD3;
-$calendar-month-day-header-bg: #778591;
+$calendar-header-bg: #C2C3C4;
+$calendar-month-day-header-bg: #929798;
 $calendar-other-month-day-header-bg: #b3c0c7;
 $calendar-other-month-day-header-color: #F5F5F5;
 $calendar-other-month-day-header-color-hover: #F08377;
@@ -247,7 +247,7 @@ $scheduler-busy-color: #e67c73;
 $line-item-group-width: 100%;
 
 // Workflow
-$workflow-action-bg: #BFCAD3;
+$workflow-action-bg: #C2C3C4;
 
 $email-template-bg: #FAFAFA;
 

@@ -54,7 +54,7 @@
     float: left;
     margin-top: 6px;
     
-    color: #534d64;
+    color: #416f81;
     float: left;
     font-size: 26px;
     font-weight: 200;
@@ -127,7 +127,7 @@ ul.dashboardTabList li.active {opacity:1;}
 
 ul.dashboardTabList li a {
 	float:left;
-	color:#534d64;
+	color:#416f81;
 	font-size:24px;
 	font-weight:300;
 	letter-spacing:2px;
