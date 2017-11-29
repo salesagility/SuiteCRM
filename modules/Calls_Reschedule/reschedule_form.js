@@ -112,8 +112,8 @@ function get_form() {
       dialog.show();
 
       document.getElementById('call_id').value = id.value;
-      eval(document.getElementById('script').innerHTML);
-      eval(document.getElementById('script2').innerHTML);
+      SUGAR.util.evalScript(document.getElementById('script').innerHTML);
+      SUGAR.util.evalScript(document.getElementById('script2').innerHTML);
 
     }
 

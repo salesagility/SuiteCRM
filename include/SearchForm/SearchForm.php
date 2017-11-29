@@ -113,10 +113,10 @@ class SearchForm {
         }
 
         $this->bean = $seedBean;
-        $this->tabs = array(array('title'  => $app_strings['LNK_BASIC_SEARCH'],
+        $this->tabs = array(array('title'  => $app_strings['LNK_BASIC_FILTER'],
                                   'link'   => $module . '|basic_search',
                                   'key'    => $module . '|basic_search'),
-                            array('title'  => $app_strings['LNK_ADVANCED_SEARCH'],
+                            array('title'  => $app_strings['LNK_ADVANCED_FILTER'],
                                   'link'   => $module . '|advanced_search',
                                   'key'    => $module . '|advanced_search'));
 
@@ -678,7 +678,7 @@ class SearchForm {
 
         if(!empty($SAVED_SEARCHES_OPTIONS) && $this->showSavedSearchOptions){
             $str .= "   <span class='white-space'>
-                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<b>{$app_strings['LBL_SAVED_SEARCH_SHORTCUT']}</b>&nbsp;
+                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<b>{$app_strings['LBL_SAVED_FILTER_SHORTCUT']}</b>&nbsp;
                         {$SAVED_SEARCHES_OPTIONS}
                         <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'  onclick='SUGAR.searchForm.clear_form(this.form);' class='button' type='button' name='go_select' value=' {$app_strings['LBL_GO_BUTTON_LABEL']} '/></span>
                     </span>

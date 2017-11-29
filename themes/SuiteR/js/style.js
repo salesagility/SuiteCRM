@@ -277,11 +277,12 @@ var checkContents = setInterval(function(){
 
         if($(".list.View").length > 0){
             element = $(".list.View");
+
         }
 
         //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $(element).footable();
+        //$('.list.view').footable();
         //$(".footable").find("th:first").attr("data-toggle","true");
 
         // Button to toggle list view search

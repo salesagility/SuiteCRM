@@ -100,7 +100,7 @@ class ListViewXTPL extends ListViewDisplay{
 
 		$oddRow = false;
 		if($this->xtpl->exists($this->pro_nav_block)) $this->xtpl->parse($this->pro_nav_block);
-		$this->xtpl->assign('CHECKALL', "<input type='checkbox' title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='checkbox' id='massall' name='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
+		$this->xtpl->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox' title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' id='massall' name='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
 		foreach($data['data'] as $id=>$row) {
 			$this->xtpl->assign($html_var, $row);
 			if(!empty($data['pageData']['tag'][$id])) {

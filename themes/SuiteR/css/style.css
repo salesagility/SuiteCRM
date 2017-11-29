@@ -621,6 +621,10 @@ table.subpanelTabForm {
     padding-left:10px !important;
     padding-top:10px !important;
 }
+
+.search_form label {
+    white-space: normal;
+}
 /* sitemap */
 
 #sitemap {
@@ -772,6 +776,42 @@ div#responseTime {
 
 #scheduler .schedulerInvitees .tabForm {
     margin-bottom: 0;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+    border-left: 4px solid #75AF4F;
+    background-color: #fff;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+    border-left: 4px solid #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+    background-color: rgb(77, 94, 170);
+    border-color: #fff;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+    background-color: rgb(170, 77, 77);
+    border-color: #fff;
 }
 
 /* calendar module styles */
@@ -2117,7 +2157,6 @@ ul.clickMenu form{
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-
    color: #3C8DBC;
 }
 
@@ -2132,7 +2171,6 @@ ul.clickMenu li span.ab:hover {
 
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
     background-color: #eeeeee;
-    float: left;
     margin: 0;
     list-style: none;
     position: relative; /*--Declare X and Y axis base--*/
@@ -2143,6 +2181,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     transition: all 0.3s ease-out;
     padding:5px;
     color:#ffffff;
+    height: 25px;
 }
 
 ul.SugarActionMenuIESub li a,
@@ -2150,8 +2189,9 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     display: block;
     text-decoration: none;
     float: left;
-    margin:0 5px 0 0;
+    margin: 0px 4px 0 0;
     color: #333333;
+    padding: 3px 3px 0px 8px;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
@@ -2167,17 +2207,25 @@ ul.clickMenu li a:hover{
 }
 
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-    width: 22px;
-    height: 16px;
+    min-width: 15px;
+    height: 25px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -24px;
     cursor: pointer;
+}
+
+#selectLink li span {
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -28px;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
     border-left: 1px #aaa solid;
     /* Remove the padding, not needed when we select records */
     /* padding-left: 5px; */
+}
+
+#select_link {
+    padding: 0px;
 }
 
 ul.clickMenu li span.subhover {
@@ -2218,7 +2266,7 @@ ul.clickMenu.subpanel.records {
 }
 
 ul.clickMenu.subpanel.records li a{
-    color: #aaa;
+    color: #000;
 }
 
 ul.clickMenu.subpanel.records > li div:hover a{
@@ -2319,11 +2367,12 @@ ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, u
 td.paginationActionButtons ul.clickMenu .massall,
 ul#selectLink.clickMenu .massall, td.selectCol .massall{
     float: left;
-    margin: 2px 0 0 4px;
+    margin: 6px 0 0 0px;
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 0 !important;
+    padding: 5px 5px 5px 5px;
+    margin: 0;
 }
 
 ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
@@ -2331,7 +2380,7 @@ ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowL
 }
 
 ul#selectLink.clickMenu {
-    height: 17px;
+    height: 28px;
     min-width: 20px;
     background-image: none;
 }
@@ -2380,14 +2429,13 @@ ul#detailViewActions.clickMenu {
     width: 17px;
     height: 17px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -30px;
     opacity: .5;
 }
 
 .selectActionsDisabled span.ab {
     border-left: 1px #ccc solid;
-    margin-left: 10px;
-    padding-left: 5px;
+    margin: 6px 5px 2px -2px;
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
@@ -2395,7 +2443,7 @@ ul#detailViewActions.clickMenu {
     display: block;
     text-decoration: none !important;
     color: #999 !important;
-    padding: 1px 0 0 0 !important;
+    padding: 1px 0 0 0;
     text-shadow: 1px 1px #FFFFFF;
     font-weight: normal;
     font-size: 13px;
@@ -2477,8 +2525,8 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 }
 
 .selectActionsDisabled {
-    padding: 3px 8px 3px 8px;
-    margin: 0 3px 0 3px;
+    /*padding: 3px 8px 3px 8px;
+    margin: 0 3px 0 3px;*/
     background: #cccccc; /* Old browsers */
     color: #121212;
     cursor: pointer;
@@ -2785,6 +2833,19 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     padding:10px;
     margin: 10px 60px 10px 10px;
+}
+
+#case_updates label {
+    margin-left: 10px;
+}
+
+#case_updates textarea {
+    margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .caseUpdateImage {
@@ -3581,10 +3642,18 @@ table legend {
     display: none;
 }
 
-
+h3,
+h4,
+.sidebar h2 {
+    font-size: 14.772px;
+}
 
 .modal {
     z-index: 16000;
+}
+
+.modal-lg{
+    display: table;
 }
 
 .qtip-titlebar {
@@ -3828,7 +3897,6 @@ span#quickcreateplus{
     font-weight: bold;
     background-color: #3C8DBC;
     line-height: 20px;
-    /*border-bottom: 1px solid #757083;*/
 }
 
 
@@ -4319,6 +4387,9 @@ select,
     .search_form {
         display: none;
     }
+    .modal-search .search_form {
+        display: block;
+    }
 }
 
 /* Custom styling for recently viewed on sidebar */
@@ -4475,6 +4546,12 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border-bottom:1px solid #cccccc;
 }
 
+.topnav h3,
+.recent_h3,
+.home_h3 {
+    font-size: 14.772px;
+}
+
 .home_h3 span{
     margin: 0 5px 0 5px;
 }
@@ -4545,6 +4622,13 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         float: left;
         background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
         cursor: pointer;
+        margin: 4px 0px 0px 0;
+        left: -6px;
+        position: relative;
+    }
+    #selectLink li span {
+        margin: 0;
+        left: 0px
     }
 }
 
@@ -5324,11 +5408,7 @@ object{
     height: 22px;
     position: relative;
 }
-/*
-#fieldChoices .field.required .field-header{
-    background-color: red;
-}
-*/
+
 #fieldChoices .field-type {
     float: left;
     padding: 2px;
@@ -5581,19 +5661,15 @@ table#lineItems,
 #lineItems td {
     background: none !important;
 }
-
-#actionLines,
-#actionLines table,
-#actionLines tr,
-#actionLines td {
-    border: 1px solid transparent !important;
-}
-
-#actionLines,
-#actionLines table,
 #line_items table {
     clear: both;
     border-radius: 4px;
+    width: 100%;
+}
+
+#actionLines,
+#actionLines table {
+    clear: both;
     width: 100%;
 }
 
@@ -5606,22 +5682,89 @@ table#actionLines > tr > td > table td:first-of-type {
 }
 
 
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
+#line_items table > tr > td > table {
     background: #F5F5F5;
     margin: 16px 0 0 0 !important;
     clear: both;
     display: block;
+    border: 1px solid #dddddd;
+}
+
+.action-table {
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+    border: 1px solid #dddddd;
+}
+
+.action-table > tbody {
+    display: block;
+}
+
+.action-table > tbody > tr {
+    display: block;
+}
+
+.action-table > tbody > tr:first-child > td {
+    display: inline-block;
+}
+
+.action-table > tbody > tr:first-child > td:first-child {
+    width: 50%;
+}
+
+.action-table > tbody > tr:first-child > td:nth-child(2) {
+    width: 45%;
+}
+
+.action-table > tbody >  tr:first-child > td input {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td select {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td:last-child {
+    width: auto;
+}
+
+.action-table > tbody > tr:first-child > td:last-child .delete-btn {
+    float: right;
+}
+
+.action-table > tbody > tr:first-child > td:last-child .delete-btn .btn-danger {
+    background-color: #3C8DBC;
+    border-color: #3C8DBC;
+    padding: 0 4px;
+}
+
+
+@media (max-width: 992px) {
+    .action-table > tbody >  tr:first-child > td {
+        display: inline-block;
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .action-table > tbody > tr:first-child > td {
+        display: inline-block;
+        width: 44%;
+    }
+}
+
+.edit tr td [data-workflow-action] td {
+    vertical-align: middle;
 }
 
 #conditionLines td,  #fieldLines td {
     padding: 8px;
 }
 
-
 #lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
     width: 50% !important;
 }
-
 
 [field=line_items] {
     float: none;
@@ -5642,10 +5785,13 @@ table#lineItems {
 table#lineItems tr td table tfoot tr td span {
     width: 20%;
 }
+
 table#lineItems tr td table tfoot tr td span input[type="text"] {
     display: block;
     float: none;
 }
+
+
 
 
 /*totals*/
@@ -5702,21 +5848,30 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 18.8571px;
     padding: 5px 8px 5px 8px;
 }
-#lineItems .product_group {}
-#lineItems .service_group {}
-#lineItems .add_product_line {}
-#lineItems .add_service_line {}
-#lineItems .group_total_amt {}
-#lineItems .group_discount_amount {}
-#lineItems .group_subtotal_amount {}
-#lineItems .group_tax_amount {}
-#lineItems .group_subtotal_tax_amount {}
-#lineItems .group_total_amount {}
-#lineItems  #addGroup {}
+
 /*Labels Next to Fields*/
 #lineItems  .alignedLabel {
     display: none;
     visibility: collapse;
+}
+
+#lineItems .totals {
+    float: right;
+    width: 192px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+    width: 50%;
+    font-weight: normal;
+    font-size: 12px;
+    float: left;
+}
+
+#lineItems .totals input {
+    width: 50%;
+    float: right;
 }
 
 /*Product Lines*/
@@ -5801,6 +5956,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     height: 50px;
 }
 
+
 /*Service Lines*/
 #lineItems  #service_head td {
     padding: 32px 0 8px 0;
@@ -5848,5 +6004,279 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin: 0 5px 0 0;
 }
 
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    margin-bottom: initial;
+    font-size: 10.2px;
+    line-height: 17px;
+    letter-spacing: 1.2px;
+}
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    line-height: 20px;
+}
+
+label.selected-actions-label {
+    cursor: pointer;
+}
+
+
+@media (min-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: block;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: none;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: block;
+    }
+
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
+
+div.modal-content {
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+#columnsFilterDialog div.modal-content {
+    width: 450px;
+}
+
+div.modal-header > h4 {
+    font-size: 19px;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+#columnsFilterList > div > h1 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+ul.chooserList {
+    list-style-type: none;
+    min-height: 60px;
+}
+
+ul.chooserList > li {
+    padding: 10px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+ul.chooserList.green.ui-sortable > li {
+    background-color: #CCE8E2;
+}
+
+ul.chooserList.red.ui-sortable > li {
+    background-color: #3C8DBC;
+}
+
+div.modal-header {
+    padding: 25px;
+}
+
+#columnsFilterList {
+    padding: 30px;
+}
+
+ul.chooserList.green.ui-sortable {
+    margin-bottom: 30px;
+}
+
+ul.chooserList.ui-sortable {
+    padding-left: 0;
+}
+
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+    top: -1px;
+}
+
+ul.clickMenu.searchAppliedAlert {
+    color: #000;
+    background-image: none;
+    text-align: center;
+    padding: 5px 15px 5px 0px;
+}
+
+.paginationActionButtons input {
+    width: 30px;
+}
+
+.paginationActionButtons .selectActionsDisabled {
+    height: 27px;
+}
+
+.paginationActionButtons .sugar_action_button {
+    height: 25px;
+    padding: 0;
+}
+
+
+@media (max-width: 992px) {
+    ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly {
+        display: none;
+    }
+
+    .desktopOnly {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.mobileOnly {
+        display: none;
+    }
+
+    .mobileOnly {
+        display: none;
+    }
+}
+
+
+#selectedRecordsTop,
+#selectedRecordsBottom {
+    background-position-x: 95%;
+    padding-right: 10px;
+    color: #444444;
+    display: block!important;
+}
+
+ul.clickMenu.searchAppliedAlert.selectmenu.SugarActionMenu.listViewLinkButton {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly a {
+    line-height: 15px;
+}
+
+ul.listViewLinkButton > li {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
+    font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 0.8;
+    font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove:before {
+    content: '';
+}
+
+.paginationActionButtons .parent-dropdown-handler {
+    padding: 0 0 0 5px;
+}
+
+.paginationActionButtons .parent-dropdown-handler label {
+    margin-bottom: 0px;
+    height: 25px;
+    line-height: 25px;
+    color: #444444;
+}
+
+#selectLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#selectLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+ul.clickMenu.SugarActionMenu.listViewLinkButton > li .ddopen {
+    top: 25px!important;
+}
+
+.paginationActionButtons .parent-dropdown-handler:hover * {
+    color: #3C8DBC;
+}
+
+.dateTimeRangeChoice select {
+    width:125px;
+}
+
+.dateRangeInput {
+    width:100px !important;
+}
+
+.templateGroupChooser {
+    width: 150px;
+}
+
+@media (max-width: 990px) {
+    .modal-search tr {
+        width: 100%;
+        display: block;
+        float: none;
+        border: none;
+    }
+    .modal-search td {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search .edit tr td[scope=row] {
+        width: 110px;
+        float: left;
+    }
+    .modal-search .edit.basic tr td {
+        clear: both;
+    }
+    .modal-search .helpIcon {
+      display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .modal-search .edit > table {
+        border: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
+    }
+}

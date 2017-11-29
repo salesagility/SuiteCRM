@@ -44,7 +44,7 @@
 	<button type="button" id="btn-remove-all-recurrences" onclick="CAL.remove_all_recurrences();"> {$MOD.LBL_REMOVE_ALL_RECURRENCES} </button>
 </div>
 
-<div id="cal-repeat-block" style="dispaly: none;">
+<div id="cal-repeat-block" style="display: none;">
 <form name="CalendarRepeatForm" id="CalendarRepeatForm" onsubmit="return false;">
 
 <input type="hidden" name="repeat_parent_id">

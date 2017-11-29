@@ -207,14 +207,24 @@ class MBModule
         return $this->mblanguage->getModStrings ( $language ) ;
     }
 
-    function setModStrings ($language = 'en_us' , $mod_strings)
+    function setModStrings ($language, $mod_strings)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php' ;
         $this->mblanguage->strings [ $language ] = $mod_strings ;
     }
 
-	function setLabel ($language = 'en_us' , $key , $value)
+	function setLabel ($language, $key , $value)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
     	$language .= '.lang.php' ;
         $this->mblanguage->strings [ $language ] [ $key ] = $value ;
         //Ensure this key exists in all languages
@@ -225,8 +235,13 @@ class MBModule
         }
     }
 
-    function deleteLabel ($language = 'en_us' , $key)
+    function deleteLabel ($language, $key)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
    		foreach ($this->mblanguage->strings as $lang => $values) {
         	if (!empty($values[$key])) {
         		unset($this->mblanguage->strings[$lang][$key]);
@@ -243,8 +258,13 @@ class MBModule
         $this->save();
     }
 
-    function getLabel ($language = 'en_us' , $key)
+    function getLabel ($language, $key)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php' ;
         if (empty ( $this->mblanguage->strings [ $language ] [ $key ] ))
         {
@@ -260,20 +280,33 @@ class MBModule
         return $this->mblanguage->getAppListStrings ( $language ) ;
     }
 
-    function setAppListStrings ($language = 'en_us' , $app_list_strings)
+    function setAppListStrings ($language, $app_list_strings)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] = $app_list_strings ;
     }
 
-    function setDropDown ($language = 'en_us' , $key , $value)
+    function setDropDown ($language, $key , $value)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] [ $key ] = $value ;
     }
 
-    function deleteDropDown ($language = 'en_us' , $key)
+    function deleteDropDown ($language, $key)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php' ;
         unset ( $this->mblanguage->appListStrings [ $language ] [ $key ] ) ;
     }
@@ -468,21 +501,17 @@ class MBModule
         $smarty->left_delimiter = '{{' ;
         $smarty->right_delimiter = '}}' ;
         $smarty->assign ( 'class', $class ) ;
-        //write sugar generated class
-        $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '_sugar.php', 'w' ) ;
-        fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/Class.tpl' ) ) ;
-        fclose ( $fp ) ;
+
+        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' )) {
+            $fp = sugar_fopen($path . '/' . $class ['name'] . '.php', 'w');
+            fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
+            fclose($fp);
+        }
         //write vardefs
         $fp = sugar_fopen ( $path . '/vardefs.php', 'w' ) ;
         fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/vardef.tpl' ) ) ;
         fclose ( $fp ) ;
-
-        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' ))
-        {
-            $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '.php', 'w' ) ;
-            fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/DeveloperClass.tpl' ) ) ;
-            fclose ( $fp ) ;
-        }
+        
         if (! file_exists ( $path . '/metadata' ))
             mkdir_recursive ( $path . '/metadata' ) ;
         if (! empty ( $this->config [ 'studio' ] ))

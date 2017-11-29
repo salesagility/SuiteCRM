@@ -56,6 +56,11 @@
 	</div>
     
     <div class="p_login_middle">
+        {if $LOGIN_ERROR_MESSAGE}
+            <p align='center' class='error'>{$LOGIN_ERROR_MESSAGE}</p>
+        {/if}
+
+
     <div id="loginform">
         
         <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form"
@@ -84,19 +89,19 @@
                 <input type="hidden" name="{$key}" value="{$var}">
             {/foreach}
             {if !empty($SELECT_LANGUAGE)}
-                {sugar_translate module="Users" label="LBL_LANGUAGE"}:
-                <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                <div class="login-language-chooser" >
+                    {sugar_translate module="Users" label="LBL_LANGUAGE"}:
+                    <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                </div>
             {/if}
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-user"></span>-->
                 <input type="text" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus
                        tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}'/>
             </div>
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-lock"></span>-->
                 <input type="password" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2"
                        id="user_password" name="user_password" value='{$LOGIN_PASSWORD}'/>
@@ -118,14 +123,14 @@
                 <div id="generate_success" class='error' style="display:inline;"></div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-user"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"
                            value='{$LOGIN_USER_NAME}'
                            placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_mail" name="fp_user_mail" value=''
                            placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}">
                 </div>
