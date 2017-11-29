@@ -765,7 +765,7 @@ class SugarBean
                         if($db instanceof DBManager) {
                             $db->query($insert_string, true);
                         } else {
-                            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager, ' . get_class($db) . ' given.');
+                            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager');
                         }
                     }
                 }
