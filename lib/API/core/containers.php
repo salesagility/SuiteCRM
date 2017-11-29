@@ -39,15 +39,12 @@
  */
 
 // file has been separated out for testing and mocking purposes
-global $container;
 $version = 8;
-
-
-const API_PATH = 'lib/API/v8';
 
 $container = new \Slim\Container;
 // Load Containers
-$containerFiles = (array) glob(API_PATH.'/container/*.php');
+$paths = new \SuiteCRM\Utility\Paths();
+$containerFiles = (array) glob($paths->getLibraryPath().'/API/v8/container/*.php');
 
 foreach ($containerFiles as $containerFile) {
     require $containerFile;
@@ -103,3 +100,7 @@ $container['phpErrorHandler'] = function ($container) {
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
+
+if(isset($GLOBALS['container']) === false) {
+    $GLOBALS['container'] = $container;
+}
