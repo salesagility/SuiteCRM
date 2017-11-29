@@ -118,7 +118,10 @@ if(isset($_SESSION["login_user_name"])) {
 }
 $sugar_smarty->assign('LOGIN_USER_NAME', $login_user_name);
 
-$mod_strings['VLD_ERROR'] = $GLOBALS['app_strings']["\x4c\x4f\x47\x49\x4e\x5f\x4c\x4f\x47\x4f\x5f\x45\x52\x52\x4f\x52"];
+if (isset($GLOBALS['app_strings']["\x4c\x4f\x47\x49\x4e\x5f\x4c\x4f\x47\x4f\x5f\x45\x52\x52\x4f\x52"])) {
+    $mod_strings['VLD_ERROR'] =
+        $GLOBALS['app_strings']["\x4c\x4f\x47\x49\x4e\x5f\x4c\x4f\x47\x4f\x5f\x45\x52\x52\x4f\x52"];
+}
 
 // Retrieve password from the session if possible.
 if(isset($_SESSION["login_password"])) {
