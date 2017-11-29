@@ -458,6 +458,7 @@ $app_list_strings = array(
         'Accounts' => 'Account',
         'Contacts' => 'Contact',
         'Opportunities' => 'Opportunity',
+        'Campaigns' => 'Campaign',
         'Tasks' => 'Task',
         'Emails' => 'Email',
 
