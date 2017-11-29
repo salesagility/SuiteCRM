@@ -158,6 +158,10 @@ $(document).ready(function(){
       var treeData = [];
 
       for(var field in relData){
+        // We don't want to show the parent module as child of itself
+        if(node && node.module == relData[field]['module']){
+          continue;
+        }
         if(field) {
           var modulePath = '';
           var modulePathDisplay = '';
@@ -211,13 +215,12 @@ $(document).ready(function(){
         }
         //console.log(event);
         var node = $(this).closest('li.jqtree_common').data('node');
-        if(node.loaded) {
 
-        }else if(node.type == 'relationship'){
-          loadTreeData(node.module, node);
-        }else{
+        if(node.type == 'relationship'){
+          if(!node.loaded) {
+            loadTreeData(node.module, node);
+          }
           loadTreeLeafData(node);
-          $('#fieldTree').tree('openNode', node);
         }
 
         $('.jqtree-selected').removeClass('jqtree-selected');
