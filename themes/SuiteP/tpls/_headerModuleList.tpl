@@ -626,9 +626,9 @@
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
-                        </div>
-                    </form>
-                </li>
+                </div>
+            </form>
+            </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
                     <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false">
@@ -661,74 +661,72 @@
         </div>
         <div class="desktop-bar">
             <ul id="toolbar" class="toolbar">
-                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
-                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a>
-                        </li>
-                        <li class="last">
-                            <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a>
-                        </li>
-                    </ul>
-                </li>
-                <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
-                    </button>
-                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
-                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
-                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
-                            <input type="hidden" class="form-control" name="module" value="Home">
+                <liid="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                <a class="dropdown-toggle" data-toggle="dropdown"aria-expanded="false">
+                    {$APP.LBL_CREATE_BUTTON_LABEL}
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li>
+                        <a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{sugar_translate module="Contacts" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li>
+                        <a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{sugar_translate module="Opportunities" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li>
+                        <a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{sugar_translate module="Leads" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li>
+                        <a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{sugar_translate module="Documents" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li>
+                        <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{sugar_translate module="Calls" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                    <li >
+                        <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{sugar_translate module="Tasks" label="LBL_MODULE_NAME"}</a>
+                    </li>
+                </ul>
+            </li>
+<li id="" class="dropdown nav navbar-nav navbar-search">
+        <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+<!--<span class="glyphicon glyphicon-search"> </span>-->Search
+</button>
+        <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+            <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                    <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                    <input type="hidden" class="form-control" name="module " value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
-                            <input type="hidden" class="form-control" name="advanced" value="false">
+                                <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
-                                       placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                       placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/><spanclass="input-group-btn">
+                                           <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                                     aria-hidden="true"></span>-->Search</button>
                             </span>
-                            </div>
+                        </div>
                         </form>
                     </div>
-                </li>
-                <li>
+                        </li>
+                            <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
-                          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                         <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
-                        <input type="hidden" class="form-control" name="module" value="Home">
+                        <input type="hidden" class="form-control" name=" module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
-                        <input type="hidden" class="form-control" name="advanced" value="false">
-                        <div class="input-group">
-                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
-                                   placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                    <input type="hidden" class="form-control" name="advanced" value="false">
+                    <div class="input-group">
+                        <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                            placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/><spanclass="input-group-btn">
+                                       <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
                         </div>
                     </form>
-                </li>
-                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                        </li>
+                        <liid="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
                     <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
@@ -749,9 +747,8 @@
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
-                            <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
-                                {$APP.LBL_PROFILE}
-                            </a>
+                            <a href='index.php? module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                                {$APP.LBL_PROFILE}</a>
                         </li>
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
