@@ -6,10 +6,10 @@ $dictionary["surveyquestionoptions_surveyquestionresponses"] = array (
   array (
     'surveyquestionoptions_surveyquestionresponses' => 
     array (
-      'lhs_module' => 'SA_SurveyQuestionOptions',
+      'lhs_module' => 'SurveyQuestionOptions',
       'lhs_table' => 'surveyquestionoptions',
       'lhs_key' => 'id',
-      'rhs_module' => 'SA_SurveyQuestionResponses',
+      'rhs_module' => 'SurveyQuestionResponses',
       'rhs_table' => 'surveyquestionresponses',
       'rhs_key' => 'id',
       'relationship_type' => 'many-to-many',
