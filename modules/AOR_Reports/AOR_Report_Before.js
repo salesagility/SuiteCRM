@@ -197,11 +197,6 @@ $(document).ready(function(){
         node.loaded = true;
         $('#fieldTree').tree('openNode', node);
       }
-      else
-      {
-        if($('#fieldTree a:first').length)
-          $('#fieldTree a:first').click();
-      }
 
     }
 
@@ -216,12 +211,10 @@ $(document).ready(function(){
         //console.log(event);
         var node = $(this).closest('li.jqtree_common').data('node');
 
-        if(node.type == 'relationship'){
-          if(!node.loaded) {
-            loadTreeData(node.module, node);
-          }
-          loadTreeLeafData(node);
+        if(!node.loaded) {
+          loadTreeData(node.module, node);
         }
+        loadTreeLeafData(node);
 
         $('.jqtree-selected').removeClass('jqtree-selected');
         $(this).closest('li').addClass('jqtree-selected');
