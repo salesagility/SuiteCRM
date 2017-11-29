@@ -102,15 +102,6 @@
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
 										</a>
 									</li>
-
-
-									<li class="icon-btn">
-										<a href="javascript:" onclick="document.location = 'index.php?module=FP_events&action=EditView'" title="{$MOD.LBL_CAMPAIGN_EVENT_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/CampaignEvent.png"}" />
-											<br />
-											<span>{$MOD.LBL_CAMPAIGN_EVENT}</span>
-										</a>
-									</li>
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_survey').click(); $(this).closest('form').submit();" title="{$MOD.LBL_CAMPAIGN_SURVEY}">
 											<img src="{sugar_getimagepath file="cmpwzrd/Surveys.png"}" />
