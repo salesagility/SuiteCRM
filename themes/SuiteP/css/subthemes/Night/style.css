@@ -4,7 +4,7 @@ html {
 body {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 13px;
-    background: #f5f5f5;
+    background: #253f4a;
     color: #416f81;
     margin: 0;
     overflow: auto;
@@ -58,11 +58,11 @@ a:hover {
     float: left
 }
 .bootstrap-container.col-sm-offset-3 {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     margin-top: 80px
 }
 .bootstrap-container {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     margin-top: 110px
 }
 .bootstrap-container .dropdown-menu em {
@@ -236,7 +236,7 @@ a:hover {
 .sidebar .actionMenuSidebar li a {
     display: block;
     font-size: 13px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #fff;
     margin: 0 0 1px 0;
     clear: both
@@ -363,12 +363,12 @@ a:hover {
     visibility: collapse
 }
 .recentlyViewedSidebar li a {
-    color: #f5f5f5;
+    color: #253f4a;
     padding-top: 12px;
     padding-bottom: 12px
 }
 .favoritesSidebar li a {
-    color: #f5f5f5;
+    color: #253f4a;
     padding-top: 12px;
     padding-bottom: 12px
 }
@@ -399,13 +399,13 @@ a:hover {
 .recentlyViewedSidebar .recent_h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #253f4a;
     margin: 0 0 5px 0
 }
 .favoritesSidebar .recent_h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #253f4a;
     margin: 0 0 5px 0
 }
 footer * {
@@ -686,7 +686,7 @@ footer.collapsedSidebar {
     -o-transition: all 0.3s ease-out
 }
 .navbar-inverse .dropdown-menu .action-links-title a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .navbar-inverse .dropdown-menu .recentlinks {
     width: 100%
@@ -695,7 +695,7 @@ footer.collapsedSidebar {
     margin-right: 5px
 }
 .navbar-inverse .dropdown-menu .recentlinks a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .navbar-inverse .dropdown-menu .favoritelinks {
     width: 100%
@@ -704,7 +704,7 @@ footer.collapsedSidebar {
     margin-right: 5px
 }
 .navbar-inverse .dropdown-menu .favoritelinks a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .navbar-inverse .nav {
     display: inline-block
@@ -789,12 +789,12 @@ footer.collapsedSidebar {
     border-color: transparent
 }
 .navbar-inverse .headerlinks a:link {
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0;
     width: 100%
 }
 .navbar-inverse .headerlinks a:visited {
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0;
     width: 100%
 }
@@ -807,7 +807,7 @@ footer.collapsedSidebar {
     min-height: 60px
 }
 .recent_h3 {
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 42px
 }
 .recent_h3 > strong {
@@ -833,13 +833,13 @@ footer.collapsedSidebar {
     line-height: normal
 }
 .dropdown-menu li.action-links-title a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .dropdown-menu li.recent-links-title a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .dropdown-menu li.favorite-links-title a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 .with-actions span {
     display: inline-block
@@ -1040,7 +1040,7 @@ footer.collapsedSidebar {
 }
 .moremenu a {
     font-size: 1.2em;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 8px 0 0 0;
     margin: 0
@@ -1062,7 +1062,7 @@ footer.collapsedSidebar {
 .moremenu ul li a:hover {
     background: none;
     background: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 5px
 }
@@ -1099,7 +1099,7 @@ footer.collapsedSidebar {
     color: #f08377
 }
 .navbar-inverse .globalLinks-desktop > li > a {
-    color: #f5f5f5
+    color: #253f4a
 }
 .globalLinks-desktop ul li a {
     color: #fff
@@ -1518,7 +1518,7 @@ footer.collapsedSidebar {
 }
 .desktop_notifications .has-alerts p {
     font-size: 12px;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     color: #416f81;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
@@ -1704,7 +1704,7 @@ footer.collapsedSidebar {
     .globalLinks-mobile.open > .dropdown-toggle.btn-default.focus,
     .globalLinks-mobile.open > .dropdown-toggle.btn-default:focus,
     .globalLinks-mobile.open > .dropdown-toggle.btn-default:hover {
-        color: #f5f5f5;
+        color: #253f4a;
         background-color: transparent;
         border-color: transparent;
         background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png")
@@ -1986,7 +1986,7 @@ footer.collapsedSidebar {
     .globalLinks-mobile.open > .dropdown-toggle.btn-default.focus,
     .globalLinks-mobile.open > .dropdown-toggle.btn-default:focus,
     .globalLinks-mobile.open > .dropdown-toggle.btn-default:hover {
-        color: #f5f5f5;
+        color: #253f4a;
         background-color: transparent;
         border-color: transparent;
         background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png")
@@ -2225,7 +2225,7 @@ footer.collapsedSidebar {
     }
     .desktop_notifications > .btn-success:hover {
         background-color: #416f81;
-        color: #f5f5f5;
+        color: #253f4a;
         border: none
     }
     .desktop_notifications > .btn-success:active {
@@ -2466,7 +2466,7 @@ footer.collapsedSidebar {
     .globalLinks-desktop.open > .dropdown-toggle.btn-default.focus,
     .globalLinks-desktop.open > .dropdown-toggle.btn-default:focus,
     .globalLinks-desktop.open > .dropdown-toggle.btn-default:hover {
-        color: #f5f5f5;
+        color: #253f4a;
         background-color: transparent;
         border-color: transparent;
         background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png")
@@ -2958,7 +2958,7 @@ footer.collapsedSidebar {
     text-align: right
 }
 div.p_login {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     height: 100%
 }
 div.p_login .p_login_top {
@@ -2981,7 +2981,7 @@ div.p_login .p_login_top a {
     text-indent: -9999px
 }
 div.p_login .p_login_middle {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     float: left;
     width: 100%
 }
@@ -3390,7 +3390,7 @@ fieldset[disabled] .btn-primary.active {
 }
 #conditionLines > tbody > tr {
     display: block;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     border-bottom: 5px #fff solid
 }
 #conditionLines > tbody > tr > td {
@@ -3405,7 +3405,7 @@ fieldset[disabled] .btn-primary.active {
     width: 16.667%
 }
 #conditionLines tbody td {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     margin-bottom: 4px;
     min-height: 64px
 }
@@ -3736,7 +3736,7 @@ fieldset[disabled] .btn-primary.active {
 }
 .removeFileButton {
     background-color: #f08377;
-    color: #f5f5f5
+    color: #253f4a
 }
 .removeFileButton:hover {
     background-color: #d66c60
@@ -3764,110 +3764,110 @@ fieldset[disabled] .btn-primary.active {
     text-transform: uppercase
 }
 .btn-default {
-    background-color: #4E869C;
-    color: #f5f5f5;
-    border: 1px solid #4E869C
+    background-color: #4eb69c;
+    color: #253f4a;
+    border: 1px solid #4eb69c
 }
 .btn-default:hover {
-    background-color: #4E869C;
-    color: #f5f5f5;
-    border: 1px solid #4E869C
+    background-color: #4eb69c;
+    color: #253f4a;
+    border: 1px solid #4eb69c
 }
 .btn-default:active {
-    background-color: #4E869C;
-    color: #f5f5f5;
-    border: 1px solid #4E869C
+    background-color: #4eb69c;
+    color: #253f4a;
+    border: 1px solid #4eb69c
 }
 .btn-default:focus {
-    background-color: #4E869C;
-    color: #f5f5f5;
-    border: 1px solid #4E869C
+    background-color: #4eb69c;
+    color: #253f4a;
+    border: 1px solid #4eb69c
 }
 .btn-primary {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #2e4f5c
 }
 .btn-primary:hover {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #2e4f5c
 }
 .btn-primary:active {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #2e4f5c
 }
 .btn-primary:focus {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #2e4f5c
 }
 .btn-info {
     background-color: #aa9dcc;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #aa9dcc
 }
 input[type=button].btn-info {
     background-color: #aa9dcc;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #aa9dcc
 }
 .btn-info:hover {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 .btn-info:active {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 .btn-info:focus {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 input[type=button].btn-info:hover {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 input[type=button].btn-info:active {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 input[type=button].btn-info:focus {
     background-color: #9589b3;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #9589b3
 }
 .btn-success {
     background-color: #bbe6a5;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #bbe6a5
 }
 .btn-success:hover {
     background-color: #bbe6a5;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #bbe6a5
 }
 .btn-success:active {
     background-color: #bbe6a5;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #bbe6a5
 }
 .btn-success:focus {
     background-color: #bbe6a5;
-    color: #f5f5f5;
+    color: #253f4a;
     border: 1px solid #bbe6a5
 }
 .button {
     font-size: 13px;
     font-weight: 500;
     background: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
     margin: 0 0 0 0;
@@ -3885,7 +3885,7 @@ input[type=submit] {
     font-size: 13px;
     font-weight: 500;
     background: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
     margin: 0 0 0 0;
@@ -3900,7 +3900,7 @@ input[type=button] {
     font-size: 13px;
     font-weight: 500;
     background: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
     margin: 0 0 0 0;
@@ -3915,7 +3915,7 @@ input[type=reset] {
     font-size: 13px;
     font-weight: 500;
     background: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
     margin: 0 0 0 0;
@@ -3958,25 +3958,25 @@ input[type=submit]:hover,
 input[type=button]:hover,
 input[type=reset]:hover {
     font-size: 13px;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer
 }
 input[type=submit]:active,
 input[type=button]:active,
 input[type=reset]:active {
     font-size: 13px;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer
 }
 input[type=submit]:focus,
 input[type=button] {
     font-size: 13px;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer
 }
 .moremenu a {
     font-size: 13px;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     margin: 0
 }
@@ -3997,7 +3997,7 @@ input[type=button] {
 .moremenu ul li a:hover {
     background: none;
     background: #d66c60;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 5px
 }
@@ -4040,7 +4040,7 @@ button[disabled] {
     font-size: 13px;
     font-weight: 500;
     background-color: #777;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     margin: 0 0 0 0;
     border: none;
@@ -4054,7 +4054,7 @@ input[type="submit"][disabled] {
     font-size: 13px;
     font-weight: 500;
     background-color: #777;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     margin: 0 0 0 0;
     border: none;
@@ -4068,7 +4068,7 @@ input[type="reset"][disabled] {
     font-size: 13px;
     font-weight: 500;
     background-color: #777;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     margin: 0 0 0 0;
     border: none;
@@ -4082,7 +4082,7 @@ input[type="button"][disabled] {
     font-size: 13px;
     font-weight: 500;
     background-color: #777;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     margin: 0 0 0 0;
     border: none;
@@ -4118,32 +4118,32 @@ input[type="button"][disabled] {
 }
 .button:hover {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .button:focus {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .button.focus {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .button:active {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .button.active {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .open > .dropdown-toggle.btn-primary {
     background-color: #808f9c;
-    color: #f5f5f5;
+    color: #253f4a;
     border-color: #808f9c
 }
 .button:active {
@@ -4156,7 +4156,7 @@ input[type="button"][disabled] {
     background-image: none
 }
 .button .badge {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     color: #f08377
 }
 .yui-layout-hd .button {
@@ -4661,7 +4661,7 @@ font[color=red] {
     display: inline-block
 }
 #pageContainer .dashletcontainer .pagination td button {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 2px;
     border-radius: 3px;
     width: auto;
@@ -4690,7 +4690,7 @@ font[color=red] {
     padding-right: 20px
 }
 #pageContainer .dashletcontainer .hd .icon {
-    fill: #f5f5f5
+    fill: #253f4a
 }
 .dashletPanel thead {
     background-color: #2e4f5c
@@ -4733,7 +4733,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4743,7 +4743,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:link {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4753,7 +4753,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:hover {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4763,7 +4763,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:visited {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4773,7 +4773,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:active {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4783,7 +4783,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:focus {
     font-weight: 400;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 10px 20px 10px 10px;
     border: 1px solid transparent;
     border-top-left-radius: 4px;
@@ -4792,27 +4792,27 @@ ul.subpanelTablist li {
 }
 #dashletCategories > li.active a {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCategories > li.active a:link {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCategories > li.active a:hover {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCategories > li.active a:visited {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCategories > li.active a:active {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCategories > li.active a:focus {
     background-color: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 #dashletCtrls {
     float: right
@@ -5012,7 +5012,7 @@ td.dashlet-title > h3 > span {
 }
 .dashletPanel .h3Row {
     background-color: #66727d;
-    color: #f5f5f5;
+    color: #253f4a;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px
 }
@@ -5023,7 +5023,7 @@ td.dashlet-title > h3 > span {
 .dashletPanel .h3Row h3 {
     font-size: 13px;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #253f4a;
     margin: 0 0 0 10px;
     letter-spacing: 1px;
     text-transform: uppercase
@@ -5220,7 +5220,7 @@ td.dashlet-title > h3 > span {
     border: 0
 }
 tr#pagination {
-    background: #f5f5f5
+    background: #253f4a
 }
 .list .pagination td {
     padding: 0;
@@ -5255,7 +5255,7 @@ tr#pagination {
 .list #pagination td .paginationTable .pageNumbers {
     position: static;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 8px 0 0;
     margin: 0 0 0 0
 }
@@ -5378,25 +5378,25 @@ tr#pagination {
     font-weight: normal;
     padding: 2px 0 3px 0;
     text-decoration: none;
-    color: #f5f5f5
+    color: #253f4a
 }
 .list .pagination td table td a:visited {
     font-weight: bold;
     padding: 2px 0 3px 0;
     text-decoration: none;
-    color: #f5f5f5
+    color: #253f4a
 }
 .reportGroupByDataChildTablelistViewThS1 a:link {
     font-weight: bold;
     padding: 2px 0 3px 0;
     text-decoration: none;
-    color: #f5f5f5
+    color: #253f4a
 }
 .reportGroupByDataChildTablelistViewThS1 a:visited {
     font-weight: bold;
     padding: 2px 0 3px 0;
     text-decoration: none;
-    color: #f5f5f5
+    color: #253f4a
 }
 .list .pagination td table td a:hover {
     text-decoration: none
@@ -5445,7 +5445,7 @@ tr#pagination {
     text-align: left;
     white-space: nowrap;
     font-weight: 700;
-    color: #f5f5f5
+    color: #253f4a
 }
 .list tr td[scope=col] {
     font-size: 13px;
@@ -5455,7 +5455,7 @@ tr#pagination {
     border-right: none;
     text-align: left;
     white-space: nowrap;
-    color: #f5f5f5
+    color: #253f4a
 }
 .edit .list tr th {
     font-size: 13px;
@@ -5557,7 +5557,7 @@ a.listViewTdToolsS1 {
     font-size: 13px;
     font-weight: 700;
     padding-right: 10px;
-    color: #f5f5f5
+    color: #253f4a
 }
 .list {
     font-size: 12px
@@ -5648,7 +5648,7 @@ a.listViewTdToolsS1 {
     border-bottom: none
 }
 #selectLinkTop .sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 0 4px 0 0;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -5664,7 +5664,7 @@ a.listViewTdToolsS1 {
     margin-left: 0
 }
 #selectLinkBottom .sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 0 4px 0 0;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -5711,13 +5711,13 @@ a.listViewTdToolsS1 {
     background-image: none
 }
 .single a {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 0;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .single > a {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 0
@@ -5759,26 +5759,26 @@ a.listViewTdToolsS1 {
     float: left
 }
 .list tr th a:visited {
-    color: #f5f5f5
+    color: #253f4a
 }
 .list tr td[scope=col] a:link {
-    color: #f5f5f5
+    color: #253f4a
 }
 .list tr td[scope=col] a:visited {
-    color: #f5f5f5
+    color: #253f4a
 }
 .list .pagination td table td span.pageNumbers {
-    color: #f5f5f5
+    color: #253f4a
 }
 .list tr.pagination td.buttons ul.clickMenu > li > a:link {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: left;
     text-decoration: none
 }
 .list tr.pagination td.buttons ul.clickMenu > li > a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: left;
     text-decoration: none
 }
@@ -5919,7 +5919,7 @@ a.listViewTdToolsS1 {
 #detail_header_action_menu > .sugar_action_button > .subnav {
     left: 0;
     right: auto;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
@@ -5927,7 +5927,7 @@ a.listViewTdToolsS1 {
 #userEditActions > .sugar_action_button > .subnav {
     left: 0;
     right: auto;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
@@ -5936,7 +5936,7 @@ a.listViewTdToolsS1 {
     left: 0;
     right: auto;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     padding: 0;
     width: auto
@@ -5945,7 +5945,7 @@ a.listViewTdToolsS1 {
     left: 0;
     right: auto;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     padding: 0;
     width: auto
@@ -5960,229 +5960,229 @@ a.listViewTdToolsS1 {
     padding: 4px 10px
 }
 #detail_header_action_menu > .sugar_action_button > .subnav li {
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
 }
 #detail_header_action_menu > .sugar_action_button > .subnav a {
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
 }
 #userEditActions > .sugar_action_button > .subnav li {
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
 }
 #userEditActions > .sugar_action_button > .subnav a {
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     background-color: #f08377
 }
 #userEditActions .clickMenu li .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #selectLinkTop > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 #selectLinkTop > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkTop .clickMenu li .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .action-link-top .clickMenu li .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkTop > .sugar_action_button > .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
 .action-link-top > .sugar_action_button > .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
 #actionLinkTop > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .action-link-top > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkTop > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .action-link-top > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #selectLinkBottom > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 #selectLinkBottom > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkBottom .clickMenu li .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .action-link-bottom .clickMenu li .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkBottom > .sugar_action_button > .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
 .action-link-bottom > .sugar_action_button > .subnav {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
 #actionLinkBottom > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .action-link-bottom > .sugar_action_button > .subnav li {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkBottom > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
     line-height: 24px;
-    color: #f5f5f5;
+    color: #253f4a;
     width: 100%
 }
 .action-link-bottom > .sugar_action_button > .subnav a {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 #actionLinkTop .menuItem {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 .action-link-top .menuItem {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 #actionLinkBottom .menuItem {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 .action-link-bottom .menuItem {
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%;
     padding: 0
 }
 #actionLinkTop .sugar_action_button .subnav.ddopen a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none
 }
 .action-link-top .sugar_action_button .subnav.ddopen a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none
 }
 #actionLinkTop .sugar_action_button .subnav.ddopen a:hover {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none;
     background-color: #677785;
     width: 100%
 }
 .action-link-top .sugar_action_button .subnav.ddopen a:hover {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none;
     background-color: #677785;
     width: 100%
 }
 #actionLinkBottom .sugar_action_button .subnav.ddopen a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none
 }
 .action-link-bottom .sugar_action_button .subnav.ddopen a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none
 }
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none;
     background-color: #677785;
     width: 100%
 }
 .action-link-bottom .sugar_action_button .subnav.ddopen a:hover {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: none;
     background-color: #677785;
     width: 100%
@@ -6450,7 +6450,7 @@ a#basic_search_link:hover {
 }
 div#search_form > .advanced input.button {
     background-color: #aa9dcc;
-    color: #f5f5f5
+    color: #253f4a
 }
 div#search_form > .advanced input.button:hover {
     background-color: #d66c60
@@ -6463,63 +6463,63 @@ div#search_form > .advanced input.button:hover {
     color: #fff
 }
 .paginationTable .button {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type=submit] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type=button] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationChangeButtons button[type=submit] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable button[disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type="submit"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type="reset"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type="button"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -6627,7 +6627,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
     background-color: #f08377;
     position: absolute;
     line-height: 20px;
-    color: #f5f5f5;
+    color: #253f4a;
     height: 20px;
     width: 20px;
     border-radius: 30px;
@@ -6860,63 +6860,63 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     margin-right: 15px
 }
 .popupBody .list.view .pagination .button {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type=submit] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type=button] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .paginationChangeButtons button[type=submit] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination button[disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="submit"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="reset"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="button"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
@@ -6924,7 +6924,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     min-width: 32px
 }
 .popupBody .list.view .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -6985,7 +6985,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     right: auto;
     padding: 4px 10px;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
@@ -7042,18 +7042,18 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     border-top-right-radius: 4px
 }
 .inbound-email .list.view .pagination .button {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination td {
-    color: #f5f5f5
+    color: #253f4a
 }
 .inbound-email .list.view .pagination #delete_button {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -7061,16 +7061,16 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     height: 26px
 }
 .inbound-email .list.view .pagination input[type=button] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     color: #fff;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email #delete_button {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
@@ -7079,42 +7079,42 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     border-bottom: none
 }
 .inbound-email .list.view .paginationChangeButtons button[type=submit] {
-    background-color: #4E869C;
-    color: #f5f5f5;
+    background-color: #4eb69c;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination button[disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="submit"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="reset"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="button"][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
@@ -7129,7 +7129,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     margin-top: 4px
 }
 .inbound-email .list.view .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -7202,7 +7202,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 .inbound-email .list .subnav {
     padding: 4px 10px;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: auto
 }
@@ -7228,14 +7228,14 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 .inbound-email .menuItemHilite {
     font-weight: normal;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
 .inbound-email .menuItem {
     font-weight: normal;
     background-color: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 24px;
     width: 100%
 }
@@ -7487,7 +7487,7 @@ ul.clickMenu {
     padding: 0;
     margin: 0;
     vertical-align: bottom;
-    color: #f5f5f5;
+    color: #253f4a;
     display: inline-block;
     border-radius: 3px
 }
@@ -7607,7 +7607,7 @@ tr.pagination-unique:nth-of-type(2) {
 }
 div.list-view-rounded-corners > table,
 tr.pagination-unique {
-    background: #f5f5f5
+    background: #253f4a
 }
 .sugar_action_button {
     height: 27px
@@ -7617,49 +7617,49 @@ tr.pagination-unique {
 }
 table.subpanel-table ul.subpanel > a {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 #actionLinkTop li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .action-link-top li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 #actionLinkBottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .action-link-bottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .listViewLinkButton li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 #selectLinkTop li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -7670,7 +7670,7 @@ table.subpanel-table li.sugar_action_button {
 }
 #selectLinkBottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -7681,19 +7681,19 @@ table.subpanel-table li.sugar_action_button {
 }
 table.subpanel-table .pagination .sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table .pagination li.sugar_action_button > form > a {
     padding: 0;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 0;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -7779,7 +7779,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 }
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
     padding: 0px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 1px solid transparent;
     border-radius: 4px;
     padding-right: 4px;
@@ -7934,9 +7934,9 @@ ul.clickMenu > li > span.searchAppliedAlert {
     padding: 0 2px 0 2px
 }
 .list-view-action-buttons > li .btn {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     border: 0;
-    color: #f5f5f5;
+    color: #253f4a;
     font-size: 13px;
     margin: 0 0 0 0;
     padding: 5px 8px 4px 8px
@@ -8156,11 +8156,11 @@ p.msg {
     line-height: 18px;
     font-size: 10px;
     padding: 0 10px 0 10px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     font-weight: 600
 }
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -8172,11 +8172,11 @@ p.msg {
     line-height: 18px;
     font-size: 10px;
     padding: 0 10px 0 10px;
-    background-color: #4E869C;
+    background-color: #4eb69c;
     font-weight: 600
 }
 .nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
-    background-color: #4E869C
+    background-color: #4eb69c
 }
 .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-left {
     margin-right: 4px
@@ -8185,7 +8185,7 @@ p.msg {
     margin-left: 4px
 }
 .pagination-range-label {
-    color: #4E869C;
+    color: #4eb69c;
     font-size: 13px;
     font-weight: bold
 }
@@ -8198,7 +8198,7 @@ p.msg {
     background-color: #777
 }
 .mobile-pagination .btn-pagination {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -8206,7 +8206,7 @@ p.msg {
     padding: 2px 10px 2px 10px
 }
 .mobile-pagination .btn-pagination:hover {
-    background-color: #4E869C
+    background-color: #4eb69c
 }
 .mobile-pagination .glyphicon-chevron-left {
     margin-right: 0px
@@ -8489,7 +8489,7 @@ div#searchResults {
     border-left: 4px solid #79996a
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     border-left: 4px solid #79996a
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
@@ -8542,7 +8542,7 @@ div#searchResults {
 #create_invitee_as_lead {
     font-size: 13px;
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px;
     margin: 4px;
     border: 1px solid transparent;
@@ -8554,7 +8554,7 @@ div#searchResults {
 #create_invitee_as_contact {
     font-size: 13px;
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px;
     margin: 4px;
     border: 1px solid transparent;
@@ -8570,7 +8570,7 @@ div#searchResults {
 #create-invitee-edit button {
     font-size: 13px;
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px;
     margin: 4px;
     border: 1px solid transparent;
@@ -8582,7 +8582,7 @@ div#searchResults {
 #EditView .edit input[type=submit]#invitees_search {
     font-size: 13px;
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px;
     margin: 4px;
     border: 1px solid transparent;
@@ -8925,7 +8925,7 @@ slot {
     display: inline;
     font-size: 14px;
     font-weight: 400;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     color: #416f81;
     padding: 0px 10px;
     border: 1px solid transparent;
@@ -9373,7 +9373,7 @@ li.noBullet {
 }
 .error {
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 7px 10px;
     font-size: 12px;
     margin-bottom: 20px;
@@ -9403,12 +9403,12 @@ div.content p.error {
 }
 .required a:link {
     font-weight: 600;
-    color: #f5f5f5;
+    color: #253f4a;
     text-decoration: underline
 }
 .error a {
     font-weight: 600;
-    color: #f5f5f5;
+    color: #253f4a;
     text-decoration: underline
 }
 .error a:link {
@@ -9458,7 +9458,7 @@ input.sqsEnabled {
 .pageNumbers {
     position: static;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 8px 0 0;
     margin: 0 0 0 0
 }
@@ -9872,7 +9872,7 @@ a.tabFormAdvLink:hover {
     color: #416f81
 }
 .evenListRowS1 td {
-    background: #f5f5f5
+    background: #253f4a
 }
 .oddListRowS1 td {
     background: #fff
@@ -9933,7 +9933,7 @@ table.detail {
     border-color: #abc3d7
 }
 .other td {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     color: #444;
     border-left-color: #dfdfdf
 }
@@ -9995,7 +9995,7 @@ span#selectedRecordsTop {
 }
 ul.clickMenu {
     display: inline-block;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0;
     margin: 0;
     border-radius: 3px;
@@ -10037,7 +10037,7 @@ ul.clickMenu ul.subnav-sub li a:hover {
 }
 ul.clickMenu > li {
     position: relative;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 5px;
     margin: 0 5px 0 0;
@@ -10047,7 +10047,7 @@ ul.clickMenu > li {
 }
 ul.SugarActionMenuIESub li {
     position: relative;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     padding: 5px;
     margin: 0;
@@ -10057,14 +10057,14 @@ ul.SugarActionMenuIESub li {
 }
 ul.SugarActionMenuIESub li {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     margin: 0 5px 0 0;
     float: left;
     text-decoration: none
 }
 ul.clickMenu li a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     margin: 0 5px 0 0;
     float: left;
     text-decoration: none
@@ -10123,7 +10123,7 @@ ul#detailViewActions.clickMenu {
 }
 .selectActionsDisabled {
     display: inline-block;
-    background-color: #4E869C;
+    background-color: #4e869c;
     border-radius: 3px;
     vertical-align: bottom
 }
@@ -10166,7 +10166,7 @@ ul#detailViewActions.clickMenu {
     text-decoration: none
 }
 ul.clickMenu.SugarActionMenu li.single a {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0 8px
 }
 ul.clickMenu.SugarActionMenu li.single a:hover {
@@ -10269,11 +10269,11 @@ span.crumbLink {
 }
 a#delete_listview_top:hover {
     font-size: 14px;
-    color: #f5f5f5
+    color: #253f4a
 }
 a#delete_listview_bottom:hover {
     font-size: 14px;
-    color: #f5f5f5
+    color: #253f4a
 }
 .about_suite {
     padding: 0 25px 0 0;
@@ -10408,12 +10408,12 @@ input[type=text].cstm_code {
     right: 2em
 }
 .headerlinks a:link {
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 14px 5px 14px 0;
     width: 100%
 }
 .headerlinks a:visited {
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 14px 5px 14px 0;
     width: 100%
 }
@@ -10667,15 +10667,15 @@ table#lineItems tr td table tfoot tr td span {
     width: 100%
 }
 #lineItems .group > thead {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     min-height: 52px
 }
 #lineItems .group > thead > tr {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     min-height: 52px
 }
 #lineItems .group > thead > tr > td {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     min-height: 52px
 }
 #lineItems .group > thead > tr > td:nth-of-type(1) {
@@ -10701,7 +10701,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 #lineItems #product_head td {
     padding: 0;
-    border-bottom: 1px solid #f5f5f5
+    border-bottom: 1px solid #253f4a
 }
 #lineItems .product_group {
     background: none
@@ -10723,7 +10723,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 #lineItems .product_group > tbody > tr:nth-of-type(2) > td {
     padding-bottom: 32px;
-    border-bottom: 1px solid #f5f5f5
+    border-bottom: 1px solid #253f4a
 }
 #lineItems .product_qty {
     margin: 0 5px 0 0;
@@ -10785,11 +10785,11 @@ table#lineItems tr td table tfoot tr td span {
 }
 #lineItems #service_head td {
     padding: 0;
-    border-bottom: 1px solid #f5f5f5
+    border-bottom: 1px solid #253f4a
 }
 #lineItems .service_group > tbody > tr > td {
     padding-bottom: 32px;
-    border-bottom: 1px solid #f5f5f5
+    border-bottom: 1px solid #253f4a
 }
 #lineItems .service_group {
     background: none
@@ -11040,7 +11040,7 @@ ul::-webkit-scrollbar-thumb {
     border: none
 }
 .headerlinks a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 table {
     font-size: 13px
@@ -11569,7 +11569,7 @@ select#sales_stage_advanced {
 }
 #fieldChoices .field-list {
     display: inline-block;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     padding: 8px;
     margin-right: 1%;
     border: 1px solid transparent;
@@ -11603,7 +11603,7 @@ select#sales_stage_advanced {
     font-size: 14px;
     background-clip: padding-box;
     background-color: #396070;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 8px;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -11612,7 +11612,7 @@ select#sales_stage_advanced {
 }
 #fieldChoices .required > .field-header {
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 8px;
     margin: 0;
     border: 1px solid transparent
@@ -11862,7 +11862,7 @@ td.inlineEditActive {
     background-color: #777
 }
 .edit-view-pagination .btn-pagination {
-    background-color: #4E869C;
+    background-color: #4eb69c;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -11870,7 +11870,7 @@ td.inlineEditActive {
     padding: 0 10px 0 10px
 }
 .edit-view-pagination .btn-pagination:hover {
-    background-color: #4E869C
+    background-color: #4eb69c
 }
 .edit-view-pagination.glyphicon-chevron-left {
     margin-right: 4px
@@ -13127,7 +13127,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     font-size: 14px;
     font-weight: 500;
     background-color: #66727d;
-    color: #f5f5f5;
+    color: #253f4a;
     line-height: 52px;
     height: 52px
 }
@@ -13151,7 +13151,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     display: block;
     font-size: 12px;
     font-weight: 500;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -13166,7 +13166,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     display: block;
     font-size: 14px;
     font-weight: 500;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 10px 0 10px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -13289,42 +13289,42 @@ div.sub-panel {
     width: 100%
 }
 .subpanel-table ul.subpanel > a {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .subpanel-table li.sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .subpanel-table .pagination .sugar_action_button {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .subpanel-table .pagination li.sugar_action_button > form > a {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .subpanel-table .pagination .sugar_action_button > form > a {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .subpanel-table .pagination .sugar_action_button > form > a {
-    background-color: #4E869C;
+    background-color: #4e869c;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
@@ -13387,7 +13387,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
-    background-color: #4E869C
+    background-color: #4e869c
 }
 #actionLinkTop li.sugar_action_button:hover,
 #actionLinkBottom li.sugar_action_button:hover,
@@ -13415,7 +13415,7 @@ div.sub-panel {
     float: right
 }
 .subpanelTabForm {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     color: #000;
     border-color: #f08377
 }
@@ -13702,13 +13702,13 @@ table.subpanelTabForm {
 }
 .other.view td:nth-of-type(3) {
     display: block;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     float: left;
     width: 100%
 }
 .other.view td:nth-of-type(4) {
     display: block;
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     padding-bottom: 10px;
     padding-left: 52px;
     float: right;
@@ -13789,7 +13789,7 @@ table.subpanelTabForm {
     display: block;
     font-size: 13px;
     font-weight: 700;
-    background: #f5f5f5;
+    background: #253f4a;
     padding: 8px 0 8px 8px;
     margin-bottom: 4px;
     border: 1px solid transparent;
@@ -14249,7 +14249,7 @@ form[name="wizform"] .progression li::after {
     border-left-color: #f08377
 }
 form[name="wizform"] .progression li::before {
-    border-left-color: #f5f5f5
+    border-left-color: #253f4a
 }
 form[name="wizform"] input[type="button"] {
     margin-left: 10px;
@@ -14709,7 +14709,7 @@ p#clear {
 }
 .yui-calendar td.calcell a {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     height: 100%;
     text-decoration: none
 }
@@ -19408,7 +19408,7 @@ a.sugar-tab-close,
     font-size: 13px;
     font-weight: 500;
     background-color: #f08377;
-    color: #f5f5f5;
+    color: #253f4a;
     cursor: pointer;
     cursor: pointer;
     padding: 0 20px 0 20px;
@@ -19489,7 +19489,7 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnav {
     font-weight: normal;
     background-color: #66727d;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 8px;
     border: 1px solid #66727d;
     border-radius: 4px;
@@ -19498,7 +19498,7 @@ table#goto_date_trigger_div_t thead {
     text-transform: uppercase
 }
 .yui-calendar a.calnavleft {
-    color: #f5f5f5;
+    color: #253f4a;
     background-color: #aa9dcc;
     border: 1px solid #aa9dcc;
     padding: 0;
@@ -19518,7 +19518,7 @@ table#goto_date_trigger_div_t thead {
     background-color: #aa9dcc;
     background-origin: padding-box;
     background-position: 0 0;
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0;
     margin-top: 10px;
     border: 1px solid #aa9dcc;
@@ -19567,23 +19567,23 @@ table#goto_date_trigger_div_t thead {
 }
 .yui-calendar td.calcell.selected {
     background: #d66c60;
-    color: #f5f5f5
+    color: #253f4a
 }
 .yui-calendar td.calcell.selected a {
     background: #d66c60;
-    color: #f5f5f5
+    color: #253f4a
 }
 .yui-calendar td.calcell a:hover {
     background: #d66c60;
-    color: #f5f5f5
+    color: #253f4a
 }
 .yui-calendar td.calcell.calcellhover {
     background: #d66c60;
-    color: #f5f5f5
+    color: #253f4a
 }
 .yui-calendar td.calcell.calcellhover a {
     background: #d66c60;
-    color: #f5f5f5
+    color: #253f4a
 }
 .yui-calendar .calweekdaycell {
     color: #f08377
@@ -19605,7 +19605,7 @@ a#callnav_today {
 }
 .monthHeader {
     background: #2e4f5c;
-    color: #f5f5f5;
+    color: #253f4a;
     padding-left: 8px;
     padding-right: 8px;
     margin-top: 10px;
@@ -19676,9 +19676,9 @@ div.monthFooter {
     border: none
 }
 .yearCalBodyMonth {
-    background-color: #f5f5f5;
+    background-color: #253f4a;
     border-top: 2px solid #f08377;
-    border-bottom: 2px solid #f5f5f5
+    border-bottom: 2px solid #253f4a
 }
 .yearCalBody .monthHeader {
     border: none
@@ -19775,7 +19775,7 @@ ul.yui-nav li.selected {
 }
 .qtip-title-text {
     display: block;
-    color: #f5f5f5;
+    color: #253f4a;
     float: left;
     line-height: 18px;
     width: 128px
@@ -19790,7 +19790,7 @@ ul.yui-nav li.selected {
     margin: 0 0 0 4px
 }
 .qtip-title-buttons a {
-    color: #f5f5f5;
+    color: #253f4a;
     padding: 0 4px;
     margin: 0
 }
@@ -19807,7 +19807,7 @@ ul.yui-nav li.selected {
 }
 .qtip-default .qtip-titlebar .qtip-close {
     font-size: 22px;
-    color: #f5f5f5
+    color: #253f4a
 }
 .qtip-default .qtip-titlebar .qtip-close:hover {
     font-size: 22px;
@@ -19819,7 +19819,7 @@ ul.yui-nav li.selected {
 }
 .qtip-content {
     background-color: #65697a;
-    color: #f5f5f5;
+    color: #253f4a;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px
 }
@@ -19857,10 +19857,10 @@ td.fc-day-top.fc-other-month {
     line-height: 24px
 }
 .fc-day-header a {
-    color: #f5f5f5
+    color: #253f4a
 }
 .fc-day-header a:hover {
-    color: #f5f5f5
+    color: #253f4a
 }
 td.fc-day-top.fc-today {
     background: #2e4f5c;
@@ -19879,7 +19879,7 @@ td.fc-day-top.fc-today {
     border-bottom: 2px solid
 }
 .pagecontent > div.row.monthHeader > div > a {
-    color: #f5f5f5
+    color: #253f4a
 }
 .pagecontent > div.row.monthHeader {
     margin-bottom: 0
@@ -19970,17 +19970,17 @@ td.fc-day-top.fc-today {
     visibility: collapse
 }
 .monthCalBody > .calSharedUser {
-    color: #f5f5f5
+    color: #253f4a
 }
 thead.fc-head {
     background: #2e4f5c;
-    color: #f5f5f5
+    color: #253f4a
 }
 thead.fc-head tr td {
     padding: 8px
 }
 a.fc-day-number {
-    color: #f5f5f5;
+    color: #253f4a;
     text-decoration: none
 }
 a.fc-day-number:hover {
@@ -20161,7 +20161,7 @@ iframe.teamNoticeBox {
 .email-indicator .email-flagged {
     background-color: #f08377;
     border-radius: 28px;
-    color: #f5f5f5;
+    color: #253f4a;
     font-size: 18px
 }
 .email-indicator .email-new {
@@ -20170,7 +20170,7 @@ iframe.teamNoticeBox {
 }
 .email-indicator .email-imported {
     background-color: #aa9dcc;
-    color: #f5f5f5;
+    color: #253f4a;
     border-radius: 4px
 }
 .email-new-record.oddListRowS1:hover td {
