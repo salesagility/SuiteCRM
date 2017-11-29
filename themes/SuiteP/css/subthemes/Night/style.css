@@ -1,3 +1,521 @@
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
+/*
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+/**
+ * YUI Base
+ * @module base
+ * @namespace yui-
+ * @requires reset, fonts
+*//*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+ 
+#ajaxStatusDiv 
+{
+    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    color: rgb(198, 12, 48); 
+    position: fixed;
+    opacity: 0.8;
+    -moz-opacity:0.8;
+    filter: alpha(opacity=80);
+    top: 7px;
+}
+
+
+.search_form .view .yui-ac-highlight {
+    text-shadow: none;
+}
+
+/* hack for webkit browsers ( namely Chrome and Safari ) */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    #ajaxStatusDiv 
+    {
+        position: absolute;
+    }
+}
 html {
     height: 100%
 }
@@ -8,7 +526,7 @@ body {
     color: #416f81;
     margin: 0;
     overflow: auto;
-    height: 100%
+    height: 100%;
 }
 img,
 svg {
@@ -19,7 +537,7 @@ h3 {
     font-weight: bold
 }
 a {
-    color: #f08377
+    color: #E6A06D;
 }
 a:hover {
     color: #f08377
@@ -236,7 +754,7 @@ a:hover {
 .sidebar .actionMenuSidebar li a {
     display: block;
     font-size: 13px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #fff;
     margin: 0 0 1px 0;
     clear: both
@@ -363,12 +881,12 @@ a:hover {
     visibility: collapse
 }
 .recentlyViewedSidebar li a {
-    color: #253f4a;
+    color: #ECEFF0;
     padding-top: 12px;
     padding-bottom: 12px
 }
 .favoritesSidebar li a {
-    color: #253f4a;
+    color: #ECEFF0;
     padding-top: 12px;
     padding-bottom: 12px
 }
@@ -399,13 +917,13 @@ a:hover {
 .recentlyViewedSidebar .recent_h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #253f4a;
+    color: #ECEFF0;
     margin: 0 0 5px 0
 }
 .favoritesSidebar .recent_h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #253f4a;
+    color: #ECEFF0;
     margin: 0 0 5px 0
 }
 footer * {
@@ -414,7 +932,7 @@ footer * {
 footer {
     box-sizing: content-box;
     bottom: 0;
-    background-color: #ddd;
+    background-color: #416F81;
     margin: 0 0 0 0;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -807,7 +1325,7 @@ footer.collapsedSidebar {
     min-height: 60px
 }
 .recent_h3 {
-    color: #253f4a;
+    color: #ECEFF0;
     line-height: 42px
 }
 .recent_h3 > strong {
@@ -1111,7 +1629,7 @@ footer.collapsedSidebar {
     padding: 0
 }
 .usermenu a .caret {
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.svg"), url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_caret.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     margin-left: 10px;
@@ -1121,7 +1639,7 @@ footer.collapsedSidebar {
 }
 .usermenu a .user_icon {
     display: inline-block;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
     background-position: 0 -1;
     background-repeat: no-repeat;
     margin-right: 11px;
@@ -1165,7 +1683,7 @@ footer.collapsedSidebar {
     border-color: transparent
 }
 .mobileheader .modulename a {
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 92.5% 5px;
     background-repeat: no-repeat;
     padding: 15px 32px 18px 0
@@ -1174,18 +1692,18 @@ footer.collapsedSidebar {
     padding: 0
 }
 .searchform .query_string {
-    font-size: 13px;
-    background-color: #65697a;
-    color: #a2a5af;
+    /* font-size: 13px; */
+    /* background-color: #FFFFFF; */
+    /* color: #a2a5af; */
     padding: 12px 12px 12px 12px;
-    border: 0px solid transparent;
+    /* border: 0px solid transparent; */
     border-radius: 3px;
     letter-spacing: 1px;
     line-height: normal;
     width: 200px;
-    min-height: 40px;
-    -webkit-text-fill-color: #afaabf;
-    -webkit-box-shadow: 0 0 0 1000px #65697a inset
+    /* min-height: 40px; */
+    /* -webkit-text-fill-color: #afaabf; */
+    /* -webkit-box-shadow: 0 0 0 1000px #ffffff inset; */
 }
 .searchform .query_string:-webkit-autofill {
     font-size: 13px;
@@ -1351,8 +1869,8 @@ footer.collapsedSidebar {
 .quickcreatetop .dropdown-toggle {
     display: inline-block;
     font-size: 13px;
-    background-color: #535050;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-color: #1F4351;
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 80px 0px;
     background-repeat: no-repeat;
     color: #fff;
@@ -1707,11 +2225,11 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png")
+        background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png")
     }
     .open.globalLinks > .btn-default:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -1722,7 +2240,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default:active:hover {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -1733,7 +2251,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default.focus:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -1744,7 +2262,7 @@ footer.collapsedSidebar {
     }
     .globalLinks-mobile > .btn-default.usermenucollapsed {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon_small.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -1755,7 +2273,7 @@ footer.collapsedSidebar {
     }
     .desktop_notifications > button {
         background-color: #535050;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         width: 28px;
         height: 28px;
@@ -1763,23 +2281,23 @@ footer.collapsedSidebar {
     }
     .desktop_notifications > button:hover {
         background-color: #535050;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050;
         border: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050
     }
@@ -1787,7 +2305,7 @@ footer.collapsedSidebar {
     .desktop_notifications .btn-success.active,
     .desktop_notifications .btn-success:active,
     .desktop_notifications.open > .dropdown-toggle.btn-success {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert_small.png");
         background-position: 0 0;
         background-color: #535050;
         border: none
@@ -1964,7 +2482,7 @@ footer.collapsedSidebar {
     }
     .usermenucollapsed.btn-default {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-left: 0;
@@ -1989,17 +2507,17 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
     .globalLinks-desktop .btn-default.active,
     .globalLinks-desktop .btn-default:active,
     .globalLinks-desktop .open > .dropdown-toggle.btn-default {
         background-color: #416f81;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
     .open.globalLinks > .btn-default:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2010,7 +2528,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default:active:hover {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2021,7 +2539,7 @@ footer.collapsedSidebar {
     }
     .open.globalLinks > .btn-default.focus:active {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2032,7 +2550,7 @@ footer.collapsedSidebar {
     }
     .globalLinks-mobile > .btn-default.usermenucollapsed {
         background-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png");
         background-position: 0 0;
         background-repeat: no-repeat;
         margin-top: 0;
@@ -2147,42 +2665,42 @@ footer.collapsedSidebar {
         text-indent: -9999px
     }
     .desktop_notifications .btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications .btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications .btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2198,7 +2716,7 @@ footer.collapsedSidebar {
     #desktop_notifications .btn-success:active.focus,
     #desktop_notifications .btn-success:active:focus,
     #desktop_notifications .btn-success:active:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2210,14 +2728,14 @@ footer.collapsedSidebar {
     #desktop_notifications.open > .dropdown-toggle.btn-success.focus,
     #desktop_notifications.open > .dropdown-toggle.btn-success:focus,
     #desktop_notifications.open > .dropdown-toggle.btn-success:hover {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications > .btn-success {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2229,14 +2747,14 @@ footer.collapsedSidebar {
         border: none
     }
     .desktop_notifications > .btn-success:active {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
         box-shadow: none
     }
     .desktop_notifications > .btn-success:focus {
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_alert.png");
         background-position: 0 0;
         background-color: #416f81;
         border: none;
@@ -2469,7 +2987,7 @@ footer.collapsedSidebar {
         color: #253f4a;
         background-color: transparent;
         border-color: transparent;
-        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png")
+        background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_user_icon.png")
     }
 }
 .topnav #overflow-menu > li.with-actions .dropdown-menu {
@@ -2651,7 +3169,7 @@ footer.collapsedSidebar {
         width: 39%
     }
     .navbar-form.searchform .input-group-btn {
-        background: #65697a;
+        background: #ffffff;
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px
     }
@@ -3764,24 +4282,24 @@ fieldset[disabled] .btn-primary.active {
     text-transform: uppercase
 }
 .btn-default {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
-    border: 1px solid #4eb69c
+    border: 1px solid #4E869C
 }
 .btn-default:hover {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
-    border: 1px solid #4eb69c
+    border: 1px solid #4E869C
 }
 .btn-default:active {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
-    border: 1px solid #4eb69c
+    border: 1px solid #4E869C
 }
 .btn-default:focus {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
-    border: 1px solid #4eb69c
+    border: 1px solid #4E869C
 }
 .btn-primary {
     background-color: #2e4f5c;
@@ -3884,8 +4402,8 @@ input[type=submit].button:hover {
 input[type=submit] {
     font-size: 13px;
     font-weight: 500;
-    background: #f08377;
-    color: #253f4a;
+    background: #E6A06D;
+    color: #fff;
     cursor: pointer;
     padding: 0 20px 0 20px;
     margin: 0 0 0 0;
@@ -3894,7 +4412,7 @@ input[type=submit] {
     letter-spacing: 1px;
     line-height: 32px;
     height: 32px;
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 input[type=button] {
     font-size: 13px;
@@ -4174,10 +4692,10 @@ input[type="button"][disabled] {
     border-radius: 4px
 }
 input[type=text] {
-    background: #d8f5ee;
-    padding: 5px;
-    border: 1px solid #213843;
-    border-radius: 4px
+    /* background: #d8f5ee; */
+    /* padding: 5px; */
+    border: 1px solid #ffffff;
+    border-radius: 4px;
 }
 input[type=number] {
     background: #d8f5ee;
@@ -4274,7 +4792,7 @@ select {
     background: url("../../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #fff;
     background-color: #fff;
     background-size: 52px 52px;
-    color: #416f81;
+    /* color: #416f81; */
     padding: 0 52px 0 5px;
     border-color: #213843;
     border-style: solid;
@@ -4287,7 +4805,7 @@ select {
     scrollbar-base-color: #213843;
     scrollbar-arrow-color: #213843;
     border-size: 1px;
-    -moz-appearance: none
+    -moz-appearance: none;
 }
 select:focus {
     border-color: #213843;
@@ -4425,12 +4943,12 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     width: 52px;
 }
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
     width: 32px;
     height: 32px
 }
 .emailaddresses button {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-add.png');
     width: 34px;
     height: 34px
 }
@@ -4661,7 +5179,7 @@ font[color=red] {
     display: inline-block
 }
 #pageContainer .dashletcontainer .pagination td button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     padding: 2px;
     border-radius: 3px;
     width: auto;
@@ -5249,15 +5767,15 @@ tr#pagination {
     padding: 5px 0 5px 0
 }
 .list #pagination td .paginationTable .paginationChangeButtons {
-    background-color: #396070;
-    padding: 5px 5px 5px 0
+    background-color: #ff;
+    padding: 5px 5px 5px 0;
 }
 .list #pagination td .paginationTable .pageNumbers {
     position: static;
     font-weight: bold;
-    color: #253f4a;
+    color: #fff;
     padding: 0 8px 0 0;
-    margin: 0 0 0 0
+    margin: 0 0 0 0;
 }
 #listViewStartButton_top {
     background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
@@ -5445,7 +5963,7 @@ tr#pagination {
     text-align: left;
     white-space: nowrap;
     font-weight: 700;
-    color: #253f4a
+    color: #CFD4D7;
 }
 .list tr td[scope=col] {
     font-size: 13px;
@@ -5517,7 +6035,7 @@ tr#pagination {
     word-wrap: break-word
 }
 .list thead {
-    background-color: #2e4f5c
+    background-color: #416F81;
 }
 .list .oddListRowS1 td[nowrap] {
     white-space: nowrap;
@@ -5557,7 +6075,7 @@ a.listViewTdToolsS1 {
     font-size: 13px;
     font-weight: 700;
     padding-right: 10px;
-    color: #253f4a
+    color: #CFD4D7;
 }
 .list {
     font-size: 12px
@@ -5632,10 +6150,10 @@ a.listViewTdToolsS1 {
 }
 .table-responsive.list > tbody > tr > td > a {
     font-weight: bold;
-    color: #e56455;
-    border-bottom-color: #e56455;
+    color: #E6A06D;
+    border-bottom-color: #E6A06D;
     border-bottom-style: dashed;
-    border-bottom-width: 1px
+    border-bottom-width: 1px;
 }
 .table-responsive.list > tbody > tr > td svg {
     width: 20px
@@ -5648,12 +6166,12 @@ a.listViewTdToolsS1 {
     border-bottom: none
 }
 #selectLinkTop .sugar_action_button {
-    background-color: #4eb69c;
+    background-color: #27434E;
     padding: 0 4px 0 0;
     border: 1px solid transparent;
     border-radius: 4px;
     min-width: 32px;
-    margin-left: 0
+    margin-left: 0;
 }
 #selectLinkBottom {
     margin-right: 5px;
@@ -5664,7 +6182,7 @@ a.listViewTdToolsS1 {
     margin-left: 0
 }
 #selectLinkBottom .sugar_action_button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     padding: 0 4px 0 0;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -5711,13 +6229,13 @@ a.listViewTdToolsS1 {
     background-image: none
 }
 .single a {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     padding: 0;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .single > a {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 0
@@ -5792,7 +6310,7 @@ a.listViewTdToolsS1 {
     line-height: 45px
 }
 .listViewButtons .button:hover {
-    background-color: #d66c60
+    background-color: #E6A06D;
 }
 #massassign_form h3 {
     font-size: 14px;
@@ -5801,7 +6319,7 @@ a.listViewTdToolsS1 {
     margin: 14px 20px 0 0
 }
 #massassign_form h3 span {
-    color: #6a6578
+    color: #fff;
 }
 #massassign_form .button {
     margin-right: 10px
@@ -6409,7 +6927,7 @@ a#advanced_search_link {
     font-size: 13px;
     font-weight: 500;
     background-color: #aa9dcc;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
     background-position: 173px 2px;
     background-repeat: no-repeat;
     color: #fff;
@@ -6431,7 +6949,7 @@ a#basic_search_link {
     font-size: 13px;
     font-weight: 500;
     background-color: #aa9dcc;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_up_arrow.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_up_arrow.png");
     background-position: 136px 13px;
     background-repeat: no-repeat;
     color: #fff;
@@ -6463,63 +6981,63 @@ div#search_form > .advanced input.button:hover {
     color: #fff
 }
 .paginationTable .button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type=submit] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type=button] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationChangeButtons button[type=submit] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable button[disabled] {
-    background-color: #4eb69c;
-    color: #808f9c;
+    background-color: #27434E;
+    color: #fff;
     padding: 0 10px 0 10px;
     line-height: 26px;
-    height: 26px
+    height: 26px;
 }
 .paginationTable input[type="submit"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type="reset"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationTable input[type="button"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -6860,63 +7378,63 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     margin-right: 15px
 }
 .popupBody .list.view .pagination .button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type=submit] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type=button] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .paginationChangeButtons button[type=submit] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination button[disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="submit"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="reset"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .list.view .pagination input[type="button"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .popupBody .sugar_action_button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
@@ -6924,7 +7442,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     min-width: 32px
 }
 .popupBody .list.view .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -7042,7 +7560,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     border-top-right-radius: 4px
 }
 .inbound-email .list.view .pagination .button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -7052,7 +7570,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     color: #253f4a
 }
 .inbound-email .list.view .pagination #delete_button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     border: 1px solid transparent;
@@ -7061,7 +7579,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     height: 26px
 }
 .inbound-email .list.view .pagination input[type=button] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     color: #fff;
     padding: 0 10px 0 10px;
@@ -7069,7 +7587,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     height: 26px
 }
 .inbound-email #delete_button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -7079,42 +7597,42 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     border-bottom: none
 }
 .inbound-email .list.view .paginationChangeButtons button[type=submit] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #253f4a;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination button[disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="submit"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="reset"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .list.view .pagination input[type="button"][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
     height: 26px
 }
 .inbound-email .sugar_action_button {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     padding: 0;
     padding-right: 4px;
     border: 1px solid transparent;
@@ -7129,7 +7647,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     margin-top: 4px
 }
 .inbound-email .list.view .paginationChangeButtons button[type=submit][disabled] {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     color: #808f9c;
     padding: 0 10px 0 10px;
     line-height: 26px;
@@ -7487,9 +8005,9 @@ ul.clickMenu {
     padding: 0;
     margin: 0;
     vertical-align: bottom;
-    color: #253f4a;
+    color: #ffff;
     display: inline-block;
-    border-radius: 3px
+    border-radius: 3px;
 }
 .listViewLinkButton {
     min-width: 32px;
@@ -7617,51 +8135,51 @@ tr.pagination-unique {
 }
 table.subpanel-table ul.subpanel > a {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 #actionLinkTop li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #27434E;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 .action-link-top li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 #actionLinkBottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #27434E;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 .action-link-bottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .listViewLinkButton li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #27434E;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 #selectLinkTop li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #27434E;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 @-moz-document url-prefix() {
     #selectLinkTop li.sugar_action_button {
@@ -7670,9 +8188,9 @@ table.subpanel-table li.sugar_action_button {
 }
 #selectLinkBottom li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #27434E;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 @-moz-document url-prefix() {
     #selectLinkBottom li.sugar_action_button {
@@ -7681,19 +8199,19 @@ table.subpanel-table li.sugar_action_button {
 }
 table.subpanel-table .pagination .sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table .pagination li.sugar_action_button > form > a {
     padding: 0;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
 table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 0;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -7779,7 +8297,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 }
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
     padding: 0px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 1px solid transparent;
     border-radius: 4px;
     padding-right: 4px;
@@ -7934,7 +8452,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
     padding: 0 2px 0 2px
 }
 .list-view-action-buttons > li .btn {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     border: 0;
     color: #253f4a;
     font-size: 13px;
@@ -8156,11 +8674,11 @@ p.msg {
     line-height: 18px;
     font-size: 10px;
     padding: 0 10px 0 10px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     font-weight: 600
 }
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -8172,11 +8690,11 @@ p.msg {
     line-height: 18px;
     font-size: 10px;
     padding: 0 10px 0 10px;
-    background-color: #4eb69c;
+    background-color: #4E869C;
     font-weight: 600
 }
 .nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
-    background-color: #4eb69c
+    background-color: #4E869C
 }
 .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-left {
     margin-right: 4px
@@ -8185,7 +8703,7 @@ p.msg {
     margin-left: 4px
 }
 .pagination-range-label {
-    color: #4eb69c;
+    color: #4E869C;
     font-size: 13px;
     font-weight: bold
 }
@@ -8198,7 +8716,7 @@ p.msg {
     background-color: #777
 }
 .mobile-pagination .btn-pagination {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -8206,7 +8724,7 @@ p.msg {
     padding: 2px 10px 2px 10px
 }
 .mobile-pagination .btn-pagination:hover {
-    background-color: #4eb69c
+    background-color: #4E869C
 }
 .mobile-pagination .glyphicon-chevron-left {
     margin-right: 0px
@@ -8646,8 +9164,8 @@ a#powered_by {
     cursor: pointer
 }
 a#admin_options:hover {
-    color: #d66c60;
-    text-decoration: none
+    color: #fff;
+    text-decoration: none;
 }
 a#powered_by:hover {
     color: #d66c60;
@@ -8665,16 +9183,16 @@ a#powered_by:hover {
 }
 .footer_right a {
     font-size: 12px;
-    background-image: none, url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
+    background-image: none, url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_icon_back_to_top.png");
     background-position: right 3px;
     background-repeat: no-repeat;
-    color: #4d4d4d;
+    color: #fff;
     padding-right: 20px;
-    letter-spacing: 1px
+    letter-spacing: 1px;
 }
 .footer_right a:hover {
     background-position: right -15px;
-    color: #d66c60
+    color: #fff;
 }
 .subDmenu {
     display: none;
@@ -9004,7 +9522,7 @@ slot {
 }
 select {
     font-weight: normal;
-    color: #416f81
+    /* color: #416f81; */
 }
 option[selected] {
     font-weight: normal;
@@ -9314,7 +9832,7 @@ li.noBullet {
 }
 #MorePanelHandle {
     display: inline;
-    background: url('../../../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=more.gif') no-repeat bottom left;
     color: #444;
     cursor: pointer;
     margin-bottom: 2px;
@@ -9688,7 +10206,7 @@ div.confirmTable {
 }
 .buttonSlide.yui-module .yui-hd .toggle em {
     display: inline;
-    background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
+    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_more.png');
     background-repeat: no-repeat;
     float: right;
     overflow: hidden;
@@ -9698,7 +10216,7 @@ div.confirmTable {
     text-indent: 9999px
 }
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-    background-image: url('../../../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png')
+    background-image: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=slider_button_less.png')
 }
 .view {
     border-top: 2px solid;
@@ -9734,11 +10252,11 @@ div.confirmTable {
     display: block;
     font-size: 26px;
     font-weight: 300;
-    color: #416f81;
+    color: #CFD4D7;
     margin: 0 0 12px 0;
     float: left;
     letter-spacing: 2px;
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 .moduleTitle > h2 > img {
     display: none
@@ -9875,13 +10393,13 @@ a.tabFormAdvLink:hover {
     background: #253f4a
 }
 .oddListRowS1 td {
-    background: #fff
+    background: #2E4F5C;
 }
 .evenListRowS1:hover td {
-    background: #faf7cf
+    background: #253F4A;
 }
 .oddListRowS1:hover td {
-    background: #faf7cf
+    background: #2E4F5C;
 }
 .detail table {
     background-color: #cbdae6
@@ -9934,8 +10452,8 @@ table.detail {
 }
 .other td {
     background-color: #253f4a;
-    color: #444;
-    border-left-color: #dfdfdf
+    color: #E6A06D;
+    border-left-color: #dfdfdf;
 }
 .other td[scope=row] {
     background-color: #fafafa;
@@ -9995,12 +10513,12 @@ span#selectedRecordsTop {
 }
 ul.clickMenu {
     display: inline-block;
-    color: #253f4a;
+    /* color: #253f4a; */
     padding: 0;
     margin: 0;
     border-radius: 3px;
     vertical-align: bottom;
-    list-style: none
+    list-style: none;
 }
 ul.clickMenu form {
     display: block;
@@ -10037,13 +10555,13 @@ ul.clickMenu ul.subnav-sub li a:hover {
 }
 ul.clickMenu > li {
     position: relative;
-    color: #253f4a;
+    /* color: #253f4a; */
     cursor: pointer;
     padding: 5px;
     margin: 0 5px 0 0;
     border-radius: 3px;
     float: left;
-    list-style: none
+    list-style: none;
 }
 ul.SugarActionMenuIESub li {
     position: relative;
@@ -10064,10 +10582,10 @@ ul.SugarActionMenuIESub li {
 }
 ul.clickMenu li a {
     display: block;
-    color: #253f4a;
+    color: #fff;
     margin: 0 5px 0 0;
     float: left;
-    text-decoration: none
+    text-decoration: none;
 }
 ul.clickMenu li a.clearSearchIcon {
     margin: 3px 0px 0px 8px
@@ -10123,9 +10641,9 @@ ul#detailViewActions.clickMenu {
 }
 .selectActionsDisabled {
     display: inline-block;
-    background-color: #4e869c;
+    background-color: #27434E;
     border-radius: 3px;
-    vertical-align: bottom
+    vertical-align: bottom;
 }
 .selectActionsDisabled span {
     background-image: none, url("../../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../../themes/SuiteP/images/p_pag_tools.png");
@@ -10269,11 +10787,11 @@ span.crumbLink {
 }
 a#delete_listview_top:hover {
     font-size: 14px;
-    color: #253f4a
+    color: #fff;
 }
 a#delete_listview_bottom:hover {
     font-size: 14px;
-    color: #253f4a
+    color: #fff;
 }
 .about_suite {
     padding: 0 25px 0 0;
@@ -10469,22 +10987,22 @@ dl {
     margin-top: 20px
 }
 #EditView_tabs .id-ff-remove img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #EditView_tabs .edit [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #conditionLines [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
 #actionLines [type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     width: 32px;
     height: 32px
 }
@@ -10492,7 +11010,7 @@ dl {
     content: none
 }
 #actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png')
 }
 #search_form span.id-ff.multiple {
     position: relative;
@@ -10517,7 +11035,7 @@ input#btn_ActionLine.button[type="button"] {
     padding: 0 10px
 }
 #deleteGroup img {
-    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
+    content: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-clear.png');
     width: 32px;
     height: 32px
 }
@@ -10998,9 +11516,9 @@ div::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5)
 }
 select::-webkit-scrollbar-thumb {
-    background: rgba(165, 232, 214, 1);
+    background: #213843;
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5)
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
 }
 input::-webkit-scrollbar-thumb {
     background: rgba(165, 232, 214, 1);
@@ -11133,10 +11651,10 @@ span.id-ff button img {
     height: 32px
 }
 span.id-ff button:first-of-type img {
-    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png')
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
 }
 span.id-ff button:last-of-type img {
-    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png')
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-select.png')
 }
 a.tabFormAdvLink {
     text-transform: uppercase
@@ -11715,8 +12233,8 @@ hr {
     border: none
 }
 #copyright_data a {
-    color: #000;
-    margin: 0 5px 0 5px
+    color: #fff;
+    margin: 0 5px 0 5px;
 }
 #copyright_data a:hover {
     cursor: pointer;
@@ -11862,7 +12380,7 @@ td.inlineEditActive {
     background-color: #777
 }
 .edit-view-pagination .btn-pagination {
-    background-color: #4eb69c;
+    background-color: #4E869C;
     font-size: 10px;
     font-weight: 600;
     height: 28px;
@@ -11870,7 +12388,7 @@ td.inlineEditActive {
     padding: 0 10px 0 10px
 }
 .edit-view-pagination .btn-pagination:hover {
-    background-color: #4eb69c
+    background-color: #4E869C
 }
 .edit-view-pagination.glyphicon-chevron-left {
     margin-right: 4px
@@ -12980,7 +13498,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 }
 .content .nav > li > a.first-tab-xs {
     background-color: #2e4f5c;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 7.5px;
     background-repeat: no-repeat;
     padding-right: 10px;
@@ -13013,7 +13531,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 }
 .content #tab-actions > a {
     background-color: #f08377;
-    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 10px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -13084,7 +13602,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border-bottom-right-radius: 4px
 }
 .content .detail-view .tab-content {
-    background-color: #fff;
+    background-color: #2E4F5C;
     padding: 24px;
     margin-bottom: 5px;
     border: 1px solid transparent;
@@ -13402,7 +13920,7 @@ div.sub-panel {
 .subpanel-table ul.subpanel a:hover,
 .subpanel-table .pagination a,
 .subpanel-table .subnav {
-    background-color: #2e4f5c
+    background-color: #27434E;
 }
 .subpanel-table .pagination a {
     padding-left: 8px;
@@ -13682,14 +14200,14 @@ table.subpanelTabForm {
 }
 .other.view td:nth-of-type(1) {
     display: block;
-    background-color: #fff;
+    background-color: #2E4F5C;
     float: left;
     width: 100%;
-    text-wrap: normal
+    text-wrap: normal;
 }
 .other.view td:nth-of-type(2) {
     display: block;
-    background-color: #fff;
+    background-color: #2E4F5C;
     padding-bottom: 10px;
     padding-left: 52px;
     float: right;
@@ -15269,7 +15787,7 @@ span.yui-carousel-first-button-disabled {
     right: 0;
     width: 25px;
     height: 15px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=dashletclose.png') no-repeat;
     cursor: pointer
 }
 .yui-panel-container .underlay {
@@ -15525,10 +16043,10 @@ th.yui-dt-sortable .yui-dt-label {
     margin-right: 10px
 }
 th.yui-dt-asc .yui-dt-liner {
-    background: url('../../../../../../index.php?entryPoint=getImage&imageName=arrow_up.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_up.gif') no-repeat right
 }
 th.yui-dt-desc .yui-dt-liner {
-    background: url('../../../../../../index.php?entryPoint=getImage&imageName=arrow_down.gif') no-repeat right
+    background: url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=arrow_down.gif') no-repeat right
 }
 tbody .yui-dt-editable {
     cursor: pointer
@@ -16902,7 +17420,7 @@ div.yui-layout-hd h2 {
     height: 5px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
     right: 10px
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
@@ -16911,7 +17429,7 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-left .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-clip-left .collapse:hover,
 .yui-layout .yui-layout-clip-right .collapse {
@@ -16921,7 +17439,7 @@ div.yui-layout-hd h2 {
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse {
     left: 5px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
     top: 4px;
@@ -16929,22 +17447,22 @@ div.yui-layout-hd h2 {
     border: 1px solid #666
 }
 .yui-layout .yui-layout-clip-right .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px
 }
 .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -240px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
     right: 5px
 }
 .yui-layout .yui-layout-clip-bottom .collapse {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
     border: 1px solid #808080
 }
 .yui-layout .yui-layout-hd {
@@ -17025,7 +17543,7 @@ div.yui-layout-hd h2 {
     width: 6px;
     top: 45%;
     left: 0;
-    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px
 }
 .yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob,
 .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob {
@@ -17033,7 +17551,7 @@ div.yui-layout-hd h2 {
     height: 6px;
     width: 16px;
     left: 45%;
-    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat -20px 0
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0
 }
 .yui-log {
     font-family: monospace;
@@ -17346,7 +17864,7 @@ a.yuimenuitemlabel:hover {
     margin-top: -1.45em
 }
 .yuimenuitem-hassubmenu > a {
-    background-image: url(../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png);
     background-position: right -126px;
     background-repeat: no-repeat
 }
@@ -17771,7 +18289,7 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-r,
 .yui-resize .yui-resize-handle-inner-l {
-    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px;
     height: 16px;
     width: 5px;
     position: absolute;
@@ -17779,29 +18297,29 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-t,
 .yui-resize .yui-resize-handle-inner-b {
-    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat -20px 0;
+    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0;
     height: 5px;
     width: 16px;
     position: absolute;
     left: 50%
 }
 .yui-resize .yui-resize-handle-br {
-    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -62px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tr {
-    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -42px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tl {
-    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -82px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-bl {
-    background-image: url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -23px;
     background-repeat: no-repeat
 }
@@ -18926,7 +19444,7 @@ div.yuimenu li.selected a.selected {
     zoom: 1
 }
 .yui-navset .yui-content {
-    background: #fff;
+    background: #2E4F5C;
     color: #000;
     zoom: 1
 }
@@ -19325,7 +19843,7 @@ div.bodywrapper {
     width: 100%
 }
 .sugar-progress-bar {
-    background: #ddd url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+    background: #ddd url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
     width: 0
 }
@@ -19337,7 +19855,7 @@ a.sugar-tab-close,
     position: relative;
     top: -3px;
     width: 9px;
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png') no-repeat scroll 0 -70px
 }
 .sugar-message-prompt {
     margin-left: 5px
@@ -19738,13 +20256,13 @@ h5.calSharedUser {
     border-color: #396070
 }
 a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-navset .yui-nav .selected a.sugar-tab-close {
-    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
+    background: transparent url('../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px
 }
 .yui-nav {
     overflow-y: hidden
