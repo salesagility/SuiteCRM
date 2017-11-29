@@ -711,9 +711,8 @@ class SugarBean
                     $dictionary = $GLOBALS['dictionary'];
                 }
             } else {
-                $msg = "createRelationshipMeta: no metadata file found" . $filename;
-                $GLOBALS['log']->debug($msg);
-                $GLOBALS['log']->fatal($msg);
+                $GLOBALS['log']->debug('createRelationshipMeta: no metadata file found' . $filename);
+
                 return;
             }
         }
