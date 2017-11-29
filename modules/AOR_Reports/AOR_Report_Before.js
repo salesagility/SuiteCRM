@@ -183,7 +183,7 @@ $(document).ready(function(){
           }
           var newNode = {
             id: field,
-            label: relData[field]['label'],
+            label: relData[field]['module_label'],
             load_on_demand : true,
             type: relData[field]['type'],
             module: relData[field]['module'],
@@ -194,30 +194,34 @@ $(document).ready(function(){
       }
       $('#fieldTree').tree('loadData',treeData, node);
       if(node){
+        if(node.opened){
+          $('#fieldTree').tree('openNode', node);
+        }
+        setNodeSelected(node);
         node.loaded = true;
-        $('#fieldTree').tree('openNode', node);
       }
+    }
 
+    function setNodeSelected(node){
+      $('.jqtree-selected').removeClass('jqtree-selected');
+      $('#fieldTree').tree('addToSelection', node);
     }
 
     $('#fieldTree').on(
       'click',
       '.jqtree-toggler, .jqtree-title', //
       function(event) {
-        if($(this).hasClass('jqtree-title')) {
-          $(this).prev().click();
-          return;
-        }
-        //console.log(event);
         var node = $(this).closest('li.jqtree_common').data('node');
+
+        node.opened = !$(this).hasClass('jqtree-title');
 
         if(!node.loaded) {
           loadTreeData(node.module, node);
         }
+
         loadTreeLeafData(node);
 
-        $('.jqtree-selected').removeClass('jqtree-selected');
-        $(this).closest('li').addClass('jqtree-selected');
+        setNodeSelected(node);
 
         return true;
       }
