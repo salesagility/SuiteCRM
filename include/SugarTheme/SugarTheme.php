@@ -970,7 +970,7 @@ EOHTML;
     public function getCSSURL($cssFileName, $returnURL = true)
     {
         
-        if (preg_match('/.css^/', $cssFileName)) {
+        if (preg_match('/.css$/', $cssFileName)) {
             global $current_user;
             $subThemeIndex = $current_user->getSubTheme();
             $subThemes = $current_user->getSubThemes();
