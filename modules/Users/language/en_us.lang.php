@@ -164,6 +164,7 @@ $mod_strings = array(
     'LBL_LANGUAGE' => 'Language',
     'LBL_LAST_NAME' => 'Last Name',
     'LBL_LAYOUT_OPTIONS' => 'Layout Options',
+    'LBL_SUBTHEME' => 'Style',
     'LBL_LDAP' => 'LDAP',
     'LBL_LDAP_AUTHENTICATION' => 'LDAP Authentication',
     'LBL_LIST_ACCEPT_STATUS' => 'Accept Status',

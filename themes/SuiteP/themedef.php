@@ -58,6 +58,12 @@ $themedef = array(
             'type' => 'bool',
             'default' => true,
         ),
+        'sub_themes' => array(
+            'vname' => 'LBL_SUBTHEME_OPTIONS',
+            'type' => 'select',
+            'options' => array('Dawn', 'Day', 'Dusk', 'Night'),
+            'default' => 0,
+        ),
         // TODO : add theme settings here.. for e.g:
         //        'navbar' => array(
         //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
