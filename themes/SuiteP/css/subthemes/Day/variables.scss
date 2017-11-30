@@ -26,6 +26,8 @@ $page-font-size: 13px;
 $page-p-size: 14px;
 $page-title-space: 40px; // normal 40px
 $main-font-color: #4b97c4;
+$main-font-color-moduleTitle-h2: #777;
+$main-font-color-body: #777;
 
 $link-color: $danger;
 $link-color-hover: $danger-hover;
@@ -77,6 +79,7 @@ $navbar-menu-link-color: #FFFFFF;
 $navbar-menu-link-color-hover: #F08377;
 $navbar-menu-seperator: #757083;
 $navbar-menu-current-seperator: #F08377;
+$navbar-menu-current-seperator-navbar-inverse-nav-topnav-span-currentTab-a-border-top: #fff;
 
 $navbar-search-bg: #65697A;
 $navbar-search-btn-bg: #829EB5;
@@ -91,6 +94,7 @@ $navbar-quick-create-menu-color: #FFFFFF;
 $navbar-quick-create-menu-color-hover: #FFFFFF;
 $navbar-quick-create-menu-seperator: #929798;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
+$navbar-quick-create-menu-bg-darken-10-quickcreatetop-dropdown-menu-li-a-hover: #8499aa;
 
 $navbar-alert-count-link-color: #FFFFFF;
 $navbar-alert-link-color: #FFFFFF;

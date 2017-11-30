@@ -131,14 +131,14 @@
       > span.currentTab {
         > a {
           display: inline-block;
-          border-top: 3px solid $navbar-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-seperator-navbar-inverse-nav-topnav-span-currentTab-a-border-top;
           //padding-top: 36px;
           //padding-bottom: 35px;
         }
       }
 
       .currentTab a {
-        color: $navbar-link-color-hover;
+        color: $navbar-menu-current-seperator-navbar-inverse-nav-topnav-span-currentTab-a-border-top;
       }
 
       .currentTab a,
@@ -996,7 +996,7 @@
 
 .quickcreatetop .dropdown-menu li a:hover {
   color: $navbar-quick-create-menu-color-hover;
-  background-color:darken($navbar-quick-create-menu-bg,10%);
+  background-color:$navbar-quick-create-menu-bg-darken-10-quickcreatetop-dropdown-menu-li-a-hover;
 }
 
 .quickcreatetop .dropdown-menu {
