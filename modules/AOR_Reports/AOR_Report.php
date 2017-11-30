@@ -577,9 +577,10 @@ class AOR_Report extends Basic
             $max_rows = 20;
         }
 
+        // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
         $fieldCount = count($this->getReportFields());
         if(!$fieldCount){
-            $GLOBALS['log']->info('Running report ' . $this->name . ' with 0 fields');
+            $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
         }
 
         $total_rows = 0;
