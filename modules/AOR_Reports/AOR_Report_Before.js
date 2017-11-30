@@ -158,6 +158,10 @@ $(document).ready(function(){
       var treeData = [];
 
       for(var field in relData){
+        // We don't want to show the parent module as child of itself
+        if(node && node.module == relData[field]['module']){
+          continue;
+        }
         if(field) {
           var modulePath = '';
           var modulePathDisplay = '';
@@ -179,7 +183,7 @@ $(document).ready(function(){
           }
           var newNode = {
             id: field,
-            label: relData[field]['label'],
+            label: relData[field]['module_label'],
             load_on_demand : true,
             type: relData[field]['type'],
             module: relData[field]['module'],
@@ -190,38 +194,34 @@ $(document).ready(function(){
       }
       $('#fieldTree').tree('loadData',treeData, node);
       if(node){
+        if(node.opened){
+          $('#fieldTree').tree('openNode', node);
+        }
+        setNodeSelected(node);
         node.loaded = true;
-        $('#fieldTree').tree('openNode', node);
       }
-      else
-      {
-        if($('#fieldTree a:first').length)
-          $('#fieldTree a:first').click();
-      }
+    }
 
+    function setNodeSelected(node){
+      $('.jqtree-selected').removeClass('jqtree-selected');
+      $('#fieldTree').tree('addToSelection', node);
     }
 
     $('#fieldTree').on(
       'click',
       '.jqtree-toggler, .jqtree-title', //
       function(event) {
-        if($(this).hasClass('jqtree-title')) {
-          $(this).prev().click();
-          return;
-        }
-        //console.log(event);
         var node = $(this).closest('li.jqtree_common').data('node');
-        if(node.loaded) {
 
-        }else if(node.type == 'relationship'){
+        node.opened = !$(this).hasClass('jqtree-title');
+
+        if(!node.loaded) {
           loadTreeData(node.module, node);
-        }else{
-          loadTreeLeafData(node);
-          $('#fieldTree').tree('openNode', node);
         }
 
-        $('.jqtree-selected').removeClass('jqtree-selected');
-        $(this).closest('li').addClass('jqtree-selected');
+        loadTreeLeafData(node);
+
+        setNodeSelected(node);
 
         return true;
       }
