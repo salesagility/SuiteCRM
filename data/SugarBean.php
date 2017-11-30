@@ -711,9 +711,8 @@ class SugarBean
                     $dictionary = $GLOBALS['dictionary'];
                 }
             } else {
-                $msg = "createRelationshipMeta: no metadata file found" . $filename;
-                $GLOBALS['log']->debug($msg);
-                $GLOBALS['log']->fatal($msg);
+                $GLOBALS['log']->debug('createRelationshipMeta: no metadata file found' . $filename);
+
                 return;
             }
         }
@@ -765,7 +764,7 @@ class SugarBean
                         if($db instanceof DBManager) {
                             $db->query($insert_string, true);
                         } else {
-                            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager, ' . get_class($db) . ' given.');
+                            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager');
                         }
                     }
                 }
@@ -1039,7 +1038,7 @@ class SugarBean
                     } else {
                         $related_field_name = $this_subpanel->get_data_source_name();
                         if(!method_exists($parentbean, 'load_relationship')) {
-                            $GLOBALS['log']->fatal('Fatal error:  Call to a member function load_relationship() on ' . get_class($parentbean));
+                            $GLOBALS['log']->fatal('Fatal error:  Call to a member function load_relationship() on an invalid object');
                         } else {
                             if (!$parentbean->load_relationship($related_field_name)) {
                                 if (isset($parentbean->$related_field_name)) {
@@ -1099,7 +1098,7 @@ class SugarBean
 
 
                     if(!method_exists($subpanel_def, 'isCollection')) {
-                        $GLOBALS['log']->fatal('Call to a member function isCollection() on ' . get_class($subpanel_def));
+                        $GLOBALS['log']->fatal('Call to a member function isCollection() on an invalid object');
                     }
                     if (
                         method_exists($subpanel_def, 'isCollection') &&
@@ -1177,7 +1176,7 @@ class SugarBean
         global $sugar_config;
         $use_count_query = false;
         if(!method_exists($subpanel_def, 'isCollection')) {
-            $GLOBALS['log']->fatal('Call to a member function isCollection() on ' . get_class($subpanel_def));
+            $GLOBALS['log']->fatal('Call to a member function isCollection() on an invalid object');
             $processing_collection = null;
         } else {
             $processing_collection = $subpanel_def->isCollection();
