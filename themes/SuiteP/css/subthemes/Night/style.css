@@ -609,7 +609,7 @@ a {
     color: #E6A06D;
 }
 a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 h4 {
     padding-left: 4px;
@@ -656,7 +656,7 @@ a:hover {
     padding: 0 10px 0 10px
 }
 .bootstrap-container .dropdown-menu em a {
-    color: #f08377
+    color: #E6A06D
 }
 .mask {
     z-index: 3 !important
@@ -665,11 +665,11 @@ a:hover {
     z-index: 11 !important
 }
 ::selection {
-    background: #f08377;
+    background: #E6A06D;
     color: #fff
 }
 ::-moz-selection {
-    background: #f08377;
+    background: #E6A06D;
     color: #fff
 }
 @media (max-width: 750px) {
@@ -1240,7 +1240,7 @@ footer.collapsedSidebar {
 }
 .navbar-inverse .dropdown-menu {
     font-size: 10px;
-    background: #5d5670;
+    background: #4e869c;
     padding: 4px 10px 4px 10px;
     margin-top: 0;
     border-top-left-radius: 0;
@@ -1255,18 +1255,18 @@ footer.collapsedSidebar {
 .navbar-inverse .dropdown-menu li a {
     display: block;
     font-size: 14px;
-    background-color: #5d5670;
+    background-color: #4e869c;
     color: #fff;
     padding: 7px 10px 7px 10px;
     margin: 0;
-    border-bottom: 1px solid #757083;
+    border-bottom: 1px solid #4e869c;
     letter-spacing: 0;
     text-decoration: none;
     text-transform: none
 }
 .navbar-inverse .dropdown-menu li a:hover {
-    background: #5d5670;
-    color: #f08377;
+    background: #4e869c;
+    color: #E6A06D;
     transition: all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
@@ -1310,15 +1310,15 @@ footer.collapsedSidebar {
     border-top: 3px solid transparent
 }
 .navbar-inverse .nav > .topnav > span.notCurrentTab > a:hover {
-    background-color: #5d5670;
-    border-top: 3px solid #f08377
+    background-color: #4e869c;
+    border-top: 3px solid #E6A06D
 }
 .navbar-inverse .nav > .topnav > span.currentTab > a {
     display: inline-block;
-    border-top: 3px solid #f08377
+    border-top: 3px solid #E6A06D
 }
 .navbar-inverse .nav > .topnav .currentTab a {
-    color: #f08377
+    color: #E6A06D
 }
 .navbar-inverse .nav > .topnav .currentTab a,
 .navbar-inverse .nav > .topnav .dropdown-toggle {
@@ -1342,12 +1342,12 @@ footer.collapsedSidebar {
     height: 60px
 }
 .navbar-inverse .nav > .topnav.with-actions > span.notCurrentTab > a:hover {
-    background-color: #5d5670;
-    border-top: 3px solid #f08377
+    background-color: #4e869c;
+    border-top: 3px solid #E6A06D
 }
 .navbar-inverse .nav > .topnav.with-actions > span.currentTab > a {
     display: inline-block;
-    border-top: 3px solid #f08377;
+    border-top: 3px solid #E6A06D;
     padding-top: 0;
     padding-bottom: 0;
     height: 60px
@@ -1490,22 +1490,22 @@ footer.collapsedSidebar {
     border-bottom: none
 }
 .mobileheader .dropdown-menu li.recentlinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .mobileheader .dropdown-menu li.favoritelinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .topnav .dropdown-menu li.recentlinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .topnav .dropdown-menu li.favoritelinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .with-actions .dropdown-menu li.recentlinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .with-actions .dropdown-menu li.favoritelinks {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .mobileheader .dropdown-menu ul li a.recent-links-detail {
     padding-top: 12px;
@@ -1605,11 +1605,11 @@ footer.collapsedSidebar {
     color: #fff
 }
 .topnav:hover {
-    background-color: #5d5670;
-    color: #f08377
+    background-color: #4e869c;
+    color: #E6A06D
 }
 .topnav a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 .topnav .dropdown-menu li:last-child a {
     border-bottom: 0
@@ -1639,7 +1639,7 @@ footer.collapsedSidebar {
 .moremenu ul li a {
     display: block;
     font-size: 1.2em;
-    color: #f08377;
+    color: #E6A06D;
     cursor: pointer;
     padding: 5px
 }
@@ -1648,7 +1648,7 @@ footer.collapsedSidebar {
 }
 .moremenu ul li a:hover {
     background: none;
-    background: #f08377;
+    background: #E6A06D;
     color: #253f4a;
     cursor: pointer;
     padding: 5px
@@ -1683,7 +1683,7 @@ footer.collapsedSidebar {
     color: #fff
 }
 .globalLinks-desktop .user-dropdown li a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 .navbar-inverse .globalLinks-desktop > li > a {
     color: #253f4a
@@ -1692,7 +1692,7 @@ footer.collapsedSidebar {
     color: #fff
 }
 .globalLinks-desktop ul li a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 .globalLinks-desktop ul li {
     padding: 0
@@ -2043,7 +2043,7 @@ footer.collapsedSidebar {
     top: -16px;
     left: 24px;
     font-size: 10px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
     border-radius: 30px;
     float: left;
@@ -2083,21 +2083,21 @@ footer.collapsedSidebar {
 }
 .desktop_notifications .dropdown-menu {
     font-size: 12px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
     padding: 8px;
     margin: 0;
     border-radius: 0
 }
 .desktop_notifications .has-alerts {
-    background-color: #5d5670;
+    background-color: #4e869c;
     border-radius: 2px
 }
 .desktop_notifications .has-alerts .alert-info {
     background-color: inherit;
     color: #fff;
     padding: 0;
-    border: 1px solid #757083;
+    border: 1px solid #4e869c;
     border-radius: 2px
 }
 .desktop_notifications .has-alerts .text-info {
@@ -2124,7 +2124,7 @@ footer.collapsedSidebar {
 .desktop_notifications .has-alerts .alert-header {
     font-size: 14px;
     font-weight: bold;
-    background-color: #5d5670;
+    background-color: #4e869c;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     line-height: 20px
@@ -2176,7 +2176,7 @@ footer.collapsedSidebar {
         background-color: #535050
     }
     .desktop_notifications .has-alerts .alert-header {
-        background-color: #5d5670;
+        background-color: #4e869c;
         line-height: 20px
     }
     .mobile-bar .user-dropdown {
@@ -2872,7 +2872,7 @@ footer.collapsedSidebar {
     }
     .mobile_menu {
         position: absolute;
-        background: #5d5670;
+        background: #4e869c;
         padding: 4px 10px 4px 10px;
         margin: 0;
         border-bottom-left-radius: 3px;
@@ -2892,7 +2892,7 @@ footer.collapsedSidebar {
         padding: 12px 15px
     }
     .mobile_menu a:hover {
-        color: #f08377;
+        color: #E6A06D;
         transition: all 0.3s ease-out;
         -webkit-transition: all 0.3s ease-out;
         -moz-transition: all 0.3s ease-out;
@@ -3069,7 +3069,7 @@ footer.collapsedSidebar {
     border-bottom: none
 }
 .topnav #overflow-menu > li.with-actions {
-    border-bottom: 1px solid #757083
+    border-bottom: 1px solid #4e869c
 }
 .topnav #overflow-menu > li.with-actions .notCurrentTabLeft {
     display: none;
@@ -3646,7 +3646,7 @@ div.p_login br {
 div.p_login #loginform span.error {
     display: block;
     background-color: transparent;
-    color: #f08377;
+    color: #E6A06D;
     padding: 0;
     margin-top: 20px;
     margin-bottom: 0;
@@ -3895,40 +3895,40 @@ fieldset[disabled] .btn-primary.active {
 }
 .button-primary .badge {
     background-color: #fff;
-    color: #f08377;
+    color: #E6A06D;
     padding: 5px
 }
 #EditView_tabs .edit .button {
-    background-color: #f08377;
+    background-color: #E6A06D;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #ConvertLead .edit .button {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #EditView_tabs .id-ff-remove {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #ConvertLead .id-ff-remove {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #EditView_tabs .edit [type="button"] {
-    background-color: #f08377;
+    background-color: #E6A06D;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 .edit-view-row [data-label=LBL_CONDITION_LINES].label {
@@ -4067,17 +4067,17 @@ fieldset[disabled] .btn-primary.active {
     width: 100%
 }
 #conditionLines [type="button"] {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #actionLines [type="button"] {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 #actionLines {
@@ -4214,23 +4214,23 @@ fieldset[disabled] .btn-primary.active {
     line-height: 20px
 }
 #deleteGroup img {
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 0;
     margin-right: 4px;
-    border: 1px solid #f08377;
+    border: 1px solid #E6A06D;
     border-radius: 4px
 }
 .btn-danger {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .btn-danger:hover {
     background-color: #d66c60
 }
 .btn-danger:active {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .btn-danger:focus {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 [data-workflow-action] .lines tbody > tr > td {
     margin-bottom: 4px;
@@ -4298,13 +4298,13 @@ fieldset[disabled] .btn-primary.active {
     width: 100%
 }
 .buttons .primary {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .buttons .primary:hover {
     background-color: #d66c60
 }
 .buttons .button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .buttons .button:hover {
     background-color: #d66c60
@@ -4322,7 +4322,7 @@ fieldset[disabled] .btn-primary.active {
     text-transform: uppercase
 }
 .removeFileButton {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a
 }
 .removeFileButton:hover {
@@ -4453,7 +4453,7 @@ input[type=button].btn-info:focus {
 .button {
     font-size: 13px;
     font-weight: 500;
-    background: #f08377;
+    background: #E6A06D;
     color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
@@ -4486,7 +4486,7 @@ input[type=submit] {
 input[type=button] {
     font-size: 13px;
     font-weight: 500;
-    background: #f08377;
+    background: #E6A06D;
     color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
@@ -4501,7 +4501,7 @@ input[type=button] {
 input[type=reset] {
     font-size: 13px;
     font-weight: 500;
-    background: #f08377;
+    background: #E6A06D;
     color: #253f4a;
     cursor: pointer;
     padding: 0 20px 0 20px;
@@ -4574,7 +4574,7 @@ input[type=button] {
 .moremenu ul li a {
     display: block;
     font-size: 13px;
-    color: #f08377;
+    color: #E6A06D;
     cursor: pointer;
     padding: 5px
 }
@@ -4744,7 +4744,7 @@ input[type="button"][disabled] {
 }
 .button .badge {
     background-color: #253f4a;
-    color: #f08377
+    color: #E6A06D
 }
 .yui-layout-hd .button {
     font-size: 13px
@@ -5022,7 +5022,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     height: 34px
 }
 .emailaddresses button {
-    background-color: #f08377;
+    background-color: #E6A06D;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -5063,8 +5063,8 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     padding: 6px 9px 6px 9px
 }
 .email-address-add-line-container .email-address-add-button:focus {
-    background-color: #f08377;
-    border: 1px solid #f08377
+    background-color: #E6A06D;
+    border: 1px solid #E6A06D
 }
 .email-address-add-line-container .email-address-add-button:hover {
     background-color: #d66c60;
@@ -5123,7 +5123,7 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     z-index: 20
 }
 font[color=red] {
-    color: #f08377
+    color: #E6A06D
 }
 @media (max-width: 768px) {
     .email-address-options-container {
@@ -5511,19 +5511,19 @@ td.dashlet-title > h3 > span {
     padding: 10px
 }
 #moduleDashletsList a {
-    color: #f08377;
+    color: #E6A06D;
     margin: 5px
 }
 #basicChartDashletsList a {
-    color: #f08377;
+    color: #E6A06D;
     margin: 5px
 }
 #toolsDashletsList a {
-    color: #f08377;
+    color: #E6A06D;
     margin: 5px
 }
 #webDashletsList a {
-    color: #f08377;
+    color: #E6A06D;
     margin: 5px
 }
 #moduleDashletsList a span {
@@ -5619,7 +5619,7 @@ td.dashlet-title > h3 > span {
     font-weight: normal
 }
 #dashletbuttons {
-    color: #f08377;
+    color: #E6A06D;
     margin: 0 2px 0 2px
 }
 #dashletbuttons:hover {
@@ -6483,12 +6483,12 @@ a.listViewTdToolsS1 {
 }
 #detail_header_action_menu .sugar_action_button {
     min-width: 32px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 5px 20px
 }
 #userEditActions .sugar_action_button {
     min-width: 32px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     padding: 5px 20px
 }
 #select_actions_disabled_top {
@@ -6509,7 +6509,7 @@ a.listViewTdToolsS1 {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #userEditActions > .sugar_action_button > .subnav {
     left: 0;
@@ -6517,7 +6517,7 @@ a.listViewTdToolsS1 {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #selectLinkTop > .sugar_action_button > .subnav {
     left: 0;
@@ -6550,25 +6550,25 @@ a.listViewTdToolsS1 {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #detail_header_action_menu > .sugar_action_button > .subnav a {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #userEditActions > .sugar_action_button > .subnav li {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #userEditActions > .sugar_action_button > .subnav a {
     color: #253f4a;
     line-height: 24px;
     width: 100%;
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #userEditActions .clickMenu li .subnav {
     background-color: #2e4f5c;
@@ -6883,10 +6883,10 @@ a.listViewTdToolsS1 {
     background-color: #677785
 }
 #detail_header_action_menu > .sugar_action_button > .subnav a:hover {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #userEditActions > .sugar_action_button > .subnav a:hover {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .list .sugar_action_button > .subnav a {
     padding: 5px 20px
@@ -7211,7 +7211,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
     width: 450px
 }
 ul.clickMenu > li > span.searchAppliedAlert {
-    background-color: #f08377;
+    background-color: #E6A06D;
     position: absolute;
     line-height: 20px;
     color: #253f4a;
@@ -7348,7 +7348,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.mobileOnly {
     display: none
 }
 ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove {
     -webkit-border-radius: 2px;
@@ -7365,7 +7365,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
         display: block
     }
     ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
-        background-color: #f08377;
+        background-color: #E6A06D;
         padding: 0;
         position: absolute;
         right: -8px;
@@ -7377,7 +7377,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
         display: block
     }
     ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
-        background-color: #f08377;
+        background-color: #E6A06D;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
         left: 6px;
@@ -8494,7 +8494,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
     top: -1px
 }
 ul.clickMenu > li > span.searchAppliedAlert {
-    background-color: #f08377;
+    background-color: #E6A06D;
     position: absolute;
     line-height: 20px;
     color: #fff;
@@ -9128,7 +9128,7 @@ div#searchResults {
 }
 #create_invitee_as_lead {
     font-size: 13px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 0 10px;
     margin: 4px;
@@ -9140,7 +9140,7 @@ div#searchResults {
 }
 #create_invitee_as_contact {
     font-size: 13px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 0 10px;
     margin: 4px;
@@ -9156,7 +9156,7 @@ div#searchResults {
 }
 #create-invitee-edit button {
     font-size: 13px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 0 10px;
     margin: 4px;
@@ -9168,7 +9168,7 @@ div#searchResults {
 }
 #EditView .edit input[type=submit]#invitees_search {
     font-size: 13px;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 0 10px;
     margin: 4px;
@@ -9952,14 +9952,14 @@ li.noBullet {
 }
 .required {
     background-color: transparent;
-    color: #f08377;
+    color: #E6A06D;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px
 }
 .error {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 7px 10px;
     font-size: 12px;
@@ -9978,7 +9978,7 @@ p.error {
 }
 .error {
     border: none;
-    color: #f08377;
+    color: #E6A06D;
     background: transparent
 }
 .error:empty {
@@ -10493,13 +10493,13 @@ table.detail {
     border-color: #cbdae6
 }
 .detail tr td a:link {
-    color: #f08377
+    color: #E6A06D
 }
 .detail tr td a:visited {
-    color: #f08377
+    color: #E6A06D
 }
 .detail tr td a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 .edit td[scope=row] {
     color: #817d8d
@@ -10554,7 +10554,7 @@ a.tabFormAdvLink:visited {
     position: fixed;
     top: 7px;
     background: #fff;
-    color: #f08377;
+    color: #E6A06D;
     padding: 5px;
     border: 1px solid #aaa;
     filter: alpha(opacity=80);
@@ -11005,7 +11005,7 @@ input[type=text].cstm_code {
     width: 100%
 }
 .headerlinks a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 .nav-pills li {
     display: inline-block
@@ -11519,7 +11519,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 .hr {
     background: #fff;
-    color: #757083;
+    color: #4e869c;
     height: 1px
 }
 .converted_account {
@@ -11623,7 +11623,7 @@ ul::-webkit-scrollbar-thumb {
     float: right
 }
 .btn-success {
-    background: #f08377;
+    background: #E6A06D;
     border: none
 }
 .headerlinks a:hover {
@@ -11672,7 +11672,7 @@ table legend {
     font-weight: bold
 }
 .ui-widget-content a {
-    color: #f08377
+    color: #E6A06D
 }
 .ui-widget-content a:hover {
     color: #d66c60
@@ -12198,7 +12198,7 @@ select#sales_stage_advanced {
     height: 48px
 }
 #fieldChoices .required > .field-header {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     padding: 8px;
     margin: 0;
@@ -12227,7 +12227,7 @@ select#sales_stage_advanced {
     display: inline-block;
     font-size: 20px;
     font-weight: 300;
-    color: #f08377;
+    color: #E6A06D;
     padding-bottom: 8px;
     text-align: center;
     width: 30%
@@ -12344,10 +12344,10 @@ tr:hover img.info {
     margin: 0
 }
 #EditView div.action_buttons .button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #save_and_continue.button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #EditView div.action_buttons .button:hover,
 #save_and_continue.button:hover {
@@ -12397,16 +12397,16 @@ h3 span {
     width: 250px
 }
 .icon {
-    fill: #f08377;
+    fill: #E6A06D;
     pointer-events: none;
-    fill: #f08377;
+    fill: #E6A06D;
     pointer-events: none
 }
 .inlineEdit {
     cursor: pointer
 }
 .inlineEditIcon {
-    color: #f08377;
+    color: #E6A06D;
     padding-left: 3px;
     float: right;
     width: 15px;
@@ -12414,7 +12414,7 @@ h3 span {
 }
 .inlineEditIcon svg {
     display: none;
-    fill: #f08377
+    fill: #E6A06D
 }
 .inlineEdit:hover .inlineEditIcon svg {
     display: inline;
@@ -12428,10 +12428,10 @@ td.inlineEditActive {
     float: right
 }
 #inlineEditSaveButton svg {
-    fill: #f08377
+    fill: #E6A06D
 }
 #inlineEditSaveButton svg:hover {
-    fill: #f08377
+    fill: #E6A06D
 }
 #inline_edit_field {
     padding-right: 5px;
@@ -12605,11 +12605,11 @@ object {
 }
 #reminders #reminder_view .reminder_item.reminder-error {
     background-color: #fff8f8;
-    border: 1px solid #f08377
+    border: 1px solid #E6A06D
 }
 #reminders #reminder_view .reminder_item .error-msg {
     font-weight: bold;
-    color: #f08377
+    color: #E6A06D
 }
 #report-editview-footer {
     float: left;
@@ -12661,7 +12661,7 @@ object {
     float: left
 }
 #report-editview-footer .tab-toggler.active .button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 #report-editview-footer .parentheses-btn {
     display: block;
@@ -13594,23 +13594,23 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content .dropdown-menu > li > a,
 .content .dropdown-menu > li > a:focus,
 .content .dropdown-menu > li > a:hover {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
     text-decoration: none
 }
 .content #tab-actions > a {
-    background-color: #f08377;
+    background-color: #E6A06D;
     background-image: url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-position: right 5px top 10px;
     background-repeat: no-repeat;
     cursor: pointer;
     padding-right: 25px;
-    border-color: #f08377;
+    border-color: #E6A06D;
     border-bottom: #fa988d
 }
 .content #tab-actions > a:hover {
-    background-color: #f08377;
-    border-color: #f08377;
+    background-color: #E6A06D;
+    border-color: #E6A06D;
     color: #fff;
     cursor: pointer
 }
@@ -13621,7 +13621,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content #tab-actions > .dropdown-menu {
     left: auto;
     right: 0;
-    background-color: #f08377;
+    background-color: #E6A06D;
     margin-right: 2px;
     border-top-left-radius: 4px;
     border-top-right-radius: 0;
@@ -13629,7 +13629,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     border-bottom-right-radius: 4px
 }
 .content #tab-actions > .dropdown-menu li {
-    background-color: #f08377;
+    background-color: #E6A06D;
     border-bottom: 1px solid #fa988d
 }
 .content #tab-actions > .dropdown-menu li:last-of-type {
@@ -13640,25 +13640,25 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     width: 100%
 }
 .content #tab-actions > .dropdown-menu a {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu .button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu .button:hover {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu .button:focus {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu .button:active {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu .open > .dropdown-toggle.btn-primary {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .content #tab-actions > .dropdown-menu li:last-of-type a {
-    background-color: #f08377;
+    background-color: #E6A06D;
     border: none
 }
 .content #EditView_tabs .tab-content {
@@ -13800,7 +13800,7 @@ div.action_buttons form {
     float: left
 }
 div.action_buttons .button {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 div.action_buttons .button:hover {
     background-color: #d66c60
@@ -14004,16 +14004,16 @@ div.sub-panel {
 .subpanelTabForm {
     background-color: #253f4a;
     color: #000;
-    border-color: #f08377
+    border-color: #E6A06D
 }
 .tablist,
 .subpanelTablist {
-    border-bottom-color: #f08377
+    border-bottom-color: #E6A06D
 }
 .tablist li a:hover,
 .subpanelTablist li a:hover {
     background: #fafafa;
-    border-color: #f08377
+    border-color: #E6A06D
 }
 .tablist li a,
 .subpanelTablist li a {
@@ -14688,7 +14688,7 @@ div.target-list-table {
 }
 .icon-btn-lst .icon-btn a {
     display: block;
-    background-color: #f08377;
+    background-color: #E6A06D;
     margin: 10px;
     border: none;
     float: left;
@@ -14699,7 +14699,7 @@ div.target-list-table {
 }
 .icon-btn-lst .icon-btn {
     display: block;
-    background-color: #f08377;
+    background-color: #E6A06D;
     margin: 10px;
     border: none;
     float: left;
@@ -14812,7 +14812,7 @@ form[name="wizform"] .icon-btn-lst .icon-btn a br {
     float: none
 }
 form[name="wizform"] .progression-container .progression .nav-steps {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 form[name="wizform"] .selected {
     background-color: #808f9c
@@ -14830,10 +14830,10 @@ form[name="wizform"] .progression li:hover::after {
     border-left-color: #808f9c
 }
 form[name="wizform"] .progression li::after {
-    border-left-color: #f08377
+    border-left-color: #E6A06D
 }
 form[name="wizform"] .progression li::after {
-    border-left-color: #f08377
+    border-left-color: #E6A06D
 }
 form[name="wizform"] .progression li::before {
     border-left-color: #253f4a
@@ -15071,10 +15071,10 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
     zoom: 1
 }
 .yui-ac-content li.yui-ac-prehighlight {
-    background: #f08377
+    background: #E6A06D
 }
 .yui-ac-content li.yui-ac-highlight {
-    background: #f08377;
+    background: #E6A06D;
     color: #fff
 }
 .yui-calcontainer {
@@ -15304,7 +15304,7 @@ p#clear {
     background-color: #000
 }
 .yui-calendar td.calcell.today a {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .yui-calendar td.calcell.oom {
     background-color: #ccc;
@@ -15316,7 +15316,7 @@ p#clear {
     color: #000
 }
 .yui-calendar td.calcell.selected a {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #000
 }
 .yui-calendar td.calcell.calcellhover {
@@ -15424,15 +15424,15 @@ p#clear {
     min-height: auto
 }
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default {
-    background-color: #f08377;
-    border: 1px solid #f08377;
+    background-color: #E6A06D;
+    border: 1px solid #E6A06D;
     -moz-border-radius: 4px 4px 4px 4px;
     border-radius: 4px
 }
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
-    text-shadow: -1px -1px #f08377
+    text-shadow: -1px -1px #E6A06D
 }
 .yui-carousel {
     position: relative;
@@ -16199,7 +16199,7 @@ tr.yui-dt-odd td.yui-dt-highlighted {
 }
 th.yui-dt-selected,
 th.yui-dt-selected a {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 tr.yui-dt-selected td,
 tr.yui-dt-selected td.yui-dt-asc,
@@ -16208,22 +16208,22 @@ tr.yui-dt-selected td.yui-dt-desc {
 }
 tr.yui-dt-even td.yui-dt-selected,
 tr.yui-dt-odd td.yui-dt-selected {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff
 }
 .yui-dt-list th.yui-dt-selected,
 .yui-dt-list th.yui-dt-selected a {
-    background-color: #f08377
+    background-color: #E6A06D
 }
 .yui-dt-list tr.yui-dt-selected td,
 .yui-dt-list tr.yui-dt-selected td.yui-dt-asc,
 .yui-dt-list tr.yui-dt-selected td.yui-dt-desc {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff
 }
 .yui-dt-list tr.yui-dt-even td.yui-dt-selected,
 .yui-dt-list tr.yui-dt-odd td.yui-dt-selected {
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff
 }
 .yui-dt-paginator {
@@ -18340,7 +18340,7 @@ a.yuimenuitemlabel:hover {
     opacity: 1
 }
 .yui-resize-proxy {
-    border: 1px dashed #f08377
+    border: 1px dashed #E6A06D
 }
 .yui-resize-status {
     background-color: #ffee69;
@@ -19994,7 +19994,7 @@ a.sugar-tab-close,
     font-size: 13px;
     font-size: 13px;
     font-weight: 500;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #253f4a;
     cursor: pointer;
     cursor: pointer;
@@ -20034,7 +20034,7 @@ a.sugar-tab-close,
 button#goto_date_trigger_div_nav_cancel {
     font-size: 13px;
     font-weight: 500;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
     cursor: pointer;
     padding: 0 10px 0 10px;
@@ -20049,7 +20049,7 @@ button#goto_date_trigger_div_nav_cancel {
 button#goto_date_trigger_div_nav_submit {
     font-size: 13px;
     font-weight: 500;
-    background-color: #f08377;
+    background-color: #E6A06D;
     color: #fff;
     cursor: pointer;
     padding: 0 10px 0 10px;
@@ -20147,7 +20147,7 @@ table#goto_date_trigger_div_t thead {
 }
 .yui-calendar td.calcell a {
     background: #fff;
-    color: #f08377;
+    color: #E6A06D;
     line-height: 32px;
     width: 32px;
     height: 32px
@@ -20173,10 +20173,10 @@ table#goto_date_trigger_div_t thead {
     color: #253f4a
 }
 .yui-calendar .calweekdaycell {
-    color: #f08377
+    color: #E6A06D
 }
 .yui-calendar a.calnav {
-    background-color: #f08377;
+    background-color: #E6A06D;
     border: 1px solid transparent;
     border-radius: 4px
 }
@@ -20264,7 +20264,7 @@ div.monthFooter {
 }
 .yearCalBodyMonth {
     background-color: #253f4a;
-    border-top: 2px solid #f08377;
+    border-top: 2px solid #E6A06D;
     border-bottom: 2px solid #253f4a
 }
 .yearCalBody .monthHeader {
@@ -20277,7 +20277,7 @@ div.monthFooter {
     border-color: #396070
 }
 .yearCalBodyMonth > a {
-    color: #f08377
+    color: #E6A06D
 }
 h5.calSharedUser {
     color: #2e4f5c
@@ -20337,7 +20337,7 @@ a.sugar-tab-close {
     overflow-y: hidden
 }
 ul.yui-nav li.selected {
-    background: #f08377
+    background: #E6A06D
 }
 .qtip-content {
     overflow-y: auto;
@@ -20385,7 +20385,7 @@ ul.yui-nav li.selected {
     color: #b29eb5
 }
 .qtip-default .qtip-titlebar {
-    background-color: #5d5670
+    background-color: #4e869c
 }
 .qtip-default .qtip-icon {
     top: 16px;
@@ -20415,10 +20415,10 @@ ul.yui-nav li.selected {
 }
 .qtip-content a {
     font-weight: bold;
-    color: #f08377
+    color: #E6A06D
 }
 .qtip-content a:hover {
-    color: #f08377
+    color: #E6A06D
 }
 td.fc-widget-header {
     background-color: #396070;
@@ -20571,7 +20571,7 @@ a.fc-day-number {
     text-decoration: none
 }
 a.fc-day-number:hover {
-    color: #f08377;
+    color: #E6A06D;
     text-decoration: none
 }
 .calendar {
@@ -20746,7 +20746,7 @@ iframe.teamNoticeBox {
     margin-left: 10px
 }
 .email-indicator .email-flagged {
-    background-color: #f08377;
+    background-color: #E6A06D;
     border-radius: 28px;
     color: #253f4a;
     font-size: 18px
@@ -21003,7 +21003,7 @@ iframe.teamNoticeBox {
     margin: 5px
 }
 .file-attachments .attachment-file-container {
-    background-color: #5d5670;
+    background-color: #4e869c;
     border-radius: 4px;
     color: #edebf5;
     font-size: 13px;
@@ -21040,7 +21040,7 @@ iframe.teamNoticeBox {
     color: #fff
 }
 .file-attachments .attachment-blank {
-    background-color: #5d5670;
+    background-color: #4e869c;
     padding: 4px 8px;
     line-height: 26px
 }
@@ -21094,7 +21094,7 @@ iframe.teamNoticeBox {
     width: 13px
 }
 .document-attachments .attachment-file-container {
-    background-color: #5d5670;
+    background-color: #4e869c;
     border-radius: 4px;
     color: #edebf5;
     font-size: 13px;
@@ -21131,7 +21131,7 @@ iframe.teamNoticeBox {
     color: #fff
 }
 .document-attachments .attachment-blank {
-    background-color: #5d5670;
+    background-color: #4e869c;
     padding: 4px 8px;
     line-height: 26px
 }
@@ -21824,7 +21824,7 @@ iframe.teamNoticeBox {
     vertical-align: top;
     text-align: center;
     font-family: 'suitepicon' !important;
-    color: #5d5670;
+    color: #4e869c;
     font-style: normal
 }
 .jstree-icon:empty {
@@ -22054,7 +22054,7 @@ iframe.teamNoticeBox {
     background: #bbe6a5
 }
 #jstree-dnd .jstree-er {
-    background: #f08377
+    background: #E6A06D
 }
 #jstree-dnd .jstree-copy {
     margin: 0 2px 0 2px

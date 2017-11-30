@@ -1170,7 +1170,7 @@ li.noBullet {
 
 .required {
   background-color: transparent;
-  color: #f08377;
+  color: #E6A06D;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid transparent;
@@ -3364,7 +3364,7 @@ table legend {
 }
 
 .ui-widget-content a {
-  color: #F08377;
+  color: #E6A06D;
 }
 
 .ui-widget-content a:hover {
@@ -4095,7 +4095,7 @@ select#sales_stage_advanced {
   display: inline-block;
   font-size: 20px;
   font-weight: 300;
-  color: #F08377;
+  color: #E6A06D;
   padding-bottom: 8px;
   text-align: center;
   width: 30%;
@@ -4315,9 +4315,9 @@ h3 span {
 }
 
 .icon {
-  fill: #F08377;
+  fill: #E6A06D;
   pointer-events: none;
-  fill: #F08377;
+  fill: #E6A06D;
   pointer-events: none;
 }
 
@@ -4326,7 +4326,7 @@ h3 span {
 }
 
 .inlineEditIcon {
-  color: #F08377;
+  color: #E6A06D;
   padding-left: 3px;
   float: right;
   width: 15px;
@@ -4335,7 +4335,7 @@ h3 span {
 
 .inlineEditIcon svg {
   display: none;
-  fill: #F08377;
+  fill: #E6A06D;
 }
 
 .inlineEdit:hover .inlineEditIcon svg {
@@ -4353,11 +4353,11 @@ td.inlineEditActive {
 }
 
 #inlineEditSaveButton svg {
-  fill: #F08377;
+  fill: #E6A06D;
 }
 
 #inlineEditSaveButton svg:hover {
-  fill: #F08377;
+  fill: #E6A06D;
 }
 
 #inline_edit_field {
