@@ -12143,19 +12143,19 @@ object {
     margin: 4px
 }
 #reminders .add-btn {
-    background-image: url(../../../../themes/SuiteP/images/id-ff-add.png);
+    background-image: url(../../../../../../themes/SuiteP/images/id-ff-add.png);
     background-position: 5px center;
     background-repeat: no-repeat;
     padding-left: 32px
 }
 #reminders .remove-btn {
-    background-image: url(../../../../themes/SuiteP/images/id-ff-clear.png);
+    background-image: url(../../../../../../themes/SuiteP/images/id-ff-clear.png);
     background-position: right 5px center;
     background-repeat: no-repeat;
     padding-right: 32px
 }
 #reminders .invitee_btn {
-    background-image: url(../../../../themes/default/images/id-ff-clear.png);
+    background-image: url(../../../../../../themes/default/images/id-ff-clear.png);
     background-position: right 5px center;
     background-repeat: no-repeat;
     padding: 4px 25px 4px 10px;
@@ -14159,10 +14159,10 @@ div.step2 .target-list-table {
     color: gray
 }
 .wizard-summary-left .box.ok {
-    background-image: url(../../../../themes/default/images/green_camp.gif)
+    background-image: url(../../../../../../themes/default/images/green_camp.gif)
 }
 .wizard-summary-left .box.fail {
-    background-image: url(../../../../themes/default/images/red_camp.gif)
+    background-image: url(../../../../../../themes/default/images/red_camp.gif)
 }
 .wizard-summary-left .box.small {
     display: table-cell;
@@ -14203,13 +14203,13 @@ div.step2 .target-list-table {
     vertical-align: middle
 }
 .wizard-summary-right .send {
-    background-image: url(../../../../themes/default/images/cmpwzrd/email167.png)
+    background-image: url(../../../../../../themes/default/images/cmpwzrd/email167.png)
 }
 .wizard-summary-right .schedule {
-    background-image: url(../../../../themes/default/images/cmpwzrd/wallclock.png)
+    background-image: url(../../../../../../themes/default/images/cmpwzrd/wallclock.png)
 }
 .wizard-summary-right .test {
-    background-image: url(../../../../themes/default/images/cmpwzrd/email167.png);
+    background-image: url(../../../../../../themes/default/images/cmpwzrd/email167.png);
     background-position-y: -7px
 }
 .wizard-summary-right .disabled {
@@ -17173,7 +17173,7 @@ div.yui-layout-hd h2 {
     width: 6px;
     top: 45%;
     left: 0;
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px
+    background: transparent url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px
 }
 .yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob,
 .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob {
@@ -17181,7 +17181,7 @@ div.yui-layout-hd h2 {
     height: 6px;
     width: 16px;
     left: 45%;
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0
+    background: transparent url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0
 }
 .yui-log {
     font-family: monospace;
@@ -17494,7 +17494,7 @@ a.yuimenuitemlabel:hover {
     margin-top: -1.45em
 }
 .yuimenuitem-hassubmenu > a {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png);
+    background-image: url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=sugar-yui-sprites-grey.png);
     background-position: right -126px;
     background-repeat: no-repeat
 }
@@ -17919,7 +17919,7 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-r,
 .yui-resize .yui-resize-handle-inner-l {
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px;
+    background: transparent url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat 0 -5px;
     height: 16px;
     width: 5px;
     position: absolute;
@@ -17927,29 +17927,29 @@ a.yuimenuitemlabel:hover {
 }
 .yui-resize .yui-resize-handle-inner-t,
 .yui-resize .yui-resize-handle-inner-b {
-    background: transparent url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0;
+    background: transparent url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png) no-repeat -20px 0;
     height: 5px;
     width: 16px;
     position: absolute;
     left: 50%
 }
 .yui-resize .yui-resize-handle-br {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -62px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tr {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -42px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-tl {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -82px;
     background-repeat: no-repeat
 }
 .yui-resize .yui-resize-handle-bl {
-    background-image: url(../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
+    background-image: url(../../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=layout_sprite.png);
     background-position: -22px -23px;
     background-repeat: no-repeat
 }
