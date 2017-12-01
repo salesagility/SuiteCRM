@@ -88,11 +88,13 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
         //execute the method and test it it returns expected contents
 
         $expected = array(
-                'Bugs' => 'Bugs',
-                'ResourceCalendar' => 'ResourceCalendar',
-				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
-                'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
-                'SecurityGroups' => 'SecurityGroups',
+            'Bugs' => 'Bugs',
+            'ResourceCalendar' => 'ResourceCalendar',
+            'AOBH_BusinessHours' => 'AOBH_BusinessHours',
+            'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
+            'SecurityGroups' => 'SecurityGroups',
+            'Surveys' => 'Surveys'
+
         );
 
         $allowed = query_module_access_list(new User('1'));

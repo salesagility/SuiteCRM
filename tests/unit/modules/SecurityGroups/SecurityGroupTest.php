@@ -295,7 +295,12 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             'jjwg_Maps',
             'AOS_Product_Categories',
             'Spots' => 'Spots',
-                );
+            'SurveyQuestionOptions' => 'SurveyQuestionOptions',
+            'SurveyQuestionResponses' => 'SurveyQuestionResponses',
+            'SurveyQuestions' => 'SurveyQuestions',
+            'SurveyResponses' => 'SurveyResponses',
+            'Surveys' => 'Surveys',
+        );
 
         $actual = $securityGroup->getSecurityModules();
         $actualKeys = array_keys($actual);
