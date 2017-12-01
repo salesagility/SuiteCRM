@@ -39,30 +39,30 @@ $chart = <<<EOD
 
             function resizeGraph(graph)
             {
-                var maxHeight = 500;
-                var maxTextSize = 10;
-
-                graph.width = $(graph).parent().width();
-                graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
-
-                var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
-                graph.__object__["properties"]["chart.text.size"] = text_size;
-                graph.__object__["properties"]["chart.key.text.size"] = text_size;
-
-                RGraph.redrawCanvas(graph);
+              var maxHeight = 500;
+              var maxTextSize = 10;
+    
+              graph.width = $(graph).parent().width();
+              graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
+    
+              var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
+              graph.__object__["properties"]["chart.text.size"] = text_size;
+              graph.__object__["properties"]["chart.key.text.size"] = text_size;
+                
+              RGraph.redrawCanvas(graph);
             }
 
             function resizeGraphs()
             {
-             var graphs = $(".resizableCanvas");
-             $.each(graphs,function(i,v){
+              var graphs = $(".resizableCanvas");
+              $.each(graphs,function(i,v){
                 resizeGraph(v);
-             });
+              });
             }
 
             $(window).resize(function ()
             {
-                resizeGraphs();
+              resizeGraphs();
             });
 
 
