@@ -16,7 +16,8 @@ class OperatorsTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$operator === null) {
-            self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator();
+            $containers = $this->tester->getContainerInterface();
+            self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator($containers);
         }
     }
 
@@ -72,5 +73,29 @@ class OperatorsTest extends \Codeception\Test\Unit
                 self::$operator->isValid(array());
             }
         );
+    }
+
+    public function testToSqlOperandsWithInvalidType()
+    {
+        $this->tester->expectException(
+            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be string] $operands'),
+            function() {
+                self::$operator->toSqlOperands('string');
+            }
+        );
+    }
+
+    public function testToSqlOperandsWithValidData()
+    {
+        $data = array('bannana');
+        $expected = '"bannana"';
+        $actual = self::$operator->toSqlOperands($data);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testTotalOperands()
+    {
+        $this->assertEquals(1, self::$operator->totalOperands());
     }
 }

@@ -40,8 +40,12 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters;
 
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters\ByIdFilter;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
+use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
 
 use Psr\Container\ContainerInterface;
@@ -52,12 +56,42 @@ class FilterInterpreter
      * @var ContainerInterface $containers
      */
     private $containers;
+    private static $fieldOperator;
+    private static $filterOperators;
+    private static $filterFieldOperators;
+    private static $filterSpecialOperators;
 
+    /**
+     * FilterInterpreter constructor.
+     * @param ContainerInterface $containers
+     * @throws \Psr\Container\ContainerExceptionInterface
+     */
     public function __construct(ContainerInterface $containers)
     {
         $this->containers = $containers;
+
+        if (self::$fieldOperator === null) {
+            self::$fieldOperator = new FieldOperator($containers);
+        }
+
+        if (self::$filterOperators === null) {
+            self::$filterOperators = $containers->get('FilterOperators');
+        }
+
+        if (self::$filterFieldOperators === null) {
+            self::$filterFieldOperators = $containers->get('FilterFieldOperators');
+        }
+
+        if (self::$filterSpecialOperators === null) {
+            self::$filterSpecialOperators = $containers->get('FilterSpecialOperators');
+        }
     }
 
+    /**
+     * @param $filterStructure
+     * @return bool
+     * @throws Exception
+     */
     public function isFilterByPreMadeName($filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]');
@@ -66,6 +100,11 @@ class FilterInterpreter
         return count($filterStructure) === 1 && is_array(current($filterStructure)) === false;
     }
 
+    /**
+     * @param $filterStructure
+     * @return bool
+     * @throws Exception
+     */
     public function isFilterById($filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]');
@@ -76,18 +115,29 @@ class FilterInterpreter
             is_array(current($filterStructure)) === true;
     }
 
+    /**
+     * @param $filterStructure
+     * @return bool
+     * @throws Exception
+     */
     public function isFilterByAttributes($filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterByAttributes][expected type to be array]');
         }
 
-        $fieldValidator = new FieldValidator();
+        $fieldValidator = new FieldValidator($this->containers);
         return count($filterStructure) >= 1 &&
             is_array(current($filterStructure)) === true &&
             array_keys($filterStructure)[0] !== '[id]' &&
         $fieldValidator->isValid(array_keys($filterStructure)[0]);
     }
 
+    /**
+     * Convert the filter structure for a parser into an SQL where clause
+     * @param $filterStructure
+     * @return string
+     * @throws Exception
+     */
     public function getFilterByPreMadeName($filterStructure)
     {
         $filter = '';
@@ -108,6 +158,12 @@ class FilterInterpreter
         return $filter;
     }
 
+    /**
+     * Convert the filter structure for a parser into an SQL where clause
+     * @param $filterStructure
+     * @return string|ByIdFilter
+     * @throws Exception
+     */
     public function getFilterById($filterStructure)
     {
         $filter = '';
@@ -124,8 +180,156 @@ class FilterInterpreter
         return $filter;
     }
 
+    /**
+     * Convert the filter structure for a parser into an SQL where clause
+     * @param array $filterStructure [table => [field => [operator, operand, ... ], ...]
+     * @return string
+     * @throws BadRequest
+     */
     public function getFilterByAttributes($filterStructure)
     {
+        $filter = '';
+        $filterOperator = new FieldOperator($this->containers);
+        $operator = new Operator($this->containers);
+        foreach ($filterStructure as $beanType => $filterFields) {
+            //
+            if ($filterOperator->isValid($beanType) === false) {
+                throw new BadRequest('[getFilterByAttributes][invalid filter]');
+            }
 
+            /** @var \SugarBean $module */
+            $module = \BeanFactory::newBean($filterOperator->stripFilterTag($beanType));
+            $tableName = $module->table_name;
+
+            // Process fields
+            foreach ($filterFields as $field => $fieldOperations)
+            {
+                // Get next field
+                if ($filterOperator->isValid($field) === false) {
+                    throw new BadRequest('[getFilterByAttributes][invalid field]');
+                }
+                // TODO: Detect if relationship
+                // TODO: Detect if middle table
+                $fieldName = $filterOperator->stripFilterTag($field);
+                if (isset($module->field_defs[$fieldName]) === false) {
+                    throw new BadRequest('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
+                }
+
+                if(is_array($fieldOperations) === false) {
+                    throw new BadRequest('[getFilterByAttributes][operations does not exist]');
+                }
+
+                // Build the SQL Query for each operation [operator, [operand, ...] ...] in this filter
+                // By iterating through $fieldOperations array
+                $index = 0;
+                $end = count($fieldOperations);
+                $lastOperator = null;
+                $operands = array();
+                while ($index < $end) {
+                    // Lets play: Is this element an operator or an operand?
+                    if ($operator->hasOperator(current($fieldOperations))) {
+                        // It's an operator
+                        // TODO: Work out if there has been a previous operator
+                        // TODO: Then run the last operator with the operand range.
+                        // TODO: Handle the case where we reach the end of the array
+                        // TODO: Handle the case when it's a field operator or a special operator
+                        if ($lastOperator === null) {
+                            // So this is the first operator
+                            $lastOperator = $this->getOperator(current($fieldOperations));
+                            // So lets keep going ...
+                            // Meanwhile lets collect the operands
+                            // Until we see an other operator or the end of the array
+                            $index++;
+                            next($fieldOperations);
+                            // Next Operator or Operand
+                            continue;
+                        }
+
+                        // Here's where the magic happens
+                        $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+
+                        // Clear the operands for the next operator
+                        $operands = array();
+
+                        // We need to start again.
+                        // So lets keep going ...
+                        // Until we see an other operator or the end of the array
+                        $lastOperator = $this->getOperator(current($fieldOperations));
+                    } else {
+                        // It's an Operand, let's keep looking for more operands
+                        // Until we see an other operator or the end of the array
+                        $operands[] = current($fieldOperations);
+                    }
+
+                    $index++;
+                    next($fieldOperations);
+                    // Next Operator or Operand
+                }
+
+                $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+            }
+        }
+
+        return $filter;
+    }
+
+    /**
+     * @param string $tableName
+     * @param OperatorInterface $filterOperator
+     * @param OperatorInterface$lastOperator
+     * @param string $field
+     * @param array $operands
+     * @return string
+     */
+    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands)
+    {
+        // Lets build the last operation into a SQL Query
+        // TODO: swap out table name if it is a related field type.
+        $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
+        $sqlOperator = $lastOperator->toSqlOperator();
+        $sqlOperands = $lastOperator->toSqlOperands($operands);
+
+        // Here's where the real magic happens
+       return implode(' ', array($sqlField, $sqlOperator, $sqlOperands));
+    }
+
+
+    /**
+     * @param string $operator
+     * @return OperatorInterface
+     * @throws Exception
+     */
+    protected function getOperator($operator)
+    {
+
+        //
+        $isInOperatorsArray = function($operatorNeedle, $operatorsHaystack) {
+            foreach ($operatorsHaystack as $operator) {
+                /** @var OperatorInterface $operator */
+                if($operator->isOperator($operatorNeedle)) {
+                    return $operator;
+                }
+            }
+            return false;
+        };
+
+        //
+        $isInFieldsOperatorsArray = $isInOperatorsArray($operator, self::$filterFieldOperators);
+        $isInSpecialOperatorsArray = $isInOperatorsArray($operator, self::$filterSpecialOperators);
+        $isInOperatorArray = $isInOperatorsArray($operator, self::$filterOperators);
+
+        if ($isInFieldsOperatorsArray !== false) {
+            return $isInFieldsOperatorsArray;
+        } elseif ($isInSpecialOperatorsArray !== false) {
+            return $isInSpecialOperatorsArray;
+        } elseif ($isInOperatorArray !== false) {
+            return $isInOperatorArray;
+        } else {
+            throw new Exception(
+                '[JsonApi][v1][Filters][FilterInterpreter][getOperator]' .
+                '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
+                'containers '
+            );
+        }
     }
 }

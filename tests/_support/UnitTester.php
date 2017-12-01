@@ -20,6 +20,9 @@ class UnitTester extends \Codeception\Actor
 {
     use _generated\UnitTesterActions;
 
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
     public function getContainerInterface()
     {
         // load PSR 11 interface

@@ -21,12 +21,13 @@ class FieldValidatorTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $containers = $this->tester->getContainerInterface();
         if(self::$fieldValidator === null) {
-            self::$fieldValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator();
+            self::$fieldValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator($containers);
         }
 
         if(self::$fieldOperator === null) {
-            self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator();
+            self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator($containers);
         }
     }
 

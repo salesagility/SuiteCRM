@@ -117,6 +117,9 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     * @throws \Psr\Container\ContainerExceptionInterface
      * @throws NotImplementedException
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
@@ -173,7 +176,8 @@ class ModuleController extends ApiController
      * GET /api/v8/modules/meta/menu/filters
      * @param Request $req
      * @param Response $res
-     * @param array $args 
+     * @param array $args
+     * @return Response
      * @throws ModuleNotFound
      * @throws ApiException
      * @throws NotAcceptable
@@ -238,7 +242,8 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @return Response
+     * @throws ApiException
      */
     public function getModulesMetaViewed(Request $req, Response $res, array $args)
     {
@@ -296,6 +301,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @return Response
      * @throws NotImplementedException
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)

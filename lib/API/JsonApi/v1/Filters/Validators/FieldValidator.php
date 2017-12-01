@@ -40,12 +40,20 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
+use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\Exception\Exception;
 
 class FieldValidator implements ValidatorInterface
 {
+    private $containers;
+
+    public function __construct(ContainerInterface $containers)
+    {
+        $this->containers = $containers;
+    }
+
     /**
      * @param string $fieldKey
      * @return bool
@@ -59,7 +67,7 @@ class FieldValidator implements ValidatorInterface
             );
         }
 
-        $fieldOperator = new FieldOperator();
+        $fieldOperator = new FieldOperator($this->containers);
         return $fieldOperator->isValid($fieldKey);
     }
 }

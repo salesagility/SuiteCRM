@@ -103,7 +103,6 @@ class ModulesLib
 
         /** @var \SugarBean $moduleBean */
         foreach ($moduleList['list'] as $moduleBean) {
-
             // Create data item
             if (isset($selectFields[$moduleBean->module_name])) {
                 // Only return the fields requested
@@ -249,6 +248,8 @@ class ModulesLib
      * @param Request $req
      * @param \SugarBean $module
      * @return array
+     * @throws \SuiteCRM\Exception\Exception
+     * @throws \SuiteCRM\API\v8\Exception\BadRequest
      */
     protected function getModuleList(Request $req, \SugarBean $module)
     {
@@ -257,23 +258,6 @@ class ModulesLib
 
         // Order by (sorting)
         $orderBy = $this->getSorting($req);
-
-        // Filtering (where clause in SQL)
-        $where = '';
-        /** @var FilterRepository $filterRepository */
-        $filterRepository = $this->containers->get('FilterRepository');
-        $filterStructure = $filterRepository->fromRequest($req);
-        /** @var FilterInterpreter $filterInterpreter */
-        $filterInterpreter = $this->containers->get('FilterInterpreter');
-        if($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
-            $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
-        } elseif ($filterInterpreter->isFilterById($filterStructure)) {
-            $where = $filterInterpreter->getFilterById($filterStructure);
-        } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
-            $where = $filterInterpreter->getFilterByAttributes($filterStructure);
-        } else {
-            throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
-        }
 
         // Pagination (offset)
         $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
@@ -290,9 +274,35 @@ class ModulesLib
             $show_deleted = (integer)$filter['deleted'];
         }
 
-        // Get list of module records
-        /** @var array $moduleList */
-        return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
+        // Filtering (where clause in SQL)
+        $where = '';
+        /** @var FilterRepository $filterRepository */
+        $filterRepository = $this->containers->get('FilterRepository');
+        $filterStructure = $filterRepository->fromRequest($req);
+        /** @var FilterInterpreter $filterInterpreter */
+        $filterInterpreter = $this->containers->get('FilterInterpreter');
+        if (empty($filterStructure)) {
+            // Do not perform a filter
+            $where = '';
+            return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
+        } elseif($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+            $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
+            /** @var array $moduleList */
+            return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
+        } elseif ($filterInterpreter->isFilterById($filterStructure)) {
+            $where = $filterInterpreter->getFilterById($filterStructure);
+            /** @var array $moduleList */
+            return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
+        } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
+            // TODO: Filter regular
+            // TODO: Filter Dates
+            // TODO: Related items of other items
+            // TODO: Middle tables
+            $where = $filterInterpreter->getFilterByAttributes($filterStructure);
+            return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
+        } else {
+            throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        }
     }
 
     /**

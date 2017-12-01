@@ -61,6 +61,6 @@ class Today implements ByPreMadeFilterInterpreter
     {
         $today = new \DateTime();
         $today = $today->setTime(0,0,0);
-        return 'data_created >= "'. $today->format(DATE_ATOM) . '"';
+        return 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
     }
 }

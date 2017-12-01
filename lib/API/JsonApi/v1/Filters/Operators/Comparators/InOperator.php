@@ -79,4 +79,21 @@ class InOperator extends Operator implements OperatorInterface
 
         return parent::isValid($operator);
     }
+
+    /**
+     * @return int
+     */
+    public function totalOperands()
+    {
+        return 255;
+    }
+
+    /**
+     * @param array $operands
+     * @return string
+     */
+    public function toSqlOperands($operands)
+    {
+        return '(' . parent::toSqlOperands($operands) . ')';
+    }
 }

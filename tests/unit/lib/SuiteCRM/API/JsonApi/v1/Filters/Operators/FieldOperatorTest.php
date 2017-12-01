@@ -15,8 +15,9 @@ class FieldOperatorTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $containers = $this->tester->getContainerInterface();
         if(self::$fieldOperator === null) {
-            self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator();
+            self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator($containers);
         }
     }
 
@@ -66,5 +67,10 @@ class FieldOperatorTest extends \Codeception\Test\Unit
                 self::$fieldOperator->isValid(array());
             }
         );
+    }
+
+    public function testTotalOperands()
+    {
+        $this->assertEquals(0, self::$fieldOperator->totalOperands());
     }
 }

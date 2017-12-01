@@ -33,7 +33,7 @@ class TodayTest extends \Codeception\Test\Unit
     {
         $today = new \DateTime();
         $today = $today->setTime(0,0,0);
-        $expected = 'data_created >= "'. $today->format(DATE_ATOM) . '"';
+        $expected = 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
         $actual = self::$filter->getByPreMadeFilter();
         $this->assertEquals(
             $expected,

@@ -87,7 +87,7 @@ class FilterRepository
 
             if(is_array($filters)) {
                 foreach ($filters as $filterKey => $filter) {
-                    $response[] = $this->filterParser->parseFilter($filterKey, $filter);
+                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter));
                 }
             } else if(is_string($filters)) {
                 $response = array($filters);

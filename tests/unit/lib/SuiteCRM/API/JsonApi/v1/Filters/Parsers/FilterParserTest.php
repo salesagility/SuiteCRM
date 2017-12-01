@@ -32,19 +32,19 @@ class FilterParserTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $container = $this->tester->getContainerInterface();
         if(self::$filterParser === null) {
             // load PSR 11 interface
-            $container = $this->tester->getContainerInterface();
             // Load mock class
             self::$filterParser = new FilterParserMock($container);
         }
 
         if(self::$operator === null) {
-            self::$operator = new Operator();
+            self::$operator = new Operator($container);
         }
 
         if(self::$fieldOperator === null) {
-            self::$fieldOperator = new FieldOperator();
+            self::$fieldOperator = new FieldOperator($container);
         }
     }
 

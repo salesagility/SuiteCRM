@@ -39,6 +39,5 @@
  */
 
 $container['DatabaseManager'] = function () {
-    global $db;
-    return $db;
+    return DBManagerFactory::getInstance();
 };

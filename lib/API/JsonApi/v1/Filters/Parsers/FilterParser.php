@@ -71,7 +71,7 @@ class FilterParser
         $this->containers = $containers;
 
         if (self::$fieldOperator === null) {
-            self::$fieldOperator = new FieldOperator();
+            self::$fieldOperator = new FieldOperator($containers);
         }
 
         if (self::$filterOperators === null) {
@@ -163,7 +163,7 @@ class FilterParser
             //
             // convert the flat data structure
             $treeDataStructure = array();
-            $fieldValidator = new FieldValidator();
+            $fieldValidator = new FieldValidator($this->containers);
             $nodeReference = &$flatDataStructure;
 
             foreach ($flatDataStructure as $index => $attribute) {
@@ -201,10 +201,10 @@ class FilterParser
      */
     protected function parseFieldFilter($filters)
     {
-        $standardOperator = new Operator();
-        $fieldOperator = new FieldOperator();
-        $specialOperator = new Operator();
-        $filterValidator = new FilterValidator();
+        $standardOperator = new Operator($this->containers);
+        $fieldOperator = new FieldOperator($this->containers);
+        $specialOperator = new Operator($this->containers);
+        $filterValidator = new FilterValidator($this->containers);
         $parsedValues =  array();
         // Parse values handle single filter vs an array of filters
         if (strpos($filters, ',')) {

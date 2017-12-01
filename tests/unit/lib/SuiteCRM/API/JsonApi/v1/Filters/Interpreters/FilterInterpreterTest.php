@@ -146,9 +146,38 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
         $actual = self::$interpreter->getFilterById($filter);
         $this->assertEquals($expected, $actual);
     }
-//
-//    public function testGetFilterByAttributes()
-//    {
-//
-//    }
+
+    public function testGetFilterByAttributes()
+    {
+        $filter = array(
+            '[Accounts]' => array(
+                '[date_modified]' => array(
+                    '[[gte]]',
+                    '2017-11-17T11:40:00+00:00'
+                ),
+            )
+        );
+        $expected = 'accounts.date_modified >= "2017-11-17T11:40:00+00:00"';
+        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGetFilterByAttributesIn()
+    {
+        $filter = array(
+            '[Accounts]' => array(
+                '[name]' => array(
+                    '[[in]]',
+                    'a',
+                    'b',
+                    'c',
+                    'd',
+                    'e',
+                ),
+            )
+        );
+        $expected = 'accounts.name IN ("a","b","c","d","e")';
+        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $this->assertEquals($expected, $actual);
+    }
 }

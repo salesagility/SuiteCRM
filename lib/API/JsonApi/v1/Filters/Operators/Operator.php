@@ -40,6 +40,8 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
+use Psr\Container\ContainerInterface;
+use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
 
 class Operator
@@ -55,6 +57,17 @@ class Operator
      * @var string $operatorFormatRegex
      */
     protected $operatorFormatRegex = '\[\[[A-Za-z\_\-]+\]\]';
+
+
+    /**
+     * @var ContainerInterface $containers;
+     */
+    protected $containers;
+
+    public function __construct(ContainerInterface $containers)
+    {
+        $this->containers = $containers;
+    }
 
     /**
      * Convert string to operator tag
@@ -125,5 +138,37 @@ class Operator
     public function totalOperands()
     {
         return 1;
+    }
+
+
+    /**
+     * General case
+     * @param array $operands
+     * @return string
+     * @throws Exception
+     */
+    public function toSqlOperands($operands)
+    {
+        if(!is_array($operands)) {
+            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be string] $operands');
+        }
+
+        /** @var \DBManager $db */
+        $db = $this->containers->get('DatabaseManager');
+        $db->checkConnection();
+
+        foreach ($operands as $i => $operand) {
+            if ($i >= $this->totalOperands()) {
+               throw new BadRequest('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][operand limit exceeded]');
+            }
+
+            if(is_numeric($operand)) {
+                $operands[$i] = $db->quote($operand);
+            } else {
+                $operands[$i] = '"'. $db->quote($operand) .'"';
+            }
+        }
+
+        return implode(',', $operands);
     }
 }

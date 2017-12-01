@@ -79,4 +79,13 @@ class NotInOperator extends Operator implements OperatorInterface
 
         return parent::isValid($operator);
     }
+
+    /**
+     * @param array $operands
+     * @return string
+     */
+    public function toSqlOperands($operands)
+    {
+        return '(' . parent::toSqlOperands($operands) . ')';
+    }
 }
