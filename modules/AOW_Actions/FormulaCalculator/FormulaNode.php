@@ -44,17 +44,21 @@
 class FormulaNode
 {
     public $text;
+    
     public $level;
+    
     public $parent;
+    
     public $children = array();
+    
     public $evaluatedValue;
     
     /**
      * FormulaNode constructor.
      *
-     * @param string        $text
-     * @param int           $level
-     * @param FormulaNode   $parent
+     * @param string      $text
+     * @param int         $level
+     * @param FormulaNode $parent
      */
     public function __construct($text, $level, $parent = null)
     {

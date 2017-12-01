@@ -48,10 +48,10 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
  */
 class actionComputeField extends actionBase
 {
-
+    
     const RAW_VALUE = "raw";
     const FORMATTED_VALUE = "formatted";
-
+    
     /**
      * @return array
      */
@@ -59,22 +59,23 @@ class actionComputeField extends actionBase
     {
         return array('modules/AOW_Actions/actions/actionComputeField.js');
     }
-
+    
     /**
      * @param SugarBean $bean
-     * @param array $params
-     * @param bool $in_save
+     * @param array     $params
+     * @param bool      $in_save
      *
      * @return bool|void
      */
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
-        try {
+        try
+        {
             require_once('modules/AOW_Actions/FormulaCalculator/FormulaCalculator.php');
             require_once('modules/AOW_Actions/FormulaCalculator/FormulaNode.php');
-
+            
             $bean->fill_in_additional_detail_fields();
-
+            
             $resolvedParameters = $this->resolveParameters(
                 $bean,
                 $this->getArrayFromParams($params, 'parameter'),
@@ -86,54 +87,65 @@ class actionComputeField extends actionBase
                 $this->getArrayFromParams($params, 'relationParameterField'),
                 $this->getArrayFromParams($params, 'relationParameterType')
             );
-
+            
             $formulas = $this->getArrayFromParams($params, 'formula');
             $formulaContents = $this->getArrayFromParams($params, 'formulaContent');
-
-            if (count($formulas) == 0) {
+            
+            if (count($formulas) == 0)
+            {
                 return;
             }
-
+            
             $calculator = new FormulaCalculator(
                 $resolvedParameters, $resolvedRelationParameters, $bean->module_name, $bean->created_by
             );
-
+            
             $relateFields = $this->getAllRelatedFields($bean);
-
-            for ($i = 0; $i < count($formulas); $i++) {
-                if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name'])) {
+            
+            for ($i = 0; $i < count($formulas); $i++)
+            {
+                if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name']))
+                {
                     $bean->{$relateFields[$formulas[$i]]['id_name']} =
                         $calculator->calculateFormula($formulaContents[$i]);
-                } else {
+                }
+                else
+                {
                     $bean->{$formulas[$i]} = $calculator->calculateFormula($formulaContents[$i]);
                 }
             }
-
-            if ($in_save) {
+            
+            if ($in_save)
+            {
                 global $current_user;
                 $bean->processed = true;
                 $check_notify =
-                    $bean->assigned_user_id != $current_user->id &&
-                    $bean->assigned_user_id != $bean->fetched_row['assigned_user_id'];
-            } else {
+                    $bean->assigned_user_id != $current_user->id
+                    && $bean->assigned_user_id != $bean->fetched_row['assigned_user_id'];
+            }
+            else
+            {
                 $check_notify = $bean->assigned_user_id != $bean->fetched_row['assigned_user_id'];
             }
-
+            
             $bean->process_save_dates = false;
             $bean->new_with_id = false;
-
+            
             $bean->save($check_notify);
-
+            
             return true;
-        } catch (Exception $e) {
-            if (isset($GLOBALS['log'])) {
+        }
+        catch(Exception $e)
+        {
+            if (isset($GLOBALS['log']))
+            {
                 $GLOBALS['log']->fatal("Calculated Field Exception: " . $e->getMessage());
             }
-
+            
             return false;
         }
     }
-
+    
     /**
      * @param $bean
      * @param $parameters
@@ -144,27 +156,35 @@ class actionComputeField extends actionBase
     private function resolveParameters($bean, $parameters, $parameterTypes)
     {
         $resolvedParameters = array();
-
-        for ($i = 0; $i < count($parameters); $i++) {
-            if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
+        
+        for ($i = 0; $i < count($parameters); $i++)
+        {
+            if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE)
+            {
                 $dataType = $bean->field_name_map[$parameters[$i]]['type'];
-
-                if ($dataType == 'enum') {
+                
+                if ($dataType == 'enum')
+                {
                     $resolvedParameters[$i] =
                         $GLOBALS['app_list_strings'][$bean->field_defs[$parameters[$i]]['options']][$bean->{$parameters[$i]}];
-                } else {
-                    if ($dataType == 'multienum') {
+                }
+                else
+                {
+                    if ($dataType == 'multienum')
+                    {
                         $resolvedParameters[$i] = $this->getMultiEnumTranslated($bean, $parameters[$i]);
                     }
                 }
-            } else {
+            }
+            else
+            {
                 $resolvedParameters[$i] = ($bean->{$parameters[$i]} == null) ? "" : $bean->{$parameters[$i]};
             }
         }
-
+        
         return $resolvedParameters;
     }
-
+    
     /**
      * @param $bean
      * @param $fieldName
@@ -174,17 +194,17 @@ class actionComputeField extends actionBase
     public function getMultiEnumTranslated($bean, $fieldName)
     {
         $displayFieldValues = unencodeMultienum($bean->$fieldName);
-
+        
         array_walk(
             $displayFieldValues,
             function ($val) use ($bean, $fieldName) {
                 $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options'][$bean->$fieldName]];
             }
         );
-
+        
         return implode(", ", $displayFieldValues);
     }
-
+    
     /**
      * @param $params
      * @param $key
@@ -194,18 +214,20 @@ class actionComputeField extends actionBase
     private function getArrayFromParams($params, $key)
     {
         $elements = array();
-
-        if (!isset($params[$key])) {
+        
+        if (!isset($params[$key]))
+        {
             return $elements;
         }
-
-        foreach ($params[$key] as $field) {
+        
+        foreach ($params[$key] as $field)
+        {
             $elements [] = $field;
         }
-
+        
         return $elements;
     }
-
+    
     /**
      * @param $bean
      * @param $relationParameters
@@ -219,67 +241,86 @@ class actionComputeField extends actionBase
         $relationParameters,
         $relationParameterFields,
         $relationParameterTypes
-    ) {
+    )
+    {
         $resolvedRelationParameters = array();
-
+        
         $relateFields = $this->getAllRelatedFields($bean);
-
-        for ($i = 0; $i < count($relationParameters); $i++) {
+        
+        for ($i = 0; $i < count($relationParameters); $i++)
+        {
             $entity = null;
-
-            if (isset($relateFields[$relationParameters[$i]]) &&
-                $relateFields[$relationParameters[$i]]['type'] == 'relate'
-            ) {
+            
+            if (isset($relateFields[$relationParameters[$i]])
+                && $relateFields[$relationParameters[$i]]['type'] == 'relate'
+            )
+            {
                 $relatedEntityId = $bean->{$relateFields[$relationParameters[$i]]['id_name']};
-
-                if (!$relatedEntityId) {
+                
+                if (!$relatedEntityId)
+                {
                     $resolvedRelationParameters[$i] = "";
                     continue;
                 }
-
+                
                 $entity = BeanFactory::getBean($relateFields[$relationParameters[$i]]['module'], $relatedEntityId);
-            } else {
-                if ($bean->load_relationship($relationParameters[$i])) {
-                    foreach ($bean->{$relationParameters[$i]}->getBeans() as $relatedEntity) {
+            }
+            else
+            {
+                if ($bean->load_relationship($relationParameters[$i]))
+                {
+                    foreach ($bean->{$relationParameters[$i]}->getBeans() as $relatedEntity)
+                    {
                         $entity = $relatedEntity;
                     }
                 }
             }
-
-            if ($entity == null) {
+            
+            if ($entity == null)
+            {
                 $resolvedRelationParameters[$i] = "";
                 continue;
             }
-
-            if ($relationParameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
+            
+            if ($relationParameterTypes[$i] == actionComputeField::FORMATTED_VALUE)
+            {
                 $dataType = $entity->field_name_map[$relationParameterFields[$i]]['type'];
-
-                if ($dataType == 'enum') {
+                
+                if ($dataType == 'enum')
+                {
                     $resolvedRelationParameters[$i] =
                         $GLOBALS['app_list_strings'][$entity->field_defs[$relationParameterFields[$i]]['options']][$entity->{$relationParameterFields[$i]}];
-                } else {
-                    if ($dataType == 'multienum') {
+                }
+                else
+                {
+                    if ($dataType == 'multienum')
+                    {
                         $resolvedRelationParameters[$i] =
                             $this->getMultiEnumTranslated($entity, $relationParameterFields[$i]);
                     }
                 }
-            } else {
-                if ($entity->field_name_map[$relationParameterFields[$i]]['type'] == 'relate' &&
-                    isset($entity->field_name_map[$relationParameterFields[$i]]['id_name'])
-                ) {
+            }
+            else
+            {
+                if ($entity->field_name_map[$relationParameterFields[$i]]['type'] == 'relate'
+                    && isset($entity->field_name_map[$relationParameterFields[$i]]['id_name'])
+                )
+                {
                     $id_name = $entity->field_name_map[$relationParameterFields[$i]]['id_name'];
                     $resolvedRelationParameters[$i] = ($entity->{$id_name} == null) ? "" : $entity->{$id_name};
-                } else {
+                }
+                else
+                {
                     $resolvedRelationParameters[$i] =
                         ($entity->{$relationParameterFields[$i]} == null) ? "" :
                             $entity->{$relationParameterFields[$i]};
                 }
             }
         }
-
+        
         return $resolvedRelationParameters;
     }
-
+    
     /**
      * @param $bean
      *
@@ -288,32 +329,34 @@ class actionComputeField extends actionBase
     private function getAllRelatedFields($bean)
     {
         $related_fields = array();
-
-        foreach ($bean->field_defs as $field => $defs) {
-            if (isset($defs['type']) && $defs['type'] == 'relate') {
+        
+        foreach ($bean->field_defs as $field => $defs)
+        {
+            if (isset($defs['type']) && $defs['type'] == 'relate')
+            {
                 $related_fields[$field] = $defs;
             }
         }
-
+        
         return $related_fields;
     }
-
+    
     /**
-     * @param $line
+     * @param                $line
      * @param SugarBean|null $bean
-     * @param array $params
+     * @param array          $params
      *
      * @return string
      */
     public function edit_display($line, SugarBean $bean = null, $params = array())
     {
         require_once("modules/AOW_WorkFlow/aow_utils.php");
-
+        
         $containerName = "computeFieldParameterContainerLine" . $line;
-
+        
         $moduleFieldsDropDown = $this->getModuleFieldsDropdown($bean);
         $relationOptions = $this->getOneRelationOptions($bean, $line);
-
+        
         $html = "
 			<link rel='stylesheet' type='text/css' href='modules/AOW_Actions/actions/actionComputeField.css' />
 			<div class='computeFieldContainer' id='$containerName'>
@@ -351,7 +394,8 @@ class actionComputeField extends actionBase
             translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
             "</option>
 						</select>
-						<input type='button' class='button' onclick='addParameter($line, \"$containerName\");' value='" .
+						<input type='button' class='button' onclick='addParameter($line, \"$containerName\");' value='"
+            .
             translate("LBL_COMPUTEFIELD_ADD_PARAMETER", "AOW_Actions") .
             "' />
 					</div>
@@ -391,7 +435,8 @@ class actionComputeField extends actionBase
             translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
             "</option>
 						</select>
-						<input type='button' class='button' onclick='addRelationParameter($line, \"$containerName\");' value='" .
+						<input type='button' class='button' onclick='addRelationParameter($line, \"$containerName\");' value='"
+            .
             translate("LBL_COMPUTEFIELD_ADD_RELATION_PARAMETER", "AOW_Actions") .
             "' />
 					</div>
@@ -424,8 +469,9 @@ class actionComputeField extends actionBase
             "' />
 					</div>
 				</fieldset>";
-
-        if (count($params) > 0) {
+        
+        if (count($params) > 0)
+        {
             $parameters = $this->createJavascriptArrayFromParams($params, 'parameter');
             $parameterTypes = $this->createJavascriptArrayFromParams($params, 'parameterType');
             $formulas = $this->createJavascriptArrayFromParams($params, 'formula');
@@ -433,7 +479,7 @@ class actionComputeField extends actionBase
             $relationParameters = $this->createJavascriptArrayFromParams($params, 'relationParameter');
             $relationParameterFields = $this->createJavascriptArrayFromParams($params, 'relationParameterField');
             $relationParameterTypes = $this->createJavascriptArrayFromParams($params, 'relationParameterType');
-
+            
             $html .= "
 				<script id ='aow_script$line' type='text/javascript'>
 					computers[$line] = new FieldComputer($line, '$containerName', $parameters, $parameterTypes, $formulas, $formulaContents, $relationParameters, $relationParameterFields, $relationParameterTypes);
@@ -467,14 +513,14 @@ class actionComputeField extends actionBase
 					$('#$containerName .computeFieldRelationParametersContainer').find('.relationParameterFieldSelect:visible').change();
 				</script>";
         }
-
+        
         $html .= "
 			</div>
 		";
-
+        
         return $html;
     }
-
+    
     /**
      * @param $bean
      *
@@ -484,27 +530,31 @@ class actionComputeField extends actionBase
     {
         $moduleFields = json_decode(getModuleFields($bean->module_name, "JSON"), true);
         $optionsString = "";
-
-        foreach ($moduleFields as $key => $value) {
-            if ($key == "") {
+        
+        foreach ($moduleFields as $key => $value)
+        {
+            if ($key == "")
+            {
                 continue;
             }
-
-            foreach ($bean->field_name_map as $mapKey => $mapValue) {
-                if ($key != $mapKey) {
+            
+            foreach ($bean->field_name_map as $mapKey => $mapValue)
+            {
+                if ($key != $mapKey)
+                {
                     continue;
                 }
-
+                
                 $dataType = $mapValue['type'];
                 $optionsString .= "<option value='$key' dataType='$dataType'>$value</option>";
-
+                
                 break;
             }
         }
-
+        
         return $optionsString;
     }
-
+    
     /**
      * @param $bean
      * @param $line
@@ -518,63 +568,71 @@ class actionComputeField extends actionBase
         $fieldSelects = "";
         $alreadyAddedLinks = array();
         $optionsArray = array();
-
-        foreach ($oneRelations as $oneRelation) {
-            if (isset($oneRelation['name']) && in_array($oneRelation['name'], $alreadyAddedLinks)) {
+        
+        foreach ($oneRelations as $oneRelation)
+        {
+            if (isset($oneRelation['name']) && in_array($oneRelation['name'], $alreadyAddedLinks))
+            {
                 continue;
             }
-
-            if (!$bean->load_relationship($oneRelation['name'])) {
+            
+            if (!$bean->load_relationship($oneRelation['name']))
+            {
                 continue;
             }
-
+            
             $def = $this->getRelationDefinitions($bean, $oneRelation['name']);
             $oppositeModule = $this->getOppositeModule($bean, $def);
-
+            
             $optionsArray [] = array(
-                'value' => $oneRelation['name'],
-                'module' => translate($oppositeModule),
-                'relation' => $this->translate($oneRelation['vname'], $bean->module_name, $oppositeModule)
+                'value'    => $oneRelation['name'],
+                'module'   => translate($oppositeModule),
+                'relation' => $this->translate($oneRelation['vname'], $bean->module_name, $oppositeModule),
             );
-
+            
             $fieldSelects .= $this->getRelationParameterFieldSelect($oneRelation['name'], $oppositeModule, $line);
             $alreadyAddedLinks [] = $oneRelation['name'];
         }
-
-        foreach ($relateFields as $name => $relateField) {
-            if (isset($relateField['link']) && in_array($relateField['link'], $alreadyAddedLinks)) {
+        
+        foreach ($relateFields as $name => $relateField)
+        {
+            if (isset($relateField['link']) && in_array($relateField['link'], $alreadyAddedLinks))
+            {
                 continue;
             }
-
-            if (isset($relateField['group']) &&
-                in_array($relateFields[$relateField['group']]['link'], $alreadyAddedLinks)
-            ) {
+            
+            if (isset($relateField['group'])
+                && in_array($relateFields[$relateField['group']]['link'], $alreadyAddedLinks)
+            )
+            {
                 continue;
             }
-
-            if (isset($relateField['link_type']) && $relateField['link_type'] == "relationship_info") {
+            
+            if (isset($relateField['link_type']) && $relateField['link_type'] == "relationship_info")
+            {
                 continue;
             }
-
+            
             $optionsArray [] = array(
-                'value' => $name,
-                'module' => $this->translate($relateField['module']),
-                'relation' => $this->translate($relateField['vname'], $bean->module_name, $relateField['module'])
+                'value'    => $name,
+                'module'   => $this->translate($relateField['module']),
+                'relation' => $this->translate($relateField['vname'], $bean->module_name, $relateField['module']),
             );
-
+            
             $fieldSelects .= $this->getRelationParameterFieldSelect($name, $relateField['module'], $line);
-
-            if (isset($relateField['link'])) {
+            
+            if (isset($relateField['link']))
+            {
                 $alreadyAddedLinks [] = $relateField['link'];
             }
         }
-
+        
         $options = $this->createOptions($optionsArray);
-
+        
         return "<select id='relationParameterSelect$line' class='relationParameterSelect'>$options</select>" .
             $fieldSelects;
     }
-
+    
     /**
      * @param $bean
      *
@@ -584,18 +642,20 @@ class actionComputeField extends actionBase
     {
         $linkedFields = $bean->get_linked_fields();
         $oneRelations = array();
-
-        foreach ($linkedFields as $key => $value) {
-            if (!isset($value['link_type']) || $value['link_type'] != "one") {
+        
+        foreach ($linkedFields as $key => $value)
+        {
+            if (!isset($value['link_type']) || $value['link_type'] != "one")
+            {
                 continue;
             }
-
+            
             $oneRelations [] = $value;
         }
-
+        
         return $oneRelations;
     }
-
+    
     /**
      * @param $bean
      * @param $relationName
@@ -606,7 +666,7 @@ class actionComputeField extends actionBase
     {
         return $bean->{$relationName}->relationship->def;
     }
-
+    
     /**
      * @param $bean
      * @param $def
@@ -617,9 +677,9 @@ class actionComputeField extends actionBase
     {
         return $def['lhs_module'] == $bean->module_name ? $def['rhs_module'] : $def['lhs_module'];
     }
-
+    
     /**
-     * @param $label
+     * @param        $label
      * @param string $module
      * @param string $otherModule
      *
@@ -628,18 +688,20 @@ class actionComputeField extends actionBase
     private function translate($label, $module = "", $otherModule = "")
     {
         $translated = translate($label);
-        if ($translated != $label) {
+        if ($translated != $label)
+        {
             return $translated;
         }
-
+        
         $translated = translate($label, $module);
-        if ($translated != $label) {
+        if ($translated != $label)
+        {
             return $translated;
         }
-
+        
         return translate($label, $otherModule);
     }
-
+    
     /**
      * @param $relationName
      * @param $moduleName
@@ -650,13 +712,13 @@ class actionComputeField extends actionBase
     private function getRelationParameterFieldSelect($relationName, $moduleName, $line)
     {
         global $beanList;
-
+        
         $bean = new $beanList[$moduleName]();
         $fields = $this->getModuleFieldsDropdown($bean);
-
+        
         return "<select class='relationParameterFieldSelect' relation='$relationName' style='display:none;'>$fields</select>";
     }
-
+    
     /**
      * @param $optionsArray
      *
@@ -665,22 +727,24 @@ class actionComputeField extends actionBase
     private function createOptions($optionsArray)
     {
         $options = "";
-
+        
         usort(
             $optionsArray,
             function ($item1, $item2) {
                 $compareString1 = $item1['module'] . ' : ' . $item1['relation'];
                 $compareString2 = $item2['module'] . ' : ' . $item2['relation'];
-
-                if ($compareString1 == $compareString2) {
+                
+                if ($compareString1 == $compareString2)
+                {
                     return 0;
                 }
-
+                
                 return $compareString1 < $compareString2 ? -1 : 1;
             }
         );
-
-        foreach ($optionsArray as $option) {
+        
+        foreach ($optionsArray as $option)
+        {
             $options .= "<option value='" .
                 $option['value'] .
                 "'>" .
@@ -689,10 +753,10 @@ class actionComputeField extends actionBase
                 $option['relation'] .
                 "</option>";
         }
-
+        
         return $options;
     }
-
+    
     /**
      * @param $params
      * @param $key
@@ -702,64 +766,9 @@ class actionComputeField extends actionBase
     private function createJavascriptArrayFromParams($params, $key)
     {
         $paramArray = $this->getArrayFromParams($params, $key);
-
+        
         return count($paramArray) == 0 ? "[]" : "['" . implode("', '", $paramArray) . "']";
     }
-
-    /**
-     * @TODO: UNUSED - REMOVE ME!
-     *
-     * @param $relationName
-     * @param $oppositeModule
-     *
-     * @return string
-     */
-    /*
-    private function getOption($relationName, $oppositeModule)
-    {
-        return "<option value='" .
-            $oneRelation['name'] .
-            "'>" .
-            translate($oppositeModule) .
-            ' : ' .
-            translate($oneRelation['vname']) .
-            "</option>";
-    }
-    */
-
-    /**
-     * @TODO: UNUSED - REMOVE ME!
-     *
-     * @param $relationship_name
-     * @param $module
-     *
-     * @return string
-     */
-    /*
-    private function getOtherModuleForRelationship($relationship_name, $module)
-    {
-        $db = $GLOBALS['db'];
-
-        $query =
-            "SELECT relationship_name, rhs_module, lhs_module FROM relationships WHERE deleted=0 AND relationship_name = '" .
-            $relationship_name .
-            "'";
-        $result = $db->query($query, true);
-        $row = $db->fetchByAssoc($result);
-
-        if ($row != null) {
-            if (strtolower($row['rhs_module']) == strtolower($module)) {
-                return $row['lhs_module'];
-            }
-
-            if (strtolower($row['lhs_module']) == strtolower($module)) {
-                return $row['rhs_module'];
-            }
-        }
-
-        return "";
-    }
-    */
 }
 
 
