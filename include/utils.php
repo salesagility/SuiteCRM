@@ -2655,7 +2655,14 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables, $from_column, $from_id, $to_id)
+/**
+ * @param $db
+ * @param array $tables
+ * @param $from_column
+ * @param $from_id
+ * @param $to_id
+ */
+function clone_relationship(&$db, $tables, $from_column = null, $from_id = null, $to_id = null)
 {
     foreach ((array) $tables as $table) {
         if ($table == 'emails_beans') {
@@ -2831,8 +2838,23 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
-{
+/**
+ * @param bool $add_blank
+ * @param $bean_name
+ * @param $display_columns
+ * @param string $where
+ * @param string $order_by
+ * @param bool $blank_is_none
+ * @return array
+ */
+function get_bean_select_array(
+    $add_blank,
+    $bean_name = null,
+    $display_columns = null,
+    $where = '',
+    $order_by = '',
+    $blank_is_none = false
+) {
     global $beanFiles;
 
     // set $add_blank = true by default
@@ -4214,8 +4236,21 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list, $values, &$bean, $add_custom_fields = false, $module = '')
-{
+/**
+ * @param array $field_list
+ * @param array $values
+ * @param array $bean
+ * @param bool $add_custom_fields
+ * @param string $module
+ * @return array
+ */
+function generate_search_where(
+    $field_list,
+    $values,
+    &$bean = null,
+    $add_custom_fields = false,
+    $module = ''
+) {
     $where_clauses = array();
     $like_char = '%';
     $table_name = $bean->object_name;

@@ -1317,7 +1317,8 @@ abstract class DBManager
      * @deprecated
      *
      * @param  SugarBean $bean the bean from which table we will generate insert stmts
-     * @param  string $select_query the query which will give us the set of objects we want to place into our insert statement
+     * @param  string $select_query the query which will give us the set of objects that
+     * we want to place into our insert statement
      * @param  int $start the first row to query
      * @param  int $count the number of rows to query
      * @param  string $table the table to query from
@@ -2622,22 +2623,21 @@ abstract class DBManager
         }
     }
 
-    /**
-     * Returns SQL defintions for all columns in a table
-     *
-     * @param  array $fieldDefs Vardef-format field def
-     * @param  bool $ignoreRequired Optional, true if we should ignor this being a required field
-     * @param  string $tablename Optional, table name
-     * @return string SQL column definitions
-     */
-    protected function columnSQLRep($fieldDefs, $ignoreRequired, $tablename)
-    {
+	/**
+	 * Returns SQL defintions for all columns in a table
+	 *
+	 * @param  array  $fieldDefs  Vardef-format field def
+	 * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
+	 * @param  string $tablename      Optional, table name
+	 * @return string SQL column definitions
+	 */
+	protected function columnSQLRep($fieldDefs, $ignoreRequired , $tablename= null){
         // set $ignoreRequired = false by default
         if (!is_bool($ignoreRequired)) {
             $ignoreRequired = false;
         }
 
-        $columns = array();
+		$columns = array();
 
         if ($this->isFieldArray($fieldDefs)) {
             foreach ($fieldDefs as $fieldDef) {
