@@ -38,6 +38,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+require_once 'modules/Configurator/Configurator.php';
+require_once('modules/AOW_Actions/FormulaCalculator/FormulaCalculatorPluginLoader.php');
+
 /**
  * Class FormulaCalculator
  */
@@ -48,27 +51,34 @@ class FormulaCalculator
     const PARAMETER_SEPARATOR_TERMINAL = ";";
     const CONFIGURATOR_NAME = "SweeterCalc";
     
+    /** @var  array */
     private $parameters;
     
+    /** @var  array */
     private $relationParameters;
     
+    /** @var  array */
     private $currentModule;
     
+    /** @var  string */
     private $creatorUserId;
     
+    /** @var \Configurator */
     private $configurator;
     
+    /** @var bool */
     private $debugEnabled;
     
+    /** @var string */
     private $debugFileName;
     
     /**
      * FormulaCalculator constructor.
      *
-     * @param $parameters
-     * @param $relationParameters
-     * @param $currentModule
-     * @param $creatorUserId
+     * @param array $parameters
+     * @param array $relationParameters
+     * @param array $currentModule
+     * @param string $creatorUserId
      */
     public function __construct($parameters, $relationParameters, $currentModule, $creatorUserId)
     {
@@ -77,7 +87,6 @@ class FormulaCalculator
         $this->currentModule = $currentModule;
         $this->creatorUserId = $creatorUserId;
         
-        require_once 'modules/Configurator/Configurator.php';
         $this->configurator = new Configurator();
         $this->configurator->loadConfig();
         
@@ -85,6 +94,9 @@ class FormulaCalculator
         $this->debugFileName =
             isset($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName']) ?
                 $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName'] : 'SweeterCalc.log';
+        
+        
+        FormulaCalculatorPluginLoader::initialize();
     }
     
     /**
@@ -391,11 +403,18 @@ class FormulaCalculator
         {
             return $this->parseFloat($params[0]) * $this->parseFloat($params[1]);
         }
-        
+    
+        /**
+         * --------------------------------------------------------------------------------------------------SUBSTITUTED
+         */
         if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null)
         {
-            return $this->parseFloat($params[0]) / $this->parseFloat($params[1]);
+            $plugin = $this->getPluginForFunctionName("divide");
+            return $plugin::getResult($params);
         }
+        /**
+         * --------------------------------------------------------------------------------------------------SUBSTITUTED
+         */
         
         if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null)
         {
@@ -561,6 +580,32 @@ class FormulaCalculator
         $this->logVardump($params);
         
         return $params;
+    }
+    
+    /**
+     * @todo: implement array where to store class instances by function name
+     *  so that we do not have to create new reflection and class instance every time
+     *
+     * @todo: we should do the checks here:
+     *      - class_exists($fqcn)
+     *      - reflection: $reflection->implementsInterface
+     *      - reflection: $reflection->isSubclassOf
+     *
+     * @param string $functionName
+     *
+     * @return \AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface
+     */
+    protected function getPluginForFunctionName($functionName)
+    {
+        $fqcn = '\AOW_Actions\FormulaCalculator\Plugins\\'
+            . 'FormulaCalculator' . ucfirst($functionName) . 'Plugin';
+        
+        $reflection = new ReflectionClass($fqcn);
+        
+        /** @var \AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface $class */
+        $class = $reflection->newInstanceWithoutConstructor();
+        
+        return $class;
     }
     
     /**
