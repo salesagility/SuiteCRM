@@ -70,7 +70,8 @@ class actionComputeField extends actionBase
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
         try {
-            require_once('modules/AOW_Actions/FormulaCalculator.php');
+            require_once('modules/AOW_Actions/FormulaCalculator/FormulaCalculator.php');
+            require_once('modules/AOW_Actions/FormulaCalculator/FormulaNode.php');
 
             $bean->fill_in_additional_detail_fields();
 
@@ -338,7 +339,7 @@ class actionComputeField extends actionBase
 							</thead>
 							<tbody>
 							</tbody>
-						</table>						
+						</table>
 						<select class='parameterSelect' id='parameterSelect$line'>
 							$moduleFieldsDropDown
 						</select>
@@ -380,7 +381,7 @@ class actionComputeField extends actionBase
 							</thead>
 							<tbody>
 							</tbody>
-						</table>						
+						</table>
 						$relationOptions
 						<select class='relationParameterTypeSelect' id='relationParameterTypeSelect$line'>
 							<option value='raw'>" .
@@ -414,7 +415,7 @@ class actionComputeField extends actionBase
 							</thead>
 							<tbody>
 							</tbody>
-						</table>						
+						</table>
 						<select>
 							$moduleFieldsDropDown
 						</select>
@@ -442,11 +443,11 @@ class actionComputeField extends actionBase
 						$('#$containerName').find('select.relationParameterFieldSelect[relation=\"' + $(this).val() + '\"]').show();
 					}
 					
-					$('#relationParameterSelect$line').change(onRelationParameterSelectChange$line);					
+					$('#relationParameterSelect$line').change(onRelationParameterSelectChange$line);
 					$('#relationParameterSelect$line').change();
 					
 					function onFieldChange$line(dropdown, valueDropdown) {
-						var value = $(dropdown).find('option:selected').attr('dataType');						
+						var value = $(dropdown).find('option:selected').attr('dataType');
 						if (value == 'enum' || value == 'multienum') {
 							$(valueDropdown).show();
 						} else {
@@ -706,11 +707,14 @@ class actionComputeField extends actionBase
     }
 
     /**
+     * @TODO: UNUSED - REMOVE ME!
+     *
      * @param $relationName
      * @param $oppositeModule
      *
      * @return string
      */
+    /*
     private function getOption($relationName, $oppositeModule)
     {
         return "<option value='" .
@@ -721,13 +725,17 @@ class actionComputeField extends actionBase
             translate($oneRelation['vname']) .
             "</option>";
     }
+    */
 
     /**
+     * @TODO: UNUSED - REMOVE ME!
+     *
      * @param $relationship_name
      * @param $module
      *
      * @return string
      */
+    /*
     private function getOtherModuleForRelationship($relationship_name, $module)
     {
         $db = $GLOBALS['db'];
@@ -751,6 +759,7 @@ class actionComputeField extends actionBase
 
         return "";
     }
+    */
 }
 
 
