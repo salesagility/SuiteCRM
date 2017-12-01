@@ -4108,7 +4108,7 @@ class InboundEmail extends SugarBean
 	 * @param array $breadcrumb Default 0, build up of the parts mapping
 	 * @param bool $forDisplay Default false
 	 */
-	publicfunction saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay= null)
+	public function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay= null)
 		{global $sugar_config;
 		/*
 			Primary body types for a part of a mail structure (imap_fetchstructure returned object)
