@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -4098,30 +4098,29 @@ class InboundEmail extends SugarBean
         }
     }
 
-    /**
-     * Takes the "parts" attribute of the object that imap_fetchbody() method
-     * returns, and recursively goes through looking for objects that have a
-     * disposition of "attachement" or "inline"
-     * @param int $msgNo The relative message number for the monitored mailbox
-     * @param object $parts Array of objects to examine
-     * @param string $emailId The GUID of the email saved prior to calling this method
-     * @param array $breadcrumb Default 0, build up of the parts mapping
-     * @param bool $forDisplay Default false
-     */
-    function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay)
-    {
-        global $sugar_config;
-        /*
-            Primary body types for a part of a mail structure (imap_fetchstructure returned object)
-            0 => text
-            1 => multipart
-            2 => message
-            3 => application
-            4 => audio
-            5 => image
-            6 => video
-            7 => other
-        */
+	/**
+	 * Takes the "parts" attribute of the object that imap_fetchbody() method
+	 * returns, and recursively goes through looking for objects that have a
+	 * disposition of "attachement" or "inline"
+	 * @param int $msgNo The relative message number for the monitored mailbox
+	 * @param object $parts Array of objects to examine
+	 * @param string $emailId The GUID of the email saved prior to calling this method
+	 * @param array $breadcrumb Default 0, build up of the parts mapping
+	 * @param bool $forDisplay Default false
+	 */
+	public function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay= null)
+		{global $sugar_config;
+		/*
+			Primary body types for a part of a mail structure (imap_fetchstructure returned object)
+			0 => text
+			1 => multipart
+			2 => message
+			3 => application
+			4 => audio
+			5 => image
+			6 => video
+			7 => other
+		*/
 
         // set $breadcrumb = '0' as default
         if (!$breadcrumb) {

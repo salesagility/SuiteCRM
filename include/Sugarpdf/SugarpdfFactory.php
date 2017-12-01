@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,26 +34,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/Sugarpdf/Sugarpdf.php');
 
-class SugarpdfFactory{
+class SugarpdfFactory
+{
     /**
      * load the correct Tcpdf
      * @param string $type Tcpdf Type
      * @return valid Tcpdf
      */
-    function loadSugarpdf($type, $module, $bean = null, $sugarpdf_object_map = array()){
+    /**
+     * Load the correct Tcpdf
+     *
+     * @param string $type
+     * @param null|string $module
+     * @param null|array $bean
+     * @param array $sugarpdf_object_map
+     * @return a|null|Sugarpdf
+     */
+    public function loadSugarpdf($type, $module = null, $bean = null, $sugarpdf_object_map = array())
+    {
 
         // set $type = 'default' by default
         if (empty($type)) {
             $type = 'default';
         }
-
         $type = strtolower(basename($type));
         //SugarpdfFactory::_loadConfig($sugarpdf, $type);
         //first let's check if the module handles this Tcpdf
@@ -152,4 +165,3 @@ class SugarpdfFactory{
             return new Sugarpdf($bean, $sugarpdf_object_map);
     }
 }
-?>
