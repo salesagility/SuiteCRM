@@ -39,11 +39,10 @@ $chart = <<<EOD
 
             function resizeGraph(graph)
             {
-                var maxWidth = 900;
                 var maxHeight = 500;
                 var maxTextSize = 10;
 
-                graph.width = ($(graph).parent().width() < maxWidth ? $(graph).parent().width() : maxWidth);
+                graph.width = $(graph).parent().width();
                 graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
 
                 var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
