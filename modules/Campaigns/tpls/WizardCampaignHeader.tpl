@@ -74,6 +74,19 @@
 			<td width="35%" ><span sugar='slot3b'><select id='status' name='wiz_step1_status'  aria-required="true" title='{$MOD.LBL_CAMPAIGN_STATUS}'>{$STATUS_OPTIONS}</select></span sugar='slot'></td>
 		</tr>
 
+					{if $campaign_type == 'survey'}
+						<tr>
+							<td width="15%" scope="col"><span sugar='slot3'>{$MOD.LBL_CAMPAIGN_SURVEY} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span sugar='slot'></td>
+							<td width="35%" >
+								<span sugar='slot2b'>
+									<input class="sqsEnabled" autocomplete="off" id="survey_name" name="wiz_step1_survey_name"  title='{$MOD.LBL_CAMPAIGN_SURVEY}' type="text" value="{$SURVEY_NAME}">
+									<input id='survey_id' name='wiz_step1_survey_id' type="hidden" value="{$SURVEY_ID}"  title='{$MOD.LBL_CAMPAIGN_SURVEY}'/>
+									<input title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button" class="button" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name=btn1 onclick='open_popup("Surveys", 600, 400, "", true, false, {$encoded_surveys_popup_request_data});' />
+								</span sugar='slot'>
+							</td>
+					</tr>
+					{/if}
+
 					<tr{if $HIDE_CAMPAIGN_TYPE} style="display: none;"{/if}>
 						<!--
 					<td scope="col"><span sugar='slot5'>{$MOD.LBL_CAMPAIGN_START_DATE} </span sugar='slot'></td>
@@ -189,7 +202,11 @@
         fields[0] = 'name'; 
         fields[1] = 'status';
         fields[2] = 'end_date';
-        
+        {/literal}
+        {if $campaign_type == "survey"}
+        fields[3] = 'survey_id';
+        {/if}
+        {literal}
         var field_value = ''; 
         for (i=0; i < fields.length; i++){
             if(document.getElementById(fields[i]) !=null){

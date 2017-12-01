@@ -3865,3 +3865,27 @@ $app_list_strings['pdf_page_size_dom']['Letter'] = 'Letter';
 $app_list_strings['pdf_page_size_dom']['Legal'] = 'Legal';
 $app_list_strings['pdf_orientation_dom']['Portrait'] = 'Portrait';
 $app_list_strings['pdf_orientation_dom']['Landscape'] = 'Landscape';
+
+
+$app_list_strings['moduleList']['SurveyResponses'] = 'Survey Responses';
+$app_list_strings['moduleList']['Surveys'] = 'Surveys';
+$app_list_strings['moduleList']['SurveyQuestionResponses'] = 'Survey Question Responses';
+$app_list_strings['moduleList']['SurveyQuestions'] = 'Survey Questions';
+$app_list_strings['moduleList']['SurveyQuestionOptions'] = 'Survey Question Options';
+$app_list_strings['survey_status_list']['Draft'] = 'Draft';
+$app_list_strings['survey_status_list']['Public'] = 'Public';
+$app_list_strings['survey_status_list']['Closed'] = 'Closed';
+$app_list_strings['surveys_question_type']['Text'] = 'Text';
+$app_list_strings['surveys_question_type']['Textbox'] = 'Textbox';
+$app_list_strings['surveys_question_type']['Checkbox'] = 'Checkbox';
+$app_list_strings['surveys_question_type']['Radio'] = 'Radio';
+$app_list_strings['surveys_question_type']['Dropdown'] = 'Dropdown';
+$app_list_strings['surveys_question_type']['Multiselect'] = 'Multiselect';
+$app_list_strings['surveys_question_type']['Matrix'] = 'Matrix';
+$app_list_strings['surveys_question_type']['DateTime'] = 'DateTime';
+$app_list_strings['surveys_question_type']['Date'] = 'Date';
+$app_list_strings['surveys_question_type']['Scale'] = 'Scale';
+$app_list_strings['surveys_question_type']['Rating'] = 'Rating';
+$app_list_strings['surveys_matrix_options'][0] = 'Satisfied';
+$app_list_strings['surveys_matrix_options'][1] = 'Neither Satisfied nor Dissatisfied';
+$app_list_strings['surveys_matrix_options'][2] = 'Dissatisfied';
