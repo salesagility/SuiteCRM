@@ -73,6 +73,7 @@
 									<input type="radio"  id="wizardtype_nl" name="wizardtype" value='1'checked ><label for='wizardtype_nl'>{$MOD.LBL_NEWSLETTER}</label><br>
 									<input type="radio"  id="wizardtype_em" name="wizardtype" value='2'><label for='wizardtype_em'>{$MOD.LBL_EMAIL}</label><br>
 									<input type="radio"  id="wizardtype_ot" name='wizardtype' value='3'><label for='wizardtype_ot'>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</label><br>
+									<input type="radio"  id="wizardtype_survey" name='wizardtype' value='4'><label for='wizardtype_survey'>{$MOD.LBL_CAMPAIGN_SURVEY}</label><br>
 								</p>
 
 
@@ -99,6 +100,13 @@
 											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
 											<br />
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
+										</a>
+									</li>
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_survey').click(); $(this).closest('form').submit();" title="{$MOD.LBL_CAMPAIGN_SURVEY}">
+											<img src="{sugar_getimagepath file="cmpwzrd/Surveys.png"}" />
+											<br />
+											<span>{$MOD.LBL_CAMPAIGN_SURVEY}</span>
 										</a>
 									</li>
 								</ul>

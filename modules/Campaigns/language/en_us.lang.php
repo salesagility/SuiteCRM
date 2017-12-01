@@ -461,6 +461,8 @@ $mod_strings = array (
 	'LBL_EMAIL_MARKETING' => 'Email Marketing',
 	'LBL_QUEUE_ITEMS' => 'Queue Items',
 	'LBL_PROSPECT_LISTS' => 'Prospect Lists',
+	'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
+	'LBL_CAMPAIGN_SURVEY' => "Survey",
 );
 
 
