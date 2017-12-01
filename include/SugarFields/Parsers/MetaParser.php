@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * MetaParser.php
@@ -151,8 +154,10 @@ function getTagAttribute($name, $contents, $filter = '') {
  * Returns an Array of the tables found in the file.  If $tableClass parameter
  * is supplied, it'll return only those tables that have a matching class attribute
  * equal to $tableClass
- * @param $tableClass Optional table class parameter value
- * @return Array of table elements found
+ *
+ * @param null $tableClass Optional table class parameter value
+ * @param null $contents
+ * @return array|false of table elements found
  */
 function getTables($tableClass = null, $contents = '') {
    preg_match_all("'(<table[^>]*?>)(.*?)(</table[^>]*?>)'si", $contents, $matches, PREG_SET_ORDER);
@@ -552,7 +557,15 @@ function applyPostRules($moduleDir, $panels) {
    return $panels;
 }
 
-function createFileContents($moduleDir, $panels, $templateMeta=array()) {
+    /**
+     * @param $moduleDir
+     * @param $panels
+     * @param array $templateMeta
+     * @param null $htmlFilePath
+     * @return mixed|string
+     */
+    public function createFileContents($moduleDir, $panels, $templateMeta = array(), $htmlFilePath = null)
+    {
 
 $header = "<?php\n\n";
 
@@ -824,4 +837,4 @@ function findSingleVardefElement($formElements=array(), $vardefs=array()) {
 
 
 }
-?>
+
