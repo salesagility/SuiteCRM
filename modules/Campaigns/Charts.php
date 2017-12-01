@@ -62,7 +62,7 @@ class campaign_charts {
      * @param string $marketing_id
      * @return string
      */
-    publicfunction campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
+    public function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
 		global $app_strings, $mod_strings, $charset, $lang, $barChartColors,$app_list_strings;
 
 		if ($campaign_id) {

@@ -755,7 +755,7 @@ EOQ;
 	  * @param string $mod_type name of the module, either "Contact" or "Releases" currently
 	  *@return string
 	*/
-    publicfunction addUserName($displayname, $varname, $id_name, $mod_type= null){
+    public function addUserName($displayname, $varname, $id_name, $mod_type= null){
 		global $app_strings;
 
 		if(empty($id_name))
