@@ -42,15 +42,17 @@ namespace AOW_Actions\FormulaCalculator\Plugins;
 /**
  * Class FormulaCalculatorAddPlugin
  */
-class FormulaCalculatorAddPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface {
+class FormulaCalculatorAddPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
+{
     /**
      * @param array $params
      *
      * @return float|int
      */
-    public static function getResult(array $params = []) {
+    public static function getResult(array $params = [])
+    {
         $result = self::parseFloat($params[0]) + self::parseFloat($params[1]);
-        
+
         return $result;
     }
 }

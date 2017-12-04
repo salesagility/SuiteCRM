@@ -47,8 +47,10 @@ use SuiteCRM\Exception\Exception;
  *
  * @package AOW_Actions\FormulaCalculator\Exception
  */
-class FormulaCalculatorException extends Exception {
-    public function __construct($message, $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null) {
+class FormulaCalculatorException extends Exception
+{
+    public function __construct($message, $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
+    {
         parent::__construct('[FormulaCalculator] ' . $message . '', $code, $previous);
     }
 }

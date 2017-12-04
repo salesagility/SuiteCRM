@@ -49,58 +49,60 @@ require_once('modules/AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorPlu
 /**
  * Class FormulaCalculator
  */
-class FormulaCalculator {
+class FormulaCalculator
+{
     const START_TERMINAL = "{";
     const END_TERMINAL = "}";
     const PARAMETER_SEPARATOR_TERMINAL = ";";
     const CONFIGURATOR_NAME = "SweeterCalc";
-    
+
     /** @var  array $parameters */
     private $parameters;
-    
+
     /** @var  array $relationParameters */
     private $relationParameters;
-    
+
     /** @var  array $currentModule */
     private $currentModule;
-    
+
     /** @var  string $creatorUserId */
     private $creatorUserId;
-    
+
     /** @var \Configurator $configurator */
     private $configurator;
-    
+
     /** @var bool $debugEnabled */
     private $debugEnabled;
-    
+
     /** @var string $debugFileName */
     private $debugFileName;
-    
+
     /**
      * FormulaCalculator constructor.
      *
-     * @param array  $parameters
-     * @param array  $relationParameters
-     * @param array  $currentModule
+     * @param array $parameters
+     * @param array $relationParameters
+     * @param array $currentModule
      * @param string $creatorUserId
      */
-    public function __construct($parameters, $relationParameters, $currentModule, $creatorUserId) {
+    public function __construct($parameters, $relationParameters, $currentModule, $creatorUserId)
+    {
         $this->parameters = $parameters;
         $this->relationParameters = $relationParameters;
         $this->currentModule = $currentModule;
         $this->creatorUserId = $creatorUserId;
-        
+
         $this->configurator = new Configurator();
         $this->configurator->loadConfig();
-        
+
         $this->debugEnabled = $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugEnabled'] == 1;
         $this->debugFileName =
             isset($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName']) ?
                 $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName'] : 'SweeterCalc.log';
-        
+
         FormulaCalculatorPluginLoader::initialize();
     }
-    
+
     /**
      * @param string $formula
      *
@@ -108,83 +110,85 @@ class FormulaCalculator {
      *
      * @return mixed|string
      */
-    public function calculateFormula($formula) {
+    public function calculateFormula($formula)
+    {
         try {
             $currentEncoding = mb_internal_encoding();
-            
+
             mb_internal_encoding("UTF-8");
-            
+
             $this->log("--------------------------------------------------------------------------------------------------------");
             $this->log("Evaluating expression: '$formula'.");
-            
+
             $rootNode = $this->createTree($formula);
             $evaluated = $this->evaluateTreeLevel($rootNode);
-            
+
             $this->log("Expression evaluated, value is: '$evaluated'.");
             $this->log("--------------------------------------------------------------------------------------------------------");
-            
+
             mb_internal_encoding($currentEncoding);
-            
+
             return $evaluated;
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             $this->log('Exception: ' . $e->getMessage());
             throw $e;
         }
     }
-    
+
     /**
      * @param string $content
      */
-    private function log($content) {
+    private function log($content)
+    {
         if (!$this->debugEnabled) {
             return;
         }
-        
+
         $currentContent = file_exists($this->debugFileName) ? file_get_contents($this->debugFileName) : "";
         file_put_contents($this->debugFileName, $currentContent . "[" . date("Y-m-d H:i:s") . "] " . $content . "\n");
     }
-    
+
     /**
      * @param $content
      *
      * @return FormulaNode
      */
-    private function createTree($content) {
+    private function createTree($content)
+    {
         $rootNode = new FormulaNode($content, 0);
-        
+
         $this->findLexicalElementsOnLevel($content, 0, $rootNode);
-        
+
         return $rootNode;
     }
-    
+
     /**
-     * @param string      $content
-     * @param int         $level
+     * @param string $content
+     * @param int $level
      * @param FormulaNode $node
      */
-    private function findLexicalElementsOnLevel($content, $level, &$node) {
+    private function findLexicalElementsOnLevel($content, $level, &$node)
+    {
         $characters = preg_split('//u', $content, -1, PREG_SPLIT_NO_EMPTY);
         $terminalLevel = 0;
-        
+
         $currentText = "";
         for ($i = 0; $i < count($characters); $i++) {
             $char = $characters[$i];
-            
+
             if ($terminalLevel > 0) {
                 $currentText .= $char;
             }
-            
+
             if ($char === FormulaCalculator::START_TERMINAL) {
                 if ($terminalLevel == 0) {
                     $currentText .= $char;
                 }
-                
+
                 $terminalLevel++;
-            }
-            elseif ($char === FormulaCalculator::END_TERMINAL) {
+            } elseif ($char === FormulaCalculator::END_TERMINAL) {
                 $terminalLevel--;
-                
+
                 if ($terminalLevel == 0) {
                     $newLevel = $level + 1;
                     $newNode = new FormulaNode($currentText, $newLevel, $node);
@@ -195,80 +199,82 @@ class FormulaCalculator {
             }
         }
     }
-    
+
     /**
      * @param \FormulaNode $node
      *
      * @return int|mixed|string
      */
-    private function evaluateTreeLevel(&$node) {
+    private function evaluateTreeLevel(&$node)
+    {
         if ($node->isLeaf()) {
             $node->evaluatedValue = $this->evaluateNode($node->text);
             $this->log("Node value: " . $node->evaluatedValue);
             $node->evaluatedValue = $this->evaluateLeaf($node->evaluatedValue);
-            
+
             $this->log("Evaluating leaf: " . $node->text);
             $this->log("Leaf value: " . $node->evaluatedValue);
-            
+
             return $node->evaluatedValue;
         }
-        
+
         $childItems = array();
         foreach ($node->children as $child) {
             $childItems [] = array(
-                'value'          => $child->text,
+                'value' => $child->text,
                 'evaluatedValue' => $this->evaluateTreeLevel($child),
             );
         }
-        
+
         if ($node->level > 0) {
             $node->evaluatedValue = $this->evaluateNode($node->text, $childItems);
             $this->log("Node value: " . $node->evaluatedValue);
-        }
-        else {
+        } else {
             $evaluatedValue = $node->text;
-            
+
             foreach ($childItems as $childItem) {
                 $pos = strpos($evaluatedValue, $childItem['value']);
                 if ($pos !== false) {
                     $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: "
-                               . $evaluatedValue);
+                        . $evaluatedValue);
                     $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos,
-                                                     strlen($childItem['value']));
+                        strlen($childItem['value']));
                     $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: "
-                               . $evaluatedValue);
+                        . $evaluatedValue);
                 }
             }
-            
+
             $node->evaluatedValue = $evaluatedValue;
         }
-        
+
         return $node->evaluatedValue;
     }
-    
+
     /**
      * @param $text
      *
      * @return string|null
      */
-    protected function getFunctionName($text) {
+    protected function getFunctionName($text)
+    {
         $answer = null;
-        
+
         $pattern = "#^" . self::START_TERMINAL . "([a-zA-Z]*)\(" . "#";
         if (preg_match($pattern, $text, $m)) {
             $answer = $m[1];
         }
-        
+
         return $answer;
     }
-    
+
     /**
      * @param string $text
-     * @param array  $childItems
+     * @param array $childItems
      *
      * @return string
      */
-    private function evaluateNode($text, $childItems = array()) {
+    private function evaluateNode($text, $childItems = array())
+    {
         $answer = "";
         $functionName = $this->getFunctionName($text);
         $plugin = null;
@@ -276,158 +282,156 @@ class FormulaCalculator {
             $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction($functionName);
             $params = $this->evaluateFunctionParams($functionName, $text, $childItems);
             $answer = $plugin::getResult($params);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->log($e->getMessage());
         }
-        
+
         /* Do this until evaluateNodeOld exists */
         if (!$plugin) {
             $answer = $this->evaluateNodeOld($text, $childItems);
         }
-        
+
         return $answer;
     }
-    
+
     /**
      * @todo: move out calculations to external classes
      *
      * @param string $text
-     * @param array  $childItems
+     * @param array $childItems
      *
      * @return string
      */
-    private function evaluateNodeOld($text, $childItems = array()) {
+    private function evaluateNodeOld($text, $childItems = array())
+    {
         if (count($childItems) == 0) {
             $this->log("Evaluating node: " . $text . " with no children.");
-        }
-        else {
+        } else {
             $this->log("Evaluating node: " . $text . " with children: ");
             $this->logVardump($childItems);
         }
-        
+
         // Logical functions
         if (($params = $this->evaluateFunctionParams("equal", $text, $childItems)) != null) {
             return $params[0] == $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("notEqual", $text, $childItems)) != null) {
             return $params[0] != $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("greaterThan", $text, $childItems)) != null) {
             return $params[0] > $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("greaterThanOrEqual", $text, $childItems)) != null) {
             return $params[0] >= $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("lessThan", $text, $childItems)) != null) {
             return $params[0] < $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("lessThanOrEqual", $text, $childItems)) != null) {
             return $params[0] <= $params[1] ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("empty", $text, $childItems)) != null) {
             return $params[0] == "" ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("notEmpty", $text, $childItems)) != null) {
             return $params[0] != "" ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("not", $text, $childItems)) != null) {
             return $params[0] == "0" ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("and", $text, $childItems)) != null) {
             return ($params[0] && $params[1]) ? "1" : "0";
         }
-        
+
         if (($params = $this->evaluateFunctionParams("or", $text, $childItems)) != null) {
             return ($params[0] || $params[1]) ? "1" : "0";
         }
-        
+
         // Control functions
         if (($params = $this->evaluateFunctionParams("ifThenElse", $text, $childItems)) != null) {
             return $params[0] ? $params[1] : $params[2];
         }
-        
+
         // String functions
         if (($params = $this->evaluateFunctionParams("substring", $text, $childItems)) != null) {
             // Workaround for PHP < 5.4.8
             if (isset($params[2])) {
                 return mb_substr($params[0], intval($params[1]), intval($params[2]));
-            }
-            else {
+            } else {
                 return mb_substr($params[0], intval($params[1]));
             }
         }
-        
+
         if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null) {
             return mb_strlen($params[0]);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("replace", $text, $childItems)) != null) {
             return str_replace($params[0], $params[1], $params[2]);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("position", $text, $childItems)) != null) {
             $pos = mb_strpos($params[0], $params[1]);
-            
+
             return ($pos == false) ? -1 : $pos;
         }
-        
+
         if (($params = $this->evaluateFunctionParams("lowercase", $text, $childItems)) != null) {
             return mb_strtolower($params[0]);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("uppercase", $text, $childItems)) != null) {
             return mb_strtoupper($params[0]);
         }
-        
+
         // Mathematical calculations
         if (($params = $this->evaluateFunctionParams("multiply", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) * $this->parseFloat($params[1]);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null) {
             return pow($this->parseFloat($params[0]), $this->parseFloat($params[1]));
         }
-        
+
         if (($params = $this->evaluateFunctionParams("squareRoot", $text, $childItems)) != null) {
             return sqrt($this->parseFloat($params[0]));
         }
-        
+
         if (($params = $this->evaluateFunctionParams("absolute", $text, $childItems)) != null) {
             return abs($this->parseFloat($params[0]));
         }
-        
+
         // Date functions
         if (($params = $this->evaluateFunctionParams("now", $text, $childItems)) != null) {
             return date($params[0]);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("yesterday", $text, $childItems)) != null) {
             return date($params[0], time() - 60 * 60 * 24);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("tomorrow", $text, $childItems)) != null) {
             return date($params[0], time() + 60 * 60 * 24);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("date", $text, $childItems)) != null) {
             return date($params[0], strtotime($params[1]));
         }
-        
+
         if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) {
             $d1 = new DateTime($params[0]);
             $d2 = new DateTime($params[1]);
             $diff = $d1->diff($d2);
-            
+
             switch ($params[2]) {
                 case 'years':
                     return $diff->y;
@@ -445,74 +449,75 @@ class FormulaCalculator {
                     return $diff->days;
             }
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addYears", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'Y');
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addMonths", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M');
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addDays", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'D');
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addHours", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'H', true);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addMinutes", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', true);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("addSeconds", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'S', true);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractYears", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'Y', false, false);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractMonths", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', false, false);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractDays", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'D', false, false);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractHours", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'H', true, false);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractMinutes", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', true, false);
         }
-        
+
         if (($params = $this->evaluateFunctionParams("subtractSeconds", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'S', true, false);
         }
-        
+
         return $text;
     }
-    
+
     /**
      * @param $obj
      */
-    private function logVardump($obj) {
+    private function logVardump($obj)
+    {
         if (!$this->debugEnabled) {
             return;
         }
-        
+
         ob_start();
         var_dump($obj);
         $str = ob_get_contents();
         ob_end_clean();
-        
+
         $this->log($str);
     }
-    
+
     /**
      * @param $functionName
      * @param $text
@@ -520,21 +525,22 @@ class FormulaCalculator {
      *
      * @return array|null
      */
-    private function evaluateFunctionParams($functionName, $text, $childItems) {
+    private function evaluateFunctionParams($functionName, $text, $childItems)
+    {
         if (!preg_match("/^\s*\{\s*$functionName\s*\(/i", $text)) {
             return null;
         }
-        
+
         $this->log("Matched funcion name: " . $functionName);
-        
+
         $params = $this->getFunctionParameters($functionName, $text, $childItems);
-        
+
         $this->log("Resolved parameters for function '$functionName': ");
         $this->logVardump($params);
-        
+
         return $params;
     }
-    
+
     /**
      * @param $functionName
      * @param $text
@@ -542,15 +548,16 @@ class FormulaCalculator {
      *
      * @return array
      */
-    private function getFunctionParameters($functionName, $text, $childItems) {
+    private function getFunctionParameters($functionName, $text, $childItems)
+    {
         $parameters = $this->getParameterArray($functionName, $text);
-        
+
         $resolvedParameters = array();
         foreach ($parameters as $parameter) {
             $this->log("Resolving parameter '$parameter'");
-            
+
             $found = false;
-            
+
             foreach ($childItems as $childItem) {
                 if ($parameter == $childItem['value']) {
                     $this->log("Replacing parameter '$parameter' with value '" . $childItem['evaluatedValue'] . "'");
@@ -559,113 +566,112 @@ class FormulaCalculator {
                     break;
                 }
             }
-            
+
             if (!$found) {
                 $paramText = $parameter;
                 $replaced = false;
-                
+
                 $this->log("Single expression parameter not found, trying to parse multi expression parameter...");
                 foreach ($childItems as $childItem) {
                     if (mb_strpos($paramText, $childItem['value']) !== false) {
                         $this->log("Found multi expression part '" . $childItem['value']
-                                   . "' in parameter '$paramText'");
+                            . "' in parameter '$paramText'");
                         $this->log("Replacing parameter part '" . $childItem['value'] . "' with value '"
-                                   . $childItem['evaluatedValue'] . "'");
-                        
+                            . $childItem['evaluatedValue'] . "'");
+
                         $paramText = str_replace($childItem['value'], $childItem['evaluatedValue'], $paramText);
                         $replaced = true;
-                        
+
                         $this->log("New parameter value '$paramText'");
                     }
                 }
-                
+
                 if (!$replaced) {
                     $this->log("Did not found any multi expression part.");
                 }
-                
+
                 $resolvedParameters [] = $paramText;
             }
         }
-        
+
         return $resolvedParameters;
     }
-    
+
     /**
      * @param $functionName
      * @param $text
      *
      * @return array
      */
-    private function getParameterArray($functionName, $text) {
+    private function getParameterArray($functionName, $text)
+    {
         $this->log("Extracting parameters for function '$functionName' ...");
-        
+
         $parameterText = $this->getParameterText($functionName, $text);
-        
+
         $characters = preg_split('//u', $parameterText, -1, PREG_SPLIT_NO_EMPTY);
         $terminalLevel = 0;
-        
+
         $params = array();
         $currentParam = "";
         for ($i = 0; $i < count($characters); $i++) {
             $char = $characters[$i];
-            
+
             if ($char === FormulaCalculator::START_TERMINAL) {
                 $terminalLevel++;
                 $currentParam .= $char;
-            }
-            else {
+            } else {
                 if ($char === FormulaCalculator::END_TERMINAL) {
                     $terminalLevel--;
                     $currentParam .= $char;
-                }
-                else {
+                } else {
                     if ($char === FormulaCalculator::PARAMETER_SEPARATOR_TERMINAL) {
                         if ($terminalLevel == 0) {
                             $params [] = $currentParam;
                             $currentParam = "";
-                        }
-                        else {
+                        } else {
                             $currentParam .= $char;
                         }
-                    }
-                    else {
+                    } else {
                         $currentParam .= $char;
                     }
                 }
             }
         }
-        
+
         $params [] = $currentParam;
         $trimmed = array_map('trim', $params);
-        
+
         $this->log("Extracted parameters:");
         $this->logVardump($params);
-        
+
         return $trimmed;
     }
-    
+
     /**
      * @param $functionName
      * @param $text
      *
      * @return string
      */
-    private function getParameterText($functionName, $text) {
+    private function getParameterText($functionName, $text)
+    {
         $parameterText = preg_replace("/^\s*\{\s*" . $functionName . "\s*\(\s*/", "", $text, 1);
         $parameterText = preg_replace("/\s*\)\s*\}\s*$/", "", $parameterText, 1);
-        
+
         return trim($parameterText);
     }
-    
+
     /**
      * @param $value
      *
      * @return float
      */
-    private function parseFloat($value) {
+    private function parseFloat($value)
+    {
         return floatval(str_replace(",", ".", $value));
     }
-    
+
     /**
      * @param      $format
      * @param      $datestring
@@ -676,36 +682,36 @@ class FormulaCalculator {
      *
      * @return string
      */
-    private function modifyDate($format, $datestring, $ammount, $type, $isTime = false, $isAdd = true) {
+    private function modifyDate($format, $datestring, $ammount, $type, $isTime = false, $isAdd = true)
+    {
         $prefix = $isTime ? 'PT' : 'P';
-        
+
         $datetime = new DateTime($datestring);
-        
+
         if ($isAdd) {
             $datetime->add(new DateInterval($prefix . $ammount . $type));
-        }
-        else {
+        } else {
             $datetime->sub(new DateInterval($prefix . $ammount . $type));
         }
-        
+
         return $datetime->format($format);
     }
-    
+
     /**
      * @param $leaf
      *
      * @return int|mixed|string
      */
-    private function evaluateLeaf($leaf) {
+    private function evaluateLeaf($leaf)
+    {
         $evaluated = $leaf;
-        
+
         if (preg_match("/{P[0-9]+}/i", $leaf)) {
             for ($i = 0; $i < count($this->parameters); $i++) {
                 $evaluated = str_replace("{P$i}", $this->parameters[$i], $evaluated);
                 $evaluated = str_replace("{p$i}", $this->parameters[$i], $evaluated);
             }
-        }
-        else {
+        } else {
             if (preg_match("/{R[0-9]+}/i", $leaf)) {
                 for ($i = 0; $i < count($this->relationParameters); $i++) {
                     $evaluated = str_replace("{R$i}", $this->relationParameters[$i], $evaluated);
@@ -713,20 +719,21 @@ class FormulaCalculator {
                 }
             }
         }
-        
+
         $evaluated = $this->replaceGlobalVariables($evaluated);
-        
+
         return $evaluated;
     }
-    
+
     /**
      * @param $text
      *
      * @return int|string
      */
-    private function replaceGlobalVariables($text) {
+    private function replaceGlobalVariables($text)
+    {
         $evaluated = $text;
-        
+
         $evaluated = $this->replaceGlobalVariable('GlobalCounter', $evaluated);
         $evaluated = $this->replaceGlobalVariable('GlobalCounterPerUser', $evaluated);
         $evaluated = $this->replaceGlobalVariable('GlobalCounterPerModule', $evaluated);
@@ -735,37 +742,39 @@ class FormulaCalculator {
         $evaluated = $this->replaceGlobalVariable('DailyCounterPerUser', $evaluated);
         $evaluated = $this->replaceGlobalVariable('DailyCounterPerModule', $evaluated);
         $evaluated = $this->replaceGlobalVariable('DailyCounterPerUserPerModule', $evaluated);
-        
+
         return $evaluated;
     }
-    
+
     /**
      * @param $globalVariableType
      * @param $text
      *
      * @return int|string
      */
-    private function replaceGlobalVariable($globalVariableType, $text) {
+    private function replaceGlobalVariable($globalVariableType, $text)
+    {
         if (preg_match("/^\{$globalVariableType\(/i", $text)) {
             $parameters = $this->getParameterArray($globalVariableType, $text);
             $currentValue = $this->getGlobalVariableConfig($globalVariableType, $parameters[0]);
             $newValue = $currentValue + 1;
-            
+
             $this->setGlobalVariableConfig($globalVariableType, $parameters[0], $newValue);
-            
+
             return isset($parameters[1]) ? $this->formatCounter($newValue, $parameters[1]) : $newValue;
         }
-        
+
         return $text;
     }
-    
+
     /**
      * @param $globalVariableType
      * @param $parameterText
      *
      * @return int
      */
-    private function getGlobalVariableConfig($globalVariableType, $parameterText) {
+    private function getGlobalVariableConfig($globalVariableType, $parameterText)
+    {
         switch ($globalVariableType) {
             case 'GlobalCounter':
                 return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText];
@@ -775,15 +784,14 @@ class FormulaCalculator {
                 return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerModule'][$this->currentModule][$parameterText];
             case 'GlobalCounterPerUserPerModule':
                 return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
-            
+
             case 'DailyCounter':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date']
                     ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'];
-                }
-                else {
+                } else {
                     return 0;
                 }
             case 'DailyCounterPerUser':
@@ -792,8 +800,7 @@ class FormulaCalculator {
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
-                }
-                else {
+                } else {
                     return 0;
                 }
             case 'DailyCounterPerModule':
@@ -802,8 +809,7 @@ class FormulaCalculator {
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
-                }
-                else {
+                } else {
                     return 0;
                 }
             case 'DailyCounterPerUserPerModule':
@@ -812,21 +818,21 @@ class FormulaCalculator {
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
-                }
-                else {
+                } else {
                     return 0;
                 }
         }
-        
+
         return null;
     }
-    
+
     /**
      * @param $globalVariableType
      * @param $parameterText
      * @param $value
      */
-    private function setGlobalVariableConfig($globalVariableType, $parameterText, $value) {
+    private function setGlobalVariableConfig($globalVariableType, $parameterText, $value)
+    {
         switch ($globalVariableType) {
             case 'GlobalCounter':
                 $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText] =
@@ -869,17 +875,18 @@ class FormulaCalculator {
                     $value;
                 break;
         }
-        
+
         $this->configurator->saveConfig();
     }
-    
+
     /**
      * @param $value
      * @param $digits
      *
      * @return string
      */
-    private function formatCounter($value, $digits) {
+    private function formatCounter($value, $digits)
+    {
         return sprintf("%0" . $digits . "d", $value);
     }
 }
