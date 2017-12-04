@@ -41,21 +41,20 @@
 /**
  * Class FormulaNode
  */
-class FormulaNode
-{
-    /** @var string */
+class FormulaNode {
+    /** @var string $text */
     public $text;
     
-    /** @var int */
+    /** @var int $level */
     public $level;
     
-    /** @var \FormulaNode|null */
+    /** @var \FormulaNode|null $parent */
     public $parent;
     
-    /** @var array */
+    /** @var array $children */
     public $children = array();
     
-    /** @var mixed */
+    /** @var mixed $evaluatedValue */
     public $evaluatedValue;
     
     /**
@@ -65,8 +64,7 @@ class FormulaNode
      * @param int         $level
      * @param FormulaNode $parent
      */
-    public function __construct($text, $level, $parent = null)
-    {
+    public function __construct($text, $level, $parent = null) {
         $this->text = $text;
         $this->level = $level;
         $this->parent = $parent;
@@ -75,16 +73,14 @@ class FormulaNode
     /**
      * @param FormulaNode $childNode
      */
-    public function addChild(FormulaNode $childNode)
-    {
+    public function addChild(FormulaNode $childNode) {
         $this->children[] = $childNode;
     }
     
     /**
      * @return bool
      */
-    public function isLeaf()
-    {
+    public function isLeaf() {
         return count($this->children) === 0;
     }
 }

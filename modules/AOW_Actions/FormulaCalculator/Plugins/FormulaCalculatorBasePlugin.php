@@ -48,15 +48,13 @@ namespace AOW_Actions\FormulaCalculator\Plugins;
 /**
  * Class FormulaCalculatorBasePlugin
  */
-class FormulaCalculatorBasePlugin
-{
+class FormulaCalculatorBasePlugin {
     /**
      * @param mixed $value
      *
      * @return float
      */
-    protected static function parseFloat($value)
-    {
+    protected static function parseFloat($value) {
         return floatval(str_replace(",", ".", $value));
     }
 }

@@ -42,20 +42,17 @@ namespace AOW_Actions\FormulaCalculator\Plugins;
 /**
  * Class FormulaCalculatorDividePlugin
  */
-class FormulaCalculatorDividePlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
-{
+class FormulaCalculatorDividePlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface {
     /**
      * @param array $params
      *
      * @return float|int|string
      */
-    public static function getResult(array $params = [])
-    {
+    public static function getResult(array $params = []) {
         $result = '';
         
-        if(isset($params[0]) && isset($params[1]) && $params[1] != 0)
-        {
-            $result =  self::parseFloat($params[0]) / self::parseFloat($params[1]);
+        if (isset($params[0]) && isset($params[1]) && $params[1] != 0) {
+            $result = self::parseFloat($params[0]) / self::parseFloat($params[1]);
         }
         
         return $result;

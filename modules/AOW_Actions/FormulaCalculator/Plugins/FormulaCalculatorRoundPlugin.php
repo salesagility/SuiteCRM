@@ -42,21 +42,18 @@ namespace AOW_Actions\FormulaCalculator\Plugins;
 /**
  * Class FormulaCalculatorRoundPlugin
  */
-class FormulaCalculatorRoundPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
-{
+class FormulaCalculatorRoundPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface {
     /**
      * @param array $params
      *
      * @return float|int|string
      */
-    public static function getResult(array $params = [])
-    {
+    public static function getResult(array $params = []) {
         $result = '';
         
-        if(isset($params[0]))
-        {
+        if (isset($params[0])) {
             $precision = isset($params[1]) ? intval($params[1]) : 0;
-            $result =  round($params[0], $precision);
+            $result = round($params[0], $precision);
         }
         
         return $result;

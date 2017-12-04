@@ -42,8 +42,7 @@ namespace AOW_Actions\FormulaCalculator\Plugins;
 /**
  * Interface FormulaCalculatorPluginInterface
  */
-interface FormulaCalculatorPluginInterface
-{
+interface FormulaCalculatorPluginInterface {
     /**
      * @param array $params
      *

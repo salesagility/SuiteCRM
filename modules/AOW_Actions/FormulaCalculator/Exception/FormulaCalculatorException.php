@@ -37,36 +37,18 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace Custom\AOW_Actions\FormulaCalculator\Plugins;
+namespace AOW_Actions\FormulaCalculator\Exception;
 
-use AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorBasePlugin;
-use AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface;
+use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\Exception\Exception;
 
 /**
- * Time(duration) must be formatted as: 1:00:05 (H:m:s)
+ * Class FormulaCalculatorException
  *
- * Class FormulaCalculatorTimeToSecondsPlugin
+ * @package AOW_Actions\FormulaCalculator\Exception
  */
-class FormulaCalculatorTimeToSecondsPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
-{
-    /**
-     * @param array $params
-     *
-     * @return float|int
-     */
-    public static function getResult(array $params = [])
-    {
-        $result = '';
-        
-        if(isset($params[0]) && !empty($params[0]))
-        {
-            $seconds = strtotime("1970-01-01 " . $params[0] . " UTC");
-            if($seconds)
-            {
-                $result = $seconds;
-            }
-        }
-        
-        return $result;
+class FormulaCalculatorException extends Exception {
+    public function __construct($message, $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null) {
+        parent::__construct('[FormulaCalculator] ' . $message . '', $code, $previous);
     }
 }
