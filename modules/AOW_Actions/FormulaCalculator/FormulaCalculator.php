@@ -171,7 +171,6 @@ class FormulaCalculator
     {
         $characters = preg_split('//u', $content, -1, PREG_SPLIT_NO_EMPTY);
         $terminalLevel = 0;
-        $hasChild = false;
         
         $currentText = "";
         for ($i = 0; $i < count($characters); $i++)
@@ -201,11 +200,8 @@ class FormulaCalculator
                     $newLevel = $level + 1;
                     $newNode = new FormulaNode($currentText, $newLevel, $node);
                     $node->addChild($newNode);
-                    
                     $this->findLexicalElementsOnLevel(mb_substr($currentText, 1, -1), $newLevel, $newNode);
-                    
                     $currentText = "";
-                    $hasChild = true;
                 }
             }
         }
@@ -935,6 +931,8 @@ class FormulaCalculator
                     return 0;
                 }
         }
+        
+        return null;
     }
     
     /**

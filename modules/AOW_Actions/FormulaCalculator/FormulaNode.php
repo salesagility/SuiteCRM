@@ -43,14 +43,19 @@
  */
 class FormulaNode
 {
+    /** @var string */
     public $text;
     
+    /** @var int */
     public $level;
     
+    /** @var \FormulaNode|null */
     public $parent;
     
+    /** @var array */
     public $children = array();
     
+    /** @var mixed */
     public $evaluatedValue;
     
     /**
