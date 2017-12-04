@@ -275,7 +275,6 @@ class ModulesLib
         }
 
         // Filtering (where clause in SQL)
-        $where = '';
         /** @var FilterRepository $filterRepository */
         $filterRepository = $this->containers->get('FilterRepository');
         $filterStructure = $filterRepository->fromRequest($req);
@@ -294,10 +293,6 @@ class ModulesLib
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
-            // TODO: Filter regular
-            // TODO: Filter Dates
-            // TODO: Related items of other items
-            // TODO: Middle tables
             $where = $filterInterpreter->getFilterByAttributes($filterStructure);
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         } else {

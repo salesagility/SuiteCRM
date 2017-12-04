@@ -861,7 +861,6 @@ class ModuleController extends ApiController
         }
 
         return $this->generateJsonApiResponse($req, $res, $payload);
-        throw new NotImplementedException();
     }
 
     /**

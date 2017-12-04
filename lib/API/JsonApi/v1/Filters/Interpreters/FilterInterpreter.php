@@ -208,8 +208,8 @@ class FilterInterpreter
                 if ($filterOperator->isValid($field) === false) {
                     throw new BadRequest('[getFilterByAttributes][invalid field]');
                 }
-                // TODO: Detect if relationship
-                // TODO: Detect if middle table
+                // TODO: TASK: UNDEFINED - Detect and handle if relationship
+                // TODO: TASK: UNDEFINED - Detect and handle if middle table
                 $fieldName = $filterOperator->stripFilterTag($field);
                 if (isset($module->field_defs[$fieldName]) === false) {
                     throw new BadRequest('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
@@ -229,10 +229,6 @@ class FilterInterpreter
                     // Lets play: Is this element an operator or an operand?
                     if ($operator->hasOperator(current($fieldOperations))) {
                         // It's an operator
-                        // TODO: Work out if there has been a previous operator
-                        // TODO: Then run the last operator with the operand range.
-                        // TODO: Handle the case where we reach the end of the array
-                        // TODO: Handle the case when it's a field operator or a special operator
                         if ($lastOperator === null) {
                             // So this is the first operator
                             $lastOperator = $this->getOperator(current($fieldOperations));
@@ -266,6 +262,7 @@ class FilterInterpreter
                     // Next Operator or Operand
                 }
 
+                // Handle the last operator
                 $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
             }
         }
@@ -276,7 +273,7 @@ class FilterInterpreter
     /**
      * @param string $tableName
      * @param OperatorInterface $filterOperator
-     * @param OperatorInterface$lastOperator
+     * @param OperatorInterface $lastOperator
      * @param string $field
      * @param array $operands
      * @return string
