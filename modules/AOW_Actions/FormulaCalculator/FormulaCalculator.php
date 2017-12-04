@@ -100,10 +100,11 @@ class FormulaCalculator
     }
     
     /**
-     * @param $formula
+     * @param string $formula
+     *
+     * @throws \Exception
      *
      * @return mixed|string
-     * @throws Exception
      */
     public function calculateFormula($formula)
     {
@@ -134,7 +135,7 @@ class FormulaCalculator
     }
     
     /**
-     * @param $content
+     * @param string $content
      */
     private function log($content)
     {
@@ -162,9 +163,9 @@ class FormulaCalculator
     }
     
     /**
-     * @param $content
-     * @param $level
-     * @param $node
+     * @param string $content
+     * @param int $level
+     * @param FormulaNode $node
      */
     private function findLexicalElementsOnLevel($content, $level, &$node)
     {
@@ -211,7 +212,7 @@ class FormulaCalculator
     }
     
     /**
-     * @param $node
+     * @param \FormulaNode $node
      *
      * @return int|mixed|string
      */
@@ -266,6 +267,8 @@ class FormulaCalculator
         
         return $node->evaluatedValue;
     }
+    
+    
     
     /**
      * @param       $text
