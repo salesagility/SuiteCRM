@@ -409,7 +409,13 @@ class FormulaCalculator
          */
         if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null)
         {
-            $plugin = $this->getPluginForFunctionName("divide");
+            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction("divide");
+            return $plugin::getResult($params);
+        }
+    
+        if (($params = $this->evaluateFunctionParams("round", $text, $childItems)) != null)
+        {
+            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction("round");
             return $plugin::getResult($params);
         }
         /**
@@ -580,32 +586,6 @@ class FormulaCalculator
         $this->logVardump($params);
         
         return $params;
-    }
-    
-    /**
-     * @todo: implement array where to store class instances by function name
-     *  so that we do not have to create new reflection and class instance every time
-     *
-     * @todo: we should do the checks here:
-     *      - class_exists($fqcn)
-     *      - reflection: $reflection->implementsInterface
-     *      - reflection: $reflection->isSubclassOf
-     *
-     * @param string $functionName
-     *
-     * @return \AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface
-     */
-    protected function getPluginForFunctionName($functionName)
-    {
-        $fqcn = '\AOW_Actions\FormulaCalculator\Plugins\\'
-            . 'FormulaCalculator' . ucfirst($functionName) . 'Plugin';
-        
-        $reflection = new ReflectionClass($fqcn);
-        
-        /** @var \AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface $class */
-        $class = $reflection->newInstanceWithoutConstructor();
-        
-        return $class;
     }
     
     /**
