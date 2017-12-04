@@ -81,6 +81,11 @@ class FormulaCalculatorPluginLoader
     {
         if(!array_key_exists($function, self::$plugins))
         {
+            if(!$function)
+            {
+                throw new \Exception(__CLASS__ . ": No function name provided!");
+            }
+            
             $fqcn = '\AOW_Actions\FormulaCalculator\Plugins\\'
                 . 'FormulaCalculator' . ucfirst($function) . 'Plugin';
     

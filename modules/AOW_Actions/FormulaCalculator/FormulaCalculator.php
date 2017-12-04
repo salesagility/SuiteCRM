@@ -268,15 +268,63 @@ class FormulaCalculator
         return $node->evaluatedValue;
     }
     
-    
+    /**
+     * @param $text
+     *
+     * @return string|null
+     */
+    protected function getFunctionName($text)
+    {
+        $answer = null;
+        
+        $pattern = "#^" . self::START_TERMINAL . "([a-zA-Z]*)\(" . "#";
+        if(preg_match($pattern, $text, $m))
+        {
+            $answer = $m[1];
+        }
+        
+        return $answer;
+    }
     
     /**
-     * @param       $text
-     * @param array $childItems
+     * @param string    $text
+     * @param array     $childItems
      *
      * @return string
      */
     private function evaluateNode($text, $childItems = array())
+    {
+        $answer = "";
+        $functionName = $this->getFunctionName($text);
+        $plugin = null;
+        try
+        {
+            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction($functionName);
+            $params = $this->evaluateFunctionParams($functionName, $text, $childItems);
+            $answer = $plugin::getResult($params);
+        } catch(\Exception $e)
+        {
+            $this->log($e->getMessage());
+        }
+        
+        /* Do this until evaluateNodeOld exists */
+        if(!$plugin)
+        {
+            $answer = $this->evaluateNodeOld($text, $childItems);
+        }
+        
+        return $answer;
+    }
+    
+    /**
+     * @todo: move out calculations to external classes
+     *
+     * @param string    $text
+     * @param array     $childItems
+     *
+     * @return string
+     */
+    private function evaluateNodeOld($text, $childItems = array())
     {
         if (count($childItems) == 0)
         {
@@ -392,38 +440,10 @@ class FormulaCalculator
         }
         
         // Mathematical calculations
-        if (($params = $this->evaluateFunctionParams("add", $text, $childItems)) != null)
-        {
-            return $this->parseFloat($params[0]) + $this->parseFloat($params[1]);
-        }
-        
-        if (($params = $this->evaluateFunctionParams("subtract", $text, $childItems)) != null)
-        {
-            return $this->parseFloat($params[0]) - $this->parseFloat($params[1]);
-        }
-        
         if (($params = $this->evaluateFunctionParams("multiply", $text, $childItems)) != null)
         {
             return $this->parseFloat($params[0]) * $this->parseFloat($params[1]);
         }
-    
-        /**
-         * --------------------------------------------------------------------------------------------------SUBSTITUTED
-         */
-        if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null)
-        {
-            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction("divide");
-            return $plugin::getResult($params);
-        }
-    
-        if (($params = $this->evaluateFunctionParams("round", $text, $childItems)) != null)
-        {
-            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction("round");
-            return $plugin::getResult($params);
-        }
-        /**
-         * --------------------------------------------------------------------------------------------------SUBSTITUTED
-         */
         
         if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null)
         {
