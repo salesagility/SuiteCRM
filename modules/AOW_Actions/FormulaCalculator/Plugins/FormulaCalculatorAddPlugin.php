@@ -40,7 +40,7 @@
 namespace AOW_Actions\FormulaCalculator\Plugins;
 
 /**
- * Class FormulaCalculatorDividePlugin
+ * Class FormulaCalculatorAddPlugin
  */
 class FormulaCalculatorAddPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
 {

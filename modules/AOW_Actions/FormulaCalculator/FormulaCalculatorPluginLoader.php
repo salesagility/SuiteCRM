@@ -51,7 +51,7 @@
 class FormulaCalculatorPluginLoader
 {
     /** @var string */
-    protected static $pluginPathPrefix;
+    protected static $projectRootPath;
     
     /** @var array */
     protected static $plugins = Array();
@@ -61,11 +61,12 @@ class FormulaCalculatorPluginLoader
      */
     public static function initialize()
     {
-        self::$pluginPathPrefix = dirname(dirname(dirname(__DIR__))) . '/modules/';
+        self::$projectRootPath = dirname(dirname(dirname(__DIR__)));
         
-        require_once(self::$pluginPathPrefix . 'AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorBasePlugin.php');
-        require_once(self::$pluginPathPrefix
-            . 'AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorPluginInterface.php');
+        require_once(self::$projectRootPath
+            . '/modules/AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorBasePlugin.php');
+        require_once(self::$projectRootPath
+            . '/modules/AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorPluginInterface.php');
         
         spl_autoload_register("FormulaCalculatorPluginLoader::load");
     }
@@ -79,44 +80,60 @@ class FormulaCalculatorPluginLoader
      */
     public static function getPluginInstanceForFunction($function)
     {
-        if(!array_key_exists($function, self::$plugins))
+        if (!array_key_exists($function, self::$plugins))
         {
-            if(!$function)
+            if (!$function)
             {
                 throw new \Exception(__CLASS__ . ": No function name provided!");
             }
+    
+            $fqcn = null;
+            $className = 'FormulaCalculator' . ucfirst($function) . 'Plugin';
             
-            $fqcn = '\AOW_Actions\FormulaCalculator\Plugins\\'
-                . 'FormulaCalculator' . ucfirst($function) . 'Plugin';
+            $fqcnTests = [];
+            $fqcnTests["custom"] = '\Custom\AOW_Actions\FormulaCalculator\Plugins\\' . $className;
+            $fqcnTests["core"] = '\AOW_Actions\FormulaCalculator\Plugins\\' . $className;
+            
     
-            if(!class_exists($fqcn))
+            foreach ($fqcnTests as $key => $class)
             {
-                throw new \Exception(__CLASS__ . ": Class does not exist! " . $fqcn);
+                if (class_exists($class))
+                {
+                    $fqcn = $class;
+                }
             }
-    
+            
+            if(!$fqcn)
+            {
+                throw new \Exception(__CLASS__ . ": Plugin class was not found for function(".$function.")! ");
+            }
+            
             $reflection = new ReflectionClass($fqcn);
-    
-            if(!$reflection->implementsInterface("\AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface"))
+            
+            if (!$reflection->implementsInterface("\AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface"))
             {
-                throw new \Exception(__CLASS__ . ": The loaded plugin does not implement the FormulaCalculatorPluginInterface interface!");
+                throw new \Exception(__CLASS__
+                                     . ": The loaded plugin does not implement the FormulaCalculatorPluginInterface interface!");
             }
-    
-            if(!$reflection->isSubclassOf("\AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorBasePlugin"))
+            
+            if (!$reflection->isSubclassOf("\AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorBasePlugin"))
             {
-                throw new \Exception(__CLASS__ . ": The loaded plugin does not extend the FormulaCalculatorBasePlugin class!");
+                throw new \Exception(__CLASS__
+                                     . ": The loaded plugin does not extend the FormulaCalculatorBasePlugin class!");
             }
             
             self::$plugins[$function] = $reflection->newInstanceWithoutConstructor();
         }
-    
+        
         return self::$plugins[$function];
     }
     
     /**
-     * @todo: allow of loading of classes from custom directory
-     *
-     * This method will only load:
-     *  - class name: FormulaCalculator...Plugin
+     * This method will only load classes with:
+     *  - name: FormulaCalculator...Plugin
+     *  - from namespaces:
+     *          - \AOW_Actions\FormulaCalculator\Plugins
+     *          - \Custom\AOW_Actions\FormulaCalculator\Plugins
      *
      * @param string $fqcn Fully Qualified Class Name
      */
@@ -157,6 +174,14 @@ class FormulaCalculatorPluginLoader
      */
     protected static function getPathForFqcnParts($fqcnParts, $className)
     {
-        return self::$pluginPathPrefix . implode("/", $fqcnParts) . '/' . $className . '.php';
+        $prefix = '/modules/';
+        
+        if($fqcnParts[0] == "Custom")
+        {
+            array_shift($fqcnParts);
+            $prefix = '/custom/modules/';
+        }
+        
+        return self::$projectRootPath . $prefix . implode("/", $fqcnParts) . '/' . $className . '.php';
     }
 }

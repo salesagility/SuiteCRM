@@ -37,27 +37,27 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace AOW_Actions\FormulaCalculator\Plugins;
+namespace Custom\AOW_Actions\FormulaCalculator\Plugins;
+
+use AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorBasePlugin;
+use AOW_Actions\FormulaCalculator\Plugins\FormulaCalculatorPluginInterface;
 
 /**
- * Class FormulaCalculatorRoundPlugin
+ * Class FormulaCalculatorUniqueIdPlugin
  */
-class FormulaCalculatorRoundPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
+class FormulaCalculatorUniqueIdPlugin extends FormulaCalculatorBasePlugin implements FormulaCalculatorPluginInterface
 {
     /**
      * @param array $params
      *
-     * @return float|int|string
+     * @return float|int
      */
     public static function getResult(array $params = [])
     {
-        $result = '';
+        $prefix = isset($params[0]) ? $params[0] : "";
+        $more_entropy = isset($params[1]) && $params[1];
         
-        if(isset($params[0]))
-        {
-            $precision = isset($params[1]) ? intval($params[1]) : 0;
-            $result =  round($params[0], $precision);
-        }
+        $result =  uniqid($prefix, $more_entropy);
         
         return $result;
     }
