@@ -1223,9 +1223,17 @@ function insert_default_settings(){
     global $setup_sugar_version;
     global $sugar_db_version;
 
+    $fromAddress = 'do_not_reply@example.com';
+    if (isset($_SESSION['smtp_from_addr']) && $_SESSION['smtp_from_addr']) {
+        $fromAddress = $_SESSION['smtp_from_addr'];
+    }
+    $fromName = 'SuiteCRM';
+    if (isset($_SESSION['smtp_from_name']) && $_SESSION['smtp_from_name']) {
+        $fromName = $_SESSION['smtp_from_name'];
+    }
 
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', '$fromAddress')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', '$fromName')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");
