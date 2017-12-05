@@ -54,13 +54,13 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class CampaignsViewDetail extends ViewDetail {
 
- 	function __construct(){
+    function __construct(){
 
         parent::__construct();
         //turn off normal display of subpanels
         $this->options['show_subpanels'] = false;
 
- 	}
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -88,9 +88,9 @@ class CampaignsViewDetail extends ViewDetail {
 
     }
 
- 	function display() {
- 	    global $app_list_strings;
- 	    $this->ss->assign('APP_LIST', $app_list_strings);
+    function display() {
+        global $app_list_strings;
+        $this->ss->assign('APP_LIST', $app_list_strings);
 
         if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target'){
             require_once('modules/Campaigns/utils.php');
@@ -106,27 +106,27 @@ class CampaignsViewDetail extends ViewDetail {
 
         }
 
-	    if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "submit");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
-	    } else {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "hidden");
-	    	$this->ss->assign("DISABLE_LINK", "display:none");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "submit");
-	    }
+        if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
+            $this->ss->assign("ADD_BUTTON_STATE", "submit");
+            $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
+        } else {
+            $this->ss->assign("ADD_BUTTON_STATE", "hidden");
+            $this->ss->assign("DISABLE_LINK", "display:none");
+            $this->ss->assign("TARGET_BUTTON_STATE", "submit");
+        }
 
-	    $currency = new Currency();
-	    if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
-	    {
-	    	$currency->retrieve($this->bean->currency_id);
-	    	if( $currency->deleted != 1){
-	    		$this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
-	    	}else {
-	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    	}
-	    }else{
-	    	$this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    }
+        $currency = new Currency();
+        if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
+        {
+            $currency->retrieve($this->bean->currency_id);
+            if( $currency->deleted != 1){
+                $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
+            }else {
+                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+            }
+        }else{
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+        }
 
         parent::display();
 
@@ -142,7 +142,7 @@ class CampaignsViewDetail extends ViewDetail {
             foreach ($alltabs as $key=>$name) {
                 if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls' && $name != 'history'
                 /* BEGIN - SECURITY GROUPS */
-                	&& $name != 'securitygroups'
+                    && $name != 'securitygroups'
                 /* END - SECURITY GROUPS */
                 ) {
                     //exclude subpanels that are not prospectlists, emailmarketing, or tracked urls
