@@ -4,7 +4,7 @@
 
 <ul class="noBullet" id="subpanel_list">
 {foreach from=$subpanel_tabs key=i item=subpanel_tab}
-    <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
+    <li class="noBullet useFooTable" id="whole_subpanel_{$subpanel_tab}">
         {$subpanel_tabs_properties.$i.collapse_subpanels}
         <div class="panel panel-default sub-panel">
             <div class="panel-heading panel-heading-collapse">

@@ -286,7 +286,7 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     var returnstuff = http_fetch_sync(url + '&inline=' + inline + '&ajaxSubpanel=true');
     request_id++;
     got_data(returnstuff, inline);
-    if ($('#whole_subpanel_' + child_field).hasClass('panel panel-default sub-panel')) {
+    if ($('#whole_subpanel_' + child_field).hasClass('useFooTable')) {
       $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
     }
   } else {
