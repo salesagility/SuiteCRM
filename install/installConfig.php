@@ -591,6 +591,13 @@ EOQ;
 
         // set default smtp toggle buttons selected value
         if(empty($_SESSION['smtp_tab_selected'])) $_SESSION['smtp_tab_selected'] = 'smtp_tab_other';
+        
+        if(!isset($_SESSION['smtp_from_name']) || !$_SESSION['smtp_from_name']) {
+            $_SESSION['smtp_from_name'] = 'SuiteCRM';
+        }
+        if(!isset($_SESSION['smtp_from_addr']) || !$_SESSION['smtp_from_addr']) {
+            $_SESSION['smtp_from_addr'] = 'do_not_reply@example.com';
+        }
 
         $out .= <<<EOQ
         <div class="floatbox full" id="fb2">
@@ -605,7 +612,21 @@ EOQ;
 
             <!-- smtp types toggler buttons -->
 
-            <p style="display: inline;">{$mod_strings['LBL_CHOOSE_EMAIL_PROVIDER']} </p><div class="tooltip-toggle"> <em>i</em> <div class="tooltip">{$mod_strings['LBL_WIZARD_SMTP_DESC']}</div></div>
+            <p style="display: inline;">
+            
+            <div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_FROM_NAME']}</label>
+                    <input type="text" name="smtp_from_name" value="{$_SESSION['smtp_from_name']}">
+                </div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_FROM_ADDR']}</label>
+                    <input type="email" name="smtp_from_addr" value="{$_SESSION['smtp_from_addr']}">
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            {$mod_strings['LBL_CHOOSE_EMAIL_PROVIDER']} </p><div class="tooltip-toggle"> <em>i</em> <div class="tooltip">{$mod_strings['LBL_WIZARD_SMTP_DESC']}</div></div>
             <div class="clear"></div>
             <div>
                 <input type="button" class="smtp_tab_toggler" id="smtp_tab_gmail_toggler" for="smtp_tab_gmail" value="{$mod_strings['LBL_SMTPTYPE_GMAIL']}" />
