@@ -40,6 +40,10 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
+/**
+ * Interface ByPreMadeFilterInterpreter
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ */
 interface ByPreMadeFilterInterpreter
 {
     /**

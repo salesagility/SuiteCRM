@@ -42,6 +42,10 @@ namespace SuiteCRM\API\JsonApi\v1\Repositories;
 
 use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 
+/**
+ * Class RelationshipRepository
+ * @package SuiteCRM\API\JsonApi\v1\Repositories
+ */
 class RelationshipRepository
 {
     /**

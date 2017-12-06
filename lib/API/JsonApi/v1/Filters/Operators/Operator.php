@@ -44,6 +44,10 @@ use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class Operator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Operators
+ */
 class Operator
 {
     /**

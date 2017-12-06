@@ -77,6 +77,9 @@ class JsonApi implements LoggerAwareInterface, JsonApiResponseInterface
         return __DIR__ . '/schema.json';
     }
 
+    /**
+     * @return array
+     */
     public function toJsonApiResponse()
     {
         return array(

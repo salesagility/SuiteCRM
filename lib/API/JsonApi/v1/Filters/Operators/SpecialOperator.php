@@ -42,6 +42,10 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class SpecialOperator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Operators
+ */
 class SpecialOperator extends Operator
 {
     /**

@@ -43,11 +43,19 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\InvalidArgumentException;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\SpecialOperator;
-use SuiteCRM\Exception\Exception;
 
+/**
+ * Class SpecialOperatorValidator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ */
 class SpecialOperatorValidator implements ValidatorInterface
 {
 
+    /**
+     * @param mixed $value
+     * @return bool|void
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
+     */
     public function isValid($value)
     {
         if(!is_string(value)) {

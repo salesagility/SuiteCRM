@@ -52,6 +52,10 @@ use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class FilterParser
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Parsers
+ */
 class FilterParser
 {
     /**

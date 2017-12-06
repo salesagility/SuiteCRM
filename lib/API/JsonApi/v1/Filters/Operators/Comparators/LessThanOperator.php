@@ -44,6 +44,10 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class LessThanOperator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators
+ */
 class LessThanOperator extends Operator implements OperatorInterface
 {
     /**

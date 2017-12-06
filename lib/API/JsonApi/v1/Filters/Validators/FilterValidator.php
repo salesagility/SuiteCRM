@@ -43,6 +43,10 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class FilterValidator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ */
 class FilterValidator implements ValidatorInterface
 {
     /**

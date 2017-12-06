@@ -44,6 +44,10 @@ use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByIdFilterInterpreter;
 use SuiteCRM\Exception\Exception;
 
+/**
+ * Class ByIdFilter
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters
+ */
 class ByIdFilter implements ByIdFilterInterpreter
 {
     /** @var ContainerInterface $containers */

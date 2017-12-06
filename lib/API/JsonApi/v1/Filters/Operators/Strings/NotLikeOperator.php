@@ -44,6 +44,10 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class NotLikeOperator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings
+ */
 class NotLikeOperator extends Operator implements OperatorInterface
 {
     /**

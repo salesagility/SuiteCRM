@@ -40,6 +40,10 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
+/**
+ * Interface OperatorInterface
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ */
 interface OperatorInterface
 {
     /**

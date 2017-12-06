@@ -40,6 +40,10 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
+/**
+ * Interface ParserInterface
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ */
 interface ParserInterface
 {
     /**

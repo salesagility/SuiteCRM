@@ -47,6 +47,10 @@ use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequest;
 
+/**
+ * Class FilterRepository
+ * @package SuiteCRM\API\JsonApi\v1\Repositories
+ */
 class FilterRepository
 {
     /**
@@ -99,6 +103,9 @@ class FilterRepository
         return $response;
     }
 
+    /**
+     * @return SuiteBeanResource
+     */
     public function toSuiteBeanResource()
     {
         return new SuiteBeanResource($this->containers);

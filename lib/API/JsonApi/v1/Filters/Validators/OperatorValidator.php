@@ -44,9 +44,17 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class OperatorValidator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ */
 class OperatorValidator implements ValidatorInterface
 {
 
+    /**
+     * @param string $value
+     * @return bool|void
+     */
     public function isValid($value)
     {
         if(!is_string(value)) {

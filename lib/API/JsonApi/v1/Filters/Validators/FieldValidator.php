@@ -45,10 +45,21 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
+/**
+ * Class FieldValidator
+ * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ */
 class FieldValidator implements ValidatorInterface
 {
+    /**
+     * @var ContainerInterface $containers
+     */
     private $containers;
 
+    /**
+     * FieldValidator constructor.
+     * @param ContainerInterface $containers
+     */
     public function __construct(ContainerInterface $containers)
     {
         $this->containers = $containers;
