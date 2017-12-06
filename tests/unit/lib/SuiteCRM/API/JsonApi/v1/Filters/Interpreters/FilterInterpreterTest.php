@@ -30,7 +30,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
     public function testIsFilterByPreMadeWithInvalidParameter()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]'),
+            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]'),
             function() {
                 $filter = 'Today';
                 self::$interpreter->isFilterByPreMadeName($filter);
@@ -60,7 +60,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
     public function testIsFilterByIdWithInvalidParameter()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]'),
+            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]'),
             function() {
                 $filter = 'Today';
                self::$interpreter->isFilterById($filter);

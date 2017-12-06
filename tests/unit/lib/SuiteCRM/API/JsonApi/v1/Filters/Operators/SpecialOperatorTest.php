@@ -31,7 +31,7 @@ class SpecialOperatorTest extends \Codeception\Test\Unit
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception(
+            new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'
             ),
             function() {
@@ -61,7 +61,9 @@ class SpecialOperatorTest extends \Codeception\Test\Unit
     public function testIsOperatorWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'
+            ),
             function() {
                 self::$specialOperator->isValid(array());
             }

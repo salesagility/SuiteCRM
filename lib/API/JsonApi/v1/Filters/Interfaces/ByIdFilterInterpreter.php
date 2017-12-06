@@ -42,5 +42,9 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
 interface ByIdFilterInterpreter
 {
-    public function getByIdFilter($filterStructure);
+    /**
+     * @param array $filterStructure
+     * @return mixed
+     */
+    public function getByIdFilter(array $filterStructure);
 }

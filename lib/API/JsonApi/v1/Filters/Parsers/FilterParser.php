@@ -50,6 +50,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FilterValidator;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class FilterParser
 {
@@ -139,13 +140,14 @@ class FilterParser
      * @return array
      * @throws BadRequest
      * @throws Exception
+     * @throws InvalidArgumentException
      */
     protected function splitFieldKeys($fieldKey, $delimiter = '.')
     {
         $response = array();
         //
         if (is_string($fieldKey) === false) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitFieldKeys][expected type to be string] $fieldKey'
             );
@@ -276,11 +278,12 @@ class FilterParser
      * @param string $delimiter
      * @return array
      * @throws Exception
+     * @throws InvalidArgumentException
      */
     protected function splitValues($fieldKey, $delimiter = ',')
     {
         if (is_string($fieldKey) === false) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][expected type to be string] $fieldKey'
             );

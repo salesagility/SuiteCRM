@@ -40,7 +40,9 @@ class OperatorsTest extends \Codeception\Test\Unit
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
+            ),
             function() {
                 self::$operator->isValid(array());
             }
@@ -68,7 +70,9 @@ class OperatorsTest extends \Codeception\Test\Unit
     public function testIsOperatorWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
+            ),
             function() {
                 self::$operator->isValid(array());
             }
@@ -78,7 +82,9 @@ class OperatorsTest extends \Codeception\Test\Unit
     public function testToSqlOperandsWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands'),
+            new \SuiteCRM\Exception\InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands'
+            ),
             function() {
                 self::$operator->toSqlOperands('string');
             }

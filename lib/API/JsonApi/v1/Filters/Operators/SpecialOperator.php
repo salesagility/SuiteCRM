@@ -40,7 +40,7 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class SpecialOperator extends Operator
 {
@@ -70,12 +70,12 @@ class SpecialOperator extends Operator
     /**
      * @param string $operator
      * @return bool
-     * @throws \SuiteCRM\Exception\Exception
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function isValid($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'
             );
         }
@@ -86,12 +86,12 @@ class SpecialOperator extends Operator
     /**
      * @param string $operator
      * @return bool
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function isOperator($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][SpecialOperator][isOperator][expected type to be string] $operator');
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][SpecialOperator][isOperator][expected type to be string] $operator');
         }
 
         if (preg_match('/'.$this->operatorFormatRegex.'/', $operator, $matches) === 1) {

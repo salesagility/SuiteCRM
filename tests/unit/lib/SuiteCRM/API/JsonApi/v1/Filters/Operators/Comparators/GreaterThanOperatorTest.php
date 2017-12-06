@@ -23,7 +23,7 @@ class GreaterThanOperatorTest extends \Codeception\Test\Unit
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Comparators][GreaterThanOperator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][GreaterThanOperator][isValid][expected type to be string] $operator'),
             function() {
                 self::$operator->isValid(array());
             }

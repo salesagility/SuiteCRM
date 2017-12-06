@@ -34,7 +34,7 @@ class FieldOperatorTest extends \Codeception\Test\Unit
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
             function() {
                 self::$fieldOperator->isValid(array());
             }
@@ -62,7 +62,7 @@ class FieldOperatorTest extends \Codeception\Test\Unit
     public function testIsOperatorWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
+            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
             function() {
                 self::$fieldOperator->isValid(array());
             }

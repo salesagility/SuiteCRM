@@ -38,54 +38,27 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters;
+namespace SuiteCRM\Exception;
 
-use Psr\Container\ContainerInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByIdFilterInterpreter;
-use SuiteCRM\Exception\Exception;
 
-class ByIdFilter implements ByIdFilterInterpreter
+use Psr\Log\LogLevel;
+use SuiteCRM\API\v8\Controller\ApiController;
+use SuiteCRM\Enumerator\ExceptionCode;
+
+/**
+ * Class Exception
+ * @package SuiteCRM\InvalidArgumentException
+ */
+class InvalidArgumentException extends Exception
 {
-    /** @var ContainerInterface $containers */
-    private $containers;
-
     /**
-     * ByIdFilter constructor.
-     * @param ContainerInterface $containers
+     * ApiException constructor.
+     * @param string $message API Exception "$message"
+     * @param int $code
+     * @param $previous
      */
-    public function __construct(ContainerInterface $containers)
+    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
     {
-        $this->containers = $containers;
-    }
-
-    /**
-     * @param array $filterStructure
-     * @return string
-     * @throws \SuiteCRM\Exception\Exception
-     */
-    public function getByIdFilter(array $filterStructure)
-    {
-        if (empty($filterStructure)) {
-            throw new Exception(
-                '[getByIdFilter][expected filter structure to contain something]'
-            );
-        }
-
-        /** @var \DBManager $databaseManager */
-        $databaseManager = $this->containers->get('DatabaseManager');
-        $idFilter = array();
-        /** @var array $identifiers */
-        $identifiers = $filterStructure['[id]'];
-        foreach ($identifiers as $id) {
-            if(empty($id)) {
-                continue;
-            }
-
-            $idFilter[] = '"'. $databaseManager->quote($id) .'"';
-        }
-
-        $filter = 'id IN ('. implode(',', $idFilter) .')';
-
-        return $filter;
+        parent::__construct('[InvalidArgumentException] '.$message.'', $code, $previous);
     }
 }

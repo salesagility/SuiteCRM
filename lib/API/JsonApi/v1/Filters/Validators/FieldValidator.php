@@ -43,7 +43,7 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class FieldValidator implements ValidatorInterface
 {
@@ -57,12 +57,12 @@ class FieldValidator implements ValidatorInterface
     /**
      * @param string $fieldKey
      * @return bool
-     *  @throws \SuiteCRM\Exception\Exception
+     *  @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function isValid($fieldKey)
     {
         if(!is_string($fieldKey)) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             );
         }

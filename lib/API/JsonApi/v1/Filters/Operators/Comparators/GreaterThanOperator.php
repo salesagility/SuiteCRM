@@ -42,7 +42,7 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class GreaterThanOperator extends Operator implements OperatorInterface
 {
@@ -67,12 +67,12 @@ class GreaterThanOperator extends Operator implements OperatorInterface
     /**
      * @param string $operator
      * @return bool
-     * @throws \SuiteCRM\Exception\Exception
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function isValid($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Comparators]'.
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators]'.
                 '[GreaterThanOperator][isValid][expected type to be string] $operator'
             );
         }

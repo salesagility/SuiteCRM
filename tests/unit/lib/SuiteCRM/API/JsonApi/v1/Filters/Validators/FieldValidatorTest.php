@@ -38,7 +38,7 @@ class FieldValidatorTest extends \Codeception\Test\Unit
     public function testIsValidWithWrongDataType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception(
+            new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             ),
             function() {

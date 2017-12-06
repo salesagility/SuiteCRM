@@ -49,6 +49,7 @@ use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
 
 use Psr\Container\ContainerInterface;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class FilterInterpreter
 {
@@ -90,11 +91,11 @@ class FilterInterpreter
     /**
      * @param $filterStructure
      * @return bool
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function isFilterByPreMadeName($filterStructure) {
         if(is_array($filterStructure) === false) {
-            throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]');
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]');
         }
 
         return count($filterStructure) === 1 && is_array(current($filterStructure)) === false;
@@ -103,11 +104,11 @@ class FilterInterpreter
     /**
      * @param $filterStructure
      * @return bool
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function isFilterById($filterStructure) {
         if(is_array($filterStructure) === false) {
-            throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]');
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]');
         }
 
         return count($filterStructure) === 1 &&

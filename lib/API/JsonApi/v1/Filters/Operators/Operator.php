@@ -42,7 +42,7 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class Operator
 {
@@ -95,12 +95,14 @@ class Operator
     /**
      * @param string $operator
      * @return bool
-     * @throws \SuiteCRM\Exception\Exception
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function isValid($operator)
     {
         if(!is_string($operator)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator');
+            throw new InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
+            );
         }
 
         if (preg_match('/^'.$this->operatorFormatRegex.'$/', $operator, $matches) === 1) {
@@ -119,10 +121,17 @@ class Operator
         return $this->toFilterOperator() === $operator;
     }
 
+    /**
+     * @param $filter
+     * @return bool
+     * @throws InvalidArgumentException
+     */
     public function hasOperator($filter)
     {
         if(!is_string($filter)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][hasOperator][expected type to be string] $operator');
+            throw new InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][hasOperator][expected type to be string] $operator'
+            );
         }
 
         if (preg_match('/'.$this->operatorFormatRegex.'/', $filter, $matches) === 1) {
@@ -145,12 +154,15 @@ class Operator
      * General case
      * @param array $operands
      * @return string
-     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws BadRequest
      */
     public function toSqlOperands($operands)
     {
         if(!is_array($operands)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands');
+            throw new InvalidArgumentException(
+                '[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands'
+            );
         }
 
         /** @var \DBManager $db */

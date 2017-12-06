@@ -41,7 +41,7 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
+use SuiteCRM\API\JsonApi\v1\Filters\Operators\InvalidArgumentException;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\SpecialOperator;
 use SuiteCRM\Exception\Exception;
 
@@ -51,7 +51,7 @@ class SpecialOperatorValidator implements ValidatorInterface
     public function isValid($value)
     {
         if(!is_string(value)) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][SpecialOperatorValidator][expected type to be string] $fieldKey'
             );
         }

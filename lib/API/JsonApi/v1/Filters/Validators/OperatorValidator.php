@@ -42,7 +42,7 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class OperatorValidator implements ValidatorInterface
 {
@@ -55,7 +55,7 @@ class OperatorValidator implements ValidatorInterface
             );
         }
 
-        $operator = new Operator();
+        $operator = new InvalidArgumentException();
         $operator->isValid($value);
     }
 }

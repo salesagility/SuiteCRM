@@ -6,6 +6,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\Paths;
 
 class FilterParserTest extends \Codeception\Test\Unit
@@ -55,7 +56,7 @@ class FilterParserTest extends \Codeception\Test\Unit
     public function testSplitKeysWithEmptyArray()
     {
         $this->tester->expectException(
-            new Exception(
+            new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]'.
                 '[splitFieldKeys][expected type to be string] $fieldKey'
             ),
@@ -173,7 +174,7 @@ class FilterParserTest extends \Codeception\Test\Unit
     public function testSplitValuesWithInvalidDataType()
     {
         $this->tester->expectException(
-            new Exception(
+            new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][expected type to be string] $fieldKey'
             ),
