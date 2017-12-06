@@ -1,5 +1,4 @@
 /**** Calendar ***/
-@import 'variables.scss';
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
   background-color: inherit;
@@ -9,8 +8,8 @@
 button#goto_date_trigger_div_nav_cancel {
   font-size: 13px;
   font-weight: 500;
-  background-color: #F08377;
-  color: #fff;
+  background-color: $danger-btn-bg;
+  color: $danger-btn-color;
   cursor: pointer;
   padding: 0 10px 0 10px;
   margin: 0 0 0 0;
@@ -25,8 +24,8 @@ button#goto_date_trigger_div_nav_cancel {
 button#goto_date_trigger_div_nav_submit {
   font-size: 13px;
   font-weight: 500;
-  background-color: #F08377;
-  color: #fff;
+  background-color: $danger-btn-bg;
+  color: $danger-btn-color;
   cursor: pointer;
   padding: 0 10px 0 10px;
   margin: 0 0 0 0;
@@ -40,7 +39,7 @@ button#goto_date_trigger_div_nav_submit {
 }
 
 table#goto_date_trigger_div_t thead {
-  background: #BFCAD3;
+  background: $calendar-other-month-day-header-bg;
 }
 
 
@@ -56,10 +55,10 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar a.calnav {
   font-weight: normal;
-  background-color: #66727D;
+  background-color: $calendar-nav-button-bg;
   color: $default-btn-color;
   padding: 8px;
-  border: 1px solid #66727D;
+  border: 1px solid $calendar-nav-button-bg;
   border-radius: 4px;
   width: auto;
   height: auto;
@@ -132,54 +131,55 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar .calbody td {
-  background: $main-alternate-bg;
+  background: $calendar-slot-bg;
 }
 
 .yui-calendar td.calcell a {
-  background: $main-alternate-bg;
-  color: $link-color;
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
   line-height: 32px;
   width: 32px;
   height: 32px;
 }
 
 .yui-calendar td.calcell.selected {
-  background: $danger-btn-bg-hover;
-  color: $default-btn-color;
+  background: $calendar-selected-bg;
+  color: $calendar-slot-color;
 }
 
 .yui-calendar td.calcell.selected a {
-  background: $danger-btn-bg-hover;
-  color: $default-btn-color;
+  background: $calendar-selected-bg;
+  color: $calendar-selected-color;
 }
 
 .yui-calendar td.calcell a:hover {
-  background: $danger-btn-bg-hover;
-  color: $default-btn-color;
+  background: $calendar-selected-color;
+  color: $calendar-selected-color;
 }
 
 .yui-calendar td.calcell.calcellhover {
-  background: $danger-btn-bg-hover;
-  color: $default-btn-color;
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
 }
 
 .yui-calendar td.calcell.calcellhover a {
-  background: $danger-btn-bg-hover;
-  color: $default-btn-color;
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
 }
 
 .yui-calendar .calweekdaycell {
-  color: $link-color;
+  color: $calendar-other-month-day-header-color;
 }
 
 .yui-calendar a.calnav {
-  background-color: $danger-btn-bg;
+  background-color: $calendar-nav-bg;
   border: 1px solid transparent;
   border-radius: 4px;
 }
 
 .yui-calendar a.calnav:hover {
-  background-color: $danger-btn-bg-hover;
+  background-color: $calendar-selected-bg;
+  color: $calendar-selected-color;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -192,7 +192,7 @@ a#callnav_today {
 
 .monthHeader {
   background: $calendar-title-bg;
-  color: $default-btn-color;
+  color: $calendar-title-color;
   padding-left: 8px;
   padding-right: 8px;
   margin-top: 10px;
@@ -267,16 +267,16 @@ h5.calSharedUser  {
 
 
 div.monthFooter {
-  background-color: #BFCAD3;
+  background-color: $calendar-header-bg;
   line-height: 32px;
 }
 .monthCalBody td {
-  background-color: #fff;
-  color: #444444;
+  background-color: $calendar-body-bg;
+  color: $calendar-body-color;
 }
 
 .monthCalBody th a {
-  color: #000000;
+  color: $calendar-body-header-color;
 }
 
 .yearCalBody {
@@ -284,9 +284,9 @@ div.monthFooter {
 }
 
 .yearCalBodyMonth {
-  background-color: $default-btn-color;
+  background-color: $calendar-year-body-bg;
   border-top: 2px solid $danger-btn-bg;
-  border-bottom: 2px solid $default-btn-color;
+  border-bottom: 2px solid $calendar-year-body-border-color;
 }
 
 .yearCalBody .monthHeader {
@@ -688,7 +688,7 @@ a.fc-day-number:hover {
 }
 
 .calendar {
-  border: 1px solid #999;
+  border: 1px solid $calendar-border-color;
 }
 
 .calendar .button {
@@ -697,7 +697,7 @@ a.fc-day-number:hover {
 }
 
 .calendar .combo {
-  background: #eee;
+  background: $gray-lighter;
   padding: 0;
   border-top: 1px solid #f1f1f1;
   border-bottom: 1px solid #999;
@@ -774,19 +774,20 @@ a.fc-day-number:hover {
   border-color: #666;
 }
 
+.calendar tbody td.today a,
 .calendar tbody td.today {
-  color: #666;
+  background-color: $calendar-today-bg;
+  color: $calendar-today-color;
 }
 
 .calendar tbody td.weekend {
-  background: #f9f9f9;
-  color: #666;
+  background: $calendar-other-month-day-body-bg;
+  color: $calendar-other-month-day-body-color;
 }
 
 .calendar tfoot .ttip {
-  background: #e8f0f4;
-  background: #dfdfdf;
-  color: #000;
+  background: $calendar-tip-bg;
+  color: $calendar-tip-color;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #ccc;
 }
@@ -804,16 +805,16 @@ a.fc-day-number:hover {
 }
 
 .calendar thead .title {
-  background: #f8f7f7;
-  color: #000;
+  background: $calendar-month-day-header-bg;
+  color: $calendar-month-day-header-color;
   padding: 3px;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid $calendar-body-header-color;
+  border-bottom: 1px solid $calendar-body-header-color;
 }
 
 .calendar thead .weekend {
   font-weight: bold;
-  color: #000;
+  color: $calendar-other-month-day-body-color;
 }
 
 

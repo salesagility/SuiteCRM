@@ -48,7 +48,6 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
     <!-- Bootstrap -->
     <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
-    <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
     <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
     <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
     <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>

@@ -75,7 +75,7 @@
 .yui-ac-content {
   position: absolute;
   background: $main-alternate-bg;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   overflow: hidden;
   width: 100%;
   z-index: 9050;
@@ -236,9 +236,9 @@ p#clear {
 }
 
 .yui-calcontainer {
-  background-color: $main-alternate-bg;
+  background-color: $calendar-slot-bg;
   padding: 10px;
-  border: 1px solid #808080;
+  border: 1px solid #calendar-slot-border-color;
 }
 
 .yui-calcontainer.multi {
@@ -260,7 +260,7 @@ p#clear {
   color: #000;
   padding: .4em;
   margin: 0 -10px 10px -10px;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid $calendar-other-month-day-header-bg;
   text-align: left;
   height: auto;
 }
@@ -346,12 +346,12 @@ p#clear {
 }
 
 .yui-calendar .calfoot {
-  background-color: #f2f2f2;
+  background-color: $calendar-slot-bg;
 }
 
 .yui-calendar .calrowhead, .yui-calendar .calrowfoot
 {
-  color: #a6a6a6;
+  color: $calendar-slot-color;
   font-size: 85%;
   font-style: normal;
   font-weight: normal;
@@ -369,9 +369,9 @@ p#clear {
 }
 
 .yui-calendar td.calcell {
-  background: #fff;
+  background: $calendar-slot-bg;
   padding: 1px;
-  border: 1px solid #cccccc;
+  border: 1px solid $calendar-slot-border-color;
   line-height: 1.6em;
   text-align: center;
   height: 1.6em;
@@ -380,33 +380,33 @@ p#clear {
 
 .yui-calendar td.calcell a {
   display: block;
-  color: $default-btn-color;
+  color: $calendar-slot-color;
   height: 100%;
   text-decoration: none;
 }
 
 .yui-calendar td.calcell.today {
-  background-color: #000;
+  background-color: $calendar-today-bg;
 }
 
 .yui-calendar td.calcell.today a {
-  background-color: $danger-btn-bg;
+  background-color: $calendar-today-bg;
 }
 
 .yui-calendar td.calcell.oom {
-  background-color: #cccccc;
-  color: #a6a6a6;
+  background-color: $calendar-other-month-day-body-bg;
+  color: $calendar-other-month-day-body-color;
   cursor: default;
 }
 
 .yui-calendar td.calcell.selected {
-  background-color: #fff;
-  color: #000;
+  background-color: $calendar-selected-bg;
+  color: $calendar-selected-color;
 }
 
 .yui-calendar td.calcell.selected a {
-  background-color: $danger-btn-bg;
-  color: #000;
+  background-color: $calendar-selected-bg;
+  color: $calendar-selected-color;
 }
 
 .yui-calendar td.calcell.calcellhover {
@@ -457,7 +457,7 @@ p#clear {
 }
 
 .yui-calcontainer .yui-cal-nav-mask {
-  background-color: #000;
+  background-color: $mask-bg;
   filter: alpha(opacity = 25);
   opacity: 0.25;
 }
@@ -467,10 +467,10 @@ p#clear {
   left: 50%;
   font-family: arial, helvetica, clean, sans-serif;
   font-size: 93%;
-  background-color: #f2f2f2;
+  background-color: $calendar-body-bg;
   padding: 0;
   margin-left: -7em;
-  border: 1px solid #808080;
+  border: 1px solid $calendar-border-color;
   width: 14em;
 }
 
@@ -494,10 +494,10 @@ p#clear {
 
 .yui-calcontainer .yui-cal-nav-e {
   display: none;
-  background-color: #F2F2F2;
+  background-color: $calendar-body-bg;
   padding: 5px;
   margin-top: 5px;
-  border-top: 1px solid black;
+  border-top: 1px solid $calendar-border-color;
 }
 
 .yui-calcontainer .yui-cal-nav label {
@@ -511,8 +511,8 @@ p#clear {
 }
 
 .yui-calcontainer .yui-cal-nav-y input.yui-invalid {
-  background-color: #FFEE69;
-  border: 1px solid #000;
+  background-color: $btn-warning-bg;
+  border: 1px solid $btn-warning-color;
 }
 
 .yui-calcontainer .yui-cal-nav-yc {
@@ -520,18 +520,17 @@ p#clear {
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
-  background-color: #ccc;
+  background-color: $default-btn-bg;
   margin: auto .15em;
-  border: 1px solid #808080;
+  border: 1px solid $default-btn-bg;
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn button {
   font-size: 93%;
-  color: #000;
+  color: $default-btn-color;
   padding: 0 8px;
   line-height: 2;
   line-height: 1.7;
-  min-height: 2em;
   min-height: auto;
 }
 
@@ -544,7 +543,7 @@ p#clear {
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
   background-color: $danger-btn-bg;
-  color: #fff;
+  color: $danger-btn-color;
   text-shadow: -1px -1px $danger-btn-bg;
 }
 
@@ -582,7 +581,7 @@ p#clear {
   display: inline-block;
   padding: 0;
   margin: 1px;
-  border: 1px solid #ccc;
+  border: 1px solid $calendar-border-color;
   float: left;
   float: none;
   overflow: hidden;
@@ -593,7 +592,7 @@ p#clear {
 
 .yui-carousel .yui-carousel-item-selected {
   margin: 1px;
-  border: 1px dashed #000;
+  border: 1px dashed $calendar-border-color;
 }
 
 .yui-carousel-vertical {
@@ -608,7 +607,7 @@ p#clear {
 }
 
 .yui-log .carousel {
-  background: #f2e886;
+  background: $btn-warning-bg;
 }
 
 .yui-carousel-nav {
@@ -622,11 +621,10 @@ p#clear {
 }
 
 .yui-carousel-button-focus {
-  outline: 1px dotted #000;
 }
 
 .yui-carousel, .yui-carousel-vertical {
-  border: 1px solid #808080;
+  border: 1px solid $panel-border-bg;
 }
 
 .yui-carousel-nav {
@@ -968,7 +966,7 @@ span.yui-carousel-first-button-disabled {
 }
 
 .mask {
-  background-color: #000;
+  background-color: $mask-bg;
   filter: alpha(opacity = 25);
   opacity: .25;
 }
@@ -993,7 +991,6 @@ span.yui-carousel-first-button-disabled {
 
 .yui-module .hd, .yui-panel .hd, .yui-panel .bd, .yui-panel .ft
 {
-
   margin: 0 -1px;
   margin: 0;
   border: 0;
@@ -1020,9 +1017,9 @@ span.yui-carousel-first-button-disabled {
 .yui-module .hd, .yui-panel .hd {
   font-size: 12px;
   font-weight: bold;
-  background: $active-tab-bg  none repeat scroll 0 0;
-  background-color: $active-tab-bg;
-  color: #ffffff;
+  background: $primary  none repeat scroll 0 0;
+  background-color: $primary;
+  color: $default-btn-color;
   padding: 3px 6px;
   line-height: 2;
   line-height: 1.8;

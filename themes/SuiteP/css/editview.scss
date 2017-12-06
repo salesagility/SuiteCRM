@@ -1,5 +1,4 @@
 /**** Edit view ***/
-@import 'variables.scss';
 
 /*Import VCard*/
 .import-vcard {
@@ -1219,13 +1218,13 @@ div.content p.error {
 
 .required a:link {
   font-weight: 600;
-  color: $default-btn-color;
+  color: $link-color;
   text-decoration: underline;
 }
 
 .error a {
   font-weight: 600;
-  color: $default-btn-color;
+  color: $link-color;
   text-decoration: underline;
 }
 
@@ -1235,11 +1234,11 @@ div.content p.error {
 }
 
 .required a:hover {
-  color: $main-font-color;
+  color: $link-color-hover;
 }
 
 .error a:hover {
-  color: $main-font-color;
+  color: $link-color-hover;
 }
 
 .success {

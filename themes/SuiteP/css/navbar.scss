@@ -1,5 +1,4 @@
 /**** NAVBAR ****/
-@import 'variables.scss';
 
 // Mix ins:
 @mixin alertButton() {
@@ -11,6 +10,20 @@
 }
 
 //Style
+
+
+.navbar-left {
+  float: left!important;
+}
+
+.navbar-right {
+  float: right!important;
+}
+
+.navbar-right~.navbar-right {
+  margin-right: 0;
+}
+
 .navbar-inverse {
   background: $navbar-bg;
 

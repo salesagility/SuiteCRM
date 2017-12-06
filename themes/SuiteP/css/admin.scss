@@ -1,7 +1,4 @@
 /**** Admin ***/
-@import 'variables.scss';
-
-
 
 .admin-panel h3 {
   font-size: $page-font-size + 1px;
@@ -276,15 +273,15 @@ div#rollover a span {
 }
 
 div#rollover a:hover span {
-  background-color: #fff;
+  background-color: $main-alternate-bg;
   display: block;
-  color: #333;
+  color: $gray-dark;
   font-size: 12px;
   margin-left: 5px;
   margin-top: 5px;
   padding: 10px;
   position: absolute;
-  border: 1px solid #ccc;
+  border: 1px solid $btn-default-border;
   text-decoration: none;
   width: 250px;
   z-index: 1000;
