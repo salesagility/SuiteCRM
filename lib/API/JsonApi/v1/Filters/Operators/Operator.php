@@ -150,7 +150,7 @@ class Operator
     public function toSqlOperands($operands)
     {
         if(!is_array($operands)) {
-            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be string] $operands');
+            throw new Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands');
         }
 
         /** @var \DBManager $db */

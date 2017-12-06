@@ -78,7 +78,7 @@ class OperatorsTest extends \Codeception\Test\Unit
     public function testToSqlOperandsWithInvalidType()
     {
         $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be string] $operands'),
+            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][expected type to be array] $operands'),
             function() {
                 self::$operator->toSqlOperands('string');
             }
