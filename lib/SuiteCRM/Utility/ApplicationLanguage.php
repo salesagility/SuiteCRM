@@ -38,41 +38,22 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\OAuth2\Repositories;
+namespace SuiteCRM\Utility;
 
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-
-class ClientRepository implements ClientRepositoryInterface
+class ApplicationLanguage
 {
+
     /**
-     * {@inheritdoc}
-     * @return null|ClientEntity
+     * @param CurrentLanguage $currentLanguage
+     * @param string $moduleName
+     * @return array
      */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
-    {
-
-        $client = new \OAuth2Clients();
-        $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
-            return null;
-        }
-
-        if (
-            $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
-        ) {
-            return null;
-        }
-
-        $clientEntity = new ClientEntity();
-        $clientEntity->setIdentifier($clientIdentifier);
-        $clientEntity->setName($client->name);
-
-        $redirect_url = isset($client->redirect_uri) ? $client->redirect_uri : '';
-        $clientEntity->setRedirectUri($redirect_url);
-
-        return $clientEntity;
+    public function getApplicationLanguageStrings(CurrentLanguage $currentLanguage) {
+        $applicationLanguageStrings =  array_merge(
+            return_application_language($currentLanguage->getCurrentLanguage()),
+            return_app_list_strings_language($currentLanguage->getCurrentLanguage())
+        );
+        return $applicationLanguageStrings;
     }
+
 }
