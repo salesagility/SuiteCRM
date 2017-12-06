@@ -109,7 +109,7 @@ class FilterInterpreter
     }
 
     /**
-     * @param $filterStructure
+     * @param array $filterStructure
      * @return bool
      * @throws InvalidArgumentException
      */
@@ -122,7 +122,7 @@ class FilterInterpreter
     }
 
     /**
-     * @param $filterStructure
+     * @param array $filterStructure
      * @return bool
      * @throws InvalidArgumentException
      */
@@ -137,7 +137,7 @@ class FilterInterpreter
     }
 
     /**
-     * @param $filterStructure
+     * @param array $filterStructure  [table => [field => [operator, operand, ... ], ...]
      * @return bool
      * @throws Exception
      */
@@ -181,7 +181,7 @@ class FilterInterpreter
 
     /**
      * Convert the filter structure for a parser into an SQL where clause
-     * @param $filterStructure
+     * @param $filterStructure  [table => [field => [operator, operand, ... ], ...]
      * @return string|ByIdFilter
      * @throws Exception
      */
