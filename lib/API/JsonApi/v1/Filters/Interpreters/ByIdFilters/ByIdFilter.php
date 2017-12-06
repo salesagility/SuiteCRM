@@ -40,15 +40,30 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters;
 
+use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByIdFilterInterpreter;
 
 class ByIdFilter implements ByIdFilterInterpreter
 {
+    /** @var ContainerInterface $containers */
+    private $containers;
+
+    /**
+     * ByIdFilter constructor.
+     * @param ContainerInterface $containers
+     */
+    public function __construct(ContainerInterface $containers)
+    {
+        $this->containers = $containers;
+    }
+
     /**
      * @return string
      */
     public function getByIdFilter($filterStructure)
     {
+        /** @var \DBManager $databaseManager */
+        $databaseManager = $this->containers->get('DatabaseManager');
         $filter = '';
         $idFilter = array();
         /** @var array $identifiers */
@@ -58,7 +73,7 @@ class ByIdFilter implements ByIdFilterInterpreter
                 continue;
             }
 
-            $idFilter[] = '"'. $id .'"';
+            $idFilter[] = '"'. $databaseManager->quote($id) .'"';
         }
 
         $filter = 'id IN ('. implode(',', $idFilter) .')';
