@@ -203,9 +203,9 @@
   display: inline-block;
   width: 1px;
   height: 2.4em;
-  background: white;
+  background: $panel-bg;
   margin: 0 0.5em 0 0;
-  border-left: 1px solid #e2e3e3;
+  border-left: 1px solid $panel-default-border;
 }
 .vakata-context .vakata-contextmenu-shortcut {
   font-size: 0.8em;
@@ -289,23 +289,23 @@
 }
 .jstree-default .jstree-hovered {
   background: $email-tree-selected;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 .jstree-default .jstree-context {
   background: $email-tree-selected;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 
 }
 .jstree-default .jstree-clicked {
   background: $email-tree-selected;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 .jstree-default .jstree-no-icons .jstree-anchor > .jstree-themeicon {
   display: none;
 }
 .jstree-default .jstree-disabled {
   background: transparent;
-  color: #666666;
+  color: $default-text-disabled-color;
 }
 .jstree-default .jstree-disabled.jstree-hovered {
   background: transparent;

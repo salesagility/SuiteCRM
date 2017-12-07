@@ -40,7 +40,7 @@
   }
   .glyph-print {
     font-size: 20px;
-    color: #778591;
+    color: $panel-button-bg-hover;
     font-weight: normal;
     text-align: right;
   }
@@ -53,7 +53,7 @@
     display: block;
     font-size: 26px;
     font-weight: 300;
-    color: $main-font-color;
+    color: $main-header-font-color;
     margin: 0 0 0 0;
     float: left;
     letter-spacing: 2px;

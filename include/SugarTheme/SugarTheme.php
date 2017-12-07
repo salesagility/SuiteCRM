@@ -601,11 +601,7 @@ class SugarTheme
         $html = '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('deprecated.css').'" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
-
 
 		// sprites
 		if(!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
@@ -646,6 +642,8 @@ class SugarTheme
             $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('fonts.'.$font.'.css').'" id="current_font_style" />';
         }
 
+
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
         return $html;
     }
 

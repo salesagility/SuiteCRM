@@ -32,7 +32,7 @@
   @include clearfix;
 
   @media (min-width: $grid-float-breakpoint) {
-    float: left;
+
   }
 }
 
@@ -230,7 +230,7 @@
 // the nav the full height of the horizontal nav (above 768px).
 
 .navbar-nav {
-  margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
+  margin: ($navbar-padding-vertical / 2) ($navbar-padding-horizontal);
 
   > li > a {
     padding-top:    10px;
@@ -264,11 +264,9 @@
 
   // Uncollapse the nav
   @media (min-width: $grid-float-breakpoint) {
-    float: left;
     margin: 0;
 
     > li {
-      float: left;
       > a {
         padding-top:    $navbar-padding-vertical;
         padding-bottom: $navbar-padding-vertical;
@@ -284,6 +282,8 @@
 // our navbars.
 
 .navbar-form {
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: -$navbar-padding-horizontal;
   margin-right: -$navbar-padding-horizontal;
   padding: 10px $navbar-padding-horizontal;
