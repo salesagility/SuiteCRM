@@ -4,6 +4,22 @@ $sm-breakpoint: 768px;
 $md-breakpoint: 1024px;
 $lg-breakpoint: 1200px;
 
+// Main color palette
+$primary: #778591;
+$danger: #F08377;
+$danger-hover: #F08377;
+$success: #BBE6A5;
+$info: #AA9DCC;
+$warning: #E6D5A5;
+
+$page-content-spacing: 20px;
+
+$main-bg: #F5F5F5;
+$main-alternate-bg: #FFFFFF;
+
+$selection-color: #FFFFFF;
+$selection-bg: #F08377;
+
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -164,23 +180,23 @@ $btn-default-border:             #94A6B5 !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
+$btn-primary-border:             $brand-primary !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
-$btn-success-border:             darken($btn-success-bg, 5%) !default;
+$btn-success-border:             $brand-success !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
-$btn-info-border:                darken($btn-info-bg, 5%) !default;
+$btn-info-border:                $brand-info !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-border:             darken($btn-warning-bg, 5%) !default;
+$btn-warning-border:             $brand-warning !default;
 
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-border:              darken($btn-danger-bg, 5%) !default;
+$btn-danger-border:              $brand-danger !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
@@ -248,7 +264,7 @@ $cursor-disabled:                not-allowed !default;
 //** Background for the dropdown menu.
 $dropdown-bg:                    #fff !default;
 //** Dropdown menu `border-color`.
-$dropdown-border:                rgba(0,0,0,.15) !default;
+$dropdown-border:                transparent !default;
 //** Dropdown menu `border-color` **for IE8**.
 $dropdown-fallback-border:       #ccc !default;
 //** Divider color for between dropdown items.
@@ -340,7 +356,7 @@ $screen-mdlg-max:            ($screen-lg-min + 50) !default;
 //** Number of columns in the grid.
 $grid-columns:              12 !default;
 //** Padding between columns. Gets divided in half for the left and right.
-$grid-gutter-width:         30px !default;
+$grid-gutter-width:         5px !default;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
 $grid-float-breakpoint:     $screen-sm-min !default;
@@ -559,7 +575,6 @@ $popover-max-width:                   276px !default;
 $popover-border-color:                rgba(0,0,0,.2) !default;
 //** Popover fallback border color
 $popover-fallback-border-color:       #ccc !default;
-
 //** Popover title background color
 $popover-title-bg:                    darken($popover-bg, 3%) !default;
 
@@ -612,7 +627,7 @@ $modal-title-padding:         15px !default;
 $modal-title-line-height:     $line-height-base !default;
 
 //** Background color of modal content area
-$modal-content-bg:                             #fff !default;
+$modal-content-bg:                             $main-alternate-bg !default;
 //** Modal content border color
 $modal-content-border-color:                   rgba(0,0,0,.2) !default;
 //** Modal content border color **for IE8**
@@ -718,7 +733,7 @@ $list-group-link-heading-color: #333 !default;
 //
 //##
 
-$panel-bg:                    #fff !default;
+$panel-bg: $main-alternate-bg !default;
 $panel-body-padding:          15px !default;
 $panel-heading-padding:       10px 15px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
@@ -729,7 +744,7 @@ $panel-inner-border:          #ddd !default;
 $panel-footer-bg:             #f5f5f5 !default;
 
 $panel-default-text:          $gray-dark !default;
-$panel-default-border:        #ddd !default;
+$panel-default-border:        transparent !default;
 $panel-default-heading-bg:    #f5f5f5 !default;
 
 $panel-primary-text:          #fff !default;
@@ -884,27 +899,13 @@ $dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;
 
-// Page
-$primary: #778591;
-$danger: #F08377;
-$danger-hover: #F08377;
-$success: #BBE6A5;
-$info: #AA9DCC;
-$warning: #E6D5A5;
-
-$page-content-spacing: 20px;
-
-$main-bg: #F5F5F5;
-$main-alternate-bg: #FFFFFF;
-
-$selection-color: #FFFFFF;
-$selection-bg: #F08377;
 
 $page-font-family: $font-family-base;
 $page-font-size: 13px;
 $page-p-size: 14px;
 $page-title-space: 40px; // normal 40px
 $main-font-color: #534D64;
+$main-header-font-color: $main-font-color;
 
 $link-color: $danger;
 $link-color-hover: $danger-hover;
@@ -1002,6 +1003,7 @@ $side-bar-link-color-hover: #677785;
 $active-tab-bg: #778591;
 $active-tab-bg-hover:#778591;
 $active-tab-color-hover:#FFFFFF;
+$active-tab-border: transparent;
 $default-tab-bg: #BFCAD3;
 $default-tab-bg-hover: #BFCAD3;
 $default-tab-color-hover: #FFFFFF;
@@ -1011,7 +1013,7 @@ $action-tab-bg-hover: #F08377;
 $action-tab-seperator: #FA988D;
 $action-tab-color: #FFFFFF;
 $action-tab-color-hover: #FFFFFF;
-$tab-bg: #FFFFFF;
+$tab-bg: $panel-bg;
 $tab-height: 10px; // 32p normal 24px small
 $tab-margin-bottom: 5px;
 
@@ -1019,6 +1021,11 @@ $tab-margin-bottom: 5px;
 $panel-collapsed-bg: #BFCAD3;
 $panel-expanded-bg: #66727D;
 $panel-height-divisor: 1; // 1 normal  1.25 small
+$panel-collapsed-color: #fff;
+$panel-expanded-color: $panel-collapsed-color;
+$panel-button-bg: #94A6B5;
+$panel-button-bg-hover: #778591;
+$campaign-pagination-bg-hover: #808F9C;
 
 // Detail view
 $detail-view-field-bg: #F5F5F5;
@@ -1048,6 +1055,7 @@ $filters-input-bg: #FFFFFF;
 // Form Elements
 $input-line-height: 20px;
 $button-line-height: 32px;
+$global-search-height: 38px;
 
 $input-bg: #D8F5EE;
 $input-select-option: #FFFFFF;
@@ -1059,8 +1067,10 @@ $input-border: #A5E8D6;
 // tables
 $table-header-bg: #778591;
 $table-nav-bg: #BFCAD3;
-$table-focus-bg: #FAF7CF;
-$table-alternate-row-bg: #FFFFFF;
+$table-focus-bg: #FAF7CF; // also hover
+$table-row-bg: $main-bg;
+$table-alternate-row-bg: $main-bg;
+$table-row-bg: $main-alternate-bg;
 
 
 // Dashlets
@@ -1094,7 +1104,9 @@ $case-contact-color: #534D64;
 $case-contact-border-color: transparent;
 
 // Full Calendar and YUI popup calendar
-$calendar-slot-bg: #F5F5F5;
+$calendar-bg: #FFFFFF;
+$calendar-border-color: #dddddd;
+$calendar-slot-bg: #FFFFFF;
 $calendar-slot-color: $link-color;
 $calendar-slot-border-color: #dddddd;
 $calendar-month-slot-height: 52px;
@@ -1107,6 +1119,7 @@ $calendar-user-height: 32px;
 $calendar-user-bg: #ABC3D7;
 $calendar-user-height: 40px;
 $calendar-header-bg: #BFCAD3;
+// YUI Popup calendar
 $calendar-month-day-header-bg: #778591;
 $calendar-month-day-header-color: #F5F5F5;
 $calendar-year-body-bg: $calendar-slot-bg;
@@ -1114,6 +1127,7 @@ $calendar-year-body-border-color: $calendar-slot-bg;
 $calendar-other-month-day-header-bg: #b3c0c7;
 $calendar-other-month-day-header-color: #F5F5F5;
 $calendar-other-month-day-header-color-hover: #F08377;
+$calendar-nav-header-bg: #66727D;
 $calendar-nav-button-bg: #66727D;
 $calendar-body-bg: $main-alternate-bg;
 $calendar-body-color: #444444;
@@ -1126,9 +1140,12 @@ $calendar-tip-color: $main-font-color;
 $calendar-nav-bg: $danger-btn-bg;
 $calendar-selected-bg: $danger-btn-bg;
 $calendar-selected-color: $default-btn-color;
+$calendar-hover-bg: $danger-btn-bg-hover;
+$calendar-hover-color: $danger-btn-color-hover;
+$calendar-arrow-button-bg: $btn-info-bg;
+$calendar-arrow-button-color: $btn-info-color;
 
-
-
+// Qtip popups in the full calendar
 $qtip-font-size: 12px;
 $qtip-btn-color: #F5F5F5;
 $qtip-btn-hover: #B29Eb5;
@@ -1140,8 +1157,24 @@ $qtip-content-color: #F5F5F5;
 
 // yui
 $mask-bg: #000;
+$shadow: #000;
+
+// yui color picker
+$yui-picker-bg: #F00;
+$yui-picker-panel-bg: #e3e3e3;
+$yui-picker-panel-border-color: #888;
+$yui-picker-panel-header-bg: #ccc;
+$yui-picker-panel-header-color: #000;
+$yui-picker-panel-header-border: 1px solid #e3e3e3;
+$yui-picker-panel-body-bg: #e3e3e3;
+$yui-picker-panel-body-color: #000;
+$yui-picker-panel-body-border: 1px solid #e3e3e3;
+$yui-picker-panel-footer-bg: #e3e3e3;
+
 
 // Schedule bar
+$scheduler-slot-bg: $gray-lighter;
+$scheduler-slot-border-color: $panel-default-border;
 $scheduler-start-color: #79996a;
 $scheduler-end-color: #99534d;
 $scheduler-free-color: #6a80e6;

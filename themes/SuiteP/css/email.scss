@@ -63,7 +63,7 @@
 .email-indicator .email-imported {
   background-color: $info-btn-bg;
   color: $default-btn-color;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .email-new-record.oddListRowS1:hover td {
@@ -226,13 +226,13 @@
 
   background: $main-alternate-bg;
   border: 1px solid $email-attachment-container-border;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $email-attachment-height + ($email-attachment-padding * 2);
   margin: 5px 0;
   min-height: $email-attachment-height + ($email-attachment-padding * 2);
 
   label {
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     color: $email-attachment-color;
     cursor: pointer;
     display: inline-block;
@@ -257,7 +257,7 @@
 
   .attachment-group-container {
     background-color: $email-attachment-group-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     display: inline-block;
     line-height: $email-attachment-height + ($email-attachment-padding * 2);
     min-height: $email-attachment-height + ($email-attachment-padding * 2);
@@ -266,7 +266,7 @@
 
   .attachment-file-container {
     background-color: $email-attachment-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     color: $email-attachment-color;
     font-size: $email-attachment-font-size;
     display: inline-block;
@@ -294,7 +294,7 @@
 
   .attachment-remove {
     background-color: $email-attachment-remove-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     cursor: pointer;
     margin: 0 5px 0 0;
     padding: $email-attachment-padding;
@@ -330,13 +330,13 @@
 
   background: $main-alternate-bg;
   border: 1px solid $email-attachment-container-border;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $email-attachment-height + ($email-attachment-padding * 2);
   margin: 5px 0;
   min-height: $email-attachment-height + ($email-attachment-padding * 2);
 
   label {
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     color: $email-attachment-color;
     cursor: pointer;
     display: inline-block;
@@ -361,7 +361,7 @@
 
   .attachment-group-container {
     background-color: $email-attachment-group-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     display: inline-block;
     line-height: $email-attachment-height + ($email-attachment-padding * 2);
     min-height: $email-attachment-height + ($email-attachment-padding * 2);
@@ -375,7 +375,7 @@
 
   .attachment-file-container {
     background-color: $email-attachment-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     color: $email-attachment-color;
     font-size: $email-attachment-font-size;
     display: inline-block;
@@ -403,7 +403,7 @@
 
   .attachment-remove {
     background-color: $email-attachment-remove-bg;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     cursor: pointer;
     margin: 0 5px 0 0;
     padding: $email-attachment-padding;

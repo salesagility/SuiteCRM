@@ -172,7 +172,7 @@
   padding: 0;
   margin-right: 4px;
   border: 1px solid $danger-btn-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #actionLines [type="button"] {
@@ -180,7 +180,7 @@
   padding: 0;
   margin-right: 4px;
   border: 1px solid $danger-btn-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #actionLines {
@@ -201,7 +201,7 @@
 
 #actionLines > tr > td {
   border: 1px solid $workflow-action-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   margin-bottom: 4px;
 }
 
@@ -364,7 +364,7 @@
   padding: 0;
   margin-right: 4px;
   border: 1px solid $danger-btn-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .btn-danger {

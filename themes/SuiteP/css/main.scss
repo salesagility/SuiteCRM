@@ -43,10 +43,10 @@ h5 {
 }
 
 hr {
-  background-color: #cccccc;
-  color: #cccccc;
+  background-color: $panel-default-border;
+  color: $panel-default-border;
   border: 0;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid $panel-default-border;
   clear: both;
   height: 1px;
 }

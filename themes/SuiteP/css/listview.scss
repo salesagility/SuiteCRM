@@ -554,7 +554,7 @@ a.listViewTdToolsS1 {
   background-color: $list-view-action-button-bg;
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   margin-left: 0;
 }
@@ -572,7 +572,7 @@ a.listViewTdToolsS1 {
   background-color: $list-view-action-button-bg;
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   margin-left: 0;
 }
@@ -631,20 +631,20 @@ a.listViewTdToolsS1 {
   background-color: $list-view-action-button-bg;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .single > a {
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   padding: 0;
 }
 
 #actionLinkTop .sugar_action_button {
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   background-color: $list-view-action-menu-bg;
 }
@@ -652,7 +652,7 @@ a.listViewTdToolsS1 {
 .action-link-top .sugar_action_button {
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   background-color: $list-view-action-menu-bg;
 }
@@ -660,7 +660,7 @@ a.listViewTdToolsS1 {
 #actionLinkBottom .sugar_action_button {
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   background-color: $list-view-action-menu-bg;
 
@@ -669,7 +669,7 @@ a.listViewTdToolsS1 {
 .action-link-bottom .sugar_action_button {
   padding: 0 4px 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
   background-color: $list-view-action-menu-bg;
 }
@@ -1364,7 +1364,7 @@ a.listViewTdToolsS1 {
 }
 
 .list .sugar_action_button > .subnav {
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 form#MassAssign_SecurityGroups {
@@ -2123,7 +2123,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   padding: 0;
   padding-right: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
 }
 
@@ -2288,7 +2288,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   color: $default-btn-color;
   padding: 0 10px 0 10px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: 26px;
   height: 26px;
 }
@@ -2359,7 +2359,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   padding: 0;
   padding-right: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   min-width: 32px;
 
 }
@@ -2849,7 +2849,7 @@ ul.clickMenu li ul.subnav {
   float: left;
   width: auto;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   padding: 8px 0;
   z-index: 10;
   overflow: hidden;
@@ -2864,7 +2864,7 @@ ul.clickMenu ul.subnav-sub {
   float: left;
   width: auto;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   padding: 8px 0;
   z-index: 10;
   overflow: hidden;
@@ -2879,7 +2879,7 @@ ul.SugarActionMenuIESub {
   float: left;
   width: auto;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   padding: 8px 0;
   z-index: 10;
   overflow: hidden;
@@ -2985,56 +2985,56 @@ table.subpanel-table ul.subpanel > a {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #actionLinkTop li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .action-link-top li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #actionLinkBottom li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .action-link-bottom li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 table.subpanel-table li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .listViewLinkButton li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #selectLinkTop li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 @-moz-document url-prefix() {
@@ -3047,7 +3047,7 @@ table.subpanel-table li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 @-moz-document url-prefix() {
@@ -3060,21 +3060,21 @@ table.subpanel-table .pagination .sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 table.subpanel-table .pagination li.sugar_action_button > form > a {
   padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 table.subpanel-table .pagination .sugar_action_button > form > a {
   padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 #actionLinkTop li.sugar_action_button:hover {
@@ -3187,7 +3187,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg; /* ??? #94A6B5; */
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   padding-right: 4px;
   min-width: 32px;
 }

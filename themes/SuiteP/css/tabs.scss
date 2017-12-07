@@ -3,7 +3,6 @@
 .content {
 
   .nav-tabs {
-    margin: ($tab-height/2) 0 ($tab-height/2) 0;
     border: hidden;
   }
 
@@ -37,7 +36,7 @@
     color: $default-tab-color-hover;
     cursor: pointer;
     margin: 0 2px 0 2px;
-    border-color: #eee #eee #fff;
+    border-color: $active-tab-border;
     letter-spacing: 2px;
     line-height: $tab-height;
   }
@@ -54,7 +53,7 @@
     margin-bottom: 0;
     margin-left: 2px;
     margin-right: 2px;
-    border-color: #eee #eee #fff;
+    border-color: $active-tab-border;
     letter-spacing: 2px;
     line-height: $tab-height;
   }

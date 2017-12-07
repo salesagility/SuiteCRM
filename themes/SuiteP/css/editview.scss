@@ -4,7 +4,7 @@
 .import-vcard {
   background-color: $main-alternate-bg;
   padding: 16px;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 
   #vcard_file {
     margin-top: 10px;
@@ -41,11 +41,11 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv {
-  background-color: #FAFAFA;
+  background-color: $panel-bg;
   color: $main-font-color;
   padding: 20px 20px 10px 20px;
   border: 1px solid $panel-border-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   text-align: left;
   width: 100%;
   border-collapse: collapse;
@@ -67,11 +67,11 @@ div#searchResults {
 
 #scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col] {
   padding-left: 4px;
-  border-left: 1px solid #DDDDDD;
+  border-left: 1px solid $scheduler-slot-border-color;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
-  background-color: #eeeeee;
+  background-color: $scheduler-slot-bg;
   width: 15px;
 }
 
@@ -135,24 +135,24 @@ div#searchResults {
 }
 
 #create-invitees {
-  background-color: #FAFAFA;
+  background-color: $panel-bg;
   color: $main-font-color;
   padding: 20px 20px 10px 20px;
   margin-top: 5px;
   border: 1px solid $panel-border-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   text-align: left;
   width: 100%;
   border-collapse: collapse;
 }
 
 .schedulerInvitees {
-  background-color: #FAFAFA;
+  background-color: $panel-bg;
   color: $main-font-color;
   padding: 20px 20px 10px 20px;
   margin-top: 5px;
   border: 1px solid $panel-border-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   text-align: left;
   width: 100%;
   border-collapse: collapse;
@@ -165,7 +165,7 @@ div#searchResults {
   padding: 0 10px;
   margin: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $button-line-height;
   height: $button-line-height;
   text-transform: uppercase;
@@ -178,7 +178,7 @@ div#searchResults {
   padding: 0 10px;
   margin: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $button-line-height;
   height: $button-line-height;
   text-transform: uppercase;
@@ -196,7 +196,7 @@ div#searchResults {
   padding: 0 10px;
   margin: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $button-line-height;
   height: $button-line-height;
   text-transform: uppercase;
@@ -210,7 +210,7 @@ div#searchResults {
   padding: 0 10px;
   margin: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: $button-line-height;
   height: $button-line-height;
   text-transform: uppercase;
@@ -222,7 +222,7 @@ div#searchResults {
   padding: 20px 20px 10px 20px;
   margin-top: 5px;
   border: 1px solid $panel-border-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   text-align: left;
   width: 100%;
   border-collapse: collapse;
@@ -334,8 +334,8 @@ a#powered_by:hover {
 .menu {
   display: none;
   position: absolute;
-  background-color: #f6f6f6;
-  border: #999999 solid 1px;
+  background-color: $panel-bg;
+  border: $panel-default-border solid 1px;
   filter: alpha(opacity=90);
   opacity: 0.9;
   visibility: hidden;
@@ -628,7 +628,7 @@ slot {
   color: $main-font-color;
   padding: 0px 10px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: 38px;
   text-align: left;
   min-height: 38px;
@@ -814,7 +814,7 @@ fieldset label {
 .validation-message {
   margin: 4px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 table#tabFormPagination td{
@@ -1002,31 +1002,31 @@ div.row.monthHeader {
 }
 
 .olCapFontClass A {
-  color: #dfdfdf;
+  color: $calendar-slot-color;
 }
 
 .olFgClass td {
-  background-color: #fff;
+  background-color: $panel-bg;
   padding: 5px 7px 7px 10px;
   line-height: 18px;
 }
 
 #forecastsWorksheet .olBgClass td.olFgClass {
-  background-color: #fff;
+  background-color: $panel-bg;
   padding: 5px 7px 7px 10px;
   line-height: 18px;
 }
 
 .olCgClass td{
-  background-color: #f6f6f6;
+  background-color: $panel-bg;
   padding: 5px 3px 3px 10px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid $panel-default-border;
 }
 
 #forecastsWorksheet .olBgClass td.olCgClass {
-  background-color: #f6f6f6;
+  background-color: $panel-bg;
   padding: 5px 3px 3px 10px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid $panel-default-border;
 }
 
 .olCgClass {
@@ -1035,7 +1035,7 @@ div.row.monthHeader {
 }
 
 .olBgClass {
-  background-color: #ddd;
+  background-color: $panel-bg;
   padding: 2px;
 }
 
@@ -1044,14 +1044,14 @@ div.row.monthHeader {
 }
 
 .olCloseFontClass {
-  background-color: #dfdfdf;
+  background-color: $panel-bg;
   padding-bottom: 1px;
   text-align: right;
 }
 
 .aclAll {
   font-weight: bold;
-  color: #008000;
+  color: $alert-success-text;
 }
 
 .aclOwner {
@@ -1061,32 +1061,32 @@ div.row.monthHeader {
 
 .aclNone {
   font-weight: bold;
-  color: #FF0000;
+  color: $alert-info-text;
 }
 
 .aclEnabled {
   font-weight: bold;
-  color: #008000;
+  color: $alert-success-text;
 }
 
 .aclDisabled {
   font-weight: bold;
-  color: #FF0000;
+  color: $alert-info-text;
 }
 
 .aclAdmin {
   font-weight: bold;
-  color: #0000FF;
+  color: $alert-warning-text;
 }
 
 .aclNormal {
   font-weight: bold;
-  color: #008000;
+  color: $alert-success-text;
 }
 
 .aclGroup {
   font-weight: bold;
-  color: #0000A0;
+  color: $alert-info-text;
 }
 
 ul.noBullet {
@@ -1109,7 +1109,6 @@ li.noBullet {
 #MorePanelHandle {
   display: inline;
   background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
-  color: #444;
   cursor: pointer;
   margin-bottom: 2px;
   margin-left: 2px;
@@ -1137,7 +1136,7 @@ li.noBullet {
 }
 
 .sqsSelectedSmartInputItem {
-  background-color: #DEEFFF;
+  background-color: $panel-bg;
 }
 
 #sqsSmartInputResults {
@@ -1147,17 +1146,17 @@ li.noBullet {
 
 .sqsNoMatch {
   font-weight: bold;
-  background-color: #eeeeee;
-  color: #980000;
+  background-color: $panel-bg;
+  color: $alert-info-text;
   padding: 2px 5px 2px 5px;
 }
 
 .todaysTask {
-  color: #FF7800
+  color: $alert-warning-text
 }
 
 .overdueTask {
-  color: #ff0000;
+  color: $alert-info-text;
 }
 
 .product_group .required {
@@ -1169,11 +1168,11 @@ li.noBullet {
 
 .required {
   background-color: transparent;
-  color: #f08377;
+  color: $alert-info-text;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .error {
@@ -1183,7 +1182,7 @@ li.noBullet {
   font-size:12px;
   margin-bottom: 20px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 //
@@ -1203,7 +1202,7 @@ p.error {
 
 .error {
   border: none;
-  color: $danger;
+  color: $alert-danger-text;
   background: transparent;
 }
 
@@ -1246,7 +1245,7 @@ div.content p.error {
 }
 
 .rssItemDate {
-  color: #666666;
+  color: $primary;
 }
 
 .date {
@@ -1294,8 +1293,8 @@ input.sqsEnabled {
 .contentBox {
   padding: 0 10px 0 0;
   margin: 10px 0 10px 0;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
+  border-top: 1px solid $panel-default-border;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .contentBox td {
@@ -1303,7 +1302,7 @@ input.sqsEnabled {
 }
 
 .teamNoticeBox {
-  background: #fff;
+  background: $panel-bg;
   padding: 0;
   border: 1px solid;
   width: 100%;
@@ -1314,15 +1313,15 @@ input.sqsEnabled {
 }
 
 .mceToolbarTop {
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .x-dlg-btns button.x-btn-text:hover {
-  color: #000;
+  color: $main-font-color;
 }
 
 .x-dlg-btns .x-btn-focus button.x-btn-text {
-  color: #000;
+  color: $main-font-color;
 }
 
 td.edit.view td {
@@ -1493,31 +1492,31 @@ iframe.teamNoticeBox {
 }
 
 .x-sqs-list {
-  background: #d0d0d0;
-  border: 1px solid #d0d0d0;
+  background: $panel-bg;
+  border: 1px solid $panel-default-border;
   overflow: hidden;
 }
 
 .x-sqs-list-inner {
   position: relative;
-  background: #FFF;
+  background: $panel-bg;
   overflow: auto;
   overflow-x: hidden;
 }
 
 .x-sqs-list-item {
-  font: normal 12px 'Lato', arial, sans-serif;
+  font: normal 12px $font-family-base;
   padding: 1px;
-  border: 1px solid #fff;
+  border: 1px solid $panel-default-border;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .x-sqs-list .x-sqs-selected {
-  background: #d0d0d0;
+  background: $selection-bg;
   cursor: pointer;
-  border: 1px dotted #f6f6f6;
+  border: 1px dotted $panel-default-border;
 }
 
 embed {
@@ -1638,7 +1637,7 @@ div.confirmTable {
   display: block;
   font-size: 26px;
   font-weight: 300;
-  color: $main-font-color;
+  color: $main-header-font-color;
   margin: 0 0 $detail-view-module-title-space 0;
   float: left;
   letter-spacing: 2px;
@@ -1812,19 +1811,19 @@ a.tabFormAdvLink:hover {
 }
 
 .evenListRowS1 td {
-  background: #f5f5f5;
+  background: $table-row-bg;
 }
 
 .oddListRowS1 td {
-  background: #fff;
+  background: $table-alternate-row-bg;
 }
 
 .evenListRowS1:hover td {
-  background: #FAF7CF;
+  background: $table-focus-bg;
 }
 
 .oddListRowS1:hover td {
-  background: #FAF7CF;
+  background: $table-focus-bg;
 }
 
 .detail table {
@@ -1836,9 +1835,9 @@ table.detail {
 }
 
 .detail tr td[scope="row"] {
-  background-color: #f6f6f6;
-  color: #000000;
-  border-color: #cbdae6;
+  background-color: $panel-bg;
+  color: $main-font-color;
+  border-color: $panel-default-border;
 }
 
 .detail h4 {
@@ -1846,13 +1845,13 @@ table.detail {
 }
 
 .detail tr th {
-  border-color: #cbdae6;
+  border-color: $panel-default-border;
 }
 
 .detail tr td {
-  background-color: #fff;
-  color: #444444;
-  border-color: #cbdae6;
+  background-color: $panel-bg;
+  border-color: $panel-default-border;
+  color: $main-font-color;
 }
 
 .detail tr td a:link {
@@ -1872,49 +1871,50 @@ table.detail {
 }
 
 #EditView hr {
-  border-color: #abc3d7;
+  border-color: $panel-default-border;
 }
 
 .edit {
-  background-color: #f6f6f6;
-  color: #333333;
+  background-color: $panel-bg;
+  border-color: $panel-default-border;
 }
 
 .detail .edit td {
-  background-color: #fff;
+  background-color: $panel-bg;
+  border-color: $panel-default-border;
   border-bottom: 0;
 }
 
 .other {
-  background-color: #cbdae6;
-  border-color: #abc3d7;
+  background-color: $panel-bg;
+  border-color: $panel-default-border
 }
 
 .other td {
-  background-color: $default-btn-color;
-  color: #444444;
-  border-left-color: #dfdfdf;
+  background-color: $panel-bg;
+  color: $main-font-color;
+  border-left-color: $panel-default-border;
 }
 
 .other td[scope=row] {
-  background-color: #fafafa;
-  color: #000000;
+  background-color: $panel-bg;
+  color: $main-font-color;
 }
 
 .other td.edit {
-  background-color: #f6f6f6;
-  color: #000000;
+  background-color: $panel-bg;
+  color: $main-font-color;
 }
 
 a.tabFormAdvLink:link {
-  color: #444444;
+  color: $link-color;
   padding-top: 32px;
   padding-right: 32px;
   float: left;
 }
 
 a.tabFormAdvLink:visited {
-  color: #444444;
+  color: $link-color;
   padding-top: 32px;
   padding-right: 32px;
   float: left;
@@ -1931,10 +1931,10 @@ a.tabFormAdvLink:visited {
 #ajaxStatusDiv {
   position: fixed;
   top: 7px;
-  background: #ffffff;
+  background: $panel-bg;
   color: $danger;
   padding: 5px;
-  border: 1px solid #aaa;
+  border: 1px solid $panel-default-border;
   filter: alpha(opacity=80);
   opacity: .8;
   z-index: 20;
@@ -1942,9 +1942,9 @@ a.tabFormAdvLink:visited {
 }
 
 .detail508 tr td[scope="col"] {
-  background-color: #F6F6F6;
-  color: #000000;
-  border-color: #CBDAE6;
+  background-color: $panel-bg;
+  color: $main-font-color;
+  border-color: $panel-default-border;
   text-align: right;
   white-space: nowrap;
 }
@@ -1962,7 +1962,7 @@ td.teamset-row {
 }
 
 span#selectedRecordsTop {
-  color: #fff;
+  color: $default-btn-color;
 }
 
 ul.clickMenu {
@@ -2212,19 +2212,19 @@ a:link {
 }
 
 .view {
-  background: #fefefe;
+  background: $main-alternate-bg;
   padding: 0;
   margin: 0;
 }
 
 table.view {
-  background: #fefefe;
+  background: $main-alternate-bg;
   padding: 0;
   margin: 0;
 }
 
 .evenListRowS1 {
-  background: #efefef;
+  background: $main-bg;
 }
 
 .toggler {
@@ -2252,7 +2252,7 @@ table.view {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: $main-alternate-bg;
   width: 100%;
   height: 100%;
 }
@@ -2696,13 +2696,13 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #actionLines {
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   clear: both;
   width: 100%;
 }
 
 #actionLines table {
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   clear: both;
   width: 100%;
 }
@@ -2789,7 +2789,7 @@ table#lineItems tr td table tfoot tr td span {
   display: block;
   padding: 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 100%;
 }
 
@@ -2797,7 +2797,7 @@ table#lineItems tr td table tfoot tr td span {
   display: block;
   padding: 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 100%;
 }
 
@@ -2805,7 +2805,7 @@ table#lineItems tr td table tfoot tr td span {
   display: block;
   padding: 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 100%;
 }
 
@@ -2813,7 +2813,7 @@ table#lineItems tr td table tfoot tr td span {
   display: block;
   padding: 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 100%;
 }
 
@@ -3175,7 +3175,7 @@ table#lineItems tr td table tfoot tr td span {
 
 .converted_account {
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .converted_account td {
@@ -3184,7 +3184,7 @@ table#lineItems tr td table tfoot tr td span {
 
 .converted_account > tbody > tr > td {
   padding: 10px;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .modal {
@@ -4014,7 +4014,7 @@ select#sales_stage_advanced {
   padding: 8px;
   margin-right: 1%;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 30%;
   min-height: 240px;
 }
@@ -4053,7 +4053,7 @@ select#sales_stage_advanced {
   color: $default-btn-color;
   padding: 8px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   line-height: 32px;
   height: 48px;
 }
@@ -4107,7 +4107,7 @@ select#sales_stage_advanced {
 .ui-state-highlight {
   background: #E6E6E6;
   border: 1px solid #778591;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   height: 30px;
 
 }
@@ -4128,7 +4128,7 @@ hr {
   background: #ffffff;
   padding: 16px 8px 8px 8px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 /* fix schedule bar popup on calendar */
@@ -4873,7 +4873,7 @@ object {
   }
 
   .edit-view-pagination-desktop {
-    display: hidden;
+    display: none;
     visibility: collapse;
   }
 

@@ -1,50 +1,45 @@
-///*********************************************************************************
-// * SugarCRM Community Edition is a customer relationship management program developed by
-// * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-// *
-// * This program is free software; you can redistribute it and/or modify it under
-// * the terms of the GNU Affero General Public License version 3 as published by the
-// * Free Software Foundation with the addition of the following permission added
-// * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
-// * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
-// * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
-// *
-// * This program is distributed in the hope that it will be useful, but WITHOUT
-// * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
-// * details.
-// *
-// * You should have received a copy of the GNU Affero General Public License along with
-// * this program; if not, see http://www.gnu.org/licenses or write to the Free
-// * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-// * 02110-1301 USA.
-// *
-// * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
-// * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
-// *
-// * The interactive user interfaces in modified source and object code versions
-// * of this program must display Appropriate Legal Notices, as required under
-// * Section 5 of the GNU Affero General Public License version 3.
-// *
-// * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
-// * these Appropriate Legal Notices must retain the display of the "Powered by
-// * SugarCRM" logo. If the display of the logo is not reasonably feasible for
-// * technical reasons, the Appropriate Legal Notices must display the words
-// * "Powered by SugarCRM".
-// ********************************************************************************/
-//
-///**
-// * Contains styling for the yui widget elements
-// */
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
 
-@import 'variables.scss';
-
-
-//
+/**
+ * Contains styling for the yui widget elements
+ */
 
 .yui-ac {
   position: relative;
-  font-family: arial;
+  font-family: $font-family-base;
   font-size: 100%;
 }
 
@@ -83,7 +78,7 @@
 
 .yui-ac-shadow {
   position: absolute;
-  background: #000;
+  background: $shadow;
   margin: .3em;
   filter: alpha(opacity = 10);
   opacity: .10;
@@ -220,14 +215,16 @@
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn button {
   display: block;
   display: inline-block;
-  background-color: transparent;
+  background-color: $danger-btn-bg;
   cursor: pointer;
   border: none;
+  border-radius: $border-radius-small;
   overflow: visible;
 }
 
 .yui-calendar .calbody a:hover {
-  background: inherit;
+  background: $danger-btn-bg-hover;
+  color: $danger-btn-color-hover;
 }
 
 p#clear {
@@ -236,9 +233,9 @@ p#clear {
 }
 
 .yui-calcontainer {
-  background-color: $calendar-slot-bg;
+  background-color: $calendar-bg;
   padding: 10px;
-  border: 1px solid #calendar-slot-border-color;
+  border: 1px solid $calendar-border-color;
 }
 
 .yui-calcontainer.multi {
@@ -257,7 +254,7 @@ p#clear {
   left: 0;
   font: 100% sans-serif;
   font-weight: bold;
-  color: #000;
+  color: $main-font-color;
   padding: .4em;
   margin: 0 -10px 10px -10px;
   border-bottom: 1px solid $calendar-other-month-day-header-bg;
@@ -330,6 +327,7 @@ p#clear {
 }
 
 .yui-calendar .calweekdayrow {
+  background-color: $calendar-header-bg;
   height: 2em;
 }
 
@@ -340,7 +338,7 @@ p#clear {
 
 .yui-calendar .calweekdaycell {
   font-weight: bold;
-  color: #000;
+  color: $calendar-body-color;
   text-align: center;
   width: 2em;
 }
@@ -410,14 +408,14 @@ p#clear {
 }
 
 .yui-calendar td.calcell.calcellhover {
-  background-color: $danger-btn-bg-hover;
-  color: #fff;
+  background-color: $calendar-hover-bg;
+  color: $calendar-hover-color;
   cursor: pointer;
 }
 
 .yui-calendar td.calcell.calcellhover a {
-  background-color:$danger-btn-bg-hover;
-  color: #fff;
+  background-color: $calendar-hover-bg;
+  color: $calendar-hover-color;
 }
 
 .yui-calendar td.calcell.previous {
@@ -428,33 +426,6 @@ p#clear {
   text-decoration: line-through;
 }
 
-.yui-calendar td.calcell.highlight1 {
-  background-color: #ccff99;
-}
-
-.yui-calendar td.calcell.highlight2 {
-  background-color: #99ccff;
-}
-
-.yui-calendar td.calcell.highlight3 {
-  background-color: #ffcccc;
-}
-
-.yui-calendar td.calcell.highlight4 {
-  background-color: #ccff99;
-}
-
-.yui-calendar a.calnav {
-  color: #000;
-  padding: 0 4px;
-  border: 1px solid #f2f2f2;
-  zoom: 1;
-}
-
-.yui-calendar a.calnav:hover {
-  cursor: pointer;
-  border-color: #A0A0A0;
-}
 
 .yui-calcontainer .yui-cal-nav-mask {
   background-color: $mask-bg;
@@ -465,7 +436,7 @@ p#clear {
 .yui-calcontainer .yui-cal-nav {
   top: 2.5em;
   left: 50%;
-  font-family: arial, helvetica, clean, sans-serif;
+  font-family: $font-family-base;
   font-size: 93%;
   background-color: $calendar-body-bg;
   padding: 0;
@@ -520,9 +491,8 @@ p#clear {
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
-  background-color: $default-btn-bg;
   margin: auto .15em;
-  border: 1px solid $default-btn-bg;
+  border: 1px solid $danger-btn-bg;
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn button {
@@ -624,7 +594,7 @@ p#clear {
 }
 
 .yui-carousel, .yui-carousel-vertical {
-  border: 1px solid $panel-border-bg;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-carousel-nav {
@@ -735,29 +705,30 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-picker-panel {
-  background: #e3e3e3;
-  border-color: #888;
+  background: $yui-picker-panel-bg;
+  border-color: $yui-picker-panel-border-color;
 }
 
 .yui-picker-panel .hd {
   font-size: 100%;
   font-weight: bold;
-  background-color: #ccc;
-  color: #000;
+  background-color: $yui-picker-panel-header-bg;
+  color: $yui-picker-panel-header-color;
   padding: 6px;
-  border: 1px solid #e3e3e3;
+  border: $yui-picker-panel-header-border;
   line-height: 100%;
   overflow: hidden;
 }
 
 .yui-picker-panel .bd {
-  background: #e8e8e8;
+  background: $yui-picker-panel-body-bg;
+  color: $yui-picker-panel-body-color;
   margin: 1px;
   height: 200px;
 }
 
 .yui-picker-panel .ft {
-  background: #e8e8e8;
+  background: $yui-picker-panel-footer-bg;
   padding: 1px;
   margin: 1px;
 }
@@ -791,7 +762,7 @@ span.yui-carousel-first-button-disabled {
   position: absolute;
   top: 4px;
   left: 4px;
-  background-color: #F00;
+  background-color: $yui-picker-bg;
   background-image: url(picker_mask.png);
   outline: 0 none;
   width: 182px;
@@ -825,7 +796,7 @@ span.yui-carousel-first-button-disabled {
   position: absolute;
   top: 4px;
   left: 240px;
-  border: 1px solid #888;
+  border: 1px solid $yui-picker-panel-border-color;
   width: 55px;
   height: 60px;
 }
@@ -834,7 +805,7 @@ span.yui-carousel-first-button-disabled {
   position: absolute;
   top: 4px;
   left: 304px;
-  border: 1px solid #888;
+  border: 1px solid $yui-picker-panel-border-color;
   width: 24px;
   height: 24px;
 }
@@ -886,7 +857,7 @@ span.yui-carousel-first-button-disabled {
   display: block;
   display: inline-block;
   font: 1em arial, helvetica, clean, sans-serif;
-  color: #000;
+  color: $yui-picker-panel-header-color;
   padding: 0;
 }
 
@@ -982,7 +953,7 @@ span.yui-carousel-first-button-disabled {
   left: 0;
   border-width: 1px 0;
   border-width: 1px;
-  border-color: #808080;
+  border-color: $yui-picker-panel-border-color;
   border-style: solid;
   z-index: 1;
   zoom: 1;
@@ -998,17 +969,17 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-module {
-  border : 1px solid #C0C0C0;
+  border : 1px solid $modal-content-border-color;
 }
 
 
 .yui-module .hd, .yui-panel .hd {
-  border-bottom: solid 1px #C0C0C0;
+  border-bottom: solid 1px $modal-header-border-color;
   padding:10px 0 10px 0;
 }
 
 .yui-module .bd, .yui-panel .bd, .yui-panel .ft {
-  background-color: #FFFFFF;
+  background-color: $modal-content-bg;
 }
 .container-close{
   margin: 4px 0 0 0;
@@ -1032,11 +1003,7 @@ span.yui-carousel-first-button-disabled {
 .yui-panel .ft {
   font-size: 77%;
   padding: 5px 10px;
-  border-top: solid 1px #808080;
-}
-
-.yui-panel-container.focused .yui-panel .hd {
-
+  border-top: solid 1px $yui-picker-panel-body-border;
 }
 
 .container-close {
@@ -1055,7 +1022,7 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-panel-container.matte {
-  background-color: #fff;
+  background-color: $panel-bg;
   padding: 9px 10px;
 }
 
@@ -1094,15 +1061,15 @@ span.yui-carousel-first-button-disabled {
 
 .yui-dialog .ft span.yui-button-disabled {
   background-position: 0pt -1500px;
-  border-color: #ccc;
+  border-color: $btn-default-border;
 }
 
 .yui-dialog .ft span.yui-button-disabled .first-child {
-  border-color: #ccc;
+  border-color: $btn-default-border;
 }
 
 .yui-dialog .ft span.yui-button-disabled button {
-  color: #a6a6a6;
+  color: $btn-default-color;
 }
 
 .yui-simple-dialog .bd .yui-icon {
@@ -1140,11 +1107,11 @@ span.yui-carousel-first-button-disabled {
   position: relative;
   top: 0;
   left: 0;
-  background-color: #FFFFFF;
-  color: #000;
+  background-color: $tooltip-bg;
+  color: $tooltip-color;
   padding: 2px 5px;
   border-width: 1px;
-  border-color: #DDDDDD;
+  border-color: $modal-content-border-color;
   border-style: solid;
   z-index: 1;
 }
@@ -1158,7 +1125,7 @@ span.yui-carousel-first-button-disabled {
   bottom: -3px;
   left: -3px;
   right: -3px;
-  background-color: #000;
+  background-color: $shadow;
 }
 
 .yui-tt-shadow-visible {
@@ -1216,7 +1183,7 @@ th.yui-dt-resizeable .yui-dt-resizerliner {
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: #CCC;
+  background-color: $gray-lighter;
   cursor: e-resize;
   cursor: col-resize;
   filter: alpha(opacity = 0);
@@ -1241,11 +1208,11 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
 }
 
 .yui-dt table {
-  font-family: arial;
+  font-family: $font-family-base;
   font-size: inherit;
   padding: 0;
   margin: 0;
-  border: 1px solid #7F7F7F;
+  border: 1px solid $panel-default-border;
   border-spacing: 0;
   border-collapse: separate;
   border-collapse: collapse;
@@ -1280,15 +1247,15 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
   padding: 0;
   margin: 0;
   border: none;
-  border-right: 1px solid #CBCBCB;
+  border-right: 1px solid $panel-default-border;
 }
 
 .yui-dt tr.yui-dt-first td {
-  border-top: 1px solid #C0C0C0;
+  border-top: 1px solid $panel-default-border;
 }
 
 .yui-dt th .yui-dt-liner {
-  background:#EEEEEE none repeat scroll 0 0;
+  background: $panel-bg none repeat scroll 0 0;
   white-space: nowrap;
 }
 
@@ -1300,7 +1267,7 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
 }
 
 .yui-dt-coltarget {
-  background-color: red;
+  background-color: $danger;
   width: 5px;
 }
 
@@ -1308,8 +1275,8 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
   padding: 0;
   margin: 0;
   border: none;
-  border-right: 1px solid #CBCBCB;
-  border-color:#FFFFFF #EDEDED #E7E7E7;
+  border-right: 1px solid $panel-default-border;
+  border-color: $panel-default-border;
   border-bottom: 1px solid #E7E7E7;
   text-align: left;
 }
@@ -1328,13 +1295,13 @@ th.yui-dt-hidden, td.yui-dt-hidden {
 }
 
 .yui-dt-mask {
-  background-color: #000;
+  background-color: $mask-bg;
   filter: alpha(opacity = 25);
   opacity: .25;
 }
 
 .yui-dt-message {
-  background-color: #FFF;
+  background-color: $main-font-color;
 }
 
 .yui-dt-scrollable table {
@@ -1342,21 +1309,17 @@ th.yui-dt-hidden, td.yui-dt-hidden {
 }
 
 .yui-dt-scrollable .yui-dt-hd {
-  border-top: 1px solid #7F7F7F;
-  border-left: 1px solid #7F7F7F;
-  border-right: 1px solid #7F7F7F;
+  border-top: 1px solid $panel-default-border;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
 }
 
 .yui-dt-scrollable .yui-dt-bd {
-  background-color: #FFF;
-  border-bottom: 1px solid #7F7F7F;
-  border-left: 1px solid #7F7F7F;
-  border-right: 1px solid #7F7F7F;
+  background-color: $panel-bg;
+  border-bottom: 1px solid $panel-default-border;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
 }
-
-/*.yui-dt-scrollable .yui-dt-data tr.yui-dt-last td {
-    border-bottom: 1px solid #7F7F7F;
-}*/
 
 thead .yui-dt-sortable {
   cursor: pointer;
@@ -1383,9 +1346,9 @@ tbody .yui-dt-editable {
 }
 
 .yui-dt-editor {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
   padding: 6px;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   text-align: left;
 }
 
@@ -1407,9 +1370,9 @@ tbody .yui-dt-editable {
 }
 
 .yui-dt-editor .yui-dt-button button.yui-dt-default {
-  background-color: #5584E0;
+  background-color: $btn-default-bg;
   color: #FFF;
-  border: 1px solid #304369;
+  border: 1px solid $btn-default-border;
 }
 
 .yui-dt-editor .yui-dt-button button:hover {
@@ -1417,15 +1380,15 @@ tbody .yui-dt-editable {
 }
 
 .yui-dt-editor .yui-dt-button button:active {
-  color: #000;
+  color: $btn-default-color;
 }
 
 tr.yui-dt-even {
-  background-color: #FFF;
+  background-color: $table-row-bg;
 }
 
 tr.yui-dt-odd {
-  background-color: #FFF;
+  background-color: $table-alternate-row-bg;
 }
 
 tr.yui-dt-even td.yui-dt-asc, tr.yui-dt-even td.yui-dt-desc
@@ -1439,43 +1402,43 @@ tr.yui-dt-odd td.yui-dt-asc, tr.yui-dt-odd td.yui-dt-desc
 }
 
 .yui-dt-list tr.yui-dt-even {
-  background-color: #FFF;
+  background-color: $table-row-bg;
 }
 
 .yui-dt-list tr.yui-dt-odd {
-  background-color: #FFF;
+  background-color: $table-alternate-row-bg;
 }
 
 .yui-dt-list tr.yui-dt-even td.yui-dt-asc, .yui-dt-list tr.yui-dt-even td.yui-dt-desc
 {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
 }
 
 .yui-dt-list tr.yui-dt-odd td.yui-dt-asc, .yui-dt-list tr.yui-dt-odd td.yui-dt-desc
 {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
 }
 
 th.yui-dt-highlighted, th.yui-dt-highlighted a
 {
-  background-color: #B2D2FF;
+  background-color: $link-color;
 }
 
 tr.yui-dt-highlighted, tr.yui-dt-highlighted td.yui-dt-asc, tr.yui-dt-highlighted td.yui-dt-desc, tr.yui-dt-even td.yui-dt-highlighted, tr.yui-dt-odd td.yui-dt-highlighted
 {
   cursor: pointer;
-  background-color: #E5F2FF;
+  background-color: $panel-bg;
 }
 
 .yui-dt-list th.yui-dt-highlighted, .yui-dt-list th.yui-dt-highlighted a
 {
-  background-color: #B2D2FF;
+  background-color: $panel-bg;
 }
 
 .yui-dt-list tr.yui-dt-highlighted, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-asc, .yui-dt-list tr.yui-dt-highlighted td.yui-dt-desc, .yui-dt-list tr.yui-dt-even td.yui-dt-highlighted, .yui-dt-list tr.yui-dt-odd td.yui-dt-highlighted
 {
   cursor: pointer;
-  background-color: #B2D2FF;
+  background-color: $panel-bg;
 }
 
 th.yui-dt-selected, th.yui-dt-selected a {
@@ -1532,15 +1495,15 @@ tr.yui-dt-even td.yui-dt-selected, tr.yui-dt-odd td.yui-dt-selected
 }
 
 a.yui-dt-page {
-  background-color: #fff;
+  background-color: $panel-bg;
   padding: 2px 6px;
-  border: 1px solid #CBCBCB;
+  border: 1px solid $panel-default-border;
   text-decoration: none;
 }
 
 .yui-dt-selected {
-  background-color: #fff;
-  border: 1px solid #fff;
+  background-color: $selection-bg;
+  border: 1px solid $selection-bg;
 }
 
 .yui-busy {
@@ -1578,8 +1541,8 @@ a.yui-dt-page {
   display: block;
   cursor: move;
   margin: 0 0 0 .2em;
-  border-left: 1px solid #999;
-  border-right: 1px solid #999;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
   clear: none;
   float: left;
   overflow: hidden;
@@ -1781,7 +1744,7 @@ a.yui-dt-page {
 }
 
 .yui-editor-container .yui-editor-masked {
-  background-color: #CCC;
+  background-color: $panel-default-border;
 }
 
 .yui-editor-container iframe {
@@ -2077,7 +2040,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   display: block;
   cursor: pointer;
   margin: 0;
-  border: 1px solid #F6F7EE;
+  border: 1px solid $panel-default-border;
   float: left;
   overflow: hidden;
   width: 9px;
@@ -2146,7 +2109,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-editor-container {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-toolbar-container {
@@ -2164,7 +2127,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 .yui-toolbar-container .yui-toolbar-titlebar h2 {
   font-size: 100%;
   font-weight: bold;
-  color: #000000;
+  color: $main-font-color;
   padding: 0.3em 1em;
   margin: 0;
   text-align: left;
@@ -2172,7 +2135,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-toolbar-group h3 {
   font-size: 75%;
-  color: #808080;
+  color: $main-font-color;
   padding-bottom: 0;
   padding-left: 0.25em;
   margin: 1em 0 0;
@@ -2187,16 +2150,16 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
 }
 
 .yui-toolbar-container .yui-toolbar-subcont {
   padding: 0 1em 0.35em;
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-toolbar-container-collapsed .yui-toolbar-titlebar {
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow
@@ -2249,8 +2212,8 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   width: 30px;
   _font-size: 0;
   margin: 0;
-  border-color: #808080;
-  color: #f2f2f2;
+  border-color: $default-btn-bg;
+  color: $default-btn-color;
   border-style: solid;
   border-width: 1px 0;
   zoom: 1;
@@ -2264,7 +2227,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   font-size: 0;
   line-height: 2;
   display: block;
-  color: #000;
+  color: $default-btn-color;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -2276,7 +2239,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child
 {
-  border-color: #808080;
+  border-color: $default-btn-bg;
   border-style: solid;
   border-width: 0 1px;
   margin: 0 -1px;
@@ -2286,18 +2249,18 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child
 {
-  border-color: #ccc;
+  border-color: $default-btn-bg;
 }
 
 .yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a
 {
-  color: #A6A6A6;
+  color: $default-btn-bg;
   cursor: default;
 }
 
 .yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled
 {
-  border-color: #ccc;
+  border-color: $default-btn-bg;
 }
 
 .yui-toolbar-container .yui-button .first-child {
@@ -2313,11 +2276,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container .yui-button-hover {
-  border-color: #808080;
+  border-color: $default-btn-bg;
 }
 
 .yui-toolbar-container .yui-button-selected {
-  border-color: #808080;
+  border-color: $default-btn-bg;
 }
 
 .yui-toolbar-container .yui-toolbar-nogrouplabels h3 {
@@ -2352,7 +2315,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container .yui-button-menu {
-  background-color: #fff;
+  background-color: $panel-bg;
 }
 
 .yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled
@@ -2361,11 +2324,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 div.yuimenu li.selected {
-  background-color: #B3D4FF;
+  background-color: $selection-bg;
 }
 
 div.yuimenu li.selected a.selected {
-  color: #000;
+  color: $selection-color;
 }
 
 .yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon
@@ -2594,7 +2557,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-color-button-menu .yui-toolbar-colors {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel {
@@ -2615,21 +2578,21 @@ div.yuimenu li.selected a.selected {
 .yui-editor-panel .hd h3 {
   position: relative;
   font-size: 93%;
-  color: #000;
+  color: $main-font-color;
   padding: 3px 0 0 0;
   margin: 0;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   width: 99%;
   height: 20px;
   text-indent: 5px;
 }
 
 .yui-editor-panel .bd {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
   padding: 0;
   margin: 0;
-  border-left: 1px solid #808080;
-  border-right: 1px solid #808080;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
   overflow: visible;
   width: 99%;
 }
@@ -2690,13 +2653,13 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel label input.warning {
-  background-color: #FFEE69;
+  background-color: $warning;
 }
 
 .yui-editor-panel .yui-toolbar-group h3 {
   font-size: 93%;
   font-weight: normal;
-  color: #000;
+  color: $main-font-color;
   padding: 0 3px 0 0;
   margin: 5px 0 0 0;
   float: left;
@@ -2723,7 +2686,6 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding {
-  width: 203px;
   width: 198px;
 }
 
@@ -2732,7 +2694,6 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding h3 {
-  margin-left: 25px;
   margin-left: 12px;
 }
 
@@ -2745,10 +2706,10 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .ft {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
   padding: 0;
   margin: 0 0 2px 0;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   border-top: none;
 }
 
@@ -2766,8 +2727,8 @@ div.yuimenu li.selected a.selected {
 
 .yui-editor-panel .ft span.tip {
   font-size: 85%;
-  background-color: #F2F2F2;
-  border-top: 1px solid #808080;
+  background-color: $panel-bg;
+  border-top: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel .ft span.tip strong {
@@ -2813,7 +2774,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-container .bd {
-  background-color: #ffffff;
+  background-color: $panel-bg;
 }
 
 .yui-editor-blankimage {
@@ -2863,7 +2824,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-crop .yui-resize {
-  border: 1px dashed #fff;
+  border: 1px dashed $panel-default-border;
 }
 
 .yui-layout-loading {
@@ -2879,12 +2840,12 @@ body.yui-layout {
 
 .yui-layout-doc {
   position: relative;
-  box-shadow: #999 0 5px 10px;
+  box-shadow: $panel-default-border 0 5px 10px;
   padding: 0;
   margin: 0;
   overflow: visible;
-  -moz-box-shadow: #999 0 5px 10px;
-  -webkit-box-shadow: #999 0 5px 10px;
+  -moz-box-shadow: $panel-default-border 0 5px 10px;
+  -webkit-box-shadow: $panel-default-border 0 5px 10px;
   height:100%;
 }
 
@@ -2940,16 +2901,9 @@ body.yui-layout {
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-  background: #ffffff; /* Old browsers */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+  background: $panel-bg;
   width: 100%;
   zoom: 1;
-  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
 }
 
 div.yui-layout-hd h2 {
@@ -3019,7 +2973,7 @@ div.yui-layout-hd h2 {
 .yui-layout .yui-layout-clip {
   display: none;
   position: absolute;
-  background-color: #c0c0c0;
+  background-color: $gray-lighter;
   height: 20px;
 }
 
@@ -3053,8 +3007,8 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-resize-proxy div {
   position: absolute;
-  background-color: #F2F2F2;
-  border: 1px solid #808080;
+  background-color: $panel-bg;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-resize .yui-resize-handle-active {
@@ -3118,7 +3072,7 @@ div.yui-layout-hd h2 {
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
   top: 4px;
   left: 4px;
-  border: 1px solid #666;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-clip-right .collapse {
@@ -3128,12 +3082,12 @@ div.yui-layout-hd h2 {
 .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse
 {
   background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-clip-top .collapse {
   background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')no-repeat -20px -240px;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse
@@ -3144,7 +3098,7 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-clip-bottom .collapse {
   background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
-  border: 1px solid #808080;
+  border: 1px solid$panel-default-border;
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .close {
@@ -3153,16 +3107,8 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-hd {
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-
-  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-  border:1px solid #ccc;
+  background: $panel-bg; /* Old browsers */
+  border: 1px solid $panel-default-border;
   border-width: 0;
 }
 
@@ -3183,8 +3129,8 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-bd {
-  background-color: #FFFFFF;
-  border: 1px solid #808080;
+  background-color: $panel-bg;
+  border: 1px solid $panel-default-border;
   border-top: none;
   border-top-width: 0;
   border-bottom: none;
@@ -3193,25 +3139,21 @@ div.yui-layout-hd h2 {
 
 }
 
-.yui-layout .yui-layout-unit div.yui-layout-bd-noft {
-  /* border-bottom: 1px solid #808080;*/
-}
-
 .yui-layout .yui-layout-unit div.yui-layout-bd-nohd {
-  border-top: 1px solid #808080;
+  border-top: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-clip {
   display: none;
   position: absolute;
-  background-color: #F2F2F2;
-  border: 1px solid #808080;
+  background-color: $panel-bg;
+  border: 1px solid $panel-default-border;
   height: 20px;
 }
 
 .yui-layout div.yui-layout-ft {
-  background-color: #f2f2f2;
-  border: 1px solid #808080;
+  background-color: $panel-bg;
+  border: 1px solid $panel-default-border;
   border-top: none;
   border-top-width: 0;
 }
@@ -3266,10 +3208,10 @@ div.yui-layout-hd h2 {
 .yui-log {
   font-family: monospace;
   font-size: 77%;
-  background-color: #AAA;
-  color: #000;
+  background-color: $panel-info-heading-bg;
+  color: $panel-info-text;
   padding: 1em;
-  border: 1px solid black;
+  border: 1px solid $panel-info-border;
   text-align: left;
   width: 31em;
   z-index: 9000;
@@ -3282,7 +3224,7 @@ div.yui-layout-hd h2 {
 }
 
 .yui-log input {
-  font-family: arial;
+  font-family: $font-family-base;
   font-size: 100%;
   font-weight: normal;
   padding: 0;
@@ -3304,14 +3246,14 @@ div.yui-layout-hd h2 {
 .yui-log .yui-log-hd h4 {
   font-size: 108%;
   font-weight: bold;
-  color: #FFF;
+  color: $panel-info-text;
   padding: 0;
   margin: 0;
 }
 
 .yui-log .yui-log-bd {
-  background-color: #FFF;
-  border: 1px solid gray;
+  background-color: $panel-info-heading-bg;
+  border: 1px solid $panel-info-border;
   overflow: auto;
   width: 100%;
   height: 20em;
@@ -3355,23 +3297,23 @@ div.yui-layout-hd h2 {
 }
 
 .yui-log .info {
-  background-color: #A7CC25;
+  background-color: $info-btn-bg;
 }
 
 .yui-log .warn {
-  background-color: #F58516;
+  background-color: $btn-warning-bg;
 }
 
 .yui-log .error {
-  background-color: #E32F0B;
+  background-color: $danger-btn-bg;
 }
 
 .yui-log .time {
-  background-color: #A6C9D7;
+  background-color: $success-btn-bg;
 }
 
 .yui-log .window {
-  background-color: #F2E886;
+  background-color: $panel-bg;
 }
 
 .yuimenu {
@@ -3396,7 +3338,7 @@ div.yui-layout-hd h2 {
 {
   margin: 0;
   padding: 0;
-  background-color:#DDDDDD;
+  background-color: $panel-bg;
 }
 
 .yuimenuitemlabel,.yuimenubaritemlabel {
@@ -3473,23 +3415,23 @@ div.yui-layout-hd h2 {
 
 .yuimenubar {
   font-size: 93%;
-  border: solid 1px #808080;
+  border: solid 1px $panel-default-border;
   line-height: 2;
   line-height: 1.9;
 }
 
 .yuimenubarnav .yuimenubaritem {
-  border-right: solid 1px #ccc;
+  border-right: solid 1px $panel-default-border;
 }
 
 .yuimenubaritemlabel {
   position: relative;
-  color: #000;
+  color: $main-font-color;
   cursor: default;
   padding: 0 10px;
   margin: -1px 0;
   border-width: 1px 0;
-  border-color: #808080;
+  border-color: $panel-default-border;
   border-style: solid;
   text-decoration: none;
 }
@@ -3505,7 +3447,7 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenubaritemlabel-selected {
-  border-color: #7D98B8;
+  border-color: $selection-bg;
 }
 
 .yuimenubarnav .yuimenubaritemlabel-selected {
@@ -3515,7 +3457,7 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenubaritemlabel-disabled {
-  color: #A6A6A6;
+  color: $default-btn-color;
   cursor: default;
 }
 
@@ -3536,8 +3478,8 @@ div.yui-layout-hd h2 {
 .yuimenu .bd {
   zoom: 1;
   _zoom: normal;
-  border: solid 1px #808080;
-  background-color: #fff;
+  border: solid 1px $panel-default-border;
+  background-color: $panel-bg;
 }
 
 .yuimenu .yuimenu .bd {
@@ -3546,7 +3488,7 @@ div.yui-layout-hd h2 {
 
 .yuimenu ul {
   border-width: 1px 0 0 0;
-  border-color: #ccc;
+  border-color: $panel-default-border;
   border-style: solid;
 }
 
@@ -3556,10 +3498,10 @@ div.yui-layout-hd h2 {
 
 .yuimenu h6 {
   font-weight: bold;
-  color: #a4a4a4;
+  color: $main-font-color;
   padding: 3px 10px 0 10px;
   border-width: 1px 0 0 0;
-  border-color: #ccc;
+  border-color: $panel-border-bg;
   border-style: solid;
 }
 
@@ -3569,14 +3511,14 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenu .yui-menu-body-scrolled {
-  border-color: #ccc #808080;
+  border-color: $panel-default-border;
   overflow: hidden;
 }
 
 .yuimenu .topscrollbar, .yuimenu .bottomscrollbar
 {
   height: 16px;
-  border: solid 1px #808080;
+  border: solid 1px $panel-default-border;
 }
 
 .yuimenu .topscrollbar {
@@ -3598,7 +3540,7 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenuitem {
-  _border-bottom: solid 1px #fff;
+  _border-bottom: solid 1px $panel-default-border;
 }
 
 .yuimenuitem.first-of-type a, .yuimenuitem.first-of-type img{
@@ -3606,9 +3548,9 @@ div.yui-layout-hd h2 {
 }
 
 .yuimenuitemlabel, a.yuimenuitemlabel, a.yuimenuitemlabel:link, a.yuimenuitemlabel:visited {
-  background-color:#FFF;
-  border-left:1px solid #999;
-  color:#000;
+  background-color: $panel-bg;
+  border-left:1px solid $panel-default-border;
+  color: $main-font-color;
   cursor:default;
   margin:0 0 0 20px;
   padding:0 5px;
@@ -3616,7 +3558,7 @@ div.yui-layout-hd h2 {
 }
 
 a.yuimenuitemlabel:hover {
-  background-color: #DDD;
+  background-color: darken($panel-bg, 10%);
 }
 .yuimenuitemlabel img {
   border:none;
@@ -3643,18 +3585,18 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-menu-shadow-visible {
-  background-color: #000;
+  background-color: $shadow;
   filter: alpha(opacity = 12);
   opacity: .12;
 }
 
 .yuimenuitem-selected {
-  background-color: #B3D4FF;
+  background-color: $selection-bg;
 }
 
 .yuimenuitem-disabled .yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled:hover {
-  background-color: #FFF;
-  color: #A6A6A6;
+  background-color: $panel-bg;
+  color: $main-font-color;
   cursor: default;
 }
 
@@ -3667,8 +3609,8 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-pg-container {
-  background:#FAFAFA none repeat scroll 0 0;
-  color:#666666;
+  background: $panel-bg none repeat scroll 0 0;
+  color: $main-font-color;
   display: block;
   white-space: nowrap;
 }
@@ -3676,7 +3618,7 @@ a.yuimenuitemlabel:hover {
 .yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-pages, .yui-pg-page
 {
   display: inline-block;
-  font-family: arial, helvetica, clean, sans-serif;
+  font-family: $font-family-base;
   padding: 3px 6px;
   zoom: 1;
 }
@@ -3689,22 +3631,10 @@ a.yuimenuitemlabel:hover {
   padding: 3px 0;
 }
 
-/* a.yui-pg-first:link, a.yui-pg-first:visited, a.yui-pg-first:active, a.yui-pg-first:hover, a.yui-pg-previous:link, a.yui-pg-previous:visited, a.yui-pg-previous:active, a.yui-pg-previous:hover, a.yui-pg-next:link, a.yui-pg-next:visited, a.yui-pg-next:active, a.yui-pg-next:hover, a.yui-pg-last:link, a.yui-pg-last:visited, a.yui-pg-last:active, a.yui-pg-last:hover, a.yui-pg-page:link, a.yui-pg-page:visited, a.yui-pg-page:active, a.yui-pg-page:hover
-    {
-    color: #06c;
-    text-decoration: underline;
-    outline: 0;
-}
-
- span.yui-pg-first, span.yui-pg-previous, span.yui-pg-next, span.yui-pg-last
-    {
-    color: #a6a6a6;
-}*/
-
 .yui-pg-page {
-  background-color: #fff;
+  background-color: $panel-bg;
   padding: 2px 6px;
-  border: 1px solid #CBCBCB;
+  border: 1px solid $panel-default-border;
   text-decoration: none;
 }
 
@@ -3736,7 +3666,7 @@ a.yuimenuitemlabel:hover {
 .yui-pv {
   position: relative;
   font: arial;
-  background-color: #4a4a4a;
+  background-color: $panel-bg;
   margin-bottom: 1em;
   overflow: hidden;
   width: 99%;
@@ -3753,7 +3683,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-pv .hd h4 {
   font: bold 14px arial;
-  color: #fff;
+  color: $main-font-color;
   padding: 8px 10px;
   margin: 0;
 }
@@ -3761,12 +3691,12 @@ a.yuimenuitemlabel:hover {
 .yui-pv .hd a {
   display: block;
   font: bold 11px arial;
-  background: #3f6bc3;
-  color: #fff;
+  background: $danger-btn-bg;
+  color: $danger-btn-color;
   cursor: pointer;
   padding: 4px;
   margin: 3px 10px 0 0;
-  border: 1px solid #3f567d;
+  border: 1px solid $danger-btn-color;
   float: right;
 }
 
@@ -3807,29 +3737,29 @@ a.yuimenuitemlabel:hover {
 
 .yui-pv .yui-pv-table .yui-dt-bd td {
   font: 12px arial;
-  color: #eeee5c;
+  color: $btn-warning-color;
 }
 
 .yui-pv .yui-pv-table tr.yui-dt-odd {
-  background: #929292;
+  background: $table-row-bg;
 }
 
 .yui-pv .yui-pv-table tr.yui-dt-even {
-  background: #58637a;
+  background: $table-alternate-row-bg;
 }
 
 .yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-even td.yui-dt-desc
 {
-  background: #384970;
+  background: $table-alternate-row-bg;
 }
 
 .yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-asc, .yui-pv .yui-pv-table tr.yui-dt-odd td.yui-dt-desc
 {
-  background: #6F6E6E;
+  background: $table-row-bg;
 }
 
 .yui-pv .yui-pv-table .yui-dt-hd th {
-  background: #2E2D2D;
+  background: $table-header-bg;
   background-image: none;
 }
 
@@ -3843,12 +3773,12 @@ a.yuimenuitemlabel:hover {
 
 .yui-pv .yui-pv-table .yui-dt-hd th a {
   font: bold 12px arial;
-  color: #fff;
+  color: $list-group-link-heading-color;
 }
 
 .yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-asc, .yui-pv .yui-pv-table .yui-dt-hd th.yui-dt-desc
 {
-  background: #333;
+  background: $table-header-bg;
 }
 
 .yui-pv-chartcontainer {
@@ -3856,7 +3786,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-pv-chart {
-  color: #fff;
+  color: $panel-bg;
   margin: 5px 0 0 0;
   clear: right;
   height: 250px;
@@ -3871,7 +3801,7 @@ a.yuimenuitemlabel:hover {
 .yui-pv-chartlegend dl {
   padding: .2em 0 .2em .5em;
   margin: 5px 0;
-  border: 1px solid #999;
+  border: 1px solid $panel-default-border;
   zoom: 1;
 }
 
@@ -3886,7 +3816,7 @@ a.yuimenuitemlabel:hover {
 .yui-pv-chartlegend dd {
   display: block;
   font: 11px arial;
-  color: #fff;
+  color: $main-font-color;
   padding: 0;
   margin: 0 1em 0 .5em;
   float: left;
@@ -3970,7 +3900,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize .yui-resize-handle-r {
-  border-color:#999;
+  border-color: $panel-default-border;
   border-style:none solid;
   border-width:thin;
   width: 5px;
@@ -4006,14 +3936,14 @@ a.yuimenuitemlabel:hover {
   width: 100%;
   height: 5px;
   zoom: 1;
-  border-color:#999;
+  border-color: $panel-default-border;
   border-style:solid none;
   border-width:thin;
 }
 
 .yui-resize-proxy {
   position: absolute;
-  border: 1px dashed #000;
+  border: 1px dashed $panel-default-border;
   visibility: hidden;
   z-index: 1000;
 }
@@ -4105,7 +4035,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize-knob .yui-resize-handle {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-resize-hover .yui-resize-handle-active {
@@ -4118,10 +4048,10 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize-status {
-  background-color: #FFEE69;
-  color: #000;
-  border: 1px solid #A6982B;
-  border-top: 1px solid #D4C237;
+  background-color: $alert-info-bg;
+  color: $alert-info-text;
+  border: 1px solid $alert-info-bg;
+  border-top: 1px solid $alert-info-bg;
 }
 
 .yui-resize-status strong, .yui-resize-status em
@@ -4221,8 +4151,8 @@ a.yuimenuitemlabel:hover {
   display: block;
   cursor: move;
   margin: 0 0 0 .2em;
-  border-left: 1px solid #999;
-  border-right: 1px solid #999;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
   clear: none;
   float: left;
   overflow: hidden;
@@ -4241,7 +4171,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-toolbar-container .yui-toolbar-titlebar h2 {
   font-weight: bold;
-  color: #000;
+  color: $main-font-color;
   padding: .2em;
   margin: 0;
   border: none;
@@ -4249,7 +4179,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-toolbar-container .yui-toolbar-titlebar h2 a {
-  color: #000;
+  color: $main-font-color;
   cursor: default;
   text-decoration: none;
 }
@@ -4288,7 +4218,6 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-toolbar-container.yui-toolbar-grouped span.yui-toolbar-separator {
-  height: 45px;
   height: 50px;
 }
 
@@ -4424,7 +4353,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-editor-container .yui-editor-masked {
-  background-color: #CCC;
+  background-color: $panel-default-border;
 }
 
 .yui-editor-container iframe {
@@ -4581,17 +4510,17 @@ a.yuimenuitemlabel:hover {
 
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid
 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dotted
 {
-  border-bottom: 1px dotted black;
+  border-bottom: 1px dotted $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-dashed
 {
-  border-bottom: 1px dashed black;
+  border-bottom: 1px dashed $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0
@@ -4603,33 +4532,33 @@ a.yuimenuitemlabel:hover {
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-1
 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-2
 {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-3
 {
   top: 2px;
   top: -5px;
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-4
 {
   top: 1px;
   top: -5px;
-  border-bottom: 4px solid black;
+  border-bottom: 4px solid $panel-default-border;
 }
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-5
 {
   top: 1px;
   top: -5px;
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid $panel-default-border;
 }
 
 .yui-toolbar-container .yui-toolbar-bordersize-menu,.yui-toolbar-container .yui-toolbar-bordertype-menu
@@ -4651,42 +4580,42 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-1 a {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-2 a {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-3 a {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-4 a {
-  border-bottom: 4px solid black;
+  border-bottom: 4px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-5 a {
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordertype-menu li.yui-toolbar-bordertype-solid a {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordertype-menu li.yui-toolbar-bordertype-dashed a {
-  border-bottom: 1px dashed black;
+  border-bottom: 1px dashed $panel-default-border;
   height: 14px;
 }
 
 .yui-toolbar-bordertype-menu li.yui-toolbar-bordertype-dotted a {
-  border-bottom: 1px dotted black;
+  border-bottom: 1px dotted $panel-default-border;
   height: 14px;
 }
 
@@ -4720,7 +4649,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   display: block;
   cursor: pointer;
   margin: 0;
-  border: 1px solid #F6F7EE;
+  border: 1px solid $panel-default-border;
   float: left;
   overflow: hidden;
   width: 9px;
@@ -4729,7 +4658,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-colors a:hover {
-  border: 1px solid black;
+  border: 1px solid $link-color-hover;
 }
 
 .yui-color-button-menu {
@@ -4758,7 +4687,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 .yui-toolbar-colors span em {
   display: block;
   margin: 0.75px;
-  border: 1px solid black;
+  border: 1px solid $panel-default-border;
   float: left;
   overflow: hidden;
   width: 30px;
@@ -4789,7 +4718,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-editor-container {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-toolbar-container {
@@ -4807,7 +4736,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 .yui-toolbar-container .yui-toolbar-titlebar h2 {
   font-size: 100%;
   font-weight: bold;
-  color: #000000;
+  color: $main-font-color;
   padding: 0.3em 1em;
   margin: 0;
   text-align: left;
@@ -4815,7 +4744,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-toolbar-group h3 {
   font-size: 75%;
-  color: #808080;
+  color: $main-font-color;
   padding-bottom: 0;
   padding-left: 0.25em;
   margin: 1em 0 0;
@@ -4830,16 +4759,16 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container {
-  background-color: #F2F2F2;
+  background-color: $panel-default-border;
 }
 
 .yui-toolbar-container .yui-toolbar-subcont {
   padding: 0 1em 0.35em;
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-toolbar-container-collapsed .yui-toolbar-titlebar {
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .yui-editor-container .visible .yui-menu-shadow, .yui-editor-panel .visible .yui-menu-shadow
@@ -4864,10 +4793,10 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-editor-container .dompath {
-  background-color: #F2F2F2;
-  color: #999;
+  background-color:$panel-bg;
+  color: $main-font-color;
   padding: 0.25em;
-  border-top: 1px solid #808080;
+  border-top: 1px solid $panel-default-border;
   text-align: left;
 }
 
@@ -4892,8 +4821,8 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   width: 30px;
   _font-size: 0;
   margin: 0;
-  border-color: #808080;
-  color: #f2f2f2;
+  border-color: $panel-default-border;
+  color: $main-font-color;
   border-style: solid;
   border-width: 1px 0;
   zoom: 1;
@@ -4907,7 +4836,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
   font-size: 0;
   line-height: 2;
   display: block;
-  color: #000;
+  color: $main-font-color;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -4919,7 +4848,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-push-button .first-child, .yui-toolbar-container .yui-color-button .first-child, .yui-toolbar-container .yui-menu-button .first-child
 {
-  border-color: #808080;
+  border-color: $panel-default-border;
   border-style: solid;
   border-width: 0 1px;
   margin: 0 -1px;
@@ -4929,18 +4858,18 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-push-button-disabled .first-child, .yui-toolbar-container .yui-color-button-disabled .first-child, .yui-toolbar-container .yui-menu-button-disabled .first-child
 {
-  border-color: #ccc;
+  border-color: $panel-default-border;
 }
 
 .yui-toolbar-container .yui-push-button-disabled a, .yui-toolbar-container .yui-color-button-disabled a, .yui-toolbar-container .yui-menu-button-disabled a
 {
-  color: #A6A6A6;
+  color: $main-font-color;
   cursor: default;
 }
 
 .yui-toolbar-container .yui-push-button-disabled, .yui-toolbar-container .yui-color-button-disabled, .yui-toolbar-container .yui-menu-button-disabled
 {
-  border-color: #ccc;
+  border-color: $panel-default-border;
 }
 
 .yui-toolbar-container .yui-button .first-child {
@@ -4956,11 +4885,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container .yui-button-hover {
-  border-color: #808080;
+  border-color: $panel-default-border;
 }
 
 .yui-toolbar-container .yui-button-selected {
-  border-color: #808080;
+  border-color: $panel-default-border;
 }
 
 .yui-toolbar-container .yui-toolbar-nogrouplabels h3 {
@@ -4990,12 +4919,12 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .visible .yuimenuitemlabel {
   position: relative;
-  color: #000;
+  color: $main-font-color;
   cursor: pointer;
 }
 
 .yui-toolbar-container .yui-button-menu {
-  background-color: #fff;
+  background-color: $panel-bg;
 }
 
 .yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled
@@ -5004,11 +4933,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 div.yuimenu li.selected {
-  background-color: #B3D4FF;
+  background-color: $selection-bg;
 }
 
 div.yuimenu li.selected a.selected {
-  color: #000;
+  color: $selection-color;
 }
 
 .yui-toolbar-container .yui-toolbar-bold span.yui-toolbar-icon
@@ -5211,7 +5140,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-toolbar-container select {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   height: 22px;
 }
 
@@ -5237,7 +5166,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-color-button-menu .yui-toolbar-colors {
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel {
@@ -5258,21 +5187,21 @@ div.yuimenu li.selected a.selected {
 .yui-editor-panel .hd h3 {
   position: relative;
   font-size: 93%;
-  color: #000;
+  color: $main-font-color;
   padding: 3px 0 0 0;
   margin: 0;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   width: 99%;
   height: 20px;
   text-indent: 5px;
 }
 
 .yui-editor-panel .bd {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
   padding: 0;
   margin: 0;
-  border-left: 1px solid #808080;
-  border-right: 1px solid #808080;
+  border-left: 1px solid $panel-default-border;
+  border-right: 1px solid $panel-default-border;
   overflow: visible;
   width: 99%;
 }
@@ -5333,13 +5262,13 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel label input.warning {
-  background-color: #FFEE69;
+  background-color: $warning;
 }
 
 .yui-editor-panel .yui-toolbar-group h3 {
   font-size: 93%;
   font-weight: normal;
-  color: #000;
+  color: $main-font-color;
   padding: 0 3px 0 0;
   margin: 5px 0 0 0;
   float: left;
@@ -5353,7 +5282,6 @@ div.yuimenu li.selected a.selected {
 .yui-editor-panel .height-width {
   margin: 3px 0 0 35px;
   margin-left: 14px;
-  width: 42%;
   width: 44%;
 }
 
@@ -5366,7 +5294,6 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding {
-  width: 203px;
   width: 198px;
 }
 
@@ -5375,7 +5302,6 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding h3 {
-  margin-left: 25px;
   margin-left: 12px;
 }
 
@@ -5388,10 +5314,10 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .ft {
-  background-color: #F2F2F2;
+  background-color: $panel-bg;
   padding: 0;
   margin: 0 0 2px 0;
-  border: 1px solid #808080;
+  border: 1px solid $panel-default-border;
   border-top: none;
 }
 
@@ -5409,8 +5335,8 @@ div.yuimenu li.selected a.selected {
 
 .yui-editor-panel .ft span.tip {
   font-size: 85%;
-  background-color: #F2F2F2;
-  border-top: 1px solid #808080;
+  background-color: $panel-bg;
+  border-top: 1px solid $panel-default-border;
 }
 
 .yui-editor-panel .ft span.tip strong {
@@ -5456,7 +5382,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .yui-toolbar-container .bd {
-  background-color: #ffffff;
+  background-color: $main-font-color;
 }
 
 .yui-editor-blankimage {
@@ -5541,7 +5467,7 @@ div.yuimenu li.selected a.selected {
   font-size: 11px;
   font-style: normal;
   font-weight: bold;
-  color:#666;
+  color: $main-font-color;
 }
 
 .yui-navset {
@@ -5552,8 +5478,8 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-navset .yui-content {
-  background: #FFFFFF;
-  color: #000;
+  background: $panel-bg;
+  color: $main-font-color;
   zoom: 1;
 }
 
@@ -5644,10 +5570,10 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
 {
-  background: #eeeeee;
-  border: solid #a3a3a3;
+  background: $panel-bg;
+  border: solid $panel-default-border;
   border-width: 0 1px;
-  color: #000;
+  color: $main-font-color;
   position: relative;
   text-decoration: none;
   height:30px;
@@ -5655,8 +5581,8 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset .yui-nav a em, .yui-navset .yui-navset-top .yui-nav a em
 {
-  background: #eeeeee;
-  border: solid #a3a3a3;
+  background: $panel-bg;
+  border: solid $panel-default-border;
   border-width: 1px 0 0;
   cursor: hand;
   padding: 1px 10px 1px;
@@ -5669,8 +5595,7 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover
 {
-
-  color: #000;
+  color: $main-font-color;
 }
 
 .yui-navset .yui-nav a:hover, .yui-navset .yui-nav a:focus
@@ -5679,7 +5604,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-navset  .selected a em{
-  background: #ffffff;
+  background: $panel-bg;
   color: #333;
   padding: 8px;
 }
@@ -5766,28 +5691,13 @@ div.bodywrapper {
   padding: 0.2em .75em;
   top: auto;
   left: -1px;
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+  background: $panel-bg;
 }
 
 .yui-navset-right .yui-nav a em {
   left: auto;
   right: -1px;
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-  border-width: 0 1px 0 0;
-  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+  background: $panel-bg;
 }
 
 .yui-navset-left .yui-nav a, .yui-navset-left .yui-nav .selected a, .yui-navset-left .yui-nav a:hover, .yui-navset-right .yui-nav a, .yui-navset-right .yui-nav .selected a, .yui-navset-right .yui-nav a:hover, .yui-navset-bottom .yui-nav a, .yui-navset-bottom .yui-nav .selected a, .yui-navset-bottom .yui-nav a:hover
@@ -5796,8 +5706,8 @@ div.bodywrapper {
 }
 
 .yui-navset-left .yui-content {
-  border: 1px solid #808080;
-  border-left-color: #243356;
+  border: 1px solid $panel-default-border;
+  border-left-color: $panel-default-border;
 }
 
 .yui-navset-bottom .yui-nav, .yui-navset .yui-navset-bottom .yui-nav
@@ -5826,24 +5736,13 @@ div.bodywrapper {
   border-width: 0 0 1px;
   top: auto;
   bottom: -1px;
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+  background: $panel-bg;
 }
 
 .yui-navset-bottom .yui-content, .yui-navset .yui-navset-bottom .yui-content
 {
-  border: 1px solid #808080;
-  border-bottom-color: #243356;
-}
-
-.ygtvitem {
-
+  border: 1px solid $panel-default-border;
+  border-bottom-color: $panel-default-border;
 }
 
 .ygtvitem table {
@@ -5968,27 +5867,13 @@ div.bodywrapper {
   width: 12px;
   height: 22px;
 }
-/*
-.ygtvfocus {
-    background-color: #c0e0e0;
-    border: none;
-}
-
-.ygtvfocus .ygtvlabel,.ygtvfocus .ygtvlabel:link,.ygtvfocus .ygtvlabel:visited,.ygtvfocus .ygtvlabel:hover
-    {
-    background-color: #c0e0e0;
-}
-
-.ygtvfocus a,.ygtvrow td a {
-    outline-style: none;
-}*/
 
 .ygtv-highlight1 {
-  background-color: #EEE;
+  background-color: $selection-bg;
 }
 
 .ygtv-highlight1 .ygtvcontent {
-  border:thin dashed lightgrey;
+  border:thin dashed $selection-bg;
 }
 
 .ygtvok {
@@ -6013,9 +5898,9 @@ div.bodywrapper {
 .ygtv-label-editor {
   display: none;
   position: absolute;
-  background-color: #f2f2f2;
+  background-color: $panel-bg;
   margin: auto;
-  border: 1px solid silver;
+  border: 1px solid $panel-default-border;
   overflow: hidden;
   z-index: 9000;
 }
@@ -6050,20 +5935,20 @@ div.bodywrapper {
 }
 
 .ydlg-bd {
-  background-color:#F2F2F2;
+  background-color: $panel-bg;
   padding: 5px;
 }
 
 
 .sugar-progress-wrap {
-  background-color: #FFF;
-  border:1px solid #666;
+  background-color: $progress-bg;
+  border:1px solid $panel-default-border;
   height: 16px;
   width: 100%;
 }
 
 .sugar-progress-bar {
-  background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+  background: $progress-bar-bg url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
   height: 16px;
   width: 0;
 }
@@ -6083,8 +5968,8 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 .sugar-subpanel-header-row {
-  background-color:#EEEEEE;
-  border-bottom:1px solid #C0C0C0;
+  background-color: $panel-bg;
+  border-bottom:1px solid $panel-default-border;
   height:21px;
 }
 
@@ -6098,34 +5983,6 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 {
   background-color: transparent ;
 }
-
-/*
-    //Custom SugarCRM theme
-
-.yui-layout-wrap .yui-navset .yui-content {
-    background:#FFF none repeat scroll 0 0;
-    height : 100%;
-}
-
-.yui-layout .yui-layout-unit .yui-layout-wrap div.yui-layout-bd {
-    background:#FFF none repeat scroll 0 0;
-}
-
-
-.yui-navset-top ul{
-
-    border-style:solid;
-    border-width:0 0 5px;
-}
-
-
-.yui-navset-top ul li.selected a, .yui-navset-top ul li.selected a:focus, .yui-navset-top ul li.selected a:hover {
-
-}
-
-.yui-navset  {
-    height : 100%;
-}*/
 
 .yui-layout-unit-right.yui-resize .yui-layout-wrap .yui-layout-hd {
 

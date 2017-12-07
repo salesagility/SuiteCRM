@@ -61,8 +61,8 @@
 #toolbox {
   background: $main-alternate-bg;
   padding: 5px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+  border: 1px solid $panel-default-border;
+  border-radius: $border-radius-base;
   float: left;
   overflow-y: scroll;
   width: 192px;
@@ -72,8 +72,8 @@
   position: absolute;
   padding: 5px;
   margin-left: 200px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+  border: 1px solid $panel-default-border;
+  border-radius: $border-radius-base;
   float: right;
   width: 100%;
 
@@ -82,13 +82,13 @@
 .le_panel {
   background: $default-tab-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .le_row {
   background: $default-btn-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   //background: $main-bg;
 }
 
@@ -99,7 +99,7 @@
   padding: 5px;
   margin: 2px 3px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   float: left;
   overflow: hidden;
   width: 150px;
@@ -113,7 +113,7 @@
   padding: 5px;
   margin: 2px 3px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   float: left;
   overflow: hidden;
   width: 150px;
@@ -158,7 +158,7 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
   padding: 5px;
   margin: 2px 3px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   float: left;
   overflow: hidden;
   width: 150px;
@@ -178,7 +178,7 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
   padding-bottom: 10px;
   margin: 5px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: 150px;
 }
 
@@ -216,9 +216,6 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 
 .deleteme {
   font-weight: normal;
-  color: #565656;
-
-
 }
 
 #delete {

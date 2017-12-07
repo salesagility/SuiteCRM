@@ -1,8 +1,9 @@
 /**** Calendar ***/
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
-  background-color: inherit;
+  background-color: $danger-btn-bg;
   border: none;
+  border-radius: $border-radius-base;
 }
 
 button#goto_date_trigger_div_nav_cancel {
@@ -14,7 +15,7 @@ button#goto_date_trigger_div_nav_cancel {
   padding: 0 10px 0 10px;
   margin: 0 0 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   letter-spacing: 1px;
   line-height: 40px;
   height: 40px;
@@ -30,7 +31,7 @@ button#goto_date_trigger_div_nav_submit {
   padding: 0 10px 0 10px;
   margin: 0 0 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   letter-spacing: 1px;
   line-height: 40px;
   height: 40px;
@@ -48,7 +49,7 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar .calhead {
-  background: #66727D;
+  background: $calendar-nav-header-bg;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
@@ -59,7 +60,7 @@ table#goto_date_trigger_div_t thead {
   color: $default-btn-color;
   padding: 8px;
   border: 1px solid $calendar-nav-button-bg;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   width: auto;
   height: auto;
   text-transform: uppercase;
@@ -68,10 +69,10 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnavleft
 {
   color: $default-btn-color;
-  background-color: $info-btn-bg;
-  border: 1px solid $info-btn-bg;
+  background-color: $calendar-arrow-button-bg;
+  border: 1px solid $calendar-arrow-button-bg;
   padding: 0;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   text-transform: uppercase;
   font-weight: normal;
   height: 32px;
@@ -85,14 +86,14 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnavright {
   display: inline-block;
   font-weight: normal;
-  background-color: $info-btn-bg;
+  background-color: $calendar-arrow-button-bg;
   background-origin: padding-box;
   background-position: 0 0;
-  color: $default-btn-color;
+  color: $calendar-arrow-button-color;
   padding: 0;
   margin-top: 10px;
-  border: 1px solid $info-btn-bg;
-  border-radius: 4px;
+  border: 1px solid $calendar-arrow-button-bg;
+  border-radius: $border-radius-base;
   width: 32px;
   height: 32px;
   text-transform: uppercase;
@@ -123,7 +124,7 @@ table#goto_date_trigger_div_t thead {
   border-bottom-right-radius: 4px;
 }
 .yui-module.yui-overlay.yui-panel.cal_panel {
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 .yui-panel .bd {
   display: block;
@@ -174,14 +175,14 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnav {
   background-color: $calendar-nav-bg;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .yui-calendar a.calnav:hover {
   background-color: $calendar-selected-bg;
   color: $calendar-selected-color;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 a#callnav_today {
@@ -403,8 +404,8 @@ ul.yui-nav li.selected {
   font-family: 'Lato', Lato, Arial, sans-serif;
   font-size: $qtip-font-size;
   border: none;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
+  border-radius: $border-radius-base;
+  -webkit-border-radius: $border-radius-base;
 }
 
 
@@ -692,17 +693,13 @@ a.fc-day-number:hover {
 }
 
 .calendar .button {
-  background-color: #eee;
+  border-color: $panel-default-border;
   background-image: none;
 }
 
 .calendar .combo {
   background: $gray-lighter;
   padding: 0;
-  border-top: 1px solid #f1f1f1;
-  border-bottom: 1px solid #999;
-  border-left: 1px solid #f1f1f1;
-  border-right: 1px solid #999;
 }
 
 .calendar .combo .active {
@@ -710,9 +707,9 @@ a.fc-day-number:hover {
 }
 
 .calendar .combo .hilite {
-  background: #f8f7f7;
+  background: $panel-bg;
   padding: 1px 4px 1px 4px;
-  border-color: #9e9e9e;
+  border-color: $panel-default-border;
   border-top: 1px solid;
   border-bottom: 1px solid;
 }
@@ -732,16 +729,16 @@ a.fc-day-number:hover {
 }
 
 .calendar table {
-  background: #eee;
+  background: $panel-bg;
 }
 
 .calendar table .wn {
-  background: #eeeeee;
-  border-right: 1px solid #ccc;
+  background: $panel-bg;
+  border-right: 1px solid $panel-default-border;
 }
 
 .calendar tbody .day {
-  background: #fff;
+  background: $calendar-slot-bg;
   padding: 2px 4px 2px 2px;
   text-align: right;
 }
@@ -756,22 +753,22 @@ a.fc-day-number:hover {
 
 .calendar tbody .rowhilite td,
 .calendar tbody .rowhilite td.weekend {
-  background: #f6f6f6;
+  background: $panel-bg;
 }
 
 .calendar tbody .rowhilite td.wn {
-  background: #fff;
+  background: $panel-bg;
 }
 
 .calendar tbody td.hilite,
 .calendar tbody td.weekend.hilite {
-  background: #f8f7f7;
-  border-color: #9e9e9e;
+  background: $panel-bg;
+  border-color: $panel-default-border;
 }
 
 .calendar tbody td.selected {
-  background: #eee;
-  border-color: #666;
+  background: $panel-bg;
+  border-color: $panel-default-border;
 }
 
 .calendar tbody td.today a,
@@ -788,20 +785,17 @@ a.fc-day-number:hover {
 .calendar tfoot .ttip {
   background: $calendar-tip-bg;
   color: $calendar-tip-color;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid $panel-default-border;
+  border-bottom: 1px solid $panel-default-border;
 }
 
 .calendar thead .hilite {
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #fff;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #fff;
+  border-top: 1px solid $panel-default-border;
 }
 
 .calendar thead .name {
-  background: #dddddd;
-  border-color: #cccccc;
+  background: $panel-bg;
+  border-color: $panel-default-border;
 }
 
 .calendar thead .title {

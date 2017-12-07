@@ -14,7 +14,7 @@
 
 .panel-default > .panel-heading {
   background: $panel-expanded-bg;
-  color: white;
+  color: $panel-expanded-color;
   padding: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -27,7 +27,7 @@
   font-size: 14px ;
   font-weight: 500;
   background-color: $panel-expanded-bg;
-  color: $default-btn-color;
+  color: $panel-expanded-color;
   line-height: 52px/$panel-height-divisor;
   height: 52px/$panel-height-divisor;
 }
@@ -37,7 +37,7 @@
 }
 
 .panel-default > .panel-heading-collapse {
-  background: $panel-collapsed-bg;
+  background: $panel-collapsed-color;
 }
 
 .collapse, .collapsing, .collapse.in {
@@ -54,7 +54,7 @@
   display: block;
   font-size: 12px ;
   font-weight: 500;
-  color: $default-btn-color;
+  color: $panel-expanded-color;
   padding: 0 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -73,7 +73,7 @@
   display: block;
   font-size: 14px ;
   font-weight: 500;
-  color: $default-btn-color;
+  color: $panel-expanded-color;
   padding: 0 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -158,7 +158,7 @@ div.sub-panel {
 
 
 .subpanel-table tr:last-of-type td {
-  border-bottom: 1px solid transparent;
+  border-bottom: 0px solid transparent;
 }
 
 
@@ -204,12 +204,12 @@ div.sub-panel {
 
 .footable-details.table-responsive.list th {
   font-weight: bold;
-  color: #000000;
+  color: $main-font-color;
 }
 
 .footable-details.table-responsive.list th a:link {
   font-weight: bold;
-  color: #000000;
+  color: $main-font-color;
   border-bottom: none;
 }
 
@@ -227,7 +227,7 @@ div.sub-panel {
 }
 
 .sugar_action_button a {
-  color: #fff;
+  color: $panel-expanded-color;
 }
 
 .subpanel-table .pagination li.sugar_action_button > form > a {
@@ -235,56 +235,56 @@ div.sub-panel {
 }
 
 .subpanel-table ul.subpanel > a {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .subpanel-table li.sugar_action_button {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .subpanel-table .pagination .sugar_action_button {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .subpanel-table .pagination li.sugar_action_button > form > a {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a{
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
 }
 
 /*calendar popup fix*/
 .calcell > a {
-  background-color: #fff;
+  background-color: $panel-bg;
 }
 
 
@@ -319,7 +319,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"]:hover {
-  background-color: #808F9C;
+  background-color: $campaign-pagination-bg-hover;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"] {
@@ -354,7 +354,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
-  background-color: #94A6B5;
+  background-color: $panel-button-bg;
 }
 
 #actionLinkTop li.sugar_action_button:hover,
@@ -377,7 +377,7 @@ div.sub-panel {
 .subpanel-table .pagination .sugar_action_button:hover > form > a,
 .subpanel-table .pagination a,
 .subpanel-table .subnav {
-  background-color: #778591;
+  background-color: $panel-button-bg-hover;
 }
 
 .subpanel-table .pagination a {
@@ -393,103 +393,6 @@ div.sub-panel {
 }
 
 
-
-.subpanelTabForm {
-  background-color: $main-bg;
-  color: #000000;
-  border-color: #F08377;
-}
-
-.tablist, .subpanelTablist {
-  border-bottom-color: #F08377;
-}
-
-.tablist li a:hover, .subpanelTablist li a:hover {
-  background: #fafafa;
-  border-color: #F08377;
-}
-
-.tablist li a, .subpanelTablist li a {
-  background-color: #fff;
-  border-color: #dddddd;
-}
-
-.tablist li a:link, .tablist li a:visited, .subpanelTablist li a:link, .subpanelTablist li a:visited {
-  color: #444444;
-}
-
-.tablist li a:hover, .subpanelTablist li a:hover {
-  background: #fafafa;
-}
-
-.subpanelTablist li a.current, .subpanelTablist li a.current:hover {
-  background: #fff;
-  color: #4f4f4f;
-  border-top: none;
-  border-bottom: none;
-  border-right-color: #cccccc;
-}
-
-.tablist li a.current:link, .tablist li a.current:visited, .tablist li a.current:hover {
-  background: #f6f6f6;
-  border-top-color: #abc3d7;
-  border-bottom-color: #f6f6f6;
-  border-right-color: #abc3d7;
-}
-
-
-.tablist, .subpanelTablist {
-  border-bottom: 2px solid;
-}
-
-.tablist li a, .subpanelTablist li a {
-  border-top: 2px solid;
-  border-top: none;
-  border-bottom: none;
-  border-right-color: #cccccc;
-}
-
-.tablist li a:hover, .subpanelTablist li a:hover {
-  border-top: 2px solid;
-}
-
-.tablist li a.current, .tablist li a.current:hover {
-  font-weight: bold;
-  border-bottom: 2px solid #f6f6f6;
-}
-
-.subpanelTablist li a.current, .subpanelTablist li a.current:hover {
-  font-weight: bold;
-  border-bottom: 2px solid #fff;
-}
-
-.subpanelTabForm .h3Row {
-  background-image: none;
-  border-top: 1px solid #dddddd;
-}
-
-
-
-.tablist, .subpanelTablist {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-
-#dashName {
-  margin-bottom: 4px;
-}
-
-
-.tablist li a.activeSubTab:hover {
-  color: #000000;
-  border-bottom-color: #ddd;
-}
-
-.subpanelTablist li a.activeSubTab:hover {
-  color: #000000;
-}
 
 .subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
   background: transparent;
@@ -632,6 +535,6 @@ table.subpanelTabForm {
 }
 
 .clickMenu li a.disabled {
-  color: gray ;
+  color: $disabled-btn-color ;
   cursor: default ;
 }

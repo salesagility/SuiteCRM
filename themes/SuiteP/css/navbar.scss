@@ -715,6 +715,8 @@
 
 .searchform.navbar-form {
   padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .searchform .query_string {
@@ -804,6 +806,8 @@
 
 .navbar-toggle {
   float: left;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #quickcreateplus {
@@ -1265,6 +1269,8 @@
 
   .navbar-toggle {
     height: 60px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .mobile_menu {
@@ -1566,6 +1572,8 @@
 
 	.navbar-toggle {
 		height:60px;
+        margin-top: 0;
+        margin-bottom: 0;
 	}
   .mobile-bar {
     visibility: collapse;
@@ -1844,8 +1852,8 @@
   }
 
   .navbar-search.open .searchformdropdown button {
-    height: 38px;
-    width: 38px;
+    height: $global-search-height;
+    width: $global-search-height;
     background-position: 5px 5px;
   }
 
@@ -2407,8 +2415,8 @@
     border: none;
     float: left;
     overflow: hidden;
-    height: $input-line-height;
-    width: $input-line-height;
+    height: $global-search-height;
+    width: $global-search-height;
     text-indent: -9999px;
   }
 
@@ -2430,8 +2438,8 @@
     border-radius: 3px;
     letter-spacing: 1px;
     width: 200px;
-    min-height: 38px;
-    line-height: 38px;
+    min-height: $global-search-height;
+    line-height: $global-search-height;
   }
 
   .globalLinks-desktop .dropdown-toggle {

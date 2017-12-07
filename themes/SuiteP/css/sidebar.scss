@@ -375,7 +375,7 @@ footer {
   background-color: $footer-btn-bg;
   margin: 0 0 0 0;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: $border-radius-base;
   clear: both;
   line-height: 38px;
   width: 100%;
