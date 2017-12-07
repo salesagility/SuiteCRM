@@ -170,7 +170,7 @@
                     </a>
 
                 </div>
-                <div class="panel-body {{$collapse}}" id="detailpanel_{{$panelCount}}">
+                <div class="panel-body {{$collapse}} panelContainer" id="detailpanel_{{$panelCount}}" data-id="{{$label_upper}}">
                     <div class="tab-content">
                         {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
                     </div>
