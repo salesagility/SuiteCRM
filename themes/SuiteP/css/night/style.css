@@ -2,7 +2,7 @@
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/twbs/../bootstrap/blob/master/LICENSE)
  */
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -8667,11 +8667,6 @@ footer.collapsedSidebar {
     height: auto;
     max-height: inherit; } }
 /**** LOGIN **/
-/*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
 .login {
   padding: 10px 6px 12px 10px; }
 
