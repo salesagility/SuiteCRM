@@ -46,6 +46,7 @@ $app->group('/v8/modules', function () use ($app) {
         $app->get('/list', 'ModuleController:getModulesMetaList');
         $app->get('/menu/modules', 'ModuleController:getModulesMetaMenuModules');
         $app->get('/menu/filters', 'ModuleController:getModulesMetaMenuFilters');
+        $app->get('/languages', 'ModuleController:getApplicationMetaLanguages');
 
     });
 

@@ -65,6 +65,7 @@ use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\ApplicationLanguage;
 
 /**
  * Class ModuleController
@@ -710,6 +711,35 @@ class ModuleController extends ApiController
         $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
         $payload['meta'][$args['module']]['language'] = $moduleLanguageStrings;
+
+        return $this->generateJsonApiResponse($req, $res, $payload);
+    }
+
+
+    /**
+     * GET /api/v8/meta/language
+     *
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
+     * @throws \SuiteCRM\API\v8\Exception\InvalidJsonApiResponse
+     * @throws \InvalidArgumentException
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \SuiteCRM\API\v8\Exception\UnsupportedMediaType
+     * @throws \SuiteCRM\API\v8\Exception\NotAcceptable
+     */
+    public function getApplicationMetaLanguages(Request $req, Response $res, array $args)
+    {
+        $this->negotiatedJsonApiContent($req, $res);
+
+        $currentLanguage = $this->containers->get('CurrentLanguage');
+        /** @var ApplicationLanguage $moduleLanguage */
+        $applicationLanguage = $this->containers->get('ApplicationLanguages');
+
+        $payload['meta']['application']['language'] =
+            $applicationLanguage->getApplicationLanguageStrings($currentLanguage);
 
         return $this->generateJsonApiResponse($req, $res, $payload);
     }
