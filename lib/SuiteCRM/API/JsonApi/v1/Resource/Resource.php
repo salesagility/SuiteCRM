@@ -59,7 +59,6 @@ class Resource extends ResourceIdentifier
 {
     protected static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
         'id',
-        'type',
     );
 
     protected static $JSON_API_RESERVED_KEYWORDS = array(
