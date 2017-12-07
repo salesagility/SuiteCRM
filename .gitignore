@@ -89,6 +89,10 @@ node_modules/
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
 themes/SuiteP/css/*.css
+themes/SuiteP/css/dawn/variables.css
+themes/SuiteP/css/day/variables.css
+themes/SuiteP/css/dust/variables.css
+themes/SuiteP/css/night/variables.css
 !themes/SuiteP/css/studio.css
 !themes/SuiteP/css/chart.css
 !themes/SuiteP/css/bubbles.css
