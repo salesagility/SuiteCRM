@@ -6451,7 +6451,7 @@ footer.collapsedSidebar {
     text-indent: -9999px;
     content: ''; }
   .navbar-inverse a:hover.with-home-icon {
-    background-image: url("../../../../../../themes/SuiteP/images/p_icon_home_hover.png"); }
+    background-image: url("../../../../../themes/SuiteP/images/p_icon_home_hover.png"); }
   .navbar-inverse .dropdown-menu > li > a {
     line-height: normal; }
   .navbar-inverse .dropdown-menu {

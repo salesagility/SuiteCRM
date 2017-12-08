@@ -13,8 +13,8 @@ $main-bg: $color-51;
 $main-alternate-bg: $color-80;
 
 $primary: $color-20;
-$danger: $color-50;
-$danger-hover: $color-50;
+$danger: $color-4;
+$danger-hover: $color-4;
 $success: $color-38;
 $info: $color-35;
 $warning: $color-47;
@@ -909,7 +909,7 @@ $page-font-family: $font-family-base;
 $page-font-size: 13px;
 $page-p-size: 14px;
 $page-title-space: 40px; // normal 40px
-$main-font-color: $color-7;
+$main-font-color: $fg-color-7;
 $main-header-font-color: $main-font-color;
 
 $link-color: $danger;
@@ -1013,8 +1013,8 @@ $default-tab-bg: $color-39;
 $default-tab-bg-hover: $color-39;
 $default-tab-color-hover: $color-80;
 $default-tab-color: $color-80;
-$action-tab-bg: $color-50;
-$action-tab-bg-hover: $color-50;
+$action-tab-bg: $color-4;
+$action-tab-bg-hover: $color-4;
 $action-tab-seperator: $color-53;
 $action-tab-color: $color-80;
 $action-tab-color-hover: $color-80;
@@ -1040,6 +1040,7 @@ $detail-view-module-title-space: 12px;
 $list-view-toolbar-bg: $color-39;
 $list-view-header-bg: $color-20;
 $list-view-button-color: $color-80;
+$list-view-text-color: $color-46;
 $list-view-link-color: $color-46;
 $list-view-link-hover-color: $color-43;
 $list-view-action-button-disabled-bg: $color-41;
