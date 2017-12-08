@@ -308,7 +308,7 @@ p#clear {
   top: 0;
   bottom: 0;
   left: -10px;
-  background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent;
+  background: url("../../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent;
   cursor: pointer;
   margin-left: .4em;
   width: 25px;
@@ -319,7 +319,7 @@ p#clear {
   top: 0;
   bottom: 0;
   right: -10px;
-  background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent;
+  background: url("../../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent;
   cursor: pointer;
   margin-right: .4em;
   width: 25px;
@@ -5570,10 +5570,10 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
 {
-  background: $panel-bg;
-  border: solid $panel-default-border;
+  background: $default-tab-bg;
+  border: solid $default-tab-bg;
   border-width: 0 1px;
-  color: $main-font-color;
+  color: $default-tab-color;
   position: relative;
   text-decoration: none;
   height:30px;
@@ -5604,8 +5604,8 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-navset  .selected a em{
-  background: $panel-bg;
-  color: #333;
+  background: $active-tab-bg;
+  color: $action-tab-color;
   padding: 8px;
 }
 

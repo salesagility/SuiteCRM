@@ -61,15 +61,13 @@ $themedef = array(
         'sub_themes' => array(
             'vname' => 'LBL_SUBTHEME_OPTIONS',
             'type' => 'select',
-            'options' => array('LBL_SUBTHEME_OPTIONS_DAWN', 'LBL_SUBTHEME_OPTIONS_DAY', 'LBL_SUBTHEME_OPTIONS_DUSK'),
+            'options' => array(
+                'LBL_SUBTHEME_OPTIONS_DAWN',
+                'LBL_SUBTHEME_OPTIONS_DAY',
+                'LBL_SUBTHEME_OPTIONS_DUSK',
+                'LBL_SUBTHEME_OPTIONS_NIGHT'
+            ),
             'default' => 0,
         ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
-
     ),
 );

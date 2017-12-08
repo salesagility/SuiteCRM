@@ -51,6 +51,7 @@
     <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
     <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
     <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>
+    {$SUGAR_CSS}
 
     <title>{$APP.LBL_BROWSER_TITLE}</title>
 
@@ -76,7 +77,7 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">    
+    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>
