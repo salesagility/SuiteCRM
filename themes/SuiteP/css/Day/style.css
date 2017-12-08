@@ -5963,7 +5963,7 @@ a:hover {
   font-weight: 700; }
 
 .parentheses-btn:hover {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   cursor: grab; }
 
 .parentheses-btn .condition-sortable-handle {
@@ -7266,8 +7266,8 @@ footer.collapsedSidebar {
 
 .desktop_notifications .dropdown-menu {
   font-size: 12px;
-  background-color: #F2DEDE;
-  color: #A94442;
+  background-color: #F08377;
+  color: #FFFFFF;
   padding: 8px;
   margin: 0;
   border-radius: 0; }
@@ -9523,34 +9523,34 @@ input[type=button].btn-info {
   border: 1px solid #76C1B7; }
 
 .btn-info:hover {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 .btn-info:active {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 .btn-info:focus {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 input[type=button].btn-info:hover {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 input[type=button].btn-info:active {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 input[type=button].btn-info:focus {
-  background-color: #9589B3;
+  background-color: #89b3ac;
   color: #F5F5F5;
-  border: 1px solid #9589B3; }
+  border: 1px solid #89b3ac; }
 
 .btn-success {
   background-color: #BBE6A5;
@@ -9809,16 +9809,16 @@ input[type="button"][disabled] {
   background-color: #76C1B7; }
 
 [field="shipping_address_street"].detail-view-field .button:hover {
-  background-color: #9589B3; }
+  background-color: #89b3ac; }
 
 [field="billing_address_street"].detail-view-field .button:hover {
-  background-color: #9589B3; }
+  background-color: #89b3ac; }
 
 .buttons input#btn_view_change_log {
   background-color: #76C1B7; }
 
 .buttons input#btn_view_change_log:hover {
-  background-color: #9589B3; }
+  background-color: #89b3ac; }
 
 .button:hover {
   background-color: #808F9C;
@@ -12127,7 +12127,7 @@ a#advanced_search_link {
   text-transform: uppercase; }
 
 a#advanced_search_link:hover {
-  background-color: #9589B3; }
+  background-color: #89b3ac; }
 
 a#basic_search_link {
   display: inline-block;
