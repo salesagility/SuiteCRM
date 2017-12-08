@@ -788,6 +788,8 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop input[type=checkbox] {
   margin-top: 5px;
+  float: left;
+  margin: 2px 0 0 2px;
 }
 
 #selectLinkBottom input[type=checkbox] {
@@ -2803,6 +2805,24 @@ listViewLinkButton {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
+}
+
+ul.cust_list {
+  background: none repeat scroll 0 0 #FFFFFF;
+  background-color: #778591;
+  border: 1px solid #CCCCCC;
+  box-shadow: 0 5px 10px #999999;
+  float: left;
+  left: 0;
+  list-style: none outside none;
+  margin: 0;
+  overflow: hidden;
+  padding: 8px 0;
+  position: absolute;
+  top: 18px;
+  width: auto;
+  z-index: 10;
+  display: none;
 }
 
 ul.clickMenu {
