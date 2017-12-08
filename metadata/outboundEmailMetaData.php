@@ -78,6 +78,20 @@ $dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
 			'required' => true,
 			'reportable' => false,
 		),
+            
+                            'smtp_from_name' =>
+        array(
+            'name' => 'smtp_from_name',
+            'vname' => 'LBL_SMTP_FROM_NAME',
+            'type' => 'varchar',
+        ),
+        'smtp_from_addr' =>
+        array(
+            'name' => 'smtp_from_addr',
+            'vname' => 'LBL_SMTP_FROM_ADDR',
+            'type' => 'varchar',
+        ),
+            
 		'mail_sendtype' => array(
 			'name' => 'mail_sendtype',
 			'vname' => 'LBL_MAIL_SENDTYPE',
