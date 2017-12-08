@@ -5803,12 +5803,12 @@ a:hover {
   z-index: 11 !important; }
 
 ::selection {
-  background: #FFFFFF;
+  background: #4B97C4;
   color: #FFFFFF; }
 
 /* Safari */
 ::-moz-selection {
-  background: #FFFFFF;
+  background: #4B97C4;
   color: #FFFFFF; }
 
 /* Firefox */
@@ -15331,7 +15331,7 @@ iframe.teamNoticeBox {
   white-space: nowrap; }
 
 .x-sqs-list .x-sqs-selected {
-  background: #FFFFFF;
+  background: #4B97C4;
   cursor: pointer;
   border: 1px dotted transparent; }
 
@@ -20036,10 +20036,10 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
   zoom: 1; }
 
 .yui-ac-content li.yui-ac-prehighlight {
-  background: #FFFFFF; }
+  background: #4B97C4; }
 
 .yui-ac-content li.yui-ac-highlight {
-  background: #FFFFFF;
+  background: #4B97C4;
   color: #FFFFFF; }
 
 .yui-calcontainer {
@@ -21150,8 +21150,8 @@ a.yui-dt-page {
   text-decoration: none; }
 
 .yui-dt-selected {
-  background-color: #FFFFFF;
-  border: 1px solid #FFFFFF; }
+  background-color: #4B97C4;
+  border: 1px solid #4B97C4; }
 
 .yui-busy {
   cursor: wait; }
@@ -21786,7 +21786,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
   position: relative; }
 
 div.yuimenu li.selected {
-  background-color: #FFFFFF; }
+  background-color: #4B97C4; }
 
 div.yuimenu li.selected a.selected {
   color: #FFFFFF; }
@@ -22661,7 +22661,7 @@ div.yui-layout-hd h2 {
   background: url(menubaritem_submenuindicator.png) right center no-repeat; }
 
 .yuimenubaritemlabel-selected {
-  border-color: #FFFFFF; }
+  border-color: #4B97C4; }
 
 .yuimenubarnav .yuimenubaritemlabel-selected {
   left: -1px;
@@ -22777,7 +22777,7 @@ a.yuimenuitemlabel:hover {
   opacity: .12; }
 
 .yuimenuitem-selected {
-  background-color: #FFFFFF; }
+  background-color: #4B97C4; }
 
 .yuimenuitem-disabled .yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled:hover {
   background-color: #FFFFFF;
@@ -23836,7 +23836,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
   position: relative; }
 
 div.yuimenu li.selected {
-  background-color: #FFFFFF; }
+  background-color: #4B97C4; }
 
 div.yuimenu li.selected a.selected {
   color: #FFFFFF; }
@@ -24518,10 +24518,10 @@ div.bodywrapper {
   height: 22px; }
 
 .ygtv-highlight1 {
-  background-color: #FFFFFF; }
+  background-color: #4B97C4; }
 
 .ygtv-highlight1 .ygtvcontent {
-  border: thin dashed #FFFFFF; }
+  border: thin dashed #4B97C4; }
 
 .ygtvok {
   width: 18px;
@@ -25001,7 +25001,7 @@ a.sugar-tab-close {
   overflow-y: hidden; }
 
 ul.yui-nav li.selected {
-  background: #FFFFFF; }
+  background: #4B97C4; }
 
 .qtip-content {
   overflow-y: auto;
