@@ -42,6 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+global $current_language;
+$users_mod = return_module_language($current_language, 'Users');
+
 $themedef = array(
     'name' => 'Suite P',
     'description' => 'SuiteCRM Responsive Theme',
@@ -62,10 +65,12 @@ $themedef = array(
             'vname' => 'LBL_SUBTHEME_OPTIONS',
             'type' => 'select',
             'options' => array(
-                'LBL_SUBTHEME_OPTIONS_DAWN',
-                'LBL_SUBTHEME_OPTIONS_DAY',
-                'LBL_SUBTHEME_OPTIONS_DUSK',
-                'LBL_SUBTHEME_OPTIONS_NIGHT'
+                $users_mod['LBL_SUBTHEMES'] => array(
+                    'Dawn'  => $users_mod['LBL_SUBTHEME_OPTIONS_DAWN'],
+                    'Day'   => $users_mod['LBL_SUBTHEME_OPTIONS_DAY'],
+                    'Dusk'  => $users_mod['LBL_SUBTHEME_OPTIONS_DUSK'],
+                    'Night' => $users_mod['LBL_SUBTHEME_OPTIONS_NIGHT'],
+                ),
             ),
             'default' => 0,
         ),

@@ -969,10 +969,7 @@ EOHTML;
     {
         if (preg_match('/.css$/', $cssFileName)) {
             global $current_user;
-            $subThemeIndex = $current_user->getSubTheme();
-            $subThemes = $current_user->getSubThemes();
-            $subTheme = $subThemes[$subThemeIndex];
-            $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
+            $subTheme = $current_user->getSubTheme();
             $cssFileName = $subTheme . '/' . $cssFileName;
         }
 
