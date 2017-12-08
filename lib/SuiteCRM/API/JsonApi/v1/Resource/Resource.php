@@ -178,12 +178,6 @@ class Resource extends ResourceIdentifier
             if ($attribute === 'id') {
                 continue;
             }
-            // 'type' is a JSON API reserved keyword, but some models have a 'type' field, so we use an alias in the API
-            if ($attribute === 'type'){
-                $response[self::ATTRIBUTES][self::$API_TYPE_KEYWORD_ALIAS] = $value;
-                continue;
-
-            }
             if(in_array($attribute, $fields) === true) {
                 $response[self::ATTRIBUTES][$attribute] = $value;
             }
