@@ -72,7 +72,7 @@ $themedef = array(
                     'Night' => $users_mod['LBL_SUBTHEME_OPTIONS_NIGHT'],
                 ),
             ),
-            'default' => 0,
+            'default' => 'Dawn',
         ),
     ),
 );
