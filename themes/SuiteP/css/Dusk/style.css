@@ -257,8 +257,8 @@ th {
     border: 1px solid #ddd !important; } }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.eot");
-  src: url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.woff") format("woff"), url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.eot");
+  src: url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.woff") format("woff"), url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../../../../../themes/SuiteP/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 .glyphicon {
   position: relative;
   top: 1px;
@@ -6439,7 +6439,7 @@ footer.collapsedSidebar {
   /* fix default buttons */ }
   .navbar-inverse .with-home-icon {
     display: inline-block;
-    background-image: url("../../../../themes/SuiteP/images/p_icon_home.png");
+    background-image: url("../../../../../themes/SuiteP/images/p_icon_home.png");
     background-position: 14px 20px;
     background-position: 0px 8px;
     background-repeat: no-repeat;
@@ -6451,7 +6451,7 @@ footer.collapsedSidebar {
     text-indent: -9999px;
     content: ''; }
   .navbar-inverse a:hover.with-home-icon {
-    background-image: url("../../../../themes/SuiteP/images/p_icon_home_hover.png"); }
+    background-image: url("../../../../../../themes/SuiteP/images/p_icon_home_hover.png"); }
   .navbar-inverse .dropdown-menu > li > a {
     line-height: normal; }
   .navbar-inverse .dropdown-menu {
@@ -8855,7 +8855,7 @@ textarea {
 
 .checkbox {
   display: inline-block;
-  background: url("../../../../themes/SuiteP/images/forms/check.png") no-repeat;
+  background: url("../../../../../themes/SuiteP/images/forms/check.png") no-repeat;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -8866,7 +8866,7 @@ textarea {
 
 input[type=checkbox] {
   display: inline-block;
-  background: url("../../../../themes/SuiteP/images/forms/check.png") no-repeat;
+  background: url("../../../../../themes/SuiteP/images/forms/check.png") no-repeat;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -8877,7 +8877,7 @@ input[type=checkbox] {
 
 input[type=radio] {
   display: inline-block;
-  background: url("../../../../themes/SuiteP/images/forms/radio.png") no-repeat;
+  background: url("../../../../../themes/SuiteP/images/forms/radio.png") no-repeat;
   padding: 0;
   margin: 0;
   width: 16px;

@@ -102,10 +102,12 @@ class SugarThemeRegistry
      */
     public static function current()
     {
-        if ( !isset(self::$_currentTheme) )
+        if ( !isset(static::$_currentTheme) ) {
             self::buildRegistry();
+        }
 
-        return self::$_themes[self::$_currentTheme];
+        $current_theme = self::$_currentTheme;
+        return self::$_themes[$current_theme];
     }
 
     /**
@@ -367,9 +369,10 @@ class SugarThemeRegistry
     
     public static function getSubThemes() {
         global $mod_strings;
+        $subthemesLabel = $mod_strings['LBL_SUBTHEMES'];
         $current = self::current();
         $themeConfig = self::getThemeConfig($current->dirName);
-        $subThemes = isset($themeConfig['sub_themes']['options']) ? $themeConfig['sub_themes']['options'] : array();
+        $subThemes = isset($themeConfig['sub_themes']['options']) ? $themeConfig['sub_themes']['options'][$subthemesLabel] : array();
         foreach($subThemes as &$subTheme) {
             $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
         }

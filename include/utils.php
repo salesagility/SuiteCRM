@@ -46,6 +46,7 @@ require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
 
+
 function make_sugar_config(&$sugar_config)
 {
     /* used to convert non-array config.php file to array format */
