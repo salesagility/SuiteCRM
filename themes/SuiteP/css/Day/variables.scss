@@ -1217,3 +1217,7 @@ $email-attachment-height: 18px;
 $email-attachment-padding: 4px;
 $email-tree-color: $color-9;
 $email-tree-selected: $color-53;
+
+// Notifications
+$notification-bg: $alert-danger-bg !default;
+$notification-text: $alert-danger-text !default;

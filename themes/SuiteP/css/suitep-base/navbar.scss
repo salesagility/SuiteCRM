@@ -1113,8 +1113,8 @@
 
 .desktop_notifications .dropdown-menu {
   font-size: 12px;
-  background-color: $danger;
-  color: $navbar-menu-link-color;
+  background-color: $notification-bg;
+  color: $notification-text;
   padding: 8px;
   margin: 0;
   border-radius: 0;
