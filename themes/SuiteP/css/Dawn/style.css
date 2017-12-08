@@ -7267,7 +7267,7 @@ footer.collapsedSidebar {
 .desktop_notifications .dropdown-menu {
   font-size: 12px;
   background-color: #F08377;
-  color: #A94442;
+  color: #F5F5F5;
   padding: 8px;
   margin: 0;
   border-radius: 0; }
@@ -12010,7 +12010,7 @@ a.listViewTdToolsS1 {
   border-radius: 4px; }
 
 form#MassAssign_SecurityGroups {
-  background-color: #e6e6e6;
+  background-color: #F5F5F5;
   padding: 0px 20px 0px 20px;
   margin: 10px 0 20px 0;
   border-radius: 3px;
@@ -19939,6 +19939,23 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
     min-width: 255px; } }
 .mozaik-inner {
   background-color: #FAFAFA; }
+
+.panel-toolbar,
+#wizform > table > tbody > tr > td,
+.template-panel-container,
+.template-panel-container {
+  background-color: #FFFFFF !important; }
+
+.template-panel {
+  background-color: #FFFFFF !important; }
+
+.button-group-seperator {
+  border-right: transparent; }
+
+.target-list,
+.target-list-create,
+.target-list-table {
+  background-color: #FFFFFF !important; }
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by

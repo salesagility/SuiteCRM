@@ -742,3 +742,24 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
 .mozaik-inner {
   background-color: $email-template-bg;
 }
+
+.panel-toolbar,
+#wizform > table > tbody > tr > td,
+.template-panel-container,
+.template-panel-container {
+  background-color: $panel-bg !important;;
+}
+
+.template-panel {
+  background-color: $panel-bg !important;
+}
+
+.button-group-seperator {
+  border-right: $panel-default-border;
+}
+
+.target-list,
+.target-list-create,
+.target-list-table {
+  background-color: $panel-bg !important;
+}
