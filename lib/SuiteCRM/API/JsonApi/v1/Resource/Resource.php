@@ -62,6 +62,8 @@ class Resource extends ResourceIdentifier
         'type',
     );
 
+    protected static $API_TYPE_KEYWORD_ALIAS = 'KEYWORD_RECORD_TYPE';
+
     protected static $JSON_API_RESERVED_KEYWORDS = array(
         'id',
         'type',
@@ -176,8 +178,14 @@ class Resource extends ResourceIdentifier
             if ($attribute === 'id') {
                 continue;
             }
+            // 'type' is a JSON API reserved keyword, but some models have a 'type' field, so we use an alias in the API
+            if ($attribute === 'type'){
+                $response[self::ATTRIBUTES][self::$API_TYPE_KEYWORD_ALIAS] = $value;
+                continue;
+
+            }
             if(in_array($attribute, $fields) === true) {
-                $response[self::ATTRIBUTES][$attribute] = $this->attributes[$attribute];
+                $response[self::ATTRIBUTES][$attribute] = $value;
             }
         }
 
