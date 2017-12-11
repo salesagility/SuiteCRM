@@ -2834,7 +2834,7 @@ input, select, textarea, button {
 }
 
 /* for the main screen navigation tabs */
-#moduleList ul li,
+#moduleList ul li
 {
   font-size: 12px;
 }
