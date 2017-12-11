@@ -191,6 +191,19 @@
         </div>
     </div>
     <div class="attachments">
+        {if $RETURN_MODULE != 'Emails' && $RETURN_ID}
+            <div class="file-attachments">
+                <div class="attachment-group-container">
+                    <input type="hidden" id="attachment_{$RETURN_ID}" multiple="multiple">
+                    <label for="attachment_{$RETURN_ID}" class="">
+                        <div class="attachment-file-container file-image">
+                            <span class="attachment-type glyphicon glyphicon-file"></span>
+                            <span class="attachment-name">{$ATTACHMENT_NAME}</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        {/if}
         <div class="file-attachments"></div>
         <div class="document-attachments"></div>
     </div>
@@ -254,7 +267,12 @@
     <script>
         {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
       $(document).ready(function() {ldelim}
-          $('#ComposeView').EmailsComposeView();
+        $('#ComposeView').EmailsComposeView({if $RETURN_MODULE != 'Emails' && $RETURN_ID}{ldelim}
+          'attachment': {ldelim}
+            'module': '{$RETURN_MODULE}',
+            'id': '{$RETURN_ID}'
+          {rdelim}
+        {rdelim}{/if});
       {rdelim});
     </script>
     {/if}
