@@ -101,8 +101,11 @@ class actionCreateRecord extends actionBase {
         if(isset($params['record_type']) && $params['record_type'] != ''){
             require_once 'modules/AOW_WorkFlow/aow_utils.php';
             $html .= "<script id ='aow_script".$line."'>";
-            $html .= 'cr_fields[' .$line. '] = "' .trim(preg_replace('/\s+/', ' ', getModuleFields($params['record_type']))). '";';
-            $html .= 'cr_relationships[' .$line. '] = "' .trim(preg_replace('/\s+/', ' ', getModuleRelationships($params['record_type']))). '";';
+            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
+                    getModuleFields($params['record_type'], 'EditView', '', array(),
+                        array('email1', 'email2')))) . '";';
+            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
+                    getModuleRelationships($params['record_type']))) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
             if(isset($params['field'])){
                 foreach($params['field'] as $key => $field){

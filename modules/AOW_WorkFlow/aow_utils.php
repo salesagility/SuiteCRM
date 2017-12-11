@@ -47,10 +47,7 @@ function getModuleFields(
     $view = 'EditView',
     $value = '',
     $valid = array(),
-    $overrideArray = array(
-        "email1",
-        "email2"
-    )
+    $override = array()
 ) {
     global $app_strings, $beanList, $current_user;
 
@@ -90,15 +87,15 @@ function getModuleFields(
                             continue;
                         }
                     }
-                    if ($arr['type'] != 'link' &&
-                        ((!isset($arr['source']) || $arr['source'] != 'non-db' || in_array($name, $overrideArray)) ||
-                         ($arr['type'] == 'relate' && isset($arr['id_name']))) &&
-                        (empty($valid) || in_array(
-                                $arr['type'],
-                                $valid
-                            )) &&
-                        $name != 'currency_name' &&
-                        $name != 'currency_symbol') {
+
+                    if ($arr['type'] !== 'link'
+                        && $name !== 'currency_name'
+                        && $name !== 'currency_symbol'
+                        && (empty($valid) || in_array($arr['type'], $valid))
+                        && ((!isset($arr['source']) || $arr['source'] !== 'non-db')
+                            || ($arr['type'] === 'relate' && isset($arr['id_name']))
+                            || in_array($name, $override))
+                        ) {
                         if (isset($arr['vname']) && $arr['vname'] !== '') {
                             $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
                         } else {
