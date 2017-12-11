@@ -160,7 +160,7 @@ class One2MRelationship extends M2MRelationship
             }
             
             // Add relationship
-            parent::add($lhs, $rhs, $additionalFields);
+            return parent::add($lhs, $rhs, $additionalFields);
         }
     }
 
