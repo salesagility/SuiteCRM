@@ -128,7 +128,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
 
         // Filter imported emails based on the UID of the results from the IMap server
-        $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
+        $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmail->id . "'";
 
         $ret_array['inner_join'] = '';
         if (!empty($this->lvde->seed->listview_inner_join)) {
