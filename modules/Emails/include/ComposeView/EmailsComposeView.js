@@ -1337,6 +1337,8 @@
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
+      skin_url: "themes/default/css",
+      skin: "",
       plugins: "fullscreen",
       menubar: false,
       toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
@@ -1344,7 +1346,7 @@
         bold: {inline: 'b'},
         italic: {inline: 'i'},
         underline: {inline: 'u'}
-      }
+      },
     }
-  }
+  };
 }(jQuery));
