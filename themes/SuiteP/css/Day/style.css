@@ -19720,6 +19720,65 @@ form[name="wizform"] .other.view td {
 form[name="wizform"] fieldset legend {
   padding: 0; }
 
+.progression-container {
+  margin: 0 0 8px 0;
+  padding: 0; }
+
+ul.progression {
+  margin: 0;
+  padding: 0; }
+
+.progression li {
+  color: #FFFFFF;
+  border-radius: 0px;
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  margin-right: 16px;
+  width: auto;
+  margin-top: 4px; }
+
+.progression li:nth-child(1)::before {
+  border: none transparent; }
+
+.progression li::before, .progression li::after {
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  border-color: transparent;
+  border-radius: 0px; }
+
+.progression li::before {
+  border-width: 16px;
+  margin-top: -7px;
+  margin-left: -20px; }
+
+.progression li::after {
+  border-width: 14px;
+  margin-top: -5px;
+  margin-left: 20px; }
+
+.progression li:hover {
+  cursor: pointer; }
+
+.progression li:last-child::after {
+  border-left-color: transparent; }
+
+.progression li div, .progression li div * {
+  text-decoration: none;
+  padding-left: 8px;
+  display: inline; }
+
+.wizard-summary-right .test, .wizard-summary-right .schedule {
+  background-position: center center;
+  text-align: center;
+  vertical-align: bottom;
+  padding: 8px; }
+
+.wizard-step-info {
+  margin-bottom: 12px; }
+
 form[name="wizform"] .icon-btn-lst .icon-btn a {
   margin: 0;
   line-height: 20px;
@@ -19735,28 +19794,35 @@ form[name="wizform"] .icon-btn-lst .icon-btn a br {
 
 /* campaign wizard progress bar stuff */
 form[name="wizform"] .progression-container .progression .nav-steps {
-  background-color: #FFFFFF; }
+  background-color: #378CBE; }
+
+form[name="wizform"] .progression-container .progression .nav-steps:hover {
+  background-color: #5FA9D4;
+  color: #FFFFFF; }
 
 form[name="wizform"] .selected {
-  background-color: #808F9C; }
+  background-color: #5FA9D4; }
 
 .progression .nav-steps:hover {
-  background-color: #808F9C; }
+  background-color: #5FA9D4; }
 
 form[name="wizform"] .progression-container .progression .nav-steps.selected {
-  background-color: #808F9C; }
+  background-color: #5FA9D4; }
 
 form[name="wizform"] .progression li.selected::after {
-  border-left-color: #808F9C; }
+  border-left-color: #5FA9D4; }
+
+form[name="wizform"] .progression li:hover {
+  border-left-color: #5FA9D4; }
 
 form[name="wizform"] .progression li:hover::after {
-  border-left-color: #808F9C; }
+  border-left-color: #5FA9D4; }
 
 form[name="wizform"] .progression li::after {
-  border-left-color: #FFFFFF; }
+  border-left-color: #378CBE; }
 
 form[name="wizform"] .progression li::after {
-  border-left-color: #FFFFFF; }
+  border-left-color: #378CBE; }
 
 form[name="wizform"] .progression li::before {
   border-left-color: #F5F5F5; }

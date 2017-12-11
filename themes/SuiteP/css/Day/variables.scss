@@ -1095,9 +1095,11 @@ $dashlet-header-padding: 5px; // 5 normal 0 small
 $campaign-type-color: $color-80;
 $campaign-type-bg: $color-50;
 $campaign-type-bg-hover: $color-22;
-$campaign-progression-bg: $color-50;
-$campaign-progression-bg-hover: $color-22;
-$campaign-progression-bg-active: $color-22;
+$campaign-progression-color-hover:$color-50;
+$campaign-progression-color: $color-50;
+$campaign-progression-bg: $danger-btn-bg;
+$campaign-progression-bg-hover: $danger-btn-bg-hover;
+$campaign-progression-bg-active: $danger-btn-bg-hover;
 
 // Cases
 $case-internal-bg: $color-57;
