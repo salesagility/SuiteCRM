@@ -221,7 +221,7 @@ $input-bg:                       $color-80 !default;
 $input-bg-disabled:              $gray-lighter !default;
 
 //** Text color for `<input>`s
-$input-color:                    $gray !default;
+$input-color:                    $color-81 !default;
 //** `<input>` border color
 $input-border:                   $color-62 !default;
 
@@ -403,7 +403,7 @@ $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             $color-19 !default;
 $navbar-default-bg:                $color-52 !default;
-$navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
+$navbar-default-border:            lighten($navbar-default-bg, 6.5%) !default;
 
 // Navbar links
 $navbar-default-link-color:                $color-19 !default;

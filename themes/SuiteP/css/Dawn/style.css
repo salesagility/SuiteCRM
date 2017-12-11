@@ -19462,11 +19462,11 @@ div.wizard-unique-elem td {
 .wizard-box {
   display: block;
   position: relative;
-  background-color: #f6f6f6;
-  color: #333333;
+  background-color: #FFFFFF;
+  color: #534D64;
   padding: 20px;
   margin: 20px;
-  border: 1px solid lightgrey;
+  border: 1px solid transparent;
   float: left;
   width: 350px;
   min-width: 300px;

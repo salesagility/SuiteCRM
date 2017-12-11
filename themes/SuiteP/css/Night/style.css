@@ -2440,7 +2440,7 @@ output {
   padding-top: 7px;
   font-size: 14px;
   line-height: 1.42857;
-  color: #555555; }
+  color: #FFFFFF; }
 
 .form-control {
   display: block;
@@ -2449,7 +2449,7 @@ output {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857;
-  color: #555555;
+  color: #FFFFFF;
   background-color: #416F81;
   background-image: none;
   border: 1px solid #416F81;
@@ -3493,7 +3493,7 @@ tbody.collapse.in {
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
-  color: #555555;
+  color: #FFFFFF;
   text-align: center;
   background-color: #eeeeee;
   border: 1px solid #CCCCCC;
@@ -3953,7 +3953,7 @@ tbody.collapse.in {
       margin-right: 0; } }
 .navbar-default {
   background-color: #F8F8F8;
-  border-color: #e7e7e7; }
+  border-color: white; }
   .navbar-default .navbar-brand {
     color: #777777; }
     .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
@@ -3980,7 +3980,7 @@ tbody.collapse.in {
       background-color: #888888; }
   .navbar-default .navbar-collapse,
   .navbar-default .navbar-form {
-    border-color: #e7e7e7; }
+    border-color: white; }
   .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
     background-color: #e7e7e7;
     color: #ffffff; }
@@ -19462,11 +19462,11 @@ div.wizard-unique-elem td {
 .wizard-box {
   display: block;
   position: relative;
-  background-color: #f6f6f6;
-  color: #333333;
+  background-color: #2E4F5C;
+  color: #FFFFFF;
   padding: 20px;
   margin: 20px;
-  border: 1px solid lightgrey;
+  border: 1px solid transparent;
   float: left;
   width: 350px;
   min-width: 300px;
@@ -26403,7 +26403,7 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 .panel-content .edit-view-row-item .mce-rtl .mce-menu-item .mce-caret {
   border-right: 4px solid transparent; }
 .panel-content .edit-view-row-item .mce-rtl .mce-menu-item.mce-selected .mce-caret, .panel-content .edit-view-row-item .mce-rtl .mce-menu-item:focus .mce-caret, .panel-content .edit-view-row-item .mce-rtl .mce-menu-item:hover .mce-caret {
-  border-right-color: #ffffff; }
+  border-right-color: transparent; }
 .panel-content .edit-view-row-item .mce-menu .mce-throbber-inline {
   height: 25px;
   background-size: contain; }

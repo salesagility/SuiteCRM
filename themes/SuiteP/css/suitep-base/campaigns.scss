@@ -110,11 +110,11 @@ div.wizard-unique-elem td {
 .wizard-box {
   display: block;
   position: relative;
-  background-color: #f6f6f6;
-  color: #333333;
+  background-color: $panel-bg;
+  color: $main-font-color;
   padding: 20px;
   margin: 20px;
-  border: 1px solid lightgrey;
+  border: 1px solid $panel-default-border;
   float: left;
   width: 350px;
   min-width: 300px;
