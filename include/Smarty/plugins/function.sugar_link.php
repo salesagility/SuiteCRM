@@ -114,6 +114,6 @@ function smarty_function_sugar_link($params, &$smarty)
 	else
 	    $label = (!empty($GLOBALS['app_list_strings']['moduleList'][$params['module']]))?$GLOBALS['app_list_strings']['moduleList'][$params['module']]:$params['module'];
 
-    $link = '<a href="'.ajaxLink($link_url).'"'.$id.$class.$style.$options.$title.$module.'>'.$label.'</a>';
+    $link = '<a href="'.ajaxLink($link_url).'"'.$id.$class.$style.$options.$title.'>'.$label.'</a>';
     return $link;
 }

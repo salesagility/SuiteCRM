@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 if( !isset( $install_script ) || !$install_script ){
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
@@ -620,7 +623,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPSERVER']}</label>
-                    <input type="text" name="smtp_tab_gmail[mail_smtpserver]" size="25" maxlength="64" value="smtp.gmail.com">
+                    <input type="text" name="smtp_tab_gmail[mail_smtpserver]" size="25" maxlength="255" value="smtp.gmail.com">
                 </div>
 
                 <div class="formrow">
@@ -648,14 +651,14 @@ EOQ;
                 <div class="toggleArea" id="toggleArea_1">
                 <div class="formrow">
                     <label>{$mod_strings['LBL_GMAIL_SMTPUSER']}</label>
-                        <input type="text" name="smtp_tab_gmail[mail_smtpuser]" id="smtp_tab_gmail__mail_smtpuser" size="25" maxlength="64">
+                        <input type="text" name="smtp_tab_gmail[mail_smtpuser]" id="smtp_tab_gmail__mail_smtpuser" size="25" maxlength="255">
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_GMAIL_SMTPPASS']}</label>
-                        <input type="password" name="smtp_tab_gmail[mail_smtppass]" id="smtp_tab_gmail__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                        <input type="password" name="smtp_tab_gmail[mail_smtppass]" id="smtp_tab_gmail__mail_smtppass" size="25" maxlength="255" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -673,20 +676,20 @@ EOQ;
 
             <div class="form_section smtp_tab" id="smtp_tab_yahoo">
 
-                <input type="hidden" name="smtp_tab_yahoo[mail_smtpserver]" size="25" maxlength="64" value="smtp.mail.yahoo.com">
+                <input type="hidden" name="smtp_tab_yahoo[mail_smtpserver]" size="25" maxlength="255" value="smtp.mail.yahoo.com">
                 <input type="text" name="smtp_tab_yahoo[mail_smtpport]" size="5" maxlength="5" value="465">
                 <input type="hidden" name="smtp_tab_yahoo[mail_smtpssl]" value="1">
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_YAHOOMAIL_SMTPUSER']}</label>
-                    <input type="text" name="smtp_tab_yahoo[mail_smtpuser]" size="25" maxlength="64">
+                    <input type="text" name="smtp_tab_yahoo[mail_smtpuser]" size="25" maxlength="255">
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_YAHOOMAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_yahoo[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
+                    <input type="password" name="smtp_tab_yahoo[mail_smtppass]" size="25" maxlength="255" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -705,7 +708,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_EXCHANGE_SMTPSERVER']}</label>
-                    <input type="text" name="smtp_tab_exchange[mail_smtpserver]" size="25" maxlength="64" value="">
+                    <input type="text" name="smtp_tab_exchange[mail_smtpserver]" size="25" maxlength="255" value="">
                 </div>
 
                 <div class="formrow">
@@ -732,14 +735,14 @@ EOQ;
                 <div class="toggleArea" id="toggleArea_2">
                 <div class="formrow">
                     <label>{$mod_strings['LBL_EXCHANGE_SMTPUSER']}</label>
-                        <input type="text" name="smtp_tab_exchange[mail_smtpuser]" id="smtp_tab_exchange__mail_smtpuser" size="25" maxlength="64">
+                        <input type="text" name="smtp_tab_exchange[mail_smtpuser]" id="smtp_tab_exchange__mail_smtpuser" size="25" maxlength="255">
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_EXCHANGE_SMTPPASS']}</label>
-                        <input type="password" name="smtp_tab_exchange[mail_smtppass]" id="smtp_tab_exchange__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                        <input type="password" name="smtp_tab_exchange[mail_smtppass]" id="smtp_tab_exchange__mail_smtppass" size="25" maxlength="255" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -759,7 +762,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPSERVER']}</label>
-                    <input type="text" name="smtp_tab_other[mail_smtpserver]" size="25" maxlength="64" value="">
+                    <input type="text" name="smtp_tab_other[mail_smtpserver]" size="25" maxlength="255" value="">
                 </div>
 
                 <div class="formrow">
@@ -787,14 +790,14 @@ EOQ;
                 <div class="toggleArea" id="toggleArea_3">
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPUSER']}</label>
-                        <input type="text" name="smtp_tab_other[mail_smtpuser]" id="smtp_tab_other__mail_smtpuser" size="25" maxlength="64">
+                        <input type="text" name="smtp_tab_other[mail_smtpuser]" id="smtp_tab_other__mail_smtpuser" size="25" maxlength="255">
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPPASS']}</label>
-                        <input type="password" name="smtp_tab_other[mail_smtppass]" id="smtp_tab_other__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                        <input type="password" name="smtp_tab_other[mail_smtppass]" id="smtp_tab_other__mail_smtppass" size="25" maxlength="255" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
