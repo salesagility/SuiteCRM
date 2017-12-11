@@ -62,13 +62,13 @@
     <ul id="quick-nav">
         <li> <a href="#"><img src="themes/Suite7/images/quickcreate.png" class="quick_create"></a>
             <ul>
-                <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{sugar_translate module="Contacts" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{sugar_translate module="Opportunities" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{sugar_translate module="Leads" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{sugar_translate module="Documents" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{sugar_translate module="Calls" label="LBL_MODULE_NAME"}</a></li>
-                <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{sugar_translate module="Tasks" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Contacts" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Opportunities" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Leads" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Documents" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Calls" label="LBL_MODULE_NAME"}</a></li>
+                <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Tasks" label="LBL_MODULE_NAME"}</a></li>
             </ul>
 
         </li>
