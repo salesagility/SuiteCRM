@@ -994,7 +994,7 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/SuiteCRM/api/public/index.php/$1 [L]
+    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
