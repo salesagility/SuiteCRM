@@ -54,10 +54,13 @@ use SuiteCRM\API\v8\Exception\BadRequest;
 class FilterRepository
 {
     /**
-     * @var ContainerInterface
+     * @var ContainerInterface $containers
      */
     private $containers;
 
+    /**
+     * @var FilterParser $filterParser
+     */
     private $filterParser;
 
     /**
