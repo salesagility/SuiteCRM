@@ -1169,10 +1169,9 @@ li.noBullet {
 .required {
   background-color: $required-bg;
   color: $required-color;
-  padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
+  float: right;
 }
 
 .error {

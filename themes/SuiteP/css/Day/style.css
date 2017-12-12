@@ -13870,7 +13870,7 @@ p.msg {
   margin-left: 4px; }
 
 .pagination-range-label {
-  color: #707D84;
+  color: #817C8D;
   font-size: 13px;
   font-weight: bold; }
 
@@ -15048,10 +15048,9 @@ li.noBullet {
 .required {
   background-color: transparent;
   color: #FF0000;
-  padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid transparent;
-  border-radius: 4px; }
+  border-radius: 4px;
+  float: right; }
 
 .error {
   background-color: #378CBE;
