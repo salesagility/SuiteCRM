@@ -75,11 +75,7 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                   'date_modified' => array('width'   => '15',
                                                                            'label'   => 'LBL_DATE_MODIFIED'),
                                                   'quick_reply' => array('width'   => '15',
-                                                                        'label'   => '',
-                                                                        'sortable' => false,
-                                                                        'default' => true),
-                                                   'create_related' => array('width'   => '25',
-                                                                        'label'   => '',
+                                                                        'label'   => 'LNK_QUICK_REPLY',
                                                                         'sortable' => false,
                                                                         'default' => true),
 
