@@ -9,6 +9,11 @@ class SuiteLoggerTest extends \Codeception\Test\Unit
     protected $tester;
 
     /**
+     * @var string $oldLogLevel
+     */
+    private static $oldLogLevel;
+
+    /**
      * @var \SuiteCRM\Utility\SuiteLogger $logger
      */
     private static $logger;
@@ -19,11 +24,18 @@ class SuiteLoggerTest extends \Codeception\Test\Unit
             self::$logger = new \SuiteCRM\Utility\SuiteLogger();
         }
         $loggerManager = LoggerManager::getLogger();
+
+        if (self::$logger === null) {
+            self::$oldLogLevel = $loggerManager::getLogLevel();
+        }
+
         $loggerManager::setLogLevel('debug');
     }
 
     protected function _after()
     {
+        $loggerManager = LoggerManager::getLogger();
+        $loggerManager::setLogLevel(self::$oldLogLevel);
     }
 
     public function testLogEmergency()

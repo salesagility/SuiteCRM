@@ -230,4 +230,9 @@ class LoggerManager
     {
         self::$_instance->_level = $level;
     }
+
+    public static function getLogLevel()
+    {
+        return self::$_instance->_level;
+    }
 }
