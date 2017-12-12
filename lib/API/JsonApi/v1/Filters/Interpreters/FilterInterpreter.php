@@ -339,12 +339,12 @@ class FilterInterpreter
             return $isInSpecialOperatorsArray;
         } elseif ($isInOperatorArray !== false) {
             return $isInOperatorArray;
-        } else {
-            throw new Exception(
-                '[JsonApi][v1][Filters][FilterInterpreter][getOperator]' .
-                '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
-                'containers '
-            );
         }
+
+        throw new Exception(
+            '[JsonApi][v1][Filters][FilterInterpreter][getOperator]' .
+            '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
+            'containers '
+        );
     }
 }

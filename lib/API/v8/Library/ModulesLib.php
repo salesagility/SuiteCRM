@@ -294,10 +294,11 @@ class ModulesLib
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
             $where = $filterInterpreter->getFilterByAttributes($filterStructure);
+
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } else {
-            throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
         }
+
+        throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
     }
 
     /**
