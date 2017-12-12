@@ -52,7 +52,8 @@ class="yui-navset"
     {* Generate the Tab headers *}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="yui-nav">
-    {{foreach name=section from=$sectionPanels key=label item=panel}} 
+    {{foreach name=section from=$sectionPanels key=label item=panel}}
+
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
 	{{counter name="tabCount" print=false}}
