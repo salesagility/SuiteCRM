@@ -229,8 +229,6 @@ class FilterInterpreter
                 if ($filterOperator->isValid($field) === false) {
                     throw new BadRequest('[getFilterByAttributes][invalid field]');
                 }
-                // TODO: TASK: UNDEFINED - Detect and handle if relationship
-                // TODO: TASK: UNDEFINED - Detect and handle if middle table
                 $fieldName = $filterOperator->stripFilterTag($field);
                 if (isset($module->field_defs[$fieldName]) === false) {
                     throw new BadRequest('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
@@ -302,7 +300,6 @@ class FilterInterpreter
     private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands)
     {
         // Lets build the last operation into a SQL Query
-        // TODO: swap out table name if it is a related field type.
         $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
         $sqlOperator = $lastOperator->toSqlOperator();
         $sqlOperands = $lastOperator->toSqlOperands($operands);
