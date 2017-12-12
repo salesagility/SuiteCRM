@@ -585,6 +585,9 @@ $contact_user_link_guid',
 	),
 
 	// SMTP settings
+    
+    'LBL_FROM_NAME' => '"From" Name:',
+    'LBL_FROM_ADDR' => '"From" Address:',
 
 	'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from SuiteCRM, as sent from the specified email account.',
 	'LBL_CHOOSE_EMAIL_PROVIDER'        => 'Choose your Email provider:',
