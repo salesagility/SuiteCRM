@@ -126,7 +126,10 @@ function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal 
     	$contact->email2 = '';
     }
     if(!isset($contact->email_opt_out)){
-    	$contact->email_opt_out = '';
+        $contact->email_opt_out = '';
+    }
+    if(!isset($contact->email_opt_in)){
+        $contact->email_opt_in = '';
     }
 	$lbl_email_address = $mod_strings['LBL_EMAIL_ADDRESS'];
 	$salutation_options=get_select_options_with_id($app_list_strings['salutation_dom'], $contact->salutation);
@@ -264,6 +267,7 @@ $form .= <<<EOQ
 		<input type='hidden' name='${prefix}alt_address_city' value='{$contact->alt_address_city}'><input type='hidden' name='${prefix}alt_address_state'   value='{$contact->alt_address_state}'><input type='hidden' name='${prefix}alt_address_postalcode'   value='{$contact->alt_address_postalcode}'><input type='hidden' name='${prefix}alt_address_country'  value='{$contact->alt_address_country}'>
 		<input type='hidden' name='${prefix}do_not_call'  value='{$contact->do_not_call}'>
 		<input type='hidden' name='${prefix}email_opt_out'  value='{$contact->email_opt_out}'>
+		<input type='hidden' name='${prefix}email_opt_in'  value='{$contact->email_opt_in}'>
 EOQ;
 
 	if ($portal == true){
@@ -444,7 +448,8 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
         if( isset($_POST[$prefix.'old_portal_password']) && !empty($focus->portal_password) && $focus->portal_password != $_POST[$prefix.'old_portal_password']){
             $focus->portal_password = User::getPasswordHash($focus->portal_password);
         }
-		if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+        if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+        if (!isset($_POST[$prefix.'email_opt_in'])) $focus->email_opt_in = 0;
 		if (!isset($_POST[$prefix.'do_not_call'])) $focus->do_not_call = 0;
 
 	}

@@ -185,8 +185,10 @@ $mod_strings = array (
 	//newsletter wizard
 	'LBL_EDIT_TRACKER_NAME'=>'Tracker Name',
 	'LBL_EDIT_TRACKER_URL'=>'Tracker URL',
-	'LBL_EDIT_OPT_OUT_'=>'Opt-out Link?',
+    'LBL_EDIT_OPT_OUT_'=>'Opt-out Link?',
+    'LBL_EDIT_OPT_IN_'=>'Opt-in Link?',
 	'LBL_EDIT_OPT_OUT'=>'Opt-out Link:',
+    'LBL_EDIT_OPT_IN'=>'Opt-in Link:',
 	'LBL_UNSUBSCRIPTION_LIST_NAME'=>'Unsubscription List:',
 	'LBL_SUBSCRIPTION_LIST_NAME'=>'Subscription List:',
 	'LBL_TEST_LIST_NAME'=>'Test List:',
@@ -254,8 +256,10 @@ $mod_strings = array (
 	'LBL_NUMBER_OF_TARGET' => 'Number of target',
 	'LBL_EMAILS_SCHEDULED' => 'Emails Scheduled',
 	'LBL_TEST_EMAILS_SENT' => 'Test Emails Sent',
-	'LBL_USERS_CANNOT_OPTOUT' => 'System Users cannot opt out of receiving emails.',
-	'LBL_ELECTED_TO_OPTOUT' => 'You have elected to opt out of receiving emails.',
+    'LBL_USERS_CANNOT_OPTOUT' => 'System Users cannot opt out of receiving emails.',
+    'LBL_USERS_CANNOT_OPTIN' => 'System Users cannot opt in of receiving emails.',
+    'LBL_ELECTED_TO_OPTOUT' => 'You have elected to opt out of receiving emails.',
+    'LBL_ELECTED_TO_OPTIN' => 'You have elected to opt in of receiving emails.',
 	'LBL_COPY_OF' => 'Copy of ',
 	'LBL_SAVED_SEARCH' => 'Saved Search & Layout',
 	//email setup wizard
@@ -463,6 +467,13 @@ $mod_strings = array (
 	'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 	'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
 	'LBL_CAMPAIGN_SURVEY' => "Survey",
+	'LBL_OPT_IN_CHECKBOX_ON_PERSON_FORM_ENABLED' => 'Opt In Checkbox on Web-To-Person form enabled',
+	'LBL_OPT_IN_CONFIRMATION_EMAIL_ENABLED' => 'Opt In Confirmation Email enabled',
+	'LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE' => 'Opt-in confirmation email template',
+    'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
+    'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
+	'LBL_OPT_IN' => 'Opt In',
+	'LBL_CLICK' => 'Click here to Opt In...',
 );
 
 

@@ -68,6 +68,7 @@ class CampaignTracker extends SugarBean {
     var $campaign_name;
     var $message_url;
     var $is_optout;
+    var $is_optin;
 
     /* End field definitions*/
 
@@ -124,7 +125,7 @@ class CampaignTracker extends SugarBean {
 
     function save($check_notify = false) {
         //make sure that the url has a scheme, if not then add http:// scheme
-        if ($this->is_optout!=1 ){
+        if ($this->is_optout!=1 && $this->is_optin!=1 ){
             $url = strtolower(trim($this->tracker_url));
             if(!preg_match('/^(http|https|ftp):\/\//i', $url)){
                 $this->tracker_url = 'http://'.$url;
@@ -172,6 +173,8 @@ class CampaignTracker extends SugarBean {
         }
         if ($this->is_optout == 1) {
             $this->message_url .= '/index.php?entryPoint=removeme&identifier={MESSAGE_ID}';
+        } elseif($this->is_optin == 1) {
+            $this->message_url .= '/index.php?entryPoint=addme&identifier={MESSAGE_ID}';
         } else {
             $this->message_url .= '/index.php?entryPoint=campaign_trackerv2&track=' . $this->id;
         }

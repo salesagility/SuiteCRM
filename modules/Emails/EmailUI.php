@@ -613,8 +613,224 @@ eoq;
 
 
 
-    ////	END CORE
-    ///////////////////////////////////////////////////////////////////////////
+	/**
+	 * Removes contacts from the user's address book
+	 * @param array ids
+	 */
+	function removeContacts($ids) {
+		global $current_user;
+
+		$concat = "";
+
+		foreach($ids as $id) {
+			if(!empty($concat))
+				$concat .= ", ";
+
+			$concat .= "'{$id}'";
+		}
+
+		$q = "DELETE FROM address_book WHERE assigned_user_id = '{$current_user->id}' AND bean_id IN ({$concat})";
+		$r = $this->db->query($q);
+	}
+
+	/**
+	 * saves editted Contact info
+	 * @param string $str JSON serialized object
+	 */
+	function saveContactEdit($str) {
+
+		$json = getJSONobj();
+
+		$str = from_html($str);
+		$obj = $json->decode($str);
+
+		$contact = new Contact();
+		$contact->retrieve($obj['contact_id']);
+		$contact->first_name = $obj['contact_first_name'];
+		$contact->last_name = $obj['contact_last_name'];
+		$contact->save();
+
+		// handle email address changes
+		$addresses = array();
+
+		foreach($obj as $k => $req) {
+			if(strpos($k, 'emailAddress') !== false) {
+				$addresses[$k] = $req;
+			}
+		}
+
+		// prefill some REQUEST vars for emailAddress save
+        $_REQUEST['emailAddressOptOutFlag'] = $obj['optOut'];
+        $_REQUEST['emailAddressOptInFlag'] = $obj['optIn'];
+		$_REQUEST['emailAddressInvalidFlag'] = $obj['invalid'];
+		$contact->emailAddress->saveEmail($obj['contact_id'], 'Contacts', $addresses, $obj['primary'], '');
+	}
+
+	/**
+	 * Prepares the Edit Contact mini-form via template assignment
+	 * @param string id ID of contact in question
+	 * @param string module Module in focus
+	 * @return array
+	 */
+	function getEditContact($id, $module) {
+		global $app_strings;
+
+
+		if(!class_exists("Contact")) {
+
+		}
+
+		$contact = new Contact();
+		$contact->retrieve($_REQUEST['id']);
+		$ret = array();
+
+		if($contact->ACLAccess('edit')) {
+			$contactMeta = array();
+			$contactMeta['id'] = $contact->id;
+			$contactMeta['module'] = $contact->module_dir;
+			$contactMeta['first_name'] = $contact->first_name;
+			$contactMeta['last_name'] = $contact->last_name;
+
+			$this->smarty->assign("app_strings", $app_strings);
+			$this->smarty->assign("contact_strings", return_module_language($_SESSION['authenticated_user_language'], 'Contacts'));
+			$this->smarty->assign("contact", $contactMeta);
+
+			$ea = new SugarEmailAddress();
+			$newEmail = $ea->getEmailAddressWidgetEditView($id, $module, true);
+			$this->smarty->assign("emailWidget", $newEmail['html']);
+
+			$ret['form'] = $this->smarty->fetch("modules/Emails/templates/editContact.tpl");
+			$ret['prefillData'] = $newEmail['prefillData'];
+		} else {
+			$id = "";
+			$ret['form'] = $app_strings['LBL_EMAIL_ERROR_NO_ACCESS'];
+			$ret['prefillData'] = '{}';
+		}
+
+		$ret['id'] = $id;
+		$ret['contactName'] = $contact->full_name;
+
+		return $ret;
+	}
+
+
+	/**
+	 * Retrieves a concatenated list of contacts, those with assigned_user_id = user's id and those in the address_book
+	 * table
+	 * @param array $contacts Array of contact types -> IDs
+	 * @param object $user User in focus
+	 * @return array
+	 */
+	function getUserContacts($contacts, $user=null) {
+
+		global $current_user;
+		global $locale;
+
+		if(empty($user)) {
+			$user = $current_user;
+		}
+
+		$emailAddress = new SugarEmailAddress();
+		$ret = array();
+
+		$union = '';
+
+		$modules = array();
+		foreach($contacts as $contact) {
+			if(!isset($modules[$contact['module']])) {
+				$modules[$contact['module']] = array();
+			}
+			$modules[$contact['module']][] = $contact;
+		}
+
+		foreach($modules as $module => $contacts) {
+			if(!empty($union)) {
+				$union .= " UNION ALL ";
+			}
+
+			$table = strtolower($module);
+			$idsSerial = '';
+
+			foreach($contacts as $contact) {
+				if(!empty($idsSerial)) {
+					$idsSerial .= ",";
+				}
+				$idsSerial .= "'{$contact['id']}'";
+			}
+
+			$union .= "(SELECT id, first_name, last_name, title, '{$module}' module FROM {$table} WHERE id IN({$idsSerial}) AND deleted = 0 )";
+		}
+		if(!empty($union)) {
+			$union .= " ORDER BY last_name";
+		}
+
+		$r = $user->db->query($union);
+
+		//_pp($union);
+
+		while($a = $user->db->fetchByAssoc($r)) {
+			$c = array();
+
+			$c['name'] = $locale->getLocaleFormattedName($a['first_name'], "<b>{$a['last_name']}</b>", '', $a['title'], '', $user);
+			$c['id'] = $a['id'];
+			$c['module'] = $a['module'];
+			$c['email'] = $emailAddress->getAddressesByGUID($a['id'], $a['module']);
+			$ret[$a['id']] = $c;
+		}
+
+		return $ret;
+	}
+	////	END ADDRESS BOOK
+	///////////////////////////////////////////////////////////////////////////
+
+
+	///////////////////////////////////////////////////////////////////////////
+	////	EMAIL 2.0 Preferences
+	function getUserPrefsJS() {
+		global $current_user;
+		global $locale;
+
+		// sort order per mailbox view
+		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
+		$sortArray = array();
+		if(!empty($sortSerial)) {
+			$sortArray = sugar_unserialize($sortSerial);
+		}
+
+		// treeview collapsed/open states
+		$folderStateSerial = $current_user->getPreference('folderOpenState', 'Emails');
+		$folderStates = array();
+		if(!empty($folderStateSerial)) {
+			$folderStates = sugar_unserialize($folderStateSerial);
+		}
+
+		// subscribed accounts
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+
+		// general settings
+		$emailSettings = $current_user->getPreference('emailSettings', 'Emails');
+
+		if(empty($emailSettings)) {
+			$emailSettings = array();
+			$emailSettings['emailCheckInterval'] = -1;
+			$emailSettings['autoImport'] = '';
+			$emailSettings['alwaysSaveOutbound'] = '1';
+			$emailSettings['sendPlainText'] = '';
+			$emailSettings['defaultOutboundCharset'] = $GLOBALS['sugar_config']['default_email_charset'];
+			$emailSettings['showNumInList'] = 20;
+		}
+
+		// focus folder
+		$focusFolder = $current_user->getPreference('focusFolder', 'Emails');
+		$focusFolder = !empty($focusFolder) ? sugar_unserialize($focusFolder) : array();
+
+		// unread only flag
+		$showUnreadOnly = $current_user->getPreference('showUnreadOnly', 'Emails');
+
+		$listViewSort = array(
+			"sortBy" => 'date',
+			"sortDirection" => 'DESC',
+		);
 
     ///////////////////////////////////////////////////////////////////////////
     ////	ADDRESS BOOK
@@ -674,8 +890,65 @@ eoq;
                 $concat .= ", ";
             }
 
-            $concat .= "'{$id}'";
-        }
+			$name = explode(" ", trim($from));
+
+			$address = trim(array_pop($name));
+			$address = str_replace(array("<",">","&lt;","&gt;"), "", $address);
+
+			$emailAddress[] = array(
+				'email_address'		=> $address,
+				'primary_address'	=> 1,
+				'invalid_email'		=> 0,
+                'opt_out'			=> 0,
+                'opt_in'			=> 0,
+				'reply_to_address'	=> 1
+			);
+
+			$focus->email1 = $address;
+
+			if(!empty($name)) {
+				$focus->last_name = trim(array_pop($name));
+
+				foreach($name as $first) {
+					if(!empty($focus->first_name)) {
+						$focus->first_name .= " ";
+					}
+					$focus->first_name .= trim($first);
+				}
+			}
+		} else {
+			// bugs, cases, tasks
+			$focus->name = trim($email->name);
+		}
+
+		$focus->description = trim(strip_tags($email->description));
+		$focus->assigned_user_id = $current_user->id;
+
+
+		$EditView = new EditView();
+		$EditView->ss = new Sugar_Smarty();
+		//MFH BUG#20283 - checks for custom quickcreate fields
+		$EditView->setup($_REQUEST['qc_module'], $focus, 'custom/modules/'.$focus->module_dir.'/metadata/editviewdefs.php', 'include/EditView/EditView.tpl');
+		$EditView->process();
+		$EditView->render();
+
+		$EditView->defs['templateMeta']['form']['buttons'] = array(
+			'email2save' => array(
+				'id' => 'e2AjaxSave',
+				'customCode' => '<input type="button" class="button" value="   '.$app_strings['LBL_SAVE_BUTTON_LABEL']
+				              . '   " onclick="SUGAR.email2.detailView.saveQuickCreate(false);" />'
+			),
+			'email2saveandreply' => array(
+			    'id' => 'e2SaveAndReply',
+			    'customCode' => '<input type="button" class="button" value="   '.$app_strings['LBL_EMAIL_SAVE_AND_REPLY']
+			                  . '   " onclick="SUGAR.email2.detailView.saveQuickCreate(\'reply\');" />'
+			),
+			'email2cancel' => array(
+			     'id' => 'e2cancel',
+			     'customCode' => '<input type="button" class="button" value="   '.$app_strings['LBL_EMAIL_CANCEL']
+                              . '   " onclick="SUGAR.email2.detailView.quickCreateDialog.hide();" />'
+			)
+		);
 
         $q = "DELETE FROM address_book WHERE assigned_user_id = '{$current_user->id}' AND bean_id IN ({$concat})";
         $r = $this->db->query($q);

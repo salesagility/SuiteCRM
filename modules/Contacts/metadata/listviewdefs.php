@@ -120,11 +120,15 @@ $listViewDefs['Contacts'] = array(
         'width' => '15', 
         'label' => 'LBL_LIST_EMAIL_ADDRESS',
         'sortable' => false,
-        'customCode' => '{$EMAIL2_LINK}{$EMAIL2}</a>'),  
+        'customCode' => '{$EMAIL2_LINK}{$EMAIL2}</a>'),
     'EMAIL_OPT_OUT' => array(
-        'width' => '10', 
-        
+        'width' => '10',
+
         'label' => 'LBL_EMAIL_OPT_OUT'),
+    'EMAIL_OPT_IN' => array(
+        'width' => '10',
+
+        'label' => 'LBL_EMAIL_OPT_IN'),
     'PRIMARY_ADDRESS_STREET' => array(
         'width' => '10', 
         'label' => 'LBL_PRIMARY_ADDRESS_STREET'),

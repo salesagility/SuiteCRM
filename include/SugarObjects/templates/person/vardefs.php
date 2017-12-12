@@ -253,6 +253,14 @@ $vardefs = array(
             'massupdate' => false,
             'studio' => 'false',
         ),
+        'email_opt_in' => array(
+            'name' => 'email_opt_in',
+            'vname' => 'LBL_EMAIL_OPT_IN',
+            'source' => 'non-db',
+            'type' => 'bool',
+            'massupdate' => false,
+            'studio' => 'false',
+        ),
 
         'primary_address_street' => array(
             'name' => 'primary_address_street',

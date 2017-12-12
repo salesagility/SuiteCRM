@@ -713,6 +713,10 @@ if ($has_campaign || $inboundEmail) {
             $ss->assign("IS_OPTOUT_CHECKED","checked");
             $ss->assign("TRACKER_URL_DISABLED","disabled");
         }
+        if (!empty($focus->is_optin) && $focus->is_optin == 1) {
+            $ss->assign("IS_OPTIN_CHECKED","checked");
+            $ss->assign("TRACKER_URL_DISABLED","disabled");
+        }
 
     }
 }

@@ -361,6 +361,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'massupdate' => false,
                 'studio' => 'false',
             ),
+        'webtolead_email_opt_in' =>
+            array(
+                'name' => 'webtolead_email_opt_in',
+                'vname' => 'LBL_EMAIL_OPT_IN',
+                'type' => 'bool',
+                'source' => 'non-db',
+                'comment' => 'Indicator signaling if lead elects to opt in of email campaigns',
+                'importable' => 'false',
+                'massupdate' => false,
+                'studio' => 'false',
+            ),
         'webtolead_invalid_email' =>
             array(
                 'name' => 'webtolead_invalid_email',

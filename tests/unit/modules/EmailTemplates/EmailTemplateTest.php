@@ -142,9 +142,10 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
         //test Parse_tracker_urls
         $tracker_url_template = 'localhost/index.php?entryPoint=campaign_trackerv2&track=%s&identifier=tracker_key';
         $removeme_url_template = 'localhost/index.php?entryPoint=removeme&identifier=tracker_key';
+        $addme_url_template = 'localhost/index.php?entryPoint=addme&identifier=tracker_key';
         $tracker_urls = array();
 
-        $result = $emailTemplate->parse_tracker_urls($actual, $tracker_url_template, $tracker_urls, $removeme_url_template);
+        $result = $emailTemplate->parse_tracker_urls($actual, $tracker_url_template, $tracker_urls, $removeme_url_template, $addme_url_template);
         $this->assertSame($expected, $result);
     }
 

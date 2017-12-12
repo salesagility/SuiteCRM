@@ -79,7 +79,8 @@ class Prospect extends Person {
 	var $email_and_name1;
 	var $assistant;
 	var $assistant_phone;
-	var $email_opt_out;
+    var $email_opt_out;
+    var $email_opt_in;
 	var $primary_address_street;
 	var $primary_address_city;
 	var $primary_address_state;

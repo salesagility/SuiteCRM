@@ -113,15 +113,24 @@ $dictionary['CampaignTracker'] = array('table' => 'campaign_trkrs',
     	'dbType' => 'id',
 		'comment' => 'User ID who created record'
   	),
-  	'is_optout' => array (
-    	'name' => 'is_optout',
-    	'vname' => 'LBL_OPTOUT',
-    	'type' => 'bool',
-    	'required' => true,
-    	'default' => '0',
-    	'reportable'=>false,
-    	'comment' => 'Indicator whether tracker URL represents an opt-out link'
-  	),
+    'is_optout' => array (
+        'name' => 'is_optout',
+        'vname' => 'LBL_OPTOUT',
+        'type' => 'bool',
+        'required' => true,
+        'default' => '0',
+        'reportable'=>false,
+        'comment' => 'Indicator whether tracker URL represents an opt-out link'
+    ),
+    'is_optin' => array (
+        'name' => 'is_optin',
+        'vname' => 'LBL_OPTIN',
+        'type' => 'bool',
+        'required' => true,
+        'default' => '0',
+        'reportable'=>false,
+        'comment' => 'Indicator whether tracker URL represents an opt-in link'
+    ),
   	'deleted' => array (
     	'name' => 'deleted',
     	'vname' => 'LBL_DELETED',

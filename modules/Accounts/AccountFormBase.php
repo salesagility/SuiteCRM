@@ -333,7 +333,10 @@ if (isset($contact->assigned_user_id)) {
     	$contact->email2 = '';
     }
     if(!isset($contact->email_opt_out)){
-    	$contact->email_opt_out = '';
+        $contact->email_opt_out = '';
+    }
+    if(!isset($contact->email_opt_in)){
+        $contact->email_opt_in = '';
     }
 		$form="";
         $default_desc="";
@@ -351,6 +354,7 @@ if (isset($contact->assigned_user_id)) {
 		<input type="hidden" name="${prefix}assigned_user_id" value='${user_id}'>
 		<input type='hidden' name='${prefix}do_not_call'  value='{$contact->do_not_call}'>
 		<input type='hidden' name='${prefix}email_opt_out'  value='{$contact->email_opt_out}'>
+		<input type='hidden' name='${prefix}email_opt_in'  value='{$contact->email_opt_in}'>
 		<table width='100%' border="0" cellpadding="0" cellspacing="0">
 		<tr>
 		<td width="20%" nowrap scope="row">$lbl_account_name&nbsp;<span class="required">$lbl_required_symbol</span></td>

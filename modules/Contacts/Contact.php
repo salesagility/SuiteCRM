@@ -86,6 +86,7 @@ class Contact extends Person
     public $assistant;
     public $assistant_phone;
     public $email_opt_out;
+    public $email_opt_in;
     public $primary_address_street;
     public $primary_address_city;
     public $primary_address_state;

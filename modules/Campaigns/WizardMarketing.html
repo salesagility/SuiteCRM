@@ -477,7 +477,10 @@
 						</div>
 						<div class="clear"></div>
 						<div class="form-group">
-							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
+							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span>
+							<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
+							<span>{$MOD.LBL_EDIT_OPT_IN|replace:' ':'&nbsp'}</span>
+							<input onclick="toggle_tracker_url(document.getElementById('is_optin'), document.getElementById('is_optout'));" name="is_optin" id="is_optin" tabindex='2' type="checkbox" {$IS_OPTIN_CHECKED}/>
 							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button hidden' value='{$MOD.LBL_INSERT_URL_REF}'>
 						</div>
 					</div>
@@ -682,12 +685,15 @@
 
 						</script>
 						<script type="text/javascript">
-							function toggle_tracker_url(isoptout) {
+							function toggle_tracker_url(isoptin, isoptout) {
 								tracker_url = document.getElementById('tracker_url_add');
 								if (isoptout.checked) {
 									tracker_url.disabled=true;
 									tracker_url.value="index.php?entryPoint=removeme";
-								} else {
+								} else if (isoptin.checked) {
+                                  tracker_url.disabled=true;
+                                  tracker_url.value="index.php?entryPoint=addme";
+                                } else {
 									tracker_url.disabled=false;
 								}
 							}
@@ -734,7 +740,8 @@
 										campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
 										tracker_name: trackerName,
 										tracker_url: trackerURL,
-										is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+                                      is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+                                      is_optin: $('#is_optin').prop('checked') ? 'on' : '',
 										response_json: true
 									}, function (resp) {
 										resp = JSON.parse(resp);

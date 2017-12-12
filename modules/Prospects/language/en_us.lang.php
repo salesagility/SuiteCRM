@@ -98,6 +98,7 @@ $mod_strings = array(
     'LBL_ASSISTANT_PHONE' => 'Assistant Phone:',
     'LBL_DO_NOT_CALL' => 'Do Not Call:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
+    'LBL_EMAIL_OPT_IN' => 'Email Opt In:',
     'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
     'LBL_ALTERNATE_ADDRESS' => 'Other Address:',
     'LBL_ANY_ADDRESS' => 'Any Address:',
@@ -157,5 +158,8 @@ $mod_strings = array(
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     //For export labels
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_FP_EVENTS_TITLE' => 'Events',
+    'LBL_THANKS_FOR_SUBMITTING' => 'Thanks for submitting.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
 ?>

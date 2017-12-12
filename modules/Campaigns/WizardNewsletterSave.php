@@ -176,6 +176,7 @@ global $mod_strings;
                         $ct_focus->tracker_name = $tracker_values[1];
                         $ct_focus->is_optout = $tracker_values[2];
                         $ct_focus->tracker_url = $tracker_values[3];
+                        $ct_focus->is_optin = $tracker_values[4];
                         $ct_focus->save();
 
                         //load relationship and add to the list
@@ -196,6 +197,7 @@ global $mod_strings;
                         $ct_focus->tracker_name = $tracker_values[0];
                         $ct_focus->is_optout = $tracker_values[1];
                         $ct_focus->tracker_url = $tracker_values[2];
+                        $ct_focus->is_optin = $tracker_values[3];
                         $ct_focus->save();
 
                         //load relationship and add to the list
@@ -340,6 +342,7 @@ global $mod_strings;
                         $ct_focus->tracker_name = $tracker_values[1];
                         $ct_focus->is_optout = $tracker_values[2];
                         $ct_focus->tracker_url = $tracker_values[3];
+                        $ct_focus->is_optin = $tracker_values[4];
                         $ct_focus->save();
 
                         //load relationship and add to the list
@@ -360,6 +363,7 @@ global $mod_strings;
                         $ct_focus->tracker_name = $tracker_values[0];
                         $ct_focus->is_optout = $tracker_values[1];
                         $ct_focus->tracker_url = $tracker_values[2];
+                        $ct_focus->is_optin = $tracker_values[1];
                         $ct_focus->save();
 
                         //load relationship and add to the list

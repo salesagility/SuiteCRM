@@ -102,9 +102,12 @@ $mod_strings = array (
 	'LBL_RELATED_TYPE'							=> 'Related Type',
 	'LBL_SEARCH_FORM_TITLE'						=> 'Queue Search',
 	'TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE'	=> 'Value of Config.php setting site_url',
-	'TXT_REMOVE_ME_ALT'							=> 'To remove yourself from this email list go to',
-	'TXT_REMOVE_ME_CLICK'						=> 'click here',
-	'TXT_REMOVE_ME'								=> 'To remove yourself from this email list ',
+    'TXT_REMOVE_ME_ALT'							=> 'To remove yourself from this email list go to',
+    'TXT_ADD_ME_ALT'							=> 'To add yourself to this email list go to',
+    'TXT_REMOVE_ME_CLICK'						=> 'click here',
+    'TXT_ADD_ME_CLICK'						=> 'click here',
+    'TXT_REMOVE_ME'								=> 'To remove yourself from this email list ',
+    'TXT_ADD_ME'								=> 'To add yourself to this email list ',
 	'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER'		=> 'Send notification from assigning user\'s e-mail address',
 
 	'LBL_SECURITY_TITLE'						=> 'Email Security Settings',
@@ -134,6 +137,11 @@ $mod_strings = array (
     'LBL_FROM_ADDRESS_HELP'                     => 'When enabled, the assigning user\\\'s name and email address will be included in the From field of the email. This feature might not work with SMTP servers that do not allow sending from a different email account than the server account.',
 	'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
+    'LBL_OPT_IN_CHECKBOX_ON_PERSON_FORM_ENABLED' => 'Opt In Checkbox on Web-To-Person form enabled',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_ENABLED' => 'Opt In Confirmation Email enabled',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_TEMPLATE' => 'Opt-in confirmation email template',
+    'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
+    'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
 );
 
 ?>

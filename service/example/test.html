@@ -189,7 +189,7 @@ SugarRest.getUserId =  function(){
 SugarRest.getEntryList = function(module){
 	var data = [SugarRest.session, module, "", '', 0, [], [{
 		'name': 'email_addresses',
-		'value': ['id', 'email_address', 'opt_out', 'primary_address',]
+		'value': ['id', 'email_address', 'opt_out', 'opt_in', 'primary_address',]
 	}], 10, 0];
 	m = YAHOO.lang.JSON.stringify(data);
 	YAHOO.util.Connect.asyncRequest('POST', 'v2/rest.php', {
@@ -202,7 +202,7 @@ SugarRest.getEntryList = function(module){
 SugarRest.getEntry = function(module, id){
 	var data = [SugarRest.session, module, id, ['last_name', 'email1', 'date_modified','description'], [{
 		'name': 'email_addresses',
-		'value': ['id', 'email_address', 'opt_out', 'primary_address',]
+		'value': ['id', 'email_address', 'opt_out', 'opt_in', 'primary_address',]
 	}]];
 	m = YAHOO.lang.JSON.stringify(data);
 	YAHOO.util.Connect.asyncRequest('POST', 'v2/rest.php', {
@@ -214,7 +214,7 @@ SugarRest.getEntry = function(module, id){
 SugarRest.getEntries = function(module, ids){
 	var data = [SugarRest.session, module, ids, ['last_name', 'email1', 'date_modified','description'], [{
 		'name': 'email_addresses',
-		'value': ['id', 'email_address', 'opt_out', 'primary_address',]
+		'value': ['id', 'email_address', 'opt_out', 'opt_in', 'primary_address',]
 	}]];
 	m = YAHOO.lang.JSON.stringify(data);
 	YAHOO.util.Connect.asyncRequest('POST', 'v2/rest.php', {

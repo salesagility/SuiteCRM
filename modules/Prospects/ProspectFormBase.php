@@ -287,7 +287,9 @@ if(!empty($mod)){
 		</tr>
 		</table>
 		<input type='hidden' name='${prefix}alt_address_city' value='{$prospect->alt_address_city}'><input type='hidden' name='${prefix}alt_address_state'   value='{$prospect->alt_address_state}'><input type='hidden' name='${prefix}alt_address_postalcode'   value='{$prospect->alt_address_postalcode}'><input type='hidden' name='${prefix}alt_address_country'  value='{$prospect->alt_address_country}'>
-		<input type='hidden' name='${prefix}do_not_call'  value='{$prospect->do_not_call}'><input type='hidden' name='${prefix}email_opt_out'  value='{$prospect->email_opt_out}'>
+		<input type='hidden' name='${prefix}do_not_call'  value='{$prospect->do_not_call}'>
+		<input type='hidden' name='${prefix}email_opt_out'  value='{$prospect->email_opt_out}'>
+		<input type='hidden' name='${prefix}email_opt_in'  value='{$prospect->email_opt_in}'>
 EOQ;
 
 
@@ -424,8 +426,9 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 		return null;
 	}
 	if (!isset($GLOBALS['check_notify'])) $GLOBALS['check_notify']=false;
-	
-	if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+
+    if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
+    if (!isset($_POST[$prefix.'email_opt_in'])) $focus->email_opt_in = 0;
 	if (!isset($_POST[$prefix.'do_not_call'])) $focus->do_not_call = 0;
 	
 	if (empty($_POST['record']) && empty($_POST['dup_checked'])) {

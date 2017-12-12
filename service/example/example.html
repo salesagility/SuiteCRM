@@ -150,7 +150,7 @@ SugarRest.setModuleFields = function(o){
 SugarRest.getLeadsQuery = function(){
 	var data = [SugarRest.session, 'Leads', " leads.do_not_call = 0 AND leads.status != 'Converted' AND leads.status != 'Dead' AND leads.assigned_user_id = '" + SugarRest.user_id + "' ", '', 0, SugarRest.leadFields, [{
 		'name': 'email_addresses',
-		'value': ['id', 'email_address', 'opt_out', 'primary_address',]
+		'value': ['id', 'email_address', 'opt_out', 'opt_in', 'primary_address',]
 	}], 500, 0];
 	q =  SugarRest.getQuery('get_entry_list', data, SugarRest.test);
 	console.log(q);

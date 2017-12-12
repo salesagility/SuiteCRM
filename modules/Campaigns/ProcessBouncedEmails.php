@@ -156,7 +156,13 @@ function checkBouncedEmailForIdentifier($email_description)
         $found = TRUE;
         $GLOBALS['log']->debug("Found campaign identifier in body of email");
     }
-    
+    else if( preg_match('/index.php\?entryPoint=addme&identifier=[a-z0-9\-]*/',$email_description, $matches) )
+    {
+        $identifiers = preg_split('/index.php\?entryPoint=addme&identifier=/',$matches[0],-1,PREG_SPLIT_NO_EMPTY);
+        $found = TRUE;
+        $GLOBALS['log']->debug("Found campaign identifier in body of email");
+    }
+
     return array('found' => $found, 'matches' => $matches, 'identifiers' => $identifiers);
 }
 
