@@ -1799,12 +1799,12 @@ div.qtip.qtip-default {
 }
 
 .modal-content #search_form label {
-  color: #000000;
+  color: $main-font-color;
 }
 
 .modal-content .search_form .view input[type="text"],
 .modal-content .search_form .view textarea {
-  background-color: #D4F1EA;
+  background-color: $input-bg;
 }
 
 .search_form .view select,
@@ -1814,7 +1814,7 @@ div.qtip.qtip-default {
 
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
-  border: 2px solid #A5E8D6;
+  border: 2px solid $input-border;
 }
 
 .search_form .view .dateTimeRangeChoice {
