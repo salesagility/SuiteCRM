@@ -132,6 +132,20 @@ class EmailsController extends SugarController
     public function action_ComposeView()
     {
         $this->view = 'compose';
+        if (isset($_REQUEST['ids']) && isset($_REQUEST['targetModule'])){
+            $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
+            foreach ($toAddressIds as $id){
+                $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
+                if($destinataryBean && $destinataryBean->email1){
+                    $idLine = '<input type="hidden" class="email-compose-view-to-list" ';
+                    $idLine .= 'data-record-module="' . $_REQUEST['targetModule'] . '" ';
+                    $idLine .= 'data-record-id="' . $id . '" ';
+                    $idLine .= 'data-record-name="' . $destinataryBean->name . '" ';
+                    $idLine .= 'data-record-email="' . $destinataryBean->email1 . '">';
+                    echo $idLine;
+                }
+            }
+        }
     }
 
     /**
