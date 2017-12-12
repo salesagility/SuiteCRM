@@ -18,6 +18,8 @@ class SuiteLoggerTest extends \Codeception\Test\Unit
         if (self::$logger === null) {
             self::$logger = new \SuiteCRM\Utility\SuiteLogger();
         }
+        $loggerManager = LoggerManager::getLogger();
+        $loggerManager::setLogLevel('debug');
     }
 
     protected function _after()
