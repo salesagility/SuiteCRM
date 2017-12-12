@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +34,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
-* Description:  Includes the functions for Customer module specific charts.
-********************************************************************************/
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarCharts/SugarChartFactory.php');
-
 
 class campaign_charts {
 	/**
@@ -58,7 +53,16 @@ class campaign_charts {
 	* Contributor(s): ______________________________________..
 	*/
 
-	function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
+	/**
+     * @param array $datay
+     * @param array $targets
+     * @param null|string $campaign_id
+     * @param string $cache_file_name
+     * @param bool $refresh
+     * @param string $marketing_id
+     * @return string
+     */
+    public function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
 		global $app_strings, $mod_strings, $charset, $lang, $barChartColors,$app_list_strings;
 
 		if ($campaign_id) {
@@ -183,9 +187,20 @@ class campaign_charts {
 		return $return;
 	}
 
-	//campaign roi computations.
-	function campaign_response_roi($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
-		global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
+	/**
+     * Campaign roi computations.
+	*
+     * @param array $datay
+     * @param array $targets
+     * @param string|null $campaign_id
+     * @param string $cache_file_name
+     * @param bool $refresh
+     * @param string $marketing_id
+     * @param bool $is_dashlet
+     * @param string $dashlet_id
+     * @return string
+     */function campaign_response_roi($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id=''
+		) {global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
 		$not_empty = false;
 
@@ -475,4 +490,3 @@ class campaign_charts {
 		return $return;
 	}
 }// end charts class
-?>

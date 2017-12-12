@@ -1,4 +1,0 @@
-<?php
-/***CONFIGURATOR***/
-
-/***CONFIGURATOR***/

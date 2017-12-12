@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/EditView/EditView2.php');
 
@@ -453,7 +456,7 @@ eoq;
 						case "int":
 							if(!empty($field['massupdate']) && empty($field['auto_increment']))
 							{
-								$even = !$even; $newhtml .=$this->addInputType($displayname, $field);
+								$even = !$even; $newhtml .=$this->addInputType($displayname, $field['name']);
 							}
 							 break;
 						case "contact_id":$even = !$even; $newhtml .=$this->addContactID($displayname, $field["name"]); break;
@@ -745,13 +748,14 @@ EOQ;
 	}
 
     /**
-	  * Add a generic widget to lookup Users.
-	  * @param displayname Name to display in the popup window
-	  * @param varname name of the variable
-	  * @param id_name name of the id in vardef
-	  * @param mod_type name of the module, either "Contact" or "Releases" currently
-	  */
-	function addUserName($displayname, $varname, $id_name, $mod_type){
+	  * Add a generic widget to lookup Users
+	  ** @param string $displayname Name to display in the popup window
+	  * @param string $varname name of the variable
+	  * @param string $id_name name of the id in vardef
+	  * @param string $mod_type name of the module, either "Contact" or "Releases" currently
+	  *@return string
+	*/
+    public function addUserName($displayname, $varname, $id_name, $mod_type= null){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -813,12 +817,13 @@ EOHTML;
 	/**
 	  * Add a generic module popup selection popup window HTML code.
 	  * Currently supports Contact and Releases
-	  * @param displayname Name to display in the popup window
-	  * @param varname name of the variable
-	  * @param id_name name of the id in vardef
-	  * @param mod_type name of the module, either "Contact" or "Releases" currently
-	  */
-	function addGenericModuleID($displayname, $varname, $id_name, $mod_type){
+	  ** @param string $displayname Name to display in the popup window
+	  * @param string $varname Name of the variable
+	  * @param string $id_name Name of the id in vardef
+	  * @param string $mod_type Name of the module, either "Contact" or "Releases" currently
+	  *@return string
+     */
+	function addGenericModuleID($displayname, $varname, $id_name, $mod_type= null){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -1360,5 +1365,3 @@ EOQ;
         return '';
     }
 }
-
-?>
