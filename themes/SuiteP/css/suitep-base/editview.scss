@@ -1167,8 +1167,8 @@ li.noBullet {
 }
 
 .required {
-  background-color: transparent;
-  color: $alert-info-text;
+  background-color: $required-bg;
+  color: $required-color;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid transparent;
