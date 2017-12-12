@@ -86,7 +86,7 @@
         height: 64px;
 
         td {
-          background-color: $default-btn-color;
+          background-color: $main-alternate-bg;
 
           [type=text] {
             margin-right: 4px;
@@ -108,7 +108,7 @@
     tbody:nth-of-type(2n) {
       tr {
         td {
-          background-color: $panel-bg;
+          background-color: $main-bg;
         }
       }
     }
@@ -124,7 +124,7 @@
         height: 64px;
 
         td {
-          background-color: $default-btn-color;
+          background-color: $main-alternate-bg;
 
           [type=text] {
             margin-right: 4px;
@@ -146,7 +146,7 @@
     tbody {
       tr:nth-of-type(2n) {
         td {
-          background-color: $panel-bg;
+          background-color: $main-bg;
         }
       }
     }
@@ -169,7 +169,7 @@
       tr {
         height: 64px;
         td {
-          background-color: $default-btn-color;
+          background-color: $main-alternate-bg;
 
           [type=text] {
             margin-right: 4px;
@@ -196,7 +196,7 @@
     tbody {
       tr:nth-of-type(2n) {
         td {
-          background-color: $panel-bg;
+          background-color: $main-bg;
         }
       }
     }
@@ -235,4 +235,9 @@
 
 .parentheses-btn .condition-sortable-handle {
   padding: 5px 10px 5px 10px
+}
+
+
+.jqtree-tree .jqtree-title {
+  color: $link-color;
 }

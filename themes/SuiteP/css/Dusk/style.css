@@ -5882,7 +5882,7 @@ a:hover {
 .aor-tab-content #fieldLines tbody tr {
   height: 64px; }
   .aor-tab-content #fieldLines tbody tr td {
-    background-color: #F5F5F5; }
+    background-color: #FFFFFF; }
     .aor-tab-content #fieldLines tbody tr td [type=text] {
       margin-right: 4px; }
   .aor-tab-content #fieldLines tbody tr td:first-of-type {
@@ -5893,13 +5893,13 @@ a:hover {
       height: 0px;
       font-size: 32px; }
 .aor-tab-content #fieldLines tbody:nth-of-type(2n) tr td {
-  background-color: #FFFFFF; }
+  background-color: #F5F5F5; }
 .aor-tab-content #aor_conditionLines .logic-select {
   margin-right: 4px; }
 .aor-tab-content #aor_conditionLines tbody tr {
   height: 64px; }
   .aor-tab-content #aor_conditionLines tbody tr td {
-    background-color: #F5F5F5; }
+    background-color: #FFFFFF; }
     .aor-tab-content #aor_conditionLines tbody tr td [type=text] {
       margin-right: 4px; }
   .aor-tab-content #aor_conditionLines tbody tr td:first-of-type {
@@ -5910,14 +5910,14 @@ a:hover {
       height: 0px;
       font-size: 32px; }
 .aor-tab-content #aor_conditionLines tbody tr:nth-of-type(2n) td {
-  background-color: #FFFFFF; }
+  background-color: #F5F5F5; }
 .aor-tab-content #aor_conditionLines #aor_conditionLines_head td:nth-of-type(2),
 .aor-tab-content #aor_conditionLines #aor_conditionLines_head td:last-of-type {
   padding-right: 8px; }
 .aor-tab-content #detailpanel_charts tbody tr {
   height: 64px; }
   .aor-tab-content #detailpanel_charts tbody tr td {
-    background-color: #F5F5F5; }
+    background-color: #FFFFFF; }
     .aor-tab-content #detailpanel_charts tbody tr td [type=text] {
       margin-right: 4px; }
     .aor-tab-content #detailpanel_charts tbody tr td select {
@@ -5931,7 +5931,7 @@ a:hover {
       height: 0px;
       font-size: 32px; }
 .aor-tab-content #detailpanel_charts tbody tr:nth-of-type(2n) td {
-  background-color: #FFFFFF; }
+  background-color: #F5F5F5; }
 
 #aor_condition_parenthesis_table {
   border: none;
@@ -5959,6 +5959,9 @@ a:hover {
 
 .parentheses-btn .condition-sortable-handle {
   padding: 5px 10px 5px 10px; }
+
+.jqtree-tree .jqtree-title {
+  color: #FF5449; }
 
 /**** SIDEBAR ****/
 .sidebar {
