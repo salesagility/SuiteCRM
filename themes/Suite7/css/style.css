@@ -4731,6 +4731,7 @@ ul.cust_list {
   background-color: #fff;
   border: 1px solid #CCCCCC;
   box-shadow: 0 5px 10px #999999;
+  white-space: nowrap;
   float: left;
   left: 0;
   list-style: none outside none;
