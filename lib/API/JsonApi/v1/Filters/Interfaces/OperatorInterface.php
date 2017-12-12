@@ -69,5 +69,5 @@ interface OperatorInterface
      * @param array $operands
      * @return string
      */
-    public function toSqlOperands($operands);
+    public function toSqlOperands(array $operands);
 }

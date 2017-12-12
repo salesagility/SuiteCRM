@@ -211,7 +211,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     }
 
     /**
-     * @param array $meta
+     * @param array|null $meta
      * @return Links
      */
     public function withMeta($meta)

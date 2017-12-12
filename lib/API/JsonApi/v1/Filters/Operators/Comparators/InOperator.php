@@ -96,7 +96,7 @@ class InOperator extends Operator implements OperatorInterface
      * @param array $operands
      * @return string
      */
-    public function toSqlOperands($operands)
+    public function toSqlOperands(array $operands)
     {
         return '(' . parent::toSqlOperands($operands) . ')';
     }

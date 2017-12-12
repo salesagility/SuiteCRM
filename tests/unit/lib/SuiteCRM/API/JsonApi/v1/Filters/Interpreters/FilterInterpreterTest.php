@@ -27,18 +27,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testIsFilterByPreMadeWithInvalidParameter()
-    {
-        $this->tester->expectException(
-            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]'),
-            function() {
-                $filter = 'Today';
-                self::$interpreter->isFilterByPreMadeName($filter);
-            }
-        );
-
-    }
-
     public function testIsFilterByPreMadeWithByPreMadeFilterCase()
     {
         $filter = array('Today');
@@ -57,17 +45,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
         $this->assertFalse(self::$interpreter->isFilterByPreMadeName($filter));
     }
 
-    public function testIsFilterByIdWithInvalidParameter()
-    {
-        $this->tester->expectException(
-            new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]'),
-            function() {
-                $filter = 'Today';
-               self::$interpreter->isFilterById($filter);
-            }
-        );
-    }
-
     public function testIsFilterByIdWithByPreMadeNameCase()
     {
         $filter = array('Today');
@@ -84,18 +61,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
     {
         $filter = array('[name]' => array('[[eq]]', 'foo'));
         $this->assertFalse(self::$interpreter->isFilterById($filter));
-    }
-
-    //
-    public function testIsFilterByAttributesWithInvalidParameter()
-    {
-        $this->tester->expectException(
-            new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][isFilterByAttributes][expected type to be array]'),
-            function() {
-                $filter = 'Today';
-               self::$interpreter->isFilterByAttributes($filter);
-            }
-        );
     }
 
     public function testIsFilterByAttributesWithByPreMadeNameCase()
