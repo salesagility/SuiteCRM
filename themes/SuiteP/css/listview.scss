@@ -2808,10 +2808,10 @@ listViewLinkButton {
 }
 
 ul.cust_list {
-  background: none repeat scroll 0 0 #FFFFFF;
-  background-color: #778591;
-  border: 1px solid #CCCCCC;
-  box-shadow: 0 5px 10px #999999;
+  background: none repeat scroll 0 0;
+  background-color: $list-view-action-menu-bg;
+  border: 1px solid;
+  box-shadow: 0 5px 10px;
   float: left;
   left: 0;
   list-style: none outside none;
