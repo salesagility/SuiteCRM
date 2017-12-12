@@ -26131,7 +26131,12 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
   padding-bottom: 8px;
   padding-left: 8px; }
 
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
+  background: #416F81;
+  color: #FFFFFF; }
+
 .panel-content .edit-view-row-item .mce-container, .panel-content .edit-view-row-item .mce-container *, .panel-content .edit-view-row-item .mce-widget, .panel-content .edit-view-row-item .mce-widget *, .panel-content .edit-view-row-item .mce-reset {
+  background: #416F81;
   color: #FFFFFF; }
 .panel-content .edit-view-row-item div.mce-container #tinymce {
   background: #416F81; }

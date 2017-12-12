@@ -1,6 +1,12 @@
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
+  background: $input-bg;
+  color: $main-font-color;
+}
+
 .panel-content {
   .edit-view-row-item {
     .mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
+      background: $input-bg;
       color: $main-font-color;
     }
 
