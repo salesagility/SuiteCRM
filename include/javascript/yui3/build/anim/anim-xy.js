@@ -1,8 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('anim-xy',function(Y){var NUM=Number;Y.Anim.behaviors.xy={set:function(anim,att,from,to,elapsed,duration,fn){anim._node.setXY([fn(elapsed,NUM(from[0]),NUM(to[0])-NUM(from[0]),duration),fn(elapsed,NUM(from[1]),NUM(to[1])-NUM(from[1]),duration)]);},get:function(anim){return anim._node.getXY();}};},'3.3.0',{requires:['anim-base','node-screen']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("anim-xy",function(B){var A=Number;B.Anim.behaviors.xy={set:function(F,D,I,H,C,G,E){F._node.setXY([E(C,A(I[0]),A(H[0])-A(I[0]),G),E(C,A(I[1]),A(H[1])-A(I[1]),G)]);},get:function(C){return C._node.getXY();}};},"3.3.0",{requires:["anim-base","node-screen"]});
