@@ -104,4 +104,6 @@ $mod_strings = array (
     'LBL_TYPE' => 'Type',
     'LBL_MAIL_SENDTYPE' => 'Mail Send Type',
     'LBL_MAIL_SMTPSSL' => 'Mail SMTP/SSL',
+    'LBL_SMTP_FROM_NAME' => '"From" address',
+    'LBL_SMTP_FROM_ADDR' => '"From" name',
 );
