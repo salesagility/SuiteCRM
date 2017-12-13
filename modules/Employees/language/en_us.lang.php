@@ -144,7 +144,7 @@ $mod_strings = array(
     'LBL_BUTTON_SELECT' => 'Select',
     'LBL_BUTTON_CLEAR' => 'Clear',
 
-  'LBL_CONTACTS_SYNC' => 'Contact Sync',
+    'LBL_CONTACTS_SYNC' => 'Contact Sync',
     'LBL_OAUTH_TOKENS' => 'OAuth Tokens',
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',

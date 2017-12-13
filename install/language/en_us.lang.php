@@ -452,7 +452,7 @@ $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
 
-	// SMTP settings
+    // SMTP settings
 
     'LBL_FROM_NAME' => '"From" Name:',
     'LBL_FROM_ADDR' => '"From" Address:',
