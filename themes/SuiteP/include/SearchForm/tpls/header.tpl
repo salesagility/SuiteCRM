@@ -42,7 +42,7 @@
 <div class='listViewBody'>
     <script type="text/javascript" src="{sugar_getjspath file='include/javascript/popup_parent_helper.js'}"></script>
     {$TABS}
-    {{if $displayView == saved_views }}
+    {{if $displayView =='saved_views'}}
     {literal}
         <script>SUGAR.savedViews.handleForm();</script>
     {/literal}
