@@ -1408,7 +1408,8 @@ EOQ;
             $emailUI = new EmailUI();
             for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
                 $emailField = 'email' . (string)($i + 1);
-                if ($focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
                     $focus->$emailField = $emailAddress;
                     $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
                     break;
