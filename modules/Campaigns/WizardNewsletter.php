@@ -323,9 +323,15 @@ global $odd_bg, $even_bg, $hilite_bg;
         $ct_focus = new CampaignTracker();
         $ct_focus->retrieve($trkr_id);
       if(isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)){
-            if($ct_focus->is_optout){$opt = 'checked';}else{$opt = '';}
+          if($ct_focus->is_optout){$optout = 'checked';}else{$optout = '';}
+          if($ct_focus->is_optin){$optin = 'checked';}else{$optin = '';}
             $trkr_html .= "<div id='existing_trkr".$trkr_count."'> <table width='100%' border='0' cellspacing='0' cellpadding='0'>" ;
-            $trkr_html .= "<tr class='evenListRowS1'><td width='15%'><input name='wiz_step3_is_optout".$trkr_count."' title='".$mod_strings['LBL_EDIT_OPT_OUT'] . $trkr_count ."' id='existing_is_optout". $trkr_count ."' class='checkbox' type='checkbox' $opt  /><input name='wiz_step3_id".$trkr_count."' value='".$ct_focus->id."' id='existing_tracker_id". $trkr_count ."'type='hidden''/></td>";
+            $trkr_html .= "<tr class='evenListRowS1'>
+                                <td width='15%'>
+                                    <input name='wiz_step3_is_optout".$trkr_count."' title='".$mod_strings['LBL_EDIT_OPT_OUT'] . $trkr_count ."' id='existing_is_optout". $trkr_count ."' class='checkbox' type='checkbox' $optout  />
+                                    <input name='wiz_step3_is_optin".$trkr_count."' title='".$mod_strings['LBL_EDIT_OPT_IN'] . $trkr_count ."' id='existing_is_optin". $trkr_count ."' class='checkbox' type='checkbox' $optin  />
+                                    <input name='wiz_step3_id".$trkr_count."' value='".$ct_focus->id."' id='existing_tracker_id". $trkr_count ."'type='hidden''/>
+                            </td>";
             $trkr_html .= "<td width='40%'> <input id='existing_tracker_name". $trkr_count ."' type='text' size='20' maxlength='255' name='wiz_step3_tracker_name". $trkr_count ."' title='".$mod_strings['LBL_EDIT_TRACKER_NAME']. $trkr_count ."' value='".$ct_focus->tracker_name."' ></td>";
             $trkr_html .= "<td width='40%'><input type='text' size='60' maxlength='255' name='wiz_step3_tracker_url". $trkr_count ."' title='".$mod_strings['LBL_EDIT_TRACKER_URL']. $trkr_count ."' id='existing_tracker_url". $trkr_count ."' value='".$ct_focus->tracker_url."' ></td>";
             $trkr_html .= "<td><a href='#' onclick=\"javascript:remove_existing_tracker('existing_trkr".$trkr_count."','".$ct_focus->id."'); \" >  ";

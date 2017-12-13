@@ -117,13 +117,16 @@ class EmailManController extends SugarController
 
         $configurator->config['email_xss'] = base64_encode(serialize($security));
 
+        $configurator->config['opt_in_confirmation_email_enabled'] = $_REQUEST['opt_in_confirmation_email_enabled'];
+        $configurator->config['opt_in_confirmation_email_template_id'] = $_REQUEST['opt_in_confirmation_email_template_id'];
+        $configurator->config['opt_in_checkbox_on_person_form_enabled'] = $_REQUEST['opt_in_checkbox_on_person_form_enabled'];
+
         ////	SECURITY
         ///////////////////////////////////////////////////////////////////////////////
 
         ksort($sugar_config);
 
         $configurator->handleOverride();
-
 
     }
 

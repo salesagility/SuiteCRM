@@ -91,6 +91,7 @@ $mod_strings = array(
     'LBL_DUPLICATE' => 'Possible Duplicate Contacts',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
+    'LBL_EMAIL_OPT_IN' => 'Email Opt In:',
     'LBL_EXISTING_ACCOUNT' => 'Used an existing account',
     'LBL_EXISTING_CONTACT' => 'Used an existing contact',
     'LBL_EXISTING_OPPORTUNITY' => 'Used an existing opportunity',
@@ -219,6 +220,9 @@ $mod_strings = array(
     'LBL_AOS_INVOICES' => 'Invoices',
     'LBL_AOS_QUOTES' => 'Quotes',
     'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
+    'LBL_THANKS_FOR_SUBMITTING' => 'Thanks for submitting.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED' => 'Opt In Confirmation Email sending failed.',
+    'LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS' => 'Opt In Confirmation Email sent to your email address.',
 );
 
 ?>

@@ -54,6 +54,9 @@
 {foreach from=$optOut item=email}
 <input type="hidden" name="{$moduleDir}{$email_widget_id}emailAddressOptOutFlag[]" value="{$email}">
 {/foreach}
+{foreach from=$optIn item=email}
+<input type="hidden" name="{$moduleDir}{$email_widget_id}emailAddressOptInFlag[]" value="{$email}">
+{/foreach}
 {foreach from=$invalid item=email}
 <input type="hidden" name="{$moduleDir}{$email_widget_id}emailAddressInvalidFlag[]" value="{$email}">
 {/foreach}

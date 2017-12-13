@@ -118,6 +118,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
+        $optInEmailFields = array();
+        $optInPrefix = 'opt_in_';
         if (!empty($person)) {
 
             $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
@@ -131,9 +133,10 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 if ($k === 'client_id_address' || $k === 'req_id'
                     || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
-                }
-                if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
-                    if (in_array($k, $possiblePersonCaptureFields)) {
+                } elseif(preg_match('/^' . $optInPrefix . '/', $k)) {
+                    $optInEmailFields[] = substr($k, strlen($optInPrefix));
+                } else {
+                    if ((array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) && in_array($k, $possiblePersonCaptureFields)) {
                         $person->$k = $v;
                     } else {
                         $GLOBALS['log']->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
@@ -154,6 +157,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $camplog->target_type = $person->module_dir;
             $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
+            $camplog->target_tracker_key = create_guid();
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
             }
@@ -190,16 +194,44 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         }
 
         //in case there are forms out there still using email_opt_out
-        if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
+        if(isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out']) || isset($_POST['email_opt_in'])){
+
+            $outOut = isset($_POST['email_opt_out']) && $_POST['email_opt_out'];
+            $outIn = isset($_POST['email_opt_in']) && $_POST['email_opt_in'];
+
             if (isset($person->email1) && !empty($person->email1)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email1, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email1, 0, 1 && !$optIn);
             }
             if (isset($person->email2) && !empty($person->email2)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email2, 0, 1);
+                $sea->AddUpdateEmailAddress($person->email2, 0, 1 && !$optIn);
             }
         }
+
+        if(!empty($optInEmailFields)) {
+            foreach($optInEmailFields as $optInEmailField) {
+                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                    $sea = new SugarEmailAddress();
+                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    if($sea->retrieve($emailId)) {
+                        // TODO: config - they can get opt-in confirmation email instead checkbox on web-to-person form
+                        $sea->optIn();
+                        //$sea->saveEmail($person->id, $moduleDir);
+                    } else {
+                        $msg = 'Error retrieving an email address.';
+                        $GLOBALS['log']->fatal($msg);
+                        throw new RuntimeException($msg);
+                    }
+                } else {
+                    $personClass = get_class($person);
+                    $msg = "Incorrect email field for opt-in at person. Person type: $personClass, field: $optInEmailField.";
+                    $GLOBALS['log']->fatal($msg);
+                    throw new RuntimeException($msg);
+                }
+            }
+        }
+
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
@@ -258,12 +290,19 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 die();
             }
         } else {
-            if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
-                echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
-            } else {
-                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+            echo "<p>{$mod_strings['LBL_THANKS_FOR_SUBMITTING']}</p>";
+
+            include_once get_custom_file_if_exists('modules/Campaigns/OptInConfirmationEmailSender.php');
+            $optInConfirmationEmailSender = new OptInConfirmationEmailSender();
+            if ($optInConfirmationEmailSender->isOptInConfirmationEmailEnabled()) {
+                if(!$optInConfirmationEmailSender->sendOptInConfirmationEmail($person, $camplog)) {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_FAILED']}</p>";
+                } else {
+                    echo "<p>{$mod_strings['LBL_OPT_IN_CONFIRMATION_EMAIL_SENDING_SUCCESS']}</p>";
+                }
             }
+
+
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
         sugar_cleanup();

@@ -338,7 +338,7 @@ class EmailTemplate extends SugarBean
     //$url_template is used to construct the url for the email message. the template should have place holder for 1 variable parameter, represented by %1
     //$template_text_array is a list of text strings that need to be searched. usually the subject, html body and text body of the email message.
     //$removeme_url_template, if the url has is_optout property checked then use this template.
-    function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
+    function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template, $addme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
         if (!isset($this->parsed_urls))
@@ -373,6 +373,8 @@ class EmailTemplate extends SugarBean
                             if (!empty($tracked_urls[$url_key_name])) {
                                 if ($tracked_urls[$url_key_name]['is_optout'] == 1) {
                                     $tracker_url = $removeme_url_template;
+                                } else if ($tracked_urls[$url_key_name]['is_optin'] == 1) {
+                                    $tracker_url = $addme_url_template;
                                 } else {
                                     $tracker_url = sprintf($url_template, $tracked_urls[$url_key_name]['id']);
                                 }

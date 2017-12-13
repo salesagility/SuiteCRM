@@ -444,7 +444,8 @@ function EmailTrackerController(action, campaignId) {
 			campaign_id: _campaignId,
 			tracker_name: trackerName,
 			tracker_url: trackerURL,
-			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+          is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+          is_optin: $('#is_optin').prop('checked') ? 'on' : '',
 			response_json: true
 		}, function (resp) {
 			resp = JSON.parse(resp);
@@ -484,7 +485,8 @@ function EmailTrackerController(action, campaignId) {
 			campaign_id: _campaignId,
 			tracker_name: trackerName,
 			tracker_url: trackerURL,
-			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+          is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+          is_optin: $('#is_optin').prop('checked') ? 'on' : '',
 			response_json: true
 		}, function (resp) {
 			resp = JSON.parse(resp);
@@ -503,7 +505,8 @@ function EmailTrackerController(action, campaignId) {
 			$('#url_text').val('');
 			$('#tracker_name').val('');
 			$('#tracker_url_add').val('');
-			$('#is_optout').attr('checked', false);
+          $('#is_optout').attr('checked', false);
+          $('#is_optin').attr('checked', false);
 			$('#tracker_url_add').removeAttr('disabled')
 			createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
 			$('#templateManagerActionOK').val($('#LBL_CREATE_TRACKER_BTN').val());

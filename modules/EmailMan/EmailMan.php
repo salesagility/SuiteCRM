@@ -548,9 +548,6 @@ class EmailMan extends SugarBean{
                 return false;
             }
 
-            if (!class_exists('EmailTemplate')) {
-
-            }
             $emailtemplate= new EmailTemplate();
 
             $ret=$emailtemplate->retrieve($email_marketing->template_id);
@@ -569,6 +566,57 @@ class EmailMan extends SugarBean{
 
         return true;
     }
+
+    /**
+     * @param $request
+     * @return bool
+     */
+    private function hasEmailOptInLink($request) {
+        //fetch email marketing.
+        if (empty($this->current_emailmarketing) or !isset($this->current_emailmarketing)) {
+            if (!class_exists('EmailMarketing')) {
+
+            }
+
+            $this->current_emailmarketing=new EmailMarketing();
+
+        }
+        if (empty($this->current_emailmarketing->id) or $this->current_emailmarketing->id !== $this->marketing_id) {
+            $this->current_emailmarketing->retrieve($this->marketing_id);
+
+            $this->newmessage = true;
+        }
+        // fetch campaign details..
+        if (empty($this->current_campaign)) {
+            $this->current_campaign= new Campaign();
+        }
+        if (empty($this->current_campaign->id) or $this->current_campaign->id !== $this->current_emailmarketing->campaign_id) {
+            $this->current_campaign->retrieve($this->current_emailmarketing->campaign_id);
+
+            //load defined tracked_urls
+            $this->current_campaign->load_relationship('tracked_urls');
+            $query_array=$this->current_campaign->tracked_urls->getQuery(true);
+            $query_array['select']="SELECT tracker_name, tracker_key, id, is_optout, is_optin ";
+            $result=$this->current_campaign->db->query(implode(' ',$query_array));
+
+            $this->has_optout_links=false;
+            $this->has_optin_links=false;
+            $this->tracker_urls=array();
+            while (($row=$this->current_campaign->db->fetchByAssoc($result)) != null) {
+                $this->tracker_urls['{'.$row['tracker_name'].'}']=$row;
+                //has the user defined opt-out links for the campaign.
+                if ($row['is_optout']==1) {
+                    $this->has_optout_links=true;
+                }
+                if ($row['is_optin']==1) {
+                    $this->has_optin_links=true;
+                }
+            }
+        }
+        return $this->has_optin_links;
+    }
+
+
 	function sendEmail($mail,$save_emails=1,$testmode=false){
 	    $this->test=$testmode;
 
@@ -580,9 +628,7 @@ class EmailMan extends SugarBean{
 
 		//get tracking entities locations.
 		if (!isset($this->tracking_url)) {
-			if (!class_exists('Administration')) {
 
-			}
 			$admin=new Administration();
 			$admin->retrieveSettings('massemailer'); //retrieve all admin settings.
 		    if (isset($admin->settings['massemailer_tracking_entities_location_type']) and $admin->settings['massemailer_tracking_entities_location_type']=='2'  and isset($admin->settings['massemailer_tracking_entities_location']) ) {
@@ -604,10 +650,6 @@ class EmailMan extends SugarBean{
 		$class = $beanList[$this->related_type];
 		if (!class_exists($class)) {
 			require_once($beanFiles[$class]);
-		}
-
-		if (!class_exists('Email')) {
-
 		}
 
         //prepare variables for 'set_as_sent' function
@@ -633,14 +675,32 @@ class EmailMan extends SugarBean{
 			return true;
 		}
 
-        if ((!isset($module->email_opt_out)
-                    || ($module->email_opt_out !== 'on'
-                        && $module->email_opt_out !== 1
-                        && $module->email_opt_out !== '1'))
-            && (!isset($module->invalid_email)
-                    || ($module->invalid_email !== 'on'
-                        && $module->invalid_email !== 1
-                        && $module->invalid_email !== '1'))){
+        if (
+            // or it is an opt in email
+            $this->hasEmailOptInLink($_REQUEST)
+
+            ||
+
+            (
+                // not opted out and not invalid
+                ((!isset($module->email_opt_out)
+                        || ($module->email_opt_out !== 'on'
+                            && $module->email_opt_out !== 1
+                            && $module->email_opt_out !== '1'))
+                    && (!isset($module->invalid_email)
+                        || ($module->invalid_email !== 'on'
+                            && $module->invalid_email !== 1
+                            && $module->invalid_email !== '1'))
+                )
+                &&
+                // and opted in
+                !(!isset($module->email_opt_in)
+                    || ($module->email_opt_in !== 'on'
+                        && $module->email_opt_in !== 1
+                        && $module->email_opt_in !== '1'))
+            )
+
+        ) {
             $lower_email_address=strtolower($module->email1);
 			//test against indivdual address.
 			if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
@@ -687,9 +747,7 @@ class EmailMan extends SugarBean{
 			}
 			//fetch email template associate with the marketing message.
 			if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
-				if (!class_exists('EmailTemplate')) {
 
-				}
 				$this->current_emailtemplate= new EmailTemplate();
 
 				$this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
@@ -716,9 +774,6 @@ class EmailMan extends SugarBean{
 
 			// fetch mailbox details..
 			if(empty($this->current_mailbox)) {
-				if (!class_exists('InboundEmail')) {
-
-				}
 				$this->current_mailbox= new InboundEmail();
 			}
 			if (empty($this->current_mailbox->id) or $this->current_mailbox->id !== $this->current_emailmarketing->inbound_email_id) {
@@ -729,9 +784,6 @@ class EmailMan extends SugarBean{
 
 			// fetch campaign details..
 			if (empty($this->current_campaign)) {
-				if (!class_exists('Campaign')) {
-
-				}
 				$this->current_campaign= new Campaign();
 			}
 			if (empty($this->current_campaign->id) or $this->current_campaign->id !== $this->current_emailmarketing->campaign_id) {
@@ -740,17 +792,21 @@ class EmailMan extends SugarBean{
 				//load defined tracked_urls
 				$this->current_campaign->load_relationship('tracked_urls');
 				$query_array=$this->current_campaign->tracked_urls->getQuery(true);
-				$query_array['select']="SELECT tracker_name, tracker_key, id, is_optout ";
+				$query_array['select']="SELECT tracker_name, tracker_key, id, is_optout, is_optin ";
 				$result=$this->current_campaign->db->query(implode(' ',$query_array));
 
-				$this->has_optout_links=false;
+                $this->has_optout_links=false;
+                $this->has_optin_links=false;
 				$this->tracker_urls=array();
 				while (($row=$this->current_campaign->db->fetchByAssoc($result)) != null) {
 					$this->tracker_urls['{'.$row['tracker_name'].'}']=$row;
 					//has the user defined opt-out links for the campaign.
-					if ($row['is_optout']==1) {
-						$this->has_optout_links=true;
-					}
+                    if ($row['is_optout']==1) {
+                        $this->has_optout_links=true;
+                    }
+                    if ($row['is_optin']==1) {
+                        $this->has_optin_links=true;
+                    }
 				}
 			}
 
@@ -792,8 +848,9 @@ class EmailMan extends SugarBean{
             //parse and replace urls.
 			//this is new style of adding tracked urls to a campaign.
 			$tracker_url_template= $this->tracking_url . 'index.php?entryPoint=campaign_trackerv2&track=%s'.'&identifier='.$this->target_tracker_key;
-			$removeme_url_template=$this->tracking_url . 'index.php?entryPoint=removeme&identifier='.$this->target_tracker_key;
-			$template_data=  $this->current_emailtemplate->parse_tracker_urls($template_data,$tracker_url_template,$this->tracker_urls,$removeme_url_template);
+            $removeme_url_template=$this->tracking_url . 'index.php?entryPoint=removeme&identifier='.$this->target_tracker_key;
+            $addme_url_template=$this->tracking_url . 'index.php?entryPoint=addme&identifier='.$this->target_tracker_key;
+			$template_data=  $this->current_emailtemplate->parse_tracker_urls($template_data,$tracker_url_template,$this->tracker_urls,$removeme_url_template, $addme_url_template);
 			$mail->AddAddress($module->email1,$locale->translateCharsetMIME(trim($module->name), 'UTF-8', $OBCharset) );
 
             //refetch strings in case they have been changed by creation of email templates or other beans.
@@ -834,7 +891,24 @@ class EmailMan extends SugarBean{
 
                 //do not add the default remove me link if the campaign has a trackerurl of the opotout link
                 if ($this->has_optout_links==false) {
-                    $mail->Body .= "<br /><span style='font-size:0.8em'>{$mod_strings['TXT_REMOVE_ME']} <a href='". $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->target_tracker_key}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
+                    $mail->Body .= "
+                        <br />
+                        <span style='font-size:0.8em'>
+                            {$mod_strings['TXT_REMOVE_ME']} 
+                            <a href='". $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->target_tracker_key}'>
+                                {$mod_strings['TXT_REMOVE_ME_CLICK']}
+                            </a>
+                        </span>";
+                }
+                if ($this->has_optin_links==false) {
+                    $mail->Body .= "
+                        <br />
+                        <span style='font-size:0.8em'>
+                            {$mod_strings['TXT_ADD_ME']} 
+                            <a href='". $this->tracking_url . "index.php?entryPoint=addme&identifier={$this->target_tracker_key}'>
+                                {$mod_strings['TXT_ADD_ME_CLICK']}
+                            </a>
+                        </span>";
                 }
                 // cn: bug 11979 - adding single quote to comform with HTML email RFC
                 $mail->Body .= "<br /><img alt='' height='1' width='1' src='{$this->tracking_url}index.php?entryPoint=image&identifier={$this->target_tracker_key}' />";
@@ -845,6 +919,9 @@ class EmailMan extends SugarBean{
                 }
                 if ($this->has_optout_links==false) {
                     $mail->AltBody .="\n\n\n{$mod_strings['TXT_REMOVE_ME_ALT']} ". $this->tracking_url . "index.php?entryPoint=removeme&identifier=$this->target_tracker_key";
+                }
+                if ($this->has_optin_links==false) {
+                    $mail->AltBody .="\n\n\n{$mod_strings['TXT_ADD_ME_ALT']} ". $this->tracking_url . "index.php?entryPoint=addme&identifier=$this->target_tracker_key";
                 }
 
             }
@@ -880,9 +957,6 @@ class EmailMan extends SugarBean{
                      );
                     $this->newmessage = false;
                 }
-            }
-
-			if ($success) {
 				$this->set_as_sent($module->email1, true, $email_id, 'Emails', 'targeted');
 			} else {
 
@@ -903,7 +977,19 @@ class EmailMan extends SugarBean{
             $success = false;
             $this->target_tracker_key=create_guid();
 
-			if (isset($module->email_opt_out) && ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)) {
+			if (
+			        (
+			            isset($module->email_opt_out) &&
+                        ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)
+                    )
+
+                    ||
+
+                    !(
+                        isset($module->email_opt_in) &&
+                        ($module->email_opt_in === 'on' || $module->email_opt_in == '1' || $module->email_opt_in == 1)
+                    )
+                ) {
 				$this->set_as_sent($module->email1,true,null,null,'blocked');
 			} else {
 				if (isset($module->invalid_email) && ($module->invalid_email == 1 || $module->invalid_email == '1')) {

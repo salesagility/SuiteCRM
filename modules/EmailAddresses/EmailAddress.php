@@ -59,10 +59,10 @@ class EmailAddress extends SugarEmailAddress
 		parent::__construct();
 	}
 
-	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
+	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false, $optIn='')
 	{
 		if ( func_num_args() > 1 ) {
-		    parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+		    parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow, $optIn);
 		}
 		else {
 		    SugarBean::save($id);

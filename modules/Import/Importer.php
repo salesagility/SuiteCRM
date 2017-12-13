@@ -263,10 +263,11 @@ class Importer
                     $rowValue = $returnValue;
                     // check for current opt_out and invalid email settings for this email address
                     // if we find any, set them now
-                    $emailres = $focus->db->query( "SELECT opt_out, invalid_email FROM email_addresses WHERE email_address = '".$focus->db->quote($rowValue)."'");
+                    $emailres = $focus->db->query( "SELECT opt_out, opt_in, invalid_email FROM email_addresses WHERE email_address = '".$focus->db->quote($rowValue)."'");
                     if ( $emailrow = $focus->db->fetchByAssoc($emailres) )
                     {
                         $focus->email_opt_out = $emailrow['opt_out'];
+                        $focus->email_opt_in = $emailrow['opt_in'];
                         $focus->invalid_email = $emailrow['invalid_email'];
                     }
                 }

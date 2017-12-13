@@ -109,6 +109,7 @@ class ImportMapSalesforce extends ImportMapOther
                 "Fax"=>"phone_fax",
                 "Email"=>"email1",
                 "Email Opt Out"=>"email_opt_out",
+                "Email Opt In"=>"email_opt_in",
                 "Do Not Call"=>"do_not_call",
                 "Account Name"=>"account_name",
                 );

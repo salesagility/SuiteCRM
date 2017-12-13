@@ -61,8 +61,9 @@
 		'<td nowrap="NOWRAP"><input type="text" title="email address 0" name="emailAddress{$index}" id="emailAddress0" size="30"/></td>' +
 		'<td><span>&nbsp;</span><img id="removeButton0" name="0" src="index.php?entryPoint=getImage&amp;themeName=Sugar&amp;imageName=delete_inline.gif"/></td>' +
 		'<td align="center"><input type="radio" name="emailAddressPrimaryFlag" id="emailAddressPrimaryFlag0" value="emailAddress0" enabled="true" checked="true"/></td>' +
-		'<td align="center"><input type="checkbox" name="emailAddressOptOutFlag[]" id="emailAddressOptOutFlag0" value="emailAddress0" enabled="true"/></td>' + 
-		'<td align="center"><input type="checkbox" name="emailAddressInvalidFlag[]" id="emailAddressInvalidFlag0" value="emailAddress0" enabled="true"/></td>' + 
+        '<td align="center"><input type="checkbox" name="emailAddressOptOutFlag[]" id="emailAddressOptOutFlag0" value="emailAddress0" enabled="true"/></td>' +
+        '<td align="center"><input type="checkbox" name="emailAddressOptInFlag[]" id="emailAddressOptInFlag0" value="emailAddress0" enabled="true"/></td>' +
+        '<td align="center"><input type="checkbox" name="emailAddressInvalidFlag[]" id="emailAddressInvalidFlag0" value="emailAddress0" enabled="true"/></td>' +
 		'<td><input type="hidden" name="emailAddressVerifiedFlag0" id="emailAddressVerifiedFlag0" value="true"/></td>' + 
 		'<td><input type="hidden" name="emailAddressVerifiedValue0" id="emailAddressVerifiedValue0" value=""/></td></tr>',
 		
@@ -78,7 +79,7 @@
 		prefillEmailAddresses: function(tableId, o){
 			for (i = 0; i < o.length; i++) {
 				o[i].email_address = o[i].email_address.replace('&#039;', "'");
-				this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].invalid_email, o[i].email_address_id);
+				this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].opt_in, o[i].invalid_email, o[i].email_address_id);
 			}
 		},
 		
@@ -93,10 +94,14 @@
 		           if(email != '' && /\d+$/.test(target)) {
 		               var matches = target.match(/\d+$/);
 		               var targetNumber = matches[0];
-		               var optOutEl = Dom.get(this.id + 'emailAddressOptOutFlag' + targetNumber);
-		               if(optOutEl) {
-		                   optOutEl.checked = email['opt_out'] == 1 ? true : false;
-		               }
+						var optOutEl = Dom.get(this.id + 'emailAddressOptOutFlag' + targetNumber);
+						if(optOutEl) {
+							optOutEl.checked = email['opt_out'] == 1 ? true : false;
+						}
+						var optInEl = Dom.get(this.id + 'emailAddressOptInFlag' + targetNumber);
+						if(optInEl) {
+                          optInEl.checked = email['opt_in'] == 1 ? true : false;
+						}
 		               var invalidEl = Dom.get(this.id + 'emailAddressInvalidFlag' + targetNumber);
 		               if(invalidEl) {
 		                   invalidEl.checked = email['invalid_email'] == 1 ? true : false;
@@ -209,7 +214,7 @@
 		    return false;
 		},//freezeEvent
 		
-		addEmailAddress : function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId) {
+		addEmailAddress : function (tableId, address, primaryFlag, replyToFlag, optOutFlag, optInFlag, invalidFlag, emailId) {
 			if (this.addInProgress)
 			    return;
 			this.addInProgress = true;
@@ -226,6 +231,7 @@
 		    var newContentPrimaryFlag = document.createElement("input");
 		    var newContentReplyToFlag = document.createElement("input");
 		    var newContentOptOutFlag = document.createElement("input");
+          var newContentOptInFlag = document.createElement("input");
 		    var newContentInvalidFlag = document.createElement("input");
 		    var newContentVerifiedFlag = document.createElement("input");
 		    var newContentVerifiedValue = document.createElement("input");
@@ -310,8 +316,18 @@
 				newContentOptOutFlag.eaw = this;
 				newContentOptOutFlag.setAttribute("tabindex", tabIndexCount);
 		    newContentOptOutFlag['onClick'] = function(){this.eaw.toggleCheckbox(this)};
-	
-		    // set invalid flag
+
+          // set opt-in flag
+          newContentOptInFlag.setAttribute("type", "checkbox");
+          newContentOptInFlag.setAttribute("name", this.id + "emailAddressOptInFlag[]");
+          newContentOptInFlag.setAttribute("id", this.id + "emailAddressOptInFlag" + this.numberEmailAddresses);
+          newContentOptInFlag.setAttribute("value", this.id + "emailAddress" + this.numberEmailAddresses);
+          newContentOptInFlag.setAttribute("enabled", "true");
+          newContentOptInFlag.eaw = this;
+          newContentOptInFlag.setAttribute("tabindex", tabIndexCount);
+          newContentOptInFlag['onClick'] = function(){this.eaw.toggleCheckbox(this)};
+
+          // set invalid flag
 		    newContentInvalidFlag.setAttribute("type", "checkbox");
 		    newContentInvalidFlag.setAttribute("name", this.id + "emailAddressInvalidFlag[]");
 		    newContentInvalidFlag.setAttribute("id", this.id + "emailAddressInvalidFlag" + this.numberEmailAddresses);
@@ -346,10 +362,12 @@
 		    td3.setAttribute("align", "center");
 		    td3.setAttribute("class", "email-address-primary");
 		    td4.setAttribute("align", "center");
-				td5.setAttribute("align", "center");
-				td5.setAttribute("class", "email-address-opt-out");
-				td6.setAttribute("align", "center");
-				td6.setAttribute("class", "email-address-invalid");
+          td5.setAttribute("align", "center");
+          td5.setAttribute("class", "email-address-opt-out");
+          td6.setAttribute("align", "center");
+          td6.setAttribute("class", "email-address-opt-in");
+				td7.setAttribute("align", "center");
+				td7.setAttribute("class", "email-address-invalid");
 
 		    td1.appendChild(newContent);
 		    td1.appendChild(newContentRecordId);
@@ -361,10 +379,11 @@
 		       td2.appendChild(removeButton);
 		    td3.appendChild(newContentPrimaryFlag);
 		    td4.appendChild(newContentReplyToFlag);
-		    td5.appendChild(newContentOptOutFlag);
-		    td6.appendChild(newContentInvalidFlag);
-		    td7.appendChild(newContentVerifiedFlag);
-		    td8.appendChild(newContentVerifiedValue);
+		  td5.appendChild(newContentOptOutFlag);
+		  td6.appendChild(newContentOptInFlag);
+		    td7.appendChild(newContentInvalidFlag);
+		    td8.appendChild(newContentVerifiedFlag);
+		    td9.appendChild(newContentVerifiedValue);
 		    
 		    tr.appendChild(td1);
 		    tr.appendChild(td2);
@@ -404,13 +423,18 @@
 		    } else {
 		        this.replyToFlagObject[newContentReplyToFlag.id] = false;
 		    }
-		    
-		    if(optOutFlag == '1') {
-		        newContentOptOutFlag.setAttribute("checked", 'true');
-                newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
-		    }
-		    
-		    if(invalidFlag == '1') {
+
+          if(optOutFlag == '1') {
+            newContentOptOutFlag.setAttribute("checked", 'true');
+            newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
+          }
+
+          if(optInFlag == '1') {
+            newContentOptInFlag.setAttribute("checked", 'true');
+            newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_OPT_TITLE'));
+          }
+
+          if(invalidFlag == '1') {
 		        newContentInvalidFlag.setAttribute("checked", "true");
                 newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_INV_TITLE'));
 		    }
@@ -456,13 +480,19 @@
                        Dom.get(this.id + 'emailAddressInvalidFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
                        Dom.get(this.id + 'emailAddressInvalidFlag' + x).setAttribute("id", this.id + "emailAddressInvalidFlag" + (x-1));
                    }
-                   
-                   if(Dom.get(this.id + 'emailAddressOptOutFlag' + x)){
-                       Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
-                       Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("id", this.id + "emailAddressOptOutFlag" + (x-1));
-                   }
-                   
-                   if(Dom.get(this.id + 'emailAddressPrimaryFlag' + x)) {
+
+                 if(Dom.get(this.id + 'emailAddressOptOutFlag' + x)){
+                   Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
+                   Dom.get(this.id + 'emailAddressOptOutFlag' + x).setAttribute("id", this.id + "emailAddressOptOutFlag" + (x-1));
+                 }
+
+
+                 if(Dom.get(this.id + 'emailAddressOptInFlag' + x)){
+                   Dom.get(this.id + 'emailAddressOptInFlag' + x).setAttribute("value", this.id + "emailAddress" + (x-1));
+                   Dom.get(this.id + 'emailAddressOptInFlag' + x).setAttribute("id", this.id + "emailAddressOptInFlag" + (x-1));
+                 }
+
+                 if(Dom.get(this.id + 'emailAddressPrimaryFlag' + x)) {
                        Dom.get(this.id + 'emailAddressPrimaryFlag' + x).setAttribute("id", this.id + "emailAddressPrimaryFlag" + (x-1));
                    }
                    

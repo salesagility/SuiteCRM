@@ -144,7 +144,7 @@
 			<td width="20%">&nbsp;</td>			
 		</tr>
 		<tr>
-			<td colspan="3"><div class="reportChartContainer">{$MY_CHART}</div></td>				
+			<td colspan="3"><div class="reportChartContainer">{$MY_CHART}</div></td>
 		</tr>
 	</table>
 </form>

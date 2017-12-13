@@ -467,7 +467,21 @@ function create_tracker_summary  ($focus){
 
     $trkr_tbl = "<p><table align='center' class='list view' width='100%' border='0' cellspacing='1' cellpadding='1'>";
     $trkr_tbl .= "<tr class='detail view'><td colspan='6'><h4> ".$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']." </h4></td></tr>";
-    $trkr_tbl .= "<tr class='listViewHRS1'><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_TRACKER_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_TRACKER_URL']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_OPT_OUT']."</b></td></tr>";
+    $trkr_tbl .= "
+<tr class='listViewHRS1'>
+    <td width='15%' scope='col'>
+        <b>".$mod_strings['LBL_EDIT_TRACKER_NAME']."</b>
+    </td>
+    <td width='15%' scope='col'>
+        <b>".$mod_strings['LBL_EDIT_TRACKER_URL']."</b>
+    </td>
+    <td width='15%' scope='col'>
+        <b>".$mod_strings['LBL_EDIT_OPT_OUT']."</b>
+    </td>
+    <td width='15%' scope='col'>
+        <b>".$mod_strings['LBL_EDIT_OPT_IN']."</b>
+    </td>
+</tr>";
     
     if(count($trkr_lists)>0){
             
@@ -482,12 +496,14 @@ function create_tracker_summary  ($focus){
             $ct_focus = new CampaignTracker();
             $ct_focus->retrieve($trkr_id);
           if(isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)){
-            if($ct_focus->is_optout){$opt = 'checked';}else{$opt = '';}
+              if($ct_focus->is_optout){$optout = 'checked';}else{$optout = '';}
+              if($ct_focus->is_optin){$optin = 'checked';}else{$optin = '';}
             $trkr_tbl  .= "<tr $colorclass>";
             $trkr_tbl  .= "<td scope='row' ><a href='index.php?action=DetailView&module=CampaignTrackers&return_module=Campaigns&return_action=WizardHome&return_id=" .$focus->id. "&record=".$ct_focus->id."'>";
             $trkr_tbl  .= $ct_focus->tracker_name."</a></td>";
             $trkr_tbl  .= "<td scope='row' width='15%'>".$ct_focus->tracker_url."</td>";
-            $trkr_tbl  .= "<td scope='row' width='15%'>&nbsp;&nbsp;<input type='checkbox' class='checkbox' $opt disabled></td>";
+              $trkr_tbl  .= "<td scope='row' width='15%'>&nbsp;&nbsp;<input type='checkbox' class='checkbox' $optout disabled></td>";
+              $trkr_tbl  .= "<td scope='row' width='15%'>&nbsp;&nbsp;<input type='checkbox' class='checkbox' $optin disabled></td>";
             $trkr_tbl  .= "</tr>";
           }
         }

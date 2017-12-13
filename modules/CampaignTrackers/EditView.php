@@ -119,8 +119,12 @@ if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($
 	$xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$record. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 if (!empty($focus->is_optout) && $focus->is_optout == 1) {
-	$xtpl->assign("IS_OPTOUT_CHECKED","checked");
-	$xtpl->assign("TRACKER_URL_DISABLED","disabled");
+    $xtpl->assign("IS_OPTOUT_CHECKED","checked");
+    $xtpl->assign("TRACKER_URL_DISABLED","disabled");
+}
+if (!empty($focus->is_optin) && $focus->is_optin == 1) {
+    $xtpl->assign("IS_OPTIN_CHECKED","checked");
+    $xtpl->assign("TRACKER_URL_DISABLED","disabled");
 }
 
 $xtpl->parse("main");
