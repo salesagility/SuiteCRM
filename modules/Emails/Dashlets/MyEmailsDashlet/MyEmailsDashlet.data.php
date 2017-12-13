@@ -58,7 +58,7 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                                    'label'   => 'LBL_SUBJECT',
                                                                    'link'    => true,
                                                                    'default' => true),
-                                                   'to_addrs' => array('width'   => '15',
+                                                   'to_addrs_names' => array('width'   => '15',
                                                                          'label'   => 'LBL_TO_ADDRS',
                                                                          'default' => false),
                                                    'assigned_user_name' => array('width'   => '15',
