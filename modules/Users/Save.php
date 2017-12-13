@@ -289,20 +289,18 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 //			$focus->setPreference('email_reminder_time', -1, 0, 'global');
 //		}
 
-        if (isset($_POST['reminder_time'])){
-            $focus->setPreference('reminder_time', $_POST['reminder_time'], 0, 'global');
-        }
-        if (isset($_POST['email_reminder_time'])){
-            $focus->setPreference('email_reminder_time', $_POST['email_reminder_time'], 0, 'global');
-        }
-        if (isset($_POST['reminder_checked'])){
-            $focus->setPreference('reminder_checked', $_POST['reminder_checked'], 0, 'global');
-        }
-        if (isset($_POST['email_reminder_checked'])){
-            $focus->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
-        }
-
-
+                if (isset($_POST['reminder_time'])){
+                    $focus->setPreference('reminder_time', $_POST['reminder_time'], 0, 'global');
+                }
+                if (isset($_POST['email_reminder_time'])){
+                    $focus->setPreference('email_reminder_time', $_POST['email_reminder_time'], 0, 'global');
+                }
+                if (isset($_POST['reminder_checked'])){
+                    $focus->setPreference('reminder_checked', $_POST['reminder_checked'], 0, 'global');
+                }
+                if (isset($_POST['email_reminder_checked'])){
+                    $focus->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
+                }
 
 		if(isset($_POST['timezone'])) $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
 		if(isset($_POST['ut'])) $focus->setPreference('ut', '0', 0, 'global');
