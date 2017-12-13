@@ -609,7 +609,7 @@ class SecurityGroup extends SecurityGroup_sugar
 
                 //$security_modules[$row['rhs_module']] = $row['rhs_module'];
                 $security_modules[$row['rhs_module']] =
-                    isset($app_list_strings['moduleList'][$row['rhs_module']]) ?: '';//rost fix
+                    $app_list_strings['moduleList'][$row['rhs_module']] ?? '';//rost fix
             } else {
                 if (in_array($row['lhs_module'], $module_blacklist)) {
                     continue;
@@ -617,7 +617,7 @@ class SecurityGroup extends SecurityGroup_sugar
 
                 //$security_modules[$row['lhs_module']] = $row['lhs_module'];
                 $security_modules[$row['lhs_module']] =
-                    isset($app_list_strings['moduleList'][$row['lhs_module']]) ?: '';//rost fix
+                    $app_list_strings['moduleList'][$row['lhs_module']] ?? '';//rost fix
             }
         }
 
