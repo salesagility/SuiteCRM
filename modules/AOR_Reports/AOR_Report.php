@@ -713,7 +713,7 @@ class AOR_Report extends Basic
 
             if ($fields[$label]['display']) {
                 $html .= "<th scope='col'>";
-                $html .= "<div style='white-space: normal;' width='100%' align='left'>";
+                $html .= "<div style='color:#444;'>";
                 $html .= $field->label;
                 $html .= "</div></th>";
             }
