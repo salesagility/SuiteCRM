@@ -78,6 +78,14 @@ $dictionary['email_addresses'] = array(
 			'default'		=> 0,
 		    'vname'         => 'LBL_OPT_OUT',
 		),
+            
+                'confirm_opt_in' => array(
+			'name'			=> 'confirm_opt_in',
+			'type'			=> 'bool',
+			'default'		=> 0,
+		    'vname'         => 'LBL_CONFIRM_OPT_IN',
+		),
+            
 		'date_created' => array(
 			'name'			=> 'date_created',
 			'type'			=> 'datetime',
