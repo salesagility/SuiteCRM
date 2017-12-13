@@ -39,8 +39,10 @@ class AOW_WorkFlowController extends SugarController {
             if (isset($_REQUEST['override']) && is_array($_REQUEST['override'])) {
                 $override = $_REQUEST['override'];
             }
+            $view = isset($_REQUEST['view']) ? $_REQUEST['view'] : 'EditView';
+            $value = isset($_REQUEST['aow_value']) ? $_REQUEST['aow_value'] : '';
 
-            echo getModuleFields($module, $_REQUEST['view'], $_REQUEST['aow_value'], array(), $override);
+            echo getModuleFields($module, $view, $value, array(), $override);
         }
         die;
     }
