@@ -87,7 +87,9 @@ class SugarFieldImage extends SugarFieldFile
         if ($move) {
             $upload_file->final_move($bean->id . '_' . $field); //BEAN ID IS THE FILE NAME IN THE INSTANCE.
 
-            $upload_file->upload_doc($bean, $bean->id, $params[$prefix . $vardef['docType']], $bean->$field, $upload_file->mime_type);
+            $docType = isset($vardef['docType']) && isset($params[$prefix . $vardef['docType']]) ?
+                $params[$prefix . $vardef['docType']] : '';
+            $upload_file->upload_doc($bean, $bean->id, $docType, $bean->$field, $upload_file->mime_type);
         } else if (!empty($old_id)) {
             // It's a duplicate, I think
 
