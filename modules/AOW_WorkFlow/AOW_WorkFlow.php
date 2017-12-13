@@ -51,6 +51,37 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
+    /**
+     * return an SQL operator
+     * @param $key name of SQL operator
+     * @return mixed SQL operator or false if $key not found
+     */
+    private function getSQLOperator($key) {
+        $sqlOperatorList['Equal_To'] = '=';
+        $sqlOperatorList['Not_Equal_To'] = '!=';
+        $sqlOperatorList['Greater_Than'] = '>';
+        $sqlOperatorList['Less_Than'] = '<';
+        $sqlOperatorList['Greater_Than_or_Equal_To'] = '>=';
+        $sqlOperatorList['Less_Than_or_Equal_To'] = '<=';
+        $sqlOperatorList['Contains'] = 'LIKE';
+        $sqlOperatorList['Starts_With'] = 'LIKE';
+        $sqlOperatorList['Ends_With'] = 'LIKE';
+        $sqlOperatorList['is_null'] = 'IS NULL';
+        if(!isset($sqlOperatorList[$key])) {
+            return false;
+        }
+        return $sqlOperatorList[$key];
+    }
+
+    /**
+     * check an SQL operator is exists
+     * @param $key name of SQL operator
+     * @return bool true if operator exists otherwise false
+     */
+    private function isSQLOperator($key) {
+        return $this->getSQLOperator($key) ? true : false;
+    }
+
 	public function __construct($init=true){
 		parent::__construct();
         if($init){
@@ -285,7 +316,7 @@ class AOW_WorkFlow extends Basic {
             }
         }
 
-        if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
+        if($this->isSQLOperator($condition->operator)){
             $where_set = false;
 
             $data = $condition_module->field_defs[$condition->field];
@@ -301,7 +332,7 @@ class AOW_WorkFlow extends Basic {
             }
 
             if($condition->operator == 'is_null'){
-                $query['where'][] = '('.$field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' OR '.$field.' '.$app_list_strings['aow_sql_operator_list']['Equal_To']." '')";
+                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
                 return $query;
             }
 
@@ -394,7 +425,7 @@ class AOW_WorkFlow extends Basic {
                         else {
                             foreach($multi_values as $multi_value){
                                 if($value != '(') $value .= $sep;
-                                $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
+                                $value .= $field.' '.$this->getSQLOperator($condition->operator)." '".$multi_value."'";
                             }
                         }
                         $value .= ')';
@@ -434,7 +465,7 @@ class AOW_WorkFlow extends Basic {
             }
 
 
-            if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
+            if(!$where_set) $query['where'][] = $field.' '.$this->getSQLOperator($condition->operator).' '.$value;
         }
 
         return $query;
@@ -509,7 +540,7 @@ class AOW_WorkFlow extends Basic {
             $value = $condition->value;
 
             $dateFields = array('date','datetime', 'datetimecombo');
-            if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
+            if($this->isSQLOperator($condition->operator)){
 
                 $data = $condition_bean->field_defs[$field];
 
