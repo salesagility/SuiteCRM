@@ -425,14 +425,14 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
             'data-record-id="" data-module-name=""  data-email-address="">';
         // focus is set?
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
             if (property_exists($myBean, $emailField)) {
-                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
+                $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
                     'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
                             . $this->getBasicEmailAddressConfirmOptInTick($myBean, $emailField);
             } else {
@@ -452,14 +452,15 @@ eoq;
     private function getBasicEmailAddressConfirmOptInTick($basic, $emailField) {
         $this->getBasicEmailAddressValidateArguments($basic, $emailField);
         
-        global $sugar_config;
+        global $sugar_config, $app_strings;
 
         $tickHtml = '';
         $confirmOptIn = $this->getBasicEmailAddressConfirmOptIn($basic, $emailField);
         if ($confirmOptIn && $sugar_config['email_enable_confirm_opt_in']) {
-            $tickHtml = '<span class="confirm-opt-in-tick">&#10004;</span>';
-        }
-
+            $tickTitle = $app_strings['LBL_CONFIRM_OPT_IN_TITLE'];
+            $tickHtml = '<span class="confirm-opt-in-tick" title="' . $tickTitle . '">&#10004;</span>';
+        }        
+        
         return $tickHtml;
     }
 
@@ -486,6 +487,11 @@ eoq;
     private function getBasicEmailAddressId($basic, $emailField) {
         $this->getBasicEmailAddressValidateArguments($basic, $emailField);
 
+        if(empty($basic->emailAddress->addresses)) {
+            global $log;
+            $basic->retrieve();
+        }
+        
         $found = false;
         foreach ($basic->emailAddress->addresses as $address) {
             if ($address['email_address'] === $basic->{$emailField}) {
@@ -496,7 +502,7 @@ eoq;
         }
 
         if (!$found) {
-            throw new RuntimeException('A Basic bean has not selected email address.');
+            throw new RuntimeException('A Basic bean has not selected email address. ('.$basic->{$emailField}.')');
         }
 
         return $emailAddressId;
