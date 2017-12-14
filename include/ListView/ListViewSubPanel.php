@@ -320,7 +320,7 @@
 
 
                 //ADD OFFSET TO ARRAY
-                $fields['OFFSET'] = ($offset + $count + 1);
+                $fields['OFFSET'] = ((int)$offset + $count + 1);
 
                 if ($this->shouldProcess) {
                     if ($aItem->ACLAccess('EditView')) {
