@@ -2439,7 +2439,7 @@ $app_strings = array(
     'LBL_OK' => 'Ok',
 
     'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
-    'LBL_COLUMN_CHOSER' => 'Column Choser',
+    'LBL_COLUMN_CHOOSER' => 'Column Chooser',
     'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
     'LBL_DISPLAYED' => 'Displayed',
     'LBL_HIDDEN' => 'Hidden',
