@@ -92,25 +92,24 @@ class SugarEmailAddress extends SugarBean {
         self::__construct();
     }
 
-
     /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
-     * @param string $id
-     * @param string $module
+     * @param SugarBean $bean
      */
-    function handleLegacySave($bean, $prefix = "") {
-        if(!isset($_REQUEST) || !isset($_REQUEST['useEmailWidget'])) {
+    public function handleLegacySave($bean)
+    {
+        if (!isset($_REQUEST) || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
                 $this->addresses = array();
-                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == "1") ? true : false;
-                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == "1") ? true : false;
+                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
+                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
 
                 $isPrimary = true;
-                for($i = 1; $i <= 10; $i++){
-                    $email = 'email'.$i;
-                    if(isset($bean->$email) && !empty($bean->$email)){
-                        $opt_out_field = $email.'_opt_out';
-                        $invalid_field = $email.'_invalid';
+                for ($i = 1; $i <= 10; $i++) {
+                    $email = 'email' . $i;
+                    if (isset($bean->$email) && !empty($bean->$email)) {
+                        $opt_out_field = $email . '_opt_out';
+                        $invalid_field = $email . '_invalid';
                         $field_optOut = (isset($bean->$opt_out_field)) ? $bean->$opt_out_field : $optOut;
                         $field_invalid = (isset($bean->$invalid_field)) ? $bean->$invalid_field : $invalid;
                         $this->addAddress($bean->$email, $isPrimary, false, $field_invalid, $field_optOut);
@@ -119,8 +118,8 @@ class SugarEmailAddress extends SugarBean {
                 }
             }
         }
-        $this->populateAddresses($bean->id, $bean->module_dir, array(),'');
-        if(isset($_REQUEST) && isset($_REQUEST['useEmailWidget'])) {
+        $this->populateAddresses($bean->id, $bean->module_dir, array(), '');
+        if (isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             $this->populateLegacyFields($bean);
         }
     }
@@ -671,24 +670,23 @@ class SugarEmailAddress extends SugarBean {
     /**
      * Saves email addresses for a parent bean
      * @param string $id Parent bean ID
-     * @param string $module Parent bean's module
-     * @param array $addresses Override of $_REQUEST vars, used to handle non-standard bean saves
+     * @param string $module  Parent bean's module
+     * @param array $new_addrs Override of $_REQUEST vars, used to handle non-standard bean saves
      * @param string $primary GUID of primary address
      * @param string $replyTo GUID of reply-to address
-     * @param string $invalid GUID of invalid address
      */
-    function populateAddresses($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='') {
+    public function populateAddresses($id, $module, $new_addrs=array(), $primary='', $replyTo='') {
         $module = $this->getCorrectedModule($module);
         //One last check for the ConvertLead action in which case we need to change $module to 'Leads'
-        $module = (isset($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] == 'ConvertLead') ? 'Leads' : $module;
+        $module = (isset($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] === 'ConvertLead') ? 'Leads' : $module;
 
-        $post_from_email_address_widget = (isset($_REQUEST) && isset($_REQUEST['emailAddressWidget'])) ? true : false;
+        $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
         $hasEmailValue = false;
         $email_ids = array();
 
-        if (isset($_REQUEST) && isset($_REQUEST[$module .'_email_widget_id'])) {
+        if (isset($_REQUEST[$module . '_email_widget_id'])) {
 
             $fromRequest = false;
             // determine which array to process
@@ -739,13 +737,7 @@ class SugarEmailAddress extends SugarBean {
                 }
 
                 // prep from form save
-                $primaryField = $primary;
                 $replyToField = '';
-                $invalidField = '';
-                $optOutField = '';
-                if($fromRequest && empty($primary) && isset($primaryValue)) {
-                    $primaryField = $primaryValue;
-                }
 
                 if($fromRequest && empty($replyTo)) {
                     if(isset($_REQUEST[$eId .'emailAddressReplyToFlag'])) {
