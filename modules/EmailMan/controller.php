@@ -96,6 +96,7 @@ class EmailManController extends SugarController
 
         // save User defaults for emails
         $configurator->config['email_default_delete_attachments'] = (isset($_REQUEST['email_default_delete_attachments'])) ? true : false;
+        $configurator->config['email_enable_confirm_opt_in'] = (isset($_REQUEST['email_enable_confirm_opt_in'])) ? true : false;
 
         ///////////////////////////////////////////////////////////////////////////////
         ////	SECURITY
