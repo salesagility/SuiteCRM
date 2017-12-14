@@ -628,8 +628,17 @@ class EmailMan extends SugarBean {
             $GLOBALS['log']->fatal('Encountered invalid email address: ' . $module->email1 . " Emailman id=$this->id");
             return true;
         }
-
-        if ((!isset($module->email_opt_out) || ($module->email_opt_out !== 'on' && $module->email_opt_out !== 1 && $module->email_opt_out !== '1')) && (!isset($module->invalid_email) || ($module->invalid_email !== 'on' && $module->invalid_email !== 1 && $module->invalid_email !== '1'))) {
+        
+        if (
+                $module instanceof Basic && 
+                $sugar_config['email_enable_confirm_opt_in'] && 
+                !$module->getEmailAddressConfirmOptIn('email1')
+        ) {
+            global $log;
+            $log->warn('An email is not confirmed opt in: '. $module->email1);
+            $this->set_as_sent($module->email1, true, null, null, 'blocked');
+            $success = false;
+        } elseif ((!isset($module->email_opt_out) || ($module->email_opt_out !== 'on' && $module->email_opt_out !== 1 && $module->email_opt_out !== '1')) && (!isset($module->invalid_email) || ($module->invalid_email !== 'on' && $module->invalid_email !== 1 && $module->invalid_email !== '1'))) {
             $lower_email_address = strtolower($module->email1);
             //test against indivdual address.
             if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {

@@ -434,7 +434,7 @@ eoq;
             if (property_exists($myBean, $emailField)) {
                 $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
                     'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
-                            . $this->getBasicEmailAddressConfirmOptInTick($myBean, $emailField);
+                            . $myBean->getEmailAddressConfirmOptInTick($emailField);
             } else {
                 $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
             }
@@ -442,85 +442,7 @@ eoq;
 
         return $emailLink;
     }
-        
-    /**
-     * edit view should show confirm opt in (only if enabled)
-     * 
-     * @param Basic $basic
-     * @param string $emailField
-     */
-    private function getBasicEmailAddressConfirmOptInTick($basic, $emailField) {
-        $this->getBasicEmailAddressValidateArguments($basic, $emailField);
-        
-        global $sugar_config, $app_strings;
 
-        $tickHtml = '';
-        $confirmOptIn = $this->getBasicEmailAddressConfirmOptIn($basic, $emailField);
-        if ($confirmOptIn && $sugar_config['email_enable_confirm_opt_in']) {
-            $tickTitle = $app_strings['LBL_CONFIRM_OPT_IN_TITLE'];
-            $tickHtml = '<span class="confirm-opt-in-tick" title="' . $tickTitle . '">&#10004;</span>';
-        }        
-        
-        return $tickHtml;
-    }
-
-    /**
-     * 
-     * @param Basic $basic
-     * @param string $emailField
-     */
-    private function getBasicEmailAddressConfirmOptIn($basic, $emailField) {
-        $this->getBasicEmailAddressValidateArguments($basic, $emailField);
-
-        $emailAddressId = $this->getBasicEmailAddressId($basic, $emailField);
-        $emailAddress = BeanFactory::getBean('EmailAddresses', $emailAddressId);
-        $confirmOptIn = $emailAddress->confirm_opt_in;
-
-        return $confirmOptIn;
-    }
-
-    /**
-     * 
-     * @param Basic $basic
-     * @param string $emailField
-     */
-    private function getBasicEmailAddressId($basic, $emailField) {
-        $this->getBasicEmailAddressValidateArguments($basic, $emailField);
-
-        if(empty($basic->emailAddress->addresses)) {
-            global $log;
-            $basic->retrieve();
-        }
-        
-        $found = false;
-        foreach ($basic->emailAddress->addresses as $address) {
-            if ($address['email_address'] === $basic->{$emailField}) {
-                $found = true;
-                $emailAddressId = $address['email_address_id'];
-                break;
-            }
-        }
-
-        if (!$found) {
-            throw new RuntimeException('A Basic bean has not selected email address. ('.$basic->{$emailField}.')');
-        }
-
-        return $emailAddressId;
-    }
-
-    /**
-     * 
-     * @param Basic $basic
-     * @param string $emailField
-     */
-    private function getBasicEmailAddressValidateArguments($basic, $emailField) {
-        if (!$basic instanceof Basic) {
-            throw new InvalidArgumentException('Parameter should be a Basic, ' . get_class($basic) . ' given.');
-        }
-        if (!is_string($emailField) || !preg_match('/^email\d+/', $emailField)) {
-            throw new InvalidArgumentException('emailField string is invalid, "' . $emailField . '" given.');
-        }
-    }
 
     /**
      * Generate the composePackage for the quick compose email UI.  The package contains

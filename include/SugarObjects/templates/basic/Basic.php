@@ -71,4 +71,86 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
+    
+            
+    /**
+     * edit view should show confirm opt in (only if enabled)
+     * 
+     * @param string $emailField
+     */
+    public function getEmailAddressConfirmOptInTick($emailField) {
+        $this->getEmailAddressValidateArguments($emailField);
+        
+        global $sugar_config, $app_strings;
+
+        $tickHtml = '';
+        $confirmOptIn = $this->getEmailAddressConfirmOptIn($emailField);
+        if ($confirmOptIn && $sugar_config['email_enable_confirm_opt_in']) {
+            $tickTitle = $app_strings['LBL_CONFIRM_OPT_IN_TITLE'];
+            $tickHtml = '<span class="confirm-opt-in-tick" title="' . $tickTitle . '">&#10004;</span>';
+        }        
+        
+        return $tickHtml;
+    }
+
+    /**
+     * 
+     * @param string $emailField
+     */
+    public function getEmailAddressConfirmOptIn($emailField) {
+        $this->getEmailAddressValidateArguments($emailField);
+        
+        global $sugar_config;
+        
+        if(!$sugar_config['email_enable_confirm_opt_in']) {
+            global $log;
+            $log->warn('Confirm Opt In is not enabled.');
+            return true;
+        }
+
+        $emailAddressId = $this->getEmailAddressId($emailField);
+        $emailAddress = BeanFactory::getBean('EmailAddresses', $emailAddressId);
+        $confirmOptIn = $emailAddress->confirm_opt_in;
+
+        return $confirmOptIn;
+    }
+
+    /**
+     * 
+     * @param string $emailField
+     */
+    private function getEmailAddressId($emailField) {
+        $this->getEmailAddressValidateArguments($emailField);
+
+        if(empty($this->emailAddress->addresses)) {
+            global $log;
+            $this->retrieve();
+        }
+        
+        $found = false;
+        foreach ($this->emailAddress->addresses as $address) {
+            if ($address['email_address'] === $this->{$emailField}) {
+                $found = true;
+                $emailAddressId = $address['email_address_id'];
+                break;
+            }
+        }
+
+        if (!$found) {
+            throw new RuntimeException('A Basic bean has not selected email address. ('.$this->{$emailField}.')');
+        }
+
+        return $emailAddressId;
+    }
+
+    /**
+     * 
+     * @param string $emailField
+     */
+    private function getEmailAddressValidateArguments($emailField) {
+        if (!is_string($emailField) || !preg_match('/^email\d+/', $emailField)) {
+            throw new InvalidArgumentException('emailField string is invalid, "' . $emailField . '" given.');
+        }
+    }
+    
 }
