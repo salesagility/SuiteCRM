@@ -89,6 +89,7 @@ node_modules/
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
 themes/SuiteP/css/*.css
+themes/SuiteP/css/bootstrap/theme.css.map
 themes/SuiteP/css/dawn/style.css.map
 themes/SuiteP/css/dawn/variables.css
 themes/SuiteP/css/dawn/color-palette.css.map
