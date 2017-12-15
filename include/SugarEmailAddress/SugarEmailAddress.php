@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -104,19 +104,16 @@ class SugarEmailAddress extends SugarBean
         self::__construct();
     }
 
-
     /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
-     * @param string $id
-     * @param string $module
+     * @param SugarBean $bean
      */
-    public function handleLegacySave($bean, $prefix = "")
-    {
-        if (!isset($_REQUEST) || !isset($_REQUEST['useEmailWidget'])) {
+    publicfunction handleLegacySave($bean) {
+        if(!isset($_REQUEST) || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
                 $this->addresses = array();
-                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == "1") ? true : false;
-                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == "1") ? true : false;
+                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
+                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
 
                 $isPrimary = true;
                 for ($i = 1; $i <= 10; $i++) {
@@ -133,7 +130,7 @@ class SugarEmailAddress extends SugarBean
             }
         }
         $this->populateAddresses($bean->id, $bean->module_dir, array(), '');
-        if (isset($_REQUEST) && isset($_REQUEST['useEmailWidget'])) {
+        if (isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             $this->populateLegacyFields($bean);
         }
     }
@@ -710,11 +707,10 @@ class SugarEmailAddress extends SugarBean
     /**
      * Saves email addresses for a parent bean
      * @param string $id Parent bean ID
-     * @param string $module Parent bean's module
-     * @param array $addresses Override of $_REQUEST vars, used to handle non-standard bean saves
+     * @param string $module  Parent bean's module
+     * @param array $new_addrs Override of $_REQUEST vars, used to handle non-standard bean saves
      * @param string $primary GUID of primary address
      * @param string $replyTo GUID of reply-to address
-     * @param string $invalid GUID of invalid address
      */
     public function populateAddresses(
         $id,
@@ -733,15 +729,15 @@ class SugarEmailAddress extends SugarBean
         }
         $module = $this->getCorrectedModule($module);
         //One last check for the ConvertLead action in which case we need to change $module to 'Leads'
-        $module = (isset($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] == 'ConvertLead') ? 'Leads' : $module;
+        $module = (isset($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] === 'ConvertLead') ? 'Leads' : $module;
 
-        $post_from_email_address_widget = (isset($_REQUEST) && isset($_REQUEST['emailAddressWidget'])) ? true : false;
+        $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
         $hasEmailValue = false;
         $email_ids = array();
 
-        if (isset($_REQUEST) && isset($_REQUEST[$module . '_email_widget_id'])) {
+        if (isset($_REQUEST[$module . '_email_widget_id'])) {
             $fromRequest = false;
             // determine which array to process
             foreach ($_REQUEST as $k => $v) {
@@ -796,7 +792,6 @@ class SugarEmailAddress extends SugarBean
                 }
 
                 // prep from form save
-                $primaryField = $primary;
                 $replyToField = '';
                 $invalidField = '';
                 $optOutField = '';

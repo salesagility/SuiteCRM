@@ -394,7 +394,7 @@ class Popup_Picker
 
 
         if (count($summary_list) > 0) {
-            $summary_list = array_csort($summary_list, 'sort_value', SORT_DESC);
+            array_multisort(array_column($summary_list, 'sort_value'), SORT_DESC, $summary_list);
 
             foreach ($summary_list as $list) {
                 if ($list['module'] === 'Tasks') {

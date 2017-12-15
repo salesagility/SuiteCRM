@@ -1300,8 +1300,8 @@
     };
 
     var mb = messageBox();
-    mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
-    mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
     mb.show();
 
     mb.on('ok', function () {

@@ -412,7 +412,7 @@ eoq;
         return $this->generateComposePackageForQuickCreate($a_composeData, $emailLinkUrl, $lazyLoad);
     }
 
-    function populateComposeViewFields($bean = null, $emailField = 'email1')
+    function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true)
     {
         global $focus;
         $myBean = $focus;
@@ -431,11 +431,42 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-            if (property_exists($myBean, $emailField)) {
-                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                    'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+            
+            if (is_array($emailField)) {
+                $emailFields = $emailField;
             } else {
-                $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                $emailFields = array($emailField);
+            }
+            
+            
+            if($checkAllEmail) {
+                $i = 1;
+                $emailField = 'email' . $i;
+                while(isset($myBean->{$emailField})) {
+                    $emailFields[] = $emailField;
+                    $i++;
+                    $emailField = 'email' . $i;
+                }
+                $emailFields = array_unique($emailFields);
+            }
+            
+            foreach($emailFields as $emailField) {
+                if (property_exists($myBean, $emailField)) {
+                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
+                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+                } else {
+                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                }
+                $optOut = false;
+                $addresses = $myBean->emailAddress->addresses;
+                foreach($addresses as $address) {
+                    if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                        $optOut = true;
+                    }
+                }
+                if(!$optOut) {
+                    break;
+                }
             }
         }
 
