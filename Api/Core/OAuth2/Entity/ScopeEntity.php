@@ -11,7 +11,7 @@ class ScopeEntity implements ScopeEntityInterface
     /**
      * @inheritdoc
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->getIdentifier();
     }

@@ -28,7 +28,7 @@ class UtilityController extends AbstractApiController
      * @param Response $res
      * @return ResponseInterface
      */
-    public function access_token(Request $req, Response $res)
+    public function accessToken(Request $req, Response $res)
     {
         try {
             return $this->authorizationServer->respondToAccessTokenRequest($req, $res);

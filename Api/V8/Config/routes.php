@@ -4,7 +4,7 @@ $app->group('/V8', function () use ($app) {
     /**
      * Request an access token
      */
-    $this->post('/access_token', 'Api\V8\Controller\UtilityController:access_token');
+    $this->post('/access_token', 'Api\V8\Controller\UtilityController:accessToken');
 
     /**
      * Get server info

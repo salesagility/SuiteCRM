@@ -74,7 +74,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             throw new \DomainException('Access token not found');
         }
 
-        if(new \DateTime() > new \DateTime($token->access_token_expires)) {
+        if (new \DateTime() > new \DateTime($token->access_token_expires)) {
             return true;
         }
 

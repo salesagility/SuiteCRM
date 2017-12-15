@@ -131,13 +131,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{suitecrm.url}}/Api/index.php/V8/server_info?XDEBUG_SESSION_START=PHPSTORM",
+							"raw": "{{suitecrm.url}}/Api/V8/server_info?XDEBUG_SESSION_START=PHPSTORM",
 							"host": [
 								"{{suitecrm.url}}"
 							],
 							"path": [
 								"Api",
-								"index.php",
 								"V8",
 								"server_info"
 							],
