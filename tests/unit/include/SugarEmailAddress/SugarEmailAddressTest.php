@@ -845,6 +845,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             'email_address_caps' => 'TEST@EMAIL.COM',
             'invalid_email' => '0',
             'opt_out' => '0',
+            'confirm_opt_in' => '0',
             'date_created' => $a['date_created'],
             'date_modified' => $a['date_modified'],
             'deleted' => '0',
