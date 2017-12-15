@@ -858,7 +858,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account->name = "test";
 
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
             'data-record-id="" data-module-name=""  data-email-address="">';
         $actual = $user->getEmailLink2("abc@email.com", $account);
         $this->assertSame($expected, $actual);
@@ -868,7 +868,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $contact = new Contact();
         $contact->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
             'data-record-id="" data-module-name=""  data-email-address="">';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
@@ -889,7 +889,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account = new Account();
         $account->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
             'data-module="Accounts" data-record-id="" data-module-name="test" data-email-address="">';
         $actual = $user->getEmailLink("name", $account);
         $this->assertSame($expected, $actual);

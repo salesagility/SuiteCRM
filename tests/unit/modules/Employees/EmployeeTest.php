@@ -109,7 +109,7 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
             'SHOW_ON_EMPLOYEES' => '1',
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Employees" data-record-id="" data-module-name=" "  data-email-address="">',
+            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Employees" data-record-id="" data-module-name=" "  data-email-address="">',
             'MESSENGER_TYPE' => '',
             'REPORTS_TO_NAME' => null,
         );
