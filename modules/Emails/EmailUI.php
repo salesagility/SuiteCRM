@@ -412,6 +412,15 @@ eoq;
         return $this->generateComposePackageForQuickCreate($a_composeData, $emailLinkUrl, $lazyLoad);
     }
 
+    /**
+     * 
+     * @global ? $focus
+     * @param ?|null $bean
+     * @param string $emailField
+     * @return string
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     */
     function populateComposeViewFields($bean = null, $emailField = 'email1')
     {
         global $focus;
@@ -434,13 +443,31 @@ eoq;
             if (property_exists($myBean, $emailField)) {
                 $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
                     'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
-                            . $myBean->getEmailAddressConfirmOptInTick($emailField);
+                            . $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
             } else {
                 $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
             }
         }
 
         return $emailLink;
+    }
+    
+    /**
+     * 
+     * @param Basic|Object $myBean
+     * @param string $emailField
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     */
+    private function getEmailAddressConfirmOptInTick($myBean, $emailField) {
+        $tick = '';
+        if($myBean instanceof Basic) {
+            $tick = $myBean->getEmailAddressConfirmOptInTick($emailField);
+        } else {
+            global $log;
+            $log->warn('Trying to get an email field of non-Basic object');
+        }
+        return $tick;
     }
 
 
