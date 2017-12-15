@@ -36,28 +36,243 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-function method_callback(o){var resp=JSON.parse(o.responseText),request_id=o.tId,result=resp.result;if(result==null){return;}
-reqid=global_request_registry[request_id];if(typeof(reqid)!='undefined'){widget=global_request_registry[request_id][0];method_name=global_request_registry[request_id][1];widget[method_name](result);}}
-SugarClass.inherit("SugarVCalClient","SugarClass");function SugarVCalClient(){this.init();}
-SugarVCalClient.prototype.init=function(){};SugarVCalClient.prototype.load=function(user_id,request_id){this.user_id=user_id;YAHOO.util.Connect.asyncRequest('GET','./vcal_server.php?type=vfb&source=outlook&noAuth=noAuth&user_id='+user_id,{success:function(result){if(typeof GLOBAL_REGISTRY.freebusy=='undefined'){GLOBAL_REGISTRY.freebusy=new Object();}
-if(typeof GLOBAL_REGISTRY.freebusy_adjusted=='undefined'){GLOBAL_REGISTRY.freebusy_adjusted=new Object();}
-GLOBAL_REGISTRY.freebusy[user_id]=SugarVCalClient.prototype.parseResults(result.responseText,false,global_request_registry[request_id][0].timeslots[0].date_obj);GLOBAL_REGISTRY.freebusy_adjusted[user_id]=SugarVCalClient.prototype.parseResults(result.responseText,true,global_request_registry[request_id][0].timeslots[0].date_obj);global_request_registry[request_id][0].display();},failure:function(result){this.success(result);},argument:{result:result}});};SugarVCalClient.prototype.parseResults=function(textResult,adjusted,meetingDate){var matchXFREEBUSYID=/X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;var matchFREEBUSY=/FREEBUSY.*?\:([\w]+)\/([\w]+)/g;var matchFREEBUSYTYPE=/X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;var timehash=new Object();var dst_id;var dst_start;var dst_end;if(GLOBAL_REGISTRY.current_user.fields.dst_start==null)
-dst_start='19700101T000000Z';else
-dst_start=GLOBAL_REGISTRY.current_user.fields.dst_start.replace(/ /gi,'T').replace(/:/gi,'').replace(/-/gi,'')+'Z';if(GLOBAL_REGISTRY.current_user.fields.dst_end==null)
-dst_end='19700101T000000Z';else
-dst_end=GLOBAL_REGISTRY.current_user.fields.dst_end.replace(/ /gi,'T').replace(/:/gi,'').replace(/-/gi,'')+'Z';var d=new Date(meetingDate);var offset=d.getTimezoneOffset();if(offset>0||offset<0){gmt_offset_secs=(GLOBAL_REGISTRY.current_user.fields.gmt_offset+60)*60;}else{gmt_offset_secs=GLOBAL_REGISTRY.current_user.fields.gmt_offset*60;}
-var index=0;while(((resultFREEBUSYID=matchXFREEBUSYID.exec(textResult)))!=null&&((resultFREEBUSY=matchFREEBUSY.exec(textResult)))!=null&&((resultFREEBUSYTYPE=matchFREEBUSYTYPE.exec(textResult)))!=null){var startdate;var enddate;if(adjusted){startdate=SugarDateTime.parseAdjustedDate(resultFREEBUSY[1],dst_start,dst_end,gmt_offset_secs);enddate=SugarDateTime.parseAdjustedDate(resultFREEBUSY[2],dst_start,dst_end,gmt_offset_secs);}
-else{startdate=SugarDateTime.parseUTCDate(resultFREEBUSY[1]);enddate=SugarDateTime.parseUTCDate(resultFREEBUSY[2]);}
-var startmins=startdate.getUTCMinutes();if(startmins>=0&&startmins<15){startdate.setUTCMinutes(0);}
-else if(startmins>=15&&startmins<30){startdate.setUTCMinutes(15);}
-else if(startmins>=30&&startmins<45){startdate.setUTCMinutes(30);}
-else{startdate.setUTCMinutes(45);}
-while(startdate.valueOf()<enddate.valueOf()){var hash=SugarDateTime.getUTCHash(startdate);id=resultFREEBUSYID[1]+'-'+
-resultFREEBUSYID[2]+'-'+
-resultFREEBUSYID[3]+'-'+
-resultFREEBUSYID[4]+'-'+
-resultFREEBUSYID[5];if(typeof(timehash[hash])=='undefined'){timehash[hash]={records:{}};timehash[hash]['records'][id]=resultFREEBUSYTYPE[1];}else{timehash[hash]['records'][id]=resultFREEBUSYTYPE[1];}
-startdate=new Date(startdate.valueOf()+(15*60*1000));}
-index++;}
-return timehash;};SugarVCalClient.parseResults=SugarVCalClient.prototype.parseResults;SugarRPCClient.allowed_methods=['retrieve','query','save','set_accept_status','get_objects_from_module','email','get_user_array','get_full_list'];SugarClass.inherit("SugarRPCClient","SugarClass");function SugarRPCClient(){this.init();}
-SugarRPCClient.prototype.allowed_methods=['retrieve','query','get_objects_from_module'];SugarRPCClient.prototype.init=function(){this._showError=function(e){alert("ERROR CONNECTING to: ./index.php?entryPoint=json_server, ERROR:"+e);};this.serviceURL='./index.php?entryPoint=json_server';};SugarRPCClient.prototype.call_method=function(method,args,synchronous){var result,transaction,post_data=JSON.stringify({method:method,id:1,params:[args]});synchronous=synchronous||false;try{if(synchronous){result=$.ajax({type:"POST",url:this.serviceURL,contentType:"application/json",data:post_data,dataType:"json",async:false});result=JSON.parse(result.responseText).result;return result;}else{var currentPostHeader=YAHOO.util.Connect._default_post_header;YAHOO.util.Connect.setDefaultPostHeader("application/json");transaction=YAHOO.util.Connect.asyncRequest('POST',this.serviceURL,{success:method_callback,failure:method_callback},post_data);YAHOO.util.Connect.setDefaultPostHeader(currentPostHeader);return transaction.tId;}}catch(e){this._showError(e);}};var global_rpcClient=new SugarRPCClient();
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+// called on the return of a JSON-RPC async request,
+// and calls the display() method on the widget registered
+// in the registry at the request_id key returned by the server
+
+
+//////////////////////////////////////////////////////////////////
+
+/**
+ * This is the callback function called from SugarRPCClient.prototype.call_method
+ * found below.
+ * @param o The response object returned by YUI2's ajax request.
+ */
+function method_callback(o) {
+  var resp = JSON.parse(o.responseText),
+    request_id = o.tId,
+    result = resp.result;
+
+  if (result == null) {
+    return;
+  }
+  reqid = global_request_registry[request_id];
+  if (typeof (reqid) != 'undefined') {
+    widget = global_request_registry[request_id][0];
+    method_name = global_request_registry[request_id][1];
+    widget[method_name](result);
+  }
+}
+
+//////////////////////////////////////////////////
+// class: SugarVCalClient
+// async retrieval/parsing of vCal freebusy info
+//
+//////////////////////////////////////////////////
+
+SugarClass.inherit("SugarVCalClient", "SugarClass");
+
+function SugarVCalClient() {
+  this.init();
+}
+
+SugarVCalClient.prototype.init = function () {
+};
+
+SugarVCalClient.prototype.load = function (user_id, request_id) {
+  this.user_id = user_id;
+
+  // Bug 44239: Removed reliance on jsolait
+  YAHOO.util.Connect.asyncRequest('GET', './vcal_server.php?type=vfb&source=outlook&noAuth=noAuth&user_id=' + user_id, {
+    success: function (result) {
+      if (typeof GLOBAL_REGISTRY.freebusy == 'undefined') {
+        GLOBAL_REGISTRY.freebusy = new Object();
+      }
+      if (typeof GLOBAL_REGISTRY.freebusy_adjusted == 'undefined') {
+        GLOBAL_REGISTRY.freebusy_adjusted = new Object();
+      }
+      // parse vCal and put it in the registry using the user_id as a key:
+      GLOBAL_REGISTRY.freebusy[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, false, global_request_registry[request_id][0].timeslots[0].date_obj);
+      // parse for current user adjusted vCal
+      GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true, global_request_registry[request_id][0].timeslots[0].date_obj);
+      // now call the display() on the widget registered at request_id:
+      global_request_registry[request_id][0].display();
+    },
+    failure: function (result) {
+      this.success(result);
+    },
+    argument: {result: result}
+  });
+};
+
+// parse vCal freebusy info and return object
+SugarVCalClient.prototype.parseResults = function (textResult, adjusted, meetingDate) {
+  var matchXFREEBUSYID = /X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;
+  var matchFREEBUSY = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
+  var matchFREEBUSYTYPE = /X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;
+  //var resultFREEBUSYID = matchXFREEBUSYID.exec(textResult);
+  //var resultFREEBUSY = matchFREEBUSY.exec(textResult);
+  //var resultFREEBUSYTYPETEST = matchFREEBUSYTYPE.exec(textResult);
+
+
+  //  datetime = new SugarDateTime();
+  //var result;
+  var timehash = new Object();
+  var dst_id;
+  var dst_start;
+  var dst_end;
+
+  if (GLOBAL_REGISTRY.current_user.fields.dst_start == null)
+    dst_start = '19700101T000000Z';
+  else
+    dst_start = GLOBAL_REGISTRY.current_user.fields.dst_start.replace(/ /gi, 'T').replace(/:/gi, '').replace(/-/gi, '') + 'Z';
+
+  if (GLOBAL_REGISTRY.current_user.fields.dst_end == null)
+    dst_end = '19700101T000000Z';
+  else
+    dst_end = GLOBAL_REGISTRY.current_user.fields.dst_end.replace(/ /gi, 'T').replace(/:/gi, '').replace(/-/gi, '') + 'Z';
+
+  // Fix for issue #208 - take Daylight saving time into consideration
+  var d = new Date(meetingDate);
+  var offset = d.getTimezoneOffset();
+
+  if (offset > 0 || offset < 0) {
+    gmt_offset_secs = (GLOBAL_REGISTRY.current_user.fields.gmt_offset + 60) * 60;
+  } else {
+    gmt_offset_secs = GLOBAL_REGISTRY.current_user.fields.gmt_offset * 60;
+  }
+
+  var index = 0;
+  // New loop through all FREEBUSY & Customer Values
+  while (
+  ((resultFREEBUSYID = matchXFREEBUSYID.exec(textResult))) != null &&
+  ((resultFREEBUSY = matchFREEBUSY.exec(textResult))) != null &&
+  ((resultFREEBUSYTYPE = matchFREEBUSYTYPE.exec(textResult))) != null
+    ) {
+    var startdate;
+    var enddate;
+    if (adjusted) {// send back adjusted for current_user
+      startdate = SugarDateTime.parseAdjustedDate(resultFREEBUSY[1], dst_start, dst_end, gmt_offset_secs);
+      enddate = SugarDateTime.parseAdjustedDate(resultFREEBUSY[2], dst_start, dst_end, gmt_offset_secs);
+    }
+    else { // GMT
+      startdate = SugarDateTime.parseUTCDate(resultFREEBUSY[1]);
+      enddate = SugarDateTime.parseUTCDate(resultFREEBUSY[2]);
+    }
+
+    var startmins = startdate.getUTCMinutes();
+
+    // pick the start slot based on the minutes
+    if (startmins >= 0 && startmins < 15) {
+      startdate.setUTCMinutes(0);
+    }
+    else if (startmins >= 15 && startmins < 30) {
+      startdate.setUTCMinutes(15);
+    }
+    else if (startmins >= 30 && startmins < 45) {
+      startdate.setUTCMinutes(30);
+    }
+    else {
+      startdate.setUTCMinutes(45);
+    }
+
+    // starting at startdate, create hash of each busy 15 min
+    // timeslot and store as a key
+    while (startdate.valueOf() < enddate.valueOf()) {
+      var hash = SugarDateTime.getUTCHash(startdate);
+      id = resultFREEBUSYID[1] + '-' +
+        resultFREEBUSYID[2] + '-' +
+        resultFREEBUSYID[3] + '-' +
+        resultFREEBUSYID[4] + '-' +
+        resultFREEBUSYID[5];
+
+      if (typeof (timehash[hash]) == 'undefined') {
+        timehash[hash] = {
+          records: {}
+          //'items' : 1
+        };
+        timehash[hash]['records'][id] = resultFREEBUSYTYPE[1];
+
+      } else {
+        //timehash[hash]['items'] += 1;
+        timehash[hash]['records'][id] = resultFREEBUSYTYPE[1];
+      }
+
+      startdate = new Date(startdate.valueOf() + (15 * 60 * 1000));
+    }
+    index++;
+  }
+
+  return timehash;
+};
+
+SugarVCalClient.parseResults = SugarVCalClient.prototype.parseResults;
+//////////////////////////////////////////////////
+// class: SugarRPCClient
+// wrapper around async JSON-RPC client class
+//
+//////////////////////////////////////////////////
+SugarRPCClient.allowed_methods = ['retrieve', 'query', 'save', 'set_accept_status', 'get_objects_from_module', 'email', 'get_user_array', 'get_full_list'];
+
+SugarClass.inherit("SugarRPCClient", "SugarClass");
+
+function SugarRPCClient() {
+  this.init();
+}
+
+/*
+ * PUT NEW METHODS IN THIS ARRAY:
+ */
+SugarRPCClient.prototype.allowed_methods = ['retrieve', 'query', 'get_objects_from_module'];
+
+SugarRPCClient.prototype.init = function () {
+  this._showError = function (e) {
+    alert("ERROR CONNECTING to: ./index.php?entryPoint=json_server, ERROR:" + e);
+  };
+  this.serviceURL = './index.php?entryPoint=json_server';
+};
+
+/**
+ * Note: This method used to depend on JSOlait which is now removed. It has been reworked to use YUI for the aynchronous call
+ * and the synchronous call in sugar_3.js.
+ * @param method
+ * @param args
+ * @param synchronous Pass in true if synchronous call is desired
+ */
+SugarRPCClient.prototype.call_method = function (method, args, synchronous) {
+  var result, transaction, post_data = JSON.stringify({method: method, id: 1, params: [args]});
+  synchronous = synchronous || false;
+  try {
+    if (synchronous) {
+      result = $.ajax({
+        type: "POST",
+        url: this.serviceURL,
+        contentType: "application/json",
+        data: post_data,
+        dataType: "json",
+        async: false
+      });
+      result = JSON.parse(result.responseText).result;
+      return result;
+    } else {
+      var currentPostHeader = YAHOO.util.Connect._default_post_header;
+      YAHOO.util.Connect.setDefaultPostHeader("application/json");
+      transaction = YAHOO.util.Connect.asyncRequest('POST', this.serviceURL, {
+        success: method_callback,
+        failure: method_callback
+      }, post_data);
+      YAHOO.util.Connect.setDefaultPostHeader(currentPostHeader);
+      return transaction.tId;
+    }
+  } catch (e) {
+    this._showError(e);
+  }
+};
+
+var global_rpcClient = new SugarRPCClient();

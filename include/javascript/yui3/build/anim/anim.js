@@ -5,5 +5,1210 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("anim-base",function(B){var C="running",N="startTime",L="elapsedTime",J="start",I="tween",M="end",D="node",K="paused",O="reverse",H="iterationCount",A=Number;var F={},E;B.Anim=function(){B.Anim.superclass.constructor.apply(this,arguments);B.Anim._instances[B.stamp(this)]=this;};B.Anim.NAME="anim";B.Anim._instances={};B.Anim.RE_DEFAULT_UNIT=/^width|height|top|right|bottom|left|margin.*|padding.*|border.*$/i;B.Anim.DEFAULT_UNIT="px";B.Anim.DEFAULT_EASING=function(Q,P,S,R){return S*Q/R+P;};B.Anim._intervalTime=20;B.Anim.behaviors={left:{get:function(Q,P){return Q._getOffset(P);}}};B.Anim.behaviors.top=B.Anim.behaviors.left;B.Anim.DEFAULT_SETTER=function(S,T,V,W,Y,R,U,X){var Q=S._node,P=U(Y,A(V),A(W)-A(V),R);if(T in Q._node.style||T in B.DOM.CUSTOM_STYLES){X=X||"";Q.setStyle(T,P+X);}else{if(Q._node.attributes[T]){Q.setAttribute(T,P);}else{Q.set(T,P);}}};B.Anim.DEFAULT_GETTER=function(R,P){var Q=R._node,S="";if(P in Q._node.style||P in B.DOM.CUSTOM_STYLES){S=Q.getComputedStyle(P);}else{if(Q._node.attributes[P]){S=Q.getAttribute(P);}else{S=Q.get(P);}}return S;};B.Anim.ATTRS={node:{setter:function(P){P=B.one(P);this._node=P;if(!P){}return P;}},duration:{value:1},easing:{value:B.Anim.DEFAULT_EASING,setter:function(P){if(typeof P==="string"&&B.Easing){return B.Easing[P];}}},from:{},to:{},startTime:{value:0,readOnly:true},elapsedTime:{value:0,readOnly:true},running:{getter:function(){return !!F[B.stamp(this)];},value:false,readOnly:true},iterations:{value:1},iterationCount:{value:0,readOnly:true},direction:{value:"normal"},paused:{readOnly:true,value:false},reverse:{value:false}};B.Anim.run=function(){var Q=B.Anim._instances;for(var P in Q){if(Q[P].run){Q[P].run();}}};B.Anim.pause=function(){for(var P in F){if(F[P].pause){F[P].pause();}}B.Anim._stopTimer();};B.Anim.stop=function(){for(var P in F){if(F[P].stop){F[P].stop();}}B.Anim._stopTimer();};B.Anim._startTimer=function(){if(!E){E=setInterval(B.Anim._runFrame,B.Anim._intervalTime);}};B.Anim._stopTimer=function(){clearInterval(E);E=0;};B.Anim._runFrame=function(){var P=true;for(var Q in F){if(F[Q]._runFrame){P=false;F[Q]._runFrame();}}if(P){B.Anim._stopTimer();}};B.Anim.RE_UNITS=/^(-?\d*\.?\d*){1}(em|ex|px|in|cm|mm|pt|pc|%)*$/;var G={run:function(){if(this.get(K)){this._resume();}else{if(!this.get(C)){this._start();}}return this;},pause:function(){if(this.get(C)){this._pause();}return this;},stop:function(P){if(this.get(C)||this.get(K)){this._end(P);}return this;},_added:false,_start:function(){this._set(N,new Date()-this.get(L));this._actualFrames=0;if(!this.get(K)){this._initAnimAttr();}F[B.stamp(this)]=this;B.Anim._startTimer();this.fire(J);},_pause:function(){this._set(N,null);this._set(K,true);delete F[B.stamp(this)];this.fire("pause");},_resume:function(){this._set(K,false);F[B.stamp(this)]=this;this._set(N,new Date()-this.get(L));B.Anim._startTimer();this.fire("resume");},_end:function(P){var Q=this.get("duration")*1000;if(P){this._runAttrs(Q,Q,this.get(O));}this._set(N,null);this._set(L,0);this._set(K,false);delete F[B.stamp(this)];this.fire(M,{elapsed:this.get(L)});},_runFrame:function(){var T=this._runtimeAttr.duration,R=new Date()-this.get(N),Q=this.get(O),P=(R>=T),S,U;this._runAttrs(R,T,Q);this._actualFrames+=1;this._set(L,R);this.fire(I);if(P){this._lastFrame();}},_runAttrs:function(Z,Y,V){var W=this._runtimeAttr,R=B.Anim.behaviors,X=W.easing,P=Y,T=false,Q,S,U;if(Z>=Y){T=true;}if(V){Z=Y-Z;P=0;}for(U in W){if(W[U].to){Q=W[U];S=(U in R&&"set" in R[U])?R[U].set:B.Anim.DEFAULT_SETTER;if(!T){S(this,U,Q.from,Q.to,Z,Y,X,Q.unit);}else{S(this,U,Q.from,Q.to,P,Y,X,Q.unit);}}}},_lastFrame:function(){var P=this.get("iterations"),Q=this.get(H);Q+=1;if(P==="infinite"||Q<P){if(this.get("direction")==="alternate"){this.set(O,!this.get(O));}this.fire("iteration");}else{Q=0;this._end();}this._set(N,new Date());this._set(H,Q);},_initAnimAttr:function(){var W=this.get("from")||{},V=this.get("to")||{},P={duration:this.get("duration")*1000,easing:this.get("easing")},R=B.Anim.behaviors,U=this.get(D),T,S,Q;B.each(V,function(a,Y){if(typeof a==="function"){a=a.call(this,U);}S=W[Y];if(S===undefined){S=(Y in R&&"get" in R[Y])?R[Y].get(this,Y):B.Anim.DEFAULT_GETTER(this,Y);}else{if(typeof S==="function"){S=S.call(this,U);}}var X=B.Anim.RE_UNITS.exec(S);var Z=B.Anim.RE_UNITS.exec(a);S=X?X[1]:S;Q=Z?Z[1]:a;T=Z?Z[2]:X?X[2]:"";if(!T&&B.Anim.RE_DEFAULT_UNIT.test(Y)){T=B.Anim.DEFAULT_UNIT;}if(!S||!Q){B.error('invalid "from" or "to" for "'+Y+'"',"Anim");return;}P[Y]={from:S,to:Q,unit:T};},this);this._runtimeAttr=P;},_getOffset:function(Q){var S=this._node,T=S.getComputedStyle(Q),R=(Q==="left")?"getX":"getY",U=(Q==="left")?"setX":"setY";if(T==="auto"){var P=S.getStyle("position");if(P==="absolute"||P==="fixed"){T=S[R]();S[U](T);}else{T=0;}}return T;},destructor:function(){delete B.Anim._instances[B.stamp(this)];}};B.extend(B.Anim,B.Base,G);},"3.3.0",{requires:["base-base","node-style"]});YUI.add("anim-color",function(B){var A=Number;B.Anim.behaviors.color={set:function(F,D,I,H,C,G,E){I=B.Color.re_RGB.exec(B.Color.toRGB(I));H=B.Color.re_RGB.exec(B.Color.toRGB(H));if(!I||I.length<3||!H||H.length<3){B.error("invalid from or to passed to color behavior");}F._node.setStyle(D,"rgb("+[Math.floor(E(C,A(I[1]),A(H[1])-A(I[1]),G)),Math.floor(E(C,A(I[2]),A(H[2])-A(I[2]),G)),Math.floor(E(C,A(I[3]),A(H[3])-A(I[3]),G))].join(", ")+")");},get:function(D,C){var E=D._node.getComputedStyle(C);E=(E==="transparent")?"rgb(255, 255, 255)":E;return E;}};B.each(["backgroundColor","borderColor","borderTopColor","borderRightColor","borderBottomColor","borderLeftColor"],function(C,D){B.Anim.behaviors[C]=B.Anim.behaviors.color;});},"3.3.0",{requires:["anim-base"]});YUI.add("anim-curve",function(A){A.Anim.behaviors.curve={set:function(F,C,I,H,B,G,E){I=I.slice.call(I);H=H.slice.call(H);var D=E(B,0,100,G)/100;H.unshift(I);F._node.setXY(A.Anim.getBezier(H,D));},get:function(C,B){return C._node.getXY();}};A.Anim.getBezier=function(F,E){var G=F.length;var D=[];for(var C=0;C<G;++C){D[C]=[F[C][0],F[C][1]];
-}for(var B=1;B<G;++B){for(C=0;C<G-B;++C){D[C][0]=(1-E)*D[C][0]+E*D[parseInt(C+1,10)][0];D[C][1]=(1-E)*D[C][1]+E*D[parseInt(C+1,10)][1];}}return[D[0][0],D[0][1]];};},"3.3.0",{requires:["anim-xy"]});YUI.add("anim-easing",function(B){var A={easeNone:function(D,C,F,E){return F*D/E+C;},easeIn:function(D,C,F,E){return F*(D/=E)*D+C;},easeOut:function(D,C,F,E){return -F*(D/=E)*(D-2)+C;},easeBoth:function(D,C,F,E){if((D/=E/2)<1){return F/2*D*D+C;}return -F/2*((--D)*(D-2)-1)+C;},easeInStrong:function(D,C,F,E){return F*(D/=E)*D*D*D+C;},easeOutStrong:function(D,C,F,E){return -F*((D=D/E-1)*D*D*D-1)+C;},easeBothStrong:function(D,C,F,E){if((D/=E/2)<1){return F/2*D*D*D*D+C;}return -F/2*((D-=2)*D*D*D-2)+C;},elasticIn:function(E,C,I,H,D,G){var F;if(E===0){return C;}if((E/=H)===1){return C+I;}if(!G){G=H*0.3;}if(!D||D<Math.abs(I)){D=I;F=G/4;}else{F=G/(2*Math.PI)*Math.asin(I/D);}return -(D*Math.pow(2,10*(E-=1))*Math.sin((E*H-F)*(2*Math.PI)/G))+C;},elasticOut:function(E,C,I,H,D,G){var F;if(E===0){return C;}if((E/=H)===1){return C+I;}if(!G){G=H*0.3;}if(!D||D<Math.abs(I)){D=I;F=G/4;}else{F=G/(2*Math.PI)*Math.asin(I/D);}return D*Math.pow(2,-10*E)*Math.sin((E*H-F)*(2*Math.PI)/G)+I+C;},elasticBoth:function(E,C,I,H,D,G){var F;if(E===0){return C;}if((E/=H/2)===2){return C+I;}if(!G){G=H*(0.3*1.5);}if(!D||D<Math.abs(I)){D=I;F=G/4;}else{F=G/(2*Math.PI)*Math.asin(I/D);}if(E<1){return -0.5*(D*Math.pow(2,10*(E-=1))*Math.sin((E*H-F)*(2*Math.PI)/G))+C;}return D*Math.pow(2,-10*(E-=1))*Math.sin((E*H-F)*(2*Math.PI)/G)*0.5+I+C;},backIn:function(D,C,G,F,E){if(E===undefined){E=1.70158;}if(D===F){D-=0.001;}return G*(D/=F)*D*((E+1)*D-E)+C;},backOut:function(D,C,G,F,E){if(typeof E==="undefined"){E=1.70158;}return G*((D=D/F-1)*D*((E+1)*D+E)+1)+C;},backBoth:function(D,C,G,F,E){if(typeof E==="undefined"){E=1.70158;}if((D/=F/2)<1){return G/2*(D*D*(((E*=(1.525))+1)*D-E))+C;}return G/2*((D-=2)*D*(((E*=(1.525))+1)*D+E)+2)+C;},bounceIn:function(D,C,F,E){return F-B.Easing.bounceOut(E-D,0,F,E)+C;},bounceOut:function(D,C,F,E){if((D/=E)<(1/2.75)){return F*(7.5625*D*D)+C;}else{if(D<(2/2.75)){return F*(7.5625*(D-=(1.5/2.75))*D+0.75)+C;}else{if(D<(2.5/2.75)){return F*(7.5625*(D-=(2.25/2.75))*D+0.9375)+C;}}}return F*(7.5625*(D-=(2.625/2.75))*D+0.984375)+C;},bounceBoth:function(D,C,F,E){if(D<E/2){return B.Easing.bounceIn(D*2,0,F,E)*0.5+C;}return B.Easing.bounceOut(D*2-E,0,F,E)*0.5+F*0.5+C;}};B.Easing=A;},"3.3.0",{requires:["anim-base"]});YUI.add("anim-node-plugin",function(B){var A=function(C){C=(C)?B.merge(C):{};C.node=C.host;A.superclass.constructor.apply(this,arguments);};A.NAME="nodefx";A.NS="fx";B.extend(A,B.Anim);B.namespace("Plugin");B.Plugin.NodeFX=A;},"3.3.0",{requires:["node-pluginhost","anim-base"]});YUI.add("anim-scroll",function(B){var A=Number;B.Anim.behaviors.scroll={set:function(F,G,I,J,K,E,H){var D=F._node,C=([H(K,A(I[0]),A(J[0])-A(I[0]),E),H(K,A(I[1]),A(J[1])-A(I[1]),E)]);if(C[0]){D.set("scrollLeft",C[0]);}if(C[1]){D.set("scrollTop",C[1]);}},get:function(D){var C=D._node;return[C.get("scrollLeft"),C.get("scrollTop")];}};},"3.3.0",{requires:["anim-base"]});YUI.add("anim-xy",function(B){var A=Number;B.Anim.behaviors.xy={set:function(F,D,I,H,C,G,E){F._node.setXY([E(C,A(I[0]),A(H[0])-A(I[0]),G),E(C,A(I[1]),A(H[1])-A(I[1]),G)]);},get:function(C){return C._node.getXY();}};},"3.3.0",{requires:["anim-base","node-screen"]});YUI.add("anim",function(A){},"3.3.0",{use:["anim-base","anim-color","anim-curve","anim-easing","anim-node-plugin","anim-scroll","anim-xy"],skinnable:false});
+YUI.add('anim-base', function(Y) {
+
+/**
+* The Animation Utility provides an API for creating advanced transitions.
+* @module anim
+*/
+
+/**
+* Provides the base Anim class, for animating numeric properties.
+*
+* @module anim
+* @submodule anim-base
+*/
+
+    /**
+     * A class for constructing animation instances.
+     * @class Anim
+     * @for Anim
+     * @constructor
+     * @extends Base
+     */
+
+    var RUNNING = 'running',
+        START_TIME = 'startTime',
+        ELAPSED_TIME = 'elapsedTime',
+        /**
+        * @for Anim
+        * @event start
+        * @description fires when an animation begins.
+        * @param {Event} ev The start event.
+        * @type Event.Custom
+        */
+        START = 'start',
+
+        /**
+        * @event tween
+        * @description fires every frame of the animation.
+        * @param {Event} ev The tween event.
+        * @type Event.Custom
+        */
+        TWEEN = 'tween',
+
+        /**
+        * @event end
+        * @description fires after the animation completes.
+        * @param {Event} ev The end event.
+        * @type Event.Custom
+        */
+        END = 'end',
+        NODE = 'node',
+        PAUSED = 'paused',
+        REVERSE = 'reverse', // TODO: cleanup
+        ITERATION_COUNT = 'iterationCount',
+
+        NUM = Number;
+
+    var _running = {},
+        _timer;
+
+    Y.Anim = function() {
+        Y.Anim.superclass.constructor.apply(this, arguments);
+        Y.Anim._instances[Y.stamp(this)] = this;
+    };
+
+    Y.Anim.NAME = 'anim';
+
+    Y.Anim._instances = {};
+
+    /**
+     * Regex of properties that should use the default unit.
+     *
+     * @property RE_DEFAULT_UNIT
+     * @static
+     */
+    Y.Anim.RE_DEFAULT_UNIT = /^width|height|top|right|bottom|left|margin.*|padding.*|border.*$/i;
+
+    /**
+     * The default unit to use with properties that pass the RE_DEFAULT_UNIT test.
+     *
+     * @property DEFAULT_UNIT
+     * @static
+     */
+    Y.Anim.DEFAULT_UNIT = 'px';
+
+    Y.Anim.DEFAULT_EASING = function (t, b, c, d) {
+        return c * t / d + b; // linear easing
+    };
+
+    /**
+     * Time in milliseconds passed to setInterval for frame processing 
+     *
+     * @property intervalTime
+     * @default 20
+     * @static
+     */
+    Y.Anim._intervalTime = 20;
+
+    /**
+     * Bucket for custom getters and setters
+     *
+     * @property behaviors
+     * @static
+     */
+    Y.Anim.behaviors = {
+        left: {
+            get: function(anim, attr) {
+                return anim._getOffset(attr);
+            }
+        }
+    };
+
+    Y.Anim.behaviors.top = Y.Anim.behaviors.left;
+
+    /**
+     * The default setter to use when setting object properties.
+     *
+     * @property DEFAULT_SETTER
+     * @static
+     */
+    Y.Anim.DEFAULT_SETTER = function(anim, att, from, to, elapsed, duration, fn, unit) {
+        var node = anim._node,
+            val = fn(elapsed, NUM(from), NUM(to) - NUM(from), duration);
+
+        if (att in node._node.style || att in Y.DOM.CUSTOM_STYLES) {
+            unit = unit || '';
+            node.setStyle(att, val + unit);
+        } else if (node._node.attributes[att]) {
+            node.setAttribute(att, val);
+        } else {
+            node.set(att, val);
+        }
+    };
+
+    /**
+     * The default getter to use when getting object properties.
+     *
+     * @property DEFAULT_GETTER
+     * @static
+     */
+    Y.Anim.DEFAULT_GETTER = function(anim, att) {
+        var node = anim._node,
+            val = '';
+
+        if (att in node._node.style || att in Y.DOM.CUSTOM_STYLES) {
+            val = node.getComputedStyle(att);
+        } else if (node._node.attributes[att]) {
+            val = node.getAttribute(att);
+        } else {
+            val = node.get(att);
+        }
+
+        return val;
+    };
+
+    Y.Anim.ATTRS = {
+        /**
+         * The object to be animated.
+         * @attribute node
+         * @type Node
+         */
+        node: {
+            setter: function(node) {
+                node = Y.one(node);
+                this._node = node;
+                if (!node) {
+                }
+                return node;
+            }
+        },
+
+        /**
+         * The length of the animation.  Defaults to "1" (second).
+         * @attribute duration
+         * @type NUM
+         */
+        duration: {
+            value: 1
+        },
+
+        /**
+         * The method that will provide values to the attribute(s) during the animation. 
+         * Defaults to "Easing.easeNone".
+         * @attribute easing
+         * @type Function
+         */
+        easing: {
+            value: Y.Anim.DEFAULT_EASING,
+
+            setter: function(val) {
+                if (typeof val === 'string' && Y.Easing) {
+                    return Y.Easing[val];
+                }
+            }
+        },
+
+        /**
+         * The starting values for the animated properties. 
+         * Fields may be strings, numbers, or functions.
+         * If a function is used, the return value becomes the from value.
+         * If no from value is specified, the DEFAULT_GETTER will be used. 
+         * @attribute from
+         * @type Object
+         * supports any unit, provided it matches the "to" (or default)
+         * unit (e.g. "{width: 10em', color: 'rgb(0, 0 0)', borderColor: '#ccc'}".
+         * If using the default ('px' for length-based units), the unit may be omitted  (
+         * (e.g. "{width: 100}, borderColor: 'ccc'}", which defaults to pixels 
+         * and hex, respectively).
+         */
+        from: {},
+
+        /**
+         * The ending values for the animated properties. 
+         * Fields may be strings, numbers, or functions.
+         * @attribute to
+         * @type Object
+         * supports any unit, provided it matches the "from" (or default)
+         * unit (e.g. "{width: '50%', color: 'red', borderColor: '#ccc'}".
+         * If using the default ('px' for length-based units), the unit may be omitted (
+         * (e.g. "{width: 100}, borderColor: 'ccc'}", which defaults to pixels 
+         * and hex, respectively).
+         */
+        to: {},
+
+        /**
+         * Date stamp for the first frame of the animation.
+         * @attribute startTime
+         * @type Int
+         * @default 0 
+         * @readOnly
+         */
+        startTime: {
+            value: 0,
+            readOnly: true
+        },
+
+        /**
+         * Current time the animation has been running.
+         * @attribute elapsedTime
+         * @type Int
+         * @default 0 
+         * @readOnly
+         */
+        elapsedTime: {
+            value: 0,
+            readOnly: true
+        },
+
+        /**
+         * Whether or not the animation is currently running.
+         * @attribute running 
+         * @type Boolean
+         * @default false 
+         * @readOnly
+         */
+        running: {
+            getter: function() {
+                return !!_running[Y.stamp(this)];
+            },
+            value: false,
+            readOnly: true
+        },
+
+        /**
+         * The number of times the animation should run 
+         * @attribute iterations
+         * @type Int
+         * @default 1 
+         */
+        iterations: {
+            value: 1
+        },
+
+        /**
+         * The number of iterations that have occurred.
+         * Resets when an animation ends (reaches iteration count or stop() called). 
+         * @attribute iterationCount
+         * @type Int
+         * @default 0
+         * @readOnly
+         */
+        iterationCount: {
+            value: 0,
+            readOnly: true
+        },
+
+        /**
+         * How iterations of the animation should behave. 
+         * Possible values are "normal" and "alternate".
+         * Normal will repeat the animation, alternate will reverse on every other pass.
+         *
+         * @attribute direction
+         * @type String
+         * @default "normal"
+         */
+        direction: {
+            value: 'normal' // | alternate (fwd on odd, rev on even per spec)
+        },
+
+        /**
+         * Whether or not the animation is currently paused.
+         * @attribute paused 
+         * @type Boolean
+         * @default false 
+         * @readOnly
+         */
+        paused: {
+            readOnly: true,
+            value: false
+        },
+
+        /**
+         * If true, animation begins from last frame
+         * @attribute reverse
+         * @type Boolean
+         * @default false 
+         */
+        reverse: {
+            value: false
+        }
+
+
+    };
+
+    /**
+     * Runs all animation instances.
+     * @method run
+     * @static
+     */    
+    Y.Anim.run = function() {
+        var instances = Y.Anim._instances;
+        for (var i in instances) {
+            if (instances[i].run) {
+                instances[i].run();
+            }
+        }
+    };
+
+    /**
+     * Pauses all animation instances.
+     * @method pause
+     * @static
+     */    
+    Y.Anim.pause = function() {
+        for (var i in _running) { // stop timer if nothing running
+            if (_running[i].pause) {
+                _running[i].pause();
+            }
+        }
+
+        Y.Anim._stopTimer();
+    };
+
+    /**
+     * Stops all animation instances.
+     * @method stop
+     * @static
+     */    
+    Y.Anim.stop = function() {
+        for (var i in _running) { // stop timer if nothing running
+            if (_running[i].stop) {
+                _running[i].stop();
+            }
+        }
+        Y.Anim._stopTimer();
+    };
+    
+    Y.Anim._startTimer = function() {
+        if (!_timer) {
+            _timer = setInterval(Y.Anim._runFrame, Y.Anim._intervalTime);
+        }
+    };
+
+    Y.Anim._stopTimer = function() {
+        clearInterval(_timer);
+        _timer = 0;
+    };
+
+    /**
+     * Called per Interval to handle each animation frame.
+     * @method _runFrame
+     * @private
+     * @static
+     */    
+    Y.Anim._runFrame = function() {
+        var done = true;
+        for (var anim in _running) {
+            if (_running[anim]._runFrame) {
+                done = false;
+                _running[anim]._runFrame();
+            }
+        }
+
+        if (done) {
+            Y.Anim._stopTimer();
+        }
+    };
+
+    Y.Anim.RE_UNITS = /^(-?\d*\.?\d*){1}(em|ex|px|in|cm|mm|pt|pc|%)*$/;
+
+    var proto = {
+        /**
+         * Starts or resumes an animation.
+         * @method run
+         * @chainable
+         */    
+        run: function() {
+            if (this.get(PAUSED)) {
+                this._resume();
+            } else if (!this.get(RUNNING)) {
+                this._start();
+            }
+            return this;
+        },
+
+        /**
+         * Pauses the animation and
+         * freezes it in its current state and time.
+         * Calling run() will continue where it left off.
+         * @method pause
+         * @chainable
+         */    
+        pause: function() {
+            if (this.get(RUNNING)) {
+                this._pause();
+            }
+            return this;
+        },
+
+        /**
+         * Stops the animation and resets its time.
+         * @method stop
+         * @param {Boolean} finish If true, the animation will move to the last frame
+         * @chainable
+         */    
+        stop: function(finish) {
+            if (this.get(RUNNING) || this.get(PAUSED)) {
+                this._end(finish);
+            }
+            return this;
+        },
+
+        _added: false,
+
+        _start: function() {
+            this._set(START_TIME, new Date() - this.get(ELAPSED_TIME));
+            this._actualFrames = 0;
+            if (!this.get(PAUSED)) {
+                this._initAnimAttr();
+            }
+            _running[Y.stamp(this)] = this;
+            Y.Anim._startTimer();
+
+            this.fire(START);
+        },
+
+        _pause: function() {
+            this._set(START_TIME, null);
+            this._set(PAUSED, true);
+            delete _running[Y.stamp(this)];
+
+            /**
+            * @event pause
+            * @description fires when an animation is paused.
+            * @param {Event} ev The pause event.
+            * @type Event.Custom
+            */
+            this.fire('pause');
+        },
+
+        _resume: function() {
+            this._set(PAUSED, false);
+            _running[Y.stamp(this)] = this;
+            this._set(START_TIME, new Date() - this.get(ELAPSED_TIME));
+            Y.Anim._startTimer();
+
+            /**
+            * @event resume
+            * @description fires when an animation is resumed (run from pause).
+            * @param {Event} ev The pause event.
+            * @type Event.Custom
+            */
+            this.fire('resume');
+        },
+
+        _end: function(finish) {
+            var duration = this.get('duration') * 1000;
+            if (finish) { // jump to last frame
+                this._runAttrs(duration, duration, this.get(REVERSE));
+            }
+
+            this._set(START_TIME, null);
+            this._set(ELAPSED_TIME, 0);
+            this._set(PAUSED, false);
+
+            delete _running[Y.stamp(this)];
+            this.fire(END, {elapsed: this.get(ELAPSED_TIME)});
+        },
+
+        _runFrame: function() {
+            var d = this._runtimeAttr.duration,
+                t = new Date() - this.get(START_TIME),
+                reverse = this.get(REVERSE),
+                done = (t >= d),
+                attribute,
+                setter;
+                
+            this._runAttrs(t, d, reverse);
+            this._actualFrames += 1;
+            this._set(ELAPSED_TIME, t);
+
+            this.fire(TWEEN);
+            if (done) {
+                this._lastFrame();
+            }
+        },
+
+        _runAttrs: function(t, d, reverse) {
+            var attr = this._runtimeAttr,
+                customAttr = Y.Anim.behaviors,
+                easing = attr.easing,
+                lastFrame = d,
+                done = false,
+                attribute,
+                setter,
+                i;
+
+            if (t >= d) {
+                done = true;
+            }
+
+            if (reverse) {
+                t = d - t;
+                lastFrame = 0;
+            }
+
+            for (i in attr) {
+                if (attr[i].to) {
+                    attribute = attr[i];
+                    setter = (i in customAttr && 'set' in customAttr[i]) ?
+                            customAttr[i].set : Y.Anim.DEFAULT_SETTER;
+
+                    if (!done) {
+                        setter(this, i, attribute.from, attribute.to, t, d, easing, attribute.unit); 
+                    } else {
+                        setter(this, i, attribute.from, attribute.to, lastFrame, d, easing, attribute.unit); 
+                    }
+                }
+            }
+
+
+        },
+
+        _lastFrame: function() {
+            var iter = this.get('iterations'),
+                iterCount = this.get(ITERATION_COUNT);
+
+            iterCount += 1;
+            if (iter === 'infinite' || iterCount < iter) {
+                if (this.get('direction') === 'alternate') {
+                    this.set(REVERSE, !this.get(REVERSE)); // flip it
+                }
+                /**
+                * @event iteration
+                * @description fires when an animation begins an iteration.
+                * @param {Event} ev The iteration event.
+                * @type Event.Custom
+                */
+                this.fire('iteration');
+            } else {
+                iterCount = 0;
+                this._end();
+            }
+
+            this._set(START_TIME, new Date());
+            this._set(ITERATION_COUNT, iterCount);
+        },
+
+        _initAnimAttr: function() {
+            var from = this.get('from') || {},
+                to = this.get('to') || {},
+                attr = {
+                    duration: this.get('duration') * 1000,
+                    easing: this.get('easing')
+                },
+                customAttr = Y.Anim.behaviors,
+                node = this.get(NODE), // implicit attr init
+                unit, begin, end;
+
+            Y.each(to, function(val, name) {
+                if (typeof val === 'function') {
+                    val = val.call(this, node);
+                }
+
+                begin = from[name];
+                if (begin === undefined) {
+                    begin = (name in customAttr && 'get' in customAttr[name])  ?
+                            customAttr[name].get(this, name) : Y.Anim.DEFAULT_GETTER(this, name);
+                } else if (typeof begin === 'function') {
+                    begin = begin.call(this, node);
+                }
+
+                var mFrom = Y.Anim.RE_UNITS.exec(begin);
+                var mTo = Y.Anim.RE_UNITS.exec(val);
+
+                begin = mFrom ? mFrom[1] : begin;
+                end = mTo ? mTo[1] : val;
+                unit = mTo ? mTo[2] : mFrom ?  mFrom[2] : ''; // one might be zero TODO: mixed units
+
+                if (!unit && Y.Anim.RE_DEFAULT_UNIT.test(name)) {
+                    unit = Y.Anim.DEFAULT_UNIT;
+                }
+
+                if (!begin || !end) {
+                    Y.error('invalid "from" or "to" for "' + name + '"', 'Anim');
+                    return;
+                }
+
+                attr[name] = {
+                    from: begin,
+                    to: end,
+                    unit: unit
+                };
+
+            }, this);
+
+            this._runtimeAttr = attr;
+        },
+
+
+        // TODO: move to computedStyle? (browsers dont agree on default computed offsets)
+        _getOffset: function(attr) {
+            var node = this._node,
+                val = node.getComputedStyle(attr),
+                get = (attr === 'left') ? 'getX': 'getY',
+                set = (attr === 'left') ? 'setX': 'setY';
+
+            if (val === 'auto') {
+                var position = node.getStyle('position');
+                if (position === 'absolute' || position === 'fixed') {
+                    val = node[get]();
+                    node[set](val);
+                } else {
+                    val = 0;
+                }
+            }
+
+            return val;
+        },
+
+        destructor: function() {
+            delete Y.Anim._instances[Y.stamp(this)];
+        }
+    };
+
+    Y.extend(Y.Anim, Y.Base, proto);
+
+
+}, '3.3.0' ,{requires:['base-base', 'node-style']});
+YUI.add('anim-color', function(Y) {
+
+/**
+ * Adds support for color properties in <code>to</code>
+ * and <code>from</code> attributes.
+ * @module anim
+ * @submodule anim-color
+ */
+
+var NUM = Number;
+
+Y.Anim.behaviors.color = {
+    set: function(anim, att, from, to, elapsed, duration, fn) {
+        from = Y.Color.re_RGB.exec(Y.Color.toRGB(from));
+        to = Y.Color.re_RGB.exec(Y.Color.toRGB(to));
+
+        if (!from || from.length < 3 || !to || to.length < 3) {
+            Y.error('invalid from or to passed to color behavior');
+        }
+
+        anim._node.setStyle(att, 'rgb(' + [
+            Math.floor(fn(elapsed, NUM(from[1]), NUM(to[1]) - NUM(from[1]), duration)),
+            Math.floor(fn(elapsed, NUM(from[2]), NUM(to[2]) - NUM(from[2]), duration)),
+            Math.floor(fn(elapsed, NUM(from[3]), NUM(to[3]) - NUM(from[3]), duration))
+        ].join(', ') + ')');
+    },
+    
+    // TODO: default bgcolor const
+    get: function(anim, att) {
+        var val = anim._node.getComputedStyle(att);
+        val = (val === 'transparent') ? 'rgb(255, 255, 255)' : val;
+        return val;
+    }
+};
+
+Y.each(['backgroundColor',
+        'borderColor',
+        'borderTopColor',
+        'borderRightColor', 
+        'borderBottomColor', 
+        'borderLeftColor'],
+        function(v, i) {
+            Y.Anim.behaviors[v] = Y.Anim.behaviors.color;
+        }
+);
+
+
+}, '3.3.0' ,{requires:['anim-base']});
+YUI.add('anim-curve', function(Y) {
+
+/**
+ * Adds support for the <code>curve</code> property for the <code>to</code> 
+ * attribute.  A curve is zero or more control points and an end point.
+ * @module anim
+ * @submodule anim-curve
+ */
+
+Y.Anim.behaviors.curve = {
+    set: function(anim, att, from, to, elapsed, duration, fn) {
+        from = from.slice.call(from);
+        to = to.slice.call(to);
+        var t = fn(elapsed, 0, 100, duration) / 100;
+        to.unshift(from);
+        anim._node.setXY(Y.Anim.getBezier(to, t));
+    },
+
+    get: function(anim, att) {
+        return anim._node.getXY();
+    }
+};
+
+/**
+ * Get the current position of the animated element based on t.
+ * Each point is an array of "x" and "y" values (0 = x, 1 = y)
+ * At least 2 points are required (start and end).
+ * First point is start. Last point is end.
+ * Additional control points are optional.     
+ * @for Anim
+ * @method getBezier
+ * @static
+ * @param {Array} points An array containing Bezier points
+ * @param {Number} t A number between 0 and 1 which is the basis for determining current position
+ * @return {Array} An array containing int x and y member data
+ */
+Y.Anim.getBezier = function(points, t) {  
+    var n = points.length;
+    var tmp = [];
+
+    for (var i = 0; i < n; ++i){
+        tmp[i] = [points[i][0], points[i][1]]; // save input
+    }
+    
+    for (var j = 1; j < n; ++j) {
+        for (i = 0; i < n - j; ++i) {
+            tmp[i][0] = (1 - t) * tmp[i][0] + t * tmp[parseInt(i + 1, 10)][0];
+            tmp[i][1] = (1 - t) * tmp[i][1] + t * tmp[parseInt(i + 1, 10)][1]; 
+        }
+    }
+
+    return [ tmp[0][0], tmp[0][1] ]; 
+
+};
+
+
+}, '3.3.0' ,{requires:['anim-xy']});
+YUI.add('anim-easing', function(Y) {
+
+/*
+TERMS OF USE - EASING EQUATIONS
+Open source under the BSD License.
+Copyright 2001 Robert Penner All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ * Neither the name of the author nor the names of contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/**
+ * The easing module provides methods for customizing
+ * how an animation behaves during each run.
+ * @class Easing
+ * @module anim
+ * @submodule anim-easing
+ */
+
+var Easing = {
+
+    /**
+     * Uniform speed between points.
+     * @for Easing
+     * @method easeNone
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeNone: function (t, b, c, d) {
+        return c*t/d + b;
+    },
+    
+    /**
+     * Begins slowly and accelerates towards end. (quadratic)
+     * @method easeIn
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeIn: function (t, b, c, d) {
+        return c*(t/=d)*t + b;
+    },
+
+    /**
+     * Begins quickly and decelerates towards end.  (quadratic)
+     * @method easeOut
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeOut: function (t, b, c, d) {
+        return -c *(t/=d)*(t-2) + b;
+    },
+    
+    /**
+     * Begins slowly and decelerates towards end. (quadratic)
+     * @method easeBoth
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeBoth: function (t, b, c, d) {
+        if ((t/=d/2) < 1) {
+            return c/2*t*t + b;
+        }
+        
+        return -c/2 * ((--t)*(t-2) - 1) + b;
+    },
+    
+    /**
+     * Begins slowly and accelerates towards end. (quartic)
+     * @method easeInStrong
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeInStrong: function (t, b, c, d) {
+        return c*(t/=d)*t*t*t + b;
+    },
+    
+    /**
+     * Begins quickly and decelerates towards end.  (quartic)
+     * @method easeOutStrong
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeOutStrong: function (t, b, c, d) {
+        return -c * ((t=t/d-1)*t*t*t - 1) + b;
+    },
+    
+    /**
+     * Begins slowly and decelerates towards end. (quartic)
+     * @method easeBothStrong
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    easeBothStrong: function (t, b, c, d) {
+        if ((t/=d/2) < 1) {
+            return c/2*t*t*t*t + b;
+        }
+        
+        return -c/2 * ((t-=2)*t*t*t - 2) + b;
+    },
+
+    /**
+     * Snap in elastic effect.
+     * @method elasticIn
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} a Amplitude (optional)
+     * @param {Number} p Period (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+
+    elasticIn: function (t, b, c, d, a, p) {
+        var s;
+        if (t === 0) {
+            return b;
+        }
+        if ( (t /= d) === 1 ) {
+            return b+c;
+        }
+        if (!p) {
+            p = d* 0.3;
+        }
+        
+        if (!a || a < Math.abs(c)) {
+            a = c; 
+            s = p/4;
+        }
+        else {
+            s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        
+        return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+    },
+
+    /**
+     * Snap out elastic effect.
+     * @method elasticOut
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} a Amplitude (optional)
+     * @param {Number} p Period (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+    elasticOut: function (t, b, c, d, a, p) {
+        var s;
+        if (t === 0) {
+            return b;
+        }
+        if ( (t /= d) === 1 ) {
+            return b+c;
+        }
+        if (!p) {
+            p=d * 0.3;
+        }
+        
+        if (!a || a < Math.abs(c)) {
+            a = c;
+            s = p / 4;
+        }
+        else {
+            s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        
+        return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+    },
+    
+    /**
+     * Snap both elastic effect.
+     * @method elasticBoth
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} a Amplitude (optional)
+     * @param {Number} p Period (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+    elasticBoth: function (t, b, c, d, a, p) {
+        var s;
+        if (t === 0) {
+            return b;
+        }
+        
+        if ( (t /= d/2) === 2 ) {
+            return b+c;
+        }
+        
+        if (!p) {
+            p = d*(0.3*1.5);
+        }
+        
+        if ( !a || a < Math.abs(c) ) {
+            a = c; 
+            s = p/4;
+        }
+        else {
+            s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        
+        if (t < 1) {
+            return -0.5*(a*Math.pow(2,10*(t-=1)) * 
+                    Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+        }
+        return a*Math.pow(2,-10*(t-=1)) * 
+                Math.sin( (t*d-s)*(2*Math.PI)/p )*0.5 + c + b;
+    },
+
+
+    /**
+     * Backtracks slightly, then reverses direction and moves to end.
+     * @method backIn
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} s Overshoot (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+    backIn: function (t, b, c, d, s) {
+        if (s === undefined) {
+            s = 1.70158;
+        }
+        if (t === d) {
+            t -= 0.001;
+        }
+        return c*(t/=d)*t*((s+1)*t - s) + b;
+    },
+
+    /**
+     * Overshoots end, then reverses and comes back to end.
+     * @method backOut
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} s Overshoot (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+    backOut: function (t, b, c, d, s) {
+        if (typeof s === 'undefined') {
+            s = 1.70158;
+        }
+        return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+    },
+    
+    /**
+     * Backtracks slightly, then reverses direction, overshoots end, 
+     * then reverses and comes back to end.
+     * @method backBoth
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @param {Number} s Overshoot (optional)
+     * @return {Number} The computed value for the current animation frame
+     */
+    backBoth: function (t, b, c, d, s) {
+        if (typeof s === 'undefined') {
+            s = 1.70158; 
+        }
+        
+        if ((t /= d/2 ) < 1) {
+            return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+        }
+        return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+    },
+
+    /**
+     * Bounce off of start.
+     * @method bounceIn
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    bounceIn: function (t, b, c, d) {
+        return c - Y.Easing.bounceOut(d-t, 0, c, d) + b;
+    },
+    
+    /**
+     * Bounces off end.
+     * @method bounceOut
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    bounceOut: function (t, b, c, d) {
+        if ((t/=d) < (1/2.75)) {
+                return c*(7.5625*t*t) + b;
+        } else if (t < (2/2.75)) {
+                return c*(7.5625*(t-=(1.5/2.75))*t + 0.75) + b;
+        } else if (t < (2.5/2.75)) {
+                return c*(7.5625*(t-=(2.25/2.75))*t + 0.9375) + b;
+        }
+        return c*(7.5625*(t-=(2.625/2.75))*t + 0.984375) + b;
+    },
+    
+    /**
+     * Bounces off start and end.
+     * @method bounceBoth
+     * @param {Number} t Time value used to compute current value
+     * @param {Number} b Starting value
+     * @param {Number} c Delta between start and end values
+     * @param {Number} d Total length of animation
+     * @return {Number} The computed value for the current animation frame
+     */
+    bounceBoth: function (t, b, c, d) {
+        if (t < d/2) {
+            return Y.Easing.bounceIn(t * 2, 0, c, d) * 0.5 + b;
+        }
+        return Y.Easing.bounceOut(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+    }
+};
+
+Y.Easing = Easing;
+
+
+}, '3.3.0' ,{requires:['anim-base']});
+YUI.add('anim-node-plugin', function(Y) {
+
+/**
+ *  Binds an Anim instance to a Node instance
+ * @module anim
+ * @class Plugin.NodeFX
+ * @extends Base
+ * @submodule anim-node-plugin
+ */
+
+var NodeFX = function(config) {
+    config = (config) ? Y.merge(config) : {};
+    config.node = config.host;
+    NodeFX.superclass.constructor.apply(this, arguments);
+};
+
+NodeFX.NAME = "nodefx";
+NodeFX.NS = "fx";
+
+Y.extend(NodeFX, Y.Anim);
+
+Y.namespace('Plugin');
+Y.Plugin.NodeFX = NodeFX;
+
+
+}, '3.3.0' ,{requires:['node-pluginhost', 'anim-base']});
+YUI.add('anim-scroll', function(Y) {
+
+/**
+ * Adds support for the <code>scroll</code> property in <code>to</code>
+ * and <code>from</code> attributes.
+ * @module anim
+ * @submodule anim-scroll
+ */
+
+var NUM = Number;
+
+//TODO: deprecate for scrollTop/Left properties?
+Y.Anim.behaviors.scroll = {
+    set: function(anim, att, from, to, elapsed, duration, fn) {
+        var
+            node = anim._node, 
+            val = ([
+            fn(elapsed, NUM(from[0]), NUM(to[0]) - NUM(from[0]), duration),
+            fn(elapsed, NUM(from[1]), NUM(to[1]) - NUM(from[1]), duration)
+        ]);
+
+        if (val[0]) {
+            node.set('scrollLeft', val[0]);
+        }
+
+        if (val[1]) {
+            node.set('scrollTop', val[1]);
+        }
+    },
+    get: function(anim) {
+        var node = anim._node;
+        return [node.get('scrollLeft'), node.get('scrollTop')];
+    }
+};
+
+
+
+}, '3.3.0' ,{requires:['anim-base']});
+YUI.add('anim-xy', function(Y) {
+
+/**
+ * Adds support for the <code>xy</code> property in <code>from</code> and 
+ * <code>to</code> attributes.
+ * @module anim
+ * @submodule anim-xy
+ */
+
+var NUM = Number;
+
+Y.Anim.behaviors.xy = {
+    set: function(anim, att, from, to, elapsed, duration, fn) {
+        anim._node.setXY([
+            fn(elapsed, NUM(from[0]), NUM(to[0]) - NUM(from[0]), duration),
+            fn(elapsed, NUM(from[1]), NUM(to[1]) - NUM(from[1]), duration)
+        ]);
+    },
+    get: function(anim) {
+        return anim._node.getXY();
+    }
+};
+
+
+
+}, '3.3.0' ,{requires:['anim-base', 'node-screen']});
+
+
+YUI.add('anim', function(Y){}, '3.3.0' ,{use:['anim-base', 'anim-color', 'anim-curve', 'anim-easing', 'anim-node-plugin', 'anim-scroll', 'anim-xy'], skinnable:false});
+

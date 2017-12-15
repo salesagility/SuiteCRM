@@ -1,9 +1,9 @@
-/*
+/* 
  * More info at: http://phpjs.org
- *
+ * 
  * This is version: 3.25
  * php.js is copyright 2011 Kevin van Zonneveld.
- *
+ * 
  * Portions copyright Brett Zamir (http://brett-zamir.me), Kevin van Zonneveld
  * (http://kevin.vanzonneveld.net), Onno Marsman, Theriault, Michael White
  * (http://getsprink.com), Waldo Malqui Silva, Paulo Freitas, Jonas Raoni
@@ -97,10 +97,10 @@
  * (http://www.residence-mixte.com/), Kheang Hok Chin
  * (http://www.distantia.ca/), Jay Klehr, Lorenzo Pisani, Tony, Yen-Wei Liu,
  * Greenseed, mk.keck, Leslie Hoare, dude, booeyOH, Ben Bryan
- *
+ * 
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -108,10 +108,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.

@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,17 +35,69 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+
+
+
+
 function prep_edit(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='DetailView';the_form.return_id.value='{id}';the_form.action.value='EditView';the_form.sugar_body_only.value='0';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='DetailView';
+	the_form.return_id.value='{id}';
+	the_form.action.value='EditView';
+	the_form.sugar_body_only.value='0';
+}
+
 function prep_edit_project_tasks(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='DetailView';the_form.return_id.value='{id}';the_form.action.value='EditGridView';the_form.sugar_body_only.value='0';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='DetailView';
+	the_form.return_id.value='{id}';
+	the_form.action.value='EditGridView';
+	the_form.sugar_body_only.value='0';
+}
+
 function prep_duplicate(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='index';the_form.isDuplicate.value=true;the_form.action.value='EditView';the_form.sugar_body_only.value='0';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='index';
+	the_form.isDuplicate.value=true;
+	the_form.action.value='EditView';
+	the_form.sugar_body_only.value='0';
+}
+
 function prep_delete(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='ListView';the_form.action.value='Delete';the_form.sugar_body_only.value='0';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='ListView';
+	the_form.action.value='Delete';
+	the_form.sugar_body_only.value='0';
+}
+
 function prep_save_as_template(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='DetailView';the_form.return_id.value='{id}';the_form.action.value='Convert';the_form.sugar_body_only.value='0';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='DetailView';
+	the_form.return_id.value='{id}';
+	the_form.action.value='Convert';
+	the_form.sugar_body_only.value='0';
+}
 function prep_save_as_project(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='ProjectTemplatesDetailView';the_form.return_id.value='{id}';the_form.action.value='Convert';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='ProjectTemplatesDetailView';
+	the_form.return_id.value='{id}';
+	the_form.action.value='Convert';
+}
+
 function prep_export_to_project(the_form)
-{the_form.return_module.value='Project';the_form.return_action.value='DetailView';the_form.return_id.value='{id}';the_form.action.value='Export';the_form.sugar_body_only.value='1';}
+{
+	the_form.return_module.value='Project';
+	the_form.return_action.value='DetailView';
+	the_form.return_id.value='{id}';
+	the_form.action.value='Export';
+	the_form.sugar_body_only.value='1';
+}
+
+ //html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
+ //$(".moduleTitle .utils").html(html);

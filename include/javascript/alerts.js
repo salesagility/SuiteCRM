@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,25 +35,257 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-var AlertObj=function(){this.title='Alert';this.options={};this.options.body=' ';this.options.url_redirect='';this.options.target_module='';this.options.type='info';};var Alerts=function(){};Alerts.prototype.replaceMessages=[];Alerts.prototype.enable=function(){var alert=new AlertObj();if(!("Notification"in window)){alert.title="This browser does not support desktop notifications";Alerts.prototype.show(alert);return;}
-Notification.requestPermission(function(permission){if(permission==="granted"){alert.title="Desktop notifications are now enabled for this web browser.";}
-else{alert.title="Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";}
-Alerts.prototype.show(alert);});};Alerts.prototype.requestPermission=function(){if(!("Notification"in window)){return;}
-Notification.requestPermission();};Alerts.prototype.show=function(AlertObj){Alerts.prototype.requestPermission();if(("Notification"in window)){if(Notification.permission==="granted"){if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.target_module!=="undefined"){SUGAR.themes.theme_name=undefined;AlertObj.options.icon='index.php?entryPoint=getImage&themeName='+
-SUGAR.themes.theme_name+'&imageName='+
-AlertObj.options.target_module+'s.gif';}
-if(typeof AlertObj.options.type==="undefined"){AlertObj.options.type='info';}}
-var notification=new Notification(AlertObj.title,AlertObj.options);if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){notification.onclick=function(){window.open(AlertObj.options.url_redirect);}}
-notification.onclose=function(){Alerts.prototype.addToManager(AlertObj);}}}
-else{var message=AlertObj.title;if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.body!=="undefined"){message+='\n'+AlertObj.options.body;}
-message+=SUGAR.language.translate('app_strings','MSG_JS_ALERT_MTG_REMINDER_CALL_MSG')+"\n\n";if(confirm(message)){if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){window.location=AlertObj.options.url_redirect;}}}
-else{Alerts.prototype.addToManager(AlertObj);}}}}};Alerts.prototype.addToManager=function(AlertObj){var url='index.php',name=AlertObj.title,description,url_redirect,is_read=0,target_module,type='info';if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){url_redirect=AlertObj.options.url_redirect}
-if(typeof AlertObj.options.body!=="undefined"){description=AlertObj.options.body}
-if(typeof AlertObj.options.target_module!=="undefined"){target_module=AlertObj.options.target_module}
-if(typeof AlertObj.options.type!=="undefined"){type=AlertObj.options.type}}
-$.post(url,{module:'Alerts',action:'add',name:name,description:description,url_redirect:url_redirect,is_read:is_read,target_module:target_module,type:type}).fail(function(data){console.error(data);}).always(function(){Alerts.prototype.updateManager();});};Alerts.prototype.redirectToLogin=function(){var getQueryParams=function(qs){qs=qs.split('+').join(' ');var params={},tokens,re=/[?&]?([^=]+)=([^&]*)/g;while(tokens=re.exec(qs)){params[decodeURIComponent(tokens[1])]=decodeURIComponent(tokens[2]);}
-return params;};var params=getQueryParams(document.location.search);params.entryPoint=undefined;if(params.entryPoint!=='Changenewpassword'&&params.module!=='Users'&&params.action!=='Login'){document.location.href='index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';return true;}
-return false;};Alerts.prototype.updateManager=function(){var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data==='lost session'){Alerts.prototype.redirectToLogin();return false;}
-for(var replaceMessage in Alerts.prototype.replaceMessages){data=data.replace(Alerts.prototype.replaceMessages[replaceMessage].search,Alerts.prototype.replaceMessages[replaceMessage].replace);}
-var alertsDiv=$('.desktop_notifications #alerts');alertsDiv.html(data);var alerts=$('<div></div>');$(data).appendTo(alerts);var alertCount=$(alerts).children('.alert').length;var alertCountDiv=$('.alert_count');var desktopNotificationsDiv=$('.desktop_notifications');var alertButtonDiv=$('.alertsButton');alertCountDiv.html(alertCount);if(alertCount>0){alertsDiv.addClass('has-alerts');desktopNotificationsDiv.addClass('has-alerts');alertButtonDiv.removeClass('btn-').addClass('btn-danger');alertCountDiv.removeClass('hidden');}
-else{desktopNotificationsDiv.removeClass('has-alerts');alertsDiv.removeClass('has-alerts');alertButtonDiv.removeClass('btn-danger').addClass('btn-success');alertCountDiv.addClass('hidden');}});};Alerts.prototype.markAsRead=function(id){var url='index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';$.ajax(url).done(function(){Alerts.prototype.updateManager();});};$(document).ready(function(){Alerts.prototype.replaceMessages=[{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"),replace:""},{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"),replace:""}];var updateMissed=function(){Alerts.prototype.updateManager();setTimeout(updateMissed,60000);};setTimeout(updateMissed,2000);});
+
+/**
+ *
+ * @class
+ * @member {string} title
+ * @member {object} options
+ * @member {string} options.body
+ * @member {string} options.url_redirect
+ * @member {string} options.target_module
+ * @member {string} options.type warning danger info primary success
+ * @see https://getbootstrap.com/docs/3.3/css/#helper-classes
+ */
+var AlertObj = function() {
+  this.title = 'Alert';
+  this.options = {};
+  this.options.body = ' ';
+  this.options.url_redirect = '';
+  this.options.target_module = '';
+  this.options.type= 'info';
+};
+
+/**
+ *
+ * @namespace
+ */
+var Alerts = function () {
+};
+
+/**
+ *
+ * @type {Array}
+ */
+Alerts.prototype.replaceMessages = [];
+
+/**
+ * Enable Notifications API
+ */
+Alerts.prototype.enable = function () {
+  var alert = new AlertObj();
+
+  if (!("Notification" in window)) {
+    alert.title =  "This browser does not support desktop notifications";
+    Alerts.prototype.show(alert);
+    return;
+  }
+
+  Notification.requestPermission(function (permission) {
+    if (permission === "granted") {
+      alert.title =  "Desktop notifications are now enabled for this web browser.";
+    }
+    else {
+      alert.title = "Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";
+    }
+
+    Alerts.prototype.show(alert);
+  });
+};
+
+/**
+ * Request permission to use Notification API
+ */
+Alerts.prototype.requestPermission = function () {
+  if (!("Notification" in window)) {
+    return;
+  }
+
+  Notification.requestPermission();
+};
+
+/**
+ * Show an alert to the user
+ * @param {AlertObj} AlertObj
+ */
+Alerts.prototype.show = function (AlertObj) {
+  Alerts.prototype.requestPermission();
+  if (("Notification" in window)) {
+    if (Notification.permission === "granted") {
+      if (typeof AlertObj.options !== "undefined") {
+        if (typeof AlertObj.options.target_module !== "undefined") {
+          SUGAR.themes.theme_name = undefined;
+          AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' +
+            SUGAR.themes.theme_name + '&imageName=' +
+            AlertObj.options.target_module + 's.gif';
+        }
+        if (typeof AlertObj.options.type === "undefined") {
+          AlertObj.options.type = 'info';
+        }
+      }
+      var notification = new Notification(AlertObj.title, AlertObj.options);
+      if (typeof AlertObj.options !== "undefined") {
+        if (typeof AlertObj.options.url_redirect !== "undefined") {
+          notification.onclick = function () {
+            window.open(AlertObj.options.url_redirect);
+          }
+        }
+        notification.onclose = function () {
+          Alerts.prototype.addToManager(AlertObj);
+        }
+      }
+    }
+    else {
+      var message = AlertObj.title;
+      if (typeof AlertObj.options !== "undefined") {
+        if (typeof AlertObj.options.body !== "undefined") {
+          message += '\n' + AlertObj.options.body;
+        }
+        message += SUGAR.language.translate('app_strings', 'MSG_JS_ALERT_MTG_REMINDER_CALL_MSG') + "\n\n";
+        if (confirm(message)) {
+          if (typeof AlertObj.options !== "undefined") {
+            if (typeof AlertObj.options.url_redirect !== "undefined") {
+              window.location = AlertObj.options.url_redirect;
+            }
+          }
+        }
+        else {
+          Alerts.prototype.addToManager(AlertObj);
+        }
+      }
+    }
+  }
+};
+
+
+/**
+ * Add alert to manager instead of showing it to the user
+ * @param {AlertObj} AlertObj
+ */
+Alerts.prototype.addToManager = function (AlertObj) {
+  var url = 'index.php', name = AlertObj.title, description, url_redirect, is_read = 0, target_module, type = 'info';
+  if (typeof AlertObj.options !== "undefined") {
+    if (typeof AlertObj.options.url_redirect !== "undefined") {
+      url_redirect = AlertObj.options.url_redirect
+    }
+    if (typeof AlertObj.options.body !== "undefined") {
+      description = AlertObj.options.body
+    }
+    if (typeof AlertObj.options.target_module !== "undefined") {
+      target_module = AlertObj.options.target_module
+    }
+    if (typeof AlertObj.options.type !== "undefined") {
+      type = AlertObj.options.type
+    }
+  }
+  $.post(url, {
+    module: 'Alerts',
+    action: 'add',
+    name: name,
+    description: description,
+    url_redirect: url_redirect,
+    is_read: is_read,
+    target_module: target_module,
+    type: type
+  }).fail(function (data) {
+    console.error(data);
+  }).always(function () {
+    Alerts.prototype.updateManager();
+  });
+};
+
+/**
+ * Redirect to login page
+ * @return {boolean}
+ */
+Alerts.prototype.redirectToLogin = function () {
+  var getQueryParams = function (qs) {
+    qs = qs.split('+').join(' ');
+    var params = {},
+      tokens,
+      re = /[?&]?([^=]+)=([^&]*)/g;
+    while (tokens = re.exec(qs)) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+    return params;
+  };
+  var params = getQueryParams(document.location.search);
+  params.entryPoint = undefined;
+  if (params.entryPoint !== 'Changenewpassword' && params.module !== 'Users' && params.action !== 'Login') {
+    document.location.href = 'index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Update Alert Manager (Navigation bar element)
+ */
+Alerts.prototype.updateManager = function () {
+  var url = 'index.php?module=Alerts&action=get&to_pdf=1';
+  $.ajax(url).done(function (data) {
+    if (data === 'lost session') {
+      Alerts.prototype.redirectToLogin();
+      return false;
+    }
+
+    // remove the jsAlert message
+    for (var replaceMessage in Alerts.prototype.replaceMessages) {
+      data = data.replace(
+        Alerts.prototype.replaceMessages[replaceMessage].search,
+        Alerts.prototype.replaceMessages[replaceMessage].replace
+      );
+    }
+
+    var alertsDiv = $('.desktop_notifications #alerts');
+    alertsDiv.html(data);
+
+    var alerts = $('<div></div>');
+    $(data).appendTo(alerts);
+    var alertCount = $(alerts).children('.alert').length;
+    var alertCountDiv = $('.alert_count');
+    var desktopNotificationsDiv = $('.desktop_notifications');
+    var alertButtonDiv = $('.alertsButton');
+
+
+    alertCountDiv.html(alertCount);
+    if (alertCount > 0) {
+      alertsDiv.addClass('has-alerts');
+      desktopNotificationsDiv.addClass('has-alerts');
+      alertButtonDiv.removeClass('btn-').addClass('btn-danger');
+      alertCountDiv.removeClass('hidden');
+    }
+    else {
+      desktopNotificationsDiv.removeClass('has-alerts');
+      alertsDiv.removeClass('has-alerts');
+      alertButtonDiv.removeClass('btn-danger').addClass('btn-success');
+      alertCountDiv.addClass('hidden');
+    }
+  });
+};
+
+/**
+ * Mark alert as read
+ * @param {string} id
+ */
+Alerts.prototype.markAsRead = function (id) {
+  var url = 'index.php?module=Alerts&action=markAsRead&record=' + id + '&to_pdf=1';
+  $.ajax(url).done(function () {
+    Alerts.prototype.updateManager();
+  });
+};
+
+/**
+ * Runs timer to update alerts
+ */
+$(document).ready(function () {
+  Alerts.prototype.replaceMessages = [
+    {search: SUGAR.language.translate("app", "MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"), replace: ""},
+    {search: SUGAR.language.translate("app", "MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"), replace: ""}
+  ];
+  var updateMissed = function () {
+    Alerts.prototype.updateManager();
+    setTimeout(updateMissed, 60000);
+  };
+  setTimeout(updateMissed, 2000);
+});

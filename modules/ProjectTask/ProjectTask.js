@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,11 +35,35 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function update_status(percent_complete){if(percent_complete=='0'){document.getElementById('status').value='Not Started';}
-else if(percent_complete=='100'){document.getElementById('status').value='Completed';}
-else if(isNaN(percent_complete)||(percent_complete<0||percent_complete>100)){document.getElementById('percent_complete').value='';}
-else{document.getElementById('status').value='In Progress';}}
-function update_percent_complete(status){if(status=='In Progress'){percent_value='50';}
-else if(status=='Completed'){percent_value='100';}
-else{percent_value='0';}
-document.getElementById('percent_complete').value=percent_value;}
+
+
+
+
+
+function update_status(percent_complete){
+	if (percent_complete == '0'){
+		document.getElementById('status').value = 'Not Started';
+	}
+	else if (percent_complete == '100'){
+		document.getElementById('status').value = 'Completed';		
+	}
+	else if (isNaN(percent_complete) || (percent_complete < 0 || percent_complete > 100)){
+		document.getElementById('percent_complete').value = '';
+	}
+	else{
+		document.getElementById('status').value = 'In Progress';
+	}
+}
+
+function update_percent_complete(status){
+	if (status == 'In Progress'){
+		percent_value = '50';
+	}
+	else if (status == 'Completed'){
+		percent_value = '100';
+	}
+	else{
+		percent_value = '0';
+	}
+	document.getElementById('percent_complete').value = percent_value;		
+}

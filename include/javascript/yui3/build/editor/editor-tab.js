@@ -5,4 +5,73 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("editor-tab",function(C){var B=function(){B.superclass.constructor.apply(this,arguments);},A="host";C.extend(B,C.Base,{_onNodeChange:function(E){var D="indent";if(E.changedType==="tab"){if(!E.changedNode.test("li, li *")){E.changedEvent.halt();E.preventDefault();if(E.changedEvent.shiftKey){D="outdent";}this.get(A).execCommand(D,"");}}},initializer:function(){this.get(A).on("nodeChange",C.bind(this._onNodeChange,this));}},{NAME:"editorTab",NS:"tab",ATTRS:{host:{value:false}}});C.namespace("Plugin");C.Plugin.EditorTab=B;},"3.3.0",{requires:["editor-base"],skinnable:false});
+YUI.add('editor-tab', function(Y) {
+
+    /**
+     * Handles tab and shift-tab indent/outdent support.
+     * @module editor
+     * @submodule editor-tab
+     */     
+    /**
+     * Handles tab and shift-tab indent/outdent support.
+     * @class Plugin.EditorTab
+     * @constructor
+     * @extends Base
+     */
+    
+    var EditorTab = function() {
+        EditorTab.superclass.constructor.apply(this, arguments);
+    }, HOST = 'host';
+
+    Y.extend(EditorTab, Y.Base, {
+        /**
+        * Listener for host's nodeChange event and captures the tabkey interaction.
+        * @private
+        * @method _onNodeChange
+        * @param {Event} e The Event facade passed from the host.
+        */
+        _onNodeChange: function(e) {
+            var action = 'indent';
+
+            if (e.changedType === 'tab') {
+                if (!e.changedNode.test('li, li *')) {
+                    e.changedEvent.halt();
+                    e.preventDefault();
+                    if (e.changedEvent.shiftKey) {
+                        action = 'outdent';
+                    }
+
+                    this.get(HOST).execCommand(action, '');
+                }
+            }
+        },
+        initializer: function() {
+            this.get(HOST).on('nodeChange', Y.bind(this._onNodeChange, this));
+        }
+    }, {
+        /**
+        * editorTab
+        * @property NAME
+        * @static
+        */
+        NAME: 'editorTab',
+        /**
+        * tab
+        * @property NS
+        * @static
+        */
+        NS: 'tab',
+        ATTRS: {
+            host: {
+                value: false
+            }
+        }
+    });
+
+
+    Y.namespace('Plugin');
+
+    Y.Plugin.EditorTab = EditorTab;
+
+
+}, '3.3.0' ,{requires:['editor-base'], skinnable:false});

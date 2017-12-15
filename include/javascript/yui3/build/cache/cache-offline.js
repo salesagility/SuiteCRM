@@ -5,4 +5,330 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("cache-offline",function(E){function D(){D.superclass.constructor.apply(this,arguments);}var A=null,C=E.JSON;try{A=E.config.win.localStorage;}catch(B){}E.mix(D,{NAME:"cacheOffline",ATTRS:{sandbox:{value:"default",writeOnce:"initOnly"},expires:{value:86400000},max:{value:null,readOnly:true},uniqueKeys:{value:true,readOnly:true,setter:function(){return true;}}},flushAll:function(){var F=A,G;if(F){if(F.clear){F.clear();}else{for(G in F){if(F.hasOwnProperty(G)){F.removeItem(G);delete F[G];}}}}else{}}});E.extend(D,E.Cache,A?{_setMax:function(F){return null;},_getSize:function(){var H=0,G=0,F=A.length;for(;G<F;++G){if(A.key(G).indexOf(this.get("sandbox"))===0){H++;}}return H;},_getEntries:function(){var F=[],I=0,H=A.length,G=this.get("sandbox");for(;I<H;++I){if(A.key(I).indexOf(G)===0){F[I]=C.parse(A.key(I).substring(G.length));}}return F;},_defAddFn:function(K){var J=K.entry,I=J.request,H=J.cached,F=J.expires;J.cached=H.getTime();J.expires=F?F.getTime():F;try{A.setItem(this.get("sandbox")+C.stringify({"request":I}),C.stringify(J));}catch(G){this.fire("error",{error:G});}},_defFlushFn:function(H){var G,F=A.length-1;for(;F>-1;--F){G=A.key(F);if(G.indexOf(this.get("sandbox"))===0){A.removeItem(G);}}},retrieve:function(I){this.fire("request",{request:I});var H,F,G;try{G=this.get("sandbox")+C.stringify({"request":I});try{H=C.parse(A.getItem(G));}catch(K){}}catch(J){}if(H){H.cached=new Date(H.cached);F=H.expires;F=!F?null:new Date(F);H.expires=F;if(this._isMatch(I,H)){this.fire("retrieve",{entry:H});return H;}}return null;}}:{_setMax:function(F){return null;}});E.CacheOffline=D;},"3.3.0",{requires:["cache-base","json"]});
+YUI.add('cache-offline', function(Y) {
+
+/**
+ * Extends Cache utility with offline functionality.
+ * @class CacheOffline
+ * @extends Cache
+ * @constructor
+ */
+function CacheOffline() {
+    CacheOffline.superclass.constructor.apply(this, arguments);
+}
+
+var localStorage = null,
+    JSON = Y.JSON;
+
+// Bug 2529572
+try {
+    localStorage = Y.config.win.localStorage;
+}
+catch(e) {
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// CacheOffline events
+//
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+* @event error
+* @description Fired when an entry could not be added, most likely due to
+* exceeded browser quota.
+* <dl>
+* <dt>error (Object)</dt> <dd>The error object.</dd>
+* </dl>
+*/
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// CacheOffline static
+//
+/////////////////////////////////////////////////////////////////////////////
+Y.mix(CacheOffline, {
+    /**
+     * Class name.
+     *
+     * @property NAME
+     * @type String
+     * @static
+     * @final
+     * @value "cacheOffline"
+     */
+    NAME: "cacheOffline",
+
+    ATTRS: {
+        /////////////////////////////////////////////////////////////////////////////
+        //
+        // CacheOffline Attributes
+        //
+        /////////////////////////////////////////////////////////////////////////////
+
+        /**
+        * @attribute sandbox
+        * @description A string that must be passed in via the constructor.
+        * This identifier is used to sandbox one cache instance's entries
+        * from another. Calling the cache instance's flush and length methods
+        * or get("entries") will apply to only these sandboxed entries.
+        * @type String
+        * @default "default"
+        * @initOnly
+        */
+        sandbox: {
+            value: "default",
+            writeOnce: "initOnly"
+        },
+
+        /**
+        * @attribute expires
+        * @description Absolute Date when data expires or
+        * relative number of milliseconds. Zero disables expiration.
+        * @type Date | Number
+        * @default 86400000 (one day)
+        */
+        expires: {
+            value: 86400000
+        },
+
+        /**
+        * @attribute max
+        * @description Disabled.
+        * @readOnly
+        * @default null
+        */
+        max: {
+            value: null,
+            readOnly: true
+        },
+
+        /**
+        * @attribute uniqueKeys
+        * @description Always true for CacheOffline.
+        * @readOnly
+        * @default true
+        */
+        uniqueKeys: {
+            value: true,
+            readOnly: true,
+            setter: function() {
+                return true;
+            }
+        }
+    },
+
+    /**
+     * Removes all items from all sandboxes. Useful if localStorage has
+     * exceeded quota. Only supported on browsers that implement HTML 5
+     * localStorage.
+     *
+     * @method flushAll
+     * @static
+     */
+    flushAll: function() {
+        var store = localStorage, key;
+        if(store) {
+            if(store.clear) {
+                store.clear();
+            }
+            // FF2.x and FF3.0.x
+            else {
+                for (key in store) {
+                    if (store.hasOwnProperty(key)) {
+                        store.removeItem(key);
+                        delete store[key];
+                    }
+                }
+            }
+        }
+        else {
+        }
+    }
+});
+
+Y.extend(CacheOffline, Y.Cache, localStorage ? {
+/////////////////////////////////////////////////////////////////////////////
+//
+// Offline is supported
+//
+/////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////
+    //
+    // CacheOffline protected methods
+    //
+    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Always return null.
+     *
+     * @method _setMax
+     * @protected
+     */
+    _setMax: function(value) {
+        return null;
+    },
+
+    /**
+     * Gets size.
+     *
+     * @method _getSize
+     * @protected
+     */
+    _getSize: function() {
+        var count = 0,
+            i=0,
+            l=localStorage.length;
+        for(; i<l; ++i) {
+            // Match sandbox id
+            if(localStorage.key(i).indexOf(this.get("sandbox")) === 0) {
+                count++;
+            }
+        }
+        return count;
+    },
+
+    /**
+     * Gets all entries.
+     *
+     * @method _getEntries
+     * @protected
+     */
+    _getEntries: function() {
+        var entries = [],
+            i=0,
+            l=localStorage.length,
+            sandbox = this.get("sandbox");
+        for(; i<l; ++i) {
+            // Match sandbox id
+            if(localStorage.key(i).indexOf(sandbox) === 0) {
+                entries[i] = JSON.parse(localStorage.key(i).substring(sandbox.length));
+            }
+        }
+        return entries;
+    },
+
+    /**
+     * Adds entry to cache.
+     *
+     * @method _defAddFn
+     * @param e {Event.Facade} Event Facade with the following properties:
+     * <dl>
+     * <dt>entry (Object)</dt> <dd>The cached entry.</dd>
+     * </dl>
+     * @protected
+     */
+    _defAddFn: function(e) {
+        var entry = e.entry,
+            request = entry.request,
+            cached = entry.cached,
+            expires = entry.expires;
+
+        // Convert Dates to msecs on the way into localStorage
+        entry.cached = cached.getTime();
+        entry.expires = expires ? expires.getTime() : expires;
+
+        try {
+            localStorage.setItem(this.get("sandbox")+JSON.stringify({"request":request}), JSON.stringify(entry));
+        }
+        catch(error) {
+            this.fire("error", {error:error});
+        }
+    },
+
+    /**
+     * Flushes cache.
+     *
+     * @method _defFlushFn
+     * @param e {Event.Facade} Event Facade object.
+     * @protected
+     */
+    _defFlushFn: function(e) {
+        var key,
+            i=localStorage.length-1;
+        for(; i>-1; --i) {
+            // Match sandbox id
+            key = localStorage.key(i);
+            if(key.indexOf(this.get("sandbox")) === 0) {
+                localStorage.removeItem(key);
+            }
+        }
+    },
+
+    /////////////////////////////////////////////////////////////////////////////
+    //
+    // CacheOffline public methods
+    //
+    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Adds a new entry to the cache of the format
+     * {request:request, response:response, cached:cached, expires: expires}.
+     *
+     * @method add
+     * @param request {Object} Request value must be a String or JSON.
+     * @param response {Object} Response value must be a String or JSON.
+     */
+
+    /**
+     * Retrieves cached object for given request, if available.
+     * Returns null if there is no cache match.
+     *
+     * @method retrieve
+     * @param request {Object} Request object.
+     * @return {Object} Cached object with the properties request, response,
+     * and expires, or null.
+     */
+    retrieve: function(request) {
+        this.fire("request", {request: request});
+
+        var entry, expires, sandboxedrequest;
+
+        try {
+            sandboxedrequest = this.get("sandbox")+JSON.stringify({"request":request});
+            try {
+                entry = JSON.parse(localStorage.getItem(sandboxedrequest));
+            }
+            catch(e) {
+            }
+        }
+        catch(e2) {
+        }
+
+        if(entry) {
+            // Convert msecs to Dates on the way out of localStorage
+            entry.cached = new Date(entry.cached);
+            expires = entry.expires;
+            expires = !expires ? null : new Date(expires);
+            entry.expires = expires;
+
+            if(this._isMatch(request, entry)) {
+                this.fire("retrieve", {entry: entry});
+                return entry;
+            }
+        }
+        return null;
+    }
+} :
+/////////////////////////////////////////////////////////////////////////////
+//
+// Offline is not supported
+//
+/////////////////////////////////////////////////////////////////////////////
+{
+    /**
+     * Always return null.
+     *
+     * @method _setMax
+     * @protected
+     */
+    _setMax: function(value) {
+        return null;
+    }
+});
+
+
+Y.CacheOffline = CacheOffline;
+
+
+
+}, '3.3.0' ,{requires:['cache-base', 'json']});

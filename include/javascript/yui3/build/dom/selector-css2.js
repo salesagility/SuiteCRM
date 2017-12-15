@@ -5,4 +5,452 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("selector-css2",function(g){var h="parentNode",d="tagName",e="attributes",a="combinator",f="pseudos",c=g.Selector,b={_reRegExpTokens:/([\^\$\?\[\]\*\+\-\.\(\)\|\\])/,SORT_RESULTS:true,_children:function(n,j){var k=n.children,m,l=[],o,p;if(n.children&&j&&n.children.tags){l=n.children.tags(j);}else{if((!k&&n[d])||(k&&j)){o=k||n.childNodes;k=[];for(m=0;(p=o[m++]);){if(p.tagName){if(!j||j===p.tagName){k.push(p);}}}}}return k||[];},_re:{attr:/(\[[^\]]*\])/g,pseudos:/:([\-\w]+(?:\(?:['"]?(.+)['"]?\)))*/i},shorthand:{"\\#(-?[_a-z]+[-\\w]*)":"[id=$1]","\\.(-?[_a-z]+[-\\w]*)":"[className~=$1]"},operators:{"":function(j,i){return g.DOM.getAttribute(j,i)!=="";},"~=":"(?:^|\\s+){val}(?:\\s+|$)","|=":"^{val}-?"},pseudos:{"first-child":function(i){return g.Selector._children(i[h])[0]===i;}},_bruteQuery:function(n,r,t){var o=[],i=[],q=c._tokenize(n),m=q[q.length-1],s=g.DOM._getDoc(r),k,j,p,l;if(m){j=m.id;p=m.className;l=m.tagName||"*";if(r.getElementsByTagName){if(j&&(r.all||(r.nodeType===9||g.DOM.inDoc(r)))){i=g.DOM.allById(j,r);}else{if(p){i=r.getElementsByClassName(p);}else{i=r.getElementsByTagName(l);}}}else{k=r.firstChild;while(k){if(k.tagName){i.push(k);}k=k.nextSilbing||k.firstChild;}}if(i.length){o=c._filterNodes(i,q,t);}}return o;},_filterNodes:function(u,q,s){var z=0,y,A=q.length,t=A-1,p=[],w=u[0],D=w,B=g.Selector.getters,o,x,m,r,k,v,l,C;for(z=0;(D=w=u[z++]);){t=A-1;r=null;testLoop:while(D&&D.tagName){m=q[t];l=m.tests;y=l.length;if(y&&!k){while((C=l[--y])){o=C[1];if(B[C[0]]){v=B[C[0]](D,C[0]);}else{v=D[C[0]];if(v===undefined&&D.getAttribute){v=D.getAttribute(C[0]);}}if((o==="="&&v!==C[2])||(typeof o!=="string"&&o.test&&!o.test(v))||(!o.test&&typeof o==="function"&&!o(D,C[0]))){if((D=D[r])){while(D&&(!D.tagName||(m.tagName&&m.tagName!==D.tagName))){D=D[r];}}continue testLoop;}}}t--;if(!k&&(x=m.combinator)){r=x.axis;D=D[r];while(D&&!D.tagName){D=D[r];}if(x.direct){r=null;}}else{p.push(w);if(s){return p;}break;}}}w=D=null;return p;},combinators:{" ":{axis:"parentNode"},">":{axis:"parentNode",direct:true},"+":{axis:"previousSibling",direct:true}},_parsers:[{name:e,re:/^\[(-?[a-z]+[\w\-]*)+([~\|\^\$\*!=]=?)?['"]?([^\]]*?)['"]?\]/i,fn:function(k,l){var j=k[2]||"",i=g.Selector.operators,m;if((k[1]==="id"&&j==="=")||(k[1]==="className"&&g.config.doc.documentElement.getElementsByClassName&&(j==="~="||j==="="))){l.prefilter=k[1];l[k[1]]=k[3];}if(j in i){m=i[j];if(typeof m==="string"){k[3]=k[3].replace(g.Selector._reRegExpTokens,"\\$1");m=g.DOM._getRegExp(m.replace("{val}",k[3]));}k[2]=m;}if(!l.last||l.prefilter!==k[1]){return k.slice(1);}}},{name:d,re:/^((?:-?[_a-z]+[\w-]*)|\*)/i,fn:function(j,k){var i=j[1].toUpperCase();k.tagName=i;if(i!=="*"&&(!k.last||k.prefilter)){return[d,"=",i];}if(!k.prefilter){k.prefilter="tagName";}}},{name:a,re:/^\s*([>+~]|\s)\s*/,fn:function(i,j){}},{name:f,re:/^:([\-\w]+)(?:\(['"]?(.+)['"]?\))*/i,fn:function(i,j){var k=c[f][i[1]];if(k){return[i[2],k];}else{return false;}}}],_getToken:function(i){return{tagName:null,id:null,className:null,attributes:{},combinator:null,tests:[]};},_tokenize:function(l){l=l||"";l=c._replaceShorthand(g.Lang.trim(l));var k=c._getToken(),q=l,p=[],r=false,n,o,m,j;outer:do{r=false;for(m=0;(j=c._parsers[m++]);){if((n=j.re.exec(l))){if(j.name!==a){k.selector=l;}l=l.replace(n[0],"");if(!l.length){k.last=true;}if(c._attrFilters[n[1]]){n[1]=c._attrFilters[n[1]];}o=j.fn(n,k);if(o===false){r=false;break outer;}else{if(o){k.tests.push(o);}}if(!l.length||j.name===a){p.push(k);k=c._getToken(k);if(j.name===a){k.combinator=g.Selector.combinators[n[1]];}}r=true;}}}while(r&&l.length);if(!r||l.length){p=[];}return p;},_replaceShorthand:function(k){var l=c.shorthand,m=k.match(c._re.attr),p=k.match(c._re.pseudos),o,n,j;if(p){k=k.replace(c._re.pseudos,"!!REPLACED_PSEUDO!!");}if(m){k=k.replace(c._re.attr,"!!REPLACED_ATTRIBUTE!!");}for(o in l){if(l.hasOwnProperty(o)){k=k.replace(g.DOM._getRegExp(o,"gi"),l[o]);}}if(m){for(n=0,j=m.length;n<j;++n){k=k.replace("!!REPLACED_ATTRIBUTE!!",m[n]);}}if(p){for(n=0,j=p.length;n<j;++n){k=k.replace("!!REPLACED_PSEUDO!!",p[n]);}}return k;},_attrFilters:{"class":"className","for":"htmlFor"},getters:{href:function(j,i){return g.DOM.getAttribute(j,i);}}};g.mix(g.Selector,b,true);g.Selector.getters.src=g.Selector.getters.rel=g.Selector.getters.href;if(g.Selector.useNative&&g.config.doc.querySelector){g.Selector.shorthand["\\.(-?[_a-z]+[-\\w]*)"]="[class~=$1]";}},"3.3.0",{requires:["selector-native"]});
+YUI.add('selector-css2', function(Y) {
+
+/**
+ * The selector module provides helper methods allowing CSS2 Selectors to be used with DOM elements.
+ * @module dom
+ * @submodule selector-css2
+ * @for Selector
+ */
+
+/**
+ * Provides helper methods for collecting and filtering DOM elements.
+ */
+
+var PARENT_NODE = 'parentNode',
+    TAG_NAME = 'tagName',
+    ATTRIBUTES = 'attributes',
+    COMBINATOR = 'combinator',
+    PSEUDOS = 'pseudos',
+
+    Selector = Y.Selector,
+
+    SelectorCSS2 = {
+        _reRegExpTokens: /([\^\$\?\[\]\*\+\-\.\(\)\|\\])/, // TODO: move?
+        SORT_RESULTS: true,
+        _children: function(node, tag) {
+            var ret = node.children,
+                i,
+                children = [],
+                childNodes,
+                child;
+
+            if (node.children && tag && node.children.tags) {
+                children = node.children.tags(tag);
+            } else if ((!ret && node[TAG_NAME]) || (ret && tag)) { // only HTMLElements have children
+                childNodes = ret || node.childNodes;
+                ret = [];
+                for (i = 0; (child = childNodes[i++]);) {
+                    if (child.tagName) {
+                        if (!tag || tag === child.tagName) {
+                            ret.push(child);
+                        }
+                    }
+                }
+            }
+
+            return ret || [];
+        },
+
+        _re: {
+            //attr: /(\[.*\])/g,
+            attr: /(\[[^\]]*\])/g,
+            pseudos: /:([\-\w]+(?:\(?:['"]?(.+)['"]?\)))*/i
+        },
+
+        /**
+         * Mapping of shorthand tokens to corresponding attribute selector 
+         * @property shorthand
+         * @type object
+         */
+        shorthand: {
+            '\\#(-?[_a-z]+[-\\w]*)': '[id=$1]',
+            '\\.(-?[_a-z]+[-\\w]*)': '[className~=$1]'
+        },
+
+        /**
+         * List of operators and corresponding boolean functions. 
+         * These functions are passed the attribute and the current node's value of the attribute.
+         * @property operators
+         * @type object
+         */
+        operators: {
+            '': function(node, attr) { return Y.DOM.getAttribute(node, attr) !== ''; }, // Just test for existence of attribute
+            //'': '.+',
+            //'=': '^{val}$', // equality
+            '~=': '(?:^|\\s+){val}(?:\\s+|$)', // space-delimited
+            '|=': '^{val}-?' // optional hyphen-delimited
+        },
+
+        pseudos: {
+           'first-child': function(node) { 
+                return Y.Selector._children(node[PARENT_NODE])[0] === node; 
+            } 
+        },
+
+        _bruteQuery: function(selector, root, firstOnly) {
+            var ret = [],
+                nodes = [],
+                tokens = Selector._tokenize(selector),
+                token = tokens[tokens.length - 1],
+                rootDoc = Y.DOM._getDoc(root),
+                child,
+                id,
+                className,
+                tagName;
+
+
+            // if we have an initial ID, set to root when in document
+            /*
+            if (tokens[0] && rootDoc === root &&  
+                    (id = tokens[0].id) &&
+                    rootDoc.getElementById(id)) {
+                root = rootDoc.getElementById(id);
+            }
+            */
+
+            if (token) {
+                // prefilter nodes
+                id = token.id;
+                className = token.className;
+                tagName = token.tagName || '*';
+
+                if (root.getElementsByTagName) { // non-IE lacks DOM api on doc frags
+                    // try ID first, unless no root.all && root not in document
+                    // (root.all works off document, but not getElementById)
+                    // TODO: move to allById?
+                    if (id && (root.all || (root.nodeType === 9 || Y.DOM.inDoc(root)))) {
+                        nodes = Y.DOM.allById(id, root);
+                    // try className
+                    } else if (className) {
+                        nodes = root.getElementsByClassName(className);
+                    } else { // default to tagName
+                        nodes = root.getElementsByTagName(tagName);
+                    }
+
+                } else { // brute getElementsByTagName('*')
+                    child = root.firstChild;
+                    while (child) {
+                        if (child.tagName) { // only collect HTMLElements
+                            nodes.push(child);
+                        }
+                        child = child.nextSilbing || child.firstChild;
+                    }
+                }
+                if (nodes.length) {
+                    ret = Selector._filterNodes(nodes, tokens, firstOnly);
+                }
+            }
+
+            return ret;
+        },
+        
+        _filterNodes: function(nodes, tokens, firstOnly) {
+            var i = 0,
+                j,
+                len = tokens.length,
+                n = len - 1,
+                result = [],
+                node = nodes[0],
+                tmpNode = node,
+                getters = Y.Selector.getters,
+                operator,
+                combinator,
+                token,
+                path,
+                pass,
+                //FUNCTION = 'function',
+                value,
+                tests,
+                test;
+
+            //do {
+            for (i = 0; (tmpNode = node = nodes[i++]);) {
+                n = len - 1;
+                path = null;
+                
+                testLoop:
+                while (tmpNode && tmpNode.tagName) {
+                    token = tokens[n];
+                    tests = token.tests;
+                    j = tests.length;
+                    if (j && !pass) {
+                        while ((test = tests[--j])) {
+                            operator = test[1];
+                            if (getters[test[0]]) {
+                                value = getters[test[0]](tmpNode, test[0]);
+                            } else {
+                                value = tmpNode[test[0]];
+                                // use getAttribute for non-standard attributes
+                                if (value === undefined && tmpNode.getAttribute) {
+                                    value = tmpNode.getAttribute(test[0]);
+                                }
+                            }
+
+                            if ((operator === '=' && value !== test[2]) ||  // fast path for equality
+                                (typeof operator !== 'string' && // protect against String.test monkey-patch (Moo)
+                                operator.test && !operator.test(value)) ||  // regex test
+                                (!operator.test && // protect against RegExp as function (webkit)
+                                        typeof operator === 'function' && !operator(tmpNode, test[0]))) { // function test
+
+                                // skip non element nodes or non-matching tags
+                                if ((tmpNode = tmpNode[path])) {
+                                    while (tmpNode &&
+                                        (!tmpNode.tagName ||
+                                            (token.tagName && token.tagName !== tmpNode.tagName))
+                                    ) {
+                                        tmpNode = tmpNode[path]; 
+                                    }
+                                }
+                                continue testLoop;
+                            }
+                        }
+                    }
+
+                    n--; // move to next token
+                    // now that we've passed the test, move up the tree by combinator
+                    if (!pass && (combinator = token.combinator)) {
+                        path = combinator.axis;
+                        tmpNode = tmpNode[path];
+
+                        // skip non element nodes
+                        while (tmpNode && !tmpNode.tagName) {
+                            tmpNode = tmpNode[path]; 
+                        }
+
+                        if (combinator.direct) { // one pass only
+                            path = null; 
+                        }
+
+                    } else { // success if we made it this far
+                        result.push(node);
+                        if (firstOnly) {
+                            return result;
+                        }
+                        break;
+                    }
+                }
+            }// while (tmpNode = node = nodes[++i]);
+            node = tmpNode = null;
+            return result;
+        },
+
+        combinators: {
+            ' ': {
+                axis: 'parentNode'
+            },
+
+            '>': {
+                axis: 'parentNode',
+                direct: true
+            },
+
+
+            '+': {
+                axis: 'previousSibling',
+                direct: true
+            }
+        },
+
+        _parsers: [
+            {
+                name: ATTRIBUTES,
+                re: /^\[(-?[a-z]+[\w\-]*)+([~\|\^\$\*!=]=?)?['"]?([^\]]*?)['"]?\]/i,
+                fn: function(match, token) {
+                    var operator = match[2] || '',
+                        operators = Y.Selector.operators,
+                        test;
+
+                    // add prefiltering for ID and CLASS
+                    if ((match[1] === 'id' && operator === '=') ||
+                            (match[1] === 'className' &&
+                            Y.config.doc.documentElement.getElementsByClassName &&
+                            (operator === '~=' || operator === '='))) {
+                        token.prefilter = match[1];
+                        token[match[1]] = match[3];
+                    }
+
+                    // add tests
+                    if (operator in operators) {
+                        test = operators[operator];
+                        if (typeof test === 'string') {
+                            match[3] = match[3].replace(Y.Selector._reRegExpTokens, '\\$1');
+                            test = Y.DOM._getRegExp(test.replace('{val}', match[3]));
+                        }
+                        match[2] = test;
+                    }
+                    if (!token.last || token.prefilter !== match[1]) {
+                        return match.slice(1);
+                    }
+                }
+
+            },
+            {
+                name: TAG_NAME,
+                re: /^((?:-?[_a-z]+[\w-]*)|\*)/i,
+                fn: function(match, token) {
+                    var tag = match[1].toUpperCase();
+                    token.tagName = tag;
+
+                    if (tag !== '*' && (!token.last || token.prefilter)) {
+                        return [TAG_NAME, '=', tag];
+                    }
+                    if (!token.prefilter) {
+                        token.prefilter = 'tagName';
+                    }
+                }
+            },
+            {
+                name: COMBINATOR,
+                re: /^\s*([>+~]|\s)\s*/,
+                fn: function(match, token) {
+                }
+            },
+            {
+                name: PSEUDOS,
+                re: /^:([\-\w]+)(?:\(['"]?(.+)['"]?\))*/i,
+                fn: function(match, token) {
+                    var test = Selector[PSEUDOS][match[1]];
+                    if (test) { // reorder match array
+                        return [match[2], test];
+                    } else { // selector token not supported (possibly missing CSS3 module)
+                        return false;
+                    }
+                }
+            }
+            ],
+
+        _getToken: function(token) {
+            return {
+                tagName: null,
+                id: null,
+                className: null,
+                attributes: {},
+                combinator: null,
+                tests: []
+            };
+        },
+
+        /**
+            Break selector into token units per simple selector.
+            Combinator is attached to the previous token.
+         */
+        _tokenize: function(selector) {
+            selector = selector || '';
+            selector = Selector._replaceShorthand(Y.Lang.trim(selector)); 
+            var token = Selector._getToken(),     // one token per simple selector (left selector holds combinator)
+                query = selector, // original query for debug report
+                tokens = [],    // array of tokens
+                found = false,  // whether or not any matches were found this pass
+                match,         // the regex match
+                test,
+                i, parser;
+
+            /*
+                Search for selector patterns, store, and strip them from the selector string
+                until no patterns match (invalid selector) or we run out of chars.
+
+                Multiple attributes and pseudos are allowed, in any order.
+                for example:
+                    'form:first-child[type=button]:not(button)[lang|=en]'
+            */
+            outer:
+            do {
+                found = false; // reset after full pass
+                for (i = 0; (parser = Selector._parsers[i++]);) {
+                    if ( (match = parser.re.exec(selector)) ) { // note assignment
+                        if (parser.name !== COMBINATOR ) {
+                            token.selector = selector;
+                        }
+                        selector = selector.replace(match[0], ''); // strip current match from selector
+                        if (!selector.length) {
+                            token.last = true;
+                        }
+
+                        if (Selector._attrFilters[match[1]]) { // convert class to className, etc.
+                            match[1] = Selector._attrFilters[match[1]];
+                        }
+
+                        test = parser.fn(match, token);
+                        if (test === false) { // selector not supported
+                            found = false;
+                            break outer;
+                        } else if (test) {
+                            token.tests.push(test);
+                        }
+
+                        if (!selector.length || parser.name === COMBINATOR) {
+                            tokens.push(token);
+                            token = Selector._getToken(token);
+                            if (parser.name === COMBINATOR) {
+                                token.combinator = Y.Selector.combinators[match[1]];
+                            }
+                        }
+                        found = true;
+                    }
+                }
+            } while (found && selector.length);
+
+            if (!found || selector.length) { // not fully parsed
+                tokens = [];
+            }
+            return tokens;
+        },
+
+        _replaceShorthand: function(selector) {
+            var shorthand = Selector.shorthand,
+                attrs = selector.match(Selector._re.attr), // pull attributes to avoid false pos on "." and "#"
+                pseudos = selector.match(Selector._re.pseudos), // pull attributes to avoid false pos on "." and "#"
+                re, i, len;
+
+            if (pseudos) {
+                selector = selector.replace(Selector._re.pseudos, '!!REPLACED_PSEUDO!!');
+            }
+
+            if (attrs) {
+                selector = selector.replace(Selector._re.attr, '!!REPLACED_ATTRIBUTE!!');
+            }
+
+            for (re in shorthand) {
+                if (shorthand.hasOwnProperty(re)) {
+                    selector = selector.replace(Y.DOM._getRegExp(re, 'gi'), shorthand[re]);
+                }
+            }
+
+            if (attrs) {
+                for (i = 0, len = attrs.length; i < len; ++i) {
+                    selector = selector.replace('!!REPLACED_ATTRIBUTE!!', attrs[i]);
+                }
+            }
+            if (pseudos) {
+                for (i = 0, len = pseudos.length; i < len; ++i) {
+                    selector = selector.replace('!!REPLACED_PSEUDO!!', pseudos[i]);
+                }
+            }
+            return selector;
+        },
+
+        _attrFilters: {
+            'class': 'className',
+            'for': 'htmlFor'
+        },
+
+        getters: {
+            href: function(node, attr) {
+                return Y.DOM.getAttribute(node, attr);
+            }
+        }
+    };
+
+Y.mix(Y.Selector, SelectorCSS2, true);
+Y.Selector.getters.src = Y.Selector.getters.rel = Y.Selector.getters.href;
+
+// IE wants class with native queries
+if (Y.Selector.useNative && Y.config.doc.querySelector) {
+    Y.Selector.shorthand['\\.(-?[_a-z]+[-\\w]*)'] = '[class~=$1]';
+}
+
+
+
+}, '3.3.0' ,{requires:['selector-native']});

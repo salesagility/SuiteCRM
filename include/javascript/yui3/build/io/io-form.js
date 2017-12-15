@@ -5,4 +5,98 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("io-form",function(B){var A=encodeURIComponent;B.mix(B.io,{_serialize:function(M,R){var I=[],N=M.useDisabled||false,Q=0,C=(typeof M.id==="string")?M.id:M.id.getAttribute("id"),K,J,E,P,L,H,O,F,G,D;if(!C){C=B.guid("io:");M.id.setAttribute("id",C);}J=B.config.doc.getElementById(C);for(H=0,O=J.elements.length;H<O;++H){K=J.elements[H];L=K.disabled;E=K.name;if(N?E:E&&!L){E=A(E)+"=";P=A(K.value);switch(K.type){case"select-one":if(K.selectedIndex>-1){D=K.options[K.selectedIndex];I[Q++]=E+A(D.attributes.value&&D.attributes.value.specified?D.value:D.text);}break;case"select-multiple":if(K.selectedIndex>-1){for(F=K.selectedIndex,G=K.options.length;F<G;++F){D=K.options[F];if(D.selected){I[Q++]=E+A(D.attributes.value&&D.attributes.value.specified?D.value:D.text);}}}break;case"radio":case"checkbox":if(K.checked){I[Q++]=E+P;}break;case"file":case undefined:case"reset":case"button":break;case"submit":default:I[Q++]=E+P;}}}return R?I.join("&")+"&"+R:I.join("&");}},true);},"3.3.0",{requires:["io-base","node-base"]});
+YUI.add('io-form', function(Y) {
+
+   /**
+    * Extends the IO base class to enable HTML form data serialization, when specified
+    * in the transaction's configuration object.
+    * @module io
+    * @submodule io-form
+    */
+
+    var eUC = encodeURIComponent;
+
+    Y.mix(Y.io, {
+       /**
+        * @description Method to enumerate through an HTML form's elements collection
+        * and return a string comprised of key-value pairs.
+        *
+        * @method _serialize
+        * @private
+        * @static
+        * @param {object} c - YUI form node or HTML form id.
+        * @param {string} s - Transaction data defined in the configuration.
+        * @return string
+        */
+        _serialize: function(c, s) {
+            var data = [],
+                useDf = c.useDisabled || false,
+                item = 0,
+                id = (typeof c.id === 'string') ? c.id : c.id.getAttribute('id'),
+                e, f, n, v, d, i, il, j, jl, o;
+
+                if (!id) {
+                    id = Y.guid('io:');
+                    c.id.setAttribute('id', id);
+                }
+
+                f = Y.config.doc.getElementById(id);
+
+            // Iterate over the form elements collection to construct the
+            // label-value pairs.
+            for (i = 0, il = f.elements.length; i < il; ++i) {
+                e = f.elements[i];
+                d = e.disabled;
+                n = e.name;
+
+                if (useDf ? n : n && !d) {
+                    n = eUC(n) + '=';
+                    v = eUC(e.value);
+
+                    switch (e.type) {
+                        // Safari, Opera, FF all default options.value from .text if
+                        // value attribute not specified in markup
+                        case 'select-one':
+                            if (e.selectedIndex > -1) {
+                                o = e.options[e.selectedIndex];
+                                data[item++] = n + eUC(o.attributes.value && o.attributes.value.specified ? o.value : o.text);
+                            }
+                            break;
+                        case 'select-multiple':
+                            if (e.selectedIndex > -1) {
+                                for (j = e.selectedIndex, jl = e.options.length; j < jl; ++j) {
+                                    o = e.options[j];
+                                    if (o.selected) {
+                                      data[item++] = n + eUC(o.attributes.value && o.attributes.value.specified ? o.value : o.text);
+                                    }
+                                }
+                            }
+                            break;
+                        case 'radio':
+                        case 'checkbox':
+                            if (e.checked) {
+                                data[item++] = n + v;
+                            }
+                            break;
+                        case 'file':
+                            // stub case as XMLHttpRequest will only send the file path as a string.
+                        case undefined:
+                            // stub case for fieldset element which returns undefined.
+                        case 'reset':
+                            // stub case for input type reset button.
+                        case 'button':
+                            // stub case for input type button elements.
+                            break;
+                        case 'submit':
+                        default:
+                            data[item++] = n + v;
+                    }
+                }
+            }
+            return s ? data.join('&') + "&" + s : data.join('&');
+        }
+    }, true);
+
+
+
+}, '3.3.0' ,{requires:['io-base','node-base']});

@@ -5,4 +5,399 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("widget-stack",function(E){var N=E.Lang,T=E.UA,d=E.Node,F=E.Widget,c="zIndex",P="shim",a="visible",e="boundingBox",W="renderUI",G="bindUI",S="syncUI",Q="offsetWidth",D="offsetHeight",M="parentNode",A="firstChild",X="ownerDocument",H="width",V="height",K="px",O="shimdeferred",f="shimresize",Z="visibleChange",C="widthChange",J="heightChange",b="shimChange",B="zIndexChange",I="contentUpdate",R="stacked";function U(L){this._stackNode=this.get(e);this._stackHandles={};E.after(this._renderUIStack,this,W);E.after(this._syncUIStack,this,S);E.after(this._bindUIStack,this,G);}U.ATTRS={shim:{value:(T.ie==6)},zIndex:{value:0,setter:function(L){return this._setZIndex(L);}}};U.HTML_PARSER={zIndex:function(L){return L.getStyle(c);}};U.SHIM_CLASS_NAME=F.getClassName(P);U.STACKED_CLASS_NAME=F.getClassName(R);U.SHIM_TEMPLATE='<iframe class="'+U.SHIM_CLASS_NAME+'" frameborder="0" title="Widget Stacking Shim" src="javascript:false" tabindex="-1" role="presentation"></iframe>';U.prototype={_syncUIStack:function(){this._uiSetShim(this.get(P));this._uiSetZIndex(this.get(c));},_bindUIStack:function(){this.after(b,this._afterShimChange);this.after(B,this._afterZIndexChange);},_renderUIStack:function(){this._stackNode.addClass(U.STACKED_CLASS_NAME);},_setZIndex:function(L){if(N.isString(L)){L=parseInt(L,10);}if(!N.isNumber(L)){L=0;}return L;},_afterShimChange:function(L){this._uiSetShim(L.newVal);},_afterZIndexChange:function(L){this._uiSetZIndex(L.newVal);},_uiSetZIndex:function(L){this._stackNode.setStyle(c,L);},_uiSetShim:function(L){if(L){if(this.get(a)){this._renderShim();}else{this._renderShimDeferred();}}else{this._destroyShim();}},_renderShimDeferred:function(){this._stackHandles[O]=this._stackHandles[O]||[];var Y=this._stackHandles[O],L=function(g){if(g.newVal){this._renderShim();}};Y.push(this.on(Z,L));},_addShimResizeHandlers:function(){this._stackHandles[f]=this._stackHandles[f]||[];var Y=this.sizeShim,L=this._stackHandles[f];this.sizeShim();L.push(this.after(Z,Y));L.push(this.after(C,Y));L.push(this.after(J,Y));L.push(this.after(I,Y));},_detachStackHandles:function(L){var Y=this._stackHandles[L],g;if(Y&&Y.length>0){while((g=Y.pop())){g.detach();}}},_renderShim:function(){var L=this._shimNode,Y=this._stackNode;if(!L){L=this._shimNode=this._getShimTemplate();Y.insertBefore(L,Y.get(A));if(T.ie==6){this._addShimResizeHandlers();}this._detachStackHandles(O);}},_destroyShim:function(){if(this._shimNode){this._shimNode.get(M).removeChild(this._shimNode);this._shimNode=null;this._detachStackHandles(O);this._detachStackHandles(f);}},sizeShim:function(){var Y=this._shimNode,L=this._stackNode;if(Y&&T.ie===6&&this.get(a)){Y.setStyle(H,L.get(Q)+K);Y.setStyle(V,L.get(D)+K);}},_getShimTemplate:function(){return d.create(U.SHIM_TEMPLATE,this._stackNode.get(X));}};E.WidgetStack=U;},"3.3.0",{requires:["base-build","widget"]});
+YUI.add('widget-stack', function(Y) {
+
+/**
+ * Provides stackable (z-index) support for Widgets through an extension.
+ *
+ * @module widget-stack
+ */
+    var L = Y.Lang,
+        UA = Y.UA,
+        Node = Y.Node,
+        Widget = Y.Widget,
+
+        ZINDEX = "zIndex",
+        SHIM = "shim",
+        VISIBLE = "visible",
+
+        BOUNDING_BOX = "boundingBox",
+
+        RENDER_UI = "renderUI",
+        BIND_UI = "bindUI",
+        SYNC_UI = "syncUI",
+
+        OFFSET_WIDTH = "offsetWidth",
+        OFFSET_HEIGHT = "offsetHeight",
+        PARENT_NODE = "parentNode",
+        FIRST_CHILD = "firstChild",
+        OWNER_DOCUMENT = "ownerDocument",
+
+        WIDTH = "width",
+        HEIGHT = "height",
+        PX = "px",
+
+        // HANDLE KEYS
+        SHIM_DEFERRED = "shimdeferred",
+        SHIM_RESIZE = "shimresize",
+
+        // Events
+        VisibleChange = "visibleChange",
+        WidthChange = "widthChange",
+        HeightChange = "heightChange",
+        ShimChange = "shimChange",
+        ZIndexChange = "zIndexChange",
+        ContentUpdate = "contentUpdate",
+
+        // CSS
+        STACKED = "stacked";
+
+    /**
+     * Widget extension, which can be used to add stackable (z-index) support to the 
+     * base Widget class along with a shimming solution, through the 
+     * <a href="Base.html#method_build">Base.build</a> method.
+     *
+     * @class WidgetStack
+     * @param {Object} User configuration object
+     */
+    function Stack(config) {
+        this._stackNode = this.get(BOUNDING_BOX);
+        this._stackHandles = {};
+
+        // WIDGET METHOD OVERLAP
+        Y.after(this._renderUIStack, this, RENDER_UI);
+        Y.after(this._syncUIStack, this, SYNC_UI);
+        Y.after(this._bindUIStack, this, BIND_UI);
+    }
+
+    // Static Properties
+    /**
+     * Static property used to define the default attribute 
+     * configuration introduced by WidgetStack.
+     * 
+     * @property WidgetStack.ATTRS
+     * @type Object
+     * @static
+     */
+    Stack.ATTRS = {
+        /**
+         * @attribute shim
+         * @type boolean
+         * @default false, for all browsers other than IE6, for which a shim is enabled by default.
+         * 
+         * @description Boolean flag to indicate whether or not a shim should be added to the Widgets
+         * boundingBox, to protect it from select box bleedthrough.
+         */
+        shim: {
+            value: (UA.ie == 6)
+        },
+
+        /**
+         * @attribute zIndex
+         * @type number
+         * @default 0
+         * @description The z-index to apply to the Widgets boundingBox. Non-numerical values for 
+         * zIndex will be converted to 0
+         */
+        zIndex: {
+            value:0,
+            setter: function(val) {
+                return this._setZIndex(val);
+            }
+        }
+    };
+
+    /**
+     * The HTML parsing rules for the WidgetStack class.
+     * 
+     * @property WidgetStack.HTML_PARSER
+     * @static
+     * @type Object
+     */
+    Stack.HTML_PARSER = {
+        zIndex: function(contentBox) {
+            return contentBox.getStyle(ZINDEX);
+        }
+    };
+
+    /**
+     * Default class used to mark the shim element
+     *
+     * @property WidgetStack.SHIM_CLASS_NAME
+     * @type String
+     * @static
+     * @default "yui-widget-shim"
+     */
+    Stack.SHIM_CLASS_NAME = Widget.getClassName(SHIM);
+
+    /**
+     * Default class used to mark the boundingBox of a stacked widget.
+     * 
+     * @property WidgetStack.STACKED_CLASS_NAME
+     * @type String
+     * @static
+     * @default "yui-widget-stacked"
+     */
+    Stack.STACKED_CLASS_NAME = Widget.getClassName(STACKED);
+
+    /**
+     * Default markup template used to generate the shim element.
+     * 
+     * @property WidgetStack.SHIM_TEMPLATE
+     * @type String
+     * @static
+     */
+    Stack.SHIM_TEMPLATE = '<iframe class="' + Stack.SHIM_CLASS_NAME + '" frameborder="0" title="Widget Stacking Shim" src="javascript:false" tabindex="-1" role="presentation"></iframe>';
+
+    Stack.prototype = {
+
+        /**
+         * Synchronizes the UI to match the Widgets stack state. This method in 
+         * invoked after syncUI is invoked for the Widget class using YUI's aop infrastructure.
+         *
+         * @method _syncUIStack
+         * @protected
+         */
+        _syncUIStack: function() {
+            this._uiSetShim(this.get(SHIM));
+            this._uiSetZIndex(this.get(ZINDEX));
+        },
+
+        /**
+         * Binds event listeners responsible for updating the UI state in response to 
+         * Widget stack related state changes.
+         * <p>
+         * This method is invoked after bindUI is invoked for the Widget class
+         * using YUI's aop infrastructure.
+         * </p>
+         * @method _bindUIStack
+         * @protected
+         */
+        _bindUIStack: function() {
+            this.after(ShimChange, this._afterShimChange);
+            this.after(ZIndexChange, this._afterZIndexChange);
+        },
+
+        /**
+         * Creates/Initializes the DOM to support stackability.
+         * <p>
+         * This method in invoked after renderUI is invoked for the Widget class
+         * using YUI's aop infrastructure.
+         * </p>
+         * @method _renderUIStack
+         * @protected
+         */
+        _renderUIStack: function() {
+            this._stackNode.addClass(Stack.STACKED_CLASS_NAME);
+        },
+
+        /**
+         * Default setter for zIndex attribute changes. Normalizes zIndex values to 
+         * numbers, converting non-numerical values to 0.
+         *
+         * @method _setZIndex
+         * @protected
+         * @param {String | Number} zIndex
+         * @return {Number} Normalized zIndex
+         */
+        _setZIndex: function(zIndex) {
+            if (L.isString(zIndex)) {
+                zIndex = parseInt(zIndex, 10);
+            }
+            if (!L.isNumber(zIndex)) {
+                zIndex = 0;
+            }
+            return zIndex;
+        },
+
+        /**
+         * Default attribute change listener for the shim attribute, responsible
+         * for updating the UI, in response to attribute changes.
+         *
+         * @method _afterShimChange
+         * @protected
+         * @param {EventFacade} e The event facade for the attribute change
+         */
+        _afterShimChange : function(e) {
+            this._uiSetShim(e.newVal);
+        },
+
+        /**
+         * Default attribute change listener for the zIndex attribute, responsible
+         * for updating the UI, in response to attribute changes.
+         * 
+         * @method _afterZIndexChange
+         * @protected
+         * @param {EventFacade} e The event facade for the attribute change
+         */
+        _afterZIndexChange : function(e) {
+            this._uiSetZIndex(e.newVal);
+        },
+
+        /**
+         * Updates the UI to reflect the zIndex value passed in.
+         *
+         * @method _uiSetZIndex
+         * @protected
+         * @param {number} zIndex The zindex to be reflected in the UI
+         */
+        _uiSetZIndex: function (zIndex) {
+            this._stackNode.setStyle(ZINDEX, zIndex);
+        },
+
+        /**
+         * Updates the UI to enable/disable the shim. If the widget is not currently visible,
+         * creation of the shim is deferred until it is made visible, for performance reasons.
+         *
+         * @method _uiSetShim
+         * @protected
+         * @param {boolean} enable If true, creates/renders the shim, if false, removes it.
+         */
+        _uiSetShim: function (enable) {
+            if (enable) {
+                // Lazy creation
+                if (this.get(VISIBLE)) {
+                    this._renderShim();
+                } else {
+                    this._renderShimDeferred();
+                }
+            } else {
+                this._destroyShim();
+            }
+        },
+
+        /**
+         * Sets up change handlers for the visible attribute, to defer shim creation/rendering 
+         * until the Widget is made visible.
+         * 
+         * @method _renderShimDeferred
+         * @private
+         */
+        _renderShimDeferred : function() {
+
+            this._stackHandles[SHIM_DEFERRED] = this._stackHandles[SHIM_DEFERRED] || [];
+
+            var handles = this._stackHandles[SHIM_DEFERRED],
+                createBeforeVisible = function(e) {
+                    if (e.newVal) {
+                        this._renderShim();
+                    }
+                };
+
+            handles.push(this.on(VisibleChange, createBeforeVisible));
+        },
+
+        /**
+         * Sets up event listeners to resize the shim when the size of the Widget changes.
+         * <p>
+         * NOTE: This method is only used for IE6 currently, since IE6 doesn't support a way to
+         * resize the shim purely through CSS, when the Widget does not have an explicit width/height 
+         * set.
+         * </p>
+         * @method _addShimResizeHandlers
+         * @private
+         */
+        _addShimResizeHandlers : function() {
+
+            this._stackHandles[SHIM_RESIZE] = this._stackHandles[SHIM_RESIZE] || [];
+
+            var sizeShim = this.sizeShim,
+                handles = this._stackHandles[SHIM_RESIZE];
+
+            this.sizeShim();
+
+            handles.push(this.after(VisibleChange, sizeShim));
+            handles.push(this.after(WidthChange, sizeShim));
+            handles.push(this.after(HeightChange, sizeShim));
+            handles.push(this.after(ContentUpdate, sizeShim));
+        },
+
+        /**
+         * Detaches any handles stored for the provided key
+         *
+         * @method _detachStackHandles
+         * @param String handleKey The key defining the group of handles which should be detached
+         * @private
+         */
+        _detachStackHandles : function(handleKey) {
+            var handles = this._stackHandles[handleKey],
+                handle;
+
+            if (handles && handles.length > 0) {
+                while((handle = handles.pop())) {
+                    handle.detach();
+                }
+            }
+        },
+
+        /**
+         * Creates the shim element and adds it to the DOM
+         *
+         * @method _renderShim
+         * @private
+         */
+        _renderShim : function() {
+            var shimEl = this._shimNode,
+                stackEl = this._stackNode;
+
+            if (!shimEl) {
+                shimEl = this._shimNode = this._getShimTemplate();
+                stackEl.insertBefore(shimEl, stackEl.get(FIRST_CHILD));
+
+                if (UA.ie == 6) {
+                    this._addShimResizeHandlers();
+                }
+                this._detachStackHandles(SHIM_DEFERRED);
+            }
+        },
+
+        /**
+         * Removes the shim from the DOM, and detaches any related event
+         * listeners.
+         *
+         * @method _destroyShim
+         * @private
+         */
+        _destroyShim : function() {
+            if (this._shimNode) {
+                this._shimNode.get(PARENT_NODE).removeChild(this._shimNode);
+                this._shimNode = null;
+
+                this._detachStackHandles(SHIM_DEFERRED);
+                this._detachStackHandles(SHIM_RESIZE);
+            }
+        },
+
+        /**
+         * For IE6, synchronizes the size and position of iframe shim to that of 
+         * Widget bounding box which it is protecting. For all other browsers,
+         * this method does not do anything.
+         *
+         * @method sizeShim
+         */
+        sizeShim: function () {
+            var shim = this._shimNode,
+                node = this._stackNode;
+
+            if (shim && UA.ie === 6 && this.get(VISIBLE)) {
+                shim.setStyle(WIDTH, node.get(OFFSET_WIDTH) + PX);
+                shim.setStyle(HEIGHT, node.get(OFFSET_HEIGHT) + PX);
+            }
+        },
+
+        /**
+         * Creates a cloned shim node, using the SHIM_TEMPLATE html template, for use on a new instance.
+         *
+         * @method _getShimTemplate
+         * @private
+         * @return {Node} node A new shim Node instance.
+         */
+        _getShimTemplate : function() {
+            return Node.create(Stack.SHIM_TEMPLATE, this._stackNode.get(OWNER_DOCUMENT));
+        }
+    };
+
+    Y.WidgetStack = Stack;
+
+
+}, '3.3.0' ,{requires:['base-build', 'widget']});

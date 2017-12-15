@@ -5,4 +5,231 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("recordset-indexer",function(B){function A(C){A.superclass.constructor.apply(this,arguments);}B.mix(A,{NS:"indexer",NAME:"recordsetIndexer",ATTRS:{hashTables:{value:{}},keys:{value:{}}}});B.extend(A,B.Plugin.Base,{initializer:function(C){var D=this.get("host");this.onHostEvent("add",B.bind("_defAddHash",this),D);this.onHostEvent("remove",B.bind("_defRemoveHash",this),D);this.onHostEvent("update",B.bind("_defUpdateHash",this),D);},destructor:function(C){},_setHashTable:function(E){var F=this.get("host"),G={},D=0,C=F.getLength();for(;D<C;D++){G[F._items[D].getValue(E)]=F._items[D];}return G;},_defAddHash:function(D){var C=this.get("hashTables");B.each(C,function(E,F){B.each(D.added||D.updated,function(G){if(G.getValue(F)){E[G.getValue(F)]=G;}});});},_defRemoveHash:function(E){var D=this.get("hashTables"),C;B.each(D,function(F,G){B.each(E.removed||E.overwritten,function(H){C=H.getValue(G);if(C&&F[C]===H){delete F[C];}});});},_defUpdateHash:function(C){C.added=C.updated;C.removed=C.overwritten;this._defAddHash(C);this._defRemoveHash(C);},createTable:function(C){var D=this.get("hashTables");D[C]=this._setHashTable(C);this.set("hashTables",D);return D[C];},getTable:function(C){return this.get("hashTables")[C];}});B.namespace("Plugin").RecordsetIndexer=A;},"3.3.0",{requires:["recordset-base","plugin"]});
+YUI.add('recordset-indexer', function(Y) {
+
+/**
+ * Provides the ability to store multiple custom hash tables referencing records in the recordset.
+ * @module recordset
+ * @submodule recordset-indexer
+ */
+/**
+ * Plugin that provides the ability to store multiple custom hash tables referencing records in the recordset.
+ * This utility does not support any collision handling. New hash table entries with a used key overwrite older ones.
+ * @class RecordsetIndexer
+ */
+function RecordsetIndexer(config) {
+    RecordsetIndexer.superclass.constructor.apply(this, arguments);
+}
+
+Y.mix(RecordsetIndexer, {
+    NS: "indexer",
+
+    NAME: "recordsetIndexer",
+
+    ATTRS: {
+        /**
+	    * @description Collection of all the hashTables created by the plugin. 
+		* The individual tables can be accessed by the key they are hashing against. 
+	    *
+	    * @attribute hashTables
+	    * @public
+	    * @type object
+	    */
+        hashTables: {
+            value: {
+
+            }
+        },
+
+
+        keys: {
+            value: {
+
+            }
+        }
+    }
+});
+
+
+Y.extend(RecordsetIndexer, Y.Plugin.Base, {
+
+    initializer: function(config) {
+        var host = this.get('host');
+
+        //setup listeners on recordset events
+        this.onHostEvent('add', Y.bind("_defAddHash", this), host);
+        this.onHostEvent('remove', Y.bind('_defRemoveHash', this), host);
+        this.onHostEvent('update', Y.bind('_defUpdateHash', this), host);
+
+    },
+
+    destructor: function(config) {
+    
+    },
+
+
+    /**
+     * @description Setup the hash table for a given key with all existing records in the recordset
+     *
+     * @method _setHashTable
+     * @param key {string} A key to hash by.
+	 * @return obj {object} The created hash table
+     * @private
+     */
+    _setHashTable: function(key) {
+        var host = this.get('host'),
+        obj = {},
+        i = 0,
+        len = host.getLength();
+
+        for (; i < len; i++) {
+            obj[host._items[i].getValue(key)] = host._items[i];
+        }
+        return obj;
+    },
+
+    //---------------------------------------------
+    // Syncing Methods
+    //---------------------------------------------
+
+    /**
+     * @description Updates all hash tables when a record is added to the recordset
+	 *
+     * @method _defAddHash
+     * @private
+     */
+    _defAddHash: function(e) {
+        var tbl = this.get('hashTables');
+
+
+        //Go through every hashtable that is stored.
+        //in each hashtable, look to see if the key is represented in the object being added.
+        Y.each(tbl,
+        function(v, key) {
+            Y.each(e.added || e.updated,
+            function(o) {
+                //if the object being added has a key which is being stored by hashtable v, add it into the table.
+                if (o.getValue(key)) {
+                    v[o.getValue(key)] = o;
+                }
+            });
+        });
+
+    },
+
+    /**
+     * @description Updates all hash tables when a record is removed from the recordset
+	 *
+     * @method _defRemoveHash
+     * @private
+     */
+    _defRemoveHash: function(e) {
+        var tbl = this.get('hashTables'),
+        reckey;
+
+        //Go through every hashtable that is stored.
+        //in each hashtable, look to see if the key is represented in the object being deleted.
+        Y.each(tbl,
+        function(v, key) {
+            Y.each(e.removed || e.overwritten,
+            function(o) {
+                reckey = o.getValue(key);
+
+                //if the hashtable has a key storing a record, and the key and the record both match the record being deleted, delete that row from the hashtable
+                if (reckey && v[reckey] === o) {
+                    delete v[reckey];
+                }
+            });
+        });
+    },
+
+    /**
+     * @description Updates all hash tables when the recordset is updated (a combination of add and remove)
+	 *
+     * @method _defUpdateHash
+     * @private
+     */
+    _defUpdateHash: function(e) {
+
+        //TODO: It will be more performant to create a new method rather than using _defAddHash, _defRemoveHash, due to the number of loops. See commented code.
+        e.added = e.updated;
+        e.removed = e.overwritten;
+        this._defAddHash(e);
+        this._defRemoveHash(e);
+
+        /*
+					var tbl = this.get('hashTables'), reckey;
+					
+					Y.each(tbl, function(v, key) {
+						Y.each(e.updated, function(o, i) {
+							
+							//delete record from hashtable if it has been overwritten
+							reckey = o.getValue(key);
+							
+							if (reckey) {
+								v[reckey] = o;
+							}
+							
+							//the undefined case is if more records are updated than currently exist in the recordset. 
+							if (e.overwritten[i] && (v[e.overwritten[i].getValue(key)] === e.overwritten[i])) {
+								delete v[e.overwritten[i].getValue(key)];
+							}
+							
+							// if (v[reckey] === o) {
+							// 	delete v[reckey];
+							// }
+							// 				
+							// //add the new updated record if it has a key that corresponds to a hash table
+							// if (o.getValue(key)) {
+							// 	v[o.getValue(key)] = o;
+							// }
+															
+						});
+					});
+			*/
+    },
+
+    //---------------------------------------------
+    // Public Methods
+    //---------------------------------------------
+
+    /**
+     * @description Creates a new hash table.
+	 *
+     * @method createTable
+     * @param key {string} A key to hash by.
+	 * @return tbls[key] {object} The created hash table
+     * @public
+     */
+    createTable: function(key) {
+        var tbls = this.get('hashTables');
+        tbls[key] = this._setHashTable(key);
+        this.set('hashTables', tbls);
+
+        return tbls[key];
+    },
+
+
+    /**
+     * @description Get a hash table that hashes records by a given key.
+	 *
+	 * @method getTable
+     * @param key {string} A key to hash by.
+	 * @return table {object} The created hash table
+     * @public
+     */
+    getTable: function(key) {
+        return this.get('hashTables')[key];
+    }
+
+
+
+
+
+});
+Y.namespace("Plugin").RecordsetIndexer = RecordsetIndexer;
+
+
+
+
+}, '3.3.0' ,{requires:['recordset-base','plugin']});

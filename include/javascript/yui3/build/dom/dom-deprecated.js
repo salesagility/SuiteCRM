@@ -5,4 +5,64 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dom-deprecated",function(a){a.mix(a.DOM,{children:function(d,b){var c=[];if(d){b=b||"*";c=a.Selector.query("> "+b,d);}return c;},firstByTag:function(b,c){var d;c=c||a.config.doc;if(b&&c.getElementsByTagName){d=c.getElementsByTagName(b)[0];}return d||null;},previous:function(b,d,c){return a.DOM.elementByAxis(b,"previousSibling",d,c);},next:function(b,d,c){return a.DOM.elementByAxis(b,"nextSibling",d,c);}});},"3.3.0",{requires:["dom-base"]});
+YUI.add('dom-deprecated', function(Y) {
+
+
+Y.mix(Y.DOM, {
+    // @deprecated
+    children: function(node, tag) {
+        var ret = [];
+        if (node) {
+            tag = tag || '*';
+            ret = Y.Selector.query('> ' + tag, node); 
+        }
+        return ret;
+    },
+
+    // @deprecated
+    firstByTag: function(tag, root) {
+        var ret;
+        root = root || Y.config.doc;
+
+        if (tag && root.getElementsByTagName) {
+            ret = root.getElementsByTagName(tag)[0];
+        }
+
+        return ret || null;
+    },
+
+    /*
+     * Finds the previous sibling of the element.
+     * @method previous
+     * @deprecated Use elementByAxis
+     * @param {HTMLElement} element The html element.
+     * @param {Function} fn optional An optional boolean test to apply.
+     * The optional function is passed the current DOM node being tested as its only argument.
+     * If no function is given, the first sibling is returned.
+     * @param {Boolean} all optional Whether all node types should be scanned, or just element nodes.
+     * @return {HTMLElement | null} The matching DOM node or null if none found. 
+     */
+    previous: function(element, fn, all) {
+        return Y.DOM.elementByAxis(element, 'previousSibling', fn, all);
+    },
+
+    /*
+     * Finds the next sibling of the element.
+     * @method next
+     * @deprecated Use elementByAxis
+     * @param {HTMLElement} element The html element.
+     * @param {Function} fn optional An optional boolean test to apply.
+     * The optional function is passed the current DOM node being tested as its only argument.
+     * If no function is given, the first sibling is returned.
+     * @param {Boolean} all optional Whether all node types should be scanned, or just element nodes.
+     * @return {HTMLElement | null} The matching DOM node or null if none found. 
+     */
+    next: function(element, fn, all) {
+        return Y.DOM.elementByAxis(element, 'nextSibling', fn, all);
+    }
+
+});
+
+
+
+}, '3.3.0' ,{requires:['dom-base']});

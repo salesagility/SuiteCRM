@@ -5,4 +5,40 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("datatype-number-parse",function(b){var a=b.Lang;b.mix(b.namespace("DataType.Number"),{parse:function(d){var c=(d===null)?d:+d;if(a.isNumber(c)){return c;}else{return null;}}});b.namespace("Parsers").number=b.DataType.Number.parse;},"3.3.0",{requires:["yui-base"]});
+YUI.add('datatype-number-parse', function(Y) {
+
+/**
+ * Parse number submodule.
+ *
+ * @module datatype
+ * @submodule datatype-number-parse
+ * @for DataType.Number
+ */
+
+var LANG = Y.Lang;
+
+Y.mix(Y.namespace("DataType.Number"), {
+    /**
+     * Converts data to type Number.
+     *
+     * @method parse
+     * @param data {String | Number | Boolean} Data to convert. The following
+     * values return as null: null, undefined, NaN, "".
+     * @return {Number} A number, or null.
+     */
+    parse: function(data) {
+        var number = (data === null) ? data : +data;
+        if(LANG.isNumber(number)) {
+            return number;
+        }
+        else {
+            return null;
+        }
+    }
+});
+
+// Add Parsers shortcut
+Y.namespace("Parsers").number = Y.DataType.Number.parse;
+
+
+}, '3.3.0' ,{requires:['yui-base']});

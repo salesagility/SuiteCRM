@@ -5,4 +5,103 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dataschema-array",function(C){var A=C.Lang,B={apply:function(F,G){var D=G,E={results:[],meta:{}};if(A.isArray(D)){if(A.isArray(F.resultFields)){E=B._parseResults.call(this,F.resultFields,D,E);}else{E.results=D;}}else{E.error=new Error("Array schema parse failure");}return E;},_parseResults:function(H,K,D){var G=[],O,N,I,J,M,L,F,E;for(F=K.length-1;F>-1;F--){O={};N=K[F];I=(A.isObject(N)&&!A.isFunction(N))?2:(A.isArray(N))?1:(A.isString(N))?0:-1;if(I>0){for(E=H.length-1;E>-1;E--){J=H[E];M=(!A.isUndefined(J.key))?J.key:J;L=(!A.isUndefined(N[M]))?N[M]:N[E];O[M]=C.DataSchema.Base.parse.call(this,L,J);}}else{if(I===0){O=N;}else{O=null;}}G[F]=O;}D.results=G;return D;}};C.DataSchema.Array=C.mix(B,C.DataSchema.Base);},"3.3.0",{requires:["dataschema-base"]});
+YUI.add('dataschema-array', function(Y) {
+
+/**
+ * Provides a DataSchema implementation which can be used to work with data stored in arrays.
+ *
+ * @module dataschema
+ * @submodule dataschema-array
+ */
+
+/**
+ * Array subclass for the DataSchema Utility.
+ * @class DataSchema.Array
+ * @extends DataSchema.Base
+ * @static
+ */
+var LANG = Y.Lang,
+
+    SchemaArray = {
+
+        /////////////////////////////////////////////////////////////////////////////
+        //
+        // DataSchema.Array static methods
+        //
+        /////////////////////////////////////////////////////////////////////////////
+        /**
+         * Applies a given schema to given Array data.
+         *
+         * @method apply
+         * @param schema {Object} Schema to apply.
+         * @param data {Object} Array data.
+         * @return {Object} Schema-parsed data.
+         * @static
+         */
+        apply: function(schema, data) {
+            var data_in = data,
+                data_out = {results:[],meta:{}};
+
+            if(LANG.isArray(data_in)) {
+                if(LANG.isArray(schema.resultFields)) {
+                    // Parse results data
+                    data_out = SchemaArray._parseResults.call(this, schema.resultFields, data_in, data_out);
+                }
+                else {
+                    data_out.results = data_in;
+                }
+            }
+            else {
+                data_out.error = new Error("Array schema parse failure");
+            }
+
+            return data_out;
+        },
+
+        /**
+         * Schema-parsed list of results from full data
+         *
+         * @method _parseResults
+         * @param fields {Array} Schema to parse against.
+         * @param array_in {Array} Array to parse.
+         * @param data_out {Object} In-progress parsed data to update.
+         * @return {Object} Parsed data object.
+         * @static
+         * @protected
+         */
+        _parseResults: function(fields, array_in, data_out) {
+            var results = [],
+                result, item, type, field, key, value, i, j;
+
+            for(i=array_in.length-1; i>-1; i--) {
+                result = {};
+                item = array_in[i];
+                type = (LANG.isObject(item) && !LANG.isFunction(item)) ? 2 : (LANG.isArray(item)) ? 1 : (LANG.isString(item)) ? 0 : -1;
+                if(type > 0) {
+                    for(j=fields.length-1; j>-1; j--) {
+                        field = fields[j];
+                        key = (!LANG.isUndefined(field.key)) ? field.key : field;
+                        value = (!LANG.isUndefined(item[key])) ? item[key] : item[j];
+                        result[key] = Y.DataSchema.Base.parse.call(this, value, field);
+                    }
+                }
+                else if(type === 0) {
+                    result = item;
+                }
+                else {
+                    //TODO: null or {}?
+                    result = null;
+                }
+                results[i] = result;
+            }
+            data_out.results = results;
+
+            return data_out;
+        }
+    };
+
+Y.DataSchema.Array = Y.mix(SchemaArray, Y.DataSchema.Base);
+
+
+
+}, '3.3.0' ,{requires:['dataschema-base']});

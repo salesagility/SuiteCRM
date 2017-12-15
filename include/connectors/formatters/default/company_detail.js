@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,13 +35,53 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function CompanyDetailsDialog(div_id,text,x,y)
-{this.div_id=div_id;this.text=text;this.width=300;this.header='';this.footer='';this.x=x;this.y=y;}
+
+
+function CompanyDetailsDialog(div_id, text, x, y)
+{
+    this.div_id = div_id;
+    this.text = text;
+    this.width = 300;
+    this.header = '';
+    this.footer = '';
+    this.x = x;
+    this.y = y;
+}
+
 function header(header)
-{this.header=header;}
+{
+    this.header = header;
+}
+
 function footer(footer)
-{this.footer=footer;}
+{
+    this.footer = footer;
+}
+
 function display()
-{if(typeof(dialog)!='undefined'&&dialog.destroy&&typeof(dialog.destroy)=='function')
-dialog.destroy();dialog=new YAHOO.widget.SimpleDialog(this.div_id,{width:this.width,visible:true,draggable:true,close:true,text:this.text,constraintoviewport:true,x:this.x,y:this.y});dialog.setHeader(this.header);dialog.setBody(this.text);dialog.setFooter(this.footer);dialog.render(document.body);dialog.show();}
-CompanyDetailsDialog.prototype.setHeader=header;CompanyDetailsDialog.prototype.setFooter=footer;CompanyDetailsDialog.prototype.display=display;
+{
+    if(typeof(dialog) != 'undefined' && dialog.destroy && typeof(dialog.destroy) == 'function')
+        dialog.destroy();
+
+    dialog = new YAHOO.widget.SimpleDialog(this.div_id,
+        {
+            width: this.width,
+            visible: true,
+            draggable: true,
+            close: true,
+            text: this.text,
+            constraintoviewport: true,
+            x: this.x,
+            y: this.y
+    });
+
+    dialog.setHeader(this.header);
+    dialog.setBody(this.text);
+    dialog.setFooter(this.footer);
+    dialog.render(document.body);
+    dialog.show();
+}
+
+CompanyDetailsDialog.prototype.setHeader = header;
+CompanyDetailsDialog.prototype.setFooter = footer;
+CompanyDetailsDialog.prototype.display = display;

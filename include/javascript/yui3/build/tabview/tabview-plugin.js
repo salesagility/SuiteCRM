@@ -5,4 +5,19 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("tabview-plugin",function(b){function a(){a.superclass.constructor.apply(this,arguments);}a.NAME="tabviewPlugin";a.NS="tabs";b.extend(a,b.TabviewBase);b.namespace("Plugin");b.Plugin.Tabview=a;},"3.3.0",{requires:["node-pluginhost","tabview-base"]});
+YUI.add('tabview-plugin', function(Y) {
+
+function TabviewPlugin() {
+    TabviewPlugin.superclass.constructor.apply(this, arguments);
+};
+
+TabviewPlugin.NAME = 'tabviewPlugin';
+TabviewPlugin.NS = 'tabs';
+
+Y.extend(TabviewPlugin, Y.TabviewBase);
+
+Y.namespace('Plugin');
+Y.Plugin.Tabview = TabviewPlugin;
+
+
+}, '3.3.0' ,{requires:['node-pluginhost', 'tabview-base']});

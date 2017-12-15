@@ -5,4 +5,116 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dump",function(g){var b=g.Lang,c="{...}",f="f(){...}",a=", ",d=" => ",e=function(p,n){var j,h,l=[],k=b.type(p);if(!b.isObject(p)){return p+"";}else{if(k=="date"){return p;}else{if(p.nodeType&&p.tagName){return p.tagName+"#"+p.id;}else{if(p.document&&p.navigator){return"window";}else{if(p.location&&p.body){return"document";}else{if(k=="function"){return f;}}}}}}n=(b.isNumber(n))?n:3;if(k=="array"){l.push("[");for(j=0,h=p.length;j<h;j=j+1){if(b.isObject(p[j])){l.push((n>0)?b.dump(p[j],n-1):c);}else{l.push(p[j]);}l.push(a);}if(l.length>1){l.pop();}l.push("]");}else{if(k=="regexp"){l.push(p.toString());}else{l.push("{");for(j in p){if(p.hasOwnProperty(j)){try{l.push(j+d);if(b.isObject(p[j])){l.push((n>0)?b.dump(p[j],n-1):c);}else{l.push(p[j]);}l.push(a);}catch(m){l.push("Error: "+m.message);}}}if(l.length>1){l.pop();}l.push("}");}}return l.join("");};g.dump=e;b.dump=e;},"3.3.0");
+YUI.add('dump', function(Y) {
+
+/**
+ * Returns a simple string representation of the object or array.
+ * Other types of objects will be returned unprocessed.  Arrays
+ * are expected to be indexed.  Use object notation for
+ * associative arrays.
+ *
+ * If included, the dump method is added to the YUI instance.
+ *
+ * @module dump
+ */
+
+    var L = Y.Lang,
+        OBJ = '{...}',
+        FUN = 'f(){...}',
+        COMMA = ', ',
+        ARROW = ' => ',
+
+    /**
+     * The following methods are added to the YUI instance
+     * @class YUI~dump
+     */
+
+    /**
+     * Returns a simple string representation of the object or array.
+     * Other types of objects will be returned unprocessed.  Arrays
+     * are expected to be indexed.  Use object notation for
+     * associative arrays.
+     *
+     * This method is in the 'dump' module, which is not bundled with
+     * the core YUI object
+     *
+     * @method dump
+     * @param {object} o The object to dump.
+     * @param {int} d How deep to recurse child objects, default 3.
+     * @return {string} the dump result.
+     */
+    dump = function(o, d) {
+        var i, len, s = [], type = L.type(o);
+
+        // Cast non-objects to string
+        // Skip dates because the std toString is what we want
+        // Skip HTMLElement-like objects because trying to dump
+        // an element will cause an unhandled exception in FF 2.x
+        if (!L.isObject(o)) {
+            return o + '';
+        } else if (type == 'date') {
+            return o;
+        } else if (o.nodeType && o.tagName) {
+            return o.tagName + '#' + o.id;
+        } else if (o.document && o.navigator) {
+            return 'window';
+        } else if (o.location && o.body) {
+            return 'document';
+        } else if (type == 'function') {
+            return FUN;
+        }
+
+        // dig into child objects the depth specifed. Default 3
+        d = (L.isNumber(d)) ? d : 3;
+
+        // arrays [1, 2, 3]
+        if (type == 'array') {
+            s.push('[');
+            for (i = 0, len = o.length; i < len; i = i + 1) {
+                if (L.isObject(o[i])) {
+                    s.push((d > 0) ? L.dump(o[i], d - 1) : OBJ);
+                } else {
+                    s.push(o[i]);
+                }
+                s.push(COMMA);
+            }
+            if (s.length > 1) {
+                s.pop();
+            }
+            s.push(']');
+        // regexp /foo/
+        } else if (type == 'regexp') {
+            s.push(o.toString());
+        // objects {k1 => v1, k2 => v2}
+        } else {
+            s.push('{');
+            for (i in o) {
+                if (o.hasOwnProperty(i)) {
+                    try {
+                        s.push(i + ARROW);
+                        if (L.isObject(o[i])) {
+                            s.push((d > 0) ? L.dump(o[i], d - 1) : OBJ);
+                        } else {
+                            s.push(o[i]);
+                        }
+                        s.push(COMMA);
+                    } catch (e) {
+                        s.push('Error: ' + e.message);
+                    }
+                }
+            }
+            if (s.length > 1) {
+                s.pop();
+            }
+            s.push('}');
+        }
+
+        return s.join('');
+    };
+
+    Y.dump = dump;
+    L.dump = dump;
+
+
+
+}, '3.3.0' );

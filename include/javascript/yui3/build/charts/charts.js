@@ -5,26 +5,15211 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("charts",function(b){var g=b.UA.chrome,j,d=document.createElement("canvas");if(document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1")){j="svg";}else{if(d&&d.getContext&&d.getContext("2d")){j="canvas";}else{j="vml";}}var u=function(C){this.initializer.apply(this,arguments);};u.prototype={autoSize:true,initializer:function(D){D=D||{};var C=D.width||0,E=D.height||0;if(D.node){this.node=D.node;this._styleGroup(this.node);}else{this.node=this._createGraphics();this.setSize(C,E);}this._initProps();},beginBitmapFill:function(C){var D={};D.src=C.bitmap.src;D.type="tile";this._fillProps=D;if(!isNaN(C.tx)||!isNaN(C.ty)||!isNaN(C.width)||!isNaN(C.height)){this._gradientBox={tx:C.tx,ty:C.ty,width:C.width,height:C.height};}else{this._gradientBox=null;}},beginFill:function(C,D){if(C){this._fillAlpha=b.Lang.isNumber(D)?D:1;this._fillColor=C;this._fillType="solid";this._fill=1;}return this;},beginGradientFill:function(D){var C=D.alphas||[];if(!this._defs){this._defs=this._createGraphicNode("defs");this.node.appendChild(this._defs);}this._fillAlphas=C;this._fillColors=D.colors;this._fillType=D.type||"linear";this._fillRatios=D.ratios||[];this._fillRotation=D.rotation||0;this._fillWidth=D.width||null;this._fillHeight=D.height||null;this._fillX=!isNaN(D.tx)?D.tx:NaN;this._fillY=!isNaN(D.ty)?D.ty:NaN;this._gradientId="lg"+Math.round(100000*Math.random());return this;},destroy:function(){this._removeChildren(this.node);if(this.node&&this.node.parentNode){this.node.parentNode.removeChild(this.node);}},_removeChildren:function(C){if(C.hasChildNodes()){var D;while(C.firstChild){D=C.firstChild;this._removeChildren(D);C.removeChild(D);}}},toggleVisible:function(C){this._toggleVisible(this.node,C);},_toggleVisible:function(G,H){var F=b.Selector.query(">/*",G),D=H?"visible":"hidden",E=0,C;if(F){C=F.length;for(;E<C;++E){this._toggleVisible(F[E],H);}}G.style.visibility=D;},clear:function(){if(this._graphicsList){while(this._graphicsList.length>0){this.node.removeChild(this._graphicsList.shift());}}this.path="";},curveTo:function(E,D,G,F,C,H){this._shapeType="path";if(this.path.indexOf("C")<0||this._pathType!=="C"){this._pathType="C";this.path+=" C";}this.path+=Math.round(E)+", "+Math.round(D)+", "+Math.round(G)+", "+Math.round(F)+", "+C+", "+H+" ";this._trackSize(C,H);},quadraticCurveTo:function(E,D,C,F){if(this.path.indexOf("Q")<0||this._pathType!=="Q"){this._pathType="Q";this.path+=" Q";}this.path+=Math.round(E)+" "+Math.round(D)+" "+Math.round(C)+" "+Math.round(F);},drawCircle:function(C,E,D){this._shape={x:C-D,y:E-D,w:D*2,h:D*2};this._attributes={cx:C,cy:E,r:D};this._width=this._height=D*2;this._x=C-D;this._y=E-D;this._shapeType="circle";this._draw();},drawEllipse:function(C,F,D,E){this._shape={x:C,y:F,w:D,h:E};this._width=D;this._height=E;this._x=C;this._y=F;this._shapeType="ellipse";this._draw();},drawRect:function(C,F,D,E){this._shape={x:C,y:F,w:D,h:E};this._x=C;this._y=F;this._width=D;this._height=E;this.moveTo(C,F);this.lineTo(C+D,F);this.lineTo(C+D,F+E);this.lineTo(C,F+E);this.lineTo(C,F);this._draw();},drawRoundRect:function(C,H,D,F,E,G){this._shape={x:C,y:H,w:D,h:F};this._x=C;this._y=H;this._width=D;this._height=F;this.moveTo(C,H+G);this.lineTo(C,H+F-G);this.quadraticCurveTo(C,H+F,C+E,H+F);this.lineTo(C+D-E,H+F);this.quadraticCurveTo(C+D,H+F,C+D,H+F-G);this.lineTo(C+D,H+G);this.quadraticCurveTo(C+D,H,C+D-E,H);this.lineTo(C+E,H);this.quadraticCurveTo(C,H,C,H+G);this._draw();},drawWedge:function(E,H,G,F,D,C){this._drawingComplete=false;this.path=this._getWedgePath({x:E,y:H,startAngle:G,arc:F,radius:D,yRadius:C});this._width=D*2;this._height=this._width;this._shapeType="path";this._draw();},end:function(){if(this._shapeType){this._draw();}this._initProps();},lineGradientStyle:function(){},lineStyle:function(F,E,J,H,G,I,C,D){this._stroke=1;this._strokeWeight=F;if(E){this._strokeColor=E;}this._strokeAlpha=b.Lang.isNumber(J)?J:1;},lineTo:function(H,G,E){var D=arguments,F,C;if(typeof H==="string"||typeof H==="number"){D=[[H,G]];}C=D.length;this._shapeType="path";if(this.path.indexOf("L")<0||this._pathType!=="L"){this._pathType="L";this.path+=" L";}for(F=0;F<C;++F){this.path+=D[F][0]+", "+D[F][1]+" ";this._trackSize.apply(this,D[F]);}},moveTo:function(C,D){this._pathType="M";this.path+=" M"+C+", "+D;},_getWedgePath:function(V){var L=V.x,J=V.y,Q=V.startAngle,I=V.arc,E=V.radius,F=V.yRadius||E,P,N,H,U,G,M,K,T,S,D,C,R=0,O=" M"+L+", "+J;if(Math.abs(I)>360){I=360;}P=Math.ceil(Math.abs(I)/45);N=I/P;H=-(N/180)*Math.PI;U=(Q/180)*Math.PI;if(P>0){M=L+Math.cos(Q/180*Math.PI)*E;K=J+Math.sin(Q/180*Math.PI)*F;O+=" L"+Math.round(M)+", "+Math.round(K);O+=" Q";for(;R<P;++R){U+=H;G=U-(H/2);T=L+Math.cos(U)*E;S=J+Math.sin(U)*F;D=L+Math.cos(G)*(E/Math.cos(H/2));C=J+Math.sin(G)*(F/Math.cos(H/2));O+=Math.round(D)+" "+Math.round(C)+" "+Math.round(T)+" "+Math.round(S)+" ";}O+=" L"+L+", "+J;}return O;},setSize:function(C,D){if(this.autoSize){if(C>this.node.getAttribute("width")){this.node.setAttribute("width",C);}if(D>this.node.getAttribute("height")){this.node.setAttribute("height",D);}}},_trackSize:function(C,D){if(C>this._width){this._width=C;}if(D>this._height){this._height=D;}this.setSize(C,D);},setPosition:function(C,D){this.node.setAttribute("x",C);this.node.setAttribute("y",D);},render:function(C){var D=C.get("width")||C.get("offsetWidth"),E=C.get("height")||C.get("offsetHeight");C=C||b.config.doc.body;C.appendChild(this.node);this.setSize(D,E);this._initProps();return this;},_initProps:function(){this._shape=null;this._fillColor=null;this._strokeColor=null;this._strokeWeight=0;this._fillProps=null;this._fillAlphas=null;this._fillColors=null;this._fillType=null;this._fillRatios=null;this._fillRotation=null;this._fillWidth=null;this._fillHeight=null;this._fillX=NaN;this._fillY=NaN;this.path="";this._width=0;this._height=0;this._x=0;this._y=0;this._fill=null;this._stroke=0;this._stroked=false;this._pathType=null;this._attributes={};},_clearPath:function(){this._shape=null;this._shapeType=null;
-this.path="";this._width=0;this._height=0;this._x=0;this._y=0;this._pathType=null;this._attributes={};},_draw:function(){var D=this._createGraphicNode(this._shapeType),E,C;if(this.path){if(this._fill){this.path+="z";}D.setAttribute("d",this.path);}else{for(E in this._attributes){if(this._attributes.hasOwnProperty(E)){D.setAttribute(E,this._attributes[E]);}}}D.setAttribute("stroke-width",this._strokeWeight);if(this._strokeColor){D.setAttribute("stroke",this._strokeColor);D.setAttribute("stroke-opacity",this._strokeAlpha);}if(!this._fillType||this._fillType==="solid"){if(this._fillColor){D.setAttribute("fill",this._fillColor);D.setAttribute("fill-opacity",this._fillAlpha);}else{D.setAttribute("fill","none");}}else{if(this._fillType==="linear"){C=this._getFill();C.setAttribute("id",this._gradientId);this._defs.appendChild(C);D.setAttribute("fill","url(#"+this._gradientId+")");}}this.node.appendChild(D);this._clearPath();},_getFill:function(){var C=this._fillType,D;switch(C){case"linear":D=this._getLinearGradient("fill");break;case"radial":break;case"bitmap":break;}return D;},_getLinearGradient:function(H){var V=this._createGraphicNode("linearGradient"),G="_"+H,M=this[G+"Colors"],P=this[G+"Ratios"],K=this[G+"Alphas"],N=this._fillWidth||(this._shape.w),Y=this._fillHeight||(this._shape.h),R=this[G+"Rotation"],W,T,U,L,I,O,S,Z,X,F,D,E=N/2,C=Y/2,J,Q;J=Math.PI/180;Q=parseFloat(parseFloat(Math.tan(R*J)).toFixed(8));if(Math.abs(Q)*N/2>=Y/2){if(R<180){F=0;D=Y;}else{F=Y;D=0;}Z=E-((C-F)/Q);X=E-((C-D)/Q);}else{if(R>90&&R<270){Z=N;X=0;}else{Z=0;X=N;}F=((Q*(E-Z))-C)*-1;D=((Q*(E-X))-C)*-1;}V.setAttribute("gradientTransform","rotate("+R+")");V.setAttribute("width",N);V.setAttribute("height",Y);V.setAttribute("gradientUnits","userSpaceOnUse");T=M.length;O=0;for(W=0;W<T;++W){I=K[W];U=M[W];L=P[W]||W/(T-1);L=Math.round(L*100)+"%";I=b.Lang.isNumber(I)?I:"1";O=(W+1)/T;S=this._createGraphicNode("stop");S.setAttribute("offset",L);S.setAttribute("stop-color",U);S.setAttribute("stop-opacity",I);V.appendChild(S);}return V;},_createGraphics:function(){var C=this._createGraphicNode("svg");this._styleGroup(C);return C;},_styleGroup:function(C){C.style.position="absolute";C.style.top="0px";C.style.overflow="visible";C.style.left="0px";C.setAttribute("pointer-events","none");},_createGraphicNode:function(E,C){var F=document.createElementNS("http://www.w3.org/2000/svg","svg:"+E),D=C||"none";if(E!=="defs"&&E!=="stop"&&E!=="linearGradient"){F.setAttribute("pointer-events",D);}if(E!="svg"){if(!this._graphicsList){this._graphicsList=[];}this._graphicsList.push(F);}return F;},getShape:function(C){C.graphic=this;return new b.Shape(C);}};b.Graphic=u;function m(){this.initializer.apply(this,arguments);}m.prototype={initializer:function(C){this._dummy=this._createDummy();this._canvas=this._createGraphic();this._context=this._canvas.getContext("2d");this._initProps();},beginBitmapFill:function(C){var D=this._context,F=C.bitmap,E=C.repeat||"repeat";this._fillWidth=C.width||null;this._fillHeight=C.height||null;this._fillX=!isNaN(C.tx)?C.tx:NaN;this._fillY=!isNaN(C.ty)?C.ty:NaN;this._fillType="bitmap";this._bitmapFill=D.createPattern(F,E);return this;},beginFill:function(C,E){var D=this._context;D.beginPath();if(C){if(E){C=this._2RGBA(C,E);}else{C=this._2RGB(C);}this._fillColor=C;this._fillType="solid";}return this;},beginGradientFill:function(G){var F,I,H=0,E=G.colors,D=G.alphas||[],C=E.length;this._fillAlphas=D;this._fillColors=E;this._fillType=G.type||"linear";this._fillRatios=G.ratios||[];this._fillRotation=G.rotation||0;this._fillWidth=G.width||null;this._fillHeight=G.height||null;this._fillX=!isNaN(G.tx)?G.tx:NaN;this._fillY=!isNaN(G.ty)?G.ty:NaN;for(;H<C;++H){I=D[H];F=E[H];if(I){F=this._2RGBA(F,I);}else{F=this._2RGB(F);}E[H]=F;}this._context.beginPath();return this;},lineStyle:function(J,G,F,I,K,E,C,H){G=G||"#000000";var D=this._context;if(this._stroke){D.stroke();}D.lineWidth=J;if(J){this._stroke=1;}else{this._stroke=0;}if(G){this._strokeStyle=G;if(F){this._strokeStyle=this._2RGBA(this._strokeStyle,F);}}if(!this._fill){D.beginPath();}if(E==="butt"){E="none";}if(D.lineCap){}this._drawingComplete=false;return this;},lineTo:function(I,H,E){var D=arguments,G=this._context,F,C;if(typeof I==="string"||typeof I==="number"){D=[[I,H]];}for(F=0,C=D.length;F<C;++F){G.lineTo(D[F][0],D[F][1]);this._updateShapeProps.apply(this,D[F]);this._trackSize.apply(this,D[F]);}this._drawingComplete=false;return this;},moveTo:function(C,D){this._context.moveTo(C,D);this._trackPos(C,D);this._updateShapeProps(C,D);this._drawingComplete=false;return this;},clear:function(){this._initProps();this._canvas.width=this._canvas.width;this._canvas.height=this._canvas.height;return this;},curveTo:function(E,D,G,F,C,H){this._context.bezierCurveTo(E,D,G,F,C,H);this._drawingComplete=false;this._updateShapeProps(C,H);this._trackSize(C,H);this._trackPos(C,H);return this;},quadraticCurveTo:function(E,D,C,F){this._context.quadraticCurveTo(E,D,C,F);this._drawingComplete=false;this._updateShapeProps(C,F);return this;},drawCircle:function(D,H,C){var G=this._context,F=0,E=2*Math.PI;this._shape={x:D-C,y:H-C,w:C*2,h:C*2};this._drawingComplete=false;this._trackPos(D,H);this._trackSize(C*2,C*2);G.beginPath();G.arc(D,H,C,F,E,false);this._draw();return this;},drawEllipse:function(N,L,O,T){this._shape={x:N,y:L,w:O,h:T};if(this._stroke&&this._context.lineWidth>0){O-=this._context.lineWidth*2;T-=this._context.lineWidth*2;N+=this._context.lineWidth;L+=this._context.lineWidth;}var D=this._context,Q=8,I=-(45/180)*Math.PI,V=0,H,F=O/2,G=T/2,R=0,K=N+F,J=L+G,P,M,U,S,E,C;this._drawingComplete=false;this._trackPos(N,L);this._trackSize(N+O,L+T);D.beginPath();P=K+Math.cos(0)*F;M=J+Math.sin(0)*G;D.moveTo(P,M);for(;R<Q;R++){V+=I;H=V-(I/2);U=K+Math.cos(V)*F;S=J+Math.sin(V)*G;E=K+Math.cos(H)*(F/Math.cos(I/2));C=J+Math.sin(H)*(G/Math.cos(I/2));D.quadraticCurveTo(E,C,U,S);}this._draw();return this;},drawRect:function(C,G,E,F){var D=this._context;this._shape={x:C,y:G,w:E,h:F};this._drawingComplete=false;
-D.beginPath();D.moveTo(C,G);D.lineTo(C+E,G);D.lineTo(C+E,G+F);D.lineTo(C,G+F);D.lineTo(C,G);this._trackPos(C,G);this._trackSize(E,F);this._draw();return this;},drawRoundRect:function(C,I,E,G,F,H){this._shape={x:C,y:I,w:E,h:G};var D=this._context;this._drawingComplete=false;D.beginPath();D.moveTo(C,I+H);D.lineTo(C,I+G-H);D.quadraticCurveTo(C,I+G,C+F,I+G);D.lineTo(C+E-F,I+G);D.quadraticCurveTo(C+E,I+G,C+E,I+G-H);D.lineTo(C+E,I+H);D.quadraticCurveTo(C+E,I,C+E-F,I);D.lineTo(C+F,I);D.quadraticCurveTo(C,I,C,I+H);this._trackPos(C,I);this._trackSize(E,G);this._draw();return this;},drawWedge:function(F){var M=F.x,K=F.y,Q=F.startAngle,J=F.arc,E=F.radius,G=F.yRadius,P,O,I,U,H,N,L,T,S,D,C,R=0;this._drawingComplete=false;this.moveTo(M,K);G=G||E;if(Math.abs(J)>360){J=360;}P=Math.ceil(Math.abs(J)/45);O=J/P;I=-(O/180)*Math.PI;U=(Q/180)*Math.PI;if(P>0){N=M+Math.cos(Q/180*Math.PI)*E;L=K+Math.sin(Q/180*Math.PI)*G;this.lineTo(N,L);for(;R<P;++R){U+=I;H=U-(I/2);T=M+Math.cos(U)*E;S=K+Math.sin(U)*G;D=M+Math.cos(H)*(E/Math.cos(I/2));C=K+Math.sin(H)*(G/Math.cos(I/2));this.quadraticCurveTo(D,C,T,S);}this.lineTo(M,K);}this._trackPos(M,K);this._trackSize(E,E);this._draw();},end:function(){this._draw();this._initProps();return this;},lineGradientStyle:function(){return this;},setSize:function(C,D){this._canvas.width=C;this._canvas.height=D;},_initProps:function(){var C=this._context;C.fillStyle="rgba(0, 0, 0, 1)";C.lineWidth=1;C.lineJoin="miter";C.miterLimit=3;this._strokeStyle="rgba(0, 0, 0, 1)";this._width=0;this._height=0;this._x=0;this._y=0;this._fillType=null;this._stroke=null;this._bitmapFill=null;this._drawingComplete=false;},_getFill:function(){var C=this._fillType,D;switch(C){case"linear":D=this._getLinearGradient("fill");break;case"radial":D=this._getRadialGradient("fill");break;case"bitmap":D=this._bitmapFill;break;case"solid":D=this._fillColor;break;}return D;},_getLinearGradient:function(H){var G="_"+H,M=this[G+"Colors"],Q=this[G+"Ratios"],N=!isNaN(this._fillX)?this._fillX:this._shape.x,L=!isNaN(this._fillY)?this._fillY:this._shape.y,O=this._fillWidth||(this._shape.w),Y=this._fillHeight||(this._shape.h),T=this._context,S=this[G+"Rotation"],W,U,V,K,P,J,Z,X,F,D,E=N+O/2,C=L+Y/2,I=Math.PI/180,R=parseFloat(parseFloat(Math.tan(S*I)).toFixed(8));if(Math.abs(R)*O/2>=Y/2){if(S<180){F=L;D=L+Y;}else{F=L+Y;D=L;}Z=E-((C-F)/R);X=E-((C-D)/R);}else{if(S>90&&S<270){Z=N+O;X=N;}else{Z=N;X=N+O;}F=((R*(E-Z))-C)*-1;D=((R*(E-X))-C)*-1;}J=T.createLinearGradient(Z,F,X,D);U=M.length;P=0;for(W=0;W<U;++W){V=M[W];K=Q[W]||W/(U-1);J.addColorStop(K,V);P=(W+1)/U;}return J;},_getRadialGradient:function(L){var D="_"+L,C=this[D+"Colors"],I=this[D+"Ratios"],H,F,P=this._fillWidth||this._shape.w,J=this._fillHeight||this._shape.h,N=!isNaN(this._fillX)?this._fillX:this._shape.x,M=!isNaN(this._fillY)?this._fillY:this._shape.y,G,K,E,O,Q=this._context;N+=P/2;M+=J/2;O=Q.createRadialGradient(N,M,1,N,M,P/2);F=C.length;E=0;for(H=0;H<F;++H){G=C[H];K=I[H]||H/(F-1);O.addColorStop(K,G);}return O;},_draw:function(){if(this._drawingComplete||!this._shape){return;}var C=this._context,D;if(this._fillType){D=this._getFill();if(D){C.fillStyle=D;}C.closePath();}if(this._fillType){C.fill();}if(this._stroke){C.strokeStyle=this._strokeStyle;C.stroke();}this._drawingComplete=true;},_drawingComplete:false,_reHex:/^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i,_2RGBA:function(D,C){C=(C!==undefined)?C:1;if(this._reHex.exec(D)){D="rgba("+[parseInt(RegExp.$1,16),parseInt(RegExp.$2,16),parseInt(RegExp.$3,16)].join(",")+","+C+")";}return D;},_createDummy:function(){var C=b.config.doc.createElement("div");C.style.height=0;C.style.width=0;C.style.overflow="hidden";b.config.doc.documentElement.appendChild(C);return C;},_createGraphic:function(C){var D=b.config.doc.createElement("canvas");D.width=600;D.height=600;return D;},_2RGB:function(C){this._dummy.style.background=C;return this._dummy.style.backgroundColor;},_trackSize:function(C,D){if(C>this._width){this._width=C;}if(D>this._height){this._height=D;}},_trackPos:function(C,D){if(C>this._x){this._x=C;}if(D>this._y){this._y=D;}},_updateShapeProps:function(C,F){var D,E;if(!this._shape){this._shape={};}if(!this._shape.x){this._shape.x=C;}else{this._shape.x=Math.min(this._shape.x,C);}if(!this._shape.y){this._shape.y=F;}else{this._shape.y=Math.min(this._shape.y,F);}D=Math.abs(C-this._shape.x);if(!this._shape.w){this._shape.w=D;}else{this._shape.w=Math.max(D,this._shape.w);}E=Math.abs(F-this._shape.y);if(!this._shape.h){this._shape.h=E;}else{this._shape.h=Math.max(E,this._shape.h);}},getShape:function(C){C.graphic=this;return new b.Shape(C);}};b.CanvasDrawingUtil=m;b.CanvasGraphic=b.Base.create("graphic",b.CanvasDrawingUtil,[],{autoSize:true,setSize:function(C,D){if(this.autoSize){if(C>this.node.getAttribute("width")){this.node.style.width=C+"px";this._canvas.style.width=C+"px";this._canvas.width=C;this.node.setAttribute("width",C);}if(D>this.node.getAttribute("height")){this.node.style.height=D+"px";this._canvas.style.height=D+"px";this._canvas.height=D;this.node.setAttribute("height",D);}}},_trackSize:function(C,D){if(C>this._width){this._width=C;}if(D>this._height){this._height=D;}this.setSize(C,D);},setPosition:function(C,D){this.node.style.left=C+"px";this.node.style.top=D+"px";},render:function(C){C=C||b.config.doc.body;this.node=document.createElement("div");this.node.style.width=C.offsetWidth+"px";this.node.style.height=C.offsetHeight+"px";this.node.style.display="block";this.node.style.position="absolute";this.node.style.left=C.getStyle("left");this.node.style.top=C.getStyle("top");this.node.style.pointerEvents="none";C.appendChild(this.node);this.node.appendChild(this._canvas);this._canvas.width=C.offsetWidth>0?C.offsetWidth:100;this._canvas.height=C.offsetHeight>0?C.offsetHeight:100;this._canvas.style.position="absolute";return this;},toggleVisible:function(C){this.node.style.visibility=C?"visible":"hidden";},_createGraphicNode:function(C){var D=b.config.doc.createElement("canvas");D.style.pointerEvents=C||"none";if(!this._graphicsList){this._graphicsList=[];
-}this._graphicsList.push(D);return D;},destroy:function(){this._removeChildren(this.node);if(this.node&&this.node.parentNode){this.node.parentNode.removeChild(this.node);}},_removeChildren:function(C){if(C.hasChildNodes()){var D;while(C.firstChild){D=C.firstChild;this._removeChildren(D);C.removeChild(D);}}},node:null});if(j=="canvas"){b.Graphic=b.CanvasGraphic;}var c=function(C){this.initializer.apply(this,arguments);};c.prototype={initializer:function(D){D=D||{};var C=D.width||0,E=D.height||0;this.node=this._createGraphics();this.setSize(C,E);this._initProps();},beginBitmapFill:function(C){var D={};D.src=C.bitmap.src;D.type="tile";this._fillProps=D;if(!isNaN(C.tx)||!isNaN(C.ty)||!isNaN(C.width)||!isNaN(C.height)){this._gradientBox={tx:C.tx,ty:C.ty,width:C.width,height:C.height};}else{this._gradientBox=null;}},beginFill:function(C,D){if(C){if(b.Lang.isNumber(D)){this._fillProps={type:"solid",opacity:D};}this._fillColor=C;this._fill=1;}return this;},beginGradientFill:function(E){var J=E.type,C=E.colors,D=E.alphas||[],H=E.ratios||[],M={colors:C,ratios:H},I=D.length,G=0,F,K,L=E.rotation||0;for(;G<I;++G){F=D[G];F=b.Lang.isNumber(F)?F:1;K=G>0?G+1:"";D[G]=Math.round(F*100)+"%";M["opacity"+K]=F;}if(J==="linear"){if(E){}if(L>0&&L<=90){L=450-L;}else{if(L<=270){L=270-L;}else{if(L<=360){L=630-L;}else{L=270;}}}M.type="gradientunscaled";M.angle=L;}else{if(J==="radial"){M.alignshape=false;M.type="gradientradial";M.focus="100%";M.focusposition="50%,50%";}}M.ratios=H||[];if(!isNaN(E.tx)||!isNaN(E.ty)||!isNaN(E.width)||!isNaN(E.height)){this._gradientBox={tx:E.tx,ty:E.ty,width:E.width,height:E.height};}else{this._gradientBox=null;}this._fillProps=M;},clear:function(){this._path="";this._removeChildren(this.node);},destroy:function(){this._removeChildren(this.node);this.node.parentNode.removeChild(this.node);},_removeChildren:function(C){if(C.hasChildNodes()){var D;while(C.firstChild){D=C.firstChild;this._removeChildren(D);C.removeChild(D);}}},toggleVisible:function(C){this._toggleVisible(this.node,C);},_toggleVisible:function(G,H){var F=b.one(G).get("children"),D=H?"visible":"hidden",E=0,C;if(F){C=F.length;for(;E<C;++E){this._toggleVisible(F[E],H);}}G.style.visibility=D;},curveTo:function(E,D,G,F,C,H){this._shape="shape";this._path+=" c "+Math.round(E)+", "+Math.round(D)+", "+Math.round(G)+", "+Math.round(F)+", "+C+", "+H;this._trackSize(C,H);},quadraticCurveTo:function(E,D,C,F){this._path+=" qb "+E+", "+D+", "+C+", "+F;},drawCircle:function(C,E,D){this._width=this._height=D*2;this._x=C-D;this._y=E-D;this._shape="oval";this._draw();},drawEllipse:function(C,F,D,E){this._width=D;this._height=E;this._x=C;this._y=F;this._shape="oval";this._draw();},drawRect:function(C,F,D,E){this._x=C;this._y=F;this._width=D;this._height=E;this.moveTo(C,F);this.lineTo(C+D,F);this.lineTo(C+D,F+E);this.lineTo(C,F+E);this.lineTo(C,F);this._draw();},drawRoundRect:function(C,H,D,F,E,G){this._x=C;this._y=H;this._width=D;this._height=F;this.moveTo(C,H+G);this.lineTo(C,H+F-G);this.quadraticCurveTo(C,H+F,C+E,H+F);this.lineTo(C+D-E,H+F);this.quadraticCurveTo(C+D,H+F,C+D,H+F-G);this.lineTo(C+D,H+G);this.quadraticCurveTo(C+D,H,C+D-E,H);this.lineTo(C+E,H);this.quadraticCurveTo(C,H,C,H+G);this._draw();},drawWedge:function(E,H,G,F,D,C){this._drawingComplete=false;this._width=D;this._height=D;C=C||D;this._path+=this._getWedgePath({x:E,y:H,startAngle:G,arc:F,radius:D,yRadius:C});this._width=D*2;this._height=this._width;this._shape="shape";this._draw();},_getWedgePath:function(F){var E=F.x,J=F.y,H=F.startAngle,G=F.arc,D=F.radius,C=F.yRadius||D,I;if(Math.abs(G)>360){G=360;}H*=-65535;G*=65536;I=" m "+E+" "+J+" ae "+E+" "+J+" "+D+" "+C+" "+H+" "+G;return I;},end:function(){if(this._shape){this._draw();}this._initProps();},lineGradientStyle:function(){},lineStyle:function(F,E,J,H,G,I,C,D){this._stroke=1;this._strokeWeight=F*0.7;this._strokeColor=E;this._strokeOpacity=b.Lang.isNumber(J)?J:1;},lineTo:function(H,G,E){var D=arguments,F,C;if(typeof H==="string"||typeof H==="number"){D=[[H,G]];}C=D.length;this._shape="shape";this._path+=" l ";for(F=0;F<C;++F){this._path+=" "+Math.round(D[F][0])+", "+Math.round(D[F][1]);this._trackSize.apply(this,D[F]);}},moveTo:function(C,D){this._path+=" m "+Math.round(C)+", "+Math.round(D);},setSize:function(C,D){C=Math.round(C);D=Math.round(D);this.node.style.width=C+"px";this.node.style.height=D+"px";this.node.coordSize=C+" "+D;this._canvasWidth=C;this._canvasHeight=D;},setPosition:function(C,D){C=Math.round(C);D=Math.round(D);this.node.style.left=C+"px";this.node.style.top=D+"px";},render:function(C){var D=Math.max(C.offsetWidth||0,this._canvasWidth),E=Math.max(C.offsetHeight||0,this._canvasHeight);C=C||b.config.doc.body;C.appendChild(this.node);this.setSize(D,E);this._initProps();return this;},_shape:null,_trackSize:function(C,D){if(C>this._width){this._width=C;}if(D>this._height){this._height=D;}},_initProps:function(){this._fillColor=null;this._strokeColor=null;this._strokeOpacity=null;this._strokeWeight=0;this._fillProps=null;this._path="";this._width=0;this._height=0;this._x=0;this._y=0;this._fill=null;this._stroke=0;this._stroked=false;},_clearPath:function(){this._shape=null;this._path="";this._width=0;this._height=0;this._x=0;this._y=0;},_draw:function(){var E=this._createGraphicNode(this._shape),C=Math.round(this._width),F=Math.round(this._height),G,D=this._fillProps;this.setSize(C,F);if(this._path){if(this._fill||this._fillProps){this._path+=" x";}if(this._stroke){this._path+=" e";}E.path=this._path;E.coordSize=C+", "+F;}else{E.style.display="block";E.style.position="absolute";E.style.left=this._x+"px";E.style.top=this._y+"px";}if(this._fill){E.fillColor=this._fillColor;}else{E.filled=false;}if(this._stroke&&this._strokeWeight>0){E.strokeColor=this._strokeColor;E.strokeWeight=this._strokeWeight;if(b.Lang.isNumber(this._strokeOpacity)&&this._strokeOpacity<1){G=this._createGraphicNode("stroke");E.appendChild(G);G.opacity=this._strokeOpacity;}}else{E.stroked=false;}E.style.width=C+"px";E.style.height=F+"px";
-if(D){E.filled=true;E.appendChild(this._getFill());}this.node.appendChild(E);this._clearPath();},_getFill:function(){var P=this._createGraphicNode("fill"),N=this._width,I=this._height,J=this._fillProps,D,O,G=0,C,M="",K,H,L=Math.sqrt(Math.pow(N,2)+Math.pow(I,2)),F=50,E=50;if(this._gradientBox){F=Math.round((this._gradientBox.width/2-((this._x-this._gradientBox.tx)*L/N))/(N*N/L)*100);E=Math.round((this._gradientBox.height/2-((this._y-this._gradientBox.ty)*L/I))/(I*I/L)*100);J.focussize=(this._gradientBox.width/N)/10+" "+(this._gradientBox.height/I)/10;}if(J.colors){C=J.colors.concat();H=J.ratios.concat();K=C.length;for(;G<K;++G){O=H[G]||G/(K-1);O=Math.round(100*O)+"%";M+=", "+O+" "+C[G];}if(parseInt(O,10)<100){M+=", 100% "+C[K-1];}}for(D in J){if(J.hasOwnProperty(D)){P.setAttribute(D,J[D]);}}P.colors=M.substr(2);if(J.type==="gradientradial"){P.focusposition=F+"%,"+E+"%";}return P;},_createGraphics:function(){var C=this._createGraphicNode("group");C.style.display="inline-block";C.style.position="absolute";return C;},_createGraphicNode:function(C){return document.createElement("<"+C+' xmlns="urn:schemas-microsft.com:vml" class="vml'+C+'"/>');},_getNodeShapeType:function(D){var C="shape";if(this._typeConversionHash.hasOwnProperty(D)){C=this._typeConversionHash[D];}return C;},_typeConversionHash:{circle:"oval",ellipse:"oval",rect:"rect"},getShape:function(C){C.graphic=this;return new b.Shape(C);},addChild:function(C){this.node.appendChild(C);}};if(j=="vml"){var i=document.createStyleSheet();i.addRule(".vmlgroup","behavior:url(#default#VML)",i.rules.length);i.addRule(".vmlgroup","display:inline-block",i.rules.length);i.addRule(".vmlgroup","zoom:1",i.rules.length);i.addRule(".vmlshape","behavior:url(#default#VML)",i.rules.length);i.addRule(".vmlshape","display:inline-block",i.rules.length);i.addRule(".vmloval","behavior:url(#default#VML)",i.rules.length);i.addRule(".vmloval","display:inline-block",i.rules.length);i.addRule(".vmlrect","behavior:url(#default#VML)",i.rules.length);i.addRule(".vmlrect","display:block",i.rules.length);i.addRule(".vmlfill","behavior:url(#default#VML)",i.rules.length);i.addRule(".vmlstroke","behavior:url(#default#VML)",i.rules.length);b.Graphic=c;}function n(C){this._initialize(C);this._draw();}b.extend(n,b.Graphic,{type:"shape",autoSize:false,pointerEvents:"visiblePainted",_initialize:function(C){if(!C.graphic){C.graphic=new b.Graphic();}this._setProps(C);},_setProps:function(C){this.autoSize=C.autoSize||this.autoSize;this.pointerEvents=C.pointerEvents||this.pointerEvents;this.width=C.width||this.width;this.height=C.height||this.height;this.border=C.border||this.border;this.graphics=C.graphic||this.graphics;this.canvas=this.graphics;this.parentNode=this.graphics.node;this.fill=C.fill||this.fill;this.type=C.shape||this.type;this.nodetype=this._getNodeShapeType(this.type);this.props=C.props||this.props;this.path=C.path||this.path;},_draw:function(){var D,J,G,F,C=this.parentNode,H=0,E=this.width||0,I=this.height||0;if(!this.node){this.node=this._createGraphicNode(this.nodetype,this.pointerEvents);C.appendChild(this.node);}if(this.type=="wedge"){this.path=this._getWedgePath(this.props);}if(this.nodetype=="path"){this._setPath();}if(this.border&&this.border.weight&&this.border.weight>0){H=this.border.weight;E-=H*2;I-=H*2;}this._addBorder();if(this.nodetype==="ellipse"){G=this.width/2;D=this.width/2;F=this.height/2;J=this.height/2;G-=H;F-=H;this.node.setAttribute("cx",D);this.node.setAttribute("cy",J);this.node.setAttribute("rx",G);this.node.setAttribute("ry",F);}else{this.node.setAttribute("width",E);this.node.setAttribute("height",I);this.node.style.width=E+"px";this.node.style.height=I+"px";}this._addFill();C.style.width=this.width+"px";C.style.height=this.height+"px";C.setAttribute("width",this.width);C.setAttribute("height",this.height);this.node.style.visibility="visible";this.node.setAttribute("x",H);this.node.setAttribute("y",H);return this;},_setPath:function(){if(this.path){this.path+=" Z";this.node.setAttribute("d",this.path);}},_addBorder:function(){if(this.border&&this.border.weight&&this.border.weight>0){var C=this.border.alpha;this.border.color=this.border.color||"#000000";this.border.weight=this.border.weight||1;this.border.alpha=b.Lang.isNumber(C)?C:1;this.border.linecap=this.border.linecap||"square";this.node.setAttribute("stroke",this.border.color);this.node.setAttribute("stroke-linecap",this.border.linecap);this.node.setAttribute("stroke-width",this.border.weight);this.node.setAttribute("stroke-opacity",this.border.alpha);}else{this.node.setAttribute("stroke","none");}},_addFill:function(){var C;if(this.fill.type==="linear"||this.fill.type==="radial"){this.beginGradientFill(this.fill);this.node.appendChild(this._getFill());}else{if(this.fill.type==="bitmap"){this.beginBitmapFill(this.fill);this.node.appendChild(this._getFill());}else{if(!this.fill.color){this.node.setAttribute("fill","none");}else{C=this.fill.alpha;this.fill.alpha=b.Lang.isNumber(C)?C:1;this.node.setAttribute("fill",this.fill.color);this.node.setAttribute("fill-opacity",C);}}}},end:function(){this._setPath();},update:function(C){this._setProps(C);this._draw();return this;},_getNodeShapeType:function(C){if(this._typeConversionHash.hasOwnProperty(C)){C=this._typeConversionHash[C];}return C;},toggleVisible:function(D){var C=D?"visible":"hidden";if(this.node){this.node.style.visibility=C;}},addClass:function(C){var D=this.node;if(D){if(D.className&&D.className.baseVal){D.className.baseVal=b.Lang.trim([D.className.baseVal,C].join(" "));}else{D.setAttribute("class",C);}}},setPosition:function(C,F){var D=b.one(this.parentNode),E=this.hotspot;D.setStyle("position","absolute");D.setStyle("left",C);D.setStyle("top",F);if(E){E.setStyle("position","absolute");E.setStyle("left",C);E.setStyle("top",F);}},_typeConversionHash:{circle:"ellipse",wedge:"path"}});b.Shape=n;function s(C){this._dummy=this._createDummy();this._canvas=this._createGraphic();this.node=this._canvas;this._context=this._canvas.getContext("2d");
-this._initialize(C);this._validate();}b.extend(s,b.CanvasDrawingUtil,{type:"shape",autoSize:false,_initialize:function(C){this._canvas.style.position="absolute";if(C.graphic){C.graphic.node.appendChild(this._canvas);}this._setProps(C);},_setProps:function(C){this.autoSize=C.autoSize||this.autoSize;this.width=C.width||this.width;this.height=C.height||this.height;this.border=C.border||this.border;this.graphics=C.graphic||this.graphics;this.fill=C.fill||this.fill;this.type=C.shape||this.type;this.props=C.props||this.props;this.path=C.path||this.path;this.props=C.props||this.props;this.parentNode=this.graphics.node;},_validate:function(){var C=this.width,F=this.height,D=this.border,E=this.type,G=this.fill;this.clear();this.setSize(this.width,this.height);this._canvas.style.top="0px";this._canvas.style.left="0px";if(D&&D.weight&&D.weight>0){D.color=D.color||"#000";D.alpha=D.alpha||1;this.lineStyle(D.weight,D.color,D.alpha);}if(G.type==="radial"||G.type==="linear"){this.beginGradientFill(G);}else{if(G.type==="bitmap"){this.beginBitmapFill(G);}else{this.beginFill(G.color,G.alpha);}}switch(E){case"circle":this.drawEllipse(0,0,C,F);break;case"rect":this.drawRect(0,0,C,F);break;case"wedge":this.drawWedge(this.props);break;}return this;},update:function(C){this._setProps(C);this._validate();return this;},toggleVisible:function(D){var C=D?"visible":"hidden";if(this.node){this.node.style.visibility=C;}},setPosition:function(C,E){var D=b.one(this.parentNode);D.setStyle("position","absolute");D.setStyle("left",C);D.setStyle("top",E);},addClass:function(C){if(this.node){this.node.style.pointerEvents="painted";this.node.setAttribute("class",C);}}});b.CanvasShape=s;if(j=="canvas"){b.Shape=b.CanvasShape;}function B(C){this._initialize(C);this._draw();}B.prototype={type:"shape",_initialize:function(C){if(!C.graphic){C.graphic=new b.Graphic();}this._setProps(C);},width:0,height:0,_setProps:function(C){this.width=C.width&&C.width>=0?C.width:this.width;this.height=C.height&&C.height>=0?C.height:this.height;this.border=C.border||this.border;this.graphics=C.graphic||this.graphics;this.canvas=this.graphics;this.parentNode=this.graphics.node;this.fill=C.fill||this.fill;this.type=C.shape||this.type;this.props=C.props||this.props;},_draw:function(){var D,E=0,C=this.width||0,F=this.height||0;this.graphics.setSize(C,F);if(this.node){this.node.style.visible="hidden";}else{if(!this.node){this.node=this.graphics._createGraphicNode(this.graphics._getNodeShapeType(this.type));this.graphics.node.appendChild(this.node);}}if(this.type==="wedge"){D=this.graphics._getWedgePath(this.props);if(this.fill){D+=" x";}if(this.border){D+=" e";}this.node.path=D;}this._addBorder();if(this.border&&this.border.weight&&this.border.weight>0){E=this.border.weight;C-=E;F-=E;}this.node.style.width=Math.max(C,0)+"px";this.node.style.height=Math.max(F,0)+"px";this._addFill();return this;},_addBorder:function(){if(this.border&&this.border.weight&&this.border.weight>0){var C=this.border.alpha,D=this.borderWeight;C=b.Lang.isNumber(C)?C:1;D=b.Lang.isNumber(D)?D:1;this.node.strokecolor=this.border.color||"#000000";this.node.strokeweight=D;if(C<1){if(!this._strokeNode){this._strokeNode=this.graphics._createGraphicNode("stroke");this.node.appendChild(this._strokeNode);}this._strokeNode.opacity=C;}else{if(this._strokeNode){this._strokeNode.opacity=C;}}this.node.stroked=true;}else{this.node.stroked=false;}},_addFill:function(){var C;this.node.filled=true;if(this.fill.type==="linear"||this.fill.type==="radial"){this.graphics.beginGradientFill(this.fill);this.node.appendChild(this.graphics._getFill());}else{if(this.fill.type==="bitmap"){this.graphics.beginBitmapFill(this.fill);this.node.appendChild(this.graphics._getFill());}else{if(!this.fill.color){this.node.filled=false;}else{if(this.fillnode){this.graphics._removeChildren(this.fillnode);}C=this.fill.alpha;C=b.Lang.isNumber(C)?C:1;this.fill.alpha=C;this.fillnode=this.graphics._createGraphicNode("fill");this.fillnode.type="solid";this.fillnode.color=this.fill.color;this.fillnode.opacity=C;this.node.appendChild(this.fillnode);}}}},addClass:function(D){var C=this.node;if(C){b.one(C).addClass(D);}},toggleVisible:function(D){var C=D?"visible":"hidden";if(this.node){b.one(this.node).setStyle("visibility",C);}},setPosition:function(C,E){var D=b.one(this.parentNode);D.setStyle("position","absolute");D.setStyle("left",C);D.setStyle("top",E);},update:function(C){this._setProps(C);this._draw();return this;}};b.VMLShape=B;if(j=="vml"){b.Shape=B;}function v(){}v.ATTRS={styles:{getter:function(){this._styles=this._styles||this._getDefaultStyles();return this._styles;},setter:function(C){this._styles=this._setStyles(C);}},graphic:{}};v.NAME="renderer";v.prototype={_styles:null,_setStyles:function(D){var C=this.get("styles");return this._mergeStyles(D,C);},_mergeStyles:function(D,C){if(!C){C={};}var E=b.merge(C,{});b.Object.each(D,function(H,G,F){if(C.hasOwnProperty(G)&&b.Lang.isObject(H)&&!b.Lang.isArray(H)){E[G]=this._mergeStyles(H,C[G]);}else{E[G]=H;}},this);return E;},_getDefaultStyles:function(){return{padding:{top:0,right:0,bottom:0,left:0}};}};b.augment(v,b.Attribute);b.Renderer=v;b.Axis=b.Base.create("axis",b.Widget,[b.Renderer],{_dataChangeHandler:function(C){if(this.get("rendered")){this._drawAxis();}},_updateHandler:function(C){if(this.get("rendered")){this._drawAxis();}},_positionChangeHandler:function(D){var C=this.get("position");if(C=="none"){return;}this._layout=this.getLayout(this.get("position"));if(this.get("rendered")){this._drawAxis();}},renderUI:function(){var C=this.get("position");if(C&&C!="none"){this._layout=this.getLayout(C);this._setCanvas();}},syncUI:function(){this._drawAxis();},_setCanvas:function(){var C=this.get("contentBox"),H=this.get("boundingBox"),G=this.get("position"),E=this._parentNode,D=this.get("width"),F=this.get("height");H.setStyle("position","absolute");D=D?D+"px":E.getStyle("width");F=F?F+"px":E.getStyle("height");if(G==="top"||G==="bottom"){C.setStyle("width",D);}else{C.setStyle("height",F);
-}C.setStyle("position","relative");C.setStyle("left","0px");C.setStyle("top","0px");this.set("graphic",new b.Graphic());this.get("graphic").render(C);},_getDefaultStyles:function(){var C={majorTicks:{display:"inside",length:4,color:"#dad8c9",weight:1,alpha:1},minorTicks:{display:"none",length:2,color:"#dad8c9",weight:1},line:{weight:1,color:"#dad8c9",alpha:1},majorUnit:{determinant:"count",count:11,distance:75},top:"0px",left:"0px",width:"100px",height:"100px",label:{color:"#808080",alpha:1,fontSize:"85%",rotation:0,margin:{top:4,right:4,bottom:4,left:4}},hideOverlappingLabelTicks:false};return b.merge(b.Renderer.prototype._getDefaultStyles(),C);},_handleSizeChange:function(F){var E=F.attrName,H=this.get("position"),D=H=="left"||H=="right",C=this.get("contentBox"),G=H=="bottom"||H=="top";C.setStyle("width",this.get("width"));C.setStyle("height",this.get("height"));if((G&&E=="width")||(D&&E=="height")){this._drawAxis();}},_layout:null,getLayout:function(D){var C;switch(D){case"top":C=new b.TopAxisLayout({axisRenderer:this});break;case"bottom":C=new b.BottomAxisLayout({axisRenderer:this});break;case"left":C=new b.LeftAxisLayout({axisRenderer:this});break;case"right":C=new b.RightAxisLayout({axisRenderer:this});break;}return C;},drawLine:function(E,D,C){var F=this.get("graphic");F.lineStyle(C.weight,C.color,C.alpha);F.moveTo(E.x,E.y);F.lineTo(D.x,D.y);F.end();},_drawAxis:function(){if(this._drawing){this._callLater=true;return;}this._drawing=true;this._callLater=false;if(this.get("position")!="none"){var S=this.get("styles"),N=S.majorTicks,O=N.display!="none",F,M=S.majorUnit,L,Q,H=0,D,I,K,R,J=this._layout,G=this.get("labelFunction"),P=this.get("labelFunctionScope"),E=this.get("labelFormat"),C=this.get("graphic");C.clear();J.setTickOffsets();D=this.getLength();K=J.getLineStart();L=this.getTotalMajorUnits(M);Q=this.getMajorUnitDistance(L,D,M);this.set("edgeOffset",this.getEdgeOffset(L,D)*0.5);F=this.getFirstPoint(K);this.drawLine(K,this.getLineEnd(F),S.line);if(O){J.drawTick(F,N);}if(L<1){this._clearLabelCache();return;}this._createLabelCache();this._tickPoints=[];J.set("maxLabelSize",0);for(;H<L;++H){if(O){J.drawTick(F,N);}I=this.getPosition(F);R=this.getLabel(F);R.innerHTML=G.apply(P,[this.getLabelByIndex(H,L),E]);F=this.getNextPoint(F,Q);}this._clearLabelCache();J.setSizeAndPosition();if(this.get("overlapGraph")){J.offsetNodeForTick(this.get("contentBox"));}J.setCalculatedSize();for(H=0;H<L;++H){J.positionLabel(this.get("labels")[H],this._tickPoints[H]);}}this._drawing=false;if(this._callLater){this._drawAxis();}else{this.fire("axisRendered");}},_labels:null,_labelCache:null,getLabel:function(H,I){var E,D,F={rotation:"rotation",margin:"margin",alpha:"alpha"},C=this._labelCache,G=this.get("styles").label;if(C.length>0){D=C.shift();}else{D=document.createElement("span");D.style.display="block";D.style.whiteSpace="nowrap";b.one(D).addClass("axisLabel");this.get("contentBox").appendChild(D);}D.style.position="absolute";this._labels.push(D);this._tickPoints.push({x:H.x,y:H.y});this._layout.updateMaxLabelSize(D);for(E in G){if(G.hasOwnProperty(E)&&!F.hasOwnProperty(E)){D.style[E]=G[E];}}return D;},_createLabelCache:function(){if(this._labels){if(this._labelCache){this._labelCache=this._labels.concat(this._labelCache);}else{this._labelCache=this._labels.concat();}}else{this._clearLabelCache();}this._labels=[];},_clearLabelCache:function(){if(this._labelCache){var C=this._labelCache.length,E=0,D,F=this._labelCache;for(;E<C;++E){D=F[E];D.parentNode.removeChild(D);}}this._labelCache=[];},_calculateSizeByTickLength:true,getLineEnd:function(E){var C=this.get("width"),D=this.get("height"),F=this.get("position");if(F==="top"||F==="bottom"){return{x:C,y:E.y};}else{return{x:E.x,y:D};}},getLength:function(){var D,F=this.get("styles"),G=F.padding,C=this.get("width"),E=this.get("height"),H=this.get("position");if(H==="top"||H==="bottom"){D=C-(G.left+G.right);}else{D=E-(G.top+G.bottom);}return D;},getFirstPoint:function(F){var C=this.get("styles"),G=this.get("position"),E=C.padding,D={x:F.x,y:F.y};if(G==="top"||G==="bottom"){D.x+=E.left+this.get("edgeOffset");}else{D.y+=this.get("height")-(E.top+this.get("edgeOffset"));}return D;},getNextPoint:function(C,D){var E=this.get("position");if(E==="top"||E==="bottom"){C.x=C.x+D;}else{C.y=C.y-D;}return C;},getLastPoint:function(){var D=this.get("styles"),E=D.padding,C=this.get("width"),F=this.get("position");if(F==="top"||F==="bottom"){return{x:C-E.right,y:E.top};}else{return{x:E.left,y:E.top};}},getPosition:function(C){var H,F=this.get("height"),E=this.get("styles"),G=E.padding,I=this.get("position"),D=this.get("dataType");if(I==="left"||I==="right"){if(D==="numeric"){H=(F-(G.top+G.bottom))-(C.y-G.top);}else{H=C.y-G.top;}}else{H=C.x-G.left;}return H;}},{ATTRS:{edgeOffset:{value:0},graphic:{},node:{},position:{lazyAdd:false,setOnce:true,setter:function(C){if(C=="none"){this.bindUI();}return C;}},topTickOffset:{value:0},bottomTickOffset:{value:0},leftTickOffset:{value:0},rightTickOffset:{value:0},labels:{readOnly:true,getter:function(){return this._labels;}},tickPoints:{readOnly:true,getter:function(){if(this.get("position")=="none"){return this.get("styles").majorUnit.count;}return this._tickPoints;}},overlapGraph:{value:true,validator:function(C){return b.Lang.isBoolean(C);}},labelFunctionScope:{}}});function p(C){p.superclass.constructor.apply(this,arguments);}p.ATTRS={axisRenderer:{value:null},maxLabelSize:{value:0}};b.extend(p,b.Base,{setTickOffsets:function(){var C=this.get("axisRenderer"),G=C.get("styles").majorTicks,E=G.length,D=E*0.5,F=G.display;C.set("topTickOffset",0);C.set("bottomTickOffset",0);switch(F){case"inside":C.set("rightTickOffset",E);C.set("leftTickOffset",0);break;case"outside":C.set("rightTickOffset",0);C.set("leftTickOffset",E);break;case"cross":C.set("rightTickOffset",D);C.set("leftTickOffset",D);break;default:C.set("rightTickOffset",0);C.set("leftTickOffset",0);break;}},drawTick:function(I,G){var D=this.get("axisRenderer"),E=D.get("styles"),H=E.padding,F=G.length,J={x:H.left,y:I.y},C={x:F+H.left,y:I.y};
-D.drawLine(J,C,G);},getLineStart:function(){var C=this.get("axisRenderer"),D=C.get("styles"),H=D.padding,I=D.majorTicks,E=I.length,G=I.display,F={x:H.left,y:0};if(G==="outside"){F.x+=E;}else{if(G==="cross"){F.x+=E/2;}}return F;},getLabelPoint:function(C){var D=this.get("axisRenderer");return{x:C.x-D.get("leftTickOffset"),y:C.y};},updateMaxLabelSize:function(N){var H=this.get("axisRenderer"),C=H.get("styles").label,E=Math.min(90,Math.max(-90,C.rotation)),I=Math.abs(E),L=Math.PI/180,O=parseFloat(parseFloat(Math.sin(I*L)).toFixed(8)),F=parseFloat(parseFloat(Math.cos(I*L)).toFixed(8)),K=F,J=E>0?-O:O,G=-J,D=K,M;if(!document.createElementNS){N.style.filter="progid:DXImageTransform.Microsoft.Matrix(M11="+K+" M12="+J+" M21="+G+" M22="+D+' sizingMethod="auto expand")';this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),N.offsetWidth));}else{N.style.msTransform="rotate(0deg)";if(E===0){M=N.offsetWidth;}else{if(I===90){M=N.offsetHeight;}else{M=(F*N.offsetWidth)+(O*N.offsetHeight);}}this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),M));}},positionLabel:function(J,R){var Q=this.get("axisRenderer"),E=Q.get("leftTickOffset"),U=Q.get("styles").label,M=U.alpha,T,P=0,L=R.x,S=R.y,K=Math.min(90,Math.max(-90,U.rotation)),D=Math.abs(K),G=Math.PI/180,O=parseFloat(parseFloat(Math.sin(D*G)).toFixed(8)),I=parseFloat(parseFloat(Math.cos(D*G)).toFixed(8)),X=I,W=K>0?-O:O,H=-W,F=X,N=this.get("maxLabelSize"),V=Math.round(J.offsetWidth),C=Math.round(J.offsetHeight);if(U.margin&&U.margin.right){P=U.margin.right;}if(!document.createElementNS){J.style.filter=null;V=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(K===0){L=V;S-=C*0.5;}else{if(D===90){L=C;S-=V*0.5;}else{if(K>0){L=(I*V)+(C*K/90);S-=(O*V)+(I*(C*0.5));}else{L=(I*V)+(D/90*C);S-=I*(C*0.5);}}}L+=E;J.style.left=((R.x+N)-L)+"px";J.style.top=S+"px";if(T){T+=" ";}if(b.Lang.isNumber(M)&&M<1&&M>-1&&!isNaN(M)){T="progid:DXImageTransform.Microsoft.Alpha(Opacity="+Math.round(M*100)+")";}if(K!==0){if(T){T+=" ";}else{T="";}T+="progid:DXImageTransform.Microsoft.Matrix(M11="+X+" M12="+W+" M21="+H+" M22="+F+' sizingMethod="auto expand")';}if(T){J.style.filter=T;}return;}J.style.msTransform="rotate(0deg)";V=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(K===0){L-=V;S-=C*0.5;}else{if(K===90){S-=V*0.5;}else{if(K===-90){L-=C;S+=V*0.5;}else{if(K<0){L-=(I*V)+(O*C);S+=(O*V)-(I*(C*0.6));}else{L-=(I*V);S-=(O*V)+(I*(C*0.6));}}}}L-=E;J.style.left=(this.get("maxLabelSize")+L)+"px";J.style.top=S+"px";J.style.MozTransformOrigin="0 0";J.style.MozTransform="rotate("+K+"deg)";J.style.webkitTransformOrigin="0 0";J.style.webkitTransform="rotate("+K+"deg)";J.style.msTransformOrigin="0 0";J.style.msTransform="rotate("+K+"deg)";J.style.OTransformOrigin="0 0";J.style.OTransform="rotate("+K+"deg)";},setSizeAndPosition:function(){var C=this.get("maxLabelSize"),D=this.get("axisRenderer"),E=D.get("styles"),I=D.get("leftTickOffset"),G=C+I,H=D.get("graphic"),F=E.label.margin;if(F&&F.right){G+=F.right;}G=Math.round(G);D.set("width",G);D.get("contentBox").setStyle("width",G);b.one(H.node).setStyle("left",C+F.right);},offsetNodeForTick:function(C){},setCalculatedSize:function(){var E=this.get("axisRenderer"),G=E.get("styles"),F=G.label,H=E.get("leftTickOffset"),D=this.get("maxLabelSize"),C=Math.round(H+D+F.margin.right);E.get("contentBox").setStyle("width",C);E.set("width",C);}});b.LeftAxisLayout=p;function t(C){t.superclass.constructor.apply(this,arguments);}t.ATTRS={axisRenderer:{value:null}};b.extend(t,b.Base,{setTickOffsets:function(){var C=this.get("axisRenderer"),G=C.get("styles").majorTicks,E=G.length,D=E*0.5,F=G.display;C.set("topTickOffset",0);C.set("bottomTickOffset",0);switch(F){case"inside":C.set("leftTickOffset",E);C.set("rightTickOffset",0);break;case"outside":C.set("leftTickOffset",0);C.set("rightTickOffset",E);break;case"cross":C.set("rightTickOffset",D);C.set("leftTickOffset",D);break;default:C.set("leftTickOffset",0);C.set("rightTickOffset",0);break;}},drawTick:function(I,G){var D=this.get("axisRenderer"),E=D.get("styles"),H=E.padding,F=G.length,J={x:H.left,y:I.y},C={x:H.left+F,y:I.y};D.drawLine(J,C,G);},getLineStart:function(){var C=this.get("axisRenderer"),D=C.get("styles"),H=D.padding,I=D.majorTicks,E=I.length,G=I.display,F={x:H.left,y:H.top};if(G==="inside"){F.x+=E;}else{if(G==="cross"){F.x+=E/2;}}return F;},getLabelPoint:function(C){var D=this.get("axisRenderer");return{x:C.x+D.get("rightTickOffset"),y:C.y};},updateMaxLabelSize:function(N){var H=this.get("axisRenderer"),C=H.get("styles").label,E=Math.min(90,Math.max(-90,C.rotation)),I=Math.abs(E),L=Math.PI/180,O=parseFloat(parseFloat(Math.sin(I*L)).toFixed(8)),F=parseFloat(parseFloat(Math.cos(I*L)).toFixed(8)),K=F,J=E>0?-O:O,G=-J,D=K,M;if(!document.createElementNS){N.style.filter="progid:DXImageTransform.Microsoft.Matrix(M11="+K+" M12="+J+" M21="+G+" M22="+D+' sizingMethod="auto expand")';this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),N.offsetWidth));}else{N.style.msTransform="rotate(0deg)";if(E===0){M=N.offsetWidth;}else{if(I===90){M=N.offsetHeight;}else{M=(F*N.offsetWidth)+(O*N.offsetHeight);}}this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),M));}},positionLabel:function(J,Q){var P=this.get("axisRenderer"),E=P.get("rightTickOffset"),T=P.get("styles").label,M=T.alpha,S,O=0,L=Q.x,R=Q.y,K=Math.min(Math.max(T.rotation,-90),90),D=Math.abs(K),G=Math.PI/180,N=parseFloat(parseFloat(Math.sin(D*G)).toFixed(8)),I=parseFloat(parseFloat(Math.cos(D*G)).toFixed(8)),W=I,V=K>0?-N:N,H=-V,F=W,U=Math.round(J.offsetWidth),C=Math.round(J.offsetHeight);if(T.margin&&T.margin.right){O=T.margin.right;}if(!document.createElementNS){J.style.filter=null;if(K===0){R-=C*0.5;}else{if(D===90){R-=U*0.5;}else{if(K>0){R-=(I*(C*0.5));}else{R-=(N*U)+(I*(C*0.5));}}}L+=O;L+=E;J.style.left=L+"px";J.style.top=R+"px";if(b.Lang.isNumber(M)&&M<1&&M>-1&&!isNaN(M)){S="progid:DXImageTransform.Microsoft.Alpha(Opacity="+Math.round(M*100)+")";}if(K!==0){if(S){S+=" ";}else{S="";}S+="progid:DXImageTransform.Microsoft.Matrix(M11="+W+" M12="+V+" M21="+H+" M22="+F+' sizingMethod="auto expand")';
-}if(S){J.style.filter=S;}return;}J.style.msTransform="rotate(0deg)";U=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(K===0){R-=C*0.5;}else{if(K===90){L+=C;R-=U*0.5;}else{if(K===-90){R+=U*0.5;}else{if(K<0){R-=(I*(C*0.6));}else{R-=I*(C*0.6);L+=N*C;}}}}L+=O;L+=E;J.style.left=L+"px";J.style.top=R+"px";J.style.MozTransformOrigin="0 0";J.style.MozTransform="rotate("+K+"deg)";J.style.webkitTransformOrigin="0 0";J.style.webkitTransform="rotate("+K+"deg)";J.style.msTransformOrigin="0 0";J.style.msTransform="rotate("+K+"deg)";J.style.OTransformOrigin="0 0";J.style.OTransform="rotate("+K+"deg)";},setSizeAndPosition:function(){var D=this.get("axisRenderer"),E=D.get("styles").label,C=this.get("maxLabelSize"),G=D.get("rightTickOffset"),F=G+C;if(E.margin&&E.margin.weight){F+=E.margin.weight;}D.set("width",F);D.get("contentBox").setStyle("width",F);},offsetNodeForTick:function(C){var D=this.get("axisRenderer"),F=D.get("leftTickOffset"),E=0-F;C.setStyle("left",E);},setCalculatedSize:function(){var D=this.get("axisRenderer"),E=D.get("styles").label,C=Math.round(D.get("rightTickOffset")+this.get("maxLabelSize")+E.margin.left);D.set("width",C);}});b.RightAxisLayout=t;function x(C){x.superclass.constructor.apply(this,arguments);}x.ATTRS={axisRenderer:{value:null},maxLabelSize:{value:0}};b.extend(x,b.Base,{setTickOffsets:function(){var C=this.get("axisRenderer"),G=C.get("styles").majorTicks,E=G.length,D=E*0.5,F=G.display;C.set("leftTickOffset",0);C.set("rightTickOffset",0);switch(F){case"inside":C.set("topTickOffset",E);C.set("bottomTickOffset",0);break;case"outside":C.set("topTickOffset",0);C.set("bottomTickOffset",E);break;case"cross":C.set("topTickOffset",D);C.set("bottomTickOffset",D);break;default:C.set("topTickOffset",0);C.set("bottomTickOffset",0);break;}},getLineStart:function(){var C=this.get("axisRenderer"),D=C.get("styles"),H=D.padding,I=D.majorTicks,E=I.length,G=I.display,F={x:0,y:H.top};if(G==="inside"){F.y+=E;}else{if(G==="cross"){F.y+=E/2;}}return F;},drawTick:function(I,G){var D=this.get("axisRenderer"),E=D.get("styles"),H=E.padding,F=G.length,J={x:I.x,y:H.top},C={x:I.x,y:F+H.top};D.drawLine(J,C,G);},getLabelPoint:function(C){var D=this.get("axisRenderer");return{x:C.x,y:C.y+D.get("bottomTickOffset")};},updateMaxLabelSize:function(N){var H=this.get("axisRenderer"),C=H.get("styles").label,E=Math.min(90,Math.max(-90,C.rotation)),I=Math.abs(E),L=Math.PI/180,O=parseFloat(parseFloat(Math.sin(I*L)).toFixed(8)),F=parseFloat(parseFloat(Math.cos(I*L)).toFixed(8)),K=F,J=E>0?-O:O,G=-J,D=K,M;if(!document.createElementNS){N.style.filter="progid:DXImageTransform.Microsoft.Matrix(M11="+K+" M12="+J+" M21="+G+" M22="+D+' sizingMethod="auto expand")';this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),N.offsetHeight));}else{N.style.msTransform="rotate(0deg)";if(E===0){M=N.offsetHeight;}else{if(I===90){M=N.offsetWidth;}else{M=(O*N.offsetWidth)+(F*N.offsetHeight);}}this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),M));}},positionLabel:function(J,Q){var P=this.get("axisRenderer"),E=P.get("bottomTickOffset"),T=P.get("styles").label,M=T.alpha,S,O=0,L=Math.round(Q.x),R=Math.round(Q.y),K=Math.min(90,Math.max(-90,T.rotation)),D=Math.abs(K),G=Math.PI/180,N=parseFloat(parseFloat(Math.sin(D*G)).toFixed(8)),I=parseFloat(parseFloat(Math.cos(D*G)).toFixed(8)),W=I,V=K>0?-N:N,H=-V,F=W,U=Math.round(J.offsetWidth),C=Math.round(J.offsetHeight);if(T.margin&&T.margin.top){O=T.margin.top;}if(!document.createElementNS){W=I;V=K>0?-N:N;H=-V;F=W;J.style.filter=null;U=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(D===90){L-=C*0.5;}else{if(K<0){L-=I*U;L-=N*(C*0.5);}else{if(K>0){L-=N*(C*0.5);}else{L-=U*0.5;}}}R+=O;R+=E;J.style.left=Math.round(L)+"px";J.style.top=Math.round(R)+"px";if(b.Lang.isNumber(M)&&M<1&&M>-1&&!isNaN(M)){S="progid:DXImageTransform.Microsoft.Alpha(Opacity="+Math.round(M*100)+")";}if(K!==0){if(S){S+=" ";}else{S="";}S+="progid:DXImageTransform.Microsoft.Matrix(M11="+W+" M12="+V+" M21="+H+" M22="+F+' sizingMethod="auto expand")';}if(S){J.style.filter=S;}return;}J.style.msTransform="rotate(0deg)";U=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(K===0){L-=U*0.5;}else{if(D===90){if(K===90){L+=C*0.5;}else{R+=U;L-=C*0.5;}}else{if(K<0){L-=(I*U)+(N*(C*0.6));R+=N*U;}else{L+=Math.round(N*(C*0.6));}}}R+=O;R+=E;J.style.left=Math.round(L)+"px";J.style.top=Math.round(R)+"px";J.style.MozTransformOrigin="0 0";J.style.MozTransform="rotate("+K+"deg)";J.style.webkitTransformOrigin="0 0";J.style.webkitTransform="rotate("+K+"deg)";J.style.msTransformOrigin="0 0";J.style.msTransform="rotate("+K+"deg)";J.style.OTransformOrigin="0 0";J.style.OTransform="rotate("+K+"deg)";},setSizeAndPosition:function(){var C=this.get("maxLabelSize"),D=this.get("axisRenderer"),F=D.get("bottomTickLength"),E=D.get("styles"),H=F+C,G=E.label.margin;if(G&&G.top){H+=G.top;}H=Math.round(H);D.set("height",H);},offsetNodeForTick:function(C){var D=this.get("axisRenderer");D.get("contentBox").setStyle("top",0-D.get("topTickOffset"));},setCalculatedSize:function(){var D=this.get("axisRenderer"),E=D.get("styles").label,C=Math.round(D.get("bottomTickOffset")+this.get("maxLabelSize")+E.margin.top);D.set("height",C);}});b.BottomAxisLayout=x;function a(C){a.superclass.constructor.apply(this,arguments);}a.ATTRS={axisRenderer:{value:null},maxLabelSize:{value:0}};b.extend(a,b.Base,{setTickOffsets:function(){var C=this.get("axisRenderer"),G=C.get("styles").majorTicks,E=G.length,D=E*0.5,F=G.display;C.set("leftTickOffset",0);C.set("rightTickOffset",0);switch(F){case"inside":C.set("bottomTickOffset",E);C.set("topTickOffset",0);break;case"outside":C.set("bottomTickOffset",0);C.set("topTickOffset",E);break;case"cross":C.set("topTickOffset",D);C.set("bottomTickOffset",D);break;default:C.set("topTickOffset",0);C.set("bottomTickOffset",0);break;}},getLineStart:function(){var C=this.get("axisRenderer"),D=C.get("styles"),H=D.padding,I=D.majorTicks,E=I.length,G=I.display,F={x:0,y:H.top};if(G==="outside"){F.y+=E;}else{if(G==="cross"){F.y+=E/2;}}return F;
-},drawTick:function(I,G){var D=this.get("axisRenderer"),E=D.get("styles"),H=E.padding,F=G.length,J={x:I.x,y:H.top},C={x:I.x,y:F+H.top};D.drawLine(J,C,G);},getLabelPoint:function(D){var C=this.get("axisRenderer");return{x:D.x,y:D.y-C.get("topTickOffset")};},updateMaxLabelSize:function(N){var H=this.get("axisRenderer"),C=H.get("styles").label,E=Math.min(90,Math.max(-90,C.rotation)),I=Math.abs(E),L=Math.PI/180,O=parseFloat(parseFloat(Math.sin(I*L)).toFixed(8)),F=parseFloat(parseFloat(Math.cos(I*L)).toFixed(8)),K=F,J=E>0?-O:O,G=-J,D=K,M;if(!document.createElementNS){N.style.filter="progid:DXImageTransform.Microsoft.Matrix(M11="+K+" M12="+J+" M21="+G+" M22="+D+' sizingMethod="auto expand")';this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),N.offsetHeight));}else{N.style.msTransform="rotate(0deg)";if(E===0){M=N.offsetHeight;}else{if(I===90){M=N.offsetWidth;}else{M=(O*N.offsetWidth)+(F*N.offsetHeight);}}this.set("maxLabelSize",Math.max(this.get("maxLabelSize"),M));}},positionLabel:function(J,R){var Q=this.get("axisRenderer"),E=Q.get("topTickOffset"),U=Q.get("styles").label,M=U.alpha,T,P=0,L=R.x,S=R.y,K=Math.max(-90,Math.min(90,U.rotation)),D=Math.abs(K),G=Math.PI/180,O=parseFloat(parseFloat(Math.sin(D*G)).toFixed(8)),I=parseFloat(parseFloat(Math.cos(D*G)).toFixed(8)),X,W,H,F,N=this.get("maxLabelSize"),V=Math.round(J.offsetWidth),C=Math.round(J.offsetHeight);K=Math.min(90,K);K=Math.max(-90,K);if(U.margin&&U.margin.bottom){P=U.margin.bottom;}if(!document.createElementNS){J.style.filter=null;V=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);X=I;W=K>0?-O:O;H=-W;F=X;if(K===0){L-=V*0.5;}else{if(D===90){L-=C*0.5;}else{if(K>0){L-=(I*V)+Math.min((O*C),(K/180*C));S-=(O*V)+(I*(C));S+=N;}else{L-=O*(C*0.5);S-=(O*V)+(I*(C));S+=N;}}}S-=E;J.style.left=L;J.style.top=S;if(b.Lang.isNumber(M)&&M<1&&M>-1&&!isNaN(M)){T="progid:DXImageTransform.Microsoft.Alpha(Opacity="+Math.round(M*100)+")";}if(K!==0){if(T){T+=" ";}else{T="";}T+="progid:DXImageTransform.Microsoft.Matrix(M11="+X+" M12="+W+" M21="+H+" M22="+F+' sizingMethod="auto expand")';}if(T){J.style.filter=T;}return;}J.style.msTransform="rotate(0deg)";V=Math.round(J.offsetWidth);C=Math.round(J.offsetHeight);if(K===0){L-=V*0.5;S-=C;}else{if(K===90){L+=C*0.5;S-=V;}else{if(K===-90){L-=C*0.5;S-=0;}else{if(K<0){L-=(O*(C*0.6));S-=(I*C);}else{L-=(I*V)-(O*(C*0.6));S-=(O*V)+(I*C);}}}}S-=E;J.style.left=L+"px";J.style.top=(this.get("maxLabelSize")+S)+"px";J.style.MozTransformOrigin="0 0";J.style.MozTransform="rotate("+K+"deg)";J.style.webkitTransformOrigin="0 0";J.style.webkitTransform="rotate("+K+"deg)";J.style.msTransformOrigin="0 0";J.style.msTransform="rotate("+K+"deg)";J.style.OTransformOrigin="0 0";J.style.OTransform="rotate("+K+"deg)";},setSizeAndPosition:function(){var C=this.get("maxLabelSize"),D=this.get("axisRenderer"),H=D.get("topTickOffset"),E=D.get("styles"),F=E.label.margin,I=D.get("graphic"),G=H+C;if(F&&F.bottom){G+=F.bottom;}D.set("height",G);b.one(I.node).setStyle("top",C+F.bottom);},offsetNodeForTick:function(C){},setCalculatedSize:function(){var D=this.get("axisRenderer"),E=D.get("styles").label,C=Math.round(D.get("topTickOffset")+this.get("maxLabelSize")+E.margin.bottom);D.set("height",C);}});b.TopAxisLayout=a;b.AxisType=b.Base.create("baseAxis",b.Axis,[],{bindUI:function(){this.after("dataReady",b.bind(this._dataChangeHandler,this));this.after("dataUpdate",b.bind(this._dataChangeHandler,this));this.after("minimumChange",b.bind(this._keyChangeHandler,this));this.after("maximumChange",b.bind(this._keyChangeHandler,this));this.after("keysChange",this._keyChangeHandler);this.after("dataProviderChange",this._dataProviderChangeHandler);this.after("stylesChange",this._updateHandler);this.after("positionChange",this._positionChangeHandler);this.after("overlapGraphChange",this._updateHandler);this.after("widthChange",this._handleSizeChange);this.after("heightChange",this._handleSizeChange);this.after("alwaysShowZeroChange",this._keyChangeHandler);this.after("roundingMethodChange",this._keyChangeHandler);},_dataProviderChangeHandler:function(F){var C=this.get("keyCollection").concat(),E=this.get("keys"),D;if(E){for(D in E){if(E.hasOwnProperty(D)){delete E[D];}}}if(C&&C.length){this.set("keys",C);}},GUID:"yuibaseaxis",_type:null,_setMaximum:null,_dataMaximum:null,_setMinimum:null,_data:null,_updateTotalDataFlag:true,_dataReady:false,addKey:function(C){this.set("keys",C);},_getKeyArray:function(F,G){var E=0,H,D=[],C=G.length;for(;E<C;++E){H=G[E];D[E]=H[F];}return D;},_setDataByKey:function(G,H){var F,I,D=[],E=this._dataClone.concat(),C=E.length;for(F=0;F<C;++F){I=E[F];D[F]=I[G];}this.get("keys")[G]=D;this._updateTotalDataFlag=true;},_updateTotalData:function(){var D=this.get("keys"),C;this._data=[];for(C in D){if(D.hasOwnProperty(C)){this._data=this._data.concat(D[C]);}}this._updateTotalDataFlag=false;},removeKey:function(D){var C=this.get("keys");if(C.hasOwnProperty(D)){delete C[D];this._keyChangeHandler();}},getKeyValueAt:function(D,C){var F=NaN,E=this.get("keys");if(E[D]&&E[D][C]){F=E[D][C];}return F;},getDataByKey:function(D){var C=this.get("keys");if(C[D]){return C[D];}return null;},_updateMinAndMax:function(){var H=this.get("data"),D=0,G=0,C,E,F;if(H&&H.length&&H.length>0){C=H.length;D=G=H[0];if(C>1){for(F=1;F<C;F++){E=H[F];if(isNaN(E)){continue;}D=Math.max(E,D);G=Math.min(E,G);}}}this._dataMaximum=D;this._dataMinimum=G;},getTotalMajorUnits:function(){var D,E=this.get("styles").majorUnit,C=this.get("length");if(E.determinant==="count"){D=E.count;}else{if(E.determinant==="distance"){D=(C/E.distance)+1;}}return D;},getMajorUnitDistance:function(C,F,D){var E;if(D.determinant==="count"){E=F/(C-1);}else{if(D.determinant==="distance"){E=D.distance;}}return E;},getEdgeOffset:function(D,C){return 0;},getLabelByIndex:function(G,D){var F=this.get("minimum"),C=this.get("maximum"),H=(C-F)/(D-1),E;D-=1;E=F+(G*H);return E;},_keyChangeHandler:function(C){this._updateMinAndMax();this.fire("dataUpdate");}},{ATTRS:{keys:{value:{},setter:function(G){var E={},D,C,F=this.get("dataProvider");
-if(b.Lang.isArray(G)){C=G.length;for(D=0;D<C;++D){E[G[D]]=this._getKeyArray(G[D],F);}}else{if(b.Lang.isString(G)){E=this.get("keys");E[G]=this._getKeyArray(G,F);}else{for(D in G){if(G.hasOwnProperty(D)){E[D]=this._getKeyArray(D,F);}}}}this._updateTotalDataFlag=true;return E;}},roundingMethod:{value:"niceNumber"},type:{readOnly:true,getter:function(){return this._type;}},dataProvider:{setter:function(C){return C;}},dataMaximum:{getter:function(){if(!this._dataMaximum){this._updateMinAndMax();}return this._dataMaximum;}},maximum:{getter:function(){var C=this.get("dataMaximum");if(this.get("setMax")){C=this._setMaximum;}return C;},setter:function(C){this._setMaximum=parseFloat(C);return C;}},dataMinimum:{getter:function(){if(!this._dataMinimum){this._updateMinAndMax();}return this._dataMinimum;}},minimum:{getter:function(){var C=this.get("dataMinimum");if(this.get("setMin")){C=this._setMinimum;}return C;},setter:function(C){this._setMinimum=parseFloat(C);return C;}},setMax:{readOnly:true,getter:function(){return b.Lang.isNumber(this._setMaximum);}},setMin:{readOnly:true,getter:function(){return b.Lang.isNumber(this._setMinimum);}},data:{getter:function(){if(!this._data||this._updateTotalDataFlag){this._updateTotalData();}return this._data;}},keyCollection:{getter:function(){var E=this.get("keys"),D,C=[];for(D in E){if(E.hasOwnProperty(D)){C.push(D);}}return C;},readOnly:true},labelFunction:{value:function(D,C){return D;}}}});function q(C){q.superclass.constructor.apply(this,arguments);}q.NAME="numericAxis";q.ATTRS={alwaysShowZero:{value:true},labelFunction:{value:function(D,C){if(C){return b.DataType.Number.format(D,C);}return D;}},labelFormat:{value:{prefix:"",thousandsSeparator:"",decimalSeparator:"",decimalPlaces:"0",suffix:""}}};b.extend(q,b.AxisType,{_type:"numeric",_getMinimumUnit:function(C,E,D){return this._getNiceNumber(Math.ceil((C-E)/D));},_getNiceNumber:function(E){var G=E,C=Math.ceil(Math.log(G)*0.4342944819032518),F=Math.pow(10,C),D;if(F/2>=G){D=Math.floor((F/2-G)/(Math.pow(10,C-1)/2));G=F/2-D*Math.pow(10,C-1)/2;}else{G=F;}if(!isNaN(G)){return G;}return E;},_updateMinAndMax:function(){var D=this.get("data"),I=0,C=0,G,F,E,J,K=this.get("setMax"),H=this.get("setMin");if(!K&&!H){if(D&&D.length&&D.length>0){G=D.length;I=C=D[0];if(G>1){for(E=1;E<G;E++){F=D[E];if(isNaN(F)){if(b.Lang.isObject(F)){for(J in F){if(F.hasOwnProperty(J)){I=Math.max(F[J],I);C=Math.min(F[J],C);}}}continue;}I=K?this._setMaximum:Math.max(F,I);C=H?this._setMinimum:Math.min(F,C);}}}this._roundMinAndMax(C,I);}},_roundMinAndMax:function(G,P){var J,E,Q=G>=0,O=P>0,H,N,R,F,M,D,L,K=this.getTotalMajorUnits()-1,I=this.get("alwaysShowZero"),S=this.get("roundingMethod"),C=(P-G)/K>=1;if(S){if(S=="niceNumber"){J=this._getMinimumUnit(P,G,K);if(Q&&O){if(I||G<J){G=0;}J=this._getMinimumUnit(P,G,K);P=this._roundUpToNearest(P,J);}else{if(O&&!Q){F=Math.round(K/((-1*G)/P+1));M=K-F;D=Math.ceil(P/F);L=Math.floor(G/M)*-1;J=Math.max(D,L);J=this._getNiceNumber(J);P=J*F;G=J*M*-1;}else{if(I||P===0||P+J>0){P=0;J=this._getMinimumUnit(P,G,K);}else{P=this._roundUpToNearest(P,J);}G=P-(J*K);}}}else{if(S=="auto"){if(Q&&O){if(I||G<(P-G)/K){G=0;}J=(P-G)/K;if(C){J=Math.ceil(J);}P=G+(J*K);}else{if(O&&!Q){if(I){F=Math.round(K/((-1*G)/P+1));M=K-F;if(C){D=Math.ceil(P/F);L=Math.floor(G/M)*-1;}else{D=P/F;L=G/M*-1;}J=Math.max(D,L);P=J*F;G=J*M*-1;}else{J=(P-G)/K;if(C){J=Math.ceil(J);}G=this._roundDownToNearest(G,J);P=this._roundUpToNearest(P,J);}}else{J=(P-G)/K;if(C){J=Math.ceil(J);}if(I||P===0||P+J>0){P=0;J=(P-G)/K;if(C){Math.ceil(J);}}else{P=this._roundUpToNearest(P,J);}G=P-(J*K);}}}else{if(!isNaN(S)&&isFinite(S)){J=S;E=J*K;H=(P-G)>E;R=this._roundDownToNearest(G,J);N=this._roundUpToNearest(P,J);if(Q&&O){if(I||R<=0){G=0;}else{G=R;}if(!H){P=G+E;}else{P=N;}}else{if(O&&!Q){G=R;if(!H){P=G+E;}else{P=N;}}else{if(P===0||I){P=0;}else{P=N;}if(!H){G=P-E;}else{G=R;}}}}}}}this._dataMaximum=P;this._dataMinimum=G;},getLabelByIndex:function(G,D){var F=this.get("minimum"),C=this.get("maximum"),H=(C-F)/(D-1),E;D-=1;E=F+(G*H);if(G>0){E=this._roundToNearest(E,H);}return E;},_roundToNearest:function(E,D){D=D||1;if(D===0){return E;}var C=Math.round(this._roundToPrecision(E/D,10))*D;return this._roundToPrecision(C,10);},_roundUpToNearest:function(D,C){C=C||1;if(C===0){return D;}return Math.ceil(this._roundToPrecision(D/C,10))*C;},_roundDownToNearest:function(D,C){C=C||1;if(C===0){return D;}return Math.floor(this._roundToPrecision(D/C,10))*C;},_roundToPrecision:function(E,C){C=C||0;var D=Math.pow(10,C);return Math.round(D*E)/D;}});b.NumericAxis=q;function f(C){f.superclass.constructor.apply(this,arguments);}f.NAME="stackedAxis";b.extend(f,b.NumericAxis,{_updateMinAndMax:function(){var I=0,D=0,H=0,C=0,G=0,E=0,J,F,K=this.get("keys");for(J in K){if(K.hasOwnProperty(J)){G=Math.max(G,K[J].length);}}for(;E<G;++E){H=0;C=0;for(J in K){if(K.hasOwnProperty(J)){F=K[J][E];if(isNaN(F)){continue;}if(F>=0){H+=F;}else{C+=F;}}}if(H>0){I=Math.max(I,H);}else{I=Math.max(I,C);}if(C<0){D=Math.min(D,C);}else{D=Math.min(D,H);}}this._roundMinAndMax(D,I);}});b.StackedAxis=f;function e(C){e.superclass.constructor.apply(this,arguments);}e.NAME="timeAxis";e.ATTRS={setMax:{readOnly:true,getter:function(){var C=this._getNumber(this._setMaximum);return(b.Lang.isNumber(C));}},setMin:{readOnly:true,getter:function(){var C=this._getNumber(this._setMinimum);return(b.Lang.isNumber(C));}},maximum:{getter:function(){var C=this._getNumber(this._setMaximum);if(!b.Lang.isNumber(C)){C=this._getNumber(this.get("dataMaximum"));}return C;},setter:function(C){this._setMaximum=this._getNumber(C);return C;}},minimum:{getter:function(){var C=this._getNumber(this._setMinimum);if(!b.Lang.isNumber(C)){C=this._getNumber(this.get("dataMinimum"));}return C;},setter:function(C){this._setMinimum=this._getNumber(C);return C;}},labelFunction:{value:function(D,C){D=b.DataType.Date.parse(D);if(C){return b.DataType.Date.format(D,{format:C});}return D;}},labelFormat:{value:"%b %d, %y"}};b.extend(e,b.AxisType,{GUID:"yuitimeaxis",_dataType:"time",getLabelByIndex:function(H,E){var G=this.get("minimum"),D=this.get("maximum"),C=this.get("position"),I,F;
-E-=1;I=((D-G)/E)*H;if(C=="bottom"||C=="top"){F=G+I;}else{F=D-I;}return F;},_getKeyArray:function(F,G){var H,D=[],E=0,I,C=G.length;for(;E<C;++E){H=G[E][F];if(b.Lang.isDate(H)){I=H.valueOf();}else{if(!b.Lang.isNumber(H)){I=new Date(H.toString()).valueOf();}else{I=H;}}D[E]=I;}return D;},_setDataByKey:function(G,H){var I,D=[],F=this._dataClone.concat(),E,J,C=F.length;for(E=0;E<C;++E){I=F[E][G];if(b.Lang.isDate(I)){J=I.valueOf();}else{if(!b.Lang.isNumber(I)){J=new Date(I.toString()).valueOf();}else{J=I;}}D[E]=J;}this.get("keys")[G]=D;this._updateTotalDataFlag=true;},_getNumber:function(C){if(b.Lang.isDate(C)){C=C.valueOf();}else{if(!b.Lang.isNumber(C)&&C){C=new Date(C.toString()).valueOf();}}return C;}});b.TimeAxis=e;function h(C){h.superclass.constructor.apply(this,arguments);}h.NAME="categoryAxis";b.extend(h,b.AxisType,{_indices:null,GUID:"yuicategoryaxis",_type:"category",_updateMinAndMax:function(){this._dataMaximum=Math.max(this.get("data").length-1,0);this._dataMinimum=0;},_getKeyArray:function(F,G){var E=0,H,D=[],I=[],C=G.length;if(!this._indices){this._indices={};}for(;E<C;++E){H=G[E];D[E]=E;I[E]=H[F];}this._indices[F]=D;return I;},_setDataByKey:function(G){var F,H,D=[],I=[],E=this._dataClone.concat(),C=E.length;if(!this._indices){this._indices={};}for(F=0;F<C;++F){H=E[F];D[F]=F;I[F]=H[G];}this._indices[G]=D;this.get("keys")[G]=I.concat();this._updateTotalDataFlag=true;},getDataByKey:function(D){if(!this._indices){this.get("keys");}var C=this._indices;if(C[D]){return C[D];}return null;},getTotalMajorUnits:function(D,C){return this.get("data").length;},getMajorUnitDistance:function(C,F,D){var E;if(D.determinant==="count"){E=F/C;}else{if(D.determinant==="distance"){E=D.distance;}}return E;},getEdgeOffset:function(D,C){return C/D;},getLabelByIndex:function(F,D){var E,G=this.get("data"),C=this.get("position");if(C=="bottom"||C=="top"){E=G[F];}else{E=G[D-(F+1)];}return E;}});b.CategoryAxis=h;function o(){}o.prototype={getCurveControlPoints:function(F,I){var G=[],E=1,D=F.length-1,C=[],H=[];if(D<1){return null;}G[0]={startx:F[0],starty:I[0],endx:F[1],endy:I[1]};if(D===1){G[0].ctrlx1=(2*F[0]+F[1])/3;G[0].ctrly2=(2*I[0]+I[1])/3;G[0].ctrlx2=2*G[0].ctrlx1-F[0];G[0].ctrly2=2*G[0].ctrly1-I[0];return G;}for(;E<D;++E){G.push({startx:Math.round(F[E]),starty:Math.round(I[E]),endx:Math.round(F[E+1]),endy:Math.round(I[E+1])});C[E]=4*F[E]+2*F[E+1];H[E]=4*I[E]+2*I[E+1];}C[0]=F[0]+(2*F[1]);C[D-1]=(8*F[D-1]+F[D])/2;C=this.getControlPoints(C.concat());H[0]=I[0]+(2*I[1]);H[D-1]=(8*I[D-1]+I[D])/2;H=this.getControlPoints(H.concat());for(E=0;E<D;++E){G[E].ctrlx1=Math.round(C[E]);G[E].ctrly1=Math.round(H[E]);if(E<D-1){G[E].ctrlx2=Math.round(2*F[E+1]-C[E+1]);G[E].ctrly2=Math.round(2*I[E+1]-H[E+1]);}else{G[E].ctrlx2=Math.round((F[D]+C[D-1])/2);G[E].ctrly2=Math.round((I[D]+H[D-1])/2);}}return G;},getControlPoints:function(H){var E=H.length,D=[],G=[],C=2,F=1;D[0]=H[0]/C;for(;F<E;++F){G[F]=1/C;C=(F<E-1?4:3.5)-G[F];D[F]=(H[F]-D[F-1])/C;}for(F=1;F<E;++F){D[E-F-1]-=G[E-F]*D[E-F];}return D;}};b.CurveUtil=o;function l(){}l.prototype={_stackCoordinates:function(){var M=this.get("direction"),E=this.get("order"),K=this.get("type"),N=this.get("graph"),H=N.get("height"),D=N.seriesTypes[K],G=0,J,L=this.get("xcoords"),F=this.get("ycoords"),I,C;if(E===0){return;}I=D[E-1].get("xcoords").concat();C=D[E-1].get("ycoords").concat();if(M==="vertical"){J=I.length;for(;G<J;++G){if(!isNaN(I[G])&&!isNaN(L[G])){L[G]+=I[G];}}}else{J=C.length;for(;G<J;++G){if(!isNaN(C[G])&&!isNaN(F[G])){F[G]=C[G]-(H-F[G]);}}}}};b.StackingUtil=l;function k(){}k.prototype={_lineDefaults:null,_getGraphic:function(){var C=this.get("graph");if(!this._lineGraphic){this._lineGraphic=new b.Graphic();this._lineGraphic.render(C.get("contentBox"));}this._lineGraphic.clear();this._lineGraphic.setSize(C.get("width"),C.get("height"));this.autoSize=false;return this._lineGraphic;},drawLines:function(){if(this.get("xcoords").length<1){return;}var K=this.get("xcoords").concat(),X=this.get("ycoords").concat(),T=this.get("direction"),P=T==="vertical"?X.length:K.length,E,D,W=E,U=D,S,Q,O,G=this.get("styles").line,R=G.lineType,M=G.color||this._getDefaultColor(this.get("graphOrder"),"line"),L=G.alpha,V=G.dashLength,I=G.gapSpace,H=G.connectDiscontinuousPoints,C=G.discontinuousType,F=G.discontinuousDashLength,N=G.discontinuousGapSpace,J=this._getGraphic();E=W=K[0];D=U=X[0];J.lineStyle(G.weight,M,L);J.moveTo(E,D);for(O=1;O<P;O=++O){S=K[O];Q=X[O];if(isNaN(Q)){W=S;U=Q;continue;}if(W==E){if(R!="dashed"){J.lineTo(S,Q);}else{this.drawDashedLine(W,U,S,Q,V,I);}}else{if(!H){J.moveTo(S,Q);}else{if(C!="solid"){this.drawDashedLine(W,U,S,Q,F,N);}else{J.lineTo(S,Q);}}}E=W=S;D=U=Q;}J.end();},drawSpline:function(){if(this.get("xcoords").length<1){return;}var N=this.get("xcoords"),H=this.get("ycoords"),P=this.getCurveControlPoints(N,H),I=P.length,K,J,E,D,O,M,G=0,Q=this.get("styles").line,C=this._getGraphic(),L=Q.alpha,F=Q.color||this._getDefaultColor(this.get("graphOrder"),"line");C.lineStyle(Q.weight,F,L);C.moveTo(N[0],H[0]);for(;G<I;G=++G){O=P[G].endx;M=P[G].endy;K=P[G].ctrlx1;J=P[G].ctrlx2;E=P[G].ctrly1;D=P[G].ctrly2;C.curveTo(K,E,J,D,O,M);}C.end();},drawDashedLine:function(N,R,D,P,F,E){F=F||10;E=E||10;var H=F+E,K=D-N,O=P-R,Q=Math.sqrt(Math.pow(K,2)+Math.pow(O,2)),I=Math.floor(Math.abs(Q/H)),G=Math.atan2(O,K),M=N,L=R,J,C=this._getGraphic();K=Math.cos(G)*H;O=Math.sin(G)*H;for(J=0;J<I;++J){C.moveTo(M,L);C.lineTo(M+Math.cos(G)*F,L+Math.sin(G)*F);M+=K;L+=O;}C.moveTo(M,L);Q=Math.sqrt((D-M)*(D-M)+(P-L)*(P-L));if(Q>F){C.lineTo(M+Math.cos(G)*F,L+Math.sin(G)*F);}else{if(Q>0){C.lineTo(M+Math.cos(G)*Q,L+Math.sin(G)*Q);}}C.moveTo(D,P);},_getLineDefaults:function(){return{alpha:1,weight:6,lineType:"solid",dashLength:10,gapSpace:10,connectDiscontinuousPoints:true,discontinuousType:"solid",discontinuousDashLength:10,discontinuousGapSpace:10};}};b.augment(k,b.Attribute);b.Lines=k;function z(C){var D={area:{getter:function(){return this._defaults||this._getAreaDefaults();},setter:function(F){var E=this._defaults||this._getAreaDefaults();
-this._defaults=b.merge(E,F);}}};this.addAttrs(D,C);this.get("styles");}z.prototype={drawFill:function(L,H){if(L.length<1){return;}var K=L.length,E=L[0],D=H[0],J=E,I=D,O,N,G=1,M=this.get("styles").area,C=this.get("graphic"),F=M.color||this._getDefaultColor(this.get("graphOrder"),"slice");C.clear();C.beginFill(F,M.alpha);C.moveTo(E,D);for(;G<K;G=++G){O=L[G];N=H[G];if(isNaN(N)){J=O;I=N;continue;}C.lineTo(O,N);J=O;I=N;}C.end();},drawAreaSpline:function(){if(this.get("xcoords").length<1){return;}var O=this.get("xcoords"),J=this.get("ycoords"),Q=this.getCurveControlPoints(O,J),K=Q.length,M,L,G,F,P,N,I=0,E=O[0],D=J[0],R=this.get("styles").area,C=this.get("graphic"),H=R.color||this._getDefaultColor(this.get("graphOrder"),"slice");C.beginFill(H,R.alpha);C.moveTo(E,D);for(;I<K;I=++I){P=Q[I].endx;N=Q[I].endy;M=Q[I].ctrlx1;L=Q[I].ctrlx2;G=Q[I].ctrly1;F=Q[I].ctrly2;C.curveTo(M,G,L,F,P,N);}if(this.get("direction")==="vertical"){C.lineTo(this._leftOrigin,N);C.lineTo(this._leftOrigin,D);}else{C.lineTo(P,this._bottomOrigin);C.lineTo(E,this._bottomOrigin);}C.lineTo(E,D);C.end();},drawStackedAreaSpline:function(){if(this.get("xcoords").length<1){return;}var N=this.get("xcoords"),X=this.get("ycoords"),L,S=this.get("order"),E=this.get("type"),C=this.get("graph"),F=C.seriesTypes[E],D,Q,U,P,O,W,V,J,H,T=0,K,I,G=this.get("styles").area,M=this.get("graphic"),R=G.color||this._getDefaultColor(this.get("graphOrder"),"slice");K=N[0];I=X[0];L=this.getCurveControlPoints(N,X);U=L.length;M.beginFill(R,G.alpha);M.moveTo(K,I);for(;T<U;T=++T){J=L[T].endx;H=L[T].endy;P=L[T].ctrlx1;O=L[T].ctrlx2;W=L[T].ctrly1;V=L[T].ctrly2;M.curveTo(P,W,O,V,J,H);}if(S>0){D=F[S-1].get("xcoords").concat().reverse();Q=F[S-1].get("ycoords").concat().reverse();L=this.getCurveControlPoints(D,Q);T=0;U=L.length;M.lineTo(D[0],Q[0]);for(;T<U;T=++T){J=L[T].endx;H=L[T].endy;P=L[T].ctrlx1;O=L[T].ctrlx2;W=L[T].ctrly1;V=L[T].ctrly2;M.curveTo(P,W,O,V,J,H);}}else{if(this.get("direction")==="vertical"){M.lineTo(this._leftOrigin,X[X.length-1]);M.lineTo(this._leftOrigin,I);}else{M.lineTo(N[N.length-1],this._bottomOrigin);M.lineTo(K,this._bottomOrigin);}}M.lineTo(K,I);M.end();},_defaults:null,_getClosingPoints:function(){var C=this.get("xcoords").concat(),D=this.get("ycoords").concat();if(this.get("direction")==="vertical"){C.push(this._leftOrigin);C.push(this._leftOrigin);D.push(D[D.length-1]);D.push(D[0]);}else{C.push(C[C.length-1]);C.push(C[0]);D.push(this._bottomOrigin);D.push(this._bottomOrigin);}C.push(C[0]);D.push(D[0]);return[C,D];},_getStackedClosingPoints:function(){var G=this.get("order"),J=this.get("type"),M=this.get("graph"),K=this.get("direction"),E=M.seriesTypes[J],I,F,L=this.get("xcoords").concat(),H=this.get("ycoords").concat(),D=L[0],C=H[0];if(G>0){I=E[G-1].get("xcoords").concat();F=E[G-1].get("ycoords").concat();L=L.concat(I.concat().reverse());H=H.concat(F.concat().reverse());L.push(L[0]);H.push(H[0]);}else{if(K==="vertical"){L.push(this._leftOrigin);L.push(this._leftOrigin);H.push(H[H.length-1]);H.push(C);}else{L.push(L[L.length-1]);L.push(D);H.push(this._bottomOrigin);H.push(this._bottomOrigin);}}return[L,H];},_getAreaDefaults:function(){return{};}};b.augment(z,b.Attribute);b.Fills=z;function y(C){var D={markers:{getter:function(){return this._markers;}}};this.addAttrs(D,C);}y.prototype={_plotDefaults:null,drawPlots:function(){if(!this.get("xcoords")||this.get("xcoords").length<1){return;}var F=b.clone(this.get("styles").marker),S=F.width,L=F.height,R=this.get("xcoords"),J=this.get("ycoords"),K=0,M=R.length,Q=J[0],H,I,N=S/2,G=L/2,P=null,O=null,D=this.get("graphOrder"),E,C=g;if(b.Lang.isArray(F.fill.color)){P=F.fill.color.concat();}if(b.Lang.isArray(F.border.color)){O=F.border.colors.concat();}this._createMarkerCache();if(C){this._createHotspotCache();}for(;K<M;++K){Q=(J[K]-G);H=(R[K]-N);if(!Q||!H||Q===undefined||H===undefined||Q=="undefined"||H=="undefined"||isNaN(Q)||isNaN(H)){this._markers.push(null);this._graphicNodes.push(null);continue;}if(P){F.fill.color=P[K%P.length];}if(O){F.border.colors=O[K%O.length];}I=this.getMarker(F,D,K);I.setPosition(H,Q);if(C){E=this.getHotspot(F,D,K);E.setPosition(H,Q);E.parentNode.style.zIndex=5;}}this._clearMarkerCache();if(C){this._clearHotspotCache();}},_getPlotDefaults:function(){var C={fill:{type:"solid",alpha:1,colors:null,alphas:null,ratios:null},border:{weight:1,alpha:1},width:10,height:10,shape:"circle"};C.fill.color=this._getDefaultColor(this.get("graphOrder"),"fill");C.border.color=this._getDefaultColor(this.get("graphOrder"),"border");return C;},_markers:null,_markerCache:null,getMarker:function(F,C,E){var D;if(this._markerCache.length>0){while(!D){if(this._markerCache.length<1){D=this._createMarker(F,C,E);break;}D=this._markerCache.shift();}D.update(F);}else{D=this._createMarker(F,C,E);}this._markers.push(D);this._graphicNodes.push(D.parentNode);return D;},_createMarker:function(G,C,F){var H=new b.Graphic(),E,D=b.clone(G);H.render(this.get("graph").get("contentBox"));H.node.setAttribute("id","markerParent_"+C+"_"+F);D.graphic=H;E=new b.Shape(D);E.addClass("yui3-seriesmarker");E.node.setAttribute("id","series_"+C+"_"+F);return E;},_createMarkerCache:function(){if(this._markers&&this._markers.length>0){this._markerCache=this._markers.concat();}else{this._markerCache=[];}this._markers=[];this._graphicNodes=[];},_clearMarkerCache:function(){var C=this._markerCache.length,E=0,F,D;for(;E<C;++E){D=this._markerCache[E];if(D){F=D.graphics;F.destroy();}}this._markerCache=[];},updateMarkerState:function(J,G){if(this._markers[G]){var L,I,D,M=b.clone(this.get("styles").marker),C=this._getState(J),K=this.get("xcoords"),F=this.get("ycoords"),E=this._markers[G],H=E.parentNode;D=C=="off"||!M[C]?M:M[C];D.fill.color=this._getItemColor(D.fill.color,G);D.border.color=this._getItemColor(D.border.color,G);E.update(D);L=D.width;I=D.height;H.style.left=(K[G]-L/2)+"px";H.style.top=(F[G]-I/2)+"px";E.toggleVisible(this.get("visible"));}},_getItemColor:function(D,C){if(b.Lang.isArray(D)){return D[C%D.length];}return D;},_setStyles:function(C){C=this._parseMarkerStyles(C);
-return b.Renderer.prototype._setStyles.apply(this,[C]);},_parseMarkerStyles:function(D){if(D.marker){var C=this._getPlotDefaults();D.marker=this._mergeStyles(D.marker,C);if(D.marker.over){D.marker.over=this._mergeStyles(D.marker.over,D.marker);}if(D.marker.down){D.marker.down=this._mergeStyles(D.marker.down,D.marker);}}return D;},_getState:function(C){var D;switch(C){case"mouseout":D="off";break;case"mouseover":D="over";break;case"mouseup":D="over";break;case"mousedown":D="down";break;}return D;},_stateSyles:null,_hotspots:null,_hotspotCache:null,getHotspot:function(D,C,E){var G,F=b.clone(D);F.fill={type:"solid",color:"#000",alpha:0};F.border={weight:0};if(this._hotspotCache.length>0){while(!G){if(this._hotspotCache.length<1){G=this._createHotspot(F,C,E);break;}G=this._hotspotCache.shift();}G.update(F);}else{G=this._createHotspot(F,C,E);}this._hotspots.push(G);return G;},_createHotspot:function(G,C,E){var H=new b.Graphic(),F,D=b.clone(G);H.render(this.get("graph").get("contentBox"));H.node.setAttribute("id","hotspotParent_"+C+"_"+E);D.graphic=H;F=new b.Shape(D);F.addClass("yui3-seriesmarker");F.node.setAttribute("id","hotspot_"+C+"_"+E);return F;},_createHotspotCache:function(){if(this._hotspots&&this._hotspots.length>0){this._hotspotCache=this._hotspots.concat();}else{this._hotspotCache=[];}this._hotspots=[];},_clearHotspotCache:function(){var C=this._hotspotCache.length,D=0,F,E;for(;D<C;++D){E=this._hotspotCache[D];if(E){F=E.graphics;F.destroy();}}this._hotspotCache=[];}};b.augment(y,b.Attribute);b.Plots=y;function A(){}A.prototype={drawSeries:function(){if(this.get("xcoords").length<1){return;}var aa=b.clone(this.get("styles").marker),ab,U,R=this.get("xcoords"),ad=this.get("ycoords"),X=0,Y=R.length,S=ad[0],F=this.get("type"),E=this.get("graph"),M=E.seriesTypes[F],Z=M.length,P=0,Q=0,I=0,L,V,W=this.get("order"),O=this.get("graphOrder"),H,K,T,G,ac,D=null,J=null,N,C=g;if(b.Lang.isArray(aa.fill.color)){D=aa.fill.color.concat();}if(b.Lang.isArray(aa.border.color)){J=aa.border.colors.concat();}if(this.get("direction")=="vertical"){T="height";G="width";}else{T="width";G="height";}ab=aa[T];U=aa[G];this._createMarkerCache();if(C){this._createHotspotCache();}for(;X<Z;++X){V=M[X];P+=V.get("styles").marker[T];if(W>X){I=P;}}Q=Y*P;if(Q>E.get(T)){L=E.get(T)/Q;P*=L;I*=L;ab*=L;ab=Math.max(ab,1);}I-=P/2;for(X=0;X<Y;++X){ac=this._getMarkerDimensions(R[X],ad[X],U,I);S=ac.top;U=ac.calculatedSize;H=ac.left;aa[T]=ab;aa[G]=U;if(D){aa.fill.color=D[X%D.length];}if(J){aa.border.colors=J[X%J.length];}K=this.getMarker(aa,O,X);K.setPosition(H,S);if(C){N=this.getHotspot(aa,O,X);N.setPosition(H,S);N.parentNode.style.zIndex=5;}}this._clearMarkerCache();if(C){this._clearHotspotCache();}},_defaultFillColors:["#66007f","#a86f41","#295454","#996ab2","#e8cdb7","#90bdbd","#000000","#c3b8ca","#968373","#678585"],_getPlotDefaults:function(){var C={fill:{type:"solid",alpha:1,colors:null,alphas:null,ratios:null},border:{weight:0,alpha:1},width:12,height:12,shape:"rect",padding:{top:0,left:0,right:0,bottom:0}};C.fill.color=this._getDefaultColor(this.get("graphOrder"),"fill");C.border.color=this._getDefaultColor(this.get("graphOrder"),"border");return C;}};b.Histogram=A;b.CartesianSeries=b.Base.create("cartesianSeries",b.Base,[b.Renderer],{_xDisplayName:null,_yDisplayName:null,_leftOrigin:null,_bottomOrigin:null,render:function(){this._setCanvas();this.addListeners();this.set("rendered",true);this.validate();},addListeners:function(){var D=this.get("xAxis"),C=this.get("yAxis");if(D){D.after("dataReady",b.bind(this._xDataChangeHandler,this));D.after("dataUpdate",b.bind(this._xDataChangeHandler,this));}if(C){C.after("dataReady",b.bind(this._yDataChangeHandler,this));C.after("dataUpdate",b.bind(this._yDataChangeHandler,this));}this.after("xAxisChange",this._xAxisChangeHandler);this.after("yAxisChange",this._yAxisChangeHandler);this.after("stylesChange",function(F){var E=this._updateAxisData();if(E){this.draw();}});this.after("widthChange",function(F){var E=this._updateAxisData();if(E){this.draw();}});this.after("heightChange",function(F){var E=this._updateAxisData();if(E){this.draw();}});this.after("visibleChange",this._toggleVisible);},_xAxisChangeHandler:function(D){var C=this.get("xAxis");C.after("dataReady",b.bind(this._xDataChangeHandler,this));C.after("dataUpdate",b.bind(this._xDataChangeHandler,this));},_yAxisChangeHandler:function(D){var C=this.get("yAxis");C.after("dataReady",b.bind(this._yDataChangeHandler,this));C.after("dataUpdate",b.bind(this._yDataChangeHandler,this));},GUID:"yuicartesianseries",_xDataChangeHandler:function(C){var D=this._updateAxisData();if(D){this.draw();}},_yDataChangeHandler:function(C){var D=this._updateAxisData();if(D){this.draw();}},_updateAxisData:function(){var G=this.get("xAxis"),D=this.get("yAxis"),E=this.get("xKey"),C=this.get("yKey"),F,H;if(!G||!D||!E||!C){return false;}H=G.getDataByKey(E);F=D.getDataByKey(C);if(!H||!F){return false;}this.set("xData",H.concat());this.set("yData",F.concat());return true;},validate:function(){if((this.get("xData")&&this.get("yData"))||this._updateAxisData()){this.draw();}},_setCanvas:function(){this.set("graphic",new b.Graphic());this.get("graphic").render(this.get("graph").get("contentBox"));},setAreaData:function(){var ae,ac,G=this.get("graph"),P=G.get("width"),Y=G.get("height"),N=this.get("xAxis"),D=this.get("yAxis"),I=this.get("xData").concat(),aa=this.get("yData").concat(),ah=N.getEdgeOffset(I.length,P),M=D.getEdgeOffset(aa.length,Y),S=this.get("styles").padding,V=S.left,ab=S.top,K=P-(V+S.right+ah),X=Y-(ab+S.bottom+M),T=[],ag=[],af=N.get("maximum"),Z=N.get("minimum"),F=D.get("maximum"),C=D.get("minimum"),J=K/(af-Z),Q=X/(F-C),L,ad=this.get("direction"),W=0,O=[],U=[],H=this.get("xMarkerPlaneOffset"),E=this.get("yMarkerPlaneOffset"),R=this.get("graphic");L=I.length;ah*=0.5;M*=0.5;if(ad==="vertical"){aa=aa.reverse();}if(R){R.setSize(P,Y);}this._leftOrigin=Math.round(((0-Z)*J)+V+ah);this._bottomOrigin=Math.round((X+ab+M)-(0-C)*Q);for(;W<L;++W){ae=Math.round((((I[W]-Z)*J)+V+ah));
-ac=Math.round(((X+ab+M)-(aa[W]-C)*Q));T.push(ae);ag.push(ac);O.push({start:ae-H,end:ae+H});U.push({start:ac-E,end:ac+E});}this.set("xcoords",T);this.set("ycoords",ag);this.set("xMarkerPlane",O);this.set("yMarkerPlane",U);},draw:function(){var E=this.get("graph"),C=E.get("width"),D=E.get("height");if(this.get("rendered")){if((isFinite(C)&&isFinite(D)&&C>0&&D>0)&&((this.get("xData")&&this.get("yData"))||this._updateAxisData())){if(this._drawing){this._callLater=true;return;}this._drawing=true;this._callLater=false;this.setAreaData();if(this.get("xcoords")&&this.get("ycoords")){this.drawSeries();}this._drawing=false;if(this._callLater){this.draw();}else{this._toggleVisible(this.get("visible"));this.fire("drawingComplete");}}}},_defaultPlaneOffset:4,_getDefaultStyles:function(){return{padding:{top:0,left:0,right:0,bottom:0}};},_defaultLineColors:["#426ab3","#d09b2c","#000000","#b82837","#b384b5","#ff7200","#779de3","#cbc8ba","#7ed7a6","#007a6c"],_defaultFillColors:["#6084d0","#eeb647","#6c6b5f","#d6484f","#ce9ed1","#ff9f3b","#93b7ff","#e0ddd0","#94ecba","#309687"],_defaultBorderColors:["#205096","#b38206","#000000","#94001e","#9d6fa0","#e55b00","#5e85c9","#adab9e","#6ac291","#006457"],_defaultSliceColors:["#66007f","#a86f41","#295454","#996ab2","#e8cdb7","#90bdbd","#000000","#c3b8ca","#968373","#678585"],_getDefaultColor:function(F,G){var D={line:this._defaultLineColors,fill:this._defaultFillColors,border:this._defaultBorderColors,slice:this._defaultSliceColors},E=D[G],C=E.length;F=F||0;if(F>=C){F=F%C;}G=G||"fill";return D[G][F];},_toggleVisible:function(F){var I=this.get("graphic"),H=this.get("markers"),E=0,C,G=this.get("visible"),D;if(I){I.toggleVisible(G);}if(H){C=H.length;for(;E<C;++E){D=H[E];if(D){D.toggleVisible(G);}}}if(this._lineGraphic){this._lineGraphic.toggleVisible(G);}}},{ATTRS:{xDisplayName:{getter:function(){return this._xDisplayName||this.get("xKey");},setter:function(C){this._xDisplayName=C;return C;}},yDisplayName:{getter:function(){return this._yDisplayName||this.get("yKey");},setter:function(C){this._yDisplayName=C;return C;}},categoryDisplayName:{readOnly:true,getter:function(){return this.get("direction")=="vertical"?this.get("yDisplayName"):this.get("xDisplayName");}},valueDisplayName:{readOnly:true,getter:function(){return this.get("direction")=="vertical"?this.get("xDisplayName"):this.get("yDisplayName");}},type:{value:"cartesian"},order:{},graphOrder:{},xcoords:{},ycoords:{},graph:{},xAxis:{},yAxis:{},xKey:{},yKey:{},xData:{},yData:{},rendered:{value:false},width:{readOnly:true,getter:function(){this.get("graph").get("width");}},height:{readOnly:true,getter:function(){this.get("graph").get("height");}},visible:{value:true},xMarkerPlane:{},yMarkerPlane:{},xMarkerPlaneOffset:{getter:function(){var C=this.get("styles").marker;if(C&&C.width&&isFinite(C.width)){return C.width*0.5;}return this._defaultPlaneOffset;}},yMarkerPlaneOffset:{getter:function(){var C=this.get("styles").marker;if(C&&C.height&&isFinite(C.height)){return C.height*0.5;}return this._defaultPlaneOffset;}},direction:{value:"horizontal"}}});b.MarkerSeries=b.Base.create("markerSeries",b.CartesianSeries,[b.Plots],{renderUI:function(){this._setNode();},drawSeries:function(){this.drawPlots();},_setStyles:function(C){if(!C.marker){C={marker:C};}C=this._parseMarkerStyles(C);return b.MarkerSeries.superclass._mergeStyles.apply(this,[C,this._getDefaultStyles()]);},_getDefaultStyles:function(){var C=this._mergeStyles({marker:this._getPlotDefaults()},b.MarkerSeries.superclass._getDefaultStyles());return C;}},{ATTRS:{type:{value:"marker"}}});b.LineSeries=b.Base.create("lineSeries",b.CartesianSeries,[b.Lines],{drawSeries:function(){this.get("graphic").clear();this.drawLines();},_setStyles:function(C){if(!C.line){C={line:C};}return b.LineSeries.superclass._setStyles.apply(this,[C]);},_getDefaultStyles:function(){var C=this._mergeStyles({line:this._getLineDefaults()},b.LineSeries.superclass._getDefaultStyles());return C;}},{ATTRS:{type:{value:"line"}}});b.SplineSeries=b.Base.create("splineSeries",b.CartesianSeries,[b.CurveUtil,b.Lines],{drawSeries:function(){this.get("graphic").clear();this.drawSpline();}},{ATTRS:{type:{value:"spline"}}});b.AreaSplineSeries=b.Base.create("areaSplineSeries",b.CartesianSeries,[b.Fills,b.CurveUtil],{drawSeries:function(){this.get("graphic").clear();this.drawAreaSpline();}},{ATTRS:{type:{value:"areaSpline"}}});b.StackedSplineSeries=b.Base.create("stackedSplineSeries",b.SplineSeries,[b.StackingUtil],{setAreaData:function(){b.StackedSplineSeries.superclass.setAreaData.apply(this);this._stackCoordinates.apply(this);}},{ATTRS:{type:{value:"stackedSpline"}}});b.StackedMarkerSeries=b.Base.create("stackedMarkerSeries",b.MarkerSeries,[b.StackingUtil],{setAreaData:function(){b.StackedMarkerSeries.superclass.setAreaData.apply(this);this._stackCoordinates.apply(this);}},{ATTRS:{type:{value:"stackedMarker"}}});b.ColumnSeries=b.Base.create("columnSeries",b.MarkerSeries,[b.Histogram],{_getMarkerDimensions:function(D,C,F,G){var E={top:C,left:D+G};E.calculatedSize=this._bottomOrigin-E.top;return E;},updateMarkerState:function(P,L){if(this._markers[L]){var S=b.clone(this.get("styles").marker),D,C=this._getState(P),Q=this.get("xcoords"),K=this.get("ycoords"),M=this._markers[L],R=this.get("graph"),H=R.seriesTypes[this.get("type")],J=H.length,O=0,I=0,N,E=0,G=[],F=this.get("order");D=C=="off"||!S[C]?S:S[C];D.fill.color=this._getItemColor(D.fill.color,L);D.border.color=this._getItemColor(D.border.color,L);D.height=this._bottomOrigin-K[L];M.update(D);for(;E<J;++E){N=H[E].get("markers")[L];G[E]=Q[L]+O;O+=N.width;if(F>E){I=O;}I-=O/2;}for(E=0;E<J;++E){N=b.one(H[E]._graphicNodes[L]);N.setStyle("left",(G[E]-O/2)+"px");}}}},{ATTRS:{type:{value:"column"}}});b.BarSeries=b.Base.create("barSeries",b.MarkerSeries,[b.Histogram],{renderUI:function(){this._setNode();},_getMarkerDimensions:function(D,C,F,G){var E={top:C+G,left:this._leftOrigin};E.calculatedSize=D-E.left;return E;},updateMarkerState:function(O,K){if(this._markers[K]){var S=b.clone(this.get("styles").marker),D,C=this._getState(O),P=this.get("xcoords"),J=this.get("ycoords"),L=this._markers[K],R=this.get("graph"),G=R.seriesTypes[this.get("type")],I=G.length,N=0,H=0,M,E=0,Q=[],F=this.get("order");
-D=C=="off"||!S[C]?S:S[C];D.fill.color=this._getItemColor(D.fill.color,K);D.border.color=this._getItemColor(D.border.color,K);D.width=(P[K]-this._leftOrigin);L.update(D);for(;E<I;++E){M=G[E].get("markers")[K];Q[E]=J[K]+N;N+=M.height;if(F>E){H=N;}H-=N/2;}for(E=0;E<I;++E){M=b.one(G[E]._graphicNodes[K]);M.setStyle("top",(Q[E]-N/2));}}}},{ATTRS:{type:{value:"bar"},direction:{value:"vertical"}}});b.AreaSeries=b.Base.create("areaSeries",b.CartesianSeries,[b.Fills],{drawSeries:function(){this.get("graphic").clear();this.drawFill.apply(this,this._getClosingPoints());},_setStyles:function(C){if(!C.area){C={area:C};}return b.AreaSeries.superclass._setStyles.apply(this,[C]);},_getDefaultStyles:function(){var C=this._mergeStyles({area:this._getAreaDefaults()},b.AreaSeries.superclass._getDefaultStyles());return C;}},{ATTRS:{type:{value:"area"}}});b.StackedAreaSplineSeries=b.Base.create("stackedAreaSplineSeries",b.AreaSeries,[b.CurveUtil,b.StackingUtil],{drawSeries:function(){this.get("graphic").clear();this._stackCoordinates();this.drawStackedAreaSpline();}},{ATTRS:{type:{value:"stackedAreaSpline"}}});b.ComboSeries=b.Base.create("comboSeries",b.CartesianSeries,[b.Fills,b.Lines,b.Plots],{drawSeries:function(){this.get("graphic").clear();if(this.get("showAreaFill")){this.drawFill.apply(this,this._getClosingPoints());}if(this.get("showLines")){this.drawLines();}if(this.get("showMarkers")){this.drawPlots();}},_getDefaultStyles:function(){var C=b.ComboSeries.superclass._getDefaultStyles();C.line=this._getLineDefaults();C.marker=this._getPlotDefaults();C.area=this._getAreaDefaults();return C;}},{ATTRS:{type:{value:"combo"},showAreaFill:{value:false},showLines:{value:true},showMarkers:{value:true},marker:{lazyAdd:false,getter:function(){return this.get("styles").marker;},setter:function(C){this.set("styles",{marker:C});}},line:{lazyAdd:false,getter:function(){return this.get("styles").line;},setter:function(C){this.set("styles",{line:C});}},area:{lazyAdd:false,getter:function(){return this.get("styles").area;},setter:function(C){this.set("styles",{area:C});}}}});b.StackedComboSeries=b.Base.create("stackedComboSeries",b.ComboSeries,[b.StackingUtil],{setAreaData:function(){b.StackedComboSeries.superclass.setAreaData.apply(this);this._stackCoordinates.apply(this);},drawSeries:function(){this.get("graphic").clear();if(this.get("showAreaFill")){this.drawFill.apply(this,this._getStackedClosingPoints());}if(this.get("showLines")){this.drawLines();}if(this.get("showMarkers")){this.drawPlots();}}},{ATTRS:{type:{value:"stackedCombo"},showAreaFill:{value:true}}});b.ComboSplineSeries=b.Base.create("comboSplineSeries",b.ComboSeries,[b.CurveUtil],{drawSeries:function(){this.get("graphic").clear();if(this.get("showAreaFill")){this.drawAreaSpline();}if(this.get("showLines")){this.drawSpline();}if(this.get("showMarkers")){this.drawPlots();}}},{ATTRS:{type:{value:"comboSpline"}}});b.StackedComboSplineSeries=b.Base.create("stackedComboSplineSeries",b.StackedComboSeries,[b.CurveUtil],{drawSeries:function(){this.get("graphic").clear();if(this.get("showAreaFill")){this.drawStackedAreaSpline();}if(this.get("showLines")){this.drawSpline();}if(this.get("showMarkers")){this.drawPlots();}}},{ATTRS:{type:{value:"stackedComboSpline"},showAreaFill:{value:true}}});b.StackedLineSeries=b.Base.create("stackedLineSeries",b.LineSeries,[b.StackingUtil],{setAreaData:function(){b.StackedLineSeries.superclass.setAreaData.apply(this);this._stackCoordinates.apply(this);}},{ATTRS:{type:{value:"stackedLine"}}});b.StackedAreaSeries=b.Base.create("stackedAreaSeries",b.AreaSeries,[b.StackingUtil],{setAreaData:function(){b.StackedAreaSeries.superclass.setAreaData.apply(this);this._stackCoordinates.apply(this);},drawSeries:function(){this.get("graphic").clear();this.drawFill.apply(this,this._getStackedClosingPoints());}},{ATTRS:{type:{value:"stackedArea"}}});b.StackedColumnSeries=b.Base.create("stackedColumnSeries",b.ColumnSeries,[b.StackingUtil],{drawSeries:function(){if(this.get("xcoords").length<1){return;}var X=this.get("styles").marker,P=X.width,W=X.height,Q=this.get("xcoords"),Y=this.get("ycoords"),U=0,V=Q.length,R=Y[0],G=this.get("type"),E=this.get("graph"),L=E.seriesTypes[G],J,T=this.get("order"),O=this.get("graphOrder"),H,K,I,M,S,D=T===0,F=V*P,N,C=g;this._createMarkerCache();if(C){this._createHotspotCache();}if(F>this.get("width")){J=this.width/F;P*=J;P=Math.max(P,1);}if(!D){I=L[T-1];M=I.get("negativeBaseValues");S=I.get("positiveBaseValues");}else{M=[];S=[];}this.set("negativeBaseValues",M);this.set("positiveBaseValues",S);for(U=0;U<V;++U){R=Y[U];if(D){W=this._bottomOrigin-R;if(R<this._bottomOrigin){S[U]=R;M[U]=this._bottomOrigin;}else{if(R>this._bottomOrigin){S[U]=this._bottomOrigin;M[U]=R;}else{S[U]=R;M[U]=R;}}}else{if(R>this._bottomOrigin){R+=(M[U]-this._bottomOrigin);W=M[U]-R;M[U]=R;}else{if(R<this._bottomOrigin){R=S[U]-(this._bottomOrigin-Y[U]);W=S[U]-R;S[U]=R;}}}H=Q[U]-P/2;X.width=P;X.height=W;K=this.getMarker(X,O,U);K.setPosition(H,R);if(C){N=this.getHotspot(X,O,U);N.setPosition(H,R);N.parentNode.style.zIndex=5;}}this._clearMarkerCache();if(C){this._clearHotspotCache();}},updateMarkerState:function(G,F){if(this._markers[F]){var H,D,I=this._getState(G),E=this.get("xcoords"),C=this._markers[F],J=0;H=this.get("styles").marker;D=I=="off"||!H[I]?H:H[I];D.height=C.height;C.update(D);J=H.width*0.5;if(C.parentNode){b.one(C.parentNode).setStyle("left",(E[F]-J));}}},_getPlotDefaults:function(){var C={fill:{type:"solid",alpha:1,colors:null,alphas:null,ratios:null},border:{weight:0,alpha:1},width:24,height:24,shape:"rect",padding:{top:0,left:0,right:0,bottom:0}};C.fill.color=this._getDefaultColor(this.get("graphOrder"),"fill");C.border.color=this._getDefaultColor(this.get("graphOrder"),"border");return C;}},{ATTRS:{type:{value:"stackedColumn"},negativeBaseValues:{value:null},positiveBaseValues:{value:null}}});b.StackedBarSeries=b.Base.create("stackedBarSeries",b.BarSeries,[b.StackingUtil],{drawSeries:function(){if(this.get("xcoords").length<1){return;}var W=this.get("styles").marker,O=W.width,V=W.height,P=this.get("xcoords"),Y=this.get("ycoords"),T=0,U=P.length,Q=Y[0],F=this.get("type"),E=this.get("graph"),K=E.seriesTypes[F],I,S=this.get("order"),N=this.get("graphOrder"),G,J,H,L,R,D=S===0,X=U*V,M,C=g;
-this._createMarkerCache();if(C){this._createHotspotCache();}if(X>this.get("height")){I=this.height/X;V*=I;V=Math.max(V,1);}if(!D){H=K[S-1];L=H.get("negativeBaseValues");R=H.get("positiveBaseValues");}else{L=[];R=[];}this.set("negativeBaseValues",L);this.set("positiveBaseValues",R);for(T=0;T<U;++T){Q=Y[T];G=P[T];if(D){O=G-this._leftOrigin;if(G>this._leftOrigin){R[T]=G;L[T]=this._leftOrigin;}else{if(G<this._leftOrigin){R[T]=this._leftOrigin;L[T]=G;}else{R[T]=G;L[T]=this._leftOrigin;}}G-=O;}else{if(G<this._leftOrigin){G=L[T]-(this._leftOrigin-P[T]);O=L[T]-G;L[T]=G;}else{if(G>this._leftOrigin){G+=(R[T]-this._leftOrigin);O=G-R[T];R[T]=G;G-=O;}}}Q-=V/2;W.width=O;W.height=V;J=this.getMarker(W,N,T);J.setPosition(G,Q);if(C){M=this.getHotspot(W,N,T);M.setPosition(G,Q);M.parentNode.style.zIndex=5;}}this._clearMarkerCache();if(C){this._clearHotspotCache();}},updateMarkerState:function(G,E){if(this._markers[E]){var I=this._getState(G),J=this.get("ycoords"),C=this._markers[E],H=this.get("styles").marker,F=H.height,D=I=="off"||!H[I]?H:H[I];D.width=C.width;C.update(D);if(C.parentNode){b.one(C.parentNode).setStyle("top",(J[E]-F/2));}}},_getPlotDefaults:function(){var C={fill:{type:"solid",alpha:1,colors:null,alphas:null,ratios:null},border:{weight:0,alpha:1},width:24,height:24,shape:"rect",padding:{top:0,left:0,right:0,bottom:0}};C.fill.color=this._getDefaultColor(this.get("graphOrder"),"fill");C.border.color=this._getDefaultColor(this.get("graphOrder"),"border");return C;}},{ATTRS:{type:{value:"stackedBar"},direction:{value:"vertical"},negativeBaseValues:{value:null},positiveBaseValues:{value:null}}});b.PieSeries=b.Base.create("pieSeries",b.MarkerSeries,[],{_map:null,_image:null,_setMap:function(){var E="pieHotSpotMapi_"+Math.round(100000*Math.random()),C=this.get("graph").get("contentBox"),D;if(this._image){C.removeChild(this._image);while(this._areaNodes&&this._areaNodes.length>0){D=this._areaNodes.shift();this._map.removeChild(D);}C.removeChild(this._map);}this._image=document.createElement("img");this._image.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABCAYAAAD9yd/wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJJREFUeNpiZGBgSGPAAgACDAAIkABoFyloZQAAAABJRU5ErkJggg==";C.appendChild(this._image);this._image.setAttribute("usemap","#"+E);this._image.style.zIndex=3;this._image.style.opacity=0;this._image.setAttribute("alt","imagemap");this._map=document.createElement("map");this._map.style.zIndex=5;C.appendChild(this._map);this._map.setAttribute("name",E);this._map.setAttribute("id",E);this._areaNodes=[];},_categoryDisplayName:null,_valueDisplayName:null,addListeners:function(){var C=this.get("categoryAxis"),D=this.get("valueAxis");if(C){C.after("dataReady",b.bind(this._categoryDataChangeHandler,this));C.after("dataUpdate",b.bind(this._categoryDataChangeHandler,this));}if(D){D.after("dataReady",b.bind(this._valueDataChangeHandler,this));D.after("dataUpdate",b.bind(this._valueDataChangeHandler,this));}this.after("categoryAxisChange",this.categoryAxisChangeHandler);this.after("valueAxisChange",this.valueAxisChangeHandler);this.after("stylesChange",this._updateHandler);},validate:function(){this.draw();this._renderered=true;},_categoryAxisChangeHandler:function(C){var D=this.get("categoryAxis");D.after("dataReady",b.bind(this._categoryDataChangeHandler,this));D.after("dataUpdate",b.bind(this._categoryDataChangeHandler,this));},_valueAxisChangeHandler:function(C){var D=this.get("valueAxis");D.after("dataReady",b.bind(this._valueDataChangeHandler,this));D.after("dataUpdate",b.bind(this._valueDataChangeHandler,this));},GUID:"pieseries",_categoryDataChangeHandler:function(C){if(this._rendered&&this.get("categoryKey")&&this.get("valueKey")){this.draw();}},_valueDataChangeHandler:function(C){if(this._rendered&&this.get("categoryKey")&&this.get("valueKey")){this.draw();}},draw:function(){var E=this.get("graph"),C=E.get("width"),D=E.get("height");if(isFinite(C)&&isFinite(D)&&C>0&&D>0){this._rendered=true;this.drawSeries();this.fire("drawingComplete");}},drawPlots:function(){var E=this.get("valueAxis").getDataByKey(this.get("valueKey")).concat(),F=this.get("categoryAxis").getDataByKey(this.get("categoryKey")).concat(),I=0,ag=E.length,P=this.get("styles").marker,C=P.fill.colors,ah=P.fill.alphas||["1"],M=P.border.colors,G=[P.border.weight],H=[P.border.alpha],ai=G.concat(),R=M.concat(),T=H.concat(),ad,af,U=P.padding,D=this.get("graph"),S=D.get("width")-(U.left+U.right),ac=D.get("height")-(U.top+U.bottom),aa=-90,N=S/2,V=ac/2,J=Math.min(N,V),ab=0,Y,ae=0,X,Z,K,Q,L,O=this.get("graphOrder"),W=j=="canvas";for(;ab<ag;++ab){Y=E[ab];E.push(Y);if(!isNaN(Y)){I+=Y;}}ad=C?C.concat():null;af=ah?ah.concat():null;this._createMarkerCache();if(W){this._setMap();this._image.width=S;this._image.height=ac;}for(ab=0;ab<ag;ab++){Y=E[ab];if(I===0){ae=360/E.length;}else{ae=360*(Y/I);}ae=Math.round(ae);if(ad&&ad.length<1){ad=C.concat();}if(af&&af.length<1){af=ah.concat();}if(ai&&ai.length<1){ai=G.concat();}if(ai&&R.length<1){R=M.concat();}if(T&&T.length<1){T=H.concat();}K=ai?ai.shift():null;X=R?R.shift():null;Z=T?T.shift():null;aa+=ae;Q={border:{color:X,weight:K,alpha:Z},fill:{color:ad?ad.shift():this._getDefaultColor(ab,"slice"),alpha:af?af.shift():null},shape:"wedge",props:{arc:ae,radius:J,startAngle:aa,x:N,y:V},width:S,height:ac};L=this.getMarker(Q,O,ab);if(W){this._addHotspot(Q.props,O,ab);}}this._clearMarkerCache();},_addHotspot:function(F,S,G){var P=document.createElement("area"),R=1,L=F.x,J=F.y,I=F.arc,Q=F.startAngle-I,O=F.startAngle,D=F.radius,M=L+Math.cos(Q/180*Math.PI)*D,K=J+Math.sin(Q/180*Math.PI)*D,U=L+Math.cos(O/180*Math.PI)*D,T=J+Math.sin(O/180*Math.PI)*D,X=Math.floor(I/10)-1,E=(I/(Math.floor(I/10))/180)*Math.PI,H=Math.atan((K-J)/(M-L)),W=L+", "+J+", "+M+", "+K,V,N,C;for(R=1;R<=X;++R){C=E*R;V=Math.cos(H+C);N=Math.sin(H+C);if(Q<=90){W+=", "+(L+(D*Math.cos(H+(E*R))));W+=", "+(J+(D*Math.sin(H+(E*R))));}else{W+=", "+(L-(D*Math.cos(H+(E*R))));W+=", "+(J-(D*Math.sin(H+(E*R))));}}W+=", "+U+", "+T;W+=", "+L+", "+J;this._map.appendChild(P);
-P.setAttribute("class","yui3-seriesmarker");P.setAttribute("id","hotSpot_"+S+"_"+G);P.setAttribute("shape","polygon");P.setAttribute("coords",W);this._areaNodes.push(P);},updateMarkerState:function(G,E){if(this._markers[E]){var I=this._getState(G),D,F,C=this._markers[E],H=this.get("styles").marker;D=I=="off"||!H[I]?H:H[I];F=this._mergeStyles(D,{});F.fill.color=F.fill.colors[E%F.fill.colors.length];F.fill.alpha=F.fill.alphas[E%F.fill.alphas.length];C.update(F);}},_createMarker:function(G,C,F){var E=b.clone(G),D;E.graphic=this.get("graphic");D=new b.Shape(E);D.addClass("yui3-seriesmarker");D.node.setAttribute("id","series_"+C+"_"+F);return D;},_clearMarkerCache:function(){var C=this._markerCache.length,E=0,D;for(;E<C;++E){D=this._markerCache[E];if(D&&D.node&&D.parentNode){D.parentNode.removeChild(D.node);}}this._markerCache=[];},_getPlotDefaults:function(){var C={padding:{top:0,left:0,right:0,bottom:0},fill:{alphas:["1"]},border:{weight:0,alpha:1}};C.fill.colors=this._defaultSliceColors;C.border.colors=this._defaultBorderColors;return C;},_defaultLineColors:["#426ab3","#d09b2c","#000000","#b82837","#b384b5","#ff7200","#779de3","#cbc8ba","#7ed7a6","#007a6c"],_defaultFillColors:["#6084d0","#eeb647","#6c6b5f","#d6484f","#ce9ed1","#ff9f3b","#93b7ff","#e0ddd0","#94ecba","#309687"],_defaultBorderColors:["#205096","#b38206","#000000","#94001e","#9d6fa0","#e55b00","#5e85c9","#adab9e","#6ac291","#006457"],_defaultSliceColors:["#66007f","#a86f41","#295454","#996ab2","#e8cdb7","#90bdbd","#000000","#c3b8ca","#968373","#678585"],_getDefaultColor:function(F,G){var D={line:this._defaultLineColors,fill:this._defaultFillColors,border:this._defaultBorderColors,slice:this._defaultSliceColors},E=D[G],C=E.length;F=F||0;if(F>=C){F=F%C;}G=G||"fill";return D[G][F];}},{ATTRS:{type:{value:"pie"},order:{},graph:{},categoryAxis:{value:null,validator:function(C){return C!==this.get("categoryAxis");}},valueAxis:{value:null,validator:function(C){return C!==this.get("valueAxis");}},categoryKey:{value:null,validator:function(C){return C!==this.get("categoryKey");}},valueKey:{value:null,validator:function(C){return C!==this.get("valueKey");}},categoryDisplayName:{setter:function(C){this._categoryDisplayName=C;return C;},getter:function(){return this._categoryDisplayName||this.get("categoryKey");}},valueDisplayName:{setter:function(C){this._valueDisplayName=C;return C;},getter:function(){return this._valueDisplayName||this.get("valueKey");}},slices:null}});b.Gridlines=b.Base.create("gridlines",b.Base,[b.Renderer],{render:function(){this._setCanvas();},remove:function(){var D=this.get("graphic"),C;if(D){C=D.node;if(C){b.one(C).remove();}}},draw:function(){if(this.get("axis")&&this.get("graph")){this._drawGridlines();}},_drawGridlines:function(){var C=this.get("graphic"),D=this.get("axis"),L=D.get("position"),O,I=0,F,M=this.get("direction"),P=this.get("graph"),N=P.get("width"),K=P.get("height"),Q=this.get("styles").line,H=Q.color,J=Q.weight,G=Q.alpha,E=M=="vertical"?this._verticalLine:this._horizontalLine;if(L=="none"){O=[];F=D.get("styles").majorUnit.count;for(;I<F;++I){O[I]={x:N*(I/(F-1)),y:K*(I/(F-1))};}I=0;}else{O=D.get("tickPoints");F=O.length;}if(!C){this._setCanvas();C=this.get("graphic");}C.clear();C.setSize(N,K);C.lineStyle(J,H,G);for(;I<F;++I){E(C,O[I],N,K);}C.end();},_horizontalLine:function(F,E,C,D){F.moveTo(0,E.y);F.lineTo(C,E.y);},_verticalLine:function(F,E,C,D){F.moveTo(E.x,0);F.lineTo(E.x,D);},_setCanvas:function(){this.set("graphic",new b.Graphic());this.get("graphic").render(this.get("graph").get("contentBox"));},_getDefaultStyles:function(){var C={line:{color:"#f0efe9",weight:1,alpha:1}};return C;}},{ATTRS:{direction:{},axis:{},graph:{}}});b.Graph=b.Base.create("graph",b.Widget,[b.Renderer],{bindUI:function(){var C=this.get("boundingBox");C.setStyle("position","absolute");this.after("widthChange",this._sizeChangeHandler);this.after("heightChange",this._sizeChangeHandler);this.after("stylesChange",this._updateStyles);},syncUI:function(){if(this.get("showBackground")){var J=new b.Graphic(),H,C=this.get("contentBox"),F=this.get("styles").background,E=F.border,I=E.weight||0,D=this.get("width"),G=this.get("height");if(D){D+=I*2;F.width=D;}if(G){G+=I*2;F.height=G;}J.render(C);this._background=J.getShape(F);H=b.one(J.node);H.setStyle("left",0-I);H.setStyle("top",0-I);H.setStyle("zIndex",-1);}},renderUI:function(){var G=this.get("seriesCollection"),F,E=0,D=G.length,C=this.get("horizontalGridlines"),H=this.get("verticalGridlines");for(;E<D;++E){F=G[E];if(F instanceof b.CartesianSeries){F.render();}}if(C&&C instanceof b.Gridlines){C.draw();}if(H&&H instanceof b.Gridlines){H.draw();}},seriesTypes:null,getSeriesByIndex:function(E){var C=this.get("seriesCollection"),D;if(C&&C.length>E){D=C[E];}return D;},getSeriesByKey:function(E){var D=this._seriesDictionary,C;if(D&&D.hasOwnProperty(E)){C=D[E];}return C;},addDispatcher:function(C){if(!this._dispatchers){this._dispatchers=[];}this._dispatchers.push(C);},_seriesCollection:null,_seriesDictionary:null,_parseSeriesCollection:function(G){if(!G){return;}var D=G.length,F=0,E,C;if(!this.get("seriesCollection")){this._seriesCollection=[];}if(!this._seriesDictionary){this._seriesDictionary={};}if(!this.seriesTypes){this.seriesTypes=[];}for(;F<D;++F){E=G[F];if(!(E instanceof b.CartesianSeries)&&!(E instanceof b.PieSeries)){this._createSeries(E);continue;}this._addSeries(E);}D=this.get("seriesCollection").length;for(F=0;F<D;++F){E=this.get("seriesCollection")[F];C=E.get("direction")=="horizontal"?"yKey":"xKey";this._seriesDictionary[E.get(C)]=E;}},_addSeries:function(E){var F=E.get("type"),H=this.get("seriesCollection"),G=H.length,D=this.seriesTypes,C;if(!E.get("graph")){E.set("graph",this);}H.push(E);if(!D.hasOwnProperty(F)){this.seriesTypes[F]=[];}C=this.seriesTypes[F];E.set("graphOrder",G);E.set("order",C.length);C.push(E);this.addDispatcher(E);E.after("drawingComplete",b.bind(this._drawingCompleteHandler,this));this.fire("seriesAdded",E);},_createSeries:function(G){var H=G.type,I=this.get("seriesCollection"),E=this.seriesTypes,D,C,F;
-G.graph=this;if(!E.hasOwnProperty(H)){E[H]=[];}D=E[H];G.graph=this;G.order=D.length;G.graphOrder=I.length;C=this._getSeries(G.type);F=new C(G);this.addDispatcher(F);F.after("drawingComplete",b.bind(this._drawingCompleteHandler,this));D.push(F);I.push(F);},_getSeries:function(C){var D;switch(C){case"line":D=b.LineSeries;break;case"column":D=b.ColumnSeries;break;case"bar":D=b.BarSeries;break;case"area":D=b.AreaSeries;break;case"candlestick":D=b.CandlestickSeries;break;case"ohlc":D=b.OHLCSeries;break;case"stackedarea":D=b.StackedAreaSeries;break;case"stackedline":D=b.StackedLineSeries;break;case"stackedcolumn":D=b.StackedColumnSeries;break;case"stackedbar":D=b.StackedBarSeries;break;case"markerseries":D=b.MarkerSeries;break;case"spline":D=b.SplineSeries;break;case"areaspline":D=b.AreaSplineSeries;break;case"stackedspline":D=b.StackedSplineSeries;break;case"stackedareaspline":D=b.StackedAreaSplineSeries;break;case"stackedmarkerseries":D=b.StackedMarkerSeries;break;case"pie":D=b.PieSeries;break;case"combo":D=b.ComboSeries;break;case"stackedcombo":D=b.StackedComboSeries;break;case"combospline":D=b.ComboSplineSeries;break;case"stackedcombospline":D=b.StackedComboSplineSeries;break;default:D=b.CartesianSeries;break;}return D;},_markerEventHandler:function(H){var F=H.type,C=H.currentTarget,G=C.getAttribute("id").split("_"),E=this.getSeriesByIndex(G[1]),D=G[2];E.updateMarkerState(F,D);},_dispatchers:null,_updateStyles:function(){this._background.update(this.get("styles").background);this._sizeChangeHandler();},_sizeChangeHandler:function(I){var C=this.get("horizontalGridlines"),D=this.get("verticalGridlines"),L=this.get("width"),G=this.get("height"),H,K=0,J=0,E=this.get("styles").background,F;if(E&&E.border){F=E.border.weight||0;}if(this._background){H=b.one(this._background.parentNode);if(L&&G){if(F){L+=F*2;G+=F*2;K-=F;J-=F;}H.setStyle("width",L);H.setStyle("height",G);H.setStyle("left",K);H.setStyle("top",J);this._background.update({width:L,height:G});}}if(C&&C instanceof b.Gridlines){C.draw();}if(D&&D instanceof b.Gridlines){D.draw();}this._drawSeries();},_drawSeries:function(){if(this._drawing){this._callLater=true;return;}this._callLater=false;this._drawing=true;var E=this.get("seriesCollection"),D=0,C=E.length;for(;D<C;++D){E[D].draw();if(!E[D].get("xcoords")||!E[D].get("ycoords")){this._callLater=true;break;}}this._drawing=false;if(this._callLater){this._drawSeries();}},_drawingCompleteHandler:function(E){var D=E.currentTarget,C=b.Array.indexOf(this._dispatchers,D);if(C>-1){this._dispatchers.splice(C,1);}if(this._dispatchers.length<1){this.fire("chartRendered");}},_getDefaultStyles:function(){var C={background:{shape:"rect",fill:{color:"#faf9f2"},border:{color:"#dad8c9",weight:1}}};return C;}},{ATTRS:{seriesCollection:{getter:function(){return this._seriesCollection;},setter:function(C){this._parseSeriesCollection(C);return this._seriesCollection;}},showBackground:{value:true},seriesDictionary:{readOnly:true,getter:function(){return this._seriesDictionary;}},horizontalGridlines:{value:null,setter:function(D){var C=this.get("horizontalGridlines");if(C&&C instanceof b.Gridlines){C.remove();}if(D instanceof b.Gridlines){C=D;D.set("graph",this);D.render();return D;}else{if(D&&D.axis){C=new b.Gridlines({direction:"horizontal",axis:D.axis,graph:this,styles:D.styles});C.render();return C;}}}},verticalGridlines:{value:null,setter:function(D){var C=this.get("verticalGridlines");if(C&&C instanceof b.Gridlines){C.remove();}if(D instanceof b.Gridlines){C=D;D.set("graph",this);D.render();return D;}else{if(D&&D.axis){C=new b.Gridlines({direction:"vertical",axis:D.axis,graph:this,styles:D.styles});C.render();return C;}}}}}});function r(){}r.ATTRS={tooltip:{valueFn:"_getTooltip",setter:function(C){return this._updateTooltip(C);}},categoryKey:{value:"category"},categoryType:{value:"category"},interactionType:{value:"marker"},dataProvider:{setter:function(C){return this._setDataValues(C);}},seriesKeys:{},axesCollection:{},graph:{valueFn:"_getGraph"}};r.prototype={_getGraph:function(){var C=new b.Graph();C.after("chartRendered",b.bind(function(D){this.fire("chartRendered");},this));return C;},getSeries:function(E){var C=null,D=this.get("graph");if(D){if(b.Lang.isNumber(E)){C=D.getSeriesByIndex(E);}else{C=D.getSeriesByKey(E);}}return C;},getAxisByKey:function(E){var C,D=this.get("axes");if(D.hasOwnProperty(E)){C=D[E];}return C;},getCategoryAxis:function(){var D,C=this.get("categoryKey"),E=this.get("axes");if(E.hasOwnProperty(C)){D=E[C];}return D;},_direction:"horizontal",_dataProvider:null,_setDataValues:function(H){if(b.Lang.isArray(H[0])){var G,J=[],E=H[0],F=0,D=E.length,I,C=H.length;for(;F<D;++F){G={category:E[F]};for(I=1;I<C;++I){G["series"+I]=H[I][F];}J[F]=G;}return J;}return H;},_seriesCollection:null,_setSeriesCollection:function(C){this._seriesCollection=C;},_getAxisClass:function(C){return this._axisClass[C];},_axisClass:{stacked:b.StackedAxis,numeric:b.NumericAxis,category:b.CategoryAxis,time:b.TimeAxis},_axes:null,renderUI:function(){var C=this.get("tooltip");this.get("boundingBox").setStyle("position","absolute");this.get("contentBox").setStyle("position","absolute");this._addAxes();this._addSeries();if(C&&C.show){this._addTooltip();}this._redraw();},bindUI:function(){this.after("tooltipChange",b.bind(this._tooltipChangeHandler,this));this.after("widthChange",this._sizeChanged);this.after("heightChange",this._sizeChanged);this.after("dataProviderChange",this._dataProviderChangeHandler);var G=this.get("tooltip"),I="mouseout",F="mouseover",D=this.get("contentBox"),H=this.get("interactionType"),E=0,C;if(H=="marker"){I=G.hideEvent;F=G.showEvent;b.delegate("mouseenter",b.bind(this._markerEventDispatcher,this),D,".yui3-seriesmarker");b.delegate("mousedown",b.bind(this._markerEventDispatcher,this),D,".yui3-seriesmarker");b.delegate("mouseup",b.bind(this._markerEventDispatcher,this),D,".yui3-seriesmarker");b.delegate("mouseleave",b.bind(this._markerEventDispatcher,this),D,".yui3-seriesmarker");b.delegate("click",b.bind(this._markerEventDispatcher,this),D,".yui3-seriesmarker");
-b.delegate("mousemove",b.bind(this._positionTooltip,this),D,".yui3-seriesmarker");}else{if(H=="planar"){this._overlay.on("mousemove",b.bind(this._planarEventDispatcher,this));this.on("mouseout",this.hideTooltip);}}if(G){if(I&&F&&I==F){this.on(H+"Event:"+I,this.toggleTooltip);}else{if(F){this.on(H+"Event:"+F,G[H+"EventHandler"]);}if(I){if(b.Lang.isArray(I)){C=I.length;for(;E<C;++E){this.on(H+"Event:"+I[E],this.hideTooltip);}}this.on(H+"Event:"+I,this.hideTooltip);}}}},_markerEventDispatcher:function(G){var I=G.type,C=this.get("contentBox"),M=G.currentTarget,L=M.getAttribute("id").split("_"),D=L[1],E=this.getSeries(parseInt(D,10)),F=L[2],H=this.getSeriesItems(E,F),K=G.pageX-C.getX(),J=G.pageY-C.getY();if(I=="mouseenter"){I="mouseover";}else{if(I=="mouseleave"){I="mouseout";}}E.updateMarkerState(I,F);G.halt();this.fire("markerEvent:"+I,{categoryItem:H.category,valueItem:H.value,node:M,x:K,y:J,series:E,index:F,seriesIndex:D});},_dataProviderChangeHandler:function(G){var D=this.get("dataProvider"),F=this.get("axes"),C,E;for(C in F){if(F.hasOwnProperty(C)){E=F[C];if(E instanceof b.Axis){E.set("dataProvider",D);}}}},toggleTooltip:function(D){var C=this.get("tooltip");if(C.visible){this.hideTooltip();}else{C.markerEventHandler.apply(this,[D]);}},_showTooltip:function(F,C,G){var D=this.get("tooltip"),E=D.node;if(F){D.visible=true;E.set("innerHTML",F);E.setStyle("top",G+"px");E.setStyle("left",C+"px");E.removeClass("yui3-widget-hidden");}},_positionTooltip:function(G){var E=this.get("tooltip"),F=E.node,D=this.get("contentBox"),C=(G.pageX+10)-D.getX(),H=(G.pageY+10)-D.getY();if(F){F.setStyle("left",C+"px");F.setStyle("top",H+"px");}},hideTooltip:function(){var C=this.get("tooltip"),D=C.node;C.visible=false;D.set("innerHTML","");D.setStyle("left",-10000);D.setStyle("top",-10000);D.addClass("yui3-widget-hidden");},_addTooltip:function(){var C=this.get("tooltip");this.get("contentBox").appendChild(C.node);},_updateTooltip:function(G){var E=this._tooltip,C,F=G.styles,D={markerLabelFunction:"markerLabelFunction",planarLabelFunction:"planarLabelFunction",showEvent:"showEvent",hideEvent:"hideEvent",markerEventHandler:"markerEventHandler",planarEventHandler:"planarEventHandler"};if(F){for(C in F){if(F.hasOwnProperty(C)){E.node.setStyle(C,F[C]);}}}for(C in D){if(G.hasOwnProperty(C)){E[C]=G[C];}}return E;},_getTooltip:function(){var D=document.createElement("div"),C={markerLabelFunction:this._tooltipLabelFunction,planarLabelFunction:this._planarLabelFunction,show:true,hideEvent:"mouseout",showEvent:"mouseover",markerEventHandler:function(F){var E=this.get("tooltip"),G=E.markerLabelFunction.apply(this,[F.categoryItem,F.valueItem,F.index,F.series,F.seriesIndex]);this._showTooltip(G,F.x+10,F.y+10);},planarEventHandler:function(F){var E=this.get("tooltip"),H,G=this.get("categoryAxis");H=E.planarLabelFunction.apply(this,[G,F.valueItem,F.index,F.items,F.seriesIndex]);this._showTooltip(H,F.x+10,F.y+10);}};D.setAttribute("id",this.get("id")+"_tooltip");D=b.one(D);D.setStyle("fontSize","85%");D.setStyle("opacity","0.83");D.setStyle("position","absolute");D.setStyle("paddingTop","2px");D.setStyle("paddingRight","5px");D.setStyle("paddingBottom","4px");D.setStyle("paddingLeft","2px");D.setStyle("backgroundColor","#fff");D.setStyle("border","1px solid #dbdccc");D.setStyle("pointerEvents","none");D.setStyle("zIndex",3);D.setStyle("whiteSpace","noWrap");D.addClass("yui3-widget-hidden");C.node=b.one(D);this._tooltip=C;return C;},_planarLabelFunction:function(I,M,K,G,E){var C="",L,H=0,J=G.length,D,F;if(I){C+=I.get("labelFunction").apply(this,[I.getKeyValueAt(this.get("categoryKey"),K),I.get("labelFormat")]);}for(;H<J;++H){F=G[H];if(F.get("visible")){L=M[H];D=L.axis;C+="<br/><span>"+L.displayName+": "+D.get("labelFunction").apply(this,[D.getKeyValueAt(L.key,K),D.get("labelFormat")])+"</span>";}}return C;},_tooltipLabelFunction:function(H,C,F,E,D){var G=H.displayName+":&nbsp;"+H.axis.get("labelFunction").apply(this,[H.value,H.axis.get("labelFormat")])+"<br/>"+C.displayName+":&nbsp;"+C.axis.get("labelFunction").apply(this,[C.value,C.axis.get("labelFormat")]);return G;},_tooltipChangeHandler:function(G){if(this.get("tooltip")){var E=this.get("tooltip"),F=E.node,D=E.show,C=this.get("contentBox");if(F&&D){if(!C.containes(F)){this._addTooltip();}}}}};b.ChartBase=r;b.CartesianChart=b.Base.create("cartesianChart",b.Widget,[b.ChartBase],{renderUI:function(){var D=this.get("tooltip"),C;this.get("boundingBox").setStyle("position","absolute");this.get("contentBox").setStyle("position","absolute");this._addAxes();this._addGridlines();this._addSeries();if(D&&D.show){this._addTooltip();}this.get("styles");if(this.get("interactionType")=="planar"){C=document.createElement("div");this.get("contentBox").appendChild(C);this._overlay=b.one(C);this._overlay.setStyle("position","absolute");this._overlay.setStyle("background","#fff");this._overlay.setStyle("opacity",0);this._overlay.addClass("yui3-overlay");this._overlay.setStyle("zIndex",4);}this._redraw();},_planarEventDispatcher:function(V){var D=this.get("graph"),H=this.get("boundingBox"),Q=D.get("contentBox"),M=V.pageX,W=M-Q.getX(),K=M-H.getX(),L=V.pageY,U=L-Q.getY(),J=L-H.getY(),C=D.get("seriesCollection"),N,S=0,I,G=this._selectedIndex,X,P=[],E=[],O=[],Y=this.get("direction"),Z,R=Y=="horizontal"?W:U,F=Y=="horizontal"?C[0].get("xMarkerPlane"):C[0].get("yMarkerPlane"),T=F.length;for(;S<T;++S){if(R<=F[S].end&&R>=F[S].start){I=S;break;}}T=C.length;for(S=0;S<T;++S){N=C[S];Z=N.get("markers");if(Z&&!isNaN(G)&&G>-1){N.updateMarkerState("mouseout",G);}if(N.get("ycoords")[I]>-1){if(Z&&!isNaN(I)&&I>-1){N.updateMarkerState("mouseover",I);}X=this.getSeriesItems(N,I);E.push(X.category);O.push(X.value);P.push(N);}}this._selectedIndex=I;if(I>-1){this.fire("planarEvent:mouseover",{categoryItem:E,valueItem:O,x:K,y:J,items:P,index:I});}else{this.fire("planarEvent:mouseout");}},_type:"combo",_axesRenderQueue:null,_addToAxesRenderQueue:function(C){if(!this._axesRenderQueue){this._axesRenderQueue=[];}if(b.Array.indexOf(this._axesRenderQueue,C)<0){this._axesRenderQueue.push(C);
-}},_getDefaultSeriesCollection:function(V){var L=this.get("direction"),C=V||[],S,P,N=[],I,H=this.get("seriesKeys").concat(),R,G,O,F=this.get("type"),T,K,U,D,E=this.get("categoryKey"),Q=this.get("showMarkers"),M=this.get("showAreaFill"),J=this.get("showLines");if(L=="vertical"){S="yAxis";K="yKey";P="xAxis";U="xKey";}else{S="xAxis";K="xKey";P="yAxis";U="yKey";}O=C.length;for(R=0;R<O;++R){T=this._getBaseAttribute(C[R],U);if(T){G=b.Array.indexOf(H,T);if(G>-1){H.splice(G,1);}N.push(T);}}if(H.length>0){N=N.concat(H);}O=N.length;for(R=0;R<O;++R){I=C[R]||{type:F};if(I instanceof b.CartesianSeries){this._parseSeriesAxes(I);continue;}I[K]=I[K]||E;I[U]=I[U]||H.shift();I[S]=this._getCategoryAxis();I[P]=this._getSeriesAxis(I[U]);I.type=I.type||F;if((I.type=="combo"||I.type=="stackedcombo"||I.type=="combospline"||I.type=="stackedcombospline")){if(M!==null){I.showAreaFill=I.showAreaFill||M;}if(Q!==null){I.showMarkers=I.showMarkers||Q;}if(J!==null){I.showLines=I.showLines||J;}}C[R]=I;}if(V){D=this.get("graph");D.set("seriesCollection",C);C=D.get("seriesCollection");}return C;},_parseSeriesAxes:function(D){var H=this.get("axes"),F=D.get("xAxis"),C=D.get("yAxis"),G=b.Axis,E;if(F&&!(F instanceof G)&&b.Lang.isString(F)&&H.hasOwnProperty(F)){E=H[F];if(E instanceof G){D.set("xAxis",E);}}if(C&&!(C instanceof G)&&b.Lang.isString(C)&&H.hasOwnProperty(C)){E=H[C];if(E instanceof G){D.set("yAxis",E);}}},_getCategoryAxis:function(){var C,D=this.get("axes"),E=this.get("categoryAxisName")||this.get("categoryKey");C=D[E];return C;},_getSeriesAxis:function(D,H){var G=this.get("axes"),C,F,E;if(G){if(H&&G.hasOwnProperty(H)){E=G[H];}else{for(C in G){if(G.hasOwnProperty(C)){F=G[C].get("keys");if(F&&F.hasOwnProperty(D)){E=G[C];break;}}}}}return E;},_getBaseAttribute:function(D,C){if(D instanceof b.Base){return D.get(C);}if(D.hasOwnProperty(C)){return D[C];}return null;},_setBaseAttribute:function(D,C,E){if(D instanceof b.Base){D.set(C,E);}else{D[C]=E;}},_parseAxes:function(D){var H=this._getDefaultAxes(D),K={},F={edgeOffset:"edgeOffset",position:"position",overlapGraph:"overlapGraph",labelFunction:"labelFunction",labelFunctionScope:"labelFunctionScope",labelFormat:"labelFormat",maximum:"maximum",minimum:"minimum",roundingMethod:"roundingMethod",alwaysShowZero:"alwaysShowZero"},G=this.get("dataProvider"),N,I,O,E,M,L,C,J;for(I in H){if(H.hasOwnProperty(I)){M=H[I];if(M instanceof b.Axis){E=M;}else{L=this._getAxisClass(M.type);C={};C.dataProvider=M.dataProvider||G;C.keys=M.keys;if(M.hasOwnProperty("roundingUnit")){C.roundingUnit=M.roundingUnit;}O=M.position;if(M.styles){C.styles=M.styles;}C.position=M.position;for(N in F){if(F.hasOwnProperty(N)&&M.hasOwnProperty(N)){C[N]=M[N];}}E=new L(C);}if(E){J=this.get(O+"AxesCollection");if(J&&b.Array.indexOf(J,E)>0){E.set("overlapGraph",false);}E.after("axisRendered",b.bind(this._axisRendered,this));K[I]=E;}}}return K;},_addAxes:function(){var H=this.get("axes"),D,F,I,C=this.get("width"),E=this.get("height"),G=b.Node.one(this._parentNode);if(!this._axesCollection){this._axesCollection=[];}for(D in H){if(H.hasOwnProperty(D)){F=H[D];if(F instanceof b.Axis){if(!C){this.set("width",G.get("offsetWidth"));C=this.get("width");}if(!E){this.set("height",G.get("offsetHeight"));E=this.get("height");}F.set("width",C);F.set("height",E);this._addToAxesRenderQueue(F);I=F.get("position");if(!this.get(I+"AxesCollection")){this.set(I+"AxesCollection",[F]);}else{this.get(I+"AxesCollection").push(F);}this._axesCollection.push(F);if(F.get("keys").hasOwnProperty(this.get("categoryKey"))){this.set("categoryAxis",F);}F.render(this.get("contentBox"));}}}},_addSeries:function(){var C=this.get("graph"),D=this.get("seriesCollection");C.render(this.get("contentBox"));},_addGridlines:function(){var M=this.get("graph"),D=this.get("horizontalGridlines"),E=this.get("verticalGridlines"),L=this.get("direction"),N=this.get("leftAxesCollection"),H=this.get("rightAxesCollection"),J=this.get("bottomAxesCollection"),F=this.get("topAxesCollection"),G,C=this.get("categoryAxis"),K,I;if(this._axesCollection){G=this._axesCollection.concat();G.splice(b.Array.indexOf(G,C),1);}if(D){if(N&&N[0]){K=N[0];}else{if(H&&H[0]){K=H[0];}else{K=L=="horizontal"?C:G[0];}}if(!this._getBaseAttribute(D,"axis")&&K){this._setBaseAttribute(D,"axis",K);}if(this._getBaseAttribute(D,"axis")){M.set("horizontalGridlines",D);}}if(E){if(J&&J[0]){I=J[0];}else{if(F&&F[0]){I=F[0];}else{I=L=="vertical"?C:G[0];}}if(!this._getBaseAttribute(E,"axis")&&I){this._setBaseAttribute(E,"axis",I);}if(this._getBaseAttribute(E,"axis")){M.set("verticalGridlines",E);}}},_getDefaultAxes:function(U){var M=this.get("categoryKey"),D,S,O,F={},Q=[],E=this.get("categoryAxisName")||this.get("categoryKey"),C=this.get("valueAxisName"),G=this.get("seriesKeys")||[],V,T,L,J,P,N,R=this.get("dataProvider"),W=this.get("direction"),K,H,I=[],X=this.get("stacked")?"stacked":"numeric";N=R[0];if(W=="vertical"){K="bottom";H="left";}else{K="left";H="bottom";}if(U){for(V in U){if(U.hasOwnProperty(V)){D=U[V];O=this._getBaseAttribute(D,"keys");S=this._getBaseAttribute(D,"type");if(S=="time"||S=="category"){E=V;this.set("categoryAxisName",V);if(b.Lang.isArray(O)&&O.length>0){M=O[0];this.set("categoryKey",M);}F[V]=D;}else{if(V==E){F[V]=D;}else{F[V]=D;if(V!=C&&O&&b.Lang.isArray(O)){J=O.length;for(L=0;L<J;++L){Q.push(O[L]);}I.push(F[V]);}if(!(this._getBaseAttribute(F[V],"type"))){this._setBaseAttribute(F[V],"type",X);}if(!(this._getBaseAttribute(F[V],"position"))){this._setBaseAttribute(F[V],"position",this._getDefaultAxisPosition(F[V],I,K));}}}}}}if(G.length<1){for(V in N){if(N.hasOwnProperty(V)&&V!=M&&b.Array.indexOf(Q,V)==-1){G.push(V);}}}P=b.Array.indexOf(G,M);if(P>-1){G.splice(P,1);}T=Q.length;for(V=0;V<T;++V){P=b.Array.indexOf(G,Q[V]);if(P>-1){G.splice(P,1);}}if(!F.hasOwnProperty(E)){F[E]={};}if(!(this._getBaseAttribute(F[E],"keys"))){this._setBaseAttribute(F[E],"keys",[M]);}if(!(this._getBaseAttribute(F[E],"position"))){this._setBaseAttribute(F[E],"position",H);}if(!(this._getBaseAttribute(F[E],"type"))){this._setBaseAttribute(F[E],"type",this.get("categoryType"));
-}if(!F.hasOwnProperty(C)&&G&&G.length>0){F[C]={keys:G};I.push(F[C]);}if(Q.length>0){if(G.length>0){G=Q.concat(G);}else{G=Q;}}if(F.hasOwnProperty(C)){if(!(this._getBaseAttribute(F[C],"position"))){this._setBaseAttribute(F[C],"position",this._getDefaultAxisPosition(F[C],I,K));}if(!(this._getBaseAttribute(F[C],"type"))){this._setBaseAttribute(F[C],"type",X);}if(!(this._getBaseAttribute(F[C],"keys"))){this._setBaseAttribute(F[C],"keys",G);}}this.set("seriesKeys",G);return F;},_getDefaultAxisPosition:function(F,D,C){var G=this.get("direction"),E=b.Array.indexOf(D,F);if(D[E-1]&&D[E-1].position){if(G=="horizontal"){if(D[E-1].position=="left"){C="right";}else{if(D[E-1].position=="right"){C="left";}}}else{if(D[E-1].position=="bottom"){C="top";}else{C="bottom";}}}return C;},getSeriesItems:function(H,G){var I=H.get("xAxis"),E=H.get("yAxis"),F=H.get("xKey"),D=H.get("yKey"),J,C;if(this.get("direction")=="vertical"){J={axis:E,key:D,value:E.getKeyValueAt(D,G)};C={axis:I,key:F,value:I.getKeyValueAt(F,G)};}else{C={axis:E,key:D,value:E.getKeyValueAt(D,G)};J={axis:I,key:F,value:I.getKeyValueAt(F,G)};}J.displayName=H.get("categoryDisplayName");C.displayName=H.get("valueDisplayName");J.value=J.axis.getKeyValueAt(J.key,G);C.value=C.axis.getKeyValueAt(C.key,G);return{category:J,value:C};},_axisRendered:function(C){this._axesRenderQueue=this._axesRenderQueue.splice(1+b.Array.indexOf(this._axesRenderQueue,C.currentTarget),1);if(this._axesRenderQueue.length<1){this._redraw();}},_sizeChanged:function(F){if(this._axesCollection){var E=this._axesCollection,D=0,C=E.length;for(;D<C;++D){this._addToAxesRenderQueue(E[D]);}this._redraw();}},_redraw:function(){if(this._drawing){this._callLater=true;return;}this._drawing=true;this._callLater=false;var Q=this.get("width"),N=this.get("height"),I=0,F=0,D=0,L=0,E=this.get("leftAxesCollection"),C=this.get("rightAxesCollection"),K=this.get("topAxesCollection"),O=this.get("bottomAxesCollection"),M=0,J,H,P,S=[],G="visible",R=this.get("graph");if(E){J=E.length;for(M=J-1;M>-1;--M){S[b.Array.indexOf(this._axesCollection,E[M])]={x:I+"px"};I+=E[M].get("width");}}if(C){J=C.length;M=0;for(M=J-1;M>-1;--M){F+=C[M].get("width");S[b.Array.indexOf(this._axesCollection,C[M])]={x:(Q-F)+"px"};}}if(K){J=K.length;for(M=J-1;M>-1;--M){S[b.Array.indexOf(this._axesCollection,K[M])]={y:D+"px"};D+=K[M].get("height");}}if(O){J=O.length;for(M=J-1;M>-1;--M){L+=O[M].get("height");S[b.Array.indexOf(this._axesCollection,O[M])]={y:(N-L)+"px"};}}J=this._axesCollection.length;M=0;for(;M<J;++M){H=this._axesCollection[M];P=H.get("position");if(P=="left"||P==="right"){H.get("boundingBox").setStyle("top",D+"px");H.get("boundingBox").setStyle("left",S[M].x);if(H.get("height")!==N-(L+D)){H.set("height",N-(L+D));}}else{if(P=="bottom"||P=="top"){if(H.get("width")!==Q-(I+F)){H.set("width",Q-(I+F));}H.get("boundingBox").setStyle("left",I+"px");H.get("boundingBox").setStyle("top",S[M].y);}}if(H.get("setMax")||H.get("setMin")){G="hidden";}}this._drawing=false;if(this._callLater){this._redraw();return;}if(R){R.get("boundingBox").setStyle("left",I+"px");R.get("boundingBox").setStyle("top",D+"px");R.set("width",Q-(I+F));R.set("height",N-(D+L));R.get("boundingBox").setStyle("overflow",G);}if(this._overlay){this._overlay.setStyle("left",I+"px");this._overlay.setStyle("top",D+"px");this._overlay.setStyle("width",(Q-(I+F))+"px");this._overlay.setStyle("height",(N-(D+L))+"px");}}},{ATTRS:{axesStyles:{getter:function(){var E=this.get("axes"),C,D=this._axesStyles;if(E){for(C in E){if(E.hasOwnProperty(C)&&E[C] instanceof b.Axis){if(!D){D={};}D[C]=E[C].get("styles");}}}return D;},setter:function(E){var D=this.get("axes"),C;for(C in E){if(E.hasOwnProperty(C)&&D.hasOwnProperty(C)){this._setBaseAttribute(D[C],"styles",E[C]);}}}},seriesStyles:{getter:function(){var D=this._seriesStyles,E=this.get("graph"),F,C;if(E){F=E.get("seriesDictionary");if(F){D={};for(C in F){if(F.hasOwnProperty(C)){D[C]=F[C].get("styles");}}}}return D;},setter:function(F){var D,C,E;if(b.Lang.isArray(F)){E=this.get("seriesCollection");D=0;C=F.length;for(;D<C;++D){this._setBaseAttribute(E[D],"styles",F[D]);}}else{for(D in F){if(F.hasOwnProperty(D)){E=this.getSeries(D);this._setBaseAttribute(E,"styles",F[D]);}}}}},graphStyles:{getter:function(){var C=this.get("graph");if(C){return(C.get("styles"));}return this._graphStyles;},setter:function(D){var C=this.get("graph");this._setBaseAttribute(C,"styles",D);}},styles:{getter:function(){var C={axes:this.get("axesStyles"),series:this.get("seriesStyles"),graph:this.get("graphStyles")};return C;},setter:function(C){if(C.hasOwnProperty("axes")){if(this.get("axesStyles")){this.set("axesStyles",C.axes);}else{this._axesStyles=C.axes;}}if(C.hasOwnProperty("series")){if(this.get("seriesStyles")){this.set("seriesStyles",C.series);}else{this._seriesStyles=C.series;}}if(C.hasOwnProperty("graph")){this.set("graphStyles",C.graph);}}},axes:{valueFn:"_parseAxes",setter:function(C){return this._parseAxes(C);}},seriesCollection:{valueFn:"_getDefaultSeriesCollection",setter:function(C){return this._getDefaultSeriesCollection(C);}},leftAxesCollection:{},bottomAxesCollection:{},rightAxesCollection:{},topAxesCollection:{},stacked:{value:false},direction:{getter:function(){var C=this.get("type");if(C=="bar"){return"vertical";}else{if(C=="column"){return"horizontal";}}return this._direction;},setter:function(C){this._direction=C;return this._direction;}},showAreaFill:{},showMarkers:{},showLines:{},categoryAxisName:{},valueAxisName:{value:"values"},horizontalGridlines:{getter:function(){var C=this.get("graph");if(C){return C.get("horizontalGridlines");}return this._horizontalGridlines;},setter:function(D){var C=this.get("graph");if(D&&!b.Lang.isObject(D)){D={};}if(C){C.set("horizontalGridlines",D);}else{this._horizontalGridlines=D;}}},verticalGridlines:{getter:function(){var C=this.get("graph");if(C){return C.get("verticalGridlines");}return this._verticalGridlines;},setter:function(D){var C=this.get("graph");if(D&&!b.Lang.isObject(D)){D={};}if(C){C.set("verticalGridlines",D);
-}else{this._verticalGridlines=D;}}},type:{getter:function(){if(this.get("stacked")){return"stacked"+this._type;}return this._type;},setter:function(C){if(this._type=="bar"){if(C!="bar"){this.set("direction","horizontal");}}else{if(C=="bar"){this.set("direction","vertical");}}this._type=C;return this._type;}},categoryAxis:{}}});b.PieChart=b.Base.create("pieChart",b.Widget,[b.ChartBase],{_getSeriesCollection:function(){if(this._seriesCollection){return this._seriesCollection;}var H=this.get("axes"),J=[],I,F=0,E,K=this.get("type"),M,C="categoryAxis",G="categoryKey",D="valueAxis",L="valueKey";if(H){I=H.values.get("keyCollection");M=H.category.get("keyCollection")[0];E=I.length;for(;F<E;++F){J[F]={type:K};J[F][C]="category";J[F][D]="values";J[F][G]=M;J[F][L]=I[F];}}this._seriesCollection=J;return J;},_parseAxes:function(F){if(!this._axes){this._axes={};}var G,L,E,J,C,I,K=this.get("type"),M=this.get("width"),H=this.get("height"),D=b.Node.one(this._parentNode);if(!M){this.set("width",D.get("offsetWidth"));M=this.get("width");}if(!H){this.set("height",D.get("offsetHeight"));H=this.get("height");}for(G in F){if(F.hasOwnProperty(G)){J=F[G];L=K=="pie"?"none":J.position;I=this._getAxisClass(J.type);C={dataProvider:this.get("dataProvider")};if(J.hasOwnProperty("roundingUnit")){C.roundingUnit=J.roundingUnit;}C.keys=J.keys;C.width=M;C.height=H;C.position=L;C.styles=J.styles;E=new I(C);E.on("axisRendered",b.bind(this._axisRendered,this));this._axes[G]=E;}}},_addAxes:function(){var F=this.get("axes"),C,D,E;if(!F){this.set("axes",this._getDefaultAxes());F=this.get("axes");}if(!this._axesCollection){this._axesCollection=[];}for(C in F){if(F.hasOwnProperty(C)){D=F[C];E=D.get("position");if(!this.get(E+"AxesCollection")){this.set(E+"AxesCollection",[D]);}else{this.get(E+"AxesCollection").push(D);}this._axesCollection.push(D);}}},_addSeries:function(){var C=this.get("graph"),D=this.get("seriesCollection");this._parseSeriesAxes(D);C.set("showBackground",false);C.set("width",this.get("width"));C.set("height",this.get("height"));C.set("seriesCollection",D);this._seriesCollection=C.get("seriesCollection");C.render(this.get("contentBox"));},_parseSeriesAxes:function(H){var D=0,C=H.length,F,G=this.get("axes"),E;for(;D<C;++D){F=H[D];if(F){if(F instanceof b.PieSeries){E=F.get("categoryAxis");if(E&&!(E instanceof b.Axis)){F.set("categoryAxis",G[E]);}E=F.get("valueAxis");if(E&&!(E instanceof b.Axis)){F.set("valueAxis",G[E]);}continue;}F.categoryAxis=G.category;F.valueAxis=G.values;if(!F.type){F.type=this.get("type");}}}},_getDefaultAxes:function(){var G=this.get("categoryKey"),D=this.get("seriesKeys")||[],C="numeric",F,E=this.get("dataProvider")[0];if(D.length<1){for(F in E){if(F!=G){D.push(F);}}if(D.length>0){this.set("seriesKeys",D);}}return{values:{keys:D,type:C},category:{keys:[G],type:this.get("categoryType")}};},getSeriesItems:function(E,D){var F={axis:E.get("categoryAxis"),key:E.get("categoryKey"),displayName:E.get("categoryDisplayName")},C={axis:E.get("valueAxis"),key:E.get("valueKey"),displayName:E.get("valueDisplayName")};F.value=F.axis.getKeyValueAt(F.key,D);C.value=C.axis.getKeyValueAt(C.key,D);return{category:F,value:C};},_sizeChanged:function(C){this._redraw();},_redraw:function(){var C=this.get("graph");if(C){C.set("width",this.get("width"));C.set("height",this.get("height"));}}},{ATTRS:{axes:{getter:function(){return this._axes;},setter:function(C){this._parseAxes(C);}},seriesCollection:{getter:function(){return this._getSeriesCollection();},setter:function(C){return this._setSeriesCollection(C);}},type:{value:"pie"}}});function w(C){if(C.type!="pie"){return new b.CartesianChart(C);}else{return new b.PieChart(C);}}b.Chart=w;},"3.3.0",{requires:["dom","datatype","event-custom","event-mouseenter","widget","widget-position","widget-stack"]});
+YUI.add('charts', function(Y) {
+
+/**
+ * The Charts widget provides an api for displaying data
+ * graphically.
+ *
+ * @module charts
+ */
+var ISCHROME = Y.UA.chrome,
+    DRAWINGAPI,
+    canvas = document.createElement("canvas");
+if(document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1"))
+{
+    DRAWINGAPI = "svg";
+}
+else if(canvas && canvas.getContext && canvas.getContext("2d"))
+{
+    DRAWINGAPI = "canvas";
+}
+else
+{
+    DRAWINGAPI = "vml";
+}
+
+/**
+ * Graphic is a simple drawing api that allows for basic drawing operations.
+ *
+ * @class Graphic
+ * @constructor
+ */
+var Graphic = function(config) {
+    
+    this.initializer.apply(this, arguments);
+};
+
+Graphic.prototype = {
+    /**
+     * Indicates whether or not the instance will size itself based on its contents.
+     *
+     * @property autoSize 
+     * @type String
+     */
+    autoSize: true,
+
+    /**
+     * Initializes the class.
+     *
+     * @method initializer
+     * @private
+     */
+    initializer: function(config) {
+        config = config || {};
+        var w = config.width || 0,
+            h = config.height || 0;
+        if(config.node)
+        {
+            this.node = config.node;
+            this._styleGroup(this.node);
+        }
+        else
+        {
+            this.node = this._createGraphics();
+            this.setSize(w, h);
+        }
+        this._initProps();
+    },
+
+    /** 
+     * Specifies a bitmap fill used by subsequent calls to other drawing methods.
+     * 
+     * @method beginBitmapFill
+     * @param {Object} config
+     */
+    beginBitmapFill: function(config) {
+       
+        var fill = {};
+        fill.src = config.bitmap.src;
+        fill.type = "tile";
+        this._fillProps = fill;
+        if(!isNaN(config.tx) ||
+            !isNaN(config.ty) ||
+            !isNaN(config.width) ||
+            !isNaN(config.height))
+        {
+            this._gradientBox = {
+                tx:config.tx,
+                ty:config.ty,
+                width:config.width,
+                height:config.height
+            };
+        }
+        else
+        {
+            this._gradientBox = null;
+        }
+    },
+
+    /**
+     * Specifes a solid fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginFill
+     * @param {String} color Hex color value for the fill.
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    beginFill: function(color, alpha) {
+        if (color) {
+            this._fillAlpha = Y.Lang.isNumber(alpha) ? alpha : 1;
+            this._fillColor = color;
+            this._fillType = 'solid';
+            this._fill = 1;
+        }
+        return this;
+    },
+    
+    /** 
+     * Specifies a gradient fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginGradientFill
+     * @param {Object} config
+     */
+    beginGradientFill: function(config) {
+        var alphas = config.alphas || [];
+        if(!this._defs)
+        {
+            this._defs = this._createGraphicNode("defs");
+            this.node.appendChild(this._defs);
+        }
+        this._fillAlphas = alphas;
+        this._fillColors = config.colors;
+        this._fillType =  config.type || "linear";
+        this._fillRatios = config.ratios || [];
+        this._fillRotation = config.rotation || 0;
+        this._fillWidth = config.width || null;
+        this._fillHeight = config.height || null;
+        this._fillX = !isNaN(config.tx) ? config.tx : NaN;
+        this._fillY = !isNaN(config.ty) ? config.ty : NaN;
+        this._gradientId = "lg" + Math.round(100000 * Math.random());
+        return this;
+    },
+
+    /**
+     * Removes all nodes.
+     *
+     * @method destroy
+     */
+    destroy: function()
+    {
+        this._removeChildren(this.node);
+        if(this.node && this.node.parentNode)
+        {
+            this.node.parentNode.removeChild(this.node);
+        }
+    },
+    
+    /**
+     * Removes all child nodes.
+     *
+     * @method _removeChildren
+     * @param {HTMLElement} node
+     * @private
+     */
+    _removeChildren: function(node)
+    {
+        if(node.hasChildNodes())
+        {
+            var child;
+            while(node.firstChild)
+            {
+                child = node.firstChild;
+                this._removeChildren(child);
+                node.removeChild(child);
+            }
+        }
+    },
+
+    /**
+     * Shows and and hides a the graphic instance.
+     *
+     * @method toggleVisible
+     * @param val {Boolean} indicates whether the instance should be visible.
+     */
+    toggleVisible: function(val)
+    {
+        this._toggleVisible(this.node, val);
+    },
+
+    /**
+     * Toggles visibility
+     *
+     * @method _toggleVisible
+     * @param {HTMLElement} node element to toggle
+     * @param {Boolean} val indicates visibilitye
+     * @private
+     */
+    _toggleVisible: function(node, val)
+    {
+        var children = Y.Selector.query(">/*", node),
+            visibility = val ? "visible" : "hidden",
+            i = 0,
+            len;
+        if(children)
+        {
+            len = children.length;
+            for(; i < len; ++i)
+            {
+                this._toggleVisible(children[i], val);
+            }
+        }
+        node.style.visibility = visibility;
+    },
+
+    /**
+     * Clears the graphics object.
+     *
+     * @method clear
+     */
+    clear: function() {
+        if(this._graphicsList)
+        {
+            while(this._graphicsList.length > 0)
+            {
+                this.node.removeChild(this._graphicsList.shift());
+            }
+        }
+        this.path = '';
+    },
+
+    /**
+     * Draws a bezier curve.
+     *
+     * @method curveTo
+     * @param {Number} cp1x x-coordinate for the first control point.
+     * @param {Number} cp1y y-coordinate for the first control point.
+     * @param {Number} cp2x x-coordinate for the second control point.
+     * @param {Number} cp2y y-coordinate for the second control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    curveTo: function(cp1x, cp1y, cp2x, cp2y, x, y) {
+        this._shapeType = "path";
+        if(this.path.indexOf("C") < 0 || this._pathType !== "C")
+        {
+            this._pathType = "C";
+            this.path += ' C';
+        }
+        this.path += Math.round(cp1x) + ", " + Math.round(cp1y) + ", " + Math.round(cp2x) + ", " + Math.round(cp2y) + ", " + x + ", " + y + " ";
+        this._trackSize(x, y);
+    },
+
+    /**
+     * Draws a quadratic bezier curve.
+     *
+     * @method quadraticCurveTo
+     * @param {Number} cpx x-coordinate for the control point.
+     * @param {Number} cpy y-coordinate for the control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    quadraticCurveTo: function(cpx, cpy, x, y) {
+        if(this.path.indexOf("Q") < 0 || this._pathType !== "Q")
+        {
+            this._pathType = "Q";
+            this.path += " Q";
+        }
+        this.path +=  Math.round(cpx) + " " + Math.round(cpy) + " " + Math.round(x) + " " + Math.round(y);
+    },
+
+    /**
+     * Draws a circle.
+     *
+     * @method drawCircle
+     * @param {Number} x y-coordinate
+     * @param {Number} y x-coordinate
+     * @param {Number} r radius
+     */
+	drawCircle: function(x, y, r) {
+        this._shape = {
+            x:x - r,
+            y:y - r,
+            w:r * 2,
+            h:r * 2
+        };
+        this._attributes = {cx:x, cy:y, r:r};
+        this._width = this._height = r * 2;
+        this._x = x - r;
+        this._y = y - r;
+        this._shapeType = "circle";
+        this._draw();
+	},
+
+    /**
+     * Draws an ellipse.
+     *
+     * @method drawEllipse
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+    drawEllipse: function(x, y, w, h) {
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        this._width = w;
+        this._height = h;
+        this._x = x;
+        this._y = y;
+        this._shapeType = "ellipse";
+        this._draw();
+    },
+
+    /**
+     * Draws a rectangle.
+     *
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+    drawRect: function(x, y, w, h) {
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        this._x = x;
+        this._y = y;
+        this._width = w;
+        this._height = h;
+        this.moveTo(x, y);
+        this.lineTo(x + w, y);
+        this.lineTo(x + w, y + h);
+        this.lineTo(x, y + h);
+        this.lineTo(x, y);
+        this._draw();
+    },
+
+    /**
+     * Draws a rectangle with rounded corners.
+     * 
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     * @param {Number} ew width of the ellipse used to draw the rounded corners
+     * @param {Number} eh height of the ellipse used to draw the rounded corners
+     */
+    drawRoundRect: function(x, y, w, h, ew, eh) {
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        this._x = x;
+        this._y = y;
+        this._width = w;
+        this._height = h;
+        this.moveTo(x, y + eh);
+        this.lineTo(x, y + h - eh);
+        this.quadraticCurveTo(x, y + h, x + ew, y + h);
+        this.lineTo(x + w - ew, y + h);
+        this.quadraticCurveTo(x + w, y + h, x + w, y + h - eh);
+        this.lineTo(x + w, y + eh);
+        this.quadraticCurveTo(x + w, y, x + w - ew, y);
+        this.lineTo(x + ew, y);
+        this.quadraticCurveTo(x, y, x, y + eh);
+        this._draw();
+	},
+
+    /**
+     * Draws a wedge.
+     * 
+     * @param {Number} x			x-coordinate of the wedge's center point
+     * @param {Number} y			y-coordinate of the wedge's center point
+     * @param {Number} startAngle	starting angle in degrees
+     * @param {Number} arc			sweep of the wedge. Negative values draw clockwise.
+     * @param {Number} radius		radius of wedge. If [optional] yRadius is defined, then radius is the x radius.
+     * @param {Number} yRadius		[optional] y radius for wedge.
+     */
+    drawWedge: function(x, y, startAngle, arc, radius, yRadius)
+    {
+        this._drawingComplete = false;
+        this.path = this._getWedgePath({x:x, y:y, startAngle:startAngle, arc:arc, radius:radius, yRadius:yRadius});
+        this._width = radius * 2;
+        this._height = this._width;
+        this._shapeType = "path";
+        this._draw();
+
+    },
+
+    /**
+     * Completes a drawing operation. 
+     *
+     * @method end
+     */
+    end: function() {
+        if(this._shapeType)
+        {
+            this._draw();
+        }
+        this._initProps();
+    },
+
+    /**
+     * Specifies a gradient to use for the stroke when drawing lines.
+     * Not implemented
+     *
+     * @method lineGradientStyle
+     * @private
+     */
+    lineGradientStyle: function() {
+    },
+     
+    /**
+     * Specifies a line style used for subsequent calls to drawing methods.
+     * 
+     * @method lineStyle
+     * @param {Number} thickness indicates the thickness of the line
+     * @param {String} color hex color value for the line
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    lineStyle: function(thickness, color, alpha, pixelHinting, scaleMode, caps, joints, miterLimit) {
+        this._stroke = 1;
+        this._strokeWeight = thickness;
+        if (color) {
+            this._strokeColor = color;
+        }
+        this._strokeAlpha = Y.Lang.isNumber(alpha) ? alpha : 1;
+    },
+    
+    /**
+     * Draws a line segment using the current line style from the current drawing position to the specified x and y coordinates.
+     * 
+     * @method lineTo
+     * @param {Number} point1 x-coordinate for the end point.
+     * @param {Number} point2 y-coordinate for the end point.
+     */
+    lineTo: function(point1, point2, etc) {
+        var args = arguments,
+            i,
+            len;
+        if (typeof point1 === 'string' || typeof point1 === 'number') {
+            args = [[point1, point2]];
+        }
+        len = args.length;
+        this._shapeType = "path";
+        if(this.path.indexOf("L") < 0 || this._pathType !== "L")
+        {
+            this._pathType = "L";
+            this.path += ' L';
+        }
+        for (i = 0; i < len; ++i) {
+            this.path += args[i][0] + ', ' + args[i][1] + " ";
+
+            this._trackSize.apply(this, args[i]);
+        }
+    },
+
+    /**
+     * Moves the current drawing position to specified x and y coordinates.
+     *
+     * @method moveTo
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    moveTo: function(x, y) {
+        this._pathType = "M";
+        this.path += ' M' + x + ', ' + y;
+    },
+
+    /**
+     * Generates a path string for a wedge shape
+     *
+     * @method _getWedgePath
+     * @param {Object} config attributes used to create the path
+     * @return String
+     * @private
+     */
+    _getWedgePath: function(config)
+    {
+        var x = config.x,
+            y = config.y,
+            startAngle = config.startAngle,
+            arc = config.arc,
+            radius = config.radius,
+            yRadius = config.yRadius || radius,
+            segs,
+            segAngle,
+            theta,
+            angle,
+            angleMid,
+            ax,
+            ay,
+            bx,
+            by,
+            cx,
+            cy,
+            i = 0,
+            path = ' M' + x + ', ' + y;  
+        
+        // limit sweep to reasonable numbers
+        if(Math.abs(arc) > 360)
+        {
+            arc = 360;
+        }
+        
+        // First we calculate how many segments are needed
+        // for a smooth arc.
+        segs = Math.ceil(Math.abs(arc) / 45);
+        
+        // Now calculate the sweep of each segment.
+        segAngle = arc / segs;
+        
+        // The math requires radians rather than degrees. To convert from degrees
+        // use the formula (degrees/180)*Math.PI to get radians.
+        theta = -(segAngle / 180) * Math.PI;
+        
+        // convert angle startAngle to radians
+        angle = (startAngle / 180) * Math.PI;
+        if(segs > 0)
+        {
+            // draw a line from the center to the start of the curve
+            ax = x + Math.cos(startAngle / 180 * Math.PI) * radius;
+            ay = y + Math.sin(startAngle / 180 * Math.PI) * yRadius;
+            path += " L" + Math.round(ax) + ", " +  Math.round(ay);
+            path += " Q";
+            for(; i < segs; ++i)
+            {
+                angle += theta;
+                angleMid = angle - (theta / 2);
+                bx = x + Math.cos(angle) * radius;
+                by = y + Math.sin(angle) * yRadius;
+                cx = x + Math.cos(angleMid) * (radius / Math.cos(theta / 2));
+                cy = y + Math.sin(angleMid) * (yRadius / Math.cos(theta / 2));
+                path +=  Math.round(cx) + " " + Math.round(cy) + " " + Math.round(bx) + " " + Math.round(by) + " ";
+            }
+            path += ' L' + x + ", " + y;
+        }
+        return path;
+    },
+
+    /**
+     * Sets the size of the graphics object.
+     * 
+     * @method setSize
+     * @param w {Number} width to set for the instance.
+     * @param h {Number} height to set for the instance.
+     */
+    setSize: function(w, h) {
+        if(this.autoSize)
+        {
+            if(w > this.node.getAttribute("width"))
+            {
+                this.node.setAttribute("width",  w);
+            }
+            if(h > this.node.getAttribute("height"))
+            {
+                this.node.setAttribute("height", h);
+            }
+        }
+    },
+
+    /**
+     * Updates the size of the graphics object
+     *
+     * @method _trackSize
+     * @param {Number} w width
+     * @param {Number} h height
+     * @private
+     */
+    _trackSize: function(w, h) {
+        if (w > this._width) {
+            this._width = w;
+        }
+        if (h > this._height) {
+            this._height = h;
+        }
+        this.setSize(w, h);
+    },
+
+    /**
+     * Sets the positon of the graphics object.
+     *
+     * @method setPosition
+     * @param {Number} x x-coordinate for the object.
+     * @param {Number} y y-coordinate for the object.
+     */
+    setPosition: function(x, y)
+    {
+        this.node.setAttribute("x", x);
+        this.node.setAttribute("y", y);
+    },
+
+    /**
+     * Adds the graphics node to the dom.
+     * 
+     * @method render
+     * @param {HTMLElement} parentNode node in which to render the graphics node into.
+     */
+    render: function(parentNode) {
+        var w = parentNode.get("width") || parentNode.get("offsetWidth"),
+            h = parentNode.get("height") || parentNode.get("offsetHeight");
+        parentNode = parentNode || Y.config.doc.body;
+        parentNode.appendChild(this.node);
+        this.setSize(w, h);
+        this._initProps();
+        return this;
+    },
+
+    /**
+     * Clears the properties
+     *
+     * @method _initProps
+     * @private
+     */
+    _initProps: function() {
+        this._shape = null;
+        this._fillColor = null;
+        this._strokeColor = null;
+        this._strokeWeight = 0;
+        this._fillProps = null;
+        this._fillAlphas = null;
+        this._fillColors = null;
+        this._fillType =  null;
+        this._fillRatios = null;
+        this._fillRotation = null;
+        this._fillWidth = null;
+        this._fillHeight = null;
+        this._fillX = NaN;
+        this._fillY = NaN;
+        this.path = '';
+        this._width = 0;
+        this._height = 0;
+        this._x = 0;
+        this._y = 0;
+        this._fill = null;
+        this._stroke = 0;
+        this._stroked = false;
+        this._pathType = null;
+        this._attributes = {};
+    },
+
+    /**
+     * Clears path properties
+     * 
+     * @method _clearPath
+     * @private
+     */
+    _clearPath: function()
+    {
+        this._shape = null;
+        this._shapeType = null;
+        this.path = '';
+        this._width = 0;
+        this._height = 0;
+        this._x = 0;
+        this._y = 0;
+        this._pathType = null;
+        this._attributes = {};
+    },
+
+    /**
+     * Completes a shape
+     *
+     * @method _draw
+     * @private 
+     */
+    _draw: function()
+    {
+        var shape = this._createGraphicNode(this._shapeType),
+            i,
+            gradFill;
+        if(this.path)
+        {
+            if(this._fill)
+            {
+                this.path += 'z';
+            }
+            shape.setAttribute("d", this.path);
+        }
+        else
+        {
+            for(i in this._attributes)
+            {
+                if(this._attributes.hasOwnProperty(i))
+                {
+                    shape.setAttribute(i, this._attributes[i]);
+                }
+            }
+        }
+        shape.setAttribute("stroke-width",  this._strokeWeight);
+        if(this._strokeColor)
+        {
+            shape.setAttribute("stroke", this._strokeColor);
+            shape.setAttribute("stroke-opacity", this._strokeAlpha);
+        }
+        if(!this._fillType || this._fillType === "solid")
+        {
+            if(this._fillColor)
+            {
+               shape.setAttribute("fill", this._fillColor);
+               shape.setAttribute("fill-opacity", this._fillAlpha);
+            }
+            else
+            {
+                shape.setAttribute("fill", "none");
+            }
+        }
+        else if(this._fillType === "linear")
+        {
+            gradFill = this._getFill();
+            gradFill.setAttribute("id", this._gradientId);
+            this._defs.appendChild(gradFill);
+            shape.setAttribute("fill", "url(#" + this._gradientId + ")");
+
+        }
+        this.node.appendChild(shape);
+        this._clearPath();
+    },
+
+    /**
+     * Returns ths actual fill object to be used in a drawing or shape
+     *
+     * @method _getFill
+     * @private
+     */
+    _getFill: function() {
+        var type = this._fillType,
+            fill;
+
+        switch (type) {
+            case 'linear': 
+                fill = this._getLinearGradient('fill');
+                break;
+            case 'radial': 
+                //fill = this._getRadialGradient('fill');
+                break;
+            case 'bitmap':
+                //fill = this._bitmapFill;
+                break;
+        }
+        return fill;
+    },
+
+    /**
+     * Returns a linear gradient fill
+     *
+     * @method _getLinearGradient
+     * @param {String} type gradient type
+     * @private
+     */
+    _getLinearGradient: function(type) {
+        var fill = this._createGraphicNode("linearGradient"),
+            prop = '_' + type,
+            colors = this[prop + 'Colors'],
+            ratios = this[prop + 'Ratios'],
+            alphas = this[prop + 'Alphas'],
+            w = this._fillWidth || (this._shape.w),
+            h = this._fillHeight || (this._shape.h),
+            r = this[prop + 'Rotation'],
+            i,
+            l,
+            color,
+            ratio,
+            alpha,
+            def,
+            stop,
+            x1, x2, y1, y2,
+            cx = w/2,
+            cy = h/2,
+            radCon,
+            tanRadians;
+        /*
+        if(r > 0 && r < 90)
+        {
+            r *= h/w;
+        }
+        else if(r > 90 && r < 180)
+        {
+
+            r =  90 + ((r-90) * w/h);
+        }
+*/
+        radCon = Math.PI/180;
+        tanRadians = parseFloat(parseFloat(Math.tan(r * radCon)).toFixed(8));
+        if(Math.abs(tanRadians) * w/2 >= h/2)
+        {
+            if(r < 180)
+            {
+                y1 = 0;
+                y2 = h;
+            }
+            else
+            {
+                y1 = h;
+                y2 = 0;
+            }
+            x1 = cx - ((cy - y1)/tanRadians);
+            x2 = cx - ((cy - y2)/tanRadians); 
+        }
+        else
+        {
+            if(r > 90 && r < 270)
+            {
+                x1 = w;
+                x2 = 0;
+            }
+            else
+            {
+                x1 = 0;
+                x2 = w;
+            }
+            y1 = ((tanRadians * (cx - x1)) - cy) * -1;
+            y2 = ((tanRadians * (cx - x2)) - cy) * -1;
+        }
+        /*
+        fill.setAttribute("spreadMethod", "pad");
+        
+        fill.setAttribute("x1", Math.round(100 * x1/w) + "%");
+        fill.setAttribute("y1", Math.round(100 * y1/h) + "%");
+        fill.setAttribute("x2", Math.round(100 * x2/w) + "%");
+        fill.setAttribute("y2", Math.round(100 * y2/h) + "%");
+        */
+        fill.setAttribute("gradientTransform", "rotate(" + r + ")");//," + (w/2) + ", " + (h/2) + ")");
+        fill.setAttribute("width", w);
+        fill.setAttribute("height", h);
+        fill.setAttribute("gradientUnits", "userSpaceOnUse");
+        l = colors.length;
+        def = 0;
+        for(i = 0; i < l; ++i)
+        {
+            alpha = alphas[i];
+            color = colors[i];
+            ratio = ratios[i] || i/(l - 1);
+            ratio = Math.round(ratio * 100) + "%";
+            alpha = Y.Lang.isNumber(alpha) ? alpha : "1";
+            def = (i + 1) / l;
+            stop = this._createGraphicNode("stop");
+            stop.setAttribute("offset", ratio);
+            stop.setAttribute("stop-color", color);
+            stop.setAttribute("stop-opacity", alpha);
+            fill.appendChild(stop);
+        }
+        return fill;
+    },
+
+    /**
+     * Creates a group element
+     *
+     * @method _createGraphics
+     * @private
+     */
+    _createGraphics: function() {
+        var group = this._createGraphicNode("svg");
+        this._styleGroup(group);
+        return group;
+    },
+
+    /**
+     * Styles a group element
+     *
+     * @method _styleGroup
+     * @private
+     */
+    _styleGroup: function(group)
+    {
+        group.style.position = "absolute";
+        group.style.top = "0px";
+        group.style.overflow = "visible";
+        group.style.left = "0px";
+        group.setAttribute("pointer-events", "none");
+    },
+
+    /**
+     * Creates a graphic node
+     *
+     * @method _createGraphicNode
+     * @param {String} type node type to create
+     * @param {String} pe specified pointer-events value
+     * @return HTMLElement
+     * @private
+     */
+    _createGraphicNode: function(type, pe)
+    {
+        var node = document.createElementNS("http://www.w3.org/2000/svg", "svg:" + type),
+            v = pe || "none";
+        if(type !== "defs" && type !== "stop" && type !== "linearGradient")
+        {
+            node.setAttribute("pointer-events", v);
+        }
+        if(type != "svg")
+        {
+            if(!this._graphicsList)
+            {
+                this._graphicsList = [];
+            }
+            this._graphicsList.push(node);
+        }
+        return node;
+    },
+
+    /**
+     * Creates a Shape instance and adds it to the graphics object.
+     *
+     * @method getShape
+     * @param {Object} config Object literal of properties used to construct a Shape.
+     * @return Shape
+     */
+    getShape: function(config) {
+        config.graphic = this;
+        return new Y.Shape(config); 
+    }
+
+};
+Y.Graphic = Graphic;
+
+/**
+ * Set of drawing apis for canvas based classes.
+ *
+ * @class CanvasDrawingUtil
+ * @constructor
+ */
+function CanvasDrawingUtil()
+{
+    this.initializer.apply(this, arguments);
+}
+
+CanvasDrawingUtil.prototype = {
+    /**
+     * Initializes the class.
+     *
+     * @method initializer
+     * @private
+     */
+    initializer: function(config) {
+        this._dummy = this._createDummy();
+        this._canvas = this._createGraphic();
+        this._context = this._canvas.getContext('2d');
+        this._initProps();
+    },
+
+    /** 
+     * Specifies a bitmap fill used by subsequent calls to other drawing methods.
+     * 
+     * @method beginBitmapFill
+     * @param {Object} config
+     */
+    beginBitmapFill: function(config) {
+        var context = this._context,
+            bitmap = config.bitmap,
+            repeat = config.repeat || 'repeat';
+        this._fillWidth = config.width || null;
+        this._fillHeight = config.height || null;
+        this._fillX = !isNaN(config.tx) ? config.tx : NaN;
+        this._fillY = !isNaN(config.ty) ? config.ty : NaN;
+        this._fillType =  'bitmap';
+        this._bitmapFill = context.createPattern(bitmap, repeat);
+        return this;
+    },
+
+    /**
+     * Specifes a solid fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginFill
+     * @param {String} color Hex color value for the fill.
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    beginFill: function(color, alpha) {
+        var context = this._context;
+        context.beginPath();
+        if (color) {
+            if (alpha) {
+               color = this._2RGBA(color, alpha);
+            } else {
+                color = this._2RGB(color);
+            }
+
+            this._fillColor = color;
+            this._fillType = 'solid';
+        }
+        return this;
+    },
+
+    /** 
+     * Specifies a gradient fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginGradientFill
+     * @param {Object} config
+     */
+    beginGradientFill: function(config) {
+        var color,
+            alpha,
+            i = 0,
+            colors = config.colors,
+            alphas = config.alphas || [],
+            len = colors.length;
+        this._fillAlphas = alphas;
+        this._fillColors = colors;
+        this._fillType =  config.type || "linear";
+        this._fillRatios = config.ratios || [];
+        this._fillRotation = config.rotation || 0;
+        this._fillWidth = config.width || null;
+        this._fillHeight = config.height || null;
+        this._fillX = !isNaN(config.tx) ? config.tx : NaN;
+        this._fillY = !isNaN(config.ty) ? config.ty : NaN;
+        for(;i < len; ++i)
+        {
+            alpha = alphas[i];
+            color = colors[i];
+            if (alpha) {
+               color = this._2RGBA(color, alpha);
+            } else {
+                color = this._2RGB(color);
+            }
+            colors[i] = color;
+        }
+        this._context.beginPath();
+        return this;
+    },
+    
+    /**
+     * Specifies a line style used for subsequent calls to drawing methods.
+     * 
+     * @method lineStyle
+     * @param {Number} thickness indicates the thickness of the line
+     * @param {String} color hex color value for the line
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    lineStyle: function(thickness, color, alpha, pixelHinting, scaleMode, caps, joints, miterLimit) {
+        color = color || '#000000';
+        var context = this._context;
+        if(this._stroke)
+        {
+            context.stroke();
+        }
+        context.lineWidth = thickness;
+
+        if (thickness) {
+            this._stroke = 1;
+        } else {
+            this._stroke = 0;
+        }
+
+        if (color) {
+            this._strokeStyle = color;
+            if (alpha) {
+                this._strokeStyle = this._2RGBA(this._strokeStyle, alpha);
+            }
+        }
+        
+        if(!this._fill)
+        {
+            context.beginPath();
+        }
+
+        if (caps === 'butt') {
+            caps = 'none';
+        }
+        
+        if (context.lineCap) { // FF errors when trying to set
+            //context.lineCap = caps;
+        }
+        this._drawingComplete = false;
+        return this;
+    },
+
+    /**
+     * Draws a line segment using the current line style from the current drawing position to the specified x and y coordinates.
+     * 
+     * @method lineTo
+     * @param {Number} point1 x-coordinate for the end point.
+     * @param {Number} point2 y-coordinate for the end point.
+     */
+    lineTo: function(point1, point2, etc) {
+        var args = arguments, 
+            context = this._context,
+            i, len;
+        if (typeof point1 === 'string' || typeof point1 === 'number') {
+            args = [[point1, point2]];
+        }
+
+        for (i = 0, len = args.length; i < len; ++i) {
+            context.lineTo(args[i][0], args[i][1]);
+            this._updateShapeProps.apply(this, args[i]);
+            this._trackSize.apply(this, args[i]);
+        }
+        this._drawingComplete = false;
+        return this;
+    },
+
+    /**
+     * Moves the current drawing position to specified x and y coordinates.
+     *
+     * @method moveTo
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    moveTo: function(x, y) {
+        this._context.moveTo(x, y);
+        this._trackPos(x, y);
+        this._updateShapeProps(x, y);
+        this._drawingComplete = false;
+        return this;
+    },
+   
+    /**
+     * Clears the graphics object.
+     *
+     * @method clear
+     */
+    clear: function() {
+        this._initProps();
+        this._canvas.width = this._canvas.width;
+        this._canvas.height = this._canvas.height;
+        return this;
+    },
+
+    /**
+     * Draws a bezier curve.
+     *
+     * @method curveTo
+     * @param {Number} cp1x x-coordinate for the first control point.
+     * @param {Number} cp1y y-coordinate for the first control point.
+     * @param {Number} cp2x x-coordinate for the second control point.
+     * @param {Number} cp2y y-coordinate for the second control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    curveTo: function(cp1x, cp1y, cp2x, cp2y, x, y) {
+        this._context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+        this._drawingComplete = false;
+        this._updateShapeProps(x, y);
+        this._trackSize(x, y);
+        this._trackPos(x, y);
+        return this;
+    },
+
+    /**
+     * Draws a quadratic bezier curve.
+     *
+     * @method quadraticCurveTo
+     * @param {Number} cpx x-coordinate for the control point.
+     * @param {Number} cpy y-coordinate for the control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    quadraticCurveTo: function(controlX, controlY, anchorX, anchorY) {
+        this._context.quadraticCurveTo(controlX, controlY, anchorX, anchorY);
+        this._drawingComplete = false;
+        this._updateShapeProps(anchorX, anchorY);
+        return this;
+    },
+
+    /**
+     * Draws a circle.
+     *
+     * @method drawCircle
+     * @param {Number} x y-coordinate
+     * @param {Number} y x-coordinate
+     * @param {Number} r radius
+     */
+	drawCircle: function(x, y, radius) {
+        var context = this._context,
+            startAngle = 0,
+            endAngle = 2 * Math.PI;
+        this._shape = {
+            x:x - radius,
+            y:y - radius,
+            w:radius * 2,
+            h:radius * 2
+        };
+        this._drawingComplete = false;
+        this._trackPos(x, y);
+        this._trackSize(radius * 2, radius * 2);
+        context.beginPath();
+        context.arc(x, y, radius, startAngle, endAngle, false);
+        this._draw();
+        return this;
+    },
+    
+    /**
+     * Draws an ellipse.
+     *
+     * @method drawEllipse
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+	drawEllipse: function(x, y, w, h) {
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        if(this._stroke && this._context.lineWidth > 0)
+        {
+            w -= this._context.lineWidth * 2;
+            h -= this._context.lineWidth * 2;
+            x += this._context.lineWidth;
+            y += this._context.lineWidth;
+        }
+        var context = this._context,
+            l = 8,
+            theta = -(45/180) * Math.PI,
+            angle = 0,
+            angleMid,
+            radius = w/2,
+            yRadius = h/2,
+            i = 0,
+            centerX = x + radius,
+            centerY = y + yRadius,
+            ax, ay, bx, by, cx, cy;
+        this._drawingComplete = false;
+        this._trackPos(x, y);
+        this._trackSize(x + w, y + h);
+
+        context.beginPath();
+        ax = centerX + Math.cos(0) * radius;
+        ay = centerY + Math.sin(0) * yRadius;
+        context.moveTo(ax, ay);
+        
+        for(; i < l; i++)
+        {
+            angle += theta;
+            angleMid = angle - (theta / 2);
+            bx = centerX + Math.cos(angle) * radius;
+            by = centerY + Math.sin(angle) * yRadius;
+            cx = centerX + Math.cos(angleMid) * (radius / Math.cos(theta / 2));
+            cy = centerY + Math.sin(angleMid) * (yRadius / Math.cos(theta / 2));
+            context.quadraticCurveTo(cx, cy, bx, by);
+        }
+        this._draw();
+        return this;
+	},
+
+    /**
+     * Draws a rectangle.
+     *
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+    drawRect: function(x, y, w, h) {
+        var ctx = this._context;
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        this._drawingComplete = false;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + w, y);
+        ctx.lineTo(x + w, y + h);
+        ctx.lineTo(x, y + h);
+        ctx.lineTo(x, y);
+        this._trackPos(x, y);
+        this._trackSize(w, h);
+        this._draw();
+        return this;
+    },
+
+    /**
+     * Draws a rectangle with rounded corners.
+     * 
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     * @param {Number} ew width of the ellipse used to draw the rounded corners
+     * @param {Number} eh height of the ellipse used to draw the rounded corners
+     */
+    drawRoundRect: function(x, y, w, h, ew, eh) {
+        this._shape = {
+            x:x,
+            y:y,
+            w:w,
+            h:h
+        };
+        var ctx = this._context;
+        this._drawingComplete = false;
+        ctx.beginPath();
+        ctx.moveTo(x, y + eh);
+        ctx.lineTo(x, y + h - eh);
+        ctx.quadraticCurveTo(x, y + h, x + ew, y + h);
+        ctx.lineTo(x + w - ew, y + h);
+        ctx.quadraticCurveTo(x + w, y + h, x + w, y + h - eh);
+        ctx.lineTo(x + w, y + eh);
+        ctx.quadraticCurveTo(x + w, y, x + w - ew, y);
+        ctx.lineTo(x + ew, y);
+        ctx.quadraticCurveTo(x, y, x, y + eh);
+        this._trackPos(x, y);
+        this._trackSize(w, h);
+        this._draw();
+        return this;
+    },
+
+    /**
+     * @private
+     * Draws a wedge.
+     * 
+     * @param x				x component of the wedge's center point
+     * @param y				y component of the wedge's center point
+     * @param startAngle	starting angle in degrees
+     * @param arc			sweep of the wedge. Negative values draw clockwise.
+     * @param radius		radius of wedge. If [optional] yRadius is defined, then radius is the x radius.
+     * @param yRadius		[optional] y radius for wedge.
+     */
+    drawWedge: function(cfg)
+    {
+        var x = cfg.x,
+            y = cfg.y, 
+            startAngle = cfg.startAngle, 
+            arc = cfg.arc, 
+            radius = cfg.radius, 
+            yRadius = cfg.yRadius,
+            segs,
+            segAngle,
+            theta,
+            angle,
+            angleMid,
+            ax,
+            ay,
+            bx,
+            by,
+            cx,
+            cy,
+            i = 0;
+
+        this._drawingComplete = false;
+        // move to x,y position
+        this.moveTo(x, y);
+        
+        yRadius = yRadius || radius;
+        
+        // limit sweep to reasonable numbers
+        if(Math.abs(arc) > 360)
+        {
+            arc = 360;
+        }
+        
+        // First we calculate how many segments are needed
+        // for a smooth arc.
+        segs = Math.ceil(Math.abs(arc) / 45);
+        
+        // Now calculate the sweep of each segment.
+        segAngle = arc / segs;
+        
+        // The math requires radians rather than degrees. To convert from degrees
+        // use the formula (degrees/180)*Math.PI to get radians.
+        theta = -(segAngle / 180) * Math.PI;
+        
+        // convert angle startAngle to radians
+        angle = (startAngle / 180) * Math.PI;
+        
+        // draw the curve in segments no larger than 45 degrees.
+        if(segs > 0)
+        {
+            // draw a line from the center to the start of the curve
+            ax = x + Math.cos(startAngle / 180 * Math.PI) * radius;
+            ay = y + Math.sin(startAngle / 180 * Math.PI) * yRadius;
+            this.lineTo(ax, ay);
+            // Loop for drawing curve segments
+            for(; i < segs; ++i)
+            {
+                angle += theta;
+                angleMid = angle - (theta / 2);
+                bx = x + Math.cos(angle) * radius;
+                by = y + Math.sin(angle) * yRadius;
+                cx = x + Math.cos(angleMid) * (radius / Math.cos(theta / 2));
+                cy = y + Math.sin(angleMid) * (yRadius / Math.cos(theta / 2));
+                this.quadraticCurveTo(cx, cy, bx, by);
+            }
+            // close the wedge by drawing a line to the center
+            this.lineTo(x, y);
+        }
+        this._trackPos(x, y);
+        this._trackSize(radius, radius);
+        this._draw();
+    },
+
+    /**
+     * Completes a drawing operation. 
+     *
+     * @method end
+     */
+    end: function() {
+        this._draw();
+        this._initProps();
+        return this;
+    },
+    
+    /**
+     * @private
+     * Not implemented
+     * Specifies a gradient to use for the stroke when drawing lines.
+     */
+    lineGradientStyle: function() {
+        return this;
+    },
+
+    /**
+     * Sets the size of the graphics object.
+     * 
+     * @method setSize
+     * @param w {Number} width to set for the instance.
+     * @param h {Number} height to set for the instance.
+     */
+    setSize: function(w, h)
+    {
+        this._canvas.width = w;
+        this._canvas.height = h;
+    },
+
+    /**
+     * Clears all values
+     *
+     * @method _initProps
+     * @private
+     */
+    _initProps: function() {
+        var context = this._context;
+        
+        context.fillStyle = 'rgba(0, 0, 0, 1)'; // use transparent when no fill
+        context.lineWidth = 1;
+        //context.lineCap = 'butt';
+        context.lineJoin = 'miter';
+        context.miterLimit = 3;
+        this._strokeStyle = 'rgba(0, 0, 0, 1)';
+
+        this._width = 0;
+        this._height = 0;
+        //this._shape = null;
+        this._x = 0;
+        this._y = 0;
+        this._fillType = null;
+        this._stroke = null;
+        this._bitmapFill = null;
+        this._drawingComplete = false;
+    },
+
+    /**
+     * Returns ths actual fill object to be used in a drawing or shape
+     *
+     * @method _getFill
+     * @private
+     */
+    _getFill: function() {
+        var type = this._fillType,
+            fill;
+
+        switch (type) {
+            case 'linear': 
+                fill = this._getLinearGradient('fill');
+                break;
+
+            case 'radial': 
+                fill = this._getRadialGradient('fill');
+                break;
+            case 'bitmap':
+                fill = this._bitmapFill;
+                break;
+            case 'solid': 
+                fill = this._fillColor;
+                break;
+        }
+        return fill;
+    },
+
+    /**
+     * Returns a linear gradient fill
+     *
+     * @method _getLinearGradient
+     * @private
+     */
+    _getLinearGradient: function(type) {
+        var prop = '_' + type,
+            colors = this[prop + 'Colors'],
+            ratios = this[prop + 'Ratios'],
+            x = !isNaN(this._fillX) ? this._fillX : this._shape.x,
+            y = !isNaN(this._fillY) ? this._fillY : this._shape.y,
+            w = this._fillWidth || (this._shape.w),
+            h = this._fillHeight || (this._shape.h),
+            ctx = this._context,
+            r = this[prop + 'Rotation'],
+            i,
+            l,
+            color,
+            ratio,
+            def,
+            grad,
+            x1, x2, y1, y2,
+            cx = x + w/2,
+            cy = y + h/2,
+            radCon = Math.PI/180,
+            tanRadians = parseFloat(parseFloat(Math.tan(r * radCon)).toFixed(8));
+        if(Math.abs(tanRadians) * w/2 >= h/2)
+        {
+            if(r < 180)
+            {
+                y1 = y;
+                y2 = y + h;
+            }
+            else
+            {
+                y1 = y + h;
+                y2 = y;
+            }
+            x1 = cx - ((cy - y1)/tanRadians);
+            x2 = cx - ((cy - y2)/tanRadians); 
+        }
+        else
+        {
+            if(r > 90 && r < 270)
+            {
+                x1 = x + w;
+                x2 = x;
+            }
+            else
+            {
+                x1 = x;
+                x2 = x + w;
+            }
+            y1 = ((tanRadians * (cx - x1)) - cy) * -1;
+            y2 = ((tanRadians * (cx - x2)) - cy) * -1;
+        }
+        grad = ctx.createLinearGradient(x1, y1, x2, y2);
+        l = colors.length;
+        def = 0;
+        for(i = 0; i < l; ++i)
+        {
+            color = colors[i];
+            ratio = ratios[i] || i/(l - 1);
+            grad.addColorStop(ratio, color);
+            def = (i + 1) / l;
+        }
+        
+        return grad;
+    },
+
+    /**
+     * Returns a radial gradient fill
+     *
+     * @method _getRadialGradient
+     * @private
+     */
+    _getRadialGradient: function(type) {
+        var prop = '_' + type,
+            colors = this[prop + "Colors"],
+            ratios = this[prop + "Ratios"],
+            i,
+            l,
+            w = this._fillWidth || this._shape.w,
+            h = this._fillHeight || this._shape.h,
+            x = !isNaN(this._fillX) ? this._fillX : this._shape.x,
+            y = !isNaN(this._fillY) ? this._fillY : this._shape.y,
+            color,
+            ratio,
+            def,
+            grad,
+            ctx = this._context;
+            x += w/2;
+            y += h/2;
+        grad = ctx.createRadialGradient(x, y, 1, x, y, w/2);
+        l = colors.length;
+        def = 0;
+        for(i = 0; i < l; ++i) {
+            color = colors[i];
+            ratio = ratios[i] || i/(l - 1);
+            grad.addColorStop(ratio, color);
+        }
+        return grad;
+    },
+   
+    /**
+     * Completes a shape or drawing
+     *
+     * @method _draw
+     * @private
+     */
+    _draw: function()
+    {
+        if(this._drawingComplete || !this._shape)
+        {
+            return;
+        }
+        var context = this._context,
+            fill;
+
+        if (this._fillType) {
+            fill = this._getFill();
+            if (fill) {
+                context.fillStyle = fill;
+            }
+            context.closePath();
+        }
+
+        if (this._fillType) {
+            context.fill();
+        }
+
+        if (this._stroke) {
+            context.strokeStyle = this._strokeStyle;
+            context.stroke();
+        }
+        this._drawingComplete = true;
+    },
+
+    /**
+     * @private
+     */
+    _drawingComplete: false,
+
+    /**
+     * Regex expression used for converting hex strings to rgb
+     *
+     * @property _reHex
+     * @private
+     */
+    _reHex: /^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i,
+
+    /**
+     * Parses hex color string and alpha value to rgba
+     *
+     * @method _2RGBA
+     * @private
+     */
+    _2RGBA: function(val, alpha) {
+        alpha = (alpha !== undefined) ? alpha : 1;
+        if (this._reHex.exec(val)) {
+            val = 'rgba(' + [
+                parseInt(RegExp.$1, 16),
+                parseInt(RegExp.$2, 16),
+                parseInt(RegExp.$3, 16)
+            ].join(',') + ',' + alpha + ')';
+        }
+        return val;
+    },
+
+    /**
+     * Creates dom element used for converting color string to rgb
+     *
+     * @method _createDummy
+     * @private
+     */
+    _createDummy: function() {
+        var dummy = Y.config.doc.createElement('div');
+        dummy.style.height = 0;
+        dummy.style.width = 0;
+        dummy.style.overflow = 'hidden';
+        Y.config.doc.documentElement.appendChild(dummy);
+        return dummy;
+    },
+
+    /**
+     * Creates canvas element
+     *
+     * @method _createGraphic
+     * @private
+     */
+    _createGraphic: function(config) {
+        var graphic = Y.config.doc.createElement('canvas');
+        // no size until drawn on
+        graphic.width = 600;
+        graphic.height = 600;
+        return graphic;
+    },
+
+    /**
+     * Converts color to rgb format
+     *
+     * @method _2RGB
+     * @private 
+     */
+    _2RGB: function(val) {
+        this._dummy.style.background = val;
+        return this._dummy.style.backgroundColor;
+    },
+    
+    /**
+     * Updates the size of the graphics object
+     *
+     * @method _trackSize
+     * @param {Number} w width
+     * @param {Number} h height
+     * @private
+     */
+    _trackSize: function(w, h) {
+        if (w > this._width) {
+            this._width = w;
+        }
+        if (h > this._height) {
+            this._height = h;
+        }
+    },
+
+    /**
+     * Updates the position of the current drawing
+     *
+     * @method _trackPos
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @private
+     */
+    _trackPos: function(x, y) {
+        if (x > this._x) {
+            this._x = x;
+        }
+        if (y > this._y) {
+            this._y = y;
+        }
+    },
+
+    /**
+     * Updates the position and size of the current drawing
+     *
+     * @method _updateShapeProps
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @private
+     */
+    _updateShapeProps: function(x, y)
+    {
+        var w,h;
+        if(!this._shape)
+        {
+            this._shape = {};
+        }
+        if(!this._shape.x)
+        {
+            this._shape.x = x;
+        }
+        else
+        {
+            this._shape.x = Math.min(this._shape.x, x);
+        }
+        if(!this._shape.y)
+        {
+            this._shape.y = y;
+        }
+        else
+        {
+            this._shape.y = Math.min(this._shape.y, y);
+        }
+        w = Math.abs(x - this._shape.x);
+        if(!this._shape.w)
+        {
+            this._shape.w = w;
+        }
+        else
+        {
+            this._shape.w = Math.max(w, this._shape.w);
+        }
+        h = Math.abs(y - this._shape.y);
+        if(!this._shape.h)
+        {
+            this._shape.h = h;
+        }
+        else
+        {
+            this._shape.h = Math.max(h, this._shape.h);
+        }
+    },
+    
+    /**
+     * Creates a Shape instance and adds it to the graphics object.
+     *
+     * @method getShape
+     * @param {Object} config Object literal of properties used to construct a Shape.
+     * @return Shape
+     */
+    getShape: function(config) {
+        config.graphic = this;
+        return new Y.Shape(config); 
+    }
+};
+
+Y.CanvasDrawingUtil = CanvasDrawingUtil;
+/**
+ * CanvasGraphics is a fallback drawing api used for basic drawing operations when SVG is not available.
+ *
+ * @class CanvasGraphics
+ * @constructor
+ */
+Y.CanvasGraphic = Y.Base.create("graphic",  Y.CanvasDrawingUtil, [], {
+    autoSize: true,
+
+    /**
+     * Sets the size of the graphics object.
+     * 
+     * @method setSize
+     * @param w {Number} width to set for the instance.
+     * @param h {Number} height to set for the instance.
+     */
+    setSize: function(w, h) {
+        if(this.autoSize)
+        {
+            if(w > this.node.getAttribute("width"))
+            {
+                this.node.style.width = w + "px";
+                this._canvas.style.width = w + "px";
+                this._canvas.width = w;
+                this.node.setAttribute("width", w);
+            }
+            if(h > this.node.getAttribute("height"))
+            {
+                this.node.style.height = h + "px";
+                this._canvas.style.height = h + "px";
+                this._canvas.height = h;
+                this.node.setAttribute("height", h);
+            }
+        }
+    },
+
+    /**
+     * Updates the size of the graphics object
+     *
+     * @method _trackSize
+     * @param {Number} w width
+     * @param {Number} h height
+     * @private
+     */
+    _trackSize: function(w, h) {
+        if (w > this._width) {
+            this._width = w;
+        }
+        if (h > this._height) {
+            this._height = h;
+        }
+        this.setSize(w, h);
+    },
+
+    /**
+     * Sets the positon of the graphics object.
+     *
+     * @method setPosition
+     * @param {Number} x x-coordinate for the object.
+     * @param {Number} y y-coordinate for the object.
+     */
+    setPosition: function(x, y)
+    {
+        this.node.style.left = x + "px";
+        this.node.style.top = y + "px";
+    },
+
+    /**
+     * Adds the graphics node to the dom.
+     * 
+     * @method render
+     * @param {HTMLElement} parentNode node in which to render the graphics node into.
+     */
+    render: function(node) {
+        node = node || Y.config.doc.body;
+        this.node = document.createElement("div");
+        this.node.style.width = node.offsetWidth + "px";
+        this.node.style.height = node.offsetHeight + "px";
+        this.node.style.display = "block";
+        this.node.style.position = "absolute";
+        this.node.style.left = node.getStyle("left");
+        this.node.style.top = node.getStyle("top");
+        this.node.style.pointerEvents = "none";
+        node.appendChild(this.node);
+        this.node.appendChild(this._canvas);
+        this._canvas.width = node.offsetWidth > 0 ? node.offsetWidth : 100;
+        this._canvas.height = node.offsetHeight > 0 ? node.offsetHeight : 100;
+        this._canvas.style.position = "absolute";
+
+        return this;
+    },
+    
+    /**
+     * Shows and and hides a the graphic instance.
+     *
+     * @method toggleVisible
+     * @param val {Boolean} indicates whether the instance should be visible.
+     */
+    toggleVisible: function(val)
+    {
+        this.node.style.visibility = val ? "visible" : "hidden";
+    },
+
+    /**
+     * Creates a graphic node
+     *
+     * @method _createGraphicNode
+     * @param {String} type node type to create
+     * @param {String} pe specified pointer-events value
+     * @return HTMLElement
+     * @private
+     */
+    _createGraphicNode: function(pe)
+    {
+        var node = Y.config.doc.createElement('canvas');
+        node.style.pointerEvents = pe || "none";
+        if(!this._graphicsList)
+        {
+            this._graphicsList = [];
+        }
+        this._graphicsList.push(node);
+        return node;
+    },
+
+    /**
+     * Removes all nodes.
+     *
+     * @method destroy
+     */
+    destroy: function()
+    {
+        this._removeChildren(this.node);
+        if(this.node && this.node.parentNode)
+        {
+            this.node.parentNode.removeChild(this.node);
+        }
+    },
+    
+    /**
+     * Removes all child nodes.
+     *
+     * @method _removeChildren
+     * @param {HTMLElement} node
+     * @private
+     */
+    _removeChildren: function(node)
+    {
+        if(node.hasChildNodes())
+        {
+            var child;
+            while(node.firstChild)
+            {
+                child = node.firstChild;
+                this._removeChildren(child);
+                node.removeChild(child);
+            }
+        }
+    },
+
+    /**
+     * @private
+     * Reference to the node for the graphics object
+     */
+    node: null
+});
+
+if(DRAWINGAPI == "canvas")
+{
+    Y.Graphic = Y.CanvasGraphic;
+}
+/**
+ * VMLGraphics is a fallback drawing api used for basic drawing operations when SVG is not available.
+ *
+ * @class VMLGraphics
+ * @constructor
+ */
+var VMLGraphics = function(config) {
+    
+    this.initializer.apply(this, arguments);
+};
+
+VMLGraphics.prototype = {
+    /**
+     * Indicates whether or not the instance will size itself based on its contents.
+     *
+     * @property autoSize 
+     * @type String
+     */
+    initializer: function(config) {
+        config = config || {};
+        var w = config.width || 0,
+            h = config.height || 0;
+        this.node = this._createGraphics();
+        this.setSize(w, h);
+        this._initProps();
+    },
+
+    /** 
+     * Specifies a bitmap fill used by subsequent calls to other drawing methods.
+     * 
+     * @method beginBitmapFill
+     * @param {Object} config
+     */
+    beginBitmapFill: function(config) {
+       
+        var fill = {};
+        fill.src = config.bitmap.src;
+        fill.type = "tile";
+        this._fillProps = fill;
+        if(!isNaN(config.tx) ||
+            !isNaN(config.ty) ||
+            !isNaN(config.width) ||
+            !isNaN(config.height))
+        {
+            this._gradientBox = {
+                tx:config.tx,
+                ty:config.ty,
+                width:config.width,
+                height:config.height
+            };
+        }
+        else
+        {
+            this._gradientBox = null;
+        }
+    },
+
+    /**
+     * Specifes a solid fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginFill
+     * @param {String} color Hex color value for the fill.
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    beginFill: function(color, alpha) {
+        if (color) {
+            if (Y.Lang.isNumber(alpha)) {
+                this._fillProps = {
+                    type:"solid",
+                    opacity: alpha
+                };
+            }
+            this._fillColor = color;
+            this._fill = 1;
+        }
+        return this;
+    },
+
+    /** 
+     * Specifies a gradient fill used by subsequent calls to other drawing methods.
+     *
+     * @method beginGradientFill
+     * @param {Object} config
+     */
+    beginGradientFill: function(config) {
+        var type = config.type,
+            colors = config.colors,
+            alphas = config.alphas || [],
+            ratios = config.ratios || [],
+            fill = {
+                colors:colors,
+                ratios:ratios
+            },
+            len = alphas.length,
+            i = 0,
+            alpha,
+            oi,
+            rotation = config.rotation || 0;
+    
+        for(;i < len; ++i)
+        {
+            alpha = alphas[i];
+            alpha = Y.Lang.isNumber(alpha) ? alpha : 1;
+            oi = i > 0 ? i + 1 : "";
+            alphas[i] = Math.round(alpha * 100) + "%";
+            fill["opacity" + oi] = alpha;
+        }
+        if(type === "linear")
+        {
+            if(config)
+            {
+            }
+            if(rotation > 0 && rotation <= 90)
+            {
+                rotation = 450 - rotation;
+            }
+            else if(rotation <= 270)
+            {
+                rotation = 270 - rotation;
+            }
+            else if(rotation <= 360)
+            {
+                rotation = 630 - rotation;
+            }
+            else
+            {
+                rotation = 270;
+            }
+            fill.type = "gradientunscaled";
+            fill.angle = rotation;
+        }
+        else if(type === "radial")
+        {
+            fill.alignshape = false;
+            fill.type = "gradientradial";
+            fill.focus = "100%";
+            fill.focusposition = "50%,50%";
+        }
+        fill.ratios = ratios || [];
+        
+        if(!isNaN(config.tx) ||
+            !isNaN(config.ty) ||
+            !isNaN(config.width) ||
+            !isNaN(config.height))
+        {
+            this._gradientBox = {
+                tx:config.tx,
+                ty:config.ty,
+                width:config.width,
+                height:config.height
+            };
+        }
+        else
+        {
+            this._gradientBox = null;
+        }
+        this._fillProps = fill;
+    },
+
+    /**
+     * Clears the graphics object.
+     *
+     * @method clear
+     */
+    clear: function() {
+        this._path = '';
+        this._removeChildren(this.node);
+    },
+
+    /**
+     * Removes all nodes.
+     *
+     * @method destroy
+     */
+    destroy: function()
+    {
+        this._removeChildren(this.node);
+        this.node.parentNode.removeChild(this.node);
+    },
+
+    /**
+     * Removes all child nodes.
+     *
+     * @method _removeChildren
+     * @param node
+     * @private
+     */
+    _removeChildren: function(node)
+    {
+        if(node.hasChildNodes())
+        {
+            var child;
+            while(node.firstChild)
+            {
+                child = node.firstChild;
+                this._removeChildren(child);
+                node.removeChild(child);
+            }
+        }
+    },
+
+    /**
+     * Shows and and hides a the graphic instance.
+     *
+     * @method toggleVisible
+     * @param val {Boolean} indicates whether the instance should be visible.
+     */
+    toggleVisible: function(val)
+    {
+        this._toggleVisible(this.node, val);
+    },
+
+    /**
+     * Toggles visibility
+     *
+     * @method _toggleVisible
+     * @param {HTMLElement} node element to toggle
+     * @param {Boolean} val indicates visibilitye
+     * @private
+     */
+    _toggleVisible: function(node, val)
+    {
+        var children = Y.one(node).get("children"),
+            visibility = val ? "visible" : "hidden",
+            i = 0,
+            len;
+        if(children)
+        {
+            len = children.length;
+            for(; i < len; ++i)
+            {
+                this._toggleVisible(children[i], val);
+            }
+        }
+        node.style.visibility = visibility;
+    },
+
+    /**
+     * Draws a bezier curve.
+     *
+     * @method curveTo
+     * @param {Number} cp1x x-coordinate for the first control point.
+     * @param {Number} cp1y y-coordinate for the first control point.
+     * @param {Number} cp2x x-coordinate for the second control point.
+     * @param {Number} cp2y y-coordinate for the second control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    curveTo: function(cp1x, cp1y, cp2x, cp2y, x, y) {
+        this._shape = "shape";
+        this._path += ' c ' + Math.round(cp1x) + ", " + Math.round(cp1y) + ", " + Math.round(cp2x) + ", " + Math.round(cp2y) + ", " + x + ", " + y;
+        this._trackSize(x, y);
+    },
+
+    /**
+     * Draws a quadratic bezier curve.
+     *
+     * @method quadraticCurveTo
+     * @param {Number} cpx x-coordinate for the control point.
+     * @param {Number} cpy y-coordinate for the control point.
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    quadraticCurveTo: function(cpx, cpy, x, y) {
+        this._path += ' qb ' + cpx + ", " + cpy + ", " + x + ", " + y;
+    },
+
+    /**
+     * Draws a circle.
+     *
+     * @method drawCircle
+     * @param {Number} x y-coordinate
+     * @param {Number} y x-coordinate
+     * @param {Number} r radius
+     */
+    drawCircle: function(x, y, r) {
+        this._width = this._height = r * 2;
+        this._x = x - r;
+        this._y = y - r;
+        this._shape = "oval";
+        this._draw();
+    },
+
+    /**
+     * Draws an ellipse.
+     *
+     * @method drawEllipse
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+    drawEllipse: function(x, y, w, h) {
+        this._width = w;
+        this._height = h;
+        this._x = x;
+        this._y = y;
+        this._shape = "oval";
+        this._draw();
+    },
+
+    /**
+     * Draws a rectangle.
+     *
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     */
+    drawRect: function(x, y, w, h) {
+        this._x = x;
+        this._y = y;
+        this._width = w;
+        this._height = h;
+        this.moveTo(x, y);
+        this.lineTo(x + w, y);
+        this.lineTo(x + w, y + h);
+        this.lineTo(x, y + h);
+        this.lineTo(x, y);
+        this._draw();
+    },
+
+    /**
+     * Draws a rectangle with rounded corners.
+     * 
+     * @method drawRect
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     * @param {Number} ew width of the ellipse used to draw the rounded corners
+     * @param {Number} eh height of the ellipse used to draw the rounded corners
+     */
+    drawRoundRect: function(x, y, w, h, ew, eh) {
+        this._x = x;
+        this._y = y;
+        this._width = w;
+        this._height = h;
+        this.moveTo(x, y + eh);
+        this.lineTo(x, y + h - eh);
+        this.quadraticCurveTo(x, y + h, x + ew, y + h);
+        this.lineTo(x + w - ew, y + h);
+        this.quadraticCurveTo(x + w, y + h, x + w, y + h - eh);
+        this.lineTo(x + w, y + eh);
+        this.quadraticCurveTo(x + w, y, x + w - ew, y);
+        this.lineTo(x + ew, y);
+        this.quadraticCurveTo(x, y, x, y + eh);
+        this._draw();
+    },
+
+    /**
+     * Draws a wedge.
+     * 
+     * @param {Number} x			x-coordinate of the wedge's center point
+     * @param {Number} y			y-coordinate of the wedge's center point
+     * @param {Number} startAngle	starting angle in degrees
+     * @param {Number} arc			sweep of the wedge. Negative values draw clockwise.
+     * @param {Number} radius		radius of wedge. If [optional] yRadius is defined, then radius is the x radius.
+     * @param {Number} yRadius		[optional] y radius for wedge.
+     */
+    drawWedge: function(x, y, startAngle, arc, radius, yRadius)
+    {
+        this._drawingComplete = false;
+        this._width = radius;
+        this._height = radius;
+        yRadius = yRadius || radius;
+        this._path += this._getWedgePath({x:x, y:y, startAngle:startAngle, arc:arc, radius:radius, yRadius:yRadius});
+        this._width = radius * 2;
+        this._height = this._width;
+        this._shape = "shape";
+        this._draw();
+    },
+
+    /**
+     * Generates a path string for a wedge shape
+     *
+     * @method _getWedgePath
+     * @param {Object} config attributes used to create the path
+     * @return String
+     * @private
+     */
+    _getWedgePath: function(config)
+    {
+        var x = config.x,
+            y = config.y,
+            startAngle = config.startAngle,
+            arc = config.arc,
+            radius = config.radius,
+            yRadius = config.yRadius || radius,
+            path;  
+        if(Math.abs(arc) > 360)
+        {
+            arc = 360;
+        }
+        startAngle *= -65535;
+        arc *= 65536;
+        path = " m " + x + " " + y + " ae " + x + " " + y + " " + radius + " " + yRadius + " " + startAngle + " " + arc;
+        return path;
+    },
+    
+    /**
+     * Completes a drawing operation. 
+     *
+     * @method end
+     */
+    end: function() {
+        if(this._shape)
+        {
+            this._draw();
+        }
+        this._initProps();
+    },
+
+    /**
+     * Specifies a gradient to use for the stroke when drawing lines.
+     * Not implemented
+     *
+     * @method lineGradientStyle
+     * @private
+     */
+    lineGradientStyle: function() {
+    },
+    
+    /**
+     * Specifies a line style used for subsequent calls to drawing methods.
+     * 
+     * @method lineStyle
+     * @param {Number} thickness indicates the thickness of the line
+     * @param {String} color hex color value for the line
+     * @param {Number} alpha Value between 0 and 1 used to specify the opacity of the fill.
+     */
+    lineStyle: function(thickness, color, alpha, pixelHinting, scaleMode, caps, joints, miterLimit) {
+        this._stroke = 1;
+        this._strokeWeight = thickness * 0.7;
+        this._strokeColor = color;
+        this._strokeOpacity = Y.Lang.isNumber(alpha) ? alpha : 1;
+    },
+
+    /**
+     * Draws a line segment using the current line style from the current drawing position to the specified x and y coordinates.
+     * 
+     * @method lineTo
+     * @param {Number} point1 x-coordinate for the end point.
+     * @param {Number} point2 y-coordinate for the end point.
+     */
+    lineTo: function(point1, point2, etc) {
+        var args = arguments,
+            i,
+            len;
+        if (typeof point1 === 'string' || typeof point1 === 'number') {
+            args = [[point1, point2]];
+        }
+        len = args.length;
+        this._shape = "shape";
+        this._path += ' l ';
+        for (i = 0; i < len; ++i) {
+            this._path += ' ' + Math.round(args[i][0]) + ', ' + Math.round(args[i][1]);
+            this._trackSize.apply(this, args[i]);
+        }
+    },
+
+    /**
+     * Moves the current drawing position to specified x and y coordinates.
+     *
+     * @method moveTo
+     * @param {Number} x x-coordinate for the end point.
+     * @param {Number} y y-coordinate for the end point.
+     */
+    moveTo: function(x, y) {
+        this._path += ' m ' + Math.round(x) + ', ' + Math.round(y);
+    },
+
+    /**
+     * Sets the size of the graphics object.
+     * 
+     * @method setSize
+     * @param w {Number} width to set for the instance.
+     * @param h {Number} height to set for the instance.
+     */
+    setSize: function(w, h) {
+        w = Math.round(w);
+        h = Math.round(h);
+        this.node.style.width = w + 'px';
+        this.node.style.height = h + 'px';
+        this.node.coordSize = w + ' ' + h;
+        this._canvasWidth = w;
+        this._canvasHeight = h;
+    },
+   
+    /**
+     * Sets the positon of the graphics object.
+     *
+     * @method setPosition
+     * @param {Number} x x-coordinate for the object.
+     * @param {Number} y y-coordinate for the object.
+     */
+    setPosition: function(x, y)
+    {
+        x = Math.round(x);
+        y = Math.round(y);
+        this.node.style.left = x + "px";
+        this.node.style.top = y + "px";
+    },
+
+    /**
+     * Adds the graphics node to the dom.
+     * 
+     * @method render
+     * @param {HTMLElement} parentNode node in which to render the graphics node into.
+     */
+    render: function(parentNode) {
+        var w = Math.max(parentNode.offsetWidth || 0, this._canvasWidth),
+            h = Math.max(parentNode.offsetHeight || 0, this._canvasHeight);
+        parentNode = parentNode || Y.config.doc.body;
+        parentNode.appendChild(this.node);
+        this.setSize(w, h);
+        this._initProps();
+        return this;
+    },
+
+    /**
+     * @private
+     */
+    _shape: null,
+
+    /**
+     * Updates the size of the graphics object
+     *
+     * @method _trackSize
+     * @param {Number} w width
+     * @param {Number} h height
+     * @private
+     */
+    _trackSize: function(w, h) {
+        if (w > this._width) {
+            this._width = w;
+        }
+        if (h > this._height) {
+            this._height = h;
+        }
+    },
+
+    /**
+     * Clears the properties
+     *
+     * @method _initProps
+     * @private
+     */
+    _initProps: function() {
+        this._fillColor = null;
+        this._strokeColor = null;
+        this._strokeOpacity = null;
+        this._strokeWeight = 0;
+        this._fillProps = null;
+        this._path = '';
+        this._width = 0;
+        this._height = 0;
+        this._x = 0;
+        this._y = 0;
+        this._fill = null;
+        this._stroke = 0;
+        this._stroked = false;
+    },
+
+    /**
+     * Clears path properties
+     * 
+     * @method _clearPath
+     * @private
+     */
+    _clearPath: function()
+    {
+        this._shape = null;
+        this._path = '';
+        this._width = 0;
+        this._height = 0;
+        this._x = 0;
+        this._y = 0;
+    },
+
+    /**
+     * Completes a shape
+     *
+     * @method _draw
+     * @private 
+     */
+    _draw: function()
+    {
+        var shape = this._createGraphicNode(this._shape),
+            w = Math.round(this._width),
+            h = Math.round(this._height),
+            strokeNode,
+            fillProps = this._fillProps;
+            this.setSize(w, h);
+        if(this._path)
+        {
+            if(this._fill || this._fillProps)
+            {
+                this._path += ' x';
+            }
+            if(this._stroke)
+            {
+                this._path += ' e';
+            }
+            shape.path = this._path;
+            shape.coordSize = w + ', ' + h;
+        }
+        else
+        {
+            shape.style.display = "block";
+            shape.style.position = "absolute";
+            shape.style.left = this._x + "px";
+            shape.style.top = this._y + "px";
+        }
+        
+        if (this._fill) {
+            shape.fillColor = this._fillColor;
+        }
+        else
+        {
+            shape.filled = false;
+        }
+        if (this._stroke && this._strokeWeight > 0) {
+            shape.strokeColor = this._strokeColor;
+            shape.strokeWeight = this._strokeWeight;
+            if(Y.Lang.isNumber(this._strokeOpacity) && this._strokeOpacity < 1)
+            {    
+                strokeNode = this._createGraphicNode("stroke");
+                shape.appendChild(strokeNode);
+                strokeNode.opacity = this._strokeOpacity;
+            }
+        } else {
+            shape.stroked = false;
+        }
+        shape.style.width = w + 'px';
+        shape.style.height = h + 'px';
+        if (fillProps) {
+            shape.filled = true;
+            shape.appendChild(this._getFill());
+        }
+        this.node.appendChild(shape);
+        this._clearPath();
+    },
+
+    /**
+     * Returns ths actual fill object to be used in a drawing or shape
+     *
+     * @method _getFill
+     * @private
+     */
+    _getFill: function() {
+        var fill = this._createGraphicNode("fill"),
+            w = this._width,
+            h = this._height,
+            fillProps = this._fillProps,
+            prop,
+            pct,
+            i = 0,
+            colors,
+            colorstring = "",
+            len,
+            ratios,
+            hyp = Math.sqrt(Math.pow(w, 2) + Math.pow(h, 2)),
+            cx = 50,
+            cy = 50;
+        if(this._gradientBox)
+        {
+            cx= Math.round( (this._gradientBox.width/2 - ((this._x - this._gradientBox.tx) * hyp/w))/(w * w/hyp) * 100);
+            cy = Math.round( (this._gradientBox.height/2 - ((this._y - this._gradientBox.ty) * hyp/h))/(h * h/hyp) * 100);
+            fillProps.focussize = (this._gradientBox.width/w)/10 + " " + (this._gradientBox.height/h)/10;
+        }
+        if(fillProps.colors)
+        {
+            colors = fillProps.colors.concat();
+            ratios = fillProps.ratios.concat();
+            len = colors.length;
+            for(;i < len; ++i) {
+                pct = ratios[i] || i/(len-1);
+                pct = Math.round(100 * pct) + "%";
+                colorstring += ", " + pct + " " + colors[i];
+            }
+            if(parseInt(pct, 10) < 100)
+            {
+                colorstring += ", 100% " + colors[len-1];
+            }
+        }
+        for (prop in fillProps) {
+            if(fillProps.hasOwnProperty(prop)) {
+                fill.setAttribute(prop, fillProps[prop]);
+           }
+        }
+        fill.colors = colorstring.substr(2);
+        if(fillProps.type === "gradientradial")
+        {
+            fill.focusposition = cx + "%," + cy + "%";
+        }
+        return fill;
+    },
+
+    /**
+     * Creates a group element
+     *
+     * @method _createGraphics
+     * @private
+     */
+    _createGraphics: function() {
+        var group = this._createGraphicNode("group");
+        group.style.display = "inline-block";
+        group.style.position = 'absolute';
+        return group;
+    },
+
+    /**
+     * Creates a graphic node
+     *
+     * @method _createGraphicNode
+     * @param {String} type node type to create
+     * @param {String} pe specified pointer-events value
+     * @return HTMLElement
+     * @private
+     */
+    _createGraphicNode: function(type)
+    {
+        return document.createElement('<' + type + ' xmlns="urn:schemas-microsft.com:vml" class="vml' + type + '"/>');
+    
+    },
+    
+    /**
+     * Converts a shape type to the appropriate vml node type.
+     *
+     * @method _getNodeShapeType
+     * @param {String} type The shape to convert.
+     * @return String
+     * @private
+     */
+    _getNodeShapeType: function(type)
+    {
+        var shape = "shape";
+        if(this._typeConversionHash.hasOwnProperty(type))
+        {
+            shape = this._typeConversionHash[type];
+        }
+        return shape;
+    },
+
+    /**
+     * Used to convert certain shape types to the appropriate vml node type.
+     *
+     * @property _typeConversionHash
+     * @type Object
+     * @private
+     */
+    _typeConversionHash: {
+        circle: "oval",
+        ellipse: "oval",
+        rect: "rect"
+    },
+    
+    /**
+     * Creates a Shape instance and adds it to the graphics object.
+     *
+     * @method getShape
+     * @param {Object} config Object literal of properties used to construct a Shape.
+     * @return Shape
+     */
+    getShape: function(config) {
+        config.graphic = this;
+        return new Y.Shape(config); 
+    },
+
+    /**
+     * Adds a child to the <code>node</code>.
+     *
+     * @method addChild
+     * @param {HTMLElement} element to add
+     * @private
+     */
+    addChild: function(child)
+    {
+        this.node.appendChild(child);
+    }
+};
+
+if(DRAWINGAPI == "vml")
+{
+    var sheet = document.createStyleSheet();
+    sheet.addRule(".vmlgroup", "behavior:url(#default#VML)", sheet.rules.length);
+    sheet.addRule(".vmlgroup", "display:inline-block", sheet.rules.length);
+    sheet.addRule(".vmlgroup", "zoom:1", sheet.rules.length);
+    sheet.addRule(".vmlshape", "behavior:url(#default#VML)", sheet.rules.length);
+    sheet.addRule(".vmlshape", "display:inline-block", sheet.rules.length);
+    sheet.addRule(".vmloval", "behavior:url(#default#VML)", sheet.rules.length);
+    sheet.addRule(".vmloval", "display:inline-block", sheet.rules.length);
+    sheet.addRule(".vmlrect", "behavior:url(#default#VML)", sheet.rules.length);
+    sheet.addRule(".vmlrect", "display:block", sheet.rules.length);
+    sheet.addRule(".vmlfill", "behavior:url(#default#VML)", sheet.rules.length);
+    sheet.addRule(".vmlstroke", "behavior:url(#default#VML)", sheet.rules.length);
+    Y.Graphic = VMLGraphics;
+}
+
+/**
+ * The Shape class creates a graphic object with editable 
+ * properties.
+ *
+ * @class Shape
+ * @extends Graphic
+ * @constructor
+ */
+function Shape(cfg)
+{
+    this._initialize(cfg);
+    this._draw();
+}
+
+Y.extend(Shape, Y.Graphic, {
+    /**
+     * Indicates the type of shape. 
+     *
+     * @property type 
+     * @type string
+     */
+    type: "shape",
+
+    /**
+     * Indicates whether or not the instance will size itself based on its contents.
+     *
+     * @property autoSize 
+     * @type string
+     */
+    autoSize: false,
+
+    /**
+     * Determines whether the instance will receive mouse events.
+     * 
+     * @property pointerEvents
+     * @type string
+     */
+    pointerEvents: "visiblePainted", 
+
+    /**
+     * Initializes the graphic instance.
+     *
+     * @method _initialize
+     * @private
+     */
+    _initialize: function(cfg) 
+    {
+        if(!cfg.graphic)
+        {
+            cfg.graphic = new Y.Graphic();
+        }
+        this._setProps(cfg);
+    },
+  
+    /**
+     * Updates properties for the shape.
+     *
+     * @method _setProps
+     * @param {Object} cfg Properties to update.
+     * @private
+     */
+    _setProps: function(cfg)
+    {
+        this.autoSize = cfg.autoSize || this.autoSize; 
+        this.pointerEvents = cfg.pointerEvents || this.pointerEvents;
+        this.width = cfg.width || this.width;
+        this.height = cfg.height || this.height;
+        this.border = cfg.border || this.border;
+        this.graphics = cfg.graphic || this.graphics;
+        this.canvas = this.graphics;
+        this.parentNode = this.graphics.node;
+        this.fill = cfg.fill || this.fill;
+        this.type = cfg.shape || this.type;
+        this.nodetype = this._getNodeShapeType(this.type); 
+        this.props = cfg.props || this.props;
+        this.path = cfg.path || this.path;
+    },
+
+    /**
+     * Draws the graphic.
+     *
+     * @method _draw
+     * @private
+     */
+    _draw: function()
+    {
+        var cx,
+            cy,
+            rx,
+            ry,
+            parentNode = this.parentNode,
+            borderWeight = 0,
+            fillWidth = this.width || 0,
+            fillHeight = this.height || 0;
+        if(!this.node)
+        {
+            this.node = this._createGraphicNode(this.nodetype, this.pointerEvents);
+            parentNode.appendChild(this.node);
+        }
+        if(this.type == "wedge")
+        {
+            this.path = this._getWedgePath(this.props);
+        }
+        if(this.nodetype == "path")
+        {
+            this._setPath();
+        }
+        if(this.border && this.border.weight && this.border.weight > 0)
+        {
+            borderWeight = this.border.weight;
+            fillWidth -= borderWeight * 2;
+            fillHeight -= borderWeight * 2;
+        }
+        this._addBorder();
+        if(this.nodetype === "ellipse")
+        {
+            rx = this.width/2;
+            cx = this.width/2;
+            ry = this.height/2;
+            cy = this.height/2;
+            rx -= borderWeight;
+            ry -= borderWeight;
+            this.node.setAttribute("cx", cx);
+            this.node.setAttribute("cy", cy);
+            this.node.setAttribute("rx", rx);
+            this.node.setAttribute("ry", ry);
+        }
+        else
+        {
+            this.node.setAttribute("width", fillWidth);
+            this.node.setAttribute("height", fillHeight);
+            this.node.style.width = fillWidth + "px";
+            this.node.style.height = fillHeight + "px";
+        }
+        this._addFill();
+        parentNode.style.width = this.width + "px";
+        parentNode.style.height = this.height + "px";
+        parentNode.setAttribute("width", this.width);
+        parentNode.setAttribute("height", this.height);
+        this.node.style.visibility = "visible";
+        this.node.setAttribute("x", borderWeight); 
+        this.node.setAttribute("y", borderWeight); 
+        return this;       
+    },
+
+    /**
+     * Adds a path to the shape node.
+     * 
+     * @method _setPath
+     * @private
+     */
+    _setPath: function()
+    {
+        if(this.path)
+        {
+            this.path += " Z";
+            this.node.setAttribute("d", this.path);
+        }
+    },
+
+    /**
+     * Adds a border to the shape node.
+     *
+     * @method _addBorder
+     * @private
+     */
+    _addBorder: function()
+    {
+        if(this.border && this.border.weight && this.border.weight > 0)
+        {
+            var borderAlpha = this.border.alpha;
+            this.border.color = this.border.color || "#000000";
+            this.border.weight = this.border.weight || 1;
+            this.border.alpha = Y.Lang.isNumber(borderAlpha) ? borderAlpha : 1;
+            this.border.linecap = this.border.linecap || "square";
+            this.node.setAttribute("stroke", this.border.color);
+            this.node.setAttribute("stroke-linecap", this.border.linecap);
+            this.node.setAttribute("stroke-width",  this.border.weight);
+            this.node.setAttribute("stroke-opacity", this.border.alpha);
+        }
+        else
+        {
+            this.node.setAttribute("stroke", "none");
+        }
+    },
+
+    /**
+     * Adds a fill to the shape node.
+     *
+     * @method _addFill
+     * @private
+     */
+    _addFill: function()
+    {
+        var fillAlpha;
+        if(this.fill.type === "linear" || this.fill.type === "radial")
+        {
+            this.beginGradientFill(this.fill);
+            this.node.appendChild(this._getFill());
+        }
+        else if(this.fill.type === "bitmap")
+        {
+            this.beginBitmapFill(this.fill);
+            this.node.appendChild(this._getFill());
+        }
+        else
+        {
+            if(!this.fill.color)
+            {
+                this.node.setAttribute("fill", "none");
+            }
+            else
+            {
+                fillAlpha = this.fill.alpha; 
+                this.fill.alpha = Y.Lang.isNumber(fillAlpha) ? fillAlpha : 1;
+                this.node.setAttribute("fill", this.fill.color);
+                this.node.setAttribute("fill-opacity", fillAlpha);
+            }
+        }
+    },
+
+    /**
+     * Completes a drawing operation. 
+     *
+     * @method end
+     */
+    end: function()
+    {
+        this._setPath();
+    },
+
+    /**
+     * Updates the properties of the shape instance.
+     *
+     * @method update
+     * @param {Object} cfg Object literal containing properties to update.
+     */
+    update: function(cfg)
+    {
+        this._setProps(cfg);
+        this._draw();
+        return this;
+    },
+    
+    /**
+     * Converts a shape type to the appropriate node attribute.
+     *
+     * @private
+     * @method _getNodeShapeType
+     * @param {String} type The type of shape.
+     * @return String
+     */
+    _getNodeShapeType: function(type)
+    {
+        if(this._typeConversionHash.hasOwnProperty(type))
+        {
+            type = this._typeConversionHash[type];
+        }
+        return type;
+    },
+
+    /**
+     * Sets the visibility of a shape.
+     * 
+     * @method toggleVisible
+     * @param {Boolean} val indicates whether or not the shape is visible.
+     */
+    toggleVisible: function(val)
+    {
+        var visibility = val ? "visible" : "hidden";
+        if(this.node)
+        {
+            this.node.style.visibility = visibility;
+        }
+    },
+
+    /**
+     * Adds a class to the shape's node.
+     *
+     * @method addClass
+     * @param {String} className Name of the class to add.
+     */
+    addClass: function(className)
+    {
+        var node = this.node;
+        if(node)
+        {
+            if(node.className && node.className.baseVal)
+            {
+                node.className.baseVal = Y.Lang.trim([node.className.baseVal, className].join(' '));
+            }
+            else
+            {
+                node.setAttribute("class", className);
+            }
+        }
+    },
+
+    /**
+     * Positions the parent node of the shape.
+     *
+     * @method setPosition
+     * @param {Number}, x The x-coordinate
+     * @param {Number}, y The y-coordinate
+     */
+    setPosition: function(x, y)
+    {
+        var pNode = Y.one(this.parentNode),
+            hotspot = this.hotspot;
+        pNode.setStyle("position", "absolute");
+        pNode.setStyle("left", x);
+        pNode.setStyle("top", y);
+        if(hotspot)
+        {
+            hotspot.setStyle("position", "absolute");
+            hotspot.setStyle("left", x);
+            hotspot.setStyle("top", y);
+        }
+    },
+
+    /**
+     * Used to convert shape declarations to the appropriate node type.
+     *
+     * @property _typeConversionHash
+     * @type Object
+     * @private
+     */
+    _typeConversionHash: {
+        circle: "ellipse",
+        wedge: "path"
+    }
+});
+
+Y.Shape = Shape;
+/**
+ * The Shape class creates a graphic object with editable 
+ * properties.
+ *
+ * @class CanvasShape
+ * @extends CanvasGraphic
+ * @constructor
+ */
+function CanvasShape(cfg)
+{
+    this._dummy = this._createDummy();
+    this._canvas = this._createGraphic();
+    this.node = this._canvas;
+    this._context = this._canvas.getContext('2d');
+    this._initialize(cfg);
+    this._validate();
+}
+
+Y.extend(CanvasShape, Y.CanvasDrawingUtil, {
+    /**
+     * Indicates the type of shape. 
+     *
+     * @property type 
+     * @type string
+     */
+    type: "shape",
+
+    /**
+     * Indicates whether or not the instance will size itself based on its contents.
+     *
+     * @property autoSize 
+     * @type string
+     */
+    autoSize: false,
+
+    /**
+     * Initializes the graphic instance.
+     *
+     * @method _initialize
+     * @private
+     */
+    _initialize: function(cfg) 
+    {
+        this._canvas.style.position = "absolute";
+        if(cfg.graphic)
+        {
+            cfg.graphic.node.appendChild(this._canvas);
+        }
+        this._setProps(cfg);
+    },
+  
+    /**
+     * Updates properties for the shape.
+     *
+     * @method _setProps
+     * @param {Object} cfg Properties to update.
+     * @private
+     */
+    _setProps: function(cfg)
+    {
+        this.autoSize = cfg.autoSize || this.autoSize; 
+        this.width = cfg.width || this.width;
+        this.height = cfg.height || this.height;
+        this.border = cfg.border || this.border;
+        this.graphics = cfg.graphic || this.graphics;
+        this.fill = cfg.fill || this.fill;
+        this.type = cfg.shape || this.type;
+        this.props = cfg.props || this.props;
+        this.path = cfg.path || this.path;
+        this.props = cfg.props || this.props;
+        this.parentNode = this.graphics.node;
+    },
+
+    /**
+     * Draws the graphic.
+     *
+     * @method _validate
+     * @private
+     */
+    _validate: function()
+    {
+        var w = this.width,
+            h = this.height,
+            border = this.border,
+            type = this.type,
+            fill = this.fill;
+        this.clear();
+        this.setSize(this.width, this.height);
+        this._canvas.style.top = "0px";
+        this._canvas.style.left = "0px";
+        if(border && border.weight && border.weight > 0)
+        {
+            border.color = border.color || "#000";
+            border.alpha = border.alpha || 1;
+            this.lineStyle(border.weight, border.color, border.alpha);
+        }
+        if(fill.type === "radial" || fill.type === "linear")
+        {
+            this.beginGradientFill(fill);
+        }
+        else if(fill.type === "bitmap")
+        {
+            this.beginBitmapFill(fill);
+        }   
+        else
+        {
+            this.beginFill(fill.color, fill.alpha);
+        }
+        switch(type)
+        {
+            case "circle" :
+                this.drawEllipse(0, 0, w, h);
+            break;
+            case "rect" :
+                this.drawRect(0, 0, w, h);
+            break;
+            case "wedge" :
+                this.drawWedge(this.props);
+            break;
+        }
+        return this;       
+    },
+
+    /**
+     * Updates the properties of the shape instance.
+     *
+     * @method update
+     * @param {Object} cfg Object literal containing properties to update.
+     */
+    update: function(cfg)
+    {
+        this._setProps(cfg);
+        this._validate();
+        return this;
+    },
+
+    /**
+     * Sets the visibility of a shape.
+     * 
+     * @method toggleVisible
+     * @param {Boolean} val indicates whether or not the shape is visible.
+     */
+    toggleVisible: function(val)
+    {
+        var visibility = val ? "visible" : "hidden";
+        if(this.node)
+        {
+            this.node.style.visibility = visibility;
+        }
+    },
+
+    /**
+     * Positions the parent node of the shape.
+     *
+     * @method setPosition
+     * @param {Number}, x The x-coordinate
+     * @param {Number}, y The y-coordinate
+     */
+    setPosition: function(x, y)
+    {
+        var pNode = Y.one(this.parentNode);
+        pNode.setStyle("position", "absolute");
+        pNode.setStyle("left", x);
+        pNode.setStyle("top", y);
+    },
+    
+    /**
+     * Adds a class to the shape's node.
+     *
+     * @method addClass
+     * @param {String} className Name of the class to add.
+     */
+    addClass: function(val)
+    {
+        if(this.node)
+        {
+            this.node.style.pointerEvents = "painted";
+            this.node.setAttribute("class", val);
+        }
+    }
+});
+
+Y.CanvasShape = CanvasShape;
+
+if(DRAWINGAPI == "canvas")
+{
+    Y.Shape = Y.CanvasShape;
+}
+/**
+ * VMLShape is a fallback class for Shape. It creates a graphic object with editable properties when 
+ * SVG is not available.
+ *
+ * @class VMLShape
+ * @constructor
+ */
+function VMLShape(cfg)
+{
+    this._initialize(cfg);
+    this._draw();
+}
+
+VMLShape.prototype = {
+    /**
+     * Indicates the type of shape. 
+     *
+     * @property type 
+     * @type string
+     */
+    type: "shape",
+    
+    /**
+     * Initializes the graphic instance.
+     *
+     * @method _initialize
+     * @private
+     */
+    _initialize: function(cfg) 
+    {
+        if(!cfg.graphic)
+        {
+            cfg.graphic = new Y.Graphic();
+        }
+        this._setProps(cfg);
+    },
+
+    /**
+     * @private
+     */
+    width: 0,
+
+    /**
+     * @private
+     */
+    height: 0,
+
+    /**
+     * Updates properties for the shape.
+     *
+     * @method _setProps
+     * @param {Object} cfg Properties to update.
+     * @private
+     */
+    _setProps: function(cfg) {
+        this.width = cfg.width && cfg.width >= 0 ? cfg.width : this.width;
+        this.height = cfg.height && cfg.height >= 0 ? cfg.height : this.height;
+        this.border = cfg.border || this.border;
+        this.graphics = cfg.graphic || this.graphics;
+        this.canvas = this.graphics;
+        this.parentNode = this.graphics.node;
+        this.fill = cfg.fill || this.fill;
+        this.type = cfg.shape || this.type;
+        this.props = cfg.props || this.props;
+    },
+
+    /**
+     * Draws the graphic.
+     *
+     * @method _draw
+     * @private
+     */
+    _draw: function()
+    {
+        var path,
+            borderWeight = 0,
+            fillWidth = this.width || 0,
+            fillHeight = this.height || 0;
+        this.graphics.setSize(fillWidth, fillHeight);
+        if(this.node)
+        {
+            this.node.style.visible = "hidden";
+        }
+        else if(!this.node)
+        {
+            this.node = this.graphics._createGraphicNode(this.graphics._getNodeShapeType(this.type));
+            this.graphics.node.appendChild(this.node);
+        }
+        if(this.type === "wedge")
+        {
+            path = this.graphics._getWedgePath(this.props);
+            if(this.fill)
+            {
+                path += ' x';
+            }
+            if(this.border)
+            {
+                path += ' e';
+            }
+            this.node.path = path;
+        }
+        this._addBorder();
+        if(this.border && this.border.weight && this.border.weight > 0)
+        {
+            borderWeight = this.border.weight;
+            fillWidth -= borderWeight;
+            fillHeight -= borderWeight;
+        }
+        this.node.style.width = Math.max(fillWidth, 0) + "px";
+        this.node.style.height = Math.max(fillHeight, 0) + "px";
+        this._addFill();
+        return this;
+    },
+    
+    /**
+     * Adds a border to the shape node.
+     *
+     * @method _addBorder
+     * @private
+     */
+    _addBorder: function()
+    {
+        if(this.border && this.border.weight && this.border.weight > 0)
+        {
+            var borderAlpha = this.border.alpha,
+                borderWeight = this.borderWeight;
+            borderAlpha = Y.Lang.isNumber(borderAlpha) ? borderAlpha : 1;
+            borderWeight = Y.Lang.isNumber(borderWeight) ? borderWeight : 1;
+            this.node.strokecolor = this.border.color || "#000000";
+            this.node.strokeweight = borderWeight;
+            if(borderAlpha < 1)
+            {
+                if(!this._strokeNode)
+                {
+                    this._strokeNode = this.graphics._createGraphicNode("stroke");
+                    this.node.appendChild(this._strokeNode);
+                }
+                this._strokeNode.opacity = borderAlpha;
+            }
+            else if(this._strokeNode)
+            {
+                this._strokeNode.opacity = borderAlpha;
+            }
+            this.node.stroked = true;
+        }
+        else
+        {
+            this.node.stroked = false;
+        }
+    },
+
+    /**
+     * Adds a fill to the shape node.
+     *
+     * @method _addFill
+     * @private
+     */
+    _addFill: function()
+    {
+        var fillAlpha;
+        this.node.filled = true;
+        if(this.fill.type === "linear" || this.fill.type === "radial")
+        {
+            this.graphics.beginGradientFill(this.fill);
+            this.node.appendChild(this.graphics._getFill());
+        }
+        else if(this.fill.type === "bitmap")
+        {
+            this.graphics.beginBitmapFill(this.fill);
+            this.node.appendChild(this.graphics._getFill());
+        }
+        else
+        {
+            if(!this.fill.color)
+            {
+                this.node.filled = false;
+            }
+            else
+            {
+                if(this.fillnode)
+                {
+                    this.graphics._removeChildren(this.fillnode);
+                }
+                fillAlpha = this.fill.alpha;
+                fillAlpha = Y.Lang.isNumber(fillAlpha) ? fillAlpha : 1;
+                this.fill.alpha = fillAlpha;
+                this.fillnode = this.graphics._createGraphicNode("fill");
+                this.fillnode.type = "solid";
+                this.fillnode.color = this.fill.color;
+                this.fillnode.opacity = fillAlpha;
+                this.node.appendChild(this.fillnode);
+            }
+        }
+    },
+    
+    /**
+     * Adds a class to the shape's node.
+     *
+     * @method addClass
+     * @param {String} className Name of the class to add.
+     */
+    addClass: function(val)
+    {
+        var node = this.node;
+        if(node)
+        {
+            Y.one(node).addClass(val);
+        }
+    },
+
+    /**
+     * Sets the visibility of a shape.
+     * 
+     * @method toggleVisible
+     * @param {Boolean} val indicates whether or not the shape is visible.
+     */
+    toggleVisible: function(val)
+    {
+        var visibility = val ? "visible" : "hidden";
+        if(this.node)
+        {
+            Y.one(this.node).setStyle("visibility", visibility);
+        }
+    },
+
+    /**
+     * Positions the parent node of the shape.
+     *
+     * @method setPosition
+     * @param {Number}, x The x-coordinate
+     * @param {Number}, y The y-coordinate
+     */
+    setPosition: function(x, y)
+    {
+        var pNode = Y.one(this.parentNode);
+        pNode.setStyle("position", "absolute");
+        pNode.setStyle("left", x);
+        pNode.setStyle("top", y);
+    },
+    
+    /**
+     * Updates the properties of the shape instance.
+     *
+     * @method update
+     * @param {Object} cfg Object literal containing properties to update.
+     */
+    update: function(cfg)
+    {
+        this._setProps(cfg);
+        this._draw();
+        return this;
+    }
+};
+
+Y.VMLShape = VMLShape;
+
+if (DRAWINGAPI == "vml") {
+    Y.Shape = VMLShape;
+}
+/**
+ * The Renderer class is a base class for chart components that use the <code>styles</code>
+ * attribute.
+ *
+ * @class Renderer
+ * @constructor
+ */
+function Renderer(){}
+
+Renderer.ATTRS = {
+        /**
+         * Hash of style properties for class
+         * 
+         * @attribute styles
+         * @type Object
+         */
+        styles:
+        {
+            getter: function()
+            {
+                this._styles = this._styles || this._getDefaultStyles();
+                return this._styles;
+            },
+
+            setter: function(val)
+            {
+                this._styles = this._setStyles(val);
+            }
+        },
+        
+        /**
+         * The graphic in which drawings will be rendered.
+         *
+         * @attribute graphic
+         * @type Graphic
+         */
+        graphic: {}
+};
+Renderer.NAME = "renderer";
+
+Renderer.prototype = {
+    /**
+     * @private
+     */
+	_styles: null,
+	
+    /**
+     * @protected
+     *
+     * Method used by <code>styles</code> setter.
+     *
+     * @method _setStyles
+     * @param {Object} newStyles Hash of properties to update.
+     * @return Object
+     */
+	_setStyles: function(newstyles)
+	{
+		var styles = this.get("styles");
+        return this._mergeStyles(newstyles, styles);
+	},
+    
+    /**
+     * @protected
+     *
+     * Merges to object literals so that only specified properties are 
+     * overwritten.
+     *
+     * @method _mergeStyles
+     * @param {Object} a Hash of new styles
+     * @param {Object} b Hash of original styles
+     * @return Object
+     */
+    _mergeStyles: function(a, b)
+    {
+        if(!b)
+        {
+            b = {};
+        }
+        var newstyles = Y.merge(b, {});
+        Y.Object.each(a, function(value, key, a)
+        {
+            if(b.hasOwnProperty(key) && Y.Lang.isObject(value) && !Y.Lang.isArray(value))
+            {
+                newstyles[key] = this._mergeStyles(value, b[key]);
+            }
+            else
+            {
+                newstyles[key] = value;
+            }
+        }, this);
+        return newstyles;
+    },
+
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. 
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        return {padding:{
+            top:0,
+            right: 0,
+            bottom: 0,
+            left: 0
+        }};
+    }
+};
+
+Y.augment(Renderer, Y.Attribute);
+Y.Renderer = Renderer;
+
+/**
+ * The Axis class. Generates axes for a chart.
+ *
+ * @class Axis
+ * @extends Renderer
+ * @constructor
+ */
+Y.Axis = Y.Base.create("axis", Y.Widget, [Y.Renderer], {
+    /**
+     * @private
+     */
+    _dataChangeHandler: function(e)
+    {
+        if(this.get("rendered"))
+        {
+            this._drawAxis();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _updateHandler: function(e)
+    {
+        if(this.get("rendered"))
+        {
+            this._drawAxis();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _positionChangeHandler: function(e)
+    {
+        var position = this.get("position");
+        if(position == "none")
+        {
+            return;
+        }
+        this._layout =this.getLayout(this.get("position"));
+        if(this.get("rendered"))
+        {
+            this._drawAxis();
+        }
+    },
+
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        var pos = this.get("position");
+        if(pos && pos != "none")
+        {
+            this._layout =this.getLayout(pos);
+            this._setCanvas();
+        }
+    },
+   
+    /**
+     * @private
+     */
+    syncUI: function()
+    {
+        this._drawAxis();
+    },
+
+    /**
+     * @private
+     */
+    _setCanvas: function()
+    {
+        var cb = this.get("contentBox"),
+            bb = this.get("boundingBox"),
+            p = this.get("position"),
+            pn = this._parentNode,
+            w = this.get("width"),
+            h = this.get("height");
+        bb.setStyle("position", "absolute");
+        w = w ? w + "px" : pn.getStyle("width");
+        h = h ? h + "px" : pn.getStyle("height");
+        if(p === "top" || p === "bottom")
+        {
+            cb.setStyle("width", w);
+        }
+        else
+        {
+            cb.setStyle("height", h);
+        }
+        cb.setStyle("position", "relative");
+        cb.setStyle("left", "0px");
+        cb.setStyle("top", "0px");
+        this.set("graphic", new Y.Graphic());
+        this.get("graphic").render(cb);
+    },
+	
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var axisstyles = {
+            majorTicks: {
+                display:"inside",
+                length:4,
+                color:"#dad8c9",
+                weight:1,
+                alpha:1
+            },
+            minorTicks: {
+                display:"none",
+                length:2,
+                color:"#dad8c9",
+                weight:1
+            },
+            line: {
+                weight:1,
+                color:"#dad8c9",
+                alpha:1
+            },
+            majorUnit: {
+                determinant:"count",
+                count:11,
+                distance:75
+            },
+            top: "0px",
+            left: "0px",
+            width: "100px",
+            height: "100px",
+            label: {
+                color:"#808080",
+                alpha: 1,
+                fontSize:"85%",
+                rotation: 0,
+                margin: {
+                    top:4,
+                    right:4,
+                    bottom:4,
+                    left:4
+                }
+            },
+            hideOverlappingLabelTicks: false
+        };
+        
+        return Y.merge(Y.Renderer.prototype._getDefaultStyles(), axisstyles); 
+    },
+
+    /**
+     * @private
+     */
+    _handleSizeChange: function(e)
+    {
+        var attrName = e.attrName,
+            pos = this.get("position"),
+            vert = pos == "left" || pos == "right",
+            cb = this.get("contentBox"),
+            hor = pos == "bottom" || pos == "top";
+        cb.setStyle("width", this.get("width"));
+        cb.setStyle("height", this.get("height"));
+        if((hor && attrName == "width") || (vert && attrName == "height"))
+        {
+            this._drawAxis();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _layout: null,
+
+    /**
+     * @private 
+     */
+    getLayout: function(pos)
+    {
+        var l;
+        switch(pos)
+        {
+            case "top" :
+                l = new Y.TopAxisLayout({axisRenderer:this});
+            break;
+            case "bottom" : 
+                l = new Y.BottomAxisLayout({axisRenderer:this});
+            break;
+            case "left" :
+                l = new Y.LeftAxisLayout({axisRenderer:this});
+            break;
+            case "right" :
+                l = new Y.RightAxisLayout({axisRenderer:this});
+            break;
+        }
+        return l;
+    },
+    
+    /**
+     * @private
+     */
+    drawLine: function(startPoint, endPoint, line)
+    {
+        var graphic = this.get("graphic");
+        graphic.lineStyle(line.weight, line.color, line.alpha);
+        graphic.moveTo(startPoint.x, startPoint.y);
+        graphic.lineTo(endPoint.x, endPoint.y);
+        graphic.end();
+    },
+
+    /**
+     * @private
+     */
+    _drawAxis: function ()
+    {
+        if(this._drawing)
+        {
+            this._callLater = true;
+            return;
+        }
+        this._drawing = true;
+        this._callLater = false;
+        if(this.get("position") != "none")
+        {
+            var styles = this.get("styles"),
+                majorTickStyles = styles.majorTicks,
+                drawTicks = majorTickStyles.display != "none",
+                tickPoint,
+                majorUnit = styles.majorUnit,
+                len,
+                majorUnitDistance,
+                i = 0,
+                layoutLength,
+                position,
+                lineStart,
+                label,
+                layout = this._layout,
+                labelFunction = this.get("labelFunction"),
+                labelFunctionScope = this.get("labelFunctionScope"),
+                labelFormat = this.get("labelFormat"),
+                graphic = this.get("graphic");
+            graphic.clear();
+            layout.setTickOffsets();
+            layoutLength = this.getLength();
+            lineStart = layout.getLineStart();
+            len = this.getTotalMajorUnits(majorUnit);
+            majorUnitDistance = this.getMajorUnitDistance(len, layoutLength, majorUnit);
+            this.set("edgeOffset", this.getEdgeOffset(len, layoutLength) * 0.5);
+            tickPoint = this.getFirstPoint(lineStart);
+            this.drawLine(lineStart, this.getLineEnd(tickPoint), styles.line);
+            if(drawTicks) 
+            {
+               layout.drawTick(tickPoint, majorTickStyles);
+            }
+            if(len < 1)
+            {
+                this._clearLabelCache();
+                return;
+            }
+            this._createLabelCache();
+            this._tickPoints = [];
+            layout.set("maxLabelSize", 0); 
+            for(; i < len; ++i)
+            {
+                if(drawTicks) 
+                {
+                    layout.drawTick(tickPoint, majorTickStyles);
+                }
+                position = this.getPosition(tickPoint);
+                label = this.getLabel(tickPoint);
+                label.innerHTML = labelFunction.apply(labelFunctionScope, [this.getLabelByIndex(i, len), labelFormat]);
+                tickPoint = this.getNextPoint(tickPoint, majorUnitDistance);
+            }
+            this._clearLabelCache();
+            layout.setSizeAndPosition();
+            if(this.get("overlapGraph"))
+            {
+               layout.offsetNodeForTick(this.get("contentBox"));
+            }
+            layout.setCalculatedSize();
+            for(i = 0; i < len; ++i)
+            {
+                layout.positionLabel(this.get("labels")[i], this._tickPoints[i]);
+            }
+        }
+        this._drawing = false;
+        if(this._callLater)
+        {
+            this._drawAxis();
+        }
+        else
+        {
+            this.fire("axisRendered");
+        }
+    },
+
+    /**
+     * @private
+     */
+    _labels: null,
+
+    /**
+     * @private 
+     */
+    _labelCache: null,
+
+    /**
+     * @private
+     */
+    getLabel: function(pt, pos)
+    {
+        var i,
+            label,
+            customStyles = {
+                rotation: "rotation",
+                margin: "margin",
+                alpha: "alpha"
+            },
+            cache = this._labelCache,
+            styles = this.get("styles").label;
+        if(cache.length > 0)
+        {
+            label = cache.shift();
+        }
+        else
+        {
+            label = document.createElement("span");
+            label.style.display = "block";
+            label.style.whiteSpace = "nowrap";
+            Y.one(label).addClass("axisLabel");
+            this.get("contentBox").appendChild(label);
+        }
+        label.style.position = "absolute";
+        this._labels.push(label);
+        this._tickPoints.push({x:pt.x, y:pt.y});
+        this._layout.updateMaxLabelSize(label);
+        for(i in styles)
+        {
+            if(styles.hasOwnProperty(i) && !customStyles.hasOwnProperty(i))
+            {
+                label.style[i] = styles[i];
+            }
+        }
+        return label;
+    },   
+
+    /**
+     * @private
+     */
+    _createLabelCache: function()
+    {
+        if(this._labels)
+        {
+            if(this._labelCache)
+            {
+                this._labelCache = this._labels.concat(this._labelCache);
+            }
+            else
+            {
+                this._labelCache = this._labels.concat();
+            }
+        }
+        else
+        {
+            this._clearLabelCache();
+        }
+        this._labels = [];
+    },
+    
+    /**
+     * @private
+     */
+    _clearLabelCache: function()
+    {
+        if(this._labelCache)
+        {
+            var len = this._labelCache.length,
+                i = 0,
+                label,
+                labelCache = this._labelCache;
+            for(; i < len; ++i)
+            {
+                label = labelCache[i];
+                label.parentNode.removeChild(label);
+            }
+        }
+        this._labelCache = [];
+    },
+
+    /**
+     * @private
+     */
+    _calculateSizeByTickLength: true,
+
+    /**
+     * @private 
+     */
+    getLineEnd: function(pt)
+    {
+        var w = this.get("width"),
+            h = this.get("height"),
+            pos = this.get("position");
+        if(pos === "top" || pos === "bottom")
+        {
+            return {x:w, y:pt.y};
+        }
+        else
+        {
+            return {x:pt.x, y:h};
+        }
+    },
+
+    /**
+     * @private
+     */
+    getLength: function()
+    {
+        var l,
+            style = this.get("styles"),
+            padding = style.padding,
+            w = this.get("width"),
+            h = this.get("height"),
+            pos = this.get("position");
+        if(pos === "top" || pos === "bottom")
+        {
+            l = w - (padding.left + padding.right);
+        }
+        else
+        {
+            l = h - (padding.top + padding.bottom);
+        }
+        return l;
+    },
+
+    /**
+     * @private
+     */
+    getFirstPoint:function(pt)
+    {
+        var style = this.get("styles"),
+            pos = this.get("position"),
+            padding = style.padding,
+            np = {x:pt.x, y:pt.y};
+        if(pos === "top" || pos === "bottom")
+        {
+            np.x += padding.left + this.get("edgeOffset");
+        }
+        else
+        {
+            np.y += this.get("height") - (padding.top + this.get("edgeOffset"));
+        }
+        return np;
+    },
+
+    /**
+     * @private
+     */
+    getNextPoint: function(point, majorUnitDistance)
+    {
+        var pos = this.get("position");
+        if(pos === "top" || pos === "bottom")
+        {
+            point.x = point.x + majorUnitDistance;		
+        }
+        else
+        {
+            point.y = point.y - majorUnitDistance;
+        }
+        return point;
+    },
+
+    /**
+     * @private 
+     */
+    getLastPoint: function()
+    {
+        var style = this.get("styles"),
+            padding = style.padding,
+            w = this.get("width"),
+            pos = this.get("position");
+        if(pos === "top" || pos === "bottom")
+        {
+            return {x:w - padding.right, y:padding.top};
+        }
+        else
+        {
+            return {x:padding.left, y:padding.top};
+        }
+    },
+
+    /**
+     * @private 
+     */
+    getPosition: function(point)
+    {
+        var p,
+            h = this.get("height"),
+            style = this.get("styles"),
+            padding = style.padding,
+            pos = this.get("position"),
+            dataType = this.get("dataType");
+        if(pos === "left" || pos === "right") 
+        {
+            //Numeric data on a vertical axis is displayed from bottom to top.
+            //Categorical and Timeline data is displayed from top to bottom.
+            if(dataType === "numeric")
+            {
+                p = (h - (padding.top + padding.bottom)) - (point.y - padding.top);
+            }
+            else
+            {
+                p = point.y - padding.top;
+            }
+        }
+        else
+        {
+            p = point.x - padding.left;
+        }
+        return p;
+    }
+}, {
+    ATTRS: 
+    {
+        /**
+         * @protected
+         *
+         * Difference betweend the first/last tick and edge of axis.
+         *
+         * @attribute edgeOffset
+         * @type Number
+         */
+        edgeOffset: 
+        {
+            value: 0
+        },
+
+        /**
+         * The graphic in which the axis line and ticks will be rendered.
+         *
+         * @attribute graphic
+         * @type Graphic
+         */
+        graphic: {},
+        
+        /**
+         * Contains the contents of the axis. 
+         *
+         * @attribute node
+         * @type HTMLElement
+         */
+        node: {},
+
+        /**
+         * Direction of the axis.
+         *
+         * @attribute position
+         * @type String
+         */
+        position: {
+            lazyAdd: false,
+
+            setOnce: true,
+
+            setter: function(val)
+            {
+                if(val == "none")
+                {
+                    this.bindUI();
+                }
+                return val;
+            }
+        },
+
+        /**
+         * Distance determined by the tick styles used to calculate the distance between the axis
+         * line in relation to the top of the axis.
+         *
+         * @attribute topTickOffset
+         * @type Number
+         */
+        topTickOffset: {
+            value: 0
+        },
+
+        /**
+         * Distance determined by the tick styles used to calculate the distance between the axis
+         * line in relation to the bottom of the axis.
+         *
+         * @attribute bottomTickOffset
+         * @type Number
+         */
+        bottomTickOffset: {
+            value: 0
+        },
+
+        /**
+         * Distance determined by the tick styles used to calculate the distance between the axis
+         * line in relation to the left of the axis.
+         *
+         * @attribute leftTickOffset
+         * @type Number
+         */
+        leftTickOffset: {
+            value: 0
+        },
+
+        /**
+         * Distance determined by the tick styles used to calculate the distance between the axis
+         * line in relation to the right side of the axis.
+         *
+         * @attribute rightTickOffset
+         * @type Number
+         */
+        rightTickOffset: {
+            value: 0
+        },
+        
+        /**
+         * Collection of labels used to render the axis.
+         *
+         * @attribute labels
+         * @type Array
+         */
+        labels: {
+            readOnly: true,
+            getter: function()
+            {
+                return this._labels;
+            }
+        },
+
+        /**
+         * Collection of points used for placement of labels and ticks along the axis.
+         *
+         * @attribute tickPoints
+         * @type Array
+         */
+        tickPoints: {
+            readOnly: true,
+
+            getter: function()
+            {
+                if(this.get("position") == "none")
+                {
+                    return this.get("styles").majorUnit.count;
+                }
+                return this._tickPoints;
+            }
+        },
+
+        /**
+         * Indicates whether the axis overlaps the graph. If an axis is the inner most axis on a given
+         * position and the tick position is inside or cross, the axis will need to overlap the graph.
+         *
+         * @attribute overlapGraph
+         * @type Boolean
+         */
+        overlapGraph: {
+            value:true,
+
+            validator: function(val)
+            {
+                return Y.Lang.isBoolean(val);
+            }
+        },
+
+        /**
+         * Object which should have by the labelFunction
+         *
+         * @attribute labelFunctionScope
+         * @type Object
+         */
+        labelFunctionScope: {}
+            
+        /**
+         * Style properties used for drawing an axis. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *  <dl>
+         *      <dt>majorTicks</dt><dd>Properties used for drawing ticks.
+         *          <dl>
+         *              <dt>display</dt><dd>Position of the tick. Possible values are <code>inside</code>, <code>outside</code>, <code>cross</code> and <code>none</code>. The
+         *              default value is <code>inside</code>.</dd>
+         *              <dt>length</dt><dd>The length (in pixels) of the tick. The default value is 4.</dd>
+         *              <dt>color</dt><dd>The color of the tick. The default value is <code>#dad8c9</code></dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the tick. The default value is 1.</dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the tick. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>line</dt><dd>Properties used for drawing the axis line. 
+         *          <dl>
+         *              <dt>weight</dt><dd>Number indicating the width of the axis line. The default value is 1.</dd>
+         *              <dt>color</dt><dd>The color of the axis line. The default value is <code>#dad8c9</code>.</dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the tick. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>majorUnit</dt><dd>Properties used to calculate the <code>majorUnit</code> for the axis. 
+         *          <dl>
+         *              <dt>determinant</dt><dd>The algorithm used for calculating distance between ticks. The possible options are <code>count</code> and <code>distance</code>. If
+         *              the <code>determinant</code> is <code>count</code>, the axis ticks will spaced so that a specified number of ticks appear on the axis. If the <code>determinant</code>
+         *              is <code>distance</code>, the axis ticks will spaced out according to the specified distance. The default value is <code>count</code>.</dd>
+         *              <dt>count</dt><dd>Number of ticks to appear on the axis when the <code>determinant</code> is <code>count</code>. The default value is 11.</dd>
+         *              <dt>distance</dt><dd>The distance (in pixels) between ticks when the <code>determinant</code> is <code>distance</code>. The default value is 75.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>label</dt><dd>Properties and styles applied to the axis labels.
+         *          <dl>
+         *              <dt>color</dt><dd>The color of the labels. The default value is <code>#808080</code>.</dd>
+         *              <dt>alpha</dt><dd>Number between 0 and 1 indicating the opacity of the labels. The default value is 1.</dd>
+         *              <dt>fontSize</dt><dd>The font-size of the labels. The default value is 85%</dd>
+         *              <dt>rotation</dt><dd>The rotation, in degrees (between -90 and 90) of the labels. The default value is 0.</dd>
+         *              <dt>margin</dt><dd>The distance between the label and the axis/tick. Depending on the position of the <code>Axis</code>, only one of the properties used.
+         *                  <dl>
+         *                      <dt>top</dt><dd>Pixel value used for an axis with a <code>position</code> of <code>bottom</code>. The default value is 4.</dd>
+         *                      <dt>right</dt><dd>Pixel value used for an axis with a <code>position</code> of <code>left</code>. The default value is 4.</dd>
+         *                      <dt>bottom</dt><dd>Pixel value used for an axis with a <code>position</code> of <code>top</code>. The default value is 4.</dd>
+         *                      <dt>left</dt><dd>Pixel value used for an axis with a <code>position</code> of <code>right</code>. The default value is 4.</dd>
+         *                  </dl>
+         *              </dd>
+         *          </dl>
+         *      </dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+/**
+ * Algorithmic strategy for rendering a left axis.
+ *
+ * @class LeftAxisLayout
+ * @extends Base
+ * @param {Object} config
+ * @constructor
+ */
+function LeftAxisLayout(config)
+{
+    LeftAxisLayout.superclass.constructor.apply(this, arguments);
+}
+
+LeftAxisLayout.ATTRS = {
+    /**
+     * Reference to the <code>Axis</code> using the strategy.
+     *
+     * @attribute axisRenderer
+     * @type Axis
+     * @protected
+     */
+    axisRenderer: {
+        value: null
+    },
+
+    /**
+     * @private
+     */
+    maxLabelSize: {
+        value: 0
+    }
+};
+
+Y.extend(LeftAxisLayout, Y.Base, {
+    /**
+     * Sets the length of the tick on either side of the axis line.
+     *
+     * @method setTickOffset
+     * @protected
+     */
+    setTickOffsets: function()
+    {
+        var ar = this.get("axisRenderer"),
+            majorTicks = ar.get("styles").majorTicks,
+            tickLength = majorTicks.length,
+            halfTick = tickLength * 0.5,
+            display = majorTicks.display;
+        ar.set("topTickOffset",  0);
+        ar.set("bottomTickOffset",  0);
+        
+        switch(display)
+        {
+            case "inside" :
+                ar.set("rightTickOffset",  tickLength);
+                ar.set("leftTickOffset", 0);
+            break;
+            case "outside" : 
+                ar.set("rightTickOffset", 0);
+                ar.set("leftTickOffset",  tickLength);
+            break;
+            case "cross":
+                ar.set("rightTickOffset", halfTick); 
+                ar.set("leftTickOffset",  halfTick);
+            break;
+            default:
+                ar.set("rightTickOffset", 0);
+                ar.set("leftTickOffset", 0);
+            break;
+        }
+    },
+    
+    /**
+     * Draws a tick
+     *
+     * @method drawTick
+     * @param {Object} pt Point on the axis in which the tick will intersect.
+     * @param {Object) tickStyle Hash of properties to apply to the tick.
+     * @protected
+     */
+    drawTick: function(pt, tickStyles)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            tickLength = tickStyles.length,
+            start = {x:padding.left, y:pt.y},
+            end = {x:tickLength + padding.left, y:pt.y};
+        ar.drawLine(start, end, tickStyles);
+    },
+
+    /**
+     * Calculates the coordinates for the first point on an axis.
+     *
+     * @method getLineStart
+     * @return {Object}
+     * @protected
+     */
+    getLineStart: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            majorTicks = style.majorTicks,
+            tickLength = majorTicks.length,
+            display = majorTicks.display,
+            pt = {x:padding.left, y:0};
+        if(display === "outside")
+        {
+            pt.x += tickLength;
+        }
+        else if(display === "cross")
+        {
+            pt.x += tickLength/2;
+        }
+        return pt; 
+    },
+    
+    /**
+     * Calculates the point for a label.
+     *
+     * @method getLabelPoint
+     * @param {Object} point Point on the axis in which the tick will intersect.
+     * @return {Object} 
+     * @protected
+     */
+    getLabelPoint: function(point)
+    {
+        var ar = this.get("axisRenderer");
+        return {x:point.x - ar.get("leftTickOffset"), y:point.y};
+    },
+    
+    /**
+     * Updates the value for the <code>maxLabelSize</code> for use in calculating total size.
+     *
+     * @method updateMaxLabelSize
+     * @param {HTMLElement} label to measure
+     * @protected
+     */
+    updateMaxLabelSize: function(label)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            max;
+        if(!document.createElementNS)
+        {
+            label.style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            this.set("maxLabelSize", Math.max(this.get("maxLabelSize"), label.offsetWidth));
+        }
+        else
+        {
+            label.style.msTransform = "rotate(0deg)";
+            if(rot === 0)
+            {
+                max = label.offsetWidth;
+            }
+            else if(absRot === 90)
+            {
+                max = label.offsetHeight;
+            }
+            else
+            {
+                max = (cosRadians * label.offsetWidth) + (sinRadians * label.offsetHeight);
+            }
+            this.set("maxLabelSize",  Math.max(this.get("maxLabelSize"), max));
+        }
+    },
+
+    /**
+     * Rotate and position labels.
+     *
+     * @method positionLabel
+     * @param {HTMLElement} label to rotate position
+     * @param {Object} pt hash containing the x and y coordinates in which the label will be positioned
+     * against.
+     * @protected
+     */
+    positionLabel: function(label, pt)
+    {
+        var ar = this.get("axisRenderer"),
+            tickOffset = ar.get("leftTickOffset"),
+            style = ar.get("styles").label,
+            labelAlpha = style.alpha,
+            filterString,
+            margin = 0,
+            leftOffset = pt.x,
+            topOffset = pt.y,
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            maxLabelSize = this.get("maxLabelSize"),
+            labelWidth = Math.round(label.offsetWidth),
+            labelHeight = Math.round(label.offsetHeight);
+        if(style.margin && style.margin.right)
+        {
+            margin = style.margin.right;
+        }
+        if(!document.createElementNS)
+        {
+            label.style.filter = null; 
+            labelWidth = Math.round(label.offsetWidth);
+            labelHeight = Math.round(label.offsetHeight);
+            if(rot === 0)
+            {
+                leftOffset = labelWidth;
+                topOffset -= labelHeight * 0.5;
+            }
+            else if(absRot === 90)
+            {
+                leftOffset = labelHeight;
+                topOffset -= labelWidth * 0.5;
+            }
+            else if(rot > 0)
+            {
+                leftOffset = (cosRadians * labelWidth) + (labelHeight * rot/90);
+                topOffset -= (sinRadians * labelWidth) + (cosRadians * (labelHeight * 0.5));
+            }
+            else
+            {
+                leftOffset = (cosRadians * labelWidth) + (absRot/90 * labelHeight);
+                topOffset -= cosRadians * (labelHeight * 0.5);
+            }
+            leftOffset += tickOffset;
+            label.style.left = ((pt.x + maxLabelSize) - leftOffset) + "px";
+            label.style.top = topOffset + "px";
+            if(filterString)
+            {
+                filterString += " ";
+            }
+            if(Y.Lang.isNumber(labelAlpha) && labelAlpha < 1 && labelAlpha > -1 && !isNaN(labelAlpha))
+            {
+                filterString = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(labelAlpha * 100) + ")";
+            }
+            if(rot !== 0)
+            {
+                if(filterString)
+                {
+                    filterString += " ";
+                }
+                else
+                {
+                    filterString = ""; 
+                }
+                filterString += 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            }
+            if(filterString)
+            {
+                label.style.filter = filterString;
+            }
+            return;
+        }
+        label.style.msTransform = "rotate(0deg)";
+        labelWidth = Math.round(label.offsetWidth);
+        labelHeight = Math.round(label.offsetHeight);
+        if(rot === 0)
+        {
+            leftOffset -= labelWidth;
+            topOffset -= labelHeight * 0.5;
+        }
+        else if(rot === 90)
+        {
+            topOffset -= labelWidth * 0.5;
+        }
+        else if(rot === -90)
+        {
+            leftOffset -= labelHeight;
+            topOffset += labelWidth * 0.5;
+        }
+        else
+        {
+            if(rot < 0)
+            {
+                leftOffset -= (cosRadians * labelWidth) + (sinRadians * labelHeight);
+                topOffset += (sinRadians * labelWidth) - (cosRadians * (labelHeight * 0.6)); 
+            }
+            else
+            {
+                leftOffset -= (cosRadians * labelWidth);
+                topOffset -= (sinRadians * labelWidth) + (cosRadians * (labelHeight * 0.6));
+            }
+        }
+        leftOffset -= tickOffset;
+        label.style.left = (this.get("maxLabelSize") + leftOffset) + "px";
+        label.style.top = topOffset + "px";
+        label.style.MozTransformOrigin =  "0 0";
+        label.style.MozTransform = "rotate(" + rot + "deg)";
+        label.style.webkitTransformOrigin = "0 0";
+        label.style.webkitTransform = "rotate(" + rot + "deg)";
+        label.style.msTransformOrigin =  "0 0";
+        label.style.msTransform = "rotate(" + rot + "deg)";
+        label.style.OTransformOrigin =  "0 0";
+        label.style.OTransform = "rotate(" + rot + "deg)";
+    },
+
+    /**
+     * @protected
+     *
+     * Calculates the size and positions the content elements.
+     *
+     * @method setSizeAndPosition
+     * @protected
+     */
+    setSizeAndPosition: function()
+    {
+        var labelSize = this.get("maxLabelSize"),
+            ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            leftTickOffset = ar.get("leftTickOffset"),
+            sz = labelSize + leftTickOffset,
+            graphic = ar.get("graphic"),
+            margin = style.label.margin;
+        if(margin && margin.right)
+        {
+            sz += margin.right;
+        }
+        sz = Math.round(sz);
+        ar.set("width", sz);
+        ar.get("contentBox").setStyle("width", sz);
+        Y.one(graphic.node).setStyle("left", labelSize + margin.right);
+    },
+    
+    /**
+     * Adjust the position of the Axis widget's content box for internal axes.
+     *
+     * @method offsetNodeForTick
+     * @param {Node} cb Content box of the Axis.
+     * @protected
+     */
+    offsetNodeForTick: function(cb)
+    {
+    },
+
+    /**
+     * Sets the width of the axis based on its contents.
+     *
+     * @method setCalculatedSize
+     * @protected
+     */
+    setCalculatedSize: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            label = style.label,
+            tickOffset = ar.get("leftTickOffset"),
+            max = this.get("maxLabelSize"),
+            ttl = Math.round(tickOffset + max + label.margin.right);
+        ar.get("contentBox").setStyle("width", ttl);
+        ar.set("width", ttl);
+    }
+});
+
+Y.LeftAxisLayout = LeftAxisLayout;
+/**
+ * RightAxisLayout contains algorithms for rendering a right axis.
+ *
+ * @constructor
+ * @class RightAxisLayout
+ * @extends Base
+ * @param {Object} config
+ */
+function RightAxisLayout(config)
+{
+    RightAxisLayout.superclass.constructor.apply(this, arguments);
+}
+
+RightAxisLayout.ATTRS = {
+    /**
+     * Reference to the <code>Axis</code> using the strategy.
+     *
+     * @attribute axisRenderer
+     * @type Axis
+     * @protected
+     */
+    axisRenderer: {
+        value: null
+    }
+};
+
+Y.extend(RightAxisLayout, Y.Base, {
+    /**
+     * Sets the length of the tick on either side of the axis line.
+     *
+     * @method setTickOffset
+     * @protected
+     */
+    setTickOffsets: function()
+    {
+        var ar = this.get("axisRenderer"),
+            majorTicks = ar.get("styles").majorTicks,
+            tickLength = majorTicks.length,
+            halfTick = tickLength * 0.5,
+            display = majorTicks.display;
+        ar.set("topTickOffset",  0);
+        ar.set("bottomTickOffset",  0);
+        
+        switch(display)
+        {
+            case "inside" :
+                ar.set("leftTickOffset", tickLength);
+                ar.set("rightTickOffset", 0);
+            break;
+            case "outside" : 
+                ar.set("leftTickOffset", 0);
+                ar.set("rightTickOffset", tickLength);
+            break;
+            case "cross" :
+                ar.set("rightTickOffset", halfTick);
+                ar.set("leftTickOffset", halfTick);
+            break;
+            default:
+                ar.set("leftTickOffset", 0);
+                ar.set("rightTickOffset", 0);
+            break;
+        }
+    },
+
+    /**
+     * Draws a tick
+     *
+     * @method drawTick
+     * @param {Object} pt Point on the axis in which the tick will intersect.
+     * @param {Object) tickStyle Hash of properties to apply to the tick.
+     * @protected
+     */
+    drawTick: function(pt, tickStyles)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            tickLength = tickStyles.length,
+            start = {x:padding.left, y:pt.y},
+            end = {x:padding.left + tickLength, y:pt.y};
+        ar.drawLine(start, end, tickStyles);
+    },
+    
+    /**
+     * Calculates the coordinates for the first point on an axis.
+     *
+     * @method getLineStart
+     * @return {Object}
+     * @protected
+     */
+    getLineStart: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            majorTicks = style.majorTicks,
+            tickLength = majorTicks.length,
+            display = majorTicks.display,
+            pt = {x:padding.left, y:padding.top};
+        if(display === "inside")
+        {
+            pt.x += tickLength;
+        }
+        else if(display === "cross")
+        {
+            pt.x += tickLength/2;
+        }
+        return pt;
+    },
+    
+    /**
+     * Calculates the point for a label.
+     *
+     * @method getLabelPoint
+     * @param {Object} point Point on the axis in which the tick will intersect.
+     * @return {Object} 
+     * @protected
+     */
+    getLabelPoint: function(point)
+    {
+        var ar = this.get("axisRenderer");
+        return {x:point.x + ar.get("rightTickOffset"), y:point.y};
+    },
+    
+    /**
+     * Updates the value for the <code>maxLabelSize</code> for use in calculating total size.
+     *
+     * @method updateMaxLabelSize
+     * @param {HTMLElement} label to measure
+     * @protected
+     */
+    updateMaxLabelSize: function(label)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            max;
+        if(!document.createElementNS)
+        {
+            label.style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            this.set("maxLabelSize", Math.max(this.get("maxLabelSize"), label.offsetWidth));
+        }
+        else
+        {
+            label.style.msTransform = "rotate(0deg)";
+            if(rot === 0)
+            {
+                max = label.offsetWidth;
+            }
+            else if(absRot === 90)
+            {
+                max = label.offsetHeight;
+            }
+            else
+            {
+                max = (cosRadians * label.offsetWidth) + (sinRadians * label.offsetHeight);
+            }
+            this.set("maxLabelSize",  Math.max(this.get("maxLabelSize"), max));
+        }
+    },
+
+    /**
+     * Rotate and position labels.
+     *
+     * @method positionLabel
+     * @param {HTMLElement} label to rotate position
+     * @param {Object} pt hash containing the x and y coordinates in which the label will be positioned
+     * against.
+     * @protected
+     */
+    positionLabel: function(label, pt)
+    {
+        var ar = this.get("axisRenderer"),
+            tickOffset = ar.get("rightTickOffset"),
+            style = ar.get("styles").label,
+            labelAlpha = style.alpha,
+            filterString,
+            margin = 0,
+            leftOffset = pt.x,
+            topOffset = pt.y,
+            rot =  Math.min(Math.max(style.rotation, -90), 90),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            labelWidth = Math.round(label.offsetWidth),
+            labelHeight = Math.round(label.offsetHeight);
+        if(style.margin && style.margin.right)
+        {
+            margin = style.margin.right;
+        }
+        if(!document.createElementNS)
+        {
+            label.style.filter = null;
+            if(rot === 0)
+            {
+                topOffset -= labelHeight * 0.5;
+            }
+            else if(absRot === 90)
+            {
+                topOffset -= labelWidth * 0.5;
+            }
+            else if(rot > 0)
+            {
+                topOffset -= (cosRadians * (labelHeight * 0.5));
+            }
+            else
+            {
+                topOffset -= (sinRadians * labelWidth) +  (cosRadians * (labelHeight * 0.5));
+            }
+            leftOffset += margin;
+            leftOffset += tickOffset;
+            label.style.left = leftOffset + "px";
+            label.style.top = topOffset + "px";
+            if(Y.Lang.isNumber(labelAlpha) && labelAlpha < 1 && labelAlpha > -1 && !isNaN(labelAlpha))
+            {
+                filterString = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(labelAlpha * 100) + ")";
+            }
+            if(rot !== 0)
+            {
+                if(filterString)
+                {
+                    filterString += " ";
+                }
+                else
+                {
+                    filterString = ""; 
+                }
+                filterString += 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            }
+            if(filterString)
+            {
+                label.style.filter = filterString;
+            }
+            return;
+        }
+        label.style.msTransform = "rotate(0deg)";
+        labelWidth = Math.round(label.offsetWidth);
+        labelHeight = Math.round(label.offsetHeight);
+        if(rot === 0)
+        {
+            topOffset -= labelHeight * 0.5;
+        }
+        else if(rot === 90)
+        {
+            leftOffset += labelHeight;
+            topOffset -= labelWidth * 0.5;
+        }
+        else if(rot === -90)
+        {
+            topOffset += labelWidth * 0.5;
+        }
+        else if(rot < 0)
+        {
+            topOffset -= (cosRadians * (labelHeight * 0.6)); 
+        }
+        else
+        {
+            topOffset -= cosRadians * (labelHeight * 0.6);
+            leftOffset += sinRadians * labelHeight;
+        }
+        leftOffset += margin;
+        leftOffset += tickOffset;
+        label.style.left = leftOffset + "px";
+        label.style.top = topOffset + "px";
+        label.style.MozTransformOrigin =  "0 0";
+        label.style.MozTransform = "rotate(" + rot + "deg)";
+        label.style.webkitTransformOrigin = "0 0";
+        label.style.webkitTransform = "rotate(" + rot + "deg)";
+        label.style.msTransformOrigin =  "0 0";
+        label.style.msTransform = "rotate(" + rot + "deg)";
+        label.style.OTransformOrigin =  "0 0";
+        label.style.OTransform = "rotate(" + rot + "deg)";
+    },
+
+    /**
+     * Calculates the size and positions the content elements.
+     *
+     * @method setSizeAndPosition
+     * @protected
+     */
+    setSizeAndPosition: function()
+    {
+        var ar = this.get("axisRenderer"),
+            label = ar.get("styles").label,
+            labelSize = this.get("maxLabelSize"),
+            tickOffset = ar.get("rightTickOffset"),
+            sz = tickOffset + labelSize;
+        if(label.margin && label.margin.weight)
+        {
+            sz += label.margin.weight;
+        }
+        ar.set("width", sz);
+        ar.get("contentBox").setStyle("width", sz);
+    },
+    
+    /**
+     * Adjusts position for inner ticks.
+     *
+     * @method offsetNodeForTick
+     * @param {Node} cb contentBox of the axis
+     * @protected
+     */
+    offsetNodeForTick: function(cb)
+    {
+        var ar = this.get("axisRenderer"),
+            tickOffset = ar.get("leftTickOffset"),
+            offset = 0 - tickOffset;
+        cb.setStyle("left", offset);
+    },
+
+    /**
+     * Assigns a height based on the size of the contents.
+     *
+     * @method setCalculatedSize
+     * @protected
+     */
+    setCalculatedSize: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            ttl = Math.round(ar.get("rightTickOffset") + this.get("maxLabelSize") + style.margin.left);
+        ar.set("width", ttl);
+    }
+});
+
+Y.RightAxisLayout = RightAxisLayout;
+/**
+ * Contains algorithms for rendering a bottom axis.
+ *
+ * @class BottomAxisLayout
+ * @Constructor
+ */
+function BottomAxisLayout(config)
+{
+    BottomAxisLayout.superclass.constructor.apply(this, arguments);
+}
+
+BottomAxisLayout.ATTRS = {
+    /**
+     * Reference to the <code>Axis</code> using the strategy.
+     *
+     * @attribute axisRenderer
+     * @type Axis
+     * @protected
+     */
+    axisRenderer: {
+        value:null
+    },
+    
+    /**
+     * Length in pixels of largest text bounding box. Used to calculate the height of the axis.
+     *
+     * @attribute maxLabelSize
+     * @type Number
+     * @protected
+     */
+    maxLabelSize: {
+        value: 0
+    }
+};
+
+Y.extend(BottomAxisLayout, Y.Base, {
+    /**
+     * Sets the length of the tick on either side of the axis line.
+     *
+     * @method setTickOffsets
+     * @protected
+     */
+    setTickOffsets: function()
+    {
+        var ar = this.get("axisRenderer"),
+            majorTicks = ar.get("styles").majorTicks,
+            tickLength = majorTicks.length,
+            halfTick = tickLength * 0.5,
+            display = majorTicks.display;
+        ar.set("leftTickOffset",  0);
+        ar.set("rightTickOffset",  0);
+
+        switch(display)
+        {
+            case "inside" :
+                ar.set("topTickOffset", tickLength);
+                ar.set("bottomTickOffset", 0);
+            break;
+            case "outside" : 
+                ar.set("topTickOffset", 0);
+                ar.set("bottomTickOffset", tickLength);
+            break;
+            case "cross":
+                ar.set("topTickOffset",  halfTick);
+                ar.set("bottomTickOffset",  halfTick);
+            break;
+            default:
+                ar.set("topTickOffset", 0);
+                ar.set("bottomTickOffset", 0);
+            break;
+        }
+    },
+
+    /**
+     * Calculates the coordinates for the first point on an axis.
+     *
+     * @method getLineStart
+     * @protected
+     */
+    getLineStart: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            majorTicks = style.majorTicks,
+            tickLength = majorTicks.length,
+            display = majorTicks.display,
+            pt = {x:0, y:padding.top};
+        if(display === "inside")
+        {
+            pt.y += tickLength;
+        }
+        else if(display === "cross")
+        {
+            pt.y += tickLength/2;
+        }
+        return pt; 
+    },
+    
+    /**
+     * Draws a tick
+     *
+     * @method drawTick
+     * @param {Object} pt hash containing x and y coordinates
+     * @param {Object} tickStyles hash of properties used to draw the tick
+     * @protected
+     */
+    drawTick: function(pt, tickStyles)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            tickLength = tickStyles.length,
+            start = {x:pt.x, y:padding.top},
+            end = {x:pt.x, y:tickLength + padding.top};
+        ar.drawLine(start, end, tickStyles);
+    },
+
+    /**
+     * Calculates the point for a label.
+     *
+     * @method getLabelPoint
+     * @param {Object} pt hash containing x and y coordinates
+     * @return Object
+     * @protected
+     */
+    getLabelPoint: function(point)
+    {
+        var ar = this.get("axisRenderer");
+        return {x:point.x, y:point.y + ar.get("bottomTickOffset")};
+    },
+    
+    /**
+     * Updates the value for the <code>maxLabelSize</code> for use in calculating total size.
+     *
+     * @method updateMaxLabelSize
+     * @param {HTMLElement} label to measure
+     * @protected
+     */
+    updateMaxLabelSize: function(label)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            max;
+        if(!document.createElementNS)
+        {
+            label.style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            this.set("maxLabelSize", Math.max(this.get("maxLabelSize"), label.offsetHeight));
+        }
+        else
+        {
+            label.style.msTransform = "rotate(0deg)";
+            if(rot === 0)
+            {
+                max = label.offsetHeight;
+            }
+            else if(absRot === 90)
+            {
+                max = label.offsetWidth;
+            }
+            else
+            {
+                max = (sinRadians * label.offsetWidth) + (cosRadians * label.offsetHeight); 
+            }
+            this.set("maxLabelSize",  Math.max(this.get("maxLabelSize"), max));
+        }
+    },
+    
+    /**
+     * Rotate and position labels.
+     *
+     * @method positionLabel
+     * @param {HTMLElement} label to rotate position
+     * @param {Object} pt hash containing the x and y coordinates in which the label will be positioned
+     * against.
+     * @protected
+     */
+    positionLabel: function(label, pt)
+    {
+        var ar = this.get("axisRenderer"),
+            tickOffset = ar.get("bottomTickOffset"),
+            style = ar.get("styles").label,
+            labelAlpha = style.alpha,
+            filterString,
+            margin = 0,
+            leftOffset = Math.round(pt.x),
+            topOffset = Math.round(pt.y),
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            labelWidth = Math.round(label.offsetWidth),
+            labelHeight = Math.round(label.offsetHeight);
+        if(style.margin && style.margin.top)
+        {
+            margin = style.margin.top;
+        }
+        if(!document.createElementNS)
+        {
+            m11 = cosRadians;
+            m12 = rot > 0 ? -sinRadians : sinRadians;
+            m21 = -m12;
+            m22 = m11;
+            label.style.filter = null;
+            labelWidth = Math.round(label.offsetWidth);
+            labelHeight = Math.round(label.offsetHeight);
+            if(absRot === 90)
+            {
+                leftOffset -= labelHeight * 0.5;
+            }
+            else if(rot < 0)
+            {
+                leftOffset -= cosRadians * labelWidth;
+                leftOffset -= sinRadians * (labelHeight * 0.5);
+            }
+            else if(rot > 0)
+            {
+               leftOffset -= sinRadians * (labelHeight * 0.5);
+            }
+            else
+            {
+                leftOffset -= labelWidth * 0.5;
+            }
+            topOffset += margin;
+            topOffset += tickOffset;
+            label.style.left = Math.round(leftOffset) + "px";
+            label.style.top = Math.round(topOffset) + "px";
+            if(Y.Lang.isNumber(labelAlpha) && labelAlpha < 1 && labelAlpha > -1 && !isNaN(labelAlpha))
+            {
+                filterString = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(labelAlpha * 100) + ")";
+            }
+            if(rot !== 0)
+            {
+                if(filterString)
+                {
+                    filterString += " ";
+                }
+                else
+                {
+                    filterString = ""; 
+                }
+                filterString += 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            }
+            if(filterString)
+            {
+                label.style.filter = filterString;
+            }
+            return;
+        }
+        label.style.msTransform = "rotate(0deg)";
+        labelWidth = Math.round(label.offsetWidth);
+        labelHeight = Math.round(label.offsetHeight);
+        if(rot === 0)
+        {
+            leftOffset -= labelWidth * 0.5;
+        }
+        else if(absRot === 90)
+        {
+            if(rot === 90)
+            {
+                leftOffset += labelHeight * 0.5;
+            }
+            else
+            {
+                topOffset += labelWidth;
+                leftOffset -= labelHeight * 0.5;
+            }
+        }
+        else 
+        {
+            if(rot < 0)
+            {
+                leftOffset -= (cosRadians * labelWidth) + (sinRadians * (labelHeight * 0.6));
+                topOffset += sinRadians * labelWidth;
+            }
+            else
+            {
+                leftOffset += Math.round(sinRadians * (labelHeight * 0.6));
+            }
+        }
+        topOffset += margin;
+        topOffset += tickOffset;
+        label.style.left = Math.round(leftOffset) + "px";
+        label.style.top = Math.round(topOffset) + "px";
+        label.style.MozTransformOrigin =  "0 0";
+        label.style.MozTransform = "rotate(" + rot + "deg)";
+        label.style.webkitTransformOrigin = "0 0";
+        label.style.webkitTransform = "rotate(" + rot + "deg)";
+        label.style.msTransformOrigin =  "0 0";
+        label.style.msTransform = "rotate(" + rot + "deg)";
+        label.style.OTransformOrigin =  "0 0";
+        label.style.OTransform = "rotate(" + rot + "deg)";
+    },
+    
+    /**
+     * Calculates the size and positions the content elements.
+     *
+     * @method setSizeAndPosition
+     * @protected
+     */
+    setSizeAndPosition: function()
+    {
+        var labelSize = this.get("maxLabelSize"),
+            ar = this.get("axisRenderer"),
+            tickLength = ar.get("bottomTickLength"),
+            style = ar.get("styles"),
+            sz = tickLength + labelSize,
+            margin = style.label.margin;
+        if(margin && margin.top)
+        {   
+            sz += margin.top;
+        }
+        sz = Math.round(sz);
+        ar.set("height", sz);
+    },
+
+    /**
+     * Adjusts position for inner ticks.
+     *
+     * @method offsetNodeForTick
+     * @param {Node} cb contentBox of the axis
+     * @protected
+     */
+    offsetNodeForTick: function(cb)
+    {
+        var ar = this.get("axisRenderer");
+        ar.get("contentBox").setStyle("top", 0 - ar.get("topTickOffset"));
+    },
+
+    /**
+     * Assigns a height based on the size of the contents.
+     *
+     * @method setCalculatedSize
+     * @protected
+     */
+    setCalculatedSize: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            ttl = Math.round(ar.get("bottomTickOffset") + this.get("maxLabelSize") + style.margin.top);
+        ar.set("height", ttl);
+    }
+});
+
+Y.BottomAxisLayout = BottomAxisLayout;
+/**
+ * Contains algorithms for rendering a top axis.
+ *
+ * @class TopAxisLayout
+ * @constructor
+ */
+function TopAxisLayout(config)
+{
+    TopAxisLayout.superclass.constructor.apply(this, arguments);
+}
+
+TopAxisLayout.ATTRS = {
+    /**
+     * Reference to the <code>Axis</code> using the strategy.
+     *
+     * @attribute axisRenderer
+     * @type Axis
+     * @protected
+     */
+    axisRenderer: {
+        value: null
+    },
+
+    /**
+     * Length in pixels of largest text bounding box. Used to calculate the height of the axis.
+     *
+     * @attribute maxLabelSize
+     * @type Number
+     * @protected
+     */
+    maxLabelSize: {
+        value: 0
+    }
+};
+
+Y.extend(TopAxisLayout, Y.Base, {
+    /**
+     * Sets the length of the tick on either side of the axis line.
+     *
+     * @method setTickOffsets
+     * @protected
+     */
+    setTickOffsets: function()
+    {
+        var ar = this.get("axisRenderer"),
+            majorTicks = ar.get("styles").majorTicks,
+            tickLength = majorTicks.length,
+            halfTick = tickLength * 0.5,
+            display = majorTicks.display;
+        ar.set("leftTickOffset",  0);
+        ar.set("rightTickOffset",  0);
+        switch(display)
+        {
+            case "inside" :
+                ar.set("bottomTickOffset", tickLength);
+                ar.set("topTickOffset", 0);
+            break;
+            case "outside" : 
+                ar.set("bottomTickOffset", 0);
+                ar.set("topTickOffset",  tickLength);
+            break;
+            case "cross" :
+                ar.set("topTickOffset", halfTick);
+                ar.set("bottomTickOffset", halfTick);
+            break;
+            default:
+                ar.set("topTickOffset", 0);
+                ar.set("bottomTickOffset", 0);
+            break;
+        }
+    },
+
+    /**
+     * Calculates the coordinates for the first point on an axis.
+     *
+     * @method getLineStart
+     * @protected
+     */
+    getLineStart: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            majorTicks = style.majorTicks,
+            tickLength = majorTicks.length,
+            display = majorTicks.display,
+            pt = {x:0, y:padding.top};
+        if(display === "outside")
+        {
+            pt.y += tickLength;
+        }
+        else if(display === "cross")
+        {
+            pt.y += tickLength/2;
+        }
+        return pt; 
+    },
+    
+    /**
+     * Draws a tick
+     *
+     * @method drawTick
+     * @param {Object} pt hash containing x and y coordinates
+     * @param {Object} tickStyles hash of properties used to draw the tick
+     * @protected
+     */
+    drawTick: function(pt, tickStyles)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles"),
+            padding = style.padding,
+            tickLength = tickStyles.length,
+            start = {x:pt.x, y:padding.top},
+            end = {x:pt.x, y:tickLength + padding.top};
+        ar.drawLine(start, end, tickStyles);
+    },
+    
+    /**
+     * Calculates the point for a label.
+     *
+     * @method getLabelPoint
+     * @param {Object} pt hash containing x and y coordinates
+     * @return Object
+     * @protected
+     */
+    getLabelPoint: function(pt)
+    {
+        var ar = this.get("axisRenderer");
+        return {x:pt.x, y:pt.y - ar.get("topTickOffset")};
+    },
+    
+    /**
+     * Updates the value for the <code>maxLabelSize</code> for use in calculating total size.
+     *
+     * @method updateMaxLabelSize
+     * @param {HTMLElement} label to measure
+     * @protected
+     */
+    updateMaxLabelSize: function(label)
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            rot =  Math.min(90, Math.max(-90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11 = cosRadians,
+            m12 = rot > 0 ? -sinRadians : sinRadians,
+            m21 = -m12,
+            m22 = m11,
+            max;
+        if(!document.createElementNS)
+        {
+            label.style.filter = 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            this.set("maxLabelSize", Math.max(this.get("maxLabelSize"), label.offsetHeight));
+        }
+        else
+        {
+            label.style.msTransform = "rotate(0deg)";
+            if(rot === 0)
+            {
+                max = label.offsetHeight;
+            }
+            else if(absRot === 90)
+            {
+                max = label.offsetWidth;
+            }
+            else
+            {
+                max = (sinRadians * label.offsetWidth) + (cosRadians * label.offsetHeight); 
+            }
+            this.set("maxLabelSize",  Math.max(this.get("maxLabelSize"), max));
+        }
+    },
+
+    /**
+     * Rotate and position labels.
+     *
+     * @method positionLabel
+     * @param {HTMLElement} label to rotate position
+     * @param {Object} pt hash containing the x and y coordinates in which the label will be positioned
+     * against.
+     * @protected
+     */
+    positionLabel: function(label, pt)
+    {
+        var ar = this.get("axisRenderer"),
+            tickOffset = ar.get("topTickOffset"),
+            style = ar.get("styles").label,
+            labelAlpha = style.alpha,
+            filterString,
+            margin = 0,
+            leftOffset = pt.x,
+            topOffset = pt.y,
+            rot =  Math.max(-90, Math.min(90, style.rotation)),
+            absRot = Math.abs(rot),
+            radCon = Math.PI/180,
+            sinRadians = parseFloat(parseFloat(Math.sin(absRot * radCon)).toFixed(8)),
+            cosRadians = parseFloat(parseFloat(Math.cos(absRot * radCon)).toFixed(8)),
+            m11,
+            m12,
+            m21,
+            m22,
+            maxLabelSize = this.get("maxLabelSize"),
+            labelWidth = Math.round(label.offsetWidth),
+            labelHeight = Math.round(label.offsetHeight);
+        rot = Math.min(90, rot);
+        rot = Math.max(-90, rot);
+        if(style.margin && style.margin.bottom)
+        {
+            margin = style.margin.bottom;
+        }
+        if(!document.createElementNS)
+        {
+            label.style.filter = null;
+            labelWidth = Math.round(label.offsetWidth);
+            labelHeight = Math.round(label.offsetHeight);
+            m11 = cosRadians;
+            m12 = rot > 0 ? -sinRadians : sinRadians;
+            m21 = -m12;
+            m22 = m11;
+            if(rot === 0)
+            {
+                leftOffset -= labelWidth * 0.5;
+            }
+            else if(absRot === 90)
+            {
+                leftOffset -= labelHeight * 0.5;
+            }
+            else if(rot > 0)
+            {
+                leftOffset -= (cosRadians * labelWidth) + Math.min((sinRadians * labelHeight), (rot/180 * labelHeight));
+                topOffset -= (sinRadians * labelWidth) + (cosRadians * (labelHeight));
+                topOffset += maxLabelSize;
+            }
+            else
+            {
+                leftOffset -= sinRadians * (labelHeight * 0.5);
+                topOffset -= (sinRadians * labelWidth) + (cosRadians * (labelHeight));
+                topOffset += maxLabelSize;
+            }
+            topOffset -= tickOffset;
+            label.style.left = leftOffset;
+            label.style.top = topOffset;
+            if(Y.Lang.isNumber(labelAlpha) && labelAlpha < 1 && labelAlpha > -1 && !isNaN(labelAlpha))
+            {
+                filterString = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(labelAlpha * 100) + ")";
+            }
+            if(rot !== 0)
+            {
+                if(filterString)
+                {
+                    filterString += " ";
+                }
+                else
+                {
+                    filterString = ""; 
+                }
+                filterString += 'progid:DXImageTransform.Microsoft.Matrix(M11=' + m11 + ' M12=' + m12 + ' M21=' + m21 + ' M22=' + m22 + ' sizingMethod="auto expand")';
+            }
+            if(filterString)
+            {
+                label.style.filter = filterString;
+            }
+            return;
+        }
+        label.style.msTransform = "rotate(0deg)";
+        labelWidth = Math.round(label.offsetWidth);
+        labelHeight = Math.round(label.offsetHeight);
+        if(rot === 0)
+        {
+            leftOffset -= labelWidth * 0.5;
+            topOffset -= labelHeight;
+        }
+        else if(rot === 90)
+        {
+            leftOffset += labelHeight * 0.5;
+            topOffset -= labelWidth;
+        }
+        else if(rot === -90)
+        {
+            leftOffset -= labelHeight * 0.5;
+            topOffset -= 0;
+        }
+        else if(rot < 0)
+        {
+            
+            leftOffset -= (sinRadians * (labelHeight * 0.6));
+            topOffset -= (cosRadians * labelHeight);
+        }
+        else
+        {
+            leftOffset -= (cosRadians * labelWidth) - (sinRadians * (labelHeight * 0.6));
+            topOffset -= (sinRadians * labelWidth) + (cosRadians * labelHeight);
+        }
+        topOffset -= tickOffset;
+        label.style.left = leftOffset + "px";
+        label.style.top = (this.get("maxLabelSize") + topOffset) + "px";
+        label.style.MozTransformOrigin =  "0 0";
+        label.style.MozTransform = "rotate(" + rot + "deg)";
+        label.style.webkitTransformOrigin = "0 0";
+        label.style.webkitTransform = "rotate(" + rot + "deg)";
+        label.style.msTransformOrigin =  "0 0";
+        label.style.msTransform = "rotate(" + rot + "deg)";
+        label.style.OTransformOrigin =  "0 0";
+        label.style.OTransform = "rotate(" + rot + "deg)";
+    },
+
+    /**
+     * Calculates the size and positions the content elements.
+     *
+     * @method setSizeAndPosition
+     * @protected
+     */
+    setSizeAndPosition: function()
+    {
+        var labelSize = this.get("maxLabelSize"),
+            ar = this.get("axisRenderer"),
+            tickOffset = ar.get("topTickOffset"),
+            style = ar.get("styles"),
+            margin = style.label.margin,
+            graphic = ar.get("graphic"),
+            sz = tickOffset + labelSize;
+        if(margin && margin.bottom)
+        {
+            sz += margin.bottom;
+        }
+        ar.set("height", sz);
+        Y.one(graphic.node).setStyle("top", labelSize + margin.bottom);
+    },
+    
+    /**
+     * Adjusts position for inner ticks.
+     *
+     * @method offsetNodeForTick
+     * @param {Node} cb contentBox of the axis
+     * @protected
+     */
+    offsetNodeForTick: function(cb)
+    {
+    },
+
+    /**
+     * Assigns a height based on the size of the contents.
+     *
+     * @method setCalculatedSize
+     * @protected
+     */
+    setCalculatedSize: function()
+    {
+        var ar = this.get("axisRenderer"),
+            style = ar.get("styles").label,
+            ttl = Math.round(ar.get("topTickOffset") + this.get("maxLabelSize") + style.margin.bottom);
+        ar.set("height", ttl);
+    }
+});
+
+Y.TopAxisLayout = TopAxisLayout;
+
+/**
+ * AxisType is an abstract class that manages the data for an axis.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class AxisType
+ * @constructor
+ * @extends Axis
+ */
+Y.AxisType = Y.Base.create("baseAxis", Y.Axis, [], {
+    /**
+     * @private
+     */
+    bindUI: function()
+    {
+        this.after("dataReady", Y.bind(this._dataChangeHandler, this));
+        this.after("dataUpdate", Y.bind(this._dataChangeHandler, this));
+        this.after("minimumChange", Y.bind(this._keyChangeHandler, this));
+        this.after("maximumChange", Y.bind(this._keyChangeHandler, this));
+        this.after("keysChange", this._keyChangeHandler);
+        this.after("dataProviderChange", this._dataProviderChangeHandler);
+        this.after("stylesChange", this._updateHandler);
+        this.after("positionChange", this._positionChangeHandler);
+        this.after("overlapGraphChange", this._updateHandler);
+        this.after("widthChange", this._handleSizeChange);
+        this.after("heightChange", this._handleSizeChange);
+        this.after("alwaysShowZeroChange", this._keyChangeHandler);
+        this.after("roundingMethodChange", this._keyChangeHandler);
+    },
+
+    /**
+     * @private
+     */
+    _dataProviderChangeHandler: function(e)
+    {
+        var keyCollection = this.get("keyCollection").concat(),
+            keys = this.get("keys"),
+            i;
+        if(keys)
+        {
+            for(i in keys)
+            {
+                if(keys.hasOwnProperty(i))
+                {
+                    delete keys[i];
+                }
+            }
+        }
+        if(keyCollection && keyCollection.length)
+        {
+            this.set("keys", keyCollection);
+        }
+    },
+
+    /**
+     * @private
+     */
+    GUID: "yuibaseaxis",
+	
+    /**
+     * @private
+     */
+    _type: null,
+	
+    /**
+     * @private
+     */
+    _setMaximum: null,
+	
+    /**
+     * @private
+     */
+    _dataMaximum: null,
+	
+    /**
+     * @private
+     */
+    _setMinimum: null,
+	
+    /**
+     * @private
+     */
+    _data: null,
+
+    /**
+     * @private
+     */
+    _updateTotalDataFlag: true,
+
+    /**
+     * @private
+     */
+    _dataReady: false,
+	
+    /**
+     * Adds an array to the key hash.
+     *
+     * @param value Indicates what key to use in retrieving
+     * the array.
+     */
+    addKey: function (value)
+	{
+        this.set("keys", value);
+	},
+
+    /**
+     * @private
+     */
+    _getKeyArray: function(key, data)
+    {
+        var i = 0,
+            obj,
+            keyArray = [],
+            len = data.length;
+        for(; i < len; ++i)
+        {
+            obj = data[i];
+            keyArray[i] = obj[key];
+        }
+        return keyArray;
+    },
+
+    /**
+     * @private 
+     */
+    _setDataByKey: function(key, data)
+    {
+        var i,
+            obj, 
+            arr = [], 
+            dv = this._dataClone.concat(), 
+            len = dv.length;
+        for(i = 0; i < len; ++i)
+        {
+            obj = dv[i];
+            arr[i] = obj[key];
+        }
+        this.get("keys")[key] = arr;
+        this._updateTotalDataFlag = true;
+    },
+
+    /**
+     * @private
+     */
+    _updateTotalData: function()
+    {
+		var keys = this.get("keys"),
+            i;
+        this._data = [];
+        for(i in keys)
+        {
+            if(keys.hasOwnProperty(i))
+            {
+                this._data = this._data.concat(keys[i]);
+            }
+        }
+        this._updateTotalDataFlag = false;
+    },
+
+    /**
+     * Removes an array from the key hash.
+     * 
+     * @method removeKey
+     * @param {String} value Indicates what key to use in removing from 
+     * the hash.
+     */
+    removeKey: function(value)
+    {
+        var keys = this.get("keys");
+        if(keys.hasOwnProperty(value)) 
+        {
+            delete keys[value];
+            this._keyChangeHandler();
+        }
+    },
+
+    /**
+     * Returns a numeric value based of a key value and an index.
+     *
+     * @method getKeyValueAt
+     * @param {String} key value used to look up the correct array
+     * @param {Number} index within the array
+     * @return Object
+     */
+    getKeyValueAt: function(key, index)
+    {
+        var value = NaN,
+            keys = this.get("keys");
+        if(keys[key] && keys[key][index]) 
+        {
+            value = keys[key][index];
+        }
+        return value;
+    },
+
+    /**
+     * Returns an array of values based on an identifier key.
+     *
+     * @method getDataByKey
+     * @param {String} value value used to identify the array
+     * @return Object
+     */
+    getDataByKey: function (value)
+    {
+        var keys = this.get("keys");
+        if(keys[value])
+        {
+            return keys[value];
+        }
+        return null;
+    },
+
+    /**
+     * @private 
+     */
+    _updateMinAndMax: function() 
+    {
+        var data = this.get("data"),
+            max = 0,
+            min = 0,
+            len,
+            num,
+            i;
+        if(data && data.length && data.length > 0)
+        {
+            len = data.length;
+            max = min = data[0];
+            if(len > 1)
+            {
+                for(i = 1; i < len; i++)
+                {	
+                    num = data[i];
+                    if(isNaN(num))
+                    {
+                        continue;
+                    }
+                    max = Math.max(num, max);
+                    min = Math.min(num, min);
+                }
+            }
+        }
+        this._dataMaximum = max;
+        this._dataMinimum = min;
+    },
+
+    /**
+     * Returns the total number of majorUnits that will appear on an axis.
+     *
+     * @method getTotalMajorUnits
+     * @return Number
+     */
+    getTotalMajorUnits: function()
+    {
+        var units,
+            majorUnit = this.get("styles").majorUnit,
+            len = this.get("length");
+        if(majorUnit.determinant === "count") 
+        {
+            units = majorUnit.count;
+        }
+        else if(majorUnit.determinant === "distance") 
+        {
+            units = (len/majorUnit.distance) + 1;
+        }
+        return units; 
+    },
+
+    /**
+     * Returns the distance between major units on an axis.
+     *
+     * @method getMajorUnitDistance
+     * @param {Number} len Number of ticks
+     * @param {Number} uiLen Size of the axis.
+     * @param {Object} majorUnit Hash of properties used to determine the majorUnit
+     * @return Number
+     */
+    getMajorUnitDistance: function(len, uiLen, majorUnit)
+    {
+        var dist;
+        if(majorUnit.determinant === "count")
+        {
+            dist = uiLen/(len - 1);
+        }
+        else if(majorUnit.determinant === "distance")
+        {
+            dist = majorUnit.distance;
+        }
+        return dist;
+    },
+    
+    /**
+     * Gets the distance that the first and last ticks are offset from there respective
+     * edges.
+     *
+     * @attribute getEdgeOffset
+     * @type Method
+     * @param {Number} ct Number of ticks on the axis.
+     * @param {Number} l Length (in pixels) of the axis.
+     * @return Number
+     */
+    getEdgeOffset: function(ct, l)
+    {
+        return 0;
+    },
+
+    /**
+     * Calculates and returns a value based on the number of labels and the index of
+     * the current label.
+     *
+     * @method getLabelByIndex
+     * @param {Number} i Index of the label.
+     * @param {Number} l Total number of labels.
+     * @return String
+     */
+    getLabelByIndex: function(i, l)
+    {
+        var min = this.get("minimum"),
+            max = this.get("maximum"),
+            increm = (max - min)/(l-1),
+            label;
+            l -= 1;
+        label = min + (i * increm);
+        return label;
+    },
+
+    /**
+     * @private
+     */
+    _keyChangeHandler: function(e)
+    {
+        this._updateMinAndMax();
+		this.fire("dataUpdate");
+    }
+}, {
+    ATTRS: {
+        /**
+         * Hash of array identifed by a string value.
+         *
+         * @attribute keys
+         * @type Object
+         */
+        keys: {
+            value: {},
+
+            setter: function(val)
+            {
+                var keys = {},
+                    i, 
+                    len,
+                    data = this.get("dataProvider");
+                if(Y.Lang.isArray(val))
+                {
+                    len = val.length;
+                    for(i = 0; i < len; ++i)
+                    {
+                        keys[val[i]] = this._getKeyArray(val[i], data);   
+                    }
+                    
+                }
+                else if(Y.Lang.isString(val))
+                {
+                    keys = this.get("keys");
+                    keys[val] = this._getKeyArray(val, data);
+                }
+                else
+                {
+                    for(i in val)
+                    {
+                        if(val.hasOwnProperty(i))
+                        {
+                            keys[i] = this._getKeyArray(i, data);
+                        }
+                    }
+                }
+	            this._updateTotalDataFlag = true;
+                return keys;
+            }
+        },
+
+        /**
+         *Indicates how to round unit values.
+         *  <dl>
+         *      <dt>niceNumber</dt><dd>Units will be smoothed based on the number of ticks and data range.</dd>
+         *      <dt>auto</dt><dd>If the range is greater than 1, the units will be rounded.</dd>
+         *      <dt>numeric value</dt><dd>Units will be equal to the numeric value.</dd>
+         *      <dt>null</dt><dd>No rounding will occur.</dd>
+         *  </dl>
+         *
+         * @attribute roundingMethod
+         * @type String
+         * @default niceNumber
+         */
+        roundingMethod: {
+            value: "niceNumber"
+        },
+
+        /**
+         *Returns the type of axis data
+         *  <dl>
+         *      <dt>time</dt><dd>Manages time data</dd>
+         *      <dt>stacked</dt><dd>Manages stacked numeric data</dd>      
+         *      <dt>numeric</dt><dd>Manages numeric data</dd>
+         *      <dt>category</dt><dd>Manages categorical data</dd>
+         *  </dl>
+         *
+         * @attribute type
+         * @type String
+         */
+        type:
+        {
+            readOnly: true,
+
+            getter: function ()
+            {
+                return this._type;
+            }
+        },
+
+        /**
+         * Instance of <code>ChartDataProvider</code> that the class uses
+         * to build its own data.
+         *
+         * @attribute dataProvider
+         * @type Array
+         */
+        dataProvider:{
+            setter: function (value)
+            {
+                return value;
+            }
+        },
+
+        /**
+         * The maximum value contained in the <code>data</code> array. Used for
+         * <code>maximum</code> when <code>autoMax</code> is true.
+         *
+         * @attribute dataMaximum
+         * @type Number
+         */
+        dataMaximum: {
+            getter: function ()
+            {
+                if(!this._dataMaximum)
+                {   
+                    this._updateMinAndMax();
+                }
+                return this._dataMaximum;
+            }
+        },
+
+        /**
+         * The maximum value that will appear on an axis.
+         *
+         * @attribute maximum
+         * @type Number
+         */
+        maximum: {
+            getter: function ()
+            {
+                var max = this.get("dataMaximum");
+                if(this.get("setMax")) 
+                {
+                    max = this._setMaximum;
+                }
+                return max;
+            },
+            setter: function (value)
+            {
+                this._setMaximum = parseFloat(value);
+                return value;
+            }
+        },
+
+        /**
+         * The minimum value contained in the <code>data</code> array. Used for
+         * <code>minimum</code> when <code>autoMin</code> is true.
+         *
+         * @attribute dataMinimum
+         * @type Number
+         */
+        dataMinimum: {
+            getter: function ()
+            {
+                if(!this._dataMinimum)
+                {
+                    this._updateMinAndMax();
+                }
+                return this._dataMinimum;
+            }
+        },
+
+        /**
+         * The minimum value that will appear on an axis.
+         *
+         * @attribute minimum
+         * @type Number
+         */
+        minimum: {
+            getter: function ()
+            {
+                var min = this.get("dataMinimum");
+                if(this.get("setMin"))
+                {
+                    min = this._setMinimum;
+                }
+                return min;
+            },
+            setter: function(val)
+            {
+                this._setMinimum = parseFloat(val);
+                return val;
+            }
+        },
+
+        /**
+         * Determines whether the maximum is calculated or explicitly 
+         * set by the user.
+         *
+         * @attribute setMax
+         * @type Boolean
+         */
+        setMax: {
+            readOnly: true,
+
+            getter: function()
+            {
+                return Y.Lang.isNumber(this._setMaximum);
+            }
+        },
+
+        /**
+         * Determines whether the minimum is calculated or explicitly
+         * set by the user.
+         *
+         * @attribute setMin
+         * @type Boolean
+         */
+        setMin: {
+            readOnly: true,
+
+            getter: function()
+            {
+                return Y.Lang.isNumber(this._setMinimum);
+            }
+        },
+
+        /**
+         * Array of axis data
+         *
+         * @attribute data
+         * @type Array
+         */
+        data: {
+            getter: function ()
+            {
+                if(!this._data || this._updateTotalDataFlag)
+                {
+                    this._updateTotalData();
+                }
+                return this._data;
+            }
+        },
+
+        /**
+         * Array containing all the keys in the axis.
+         *
+         * @attribute keyCollection
+         * @type Array
+         */
+        keyCollection: {
+            getter: function()
+            {
+                var keys = this.get("keys"),
+                    i, 
+                    col = [];
+                for(i in keys)
+                {
+                    if(keys.hasOwnProperty(i))
+                    {
+                        col.push(i);
+                    }
+                }
+                return col;
+            },
+            readOnly: true
+        },
+        
+        /**
+         * Method used for formatting a label.
+         *
+         * @attribute labelFunction
+         * @type Function
+         * @param {String} val label to be formatted.
+         * @param {Object} format temlate for formatting a label.
+         * @return String
+         */
+        labelFunction: {
+            value: function(val, format)
+            {
+                return val;
+            }
+        }
+    }
+});
+/**
+ * NumericAxis manages numeric data on an axis.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class NumericAxis
+ * @constructor
+ * @extends AxisType
+ */
+function NumericAxis(config)
+{
+	NumericAxis.superclass.constructor.apply(this, arguments);
+}
+
+NumericAxis.NAME = "numericAxis";
+
+NumericAxis.ATTRS = {
+    /**
+     * Indicates whether 0 should always be displayed.
+     *
+     * @attribute alwaysShowZero
+     * @type Boolean
+     */
+	alwaysShowZero: {
+	    value: true	
+	},
+    
+    /**
+     * Formats a label.
+     *
+     * @attribute labelFunction
+     * @type Function
+     * @param {Object} val Value to be formatted. 
+     * @param {Object} format Hasho of properties used to format the label.
+     */
+    labelFunction: { 
+        value: function(val, format)
+        {
+            if(format)
+            {
+                return Y.DataType.Number.format(val, format);
+            }
+            return val;
+        }
+    },
+
+    /**
+     * Hash of properties used by the <code>labelFunction</code> to format a
+     * label.
+     *
+     * @attribute labelFormat
+     * @type Object
+     */
+    labelFormat: {
+        value: {
+            prefix: "",
+            thousandsSeparator: "",
+            decimalSeparator: "",
+            decimalPlaces: "0",
+            suffix: ""
+        }
+    }
+};
+
+Y.extend(NumericAxis, Y.AxisType,
+{
+    /**
+     * @private
+     */
+    _type: "numeric",
+
+    /**
+     * @private
+     */
+    _getMinimumUnit:function(max, min, units)
+    {
+        return this._getNiceNumber(Math.ceil((max - min)/units));
+    },
+
+    /**
+     * @private
+     */
+    _getNiceNumber: function(roundingUnit)
+    {
+        var tempMajorUnit = roundingUnit,
+            order = Math.ceil(Math.log(tempMajorUnit) * 0.4342944819032518),
+            roundedMajorUnit = Math.pow(10, order),
+            roundedDiff;
+
+        if (roundedMajorUnit / 2 >= tempMajorUnit) 
+        {
+            roundedDiff = Math.floor((roundedMajorUnit / 2 - tempMajorUnit) / (Math.pow(10,order-1)/2));
+            tempMajorUnit = roundedMajorUnit/2 - roundedDiff*Math.pow(10,order-1)/2;
+        }
+        else 
+        {
+            tempMajorUnit = roundedMajorUnit;
+        }
+        if(!isNaN(tempMajorUnit))
+        {
+            return tempMajorUnit;
+        }
+        return roundingUnit;
+
+    },
+
+    /**
+     * @private
+     */
+    _updateMinAndMax: function()
+    {
+        var data = this.get("data"),
+            max = 0,
+            min = 0,
+            len,
+            num,
+            i,
+            key,
+            setMax = this.get("setMax"),
+            setMin = this.get("setMin");
+        if(!setMax && !setMin)
+        {
+            if(data && data.length && data.length > 0)
+            {
+                len = data.length;
+                max = min = data[0];
+                if(len > 1)
+                {
+                    for(i = 1; i < len; i++)
+                    {	
+                        num = data[i];
+                        if(isNaN(num))
+                        {
+                            if(Y.Lang.isObject(num))
+                            {
+                                //hloc values
+                                for(key in num)
+                                {
+                                   if(num.hasOwnProperty(key))
+                                   {
+                                        max = Math.max(num[key], max);
+                                        min = Math.min(num[key], min);
+                                   }
+                                }
+                            }
+                            continue;
+                        }
+                        max = setMax ? this._setMaximum : Math.max(num, max);
+                        min = setMin ? this._setMinimum : Math.min(num, min);
+                    }
+                }
+            }
+            this._roundMinAndMax(min, max);
+        }
+    },
+
+    /**
+     * @private
+     */
+    _roundMinAndMax: function(min, max)
+    {
+        var roundingUnit,
+            minimumRange,
+            minGreaterThanZero = min >= 0,
+            maxGreaterThanZero = max > 0,
+            dataRangeGreater,
+            maxRound,
+            minRound,
+            topTicks,
+            botTicks,
+            tempMax,
+            tempMin,
+            units = this.getTotalMajorUnits() - 1,
+            alwaysShowZero = this.get("alwaysShowZero"),
+            roundingMethod = this.get("roundingMethod"),
+            useIntegers = (max - min)/units >= 1;
+        if(roundingMethod)
+        {
+            if(roundingMethod == "niceNumber")
+            {
+                roundingUnit = this._getMinimumUnit(max, min, units);
+                if(minGreaterThanZero && maxGreaterThanZero)
+                {
+                    if(alwaysShowZero || min < roundingUnit)
+                    {
+                        min = 0;
+                    }
+                    roundingUnit = this._getMinimumUnit(max, min, units);
+                    max = this._roundUpToNearest(max, roundingUnit);
+                }
+                else if(maxGreaterThanZero && !minGreaterThanZero)
+                {
+                        topTicks = Math.round( units / ((-1 * min)/max + 1)    );
+                        botTicks = units - topTicks;
+                        tempMax = Math.ceil( max/topTicks );
+
+                        tempMin = Math.floor( min/botTicks ) * -1;
+                        
+                        roundingUnit = Math.max(tempMax, tempMin);
+                        roundingUnit = this._getNiceNumber(roundingUnit);  
+                        max = roundingUnit * topTicks;
+                        min = roundingUnit * botTicks * -1;
+                }
+                else
+                {
+                    if(alwaysShowZero || max === 0 || max + roundingUnit > 0)
+                    {
+                        max = 0;
+                        roundingUnit = this._getMinimumUnit(max, min, units);
+                    }
+                    else
+                    {
+                        max = this._roundUpToNearest(max, roundingUnit);
+                    }
+                    min = max - (roundingUnit * units);
+                }
+            }
+            else if(roundingMethod == "auto") 
+            {
+                if(minGreaterThanZero && maxGreaterThanZero)
+                {
+                    if(alwaysShowZero || min < (max-min)/units)
+                    {
+                        min = 0;
+                    }
+                
+                    roundingUnit = (max - min)/units;
+                    if(useIntegers)
+                    {
+                        roundingUnit = Math.ceil(roundingUnit);
+                    }
+                    max = min + (roundingUnit * units);
+                }
+                else if(maxGreaterThanZero && !minGreaterThanZero)
+                {
+                    if(alwaysShowZero)
+                    {
+                        topTicks = Math.round( units / ( (-1 * min) /max + 1) );
+                        botTicks = units - topTicks;
+
+                        if(useIntegers)
+                        {
+                            tempMax = Math.ceil( max/topTicks );
+                            tempMin = Math.floor( min/botTicks ) * -1;
+                        }
+                        else
+                        {
+                            tempMax = max/topTicks;
+                            tempMin = min/botTicks * -1;
+                        }
+                        roundingUnit = Math.max(tempMax, tempMin);
+                        max = roundingUnit * topTicks;
+                        min = roundingUnit * botTicks * -1;
+                    }
+                    else
+                    {
+                        roundingUnit = (max - min)/units;
+                        if(useIntegers)
+                        {
+                            roundingUnit = Math.ceil(roundingUnit);
+                        }
+                        min = this._roundDownToNearest(min, roundingUnit);
+                        max = this._roundUpToNearest(max, roundingUnit);
+                    }
+                }
+                else
+                {
+                    roundingUnit = (max - min)/units;
+                    if(useIntegers)
+                    {   
+                        roundingUnit = Math.ceil(roundingUnit);
+                    }
+                    if(alwaysShowZero || max === 0 || max + roundingUnit > 0)
+                    {
+                        max = 0;
+                        roundingUnit = (max - min)/units;
+                        if(useIntegers)
+                        {
+                            Math.ceil(roundingUnit);
+                        }
+                    }
+                    else
+                    {
+                        max = this._roundUpToNearest(max, roundingUnit);
+                    }
+                    min = max - (roundingUnit * units);
+
+                }
+            }
+            else if(!isNaN(roundingMethod) && isFinite(roundingMethod))
+            {
+                roundingUnit = roundingMethod;
+                minimumRange = roundingUnit * units;
+                dataRangeGreater = (max - min) > minimumRange;
+                minRound = this._roundDownToNearest(min, roundingUnit);
+                maxRound = this._roundUpToNearest(max, roundingUnit);
+                if(minGreaterThanZero && maxGreaterThanZero)
+                {
+                    if(alwaysShowZero || minRound <= 0)
+                    {
+                        min = 0;
+                    }
+                    else
+                    {
+                        min = minRound;
+                    }
+                    if(!dataRangeGreater)
+                    {
+                        max = min + minimumRange;
+                    }
+                    else
+                    {
+                        max = maxRound;
+                    }
+                }
+                else if(maxGreaterThanZero && !minGreaterThanZero)
+                {
+                    min = minRound;
+                    if(!dataRangeGreater)
+                    {
+                        max = min + minimumRange;
+                    }
+                    else
+                    {
+                        max = maxRound;
+                    }
+                }
+                else
+                {
+                    if(max === 0 || alwaysShowZero)
+                    {
+                        max = 0;
+                    }
+                    else
+                    {
+                        max = maxRound;
+                    }
+                    if(!dataRangeGreater)
+                    {
+                        min = max - minimumRange;
+                    }
+                    else
+                    {
+                        min = minRound;
+                    }
+                }
+            }
+        }
+        this._dataMaximum = max;
+        this._dataMinimum = min;
+    },
+
+    /**
+     * Calculates and returns a value based on the number of labels and the index of
+     * the current label.
+     *
+     * @method getLabelByIndex
+     * @param {Number} i Index of the label.
+     * @param {Number} l Total number of labels.
+     * @return String
+     */
+    getLabelByIndex: function(i, l)
+    {
+        var min = this.get("minimum"),
+            max = this.get("maximum"),
+            increm = (max - min)/(l-1),
+            label;
+            l -= 1;
+        label = min + (i * increm);
+        if(i > 0)
+        {
+            label = this._roundToNearest(label, increm);
+        }
+        return label;
+    },
+
+    /**
+     * @private
+     *
+     * Rounds a Number to the nearest multiple of an input. For example, by rounding
+     * 16 to the nearest 10, you will receive 20. Similar to the built-in function Math.round().
+     */
+    _roundToNearest: function(number, nearest)
+    {
+        nearest = nearest || 1;
+        if(nearest === 0)
+        {
+            return number;
+        }
+        var roundedNumber = Math.round(this._roundToPrecision(number / nearest, 10)) * nearest;
+        return this._roundToPrecision(roundedNumber, 10);
+    },
+	
+    /**
+     * @private
+     *
+     * Rounds a Number <em>up</em> to the nearest multiple of an input. For example, by rounding
+     * 16 up to the nearest 10, you will receive 20. Similar to the built-in function Math.ceil().
+     */
+    _roundUpToNearest: function(number, nearest)
+    {
+        nearest = nearest || 1;
+        if(nearest === 0)
+        {
+            return number;
+        }
+        return Math.ceil(this._roundToPrecision(number / nearest, 10)) * nearest;
+    },
+	
+    /**
+     * @private
+     *
+     * Rounds a Number <em>down</em> to the nearest multiple of an input. For example, by rounding
+     * 16 down to the nearest 10, you will receive 10. Similar to the built-in function Math.floor().
+     */
+    _roundDownToNearest: function(number, nearest)
+    {
+        nearest = nearest || 1;
+        if(nearest === 0)
+        {
+            return number;
+        }
+        return Math.floor(this._roundToPrecision(number / nearest, 10)) * nearest;
+    },
+
+    /**
+     * @private
+     *
+     * Rounds a number to a certain level of precision. Useful for limiting the number of
+     * decimal places on a fractional number.
+     */
+    _roundToPrecision: function(number, precision)
+    {
+        precision = precision || 0;
+        var decimalPlaces = Math.pow(10, precision);
+        return Math.round(decimalPlaces * number) / decimalPlaces;
+    }
+});
+
+Y.NumericAxis = NumericAxis;
+		
+/**
+ * StackedAxis manages stacked numeric data on an axis.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class StackedAxis
+ * @constructor
+ * @extends NumericAxis
+ */
+function StackedAxis(config)
+{
+	StackedAxis.superclass.constructor.apply(this, arguments);
+}
+
+StackedAxis.NAME = "stackedAxis";
+
+
+Y.extend(StackedAxis, Y.NumericAxis,
+{
+    /**
+     * @private
+     */
+    _updateMinAndMax: function()
+    {
+        var max = 0,
+            min = 0,
+            pos = 0,
+            neg = 0,
+            len = 0,
+            i = 0,
+            key,
+            num,
+            keys = this.get("keys");
+
+        for(key in keys)
+        {
+            if(keys.hasOwnProperty(key))
+            {
+                len = Math.max(len, keys[key].length);
+            }
+        }
+        for(; i < len; ++i)
+        {
+            pos = 0;
+            neg = 0;
+            for(key in keys)
+            {
+                if(keys.hasOwnProperty(key))
+                {
+                    num = keys[key][i];
+                    if(isNaN(num))
+                    {
+                        continue;
+                    }
+                    if(num >= 0)
+                    {
+                        pos += num;
+                    }
+                    else
+                    {
+                        neg += num;
+                    }
+                }
+            }
+            if(pos > 0)
+            {
+                max = Math.max(max, pos);
+            }
+            else 
+            {
+                max = Math.max(max, neg);
+            }
+            if(neg < 0)
+            {
+                min = Math.min(min, neg);
+            }
+            else
+            {
+                min = Math.min(min, pos);
+            }
+        }
+        this._roundMinAndMax(min, max);
+    }
+});
+
+Y.StackedAxis = StackedAxis;
+		
+/**
+ * TimeAxis manages time data on an axis.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class TimeAxis
+ * @constructor
+ * @extends AxisType
+ */
+function TimeAxis(config)
+{
+	TimeAxis.superclass.constructor.apply(this, arguments);
+}
+
+TimeAxis.NAME = "timeAxis";
+
+TimeAxis.ATTRS = 
+{
+    /**
+     * @private
+     */
+    setMax: {
+        readOnly: true,
+
+        getter: function()
+        {
+            var max = this._getNumber(this._setMaximum);
+            return (Y.Lang.isNumber(max));
+        }
+    },
+
+    /**
+     * @private
+     */
+    setMin: {
+        readOnly: true,
+
+        getter: function()
+        {
+            var min = this._getNumber(this._setMinimum);
+            return (Y.Lang.isNumber(min));
+        }
+    },
+
+    /**
+     * The maximum value that will appear on an axis.
+     *
+     * @attribute maximum
+     * @type Number
+     */
+    maximum: {
+        getter: function ()
+        {
+            var max = this._getNumber(this._setMaximum);
+            if(!Y.Lang.isNumber(max))
+            {
+                max = this._getNumber(this.get("dataMaximum"));
+            }
+            return max;
+        },
+        setter: function (value)
+        {
+            this._setMaximum = this._getNumber(value);
+            return value;
+        }
+    },
+
+    /**
+     * The minimum value that will appear on an axis.
+     *
+     * @attribute minimum
+     * @type Number
+     */
+    minimum: {
+        getter: function ()
+        {
+            var min = this._getNumber(this._setMinimum);
+            if(!Y.Lang.isNumber(min)) 
+            {
+                min = this._getNumber(this.get("dataMinimum"));
+            }
+                return min;
+        },
+        setter: function (value)
+        {
+            this._setMinimum = this._getNumber(value);
+            return value;
+        }
+    },
+
+    /**
+     * Formats a label.
+     *
+     * @attribute labelFunction
+     * @type Function
+     * @param {Object} val Value to be formatted. 
+     * @param {String} format Pattern used to format label.
+     */
+    labelFunction: {
+        value: function(val, format)
+        {
+            val = Y.DataType.Date.parse(val);
+            if(format)
+            {
+                return Y.DataType.Date.format(val, {format:format});
+            }
+            return val;
+        }
+    },
+
+    /**
+     * Pattern used by the <code>labelFunction</code> to format a label.
+     *
+     * @attribute labelFormat
+     * @type String
+     */
+    labelFormat: {
+        value: "%b %d, %y"
+    }
+};
+
+Y.extend(TimeAxis, Y.AxisType, {
+    /**
+     * Constant used to generate unique id.
+     *
+     * @property GUID
+     * @type String
+     * @private
+     */
+    GUID: "yuitimeaxis",
+	
+    /**
+     * @private
+     */
+    _dataType: "time",
+	
+    /**
+     * Calculates and returns a value based on the number of labels and the index of
+     * the current label.
+     *
+     * @method getLabelByIndex
+     * @param {Number} i Index of the label.
+     * @param {Number} l Total number of labels.
+     * @return String
+     */
+    getLabelByIndex: function(i, l)
+    {
+        var min = this.get("minimum"),
+            max = this.get("maximum"),
+            position = this.get("position"),
+            increm,
+            label;
+            l -= 1;
+        increm = ((max - min)/l) * i;
+        if(position == "bottom" || position == "top")
+        {
+            label = min + increm;
+        }
+        else
+        {
+            label = max - increm;
+        }
+        return label;
+    },
+
+    /**
+     * @private
+     */
+    _getKeyArray: function(key, data)
+    {
+        var obj,
+            keyArray = [],
+            i = 0,
+            val,
+            len = data.length;
+        for(; i < len; ++i)
+        {
+            obj = data[i][key];
+            if(Y.Lang.isDate(obj))
+            {   
+                val = obj.valueOf();
+            }
+            else if(!Y.Lang.isNumber(obj))
+            {
+                val = new Date(obj.toString()).valueOf();
+            }
+            else
+            {
+                val = obj;
+            }
+            keyArray[i] = val;
+        }
+        return keyArray;
+    },
+
+    /**
+     * @private (override)
+     */
+    _setDataByKey: function(key, data)
+    {
+        var obj, 
+            arr = [], 
+            dv = this._dataClone.concat(), 
+            i, 
+            val,
+            len = dv.length;
+        for(i = 0; i < len; ++i)
+        {
+            obj = dv[i][key];
+            if(Y.Lang.isDate(obj))
+            {
+                val = obj.valueOf();
+            }
+            else if(!Y.Lang.isNumber(obj))
+            {
+                val = new Date(obj.toString()).valueOf();
+            }
+            else
+            {
+                val = obj;
+            }
+            arr[i] = val;
+        }
+        this.get("keys")[key] = arr;
+        this._updateTotalDataFlag = true;
+    },
+
+    /**
+     * @private
+     */
+    _getNumber: function(val)
+    {
+        if(Y.Lang.isDate(val))
+        {
+            val = val.valueOf();
+        }
+        else if(!Y.Lang.isNumber(val) && val)
+        {
+            val = new Date(val.toString()).valueOf();
+        }
+
+        return val;
+    }
+});
+
+Y.TimeAxis = TimeAxis;
+		
+/**
+ * CategoryAxis manages category data on an axis.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class CategoryAxis
+ * @constructor
+ * @extends AxisType
+ */
+function CategoryAxis(config)
+{
+	CategoryAxis.superclass.constructor.apply(this, arguments);
+}
+
+CategoryAxis.NAME = "categoryAxis";
+
+Y.extend(CategoryAxis, Y.AxisType,
+{
+    /**
+     * @private
+     */
+    _indices: null,
+
+    /**
+     * @private
+     */
+    GUID: "yuicategoryaxis",
+
+    /**
+     * @private
+     */
+    _type: "category",
+        
+    /**
+     * @private
+     */
+    _updateMinAndMax: function()
+    {
+        this._dataMaximum = Math.max(this.get("data").length - 1, 0);
+        this._dataMinimum = 0;
+    },
+
+    /**
+     * @private
+     */
+    _getKeyArray: function(key, data)
+    {
+        var i = 0,
+            obj,
+            keyArr = [],
+            labels = [],
+            len = data.length;
+        if(!this._indices)
+        {
+            this._indices = {};
+        }
+        for(; i < len; ++i)
+        {
+            obj = data[i];
+            keyArr[i] = i;
+            labels[i] = obj[key];
+        }
+        this._indices[key] = keyArr;
+        return labels;
+    },
+
+    /**
+     * @private
+     */
+    _setDataByKey: function(key)
+    {
+        var i,
+            obj, 
+            arr = [], 
+            labels = [], 
+            dv = this._dataClone.concat(), 
+            len = dv.length;
+        if(!this._indices)
+        {
+            this._indices = {};
+        }
+        for(i = 0; i < len; ++i)
+        {
+            obj = dv[i];
+            arr[i] = i;
+            labels[i] = obj[key];
+        }
+        this._indices[key] = arr;
+        this.get("keys")[key] = labels.concat();
+        this._updateTotalDataFlag = true;
+    },
+
+    /**
+     * Returns an array of values based on an identifier key.
+     *
+     * @method getDataByKey
+     * @param {String} value value used to identify the array
+     * @return Array
+     */
+    getDataByKey: function (value)
+    {
+        if(!this._indices)
+        {
+            this.get("keys");
+        }
+        var keys = this._indices;
+        if(keys[value])
+        {
+            return keys[value];
+        }
+        return null;
+    },
+
+    /**
+     * Returns the total number of majorUnits that will appear on an axis.
+     *
+     * @method getTotalMajorUnits
+     * @return Number
+     */
+    getTotalMajorUnits: function(majorUnit, len)
+    {
+        return this.get("data").length;
+    },
+    
+    /**
+     * Returns the distance between major units on an axis.
+     *
+     * @method getMajorUnitDistance
+     * @param {Number} len Number of ticks
+     * @param {Number} uiLen Size of the axis.
+     * @param {Object} majorUnit Hash of properties used to determine the majorUnit
+     * @return Number
+     */
+    getMajorUnitDistance: function(len, uiLen, majorUnit)
+    {
+        var dist;
+        if(majorUnit.determinant === "count")
+        {
+            dist = uiLen/len;
+        }
+        else if(majorUnit.determinant === "distance")
+        {
+            dist = majorUnit.distance;
+        }
+        return dist;
+    },
+   
+    /**
+     * Gets the distance that the first and last ticks are offset from there respective
+     * edges.
+     *
+     * @method getEdgeOffset
+     * @param {Number} ct Number of ticks on the axis.
+     * @param {Number} l Length (in pixels) of the axis.
+     * @return Number
+     */
+    getEdgeOffset: function(ct, l)
+    {
+        return l/ct;
+    },
+   
+    /**
+     * Calculates and returns a value based on the number of labels and the index of
+     * the current label.
+     *
+     * @method getLabelByIndex
+     * @param {Number} i Index of the label.
+     * @param {Number} l Total number of labels.
+     * @return String
+     */
+    getLabelByIndex: function(i, l)
+    {
+        var label,
+            data = this.get("data"),
+            position = this.get("position");
+        if(position == "bottom" || position == "top")
+        {
+            label = data[i];
+        }
+        else
+        {
+            label = data[l - (i + 1)];
+        }   
+        return label;
+    }
+});
+
+Y.CategoryAxis = CategoryAxis;
+		
+/**
+ * Utility class used for calculating curve points.
+ *
+ * @class CurveUtil
+ * @constructor
+ */
+function CurveUtil()
+{
+}
+
+CurveUtil.prototype = {
+    /**
+     * Creates an array of start, end and control points for splines.
+     *
+     * @protected
+     * @param {Array} xcoords Collection of x-coordinates used for calculate the curves
+     * @param {Array} ycoords Collection of y-coordinates used for calculate the curves
+     * @return {Object}
+     */
+    getCurveControlPoints: function(xcoords, ycoords) 
+    {
+		var outpoints = [],
+            i = 1,
+            l = xcoords.length - 1,
+		    xvals = [],
+		    yvals = [];
+		
+		
+		// Too few points, need at least two
+		if (l < 1) 
+        {
+			return null;
+		} 
+        
+        outpoints[0] = {
+            startx: xcoords[0], 
+            starty: ycoords[0],
+            endx: xcoords[1],
+            endy: ycoords[1]
+        };
+        
+		// Special case, the Bezier should be a straight line
+        if (l === 1) 
+        {
+			outpoints[0].ctrlx1 = (2.0*xcoords[0] + xcoords[1])/3.0;  
+			outpoints[0].ctrly2 = (2.0*ycoords[0] + ycoords[1])/3.0;
+			outpoints[0].ctrlx2 = 2.0*outpoints[0].ctrlx1 - xcoords[0];
+            outpoints[0].ctrly2 = 2.0*outpoints[0].ctrly1 - ycoords[0];
+            return outpoints;
+		}
+
+		for (; i < l; ++i) 
+        {
+			outpoints.push({startx: Math.round(xcoords[i]), starty: Math.round(ycoords[i]), endx: Math.round(xcoords[i+1]), endy: Math.round(ycoords[i+1])});
+			xvals[i] = 4.0 * xcoords[i] + 2*xcoords[i+1];
+			yvals[i] = 4.0*ycoords[i] + 2*ycoords[i+1];
+		}
+		
+		xvals[0] = xcoords[0] + (2.0 * xcoords[1]);
+		xvals[l-1] = (8.0 * xcoords[l-1] + xcoords[l]) / 2.0;
+		xvals = this.getControlPoints(xvals.concat());
+        yvals[0] = ycoords[0] + (2.0 * ycoords[1]);
+		yvals[l-1] = (8.0 * ycoords[l-1] + ycoords[l]) / 2.0;	
+		yvals = this.getControlPoints(yvals.concat());
+		
+        for (i = 0; i < l; ++i) 
+        {
+			outpoints[i].ctrlx1 = Math.round(xvals[i]);
+            outpoints[i].ctrly1 = Math.round(yvals[i]);
+			
+			if (i < l-1) 
+            {
+				outpoints[i].ctrlx2 = Math.round(2*xcoords[i+1] - xvals[i+1]);
+                outpoints[i].ctrly2 = Math.round(2*ycoords[i+1] - yvals[i+1]);
+			}
+			else 
+            {
+				outpoints[i].ctrlx2 = Math.round((xcoords[l] + xvals[l-1])/2);
+                outpoints[i].ctrly2 = Math.round((ycoords[l] + yvals[l-1])/2);
+			}
+		}
+		
+		return outpoints;	
+	},
+
+    /**
+     * @private
+     */
+	getControlPoints: function(vals) 
+    {
+		var l = vals.length,
+            x = [],
+            tmp = [],
+            b = 2.0,
+            i = 1;
+		x[0] = vals[0] / b;
+		for (; i < l; ++i) 
+        {
+			tmp[i] = 1/b;
+			b = (i < l-1 ? 4.0 : 3.5) - tmp[i];
+			x[i] = (vals[i] - x[i-1]) / b;
+		}
+		
+		for (i = 1; i < l; ++i) 
+        {
+			x[l-i-1] -= tmp[l-i] * x[l-i];
+		}
+		
+		return x;
+	}
+};
+Y.CurveUtil = CurveUtil;
+/**
+ * Utility class used for creating stacked series.
+ *
+ * @class StackingUtil
+ * @constructor
+ */
+function StackingUtil(){}
+
+StackingUtil.prototype = {
+    /**
+     * @protected
+     *
+     * Adjusts coordinate values for stacked series.
+     *
+     * @method _stackCoordinates
+     */
+    _stackCoordinates: function() 
+    {
+        var direction = this.get("direction"),
+            order = this.get("order"),
+            type = this.get("type"),
+            graph = this.get("graph"),
+            h = graph.get("height"), 
+            seriesCollection = graph.seriesTypes[type],
+            i = 0,
+            len,
+            xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            prevXCoords,
+            prevYCoords;
+        if(order === 0)
+        {
+            return;
+        }
+        prevXCoords = seriesCollection[order - 1].get("xcoords").concat();
+        prevYCoords = seriesCollection[order - 1].get("ycoords").concat();
+        if(direction === "vertical")
+        {
+            len = prevXCoords.length;
+            for(; i < len; ++i)
+            {
+                if(!isNaN(prevXCoords[i]) && !isNaN(xcoords[i]))
+                {
+                    xcoords[i] += prevXCoords[i];
+                }
+            }
+        }
+        else
+        {
+            len = prevYCoords.length;
+            for(; i < len; ++i)
+            {
+                if(!isNaN(prevYCoords[i]) && !isNaN(ycoords[i]))
+                {
+                    ycoords[i] = prevYCoords[i] - (h - ycoords[i]);
+                }
+            }
+        }
+    }
+};
+Y.StackingUtil = StackingUtil;
+/**
+ * Utility class used for drawing lines.
+ *
+ * @class Lines
+ * @constructor
+ */
+function Lines(){}
+
+Lines.prototype = {
+    /**
+     * @private
+     */
+    _lineDefaults: null,
+    
+    /**
+     * Creates a graphic in which to draw a series.
+     *
+     * @method _getGraphic
+     * @return Graphic
+     * @private
+     */
+    _getGraphic: function()
+    {
+        var graph = this.get("graph");
+        if(!this._lineGraphic)
+        {
+            this._lineGraphic = new Y.Graphic();
+            this._lineGraphic.render(graph.get("contentBox"));
+        }
+        this._lineGraphic.clear();
+        this._lineGraphic.setSize(graph.get("width"), graph.get("height"));
+        this.autoSize = false;
+        return this._lineGraphic;
+    },
+
+    /**
+     * Draws lines for the series.
+     *
+     * @method drawLines
+     * @protected
+     */
+    drawLines: function()
+    {
+        if(this.get("xcoords").length < 1) 
+        {
+            return;
+        }
+        var xcoords = this.get("xcoords").concat(),
+            ycoords = this.get("ycoords").concat(),
+            direction = this.get("direction"),
+            len = direction === "vertical" ? ycoords.length : xcoords.length,
+            lastX,
+            lastY,
+            lastValidX = lastX,
+            lastValidY = lastY,
+            nextX,
+            nextY,
+            i,
+            styles = this.get("styles").line,
+            lineType = styles.lineType,
+            lc = styles.color || this._getDefaultColor(this.get("graphOrder"), "line"),
+            lineAlpha = styles.alpha,
+            dashLength = styles.dashLength,
+            gapSpace = styles.gapSpace,
+            connectDiscontinuousPoints = styles.connectDiscontinuousPoints,
+            discontinuousType = styles.discontinuousType,
+            discontinuousDashLength = styles.discontinuousDashLength,
+            discontinuousGapSpace = styles.discontinuousGapSpace,
+            graphic = this._getGraphic();
+        lastX = lastValidX = xcoords[0];
+        lastY = lastValidY = ycoords[0];
+        graphic.lineStyle(styles.weight, lc, lineAlpha);
+        graphic.moveTo(lastX, lastY);
+        for(i = 1; i < len; i = ++i)
+        {
+            nextX = xcoords[i];
+            nextY = ycoords[i];
+            if(isNaN(nextY))
+            {
+                lastValidX = nextX;
+                lastValidY = nextY;
+                continue;
+            }
+            if(lastValidX == lastX)
+            {
+                if(lineType != "dashed")
+                {
+                    graphic.lineTo(nextX, nextY);
+                }
+                else
+                {
+                    this.drawDashedLine(lastValidX, lastValidY, nextX, nextY, 
+                                                dashLength, 
+                                                gapSpace);
+                }
+            }
+            else if(!connectDiscontinuousPoints)
+            {
+                graphic.moveTo(nextX, nextY);
+            }
+            else
+            {
+                if(discontinuousType != "solid")
+                {
+                    this.drawDashedLine(lastValidX, lastValidY, nextX, nextY, 
+                                                discontinuousDashLength, 
+                                                discontinuousGapSpace);
+                }
+                else
+                {
+                    graphic.lineTo(nextX, nextY);
+                }
+            }
+        
+            lastX = lastValidX = nextX;
+            lastY = lastValidY = nextY;
+        }
+        graphic.end();
+    },
+    
+    /**
+     * Connects data points with a consistent curve for a series.
+     * 
+     * @method drawSpline
+     * @protected
+     */
+    drawSpline: function()
+    {
+        if(this.get("xcoords").length < 1) 
+        {
+            return;
+        }
+        var xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            curvecoords = this.getCurveControlPoints(xcoords, ycoords),
+            len = curvecoords.length,
+            cx1,
+            cx2,
+            cy1,
+            cy2,
+            x,
+            y,
+            i = 0,
+            styles = this.get("styles").line,
+            graphic = this._getGraphic(),
+            lineAlpha = styles.alpha,
+            color = styles.color || this._getDefaultColor(this.get("graphOrder"), "line");
+        graphic.lineStyle(styles.weight, color, lineAlpha);
+        graphic.moveTo(xcoords[0], ycoords[0]);
+        for(; i < len; i = ++i)
+        {
+            x = curvecoords[i].endx;
+            y = curvecoords[i].endy;
+            cx1 = curvecoords[i].ctrlx1;
+            cx2 = curvecoords[i].ctrlx2;
+            cy1 = curvecoords[i].ctrly1;
+            cy2 = curvecoords[i].ctrly2;
+            graphic.curveTo(cx1, cy1, cx2, cy2, x, y);
+        }
+        graphic.end();
+    },
+
+    /**
+     * Draws a dashed line between two points.
+     * 
+     * @method drawDashedLine
+     * @param {Number} xStart	The x position of the start of the line
+     * @param {Number} yStart	The y position of the start of the line
+     * @param {Number} xEnd		The x position of the end of the line
+     * @param {Number} yEnd		The y position of the end of the line
+     * @param {Number} dashSize	the size of dashes, in pixels
+     * @param {Number} gapSize	the size of gaps between dashes, in pixels
+     * @private
+     */
+    drawDashedLine: function(xStart, yStart, xEnd, yEnd, dashSize, gapSize)
+    {
+        dashSize = dashSize || 10;
+        gapSize = gapSize || 10;
+        var segmentLength = dashSize + gapSize,
+            xDelta = xEnd - xStart,
+            yDelta = yEnd - yStart,
+            delta = Math.sqrt(Math.pow(xDelta, 2) + Math.pow(yDelta, 2)),
+            segmentCount = Math.floor(Math.abs(delta / segmentLength)),
+            radians = Math.atan2(yDelta, xDelta),
+            xCurrent = xStart,
+            yCurrent = yStart,
+            i,
+            graphic = this._getGraphic();
+        xDelta = Math.cos(radians) * segmentLength;
+        yDelta = Math.sin(radians) * segmentLength;
+        
+        for(i = 0; i < segmentCount; ++i)
+        {
+            graphic.moveTo(xCurrent, yCurrent);
+            graphic.lineTo(xCurrent + Math.cos(radians) * dashSize, yCurrent + Math.sin(radians) * dashSize);
+            xCurrent += xDelta;
+            yCurrent += yDelta;
+        }
+        
+        graphic.moveTo(xCurrent, yCurrent);
+        delta = Math.sqrt((xEnd - xCurrent) * (xEnd - xCurrent) + (yEnd - yCurrent) * (yEnd - yCurrent));
+        
+        if(delta > dashSize)
+        {
+            graphic.lineTo(xCurrent + Math.cos(radians) * dashSize, yCurrent + Math.sin(radians) * dashSize);
+        }
+        else if(delta > 0)
+        {
+            graphic.lineTo(xCurrent + Math.cos(radians) * delta, yCurrent + Math.sin(radians) * delta);
+        }
+        
+        graphic.moveTo(xEnd, yEnd);
+    },
+
+    /**
+     * Default values for <code>styles</code> attribute.
+     *
+     * @method _getLineDefaults
+     * @return Object
+     * @protected
+     */
+    _getLineDefaults: function()
+    {
+        return {
+            alpha: 1,
+            weight: 6,
+            lineType:"solid", 
+            dashLength:10, 
+            gapSpace:10, 
+            connectDiscontinuousPoints:true, 
+            discontinuousType:"solid", 
+            discontinuousDashLength:10, 
+            discontinuousGapSpace:10
+        };
+    }
+};
+Y.augment(Lines, Y.Attribute);
+Y.Lines = Lines;
+/**
+ * Utility class used for drawing area fills.
+ *
+ * @class Fills
+ * @constructor
+ */
+function Fills(cfg)
+{
+    var attrs = {
+        area: {
+            getter: function()
+            {
+                return this._defaults || this._getAreaDefaults();
+            },
+
+            setter: function(val)
+            {
+                var defaults = this._defaults || this._getAreaDefaults();
+                this._defaults = Y.merge(defaults, val);
+            }
+        }
+    };
+    this.addAttrs(attrs, cfg);
+    this.get("styles");
+}
+
+Fills.prototype = {
+    /**
+     * Draws fill
+     *
+     * @method drawFill
+     * @protected
+     */
+    drawFill: function(xcoords, ycoords)
+    {
+        if(xcoords.length < 1) 
+        {
+            return;
+        }
+        var len = xcoords.length,
+            firstX = xcoords[0],
+            firstY = ycoords[0],
+            lastValidX = firstX,
+            lastValidY = firstY,
+            nextX,
+            nextY,
+            i = 1,
+            styles = this.get("styles").area,
+            graphic = this.get("graphic"),
+            color = styles.color || this._getDefaultColor(this.get("graphOrder"), "slice");
+        graphic.clear();
+        graphic.beginFill(color, styles.alpha);
+        graphic.moveTo(firstX, firstY);
+        for(; i < len; i = ++i)
+        {
+            nextX = xcoords[i];
+            nextY = ycoords[i];
+            if(isNaN(nextY))
+            {
+                lastValidX = nextX;
+                lastValidY = nextY;
+                continue;
+            }
+            graphic.lineTo(nextX, nextY);
+            lastValidX = nextX;
+            lastValidY = nextY;
+        }
+        graphic.end();
+    },
+	
+    /**
+     * Draws a fill for a spline
+     *
+     * @method drawAreaSpline
+     * @protected
+     */
+    drawAreaSpline: function()
+    {
+        if(this.get("xcoords").length < 1) 
+        {
+            return;
+        }
+        var xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            curvecoords = this.getCurveControlPoints(xcoords, ycoords),
+            len = curvecoords.length,
+            cx1,
+            cx2,
+            cy1,
+            cy2,
+            x,
+            y,
+            i = 0,
+            firstX = xcoords[0],
+            firstY = ycoords[0],
+            styles = this.get("styles").area,
+            graphic = this.get("graphic"),
+            color = styles.color || this._getDefaultColor(this.get("graphOrder"), "slice");
+        graphic.beginFill(color, styles.alpha);
+        graphic.moveTo(firstX, firstY);
+        for(; i < len; i = ++i)
+        {
+            x = curvecoords[i].endx;
+            y = curvecoords[i].endy;
+            cx1 = curvecoords[i].ctrlx1;
+            cx2 = curvecoords[i].ctrlx2;
+            cy1 = curvecoords[i].ctrly1;
+            cy2 = curvecoords[i].ctrly2;
+            graphic.curveTo(cx1, cy1, cx2, cy2, x, y);
+        }
+        if(this.get("direction") === "vertical")
+        {
+            graphic.lineTo(this._leftOrigin, y);
+            graphic.lineTo(this._leftOrigin, firstY);
+        }
+        else
+        {
+            graphic.lineTo(x, this._bottomOrigin);
+            graphic.lineTo(firstX, this._bottomOrigin);
+        }
+        graphic.lineTo(firstX, firstY);
+        graphic.end();
+    },
+    
+    /**
+     * Draws a a stacked area spline
+     *
+     * @method drawStackedAreaSpline
+     * @protected
+     */
+    drawStackedAreaSpline: function()
+    {
+        if(this.get("xcoords").length < 1) 
+        {
+            return;
+        }
+        var xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            curvecoords,
+            order = this.get("order"),
+            type = this.get("type"),
+            graph = this.get("graph"),
+            seriesCollection = graph.seriesTypes[type],
+            prevXCoords,
+            prevYCoords,
+            len,
+            cx1,
+            cx2,
+            cy1,
+            cy2,
+            x,
+            y,
+            i = 0,
+            firstX,
+            firstY,
+            styles = this.get("styles").area,
+            graphic = this.get("graphic"),
+            color = styles.color || this._getDefaultColor(this.get("graphOrder"), "slice");
+        firstX = xcoords[0];
+        firstY = ycoords[0];
+        curvecoords = this.getCurveControlPoints(xcoords, ycoords);
+        len = curvecoords.length;
+        graphic.beginFill(color, styles.alpha);
+        graphic.moveTo(firstX, firstY);
+        for(; i < len; i = ++i)
+        {
+            x = curvecoords[i].endx;
+            y = curvecoords[i].endy;
+            cx1 = curvecoords[i].ctrlx1;
+            cx2 = curvecoords[i].ctrlx2;
+            cy1 = curvecoords[i].ctrly1;
+            cy2 = curvecoords[i].ctrly2;
+            graphic.curveTo(cx1, cy1, cx2, cy2, x, y);
+        }
+        if(order > 0)
+        {
+            prevXCoords = seriesCollection[order - 1].get("xcoords").concat().reverse();
+            prevYCoords = seriesCollection[order - 1].get("ycoords").concat().reverse();
+            curvecoords = this.getCurveControlPoints(prevXCoords, prevYCoords);
+            i = 0;
+            len = curvecoords.length;
+            graphic.lineTo(prevXCoords[0], prevYCoords[0]);
+            for(; i < len; i = ++i)
+            {
+                x = curvecoords[i].endx;
+                y = curvecoords[i].endy;
+                cx1 = curvecoords[i].ctrlx1;
+                cx2 = curvecoords[i].ctrlx2;
+                cy1 = curvecoords[i].ctrly1;
+                cy2 = curvecoords[i].ctrly2;
+                graphic.curveTo(cx1, cy1, cx2, cy2, x, y);
+            }
+        }
+        else
+        {
+            if(this.get("direction") === "vertical")
+            {
+                graphic.lineTo(this._leftOrigin, ycoords[ycoords.length-1]);
+                graphic.lineTo(this._leftOrigin, firstY);
+            }
+            else
+            {
+                graphic.lineTo(xcoords[xcoords.length-1], this._bottomOrigin);
+                graphic.lineTo(firstX, this._bottomOrigin);
+            }
+
+        }
+        graphic.lineTo(firstX, firstY);
+        graphic.end();
+    },
+    
+    /**
+     * @private
+     */
+    _defaults: null,
+
+    /**
+     * Concatanates coordinate array with correct coordinates for closing an area fill.
+     *
+     * @method _getClosingPoints
+     * @return Array
+     * @protected
+     */
+    _getClosingPoints: function()
+    {
+        var xcoords = this.get("xcoords").concat(),
+            ycoords = this.get("ycoords").concat();
+        if(this.get("direction") === "vertical")
+        {
+            xcoords.push(this._leftOrigin);
+            xcoords.push(this._leftOrigin);
+            ycoords.push(ycoords[ycoords.length - 1]);
+            ycoords.push(ycoords[0]);
+        }
+        else
+        {
+            xcoords.push(xcoords[xcoords.length - 1]);
+            xcoords.push(xcoords[0]);
+            ycoords.push(this._bottomOrigin);
+            ycoords.push(this._bottomOrigin);
+        }
+        xcoords.push(xcoords[0]);
+        ycoords.push(ycoords[0]);
+        return [xcoords, ycoords];
+    },
+
+    /**
+     * Concatenates coordinate array with the correct coordinates for closing an area stack.
+     *
+     * @method _getStackedClosingPoints
+     * @return Array
+     * @protected
+     */
+    _getStackedClosingPoints: function()
+    {
+        var order = this.get("order"),
+            type = this.get("type"),
+            graph = this.get("graph"),
+            direction = this.get("direction"),
+            seriesCollection = graph.seriesTypes[type],
+            prevXCoords,
+            prevYCoords,
+            allXCoords = this.get("xcoords").concat(),
+            allYCoords = this.get("ycoords").concat(),
+            firstX = allXCoords[0],
+            firstY = allYCoords[0];
+        
+        if(order > 0)
+        {
+            prevXCoords = seriesCollection[order - 1].get("xcoords").concat();
+            prevYCoords = seriesCollection[order - 1].get("ycoords").concat();
+            allXCoords = allXCoords.concat(prevXCoords.concat().reverse());
+            allYCoords = allYCoords.concat(prevYCoords.concat().reverse());
+            allXCoords.push(allXCoords[0]);
+            allYCoords.push(allYCoords[0]);
+        }
+        else
+        {
+            if(direction === "vertical")
+            {
+                allXCoords.push(this._leftOrigin);
+                allXCoords.push(this._leftOrigin);
+                allYCoords.push(allYCoords[allYCoords.length-1]);
+                allYCoords.push(firstY);
+            }
+            else
+            {
+                allXCoords.push(allXCoords[allXCoords.length-1]);
+                allXCoords.push(firstX);
+                allYCoords.push(this._bottomOrigin);
+                allYCoords.push(this._bottomOrigin);
+            }
+        }
+        return [allXCoords, allYCoords];
+    },
+
+    /**
+     * @private
+     */
+    _getAreaDefaults: function()
+    {
+        return {
+        };
+    }
+};
+Y.augment(Fills, Y.Attribute);
+Y.Fills = Fills;
+/**
+ * Utility class used for drawing markers.
+ *
+ * @class Plots
+ * @constructor
+ */
+function Plots(cfg)
+{
+    var attrs = { 
+        markers: {
+            getter: function()
+            {
+                return this._markers;
+            }
+        }
+    };
+    this.addAttrs(attrs, cfg);
+}
+
+Plots.prototype = {
+    /**
+     * @private
+     */
+    _plotDefaults: null,
+
+    /**
+     * Draws the markers
+     *
+     * @method drawPlots
+     * @protected
+     */
+    drawPlots: function()
+    {
+        if(!this.get("xcoords") || this.get("xcoords").length < 1) 
+		{
+			return;
+		}
+        var style = Y.clone(this.get("styles").marker),
+            w = style.width,
+            h = style.height,
+            xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            i = 0,
+            len = xcoords.length,
+            top = ycoords[0],
+            left,
+            marker,
+            offsetWidth = w/2,
+            offsetHeight = h/2,
+            fillColors = null,
+            borderColors = null,
+            graphOrder = this.get("graphOrder"),
+            hotspot,
+            isChrome = ISCHROME;
+        if(Y.Lang.isArray(style.fill.color))
+        {
+            fillColors = style.fill.color.concat(); 
+        }
+        if(Y.Lang.isArray(style.border.color))
+        {
+            borderColors = style.border.colors.concat();
+        }
+        this._createMarkerCache();
+        if(isChrome)
+        {
+            this._createHotspotCache();
+        }
+        for(; i < len; ++i)
+        {
+            top = (ycoords[i] - offsetHeight);
+            left = (xcoords[i] - offsetWidth);            
+            if(!top || !left || top === undefined || left === undefined || top == "undefined" || left == "undefined" || isNaN(top) || isNaN(left))
+            {
+                this._markers.push(null);
+                this._graphicNodes.push(null);
+                continue;
+            }
+            if(fillColors)
+            {
+                style.fill.color = fillColors[i % fillColors.length];
+            }
+            if(borderColors)
+            {
+                style.border.colors = borderColors[i % borderColors.length];
+            }
+            marker = this.getMarker(style, graphOrder, i);
+            marker.setPosition(left, top);
+            if(isChrome)
+            {
+                hotspot = this.getHotspot(style, graphOrder, i);
+                hotspot.setPosition(left, top);
+                hotspot.parentNode.style.zIndex = 5;
+            }
+        }
+        this._clearMarkerCache();
+        if(isChrome)
+        {
+            this._clearHotspotCache();
+        }
+    },
+
+    /**
+     * Gets the default values for series that use the utility. This method is used by
+     * the class' <code>styles</code> attribute's getter to get build default values.
+     *
+     * @method _getPlotDefaults
+     * @return Object
+     * @protected
+     */
+    _getPlotDefaults: function()
+    {
+        var defs = {
+            fill:{
+                type: "solid",
+                alpha: 1,
+                colors:null,
+                alphas: null,
+                ratios: null
+            },
+            border:{
+                weight: 1,
+                alpha: 1
+            },
+            width: 10,
+            height: 10,
+            shape: "circle"
+        };
+        defs.fill.color = this._getDefaultColor(this.get("graphOrder"), "fill");
+        defs.border.color = this._getDefaultColor(this.get("graphOrder"), "border");
+        return defs;
+    },
+
+    /**
+     * Collection of markers to be used in the series.
+     *
+     * @private
+     */
+    _markers: null,
+
+    /**
+     * Collection of markers to be re-used on a series redraw.
+     *
+     * @private
+     */
+    _markerCache: null,
+    
+    /**
+     * Gets and styles a marker. If there is a marker in cache, it will use it. Otherwise
+     * it will create one.
+     *
+     * @method getMarker
+     * @param {Object} styles Hash of style properties.
+     * @param {Number} order Order of the series.
+     * @param {Number} index Index within the series associated with the marker.
+     * @return Shape
+     * @protected
+     */
+    getMarker: function(styles, order, index)
+    {
+        var marker;
+        if(this._markerCache.length > 0)
+        {
+            while(!marker)
+            {
+                if(this._markerCache.length < 1)
+                {
+                    marker = this._createMarker(styles, order, index);
+                    break;
+                }
+                marker = this._markerCache.shift();
+
+            }
+            marker.update(styles);
+        }
+        else
+        {
+            marker = this._createMarker(styles, order, index);
+        }
+        this._markers.push(marker);
+        this._graphicNodes.push(marker.parentNode);
+        return marker;
+    },   
+    
+    /**
+     * Creates a shape to be used as a marker.
+     *
+     * @method _createMarker
+     * @param {Object} styles Hash of style properties.
+     * @param {Number} order Order of the series.
+     * @param {Number} index Index within the series associated with the marker.
+     * @return Shape
+     * @private
+     */
+    _createMarker: function(styles, order, index)
+    {
+        var graphic = new Y.Graphic(),
+            marker,
+            cfg = Y.clone(styles);
+        graphic.render(this.get("graph").get("contentBox"));
+        graphic.node.setAttribute("id", "markerParent_" + order + "_" + index);
+        cfg.graphic = graphic;
+        marker = new Y.Shape(cfg); 
+        marker.addClass("yui3-seriesmarker");
+        marker.node.setAttribute("id", "series_" + order + "_" + index);
+        return marker;
+    },
+    
+    /**
+     * Creates a cache of markers for reuse.
+     *
+     * @method _createMarkerCache
+     * @private
+     */
+    _createMarkerCache: function()
+    {
+        if(this._markers && this._markers.length > 0)
+        {
+            this._markerCache = this._markers.concat();
+        }
+        else
+        {
+            this._markerCache = [];
+        }
+        this._markers = [];
+        this._graphicNodes = [];
+    },
+    
+    /**
+     * Removes unused markers from the marker cache
+     *
+     * @method _clearMarkerCache
+     * @private
+     */
+    _clearMarkerCache: function()
+    {
+        var len = this._markerCache.length,
+            i = 0,
+            graphic,
+            marker;
+        for(; i < len; ++i)
+        {
+            marker = this._markerCache[i];
+            if(marker)
+            {
+                graphic = marker.graphics;
+                graphic.destroy();
+            }
+        }
+        this._markerCache = [];
+    },
+
+    /**
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     * @protected
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var w,
+                h,
+                markerStyles,
+                styles = Y.clone(this.get("styles").marker),
+                state = this._getState(type),
+                xcoords = this.get("xcoords"),
+                ycoords = this.get("ycoords"),
+                marker = this._markers[i],
+                graphicNode = marker.parentNode;
+                markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+                markerStyles.fill.color = this._getItemColor(markerStyles.fill.color, i);
+                markerStyles.border.color = this._getItemColor(markerStyles.border.color, i);
+                marker.update(markerStyles);
+                w = markerStyles.width;
+                h = markerStyles.height;
+                graphicNode.style.left = (xcoords[i] - w/2) + "px";
+                graphicNode.style.top = (ycoords[i] - h/2) + "px";
+                marker.toggleVisible(this.get("visible"));
+        }
+    },
+
+    /**
+     * Parses a color from an array.
+     *
+     * @method _getItemColor
+     * @param {Array} val collection of colors
+     * @param {Number} i index of the item
+     * @return String
+     * @protected
+     */
+    _getItemColor: function(val, i)
+    {
+        if(Y.Lang.isArray(val))
+        {
+            return val[i % val.length];
+        }
+        return val;
+    },
+
+    /**
+     * Method used by <code>styles</code> setter. Overrides base implementation.
+     *
+     * @method _setStyles
+     * @param {Object} newStyles Hash of properties to update.
+     * @return Object
+     * @protected
+     */
+    _setStyles: function(val)
+    {
+        val = this._parseMarkerStyles(val);
+        return Y.Renderer.prototype._setStyles.apply(this, [val]);
+    },
+
+    /**
+     * Combines new styles with existing styles.
+     *
+     * @method _parseMarkerStyles
+     * @private
+     */
+    _parseMarkerStyles: function(val)
+    {
+        if(val.marker)
+        {
+            var defs = this._getPlotDefaults();
+            val.marker = this._mergeStyles(val.marker, defs);
+            if(val.marker.over)
+            {
+                val.marker.over = this._mergeStyles(val.marker.over, val.marker);
+            }
+            if(val.marker.down)
+            {
+                val.marker.down = this._mergeStyles(val.marker.down, val.marker);
+            }
+        }
+        return val;
+    },
+
+    /**
+     * Returns marker state based on event type
+     *
+     * @method _getState
+     * @param {String} type event type
+     * @return String
+     * @protected
+     */
+    _getState: function(type)
+    {
+        var state;
+        switch(type)
+        {
+            case "mouseout" :
+                state = "off";
+            break;
+            case "mouseover" :
+                state = "over";
+            break;
+            case "mouseup" :
+                state = "over";
+            break;
+            case "mousedown" :
+                state = "down";
+            break;
+        }
+        return state;
+    },
+    
+    /**
+     * @private
+     */
+    _stateSyles: null,
+
+    /**
+     * Collection of hotspots to be used in the series.
+     *
+     * @private
+     */
+    _hotspots: null,
+
+    /**
+     * Collection of hotspots to be re-used on a series redraw.
+     *
+     * @private
+     */
+    _hotspotCache: null,
+    
+    /**
+     * Gets and styles a hotspot. If there is a hotspot in cache, it will use it. Otherwise
+     * it will create one.
+     *
+     * @method getHotspot
+     * @param {Object} styles Hash of style properties.
+     * @param {Number} order Order of the series.
+     * @param {Number} index Index within the series associated with the hotspot.
+     * @return Shape
+     * @protected
+     */
+    getHotspot: function(hotspotStyles, order, index)
+    {
+        var hotspot,
+            styles = Y.clone(hotspotStyles);
+        styles.fill = {
+            type: "solid",
+            color: "#000",
+            alpha: 0
+        };
+        styles.border = {
+            weight: 0
+        };
+        if(this._hotspotCache.length > 0)
+        {
+            while(!hotspot)
+            {
+                if(this._hotspotCache.length < 1)
+                {
+                    hotspot = this._createHotspot(styles, order, index);
+                    break;
+                }
+                hotspot = this._hotspotCache.shift();
+
+            }
+            hotspot.update(styles);
+        }
+        else
+        {
+            hotspot = this._createHotspot(styles, order, index);
+        }
+        this._hotspots.push(hotspot);
+        return hotspot;
+    },   
+    
+    /**
+     * Creates a shape to be used as a hotspot.
+     *
+     * @method _createHotspot
+     * @param {Object} styles Hash of style properties.
+     * @param {Number} order Order of the series.
+     * @param {Number} index Index within the series associated with the hotspot.
+     * @return Shape
+     * @private
+     */
+    _createHotspot: function(styles, order, index)
+    {
+        var graphic = new Y.Graphic(),
+            hotspot,
+            cfg = Y.clone(styles);
+        graphic.render(this.get("graph").get("contentBox"));
+        graphic.node.setAttribute("id", "hotspotParent_" + order + "_" + index);
+        cfg.graphic = graphic;
+        hotspot = new Y.Shape(cfg); 
+        hotspot.addClass("yui3-seriesmarker");
+        hotspot.node.setAttribute("id", "hotspot_" + order + "_" + index);
+        return hotspot;
+    },
+    
+    /**
+     * Creates a cache of hotspots for reuse.
+     *
+     * @method _createHotspotCache
+     * @private
+     */
+    _createHotspotCache: function()
+    {
+        if(this._hotspots && this._hotspots.length > 0)
+        {
+            this._hotspotCache = this._hotspots.concat();
+        }
+        else
+        {
+            this._hotspotCache = [];
+        }
+        this._hotspots = [];
+    },
+    
+    /**
+     * Removes unused hotspots from the hotspot cache
+     *
+     * @method _clearHotspotCache
+     * @private
+     */
+    _clearHotspotCache: function()
+    {
+        var len = this._hotspotCache.length,
+            i = 0,
+            graphic,
+            hotspot;
+        for(; i < len; ++i)
+        {
+            hotspot = this._hotspotCache[i];
+            if(hotspot)
+            {
+                graphic = hotspot.graphics;
+                graphic.destroy();
+            }
+        }
+        this._hotspotCache = [];
+    }
+};
+
+Y.augment(Plots, Y.Attribute);
+Y.Plots = Plots;
+/**
+ * Histogram is the base class for Column and Bar series.
+ *
+ * @class Histogram
+ * @constructor
+ */
+function Histogram(){}
+
+Histogram.prototype = {
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        if(this.get("xcoords").length < 1) 
+        {
+            return;
+        }
+        var style = Y.clone(this.get("styles").marker),
+            setSize,
+            calculatedSize,
+            xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            i = 0,
+            len = xcoords.length,
+            top = ycoords[0],
+            type = this.get("type"),
+            graph = this.get("graph"),
+            seriesCollection = graph.seriesTypes[type],
+            seriesLen = seriesCollection.length,
+            seriesSize = 0,
+            totalSize = 0,
+            offset = 0,
+            ratio,
+            renderer,
+            order = this.get("order"),
+            graphOrder = this.get("graphOrder"),
+            left,
+            marker,
+            setSizeKey,
+            calculatedSizeKey,
+            config,
+            fillColors = null,
+            borderColors = null,
+            hotspot,
+            isChrome = ISCHROME;
+        if(Y.Lang.isArray(style.fill.color))
+        {
+            fillColors = style.fill.color.concat(); 
+        }
+        if(Y.Lang.isArray(style.border.color))
+        {
+            borderColors = style.border.colors.concat();
+        }
+        if(this.get("direction") == "vertical")
+        {
+            setSizeKey = "height";
+            calculatedSizeKey = "width";
+        }
+        else
+        {
+            setSizeKey = "width";
+            calculatedSizeKey = "height";
+        }
+        setSize = style[setSizeKey];
+        calculatedSize = style[calculatedSizeKey];
+        this._createMarkerCache();
+        if(isChrome)
+        {
+            this._createHotspotCache();
+        }
+        for(; i < seriesLen; ++i)
+        {
+            renderer = seriesCollection[i];
+            seriesSize += renderer.get("styles").marker[setSizeKey];
+            if(order > i) 
+            {
+                offset = seriesSize;
+            }
+        }
+        totalSize = len * seriesSize;
+        if(totalSize > graph.get(setSizeKey))
+        {
+            ratio = graph.get(setSizeKey)/totalSize;
+            seriesSize *= ratio;
+            offset *= ratio;
+            setSize *= ratio;
+            setSize = Math.max(setSize, 1);
+        }
+        offset -= seriesSize/2;
+        for(i = 0; i < len; ++i)
+        {
+            config = this._getMarkerDimensions(xcoords[i], ycoords[i], calculatedSize, offset);
+            top = config.top;
+            calculatedSize = config.calculatedSize;
+            left = config.left;
+            style[setSizeKey] = setSize;
+            style[calculatedSizeKey] = calculatedSize;
+            if(fillColors)
+            {
+                style.fill.color = fillColors[i % fillColors.length];
+            }
+            if(borderColors)
+            {
+                style.border.colors = borderColors[i % borderColors.length];
+            }
+            marker = this.getMarker(style, graphOrder, i);
+            marker.setPosition(left, top);
+            if(isChrome)
+            {
+                hotspot = this.getHotspot(style, graphOrder, i);
+                hotspot.setPosition(left, top);
+                hotspot.parentNode.style.zIndex = 5;
+            }
+        }
+        this._clearMarkerCache();
+        if(isChrome)
+        {
+            this._clearHotspotCache();
+        }
+    },
+    
+    /**
+     * @private
+     */
+    _defaultFillColors: ["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"],
+    
+    /**
+     * @private
+     */
+    _getPlotDefaults: function()
+    {
+        var defs = {
+            fill:{
+                type: "solid",
+                alpha: 1,
+                colors:null,
+                alphas: null,
+                ratios: null
+            },
+            border:{
+                weight: 0,
+                alpha: 1
+            },
+            width: 12,
+            height: 12,
+            shape: "rect",
+
+            padding:{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            }
+        };
+        defs.fill.color = this._getDefaultColor(this.get("graphOrder"), "fill");
+        defs.border.color = this._getDefaultColor(this.get("graphOrder"), "border");
+        return defs;
+    }
+};
+
+Y.Histogram = Histogram;
+/**
+ * The CartesianSeries class creates a chart with horizontal and vertical axes.
+ *
+ * @class CartesianSeries
+ * @extends Base
+ * @uses Renderer
+ * @constructor
+ */
+Y.CartesianSeries = Y.Base.create("cartesianSeries", Y.Base, [Y.Renderer], {
+    /**
+     * @private
+     */
+    _xDisplayName: null,
+
+    /**
+     * @private
+     */
+    _yDisplayName: null,
+    
+    /**
+     * @private
+     */
+    _leftOrigin: null,
+
+    /**
+     * @private
+     */
+    _bottomOrigin: null,
+
+    /**
+     * @private
+     */
+    render: function()
+    {
+        this._setCanvas();
+        this.addListeners();
+        this.set("rendered", true);
+        this.validate();
+    },
+
+    /**
+     * @private
+     */
+    addListeners: function()
+    {
+        var xAxis = this.get("xAxis"),
+            yAxis = this.get("yAxis");
+        if(xAxis)
+        {
+            xAxis.after("dataReady", Y.bind(this._xDataChangeHandler, this));
+            xAxis.after("dataUpdate", Y.bind(this._xDataChangeHandler, this));
+        }
+        if(yAxis)
+        {
+            yAxis.after("dataReady", Y.bind(this._yDataChangeHandler, this));
+            yAxis.after("dataUpdate", Y.bind(this._yDataChangeHandler, this));
+        }
+        this.after("xAxisChange", this._xAxisChangeHandler);
+        this.after("yAxisChange", this._yAxisChangeHandler);
+        this.after("stylesChange", function(e) {
+            var axesReady = this._updateAxisData();
+            if(axesReady)
+            {
+                this.draw();
+            }
+        });
+        this.after("widthChange", function(e) {
+            var axesReady = this._updateAxisData();
+            if(axesReady)
+            {
+                this.draw();
+            }
+        });
+        this.after("heightChange", function(e) {
+            var axesReady = this._updateAxisData();
+            if(axesReady)
+            {
+                this.draw();
+            }
+        });
+        this.after("visibleChange", this._toggleVisible);
+    },
+  
+    /**
+     * @private
+     */
+    _xAxisChangeHandler: function(e)
+    {
+        var xAxis = this.get("xAxis");
+        xAxis.after("dataReady", Y.bind(this._xDataChangeHandler, this));
+        xAxis.after("dataUpdate", Y.bind(this._xDataChangeHandler, this));
+    },
+    
+    /**
+     * @private
+     */
+    _yAxisChangeHandler: function(e)
+    {
+        var yAxis = this.get("yAxis");
+        yAxis.after("dataReady", Y.bind(this._yDataChangeHandler, this));
+        yAxis.after("dataUpdate", Y.bind(this._yDataChangeHandler, this));
+    },
+
+    /**
+     * @private
+     */
+    GUID: "yuicartesianseries",
+
+    /**
+     * @private (protected)
+     */
+    _xDataChangeHandler: function(event)
+    {
+        var axesReady = this._updateAxisData();
+        if(axesReady)
+        {
+            this.draw();
+        }
+    },
+
+    /**
+     * @private (protected)
+     */
+    _yDataChangeHandler: function(event)
+    {
+        var axesReady = this._updateAxisData();
+        if(axesReady)
+        {
+            this.draw();
+        }
+    },
+
+    /**
+     * @private 
+     */
+    _updateAxisData: function()
+    {
+        var xAxis = this.get("xAxis"),
+            yAxis = this.get("yAxis"),
+            xKey = this.get("xKey"),
+            yKey = this.get("yKey"),
+            yData,
+            xData;
+        if(!xAxis || !yAxis || !xKey || !yKey)
+        {
+            return false;
+        }
+        xData = xAxis.getDataByKey(xKey);
+        yData = yAxis.getDataByKey(yKey);
+        if(!xData || !yData)
+        {
+            return false;
+        }
+        this.set("xData", xData.concat());
+        this.set("yData", yData.concat());
+        return true;
+    },
+
+    /**
+     * @private
+     */
+    validate: function()
+    {
+        if((this.get("xData") && this.get("yData")) || this._updateAxisData())
+        {
+            this.draw();
+        }
+    },
+
+    /**
+     * @protected
+     *
+     * Creates a <code>Graphic</code> instance.
+     *
+     * @method _setCanvas
+     */
+    _setCanvas: function()
+    {
+        this.set("graphic", new Y.Graphic());
+        this.get("graphic").render(this.get("graph").get("contentBox"));
+    },
+
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {
+        var nextX, nextY,
+            graph = this.get("graph"),
+            w = graph.get("width"),
+            h = graph.get("height"),
+            xAxis = this.get("xAxis"),
+            yAxis = this.get("yAxis"),
+            xData = this.get("xData").concat(),
+            yData = this.get("yData").concat(),
+            xOffset = xAxis.getEdgeOffset(xData.length, w),
+            yOffset = yAxis.getEdgeOffset(yData.length, h),
+            padding = this.get("styles").padding,
+			leftPadding = padding.left,
+			topPadding = padding.top,
+			dataWidth = w - (leftPadding + padding.right + xOffset),
+			dataHeight = h - (topPadding + padding.bottom + yOffset),
+			xcoords = [],
+			ycoords = [],
+			xMax = xAxis.get("maximum"),
+			xMin = xAxis.get("minimum"),
+			yMax = yAxis.get("maximum"),
+			yMin = yAxis.get("minimum"),
+            xScaleFactor = dataWidth / (xMax - xMin),
+			yScaleFactor = dataHeight / (yMax - yMin),
+            dataLength,
+            direction = this.get("direction"),
+            i = 0,
+            xMarkerPlane = [],
+            yMarkerPlane = [],
+            xMarkerPlaneOffset = this.get("xMarkerPlaneOffset"),
+            yMarkerPlaneOffset = this.get("yMarkerPlaneOffset"),
+            graphic = this.get("graphic");
+        dataLength = xData.length;
+        xOffset *= 0.5;
+        yOffset *= 0.5;
+        //Assuming a vertical graph has a range/category for its vertical axis.    
+        if(direction === "vertical")
+        {
+            yData = yData.reverse();
+        }
+        if(graphic)
+        {
+            graphic.setSize(w, h);
+        }
+        this._leftOrigin = Math.round(((0 - xMin) * xScaleFactor) + leftPadding + xOffset);
+        this._bottomOrigin =  Math.round((dataHeight + topPadding + yOffset) - (0 - yMin) * yScaleFactor);
+        for (; i < dataLength; ++i) 
+		{
+            nextX = Math.round((((xData[i] - xMin) * xScaleFactor) + leftPadding + xOffset));
+			nextY = Math.round(((dataHeight + topPadding + yOffset) - (yData[i] - yMin) * yScaleFactor));
+            xcoords.push(nextX);
+            ycoords.push(nextY);
+            xMarkerPlane.push({start:nextX - xMarkerPlaneOffset, end: nextX + xMarkerPlaneOffset});
+            yMarkerPlane.push({start:nextY - yMarkerPlaneOffset, end: nextY + yMarkerPlaneOffset});
+        }
+        this.set("xcoords", xcoords);
+		this.set("ycoords", ycoords);
+        this.set("xMarkerPlane", xMarkerPlane);
+        this.set("yMarkerPlane", yMarkerPlane);
+    },
+
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method draw
+     */
+    draw: function()
+    {
+        var graph = this.get("graph"),
+            w = graph.get("width"),
+            h = graph.get("height");
+
+        if(this.get("rendered"))
+        {
+            if((isFinite(w) && isFinite(h) && w > 0 && h > 0) && ((this.get("xData") && this.get("yData")) || this._updateAxisData()))
+            {
+                if(this._drawing)
+                {
+                    this._callLater = true;
+                    return;
+                }
+                this._drawing = true;
+                this._callLater = false;
+                this.setAreaData();
+                if(this.get("xcoords") && this.get("ycoords"))
+                {
+                    this.drawSeries();
+                }
+                this._drawing = false;
+                if(this._callLater)
+                {
+                    this.draw();
+                }
+                else
+                {
+                    this._toggleVisible(this.get("visible"));
+                    this.fire("drawingComplete");
+                }
+            }
+        }
+    },
+    
+    /**
+     * @private
+     */
+    _defaultPlaneOffset: 4,
+    
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        return {padding:{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            }};
+    },
+
+    /**
+     * @protected
+     *
+     * Collection of default colors used for lines in a series when not specified by user.
+     *
+     * @property _defaultLineColors
+     * @type Array
+     */
+    _defaultLineColors:["#426ab3", "#d09b2c", "#000000", "#b82837", "#b384b5", "#ff7200", "#779de3", "#cbc8ba", "#7ed7a6", "#007a6c"],
+
+    /**
+     * @protected
+     *
+     * Collection of default colors used for marker fills in a series when not specified by user.
+     *
+     * @property _defaultFillColors
+     * @type Array
+     */
+    _defaultFillColors:["#6084d0", "#eeb647", "#6c6b5f", "#d6484f", "#ce9ed1", "#ff9f3b", "#93b7ff", "#e0ddd0", "#94ecba", "#309687"],
+    
+    /**
+     * @protected
+     *
+     * Collection of default colors used for marker borders in a series when not specified by user.
+     *
+     * @property _defaultBorderColors
+     * @type Array
+     */
+    _defaultBorderColors:["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"],
+    
+    /**
+     * @protected
+     *
+     * Collection of default colors used for area fills, histogram fills and pie fills in a series when not specified by user.
+     *
+     * @property _defaultSliceColors
+     * @type Array
+     */
+    _defaultSliceColors: ["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"],
+
+    /**
+     * @protected
+     *
+     * Parses a color based on a series order and type.
+     *
+     * @method _getDefaultColor
+     * @param {Number} index Index indicating the series order.
+     * @param {String} type Indicates which type of object needs the color.
+     * @return String
+     */
+    _getDefaultColor: function(index, type)
+    {
+        var colors = {
+                line: this._defaultLineColors,
+                fill: this._defaultFillColors,
+                border: this._defaultBorderColors,
+                slice: this._defaultSliceColors
+            },
+            col = colors[type],
+            l = col.length;
+        index = index || 0;
+        if(index >= l)
+        {
+            index = index % l;
+        }
+        type = type || "fill";
+        return colors[type][index];
+    },
+    
+    /**
+     * @protected
+     *
+     * Shows/hides contents of the series.
+     *
+     * @method _toggleVisible
+     */
+    _toggleVisible: function(e) 
+    {
+        var graphic = this.get("graphic"),
+            markers = this.get("markers"),
+            i = 0,
+            len,
+            visible = this.get("visible"),
+            marker;
+        if(graphic)
+        {
+            graphic.toggleVisible(visible);
+        }
+        if(markers)
+        {
+            len = markers.length;
+            for(; i < len; ++i)
+            {
+                marker = markers[i];
+                if(marker)
+                {
+                    marker.toggleVisible(visible);
+                }
+            }
+
+        }
+        if(this._lineGraphic)
+        {
+            this._lineGraphic.toggleVisible(visible);
+        }
+    }
+}, {
+    ATTRS: {
+        /**
+         * Name used for for displaying data related to the x-coordinate.
+         *
+         * @attribute xDisplayName
+         * @type String
+         */
+        xDisplayName: {
+            getter: function()
+            {
+                return this._xDisplayName || this.get("xKey");
+            },
+
+            setter: function(val)
+            {
+                this._xDisplayName = val;
+                return val;
+            }
+        },
+
+        /**
+         * Name used for for displaying data related to the y-coordinate.
+         *
+         * @attribute yDisplayName
+         * @type String
+         */
+        yDisplayName: {
+            getter: function()
+            {
+                return this._yDisplayName || this.get("yKey");
+            },
+
+            setter: function(val)
+            {
+                this._yDisplayName = val;
+                return val;
+            }
+        },
+        
+        /**
+         * Name used for for displaying category data
+         *
+         * @attribute categoryDisplayName
+         * @type String
+         */
+        categoryDisplayName: {
+            readOnly: true,
+
+            getter: function()
+            {
+                return this.get("direction") == "vertical" ? this.get("yDisplayName") : this.get("xDisplayName");
+            }
+        },
+
+        /**
+         * Name used for for displaying value data
+         *
+         * @attribute valueDisplayName
+         * @type String
+         */
+        valueDisplayName: {
+            readOnly: true,
+
+            getter: function()
+            {
+                return this.get("direction") == "vertical" ? this.get("xDisplayName") : this.get("yDisplayName");
+            }
+        },
+        
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default cartesian
+         */
+        type: {		
+            value: "cartesian"
+        },
+
+        /**
+         * Order of this instance of this <code>type</code>.
+         *
+         * @attribute order
+         * @type Number
+         */
+        order: {},
+
+        /**
+         * Order of the instance
+         *
+         * @attribute graphOrder
+         * @type Number
+         */
+        graphOrder: {},
+
+        /**
+         * x coordinates for the series.
+         *
+         * @attribute xcoords
+         * @type Array
+         */
+        xcoords: {},
+        
+        /**
+         * y coordinates for the series
+         *
+         * @attribute ycoords
+         * @type Array
+         */
+        ycoords: {},
+        
+        /**
+         * Reference to the <code>Graph</code> in which the series is drawn into.
+         *
+         * @attribute graph
+         * @type Graph
+         */
+        graph: {},
+
+        /**
+         * Reference to the <code>Axis</code> instance used for assigning 
+         * x-values to the graph.
+         *
+         * @attribute xAxis
+         * @type Axis
+         */
+        xAxis: {},
+        
+        /**
+         * Reference to the <code>Axis</code> instance used for assigning 
+         * y-values to the graph.
+         *
+         * @attribute yAxis
+         * @type Axis
+         */
+        yAxis: {},
+        
+        /**
+         * Indicates which array to from the hash of value arrays in 
+         * the x-axis <code>Axis</code> instance.
+         *
+         * @attribute xKey
+         * @type String
+         */
+        xKey: {},
+
+        /**
+         * Indicates which array to from the hash of value arrays in 
+         * the y-axis <code>Axis</code> instance.
+         *
+         * @attribute yKey
+         * @type String
+         */
+        yKey: {},
+
+        /**
+         * Array of x values for the series.
+         *
+         * @attribute xData
+         * @type Array
+         */
+        xData: {},
+
+        /**
+         * Array of y values for the series.
+         *
+         * @attribute yData
+         * @type Array
+         */
+        yData: {},
+       
+        /**
+         * Indicates whether the Series has been through its initial set up.
+         *
+         * @attribute rendered
+         * @type Boolean
+         */
+        rendered: {
+            value: false
+        },
+
+        /*
+         * Returns the width of the parent graph
+         *
+         * @attribute width
+         * @type Number
+         */
+        width: {
+            readOnly: true,
+            
+            getter: function()
+            {
+                this.get("graph").get("width");
+            }
+        },
+
+        /**
+         * Returns the height of the parent graph
+         *
+         * @attribute height
+         * @type Number
+         */
+        height: {
+            readOnly: true,
+            
+            getter: function()
+            {
+                this.get("graph").get("height");
+            }
+        },
+
+        /**
+         * Indicates whether to show the series
+         *
+         * @attribute visible
+         * @type Boolean
+         * @default true
+         */
+        visible: {
+            value: true
+        },
+
+        /**
+         * Collection of area maps along the xAxis. Used to determine mouseover for multiple
+         * series.
+         *
+         * @attribute xMarkerPlane
+         * @type Array
+         */
+        xMarkerPlane: {},
+        
+        /**
+         * Collection of area maps along the yAxis. Used to determine mouseover for multiple
+         * series.
+         *
+         * @attribute yMarkerPlane
+         * @type Array
+         */
+        yMarkerPlane: {},
+
+        /**
+         * Distance from a data coordinate to the left/right for setting a hotspot.
+         *
+         * @attribute xMarkerPlaneOffset
+         * @type Number
+         */
+        xMarkerPlaneOffset: {
+            getter: function() {
+                var marker = this.get("styles").marker;
+                if(marker && marker.width && isFinite(marker.width))
+                {
+                    return marker.width * 0.5;
+                }
+                return this._defaultPlaneOffset;
+            }
+        },
+
+        /**
+         * Distance from a data coordinate to the top/bottom for setting a hotspot.
+         *
+         * @attribute yMarkerPlaneOffset
+         * @type Number
+         */
+        yMarkerPlaneOffset: {
+            getter: function() {
+                var marker = this.get("styles").marker;
+                if(marker && marker.height && isFinite(marker.height))
+                {
+                    return marker.height * 0.5;
+                }
+                return this._defaultPlaneOffset;
+            }
+        },
+
+        /**
+         * Direction of the series
+         *
+         * @attribute direction
+         * @type String
+         */
+        direction: {
+            value: "horizontal"
+        }
+    }
+});
+/**
+ * The MarkerSeries class renders quantitative data by plotting relevant data points 
+ * on a graph.
+ *
+ * @class MarkerSeries
+ * @extends CartesianSeries
+ * @uses Plots
+ * @constructor
+ */
+Y.MarkerSeries = Y.Base.create("markerSeries", Y.CartesianSeries, [Y.Plots], {
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        this._setNode();
+    },
+    
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.drawPlots();
+    },
+    
+    /**
+     * @protected
+     *
+     * Method used by <code>styles</code> setter. Overrides base implementation.
+     *
+     * @method _setStyles
+     * @param {Object} newStyles Hash of properties to update.
+     * @return Object
+     */
+    _setStyles: function(val)
+    {
+        if(!val.marker)
+        {
+            val = {marker:val};
+        }
+        val = this._parseMarkerStyles(val);
+        return Y.MarkerSeries.superclass._mergeStyles.apply(this, [val, this._getDefaultStyles()]);
+    },
+    
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var styles = this._mergeStyles({marker:this._getPlotDefaults()}, Y.MarkerSeries.superclass._getDefaultStyles());
+        return styles;
+    }
+},{
+    ATTRS : {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default marker
+         */
+        type: {
+            value:"marker"
+        }
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#6084d0", "#eeb647", "#6c6b5f", "#d6484f", "#ce9ed1", "#ff9f3b", "#93b7ff", "#e0ddd0", "#94ecba", "#309687"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>width</dt><dd>indicates the width of the marker. The default value is 10.</dd>
+         *      <dt>height</dt><dd>indicates the height of the marker The default value is 10.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+/**
+ * The LineSeries class renders quantitative data on a graph by connecting relevant data points.
+ *
+ * @class LineSeries
+ * @extends CartesianSeries
+ * @uses Lines
+ * @constructor
+ */
+Y.LineSeries = Y.Base.create("lineSeries", Y.CartesianSeries, [Y.Lines], {
+    /**
+     * @protected
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this.drawLines();
+    },
+
+    /**
+     * @protected
+     *
+     * Method used by <code>styles</code> setter. Overrides base implementation.
+     *
+     * @method _setStyles
+     * @param {Object} newStyles Hash of properties to update.
+     * @return Object
+     */
+    _setStyles: function(val)
+    {
+        if(!val.line)
+        {
+            val = {line:val};
+        }
+        return Y.LineSeries.superclass._setStyles.apply(this, [val]);
+    },
+
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var styles = this._mergeStyles({line:this._getLineDefaults()}, Y.LineSeries.superclass._getDefaultStyles());
+        return styles;
+    }
+},
+{
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default line
+         */
+        type: {
+            value:"line"
+        }
+
+        /**
+         * Style properties used for drawing lines. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series on the graph. The color will be
+         *      retrieved from the following array: 
+         *      <code>["#426ab3", "#d09b2c", "#000000", "#b82837", "#b384b5", "#ff7200", "#779de3", "#cbc8ba", "#7ed7a6", "#007a6c"]</code>
+         *      <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>
+         *      <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd> 
+         *      <dt>dashLength</dt><dd>When the <code>lineType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>gapSpace</dt><dd>When the <code>lineType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *      <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing or null value between points. The default value is true.</dd> 
+         *      <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed. The default value is solid.</dd>
+         *      <dt>discontinuousDashLength</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>discontinuousGapSpace</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+
+
+		
+
+		
+/**
+ * SplineSeries renders a graph with data points connected by a curve.
+ *
+ * @class SplineSeries
+ * @constructor
+ * @extends CartesianSeries
+ * @uses CurveUtil
+ * @uses Lines
+ */
+Y.SplineSeries = Y.Base.create("splineSeries",  Y.CartesianSeries, [Y.CurveUtil, Y.Lines], {
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this.drawSpline();
+    }
+}, {
+	ATTRS : {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default spline
+         */
+        type : {
+            value:"spline"
+        }
+
+        /**
+         * Style properties used for drawing lines. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series on the graph. The color will be
+         *      retrieved from the following array: 
+         *      <code>["#426ab3", "#d09b2c", "#000000", "#b82837", "#b384b5", "#ff7200", "#779de3", "#cbc8ba", "#7ed7a6", "#007a6c"]</code>
+         *      <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>
+         *      <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd> 
+         *      <dt>dashLength</dt><dd>When the <code>lineType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>gapSpace</dt><dd>When the <code>lineType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *      <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing or null value between points. The default value is true.</dd> 
+         *      <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed. The default value is solid.</dd>
+         *      <dt>discontinuousDashLength</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>discontinuousGapSpace</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+
+
+		
+
+		
+/**
+ * AreaSplineSeries renders an area graph with data points connected by a curve.
+ *
+ * @class AreaSplineSeries
+ * @constructor
+ * @extends CartesianSeries
+ * @uses Fills
+ * @uses CurveUtil
+ */
+Y.AreaSplineSeries = Y.Base.create("areaSplineSeries", Y.CartesianSeries, [Y.Fills, Y.CurveUtil], {
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this.drawAreaSpline();
+    }
+}, {
+	ATTRS : {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default areaSpline
+         */
+        type: {
+            value:"areaSpline"
+        }
+        
+        /**
+         * Style properties used for drawing area fills. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the graph. The color will be 
+         *      retrieved from the following array:
+         *      <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *      </dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+/**
+ * StackedSplineSeries creates spline graphs in which the different series are stacked along a value axis
+ * to indicate their contribution to a cumulative total.
+ *
+ * @class StackedSplineSeries
+ * @constructor
+ * @extends SplineSeries
+ * @extends StackingUtil
+ */
+Y.StackedSplineSeries = Y.Base.create("stackedSplineSeries", Y.SplineSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series. Overrides base implementation.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {   
+        Y.StackedSplineSeries.superclass.setAreaData.apply(this);
+        this._stackCoordinates.apply(this);
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedSpline
+         */
+        type: {
+            value:"stackedSpline"
+        }
+    }
+});
+
+/**
+ * StackedMarkerSeries plots markers with different series stacked along the value axis to indicate each
+ * series' contribution to a cumulative total.
+ *
+ * @class StackedMarkerSeries
+ * @constructor
+ * @extends MarkerSeries
+ * @extends StackingUtil
+ */
+Y.StackedMarkerSeries = Y.Base.create("stackedMarkerSeries", Y.MarkerSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series. Overrides base implementation.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {   
+        Y.StackedMarkerSeries.superclass.setAreaData.apply(this);
+        this._stackCoordinates.apply(this);
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedMarker
+         */
+        type: {
+            value:"stackedMarker"
+        }
+    }
+});
+
+/**
+ * The ColumnSeries class renders columns positioned horizontally along a category or time axis. The columns'
+ * lengths are proportional to the values they represent along a vertical axis.
+ * and the relevant data points.
+ *
+ * @class ColumnSeries
+ * @extends MarkerSeries
+ * @uses Histogram
+ * @constructor
+ */
+Y.ColumnSeries = Y.Base.create("columnSeries", Y.MarkerSeries, [Y.Histogram], {
+    /**
+     * @private
+     */
+    _getMarkerDimensions: function(xcoord, ycoord, calculatedSize, offset)
+    {
+        var config = {
+            top: ycoord,
+            left: xcoord + offset
+        };
+        config.calculatedSize = this._bottomOrigin - config.top;
+        return config;
+    },
+
+    /**
+     * @protected
+     *
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var styles = Y.clone(this.get("styles").marker),
+                markerStyles,
+                state = this._getState(type),
+                xcoords = this.get("xcoords"),
+                ycoords = this.get("ycoords"),
+                marker = this._markers[i],
+                graph = this.get("graph"),
+                seriesCollection = graph.seriesTypes[this.get("type")],
+                seriesLen = seriesCollection.length,
+                seriesSize = 0,
+                offset = 0,
+                renderer,
+                n = 0,
+                xs = [],
+                order = this.get("order");
+            markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+            markerStyles.fill.color = this._getItemColor(markerStyles.fill.color, i);
+            markerStyles.border.color = this._getItemColor(markerStyles.border.color, i);
+            markerStyles.height = this._bottomOrigin - ycoords[i];
+            marker.update(markerStyles);
+            for(; n < seriesLen; ++n)
+            {
+                renderer = seriesCollection[n].get("markers")[i];
+                xs[n] = xcoords[i] + seriesSize;
+                seriesSize += renderer.width;
+                if(order > n)
+                {
+                    offset = seriesSize;
+                }
+                offset -= seriesSize/2;
+            }
+            for(n = 0; n < seriesLen; ++n)
+            {
+                renderer = Y.one(seriesCollection[n]._graphicNodes[i]);
+                renderer.setStyle("left", (xs[n] - seriesSize/2) + "px");
+            }
+        }
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default column
+         */
+        type: {
+            value: "column"
+        }
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>MarkerSeries</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>width</dt><dd>indicates the width of the marker. The default value is 12.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+/**
+ * The BarSeries class renders bars positioned vertically along a category or time axis. The bars'
+ * lengths are proportional to the values they represent along a horizontal axis.
+ * and the relevant data points.
+ *
+ * @class BarSeries
+ * @extends MarkerSeries
+ * @uses Histogram
+ * @constructor
+ */
+Y.BarSeries = Y.Base.create("barSeries", Y.MarkerSeries, [Y.Histogram], {
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        this._setNode();
+    },
+
+    /**
+     * @private
+     */
+    _getMarkerDimensions: function(xcoord, ycoord, calculatedSize, offset)
+    {
+        var config = {
+            top: ycoord + offset,
+            left: this._leftOrigin
+        };
+        config.calculatedSize = xcoord - config.left;
+        return config;
+    },
+    
+    /**
+     * @protected
+     *
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var styles = Y.clone(this.get("styles").marker),
+                markerStyles,
+                state = this._getState(type),
+                xcoords = this.get("xcoords"),
+                ycoords = this.get("ycoords"),
+                marker = this._markers[i],
+                graph = this.get("graph"),
+                seriesCollection = graph.seriesTypes[this.get("type")],
+                seriesLen = seriesCollection.length,
+                seriesSize = 0,
+                offset = 0,
+                renderer,
+                n = 0,
+                ys = [],
+                order = this.get("order");
+            markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+            markerStyles.fill.color = this._getItemColor(markerStyles.fill.color, i);
+            markerStyles.border.color = this._getItemColor(markerStyles.border.color, i);
+            markerStyles.width = (xcoords[i] - this._leftOrigin);
+            marker.update(markerStyles);
+            for(; n < seriesLen; ++n)
+            {
+                renderer = seriesCollection[n].get("markers")[i];
+                ys[n] = ycoords[i] + seriesSize;
+                seriesSize += renderer.height;
+                if(order > n)
+                {
+                    offset = seriesSize;
+                }
+                offset -= seriesSize/2;
+            }
+            for(n = 0; n < seriesLen; ++n)
+            {
+                renderer = Y.one(seriesCollection[n]._graphicNodes[i]);
+                renderer.setStyle("top", (ys[n] - seriesSize/2));
+            }
+        }
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default bar
+         */
+        type: {
+            value: "bar"
+        },
+
+        /**
+         * Indicates the direction of the category axis that the bars are plotted against.
+         *
+         * @attribute direction
+         * @type String
+         */
+        direction: {
+            value: "vertical"
+        }
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>MarkerSeries</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>height</dt><dd>indicates the width of the marker. The default value is 12.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+/**
+ * The AreaSeries class renders quantitative data on a graph by creating a fill between 0
+ * and the relevant data points.
+ *
+ * @class AreaSeries
+ * @extends CartesianSeries
+ * @uses Fills
+ * @constructor
+ */
+Y.AreaSeries = Y.Base.create("areaSeries", Y.CartesianSeries, [Y.Fills], {
+    /**
+     * @protected
+     *
+     * Renders the series. 
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this.drawFill.apply(this, this._getClosingPoints());
+    },
+    
+    /**
+     * @protected
+     *
+     * Method used by <code>styles</code> setter. Overrides base implementation.
+     *
+     * @method _setStyles
+     * @param {Object} newStyles Hash of properties to update.
+     * @return Object
+     */
+    _setStyles: function(val)
+    {
+        if(!val.area)
+        {
+            val = {area:val};
+        }
+        return Y.AreaSeries.superclass._setStyles.apply(this, [val]);
+    },
+
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var styles = this._mergeStyles({area:this._getAreaDefaults()}, Y.AreaSeries.superclass._getDefaultStyles());
+        return styles;
+    }
+},
+{
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default area
+         */
+        type: {
+            value:"area"
+        }
+        
+        /**
+         * Style properties used for drawing area fills. This attribute is inherited from <code>Renderer</code>. Below are the default values:
+         *
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the graph. The color will be 
+         *      retrieved from the following array:
+         *      <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *      </dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+
+
+		
+
+		
+/**
+ * StackedAreaSplineSeries creates a stacked area chart with points data points connected by a curve.
+ *
+ * @class StackedAreaSplineSeries
+ * @constructor
+ * @extends AreaSeries
+ * @uses CurveUtil
+ * @uses StackingUtil
+ */
+Y.StackedAreaSplineSeries = Y.Base.create("stackedAreaSplineSeries", Y.AreaSeries, [Y.CurveUtil, Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this._stackCoordinates();
+        this.drawStackedAreaSpline();
+    }
+}, {
+    ATTRS : {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedAreaSpline
+         */
+        type: {
+            value:"stackedAreaSpline"
+        }
+    }
+});
+
+/**
+ * The ComboSeries class renders a combination of lines, plots and area fills in a single series. Each
+ * series type has a corresponding boolean attribute indicating if it is rendered. By default, lines and plots 
+ * are rendered and area is not. 
+ *
+ * @class ComboSeries
+ * @extends CartesianSeries 
+ * @uses Fills
+ * @uses Lines
+ * @uses Plots
+ * @constructor
+ */
+Y.ComboSeries = Y.Base.create("comboSeries", Y.CartesianSeries, [Y.Fills, Y.Lines, Y.Plots], {
+	/**
+     * @protected
+     * 
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        if(this.get("showAreaFill"))
+        {
+            this.drawFill.apply(this, this._getClosingPoints());
+        }
+        if(this.get("showLines")) 
+        {
+            this.drawLines();
+        }
+        if(this.get("showMarkers"))
+        {
+            this.drawPlots();
+        }   
+    },
+
+    /**
+     * @protected
+     *
+     * Returns the default hash for the <code>styles</code> attribute.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var styles = Y.ComboSeries.superclass._getDefaultStyles();
+        styles.line = this._getLineDefaults();
+        styles.marker = this._getPlotDefaults();
+        styles.area = this._getAreaDefaults();
+        return styles;
+    }
+},
+{
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default combo
+         */
+        type: {
+            value:"combo"
+        },
+
+        /**
+         * Indicates whether a fill is displayed.
+         *
+         * @attribute showAreaFill
+         * @type Boolean
+         * @default false
+         */
+        showAreaFill: {
+            value: false
+        },
+
+        /**
+         * Indicates whether lines are displayed.
+         *
+         * @attribute showLines
+         * @type Boolean
+         * @default true
+         */
+        showLines: {
+            value: true
+        },
+
+        /**
+         * Indicates whether markers are displayed.
+         *
+         * @attribute showMarkers
+         * @type Boolean
+         * @default true
+         */
+        showMarkers: {
+            value: true
+        },
+
+        /**
+         * Reference to the styles of the markers. These styles can also
+         * be accessed through the <code>styles</code> attribute. Below are default
+         * values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#6084d0", "#eeb647", "#6c6b5f", "#d6484f", "#ce9ed1", "#ff9f3b", "#93b7ff", "#e0ddd0", "#94ecba", "#309687"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>width</dt><dd>indicates the width of the marker. The default value is 10.</dd>
+         *      <dt>height</dt><dd>indicates the height of the marker The default value is 10.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute marker
+         * @type Object
+         */
+        marker: {
+            lazyAdd: false,
+            getter: function()
+            {
+                return this.get("styles").marker;
+            },
+            setter: function(val)
+            {
+                this.set("styles", {marker:val});
+            }
+        },
+        
+        /**
+         * Reference to the styles of the lines. These styles can also be accessed through the <code>styles</code> attribute.
+         * Below are the default values:
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series on the graph. The color will be
+         *      retrieved from the following array: 
+         *      <code>["#426ab3", "#d09b2c", "#000000", "#b82837", "#b384b5", "#ff7200", "#779de3", "#cbc8ba", "#7ed7a6", "#007a6c"]</code>
+         *      <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>
+         *      <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd> 
+         *      <dt>dashLength</dt><dd>When the <code>lineType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>gapSpace</dt><dd>When the <code>lineType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *      <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing or null value between points. The default value is true.</dd> 
+         *      <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed. The default value is solid.</dd>
+         *      <dt>discontinuousDashLength</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the length of the dash. The default value is 10.</dd>
+         *      <dt>discontinuousGapSpace</dt><dd>When the <code>discontinuousType</code> is dashed, indicates the distance between dashes. The default value is 10.</dd>
+         *  </dl>
+         *
+         * @attribute line
+         * @type Object
+         */
+        line: {
+            lazyAdd: false,
+            getter: function()
+            {
+                return this.get("styles").line;
+            },
+            setter: function(val)
+            {
+                this.set("styles", {line:val});
+            }
+        },
+        
+        /**
+         * Reference to the styles of the area fills. These styles can also be accessed through the <code>styles</code> attribute.
+         * Below are the default values:
+         *
+         *  <dl>
+         *      <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the graph. The color will be 
+         *      retrieved from the following array:
+         *      <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *      </dd>
+         *      <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>
+         *  </dl>
+         *
+         * @attribute area
+         * @type Object
+         */
+        area: {
+            lazyAdd: false,
+            getter: function()
+            {
+                return this.get("styles").area;
+            },
+            setter: function(val)
+            {
+                this.set("styles", {area:val});
+            }
+        }
+
+        /**
+         * Style properties for the series. Contains a key indexed hash of the following:
+         *  <dl>
+         *      <dt>marker</dt><dd>Style properties for the markers in the series. Specific style attributes are listed
+         *      <a href="#config_marker">here</a>.</dd>
+         *      <dt>line</dt><dd>Style properties for the lines in the series. Specific
+         *      style attributes are listed <a href="#config_line">here</a>.</dd>
+         *      <dt>area</dt><dd>Style properties for the area fills in the series. Specific style attributes are listed
+         *      <a href="#config_area">here</a>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+
+
+		
+
+		
+/**
+ * The StackedComboSeries class renders a combination of lines, plots and area fills in a single series. Series
+ * are stacked along the value axis to indicate each series contribution to a cumulative total. Each
+ * series type has a corresponding boolean attribute indicating if it is rendered. By default, all three types are
+ * rendered.  
+ *
+ * @class StackedComboSeries
+ * @extends ComboSeries
+ * @uses StackingUtil
+ * @constructor
+ */
+Y.StackedComboSeries = Y.Base.create("stackedComboSeries", Y.ComboSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series. Overrides base implementation.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {   
+        Y.StackedComboSeries.superclass.setAreaData.apply(this);
+        this._stackCoordinates.apply(this);
+    },
+	
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        if(this.get("showAreaFill"))
+        {
+            this.drawFill.apply(this, this._getStackedClosingPoints());
+        }
+        if(this.get("showLines")) 
+        {
+            this.drawLines();
+        }
+        if(this.get("showMarkers"))
+        {
+            this.drawPlots();
+        }   
+    }
+    
+}, {
+    ATTRS : {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedCombo
+         */
+        type: {
+            value: "stackedCombo"
+        },
+
+        /**
+         * Indicates whether a fill is displayed.
+         *
+         * @attribute showAreaFill
+         * @type Boolean
+         * @default true
+         */
+        showAreaFill: {
+            value: true
+        }
+    }
+});
+/**
+ * The ComboSplineSeries class renders a combination of splines, plots and areaspline fills in a single series. Each
+ * series type has a corresponding boolean attribute indicating if it is rendered. By default, splines and plots 
+ * are rendered and areaspline is not. 
+ *
+ * @class ComboSplineSeries
+ * @extends ComboSeries
+ * @extends CurveUtil
+ * @constructor
+ */
+Y.ComboSplineSeries = Y.Base.create("comboSplineSeries", Y.ComboSeries, [Y.CurveUtil], {
+    /**
+     * @protected
+     * 
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+    {
+        this.get("graphic").clear();
+        if(this.get("showAreaFill"))
+        {
+            this.drawAreaSpline();
+        }
+        if(this.get("showLines")) 
+        {
+            this.drawSpline();
+        }
+        if(this.get("showMarkers"))
+        {
+            this.drawPlots();
+        }   
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default comboSpline
+         */
+        type: {
+            value : "comboSpline"
+        }
+    }
+});
+/**
+ * The StackedComboSplineSeries class renders a combination of splines, plots and areaspline fills in a single series. Series
+ * are stacked along the value axis to indicate each series contribution to a cumulative total. Each
+ * series type has a corresponding boolean attribute indicating if it is rendered. By default, all three types are
+ * rendered.  
+ *
+ * @class StackedComboSplineSeries
+ * @extends StackedComboSeries
+ * @uses CurveUtil
+ * @constructor
+ */
+Y.StackedComboSplineSeries = Y.Base.create("stackedComboSplineSeries", Y.StackedComboSeries, [Y.CurveUtil], {
+    /**
+	 * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+	 */
+	drawSeries: function()
+    {
+        this.get("graphic").clear();
+        if(this.get("showAreaFill"))
+        {
+            this.drawStackedAreaSpline();
+        }
+        if(this.get("showLines")) 
+        {
+            this.drawSpline();
+        }
+        if(this.get("showMarkers"))
+        {
+            this.drawPlots();
+        }   
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedComboSpline
+         */
+        type : {
+            value : "stackedComboSpline"
+        },
+
+        /**
+         * Indicates whether a fill is displayed.
+         *
+         * @attribute showAreaFill
+         * @type Boolean
+         * @default true
+         */
+        showAreaFill: {
+            value: true
+        }
+    }
+});
+/**
+ * StackedLineSeries creates line graphs in which the different series are stacked along a value axis
+ * to indicate their contribution to a cumulative total.
+ *
+ * @class StackedLineSeries
+ * @constructor
+ * @extends  LineSeries
+ * @uses StackingUtil
+ */
+Y.StackedLineSeries = Y.Base.create("stackedLineSeries", Y.LineSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series. Overrides base implementation.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {   
+        Y.StackedLineSeries.superclass.setAreaData.apply(this);
+        this._stackCoordinates.apply(this);
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedLine
+         */
+        type: {
+            value:"stackedLine"
+        }
+    }
+});
+/**
+ * StackedAreaSeries area fills to display data showing its contribution to a whole.
+ *
+ * @param {Object} config (optional) Configuration parameters for the Chart.
+ * @class StackedAreaSeries
+ * @constructor
+ * @extends AreaSeries
+ * @uses StackingUtil
+ */
+Y.StackedAreaSeries = Y.Base.create("stackedAreaSeries", Y.AreaSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Calculates the coordinates for the series. Overrides base implementation.
+     *
+     * @method setAreaData
+     */
+    setAreaData: function()
+    {   
+        Y.StackedAreaSeries.superclass.setAreaData.apply(this);
+        this._stackCoordinates.apply(this);
+    },
+
+    /**
+     * @protected
+     *
+     * Draws the series
+     *
+     * @method drawSeries
+     */
+	drawSeries: function()
+    {
+        this.get("graphic").clear();
+        this.drawFill.apply(this, this._getStackedClosingPoints());
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedArea
+         */
+        type: {
+            value:"stackedArea"
+        }
+    }
+});
+/**
+ * The StackedColumnSeries renders column chart in which series are stacked vertically to show
+ * their contribution to the cumulative total.
+ *
+ * @class StackedColumnSeries
+ * @extends ColumnSeries
+ * @uses StackingUtil
+ * @constructor
+ */
+Y.StackedColumnSeries = Y.Base.create("stackedColumnSeries", Y.ColumnSeries, [Y.StackingUtil], {
+    /**
+	 * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+	 */
+	drawSeries: function()
+	{
+	    if(this.get("xcoords").length < 1) 
+		{
+			return;
+		}
+        var style = this.get("styles").marker, 
+            w = style.width,
+            h = style.height,
+            xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            i = 0,
+            len = xcoords.length,
+            top = ycoords[0],
+            type = this.get("type"),
+            graph = this.get("graph"),
+            seriesCollection = graph.seriesTypes[type],
+            ratio,
+            order = this.get("order"),
+            graphOrder = this.get("graphOrder"),
+            left,
+            marker,
+            lastCollection,
+            negativeBaseValues,
+            positiveBaseValues,
+            useOrigin = order === 0,
+            totalWidth = len * w,
+            hotspot,
+            isChrome = ISCHROME;
+        this._createMarkerCache();
+        if(isChrome)
+        {
+            this._createHotspotCache();
+        }
+        if(totalWidth > this.get("width"))
+        {
+            ratio = this.width/totalWidth;
+            w *= ratio;
+            w = Math.max(w, 1);
+        }
+        if(!useOrigin)
+        {
+            lastCollection = seriesCollection[order - 1];
+            negativeBaseValues = lastCollection.get("negativeBaseValues");
+            positiveBaseValues = lastCollection.get("positiveBaseValues");
+        }
+        else
+        {
+            negativeBaseValues = [];
+            positiveBaseValues = [];
+        }
+        this.set("negativeBaseValues", negativeBaseValues);
+        this.set("positiveBaseValues", positiveBaseValues);
+        for(i = 0; i < len; ++i)
+        {
+            top = ycoords[i];
+            if(useOrigin)
+            {
+                h = this._bottomOrigin - top;
+                if(top < this._bottomOrigin)
+                {
+                    positiveBaseValues[i] = top;
+                    negativeBaseValues[i] = this._bottomOrigin;
+                }
+                else if(top > this._bottomOrigin)
+                {
+                    positiveBaseValues[i] = this._bottomOrigin;
+                    negativeBaseValues[i] = top;
+                }
+                else
+                {
+                    positiveBaseValues[i] = top;
+                    negativeBaseValues[i] = top;
+                }
+            }
+            else 
+            {
+                if(top > this._bottomOrigin)
+                {
+                    top += (negativeBaseValues[i] - this._bottomOrigin);
+                    h = negativeBaseValues[i] - top;
+                    negativeBaseValues[i] = top;
+                }
+                else if(top < this._bottomOrigin)
+                {
+                    top = positiveBaseValues[i] - (this._bottomOrigin - ycoords[i]);
+                    h = positiveBaseValues[i] - top;
+                    positiveBaseValues[i] = top;
+                }
+            }
+            left = xcoords[i] - w/2;
+            style.width = w;
+            style.height = h;
+            marker = this.getMarker(style, graphOrder, i);
+            marker.setPosition(left, top);
+            if(isChrome)
+            {
+                hotspot = this.getHotspot(style, graphOrder, i);
+                hotspot.setPosition(left, top);
+                hotspot.parentNode.style.zIndex = 5;
+            }
+        }
+        this._clearMarkerCache();
+        if(isChrome)
+        {
+            this._clearHotspotCache();
+        }
+    },
+
+    /**
+     * @protected
+     *
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var styles,
+                markerStyles,
+                state = this._getState(type),
+                xcoords = this.get("xcoords"),
+                marker = this._markers[i],
+                offset = 0;        
+            styles = this.get("styles").marker;
+            markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+            markerStyles.height = marker.height;
+            marker.update(markerStyles);
+            offset = styles.width * 0.5;
+            if(marker.parentNode)
+            {
+                Y.one(marker.parentNode).setStyle("left", (xcoords[i] - offset));
+            }
+        }
+    },
+	
+	/**
+	 * @private
+	 */
+    _getPlotDefaults: function()
+    {
+        var defs = {
+            fill:{
+                type: "solid",
+                alpha: 1,
+                colors:null,
+                alphas: null,
+                ratios: null
+            },
+            border:{
+                weight: 0,
+                alpha: 1
+            },
+            width: 24,
+            height: 24,
+            shape: "rect",
+
+            padding:{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            }
+        };
+        defs.fill.color = this._getDefaultColor(this.get("graphOrder"), "fill");
+        defs.border.color = this._getDefaultColor(this.get("graphOrder"), "border");
+        return defs;
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedColumn
+         */
+        type: {
+            value: "stackedColumn"
+        },
+
+        /**
+         * @private
+         *
+         * @attribute negativeBaseValues
+         * @type Array
+         * @default null
+         */
+        negativeBaseValues: {
+            value: null
+        },
+
+        /**
+         * @private
+         *
+         * @attribute positiveBaseValues
+         * @type Array
+         * @default null
+         */
+        positiveBaseValues: {
+            value: null
+        }
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>ColumnSeries</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>width</dt><dd>indicates the width of the marker. The default value is 24.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+/**
+ * The StackedBarSeries renders bar chart in which series are stacked horizontally to show
+ * their contribution to the cumulative total.
+ *
+ * @class StackedBarSeries
+ * @extends BarSeries
+ * @uses StackingUtil
+ * @constructor
+ */
+Y.StackedBarSeries = Y.Base.create("stackedBarSeries", Y.BarSeries, [Y.StackingUtil], {
+    /**
+     * @protected
+     *
+     * Draws the series.
+     *
+     * @method drawSeries
+     */
+    drawSeries: function()
+	{
+	    if(this.get("xcoords").length < 1) 
+		{
+			return;
+		}
+
+        var style = this.get("styles").marker,
+            w = style.width,
+            h = style.height,
+            xcoords = this.get("xcoords"),
+            ycoords = this.get("ycoords"),
+            i = 0,
+            len = xcoords.length,
+            top = ycoords[0],
+            type = this.get("type"),
+            graph = this.get("graph"),
+            seriesCollection = graph.seriesTypes[type],
+            ratio,
+            order = this.get("order"),
+            graphOrder = this.get("graphOrder"),
+            left,
+            marker,
+            lastCollection,
+            negativeBaseValues,
+            positiveBaseValues,
+            useOrigin = order === 0,
+            totalHeight = len * h,
+            hotspot,
+            isChrome = ISCHROME;
+        this._createMarkerCache();
+        if(isChrome)
+        {
+            this._createHotspotCache();
+        }
+        if(totalHeight > this.get("height"))
+        {
+            ratio = this.height/totalHeight;
+            h *= ratio;
+            h = Math.max(h, 1);
+        }
+        if(!useOrigin)
+        {
+            lastCollection = seriesCollection[order - 1];
+            negativeBaseValues = lastCollection.get("negativeBaseValues");
+            positiveBaseValues = lastCollection.get("positiveBaseValues");
+        }
+        else
+        {
+            negativeBaseValues = [];
+            positiveBaseValues = [];
+        }
+        this.set("negativeBaseValues", negativeBaseValues);
+        this.set("positiveBaseValues", positiveBaseValues);
+        for(i = 0; i < len; ++i)
+        {
+            top = ycoords[i];
+            left = xcoords[i];
+            
+            if(useOrigin)
+            {
+                w = left - this._leftOrigin;
+                if(left > this._leftOrigin)
+                {
+                    positiveBaseValues[i] = left;
+                    negativeBaseValues[i] = this._leftOrigin;
+                }
+                else if(left < this._leftOrigin)
+                {   
+                    positiveBaseValues[i] = this._leftOrigin;
+                    negativeBaseValues[i] = left;
+                }
+                else
+                {
+                    positiveBaseValues[i] = left;
+                    negativeBaseValues[i] = this._leftOrigin;
+                }
+                left -= w;
+            }
+            else
+            {
+                if(left < this._leftOrigin)
+                {
+                    left = negativeBaseValues[i] - (this._leftOrigin - xcoords[i]);
+                    w = negativeBaseValues[i] - left;
+                    negativeBaseValues[i] = left;
+                }
+                else if(left > this._leftOrigin)
+                {
+                    left += (positiveBaseValues[i] - this._leftOrigin);
+                    w = left - positiveBaseValues[i];
+                    positiveBaseValues[i] = left;
+                    left -= w;
+                }
+            }
+            top -= h/2;        
+            style.width = w;
+            style.height = h;
+            marker = this.getMarker(style, graphOrder, i);
+            marker.setPosition(left, top);
+            if(isChrome)
+            {
+                hotspot = this.getHotspot(style, graphOrder, i);
+                hotspot.setPosition(left, top);
+                hotspot.parentNode.style.zIndex = 5;
+            }
+        }
+        this._clearMarkerCache();
+        if(isChrome)
+        {
+            this._clearHotspotCache();
+        }
+    },
+
+    /**
+     * @protected
+     *
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var state = this._getState(type),
+                ycoords = this.get("ycoords"),
+                marker = this._markers[i],
+                styles = this.get("styles").marker,
+                h = styles.height,
+                markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+            markerStyles.width = marker.width;
+            marker.update(markerStyles);
+            if(marker.parentNode)
+            {
+                Y.one(marker.parentNode).setStyle("top", (ycoords[i] - h/2));
+            }
+        }
+    },
+	
+    /**
+     * @protected
+     *
+     * Returns default values for the <code>styles</code> attribute.
+     * 
+     * @method _getPlotDefaults
+     * @return Object
+     */
+    _getPlotDefaults: function()
+    {
+        var defs = {
+            fill:{
+                type: "solid",
+                alpha: 1,
+                colors:null,
+                alphas: null,
+                ratios: null
+            },
+            border:{
+                weight: 0,
+                alpha: 1
+            },
+            width: 24,
+            height: 24,
+            shape: "rect",
+
+            padding:{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            }
+        };
+        defs.fill.color = this._getDefaultColor(this.get("graphOrder"), "fill");
+        defs.border.color = this._getDefaultColor(this.get("graphOrder"), "border");
+        return defs;
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default stackedBar
+         */
+        type: {
+            value: "stackedBar"
+        },
+
+        /**
+         * Direction of the series
+         *
+         * @attribute direction
+         * @type String
+         * @default vertical
+         */
+        direction: {
+            value: "vertical"
+        },
+
+        /**
+         * @private
+         *
+         * @attribute negativeBaseValues
+         * @type Array
+         * @default null
+         */
+        negativeBaseValues: {
+            value: null
+        },
+
+        /**
+         * @private
+         *
+         * @attribute positiveBaseValues
+         * @type Array
+         * @default null
+         */
+        positiveBaseValues: {
+            value: null
+        }
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>BarSeries</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *              </dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color
+         *              will be retrieved from the below array:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>height</dt><dd>indicates the width of the marker. The default value is 24.</dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+
+/**
+ * PieSeries visualizes data as a circular chart divided into wedges which represent data as a 
+ * percentage of a whole.
+ *
+ * @class PieSeries
+ * @constructor
+ * @extends MarkerSeries
+ */
+Y.PieSeries = Y.Base.create("pieSeries", Y.MarkerSeries, [], { 
+    /**
+     * @private
+     */
+    _map: null,
+
+    /**
+     * @private
+     */
+    _image: null,
+
+    /**
+     * @private
+     */
+    _setMap: function()
+    {
+        var id = "pieHotSpotMapi_" + Math.round(100000 * Math.random()),
+            cb = this.get("graph").get("contentBox"),
+            areaNode;
+        if(this._image)
+        {
+            cb.removeChild(this._image);
+            while(this._areaNodes && this._areaNodes.length > 0)
+            {
+                areaNode = this._areaNodes.shift();
+                this._map.removeChild(areaNode);
+            }
+            cb.removeChild(this._map);
+        }
+        this._image = document.createElement("img"); 
+        this._image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABCAYAAAD9yd/wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJJREFUeNpiZGBgSGPAAgACDAAIkABoFyloZQAAAABJRU5ErkJggg==";
+        cb.appendChild(this._image);
+        this._image.setAttribute("usemap", "#" + id);
+        this._image.style.zIndex = 3;
+        this._image.style.opacity = 0;
+        this._image.setAttribute("alt", "imagemap");
+        this._map = document.createElement("map");
+        this._map.style.zIndex = 5;
+        cb.appendChild(this._map);
+        this._map.setAttribute("name", id);
+        this._map.setAttribute("id", id);
+        this._areaNodes = [];
+    },
+
+    /**
+     * @private
+     */
+    _categoryDisplayName: null,
+    
+    /**
+     * @private
+     */
+    _valueDisplayName: null,
+
+    /**
+     * @private
+     */
+    addListeners: function()
+    {
+        var categoryAxis = this.get("categoryAxis"),
+            valueAxis = this.get("valueAxis");
+        if(categoryAxis)
+        {
+            categoryAxis.after("dataReady", Y.bind(this._categoryDataChangeHandler, this));
+            categoryAxis.after("dataUpdate", Y.bind(this._categoryDataChangeHandler, this));
+        }
+        if(valueAxis)
+        {
+            valueAxis.after("dataReady", Y.bind(this._valueDataChangeHandler, this));
+            valueAxis.after("dataUpdate", Y.bind(this._valueDataChangeHandler, this));
+        }
+        this.after("categoryAxisChange", this.categoryAxisChangeHandler);
+        this.after("valueAxisChange", this.valueAxisChangeHandler);
+        this.after("stylesChange", this._updateHandler);
+    },
+    
+    /**
+     * @private
+     */
+    validate: function()
+    {
+        this.draw();
+        this._renderered = true;
+    },
+
+    /**
+     * @private
+     */
+    _categoryAxisChangeHandler: function(e)
+    {
+        var categoryAxis = this.get("categoryAxis");
+        categoryAxis.after("dataReady", Y.bind(this._categoryDataChangeHandler, this));
+        categoryAxis.after("dataUpdate", Y.bind(this._categoryDataChangeHandler, this));
+    },
+    
+    /**
+     * @private
+     */
+    _valueAxisChangeHandler: function(e)
+    {
+        var valueAxis = this.get("valueAxis");
+        valueAxis.after("dataReady", Y.bind(this._valueDataChangeHandler, this));
+        valueAxis.after("dataUpdate", Y.bind(this._valueDataChangeHandler, this));
+    },
+	
+    /**
+     * Constant used to generate unique id.
+     *
+     * @private
+     */
+    GUID: "pieseries",
+	
+    /**
+     * @private (protected)
+     * Handles updating the graph when the x < code>Axis</code> values
+     * change.
+     */
+    _categoryDataChangeHandler: function(event)
+    {
+       if(this._rendered && this.get("categoryKey") && this.get("valueKey"))
+        {
+            this.draw();
+        }
+    },
+
+    /**
+     * @private (protected)
+     * Handles updating the chart when the y <code>Axis</code> values
+     * change.
+     */
+    _valueDataChangeHandler: function(event)
+    {
+        if(this._rendered && this.get("categoryKey") && this.get("valueKey"))
+        {
+            this.draw();
+        }
+    },
+   
+    /**
+     * @protected
+     *
+     * Draws the series. Overrides the base implementation.
+     *
+     * @method draw
+     */
+    draw: function()
+    {
+        var graph = this.get("graph"),
+            w = graph.get("width"),
+            h = graph.get("height");
+        if(isFinite(w) && isFinite(h) && w > 0 && h > 0)
+        {   
+            this._rendered = true;
+            this.drawSeries();
+            this.fire("drawingComplete");
+        }
+    },
+
+    /**
+     * @private
+     */
+    drawPlots: function()
+    {
+        var values = this.get("valueAxis").getDataByKey(this.get("valueKey")).concat(),
+            catValues = this.get("categoryAxis").getDataByKey(this.get("categoryKey")).concat(),
+            totalValue = 0,
+            itemCount = values.length,
+            styles = this.get("styles").marker,
+            fillColors = styles.fill.colors,
+            fillAlphas = styles.fill.alphas || ["1"],
+            borderColors = styles.border.colors,
+            borderWeights = [styles.border.weight],
+            borderAlphas = [styles.border.alpha],
+            tbw = borderWeights.concat(),
+            tbc = borderColors.concat(),
+            tba = borderAlphas.concat(),
+            tfc,
+            tfa,
+            padding = styles.padding,
+            graph = this.get("graph"),
+            w = graph.get("width") - (padding.left + padding.right),
+            h = graph.get("height") - (padding.top + padding.bottom),
+            startAngle = -90,
+            halfWidth = w / 2,
+            halfHeight = h / 2,
+            radius = Math.min(halfWidth, halfHeight),
+            i = 0,
+            value,
+            angle = 0,
+            lc,
+            la,
+            lw,
+            wedgeStyle,
+            marker,
+            graphOrder = this.get("graphOrder"),
+            isCanvas = DRAWINGAPI == "canvas";
+
+        for(; i < itemCount; ++i)
+        {
+            value = values[i];
+            
+            values.push(value);
+            if(!isNaN(value))
+            {
+                totalValue += value;
+            }
+        }
+        
+        tfc = fillColors ? fillColors.concat() : null;
+        tfa = fillAlphas ? fillAlphas.concat() : null;
+        this._createMarkerCache();
+        if(isCanvas)
+        {
+            this._setMap();
+            this._image.width = w;
+            this._image.height = h;
+        }
+        for(i = 0; i < itemCount; i++)
+        {
+            value = values[i];
+            if(totalValue === 0)
+            {
+                angle = 360 / values.length;
+            }
+            else
+            {
+                angle = 360 * (value / totalValue);
+            }
+            angle = Math.round(angle);
+            if(tfc && tfc.length < 1)
+            {
+                tfc = fillColors.concat();
+            }
+            if(tfa && tfa.length < 1)
+            {
+                tfa = fillAlphas.concat();
+            }
+            if(tbw && tbw.length < 1)
+            {
+                tbw = borderWeights.concat();
+            }
+            if(tbw && tbc.length < 1)
+            {
+                tbc = borderColors.concat();
+            }
+            if(tba && tba.length < 1)
+            {
+                tba = borderAlphas.concat();
+            }
+            lw = tbw ? tbw.shift() : null;
+            lc = tbc ? tbc.shift() : null;
+            la = tba ? tba.shift() : null;
+            startAngle += angle;
+            wedgeStyle = {
+                border: {
+                    color:lc,
+                    weight:lw,
+                    alpha:la
+                },
+                fill: {
+                    color:tfc ? tfc.shift() : this._getDefaultColor(i, "slice"),
+                    alpha:tfa ? tfa.shift() : null
+                },
+                shape: "wedge",
+                props: {
+                    arc: angle,
+                    radius: radius,
+                    startAngle: startAngle,
+                    x: halfWidth,
+                    y: halfHeight
+                },
+                width: w,
+                height: h
+            };
+            marker = this.getMarker(wedgeStyle, graphOrder, i);
+            if(isCanvas)
+            {
+                this._addHotspot(wedgeStyle.props, graphOrder, i);
+            }
+        }
+        this._clearMarkerCache();
+    },
+
+    _addHotspot: function(cfg, seriesIndex, index)
+    {
+        var areaNode = document.createElement("area"),
+            i = 1,
+            x = cfg.x,
+            y = cfg.y, 
+            arc = cfg.arc,
+            startAngle = cfg.startAngle - arc, 
+            endAngle = cfg.startAngle,
+            radius = cfg.radius, 
+            ax = x + Math.cos(startAngle / 180 * Math.PI) * radius,
+            ay = y + Math.sin(startAngle / 180 * Math.PI) * radius,
+            bx = x + Math.cos(endAngle / 180 * Math.PI) * radius,
+            by = y + Math.sin(endAngle / 180 * Math.PI) * radius,
+            numPoints = Math.floor(arc/10) - 1,
+            divAngle = (arc/(Math.floor(arc/10)) / 180) * Math.PI,
+            angleCoord = Math.atan((ay - y)/(ax - x)),
+            pts = x + ", " + y + ", " + ax + ", " + ay,
+            cosAng,
+            sinAng,
+            multDivAng;
+        for(i = 1; i <= numPoints; ++i)
+        {
+            multDivAng = divAngle * i;
+            cosAng = Math.cos(angleCoord + multDivAng);
+            sinAng = Math.sin(angleCoord + multDivAng);
+            if(startAngle <= 90)
+            {
+                pts += ", " + (x + (radius * Math.cos(angleCoord + (divAngle * i))));
+                pts += ", " + (y + (radius * Math.sin(angleCoord + (divAngle * i))));
+            }
+            else
+            {
+                pts += ", " + (x - (radius * Math.cos(angleCoord + (divAngle * i))));
+                pts += ", " + (y - (radius * Math.sin(angleCoord + (divAngle * i))));
+            }
+        }
+        pts += ", " + bx + ", " + by;
+        pts += ", " + x + ", " + y;
+        this._map.appendChild(areaNode);
+        areaNode.setAttribute("class", "yui3-seriesmarker");
+        areaNode.setAttribute("id", "hotSpot_" + seriesIndex + "_" + index);
+        areaNode.setAttribute("shape", "polygon");
+        areaNode.setAttribute("coords", pts);
+        this._areaNodes.push(areaNode);
+
+    },
+
+    /**
+     * Resizes and positions markers based on a mouse interaction.
+     *
+     * @protected
+     * @method updateMarkerState
+     * @param {String} type state of the marker
+     * @param {Number} i index of the marker
+     */
+    updateMarkerState: function(type, i)
+    {
+        if(this._markers[i])
+        {
+            var state = this._getState(type),
+                markerStyles,
+                indexStyles,
+                marker = this._markers[i],
+                styles = this.get("styles").marker; 
+            markerStyles = state == "off" || !styles[state] ? styles : styles[state]; 
+            indexStyles = this._mergeStyles(markerStyles, {});
+            indexStyles.fill.color = indexStyles.fill.colors[i % indexStyles.fill.colors.length];
+            indexStyles.fill.alpha = indexStyles.fill.alphas[i % indexStyles.fill.alphas.length];
+            marker.update(indexStyles);
+        }
+    },
+    
+    /**
+     * @private
+     */
+    _createMarker: function(styles, order, index)
+    {
+        var cfg = Y.clone(styles),
+            marker;
+        cfg.graphic = this.get("graphic");
+        marker = new Y.Shape(cfg);
+        marker.addClass("yui3-seriesmarker");
+        marker.node.setAttribute("id", "series_" + order + "_" + index);
+        return marker;
+    },
+    
+    /**
+     * @private
+     */
+    _clearMarkerCache: function()
+    {
+        var len = this._markerCache.length,
+            i = 0,
+            marker;
+        for(; i < len; ++i)
+        {
+            marker = this._markerCache[i];
+            if(marker && marker.node && marker.parentNode)
+            {
+                marker.parentNode.removeChild(marker.node);
+            }
+        }
+        this._markerCache = [];
+    },
+
+    /**
+     * @private
+     */
+    _getPlotDefaults: function()
+    {
+         var defs = {
+            padding:{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            },
+            fill:{
+                alphas:["1"]
+            },
+            border: {
+                weight: 0,
+                alpha: 1
+            }
+        };
+        defs.fill.colors = this._defaultSliceColors;
+        defs.border.colors = this._defaultBorderColors;
+        return defs;
+    },
+
+    /**
+     * @private
+     */
+    _defaultLineColors:["#426ab3", "#d09b2c", "#000000", "#b82837", "#b384b5", "#ff7200", "#779de3", "#cbc8ba", "#7ed7a6", "#007a6c"],
+
+    /**
+     * @private
+     */
+    _defaultFillColors:["#6084d0", "#eeb647", "#6c6b5f", "#d6484f", "#ce9ed1", "#ff9f3b", "#93b7ff", "#e0ddd0", "#94ecba", "#309687"],
+    
+    /**
+     * @private
+     */
+    _defaultBorderColors:["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"],
+    
+    /**
+     * @private
+     */
+    _defaultSliceColors: ["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"],
+
+    /**
+     * @private
+     * @description Colors used if style colors are not specified
+     */
+    _getDefaultColor: function(index, type)
+    {
+        var colors = {
+                line: this._defaultLineColors,
+                fill: this._defaultFillColors,
+                border: this._defaultBorderColors,
+                slice: this._defaultSliceColors
+            },
+            col = colors[type],
+            l = col.length;
+        index = index || 0;
+        if(index >= l)
+        {
+            index = index % l;
+        }
+        type = type || "fill";
+        return colors[type][index];
+    }
+}, {
+    ATTRS: {
+        /**
+         * Read-only attribute indicating the type of series.
+         *
+         * @attribute type
+         * @type String
+         * @default pie
+         */
+        type: {		
+            value: "pie"
+        },
+        
+        /**
+         * Order of this instance of this <code>type</code>.
+         *
+         * @attribute order
+         * @type Number
+         */
+        order: {},
+
+        /**
+         * Reference to the <code>Graph</code> in which the series is drawn into.
+         *
+         * @attribute graph
+         * @type Graph
+         */
+        graph: {},
+        
+        /**
+         * Reference to the <code>Axis</code> instance used for assigning 
+         * category values to the graph.
+         *
+         * @attribute categoryAxis
+         * @type Axis
+         */
+        categoryAxis: {
+            value: null,
+
+            validator: function(value)
+            {
+                return value !== this.get("categoryAxis");
+            }
+        },
+        
+        /**
+         * Reference to the <code>Axis</code> instance used for assigning 
+         * series values to the graph.
+         *
+         * @attribute categoryAxis
+         * @type Axis
+         */
+        valueAxis: {
+            value: null,
+
+            validator: function(value)
+            {
+                return value !== this.get("valueAxis");
+            }
+        },
+
+        /**
+         * Indicates which array to from the hash of value arrays in 
+         * the category <code>Axis</code> instance.
+         */
+        categoryKey: {
+            value: null,
+
+            validator: function(value)
+            {
+                return value !== this.get("categoryKey");
+            }
+        },
+        /**
+         * Indicates which array to from the hash of value arrays in 
+         * the value <code>Axis</code> instance.
+         */
+        valueKey: {
+            value: null,
+
+            validator: function(value)
+            {
+                return value !== this.get("valueKey");
+            }
+        },
+
+        /**
+         * Name used for for displaying category data
+         *
+         * @attribute categoryDisplayName
+         * @type String
+         */
+        categoryDisplayName: {
+            setter: function(val)
+            {
+                this._categoryDisplayName = val;
+                return val;
+            },
+
+            getter: function()
+            {
+                return this._categoryDisplayName || this.get("categoryKey");
+            }
+        },
+
+        /**
+         * Name used for for displaying value data
+         *
+         * @attribute valueDisplayName
+         * @type String
+         */
+        valueDisplayName: {
+            setter: function(val)
+            {
+                this._valueDisplayName = val;
+                return val;
+            },
+
+            getter: function()
+            {
+                return this._valueDisplayName || this.get("valueKey");
+            }
+        },
+        
+        /**
+         * @private
+         */
+        slices: null
+        
+        /**
+         * Style properties used for drawing markers. This attribute is inherited from <code>MarkerSeries</code>. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>colors</dt><dd>An array of colors to be used for the marker fills. The color for each marker is retrieved from the 
+         *              array below:<br/>
+         *              <code>["#66007f", "#a86f41", "#295454", "#996ab2", "#e8cdb7", "#90bdbd","#000000","#c3b8ca", "#968373", "#678585"]</code>
+         *              </dd>
+         *              <dt>alphas</dt><dd>An array of alpha references (Number from 0 to 1) indicating the opacity of each marker fill. The default value is [1].</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>An array of colors to be used for the marker borders. The color for each marker is retrieved from the
+         *              array below:<br/>
+         *              <code>["#205096", "#b38206", "#000000", "#94001e", "#9d6fa0", "#e55b00", "#5e85c9", "#adab9e", "#6ac291", "#006457"]</code>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>over</dt><dd>hash containing styles for markers when highlighted by a <code>mouseover</code> event. The default 
+         *      values for each style is null. When an over style is not set, the non-over value will be used. For example,
+         *      the default value for <code>marker.over.fill.color</code> is equivalent to <code>marker.fill.color</code>.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+/**
+ * Gridlines draws gridlines on a Graph.
+ *
+ * @class Gridlines
+ * @constructor
+ * @extends Base
+ * @uses Renderer
+ */
+Y.Gridlines = Y.Base.create("gridlines", Y.Base, [Y.Renderer], {
+    /**
+     * @private
+     */
+    render: function()
+    {
+        this._setCanvas();
+    },
+
+    /**
+     * @private
+     */
+    remove: function()
+    {
+        var graphic = this.get("graphic"),
+            gNode;
+        if(graphic)
+        {
+            gNode = graphic.node;
+            if(gNode)
+            {
+                Y.one(gNode).remove();
+            }
+        }
+    },
+
+    /**
+     * @protected
+     *
+     * Draws the gridlines
+     *
+     * @method draw
+     */
+    draw: function()
+    {
+        if(this.get("axis") && this.get("graph"))
+        {
+            this._drawGridlines();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _drawGridlines: function()
+    {
+        var graphic = this.get("graphic"),
+            axis = this.get("axis"),
+            axisPosition = axis.get("position"),
+            points,
+            i = 0,
+            l,
+            direction = this.get("direction"),
+            graph = this.get("graph"),
+            w = graph.get("width"),
+            h = graph.get("height"),
+            line = this.get("styles").line,
+            color = line.color,
+            weight = line.weight,
+            alpha = line.alpha,
+            lineFunction = direction == "vertical" ? this._verticalLine : this._horizontalLine;
+        if(axisPosition == "none")
+        {
+            points = [];
+            l = axis.get("styles").majorUnit.count;
+            for(; i < l; ++i)
+            {
+                points[i] = {
+                    x: w * (i/(l-1)),
+                    y: h * (i/(l-1))
+                };
+            }
+            i = 0;
+        }
+        else
+        {
+            points = axis.get("tickPoints");
+            l = points.length;
+        }
+        if(!graphic)
+        {
+            this._setCanvas();
+            graphic = this.get("graphic");
+        }
+        graphic.clear();
+        graphic.setSize(w, h);
+        graphic.lineStyle(weight, color, alpha);
+        for(; i < l; ++i)
+        {
+            lineFunction(graphic, points[i], w, h);
+        }
+        graphic.end();
+    },
+
+    /**
+     * @private
+     */
+    _horizontalLine: function(graphic, pt, w, h)
+    {
+        graphic.moveTo(0, pt.y);
+        graphic.lineTo(w, pt.y);
+    },
+
+    /**
+     * @private
+     */
+    _verticalLine: function(graphic, pt, w, h)
+    {
+        graphic.moveTo(pt.x, 0);
+        graphic.lineTo(pt.x, h);
+    },
+
+    /**
+     * @private
+     * Creates a <code>Graphic</code> instance.
+     */
+    _setCanvas: function()
+    {
+        this.set("graphic", new Y.Graphic());
+        this.get("graphic").render(this.get("graph").get("contentBox"));
+    },
+    
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var defs = {
+            line: {
+                color:"#f0efe9",
+                weight: 1,
+                alpha: 1
+            }
+        };
+        return defs;
+    }
+
+},
+{
+    ATTRS: {
+        /**
+         * Indicates the direction of the gridline.
+         *
+         * @attribute direction
+         * @type String
+         */
+        direction: {},
+        
+        /**
+         * Indicate the <code>Axis</code> in which to bind
+         * the gridlines.
+         *
+         * @attribute axis
+         * @type Axis
+         */
+        axis: {},
+        
+        /**
+         * Indicates the <code>Graph</code> in which the gridlines 
+         * are drawn.
+         *
+         * @attribute graph
+         * @type Graph
+         */
+        graph: {}
+    }
+});
+/**
+ * Graph manages and contains series instances for a <code>CartesianChart</code>
+ * instance.
+ *
+ * @class Graph
+ * @constructor
+ * @extends Widget
+ * @uses Renderer
+ */
+Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
+    bindUI: function()
+    {
+        var bb = this.get("boundingBox");
+        bb.setStyle("position", "absolute");
+        this.after("widthChange", this._sizeChangeHandler);
+        this.after("heightChange", this._sizeChangeHandler);
+        this.after("stylesChange", this._updateStyles);
+    },
+
+    /**
+     * @private
+     */
+    syncUI: function()
+    {
+        if(this.get("showBackground"))
+        {
+            var graphic = new Y.Graphic(),
+                graphicNode,
+                cb = this.get("contentBox"),
+                bg = this.get("styles").background,
+                border = bg.border,
+                weight = border.weight || 0,
+                w = this.get("width"),
+                h = this.get("height");
+            if(w)
+            {
+                w += weight * 2;
+                bg.width = w;
+            }   
+            if(h)
+            {
+                h += weight * 2;
+                bg.height = h;
+            }
+            graphic.render(cb);
+            this._background = graphic.getShape(bg);
+            graphicNode = Y.one(graphic.node);
+            graphicNode.setStyle("left", 0 - weight);
+            graphicNode.setStyle("top", 0 - weight);
+            graphicNode.setStyle("zIndex", -1);
+        }
+    },
+   
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        var sc = this.get("seriesCollection"),
+            series,
+            i = 0,
+            len = sc.length,
+            hgl = this.get("horizontalGridlines"),
+            vgl = this.get("verticalGridlines");
+        for(; i < len; ++i)
+        {
+            series = sc[i];
+            if(series instanceof Y.CartesianSeries)
+            {
+                series.render();
+            }
+        }
+        if(hgl && hgl instanceof Y.Gridlines)
+        {
+            hgl.draw();
+        }
+        if(vgl && vgl instanceof Y.Gridlines)
+        {
+            vgl.draw();
+        }
+    },
+
+    /**
+     * @private
+     * Hash of arrays containing series mapped to a series type.
+     */
+    seriesTypes: null,
+
+    /**
+     * Returns a series instance based on an index.
+     * 
+     * @method getSeriesByIndex
+     * @param {Number} val index of the series
+     * @return CartesianSeries
+     */
+    getSeriesByIndex: function(val)
+    {
+        var col = this.get("seriesCollection"),
+            series;
+        if(col && col.length > val)
+        {
+            series = col[val];
+        }
+        return series;
+    },
+
+    /**
+     * Returns a series instance based on a key value.
+     * 
+     * @method getSeriesByKey
+     * @param {String} val key value of the series
+     * @return CartesianSeries
+     */
+    getSeriesByKey: function(val)
+    {
+        var obj = this._seriesDictionary,
+            series;
+        if(obj && obj.hasOwnProperty(val))
+        {
+            series = obj[val];
+        }
+        return series;
+    },
+
+    /**
+     * @protected
+     * Adds dispatcher to a <code>_dispatcher</code> used to
+     * to ensure all series have redrawn before for firing event.
+     *
+     * @method addDispatcher
+     * @param {CartesianSeries} val series instance to add
+     */
+    addDispatcher: function(val)
+    {
+        if(!this._dispatchers)
+        {
+            this._dispatchers = [];
+        }
+        this._dispatchers.push(val);
+    },
+
+    /**
+     * @private 
+     * @description Collection of series to be displayed in the graph.
+     */
+    _seriesCollection: null,
+    
+    /**
+     * @private
+     */
+    _seriesDictionary: null,
+
+    /**
+     * @private
+     * Parses series instances to be displayed in the graph.
+     */
+    _parseSeriesCollection: function(val)
+    {
+        if(!val)
+        {
+            return;
+        }	
+        var len = val.length,
+            i = 0,
+            series,
+            seriesKey;
+        if(!this.get("seriesCollection"))
+        {
+            this._seriesCollection = [];
+        }
+        if(!this._seriesDictionary)
+        {
+            this._seriesDictionary = {};
+        }
+        if(!this.seriesTypes)
+        {
+            this.seriesTypes = [];
+        }
+        for(; i < len; ++i)
+        {	
+            series = val[i];
+            if(!(series instanceof Y.CartesianSeries) && !(series instanceof Y.PieSeries))
+            {
+                this._createSeries(series);
+                continue;
+            }
+            this._addSeries(series);
+        }
+        len = this.get("seriesCollection").length;
+        for(i = 0; i < len; ++i)
+        {
+            series = this.get("seriesCollection")[i];
+            seriesKey = series.get("direction") == "horizontal" ? "yKey" : "xKey";
+            this._seriesDictionary[series.get(seriesKey)] = series;
+        }
+    },
+
+    /**
+     * @private
+     * Adds a series to the graph.
+     */
+    _addSeries: function(series)
+    {
+        var type = series.get("type"),
+            seriesCollection = this.get("seriesCollection"),
+            graphSeriesLength = seriesCollection.length,
+            seriesTypes = this.seriesTypes,
+            typeSeriesCollection;	
+        if(!series.get("graph")) 
+        {
+            series.set("graph", this);
+        }
+        seriesCollection.push(series);
+        if(!seriesTypes.hasOwnProperty(type))
+        {
+            this.seriesTypes[type] = [];
+        }
+        typeSeriesCollection = this.seriesTypes[type];
+        series.set("graphOrder", graphSeriesLength);
+        series.set("order", typeSeriesCollection.length);
+        typeSeriesCollection.push(series);
+        this.addDispatcher(series);
+        series.after("drawingComplete", Y.bind(this._drawingCompleteHandler, this));
+        this.fire("seriesAdded", series);
+    },
+
+    /**
+     * @private
+     */
+    _createSeries: function(seriesData)
+    {
+        var type = seriesData.type,
+            seriesCollection = this.get("seriesCollection"),
+            seriesTypes = this.seriesTypes,
+            typeSeriesCollection,
+            seriesType,
+            series;
+            seriesData.graph = this;
+        if(!seriesTypes.hasOwnProperty(type))
+        {
+            seriesTypes[type] = [];
+        }
+        typeSeriesCollection = seriesTypes[type];
+        seriesData.graph = this;
+        seriesData.order = typeSeriesCollection.length;
+        seriesData.graphOrder = seriesCollection.length;
+        seriesType = this._getSeries(seriesData.type);
+        series = new seriesType(seriesData);
+        this.addDispatcher(series);
+        series.after("drawingComplete", Y.bind(this._drawingCompleteHandler, this));
+        typeSeriesCollection.push(series);
+        seriesCollection.push(series);
+    },
+
+    /**
+     * @private
+     */
+    _getSeries: function(type)
+    {
+        var seriesClass;
+        switch(type)
+        {
+            case "line" :
+                seriesClass = Y.LineSeries;
+            break;
+            case "column" :
+                seriesClass = Y.ColumnSeries;
+            break;
+            case "bar" :
+                seriesClass = Y.BarSeries;
+            break;
+            case "area" : 
+                seriesClass = Y.AreaSeries;
+            break;
+            case "candlestick" :
+                seriesClass = Y.CandlestickSeries;
+            break;
+            case "ohlc" :
+                seriesClass = Y.OHLCSeries;
+            break;
+            case "stackedarea" :
+                seriesClass = Y.StackedAreaSeries;
+            break;
+            case "stackedline" :
+                seriesClass = Y.StackedLineSeries;
+            break;
+            case "stackedcolumn" :
+                seriesClass = Y.StackedColumnSeries;
+            break;
+            case "stackedbar" :
+                seriesClass = Y.StackedBarSeries;
+            break;
+            case "markerseries" :
+                seriesClass = Y.MarkerSeries;
+            break;
+            case "spline" :
+                seriesClass = Y.SplineSeries;
+            break;
+            case "areaspline" :
+                seriesClass = Y.AreaSplineSeries;
+            break;
+            case "stackedspline" :
+                seriesClass = Y.StackedSplineSeries;
+            break;
+            case "stackedareaspline" :
+                seriesClass = Y.StackedAreaSplineSeries;
+            break;
+            case "stackedmarkerseries" :
+                seriesClass = Y.StackedMarkerSeries;
+            break;
+            case "pie" :
+                seriesClass = Y.PieSeries;
+            break;
+            case "combo" :
+                seriesClass = Y.ComboSeries;
+            break;
+            case "stackedcombo" :
+                seriesClass = Y.StackedComboSeries;
+            break;
+            case "combospline" :
+                seriesClass = Y.ComboSplineSeries;
+            break;
+            case "stackedcombospline" :
+                seriesClass = Y.StackedComboSplineSeries;
+            break;
+            default:
+                seriesClass = Y.CartesianSeries;
+            break;
+        }
+        return seriesClass;
+    },
+
+    /**
+     * @private
+     */
+    _markerEventHandler: function(e)
+    {
+        var type = e.type,
+            markerNode = e.currentTarget,
+            strArr = markerNode.getAttribute("id").split("_"),
+            series = this.getSeriesByIndex(strArr[1]),
+            index = strArr[2];
+        series.updateMarkerState(type, index);
+    },
+
+    /**
+     * @private
+     */
+    _dispatchers: null,
+
+    /**
+     * @private
+     */
+    _updateStyles: function()
+    {
+        this._background.update(this.get("styles").background);
+        this._sizeChangeHandler();
+    },
+
+    /**
+     * @private
+     */
+    _sizeChangeHandler: function(e)
+    {
+        var hgl = this.get("horizontalGridlines"),
+            vgl = this.get("verticalGridlines"),
+            w = this.get("width"),
+            h = this.get("height"),
+            graphicNode,
+            x = 0,
+            y = 0,
+            bg = this.get("styles").background,
+            weight;
+        if(bg && bg.border)
+        {
+            weight = bg.border.weight || 0;
+        }
+        if(this._background)
+        {
+            graphicNode = Y.one(this._background.parentNode);
+            if(w && h)
+            {
+                if(weight)
+                {
+                    w += weight * 2;
+                    h += weight * 2;
+                    x -= weight;
+                    y -= weight;
+                }
+                graphicNode.setStyle("width", w);
+                graphicNode.setStyle("height", h);
+                graphicNode.setStyle("left", x);
+                graphicNode.setStyle("top", y);
+                this._background.update({width:w, height:h});
+            }
+        }
+        if(hgl && hgl instanceof Y.Gridlines)
+        {
+            hgl.draw();
+        }
+        if(vgl && vgl instanceof Y.Gridlines)
+        {
+            vgl.draw();
+        }
+        this._drawSeries();
+    },
+
+    /**
+     * @private
+     */
+    _drawSeries: function()
+    {
+        if(this._drawing)
+        {
+            this._callLater = true;
+            return;
+        }
+        this._callLater = false;
+        this._drawing = true;
+        var sc = this.get("seriesCollection"),
+            i = 0,
+            len = sc.length;
+        for(; i < len; ++i)
+        {
+            sc[i].draw();
+            if(!sc[i].get("xcoords") || !sc[i].get("ycoords"))
+            {
+                this._callLater = true;
+                break;
+            }
+        }
+        this._drawing = false;
+        if(this._callLater)
+        {
+            this._drawSeries();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _drawingCompleteHandler: function(e)
+    {
+        var series = e.currentTarget,
+            index = Y.Array.indexOf(this._dispatchers, series);
+        if(index > -1)
+        {
+            this._dispatchers.splice(index, 1);
+        }
+        if(this._dispatchers.length < 1)
+        {
+            this.fire("chartRendered");
+        }
+    },
+
+    /**
+     * @protected
+     *
+     * Gets the default value for the <code>styles</code> attribute. Overrides
+     * base implementation.
+     *
+     * @method _getDefaultStyles
+     * @return Object
+     */
+    _getDefaultStyles: function()
+    {
+        var defs = {
+            background: {
+                shape: "rect",
+                fill:{
+                    color:"#faf9f2"
+                },
+                border: {
+                    color:"#dad8c9",
+                    weight: 1
+                }
+            }
+        };
+        return defs;
+    }
+}, {
+    ATTRS: {
+        /**
+         * Collection of series. When setting the <code>seriesCollection</code> the array can contain a combination of either
+         * <code>CartesianSeries</code> instances or object literals with properties that will define a series.
+         *
+         * @attribute seriesCollection
+         * @type CartesianSeries
+         */
+        seriesCollection: {
+            getter: function()
+            {
+                return this._seriesCollection;
+            },
+
+            setter: function(val)
+            {
+                this._parseSeriesCollection(val);
+                return this._seriesCollection;
+            }
+        },
+       
+        /**
+         * Indicates whether the <code>Graph</code> has a background.
+         *
+         * @attribute showBackground
+         * @type Boolean
+         * @default true
+         */
+        showBackground: {
+            value: true
+        },
+
+        /**
+         * Read-only hash lookup for all series on in the <code>Graph</code>.
+         *
+         * @attribute seriesDictionary
+         * @type Object
+         */
+        seriesDictionary: {
+            readOnly: true,
+
+            getter: function()
+            {
+                return this._seriesDictionary;
+            }
+        },
+
+        /**
+         * Reference to the horizontal <code>Gridlines</code> instance.
+         *
+         * @attribute horizontalGridlines
+         * @type Gridlines
+         * @default null
+         */
+        horizontalGridlines: {
+            value: null,
+
+            setter: function(val)
+            {
+                var gl = this.get("horizontalGridlines");
+                if(gl && gl instanceof Y.Gridlines)
+                {
+                    gl.remove();
+                }
+                if(val instanceof Y.Gridlines)
+                {
+                    gl = val;
+                    val.set("graph", this);
+                    val.render();
+                    return val;
+                }
+                else if(val && val.axis)
+                {
+                    gl = new Y.Gridlines({direction:"horizontal", axis:val.axis, graph:this, styles:val.styles});
+                    gl.render();
+                    return gl;
+                }
+            }
+        },
+        
+        /**
+         * Reference to the vertical <code>Gridlines</code> instance.
+         *
+         * @attribute verticalGridlines
+         * @type Gridlines
+         * @default null
+         */
+        verticalGridlines: {
+            value: null,
+
+            setter: function(val)
+            {
+                var gl = this.get("verticalGridlines");
+                if(gl && gl instanceof Y.Gridlines)
+                {
+                    gl.remove();
+                }
+                if(val instanceof Y.Gridlines)
+                {
+                    gl = val;
+                    val.set("graph", this);
+                    val.render();
+                    return val;
+                }
+                else if(val && val.axis)
+                {
+                    gl = new Y.Gridlines({direction:"vertical", axis:val.axis, graph:this, styles:val.styles});
+                    gl.render();
+                    return gl;
+                }
+            }
+        }
+
+        /**
+         * Style properties used for drawing a background. Below are the default values:
+         *  <dl>
+         *      <dt>fill</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the fill. The default value is #faf9f2.</dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the background fill. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *      <dt>border</dt><dd>A hash containing the following values:
+         *          <dl>
+         *              <dt>color</dt><dd>Color of the border. The default value is #dad8c9.</dd>
+         *              <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the background border. The default value is 1.</dd>
+         *              <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>
+         *          </dl>
+         *      </dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+    }
+});
+/**
+ * The ChartBase class is an abstract class used to create charts.
+ *
+ * @class ChartBase
+ * @constructor
+ */
+function ChartBase() {}
+
+ChartBase.ATTRS = {
+    /**
+     * Reference to the default tooltip available for the chart.
+     * <p>Contains the following properties:</p>
+     *  <dl>
+     *      <dt>node</dt><dd>Reference to the actual dom node</dd>
+     *      <dt>showEvent</dt><dd>Event that should trigger the tooltip</dd>
+     *      <dt>hideEvent</dt><dd>Event that should trigger the removal of a tooltip (can be an event or an array of events)</dd>
+     *      <dt>styles</dt><dd>A hash of style properties that will be applied to the tooltip node</dd>
+     *      <dt>show</dt><dd>Indicates whether or not to show the tooltip</dd>
+     *      <dt>markerEventHandler</dt><dd>Displays and hides tooltip based on marker events</dd>
+     *      <dt>planarEventHandler</dt><dd>Displays and hides tooltip based on planar events</dd>
+     *      <dt>markerLabelFunction</dt><dd>Reference to the function used to format a marker event triggered tooltip's text</dd>
+     *      <dt>planarLabelFunction</dt><dd>Reference to the function used to format a planar event triggered tooltip's text</dd>
+     *  </dl>
+     * @attribute tooltip
+     * @type Object
+     */
+    tooltip: {
+        valueFn: "_getTooltip",
+
+        setter: function(val)
+        {
+            return this._updateTooltip(val);
+        }
+    },
+
+    /** 
+     * The key value used for the chart's category axis. 
+     *
+     * @attribute categoryKey
+     * @type String
+     * @default category
+     */
+    categoryKey: {
+        value: "category"
+    },
+        
+    /**
+     * Indicates the type of axis to use for the category axis.
+     *
+     *  <dl>
+     *      <dt>category</dt><dd>Specifies a <code>CategoryAxis</code>.</dd>
+     *      <dt>time</dt><dd>Specifies a <code>TimeAxis</dd>
+     *  </dl>
+     *
+     * @attribute categoryType
+     * @type String
+     * @default category
+     */
+    categoryType:{
+        value:"category"
+    },
+
+    /**
+     * Indicates the the type of interactions that will fire events.
+     *
+     *  <dl>
+     *      <dt>marker</dt><dd>Events will be broadcasted when the mouse interacts with individual markers.</dd>
+     *      <dt>planar</dt><dd>Events will be broadcasted when the mouse intersects the plane of any markers on the chart.</dd>
+     *      <dt>none</dt><dd>No events will be broadcasted.</dd>
+     *  </dl>
+     *
+     * @attribute interactionType
+     * @type String
+     * @default marker
+     */
+    interactionType: {
+        value: "marker"
+    },
+
+    /**
+     * Data used to generate the chart.
+     * 
+     * @attribute dataProvider
+     * @type Array
+     */
+    dataProvider: {
+        setter: function(val)
+        {
+            return this._setDataValues(val);
+        }
+    },
+        
+    /**
+     * A collection of keys that map to the series axes. If no keys are set,
+     * they will be generated automatically depending on the data structure passed into 
+     * the chart.
+     *
+     * @attribute seriesKeys
+     * @type Array
+     */
+    seriesKeys: {},
+
+    /**
+     * Reference to all the axes in the chart.
+     *
+     * @attribute axesCollection
+     * @type Array
+     */
+    axesCollection: {},
+
+    /**
+     * Reference to graph instance.
+     * 
+     * @attribute graph
+     * @type Graph 
+     */
+    graph: {
+        valueFn: "_getGraph"
+   }
+};
+
+ChartBase.prototype = {
+    /**
+     * @private
+     * @description Default value function for the <code>graph</code> attribute.
+     */
+    _getGraph: function()
+    {
+        var graph = new Y.Graph();
+        graph.after("chartRendered", Y.bind(function(e) {
+            this.fire("chartRendered");
+        }, this));
+        return graph; 
+    },
+
+    /**
+     * Returns a series instance by index or key value.
+     *
+     * @method getSeries
+     * @param val
+     * @return CartesianSeries
+     */
+    getSeries: function(val)
+    {
+        var series = null, 
+            graph = this.get("graph");
+        if(graph)
+        {
+            if(Y.Lang.isNumber(val))
+            {
+                series = graph.getSeriesByIndex(val);
+            }
+            else
+            {
+                series = graph.getSeriesByKey(val);
+            }
+        }
+        return series;
+    },
+
+    /**
+     * Returns an <code>Axis</code> instance by key reference. If the axis was explicitly set through the <code>axes</code> attribute,
+     * the key will be the same as the key used in the <code>axes</code> object. For default axes, the key for
+     * the category axis is the value of the <code>categoryKey</code> (<code>category</code>). For the value axis, the default 
+     * key is <code>values</code>.
+     *
+     * @method getAxisByKey
+     * @param {String} val Key reference used to look up the axis.
+     * @return Axis
+     */
+    getAxisByKey: function(val)
+    {
+        var axis,
+            axes = this.get("axes");
+        if(axes.hasOwnProperty(val))
+        {
+            axis = axes[val];
+        }
+        return axis;
+    },
+
+    /**
+     * Returns the category axis for the chart.
+     *
+     * @method getCategoryAxis
+     * @return Axis
+     */
+    getCategoryAxis: function()
+    {
+        var axis,
+            key = this.get("categoryKey"),
+            axes = this.get("axes");
+        if(axes.hasOwnProperty(key))
+        {
+            axis = axes[key];
+        }
+        return axis;
+    },
+
+    /**
+     * @private
+     */
+    _direction: "horizontal",
+    
+    /**
+     * @private
+     */
+    _dataProvider: null,
+
+    /**
+     * @private
+     */
+    _setDataValues: function(val)
+    {
+        if(Y.Lang.isArray(val[0]))
+        {
+            var hash, 
+                dp = [], 
+                cats = val[0], 
+                i = 0, 
+                l = cats.length, 
+                n, 
+                sl = val.length;
+            for(; i < l; ++i)
+            {
+                hash = {category:cats[i]};
+                for(n = 1; n < sl; ++n)
+                {
+                    hash["series" + n] = val[n][i];
+                }
+                dp[i] = hash; 
+            }
+            return dp;
+        }
+        return val;
+    },
+
+    /**
+     * @private 
+     */
+    _seriesCollection: null,
+
+    /**
+     * @private
+     */
+    _setSeriesCollection: function(val)
+    {
+        this._seriesCollection = val;
+    },
+    /**
+     * @private
+     */
+    _getAxisClass: function(t)
+    {
+        return this._axisClass[t];
+    },
+  
+    /**
+     * @private
+     */
+    _axisClass: {
+        stacked: Y.StackedAxis,
+        numeric: Y.NumericAxis,
+        category: Y.CategoryAxis,
+        time: Y.TimeAxis
+    },
+
+    /**
+     * @private
+     */
+    _axes: null,
+
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        var tt = this.get("tooltip");
+        //move the position = absolute logic to a class file
+        this.get("boundingBox").setStyle("position", "absolute");
+        this.get("contentBox").setStyle("position", "absolute");
+        this._addAxes();
+        this._addSeries();
+        if(tt && tt.show)
+        {
+            this._addTooltip();
+        }
+        this._redraw();
+    },
+    
+    /**
+     * @private
+     */
+    bindUI: function()
+    {
+        this.after("tooltipChange", Y.bind(this._tooltipChangeHandler, this));
+        this.after("widthChange", this._sizeChanged);
+        this.after("heightChange", this._sizeChanged);
+        this.after("dataProviderChange", this._dataProviderChangeHandler);
+        var tt = this.get("tooltip"),
+            hideEvent = "mouseout",
+            showEvent = "mouseover",
+            cb = this.get("contentBox"),
+            interactionType = this.get("interactionType"),
+            i = 0,
+            len;
+        if(interactionType == "marker")
+        {
+            hideEvent = tt.hideEvent;
+            showEvent = tt.showEvent;
+            Y.delegate("mouseenter", Y.bind(this._markerEventDispatcher, this), cb, ".yui3-seriesmarker");
+            Y.delegate("mousedown", Y.bind(this._markerEventDispatcher, this), cb, ".yui3-seriesmarker");
+            Y.delegate("mouseup", Y.bind(this._markerEventDispatcher, this), cb, ".yui3-seriesmarker");
+            Y.delegate("mouseleave", Y.bind(this._markerEventDispatcher, this), cb, ".yui3-seriesmarker");
+            Y.delegate("click", Y.bind(this._markerEventDispatcher, this), cb, ".yui3-seriesmarker");
+            Y.delegate("mousemove", Y.bind(this._positionTooltip, this), cb, ".yui3-seriesmarker");
+        }
+        else if(interactionType == "planar")
+        {
+            this._overlay.on("mousemove", Y.bind(this._planarEventDispatcher, this));
+            this.on("mouseout", this.hideTooltip);
+        }
+        if(tt)
+        {
+            if(hideEvent && showEvent && hideEvent == showEvent)
+            {
+                this.on(interactionType + "Event:" + hideEvent, this.toggleTooltip);
+            }
+            else
+            {
+                if(showEvent)
+                {
+                    this.on(interactionType + "Event:" + showEvent, tt[interactionType + "EventHandler"]);
+                }
+                if(hideEvent)
+                {
+                    if(Y.Lang.isArray(hideEvent))
+                    {
+                        len = hideEvent.length;
+                        for(; i < len; ++i)
+                        {
+                            this.on(interactionType + "Event:" + hideEvent[i], this.hideTooltip);
+                        }
+                    }
+                    this.on(interactionType + "Event:" + hideEvent, this.hideTooltip);
+                }
+            }
+        }
+    },
+    
+    /**
+     * @private
+     */
+    _markerEventDispatcher: function(e)
+    {
+        var type = e.type,
+            cb = this.get("contentBox"),
+            markerNode = e.currentTarget,
+            strArr = markerNode.getAttribute("id").split("_"),
+            seriesIndex = strArr[1],
+            series = this.getSeries(parseInt(seriesIndex, 10)),
+            index = strArr[2],
+            items = this.getSeriesItems(series, index),
+            x = e.pageX - cb.getX(),
+            y = e.pageY - cb.getY();
+        if(type == "mouseenter")
+        {
+            type = "mouseover";
+        }
+        else if(type == "mouseleave")
+        {
+            type = "mouseout";
+        }
+        series.updateMarkerState(type, index);
+        e.halt();
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>marker</code> and a series marker has received a mouseover event.
+         * 
+         *
+         * @event markerEvent:mouseover
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>Hash containing information about the category <code>Axis</code>.</dd>
+         *      <dt>valueItem</dt><dd>Hash containing information about the value <code>Axis</code>.</dd>
+         *      <dt>node</dt><dd>The dom node of the marker.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>series</dt><dd>Reference to the series of the marker.</dd>
+         *      <dt>index</dt><dd>Index of the marker in the series.</dd>
+         *      <dt>seriesIndex</dt><dd>The <code>order</code> of the marker's series.</dd>
+         *  </dl>
+         */
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>marker</code> and a series marker has received a mouseout event.
+         *
+         * @event markerEvent:mouseout
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>Hash containing information about the category <code>Axis</code>.</dd>
+         *      <dt>valueItem</dt><dd>Hash containing information about the value <code>Axis</code>.</dd>
+         *      <dt>node</dt><dd>The dom node of the marker.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>series</dt><dd>Reference to the series of the marker.</dd>
+         *      <dt>index</dt><dd>Index of the marker in the series.</dd>
+         *      <dt>seriesIndex</dt><dd>The <code>order</code> of the marker's series.</dd>
+         *  </dl>
+         */
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>marker</code> and a series marker has received a mousedown event.
+         *
+         * @event markerEvent:mousedown
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>Hash containing information about the category <code>Axis</code>.</dd>
+         *      <dt>valueItem</dt><dd>Hash containing information about the value <code>Axis</code>.</dd>
+         *      <dt>node</dt><dd>The dom node of the marker.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>series</dt><dd>Reference to the series of the marker.</dd>
+         *      <dt>index</dt><dd>Index of the marker in the series.</dd>
+         *      <dt>seriesIndex</dt><dd>The <code>order</code> of the marker's series.</dd>
+         *  </dl>
+         */
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>marker</code> and a series marker has received a mouseup event.
+         *
+         * @event markerEvent:mouseup
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>Hash containing information about the category <code>Axis</code>.</dd>
+         *      <dt>valueItem</dt><dd>Hash containing information about the value <code>Axis</code>.</dd>
+         *      <dt>node</dt><dd>The dom node of the marker.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>series</dt><dd>Reference to the series of the marker.</dd>
+         *      <dt>index</dt><dd>Index of the marker in the series.</dd>
+         *      <dt>seriesIndex</dt><dd>The <code>order</code> of the marker's series.</dd>
+         *  </dl>
+         */
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>marker</code> and a series marker has received a click event.
+         *
+         * @event markerEvent:click
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>Hash containing information about the category <code>Axis</code>.</dd>
+         *      <dt>valueItem</dt><dd>Hash containing information about the value <code>Axis</code>.</dd>
+         *      <dt>node</dt><dd>The dom node of the marker.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>series</dt><dd>Reference to the series of the marker.</dd>
+         *      <dt>index</dt><dd>Index of the marker in the series.</dd>
+         *      <dt>seriesIndex</dt><dd>The <code>order</code> of the marker's series.</dd>
+         *  </dl>
+         */
+        this.fire("markerEvent:" + type, {categoryItem:items.category, valueItem:items.value, node:markerNode, x:x, y:y, series:series, index:index, seriesIndex:seriesIndex});
+    },
+
+    /**
+     * @private
+     */
+    _dataProviderChangeHandler: function(e)
+    {
+        var dataProvider = this.get("dataProvider"),
+            axes = this.get("axes"),
+            i,
+            axis;
+        for(i in axes)
+        {
+            if(axes.hasOwnProperty(i))
+            {
+                axis = axes[i];
+                if(axis instanceof Y.Axis)
+                {
+                    axis.set("dataProvider", dataProvider);
+                }
+            }
+        }
+    },
+    
+    /**
+     * Event listener for toggling the tooltip. If a tooltip is visible, hide it. If not, it 
+     * will create and show a tooltip based on the event object.
+     * 
+     * @method toggleTooltip
+     */
+    toggleTooltip: function(e)
+    {
+        var tt = this.get("tooltip");
+        if(tt.visible)
+        {
+            this.hideTooltip();
+        }
+        else
+        {
+            tt.markerEventHandler.apply(this, [e]);
+        }
+    },
+
+    /**
+     * @private
+     */
+    _showTooltip: function(msg, x, y)
+    {
+        var tt = this.get("tooltip"),
+            node = tt.node;
+        if(msg)
+        {
+            tt.visible = true;
+            node.set("innerHTML", msg);
+            node.setStyle("top", y + "px");
+            node.setStyle("left", x + "px");
+            node.removeClass("yui3-widget-hidden");
+        }
+    },
+
+    /**
+     * @private
+     */
+    _positionTooltip: function(e)
+    {
+        var tt = this.get("tooltip"),
+            node = tt.node,
+            cb = this.get("contentBox"),
+            x = (e.pageX + 10) - cb.getX(),
+            y = (e.pageY + 10) - cb.getY();
+        if(node)
+        {
+            node.setStyle("left", x + "px");
+            node.setStyle("top", y + "px");
+        }
+    },
+
+    /**
+     * Hides the default tooltip
+     */
+    hideTooltip: function()
+    {
+        var tt = this.get("tooltip"),
+            node = tt.node;
+        tt.visible = false;
+        node.set("innerHTML", "");
+        node.setStyle("left", -10000);
+        node.setStyle("top", -10000);
+        node.addClass("yui3-widget-hidden");
+    },
+
+    /**
+     * @private
+     */
+    _addTooltip: function()
+    {
+        var tt = this.get("tooltip");
+        this.get("contentBox").appendChild(tt.node);
+    },
+
+    /**
+     * @private
+     */
+    _updateTooltip: function(val)
+    {
+        var tt = this._tooltip,
+            i,
+            styles = val.styles,
+            props = {
+                markerLabelFunction:"markerLabelFunction",
+                planarLabelFunction:"planarLabelFunction",
+                showEvent:"showEvent",
+                hideEvent:"hideEvent",
+                markerEventHandler:"markerEventHandler",
+                planarEventHandler:"planarEventHandler"
+            };
+        if(styles)
+        {
+            for(i in styles)
+            {
+                if(styles.hasOwnProperty(i))
+                {
+                    tt.node.setStyle(i, styles[i]);
+                }
+            }
+        }
+        for(i in props)
+        {
+            if(val.hasOwnProperty(i))
+            {
+                tt[i] = val[i];
+            }
+        }
+        return tt;
+    },
+
+    /**
+     * @private
+     */
+    _getTooltip: function()
+    {
+        var node = document.createElement("div"),
+            tt = {
+                markerLabelFunction: this._tooltipLabelFunction,
+                planarLabelFunction: this._planarLabelFunction,
+                show: true,
+                hideEvent: "mouseout",
+                showEvent: "mouseover",
+                markerEventHandler: function(e)
+                {
+                    var tt = this.get("tooltip"),
+                    msg = tt.markerLabelFunction.apply(this, [e.categoryItem, e.valueItem, e.index, e.series, e.seriesIndex]);
+                    this._showTooltip(msg, e.x + 10, e.y + 10);
+                },
+                planarEventHandler: function(e)
+                {
+                    var tt = this.get("tooltip"),
+                        msg ,
+                        categoryAxis = this.get("categoryAxis");
+                    msg = tt.planarLabelFunction.apply(this, [categoryAxis, e.valueItem, e.index, e.items, e.seriesIndex]);
+                    this._showTooltip(msg, e.x + 10, e.y + 10);
+                }
+            };
+        node.setAttribute("id", this.get("id") + "_tooltip");
+        node = Y.one(node);
+        node.setStyle("fontSize", "85%");
+        node.setStyle("opacity", "0.83");
+        node.setStyle("position", "absolute");
+        node.setStyle("paddingTop", "2px");
+        node.setStyle("paddingRight", "5px");
+        node.setStyle("paddingBottom", "4px");
+        node.setStyle("paddingLeft", "2px");
+        node.setStyle("backgroundColor", "#fff");
+        node.setStyle("border", "1px solid #dbdccc");
+        node.setStyle("pointerEvents", "none");
+        node.setStyle("zIndex", 3);
+        node.setStyle("whiteSpace", "noWrap");
+        node.addClass("yui3-widget-hidden");
+        tt.node = Y.one(node);
+        this._tooltip = tt;
+        return tt;
+    },
+
+    /**
+     * @private
+     */
+    _planarLabelFunction: function(categoryAxis, valueItems, index, seriesArray, seriesIndex)
+    {
+        var msg = "",
+            valueItem,
+            i = 0,
+            len = seriesArray.length,
+            axis,
+            series;
+        if(categoryAxis)
+        {
+            msg += categoryAxis.get("labelFunction").apply(this, [categoryAxis.getKeyValueAt(this.get("categoryKey"), index), categoryAxis.get("labelFormat")]);
+        }
+
+        for(; i < len; ++i)
+        {
+            series = seriesArray[i];
+            if(series.get("visible"))
+            {
+                valueItem = valueItems[i];
+                axis = valueItem.axis;
+                msg += "<br/><span>" + valueItem.displayName + ": " + axis.get("labelFunction").apply(this, [axis.getKeyValueAt(valueItem.key, index), axis.get("labelFormat")]) + "</span>";
+            }
+        }
+        return msg;
+    },
+
+    /**
+     * @private
+     */
+    _tooltipLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex)
+    {
+        var msg = categoryItem.displayName +
+        ":&nbsp;" + categoryItem.axis.get("labelFunction").apply(this, [categoryItem.value, categoryItem.axis.get("labelFormat")]) + 
+        "<br/>" + valueItem.displayName + 
+        ":&nbsp;" + valueItem.axis.get("labelFunction").apply(this, [valueItem.value, valueItem.axis.get("labelFormat")]);
+        return msg; 
+    },
+
+    /**
+     * @private
+     */
+    _tooltipChangeHandler: function(e)
+    {
+        if(this.get("tooltip"))
+        {
+            var tt = this.get("tooltip"),
+                node = tt.node,
+                show = tt.show,
+                cb = this.get("contentBox");
+            if(node && show)
+            {
+                if(!cb.containes(node))
+                {
+                    this._addTooltip();
+                }
+            }
+        }
+    }
+};
+Y.ChartBase = ChartBase;
+/**
+ * The CartesianChart class creates a chart with horizontal and vertical axes.
+ *
+ * @class CartesianChart
+ * @extends ChartBase
+ * @constructor
+ */
+Y.CartesianChart = Y.Base.create("cartesianChart", Y.Widget, [Y.ChartBase], {
+    /**
+     * @private
+     */
+    renderUI: function()
+    {
+        var tt = this.get("tooltip"),
+            overlay;
+        //move the position = absolute logic to a class file
+        this.get("boundingBox").setStyle("position", "absolute");
+        this.get("contentBox").setStyle("position", "absolute");
+        this._addAxes();
+        this._addGridlines();
+        this._addSeries();
+        if(tt && tt.show)
+        {
+            this._addTooltip();
+        }
+        //If there is a style definition. Force them to set.
+        this.get("styles");
+        if(this.get("interactionType") == "planar")
+        {
+            overlay = document.createElement("div");
+            this.get("contentBox").appendChild(overlay);
+            this._overlay = Y.one(overlay); 
+            this._overlay.setStyle("position", "absolute");
+            this._overlay.setStyle("background", "#fff");
+            this._overlay.setStyle("opacity", 0);
+            this._overlay.addClass("yui3-overlay");
+            this._overlay.setStyle("zIndex", 4);
+        }
+        this._redraw();
+    },
+
+    /**
+     * @private
+     */
+    _planarEventDispatcher: function(e)
+    {
+        var graph = this.get("graph"),
+            bb = this.get("boundingBox"),
+            cb = graph.get("contentBox"),
+            x = e.pageX,
+            offsetX = x - cb.getX(),
+            posX = x - bb.getX(),
+            y = e.pageY,
+            offsetY = y - cb.getY(),
+            posY = y - bb.getY(),
+            sc = graph.get("seriesCollection"),
+            series,
+            i = 0,
+            index,
+            oldIndex = this._selectedIndex,
+            item,
+            items = [],
+            categoryItems = [],
+            valueItems = [],
+            direction = this.get("direction"),
+            hasMarkers,
+            coord = direction == "horizontal" ? offsetX : offsetY,
+            //data columns and area data could be created on a graph level
+            markerPlane = direction == "horizontal" ? sc[0].get("xMarkerPlane") : sc[0].get("yMarkerPlane"),
+            len = markerPlane.length;
+       for(; i < len; ++i)
+       {
+            if(coord <= markerPlane[i].end && coord >= markerPlane[i].start)
+            {
+                index = i;
+                break;
+            }
+       }
+       len = sc.length;
+       for(i = 0; i < len; ++i)
+       {
+            series = sc[i];
+            hasMarkers = series.get("markers");
+            if(hasMarkers && !isNaN(oldIndex) && oldIndex > -1)
+            {
+                series.updateMarkerState("mouseout", oldIndex);
+            }
+            if(series.get("ycoords")[index] > -1)
+            {
+                if(hasMarkers && !isNaN(index) && index > -1)
+                {
+                    series.updateMarkerState("mouseover", index);
+                }
+                item = this.getSeriesItems(series, index);
+                categoryItems.push(item.category);
+                valueItems.push(item.value);
+                items.push(series);
+            }
+                
+        }
+        this._selectedIndex = index;
+        
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>planar</code> and a series' marker plane has received a mouseover event.
+         * 
+         *
+         * @event planarEvent:mouseover
+         * @preventable false
+         * @param {EventFacade} e Event facade with the following additional
+         *   properties:
+         *  <dl>
+         *      <dt>categoryItem</dt><dd>An array of hashes, each containing information about the category <code>Axis</code> of each marker whose plane has been intersected.</dd>
+         *      <dt>valueItem</dt><dd>An array of hashes, each containing information about the value <code>Axis</code> of each marker whose plane has been intersected.</dd>
+         *      <dt>x</dt><dd>The x-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>y</dt><dd>The y-coordinate of the mouse in relation to the Chart.</dd>
+         *      <dt>items</dt><dd>An array including all the series which contain a marker whose plane has been intersected.</dd>
+         *      <dt>index</dt><dd>Index of the markers in their respective series.</dd>
+         *  </dl>
+         */
+        /**
+         * Broadcasts when <code>interactionType</code> is set to <code>planar</code> and a series' marker plane has received a mouseout event.
+         *
+         * @event planarEvent:mouseout
+         * @preventable false
+         * @param {EventFacade} e 
+         */
+        if(index > -1)
+        {
+            this.fire("planarEvent:mouseover", {categoryItem:categoryItems, valueItem:valueItems, x:posX, y:posY, items:items, index:index});
+        }
+        else
+        {
+            this.fire("planarEvent:mouseout");
+        }
+    },
+
+    /**
+     * @private
+     */
+    _type: "combo",
+
+    /**
+     * @private
+     */
+    _axesRenderQueue: null,
+
+    /**
+     * @private 
+     */
+    _addToAxesRenderQueue: function(axis)
+    {
+        if(!this._axesRenderQueue)
+        {
+            this._axesRenderQueue = [];
+        }
+        if(Y.Array.indexOf(this._axesRenderQueue, axis) < 0)
+        {
+            this._axesRenderQueue.push(axis);
+        }
+    },
+
+    /**
+     * @private
+     */
+    _getDefaultSeriesCollection: function(val)
+    {
+        var dir = this.get("direction"), 
+            sc = val || [], 
+            catAxis,
+            valAxis,
+            tempKeys = [],
+            series,
+            seriesKeys = this.get("seriesKeys").concat(),
+            i,
+            index,
+            l,
+            type = this.get("type"),
+            key,
+            catKey,
+            seriesKey,
+            graph,
+            categoryKey = this.get("categoryKey"),
+            showMarkers = this.get("showMarkers"),
+            showAreaFill = this.get("showAreaFill"),
+            showLines = this.get("showLines");
+        if(dir == "vertical")
+        {
+            catAxis = "yAxis";
+            catKey = "yKey";
+            valAxis = "xAxis";
+            seriesKey = "xKey";
+        }
+        else
+        {
+            catAxis = "xAxis";
+            catKey = "xKey";
+            valAxis = "yAxis";
+            seriesKey = "yKey";
+        }
+        l = sc.length;
+        for(i = 0; i < l; ++i)
+        {
+            key = this._getBaseAttribute(sc[i], seriesKey);
+            if(key)
+            {
+                index = Y.Array.indexOf(seriesKeys, key);
+                if(index > -1)
+                {
+                    seriesKeys.splice(index, 1);
+                }
+               tempKeys.push(key);
+            }
+        }
+        if(seriesKeys.length > 0)
+        {
+            tempKeys = tempKeys.concat(seriesKeys);
+        }
+        l = tempKeys.length;
+        for(i = 0; i < l; ++i)
+        {
+            series = sc[i] || {type:type};
+            if(series instanceof Y.CartesianSeries)
+            {
+                this._parseSeriesAxes(series);
+                continue;
+            }
+            
+            series[catKey] = series[catKey] || categoryKey;
+            series[seriesKey] = series[seriesKey] || seriesKeys.shift();
+            series[catAxis] = this._getCategoryAxis();
+            series[valAxis] = this._getSeriesAxis(series[seriesKey]);
+            
+            series.type = series.type || type;
+            
+            if((series.type == "combo" || series.type == "stackedcombo" || series.type == "combospline" || series.type == "stackedcombospline"))
+            {
+                if(showAreaFill !== null)
+                {
+                    series.showAreaFill = series.showAreaFill || showAreaFill;
+                }
+                if(showMarkers !== null)
+                {
+                    series.showMarkers = series.showMarkers || showMarkers;
+                }
+                if(showLines !== null)
+                {
+                    series.showLines = series.showLines || showLines;
+                }
+            }
+            sc[i] = series;
+        }
+        if(val)
+        {
+            graph = this.get("graph");
+            graph.set("seriesCollection", sc);
+            sc = graph.get("seriesCollection");
+        }
+        return sc;
+    },
+
+    /**
+     * @private
+     */
+    _parseSeriesAxes: function(series)
+    {
+        var axes = this.get("axes"),
+            xAxis = series.get("xAxis"),
+            yAxis = series.get("yAxis"),
+            YAxis = Y.Axis,
+            axis;
+        if(xAxis && !(xAxis instanceof YAxis) && Y.Lang.isString(xAxis) && axes.hasOwnProperty(xAxis))
+        {
+            axis = axes[xAxis];
+            if(axis instanceof YAxis)
+            {
+                series.set("xAxis", axis);
+            }
+        }
+        if(yAxis && !(yAxis instanceof YAxis) && Y.Lang.isString(yAxis) && axes.hasOwnProperty(yAxis))
+        {   
+            axis = axes[yAxis];
+            if(axis instanceof YAxis)
+            {
+                series.set("yAxis", axis);
+            }
+        }
+
+    },
+
+    /**
+     * @private
+     */
+    _getCategoryAxis: function()
+    {
+        var axis,
+            axes = this.get("axes"),
+            categoryAxisName = this.get("categoryAxisName") || this.get("categoryKey");
+        axis = axes[categoryAxisName];
+        return axis;
+    },
+
+    /**
+     * @private
+     */
+    _getSeriesAxis:function(key, axisName)
+    {
+        var axes = this.get("axes"),
+            i,
+            keys,
+            axis;
+        if(axes)
+        {
+            if(axisName && axes.hasOwnProperty(axisName))
+            {
+                axis = axes[axisName];
+            }
+            else
+            {
+                for(i in axes)
+                {
+                    if(axes.hasOwnProperty(i))
+                    {
+                        keys = axes[i].get("keys");
+                        if(keys && keys.hasOwnProperty(key))
+                        {
+                            axis = axes[i];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return axis;
+    },
+
+    /**
+     * @private
+     * Gets an attribute from an object, using a getter for Base objects and a property for object
+     * literals. Used for determining attributes from series/axis references which can be an actual class instance
+     * or a hash of properties that will be used to create a class instance.
+     */
+    _getBaseAttribute: function(item, key)
+    {
+        if(item instanceof Y.Base)
+        {
+            return item.get(key);
+        }
+        if(item.hasOwnProperty(key))
+        {
+            return item[key];
+        }
+        return null;
+    },
+
+    /**
+     * @private
+     * Sets an attribute on an object, using a setter of Base objects and a property for object
+     * literals. Used for setting attributes on a Base class, either directly or to be stored in an object literal
+     * for use at instantiation.
+     */
+    _setBaseAttribute: function(item, key, value)
+    {
+        if(item instanceof Y.Base)
+        {
+            item.set(key, value);
+        }
+        else
+        {
+            item[key] = value;
+        }
+    },
+
+    /**
+     * @private
+     * Creates Axis and Axis data classes based on hashes of properties.
+     */
+    _parseAxes: function(val)
+    {
+        var hash = this._getDefaultAxes(val),
+            axes = {},
+            axesAttrs = {
+                edgeOffset: "edgeOffset", 
+                position: "position",
+                overlapGraph:"overlapGraph",
+                labelFunction:"labelFunction",
+                labelFunctionScope:"labelFunctionScope",
+                labelFormat:"labelFormat",
+                maximum:"maximum",
+                minimum:"minimum", 
+                roundingMethod:"roundingMethod",
+                alwaysShowZero:"alwaysShowZero"
+            },
+            dp = this.get("dataProvider"),
+            ai,
+            i, 
+            pos, 
+            axis,
+            dh, 
+            axisClass, 
+            config,
+            axesCollection;
+        for(i in hash)
+        {
+            if(hash.hasOwnProperty(i))
+            {
+                dh = hash[i];
+                if(dh instanceof Y.Axis)
+                {
+                    axis = dh;
+                }
+                else
+                {
+                    axisClass = this._getAxisClass(dh.type);
+                    config = {};
+                    config.dataProvider = dh.dataProvider || dp;
+                    config.keys = dh.keys;
+                    
+                    if(dh.hasOwnProperty("roundingUnit"))
+                    {
+                        config.roundingUnit = dh.roundingUnit;
+                    }
+                    pos = dh.position;
+                    if(dh.styles)
+                    {
+                        config.styles = dh.styles;
+                    }
+                    config.position = dh.position;
+                    for(ai in axesAttrs)
+                    {
+                        if(axesAttrs.hasOwnProperty(ai) && dh.hasOwnProperty(ai))
+                        {
+                            config[ai] = dh[ai];
+                        }
+                    }
+                    axis = new axisClass(config);
+                }
+
+                if(axis)
+                {
+                    axesCollection = this.get(pos + "AxesCollection");
+                    if(axesCollection && Y.Array.indexOf(axesCollection, axis) > 0)
+                    {
+                        axis.set("overlapGraph", false);
+                    }
+                    axis.after("axisRendered", Y.bind(this._axisRendered, this));
+                    axes[i] = axis;
+                }
+            }
+        }
+        return axes;
+    },
+    
+    /**
+     * @private
+     */
+    _addAxes: function()
+    {
+        var axes = this.get("axes"),
+            i, 
+            axis, 
+            pos,
+            w = this.get("width"),
+            h = this.get("height"),
+            node = Y.Node.one(this._parentNode);
+        if(!this._axesCollection)
+        {   
+            this._axesCollection = [];
+        }
+        for(i in axes)
+        {
+            if(axes.hasOwnProperty(i))
+            {
+                axis = axes[i];
+                if(axis instanceof Y.Axis)
+                {
+                    if(!w)
+                    {
+                        this.set("width", node.get("offsetWidth"));
+                        w = this.get("width");
+                    }
+                    if(!h)
+                    {
+                        this.set("height", node.get("offsetHeight"));
+                        h = this.get("height");
+                    }
+                    axis.set("width", w);
+                    axis.set("height", h);
+                    this._addToAxesRenderQueue(axis);
+                    pos = axis.get("position");
+                    if(!this.get(pos + "AxesCollection"))
+                    {
+                        this.set(pos + "AxesCollection", [axis]);
+                    }
+                    else
+                    {
+                        this.get(pos + "AxesCollection").push(axis);
+                    }
+                    this._axesCollection.push(axis);
+                    if(axis.get("keys").hasOwnProperty(this.get("categoryKey")))
+                    {
+                        this.set("categoryAxis", axis);
+                    }
+                    axis.render(this.get("contentBox"));
+                }
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    _addSeries: function()
+    {
+        var graph = this.get("graph"),
+            sc = this.get("seriesCollection");
+        graph.render(this.get("contentBox"));
+
+    },
+
+    /**
+     * @private
+     * @description Adds gridlines to the chart.
+     */
+    _addGridlines: function()
+    {
+        var graph = this.get("graph"),
+            hgl = this.get("horizontalGridlines"),
+            vgl = this.get("verticalGridlines"),
+            direction = this.get("direction"),
+            leftAxesCollection = this.get("leftAxesCollection"),
+            rightAxesCollection = this.get("rightAxesCollection"),
+            bottomAxesCollection = this.get("bottomAxesCollection"),
+            topAxesCollection = this.get("topAxesCollection"),
+            seriesAxesCollection,
+            catAxis = this.get("categoryAxis"),
+            hAxis,
+            vAxis;
+        if(this._axesCollection)
+        {
+            seriesAxesCollection = this._axesCollection.concat();
+            seriesAxesCollection.splice(Y.Array.indexOf(seriesAxesCollection, catAxis), 1);
+        }
+        if(hgl)
+        {
+            if(leftAxesCollection && leftAxesCollection[0])
+            {
+                hAxis = leftAxesCollection[0];
+            }
+            else if(rightAxesCollection && rightAxesCollection[0])
+            {
+                hAxis = rightAxesCollection[0];
+            }
+            else 
+            {
+                hAxis = direction == "horizontal" ? catAxis : seriesAxesCollection[0];
+            }
+            if(!this._getBaseAttribute(hgl, "axis") && hAxis)
+            {
+                this._setBaseAttribute(hgl, "axis", hAxis);
+            }
+            if(this._getBaseAttribute(hgl, "axis"))
+            {
+                graph.set("horizontalGridlines", hgl);
+            }
+        }
+        if(vgl)
+        {
+            if(bottomAxesCollection && bottomAxesCollection[0])
+            {
+                vAxis = bottomAxesCollection[0];
+            }
+            else if (topAxesCollection && topAxesCollection[0])
+            {
+                vAxis = topAxesCollection[0];
+            }
+            else 
+            {
+                vAxis = direction == "vertical" ? catAxis : seriesAxesCollection[0];
+            }
+            if(!this._getBaseAttribute(vgl, "axis") && vAxis)
+            {
+                this._setBaseAttribute(vgl, "axis", vAxis);
+            }
+            if(this._getBaseAttribute(vgl, "axis"))
+            {
+                graph.set("verticalGridlines", vgl);
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    _getDefaultAxes: function(axes)
+    {
+        var catKey = this.get("categoryKey"),
+            axis,
+            attr,
+            keys,
+            newAxes = {},
+            claimedKeys = [],
+            categoryAxisName = this.get("categoryAxisName") || this.get("categoryKey"),
+            valueAxisName = this.get("valueAxisName"),
+            seriesKeys = this.get("seriesKeys") || [], 
+            i, 
+            l,
+            ii,
+            ll,
+            cIndex,
+            dv,
+            dp = this.get("dataProvider"),
+            direction = this.get("direction"),
+            seriesPosition,
+            categoryPosition,
+            valueAxes = [],
+            seriesAxis = this.get("stacked") ? "stacked" : "numeric";
+        dv = dp[0];
+        if(direction == "vertical")
+        {
+            seriesPosition = "bottom";
+            categoryPosition = "left";
+        }
+        else
+        {
+            seriesPosition = "left";
+            categoryPosition = "bottom";
+        }
+        if(axes)
+        {
+            for(i in axes)
+            {
+                if(axes.hasOwnProperty(i))
+                {
+                    axis = axes[i];
+                    keys = this._getBaseAttribute(axis, "keys");
+                    attr = this._getBaseAttribute(axis, "type");
+                    if(attr == "time" || attr == "category")
+                    {
+                        categoryAxisName = i;
+                        this.set("categoryAxisName", i);
+                        if(Y.Lang.isArray(keys) && keys.length > 0)
+                        {
+                            catKey = keys[0];
+                            this.set("categoryKey", catKey);
+                        }
+                        newAxes[i] = axis;
+                    }
+                    else if(i == categoryAxisName)
+                    {
+                        newAxes[i] = axis;
+                    }
+                    else 
+                    {
+                        newAxes[i] = axis;
+                        if(i != valueAxisName && keys && Y.Lang.isArray(keys))
+                        {
+                            ll = keys.length;
+                            for(ii = 0; ii < ll; ++ii)
+                            {
+                                claimedKeys.push(keys[ii]);
+                            }
+                            valueAxes.push(newAxes[i]);
+                        }
+                        if(!(this._getBaseAttribute(newAxes[i], "type")))
+                        {
+                            this._setBaseAttribute(newAxes[i], "type", seriesAxis);
+                        }
+                        if(!(this._getBaseAttribute(newAxes[i], "position")))
+                        {
+                            this._setBaseAttribute(newAxes[i], "position", this._getDefaultAxisPosition(newAxes[i], valueAxes, seriesPosition));
+                        }
+                    }
+                }
+            }
+        }
+        if(seriesKeys.length < 1)
+        {
+            for(i in dv)
+            {
+                if(dv.hasOwnProperty(i) && i != catKey && Y.Array.indexOf(claimedKeys, i) == -1)
+                {
+                    seriesKeys.push(i);
+                }
+            }
+        }
+        cIndex = Y.Array.indexOf(seriesKeys, catKey);
+        if(cIndex > -1)
+        {
+            seriesKeys.splice(cIndex, 1);
+        }
+        l = claimedKeys.length;
+        for(i = 0; i < l; ++i)
+        {
+            cIndex = Y.Array.indexOf(seriesKeys, claimedKeys[i]); 
+            if(cIndex > -1)
+            {
+                seriesKeys.splice(cIndex, 1);
+            }
+        }
+        if(!newAxes.hasOwnProperty(categoryAxisName))
+        {
+            newAxes[categoryAxisName] = {};
+        }
+        if(!(this._getBaseAttribute(newAxes[categoryAxisName], "keys")))
+        {
+            this._setBaseAttribute(newAxes[categoryAxisName], "keys", [catKey]);
+        }
+        
+        if(!(this._getBaseAttribute(newAxes[categoryAxisName], "position")))
+        {
+            this._setBaseAttribute(newAxes[categoryAxisName], "position", categoryPosition);
+        }
+         
+        if(!(this._getBaseAttribute(newAxes[categoryAxisName], "type")))
+        {
+            this._setBaseAttribute(newAxes[categoryAxisName], "type", this.get("categoryType"));
+        }
+        if(!newAxes.hasOwnProperty(valueAxisName) && seriesKeys && seriesKeys.length > 0)
+        {
+            newAxes[valueAxisName] = {keys:seriesKeys};
+            valueAxes.push(newAxes[valueAxisName]);
+        }
+        if(claimedKeys.length > 0)
+        {
+            if(seriesKeys.length > 0)
+            {
+                seriesKeys = claimedKeys.concat(seriesKeys);
+            }
+            else
+            {
+                seriesKeys = claimedKeys;
+            }
+        }
+        if(newAxes.hasOwnProperty(valueAxisName))
+        {
+            if(!(this._getBaseAttribute(newAxes[valueAxisName], "position")))
+            {
+                this._setBaseAttribute(newAxes[valueAxisName], "position", this._getDefaultAxisPosition(newAxes[valueAxisName], valueAxes, seriesPosition));
+            }
+            if(!(this._getBaseAttribute(newAxes[valueAxisName], "type")))
+            {
+                this._setBaseAttribute(newAxes[valueAxisName], "type", seriesAxis);
+            }
+            if(!(this._getBaseAttribute(newAxes[valueAxisName], "keys")))
+            {
+                this._setBaseAttribute(newAxes[valueAxisName], "keys", seriesKeys);
+            }
+        } 
+        this.set("seriesKeys", seriesKeys);
+        return newAxes;
+    },
+
+    /**
+     * @private
+     * @description Determines the position of an axis when one is not specified.
+     */
+    _getDefaultAxisPosition: function(axis, valueAxes, position)
+    {
+        var direction = this.get("direction"),
+            i = Y.Array.indexOf(valueAxes, axis);
+        
+        if(valueAxes[i - 1] && valueAxes[i - 1].position)
+        {
+            if(direction == "horizontal")
+            {
+                if(valueAxes[i - 1].position == "left")
+                {
+                    position = "right";
+                }
+                else if(valueAxes[i - 1].position == "right")
+                {
+                    position = "left";
+                }
+            }
+            else
+            {
+                if (valueAxes[i -1].position == "bottom")
+                {
+                    position = "top";
+                }       
+                else
+                {
+                    position = "bottom";
+                }
+            }
+        }
+        return position;
+    },
+
+   
+    /**
+     * Returns an object literal containing a categoryItem and a valueItem for a given series index.
+     *
+     * @method getSeriesItem
+     * @param {CartesianSeries} series Reference to a series.
+     * @param {Number} index Index of the specified item within a series.
+     * @return Object
+     */
+    getSeriesItems: function(series, index)
+    {
+        var xAxis = series.get("xAxis"),
+            yAxis = series.get("yAxis"),
+            xKey = series.get("xKey"),
+            yKey = series.get("yKey"),
+            categoryItem,
+            valueItem;
+        if(this.get("direction") == "vertical")
+        {
+            categoryItem = {
+                axis:yAxis,
+                key:yKey,
+                value:yAxis.getKeyValueAt(yKey, index)
+            };
+            valueItem = {
+                axis:xAxis,
+                key:xKey,
+                value: xAxis.getKeyValueAt(xKey, index)
+            };
+        }
+        else
+        {
+            valueItem = {
+                axis:yAxis,
+                key:yKey,
+                value:yAxis.getKeyValueAt(yKey, index)
+            };
+            categoryItem = {
+                axis:xAxis,
+                key:xKey,
+                value: xAxis.getKeyValueAt(xKey, index)
+            };
+        }
+        categoryItem.displayName = series.get("categoryDisplayName");
+        valueItem.displayName = series.get("valueDisplayName");
+        categoryItem.value = categoryItem.axis.getKeyValueAt(categoryItem.key, index);
+        valueItem.value = valueItem.axis.getKeyValueAt(valueItem.key, index);
+        return {category:categoryItem, value:valueItem};
+    },
+
+    /**
+     * @private
+     * Listender for axisRendered event.
+     */
+    _axisRendered: function(e)
+    {
+        this._axesRenderQueue = this._axesRenderQueue.splice(1 + Y.Array.indexOf(this._axesRenderQueue, e.currentTarget), 1);
+        if(this._axesRenderQueue.length < 1)
+        {
+            this._redraw();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _sizeChanged: function(e)
+    {
+        if(this._axesCollection)
+        {
+            var ac = this._axesCollection,
+                i = 0,
+                l = ac.length;
+            for(; i < l; ++i)
+            {
+                this._addToAxesRenderQueue(ac[i]);
+            }
+            this._redraw();
+        }
+    },
+
+    /**
+     * @private
+     */
+    _redraw: function()
+    {
+        if(this._drawing)
+        {
+            this._callLater = true;
+            return;
+        }
+        this._drawing = true;
+        this._callLater = false;
+        var w = this.get("width"),
+            h = this.get("height"),
+            lw = 0,
+            rw = 0,
+            th = 0,
+            bh = 0,
+            lc = this.get("leftAxesCollection"),
+            rc = this.get("rightAxesCollection"),
+            tc = this.get("topAxesCollection"),
+            bc = this.get("bottomAxesCollection"),
+            i = 0,
+            l,
+            axis,
+            pos,
+            pts = [],
+            graphOverflow = "visible",
+            graph = this.get("graph"); 
+        if(lc)
+        {
+            l = lc.length;
+            for(i = l - 1; i > -1; --i)
+            {
+                pts[Y.Array.indexOf(this._axesCollection, lc[i])] = {x:lw + "px"};
+                lw += lc[i].get("width");
+            }
+        }
+        if(rc)
+        {
+            l = rc.length;
+            i = 0;
+            for(i = l - 1; i > -1; --i)
+            {
+                rw += rc[i].get("width");
+                pts[Y.Array.indexOf(this._axesCollection, rc[i])] = {x:(w - rw) + "px"};
+            }
+        }
+        if(tc)
+        {
+            l = tc.length;
+            for(i = l - 1; i > -1; --i)
+            {
+                pts[Y.Array.indexOf(this._axesCollection, tc[i])] = {y:th + "px"};
+                th += tc[i].get("height");
+            }
+        }
+        if(bc)
+        {
+            l = bc.length;
+            for(i = l - 1; i > -1; --i)
+            {
+                bh += bc[i].get("height");
+                pts[Y.Array.indexOf(this._axesCollection, bc[i])] = {y:(h - bh) + "px"};
+            }
+        }
+        l = this._axesCollection.length;
+        i = 0;
+        
+        for(; i < l; ++i)
+        {
+            axis = this._axesCollection[i];
+            pos = axis.get("position");
+            if(pos == "left" || pos === "right")
+            {
+                axis.get("boundingBox").setStyle("top", th + "px");
+                axis.get("boundingBox").setStyle("left", pts[i].x);
+                if(axis.get("height") !== h - (bh + th))
+                {
+                    axis.set("height", h - (bh + th));
+                }
+            }
+            else if(pos == "bottom" || pos == "top")
+            {
+                if(axis.get("width") !== w - (lw + rw))
+                {
+                    axis.set("width", w - (lw + rw));
+                }
+                axis.get("boundingBox").setStyle("left", lw + "px");
+                axis.get("boundingBox").setStyle("top", pts[i].y);
+            }
+            if(axis.get("setMax") || axis.get("setMin"))
+            {
+                graphOverflow = "hidden";
+            }
+        }
+        
+        this._drawing = false;
+        if(this._callLater)
+        {
+            this._redraw();
+            return;
+        }
+        if(graph)
+        {
+            graph.get("boundingBox").setStyle("left", lw + "px");
+            graph.get("boundingBox").setStyle("top", th + "px");
+            graph.set("width", w - (lw + rw));
+            graph.set("height", h - (th + bh));
+            graph.get("boundingBox").setStyle("overflow", graphOverflow);
+        }
+
+        if(this._overlay)
+        {
+            this._overlay.setStyle("left", lw + "px");
+            this._overlay.setStyle("top", th + "px");
+            this._overlay.setStyle("width", (w - (lw + rw)) + "px");
+            this._overlay.setStyle("height", (h - (th + bh)) + "px");
+        }
+    }
+}, {
+    ATTRS: {
+        /**
+         * @private
+         * Style object for the axes.
+         *
+         * @attribute axesStyles
+         * @type Object
+         */
+        axesStyles: {
+            getter: function()
+            {
+                var axes = this.get("axes"),
+                    i,
+                    styles = this._axesStyles;
+                if(axes)
+                {
+                    for(i in axes)
+                    {
+                        if(axes.hasOwnProperty(i) && axes[i] instanceof Y.Axis)
+                        {
+                            if(!styles)
+                            {
+                                styles = {};
+                            }
+                            styles[i] = axes[i].get("styles");
+                        }
+                    }
+                }
+                return styles;
+            },
+            
+            setter: function(val)
+            {
+                var axes = this.get("axes"),
+                    i;
+                for(i in val)
+                {
+                    if(val.hasOwnProperty(i) && axes.hasOwnProperty(i))
+                    {
+                        this._setBaseAttribute(axes[i], "styles", val[i]);
+                    }
+                }
+            }
+        },
+
+        /**
+         * @private
+         * Style object for the series
+         *
+         * @attribute seriesStyles
+         * @type Object
+         */
+        seriesStyles: {
+            getter: function()
+            {
+                var styles = this._seriesStyles,
+                    graph = this.get("graph"),
+                    dict,
+                    i;
+                if(graph)
+                {
+                    dict = graph.get("seriesDictionary");
+                    if(dict)
+                    {
+                        styles = {};
+                        for(i in dict)
+                        {
+                            if(dict.hasOwnProperty(i))
+                            {
+                                styles[i] = dict[i].get("styles");
+                            }
+                        }
+                    }
+                }
+                return styles;
+            },
+            
+            setter: function(val)
+            {
+                var i,
+                    l,
+                    s;
+    
+                if(Y.Lang.isArray(val))
+                {
+                    s = this.get("seriesCollection");
+                    i = 0;
+                    l = val.length;
+
+                    for(; i < l; ++i)
+                    {
+                        this._setBaseAttribute(s[i], "styles", val[i]);
+                    }
+                }
+                else
+                {
+                    for(i in val)
+                    {
+                        if(val.hasOwnProperty(i))
+                        {
+                            s = this.getSeries(i);
+                            this._setBaseAttribute(s, "styles", val[i]);
+                        }
+                    }
+                }
+            }
+        },
+
+        /**
+         * @private
+         * Styles for the graph.
+         *
+         * @attribute graphStyles
+         * @type Object
+         */
+        graphStyles: {
+            getter: function()
+            {
+                var graph = this.get("graph");
+                if(graph)
+                {
+                    return(graph.get("styles"));
+                }
+                return this._graphStyles;
+            },
+
+            setter: function(val)
+            {
+                var graph = this.get("graph");
+                this._setBaseAttribute(graph, "styles", val);
+            }
+
+        },
+
+        /**
+         * Style properties for the chart. Contains a key indexed hash of the following:
+         *  <dl>
+         *      <dt>series</dt><dd>A key indexed hash containing references to the <code>styles</code> attribute for each series in the chart.
+         *      Specific style attributes vary depending on the series:
+         *      <ul>
+         *          <li><a href="AreaSeries.html#config_styles">AreaSeries</a></li>
+         *          <li><a href="BarSeries.html#config_styles">BarSeries</a></li>
+         *          <li><a href="ColumnSeries.html#config_styles">ColumnSeries</a></li>
+         *          <li><a href="ComboSeries.html#config_styles">ComboSeries</a></li>
+         *          <li><a href="LineSeries.html#config_styles">LineSeries</a></li>
+         *          <li><a href="MarkerSeries.html#config_styles">MarkerSeries</a></li>
+         *          <li><a href="SplineSeries.html#config_styles">SplineSeries</a></li>
+         *      </ul>
+         *      </dd>
+         *      <dt>axes</dt><dd>A key indexed hash containing references to the <code>styles</code> attribute for each axes in the chart. Specific
+         *      style attributes can be found in the <a href="Axis.html#config_styles">Axis</a> class.</dd>
+         *      <dt>graph</dt><dd>A reference to the <code>styles</code> attribute in the chart. Specific style attributes can be found in the
+         *      <a href="Graph.html#config_styles">Graph</a> class.</dd>
+         *  </dl>
+         *
+         * @attribute styles
+         * @type Object
+         */
+        styles: {
+            getter: function()
+            {
+                var styles = { 
+                    axes: this.get("axesStyles"),
+                    series: this.get("seriesStyles"),
+                    graph: this.get("graphStyles")
+                };
+                return styles;
+            },
+            setter: function(val)
+            {
+                if(val.hasOwnProperty("axes"))
+                {
+                    if(this.get("axesStyles"))
+                    {
+                        this.set("axesStyles", val.axes);
+                    }
+                    else
+                    {
+                        this._axesStyles = val.axes;
+                    }
+                }
+                if(val.hasOwnProperty("series"))
+                {
+                    if(this.get("seriesStyles"))
+                    {
+                        this.set("seriesStyles", val.series);
+                    }
+                    else
+                    {
+                        this._seriesStyles = val.series;
+                    }
+                }
+                if(val.hasOwnProperty("graph"))
+                {
+                    this.set("graphStyles", val.graph);
+                }
+            }
+        },
+
+        /**
+         * Axes to appear in the chart. This can be a key indexed hash of axis instances or object literals
+         * used to construct the appropriate axes.
+         *
+         * @attribute axes
+         * @type Object
+         */
+        axes: {
+            valueFn: "_parseAxes",
+
+            setter: function(val)
+            {
+                return this._parseAxes(val);
+            }
+        },
+
+        /**
+         * Collection of series to appear on the chart. This can be an array of Series instances or object literals
+         * used to construct the appropriate series.
+         *
+         * @attribute seriesCollection
+         * @type Array
+         */
+        seriesCollection: {
+            valueFn: "_getDefaultSeriesCollection",
+            
+            setter: function(val)
+            {
+                return this._getDefaultSeriesCollection(val);
+            }
+        },
+
+        /**
+         * Reference to the left-aligned axes for the chart.
+         *
+         * @attribute leftAxesCollection
+         * @type Array
+         * @private
+         */
+        leftAxesCollection: {},
+
+        /**
+         * Reference to the bottom-aligned axes for the chart.
+         *
+         * @attribute bottomAxesCollection
+         * @type Array
+         * @private
+         */
+        bottomAxesCollection: {},
+
+        /**
+         * Reference to the right-aligned axes for the chart.
+         *
+         * @attribute rightAxesCollection
+         * @type Array
+         * @private
+         */
+        rightAxesCollection: {},
+
+        /**
+         * Reference to the top-aligned axes for the chart.
+         *
+         * @attribute topAxesCollection
+         * @type Array
+         * @private
+         */
+        topAxesCollection: {},
+        
+        /**
+         * Indicates whether or not the chart is stacked.
+         *
+         * @attribute stacked
+         * @type Boolean
+         */
+        stacked: {
+            value: false
+        },
+
+        /**
+         * Direction of chart's category axis when there is no series collection specified. Charts can
+         * be horizontal or vertical. When the chart type is column, the chart is horizontal.
+         * When the chart type is bar, the chart is vertical. 
+         *
+         * @attribute direction
+         * @type String
+         */
+        direction: {
+            getter: function()
+            {
+                var type = this.get("type");
+                if(type == "bar")
+                {   
+                    return "vertical";
+                }
+                else if(type == "column")
+                {
+                    return "horizontal";
+                }
+                return this._direction;
+            },
+
+            setter: function(val)
+            {
+                this._direction = val;
+                return this._direction;
+            }
+        },
+
+        /**
+         * Indicates whether or not an area is filled in a combo chart.
+         * 
+         * @attribute showAreaFill
+         * @type Boolean
+         */
+        showAreaFill: {},
+
+        /**
+         * Indicates whether to display markers in a combo chart.
+         *
+         * @attribute showMarkers
+         * @type Boolean
+         */
+        showMarkers:{},
+
+        /**
+         * Indicates whether to display lines in a combo chart.
+         *
+         * @attribute showLines
+         * @type Boolean
+         */
+        showLines:{},
+
+        /**
+         * Indicates the key value used to identify a category axis in the <code>axes</code> hash. If
+         * not specified, the categoryKey attribute value will be used.
+         * 
+         * @attribute categoryAxisName
+         * @type String
+         */
+        categoryAxisName: {
+        },
+
+        /**
+         * Indicates the key value used to identify a the series axis when an axis not generated.
+         *
+         * @attribute valueAxisName
+         * @type String
+         */
+        valueAxisName: {
+            value: "values"
+        },
+
+        /**
+         * Reference to the horizontalGridlines for the chart.
+         *
+         * @attribute horizontalGridlines
+         * @type Gridlines
+         */
+        horizontalGridlines: {
+            getter: function()
+            {
+                var graph = this.get("graph");
+                if(graph)
+                {
+                    return graph.get("horizontalGridlines");
+                }
+                return this._horizontalGridlines;
+            },
+            setter: function(val)
+            {
+                var graph = this.get("graph");
+                if(val && !Y.Lang.isObject(val))
+                {
+                    val = {};
+                }
+                if(graph)
+                {
+                    graph.set("horizontalGridlines", val);
+                }
+                else
+                {
+                    this._horizontalGridlines = val;
+                }
+            }
+        },
+
+        /**
+         * Reference to the verticalGridlines for the chart.
+         *
+         * @attribute verticalGridlines
+         * @type Gridlines
+         */
+        verticalGridlines: {
+            getter: function()
+            {
+                var graph = this.get("graph");
+                if(graph)
+                {
+                    return graph.get("verticalGridlines");
+                }
+                return this._verticalGridlines;
+            },
+            setter: function(val)
+            {
+                var graph = this.get("graph");
+                if(val && !Y.Lang.isObject(val))
+                {
+                    val = {};
+                }
+                if(graph)
+                {
+                    graph.set("verticalGridlines", val);
+                }
+                else
+                {
+                    this._verticalGridlines = val;
+                }
+            }
+        },
+        
+        /**
+         * Type of chart when there is no series collection specified.
+         *
+         * @attribute type
+         * @type String 
+         */
+        type: {
+            getter: function()
+            {
+                if(this.get("stacked"))
+                {
+                    return "stacked" + this._type;
+                }
+                return this._type;
+            },
+
+            setter: function(val)
+            {
+                if(this._type == "bar")
+                {
+                    if(val != "bar")
+                    {
+                        this.set("direction", "horizontal");
+                    }
+                }
+                else
+                {
+                    if(val == "bar")
+                    {
+                        this.set("direction", "vertical");
+                    }
+                }
+                this._type = val;
+                return this._type;
+            }
+        },
+        
+        /**
+         * Reference to the category axis used by the chart.
+         *
+         * @attribute categoryAxis
+         * @type Axis
+         */
+        categoryAxis:{}
+    }
+});
+/**
+ * The PieChart class creates a pie chart
+ *
+ * @class PieChart
+ * @extends ChartBase
+ * @constructor
+ */
+Y.PieChart = Y.Base.create("pieChart", Y.Widget, [Y.ChartBase], {
+    /**
+     * @private
+     */
+    _getSeriesCollection: function()
+    {
+        if(this._seriesCollection)
+        {
+            return this._seriesCollection;
+        }
+        var axes = this.get("axes"),
+            sc = [], 
+            seriesKeys,
+            i = 0,
+            l,
+            type = this.get("type"),
+            key,
+            catAxis = "categoryAxis",
+            catKey = "categoryKey",
+            valAxis = "valueAxis",
+            seriesKey = "valueKey";
+        if(axes)
+        {
+            seriesKeys = axes.values.get("keyCollection");
+            key = axes.category.get("keyCollection")[0];
+            l = seriesKeys.length;
+            for(; i < l; ++i)
+            {
+                sc[i] = {type:type};
+                sc[i][catAxis] = "category";
+                sc[i][valAxis] = "values";
+                sc[i][catKey] = key;
+                sc[i][seriesKey] = seriesKeys[i];
+            }
+        }
+        this._seriesCollection = sc;
+        return sc;
+    },
+
+    /**
+     * @private
+     */
+    _parseAxes: function(hash)
+    {
+        if(!this._axes)
+        {
+            this._axes = {};
+        }
+        var i, pos, axis, dh, config, axisClass,
+            type = this.get("type"),
+            w = this.get("width"),
+            h = this.get("height"),
+            node = Y.Node.one(this._parentNode);
+        if(!w)
+        {
+            this.set("width", node.get("offsetWidth"));
+            w = this.get("width");
+        }
+        if(!h)
+        {
+            this.set("height", node.get("offsetHeight"));
+            h = this.get("height");
+        }
+        for(i in hash)
+        {
+            if(hash.hasOwnProperty(i))
+            {
+                dh = hash[i];
+                pos = type == "pie" ? "none" : dh.position;
+                axisClass = this._getAxisClass(dh.type);
+                config = {dataProvider:this.get("dataProvider")};
+                if(dh.hasOwnProperty("roundingUnit"))
+                {
+                    config.roundingUnit = dh.roundingUnit;
+                }
+                config.keys = dh.keys;
+                config.width = w;
+                config.height = h;
+                config.position = pos;
+                config.styles = dh.styles;
+                axis = new axisClass(config);
+                axis.on("axisRendered", Y.bind(this._axisRendered, this));
+                this._axes[i] = axis;
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    _addAxes: function()
+    {
+        var axes = this.get("axes"),
+            i, 
+            axis, 
+            p;
+        if(!axes)
+        {
+            this.set("axes", this._getDefaultAxes());
+            axes = this.get("axes");
+        }
+        if(!this._axesCollection)
+        {   
+            this._axesCollection = [];
+        }
+        for(i in axes)
+        {
+            if(axes.hasOwnProperty(i))
+            {
+                axis = axes[i];
+                p = axis.get("position");
+                if(!this.get(p + "AxesCollection"))
+                {
+                    this.set(p + "AxesCollection", [axis]);
+                }
+                else
+                {
+                    this.get(p + "AxesCollection").push(axis);
+                }
+                this._axesCollection.push(axis);
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    _addSeries: function()
+    {
+        var graph = this.get("graph"),
+            seriesCollection = this.get("seriesCollection");
+        this._parseSeriesAxes(seriesCollection);
+        graph.set("showBackground", false);
+        graph.set("width", this.get("width"));
+        graph.set("height", this.get("height"));
+        graph.set("seriesCollection", seriesCollection);
+        this._seriesCollection = graph.get("seriesCollection");
+        graph.render(this.get("contentBox"));
+    },
+
+    /**
+     * @private
+     */
+    _parseSeriesAxes: function(c)
+    {
+        var i = 0, 
+            len = c.length, 
+            s,
+            axes = this.get("axes"),
+            axis;
+        for(; i < len; ++i)
+        {
+            s = c[i];
+            if(s)
+            {
+                //If series is an actual series instance, 
+                //replace axes attribute string ids with axes
+                if(s instanceof Y.PieSeries)
+                {
+                    axis = s.get("categoryAxis");
+                    if(axis && !(axis instanceof Y.Axis))
+                    {
+                        s.set("categoryAxis", axes[axis]);
+                    }
+                    axis = s.get("valueAxis");
+                    if(axis && !(axis instanceof Y.Axis))
+                    {
+                        s.set("valueAxis", axes[axis]);
+                    }
+                    continue;
+                }
+                s.categoryAxis = axes.category;
+                s.valueAxis = axes.values;
+                if(!s.type)
+                {
+                    s.type = this.get("type");
+                }
+            }
+        }
+    },
+
+    /**
+     * @private
+     */
+    _getDefaultAxes: function()
+    {
+        var catKey = this.get("categoryKey"),
+            seriesKeys = this.get("seriesKeys") || [], 
+            seriesAxis = "numeric",
+            i, 
+            dv = this.get("dataProvider")[0];
+        if(seriesKeys.length < 1)
+        {
+            for(i in dv)
+            {
+                if(i != catKey)
+                {
+                    seriesKeys.push(i);
+                }
+            }
+            if(seriesKeys.length > 0)
+            {
+                this.set("seriesKeys", seriesKeys);
+            }
+        }
+        return {
+            values:{
+                keys:seriesKeys,
+                type:seriesAxis
+            },
+            category:{
+                keys:[catKey],
+                type:this.get("categoryType")
+            }
+        };
+    },
+        
+    /**
+     * Returns an object literal containing a categoryItem and a valueItem for a given series index.
+     *
+     * @method getSeriesItem
+     * @param series Reference to a series.
+     * @param index Index of the specified item within a series.
+     */
+    getSeriesItems: function(series, index)
+    {
+        var categoryItem = {
+                axis: series.get("categoryAxis"),
+                key: series.get("categoryKey"),
+                displayName: series.get("categoryDisplayName")
+            },
+            valueItem = {
+                axis: series.get("valueAxis"),
+                key: series.get("valueKey"),
+                displayName: series.get("valueDisplayName")
+            };
+        categoryItem.value = categoryItem.axis.getKeyValueAt(categoryItem.key, index);
+        valueItem.value = valueItem.axis.getKeyValueAt(valueItem.key, index);
+        return {category:categoryItem, value:valueItem};
+    },
+
+    /**
+     * @private
+     */
+    _sizeChanged: function(e)
+    {
+        this._redraw();
+    },
+
+    /**
+     * @private
+     */
+    _redraw: function()
+    {
+        var graph = this.get("graph");
+        if(graph)
+        {
+            graph.set("width", this.get("width"));
+            graph.set("height", this.get("height"));
+        }
+    }
+}, {
+    ATTRS: {
+        /**
+         * Axes to appear in the chart. 
+         *
+         * @attribute axes
+         * @type Object
+         */
+        axes: {
+            getter: function()
+            {
+                return this._axes;
+            },
+
+            setter: function(val)
+            {
+                this._parseAxes(val);
+            }
+        },
+
+        /**
+         * Collection of series to appear on the chart. This can be an array of Series instances or object literals
+         * used to describe a Series instance.
+         *
+         * @attribute seriesCollection
+         * @type Array
+         */
+        seriesCollection: {
+            getter: function()
+            {
+                return this._getSeriesCollection();
+            },
+            
+            setter: function(val)
+            {
+                return this._setSeriesCollection(val);
+            }
+        },
+        
+        /**
+         * Type of chart when there is no series collection specified.
+         *
+         * @attribute type
+         * @type String 
+         */
+        type: {
+            value: "pie"
+        }
+    }
+});
+/**
+ * The Chart class is the basic application used to create a chart.
+ *
+ * @class Chart
+ * @constructor
+ */
+function Chart(cfg)
+{
+    if(cfg.type != "pie")
+    {
+        return new Y.CartesianChart(cfg);
+    }
+    else
+    {
+        return new Y.PieChart(cfg);
+    }
+}
+Y.Chart = Chart;
+
+
+}, '3.3.0' ,{requires:['dom', 'datatype', 'event-custom', 'event-mouseenter', 'widget', 'widget-position', 'widget-stack']});

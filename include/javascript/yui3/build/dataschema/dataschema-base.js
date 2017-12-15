@@ -5,4 +5,69 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dataschema-base",function(B){var A=B.Lang,C={apply:function(D,E){return E;},parse:function(D,E){if(E.parser){var F=(A.isFunction(E.parser))?E.parser:B.Parsers[E.parser+""];if(F){D=F.call(this,D);}else{}}return D;}};B.namespace("DataSchema").Base=C;B.namespace("Parsers");},"3.3.0",{requires:["base"]});
+YUI.add('dataschema-base', function(Y) {
+
+/**
+ * The DataSchema utility provides a common configurable interface for widgets to
+ * apply a given schema to a variety of data.
+ *
+ * @module dataschema
+ */
+
+/**
+ * Provides the base DataSchema implementation, which can be extended to 
+ * create DataSchemas for specific data formats, such XML, JSON, text and
+ * arrays.
+ *
+ * @module dataschema
+ * @submodule dataschema-base
+ */
+
+var LANG = Y.Lang,
+/**
+ * Base class for the YUI DataSchema Utility.
+ * @class DataSchema.Base
+ * @static
+ */
+    SchemaBase = {
+    /**
+     * Overridable method returns data as-is.
+     *
+     * @method apply
+     * @param schema {Object} Schema to apply.
+     * @param data {Object} Data.
+     * @return {Object} Schema-parsed data.
+     * @static
+     */
+    apply: function(schema, data) {
+        return data;
+    },
+    
+    /**
+     * Applies field parser, if defined
+     *
+     * @method parse
+     * @param value {Object} Original value.
+     * @param field {Object} Field.
+     * @return {Object} Type-converted value.
+     */
+    parse: function(value, field) {
+        if(field.parser) {
+            var parser = (LANG.isFunction(field.parser)) ?
+            field.parser : Y.Parsers[field.parser+''];
+            if(parser) {
+                value = parser.call(this, value);
+            }
+            else {
+            }
+        }
+        return value;
+    }
+};
+
+Y.namespace("DataSchema").Base = SchemaBase;
+Y.namespace("Parsers");
+
+
+
+}, '3.3.0' ,{requires:['base']});
