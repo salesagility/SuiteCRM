@@ -142,4 +142,3 @@ $mod_strings = array(
 );
 
 global $sugar_config;
-?>

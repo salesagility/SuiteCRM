@@ -712,15 +712,15 @@ class User extends Person
     /**
      * @deprecated
      * @param string $user_name - Must be non null and at least 2 characters
-     * @param string $user_password - Must be non null and at least 1 character.
+     * @param string $username_password - Must be non null and at least 1 character.
      * @desc Take an unencrypted username and password and return the encrypted password
      * @return string encrypted password for storage in DB and comparison against DB password.
      */
-    public function encrypt_password($user_password)
+    public function encrypt_password($username_password)
     {
         // encrypt the password.
         $salt = substr($this->user_name, 0, 2);
-        $encrypted_password = crypt($user_password, $salt);
+        $encrypted_password = crypt($username_password, $salt);
 
         return $encrypted_password;
     }
@@ -800,11 +800,11 @@ EOQ;
 
     /**
      * Load a user based on the user_name in $this
-     * @param string $user_password Password
+     * @param string $username_password Password
      * @param bool $password_encoded Is password md5-encoded or plain text?
      * @return -- this if load was successul and null if load failed.
      */
-    public function load_user($user_password, $password_encoded = false)
+    public function load_user($username_password, $password_encoded = false)
     {
         global $login_error;
         unset($GLOBALS['login_error']);
@@ -821,14 +821,14 @@ EOQ;
 
         $GLOBALS['log']->debug("Starting user load for $this->user_name");
 
-        if (!isset($this->user_name) || $this->user_name == "" || !isset($user_password) || $user_password == "") {
+        if (!isset($this->user_name) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
             return null;
         }
 
         if (!$password_encoded) {
-            $user_password = md5($user_password);
+            $username_password = md5($username_password);
         }
-        $row = self::findUserPassword($this->user_name, $user_password);
+        $row = self::findUserPassword($this->user_name, $username_password);
         if (empty($row) || !empty($GLOBALS['login_error'])) {
             $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $this->user_name . ' failed - could not Load User from Database');
 
@@ -952,12 +952,12 @@ EOQ;
     /**
      * Verify that the current password is correct and write the new password to the DB.
      *
-     * @param string $user_password - Must be non null and at least 1 character.
+     * @param string $username_password - Must be non null and at least 1 character.
      * @param string $new_password - Must be non null and at least 1 character.
      * @param string $system_generated
      * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
      */
-    public function change_password($user_password, $new_password, $system_generated = '0')
+    public function change_password($username_password, $new_password, $system_generated = '0')
     {
         global $mod_strings;
         global $current_user;
@@ -975,7 +975,7 @@ EOQ;
         //check old password current user is not an admin or current user is an admin editing themselves
         if (!$current_user->isAdminForModule('Users') || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
             //check old password first
-            $row = self::findUserPassword($this->user_name, md5($user_password));
+            $row = self::findUserPassword($this->user_name, md5($username_password));
             if (empty($row)) {
                 $GLOBALS['log']->warn("Incorrect old password for " . $this->user_name . "");
                 $this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1'] . $this->user_name . $mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
@@ -1470,7 +1470,8 @@ EOQ;
             $emailUI = new EmailUI();
             for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
                 $emailField = 'email' . (string) ($i + 1);
-                if ($focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
                     $focus->$emailField = $emailAddress;
                     $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
                     break;
@@ -2026,13 +2027,13 @@ EOQ;
 
         return $editorType;
     }
-    
+
     public function getSubThemes() {
         $sugarTheme = new SugarTheme(array());
         $subThemes = $sugarTheme->getSubThemes();
         return $subThemes;
     }
-    
+
     public function getSubTheme() {
         $subTheme = $this->getPreference('subtheme');
         if(!$subTheme) {
@@ -2041,5 +2042,5 @@ EOQ;
         }
         return $subTheme;
     }
-    
+
 }

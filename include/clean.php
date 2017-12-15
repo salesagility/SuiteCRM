@@ -197,8 +197,6 @@ class SugarCleaner
             // encode all HTML tags
             $clean_html = $dirty_html_decoded;
         }
-            
-        $clean_html = htmlentities($clean_html);
 
         return $clean_html;
     }

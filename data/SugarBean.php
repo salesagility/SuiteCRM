@@ -4305,6 +4305,8 @@ class SugarBean
             $field_name = $rel_field_name['name'];
             if (!empty($this->$field_name)) {
                 $this->fetched_rel_row[$rel_field_name['name']] = $this->$field_name;
+            } else {
+                $this->fetched_rel_row[$rel_field_name['name']] = '';
             }
         }
         //make a copy of fields in the relationship_fields array. These field values will be used to
