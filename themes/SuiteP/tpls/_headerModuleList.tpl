@@ -779,7 +779,7 @@
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
                             <ul>
-                                {if count($shortcutTopMenu.$name) > 0}
+                                {if isset($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0}
                                     <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                     {foreach from=$shortcutTopMenu.$name item=item}
                                         {if $item.URL == "-"}
