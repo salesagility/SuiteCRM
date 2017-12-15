@@ -1,0 +1,159 @@
+{
+	"info": {
+		"name": "SalesAgility",
+		"_postman_id": "9977217b-9e4a-b8fe-f32d-a59c29424939",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SuiteCRM/V8",
+			"description": "",
+			"item": [
+				{
+					"name": "Server info",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "client_id",
+									"value": "1",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "client_secret",
+									"value": "admin",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{suitecrm.url}}/Api/index.php/V8/server_info?XDEBUG_SESSION_START=PHPSTORM",
+							"host": [
+								"{{suitecrm.url}}"
+							],
+							"path": [
+								"Api",
+								"index.php",
+								"V8",
+								"server_info"
+							],
+							"query": [
+								{
+									"key": "XDEBUG_SESSION_START",
+									"value": "PHPSTORM",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
