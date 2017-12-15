@@ -77,8 +77,9 @@ $filename = str_replace(' ','',$filename);
 
 $transContent = $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
-if($_REQUEST['members'] == true)
-	$filename .= '_'.'members';
+if(!empty($_REQUEST['members'])){
+    $filename .= '_'.'members';
+}
 ///////////////////////////////////////////////////////////////////////////////
 ////	BUILD THE EXPORT FILE
 ob_clean();
