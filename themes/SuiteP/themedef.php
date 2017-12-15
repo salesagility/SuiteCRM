@@ -63,15 +63,19 @@ $themedef = array(
         'sub_themes' => array(
             'vname' => 'LBL_SUBTHEME_OPTIONS',
             'type' => 'select',
-            'options' => array(
-                $app_strings['LBL_SUBTHEMES'] => array(
-                    'Dawn'  => $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'],
-                    'Day'   => $app_strings['LBL_SUBTHEME_OPTIONS_DAY'],
-                    'Dusk'  => $app_strings['LBL_SUBTHEME_OPTIONS_DUSK'],
-                    'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
-                ),
-            ),
             'default' => 'Dawn',
         ),
     ),
 );
+
+if(!empty($app_strings['LBL_SUBTHEMES'])) {
+    // if statement removes the php notice
+    $themedef['config_options']['sub_themes']['options'] = array(
+        $app_strings['LBL_SUBTHEMES'] => array(
+            'Dawn'  => $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'],
+            'Day'   => $app_strings['LBL_SUBTHEME_OPTIONS_DAY'],
+            'Dusk'  => $app_strings['LBL_SUBTHEME_OPTIONS_DUSK'],
+            'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
+        ),
+    );
+}

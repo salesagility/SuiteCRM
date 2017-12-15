@@ -91,7 +91,7 @@ class Folder
     {
         if(isValidId($folderId)) {
 
-            $result = $this->db->query('SELECT * FROM folders WHERE id="' . $folderId . '"');
+            $result = $this->db->query("SELECT * FROM folders WHERE id='" . $folderId . "'");
             $row = $this->db->fetchByAssoc($result);
 
             // get the root of the tree

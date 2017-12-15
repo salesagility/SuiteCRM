@@ -158,4 +158,3 @@ $mod_strings = array(
     //For export labels
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_FP_EVENTS_TITLE' => 'Events',
 );
-?>

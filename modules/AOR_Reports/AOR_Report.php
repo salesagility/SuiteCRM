@@ -708,7 +708,7 @@ class AOR_Report extends Basic
 
             if ($fields[$label]['display']) {
                 $html .= "<th scope='col'>";
-                $html .= "<div style='white-space: normal;' width='100%' align='left'>";
+                $html .= "<div style='color:#444;'>";
                 $html .= $field->label;
                 $html .= "</div></th>";
             }
@@ -1245,12 +1245,18 @@ class AOR_Report extends Basic
         $query = array(),
         SugarBean $rel_module = null
     ) {
-
+        // Alias to keep lines short
+        $db = $this->db;
         if (!isset($query['join'][$alias])) {
 
             switch ($type) {
                 case 'custom':
-                    $query['join'][$alias] = 'LEFT JOIN ' . $this->db->quoteIdentifier($module->get_custom_table_name()) . ' ' . $this->db->quoteIdentifier($name) . ' ON ' . $this->db->quoteIdentifier($parentAlias) . '.id = ' . $this->db->quoteIdentifier($name) . '.id_c ';
+                    $customTable = $module->get_custom_table_name();
+                    $query['join'][$alias] =
+                        'LEFT JOIN ' .
+                        $db->quoteIdentifier($customTable) .' '. $db->quoteIdentifier($alias) .
+                        ' ON ' .
+                        $db->quoteIdentifier($parentAlias) . '.id = ' . $db->quoteIdentifier($name) . '.id_c ';
                     break;
 
                 case 'relationship':
@@ -1258,27 +1264,27 @@ class AOR_Report extends Basic
                         $params['join_type'] = 'LEFT JOIN';
                         if ($module->$name->relationship_type != 'one-to-many') {
                             if ($module->$name->getSide() == REL_LHS) {
-                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                                $params['right_join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $db->quoteIdentifier($parentAlias);
                             } else {
-                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
-                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                                $params['right_join_table_alias'] = $db->quoteIdentifier($parentAlias);
+                                $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $db->quoteIdentifier($alias);
                             }
 
                         } else {
-                            $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
-                            $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            $params['right_join_table_alias'] = $db->quoteIdentifier($parentAlias);
+                            $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                            $params['left_join_table_alias'] = $db->quoteIdentifier($parentAlias);
                         }
                         $linkAlias = $parentAlias . "|" . $alias;
-                        $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
+                        $params['join_table_link_alias'] = $db->quoteIdentifier($linkAlias);
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
                         if ($rel_module != null) {
                             $query['join'][$alias] .= $this->build_report_access_query($rel_module,
-                                $this->db->quoteIdentifier($alias));
+                                $db->quoteIdentifier($alias));
                         }
                         $query['id_select'][$alias] = $join['select'] . " AS '" . $alias . "_id'";
                         $query['id_select_group'][$alias] = $join['select'];
@@ -1297,7 +1303,6 @@ class AOR_Report extends Basic
     function build_report_access_query(SugarBean $module, $alias)
     {
 
-        $module->table_name = $alias;
         $where = '';
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
             global $current_user;
