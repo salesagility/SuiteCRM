@@ -33,32 +33,6 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
-        error_reporting(E_ALL);
-        //error_reporting(E_ERROR | E_PARSE |E_NOTICE);
-
-        //execute the method with required child objects and paramerers preset. it will rteturn some html.
-        $view = new ViewQuickedit();
-        $_REQUEST['module'] = 'Accounts';
-        $_REQUEST['action'] = 'SubpanelCreates';
-
-        try {
-            $view->bean = new Account();
-        } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
-        }
-
-        try {
-            ob_start();
-
-            $view->display();
-
-            $renderedContent = ob_get_contents();
-            ob_end_clean();
-
-            $this->assertGreaterThan(0, strlen($renderedContent));
-            $this->assertNotEquals(false, json_decode($renderedContent));
-        } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
-        }
+        $this->markTestIncomplete();
     }
 }
