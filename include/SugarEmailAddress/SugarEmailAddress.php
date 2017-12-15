@@ -108,7 +108,7 @@ class SugarEmailAddress extends SugarBean
      * Legacy email address handling.  This is to allow support for SOAP or customizations
      * @param SugarBean $bean
      */
-    publicfunction handleLegacySave($bean) {
+    public function handleLegacySave($bean) {
         if(!isset($_REQUEST) || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
                 $this->addresses = array();

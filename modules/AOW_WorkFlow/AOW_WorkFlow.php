@@ -165,7 +165,7 @@ class AOW_WorkFlow extends Basic
      * Select and run all active flows
      * @return bool
      */
-	publicfunction run_flows()
+	public function run_flows()
 		{$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         foreach ($flows as $flow) {
