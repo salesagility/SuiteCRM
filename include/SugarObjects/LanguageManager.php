@@ -41,6 +41,8 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+require_once __DIR__.'/translated_prefix.php';
 /**
  * Language files management
  * @api
@@ -306,6 +308,4 @@ class LanguageManager
     }
 }
 
-function translated_prefix($key){
-	return '[translated]' . $key;
-}
+

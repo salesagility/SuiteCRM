@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+global $app_strings;
+
 $themedef = array(
     'name' => 'Suite P',
     'description' => 'SuiteCRM Responsive Theme',
@@ -58,12 +60,18 @@ $themedef = array(
             'type' => 'bool',
             'default' => true,
         ),
-        // TODO : add theme settings here.. for e.g:
-        //        'navbar' => array(
-        //            'vname' => 'LBL_COLOUR_ADMIN_BASE',
-        //            'type' => 'colour',
-        //            'default' => '#3C8DBC',
-        //        ),
-
+        'sub_themes' => array(
+            'vname' => 'LBL_SUBTHEME_OPTIONS',
+            'type' => 'select',
+            'options' => array(
+                $app_strings['LBL_SUBTHEMES'] => array(
+                    'Dawn'  => $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'],
+                    'Day'   => $app_strings['LBL_SUBTHEME_OPTIONS_DAY'],
+                    'Dusk'  => $app_strings['LBL_SUBTHEME_OPTIONS_DUSK'],
+                    'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
+                ),
+            ),
+            'default' => 'Dawn',
+        ),
     ),
 );

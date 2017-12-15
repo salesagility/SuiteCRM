@@ -414,6 +414,9 @@ class Popup_Picker
         $template = new Sugar_Smarty();
         $template->assign('app', $app_strings);
         $template->assign('mod', $mod_strings);
+        $theme = SugarThemeRegistry::current();
+        $css = $theme->getCSS();
+        $template->assign('css', $css);
         $template->assign('theme', SugarThemeRegistry::current());
         $template->assign('langHeader', get_language_header());
         $template->assign('summaryList', $summary_list);
