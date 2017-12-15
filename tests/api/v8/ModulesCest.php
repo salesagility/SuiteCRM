@@ -376,6 +376,48 @@ class ModulesCest
         $I->assertArrayHasKey('self', $response['links']);
     }
 
+
+    /**
+     * Retrieves a list of entries
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#fetching
+     *
+     * HTTP Verb: GET
+     * URL: /api/v8/modules/{module_name}
+     */
+    public function TestScenarioRetrieveFilteredList(apiTester $I)
+    {
+        // Send Request
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        $I->sendGET(
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE .
+            '?filter[Accounts.date_entered]=[[gte]]2017-11-17T11:40:00+00:00'
+        );
+
+        // Validate Response
+        $I->seeResponseCodeIs(200);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertTrue(is_array($response['data']));
+
+        if(!empty($response['data'])) {
+            $I->assertTrue(isset($response['data']['0']));
+            $I->assertTrue(isset($response['data']['0']['id']));
+            $I->assertTrue(isset($response['data']['0']['type']));
+            $I->assertTrue(isset($response['data']['0']['attributes']));
+            $I->assertTrue(is_array($response['data']['0']['attributes']));
+        }
+
+        $I->assertArrayHasKey('links', $response);
+        $I->assertArrayHasKey('self', $response['links']);
+    }
+
+
     /**
      * Create product and create a relationship with product categories (One To Many)
      * @param apiTester $I

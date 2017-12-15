@@ -20,6 +20,20 @@ class UnitTester extends \Codeception\Actor
 {
     use _generated\UnitTesterActions;
 
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function getContainerInterface()
+    {
+        // load PSR 11 interface
+        if(isset($GLOBALS['container']) === false) {
+            $paths = new \SuiteCRM\Utility\Paths();
+            /** @noinspection PhpIncludeInspection */
+            require $paths->getContainersPath();
+        }
+
+        return $GLOBALS['container'];
+    }
    /**
     * Define custom actions here
     */
