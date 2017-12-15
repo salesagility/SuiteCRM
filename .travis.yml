@@ -28,7 +28,7 @@ script:
   - ./vendor/bin/codecept run -f unit --steps -vvv --debug
 
 after_script:
-  - cat sugarcrm.log
+  - cat suitecrm.log
 
 branches:
   only:
