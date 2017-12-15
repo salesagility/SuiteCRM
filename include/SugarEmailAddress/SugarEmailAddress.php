@@ -109,32 +109,58 @@ class SugarEmailAddress extends SugarBean
      * @param SugarBean $bean
      */
     public function handleLegacySave($bean) {
-        if(!isset($_REQUEST) || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
-            if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
-                $this->addresses = array();
-                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
-                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
-
-                $isPrimary = true;
-                for ($i = 1; $i <= 10; $i++) {
-                    $email = 'email' . $i;
-                    if (isset($bean->$email) && !empty($bean->$email)) {
-                        $opt_out_field = $email . '_opt_out';
-                        $invalid_field = $email . '_invalid';
-                        $field_optOut = (isset($bean->$opt_out_field)) ? $bean->$opt_out_field : $optOut;
-                        $field_invalid = (isset($bean->$invalid_field)) ? $bean->$invalid_field : $invalid;
-                        $this->addAddress($bean->$email, $isPrimary, false, $field_invalid, $field_optOut);
-                        $isPrimary = false;
-                    }
-                }
-            }
+        if ($this->needsToParseLegacyAddresses($bean)){
+            $this->parseLegacyEmailAddresses($bean);
         }
         $this->populateAddresses($bean->id, $bean->module_dir, array(), '');
-        if (isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
+        if (isset($_REQUEST) && isset($_REQUEST[$bean->module_dir . '_email_widget_id'])) {
             $this->populateLegacyFields($bean);
         }
     }
 
+    /**
+     * @param SugarBean $bean
+     * @return bool
+     */
+    private function needsToParseLegacyAddresses($bean)
+    {
+        if (!empty($this->addresses)){
+            // We already have addresses, don't want to overwrite them
+            return false;
+        }
+        if(isset($_REQUEST) && isset($_REQUEST[$bean->module_dir . '_email_widget_id'])){
+            // Non legacy way of handling emails
+            return false;
+        }
+        if (isset($_REQUEST) && isset($_REQUEST['massupdate'])){
+            // No need to update the emails on a mass update
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param SugarBean $bean
+     */
+    private function parseLegacyEmailAddresses($bean)
+    {
+        $this->addresses = array();
+        $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
+        $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
+
+        $isPrimary = true;
+        for ($i = 1; $i <= 10; $i++) {
+            $email = 'email' . $i;
+            if (isset($bean->$email) && !empty($bean->$email)) {
+                $opt_out_field = $email . '_opt_out';
+                $invalid_field = $email . '_invalid';
+                $field_optOut = (isset($bean->$opt_out_field)) ? $bean->$opt_out_field : $optOut;
+                $field_invalid = (isset($bean->$invalid_field)) ? $bean->$invalid_field : $invalid;
+                $this->addAddress($bean->$email, $isPrimary, false, $field_invalid, $field_optOut);
+                $isPrimary = false;
+            }
+        }
+    }
 
     /**
      * User Profile specific save email addresses,
