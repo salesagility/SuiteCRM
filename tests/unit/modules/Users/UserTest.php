@@ -544,7 +544,8 @@ class UserTest extends PHPUnit_Framework_TestCase
         $actual = $user->getPreferredEmail();
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertEquals(1, preg_match('/^one\d+\@email\.com$/', $actual['email']));
+        $preg = preg_match('/^one\d{0,}\@email\.com$/', $actual['email'], $matches);
+        self::assertEquals(1, count($matches));
 
 
     }
@@ -558,7 +559,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $actual = $user->getUsersNameAndEmail();
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertEquals(1, preg_match('/^one\d+\@email\.com$/', $actual['email']));
+        self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
 
     }
 
@@ -570,7 +571,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $actual = $user->getEmailInfo($id);
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertEquals(1, preg_match('/^one\d+\@email\.com$/', $actual['email']));
+        self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
     }
 
 
