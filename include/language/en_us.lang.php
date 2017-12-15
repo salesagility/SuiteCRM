@@ -2349,6 +2349,11 @@ $app_strings = array(
     'LBL_CATEGORY' => 'Category',
     'LBL_LIST_CATEGORY' => 'Category',
     'ERR_FACTOR_TPL_INVALID' => 'Factor Authentication message is invalid, please contact to your administrator.',
+    'LBL_SUBTHEMES' => 'Style',
+    'LBL_SUBTHEME_OPTIONS_DAWN' => 'Dawn',
+    'LBL_SUBTHEME_OPTIONS_DAY' => 'Day',
+    'LBL_SUBTHEME_OPTIONS_DUSK' => 'Dusk',
+    'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
 );
 

@@ -375,6 +375,7 @@ class SugarView
         $ss->assign("MODULE_NAME", $this->module);
         $ss->assign("langHeader", get_language_header());
 
+
         // set ab testing if exists
         $testing = (isset($_REQUEST["testing"]) ? $_REQUEST['testing'] : "a");
         $ss->assign("ABTESTING", $testing);

@@ -118,7 +118,6 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
         //execute the method and verify that it retunrs expected results
         $expected = array(
                 'DELETED' => 0,
-                'DATE_MODIFIED' => false,
         );
 
         $actual = $emailTemplate->get_list_view_data();

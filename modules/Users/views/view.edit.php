@@ -238,6 +238,11 @@ EOD
             $this->ss->assign('scroll_to_cal', true);
         }
 
+        
+        
+        $this->ss->assign('SUBTHEMES', $this->bean->getSubThemes());
+        $this->ss->assign('SUBTHEME', $this->bean->getSubTheme());
+        
 
         require_once('modules/Emails/EmailUI.php');
         $efocus = new Email();
