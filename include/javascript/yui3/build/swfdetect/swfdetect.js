@@ -5,4 +5,110 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("swfdetect",function(C){var J=0,H=C.UA,E=C.Lang,M="ShockwaveFlash",B,G,D,N,A;function L(O){return parseInt(O,10);}function F(O){if(E.isNumber(L(O[0]))){H.flashMajor=O[0];}if(E.isNumber(L(O[1]))){H.flashMinor=O[1];}if(E.isNumber(L(O[2]))){H.flashRev=O[2];}}if(H.gecko||H.webkit||H.opera){if((B=navigator.mimeTypes["application/x-shockwave-flash"])){if((G=B.enabledPlugin)){D=G.description.replace(/\s[rd]/g,".").replace(/[A-Za-z\s]+/g,"").split(".");F(D);}}}else{if(H.ie){try{N=new ActiveXObject(M+"."+M+".6");N.AllowScriptAccess="always";}catch(I){if(N!==null){J=6;}}if(J===0){try{A=new ActiveXObject(M+"."+M);D=A.GetVariable("$version").replace(/[A-Za-z\s]+/g,"").split(",");F(D);}catch(K){}}}}C.SWFDetect={getFlashVersion:function(){return(String(H.flashMajor)+"."+String(H.flashMinor)+"."+String(H.flashRev));},isFlashVersionAtLeast:function(R,T,S){var P=L(H.flashMajor),Q=L(H.flashMinor),O=L(H.flashRev);R=L(R||0);T=L(T||0);S=L(S||0);if(R===P){if(T===Q){return S<=O;}return T<Q;}return R<P;}};},"3.3.0");
+YUI.add('swfdetect', function(Y) {
+
+/**
+ * Utility for Flash version detection
+ * @module swfdetect
+ */
+
+// shortcuts
+var version = 0,
+	uA = Y.UA,
+	lG = Y.Lang,
+	sF = "ShockwaveFlash",
+	mF, eP, vS, ax6, ax;
+
+function makeInt(n) {
+	return parseInt(n, 10);
+}
+
+function parseFlashVersion (flashVer) {
+	if (lG.isNumber(makeInt(flashVer[0]))) {
+		uA.flashMajor = flashVer[0];
+	}
+	
+	if (lG.isNumber(makeInt(flashVer[1]))) {
+		uA.flashMinor = flashVer[1];
+	}
+	
+	if (lG.isNumber(makeInt(flashVer[2]))) {
+		uA.flashRev = flashVer[2];
+	}
+}
+
+if (uA.gecko || uA.webkit || uA.opera) {
+   if ((mF = navigator.mimeTypes['application/x-shockwave-flash'])) {
+      if ((eP = mF.enabledPlugin)) {
+         vS = eP.description.replace(/\s[rd]/g, '.').replace(/[A-Za-z\s]+/g, '').split('.');
+		 parseFlashVersion(vS);
+      }
+   }
+}
+else if(uA.ie) {
+    try
+    {
+        ax6 = new ActiveXObject(sF + "." + sF + ".6");
+        ax6.AllowScriptAccess = "always";
+    }
+    catch (e)
+    {
+        if(ax6 !== null)
+        {
+            version = 6.0;
+        }
+    }
+    if (version === 0) {
+    try
+    {
+        ax = new ActiveXObject(sF + "." + sF);
+        vS = ax.GetVariable("$version").replace(/[A-Za-z\s]+/g, '').split(',');
+        parseFlashVersion(vS);
+    } catch (e2) {}
+    }
+}
+
+		
+Y.SWFDetect = {
+
+	/**
+	 * Returns the version of either the Flash Player plugin (in Mozilla/WebKit/Opera browsers),
+	 * or the Flash Player ActiveX control (in IE), as a String of the form "MM.mm.rr", where
+	 * MM is the major version, mm is the minor version, and rr is the revision.
+	 * @method getFlashVersion
+	 */	
+	
+	getFlashVersion : function () {
+		return (String(uA.flashMajor) + "." + String(uA.flashMinor) + "." + String(uA.flashRev));
+	},
+
+	/**
+	 * Checks whether the version of the Flash player installed on the user's machine is greater
+	 * than or equal to the one specified. If it is, this method returns true; it is false otherwise.
+	 * @method isFlashVersionAtLeast
+	 * @return {Boolean} Whether the Flash player version is greater than or equal to the one specified.
+	 * @param flashMajor {int} The Major version of the Flash player to compare against.
+	 * @param flashMinor {int} The Minor version of the Flash player to compare against.
+	 * @param flashRev {int} The Revision version of the Flash player to compare against.
+	 */	
+	isFlashVersionAtLeast : function (flashMajor, flashMinor, flashRev) {
+		var uaMajor    = makeInt(uA.flashMajor),
+			uaMinor    = makeInt(uA.flashMinor),
+			uaRev      = makeInt(uA.flashRev);
+			
+		flashMajor = makeInt(flashMajor || 0);
+		flashMinor = makeInt(flashMinor || 0);
+		flashRev   = makeInt(flashRev || 0);
+
+		if (flashMajor === uaMajor) {
+			if (flashMinor === uaMinor) {
+				return flashRev <= uaRev;
+			}
+			return flashMinor < uaMinor;
+		}
+		return flashMajor < uaMajor;
+	}			
+};
+
+
+}, '3.3.0' );

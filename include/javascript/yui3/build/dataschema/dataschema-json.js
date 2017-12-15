@@ -5,4 +5,302 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dataschema-json",function(C){var A=C.Lang,B={getPath:function(D){var G=null,F=[],E=0;if(D){D=D.replace(/\[(['"])(.*?)\1\]/g,function(I,H,J){F[E]=J;return".@"+(E++);}).replace(/\[(\d+)\]/g,function(I,H){F[E]=parseInt(H,10)|0;return".@"+(E++);}).replace(/^\./,"");if(!/[^\w\.\$@]/.test(D)){G=D.split(".");for(E=G.length-1;E>=0;--E){if(G[E].charAt(0)==="@"){G[E]=F[parseInt(G[E].substr(1),10)];}}}else{}}return G;},getLocationValue:function(G,F){var E=0,D=G.length;for(;E<D;E++){if(A.isObject(F)&&(G[E] in F)){F=F[G[E]];}else{F=undefined;break;}}return F;},apply:function(F,G){var D=G,E={results:[],meta:{}};if(!A.isObject(G)){try{D=C.JSON.parse(G);}catch(H){E.error=H;return E;}}if(A.isObject(D)&&F){if(!A.isUndefined(F.resultListLocator)){E=B._parseResults.call(this,F,D,E);}if(!A.isUndefined(F.metaFields)){E=B._parseMeta(F.metaFields,D,E);}}else{E.error=new Error("JSON schema parse failure");}return E;},_parseResults:function(H,D,G){var F=[],I,E;if(H.resultListLocator){I=B.getPath(H.resultListLocator);if(I){F=B.getLocationValue(I,D);if(F===undefined){G.results=[];E=new Error("JSON results retrieval failure");}else{if(A.isArray(F)){if(A.isArray(H.resultFields)){G=B._getFieldValues.call(this,H.resultFields,F,G);}else{G.results=F;}}else{G.results=[];E=new Error("JSON Schema fields retrieval failure");}}}else{E=new Error("JSON Schema results locator failure");}if(E){G.error=E;}}return G;},_getFieldValues:function(L,Q,E){var G=[],N=L.length,H,F,P,R,K,T,D,J=[],O=[],M=[],S,I;for(H=0;H<N;H++){P=L[H];R=P.key||P;K=P.locator||R;T=B.getPath(K);if(T){if(T.length===1){J[J.length]={key:R,path:T[0]};}else{O[O.length]={key:R,path:T};}}else{}D=(A.isFunction(P.parser))?P.parser:C.Parsers[P.parser+""];if(D){M[M.length]={key:R,parser:D};}}for(H=Q.length-1;H>=0;--H){I={};S=Q[H];if(S){for(F=J.length-1;F>=0;--F){I[J[F].key]=C.DataSchema.Base.parse.call(this,(A.isUndefined(S[J[F].path])?S[F]:S[J[F].path]),J[F]);}for(F=O.length-1;F>=0;--F){I[O[F].key]=C.DataSchema.Base.parse.call(this,(B.getLocationValue(O[F].path,S)),O[F]);}for(F=M.length-1;F>=0;--F){R=M[F].key;I[R]=M[F].parser.call(this,I[R]);if(A.isUndefined(I[R])){I[R]=null;}}G[H]=I;}}E.results=G;return E;},_parseMeta:function(G,D,F){if(A.isObject(G)){var E,H;for(E in G){if(G.hasOwnProperty(E)){H=B.getPath(G[E]);if(H&&D){F.meta[E]=B.getLocationValue(H,D);}}}}else{F.error=new Error("JSON meta data retrieval failure");}return F;}};C.DataSchema.JSON=C.mix(B,C.DataSchema.Base);},"3.3.0",{requires:["dataschema-base","json"]});
+YUI.add('dataschema-json', function(Y) {
+
+/**
+ * Provides a DataSchema implementation which can be used to work with JSON data.
+ *
+ * @module dataschema
+ * @submodule dataschema-json
+ */
+
+/**
+ * JSON subclass for the DataSchema Utility.
+ * @class DataSchema.JSON
+ * @extends DataSchema.Base
+ * @static
+ */
+var LANG = Y.Lang,
+
+    SchemaJSON = {
+
+        /////////////////////////////////////////////////////////////////////////////
+        //
+        // DataSchema.JSON static methods
+        //
+        /////////////////////////////////////////////////////////////////////////////
+        /**
+         * Utility function converts JSON locator strings into walkable paths
+         *
+         * @method DataSchema.JSON.getPath
+         * @param locator {String} JSON value locator.
+         * @return {String[]} Walkable path to data value.
+         * @static
+         */
+        getPath: function(locator) {
+            var path = null,
+                keys = [],
+                i = 0;
+
+            if (locator) {
+                // Strip the ["string keys"] and [1] array indexes
+                locator = locator.
+                    replace(/\[(['"])(.*?)\1\]/g,
+                    function (x,$1,$2) {keys[i]=$2;return '.@'+(i++);}).
+                    replace(/\[(\d+)\]/g,
+                    function (x,$1) {keys[i]=parseInt($1,10)|0;return '.@'+(i++);}).
+                    replace(/^\./,''); // remove leading dot
+
+                // Validate against problematic characters.
+                if (!/[^\w\.\$@]/.test(locator)) {
+                    path = locator.split('.');
+                    for (i=path.length-1; i >= 0; --i) {
+                        if (path[i].charAt(0) === '@') {
+                            path[i] = keys[parseInt(path[i].substr(1),10)];
+                        }
+                    }
+                }
+                else {
+                }
+            }
+            return path;
+        },
+
+        /**
+         * Utility function to walk a path and return the value located there.
+         *
+         * @method DataSchema.JSON.getLocationValue
+         * @param path {String[]} Locator path.
+         * @param data {String} Data to traverse.
+         * @return {Object} Data value at location.
+         * @static
+         */
+        getLocationValue: function (path, data) {
+            var i = 0,
+                len = path.length;
+            for (;i<len;i++) {
+                if(
+                    LANG.isObject(data) &&
+                    (path[i] in data)
+                ) {
+                    data = data[path[i]];
+                }
+                else {
+                    data = undefined;
+                    break;
+                }
+            }
+            return data;
+        },
+
+        /**
+         * Applies a given schema to given JSON data.
+         *
+         * @method apply
+         * @param schema {Object} Schema to apply.
+         * @param data {Object} JSON data.
+         * @return {Object} Schema-parsed data.
+         * @static
+         */
+        apply: function(schema, data) {
+            var data_in = data,
+                data_out = {results:[],meta:{}};
+
+            // Convert incoming JSON strings
+            if(!LANG.isObject(data)) {
+                try {
+                    data_in = Y.JSON.parse(data);
+                }
+                catch(e) {
+                    data_out.error = e;
+                    return data_out;
+                }
+            }
+
+            if(LANG.isObject(data_in) && schema) {
+                // Parse results data
+                if(!LANG.isUndefined(schema.resultListLocator)) {
+                    data_out = SchemaJSON._parseResults.call(this, schema, data_in, data_out);
+                }
+
+                // Parse meta data
+                if(!LANG.isUndefined(schema.metaFields)) {
+                    data_out = SchemaJSON._parseMeta(schema.metaFields, data_in, data_out);
+                }
+            }
+            else {
+                data_out.error = new Error("JSON schema parse failure");
+            }
+
+            return data_out;
+        },
+
+        /**
+         * Schema-parsed list of results from full data
+         *
+         * @method _parseResults
+         * @param schema {Object} Schema to parse against.
+         * @param json_in {Object} JSON to parse.
+         * @param data_out {Object} In-progress parsed data to update.
+         * @return {Object} Parsed data object.
+         * @static
+         * @protected
+         */
+        _parseResults: function(schema, json_in, data_out) {
+            var results = [],
+                path,
+                error;
+
+            if(schema.resultListLocator) {
+                path = SchemaJSON.getPath(schema.resultListLocator);
+                if(path) {
+                    results = SchemaJSON.getLocationValue(path, json_in);
+                    if (results === undefined) {
+                        data_out.results = [];
+                        error = new Error("JSON results retrieval failure");
+                    }
+                    else {
+                        if(LANG.isArray(results)) {
+                            // if no result fields are passed in, then just take the results array whole-hog
+                            // Sometimes you're getting an array of strings, or want the whole object,
+                            // so resultFields don't make sense.
+                            if (LANG.isArray(schema.resultFields)) {
+                                data_out = SchemaJSON._getFieldValues.call(this, schema.resultFields, results, data_out);
+                            }
+                            else {
+                                data_out.results = results;
+                            }
+                        }
+                        else {
+                            data_out.results = [];
+                            error = new Error("JSON Schema fields retrieval failure");
+                        }
+                    }
+                }
+                else {
+                    error = new Error("JSON Schema results locator failure");
+                }
+
+                if (error) {
+                    data_out.error = error;
+                }
+
+            }
+            return data_out;
+        },
+
+        /**
+         * Get field data values out of list of full results
+         *
+         * @method _getFieldValues
+         * @param fields {Array} Fields to find.
+         * @param array_in {Array} Results to parse.
+         * @param data_out {Object} In-progress parsed data to update.
+         * @return {Object} Parsed data object.
+         * @static
+         * @protected
+         */
+        _getFieldValues: function(fields, array_in, data_out) {
+            var results = [],
+                len = fields.length,
+                i, j,
+                field, key, locator, path, parser,
+                simplePaths = [], complexPaths = [], fieldParsers = [],
+                result, record;
+
+            // First collect hashes of simple paths, complex paths, and parsers
+            for (i=0; i<len; i++) {
+                field = fields[i]; // A field can be a simple string or a hash
+                key = field.key || field; // Find the key
+                locator = field.locator || key; // Find the locator
+
+                // Validate and store locators for later
+                path = SchemaJSON.getPath(locator);
+                if (path) {
+                    if (path.length === 1) {
+                        simplePaths[simplePaths.length] = {key:key, path:path[0]};
+                    } else {
+                        complexPaths[complexPaths.length] = {key:key, path:path};
+                    }
+                } else {
+                }
+
+                // Validate and store parsers for later
+                //TODO: use Y.DataSchema.parse?
+                parser = (LANG.isFunction(field.parser)) ? field.parser : Y.Parsers[field.parser+''];
+                if (parser) {
+                    fieldParsers[fieldParsers.length] = {key:key, parser:parser};
+                }
+            }
+
+            // Traverse list of array_in, creating records of simple fields,
+            // complex fields, and applying parsers as necessary
+            for (i=array_in.length-1; i>=0; --i) {
+                record = {};
+                result = array_in[i];
+                if(result) {
+                    // Cycle through simpleLocators
+                    for (j=simplePaths.length-1; j>=0; --j) {
+                        // Bug 1777850: The result might be an array instead of object
+                        record[simplePaths[j].key] = Y.DataSchema.Base.parse.call(this,
+                                (LANG.isUndefined(result[simplePaths[j].path]) ?
+                                result[j] : result[simplePaths[j].path]), simplePaths[j]);
+                    }
+
+                    // Cycle through complexLocators
+                    for (j=complexPaths.length - 1; j>=0; --j) {
+                        record[complexPaths[j].key] = Y.DataSchema.Base.parse.call(this,
+                            (SchemaJSON.getLocationValue(complexPaths[j].path, result)), complexPaths[j] );
+                    }
+
+                    // Cycle through fieldParsers
+                    for (j=fieldParsers.length-1; j>=0; --j) {
+                        key = fieldParsers[j].key;
+                        record[key] = fieldParsers[j].parser.call(this, record[key]);
+                        // Safety net
+                        if (LANG.isUndefined(record[key])) {
+                            record[key] = null;
+                        }
+                    }
+                    results[i] = record;
+                }
+            }
+            data_out.results = results;
+            return data_out;
+        },
+
+        /**
+         * Parses results data according to schema
+         *
+         * @method _parseMeta
+         * @param metaFields {Object} Metafields definitions.
+         * @param json_in {Object} JSON to parse.
+         * @param data_out {Object} In-progress parsed data to update.
+         * @return {Object} Schema-parsed meta data.
+         * @static
+         * @protected
+         */
+        _parseMeta: function(metaFields, json_in, data_out) {
+            if(LANG.isObject(metaFields)) {
+                var key, path;
+                for(key in metaFields) {
+                    if (metaFields.hasOwnProperty(key)) {
+                        path = SchemaJSON.getPath(metaFields[key]);
+                        if (path && json_in) {
+                            data_out.meta[key] = SchemaJSON.getLocationValue(path, json_in);
+                        }
+                    }
+                }
+            }
+            else {
+                data_out.error = new Error("JSON meta data retrieval failure");
+            }
+            return data_out;
+        }
+    };
+
+Y.DataSchema.JSON = Y.mix(SchemaJSON, Y.DataSchema.Base);
+
+
+
+}, '3.3.0' ,{requires:['dataschema-base','json']});

@@ -5,4 +5,124 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("pluginhost-config",function(C){var B=C.Plugin.Host,A=C.Lang;B.prototype._initConfigPlugins=function(E){var G=(this._getClasses)?this._getClasses():[this.constructor],D=[],H={},F,I,K,L,J;for(I=G.length-1;I>=0;I--){F=G[I];L=F._UNPLUG;if(L){C.mix(H,L,true);}K=F._PLUG;if(K){C.mix(D,K,true);}}for(J in D){if(D.hasOwnProperty(J)){if(!H[J]){this.plug(D[J]);}}}if(E&&E.plugins){this.plug(E.plugins);}};B.plug=function(E,I,G){var J,H,D,F;if(E!==C.Base){E._PLUG=E._PLUG||{};if(!A.isArray(I)){if(G){I={fn:I,cfg:G};}I=[I];}for(H=0,D=I.length;H<D;H++){J=I[H];F=J.NAME||J.fn.NAME;E._PLUG[F]=J;}}};B.unplug=function(E,H){var I,G,D,F;if(E!==C.Base){E._UNPLUG=E._UNPLUG||{};if(!A.isArray(H)){H=[H];}for(G=0,D=H.length;G<D;G++){I=H[G];F=I.NAME;if(!E._PLUG[F]){E._UNPLUG[F]=I;}else{delete E._PLUG[F];}}}};},"3.3.0",{requires:["pluginhost-base"]});
+YUI.add('pluginhost-config', function(Y) {
+
+    /**
+     * Adds pluginhost constructor configuration and static configuration support
+     * @submodule pluginhost-config
+     */
+
+    /**
+     * Constructor and static configuration support for plugins
+     * 
+     * @for Plugin.Host
+     */
+    var PluginHost = Y.Plugin.Host,
+        L = Y.Lang;
+
+    PluginHost.prototype._initConfigPlugins = function(config) {
+
+        // Class Configuration
+        var classes = (this._getClasses) ? this._getClasses() : [this.constructor],
+            plug = [],
+            unplug = {},
+            constructor, i, classPlug, classUnplug, pluginClassName;
+
+        // TODO: Room for optimization. Can we apply statically/unplug in same pass?
+        for (i = classes.length - 1; i >= 0; i--) {
+            constructor = classes[i];
+
+            classUnplug = constructor._UNPLUG;
+            if (classUnplug) {
+                // subclasses over-write
+                Y.mix(unplug, classUnplug, true);
+            }
+
+            classPlug = constructor._PLUG;
+            if (classPlug) {
+                // subclasses over-write
+                Y.mix(plug, classPlug, true);
+            }
+        }
+
+        for (pluginClassName in plug) {
+            if (plug.hasOwnProperty(pluginClassName)) {
+                if (!unplug[pluginClassName]) {
+                    this.plug(plug[pluginClassName]);
+                }
+            }
+        }
+
+        // User Configuration
+        if (config && config.plugins) {
+            this.plug(config.plugins);
+        }
+    };
+    
+    /**
+     * Registers plugins to be instantiated at the class level (plugins 
+     * which should be plugged into every instance of the class by default).
+     *
+     * @method Plugin.Host.plug
+     * @static
+     *
+     * @param {Function} hostClass The host class on which to register the plugins
+     * @param {Function | Array} plugin Either the plugin class, an array of plugin classes or an array of objects (with fn and cfg properties defined)
+     * @param {Object} config (Optional) If plugin is the plugin class, the configuration for the plugin
+     */
+    PluginHost.plug = function(hostClass, plugin, config) {
+        // Cannot plug into Base, since Plugins derive from Base [ will cause infinite recurrsion ]
+        var p, i, l, name;
+    
+        if (hostClass !== Y.Base) {
+            hostClass._PLUG = hostClass._PLUG || {};
+    
+            if (!L.isArray(plugin)) {
+                if (config) {
+                    plugin = {fn:plugin, cfg:config};
+                }
+                plugin = [plugin];
+            }
+    
+            for (i = 0, l = plugin.length; i < l;i++) {
+                p = plugin[i];
+                name = p.NAME || p.fn.NAME;
+                hostClass._PLUG[name] = p;
+            }
+        }
+    };
+
+    /**
+     * Unregisters any class level plugins which have been registered by the host class, or any
+     * other class in the hierarchy.
+     *
+     * @method Plugin.Host.unplug
+     * @static
+     *
+     * @param {Function} hostClass The host class from which to unregister the plugins
+     * @param {Function | Array} plugin The plugin class, or an array of plugin classes
+     */
+    PluginHost.unplug = function(hostClass, plugin) {
+        var p, i, l, name;
+    
+        if (hostClass !== Y.Base) {
+            hostClass._UNPLUG = hostClass._UNPLUG || {};
+    
+            if (!L.isArray(plugin)) {
+                plugin = [plugin];
+            }
+    
+            for (i = 0, l = plugin.length; i < l; i++) {
+                p = plugin[i];
+                name = p.NAME;
+                if (!hostClass._PLUG[name]) {
+                    hostClass._UNPLUG[name] = p;
+                } else {
+                    delete hostClass._PLUG[name];
+                }
+            }
+        }
+    };
+
+
+}, '3.3.0' ,{requires:['pluginhost-base']});

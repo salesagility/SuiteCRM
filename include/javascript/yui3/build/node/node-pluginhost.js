@@ -5,4 +5,57 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("node-pluginhost",function(a){a.Node.plug=function(){var b=a.Array(arguments);b.unshift(a.Node);a.Plugin.Host.plug.apply(a.Base,b);return a.Node;};a.Node.unplug=function(){var b=a.Array(arguments);b.unshift(a.Node);a.Plugin.Host.unplug.apply(a.Base,b);return a.Node;};a.mix(a.Node,a.Plugin.Host,false,null,1);a.NodeList.prototype.plug=function(){var b=arguments;a.NodeList.each(this,function(c){a.Node.prototype.plug.apply(a.one(c),b);});};a.NodeList.prototype.unplug=function(){var b=arguments;a.NodeList.each(this,function(c){a.Node.prototype.unplug.apply(a.one(c),b);});};},"3.3.0",{requires:["node-base","pluginhost"]});
+YUI.add('node-pluginhost', function(Y) {
+
+/**
+ * Registers plugins to be instantiated at the class level (plugins 
+ * which should be plugged into every instance of Node by default).
+ *
+ * @method Node.plug
+ * @static
+ *
+ * @param {Function | Array} plugin Either the plugin class, an array of plugin classes or an array of objects (with fn and cfg properties defined)
+ * @param {Object} config (Optional) If plugin is the plugin class, the configuration for the plugin
+ */
+Y.Node.plug = function() {
+    var args = Y.Array(arguments);
+    args.unshift(Y.Node);
+    Y.Plugin.Host.plug.apply(Y.Base, args);
+    return Y.Node;
+};
+
+/**
+ * Unregisters any class level plugins which have been registered by the Node
+ *
+ * @method Node.unplug
+ * @static
+ *
+ * @param {Function | Array} plugin The plugin class, or an array of plugin classes
+ */
+Y.Node.unplug = function() {
+    var args = Y.Array(arguments);
+    args.unshift(Y.Node);
+    Y.Plugin.Host.unplug.apply(Y.Base, args);
+    return Y.Node;
+};
+
+Y.mix(Y.Node, Y.Plugin.Host, false, null, 1);
+
+// allow batching of plug/unplug via NodeList
+// doesn't use NodeList.importMethod because we need real Nodes (not tmpNode)
+Y.NodeList.prototype.plug = function() {
+    var args = arguments;
+    Y.NodeList.each(this, function(node) {
+        Y.Node.prototype.plug.apply(Y.one(node), args);
+    });
+};
+
+Y.NodeList.prototype.unplug = function() {
+    var args = arguments;
+    Y.NodeList.each(this, function(node) {
+        Y.Node.prototype.unplug.apply(Y.one(node), args);
+    });
+};
+
+
+}, '3.3.0' ,{requires:['node-base', 'pluginhost']});

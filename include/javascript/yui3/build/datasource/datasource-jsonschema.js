@@ -5,4 +5,111 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("datasource-jsonschema",function(B){var A=function(){A.superclass.constructor.apply(this,arguments);};B.mix(A,{NS:"schema",NAME:"dataSourceJSONSchema",ATTRS:{schema:{}}});B.extend(A,B.Plugin.Base,{initializer:function(C){this.doBefore("_defDataFn",this._beforeDefDataFn);},_beforeDefDataFn:function(E){var D=E.data?(E.data.responseText?E.data.responseText:E.data):E.data,C=B.DataSchema.JSON.apply.call(this,this.get("schema"),D);if(!C){C={meta:{},results:D};}this.get("host").fire("response",B.mix({response:C},E));return new B.Do.Halt("DataSourceJSONSchema plugin halted _defDataFn");}});B.namespace("Plugin").DataSourceJSONSchema=A;},"3.3.0",{requires:["datasource-local","plugin","dataschema-json"]});
+YUI.add('datasource-jsonschema', function(Y) {
+
+/**
+ * Extends DataSource with schema-parsing on JSON data.
+ *
+ * @module datasource
+ * @submodule datasource-jsonschema
+ */
+
+/**
+ * Adds schema-parsing to the DataSource Utility.
+ * @class DataSourceJSONSchema
+ * @extends Plugin.Base
+ */    
+var DataSourceJSONSchema = function() {
+    DataSourceJSONSchema.superclass.constructor.apply(this, arguments);
+};
+
+Y.mix(DataSourceJSONSchema, {
+    /**
+     * The namespace for the plugin. This will be the property on the host which
+     * references the plugin instance.
+     *
+     * @property NS
+     * @type String
+     * @static
+     * @final
+     * @value "schema"
+     */
+    NS: "schema",
+
+    /**
+     * Class name.
+     *
+     * @property NAME
+     * @type String
+     * @static
+     * @final
+     * @value "dataSourceJSONSchema"
+     */
+    NAME: "dataSourceJSONSchema",
+
+    /////////////////////////////////////////////////////////////////////////////
+    //
+    // DataSourceJSONSchema Attributes
+    //
+    /////////////////////////////////////////////////////////////////////////////
+
+    ATTRS: {
+        schema: {
+            //value: {}
+        }
+    }
+});
+
+Y.extend(DataSourceJSONSchema, Y.Plugin.Base, {
+    /**
+    * Internal init() handler.
+    *
+    * @method initializer
+    * @param config {Object} Config object.
+    * @private
+    */
+    initializer: function(config) {
+        this.doBefore("_defDataFn", this._beforeDefDataFn);
+    },
+
+    /**
+     * Parses raw data into a normalized response. To accommodate XHR responses,
+     * will first look for data in data.responseText. Otherwise will just work
+     * with data.
+     *
+     * @method _beforeDefDataFn
+     * <dl>
+     * <dt>tId (Number)</dt> <dd>Unique transaction ID.</dd>
+     * <dt>request (Object)</dt> <dd>The request.</dd>
+     * <dt>callback (Object)</dt> <dd>The callback object with the following properties:
+     *     <dl>
+     *         <dt>success (Function)</dt> <dd>Success handler.</dd>
+     *         <dt>failure (Function)</dt> <dd>Failure handler.</dd>
+     *     </dl>
+     * </dd>
+     * <dt>data (Object)</dt> <dd>Raw data.</dd>
+     * </dl>
+     * @protected
+     */
+    _beforeDefDataFn: function(e) {
+        var data = e.data ? (e.data.responseText ?  e.data.responseText : e.data) : e.data,
+            response = Y.DataSchema.JSON.apply.call(this, this.get("schema"), data);
+            
+        // Default
+        if(!response) {
+            response = {
+                meta: {},
+                results: data
+            };
+        }
+        
+        this.get("host").fire("response", Y.mix({response:response}, e));
+        return new Y.Do.Halt("DataSourceJSONSchema plugin halted _defDataFn");
+    }
+});
+    
+Y.namespace('Plugin').DataSourceJSONSchema = DataSourceJSONSchema;
+
+
+
+}, '3.3.0' ,{requires:['datasource-local', 'plugin', 'dataschema-json']});

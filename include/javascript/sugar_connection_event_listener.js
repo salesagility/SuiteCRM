@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,6 +35,18 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-SUGAR_callsInProgress=0;YAHOO.util.Connect.completeEvent.subscribe(function(event,data){SUGAR_callsInProgress--;if(data[0].conn&&data[0].conn.responseText&&SUGAR.util.isLoginPage(data[0].conn.responseText))
-return false;});YAHOO.util.Connect.startEvent.subscribe(function(event,data)
-{SUGAR_callsInProgress++;});
+
+
+
+SUGAR_callsInProgress = 0;
+
+YAHOO.util.Connect.completeEvent.subscribe(function(event, data){
+	SUGAR_callsInProgress--;
+	if (data[0].conn && data[0].conn.responseText && SUGAR.util.isLoginPage(data[0].conn.responseText))
+		return false;
+});
+
+YAHOO.util.Connect.startEvent.subscribe(function(event, data)
+{
+	SUGAR_callsInProgress++;
+});

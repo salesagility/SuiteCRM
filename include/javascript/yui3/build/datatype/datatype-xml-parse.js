@@ -5,4 +5,57 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("datatype-xml-parse",function(b){var a=b.Lang;b.mix(b.namespace("DataType.XML"),{parse:function(f){var d=null;if(a.isString(f)){try{if(!a.isUndefined(ActiveXObject)){d=new ActiveXObject("Microsoft.XMLDOM");d.async=false;d.loadXML(f);}}catch(c){try{if(!a.isUndefined(DOMParser)){d=new DOMParser().parseFromString(f,"text/xml");}}catch(g){}}}if((a.isNull(d))||(a.isNull(d.documentElement))||(d.documentElement.nodeName==="parsererror")){}return d;}});b.namespace("Parsers").xml=b.DataType.XML.parse;},"3.3.0",{requires:["yui-base"]});
+YUI.add('datatype-xml-parse', function(Y) {
+
+/**
+ * Parse XML submodule.
+ *
+ * @module datatype
+ * @submodule datatype-xml-parse
+ * @for DataType.XML
+ */
+
+var LANG = Y.Lang;
+
+Y.mix(Y.namespace("DataType.XML"), {
+    /**
+     * Converts data to type XMLDocument.
+     *
+     * @method parse
+     * @param data {String} Data to convert.
+     * @return {XMLDoc} XML Document.
+     */
+    parse: function(data) {
+        var xmlDoc = null;
+        if(LANG.isString(data)) {
+            try {
+                if(!LANG.isUndefined(ActiveXObject)) {
+                        xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                        xmlDoc.async = false;
+                        xmlDoc.loadXML(data);
+                }
+            }
+            catch(ee) {
+                try {
+                    if(!LANG.isUndefined(DOMParser)) {
+                        xmlDoc = new DOMParser().parseFromString(data, "text/xml");
+                    }
+                }
+                catch(e) {
+                }
+            }
+        }
+        
+        if( (LANG.isNull(xmlDoc)) || (LANG.isNull(xmlDoc.documentElement)) || (xmlDoc.documentElement.nodeName === "parsererror") ) {
+        }
+        
+        return xmlDoc;
+    }
+});
+
+// Add Parsers shortcut
+Y.namespace("Parsers").xml = Y.DataType.XML.parse;
+
+
+
+}, '3.3.0' ,{requires:['yui-base']});

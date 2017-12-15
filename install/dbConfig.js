@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,9 +35,46 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function togglePasswordRetypeRequired(){var theForm=document.forms[0];var elem=document.getElementById('password_retype_required');if(theForm.setup_db_create_sugarsales_user.checked){elem.style.display='';theForm.setup_db_username_is_privileged.checked="";theForm.setup_db_username_is_privileged.disabled="disabled";toggleUsernameIsPrivileged();}
-else{elem.style.display='none';theForm.setup_db_username_is_privileged.disabled="";}}
-function toggleDropTables(){var theForm=document.forms[0];if(theForm.setup_db_create_database.checked){theForm.setup_db_drop_tables.checked='';theForm.setup_db_drop_tables.disabled="disabled";}
-else{theForm.setup_db_drop_tables.disabled='';}}
-function toggleUsernameIsPrivileged(){var theForm=document.forms[0];var elem=document.getElementById('privileged_user_info');if(theForm.setup_db_username_is_privileged.checked){elem.style.display='none';}
-else{elem.style.display='';}}
+
+
+
+function togglePasswordRetypeRequired() {
+   var theForm = document.forms[0];
+   var elem = document.getElementById('password_retype_required');
+
+   if( theForm.setup_db_create_sugarsales_user.checked ){
+      elem.style.display = '';
+      // theForm.setup_db_sugarsales_user.focus();
+      theForm.setup_db_username_is_privileged.checked = "";
+      theForm.setup_db_username_is_privileged.disabled = "disabled";
+      toggleUsernameIsPrivileged();
+   }
+   else {
+      elem.style.display = 'none';
+      theForm.setup_db_username_is_privileged.disabled = "";
+   }
+}
+
+function toggleDropTables(){
+   var theForm = document.forms[0];
+
+   if( theForm.setup_db_create_database.checked ){
+      theForm.setup_db_drop_tables.checked = '';
+      theForm.setup_db_drop_tables.disabled = "disabled";
+   }
+   else {
+      theForm.setup_db_drop_tables.disabled = '';
+   }
+}
+
+function toggleUsernameIsPrivileged(){
+   var theForm = document.forms[0];
+   var elem = document.getElementById('privileged_user_info');
+
+   if( theForm.setup_db_username_is_privileged.checked ){
+      elem.style.display = 'none';
+   }
+   else {
+      elem.style.display = '';
+   }
+}

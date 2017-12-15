@@ -5,4 +5,282 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("io-upload-iframe",function(c){var n=c.config.win,j=c.config.doc,h=(j.documentMode&&j.documentMode>=8),i=decodeURIComponent;function f(u,t){var v=[],d=t.split("="),r,q;for(r=0,q=d.length-1;r<q;r++){v[r]=j.createElement("input");v[r].type="hidden";v[r].name=i(d[r].substring(d[r].lastIndexOf("&")+1));v[r].value=(r+1===q)?i(d[r+1]):i(d[r+1].substring(0,(d[r+1].lastIndexOf("&"))));u.appendChild(v[r]);}return v;}function k(r,s){var q,d;for(q=0,d=s.length;q<d;q++){r.removeChild(s[q]);}}function g(q,r,d){q.setAttribute("action",d);q.setAttribute("method","POST");q.setAttribute("target","ioupload"+r);q.setAttribute(c.UA.ie&&!h?"encoding":"enctype","multipart/form-data");}function p(q,d){var r;for(r in d){if(d.hasOwnProperty(r)){if(d[r]){q.setAttribute(r,q[r]);}else{q.removeAttribute(r);}}}}function e(d,q){c.io._timeout[d.id]=n.setTimeout(function(){var s={id:d.id,status:"timeout"};c.io.complete(s,q);c.io.end(s,q);},q.timeout);}function m(d){n.clearTimeout(c.io._timeout[d]);delete c.io._timeout[d];}function l(d){c.Event.purgeElement("#ioupload"+d,false);c.one("body").removeChild(c.one("#ioupload"+d));}function a(t,u){var s=c.one("#ioupload"+t.id).get("contentWindow.document"),q=s.one("body"),r;if(u.timeout){m(t.id);}if(q){r=q.one("pre:first-child");t.c.responseText=r?r.get("text"):q.get("text");}else{t.c.responseXML=s._node;}c.io.complete(t,u);c.io.end(t,u);n.setTimeout(function(){l(t.id);},0);}function o(q,r){var d=c.Node.create('<iframe id="ioupload'+q.id+'" name="ioupload'+q.id+'" />');d._node.style.position="absolute";d._node.style.top="-1000px";d._node.style.left="-1000px";c.one("body").appendChild(d);c.on("load",function(){a(q,r);},"#ioupload"+q.id);}function b(t,r,u){var s=(typeof u.form.id==="string")?j.getElementById(u.form.id):u.form.id,q,d={action:s.getAttribute("action"),target:s.getAttribute("target")};g(s,t.id,r);if(u.data){q=f(s,u.data);}if(u.timeout){e(t,u);}s.submit();c.io.start(t.id,u);if(u.data){k(s,q);}p(s,d);return{id:t.id,abort:function(){var v={id:t.id,status:"abort"};if(c.one("#ioupload"+t.id)){l(t.id);c.io.complete(v,u);c.io.end(v,u);}else{return false;}},isInProgress:function(){return c.one("#ioupload"+t.id)?true:false;}};}c.mix(c.io,{upload:function(q,d,r){o(q,r);return b(q,d,r);}});},"3.3.0",{requires:["io-base","node-base"]});
+YUI.add('io-upload-iframe', function(Y) {
+
+   /**
+    * Extends the IO base class to enable file uploads, with HTML forms,
+    * using an iframe as the transport medium.
+    * @module io
+    * @submodule io-upload-iframe
+    */
+
+    var w = Y.config.win,
+        d = Y.config.doc,
+        _std = (d.documentMode && d.documentMode >= 8),
+		_d = decodeURIComponent;
+   /**
+    * @description Parses the POST data object and creates hidden form elements
+    * for each key-value, and appends them to the HTML form object.
+    * @method appendData
+    * @private
+    * @static
+    * @param {object} f HTML form object.
+    * @param {string} s The key-value POST data.
+    * @return {array} e Array of created fields.
+    */
+    function _addData(f, s) {
+        var o = [],
+            m = s.split('='),
+            i, l;
+
+        for (i = 0, l = m.length - 1; i < l; i++) {
+            o[i] = d.createElement('input');
+            o[i].type = 'hidden';
+            o[i].name = _d(m[i].substring(m[i].lastIndexOf('&') + 1));
+            o[i].value = (i + 1 === l) ? _d(m[i + 1]) : _d(m[i + 1].substring(0, (m[i + 1].lastIndexOf('&'))));
+            f.appendChild(o[i]);
+        }
+
+        return o;
+    }
+
+   /**
+    * @description Removes the custom fields created to pass additional POST
+    * data, along with the HTML form fields.
+    * @method f
+    * @private
+    * @static
+    * @param {object} f HTML form object.
+    * @param {object} o HTML form fields created from configuration.data.
+    * @return {void}
+    */
+    function _removeData(f, o) {
+        var i, l;
+
+        for (i = 0, l = o.length; i < l; i++) {
+            f.removeChild(o[i]);
+        }
+    }
+
+   /**
+    * @description Sets the appropriate attributes and values to the HTML
+    * form, in preparation of a file upload transaction.
+    * @method _setAttrs
+    * @private
+    * @static
+    * @param {object} f HTML form object.
+    * @param {object} id The Transaction ID.
+    * @param {object} uri Qualified path to transaction resource.
+    * @return {void}
+    */
+    function _setAttrs(f, id, uri) {
+        f.setAttribute('action', uri);
+        f.setAttribute('method', 'POST');
+        f.setAttribute('target', 'ioupload' + id );
+        f.setAttribute(Y.UA.ie && !_std ? 'encoding' : 'enctype', 'multipart/form-data');
+    }
+
+   /**
+    * @description Reset the HTML form attributes to their original values.
+    * @method _resetAttrs
+    * @private
+    * @static
+    * @param {object} f HTML form object.
+    * @param {object} a Object of original attributes.
+    * @return {void}
+    */
+    function _resetAttrs(f, a){
+        var p;
+
+        for (p in a) {
+            if (a.hasOwnProperty(p)) {
+                if (a[p]) {
+                    f.setAttribute(p, f[p]);
+                }
+                else {
+                    f.removeAttribute(p);
+                }
+            }
+        }
+    }
+
+   /**
+    * @description Starts timeout count if the configuration object
+    * has a defined timeout property.
+    *
+    * @method _startTimeout
+    * @private
+    * @static
+    * @param {object} o Transaction object generated by _create().
+    * @param {object} c Configuration object passed to YUI.io().
+    * @return {void}
+    */
+    function _startTimeout(o, c) {
+        Y.io._timeout[o.id] = w.setTimeout(
+            function() {
+                var r = { id: o.id, status: 'timeout' };
+
+                Y.io.complete(r, c);
+                Y.io.end(r, c);
+            }, c.timeout);
+    }
+
+   /**
+    * @description Clears the timeout interval started by _startTimeout().
+    * @method _clearTimeout
+    * @private
+    * @static
+    * @param {number} id - Transaction ID.
+    * @return {void}
+    */
+    function _clearTimeout(id) {
+        w.clearTimeout(Y.io._timeout[id]);
+        delete Y.io._timeout[id];
+    }
+
+   /**
+    * @description
+    * @method _destroy
+    * @private
+    * @static
+    * @param {o} o The transaction object
+    * @param {object} uri Qualified path to transaction resource.
+    * @param {object} c Configuration object for the transaction.
+    * @return {void}
+    */
+    function _destroy(id) {
+        Y.Event.purgeElement('#ioupload' + id, false);
+        Y.one('body').removeChild(Y.one('#ioupload' + id));
+    }
+
+   /**
+    * @description Bound to the iframe's Load event and processes
+    * the response data.
+    * @method _handle
+    * @private
+    * @static
+    * @param {o} o The transaction object
+    * @param {object} c Configuration object for the transaction.
+    * @return {void}
+    */
+    function _handle(o, c) {
+        var d = Y.one('#ioupload' + o.id).get('contentWindow.document'),
+            b = d.one('body'),
+            p;
+
+        if (c.timeout) {
+            _clearTimeout(o.id);
+        }
+
+        if (b) {
+            // When a response Content-Type of "text/plain" is used, Firefox and Safari
+            // will wrap the response string with <pre></pre>.
+            p = b.one('pre:first-child');
+            o.c.responseText = p ? p.get('text') : b.get('text');
+        }
+        else {
+            o.c.responseXML = d._node;
+        }
+
+        Y.io.complete(o, c);
+        Y.io.end(o, c);
+        // The transaction is complete, so call _destroy to remove
+        // the event listener bound to the iframe transport, and then
+        // destroy the iframe.
+        w.setTimeout( function() { _destroy(o.id); }, 0);
+    }
+
+   /**
+    * @description Creates the iframe transported used in file upload
+    * transactions, and binds the response event handler.
+    *
+    * @method _create
+    * @private
+    * @static
+    * @param {object} o Transaction object generated by _create().
+    * @param {object} c Configuration object passed to YUI.io().
+    * @return {void}
+    */
+    function _create(o, c) {
+        var i = Y.Node.create('<iframe id="ioupload' + o.id + '" name="ioupload' + o.id + '" />');
+            i._node.style.position = 'absolute';
+            i._node.style.top = '-1000px';
+            i._node.style.left = '-1000px';
+
+        Y.one('body').appendChild(i);
+        // Bind the onload handler to the iframe to detect the file upload response.
+        Y.on("load", function() { _handle(o, c); }, '#ioupload' + o.id);
+    }
+
+   /**
+    * @description Uploads HTML form data, inclusive of files/attachments,
+    * using the iframe created in _create to facilitate the transaction.
+    * @method _upload
+    * @private
+    * @static
+    * @param {o} o The transaction object
+    * @param {object} uri Qualified path to transaction resource.
+    * @param {object} c Configuration object for the transaction.
+    * @return {void}
+    */
+    function _send(o, uri, c) {
+        var f = (typeof c.form.id === 'string') ? d.getElementById(c.form.id) : c.form.id,
+            fields,
+            // Track original HTML form attribute values.
+            attr = {
+                action: f.getAttribute('action'),
+                target: f.getAttribute('target')
+            };
+
+        // Initialize the HTML form properties in case they are
+        // not defined in the HTML form.
+        _setAttrs(f, o.id, uri);
+        if (c.data) {
+            fields = _addData(f, c.data);
+        }
+
+        // Start polling if a callback is present and the timeout
+        // property has been defined.
+        if (c.timeout) {
+            _startTimeout(o, c);
+        }
+
+        // Start file upload.
+        f.submit();
+        Y.io.start(o.id, c);
+        if (c.data) {
+            _removeData(f, fields);
+        }
+        // Restore HTML form attributes to their original values.
+        _resetAttrs(f, attr);
+
+        return {
+            id: o.id,
+            abort: function() {
+                var r = { id: o.id, status: 'abort' };
+
+                if (Y.one('#ioupload' + o.id)) {
+                    _destroy(o.id);
+                    Y.io.complete(r, c);
+                    Y.io.end(r, c);
+                }
+                else {
+                    return false;
+                }
+            },
+            isInProgress: function() {
+                return Y.one('#ioupload' + o.id) ? true : false;
+            }
+        };
+    }
+
+    Y.mix(Y.io, {
+        upload: function(o, uri, c) {
+            _create(o, c);
+            return _send(o, uri, c);
+        }
+    });
+
+
+
+}, '3.3.0' ,{requires:['io-base','node-base']});
