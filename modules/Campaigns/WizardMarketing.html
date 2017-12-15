@@ -892,6 +892,7 @@
 					<table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 						<tr valign="middle">
 							<td nowrap class="datafield" style="width:150px;">
+								<input type="hidden" id="userTimeFormat" value="{$TIME_FORMAT}">
 								<input autocomplete="off" type="text" id="{$fields.date_start.name}_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_{$fields.date_start.name}.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_{$fields.date_start.name}.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
 								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$fields.date_start.name}_trigger"{/capture}
 								{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
@@ -901,7 +902,7 @@
 								<script type="text/javascript">
 									setInterval(function(){
 										$('input[name="wiz_step3_date_start"]').val($('#date_start_date').val());
-										$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + ':' + $('#date_start_minutes').val());
+										$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + $('#userTimeFormat').val()[3] + $('#date_start_minutes').val());
 										$('select[name="meridiem"]').val($('#date_start_meridiem').val());
 										if(parseInt($('#date_start_hours').val())>12) {
 											$('#date_start_meridiem').val('PM');
@@ -938,7 +939,7 @@
 					<script type="text/javascript">
 						var combo_{$fields.date_start.name} = new Datetimecombo("{$fields[$fields.date_start.name].value}", "{$fields.date_start.name}", "{$TIME_FORMAT}", "0", '1', false, true);
 						//Render the remaining widget fields
-						combo_{$fields.date_start.name}.timeseparator = ':';
+						combo_{$fields.date_start.name}.timeseparator = $('#userTimeFormat').val()[3];
 						text = combo_{$fields.date_start.name}.html('');
 						document.getElementById('{$fields.date_start.name}_time_section').innerHTML = text;
 
