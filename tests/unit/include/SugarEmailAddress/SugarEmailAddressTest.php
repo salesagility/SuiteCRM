@@ -730,11 +730,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
         self::assertEquals(false, $results);
         self::assertSame(array(
-            1 => array(
+            0 => array(
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
-                'invalid_email' => '1',
+                'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
             ),
@@ -750,7 +750,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
-                'invalid_email' => '1',
+                'invalid_email' => '0',
                 'opt_out' => '1',
                 'email_address_id' => null,
             ),
