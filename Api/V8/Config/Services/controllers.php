@@ -10,7 +10,7 @@ return [
         );
     },
     AuthenticationController::class => function () {
-        require_once 'modules/Users/authentication/AuthenticationController.php';
+        require_once SUGAR_PATH . '/modules/Users/authentication/AuthenticationController.php';
         return new AuthenticationController();
     },
 ];
