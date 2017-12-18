@@ -5,9 +5,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
+
     }
 
     public function testUser()
@@ -227,7 +225,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testreloadPreferences()
     {
-        static::markTestIncomplete('Too many connections');
+//        static::markTestIncomplete('Too many connections');
 
         $user = new User();
 
@@ -263,7 +261,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testloadPreferences()
     {
-        static::markTestIncomplete('Too many connections');
+//        static::markTestIncomplete('Too many connections');
 
         $user = new User();
 
@@ -593,7 +591,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
 
-        $this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
+//        $this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
 
     }
 
@@ -796,7 +794,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         //$result = $user->get_calls();
         //$this->assertTrue(is_array($result));
 
-        $this->markTestIncomplete('Error:Only variables should be passed by reference');
+//        $this->markTestIncomplete('Error:Only variables should be passed by reference');
     }
 
 
@@ -848,7 +846,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetEmailLink2()
     {
-        $this->markTestIncomplete('Need to mock up user');
+//        $this->markTestIncomplete('Need to mock up user');
         $user = new User();
 
         $user->retrieve(1);
@@ -858,9 +856,11 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account = new Account();
         $account->name = "test";
 
+        /** @var SugarEmailAddress $emailAddress*/
+        $emailAddress =& $account->emailAddress;
+        $emailAddress->addAddress('abc@email.com');
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
+        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name="test"  data-email-address="abc@email.com">';
         $actual = $user->getEmailLink2("abc@email.com", $account);
         $this->assertSame($expected, $actual);
 
@@ -869,8 +869,11 @@ class UserTest extends PHPUnit_Framework_TestCase
         $contact = new Contact();
         $contact->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
+        /** @var SugarEmailAddress $emailAddress*/
+        $emailAddress =& $contact->emailAddress;
+        $emailAddress->addAddress('abc@email.com');
+
+        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Contacts" data-record-id="" data-module-name="test"  data-email-address="abc@email.com">';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
 
@@ -879,8 +882,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetEmailLink()
     {
-
-        $this->markTestIncomplete('Need to mock up user');
         $user = new User();
 
         $user->retrieve(1);
@@ -890,8 +891,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account = new Account();
         $account->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
-            'data-module="Accounts" data-record-id="" data-module-name="test" data-email-address="">';
+        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name="test"  data-email-address="">';
         $actual = $user->getEmailLink("name", $account);
         $this->assertSame($expected, $actual);
 
@@ -900,7 +900,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $contact = new Contact();
         $contact->name = "test";
 
-        $expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Btest%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Ctest\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
+        $expected = "<a href=\"javascript:void(0);\"  onclick=\" $(document).openComposeViewModal(this);\" data-module=\"Contacts\" data-record-id=\"\" data-module-name=\"test\"  data-email-address=\"\">";
         $actual = $user->getEmailLink("name", $contact);
         $this->assertSame($expected, $actual);
 
