@@ -582,7 +582,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (isset($params['record_id']) && $params['record_id']) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -834,7 +834,7 @@ function fixUpFormatting($module, $field, $value)
 
     require_once($beanFiles[$beanList[$module]]);
     $bean = new $beanList[$module];
-    
+
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
     switch($bean->field_defs[$field]['type']) {
