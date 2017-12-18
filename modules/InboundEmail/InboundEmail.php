@@ -415,6 +415,12 @@ class InboundEmail extends SugarBean
                     $lastMsg = $firstMsg + (int)$pageSize;
                 }
             }
+            if ($firstMsg < 1){
+                $firstMsg = 1;
+            }
+            if ($lastMsg < $firstMsg){
+                $lastMsg = $firstMsg;
+            }
 
             $sequence  = $firstMsg . ':' . $lastMsg;
             $emailSortedHeaders = imap_fetch_overview(
