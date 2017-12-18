@@ -1,13 +1,8 @@
 <?php
 
 
-class UserTest extends PHPUnit_Framework_TestCase
+class UserTest extends \Codeception\Test\Unit
 {
-    protected function setUp()
-    {
-
-    }
-
     public function testUser()
     {
 
@@ -223,19 +218,6 @@ class UserTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testreloadPreferences()
-    {
-//        static::markTestIncomplete('Too many connections');
-
-        $user = new User();
-
-        $user->retrieve(1);
-
-        $result = $user->reloadPreferences();
-        $this->assertEquals(true, $result);
-
-    }
-
 
     public function testgetUserDateTimePreferences()
     {
@@ -258,19 +240,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     }
 
-
-    public function testloadPreferences()
-    {
-//        static::markTestIncomplete('Too many connections');
-
-        $user = new User();
-
-        $user->retrieve(1);
-
-        $result = $user->loadPreferences();
-        $this->assertEquals(true, $result);
-
-    }
 
 
     public function testGetETagSeedAndIncrementETag()
