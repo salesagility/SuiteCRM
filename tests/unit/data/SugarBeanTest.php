@@ -1258,20 +1258,19 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             null, $results['query']);
 
 
-        $this->markTestIncomplete();
-//        // test
-//        $GLOBALS['log']->reset();
-//        $bean = new Contact();
-//        $bean->retrieve('test_contact1');
-//        $results = $bean->process_union_list_query(null, /** @lang sql */
-//            'SELECT DISTINCT * FROM contacts', 'end');
-//        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
-//        self::assertEquals(array(), $results['parent_data']);
-//        self::assertEquals(9.0, $results['next_offset']);
-//        self::assertEquals(-11.0, $results['previous_offset']);
-//        self::assertEquals(-1.0, $results['current_offset']);
-//        self::assertEquals(/** @lang sql */
-//            'SELECT DISTINCT * FROM contacts', $results['query']);
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->retrieve('test_contact1');
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT * FROM contacts', 'end');
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        self::assertEquals(array(), $results['parent_data']);
+        self::assertEquals(9.0, $results['next_offset']);
+        self::assertEquals(-11.0, $results['previous_offset']);
+        self::assertEquals(-1.0, $results['current_offset']);
+        self::assertEquals(/** @lang sql */
+            'SELECT DISTINCT * FROM contacts', $results['query']);
 
 
         // test
