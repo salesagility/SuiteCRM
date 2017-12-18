@@ -228,7 +228,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `contacts` ON `accounts`.id = `contacts`.id_c '));
+        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
         $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
             'custom', array());
         $this->assertSame($expected, $actual);
