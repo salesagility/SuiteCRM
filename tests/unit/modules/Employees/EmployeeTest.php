@@ -22,13 +22,11 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('Employee', 'object_name', $employee);
         $this->assertAttributeEquals('users', 'table_name', $employee);
         $this->assertAttributeEquals(true, 'new_schema', $employee);
-
     }
 
 
     public function testget_summary_text()
     {
-
         error_reporting(E_ERROR | E_PARSE);
 
         $employee = new Employee();
@@ -39,13 +37,11 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         //test with name set
         $employee->retrieve(1);
         $this->assertEquals('Administrator', $employee->get_summary_text());
-
     }
 
 
     public function testfill_in_additional_list_fields()
     {
-
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
@@ -55,7 +51,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
-
     }
 
     public function testfill_in_additional_detail_fields()
@@ -72,7 +67,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         $employee->retrieve(1);
         $employee->fill_in_additional_detail_fields();
         $this->assertEquals("", $employee->reports_to_name);
-
     }
 
     public function testretrieve_employee_id()
@@ -81,7 +75,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
-
     }
 
 
@@ -89,12 +82,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
     {
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
-
     }
 
     public function testget_list_view_data()
     {
-
         $employee = new Employee();
 
         $expected = array(
@@ -116,12 +107,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
-
     }
 
     public function testlist_view_parse_additional_sections()
     {
-
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
@@ -131,13 +120,11 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
-
     }
 
 
     public function testcreate_export_query()
     {
-
         $employee = new Employee();
 
         //test with empty string params
@@ -150,12 +137,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
         $actual = $employee->create_export_query('users.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
-
     }
 
     public function testpreprocess_fields_on_save()
     {
-
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
@@ -165,7 +150,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
-
     }
 
     /**
@@ -197,7 +181,4 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
     }
-
 }
-
-?>

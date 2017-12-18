@@ -74,7 +74,7 @@ class Basic extends SugarBean
 
     /**
      * edit view should show confirm opt in (only if enabled)
-     * 
+     *
      * @global array $sugar_config
      * @global array $app_strings
      * @param string $emailField
@@ -82,7 +82,8 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressConfirmOptInTick($emailField) {
+    public function getEmailAddressConfirmOptInTick($emailField)
+    {
         $this->getEmailAddressValidateArguments($emailField);
 
         global $sugar_config, $app_strings;
@@ -98,7 +99,7 @@ class Basic extends SugarBean
     }
 
     /**
-     * 
+     *
      * @global array $sugar_config
      * @global \LoggerManager $log
      * @param string $emailField
@@ -106,7 +107,8 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressConfirmOptIn($emailField) {
+    public function getEmailAddressConfirmOptIn($emailField)
+    {
         $this->getEmailAddressValidateArguments($emailField);
 
         global $sugar_config;
@@ -125,14 +127,15 @@ class Basic extends SugarBean
     }
 
     /**
-     * 
+     *
      * @global \LoggerManager $log
      * @param string $emailField
      * @return string|null EmailAddress ID or null on error
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    private function getEmailAddressId($emailField) {
+    private function getEmailAddressId($emailField)
+    {
         $this->getEmailAddressValidateArguments($emailField);
 
         $emailAddress = $this->cleanUpEmailAddress($this->{$emailField});
@@ -164,27 +167,28 @@ class Basic extends SugarBean
     }
 
     /**
-     * 
+     *
      * @param string $emailField
      * @throws InvalidArgumentException
      */
-    private function getEmailAddressValidateArguments($emailField) {
+    private function getEmailAddressValidateArguments($emailField)
+    {
         if (!is_string($emailField) || !preg_match('/^email\d+/', $emailField)) {
             throw new InvalidArgumentException('emailField string is invalid, "' . $emailField . '" given.');
         }
     }
 
     /**
-     * 
+     *
      * @param string $emailAddress
      * @return string
      */
-    private function cleanUpEmailAddress($emailAddress) {
+    private function cleanUpEmailAddress($emailAddress)
+    {
         $ret = $emailAddress;
         $ret = trim($ret);
         $ret = strtolower($ret);
 
         return $ret;
     }
-
 }
