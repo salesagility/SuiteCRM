@@ -4,9 +4,6 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
     }
 
     public function testpreDisplay()
@@ -29,10 +26,5 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
-    }
-
-    public function testdisplay()
-    {
-        $this->markTestIncomplete();
     }
 }
