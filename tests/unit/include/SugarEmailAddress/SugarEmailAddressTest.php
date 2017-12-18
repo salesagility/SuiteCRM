@@ -987,7 +987,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         // test
         $result = $this->ea->getEmailGUID('test@email.com');
-        self::assertTrue(isValidId($result));
+        self::assertEquals($result, 'test_email_1');
+        self::assertFalse(isValidId($result));
 
         // test
         $q = /** @lang sql */
