@@ -56,7 +56,16 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     public function revokeAccessToken($tokenId)
     {
-        // TODO: Implement revokeAccessToken() method.
+        $token = $this->beanManager->newBeanSafe('OAuth2Tokens');
+        $token->retrieve_by_string_fields(
+            ['access_token' => $tokenId]
+        );
+
+        if ($token->id === null) {
+            throw new \DomainException('Access token not found');
+        }
+
+        $token->mark_deleted($token->id);
     }
 
     /**

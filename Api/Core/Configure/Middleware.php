@@ -1,9 +1,9 @@
 <?php
-namespace Api\Core\Loader;
+namespace Api\Core\Configure;
 
 use Slim\App;
 
-class MiddlewareLoader
+class Middleware
 {
     /**
      * @param App $app

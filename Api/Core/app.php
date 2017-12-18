@@ -8,7 +8,11 @@ if (!defined('sugarEntry')) {
 chdir(__DIR__. '/../../');
 require_once __DIR__. '/../../include/entryPoint.php';
 
-$app = new \Slim\App(\Api\Core\Loader\ContainerLoader::getInstance());
+$settings = require __DIR__ . '/Config/slim.php';
+$container = new \Slim\Container($settings);
+\Api\Core\Configure\Container::configureRoutes($container);
 
-\Api\Core\Loader\RouteLoader::configureRoutes($app);
-\Api\Core\Loader\MiddlewareLoader::configureMiddleware($app, __DIR__ . '/../V8/Config/middleware.php');
+$app = new \Slim\App($container);
+
+\Api\Core\Configure\Route::configureRoutes($app);
+\Api\Core\Configure\Middleware::configureMiddleware($app, __DIR__ . '/../V8/Config/middleware.php');

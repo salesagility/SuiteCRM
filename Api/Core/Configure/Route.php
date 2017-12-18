@@ -1,9 +1,9 @@
 <?php
-namespace Api\Core\Loader;
+namespace Api\Core\Configure;
 
 use Slim\App;
 
-class RouteLoader
+class Route
 {
     /**
      * @param App $app

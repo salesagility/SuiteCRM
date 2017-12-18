@@ -53,7 +53,16 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function revokeRefreshToken($tokenId)
     {
-        // TODO: Implement revokeRefreshToken() method.
+        $token = $this->beanManager->newBeanSafe('OAuth2Tokens');
+        $token->retrieve_by_string_fields(
+            ['refresh_token' => $tokenId]
+        );
+
+        if ($token->id === null) {
+            throw new \DomainException('Refresh token not found');
+        }
+
+        $token->mark_deleted($token->id);
     }
 
     /**
@@ -61,6 +70,20 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
-        // TODO: Implement isRefreshTokenRevoked() method.
+        /** @var \OAuth2Tokens $token */
+        $token = $this->beanManager->newBeanSafe('OAuth2Tokens');
+        $token->retrieve_by_string_fields(
+            ['refresh_token' => $tokenId]
+        );
+
+        if ($token->id === null) {
+            throw new \DomainException('Refresh token not found');
+        }
+
+        if (new \DateTime() > new \DateTime($token->refresh_token_expires)) {
+            return true;
+        }
+
+        return false;
     }
 }
