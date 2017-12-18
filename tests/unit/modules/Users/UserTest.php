@@ -560,8 +560,6 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
 
-//        $this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
-
     }
 
 
@@ -755,18 +753,6 @@ class UserTest extends \Codeception\Test\Unit
 
     }
 
-    public function testget_calls()
-    {
-
-        $user = new User();
-
-        //$result = $user->get_calls();
-        //$this->assertTrue(is_array($result));
-
-//        $this->markTestIncomplete('Error:Only variables should be passed by reference');
-    }
-
-
     public function testdisplayEmailCounts()
     {
 
@@ -815,7 +801,6 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetEmailLink2()
     {
-//        $this->markTestIncomplete('Need to mock up user');
         $user = new User();
 
         $user->retrieve(1);
