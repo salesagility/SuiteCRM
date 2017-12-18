@@ -100,7 +100,7 @@ class Basic extends SugarBean
     /**
      * 
      * @global array $sugar_config
-     * @global ? $log
+     * @global \LoggerManager $log
      * @param string $emailField
      * @return boolean
      * @throws RuntimeException
@@ -126,7 +126,7 @@ class Basic extends SugarBean
 
     /**
      * 
-     * @global ? $log
+     * @global \LoggerManager $log
      * @param string $emailField
      * @return string|null EmailAddress ID or null on error
      * @throws RuntimeException
