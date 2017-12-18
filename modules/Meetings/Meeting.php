@@ -278,12 +278,12 @@ class Meeting extends SugarBean {
 		}
 
 		if (isset($_REQUEST['reminders_data']) && empty($this->saving_reminders_data)) {
-            $this->saving_reminders_data = true;
+                    $this->saving_reminders_data = true;
 			$reminderData = json_encode(
 				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
 			);
 			Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
-            $this->saving_reminders_data = false;
+                    $this->saving_reminders_data = false;
 		}
 
 		return $return_id;
