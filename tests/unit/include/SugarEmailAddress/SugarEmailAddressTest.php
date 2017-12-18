@@ -728,18 +728,17 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        $this->markTestIncomplete('We need to clear the emails after each test');
-//        self::assertEquals(false, $results);
-//        self::assertSame(array(
-//            1 => array(
-//                'email_address' => 'test@email.com',
-//                'primary_address' => '0',
-//                'reply_to_address' => '0',
-//                'invalid_email' => '1',
-//                'opt_out' => '0',
-//                'email_address_id' => null,
-//            ),
-//        ), $this->ea->addresses);
+        self::assertEquals(false, $results);
+        self::assertSame(array(
+            1 => array(
+                'email_address' => 'test@email.com',
+                'primary_address' => '0',
+                'reply_to_address' => '0',
+                'invalid_email' => '1',
+                'opt_out' => '0',
+                'email_address_id' => null,
+            ),
+        ), $this->ea->addresses);
 
         $q = /** @lang sql */
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
