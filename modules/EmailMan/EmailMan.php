@@ -485,8 +485,6 @@ class EmailMan extends SugarBean
         $retId = $email->save();
 
         foreach ($this->notes_array as $note) {
-            if (!class_exists('Note')) {
-            }
             // create "audit" email without duping off the file to save on disk space
             $noteAudit = new Note();
             $noteAudit->parent_id = $retId;
@@ -537,8 +535,6 @@ class EmailMan extends SugarBean
     public function verify_campaign($marketing_id)
     {
         if (!isset($this->verified_email_marketing_ids[$marketing_id])) {
-            if (!class_exists('EmailMarketing')) {
-            }
             $email_marketing = new EmailMarketing();
             $ret = $email_marketing->retrieve($marketing_id);
             if (empty($ret)) {
@@ -552,8 +548,6 @@ class EmailMan extends SugarBean
                 return false;
             }
 
-            if (!class_exists('EmailTemplate')) {
-            }
             $emailtemplate = new EmailTemplate();
 
             $ret = $emailtemplate->retrieve($email_marketing->template_id);
@@ -584,8 +578,6 @@ class EmailMan extends SugarBean
 
         //get tracking entities locations.
         if (!isset($this->tracking_url)) {
-            if (!class_exists('Administration')) {
-            }
             $admin = new Administration();
             $admin->retrieveSettings('massemailer'); //retrieve all admin settings.
             if (isset($admin->settings['massemailer_tracking_entities_location_type']) and $admin->settings['massemailer_tracking_entities_location_type'] == '2' and isset($admin->settings['massemailer_tracking_entities_location'])) {
@@ -609,8 +601,6 @@ class EmailMan extends SugarBean
             require_once($beanFiles[$class]);
         }
 
-        if (!class_exists('Email')) {
-        }
 
         //prepare variables for 'set_as_sent' function
         $this->target_tracker_key = create_guid();
@@ -677,8 +667,6 @@ class EmailMan extends SugarBean
 
             //fetch email marketing.
             if (empty($this->current_emailmarketing) or ! isset($this->current_emailmarketing)) {
-                if (!class_exists('EmailMarketing')) {
-                }
 
                 $this->current_emailmarketing = new EmailMarketing();
             }
@@ -689,8 +677,6 @@ class EmailMan extends SugarBean
             }
             //fetch email template associate with the marketing message.
             if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
-                if (!class_exists('EmailTemplate')) {
-                }
                 $this->current_emailtemplate = new EmailTemplate();
 
                 $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
@@ -717,8 +703,6 @@ class EmailMan extends SugarBean
 
             // fetch mailbox details..
             if (empty($this->current_mailbox)) {
-                if (!class_exists('InboundEmail')) {
-                }
                 $this->current_mailbox = new InboundEmail();
             }
             if (empty($this->current_mailbox->id) or $this->current_mailbox->id !== $this->current_emailmarketing->inbound_email_id) {
@@ -729,8 +713,6 @@ class EmailMan extends SugarBean
 
             // fetch campaign details..
             if (empty($this->current_campaign)) {
-                if (!class_exists('Campaign')) {
-                }
                 $this->current_campaign = new Campaign();
             }
             if (empty($this->current_campaign->id) or $this->current_campaign->id !== $this->current_emailmarketing->campaign_id) {
