@@ -5,12 +5,15 @@ class smpl_Invoice_Sample{
 		}
 		
 		function getBody() {
-		$d_image = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+        global $sugar_config;
+        $baseUrl = $sugar_config['site_url'];
+        $logoUrlArr = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+        $logoUrl = $baseUrl . '/' . $logoUrlArr[0];
 			return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
 <td style="text-align: left;">
-<p><img src="'.$d_image[0].'" style="float: left;"/>&nbsp;</p>
+<p><img src="'. $logoUrl .'" style="float: left;"/>&nbsp;</p>
 </td>
 </tr>
 <tr style="text-align: left;">
@@ -122,11 +125,11 @@ class smpl_Invoice_Sample{
 </table>
 <p>&nbsp;</p>';
 		}
-		
+
 		function getHeader() {
 			return '';
 		}
-		
+
 		function getFooter() {
 		global $locale;
 			return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
@@ -139,4 +142,3 @@ class smpl_Invoice_Sample{
 </table>';
 		}
 }
-?>
