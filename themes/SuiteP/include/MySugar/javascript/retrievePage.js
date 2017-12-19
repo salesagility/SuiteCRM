@@ -44,18 +44,24 @@ var dashletsPageInit = function() {
         SUGAR.mySugar.showDashletsDialog();
     })
 
-    $('.modal-add-dashboard').on('show.bs.modal', function (e) {
-        addDashboardForm($('ul.nav-dashboard > li').length -1);
-        $('.btn-add-dashboard').click(function() {
-            //validate
-            if($('#dashName').val() == '') {
-                return;
-            }
+  $('.modal-add-dashboard').on('show.bs.modal', function (e) {
 
-	    $.post($('#addpageform').attr('action'), { dashName: $('#dashName').val(), numColumns: $('[name=numColumns] option:selected').val() } ).then(function() { location.reload(); });
+    addDashboardForm($('ul.nav-dashboard > li').length -1);
 
-        })
+    $('.btn-add-dashboard').unbind('click');
+    $('.btn-add-dashboard').click(function() {
+      if($('#dashName').val() == '') {
+        return;
+      }
+
+      $.post($('#addpageform').attr('action'), {
+        dashName: $('#dashName').val(),
+        numColumns: $('[name=numColumns] option:selected').val()
+      }).then(function() {
+        location.reload();
+      });
     })
+  })
 
     $('.modal-edit-dashboard').on('show.bs.modal', function (e) {
         var tabs = $('ul.nav-dashboard > li');
