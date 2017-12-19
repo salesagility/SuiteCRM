@@ -18,9 +18,10 @@
   padding: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   height: 40px/$panel-height-divisor;
-  vertical-align: middle;
-  line-height:40px/$panel-height-divisor;
+  border-color: $panel-bg;
 }
 
 .panel-default > .panel-heading > div {
@@ -28,8 +29,7 @@
   font-weight: 500;
   background-color: $panel-expanded-bg;
   color: $panel-expanded-color;
-  line-height: 52px/$panel-height-divisor;
-  height: 52px/$panel-height-divisor;
+  vertical-align: middle;
 }
 
 .panel-default > .panel-body {
