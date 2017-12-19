@@ -384,8 +384,7 @@ $mod_strings = array(
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
 
-    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>
-below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
@@ -403,15 +402,13 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_WIZARD_FINISH9' => 'Configure the Application ',
     'LBL_WIZARD_FINISH10' => 'Use Studio to create and manage application fields and layouts.',
     'LBL_WIZARD_FINISH11' => 'Visit SuiteCRM Site ',
-    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a
-    system administrator or end user of the application.',
+    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a system administrator or end user of the application.',
     'LBL_WIZARD_FINISH14' => 'Documentation ',
     'LBL_WIZARD_FINISH15' => 'Product Guides and Release Notes ',
     'LBL_WIZARD_FINISH16' => 'Knowledge Base ',
     'LBL_WIZARD_FINISH17' => 'Tips from SuiteCRM',
     'LBL_WIZARD_FINISH18' => 'Forums ',
-    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community
-    to discuss topics of interest with each other and with SuiteCRM Developers ',
+    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community to discuss topics of interest with each other and with SuiteCRM Developers ',
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
