@@ -383,6 +383,8 @@ class Document extends File {
 		switch ($interface) {
 			case 'ACL' :
 				return true;
+            case 'FILE' :
+                return true;
 		}
 		return false;
 	}

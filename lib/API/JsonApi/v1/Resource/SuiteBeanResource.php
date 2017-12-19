@@ -60,7 +60,6 @@ use SuiteCRM\API\v8\Exception\Conflict;
  */
 class SuiteBeanResource extends Resource
 {
-
     /**
      * fromSugarBean will try to convert a SugarBean in to a resource object, it will also try to include links
      * to the related items.
@@ -138,6 +137,8 @@ class SuiteBeanResource extends Resource
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
+            } elseif ($definition['type'] === 'file') {
+                $this->retrieveFileFromBean($sugarBean, $fieldName);
             } elseif  ($definition['type'] === 'link') {
                 /** @var ServerRequestInterface $request; */
                 $request = $this->containers->get(ServerRequestInterface::class);
@@ -271,11 +272,18 @@ class SuiteBeanResource extends Resource
 
         try {
             $sugarBean->save();
+
+            // After save: saveFiles
+            foreach ($sugarBean->field_defs as $fieldName => $definition) {
+                if ($definition['type'] === 'file') {
+                    $sugarBean = $this->saveFileToBean($sugarBean, $fieldName);
+                }
+            }
+
         } catch (Exception $e) {
             throw new ApiException(
                 '[SugarBeanResource] [Unable to save bean while converting toSugarBean()] ' . $e->getMessage(),
-                $e->getCode(),
-                $e
+                $e->getCode()
             );
         }
 
@@ -431,9 +439,147 @@ class SuiteBeanResource extends Resource
      * @param Relationship $relationship
      * @return SuiteBeanResource
      */
-    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
+    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship)
+    {
         $relationshipName = $relationship->getRelationshipName();
         $this->relationships[$relationshipName]['data'] = $relationship->toJsonApiResponse();
         return clone $this;
+    }
+
+    /**
+     * Set the attributes to download a base64 encoded file
+     * @param \SugarBean $bean
+     * @param string $fieldName
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     */
+    private function retrieveFileFromBean(\SugarBean $bean, $fieldName)
+    {
+        if (empty($bean->{$fieldName})) {
+            // return if a file has not been uploaded
+            return;
+        }
+
+        if ($bean instanceof \Document) {
+            $this->retrieveFileFromDocumentBean($bean, $fieldName);
+        } elseif ($bean instanceof \File) {
+            $this->retrieveFileFromFileBean($bean, $fieldName);
+        } else {
+            throw new ApiException(
+              '[SuiteBeanResource][retrieveFileFromBean][Unsupported Type] '.
+              $bean->module_name
+            );
+        }
+    }
+
+    /**
+     * @param \Note $bean
+     * @param string $fieldName
+     * @throws ApiException
+     */
+    private function retrieveFileFromFileBean(\Note $bean, $fieldName)
+    {
+        $fileFieldName = $fieldName . '_file';
+
+        $this->attributes[$fieldName] = $bean->{$fieldName};
+        // Get file
+        $file_path = \UploadStream::getDir() . '/' . $bean->id;
+
+        if (empty($file_path)) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromFileBean][Unable to find file] Note: ' .
+                $bean->id
+            );
+        }
+
+        $file_contents = file_get_contents($file_path);
+
+        if ($file_contents === false) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromFileBean][Unable to get file contents] FileName: ' .
+                $this->attributes[$fieldName]
+            );
+        }
+
+        $file = base64_encode($file_contents);
+        $this->attributes[$fileFieldName] = $file;
+    }
+
+    /**
+     * @param \Document $bean
+     * @param string $fieldName
+     * @throws ApiException
+     */
+    private function retrieveFileFromDocumentBean(\Document $bean, $fieldName)
+    {
+        $fileFieldName = $fieldName . '_file';
+
+        $this->attributes[$fieldName] = $bean->{$fieldName};
+        // Get file
+        $file_path = \UploadStream::getDir() . '/' . $bean->document_revision_id;
+
+        if (empty($file_path)) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to find file] Note: ' .
+                $bean->id
+            );
+        }
+
+        $file_contents = file_get_contents($file_path);
+
+        if ($file_contents === false) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to get file contents] FileName: ' .
+                $this->attributes[$fieldName]
+            );
+        }
+
+        $file = base64_encode($file_contents);
+        $this->attributes[$fileFieldName] = $file;
+    }
+
+    /**
+     * POST to upload a base64 encoded file. Expects the file to be assigned to {field}_file attribute
+     * @param \SugarBean $bean
+     * @param string $fieldName
+     * @return \SugarBean
+     */
+    private function saveFileToBean(\SugarBean $bean, $fieldName)
+    {
+        global $current_user;
+
+        $config = $this->containers->get('ConfigurationManager');
+        $hasRevision = $bean instanceof \Document;
+        $dataFieldName = $fieldName . '_file';
+
+        $decodedFile = base64_decode($this->attributes[$dataFieldName]);
+        $uploadFile = new \UploadFile($fieldName);
+        $uploadFile->set_for_soap($this->attributes[$fieldName], $decodedFile);
+
+        $ext_pos = strrpos($uploadFile->stored_file_name, '.');
+        $uploadFile->file_ext = substr($uploadFile->stored_file_name, $ext_pos + 1);
+        if (in_array($uploadFile->file_ext, $config['upload_badext'], true)) {
+            $uploadFile->stored_file_name .= '.txt';
+            $uploadFile->file_ext = 'txt';
+        }
+
+        if($hasRevision) {
+            $revision = new \DocumentRevision();
+            $revision->filename = $uploadFile->get_stored_file_name();
+            $revision->file_mime_type = $uploadFile->getMimeSoap($revision->filename);
+            $revision->file_ext = $uploadFile->file_ext;
+            $revision->revision = $this->attributes['revision'];
+            $revision->document_id = $bean->id;
+            $revision->save();
+
+            $bean->document_revision_id = $revision->id;
+            $uploadFile->final_move($revision->id);
+        } else {
+            $uploadFile->final_move($bean->id);
+        }
+
+        $bean->assigned_user_id = $current_user->id;
+        $bean->save();
+
+        return $bean;
     }
 }
