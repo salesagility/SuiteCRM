@@ -1447,10 +1447,10 @@ class SugarBean
 
         $result = $this->db->query($count_query, true, "Error running count query for $this->object_name List: ");
         while ($row = $this->db->fetchByAssoc($result, true)) {
-            $num_rows_in_query += (int)current($row);
+            $num_rows_in_query = current($row);
         }
 
-        return $num_rows_in_query;
+        return (int)$num_rows_in_query;
     }
 
     /**
