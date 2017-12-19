@@ -415,7 +415,7 @@ class SuiteBeanResource extends Resource
      * @throws BadRequest
      * @throws Conflict
      */
-    public function fromJsonApiRequest($data, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         return $this->fromResource(parent::fromJsonApiRequest($data, $source));
     }

@@ -161,7 +161,7 @@ class Operator
      * @throws InvalidArgumentException
      * @throws BadRequest
      */
-    public function toSqlOperands($operands)
+    public function toSqlOperands(array $operands)
     {
         if(!is_array($operands)) {
             throw new InvalidArgumentException(

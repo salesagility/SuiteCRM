@@ -308,7 +308,7 @@ class FilterParser
      * @param OperatorInterface[] $operatorsHaystack
      * @return bool
      */
-    protected function isInOperatorsArray($operatorNeedle, $operatorsHaystack) {
+    protected function isInOperatorsArray($operatorNeedle, array $operatorsHaystack) {
         foreach ($operatorsHaystack as $operator) {
             /** @var OperatorInterface $operator */
             if($operator->isOperator($operatorNeedle)) {
@@ -335,7 +335,7 @@ class FilterParser
      * @param array $filterValueArray
      * @return array
      */
-    private function mergeValueToFilterKey($filterKeyArray, $filterValueArray)
+    private function mergeValueToFilterKey(array $filterKeyArray, array $filterValueArray)
     {
         $filterStructure = $filterKeyArray;
         if(empty($filterKeyArray)) {

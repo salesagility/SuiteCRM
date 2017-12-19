@@ -63,7 +63,7 @@ class SpecialOperator extends Operator
 
     /**
      * Convert string to operator tag
-     * @param $operator
+     * @param string $operator
      * @return mixed
      */
     public function toFilterTag($operator)

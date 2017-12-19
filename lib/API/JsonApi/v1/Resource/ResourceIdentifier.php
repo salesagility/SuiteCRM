@@ -126,7 +126,7 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
     }
 
     /**
-     * @param array $meta
+     * @param array|null $meta
      * @return ResourceIdentifier
      */
     public function withMeta($meta)

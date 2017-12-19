@@ -117,7 +117,7 @@ class Resource extends ResourceIdentifier
      * @throws BadRequest
      * @see https://tools.ietf.org/html/rfc6901
      */
-    public function fromJsonApiRequest($data, $source = ResourceEnum::DEFAULT_SOURCE)
+    public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
         if(isset($data['id'])) {
             $this->id = $data['id'];
@@ -253,7 +253,7 @@ class Resource extends ResourceIdentifier
      * @param array $data
      * @throws BadRequest
      */
-    private function relationshipFromDataArray($data)
+    private function relationshipFromDataArray(array $data)
     {
         if (isset($data[self::RELATIONSHIPS])) {
             $dataRelationships = $data[self::RELATIONSHIPS];

@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters;
 
+use Behat\Gherkin\Filter\FilterInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters\ByIdFilter;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
@@ -113,7 +114,7 @@ class FilterInterpreter
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function isFilterByPreMadeName($filterStructure) {
+    public function isFilterByPreMadeName(array $filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]');
         }
@@ -126,7 +127,7 @@ class FilterInterpreter
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function isFilterById($filterStructure) {
+    public function isFilterById(array $filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]');
         }
@@ -141,7 +142,7 @@ class FilterInterpreter
      * @return bool
      * @throws Exception
      */
-    public function isFilterByAttributes($filterStructure) {
+    public function isFilterByAttributes(array $filterStructure) {
         if(is_array($filterStructure) === false) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterByAttributes][expected type to be array]');
         }
@@ -155,11 +156,11 @@ class FilterInterpreter
 
     /**
      * Convert the filter structure for a parser into an SQL where clause
-     * @param $filterStructure
+     * @param array $filterStructure
      * @return string
      * @throws Exception
      */
-    public function getFilterByPreMadeName($filterStructure)
+    public function getFilterByPreMadeName(array $filterStructure)
     {
         $filter = '';
         $filterName = current($filterStructure);
@@ -181,11 +182,11 @@ class FilterInterpreter
 
     /**
      * Convert the filter structure for a parser into an SQL where clause
-     * @param $filterStructure  [table => [field => [operator, operand, ... ], ...]
+     * @param array $filterStructure  [table => [field => [operator, operand, ... ], ...]
      * @return string|ByIdFilter
      * @throws Exception
      */
-    public function getFilterById($filterStructure)
+    public function getFilterById(array $filterStructure)
     {
         $filter = '';
         /** @var ByIdFilter $filter */
@@ -207,7 +208,7 @@ class FilterInterpreter
      * @return string
      * @throws BadRequest
      */
-    public function getFilterByAttributes($filterStructure)
+    public function getFilterByAttributes(array $filterStructure)
     {
         $filter = '';
         $filterOperator = new FieldOperator($this->containers);
@@ -291,13 +292,13 @@ class FilterInterpreter
 
     /**
      * @param string $tableName
-     * @param OperatorInterface $filterOperator
-     * @param OperatorInterface $lastOperator
+     * @param OperatorInterface|FilterInterface $filterOperator
+     * @param OperatorInterface|FilterInterface $lastOperator
      * @param string $field
      * @param array $operands
      * @return string
      */
-    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands)
+    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands)
     {
         // Lets build the last operation into a SQL Query
         $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
