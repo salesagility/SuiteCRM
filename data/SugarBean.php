@@ -822,9 +822,6 @@ class SugarBean
         $secondary_queries = array();
         global $layout_edit_mode;
 
-        if (isset($_SESSION['show_deleted'])) {
-            $show_deleted = 1;
-        }
         $final_query = '';
         $final_query_rows = '';
         $subpanel_list = array();
