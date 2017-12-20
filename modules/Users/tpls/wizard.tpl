@@ -329,8 +329,6 @@ var SugarWizard = new function()
 {
     this.currentScreen = 'welcome';
 
-
-
     this.handleKeyStroke = function(e)
     {
         // get the key pressed
