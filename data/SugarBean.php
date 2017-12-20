@@ -1006,8 +1006,17 @@ class SugarBean
         }
 
         if(method_exists($parentbean, 'process_union_list_query')) {
-            return $parentbean->process_union_list_query($parentbean, $final_query, $row_offset, $limit, $max, '',
-                $subpanel_def, $final_query_rows, $secondary_queries);
+            return $parentbean->process_union_list_query(
+                $parentbean,
+                $final_query,
+                $row_offset,
+                $limit,
+                $max,
+                '',
+                $subpanel_def,
+                $final_query_rows,
+                $secondary_queries
+            );
         } else {
             $GLOBALS['log']->fatal('Parent bean should be a SugarBean');
             return null;
@@ -1209,7 +1218,8 @@ class SugarBean
         $query,
         $row_offset,
         $limit = -1,
-        $max_per_page = -1, $where =
+        $max_per_page = -1,
+        $where =
         '',
         $subpanel_def= null, 
         $query_row_count = '', 
@@ -1352,8 +1362,7 @@ class SugarBean
                             $current_bean->$field = $this->convertField($row[$field], $value);
                             unset($row[$field]);
                         } elseif (isset($row[$this->table_name . '.' . $field])) {
-                            $current_bean->$field = $this->convertField($row[$this->table_name . '.' . $field],
-                                $value);
+                            $current_bean->$field = $this->convertField($row[$this->table_name . '.' . $field], $value);
                             unset($row[$this->table_name . '.' . $field]);
                         } else {
                             $current_bean->$field = "";
@@ -1403,8 +1412,7 @@ class SugarBean
                             if (!empty($value['function_require'])) {
                                 require_once($value['function_require']);
                             }
-                            $current_bean->$function_field = call_user_func_array($execute_function,
-                                $execute_params);
+                            $current_bean->$function_field = call_user_func_array($execute_function, $execute_params);
                         }
                     }
                     if (!empty($current_bean->parent_type) && !empty($current_bean->parent_id)) {
@@ -1990,8 +1998,11 @@ class SugarBean
                         if(!isset($fieldDefs[$rel_name]['relationship'])) {
                             $GLOBALS['log']->fatal('Relationship not found');
                         } else {
-                            $this->$rel_name = new $class($fieldDefs[$rel_name]['relationship'], $this,
-                                $fieldDefs[$rel_name]);
+                            $this->$rel_name = new $class(
+                                $fieldDefs[$rel_name]['relationship'],
+                                $this,
+                                $fieldDefs[$rel_name]
+                            );
                         }
                     }
                 }
@@ -2862,8 +2873,10 @@ class SugarBean
                                 $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to " .
                                     "remove the relationship record: {$linkField} = " .
                                     "{$this->rel_fields_before_value[$idName]}");
-                                $success = $this->$linkField->delete($this->id,
-                                    $this->rel_fields_before_value[$idName]);
+                                $success = $this->$linkField->delete(
+                                    $this->id,
+                                    $this->rel_fields_before_value[$idName]
+                                );
                                 // just need to make sure it's true and not an array as it's possible to return an array
                                 if ($success) {
                                     $modified_relationships['remove']['success'][] = $linkField;
@@ -3911,10 +3924,16 @@ class SugarBean
                             if (preg_match($exp, $where, $matches)) {
                                 $search_expression = $matches[0];
                                 //Create three search conditions - first + last, first, last
-                                $first_name_search = str_replace($data['name'], $params['join_table_alias']
-                                    . '.first_name', $search_expression);
-                                $last_name_search = str_replace($data['name'], $params['join_table_alias']
-                                    . '.last_name', $search_expression);
+                                $first_name_search = str_replace(
+                                    $data['name'],
+                                    $params['join_table_alias'] . '.first_name',
+                                    $search_expression
+                                );
+                                $last_name_search = str_replace(
+                                    $data['name'], 
+                                    $params['join_table_alias'] . '.last_name',
+                                    $search_expression
+                                );
                                 $full_name_search = str_replace(
                                     $data['name'], 
                                     $this->db->concat($params['join_table_alias'], $data['db_concat_fields']),
@@ -3943,14 +3962,20 @@ class SugarBean
                             }
                         }
                     } else {
-                        $where = preg_replace('/(^|[\s(])' . $data['name'] . '/', '${1}'
-                            . $params['join_table_alias'] . '.' . $data['rname'], $where);
+                        $where = preg_replace(
+                            '/(^|[\s(])' . $data['name'] . '/',
+                            '${1}' . $params['join_table_alias'] . '.' . $data['rname'],
+                            $where
+                        );
 
                         // For relationship fields replace their alias by the corresponding link table and r_name
                         if (isset($data['relationship_fields'])) {
                             foreach ($data['relationship_fields'] as $r_name => $alias_name) {
-                                $where = preg_replace('/(^|[\s(])' . $alias_name . '/', '${1}'
-                                    . $params['join_table_link_alias'] . '.' . $r_name, $where);
+                                $where = preg_replace(
+                                    '/(^|[\s(])' . $alias_name . '/',
+                                    '${1}' . $params['join_table_link_alias'] . '.' . $r_name,
+                                    $where
+                                );
                             }
                         }
                     }
@@ -5032,8 +5057,15 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    public function get_related_list($child_seed, $related_field_name, $order_by = "", $where = "",
-                                     $row_offset = 0, $limit = -1, $max = -1)
+    public function get_related_list(
+        $child_seed, 
+        $related_field_name, 
+        $order_by = "",
+        $where = "",
+        $row_offset = 0,
+        $limit = -1,
+        $max = -1
+    )
     {
         global $layout_edit_mode;
 
@@ -5457,7 +5489,12 @@ class SugarBean
 
         if (!empty($row_offset) && $row_offset != 0 && !empty($limit) && $limit != -1) {
             $result = $db->limitQuery(
-                $query, $row_offset, $limit, true, "Error retrieving $template->object_name list: ");
+                $query,
+                $row_offset,
+                $limit,
+                true,
+                "Error retrieving $template->object_name list: "
+            );
         } else {
             $result = $db->query($query, true);
         }
