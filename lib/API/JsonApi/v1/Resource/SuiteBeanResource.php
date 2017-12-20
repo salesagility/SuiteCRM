@@ -137,7 +137,7 @@ class SuiteBeanResource extends Resource
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
-            } elseif ($definition['type'] === 'file') {
+            } elseif ($sugarBean instanceof \File && $definition['type'] === 'file') {
                 $this->retrieveFileFromBean($sugarBean, $fieldName);
             } elseif  ($definition['type'] === 'link') {
                 /** @var ServerRequestInterface $request; */
@@ -274,12 +274,13 @@ class SuiteBeanResource extends Resource
             $sugarBean->save();
 
             // After save: saveFiles
-            foreach ($sugarBean->field_defs as $fieldName => $definition) {
-                if ($definition['type'] === 'file') {
-                    $sugarBean = $this->saveFileToBean($sugarBean, $fieldName);
+            if($sugarBean instanceof \File) {
+                foreach ($sugarBean->field_defs as $fieldName => $definition) {
+                    if ($definition['type'] === 'file') {
+                        $sugarBean = $this->saveFileToBean($sugarBean, $fieldName);
+                    }
                 }
             }
-
         } catch (Exception $e) {
             throw new ApiException(
                 '[SugarBeanResource] [Unable to save bean while converting toSugarBean()] ' . $e->getMessage(),
@@ -448,11 +449,11 @@ class SuiteBeanResource extends Resource
 
     /**
      * Set the attributes to download a base64 encoded file
-     * @param \SugarBean $bean
+     * @param \File $bean
      * @param string $fieldName
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
-    private function retrieveFileFromBean(\SugarBean $bean, $fieldName)
+    private function retrieveFileFromBean(\File $bean, $fieldName)
     {
         if (empty($bean->{$fieldName})) {
             // return if a file has not been uploaded
@@ -519,7 +520,7 @@ class SuiteBeanResource extends Resource
 
         if (empty($file_path)) {
             throw new ApiException(
-                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to find file] Note: ' .
+                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to find file] Document: ' .
                 $bean->id
             );
         }
