@@ -329,6 +329,8 @@ var SugarWizard = new function()
 {
     this.currentScreen = 'welcome';
 
+
+
     this.handleKeyStroke = function(e)
     {
         // get the key pressed
@@ -386,13 +388,21 @@ var SugarWizard = new function()
         this.currentScreen = screen;
     }
 }
-{/literal}
-{if $SKIP_WELCOME}
-SugarWizard.changeScreen('personalinfo');
-{else}
-SugarWizard.changeScreen('welcome');
-{/if}
-{literal}
+
+$(document).ready(function() {
+  $('.screen').each(function() {
+    $(this).hide();
+  });
+
+  {/literal}
+  {if $SKIP_WELCOME}
+  SugarWizard.changeScreen('personalinfo');
+  {else}
+  SugarWizard.changeScreen('welcome');
+  {/if}
+  {literal}
+});
+
 document.onkeypress = SugarWizard.handleKeyStroke;
 
 var mail_smtpport = '{/literal}{$MAIL_SMTPPORT}{literal}';
