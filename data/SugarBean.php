@@ -1219,10 +1219,9 @@ class SugarBean
         $row_offset,
         $limit = -1,
         $max_per_page = -1,
-        $where =
-        '',
-        $subpanel_def= null, 
-        $query_row_count = '', 
+        $where = '',
+        $subpanel_def= null,
+        $query_row_count = '',
         $secondary_queries = array()
     )
     {
@@ -3029,8 +3028,8 @@ class SugarBean
                 } else {
                     require_once('data/Link2.php');
                     $rel = Relationship::retrieve_by_modules(
-                        $new_rel_link, 
-                        $this->module_dir, 
+                        $new_rel_link,
+                        $this->module_dir,
                         $this->db,
                         'many-to-many'
                     );
@@ -3722,7 +3721,7 @@ class SugarBean
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match(
                     '/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/',
-                    $where, 
+                    $where,
                     $matches
                 );
                 if ($match) {
@@ -3928,12 +3927,12 @@ class SugarBean
                                     $search_expression
                                 );
                                 $last_name_search = str_replace(
-                                    $data['name'], 
+                                    $data['name'],
                                     $params['join_table_alias'] . '.last_name',
                                     $search_expression
                                 );
                                 $full_name_search = str_replace(
-                                    $data['name'], 
+                                    $data['name'],
                                     $this->db->concat($params['join_table_alias'], $data['db_concat_fields']),
                                     $search_expression
                                 );
@@ -4385,9 +4384,9 @@ class SugarBean
      * Internal function, do not override.
      */
     public function get_detail(
-        $order_by = "", 
-        $where = "", 
-        $offset = 0, 
+        $order_by = "",
+        $where = "",
+        $offset = 0,
         $row_offset = 0,
         $limit = -1,
         $max = -1,
@@ -5056,8 +5055,8 @@ class SugarBean
      * Internal function, do not override.
      */
     public function get_related_list(
-        $child_seed, 
-        $related_field_name, 
+        $child_seed,
+        $related_field_name,
         $order_by = "",
         $where = "",
         $row_offset = 0,
