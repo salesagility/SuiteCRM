@@ -1347,6 +1347,9 @@
         italic: {inline: 'i'},
         underline: {inline: 'u'}
       },
+      convert_urls:true,
+      relative_urls:false,
+      remove_script_host:false,
     }
   };
 }(jQuery));
