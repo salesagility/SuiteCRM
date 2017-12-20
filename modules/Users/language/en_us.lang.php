@@ -384,7 +384,7 @@ $mod_strings = array(
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
 
-    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
