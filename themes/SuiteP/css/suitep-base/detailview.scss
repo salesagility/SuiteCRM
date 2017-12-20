@@ -361,3 +361,17 @@ p.msg {
     @include hideWhenPrinting()
   }
 }
+
+
+.email-link {
+    display: block;
+    float: left;
+}
+
+.confirm-opt-in-tick {
+    float: right;
+    color: $confirm-opt-in-tick;
+    font-size: 28px;
+    padding: 0 10px;
+}
+

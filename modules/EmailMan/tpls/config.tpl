@@ -227,11 +227,23 @@ function change_state(radiobutton) {
     	<td width="30%"  valign='top'>
     		<input type='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
     	</td>
+        
     	<td scope="row" width="20%">
     	   {$MOD.LBL_NOTIFY_SEND_FROM_ASSIGNING_USER}:
     	   <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_FROM_ADDRESS_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
     	</td>
     	<td width="30%"  valign='top'><input type='hidden' name='notify_send_from_assigning_user' value='0'><input name='notify_send_from_assigning_user' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_send_from_assigning_user}></td>
+        
+     </tr>
+     <tr>
+        
+        <td width="20%" scope="row" valign='top'>
+    	   {$MOD.LBL_EMAIL_ENABLE_CONFIRM_OPT_IN}:&nbsp;
+    	</td>
+    	<td width="30%"  valign='top'>
+    		<input type='checkbox' name='email_enable_confirm_opt_in' value="1" {$EMAIL_ENABLE_CONFIRM_OPT_IN}>
+    	</td>
+        
     </tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">

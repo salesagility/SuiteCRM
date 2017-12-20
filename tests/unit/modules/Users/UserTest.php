@@ -28,20 +28,17 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(false, 'authenticated', $user);
         $this->assertAttributeEquals(true, 'importable', $user);
         $this->assertAttributeEquals(false, 'team_exists', $user);
-
     }
 
 
     public function testgetSystemUser()
     {
-
         $user = new User();
 
         $result = $user->getSystemUser();
 
         $this->assertInstanceOf('User', $result);
         $this->assertEquals(1, $result->id);
-
     }
 
 
@@ -49,7 +46,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -58,7 +55,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
-
     }
 
 
@@ -70,19 +66,16 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->getSignature(1);
         $this->assertEquals(false, $result);
-
     }
 
     public function testgetSignaturesArray()
     {
-
         $user = new User();
 
         $user->retrieve(1);
 
         $result = $user->getSignaturesArray();
         $this->assertTrue(is_array($result));
-
     }
 
 
@@ -101,7 +94,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetSignatureButtons()
     {
-
         global $mod_strings;
 
         $user = new User();
@@ -122,20 +114,17 @@ class UserTest extends PHPUnit_Framework_TestCase
         $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:inherit;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;\n					</span>";
         $actual = $user->getSignatureButtons('', true);
         $this->assertSame($expected, $actual);
-
     }
 
 
     public function testhasPersonalEmail()
     {
-
         $user = new User();
 
         $user->retrieve(2);
 
         $result = $user->hasPersonalEmail();
         $this->assertEquals(false, $result);
-
     }
 
 
@@ -143,7 +132,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -154,14 +143,13 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(isset($result));
         $this->assertEquals(36, strlen($result));
-
     }
 
     public function testsetUserPrivGuid()
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -174,14 +162,13 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(isset($result));
         $this->assertEquals(36, strlen($result));
-
     }
 
     public function testSetAndGetAndResetPreference()
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -203,13 +190,11 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->resetPreferences();
         $result = $user->getPreference('userPrivGuid', 'global', $user);
         $this->assertFalse(isset($result));
-
     }
 
 
     public function testsavePreferencesToDB()
     {
-
         $user = new User();
 
         $user->retrieve(1);
@@ -221,7 +206,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
-
     }
 
 
@@ -235,7 +219,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->reloadPreferences();
         $this->assertEquals(true, $result);
-
     }
 
 
@@ -243,7 +226,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -257,7 +240,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($result['time']));
         $this->assertTrue(isset($result['userGmt']));
         $this->assertTrue(isset($result['userGmtOffset']));
-
     }
 
 
@@ -271,16 +253,14 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->loadPreferences();
         $this->assertEquals(true, $result);
-
     }
 
 
     public function testGetETagSeedAndIncrementETag()
     {
-
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -299,7 +279,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //execute getETagSeed method again, get Etag final value and  compare final and initial values
         $ETagFinal = $user->getETagSeed('test');
         $this->assertGreaterThan($ETagInitial, $ETagFinal);
-
     }
 
 
@@ -308,7 +287,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $expected = "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND LENGTH(user_name)>0";
         $actual = User::getLicensedUsersWhere();
         $this->assertSame($expected, $actual);
-
     }
 
     public function testget_summary_text()
@@ -321,7 +299,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with name set
         $user->name = "test";
         $this->assertEquals('test', $user->get_summary_text());
-
     }
 
     public function testbean_implements()
@@ -338,7 +315,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $user = new User();
@@ -349,7 +326,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->check_role_membership("test", '1');
         $this->assertEquals(false, $result);
-
     }
 
 
@@ -360,7 +336,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
 
@@ -419,7 +395,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->user_name = "test_deleted";
         $user->save();
         $user->mark_deleted($user->id);
-
     }
 
     public function retrieve($id)
@@ -435,7 +410,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals("one@email.com", $user->email1);
         $this->assertEquals("two@email.com", $user->email2);
-
     }
 
     public function retrieve_by_email_address($id)
@@ -456,12 +430,10 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->retrieve_by_email_address($email);
         $this->assertTrue(isset($user->id));
         $this->assertEquals($id, $user->id);
-
     }
 
     public function NewPasswordAndFindUserPassword($id)
     {
-
         $user = new User();
 
         $user->retrieve($id);
@@ -482,7 +454,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         // but should works on a correct test environments:
         // $this->assertTrue(isset($result['id']));
         // $this->assertEquals($id, $result['id']);
-
     }
 
 
@@ -500,7 +471,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->authenticate_user(md5("test1"));
         $this->assertEquals(true, $result);
-
     }
 
 
@@ -513,7 +483,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $result = $user->load_user("test1");
 
         $this->assertEquals(true, $result->authenticated);
-
     }
 
     public function change_password($id)
@@ -532,7 +501,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(isset($result['id']));
         $this->assertEquals($id, $result['id']);
-
     }
 
     public function getPreferredEmail($id)
@@ -545,8 +513,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         self::assertEquals('firstn lastn', $actual['name']);
         self::assertEquals(1, preg_match('/^one\d+\@email\.com$/', $actual['email']));
-
-
     }
 
     public function getUsersNameAndEmail($id)
@@ -559,7 +525,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         self::assertEquals('firstn lastn', $actual['name']);
         self::assertEquals(1, preg_match('/^one\d+\@email\.com$/', $actual['email']));
-
     }
 
 
@@ -581,19 +546,16 @@ class UserTest extends PHPUnit_Framework_TestCase
         $result = $user->encrypt_password("test");
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
-
     }
 
     public function testgetPasswordHash()
     {
-
         $result = User::getPasswordHash("test");
 
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
 
         $this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
-
     }
 
 
@@ -618,7 +580,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with valid password and valid hash
         $result = User::checkPassword("test", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(true, $result);
-
     }
 
 
@@ -643,13 +604,11 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with valid password and valid hash
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(true, $result);
-
     }
 
 
     public function testis_authenticated()
     {
-
         $user = new User();
 
         //test without setting name
@@ -658,12 +617,10 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with name set
         $user->authenticated = true;
         $this->assertEquals(true, $user->is_authenticated());
-
     }
 
     public function testfill_in_additional_list_fields()
     {
-
         $user = new User();
 
         $user->retrieve(1);
@@ -671,12 +628,10 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->fill_in_additional_list_fields();
 
         $this->assertEquals("Administrator", $user->full_name);
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
         $user = new User();
 
         $user->retrieve(1);
@@ -684,7 +639,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->fill_in_additional_detail_fields();
 
         $this->assertEquals("Administrator", $user->full_name);
-
     }
 
     public function testretrieve_user_id()
@@ -700,7 +654,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testverify_data()
     {
-
         global $mod_strings;
 
         $mod_strings['ERR_EMAIL_NO_OPTS'] = "";
@@ -717,7 +670,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with false
         $result = $user->verify_data(false);
         $this->assertEquals(false, $result);
-
     }
 
     public function testget_list_view_data()
@@ -731,23 +683,19 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
-
     }
 
     public function testlist_view_parse_additional_sections()
     {
-
         $user = new User();
 
         $list_form = array();
         $result = $user->list_view_parse_additional_sections($list_form);
         $this->assertSame($list_form, $result);
-
     }
 
     public function testGetAllUsersAndGetActiveUsers()
     {
-
         $all_users = User::getAllUsers();
         $this->assertTrue(is_array($all_users));
 
@@ -760,7 +708,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
-
         $user = new User();
 
         //test with empty string params
@@ -773,23 +720,19 @@ class UserTest extends PHPUnit_Framework_TestCase
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE user_name=\"\" AND  users.deleted = 0 AND users.is_admin=0 ORDER BY id";
         $actual = $user->create_export_query('id', 'user_name=""');
         $this->assertSame($expected, $actual);
-
     }
 
 
     public function testget_meetings()
     {
-
         $user = new User();
 
         $result = $user->get_meetings();
         $this->assertTrue(is_array($result));
-
     }
 
     public function testget_calls()
     {
-
         $user = new User();
 
         //$result = $user->get_calls();
@@ -801,7 +744,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testdisplayEmailCounts()
     {
-
         $user = new User();
 
         $expected = '<script type="text/javascript" language="Javascript">var welcome = document.getElementById("welcome");var welcomeContent = welcome.innerHTML;welcome.innerHTML = welcomeContent + "&nbsp;&nbsp;&nbsp;&nbsp;<a href=index.php?module=Emails&action=ListViewGroup>Group Inbox: (0 New)</a>";</script>';
@@ -816,19 +758,16 @@ class UserTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
 
         $this->assertSame($expected, $renderedContent);
-
     }
 
 
     public function testgetSystemDefaultNameAndEmail()
     {
-
         $user = new User();
 
         $expected = array('email', 'name');
         $actual = array_keys($user->getSystemDefaultNameAndEmail());
         $this->assertSame($expected, $actual);
-
     }
 
 
@@ -841,7 +780,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         $this->assertEquals('sugar', $result['email_default_client']);
         $this->assertEquals('html', $result['email_default_editor']);
-
     }
 
 
@@ -858,7 +796,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account->name = "test";
 
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
             'data-record-id="" data-module-name=""  data-email-address="">';
         $actual = $user->getEmailLink2("abc@email.com", $account);
         $this->assertSame($expected, $actual);
@@ -868,17 +806,15 @@ class UserTest extends PHPUnit_Framework_TestCase
         $contact = new Contact();
         $contact->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
             'data-record-id="" data-module-name=""  data-email-address="">';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
-
     }
 
 
     public function testgetEmailLink()
     {
-
         $this->markTestIncomplete('Need to mock up user');
         $user = new User();
 
@@ -889,7 +825,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $account = new Account();
         $account->name = "test";
 
-        $expected = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
+        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
             'data-module="Accounts" data-record-id="" data-module-name="test" data-email-address="">';
         $actual = $user->getEmailLink("name", $account);
         $this->assertSame($expected, $actual);
@@ -902,7 +838,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Btest%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Ctest\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
         $actual = $user->getEmailLink("name", $contact);
         $this->assertSame($expected, $actual);
-
     }
 
     public function testgetLocaleFormatDesc()
@@ -912,7 +847,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $result = $user->getLocaleFormatDesc();
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
-
     }
 
     public function testisAdmin()
@@ -925,7 +859,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with attribute set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isAdmin());
-
     }
 
     public function testisDeveloperForAnyModule()
@@ -944,24 +877,20 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with id and is_admin set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForAnyModule());
-
     }
 
     public function testgetDeveloperModules()
     {
-
         $user = new User();
 
         $user->retrieve(1);
 
         $result = $user->getDeveloperModules();
         $this->assertTrue(is_array($result));
-
     }
 
     public function testisDeveloperForModule()
     {
-
         $user = new User();
 
 
@@ -977,25 +906,20 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with id and is_admin set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
-
-
     }
 
     public function testgetAdminModules()
     {
-
         $user = new User();
 
         $user->retrieve(1);
 
         $result = $user->getAdminModules();
         $this->assertTrue(is_array($result));
-
     }
 
     public function testisAdminForModule()
     {
-
         $user = new User();
 
 
@@ -1011,8 +935,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with id and is_admin set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isAdminForModule("Accounts"));
-
-
     }
 
     public function testshowLastNameFirst()
@@ -1021,7 +943,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->showLastNameFirst();
         $this->assertEquals(false, $result);
-
     }
 
     /**
@@ -1054,7 +975,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
         $result = $user->get_first_day_of_week();
         $this->assertTrue(is_numeric($result));
-
     }
 
 
@@ -1069,20 +989,17 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($password2));
 
         $this->assertNotEquals($password1, $password2);
-
     }
 
 
     public function testsendEmailForPassword()
     {
-
         $user = new User();
 
         $result = $user->sendEmailForPassword("1");
 
         //expected result is a array with template not found message.
         $this->assertTrue(is_array($result));
-
     }
 
 
@@ -1099,7 +1016,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
-
     }
 
 
@@ -1119,7 +1035,5 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with matching user email
         $user->email1 = "abc@abc.com";
         $this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
-
     }
-
 }
