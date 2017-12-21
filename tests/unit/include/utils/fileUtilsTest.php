@@ -295,14 +295,14 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
         //execute the method and test if it returns expected values
 
         $expected = array(
-                'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
-                'data/Relationships/M2MRelationship.php' => 'b9bfd3c44abe19429fc9eff422df8ef7',
-                'data/Relationships/One2MBeanRelationship.php' => '4c3cb4510b4ae737103f7f10e1e21009',
-                'data/Relationships/One2MRelationship.php' => '8a2fbfed8d6b74faf2851eb0a6c6bad3',
-                'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
-                'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
-                'data/Relationships/RelationshipFactory.php' => '3bf18f0ff637fb3700d3ac0b75a0fb1b',
-                'data/Relationships/SugarRelationship.php' => '87e9151907a03823b1045402d46f022c',
+                'data/Relationships/EmailAddressRelationship.php' => '195d6dfabb25e608c24e54242984205d',
+                'data/Relationships/M2MRelationship.php' => 'c55b31666748d4e926f68bc52bd82c8a',
+                'data/Relationships/One2MBeanRelationship.php' => 'e87ac750ba2acdff799f6da30be7c0c4',
+                'data/Relationships/One2MRelationship.php' => 'c2e5906a0ce2fbc155e870eb112fa892',
+                'data/Relationships/One2OneBeanRelationship.php' => 'def375b106656230bdc46c2af9e240e3',
+                'data/Relationships/One2OneRelationship.php' => 'adf67c07d94def98f806a18eb02f2e1f',
+                'data/Relationships/RelationshipFactory.php' => '53019875ae5ecbd0c05e717146933917',
+                'data/Relationships/SugarRelationship.php' => 'dd83ba6dc790a7ea0cb3bd5b87c811d6',
         );
 
         $actual = generateMD5array('data/Relationships/');
