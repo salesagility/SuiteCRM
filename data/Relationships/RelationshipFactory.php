@@ -121,7 +121,8 @@ class SugarRelationshipFactory
             case 'one-to-many':
                 require_once 'data/Relationships/One2MBeanRelationship.php';
                 //If a relationship has no table or join keys, it must be bean based
-                if (empty($def['true_relationship_type']) || (empty($def['table']) && empty($def['join_table'])) || empty($def['join_key_rhs'])) {
+                if (empty($def['true_relationship_type']) || (empty($def['table'])
+                        && empty($def['join_table'])) || empty($def['join_key_rhs'])) {
                     return new One2MBeanRelationship($def);
                 } else {
                     return new One2MRelationship($def);
@@ -203,7 +204,8 @@ class SugarRelationshipFactory
                         if (!empty($relationships[$relKey]['join_table']) && empty($relationships[$relKey]['fields'])
                             && isset($dictionary[$relationships[$relKey]['join_table']]['fields'])
                         ) {
-                            $relationships[$relKey]['fields'] = $dictionary[$relationships[$relKey]['join_table']]['fields'];
+                            $relationships[$relKey]['fields']
+                                = $dictionary[$relationships[$relKey]['join_table']]['fields'];
                         }
                     }
                 }
