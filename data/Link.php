@@ -100,7 +100,6 @@ class Link
 
         $this->_db = DBManagerFactory::getInstance();
 
-
         //Following behavior is tied to a property(ignore_role) value in the vardef.
         // It alters the values of 2 properties, ignore_role_filter and add_distinct.
         //the property values can be altered again before any requests are made.
@@ -153,7 +152,6 @@ class Link
         } else {
             $GLOBALS['log']->debug("Link Constructor, No relationship record.");
         }
-
     }
 
     public function loadedSuccesfully()
@@ -183,7 +181,7 @@ class Link
             $query = $this->getQuery();
         }
         $result = $this->_db->query($query, true);
-        $list = Array();
+        $list = array();
         while ($row = $this->_db->fetchByAssoc($result)) {
             if ($role) {
                 $list[] = $row;
@@ -196,7 +194,6 @@ class Link
 
     public function getRelatedTableName()
     {
-
         $bean_is_lhs = $this->_get_bean_position();
         if (!isset($bean_is_lhs)) {
             $GLOBALS['log']->debug("Invalid relationship parameters. Exiting..");
@@ -212,13 +209,11 @@ class Link
 
     public function getRelatedModuleName()
     {
-
         $bean_is_lhs = $this->_get_bean_position();
         if (!isset($bean_is_lhs)) {
             $GLOBALS['log']->debug("Invalid relationship parameters. Exiting..");
             return null;
         }
-
         if ($bean_is_lhs) {
             return $this->_relationship->rhs_module;
         } else {
@@ -249,7 +244,6 @@ class Link
         if ($this->_relationship->lhs_table == $this->_bean_table_name
             && $this->_relationship->lhs_key == $this->_bean_key_name) {
             $position = true;
-
         }
         if ($this->_relationship->rhs_table == $this->_bean_table_name
             && $this->_relationship->rhs_key == $this->_bean_key_name) {
@@ -389,10 +383,8 @@ class Link
             $ret_arr['join'] = $join;
             $ret_arr['type'] = $this->_relationship->relationship_type;
             if ($bean_is_lhs) {
-
                 $ret_arr['rel_key'] = $this->_relationship->join_key_rhs;
             } else {
-
                 $ret_arr['rel_key'] = $this->_relationship->join_key_lhs;
             }
             return $ret_arr;
@@ -400,10 +392,8 @@ class Link
         return $join;
     }
 
-
     public function _add_deleted_clause($deleted = 0, $add_and = '', $prefix = '')
     {
-
         if (!empty($prefix)) {
             $prefix .= '.';
         }
@@ -422,14 +412,12 @@ class Link
 
     public function _add_optional_where_clause($optional_array, $add_and = '', $prefix = '')
     {
-
         if (!empty($prefix)) {
             $prefix .= '.';
         }
         if (!empty($add_and)) {
             $add_and = ' ' . $add_and . ' ';
         }
-
         if (!empty($optional_array)) {
             return $add_and . $prefix . "" . $optional_array['lhs_field'] . "" . $optional_array['operator'] . "'"
                 . $optional_array['rhs_value'] . "'";
@@ -450,7 +438,6 @@ class Link
         $for_subpanels = false
     )
     {
-
         $select = '';
         $from = '';
         $join = '';
@@ -507,22 +494,19 @@ class Link
                 }
 
                 //add deleted clause - but not if we're dealing with a Custom table which will lack the 'deleted' field
-                if (substr_count($this->_relationship->rhs_table, '_cstm') == 0)
+                if (substr_count($this->_relationship->rhs_table, '_cstm') == 0) {
                     $where .= $this->_add_deleted_clause($deleted, 'AND', $this->_relationship->rhs_table);
-
+                }
                 if ($optional_where != "") {
                     //process optional where
                     $where .= $this->_add_optional_where_clause($optional_where, 'AND');
                 }
-
-
             } else {
                 $from = 'FROM ' . $this->_relationship->lhs_table;
                 $where = 'WHERE ' . $this->_relationship->lhs_table . '.' . $this->_relationship->lhs_key . "= '"
                     . $this->_bean->{$this->_relationship->rhs_key} . "'";
                 //added deleted clause.
                 $where .= $this->_add_deleted_clause($deleted, 'AND', $this->_relationship->lhs_table);
-
 
                 if ($optional_where != "") {
                     //process optional where
@@ -554,14 +538,13 @@ class Link
             }
 
             //add deleted clause - but not if we're dealing with a Custom table which will lack the 'deleted' field
-            if (substr_count($this->_relationship->rhs_table, '_cstm') == 0)
+            if (substr_count($this->_relationship->rhs_table, '_cstm') == 0) {
                 $where .= $this->_add_deleted_clause($deleted, 'AND', $this->_relationship->rhs_table);
-
+            }
             if ($optional_where != "") {
                 //process optional where
                 $where .= $this->_add_optional_where_clause($optional_where, 'AND');
             }
-
         }
 
         if ($this->_relationship->relationship_type == 'many-to-many') {
@@ -599,13 +582,11 @@ class Link
                 $join .= $subjoin;
                 $from .= $subjoin;
 
-
                 //add deleted clause.
                 if ($deleted == 0 or $deleted == 1) {
                     $where .= ' WHERE ' . $this->_add_deleted_clause($deleted, '', $this->_relationship->join_table)
                         . $this->_add_deleted_clause($deleted, 'AND', $this->_relationship->rhs_table);
                 }
-
 
                 if ($optional_where != "") {
                     //process optional where
@@ -615,8 +596,6 @@ class Link
                         $this->_relationship->rhs_table
                     );
                 }
-
-
             } else {
                 if ($this->add_distinct) {
                     $select = "SELECT DISTINCT " . $this->_relationship->lhs_table . ".id";
@@ -649,7 +628,6 @@ class Link
                         . $this->_add_deleted_clause($deleted, 'AND', $this->_relationship->lhs_table);
                 }
 
-
                 if ($optional_where != "") {
                     //process optional where
                     $where .= $this->_add_optional_where_clause(
@@ -658,7 +636,6 @@ class Link
                         $this->_relationship->lhs_table
                     );
                 }
-
             }
             if (!empty($role)) {
                 $select .= ", " . $this->_relationship->join_table . "." . $role;
@@ -695,7 +672,6 @@ class Link
 
     public function _add_one_to_many_table_based($key, $bean_is_lhs)
     {
-
         if ($bean_is_lhs) {
             $set_key_value = $this->_bean->id;
             $where_key_value = $key;
@@ -723,7 +699,6 @@ class Link
     /* handles many to one*/
     public function _add_many_to_one_bean_based($key)
     {
-
         //make a copy of this bean to avoid recursion.
         $bean = new $this->_bean->object_name;
         $bean->retrieve($this->_bean->id);
@@ -749,7 +724,6 @@ class Link
     */
     public function add($rel_keys, $additional_values = array())
     {
-
         if (!isset($rel_keys) or empty($rel_keys)) {
             $GLOBALS['log']->fatal("Link.add, Null key passed, no-op, returning... ");
             return;
@@ -880,7 +854,6 @@ class Link
 
     public function _add_many_to_many($add_values)
     {
-
         //add date modified.
         $add_values['date_modified'] = $GLOBALS['timedate']->nowDb();
 
@@ -921,7 +894,6 @@ class Link
 
     private function _update_row(&$value_array, $table_name, $where)
     {
-
         $query = 'UPDATE ' . $table_name . ' SET ';
         $delimiter = '';
         foreach ($value_array as $key => $value) {
@@ -1106,7 +1078,6 @@ class Link
 
     public function relationship_exists($table_name, $join_key_values)
     {
-
         //find the key values for the table.
         $dup_keys = $this->_get_alternate_key_fields($table_name);
         if (empty($dup_keys)) {
@@ -1119,7 +1090,6 @@ class Link
         foreach ($dup_keys as $field) {
             //look for key in  $join_key_values, if found add to filter criteria else abort duplicate checking.
             if (isset($join_key_values[$field])) {
-
                 $this->_duplicate_where .= $delimiter . ' ' . $field . "='" . $join_key_values[$field] . "'";
                 $delimiter = 'AND';
             } else {
@@ -1217,8 +1187,6 @@ class Link
 
             return null;
         }
-
-
     }
 
     /*
@@ -1239,8 +1207,4 @@ class Link
         }
         return $role_field;
     }
-
-
 }
-
-?>
