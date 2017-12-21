@@ -263,7 +263,7 @@ function change_state(radiobutton) {
 								{$MOD.LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID}:&nbsp;
 							</td>
 							<td width="30%"  valign='top'>
-								<select>{$EMAIL_OPT_IN_TEMPLATES}</select>
+								<select name="email_template_id_opt_in">{$EMAIL_OPT_IN_TEMPLATES}</select>
 							</td>
 
 						</tr>
