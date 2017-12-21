@@ -84,7 +84,6 @@ class Link
     */
     public function __construct($_rel_name, &$_bean, $fieldDef, $_table_name = '', $_key_name = '')
     {
-        require_once("modules/TableDictionary.php");
         $GLOBALS['log']->debug("Link Constructor, relationship name: " . $_rel_name);
         $GLOBALS['log']->debug("Link Constructor, Table name: " . $_table_name);
         $GLOBALS['log']->debug("Link Constructor, Key name: " . $_key_name);
@@ -709,7 +708,6 @@ class Link
         $bean->save();
     }
 
-
     /* use this function to create link between 2 objects
     * 1:1 will be treated like 1 to many.
     * todo handle self referencing relationships
@@ -839,9 +837,9 @@ class Link
             if (isset($beanList[$custom_logic_arguments['related_module']])) {
                 $class = $beanList[$custom_logic_arguments['related_module']];
                 if (!empty($class)) {
-                    $rbean = new $class();
-                    $rbean->id = $key;
-                    $rbean->call_custom_logic('after_relationship_add', $custom_reverse_arguments);
+                    $relatedBean = new $class();
+                    $relatedBean->id = $key;
+                    $relatedBean->call_custom_logic('after_relationship_add', $custom_reverse_arguments);
                 }
             }
         }
@@ -893,7 +891,6 @@ class Link
 
         $this->_db->query($insert_string, true);
     }
-
 
     /* This method operates on all related record, takes action based on cardinality of the relationship.
     * one-to-one, one-to-many: update the rhs table's parent id with null
@@ -1036,9 +1033,9 @@ class Link
         if (isset($beanList[$custom_logic_arguments['related_module']])) {
             $class = $beanList[$custom_logic_arguments['related_module']];
             if (!empty($class)) {
-                $rbean = new $class();
-                $rbean->retrieve(empty($related_id) ? $id : $related_id);
-                $rbean->call_custom_logic('after_relationship_delete', $custom_reverse_arguments);
+                $relatedBean = new $class();
+                $relatedBean->retrieve(empty($related_id) ? $id : $related_id);
+                $relatedBean->call_custom_logic('after_relationship_delete', $custom_reverse_arguments);
             }
         }
     }
@@ -1109,8 +1106,8 @@ class Link
                 );
             }
         }
+        return array();
     }
-
 
     private function _get_link_table_definition($table_name, $def_name)
     {
@@ -1124,7 +1121,6 @@ class Link
             return null;
         }
 
-        include_once('modules/TableDictionary.php');
         // first check to see if already loaded - assumes hasn't changed in the meantime
         if (isset($dictionary[$table_name][$def_name])) {
             return $dictionary[$table_name][$def_name];
@@ -1139,8 +1135,8 @@ class Link
 
             $locations = array('metadata/', 'custom/metadata/');
 
-            foreach ($locations as $basepath) {
-                $path = $basepath . $relationshipName . 'MetaData.php';
+            foreach ($locations as $basePath) {
+                $path = $basePath . $relationshipName . 'MetaData.php';
 
                 if (file_exists($path)) {
                     include($path);
