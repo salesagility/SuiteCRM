@@ -49,7 +49,7 @@ require_once("data/Relationships/SugarRelationship.php");
  */
 class M2MRelationship extends SugarRelationship
 {
-    var $type = "many-to-many";
+    public $type = "many-to-many";
 
     public function __construct($def)
     {
@@ -87,13 +87,13 @@ class M2MRelationship extends SugarRelationship
         //Only a single link was found
         if (isset($results['name'])) {
             return $results;
-        } //Multiple links with same relationship name
-        else if (is_array($results)) {
+        } elseif (is_array($results)) {
+            //Multiple links with same relationship name
             $GLOBALS['log']->error("Warning: Multiple links found for relationship " .
                 "{$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -127,7 +127,7 @@ class M2MRelationship extends SugarRelationship
     /**
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  $additionalFields array key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -147,7 +147,7 @@ class M2MRelationship extends SugarRelationship
             $this->addRow($dataToInsert);
             $rhs->$rhsLinkName->addBean($lhs);
             $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-        } else if (get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+        } elseif (get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
             $lhs->$lhsLinkName->addBean($rhs);
             $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
@@ -190,7 +190,7 @@ class M2MRelationship extends SugarRelationship
             $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
 
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -205,8 +205,6 @@ class M2MRelationship extends SugarRelationship
             'date_modified' => TimeDate::getInstance()->nowDb(),
             'deleted' => 0,
         );
-
-
         if (!empty($this->def['relationship_role_column'])
             && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter) {
             $row[$this->relationship_role_column] = $this->relationship_role_column_value;
@@ -340,7 +338,7 @@ class M2MRelationship extends SugarRelationship
                 }
             }
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -365,19 +363,23 @@ class M2MRelationship extends SugarRelationship
     }
 
     /**
-     * @param  $link Link2 loads the relationship for this link.
-     * @return void
+     * loads the relationship for this link.
+     *
+     * @param $link Link2
+     * @param  $params array
+     * @return array
      */
     public function load($link, $params = array())
     {
         $db = DBManagerFactory::getInstance();
         $query = $this->getQuery($link, $params);
         $result = $db->query($query);
-        $rows = Array();
+        $rows = array();
         $idField = $link->getSide() == REL_LHS ? $this->def['join_key_rhs'] : $this->def['join_key_lhs'];
-        while ($row = $db->fetchByAssoc($result, FALSE)) {
-            if (empty($row['id']) && empty($row[$idField]))
+        while ($row = $db->fetchByAssoc($result, false)) {
+            if (empty($row['id']) && empty($row[$idField])) {
                 continue;
+            }
             $id = empty($row['id']) ? $row[$idField] : $row['id'];
             $rows[$id] = $row;
         }
@@ -395,15 +397,14 @@ class M2MRelationship extends SugarRelationship
             $knownKey = $this->def['join_key_lhs'];
             $targetKey = $this->def['join_key_rhs'];
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
-            $relatedSeedKey = $this->def['rhs_key'];
-            if (!empty($params['where']) || !empty($params['order_by']))
+            if (!empty($params['where']) || !empty($params['order_by'])) {
                 $whereTable = (empty($params['right_join_table_alias'])
                     ? $relatedSeed->table_name : $params['right_join_table_alias']);
+            }
         } else {
             $knownKey = $this->def['join_key_rhs'];
             $targetKey = $this->def['join_key_lhs'];
             $relatedSeed = BeanFactory::getBean($this->getLHSModule());
-            $relatedSeedKey = $this->def['lhs_key'];
             if (!empty($params['where']) || !empty($params['order_by']))
                 $whereTable = (empty($params['left_join_table_alias'])
                     ? $relatedSeed->table_name : $params['left_join_table_alias']);
@@ -417,8 +418,9 @@ class M2MRelationship extends SugarRelationship
         if (!empty($params['where'])) {
             $add_where = is_string($params['where'])
                 ? $params['where'] : "$whereTable." . $this->getOptionalWhereClause($params['where']);
-            if (!empty($add_where))
+            if (!empty($add_where)) {
                 $where .= " AND $add_where";
+            }
         }
 
         //Add any optional order clauses
@@ -595,18 +597,18 @@ class M2MRelationship extends SugarRelationship
 
     protected function getRoleFilterForJoin()
     {
-        $ret = "";
+        $return = "";
         if (!empty($this->relationship_role_column) && !$this->ignore_role_filter) {
-            $ret .= " AND " . $this->getRelationshipTable() . '.' . $this->relationship_role_column;
+            $return .= " AND " . $this->getRelationshipTable() . '.' . $this->relationship_role_column;
             //role column value.
             if (empty($this->relationship_role_column_value)) {
-                $ret .= ' IS NULL';
+                $return .= ' IS NULL';
             } else {
-                $ret .= "='" . $this->relationship_role_column_value . "'";
+                $return .= "='" . $this->relationship_role_column_value . "'";
             }
-            $ret .= "\n";
+            $return .= "\n";
         }
-        return $ret;
+        return $return;
     }
 
     /**
@@ -626,7 +628,7 @@ class M2MRelationship extends SugarRelationship
     }
 
     /**
-     * @return Array - set of fields that uniquely identify an entry in this relationship
+     * @return array - set of fields that uniquely identify an entry in this relationship
      */
     protected function getAlternateKeyFields()
     {
@@ -642,18 +644,20 @@ class M2MRelationship extends SugarRelationship
 
     public function getRelationshipTable()
     {
-        if (!empty($this->def['table']))
+        if (!empty($this->def['table'])) {
             return $this->def['table'];
-        else if (!empty($this->def['join_table']))
+        }
+        if (!empty($this->def['join_table'])) {
             return $this->def['join_table'];
-
+        }
         return false;
     }
 
     public function getFields()
     {
-        if (!empty($this->def['fields']))
+        if (!empty($this->def['fields'])) {
             return $this->def['fields'];
+        }
         $fields = array(
             "id" => array('name' => 'id'),
             'date_modified' => array('name' => 'date_modified'),
@@ -669,5 +673,4 @@ class M2MRelationship extends SugarRelationship
 
         return $fields;
     }
-
 }
