@@ -245,6 +245,15 @@ function change_state(radiobutton) {
     	</td>
         
     </tr>
+	<tr>
+		<td width="20%" scope="row" valign='top'>
+            {$MOD.LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID}:&nbsp;
+		</td>
+		<td width="30%"  valign='top'>
+			<select>{$EMAIL_OPT_IN_TEMPLATES}</select>
+		</td>
+
+	</tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
 			<tr>
@@ -410,7 +419,7 @@ function change_state(radiobutton) {
 				</td>
 				<td scope="row">&nbsp;</td>
 				<td>&nbsp;</td>
-		</tr>
+			</tr>
 </table>
 </td>
 </tr>

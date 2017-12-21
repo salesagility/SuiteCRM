@@ -135,6 +135,8 @@ class ViewConfig extends SugarView
         $this->ss->assign("OUTBOUND_TYPE_CLASS", $outboundSendTypeCSSClass);
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
 
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
+        $this->ss->assign("EMAIL_OPT_IN_TEMPLATES", get_select_options_with_id($email_templates_arr, null));
         ///////////////////////////////////////////////////////////////////////////////
         ////	USER EMAIL DEFAULTS
         // editors
