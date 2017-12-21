@@ -1,5 +1,9 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -140,12 +144,17 @@ class Link {
 		}
 
 		//default to id if not set.
-		if (empty($this->_bean_key_name))$this->_bean_key_name='id';
+		if (empty($this->_bean_key_name)) {
+		    $this->_bean_key_name='id';
+    }
 
 		$GLOBALS['log']->debug("Link Constructor, _bean_table_name: ".$this->_bean_table_name);
 		$GLOBALS['log']->debug("Link Constructor, _bean_key_name: ".$this->_bean_key_name);
-		if (!empty($this->_relationship->id)) $GLOBALS['log']->debug("Link Constructor, relationship record found.");
-		else $GLOBALS['log']->debug("Link Constructor, No relationship record.") ;
+		if (!empty($this->_relationship->id)) {
+		    $GLOBALS['log']->debug("Link Constructor, relationship record found.");
+    } else {
+		    $GLOBALS['log']->debug("Link Constructor, No relationship record.") ;
+    }
 
 	}
 
@@ -394,18 +403,30 @@ class Link {
 
 	function _add_deleted_clause($deleted=0,$add_and='',$prefix='') {
 
-		if (!empty($prefix)) $prefix.='.';
-		if (!empty($add_and)) $add_and=' '.$add_and.' ';
+		if (!empty($prefix)) {
+		    $prefix.='.';
+    }
+		if (!empty($add_and)) {
+		    $add_and=' '.$add_and.' ';
+    }
 
-		if ($deleted==0)  return $add_and.$prefix.'deleted=0';
-		if ($deleted==1) return $add_and.$prefix.'deleted=1';
-		else return '';
+		if ($deleted==0)  {
+		    return $add_and.$prefix.'deleted=0';
+    }
+		if ($deleted==1) {
+		    return $add_and.$prefix.'deleted=1';
+    }
+		return '';
 	}
 
 	function _add_optional_where_clause($optional_array, $add_and='',$prefix='') {
 
-		if (!empty($prefix)) $prefix.='.';
-		if (!empty($add_and)) $add_and=' '.$add_and.' ';
+		if (!empty($prefix)) {
+		    $prefix.='.';
+    }
+		if (!empty($add_and)) {
+		    $add_and=' '.$add_and.' ';
+    }
 
 		if(!empty($optional_array)){
 			return $add_and.$prefix."".$optional_array['lhs_field']."".$optional_array['operator']."'"
