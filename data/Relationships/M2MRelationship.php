@@ -1,5 +1,8 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -76,13 +79,18 @@ class M2MRelationship extends SugarRelationship
      */
     public function getLinkedDefForModuleByRelationship($module)
     {
-        $results = VardefManager::getLinkFieldForRelationship($module, BeanFactory::getObjectName($module), $this->name);
+        $results = VardefManager::getLinkFieldForRelationship(
+            $module,
+            BeanFactory::getObjectName($module),
+            $this->name
+        );
         //Only a single link was found
         if (isset($results['name'])) {
             return $results;
         } //Multiple links with same relationship name
         else if (is_array($results)) {
-            $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
+            $GLOBALS['log']->error("Warning: Multiple links found for relationship " .
+                "{$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
         } else {
             return FALSE;
@@ -90,7 +98,8 @@ class M2MRelationship extends SugarRelationship
     }
 
     /**
-     * Find the most 'appropriate' link entry for a relationship/module in which there are multiple link entries with the
+     * Find the most 'appropriate' link entry for a relationship/module
+     * in which there are multiple link entries with the
      * same relationship name.
      *
      * @param $links
@@ -198,7 +207,8 @@ class M2MRelationship extends SugarRelationship
         );
 
 
-        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter) {
+        if (!empty($this->def['relationship_role_column'])
+            && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter) {
             $row[$this->relationship_role_column] = $this->relationship_role_column_value;
         }
 
@@ -387,14 +397,16 @@ class M2MRelationship extends SugarRelationship
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $relatedSeedKey = $this->def['rhs_key'];
             if (!empty($params['where']) || !empty($params['order_by']))
-                $whereTable = (empty($params['right_join_table_alias']) ? $relatedSeed->table_name : $params['right_join_table_alias']);
+                $whereTable = (empty($params['right_join_table_alias'])
+                    ? $relatedSeed->table_name : $params['right_join_table_alias']);
         } else {
             $knownKey = $this->def['join_key_rhs'];
             $targetKey = $this->def['join_key_lhs'];
             $relatedSeed = BeanFactory::getBean($this->getLHSModule());
             $relatedSeedKey = $this->def['lhs_key'];
             if (!empty($params['where']) || !empty($params['order_by']))
-                $whereTable = (empty($params['left_join_table_alias']) ? $relatedSeed->table_name : $params['left_join_table_alias']);
+                $whereTable = (empty($params['left_join_table_alias'])
+                    ? $relatedSeed->table_name : $params['left_join_table_alias']);
         }
         $rel_table = $this->getRelationshipTable();
 
@@ -403,7 +415,8 @@ class M2MRelationship extends SugarRelationship
 
         //Add any optional where clause
         if (!empty($params['where'])) {
-            $add_where = is_string($params['where']) ? $params['where'] : "$whereTable." . $this->getOptionalWhereClause($params['where']);
+            $add_where = is_string($params['where'])
+                ? $params['where'] : "$whereTable." . $this->getOptionalWhereClause($params['where']);
             if (!empty($add_where))
                 $where .= " AND $add_where";
         }
@@ -438,12 +451,22 @@ class M2MRelationship extends SugarRelationship
         }
 
         if (empty($params['return_as_array'])) {
-            $query = "SELECT $targetKey id $SelectIncludedMiddleTableFields FROM $from WHERE $where AND $rel_table.deleted=$deleted";
-            if (!empty($order_by)) $query .= ' ORDER BY ' . $order_by;
+            $query = "SELECT $targetKey id $SelectIncludedMiddleTableFields FROM "
+                . "$from WHERE $where AND $rel_table.deleted=$deleted";
+            if (!empty($order_by)) {
+                $query .= ' ORDER BY ' . $order_by;
+            }
             //Limit is not compatible with return_as_array
             if (!empty($params['limit']) && $params['limit'] > 0) {
                 $offset = isset($params['offset']) ? $params['offset'] : 0;
-                $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
+                $query = DBManagerFactory::getInstance()->limitQuery(
+                    $query,
+                    $offset,
+                    $params['limit'],
+                    false,
+                    "",
+                    false
+                );
             }
             return $query;
         } else {
@@ -460,9 +483,11 @@ class M2MRelationship extends SugarRelationship
     {
         $linkIsLHS = $link->getSide() == REL_LHS;
         if ($linkIsLHS) {
-            $startingTable = (empty($params['left_join_table_alias']) ? $link->getFocus()->table_name : $params['left_join_table_alias']);
+            $startingTable = (empty($params['left_join_table_alias'])
+                ? $link->getFocus()->table_name : $params['left_join_table_alias']);
         } else {
-            $startingTable = (empty($params['right_join_table_alias']) ? $link->getFocus()->table_name : $params['right_join_table_alias']);
+            $startingTable = (empty($params['right_join_table_alias'])
+                ? $link->getFocus()->table_name : $params['right_join_table_alias']);
         }
 
         $startingKey = $linkIsLHS ? $this->def['lhs_key'] : $this->def['rhs_key'];
@@ -540,7 +565,8 @@ class M2MRelationship extends SugarRelationship
             $joinTable = $params['join_table_link_alias'];
         }
 
-        $where = "$startingTable.$startingKey=$joinTable.$startingJoinKey AND $joinTable.$joinKey='{$link->getFocus()->$targetKey}'";
+        $where = "$startingTable.$startingKey=$joinTable.$startingJoinKey AND "
+            . "$joinTable.$joinKey='{$link->getFocus()->$targetKey}'";
 
         //Check if we should ignore the role filter.
         $ignoreRole = !empty($params['ignore_role']);
@@ -590,7 +616,8 @@ class M2MRelationship extends SugarRelationship
      */
     public function relationship_exists($lhs, $rhs)
     {
-        $query = "SELECT id FROM {$this->getRelationshipTable()} WHERE {$this->join_key_lhs} = '{$lhs->id}' AND {$this->join_key_rhs} = '{$rhs->id}'";
+        $query = "SELECT id FROM {$this->getRelationshipTable()} "
+            . "WHERE {$this->join_key_lhs} = '{$lhs->id}' AND {$this->join_key_rhs} = '{$rhs->id}'";
 
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
