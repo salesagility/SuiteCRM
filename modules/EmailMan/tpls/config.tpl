@@ -258,7 +258,17 @@ function change_state(radiobutton) {
 							</td>
 
 						</tr>
-						<tr>
+                        <tr>
+
+                            <td width="20%" scope="row" valign='top'>
+                                {$MOD.LBL_EMAIL_ENABLE_SEND_OPT_IN}:&nbsp;
+                            </td>
+                            <td width="30%"  valign='top'>
+                                <input type='checkbox' name='email_enable_auto_send_opt_in' value="1" {$EMAIL_ENABLE_AUTO_SEND_OPT_IN}>
+                            </td>
+
+                        </tr>
+                        <tr>
 							<td width="20%" scope="row" valign='top'>
 								{$MOD.LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID}:&nbsp;
 							</td>

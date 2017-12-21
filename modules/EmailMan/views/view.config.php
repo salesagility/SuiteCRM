@@ -136,8 +136,11 @@ class ViewConfig extends SugarView
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
 
         $configurator = new Configurator();
+        $this->ss->assign('EMAIL_ENABLE_AUTO_SEND_OPT_IN', ($configurator->config['email_enable_auto_send_opt_in']) ? "checked='checked'" : "");
+
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
-        $this->ss->assign("EMAIL_OPT_IN_TEMPLATES", get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']));
+        $this->ss->assign('EMAIL_OPT_IN_TEMPLATES', get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']));
+
         ///////////////////////////////////////////////////////////////////////////////
         ////	USER EMAIL DEFAULTS
         // editors
