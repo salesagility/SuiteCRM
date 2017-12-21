@@ -48,8 +48,8 @@ require_once("data/Relationships/One2MRelationship.php");
  */
 class One2MBeanRelationship extends One2MRelationship
 {
-    //Type is read in sugarbean to determine query construction
-    var $type = "one-to-many";
+    //Type is read in SugarBean to determine query construction
+    public $type = "one-to-many";
 
     public function __construct($def)
     {
@@ -59,7 +59,7 @@ class One2MBeanRelationship extends One2MRelationship
     /**
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  $additionalFields array key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -111,7 +111,7 @@ class One2MBeanRelationship extends One2MRelationship
         }
 
         //One2MBean relationships require that the RHS bean be saved or else the relationship will not be saved.
-        //If we aren't already in a relationship save, intitiate a save now.
+        //If we aren't already in a relationship save, inititiate a save now.
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
@@ -162,7 +162,7 @@ class One2MBeanRelationship extends One2MRelationship
         }
 
         if ($save && !$rhs->deleted) {
-            $rhs->in_relationship_update = TRUE;
+            $rhs->in_relationship_update = true;
             $rhs->save();
         }
 
@@ -176,11 +176,11 @@ class One2MBeanRelationship extends One2MRelationship
 
     /**
      * @param  $link Link2 loads the relationship for this link.
-     * @return void
+     * @param $params array
+     * @return array
      */
     public function load($link, $params = array())
     {
-        $relatedModule = $link->getSide() == REL_LHS ? $this->def['rhs_module'] : $this->def['lhs_module'];
         $rows = array();
         //The related bean ID is stored on the RHS table.
         //If the link is RHS, just grab it from the focus.
@@ -199,7 +199,7 @@ class One2MBeanRelationship extends One2MRelationship
                 return array("rows" => array());
             }
             $result = $db->query($query);
-            while ($row = $db->fetchByAssoc($result, FALSE)) {
+            while ($row = $db->fetchByAssoc($result, false)) {
                 $id = $row['id'];
                 $rows[$id] = $row;
             }
