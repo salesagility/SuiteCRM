@@ -353,7 +353,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
             // Set Google Maps API Key
-            $this->settings['google_maps_api_key'] = $rev['google_maps_api_key'];
+            $this->settings['google_maps_api_key'] = !empty($rev['google_maps_api_key'])?$rev['google_maps_api_key']:"";
         }
 
         // Set for Global Use
