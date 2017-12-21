@@ -119,28 +119,28 @@ function change_state(radiobutton) {
 								<div id="smtpButtonGroup" class="yui-buttongroup">
 				<span id="gmail" class="yui-button yui-radio-button{if $mail_smtptype == 'gmail'} yui-button-checked{/if}">
 					<span class="first-child">
-						<button type="button" name="mail_smtptype" value="gmail">
+						<button type="button" name="mail_smtptype" value="gmail" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_GMAIL}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
 				</span>
 									<span id="yahoomail" class="yui-button yui-radio-button{if $mail_smtptype == 'yahoomail'} yui-button-checked{/if}">
 					<span class="first-child">
-						<button type="button" name="mail_smtptype" value="yahoomail">
+						<button type="button" name="mail_smtptype" value="yahoomail" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_YAHOO}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
 				</span>
 									<span id="exchange" class="yui-button yui-radio-button{if $mail_smtptype == 'exchange'} yui-button-checked{/if}">
 					<span class="first-child">
-						<button type="button" name="mail_smtptype" value="exchange">
+						<button type="button" name="mail_smtptype" value="exchange" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_EXCHANGE}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
 				</span>
 									<span id="other" class="yui-button yui-radio-button{if $mail_smtptype == 'other' || empty($mail_smtptype)} yui-button-checked{/if}">
 					<span class="first-child">
-						<button type="button" name="mail_smtptype" value="other">
+						<button type="button" name="mail_smtptype" value="other" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_OTHER}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
@@ -202,7 +202,7 @@ function change_state(radiobutton) {
 						</tr>
 						<tr><td colspan="4">&nbsp;</tr>
 						<tr>
-							<td width="15%"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="testOutboundSettings();">&nbsp;</td>
+							<td width="15%"><input type="button" class="btn btn-info" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="testOutboundSettings();">&nbsp;</td>
 							<td width="15%">&nbsp;</td>
 							<td width="40%">&nbsp;</td>
 							<td width="40%">&nbsp;</td>
