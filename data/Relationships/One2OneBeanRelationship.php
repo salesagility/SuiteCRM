@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -52,10 +54,11 @@ class One2OneBeanRelationship extends One2MBeanRelationship
     {
         parent::__construct($def);
     }
+
     /**
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  $additionalFields array key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -72,11 +75,13 @@ class One2OneBeanRelationship extends One2MBeanRelationship
     protected function updateLinks($lhs, $lhsLinkName, $rhs, $rhsLinkName)
     {
         //RHS and LHS only ever have one bean
-        if (isset($lhs->$lhsLinkName))
+        if (isset($lhs->$lhsLinkName)) {
             $lhs->$lhsLinkName->beans = array($rhs->id => $rhs);
+        }
 
-        if (isset($rhs->$rhsLinkName))
+        if (isset($rhs->$rhsLinkName)) {
             $rhs->$rhsLinkName->beans = array($lhs->id => $lhs);
+        }
     }
 
     public function getJoin($link, $params = array(), $return_array = false)
@@ -87,14 +92,13 @@ class One2OneBeanRelationship extends One2MBeanRelationship
         $targetTable = $linkIsLHS ? $this->def['rhs_table'] : $this->def['lhs_table'];
         $targetTableWithAlias = $targetTable;
         $targetKey = $linkIsLHS ? $this->def['rhs_key'] : $this->def['lhs_key'];
-        $join_type= isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
+        $join_type = isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
 
         $join = '';
 
         //Set up any table aliases required
-        if ( ! empty($params['join_table_alias']))
-        {
-            $targetTableWithAlias = $targetTable . " ". $params['join_table_alias'];
+        if (!empty($params['join_table_alias'])) {
+            $targetTableWithAlias = $targetTable . " " . $params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }
 
@@ -102,11 +106,11 @@ class One2OneBeanRelationship extends One2MBeanRelationship
 
         //join the related module's table
         $join .= "$join_type $targetTableWithAlias ON $targetTable.$targetKey=$startingTable.$startingKey"
-               . " AND $targetTable.deleted=$deleted\n"
-        //Next add any role filters
-               . $this->getRoleWhere();
+            . " AND $targetTable.deleted=$deleted\n"
+            //Next add any role filters
+            . $this->getRoleWhere();
 
-        if($return_array){
+        if ($return_array) {
             return array(
                 'join' => $join,
                 'type' => $this->type,
