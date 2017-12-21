@@ -99,7 +99,8 @@ class Link {
 		$this->_db = DBManagerFactory::getInstance();
 
 
-		//Following behavior is tied to a property(ignore_role) value in the vardef. It alters the values of 2 properties, ignore_role_filter and add_distinct.
+		//Following behavior is tied to a property(ignore_role) value in the vardef.
+			// It alters the values of 2 properties, ignore_role_filter and add_distinct.
 		//the property values can be altered again before any requests are made.
 		if (!empty($fieldDef) && is_array($fieldDef)) {
 			if (array_key_exists('ignore_role', $fieldDef)) {
@@ -126,7 +127,8 @@ class Link {
 			}
 		}
 
-		if ($this->_relationship->lhs_table == $this->_relationship->rhs_table && isset($fieldDef['side']) && $fieldDef['side'] == 'right'){
+		if ($this->_relationship->lhs_table == $this->_relationship->rhs_table
+				&& isset($fieldDef['side']) && $fieldDef['side'] == 'right'){
 		    $this->_swap_sides = true;
 		}
 
@@ -230,11 +232,13 @@ class Link {
 	function _get_bean_position() {
 		//current beans module and table are on the left side or the right side.
 		$position = false;
-		if ($this->_relationship->lhs_table == $this->_bean_table_name &&  $this->_relationship->lhs_key == $this->_bean_key_name) {
+		if ($this->_relationship->lhs_table == $this->_bean_table_name
+				&&  $this->_relationship->lhs_key == $this->_bean_key_name) {
 			$position =  true;
 
 		}
-		if ($this->_relationship->rhs_table == $this->_bean_table_name &&  $this->_relationship->rhs_key == $this->_bean_key_name) {
+		if ($this->_relationship->rhs_table == $this->_bean_table_name
+				&&  $this->_relationship->rhs_key == $this->_bean_key_name) {
 			$position =  false;
 		}
 
@@ -268,7 +272,8 @@ class Link {
 			    $table = $this->_relationship->rhs_table;
 			    $key = $this->_relationship->rhs_key;
                 // check right table alias
-			    $other_table = (empty($params['left_join_table_alias']) ? $this->_relationship->lhs_table : $params['left_join_table_alias']);
+			    $other_table = (empty($params['left_join_table_alias'])
+							? $this->_relationship->lhs_table : $params['left_join_table_alias']);
 			    $other_key = $this->_relationship->lhs_key;
 			} else {
 			    $key = $this->_relationship->lhs_key;
@@ -279,18 +284,21 @@ class Link {
 			    	$table_with_alias = $table. " ".$params['join_table_alias'];
 			    	$table = $params['join_table_alias'];
 				}
-			    $other_table = (empty($params['right_join_table_alias']) ? $this->_relationship->rhs_table : $params['right_join_table_alias']);
+			    $other_table = (empty($params['right_join_table_alias'])
+							? $this->_relationship->rhs_table : $params['right_join_table_alias']);
 			    $other_key = $this->_relationship->rhs_key;
 			}
 
-		    $join = $join_type . ' '. $table_with_alias . " ON\n".$table.'.'.$key.'= '.$other_table.'.'.$other_key ." AND ". $table.".deleted=0\n";
+		    $join = $join_type . ' '. $table_with_alias . " ON\n".$table.'.'.$key.'= '
+						.$other_table.'.'.$other_key ." AND ". $table.".deleted=0\n";
 
 		}
 		if ($this->_relationship->relationship_type == 'one-to-many' && $bean_is_lhs) {
 
 			    $table = $this->_relationship->rhs_table;
 			    $key = $this->_relationship->rhs_key;
-			    $other_table = (empty($params['left_join_table_alias']) ? $this->_relationship->lhs_table : $params['left_join_table_alias']);
+			    $other_table = (empty($params['left_join_table_alias'])
+							? $this->_relationship->lhs_table : $params['left_join_table_alias']);
 			    $other_key = $this->_relationship->lhs_key;
 					if ( ! empty($params['join_table_alias']))
 					{
@@ -298,7 +306,8 @@ class Link {
 			    	$table = $params['join_table_alias'];
 					}
 
-			    $join = $join_type . ' '.$table_with_alias . " ON\n".$table.'.'.$key.'= '.$other_table.'.'.$other_key ." AND ". $table.".deleted=0\n";
+			    $join = $join_type . ' '.$table_with_alias . " ON\n".$table.'.'.$key.'= '
+							.$other_table.'.'.$other_key ." AND ". $table.".deleted=0\n";
 
 		}
 
@@ -316,12 +325,16 @@ class Link {
 
 			if ( $bean_is_lhs )
 			{
-                $other_table = (empty($params['left_join_table_alias']) ? $this->_relationship->lhs_table : $params['left_join_table_alias']);
-				$join .= $join_type . ' '.$rel_table_with_alias.' ON '.$other_table.".".$this->_relationship->lhs_key."=".$rel_table.".".$this->_relationship->join_key_lhs."  AND ".$rel_table.".deleted=0\n";
+                $other_table = (empty($params['left_join_table_alias'])
+										? $this->_relationship->lhs_table : $params['left_join_table_alias']);
+				$join .= $join_type . ' '.$rel_table_with_alias.' ON '.$other_table.".".$this->_relationship->lhs_key."="
+						.$rel_table.".".$this->_relationship->join_key_lhs."  AND ".$rel_table.".deleted=0\n";
 			} else
 			{
-                $other_table = (empty($params['right_join_table_alias']) ? $this->_relationship->rhs_table : $params['right_join_table_alias']);
-				$join .= $join_type . ' '.$rel_table_with_alias.' ON '.$other_table.".".$this->_relationship->rhs_key."=".$rel_table.".".$this->_relationship->join_key_rhs."  AND ".$rel_table.".deleted=0\n";
+                $other_table = (empty($params['right_join_table_alias'])
+										? $this->_relationship->rhs_table : $params['right_join_table_alias']);
+				$join .= $join_type . ' '.$rel_table_with_alias.' ON '.$other_table.".".$this->_relationship->rhs_key."="
+						.$rel_table.".".$this->_relationship->join_key_rhs."  AND ".$rel_table.".deleted=0\n";
 			}
 			if (!empty($this->_relationship->relationship_role_column) && !$this->ignore_role_filter)
 			{
@@ -349,12 +362,15 @@ class Link {
 			if ( $bean_is_lhs )
 			{
 				if($this->_rhs_key_override){
-					$join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->rhs_key."=".$rel_table.".".$this->_relationship->join_key_rhs." AND ".$table.".deleted=0";
+					$join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->rhs_key."=".$rel_table
+							.".".$this->_relationship->join_key_rhs." AND ".$table.".deleted=0";
 				}else{
-              	 	$join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->lhs_key."=".$rel_table.".".$this->_relationship->join_key_rhs." AND ".$table.".deleted=0";
+              	 	$join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->lhs_key."="
+											.$rel_table.".".$this->_relationship->join_key_rhs." AND ".$table.".deleted=0";
 				}
 			} else {
-                $join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->rhs_key."=".$rel_table.".".$this->_relationship->join_key_lhs." AND ".$table.".deleted=0";
+                $join .= $join_type . ' '.$table_with_alias.' ON '.$table.".".$this->_relationship->rhs_key."="
+										.$rel_table.".".$this->_relationship->join_key_lhs." AND ".$table.".deleted=0";
 			}
                 $join.= "\n";
 		}
@@ -392,7 +408,8 @@ class Link {
 		if (!empty($add_and)) $add_and=' '.$add_and.' ';
 
 		if(!empty($optional_array)){
-			return $add_and.$prefix."".$optional_array['lhs_field']."".$optional_array['operator']."'".$optional_array['rhs_value']."'";
+			return $add_and.$prefix."".$optional_array['lhs_field']."".$optional_array['operator']."'"
+					.$optional_array['rhs_value']."'";
 		}
 		return '';
 	//end function _add_optional_where_clause
@@ -400,7 +417,16 @@ class Link {
 
 
 
-	function getQuery($return_as_array=false, $sort_array = array(),$deleted=0, $optional_where="", $return_join = false, $bean_filter="", $role="", $for_subpanels = false){
+	function getQuery(
+		$return_as_array=false,
+		$sort_array = array(),
+		$deleted=0,
+		$optional_where="",
+		$return_join = false,
+		$bean_filter="",
+		$role="",
+		$for_subpanels = false
+	){
 
 		$select='';
 		$from='';
@@ -465,7 +491,8 @@ class Link {
 			}
 			else {
 			    $from= 'FROM '.$this->_relationship->lhs_table;
-			    $where='WHERE '.$this->_relationship->lhs_table.'.'.$this->_relationship->lhs_key."= '".$this->_bean->{$this->_relationship->rhs_key}."'";
+			    $where='WHERE '.$this->_relationship->lhs_table.'.'.$this->_relationship->lhs_key."= '"
+							.$this->_bean->{$this->_relationship->rhs_key}."'";
 			    //added deleted clause.
 			    $where.=$this->_add_deleted_clause($deleted,'AND', $this->_relationship->lhs_table);
 
@@ -521,7 +548,10 @@ class Link {
 				}
 
 			    $from= 'FROM '.$this->_relationship->rhs_table;
-			    $subjoin=' INNER JOIN '.$this->_relationship->join_table.' ON ('.$this->_relationship->rhs_table.".".$this->_relationship->rhs_key."=".$this->_relationship->join_table.".".$this->_relationship->join_key_rhs." AND ".$this->_relationship->join_table.".".$this->_relationship->join_key_lhs.$bean_filter;
+			    $subjoin=' INNER JOIN '.$this->_relationship->join_table.' ON ('.$this->_relationship->rhs_table."."
+							.$this->_relationship->rhs_key."=".$this->_relationship->join_table."."
+							.$this->_relationship->join_key_rhs." AND ".$this->_relationship->join_table."."
+							.$this->_relationship->join_key_lhs.$bean_filter;
 				$join_tables[] = $this->_relationship->join_table;
 			    if (!empty($this->_relationship->relationship_role_column) && !$this->ignore_role_filter) {
 			    	$subjoin.=" AND ".$this->_relationship->join_table.'.'.$this->_relationship->relationship_role_column;
@@ -540,7 +570,8 @@ class Link {
 
 				//add deleted clause.
 				if ($deleted == 0 or $deleted==1) {
-			    	$where.=' WHERE '.$this->_add_deleted_clause($deleted,'',$this->_relationship->join_table).$this->_add_deleted_clause($deleted,'AND',$this->_relationship->rhs_table);
+			    	$where.=' WHERE '.$this->_add_deleted_clause($deleted,'',$this->_relationship->join_table)
+								.$this->_add_deleted_clause($deleted,'AND',$this->_relationship->rhs_table);
 				}
 
 
@@ -559,7 +590,10 @@ class Link {
 				}
 
 			    $from= 'FROM '.$this->_relationship->lhs_table;
-			    $subjoin=' INNER JOIN '.$this->_relationship->join_table.' ON ('.$this->_relationship->lhs_table.".".$this->_relationship->lhs_key."=".$this->_relationship->join_table.".".$this->_relationship->join_key_lhs." AND ".$this->_relationship->join_table.".".$this->_relationship->join_key_rhs.$bean_filter;
+			    $subjoin=' INNER JOIN '.$this->_relationship->join_table.' ON ('.$this->_relationship->lhs_table."."
+							.$this->_relationship->lhs_key."=".$this->_relationship->join_table."."
+							.$this->_relationship->join_key_lhs." AND ".$this->_relationship->join_table."."
+							.$this->_relationship->join_key_rhs.$bean_filter;
 			    $join_tables[] = $this->_relationship->join_table;
 			    if (!empty($this->_relationship->relationship_role_column) && !$this->ignore_role_filter) {
 			    	$subjoin.=" AND ".$this->_relationship->relationship_role_column;
@@ -576,7 +610,8 @@ class Link {
 			    $from .= $subjoin;
 				//add deleted clause.
 				if ($deleted == 0 or $deleted==1) {
-			    	$where.=' WHERE '.$this->_add_deleted_clause($deleted,'',$this->_relationship->join_table).$this->_add_deleted_clause($deleted,'AND',$this->_relationship->lhs_table);
+			    	$where.=' WHERE '.$this->_add_deleted_clause($deleted,'',$this->_relationship->join_table)
+								.$this->_add_deleted_clause($deleted,'AND',$this->_relationship->lhs_table);
 				}
 
 
@@ -607,7 +642,14 @@ class Link {
 		}
 	}
 
-	function getBeans($template, $sort_array = array(), $begin_index = 0, $end_index = -1, $deleted=0, $optional_where="") {
+	function getBeans(
+		$template,
+		$sort_array = array(),
+		$begin_index = 0,
+		$end_index = -1,
+		$deleted=0,
+		$optional_where=""
+	) {
 		$query = $this->getQuery(false,array(), $deleted, $optional_where); //get array of IDs
 		return $this->_bean->build_related_list($query, $template);
 	}
@@ -628,7 +670,8 @@ class Link {
 
 		//add role column to the query.
 		if (!empty($this->_relationship->relationship_role_column)) {
-			$query.=' ,'.$this->_relationship->relationship_role_column."='".$this->_relationship->relationship_role_column_value."'";
+			$query.=' ,'.$this->_relationship->relationship_role_column."='"
+					.$this->_relationship->relationship_role_column_value."'";
 		}
 		$query.=' WHERE '.$this->_relationship->rhs_table.".id='".$where_key_value."'";
 
@@ -691,7 +734,8 @@ class Link {
 			if (($this->_relationship->relationship_type == 'one-to-one')
 				or ($this->_relationship->relationship_type == 'one-to-many' and !$bean_is_lhs)
 				or ($this->_relationship->relationship_type == 'many-to-one')) {
-					$GLOBALS['log']->fatal("Invalid parameters passed to function, the relationship does not support addition of multiple records.");
+					$GLOBALS['log']->fatal("Invalid parameters passed to function, " .
+							"the relationship does not support addition of multiple records.");
 					return;
 				}
 		}
@@ -699,7 +743,8 @@ class Link {
         foreach($keys as $key) {
 
 			//fetch the related record using the key and update.
-			if ($this->_relationship->relationship_type=='one-to-one' || $this->_relationship->relationship_type == 'one-to-many' ) {
+			if ($this->_relationship->relationship_type=='one-to-one'
+					|| $this->_relationship->relationship_type == 'one-to-many' ) {
                 $this->_add_one_to_many_table_based($key,$bean_is_lhs);
 			}
 
@@ -735,8 +780,10 @@ class Link {
 					$additional_values[$this->_relationship->join_key_lhs]=$key;
 				}
 				//add the role condition.
-				if (!empty($this->_relationship->relationship_role_column) && !empty($this->_relationship->relationship_role_column_value)) {
-					$additional_values[$this->_relationship->relationship_role_column]=$this->_relationship->relationship_role_column_value;
+				if (!empty($this->_relationship->relationship_role_column)
+						&& !empty($this->_relationship->relationship_role_column_value)) {
+					$additional_values[$this->_relationship->relationship_role_column]
+							= $this->_relationship->relationship_role_column_value;
 				}
 				//add deleted condition.
 				$additional_values['deleted']=0;
@@ -819,7 +866,8 @@ class Link {
 	}
 
 	function _delete_row($table_name,$key) {
-		$query="UPDATE $table_name SET deleted=1, date_modified='" .$GLOBALS['timedate']->nowDb()."' WHERE id='".$this->_db->quote($key)."'";
+		$query="UPDATE $table_name SET deleted=1, date_modified='" .$GLOBALS['timedate']->nowDb()
+				."' WHERE id='".$this->_db->quote($key)."'";
 		$GLOBALS['log']->debug("Relationship Delete Statement :".$query);
 
 		$result=$this->_db->query($query, true);
@@ -882,11 +930,14 @@ class Link {
 	    if ($_relationship->relationship_type=='one-to-many' or $_relationship->relationship_type=='one-to-one' ) {
     		if ($bean_is_lhs) {
     			//update rhs_table set rhs_key = null, relation_column_name = null where rhs_key= this_bean_id
-    			$query='UPDATE '.$_relationship->rhs_table.' SET '.$_relationship->rhs_key."=NULL, date_modified='".$GLOBALS['timedate']->nowDb()."'";
+    			$query='UPDATE '.$_relationship->rhs_table.' SET '.$_relationship->rhs_key
+							."=NULL, date_modified='".$GLOBALS['timedate']->nowDb()."'";
 
-    			if (!empty($_relationship->relationship_role_column) && !empty($_relationship->relationship_role_column_value)) {
+    			if (!empty($_relationship->relationship_role_column)
+							&& !empty($_relationship->relationship_role_column_value)) {
     				$query.=','.$_relationship->relationship_role_column."= NULL ";
-    				$query.=' WHERE '.$_relationship->relationship_role_column."= '".$_relationship->relationship_role_column_value."' AND ";
+    				$query.=' WHERE '.$_relationship->relationship_role_column."= '"
+								.$_relationship->relationship_role_column_value."' AND ";
     			} else {
     				$query.=' WHERE ';
     			}
@@ -917,35 +968,47 @@ class Link {
 			$use_bean_is_lhs = isset($_REQUEST['ajaxSubpanel']) || $this->_swap_sides !== true;
     		$query='UPDATE '.$_relationship->join_table." SET deleted=1, date_modified='".$GLOBALS['timedate']->nowDb()."'";
     		if ($bean_is_lhs && $use_bean_is_lhs) {
-    			if (!empty($this->_relationship->reverse) && ($this->_relationship->reverse == true or $this->_relationship->reverse == 1)){
+    			if (!empty($this->_relationship->reverse)
+							&& ($this->_relationship->reverse == true or $this->_relationship->reverse == 1)){
     				if (empty($related_id)) {
-    					$query.=" WHERE (".$_relationship->join_key_lhs."= '". $id ."' or ".$_relationship->join_key_rhs."='". $id ."')" ;
+    					$query.=" WHERE (".$_relationship->join_key_lhs."= '". $id ."' or "
+									.$_relationship->join_key_rhs."='". $id ."')" ;
     				} else {
-    					$query.=" WHERE (".$_relationship->join_key_lhs."= '". $id ."' AND ".$_relationship->join_key_rhs."='".$related_id."') OR (".$_relationship->join_key_rhs."='". $id ."' AND ".$_relationship->join_key_lhs."='".$related_id."')";
+    					$query.=" WHERE (".$_relationship->join_key_lhs."= '". $id ."' AND ".$_relationship->join_key_rhs
+									."='".$related_id."') OR (".$_relationship->join_key_rhs."='". $id ."' AND "
+									.$_relationship->join_key_lhs."='".$related_id."')";
     				}
     			} else {
     				if (empty($related_id)) {
     					$query.=" WHERE ".$_relationship->join_key_lhs."= '". $id ."'";
     				} else {
-    					$query.=" WHERE ".$_relationship->join_key_lhs."= '". $id ."' AND ".$_relationship->join_key_rhs."= '". $related_id."'";
+    					$query.=" WHERE ".$_relationship->join_key_lhs."= '". $id ."' AND ".$_relationship->join_key_rhs."= '"
+									. $related_id."'";
     				}
     			}
     		} else {
-                if (!empty($this->_relationship->reverse) && ($this->_relationship->reverse == true or $this->_relationship->reverse == 1)) {
+                if (!empty($this->_relationship->reverse)
+										&& ($this->_relationship->reverse == true or $this->_relationship->reverse == 1)) {
                     if (empty($related_id)) {
-                        $query.=" WHERE (".$_relationship->join_key_rhs."= '". $id ."' or ".$_relationship->join_key_lhs."='". $id ."')" ;
+                        $query.=" WHERE (".$_relationship->join_key_rhs."= '". $id ."' or "
+														.$_relationship->join_key_lhs."='". $id ."')" ;
                     } else {
-                        $query.=" WHERE (".$_relationship->join_key_rhs."= '". $id ."' AND ".$_relationship->join_key_lhs."='".$related_id."') OR (".$_relationship->join_key_lhs."='". $id ."' AND ".$_relationship->join_key_rhs."='".$related_id."')";
+                        $query.=" WHERE (".$_relationship->join_key_rhs."= '". $id ."' AND "
+														.$_relationship->join_key_lhs."='".$related_id."') OR (".$_relationship->join_key_lhs."='"
+														. $id ."' AND ".$_relationship->join_key_rhs."='".$related_id."')";
                     }
                 } else {
                      if (empty($related_id)) {
                         $query.=" WHERE ".$_relationship->join_key_rhs."= '". $id ."'" ;
                      } else {
-                        $query.=" WHERE ".$_relationship->join_key_rhs."= '". $id ."' AND ".$_relationship->join_key_lhs."= '". $related_id."'" ;
+                        $query.=" WHERE ".$_relationship->join_key_rhs."= '". $id ."' AND "
+														.$_relationship->join_key_lhs."= '". $related_id."'" ;
                      }
                 }
-    			if (!empty($_relationship->relationship_role_column) && !empty($_relationship->relationship_role_column_value)) {
-    				$query.=' AND '.$_relationship->relationship_role_column."= '".$_relationship->relationship_role_column_value."'";
+    			if (!empty($_relationship->relationship_role_column)
+							&& !empty($_relationship->relationship_role_column_value)) {
+    				$query.=' AND '.$_relationship->relationship_role_column."= '"
+								.$_relationship->relationship_role_column_value."'";
     			}
     		}
 		}
@@ -1029,8 +1092,8 @@ class Link {
 		}
 	}
 
-	/* returns array of keys for duplicate checking, first check for an index of type alternate_key, if not found searches for
-	 * primary key.
+	/* returns array of keys for duplicate checking, first check for an index of type alternate_key,
+	 * if not found searches for primary key.
 	 *
 	 */
 	function _get_alternate_key_fields($table_name) {
@@ -1044,9 +1107,15 @@ class Link {
 			}
 		}
 		$relationships=Link::_get_link_table_definition($table_name,'relationships');
-		if (!empty($relationships)) {//bug 32623, when the relationship is built in old version, there is no alternate_key. we have to use join_key_lhs and join_key_lhs.
-			if(!empty($relationships[$this->_relationship_name]) && !empty($relationships[$this->_relationship_name]['join_key_lhs']) && !empty($relationships[$this->_relationship_name]['join_key_rhs'])) {
-				return array($relationships[$this->_relationship_name]['join_key_lhs'], $relationships[$this->_relationship_name]['join_key_rhs']);
+		if (!empty($relationships)) {//bug 32623, when the relationship is built in old version,
+				// there is no alternate_key. we have to use join_key_lhs and join_key_lhs.
+			if(!empty($relationships[$this->_relationship_name])
+					&& !empty($relationships[$this->_relationship_name]['join_key_lhs'])
+					&& !empty($relationships[$this->_relationship_name]['join_key_rhs'])) {
+				return array(
+					$relationships[$this->_relationship_name]['join_key_lhs'],
+					$relationships[$this->_relationship_name]['join_key_rhs']
+				);
 			}
 		}
 	}
@@ -1073,7 +1142,9 @@ class Link {
  			if (isset($dictionary[$this->_relationship_name][$def_name])) {
  				return ($dictionary[$this->_relationship_name][$def_name]);
  			}
-            // custom metadata is found in custom/metadata (naturally) and the naming follows the convention $relationship_name_c, and $relationship_name = $table_name$locations = array( 'metadata/' , 'custom/metadata/' ) ;
+            // custom metadata is found in custom/metadata (naturally) and the naming follows the convention
+            // $relationship_name_c, and $relationship_name = $table_name$locations
+            // = array( 'metadata/' , 'custom/metadata/' ) ;
             $relationshipName = preg_replace( '/_c$/' , '' , $table_name ) ;
 
             $locations = array ( 'metadata/' , 'custom/metadata/' ) ;
