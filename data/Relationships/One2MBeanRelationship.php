@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -65,7 +67,9 @@ class One2MBeanRelationship extends One2MRelationship
         // test to see if the relationship exist if the relationship between the two beans
         // exist then we just fail out with false as we don't want to re-trigger this
         // the save and such as it causes problems with the related() in sugarlogic
-        if ($this->relationship_exists($lhs, $rhs) && !empty($GLOBALS['resavingRelatedBeans'])) return false;
+        if ($this->relationship_exists($lhs, $rhs) && !empty($GLOBALS['resavingRelatedBeans'])) {
+            return false;
+        }
 
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
@@ -76,8 +80,9 @@ class One2MBeanRelationship extends One2MRelationship
             $oldLink = $rhs->$rhsLinkName;
             $prevRelated = $oldLink->getBeans(null);
             foreach ($prevRelated as $oldLHS) {
-                if ($oldLHS->id != $lhs->id)
+                if ($oldLHS->id != $lhs->id) {
                     $this->remove($oldLHS, $rhs, false);
+                }
             }
         }
 
@@ -106,19 +111,22 @@ class One2MBeanRelationship extends One2MRelationship
 
         //One2MBean relationships require that the RHS bean be saved or else the relationship will not be saved.
         //If we aren't already in a relationship save, intitiate a save now.
-        if (empty($GLOBALS['resavingRelatedBeans']))
+        if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
+        }
 
         return true;
     }
 
     protected function updateLinks($lhs, $lhsLinkName, $rhs, $rhsLinkName)
     {
-        if (isset($lhs->$lhsLinkName))
+        if (isset($lhs->$lhsLinkName)) {
             $lhs->$lhsLinkName->addBean($rhs);
+        }
         //RHS only has one bean ever, so we don't need to preload the relationship
-        if (isset($rhs->$rhsLinkName))
+        if (isset($rhs->$rhsLinkName)) {
             $rhs->$rhsLinkName->beans = array($lhs->id => $lhs);
+        }
     }
 
     protected function updateFields($lhs, $rhs, $additionalFields)
@@ -141,8 +149,9 @@ class One2MBeanRelationship extends One2MRelationship
         $rhsID = $this->def['rhs_key'];
 
         //If this relationship has already been removed, we can just return
-        if ($rhs->$rhsID != $lhs->id)
+        if ($rhs->$rhsID != $lhs->id) {
             return false;
+        }
 
         $rhs->$rhsID = '';
 
@@ -180,8 +189,8 @@ class One2MBeanRelationship extends One2MRelationship
             if (!empty($id)) {
                 $rows[$id] = array('id' => $id);
             }
-        } else //If the link is LHS, we need to query to get the full list and load all the beans.
-        {
+        } else {
+            //If the link is LHS, we need to query to get the full list and load all the beans.
             $db = DBManagerFactory::getInstance();
             $query = $this->getQuery($link, $params);
             if (empty($query)) {
@@ -226,8 +235,9 @@ class One2MBeanRelationship extends One2MRelationship
             //Add any optional where clause
             if (!empty($params['where'])) {
                 $add_where = is_string($params['where']) ? $params['where'] : "$rhsTable." . $this->getOptionalWhereClause($params['where']);
-                if (!empty($add_where))
+                if (!empty($add_where)) {
                     $where .= " AND $add_where";
+                }
             }
 
             //Add any optional order clauses
@@ -240,7 +250,9 @@ class One2MBeanRelationship extends One2MRelationship
             if (empty($params['return_as_array'])) {
                 //Limit is not compatible with return_as_array
                 $query = "SELECT id FROM $from $where";
-                if (!empty($order_by)) $query .= ' ORDER BY ' . $order_by;
+                if (!empty($order_by)) {
+                    $query .= ' ORDER BY ' . $order_by;
+                }
                 if (!empty($params['limit']) && $params['limit'] > 0) {
                     $offset = isset($params['offset']) ? $params['offset'] : 0;
                     $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
@@ -261,8 +273,9 @@ class One2MBeanRelationship extends One2MRelationship
     {
         $linkIsLHS = $link->getSide() == REL_LHS;
         $startingTable = (empty($params['left_join_table_alias']) ? $this->def['lhs_table'] : $params['left_join_table_alias']);
-        if (!$linkIsLHS)
+        if (!$linkIsLHS) {
             $startingTable = (empty($params['right_join_table_alias']) ? $this->def['rhs_table'] : $params['right_join_table_alias']);
+        }
         $startingKey = $linkIsLHS ? $this->def['lhs_key'] : $this->def['rhs_key'];
         $targetTable = $linkIsLHS ? $this->def['rhs_table'] : $this->def['lhs_table'];
         $targetTableWithAlias = $targetTable;
@@ -376,9 +389,9 @@ class One2MBeanRelationship extends One2MRelationship
 
     public function getRelationshipTable()
     {
-        if (isset($this->def['table']))
+        if (isset($this->def['table'])) {
             return $this->def['table'];
-        else
-            return $this->def['rhs_table'];
+        }
+        return $this->def['rhs_table'];
     }
 }
