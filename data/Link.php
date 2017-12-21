@@ -52,7 +52,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Link
 {
     /* Private variables.*/
-    private $_log;
     private $_relationship_name; //relationship this attribute is tied to.
     private $_bean; //stores a copy of the bean.
     private $_relationship = '';
@@ -85,7 +84,6 @@ class Link
     */
     public function __construct($_rel_name, &$_bean, $fieldDef, $_table_name = '', $_key_name = '')
     {
-        global $dictionary;
         require_once("modules/TableDictionary.php");
         $GLOBALS['log']->debug("Link Constructor, relationship name: " . $_rel_name);
         $GLOBALS['log']->debug("Link Constructor, Table name: " . $_table_name);
@@ -270,8 +268,6 @@ class Link
         if (isset($params['join_type'])) {
             $join_type = $params['join_type'];
         }
-        $id = -1;
-        $join = '';
         $bean_is_lhs = $this->_get_bean_position();
 
         if ($this->_relationship->relationship_type == 'one-to-one'
@@ -423,7 +419,6 @@ class Link
                 . $optional_array['rhs_value'] . "'";
         }
         return '';
-        //end function _add_optional_where_clause
     }
 
 
@@ -693,7 +688,7 @@ class Link
 
         $GLOBALS['log']->fatal("Relationship Query " . $query);
 
-        $result = $this->_db->query($query, true);
+        $this->_db->query($query, true);
     }
 
     /* handles many to one*/
@@ -859,37 +854,10 @@ class Link
 
         //check whether duplicate exist or not.
         if ($this->relationship_exists($this->_relationship->join_table, $add_values)) {
-
-            /*			switch($this->when_dup_relationship_found) {
-
-            case 1: //do nothing.
-            $GLOBALS['log']->debug("Executing default option, no action.");
-            break;
-
-            case 3: //delete the record first, then create a new entry.
-            $this->_delete_row($this->_relationship->join_table,$this->_duplicate_key);
-            $this->_insert_row($add_values);
-            break;
-
-            default:
-            case 2: //update the record.
-            */
             $this->_update_row($add_values, $this->_relationship->join_table, $this->_duplicate_where);
-            /*					break;
-            }*/
-
         } else {
             $this->_insert_row($add_values);
         }
-    }
-
-    private function _delete_row($table_name, $key)
-    {
-        $query = "UPDATE $table_name SET deleted=1, date_modified='" . $GLOBALS['timedate']->nowDb()
-            . "' WHERE id='" . $this->_db->quote($key) . "'";
-        $GLOBALS['log']->debug("Relationship Delete Statement :" . $query);
-
-        $result = $this->_db->query($query, true);
     }
 
     private function _update_row(&$value_array, $table_name, $where)
@@ -903,7 +871,7 @@ class Link
         $query .= $where;
         $GLOBALS['log']->debug("Relationship Update Statement :" . $query);
 
-        $result = $this->_db->query($query, true);
+        $this->_db->query($query, true);
     }
 
     private function _insert_row(&$value_array)
@@ -923,7 +891,7 @@ class Link
             . $columns_list . ') VALUES (' . $values_list . ')';
         $GLOBALS['log']->debug("Relationship Insert String :" . $insert_string);
 
-        $result = $this->_db->query($insert_string, true);
+        $this->_db->query($insert_string, true);
     }
 
 
@@ -943,7 +911,6 @@ class Link
         );
 
         $_relationship =& $this->_relationship;
-        $_bean =& $this->_bean;
 
         $bean_is_lhs = $this->_get_bean_position();
         if (!isset($bean_is_lhs)) {
