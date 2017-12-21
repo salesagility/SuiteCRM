@@ -318,7 +318,8 @@ abstract class SugarRelationship
         //Check the relationship role as well
         $roleCheck = $this->getRoleWhere();
 
-        $query = "SELECT * FROM {$this->getRelationshipTable()} WHERE $leftIDName='$leftID' AND $rightIDName='$rightID' $roleCheck AND deleted=0";
+        $query = "SELECT * FROM {$this->getRelationshipTable()} WHERE $leftIDName='$leftID' "
+            . "AND $rightIDName='$rightID' $roleCheck AND deleted=0";
 
         $db = DBManagerFactory::getInstance();
         $result = $db->query($query);
@@ -345,7 +346,8 @@ abstract class SugarRelationship
         if (empty($table)) {
             $table = $this->getRelationshipTable();
         }
-        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$ignore_role_filter) {
+        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value'])
+            && !$ignore_role_filter) {
             if (empty($table)) {
                 $roleCheck = " AND $this->relationship_role_column";
             } else {
@@ -432,7 +434,8 @@ abstract class SugarRelationship
     }
 
     /**
-     * @param $optional_array array clause to add to the where query when populating this relationship. It should be in the
+     * @param $optional_array array clause to add to the where query when populating this relationship.
+     * It should be in the
      *
      * @return string
      */
@@ -445,7 +448,8 @@ abstract class SugarRelationship
             }
         }
 
-        return $optional_array['lhs_field'] . '' . $optional_array['operator'] . "'" . $optional_array['rhs_value'] . "'";
+        return $optional_array['lhs_field'] . '' . $optional_array['operator'] . "'"
+            . $optional_array['rhs_value'] . "'";
     }
 
     /**
