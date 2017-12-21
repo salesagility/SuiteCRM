@@ -113,7 +113,7 @@ class One2MBeanRelationship extends One2MRelationship
         //If we aren't already in a relationship save, intitiate a save now.
         if (empty($GLOBALS['resavingRelatedBeans']))
             SugarRelationship::resaveRelatedBeans();
-        
+
         return true;
     }
 
@@ -294,8 +294,8 @@ class One2MBeanRelationship extends One2MRelationship
 
         //First join the relationship table
         $join .= "$join_type $targetTableWithAlias ON $startingTable.$startingKey=$targetTable.$targetKey AND $targetTable.deleted=0\n"
-        //Next add any role filters
-               . $this->getRoleWhere(($linkIsLHS) ? $targetTable : $startingTable) . "\n";
+            //Next add any role filters
+            . $this->getRoleWhere(($linkIsLHS) ? $targetTable : $startingTable) . "\n";
 
         if($return_array){
             return array(
@@ -347,14 +347,14 @@ class One2MBeanRelationship extends One2MRelationship
         {
             $tableInRoleFilter = $linkIsLHS ? $alias : $startingTable;
         }
-        
+
         //Set up any table aliases required
         $targetTableWithAlias = "$targetTable $alias";
         $targetTable = $alias;
 
         $query .= "$join_type $targetTableWithAlias ON $startingTable.$startingKey=$targetTable.$targetKey AND $targetTable.deleted=0\n"
-        //Next add any role filters
-               . $this->getRoleWhere($tableInRoleFilter) . "\n";
+            //Next add any role filters
+            . $this->getRoleWhere($tableInRoleFilter) . "\n";
 
         if (!empty($params['return_as_array'])) {
             $return_array = true;
