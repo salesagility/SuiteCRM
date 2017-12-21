@@ -197,9 +197,9 @@ class SugarRelationshipFactory
             if (!empty($def['relationships'])) {
                 foreach ($def['relationships'] as $relKey => $relDef) {
                     if ($key === $relKey) { //Relationship only entry, we need to capture everything
-                        $relationships[$key] = array_merge(array('name' => $key), (array) $def, (array) $relDef);
+                        $relationships[$key] = array_merge(array('name' => $key), (array)$def, (array)$relDef);
                     } else {
-                        $relationships[$relKey] = array_merge(array('name' => $relKey), (array) $relDef);
+                        $relationships[$relKey] = array_merge(array('name' => $relKey), (array)$relDef);
                         if (!empty($relationships[$relKey]['join_table']) && empty($relationships[$relKey]['fields'])
                             && isset($dictionary[$relationships[$relKey]['join_table']]['fields'])
                         ) {
@@ -211,7 +211,7 @@ class SugarRelationshipFactory
         }
         //Save it out
         sugar_mkdir(dirname($this->getCacheFile()), null, true);
-        $out = "<?php \n \$relationships = ".var_export($relationships, true).';';
+        $out = "<?php \n \$relationships = " . var_export($relationships, true) . ';';
         sugar_file_put_contents_atomic($this->getCacheFile(), $out);
 
         $this->relationships = $relationships;
