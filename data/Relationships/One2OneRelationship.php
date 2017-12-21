@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -53,18 +55,18 @@ class One2OneRelationship extends M2MRelationship
     {
         parent::__construct($def);
     }
+
     /**
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  $additionalFields array key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
         //If the current data matches the existing data, don't do anything
-        if (!$this->checkExisting($dataToInsert))
-        {
+        if (!$this->checkExisting($dataToInsert)) {
             $lhsLinkName = $this->lhsLink;
             $rhsLinkName = $this->rhsLink;
             //In a one to one, any existing links from both sides must be removed first.
@@ -80,6 +82,4 @@ class One2OneRelationship extends M2MRelationship
         // data matched what was there so return false, since nothing happened
         return false;
     }
-
-
 }
