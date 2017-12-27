@@ -186,11 +186,9 @@ class EmailsController extends SugarController
                 // We need to ensure that drafts will still show
                 // in the list view
                 if ($this->bean->status !== 'draft') {
-                    $this->bean->status = 'send_error';
                     $this->bean->save();
-                } else {
-                    $this->bean->status = 'send_error';
                 }
+                $this->bean->status = 'send_error';
         }
 
             $this->view = 'sendemail';
@@ -443,6 +441,28 @@ class EmailsController extends SugarController
 
                 $data[] = $dataAddress;
             }
+        }
+
+        $oe = new OutboundEmail();
+        if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
+            $system = $oe->getSystemMailerSettings();
+            $data[] = array(
+                'type' => 'system',
+                'id' => $system->id,
+                'attributes' => array(
+                    'from' => $system->mail_smtpuser,
+                    'name' => $current_user->name,
+                    'oe' => $system->mail_smtpuser,
+                ),
+                'prepend' => false,
+                'isPersonalEmailAccount' => false,
+                'isGroupEmailAccount' => true,
+                'outboundEmail' => array(
+                    'id' => $system->id,
+                    'name' => $system->name,
+                ),
+                'emailSignatures' => $defaultEmailSignature,
+            );
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
@@ -849,8 +869,6 @@ class EmailsController extends SugarController
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
-        $hasAccess = false;
-
         // Check that user is allowed to use inbound email account
         $hasAccessToInboundEmailAccount = false;
         $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
@@ -910,11 +928,14 @@ class EmailsController extends SugarController
             $isAllowedToUseOutboundEmail = true;
         }
 
-        $hasAccess =
-            ($hasAccessToInboundEmailAccount === true) &&
-            ($isFromAddressTheSame === true) &&
-            ($isAllowedToUseOutboundEmail === true);
+        // The inbound email account is an empty object, we assume the user has access
+        if (empty($requestedInboundEmail->id)) {
+            $hasAccessToInboundEmailAccount = true;
+            $isFromAddressTheSame = true;
+        }
 
-        return $hasAccess;
+        return $hasAccessToInboundEmailAccount === true &&
+            $isFromAddressTheSame === true &&
+            $isAllowedToUseOutboundEmail === true;
     }
 }
