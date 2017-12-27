@@ -451,7 +451,7 @@ class EmailsController extends SugarController
                 'id' => $system->id,
                 'attributes' => array(
                     'from' => $system->mail_smtpuser,
-                    'name' => $current_user->name,
+                    'name' => $system->name,
                     'oe' => $system->mail_smtpuser,
                 ),
                 'prepend' => false,
