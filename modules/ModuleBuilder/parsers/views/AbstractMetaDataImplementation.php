@@ -344,16 +344,6 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if(!empty($this->_originalViewTemplateDefs)) {
-            $templateMeta = var_export($this->_originalViewTemplateDefs, true);
-            if(!empty($templateMeta)) {
-                $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\''. $this->_viewName . '\'][\'templateMeta\'] = '.$templateMeta;
-            }
-        }
-
-        $out .= ";\n?>\n";
-
-
         if (sugar_file_put_contents($filename, $out) === false) {
             $GLOBALS ['log']->fatal(get_class($this) . ": could not write new viewdef file " . $filename);
         }
