@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_ASSIGNED_TO_NAME' => 'Contract Manager',
     'LBL_CONTRACT_ACCOUNT' => 'Account',
     'LBL_OPPORTUNITY' => 'Opportunity',
@@ -128,4 +128,4 @@ $mod_strings = array (
     'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
     'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes: Contracts',
 );
-?>
+

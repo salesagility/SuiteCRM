@@ -370,5 +370,7 @@ $mod_strings = array(
     'LBL_MARK_READ' => 'Mark As Read',
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
+    
+    'ERR_NO_RETURN_ID' => 'Attacment is not found.',
 );
 

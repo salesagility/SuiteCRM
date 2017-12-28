@@ -403,7 +403,7 @@ eoq;
         return $this->generateComposePackageForQuickCreate($a_composeData, $emailLinkUrl, $lazyLoad);
     }
 
-    function populateComposeViewFields($bean = null, $emailField = 'email1')
+    function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true)
     {
         global $focus;
         $myBean = $focus;
@@ -422,11 +422,42 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-            if (property_exists($myBean, $emailField)) {
-                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                    'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+            
+            if (is_array($emailField)) {
+                $emailFields = $emailField;
             } else {
-                $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                $emailFields = array($emailField);
+            }
+            
+            
+            if($checkAllEmail) {
+                $i = 1;
+                $emailField = 'email' . $i;
+                while(isset($myBean->{$emailField})) {
+                    $emailFields[] = $emailField;
+                    $i++;
+                    $emailField = 'email' . $i;
+                }
+                $emailFields = array_unique($emailFields);
+            }
+            
+            foreach($emailFields as $emailField) {
+                if (property_exists($myBean, $emailField)) {
+                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
+                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+                } else {
+                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                }
+                $optOut = false;
+                $addresses = $myBean->emailAddress->addresses;
+                foreach($addresses as $address) {
+                    if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                        $optOut = true;
+                    }
+                }
+                if(!$optOut) {
+                    break;
+                }
             }
         }
 
@@ -1051,13 +1082,18 @@ eoq;
     /**
      * returns an array of nodes that correspond to IMAP mailboxes.
      * @param bool $forceRefresh
+     * @param User|null $user User
      * @return object TreeView object
      */
-    function getMailboxNodes()
+    function getMailboxNodes($forceRefresh = false, $user = null)
     {
         global $sugar_config;
         global $current_user;
         global $app_strings;
+        
+        if(!$user) {
+            $user = $current_user;
+        }
 
         $tree = new Tree("frameFolders");
         $tree->tree_style = 'include/ytree/TreeView/css/check/tree.css';
@@ -1070,15 +1106,15 @@ eoq;
         $rootNode->dynamicloadfunction = '';
         $rootNode->expanded = true;
         $rootNode->dynamic_load = true;
-        $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+        $showFolders = sugar_unserialize(base64_decode($user->getPreference('showFolders', 'Emails')));
 
         if (empty($showFolders)) {
             $showFolders = array();
         }
 
         // INBOX NODES
-        if ($current_user->hasPersonalEmail()) {
-            $personals = $ie->retrieveByGroupId($current_user->id);
+        if ($user->hasPersonalEmail()) {
+            $personals = $ie->retrieveByGroupId($user->id);
 
             foreach ($personals as $k => $personalAccount) {
                 if (in_array($personalAccount->id, $showFolders)) {
@@ -1119,7 +1155,7 @@ eoq;
         }
 
         // GROUP INBOX NODES
-        $beans = $ie->retrieveAllByGroupId($current_user->id, false);
+        $beans = $ie->retrieveAllByGroupId($user->id, false);
         foreach ($beans as $k => $groupAccount) {
             if (in_array($groupAccount->id, $showFolders)) {
                 // check for cache value

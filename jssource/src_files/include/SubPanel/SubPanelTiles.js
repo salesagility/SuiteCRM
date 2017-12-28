@@ -283,13 +283,14 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     }
 
     current_subpanel_url = url;
-    // http_fetch_async(url,got_data,request_id++);
     var returnstuff = http_fetch_sync(url + '&inline=' + inline + '&ajaxSubpanel=true');
     request_id++;
     got_data(returnstuff, inline);
-    $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
-  }
-  else {
+    if ($('#whole_subpanel_' + child_field).hasClass('useFooTable')) {
+      $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
+    }
+  } else {
+
     var subpanel = document.getElementById('subpanel_' + child_field);
     subpanel.style.display = '';
 

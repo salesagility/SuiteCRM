@@ -42,9 +42,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-
-);
-
-
-?>
+$mod_strings = array();
