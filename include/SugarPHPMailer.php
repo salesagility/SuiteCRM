@@ -52,21 +52,61 @@ require_once 'include/OutboundEmail/OutboundEmail.php';
  */
 class SugarPHPMailer extends PHPMailer
 {
-    /*
-     * var OutboundEmail
+    /**
+     * @var OutboundEmail
      */
     public $oe;
+
+    /**
+     * @var string
+     */
     public $protocol = 'tcp://';
+
+    /**
+     * @var bool
+     */
     public $preppedForOutbound = false;
+
+    /**
+     * @var bool
+     */
     public $disclosureEnabled;
+
+    /**
+     * @var
+     */
     public $disclosureText;
+
+    /**
+     * @var bool
+     */
     public $isHostEmpty = false;
+
+    /**
+     * @var bool
+     */
     public $opensslOpened = true;
 
     /**
      * @var string
      */
     public $Body_html;
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     *     please update your code, use __construct instead
+     */
+    public function SugarPHPMailer()
+    {
+        $deprecatedMessage =
+            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
     /**
      * Sole constructor
@@ -105,22 +145,6 @@ class SugarPHPMailer extends PHPMailer
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
-     *     please update your code, use __construct instead
-     */
-    public function SugarPHPMailer()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-    /**
      * Prefills outbound details
      */
     public function setMailer()
@@ -141,10 +165,10 @@ class SugarPHPMailer extends PHPMailer
             $this->Port = $oe->mail_smtpport;
             if ($oe->mail_smtpssl == 1) {
                 $this->SMTPSecure = 'ssl';
-            } // if
+            }
             if ($oe->mail_smtpssl == 2) {
                 $this->SMTPSecure = 'tls';
-            } // if
+            }
 
             if ($oe->mail_smtpauth_req) {
                 $this->SMTPAuth = true;
@@ -175,10 +199,10 @@ class SugarPHPMailer extends PHPMailer
             $this->Port = $oe->mail_smtpport;
             if ($oe->mail_smtpssl == 1) {
                 $this->SMTPSecure = 'ssl';
-            } // if
+            }
             if ($oe->mail_smtpssl == 2) {
                 $this->SMTPSecure = 'tls';
-            } // if
+            }
             if ($oe->mail_smtpauth_req) {
                 $this->SMTPAuth = true;
                 $this->Username = $oe->mail_smtpuser;
@@ -197,7 +221,8 @@ class SugarPHPMailer extends PHPMailer
         global $locale;
 
         if (!$this->preppedForOutbound) {
-            //bug 28534. We should not set it to true to circumvent the following conversion as each email is independent.
+            //bug 28534. We should not set it to true to circumvent the following conversion
+            // as each email is independent.
             //$this->preppedForOutbound = true; // flag so we don't redo this
             $OBCharset = $locale->getPrecedentPreference('default_email_charset');
 
@@ -234,58 +259,6 @@ eoq;
             $this->FromName = $locale->translateCharset(trim($this->FromName), 'UTF-8', $OBCharset);
 
         }
-    }
-
-    /**
-     * Replace images with locations specified by regex with cid: images
-     * and attach needed files
-     *
-     * @param string $regex Regular expression
-     * @param string $local_prefix Prefix where local files are stored
-     * @param bool $object Use attachment object
-     */
-    public function replaceImageByRegex($regex, $local_prefix, $object = false)
-    {
-        preg_match_all("#<img[^>]*[\s]+src[^=]*=[\s]*[\"']($regex)(.+?)[\"']#si", $this->Body, $matches);
-        $i = 0;
-        foreach ($matches[2] as $match) {
-            $filename = urldecode($match);
-            $cid = $filename;
-            $file_location = $local_prefix . $filename;
-            if (!file_exists($file_location)) {
-                continue;
-            }
-            if ($object) {
-                if (preg_match('#&(?:amp;)?type=([\w]+)#i', $matches[0][$i], $typematch)) {
-                    switch (strtolower($typematch[1])) {
-                        case 'documents':
-                            $beanname = 'DocumentRevisions';
-                            break;
-                        case 'notes':
-                            $beanname = 'Notes';
-                            break;
-                    }
-                }
-                $mime_type = 'application/octet-stream';
-                if (isset($beanname)) {
-                    $bean = BeanFactory::getBean($beanname, $filename);
-                    if (!empty($bean->id)) {
-                        $mime_type = $bean->file_mime_type;
-                        $filename = $bean->filename;
-                    }
-                }
-            } else {
-                $mime_type = 'image/' . strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-            }
-            if (!$this->embeddedAttachmentExists($cid)) {
-                $this->addEmbeddedImage($file_location, $cid, $filename, 'base64', $mime_type);
-            }
-            $i++;
-        }
-        //replace references to cache with cid tag
-        $this->Body = preg_replace("|\"$regex|i", '"cid:', $this->Body);
-        // remove bad img line from outbound email
-        $this->Body = preg_replace('#<img[^>]+src[^=]*=\"\/([^>]*?[^>]*)>#sim', '', $this->Body);
     }
 
     /**
@@ -346,52 +319,55 @@ eoq;
     }
 
     /**
-     * overloads class.phpmailer's setError() method so that we can log errors in sugarcrm.log
+     * Replace images with locations specified by regex with cid: images
+     * and attach needed files
      *
-     * @param string $msg
+     * @param string $regex Regular expression
+     * @param string $local_prefix Prefix where local files are stored
+     * @param bool $object Use attachment object
      */
-    protected function setError($msg)
+    public function replaceImageByRegex($regex, $local_prefix, $object = false)
     {
-        $GLOBALS['log']->fatal("SugarPHPMailer encountered an error: {$msg}");
-        parent::setError($msg);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return bool
-     * @throws \phpmailerException
-     */
-    public function smtpConnect($options = array())
-    {
-        $connection = parent::smtpConnect();
-        if (!$connection) {
-            global $app_strings;
-            if (isset($this->oe) && $this->oe->type === 'system') {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND']);
+        preg_match_all("#<img[^>]*[\s]+src[^=]*=[\s]*[\"']($regex)(.+?)[\"']#si", $this->Body, $matches);
+        $i = 0;
+        foreach ($matches[2] as $match) {
+            $filename = urldecode($match);
+            $cid = $filename;
+            $file_location = $local_prefix . $filename;
+            if (!file_exists($file_location)) {
+                continue;
+            }
+            if ($object) {
+                if (preg_match('#&(?:amp;)?type=([\w]+)#i', $matches[0][$i], $typematch)) {
+                    switch (strtolower($typematch[1])) {
+                        case 'documents':
+                            $beanname = 'DocumentRevisions';
+                            break;
+                        case 'notes':
+                            $beanname = 'Notes';
+                            break;
+                    }
+                }
+                $mime_type = 'application/octet-stream';
+                if (isset($beanname)) {
+                    $bean = BeanFactory::getBean($beanname, $filename);
+                    if (!empty($bean->id)) {
+                        $mime_type = $bean->file_mime_type;
+                        $filename = $bean->filename;
+                    }
+                }
             } else {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND']);
-            } // else
+                $mime_type = 'image/' . strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            }
+            if (!$this->embeddedAttachmentExists($cid)) {
+                $this->addEmbeddedImage($file_location, $cid, $filename, 'base64', $mime_type);
+            }
+            $i++;
         }
-
-        return $connection;
-    } // fn
-
-    /**
-     * overloads PHPMailer::PreSend() to allow for empty messages to go out.
-     *
-     * @return bool
-     * @throws \phpmailerException
-     */
-    public function PreSend()
-    {
-        //check to see if message body is empty
-        if (empty($this->Body)) {
-            //PHPMailer will throw an error if the body is empty, so insert a blank space if body is empty
-            $this->Body = ' ';
-        }
-
-        return parent::preSend();
+        //replace references to cache with cid tag
+        $this->Body = preg_replace("|\"$regex|i", '"cid:', $this->Body);
+        // remove bad img line from outbound email
+        $this->Body = preg_replace('#<img[^>]+src[^=]*=\"\/([^>]*?[^>]*)>#sim', '', $this->Body);
     }
 
     /**
@@ -413,6 +389,55 @@ eoq;
     }
 
     /**
+     * @param array $options
+     *
+     * @return bool
+     * @throws \phpmailerException
+     */
+    public function smtpConnect($options = null)
+    {
+        $connection = parent::smtpConnect();
+        if (!$connection) {
+            global $app_strings;
+            if (isset($this->oe) && $this->oe->type === 'system') {
+                $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND']);
+            } else {
+                $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND']);
+            } // else
+        }
+
+        return $connection;
+    }
+
+    /**
+     * overloads class.phpmailer's setError() method so that we can log errors in sugarcrm.log
+     *
+     * @param string $msg
+     */
+    protected function setError($msg)
+    {
+        $GLOBALS['log']->fatal("SugarPHPMailer encountered an error: {$msg}");
+        parent::setError($msg);
+    }
+
+    /**
+     * overloads PHPMailer::PreSend() to allow for empty messages to go out.
+     *
+     * @return bool
+     * @throws \phpmailerException
+     */
+    public function PreSend()
+    {
+        //check to see if message body is empty
+        if (empty($this->Body)) {
+            //PHPMailer will throw an error if the body is empty, so insert a blank space if body is empty
+            $this->Body = ' ';
+        }
+
+        return parent::preSend();
+    }
+
+    /**
      * Replace an Email Template variable placeholder in the email contents
      * such as Subject, Body Body_html and BodyAlt.
      * Call this helper function directly before send the email
@@ -421,11 +446,12 @@ eoq;
      * @param string $key
      * @param string $value
      */
-    public function replace($key, $value) {
+    public function replace($key, $value)
+    {
         $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
         $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
         $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
     }
 
-} // end class definition
+}
