@@ -1,9 +1,12 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -41,9 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Smarty/Smarty.class.php');
 
-if(!defined('SUGAR_SMARTY_DIR'))
-{
-	define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
+if (!defined('SUGAR_SMARTY_DIR')) {
+    define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }
 
 /**
@@ -53,56 +55,65 @@ if(!defined('SUGAR_SMARTY_DIR'))
 class Sugar_Smarty extends Smarty
 {
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     * please update your code, use __construct instead
+     */
+    public function Sugar_Smarty()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
+            'please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    /**
      * Sugar_Smarty constructor.
      */
-	public function __construct()
-	{
+    public function __construct()
+    {
         parent::__construct();
-		if(!file_exists(SUGAR_SMARTY_DIR))mkdir_recursive(SUGAR_SMARTY_DIR, true);
-		if(!file_exists(SUGAR_SMARTY_DIR . 'templates_c'))mkdir_recursive(SUGAR_SMARTY_DIR . 'templates_c', true);
-		if(!file_exists(SUGAR_SMARTY_DIR . 'configs'))mkdir_recursive(SUGAR_SMARTY_DIR . 'configs', true);
-		if(!file_exists(SUGAR_SMARTY_DIR . 'cache'))mkdir_recursive(SUGAR_SMARTY_DIR . 'cache', true);
-
-		$this->template_dir = '.';
-		$this->compile_dir = SUGAR_SMARTY_DIR . 'templates_c';
-		$this->config_dir = SUGAR_SMARTY_DIR . 'configs';
-		$this->cache_dir = SUGAR_SMARTY_DIR . 'cache';
-		$this->request_use_auto_globals = true; // to disable Smarty from using long arrays
-
-		if(file_exists('custom/include/Smarty/plugins'))
-        {
-			$plugins_dir[] = 'custom/include/Smarty/plugins';
+        if (!file_exists(SUGAR_SMARTY_DIR)) {
+            mkdir_recursive(SUGAR_SMARTY_DIR, true);
         }
-		$plugins_dir[] = 'include/Smarty/plugins';
-		$this->plugins_dir = $plugins_dir;
+        if (!file_exists(SUGAR_SMARTY_DIR . 'templates_c')) {
+            mkdir_recursive(SUGAR_SMARTY_DIR . 'templates_c', true);
+        }
+        if (!file_exists(SUGAR_SMARTY_DIR . 'configs')) {
+            mkdir_recursive(SUGAR_SMARTY_DIR . 'configs', true);
+        }
+        if (!file_exists(SUGAR_SMARTY_DIR . 'cache')) {
+            mkdir_recursive(SUGAR_SMARTY_DIR . 'cache', true);
+        }
 
-		$this->assign("VERSION_MARK", getVersionedPath(''));
-	}
+        $this->template_dir = '.';
+        $this->compile_dir = SUGAR_SMARTY_DIR . 'templates_c';
+        $this->config_dir = SUGAR_SMARTY_DIR . 'configs';
+        $this->cache_dir = SUGAR_SMARTY_DIR . 'cache';
+        $this->request_use_auto_globals = true; // to disable Smarty from using long arrays
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	public function Sugar_Smarty(){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct();
-	}
+        if (file_exists('custom/include/Smarty/plugins')) {
+            $plugins_dir[] = 'custom/include/Smarty/plugins';
+        }
+        $plugins_dir[] = 'include/Smarty/plugins';
+        $this->plugins_dir = $plugins_dir;
 
-	/**
-	 * Override default _unlink method call to fix Bug 53010
-	 *
-	 * @param string $resource
+        $this->assign("VERSION_MARK", getVersionedPath(''));
+    }
+
+    /**
+     * Override default _unlink method call to fix Bug 53010
+     *
+     * @param string $resource
      * @param integer $exp_time
      * @return boolean
      */
     public function _unlink($resource, $exp_time = null)
     {
-        if(file_exists($resource)) {
+        if (file_exists($resource)) {
             return parent::_unlink($resource, $exp_time);
         }
 
@@ -110,31 +121,34 @@ class Sugar_Smarty extends Smarty
         return true;
     }
 
-	/**
-	 * executes & returns or displays the template results
-	 *
-	 * @param string $resource_name
-	 * @param string|null $cache_id
-	 * @param string|null $compile_id
-	 * @param boolean $display
+    /**
+     * executes & returns or displays the template results
+     *
+     * @param string $resource_name
+     * @param string|null $cache_id
+     * @param string|null $compile_id
+     * @param boolean $display
      * @return string
-	 */
-    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
+     */
+    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
+    {
 
-		/// Try and fetch the tpl from the theme folder
-		/// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
-		/// otherwise fall back to the default tpl
-		$current_theme = SugarThemeRegistry::current();
-		$theme_directory = $current_theme->__toString();
-		if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
-			$test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
-			if (file_exists($test_path)) {
-				$resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
-			}
-		}
-		///
-		return parent::fetch($resource_name, $cache_id, $compile_id, $display);
-	}
+        /// Try and fetch the tpl from the theme folder
+        /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
+        /// otherwise fall back to the default tpl
+        $current_theme = SugarThemeRegistry::current();
+        $theme_directory = $current_theme->__toString();
+        if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+            $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR
+                . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+            if (file_exists($test_path)) {
+                $resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory
+                    . DIRECTORY_SEPARATOR . $resource_name;
+            }
+        }
+
+        return parent::fetch($resource_name, $cache_id, $compile_id, $display);
+    }
 
 
     /**
@@ -146,8 +160,7 @@ class Sugar_Smarty extends Smarty
     {
         parent::trigger_error($error_msg, $error_type);
 
-        switch ($error_type)
-        {
+        switch ($error_type) {
             case E_USER_ERROR:
                 $GLOBALS['log']->error('Smarty: ' . $error_msg);
                 break;
