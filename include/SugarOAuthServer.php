@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -40,6 +39,7 @@
 
 require_once 'modules/OAuthTokens/OAuthToken.php';
 require_once 'modules/OAuthKeys/OAuthKey.php';
+
 /**
  * Sugar OAuth provider implementation
  * @api
@@ -53,15 +53,70 @@ class SugarOAuthServer
     protected $token;
 
     /**
+     * Create OAuth provider
+     *
+     * Checks current request for OAuth valitidy
+     * @param string $req_path
+     * @throws Exception
+     * @throws OAuthException
+     */
+    public function __construct($req_path = '')
+    {
+        $GLOBALS['log']->debug("OAUTH: __construct($req_path): " . var_export($_REQUEST, true));
+        $this->check();
+        $this->provider = new Zend_Oauth_Provider();
+        try {
+            $this->provider->setConsumerHandler(array($this, 'lookupConsumer'));
+            $this->provider->setTimestampNonceHandler(array($this, 'timestampNonceChecker'));
+            $this->provider->setTokenHandler(array($this, 'tokenHandler'));
+            if (!empty($req_path)) {
+                $this->provider->isRequestTokenEndpoint($req_path);  // No token needed for this end point
+            }
+            $this->provider->checkOAuthRequest(null, $this->decodePostGet());
+            if (mt_rand() % 10 == 0) {
+                // cleanup 1 in 10 times
+                OAuthToken::cleanup();
+            }
+        } catch (Exception $e) {
+            $GLOBALS['log']->debug($this->reportProblem($e));
+            throw $e;
+        }
+    }
+
+    /**
      * Check if everything is OK
      * @throws OAuthException
      */
     protected function check()
     {
-        if(!function_exists('mhash') && !function_exists('hash_hmac')) {
+        if (!function_exists('mhash') && !function_exists('hash_hmac')) {
             // define exception class
             throw new OAuthException("MHash extension required for OAuth support");
         }
+    }
+
+    /**
+     * Decode POST/GET via from_html()
+     * @return array decoded data
+     */
+    protected function decodePostGet()
+    {
+        $data = array_merge($_GET, $_POST);
+        foreach ($data as $k => $v) {
+            $data[$k] = from_html($v);
+        }
+        return $data;
+    }
+
+    /**
+     * Report OAuth problem as string
+     *
+     * @param Exception $e
+     * @return string
+     */
+    public function reportProblem(Exception $e)
+    {
+        return $this->provider->reportProblem($e);
     }
 
     /**
@@ -75,6 +130,7 @@ class SugarOAuthServer
     /**
      * Find consumer by key
      * @param $provider
+     * @return int
      */
     public function lookupConsumer($provider)
     {
@@ -83,7 +139,7 @@ class SugarOAuthServer
         // on bad key: Zend_Oauth_Provider::CONSUMER_KEY_REFUSED
         $GLOBALS['log']->debug("OAUTH: lookupConsumer, key={$provider->consumer_key}");
         $consumer = OAuthKey::fetchKey($provider->consumer_key);
-        if(!$consumer) {
+        if (!$consumer) {
             return Zend_Oauth_Provider::CONSUMER_KEY_UNKNOWN;
         }
         $provider->consumer_secret = $consumer->c_secret;
@@ -94,14 +150,15 @@ class SugarOAuthServer
     /**
      * Check timestamps & nonces
      * @param OAuthProvider $provider
+     * @return int
      */
     public function timestampNonceChecker($provider)
     {
         // FIXME: add ts/nonce verification
-        if(empty($provider->nonce)) {
+        if (empty($provider->nonce)) {
             return Zend_Oauth_Provider::BAD_NONCE;
         }
-        if(empty($provider->timestamp)) {
+        if (empty($provider->timestamp)) {
             return Zend_Oauth_Provider::BAD_TIMESTAMP;
         }
         return OAuthToken::checkNonce($provider->consumer_key, $provider->nonce, $provider->timestamp);
@@ -110,21 +167,22 @@ class SugarOAuthServer
     /**
      * Vefiry incoming token
      * @param OAuthProvider $provider
+     * @return int
      */
     public function tokenHandler($provider)
     {
         $GLOBALS['log']->debug("OAUTH: tokenHandler, token={$provider->token}, verify={$provider->verifier}");
 
         $token = OAuthToken::load($provider->token);
-        if(empty($token)) {
+        if (empty($token)) {
             return Zend_Oauth_Provider::TOKEN_REJECTED;
         }
-        if($token->consumer != $this->consumer->id) {
+        if ($token->consumer != $this->consumer->id) {
             return Zend_Oauth_Provider::TOKEN_REJECTED;
         }
-        $GLOBALS['log']->debug("OAUTH: tokenHandler, found token=".var_export($token->id, true));
-        if($token->tstate == OAuthToken::REQUEST) {
-            if(!empty($token->verify) && $provider->verifier == $token->verify) {
+        $GLOBALS['log']->debug("OAUTH: tokenHandler, found token=" . var_export($token->id, true));
+        if ($token->tstate == OAuthToken::REQUEST) {
+            if (!empty($token->verify) && $provider->verifier == $token->verify) {
                 $provider->token_secret = $token->secret;
                 $this->token = $token;
                 return Zend_Oauth_Provider::OK;
@@ -132,55 +190,12 @@ class SugarOAuthServer
                 return Zend_Oauth_Provider::TOKEN_USED;
             }
         }
-        if($token->tstate == OAuthToken::ACCESS) {
+        if ($token->tstate == OAuthToken::ACCESS) {
             $provider->token_secret = $token->secret;
             $this->token = $token;
             return Zend_Oauth_Provider::OK;
         }
         return Zend_Oauth_Provider::TOKEN_REJECTED;
-    }
-
-    /**
-     * Decode POST/GET via from_html()
-     * @return array decoded data
-     */
-    protected function decodePostGet()
-    {
-        $data = $_GET;
-        $data = array_merge($data, $_POST);
-        foreach($data as $k => $v) {
-            $data[$k] = from_html($v);
-        }
-        return $data;
-    }
-
-    /**
-     * Create OAuth provider
-     *
-     * Checks current request for OAuth valitidy
-     * @param bool $add_rest add REST endpoint as request path
-     */
-    public function __construct($req_path = '')
-    {
-        $GLOBALS['log']->debug("OAUTH: __construct($req_path): ".var_export($_REQUEST, true));
-        $this->check();
-        $this->provider = new Zend_Oauth_Provider();
-        try {
-		    $this->provider->setConsumerHandler(array($this,'lookupConsumer'));
-		    $this->provider->setTimestampNonceHandler(array($this,'timestampNonceChecker'));
-		    $this->provider->setTokenHandler(array($this,'tokenHandler'));
-	        if(!empty($req_path)) {
-		        $this->provider->isRequestTokenEndpoint($req_path);  // No token needed for this end point
-	        }
-	    	$this->provider->checkOAuthRequest(null, $this->decodePostGet());
-	    	if(mt_rand() % 10 == 0) {
-	    	    // cleanup 1 in 10 times
-	    	    OAuthToken::cleanup();
-	    	}
-        } catch(Exception $e) {
-            $GLOBALS['log']->debug($this->reportProblem($e));
-            throw $e;
-        }
     }
 
     /**
@@ -193,7 +208,7 @@ class SugarOAuthServer
         $token = OAuthToken::generate();
         $token->setConsumer($this->consumer);
         $params = $this->provider->getOAuthParams();
-        if(!empty($params['oauth_callback']) && $params['oauth_callback'] != 'oob') {
+        if (!empty($params['oauth_callback']) && $params['oauth_callback'] != 'oob') {
             $token->setCallbackURL($params['oauth_callback']);
         }
         $token->save();
@@ -207,7 +222,7 @@ class SugarOAuthServer
     public function accessToken()
     {
         $GLOBALS['log']->debug("OAUTH: accessToken");
-        if(empty($this->token) || $this->token->tstate != OAuthToken::REQUEST) {
+        if (empty($this->token) || $this->token->tstate != OAuthToken::REQUEST) {
             return null;
         }
         $this->token->invalidate();
@@ -226,7 +241,9 @@ class SugarOAuthServer
      */
     public function authUrl()
     {
-        return urlencode(rtrim($GLOBALS['sugar_config']['site_url'],'/')."/index.php?module=OAuthTokens&action=authorize");
+        return urlencode(
+            rtrim($GLOBALS['sugar_config']['site_url'], '/') . "/index.php?module=OAuthTokens&action=authorize"
+        );
     }
 
     /**
@@ -235,7 +252,7 @@ class SugarOAuthServer
      */
     public function authorizedToken()
     {
-        if($this->token->tstate == OAuthToken::ACCESS) {
+        if ($this->token->tstate == OAuthToken::ACCESS) {
             return $this->token;
         }
         return null;
@@ -247,22 +264,20 @@ class SugarOAuthServer
      */
     public function authorization()
     {
-        if($this->token->tstate == OAuthToken::ACCESS) {
+        if ($this->token->tstate == OAuthToken::ACCESS) {
             return $this->token->authdata;
         }
         return null;
     }
-
-    /**
-     * Report OAuth problem as string
-     */
-    public function reportProblem(Exception $e)
-    {
-        return $this->provider->reportProblem($e);
-    }
 }
 
-if(!class_exists('OAuthException')) {
-    // we will use this in case oauth extension is not loaded
-    class OAuthException extends Exception {}
+if (!class_exists('OAuthException')) {
+    /**
+     * Class OAuthException
+     *
+     * we will use this in case oauth extension is not loaded
+     */
+    class OAuthException extends Exception
+    {
+    }
 }
