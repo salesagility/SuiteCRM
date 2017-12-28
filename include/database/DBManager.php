@@ -4038,5 +4038,10 @@ abstract class DBManager
      * @abstract
      * @return string
      */
-    abstract public function getGuidSQL();
+	abstract public function getGuidSQL();
+
+
+    function removeLineBreaks($sql) {
+        return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
 }
