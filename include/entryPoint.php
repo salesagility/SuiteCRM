@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $GLOBALS['starttTime'] = microtime(true);
 
 set_include_path(
-    dirname(__FILE__).'/..'.PATH_SEPARATOR.
+    dirname(__FILE__) . '/..' . PATH_SEPARATOR .
     get_include_path()
 );
 
@@ -67,7 +67,7 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
 
 $BASE_DIR = realpath(dirname(__DIR__));
 
-require_once $BASE_DIR.'/vendor/autoload.php';
+require_once $BASE_DIR . '/vendor/autoload.php';
 
 // config|_override.php
 if (is_file('config.php')) {
@@ -111,7 +111,8 @@ require_once 'include/dir_inc.php';
 require_once 'include/Localization/Localization.php';
 require_once 'include/javascript/jsAlerts.php';
 require_once 'include/TimeDate.php';
-require_once 'include/modules.php'; // provides $moduleList, $beanList, $beanFiles, $modInvisList, $adminOnlyList, $modInvisListActivities
+// provides $moduleList, $beanList, $beanFiles, $modInvisList, $adminOnlyList, $modInvisListActivities
+require_once 'include/modules.php';
 
 require_once 'include/utils/autoloader.php';
 spl_autoload_register(array('SugarAutoLoader', 'autoload'));
@@ -148,7 +149,7 @@ UploadStream::register();
 ///////////////////////////////////////////////////////////////////////////////
 ////    Handle loading and instantiation of various Sugar* class
 if (!defined('SUGAR_PATH')) {
-    define('SUGAR_PATH', realpath(dirname(__FILE__).'/..'));
+    define('SUGAR_PATH', realpath(dirname(__FILE__) . '/..'));
 }
 require_once 'include/SugarObjects/SugarRegistry.php';
 
@@ -174,12 +175,13 @@ if (empty($GLOBALS['installing'])) {
 
     SugarApplication::preLoadLanguages();
 
-    $timedate = TimeDate::getInstance();
+    $timeDate = TimeDate::getInstance();
 
     $GLOBALS['sugar_version'] = $sugar_version;
     $GLOBALS['sugar_flavor'] = $sugar_flavor;
-    $GLOBALS['timedate'] = $timedate;
-    $GLOBALS['js_version_key'] = md5($GLOBALS['sugar_config']['unique_key'].$GLOBALS['sugar_version'].$GLOBALS['sugar_flavor']);
+    $GLOBALS['timedate'] = $timeDate;
+    $GLOBALS['js_version_key'] =
+        md5($GLOBALS['sugar_config']['unique_key'] . $GLOBALS['sugar_version'] . $GLOBALS['sugar_flavor']);
 
     $db = DBManagerFactory::getInstance();
     $db->resetQueryCount();
