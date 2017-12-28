@@ -1,9 +1,12 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,40 +41,57 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+/**
+ * Class SugarWidgetTabs
+ *
+ * Displays users subpanels in tabs
+ */
+class SugarWidgetTabs
+{
     /**
-     * Class SugarWidgetTabs
-     *
-     * Displays users subpanels in tabs
+     * @var
      */
-class SugarWidgetTabs {
-
-    var $tabs;
-    var $current_key;
-
-    function __construct(&$tabs, $current_key, $jscallback) {
-
-        $this->tabs = $tabs;
-        $this->current_key = $current_key;
-        $this->jscallback = $jscallback;
-    }
+    public $tabs;
+    /**
+     * @var
+     */
+    public $current_key;
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be
+     * remove in 7.8, please update your code, use __construct instead
+     * @param $tabs
+     * @param $current_key
+     * @param $jscallback
      */
-    function SugarWidgetTabs(&$tabs, $current_key, $jscallback) {
+    public function SugarWidgetTabs(&$tabs, $current_key, $jscallback)
+    {
 
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
+            'please update your code';
         if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($tabs, $current_key, $jscallback);
     }
 
+    /**
+     * SugarWidgetTabs constructor.
+     * @param $tabs
+     * @param $current_key
+     * @param $jscallback
+     */
+    public function __construct(&$tabs, $current_key, $jscallback)
+    {
+        $this->tabs = $tabs;
+        $this->current_key = $current_key;
+        $this->jscallback = $jscallback;
+    }
 
-    function display() {
+    public function display()
+    {
 
         $template = new Sugar_Smarty();
         $template->assign('subpanel_tabs', $this->tabs);
@@ -79,6 +99,6 @@ class SugarWidgetTabs {
         $template->assign('jscallback', $this->jscallback);
         $template->assign('subpanel_current_key', $this->current_key);
 
-        return $template->display('include/tabs.tpl');
+        $template->display('include/tabs.tpl');
     }
 }
