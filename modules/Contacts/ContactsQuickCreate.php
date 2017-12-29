@@ -43,11 +43,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/EditView/QuickCreate.php');
 
 
+/**
+ * Class ContactsQuickCreate
+ */
 class ContactsQuickCreate extends QuickCreate
 {
 
+    /**
+     * @var
+     */
     public $javascript;
 
+    /**
+     *
+     */
     public function process()
     {
         global $app_list_strings, $current_language, $mod_strings;
