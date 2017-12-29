@@ -46,26 +46,58 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 // Contact is used to store customer information.
+
+/**
+ * Class ContactOpportunityRelationship
+ */
 class ContactOpportunityRelationship extends SugarBean
 {
     // Stored fields
+    /**
+     * @var
+     */
     public $id;
 
+    /**
+     * @var
+     */
     public $contact_id;
 
+    /**
+     * @var
+     */
     public $contact_role;
 
+    /**
+     * @var
+     */
     public $opportunity_id;
 
     // Related fields
+
+    /**
+     * @var
+     */
     public $contact_name;
 
+    /**
+     * @var
+     */
     public $opportunity_name;
 
+    /**
+     * @var string
+     */
     public $table_name = "opportunities_contacts";
 
+    /**
+     * @var string
+     */
     public $object_name = "ContactOpportunityRelationship";
 
+    /**
+     * @var array
+     */
     public $column_fields = array(
         "id",
         "contact_id",
@@ -74,10 +106,19 @@ class ContactOpportunityRelationship extends SugarBean
         'date_modified'
     );
 
+    /**
+     * @var bool
+     */
     public $new_schema = true;
 
+    /**
+     * @var array
+     */
     public $additional_column_fields = array();
 
+    /**
+     * @var array
+     */
     public $field_defs = array(
         'id' => array('name' => 'id', 'type' => 'char', 'len' => '36', 'default' => ''),
         'contact_id' => array('name' => 'contact_id', 'type' => 'char', 'len' => '36',),
@@ -103,6 +144,9 @@ class ContactOpportunityRelationship extends SugarBean
         self::__construct();
     }
 
+    /**
+     * ContactOpportunityRelationship constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -113,6 +157,9 @@ class ContactOpportunityRelationship extends SugarBean
 
     }
 
+    /**
+     *
+     */
     public function fill_in_additional_detail_fields()
     {
         global $locale;
