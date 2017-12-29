@@ -646,6 +646,17 @@ class SugarView
             // Now time to go through each of the tab sets and fix them up.
             foreach ($groupTabs as $tabIdx => $tabData) {
                 $topTabs = $tabData['modules'];
+
+                // Sort the list of modules alphabetically and put the current module at the top
+                asort($topTabs);
+                if (!empty($moduleTab)) {
+                    unset($topTabs[$moduleTab]);
+                    $topTabs = array_merge(
+                        array($moduleTab => $tabData['modules'][$moduleTab]),
+                        $topTabs
+                    );
+                }
+
                 if (!is_array($topTabs)) {
                     $topTabs = array();
                 }
@@ -654,23 +665,6 @@ class SugarView
                 // Split it in to the tabs that go across the top, and the ones that are on the extra menu.
                 if (count($topTabs) > $max_tabs) {
                     $extraTabs = array_splice($topTabs, $max_tabs);
-                }
-                // Make sure the current module is accessable through one of the top tabs
-                if (!isset($topTabs[$moduleTab])) {
-                    // Nope, we need to add it.
-                    // First, take it out of the extra menu, if it's there
-                    if (isset($extraTabs[$moduleTab])) {
-                        unset($extraTabs[$moduleTab]);
-                    }
-                    if (count($topTabs) >= $max_tabs - 1) {
-                        // We already have the maximum number of tabs, so we need to shuffle the last one
-                        // from the top to the first one of the extras
-                        $lastElem = array_splice($topTabs, $max_tabs - 1);
-                        $extraTabs = $lastElem + $extraTabs;
-                    }
-                    if (!empty($moduleTab)) {
-                        $topTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
-                    }
                 }
 
                 // Get a unique list of the top tabs so we can build the popup menus for them
