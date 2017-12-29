@@ -647,8 +647,12 @@ class SugarView
             foreach ($groupTabs as $tabIdx => $tabData) {
                 $topTabs = $tabData['modules'];
 
-                // Sort the list of modules alphabetically and put the current module at the top
-                asort($topTabs);
+                // Sort the list of modules alphabetically
+                if($current_user->getPreference('sort_modules_by_name')){
+                    asort($topTabs);
+                }
+
+                // put the current module at the top of the list
                 if (!empty($moduleTab)) {
                     unset($topTabs[$moduleTab]);
                     $topTabs = array_merge(
