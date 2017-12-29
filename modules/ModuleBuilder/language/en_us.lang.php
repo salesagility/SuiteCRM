@@ -378,6 +378,7 @@ $mod_strings = array(
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
     'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_FILTER' => 'Filter',
     'LBL_TOOLBOX' => 'Toolbox',
     'LBL_QUICKCREATE' => 'QuickCreate',
