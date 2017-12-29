@@ -218,7 +218,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	        $focus->setPreference('swap_shortcuts', '', 0, 'global');
 	    }
 
-      if(isset($_POST['sort_modules_by_name'])) {
+      if (isset($_POST['sort_modules_by_name'])) {
           $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
       } else {
           $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');

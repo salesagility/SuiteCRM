@@ -648,7 +648,7 @@ class SugarView
                 $topTabs = $tabData['modules'];
 
                 // Sort the list of modules alphabetically
-                if($current_user->getPreference('sort_modules_by_name')){
+                if ($current_user->getPreference('sort_modules_by_name')) {
                     asort($topTabs);
                 }
 
