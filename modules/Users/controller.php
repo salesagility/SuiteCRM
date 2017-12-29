@@ -44,8 +44,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("include/OutboundEmail/OutboundEmail.php");
 
+/**
+ * Class UsersController
+ */
 class UsersController extends SugarController
 {
+    /**
+     * action "save" (with a lower case S that is for OSX users ;-)
+     * @see SugarController::action_save()
+     */
+    public function action_save()
+    {
+        require 'modules/Users/Save.php';
+    }
+
     /**
      * bug 48170
      * Action resetPreferences gets fired when user clicks on  'Reset User Preferences' button
@@ -53,19 +65,26 @@ class UsersController extends SugarController
      */
     protected function action_resetPreferences()
     {
-        if ($_REQUEST['record'] == $GLOBALS['current_user']->id || ($GLOBALS['current_user']->isAdminForModule('Users'))) {
+        if ($_REQUEST['record'] == $GLOBALS['current_user']->id || ($GLOBALS['current_user']->isAdminForModule(
+                'Users'
+            ))) {
             $u = new User();
             $u->retrieve($_REQUEST['record']);
             $u->resetPreferences();
             if ($u->id == $GLOBALS['current_user']->id) {
                 SugarApplication::redirect('index.php');
             } else {
-                SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView"); //bug 48170]
+                SugarApplication::redirect(
+                    "index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView"
+                ); //bug 48170]
 
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function action_delete()
     {
         if ($_REQUEST['record'] != $GLOBALS['current_user']->id && ($GLOBALS['current_user']->isAdminForModule('Users')
@@ -89,14 +108,20 @@ class UsersController extends SugarController
         }
     }
 
+    /**
+     *
+     */
     protected function action_wizard()
     {
         $this->view = 'wizard';
     }
 
+    /**
+     *
+     */
     protected function action_saveuserwizard()
     {
-        global $current_user, $sugar_config;
+        global $current_user;
 
         // set all of these default parameters since the Users save action will undo the defaults otherwise
         $_POST['record'] = $current_user->id;
@@ -116,6 +141,9 @@ class UsersController extends SugarController
         require('modules/Users/Save.php');
     }
 
+    /**
+     *
+     */
     protected function action_saveftsmodules()
     {
         $this->view = 'fts';
@@ -123,14 +151,8 @@ class UsersController extends SugarController
     }
 
     /**
-     * action "save" (with a lower case S that is for OSX users ;-)
-     * @see SugarController::action_save()
+     *
      */
-    public function action_save()
-    {
-        require 'modules/Users/Save.php';
-    }
-
     protected function action_editview()
     {
         $this->view = 'edit';
@@ -139,6 +161,9 @@ class UsersController extends SugarController
         }
     }
 
+    /**
+     *
+     */
     protected function action_detailview()
     {
         $this->view = 'detail';
@@ -146,5 +171,4 @@ class UsersController extends SugarController
             SugarApplication::redirect("index.php?module=Home&action=index");
         }
     }
-}	
-
+}
