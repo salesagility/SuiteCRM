@@ -45,68 +45,292 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // User is used to store customer information.
+
+/**
+ * Class User
+ */
 class User extends Person
 {
 
     // Stored fields
+    /**
+     * @var string
+     */
     public $name = '';
+
+    /**
+     * @var
+     */
     public $full_name;
+
+    /**
+     * @var
+     */
     public $id;
+
+    /**
+     * @var
+     */
     public $user_name;
+
+    /**
+     * @var
+     */
     public $user_hash;
+
+    /**
+     * @var
+     */
     public $salutation;
+
+    /**
+     * @var
+     */
     public $first_name;
+
+    /**
+     * @var
+     */
     public $last_name;
+
+    /**
+     * @var
+     */
     public $date_entered;
+
+    /**
+     * @var
+     */
     public $date_modified;
+
+    /**
+     * @var
+     */
     public $modified_user_id;
+
+    /**
+     * @var
+     */
     public $created_by;
+
+    /**
+     * @var
+     */
     public $created_by_name;
+
+    /**
+     * @var
+     */
     public $modified_by_name;
+
+    /**
+     * @var
+     */
     public $description;
+
+    /**
+     * @var
+     */
     public $phone_home;
+
+    /**
+     * @var
+     */
     public $phone_mobile;
+
+    /**
+     * @var
+     */
     public $phone_work;
+
+    /**
+     * @var
+     */
     public $phone_other;
+
+    /**
+     * @var
+     */
     public $phone_fax;
+
+    /**
+     * @var
+     */
     public $email1;
+
+    /**
+     * @var
+     */
     public $email2;
+
+    /**
+     * @var
+     */
     public $address_street;
+
+    /**
+     * @var
+     */
     public $address_city;
+
+    /**
+     * @var
+     */
     public $address_state;
+
+    /**
+     * @var
+     */
     public $address_postalcode;
+
+    /**
+     * @var
+     */
     public $address_country;
+
+    /**
+     * @var
+     */
     public $status;
+
+    /**
+     * @var
+     */
     public $title;
+
+    /**
+     * @var
+     */
     public $photo;
+
+    /**
+     * @var
+     */
     public $portal_only;
+
+    /**
+     * @var
+     */
     public $department;
+
+    /**
+     * @var bool
+     */
     public $authenticated = false;
+
+    /**
+     * @var
+     */
     public $error_string;
+
+    /**
+     * @var
+     */
     public $is_admin;
+
+    /**
+     * @var
+     */
     public $employee_status;
+
+    /**
+     * @var
+     */
     public $messenger_id;
+
+    /**
+     * @var
+     */
     public $messenger_type;
+
+    /**
+     * @var
+     */
     public $is_group;
+
+    /**
+     * @var
+     */
     public $accept_status; // to support Meetings
+
     //adding a property called team_id so we can populate it for use in the team widget
+    /**
+     * @var
+     */
     public $team_id;
+
+    /**
+     * @var
+     */
     public $receive_notifications;
+
+    /**
+     * @var
+     */
     public $reports_to_name;
+
+    /**
+     * @var
+     */
     public $reports_to_id;
+
+    /**
+     * @var bool
+     */
     public $team_exists = false;
+
+    /**
+     * @var string
+     */
     public $table_name = "users";
+
+    /**
+     * @var string
+     */
     public $module_dir = 'Users';
+
+    /**
+     * @var string
+     */
     public $object_name = "User";
+
+    /**
+     * @var
+     */
     public $user_preferences;
+
+    /**
+     * @var bool
+     */
     public $importable = true;
+
+    /**
+     * @var
+     */
     public $_userPreferenceFocus;
+
+    /**
+     * @var array
+     */
     public $encodeFields = array("first_name", "last_name", "description");
+
     // This is used to retrieve related fields from form posts.
+
+    /**
+     * @var array
+     */
     public $additional_column_fields = array(
         'reports_to_name'
     );
+
+    /**
+     * @var
+     */
     public $emailAddress;
+
+    /**
+     * @var bool
+     */
     public $new_schema = true;
 
     /**
@@ -119,13 +343,77 @@ class User extends Person
      */
     public $factor_auth_interface;
 
-    public function __construct()
+    /**
+     * Check that password matches existing hash
+     * @param string $password Plaintext password
+     * @param string $user_hash DB hash
+     * @return bool
+     */
+    public static function checkPassword($password, $user_hash)
     {
-        parent::__construct();
-
-        $this->_loadUserPreferencesFocus();
+        return self::checkPasswordMD5(md5($password), $user_hash);
     }
 
+    /**
+     * getAllUsers
+     *
+     * Returns all active and inactive users
+     * @return Array of all users in the system
+     */
+    public static function getAllUsers()
+    {
+        $active_users = get_user_array(false);
+        $inactive_users = get_user_array(false, "Inactive");
+        $result = $active_users + $inactive_users;
+        asort($result);
+
+        return $result;
+    }
+
+    /**
+     * getActiveUsers
+     *
+     * Returns all active users
+     * @return Array of active users in the system
+     */
+    public static function getActiveUsers()
+    {
+        $active_users = get_user_array(false);
+        asort($active_users);
+
+        return $active_users;
+    }
+
+    /**
+     * Method for password generation
+     *
+     * @static
+     * @return string password
+     */
+    public static function generatePassword()
+    {
+        $charBKT = '';
+        //chars to select from
+        $LOWERCASE = "abcdefghijklmnpqrstuvwxyz";
+        $NUMBER = "0123456789";
+        $UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $condition = 0;
+        $charBKT .= $UPPERCASE . $LOWERCASE . $NUMBER;
+        $password = "";
+        $length = '6';
+
+        // Create random characters for the ones that doesnt have requirements
+        for ($i = 0; $i < $length - $condition; $i++) {  // loop and create password
+            $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
+        }
+
+        return $password;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
     public function __set($key, $value)
     {
         $this->$key = $value;
@@ -135,11 +423,13 @@ class User extends Person
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     *     please update your code, use __construct instead
      */
     public function User()
     {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
+            'please update your code';
         if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
         } else {
@@ -148,6 +438,19 @@ class User extends Person
         self::__construct();
     }
 
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->_loadUserPreferencesFocus();
+    }
+
+    /**
+     *
+     */
     protected function _loadUserPreferencesFocus()
     {
         $this->_userPreferenceFocus = new UserPreference($this);
@@ -159,13 +462,58 @@ class User extends Person
     public function getSystemUser()
     {
         if (null === $this->retrieve('1')) { // handle cases where someone deleted user with id "1"
-            $this->retrieve_by_string_fields(array(
-                'status' => 'Active',
-                'is_admin' => '1',
-            ));
+            $this->retrieve_by_string_fields(
+                array(
+                    'status' => 'Active',
+                    'is_admin' => '1',
+                )
+            );
         }
 
         return $this;
+    }
+
+    /**
+     * retrieves an User bean
+     * pre-format name & full_name attribute with first/last
+     * loads User's preferences
+     *
+     * @param string|integer $id ID of the User
+     * @param bool $encode encode the result
+     * @param bool $deleted
+     * @return User|SugarBean|null null if no User found
+     */
+    public function retrieve($id = -1, $encode = true, $deleted = true)
+    {
+        $ret = parent::retrieve($id, $encode, $deleted);
+        if ($ret && isset($_SESSION) && $_SESSION !== null) {
+            $this->loadPreferences();
+        }
+        return $ret;
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::loadPreferences() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::loadPreferences()
+     *
+     * @param string $category name of the category to retreive, defaults to global scope
+     * @return bool successful?
+     */
+    public function loadPreferences(
+        $category = 'global'
+    )
+    {
+        // for BC
+        if (func_num_args() > 1) {
+            $user = func_get_arg(1);
+            $GLOBALS['log']->deprecated('User::loadPreferences() should not be used statically.');
+        } else {
+            $user = $this;
+        }
+
+        return $user->_userPreferenceFocus->loadPreferences($category);
     }
 
     /**
@@ -181,10 +529,39 @@ class User extends Person
         }
     }
 
+    /* Returns the User's private GUID; this is unassociated with the User's
+     * actual GUID.  It is used to secure file names that must be HTTP://
+     * accesible, but obfusicated.
+     */
+
+    /**
+     * Interface for the User object to calling the UserPreference::setPreference() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::getPreference()
+     *
+     * @param string $name name of the preference to retreive
+     * @param string $category name of the category to retreive, defaults to global scope
+     * @return mixed the value of the preference (string, array, int etc)
+     * @internal param bool $useRequestedRecord
+     */
+    public function getPreference($name, $category = 'global')
+    {
+        // for BC
+        if (func_num_args() > 2) {
+            $user = func_get_arg(2);
+            $GLOBALS['log']->deprecated('User::getPreference() should not be used statically.');
+        } else {
+            $user = $this;
+        }
+
+        return $user->_userPreferenceFocus->getPreference($name, $category);
+    }
+
     /**
      * retrieves the signatures for a user
      * @param string id ID of user_signature
-     * @return array ID, signature, and signature_html
+     * @return array|bool ID, signature, and signature_html
      */
     public function getSignature($id)
     {
@@ -221,256 +598,6 @@ class User extends Person
     }
 
     /**
-     * retrieves any signatures that the User may have created as <select>
-     * @param bool $live
-     * @param string $defaultSig
-     * @param bool $forSettings
-     * @param string $elementId
-     * @param bool $useRequestedRecord
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function getSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'signature_id', $useRequestedRecord = false
-    ) {
-        $sig = $this->getSignaturesArray($useRequestedRecord);
-        $sigs = array();
-        foreach ($sig as $key => $arr) {
-            $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
-        }
-
-        $change = '';
-        if (!$live) {
-            $change = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
-        }
-
-        $id = (!$forSettings) ? $elementId : 'signature_idDisplay';
-
-        $out = "<select {$change} id='{$id}' name='{$id}'>";
-        $out .= get_select_options_with_id($sigs, $defaultSig) . '</select>';
-
-        return $out;
-    }
-
-    /**
-     * retrieves any signatures that the User may have created as <select>
-     * @param bool $live
-     * @param string $defaultSig
-     * @param bool $forSettings
-     * @param string $elementId
-     * @param bool $useRequestedRecord
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function getEmailAccountSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'account_signature_id', $useRequestedRecord = false
-    ) {
-        $sig = $this->getSignaturesArray($useRequestedRecord);
-        $sigs = array();
-        foreach ($sig as $key => $arr) {
-            $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
-        }
-
-        $change = '';
-        if (!$live) {
-            $change = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
-        }
-
-        $id = (!$forSettings) ? $elementId : 'signature_idDisplay';
-
-        $out = "<select {$change} id='{$id}' name='{$id}'>";
-        if (empty($defaultSig)) {
-            $out .= get_select_empty_option($defaultSig, true, 'LBL_DEFAULT_EMAIL_SIGNATURES');
-        } else {
-            $out .= get_select_empty_option($defaultSig, false, 'LBL_DEFAULT_EMAIL_SIGNATURES');
-        }
-        $out .= get_select_full_options_with_id($sigs, $defaultSig);
-        $out .= '</select>';
-
-        return $out;
-    }
-
-    /**
-     * returns buttons and JS for signatures
-     */
-    public function getSignatureButtons($jscall = '', $defaultDisplay = false)
-    {
-        global $mod_strings;
-
-        $jscall = empty($jscall) ? 'open_email_signature_form' : $jscall;
-
-        $butts = "<input class='button' onclick='javascript:{$jscall}(\"\", \"{$this->id}\");' value='{$mod_strings['LBL_BUTTON_CREATE']}' type='button'>&nbsp;";
-        if ($defaultDisplay) {
-            $butts .= '<span name="edit_sig" id="edit_sig" style="visibility:inherit;"><input class="button" onclick="javascript:' . $jscall . '(document.getElementById(\'signature_id\', \'\').value)" value="' . $mod_strings['LBL_BUTTON_EDIT'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
-        } else {
-            $butts .= '<span name="edit_sig" id="edit_sig" style="visibility:hidden;"><input class="button" onclick="javascript:' . $jscall . '(document.getElementById(\'signature_id\', \'\').value)" value="' . $mod_strings['LBL_BUTTON_EDIT'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
-        }
-
-        return $butts;
-    }
-
-    /**
-     * performs a rudimentary check to verify if a given user has setup personal
-     * InboundEmail
-     *
-     * @return bool
-     */
-    public function hasPersonalEmail()
-    {
-        $focus = new InboundEmail;
-        $focus->retrieve_by_string_fields(array('group_id' => $this->id));
-
-        return !empty($focus->id);
-    }
-
-    /* Returns the User's private GUID; this is unassociated with the User's
-     * actual GUID.  It is used to secure file names that must be HTTP://
-     * accesible, but obfusicated.
-     */
-
-    public function getUserPrivGuid()
-    {
-        $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
-        if ($userPrivGuid) {
-            return $userPrivGuid;
-        } else {
-            $this->setUserPrivGuid();
-            if (!isset($_SESSION['setPrivGuid'])) {
-                $_SESSION['setPrivGuid'] = true;
-                $userPrivGuid = $this->getUserPrivGuid();
-
-                return $userPrivGuid;
-            } else {
-                sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
-            }
-        }
-    }
-
-    public function setUserPrivGuid()
-    {
-        $privGuid = create_guid();
-        //($name, $value, $nosession=0)
-        $this->setPreference('userPrivGuid', $privGuid, 0, 'global', $this);
-    }
-
-    /**
-     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::setPreference()
-     *
-     * @param string $name Name of the preference to set
-     * @param string $value Value to set preference to
-     * @param null $nosession For BC, ignored
-     * @param string $category Name of the category to retrieve
-     */
-    public function setPreference(
-    $name, $value, $nosession = 0, $category = 'global'
-    ) {
-        // for BC
-        if (func_num_args() > 4) {
-            $user = func_get_arg(4);
-            $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
-        } else {
-            $user = $this;
-        }
-
-        $user->_userPreferenceFocus->setPreference($name, $value, $category);
-    }
-
-    /**
-     * Interface for the User object to calling the UserPreference::resetPreferences() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::resetPreferences()
-     *
-     * @param string $category category to reset
-     */
-    public function resetPreferences(
-    $category = null
-    ) {
-        // for BC
-        if (func_num_args() > 1) {
-            $user = func_get_arg(1);
-            $GLOBALS['log']->deprecated('User::resetPreferences() should not be used statically.');
-        } else {
-            $user = $this;
-        }
-
-        $user->_userPreferenceFocus->resetPreferences($category);
-    }
-
-    /**
-     * Interface for the User object to calling the UserPreference::savePreferencesToDB() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::savePreferencesToDB()
-     */
-    public function savePreferencesToDB()
-    {
-        // for BC
-        if (func_num_args() > 0) {
-            $user = func_get_arg(0);
-            $GLOBALS['log']->deprecated('User::savePreferencesToDB() should not be used statically.');
-        } else {
-            $user = $this;
-        }
-
-        $user->_userPreferenceFocus->savePreferencesToDB();
-    }
-
-    /**
-     * Unconditionally reloads user preferences from the DB and updates the session
-     * @param string $category name of the category to retreive, defaults to global scope
-     * @return bool successful?
-     */
-    public function reloadPreferences($category = 'global')
-    {
-        return $this->_userPreferenceFocus->reloadPreferences($category = 'global');
-    }
-
-    /**
-     * Interface for the User object to calling the UserPreference::getUserDateTimePreferences() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::getUserDateTimePreferences()
-     *
-     * @return array 'date' - date format for user ; 'time' - time format for user
-     */
-    public function getUserDateTimePreferences()
-    {
-        // for BC
-        if (func_num_args() > 0) {
-            $user = func_get_arg(0);
-            $GLOBALS['log']->deprecated('User::getUserDateTimePreferences() should not be used statically.');
-        } else {
-            $user = $this;
-        }
-
-        return $user->_userPreferenceFocus->getUserDateTimePreferences();
-    }
-
-    /**
-     * Interface for the User object to calling the UserPreference::loadPreferences() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::loadPreferences()
-     *
-     * @param string $category name of the category to retreive, defaults to global scope
-     * @return bool successful?
-     */
-    public function loadPreferences(
-    $category = 'global'
-    ) {
-        // for BC
-        if (func_num_args() > 1) {
-            $user = func_get_arg(1);
-            $GLOBALS['log']->deprecated('User::loadPreferences() should not be used statically.');
-        } else {
-            $user = $this;
-        }
-
-        return $user->_userPreferenceFocus->loadPreferences($category);
-    }
-
-    /**
      * @return bool|SugarBean
      * @throws \RuntimeException
      */
@@ -492,27 +619,230 @@ class User extends Person
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::getPreference()
-     *
-     * @param string $name name of the preference to retreive
-     * @param string $category name of the category to retreive, defaults to global scope
-     * @return mixed the value of the preference (string, array, int etc)
-     * @internal param bool $useRequestedRecord
+     * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
      */
-    public function getPreference(
-    $name, $category = 'global'
-    ) {
+    public function getSignatures(
+        $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'signature_id',
+        $useRequestedRecord = false
+    )
+    {
+        $sig = $this->getSignaturesArray($useRequestedRecord);
+        $sigs = array();
+        foreach ($sig as $key => $arr) {
+            $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
+        }
+
+        $change = '';
+        if (!$live) {
+            $change
+                = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
+        }
+
+        $id = (!$forSettings) ? $elementId : 'signature_idDisplay';
+
+        $out = "<select {$change} id='{$id}' name='{$id}'>";
+        $out .= get_select_options_with_id($sigs, $defaultSig) . '</select>';
+
+        return $out;
+    }
+
+    /**
+     * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function getEmailAccountSignatures(
+        $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
+    )
+    {
+        $sig = $this->getSignaturesArray($useRequestedRecord);
+        $sigs = array();
+        foreach ($sig as $key => $arr) {
+            $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
+        }
+
+        $change = '';
+        if (!$live) {
+            $change
+                = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
+        }
+
+        $id = (!$forSettings) ? $elementId : 'signature_idDisplay';
+
+        $out = "<select {$change} id='{$id}' name='{$id}'>";
+        if (empty($defaultSig)) {
+            $out .= get_select_empty_option($defaultSig, true, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+        } else {
+            $out .= get_select_empty_option($defaultSig, false, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+        }
+        $out .= get_select_full_options_with_id($sigs, $defaultSig);
+        $out .= '</select>';
+
+        return $out;
+    }
+
+    /**
+     * returns buttons and JS for signatures
+     * @param string $jscall
+     * @param bool $defaultDisplay
+     * @return string
+     */
+    public function getSignatureButtons($jscall = '', $defaultDisplay = false)
+    {
+        global $mod_strings;
+
+        $jscall = empty($jscall) ? 'open_email_signature_form' : $jscall;
+
+        $butts = "<input class='button' onclick='{$jscall}(\"\", \"{$this->id}\");' " .
+            "value='{$mod_strings['LBL_BUTTON_CREATE']}' type='button'>&nbsp;";
+        if ($defaultDisplay) {
+            $butts .= '<span name="edit_sig" id="edit_sig" style="visibility:inherit;">' .
+                '<input class="button" onclick="'
+                . $jscall . '(document.getElementById(\'signature_id\', \'\').value)" value="'
+                . $mod_strings['LBL_BUTTON_EDIT'] . '" type="button" tabindex="392">&nbsp;
+					</span>';
+        } else {
+            $butts .= '<span name="edit_sig" id="edit_sig" style="visibility:hidden;">' .
+                '<input class="button" onclick="'
+                . $jscall . '(document.getElementById(\'signature_id\', \'\').value)" value="'
+                . $mod_strings['LBL_BUTTON_EDIT'] . '" type="button" tabindex="392">&nbsp;
+					</span>';
+        }
+
+        return $butts;
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    public function getUserPrivGuid()
+    {
+        $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
+        if ($userPrivGuid) {
+            return $userPrivGuid;
+        } else {
+            $this->setUserPrivGuid();
+            if (!isset($_SESSION['setPrivGuid'])) {
+                $_SESSION['setPrivGuid'] = true;
+                $userPrivGuid = $this->getUserPrivGuid();
+
+                return $userPrivGuid;
+            } else {
+                sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public function setUserPrivGuid()
+    {
+        $privGuid = create_guid();
+        $this->setPreference('userPrivGuid', $privGuid, 0, 'global', $this);
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::setPreference() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::setPreference()
+     *
+     * @param string $name Name of the preference to set
+     * @param string $value Value to set preference to
+     * @param int $nosession For BC, ignored
+     * @param string $category Name of the category to retrieve
+     */
+    public function setPreference(
+        $name,
+        $value,
+        $nosession = 0,
+        $category = 'global'
+    )
+    {
         // for BC
-        if (func_num_args() > 2) {
-            $user = func_get_arg(2);
-            $GLOBALS['log']->deprecated('User::getPreference() should not be used statically.');
+        if (func_num_args() > 4) {
+            $user = func_get_arg(4);
+            $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
         } else {
             $user = $this;
         }
 
-        return $user->_userPreferenceFocus->getPreference($name, $category);
+        $user->_userPreferenceFocus->setPreference($name, $value, $category);
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::resetPreferences() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::resetPreferences()
+     *
+     * @param string $category category to reset
+     */
+    public function resetPreferences(
+        $category = null
+    )
+    {
+        // for BC
+        if (func_num_args() > 1) {
+            $user = func_get_arg(1);
+            $GLOBALS['log']->deprecated('User::resetPreferences() should not be used statically.');
+        } else {
+            $user = $this;
+        }
+
+        $user->_userPreferenceFocus->resetPreferences($category);
+    }
+
+    /**
+     * Unconditionally reloads user preferences from the DB and updates the session
+     * @param string $category name of the category to retreive, defaults to global scope
+     * @return bool successful?
+     */
+    public function reloadPreferences($category = 'global')
+    {
+        return $this->_userPreferenceFocus->reloadPreferences($category = 'global');
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::getUserDateTimePreferences() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::getUserDateTimePreferences()
+     *
+     * @return array 'date' - date format for user ; 'time' - time format for user
+     */
+    public function getUserDateTimePreferences()
+    {
+        // for BC
+        if (func_num_args() > 0) {
+            $user = func_get_arg(0);
+            $GLOBALS['log']->deprecated('User::getUserDateTimePreferences() should not be used statically.');
+        } else {
+            $user = $this;
+        }
+
+        return $user->_userPreferenceFocus->getUserDateTimePreferences();
     }
 
     /**
@@ -526,7 +856,7 @@ class User extends Person
      * UserPreference::incrementETag("mainMenuETag");
      *
      * @param string $tag ETag seed name.
-     * @return nothing
+     * @return void
      */
     public function incrementETag($tag)
     {
@@ -558,19 +888,13 @@ class User extends Person
     }
 
     /**
-     * Get WHERE clause that fetches all users counted for licensing purposes
-     * @return string
+     * @param bool $check_notify
+     * @return bool|string
+     * @throws SuiteException
      */
-    public static function getLicensedUsersWhere()
-    {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name', 'length') . ">0";
-
-        return "1<>1";
-    }
-
     public function save($check_notify = false)
     {
-        global $current_user, $sugar_config, $mod_strings;
+        global $current_user, $mod_strings;
 
         $msg = '';
 
@@ -589,7 +913,8 @@ class User extends Person
                 $GLOBALS['log']->warn($msg);
                 SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
             } else {
-                if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                if ($this->factor_auth != $tmpUser->factor_auth
+                    || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
                     $GLOBALS['log']->warn($msg);
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
@@ -600,8 +925,6 @@ class User extends Person
         }
 
         if ($this->factor_auth && $isUpdate && is_admin($current_user)) {
-            $tmpUser = BeanFactory::getBean('Users', $this->id);
-
             $factorAuthFactory = new FactorAuthFactory();
             $factorAuth = $factorAuthFactory->getFactorAuth($this);
 
@@ -609,10 +932,6 @@ class User extends Person
                 $this->factor_auth = false;
             }
         }
-
-
-        $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();
-
 
         // is_group & portal should be set to 0 by default
         if (!isset($this->is_group)) {
@@ -652,6 +971,38 @@ class User extends Person
     }
 
     /**
+     * Get WHERE clause that fetches all users counted for licensing purposes
+     * @return string
+     */
+    public static function getLicensedUsersWhere()
+    {
+        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND "
+            . $GLOBALS['db']->convert(
+                'user_name',
+                'length'
+            ) . ">0";
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::savePreferencesToDB() method in
+     * modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::savePreferencesToDB()
+     */
+    public function savePreferencesToDB()
+    {
+        // for BC
+        if (func_num_args() > 0) {
+            $user = func_get_arg(0);
+            $GLOBALS['log']->deprecated('User::savePreferencesToDB() should not be used statically.');
+        } else {
+            $user = $this;
+        }
+
+        $user->_userPreferenceFocus->savePreferencesToDB();
+    }
+
+    /**
      * @return boolean true if the user is a member of the role_name, false otherwise
      * @param string $role_name - Must be the exact name of the acl_role
      * @param string $user_id - The user id to check for the role membership, empty string if current user
@@ -683,8 +1034,8 @@ class User extends Person
                     $_SESSION['role_memberships'] = ACLRole::getUserRoleNames($user_id);
                     $role_array = $_SESSION['role_memberships'];
                 }
-            } // else the session had the values, so we assign to the role array
-            else {
+            } else {
+                // else the session had the values, so we assign to the role array
                 $role_array = $_SESSION['role_memberships'];
             }
         } else {
@@ -703,18 +1054,19 @@ class User extends Person
         }
     }
 
+    /**
+     * @return string
+     */
     public function get_summary_text()
     {
-        //$this->_create_proper_name_field();
         return $this->name;
     }
 
     /**
      * @deprecated
-     * @param string $user_name - Must be non null and at least 2 characters
      * @param string $username_password - Must be non null and at least 1 character.
-     * @desc Take an unencrypted username and password and return the encrypted password
-     * @return string encrypted password for storage in DB and comparison against DB password.
+     * @return string encrypted password for storage in DB and comparison against DB password.* @desc
+     * Take an unencrypted username and password and return the encrypted password
      */
     public function encrypt_password($username_password)
     {
@@ -744,165 +1096,12 @@ class User extends Person
     }
 
     /**
-     * retrieves an User bean
-     * pre-format name & full_name attribute with first/last
-     * loads User's preferences
-     *
-     * @param string|integer $id ID of the User
-     * @param bool $encode encode the result
-     * @param bool $deleted
-     * @return User|SugarBean|null null if no User found
-     */
-    public function retrieve($id = -1, $encode = true, $deleted = true)
-    {
-        $ret = parent::retrieve($id, $encode, $deleted);
-        if ($ret && isset($_SESSION) && $_SESSION !== null) {
-            $this->loadPreferences();
-        }
-        return $ret;
-    }
-
-    public function retrieve_by_email_address($email)
-    {
-        $email1 = strtoupper($email);
-        $q = <<<EOQ
-
-		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
-		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
-EOQ;
-
-
-        $res = $this->db->query($q);
-        $rows = array();
-        while ($row = $this->db->fetchByAssoc($res)) {
-            $rows[] = $row;
-        }
-
-        if (count($rows) > 1) {
-            $GLOBALS['log']->fatal('ambiguous user email address');
-        }
-        if (!empty($rows[0]['id'])) {
-            return $this->retrieve($rows[0]['id']);
-        }
-        return '';
-    }
-
-    public function bean_implements($interface)
-    {
-        switch ($interface) {
-            case 'ACL':
-                return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Load a user based on the user_name in $this
-     * @param string $username_password Password
-     * @param bool $password_encoded Is password md5-encoded or plain text?
-     * @return -- this if load was successul and null if load failed.
-     */
-    public function load_user($username_password, $password_encoded = false)
-    {
-        global $login_error;
-        unset($GLOBALS['login_error']);
-        if (isset($_SESSION['loginattempts'])) {
-            $_SESSION['loginattempts'] += 1;
-        } else {
-            $_SESSION['loginattempts'] = 1;
-        }
-        if ($_SESSION['loginattempts'] > 5) {
-            $GLOBALS['log']->fatal('SECURITY: ' . $this->user_name . ' has attempted to login ' . $_SESSION['loginattempts'] . ' times from IP address: ' . $_SERVER['REMOTE_ADDR'] . '.');
-
-            return null;
-        }
-
-        $GLOBALS['log']->debug("Starting user load for $this->user_name");
-
-        if (!isset($this->user_name) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
-            return null;
-        }
-
-        if (!$password_encoded) {
-            $username_password = md5($username_password);
-        }
-        $row = self::findUserPassword($this->user_name, $username_password);
-        if (empty($row) || !empty($GLOBALS['login_error'])) {
-            $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $this->user_name . ' failed - could not Load User from Database');
-
-            return null;
-        }
-
-        // now fill in the fields.
-        $this->loadFromRow($row);
-        $this->loadPreferences();
-
-        if ($this->status != "Inactive") {
-            $this->authenticated = true;
-        }
-
-        unset($_SESSION['loginattempts']);
-
-        return $this;
-    }
-
-    /**
-     * Generate a new hash from plaintext password
-     * @param string $password
-     */
-    public static function getPasswordHash($password)
-    {
-        if (!defined('CRYPT_MD5') || !constant('CRYPT_MD5')) {
-            // does not support MD5 crypt - leave as is
-            if (defined('CRYPT_EXT_DES') && constant('CRYPT_EXT_DES')) {
-                return crypt(strtolower(md5($password)), "_.012" . substr(str_shuffle('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), -4));
-            }
-            // plain crypt cuts password to 8 chars, which is not enough
-            // fall back to old md5
-            return strtolower(md5($password));
-        }
-
-        return @crypt(strtolower(md5($password)));
-    }
-
-    /**
-     * Check that password matches existing hash
-     * @param string $password Plaintext password
-     * @param string $user_hash DB hash
-     */
-    public static function checkPassword($password, $user_hash)
-    {
-        return self::checkPasswordMD5(md5($password), $user_hash);
-    }
-
-    /**
-     * Check that md5-encoded password matches existing hash
-     * @param string $password MD5-encoded password
-     * @param string $user_hash DB hash
-     * @return bool Match or not?
-     */
-    public static function checkPasswordMD5($password_md5, $user_hash)
-    {
-        if (empty($user_hash)) {
-            return false;
-        }
-        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
-            // Old way - just md5 password
-            return strtolower($password_md5) == $user_hash;
-        }
-
-        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
-    }
-
-    /**
      * Find user with matching password
      * @param string $name Username
      * @param string $password MD5-encoded password
      * @param string $where Limiting query
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return bool|arraythe matching User of false if not found
+     * @return bool|array the matching User of false if not found
      */
     public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
     {
@@ -932,21 +1131,121 @@ EOQ;
     }
 
     /**
-     * Sets new password and resets password expiration timers
-     * @param string $new_password
+     * Check that md5-encoded password matches existing hash
+     * @param $password_md5
+     * @param string $user_hash DB hash
+     * @return bool Match or not?
      */
-    public function setNewPassword($new_password, $system_generated = '0')
+    public static function checkPasswordMD5($password_md5, $user_hash)
     {
-        $user_hash = self::getPasswordHash($new_password);
-        $this->setPreference('loginexpiration', '0');
-        $this->setPreference('lockout', '');
-        $this->setPreference('loginfailed', '0');
-        $this->savePreferencesToDB();
-        //set new password
-        $now = TimeDate::getInstance()->nowDb();
-        $query = "UPDATE $this->table_name SET user_hash='$user_hash', system_generated_password='$system_generated', pwd_last_changed='$now' where id='$this->id'";
-        $this->db->query($query, true, "Error setting new password for $this->user_name: ");
-        $_SESSION['hasExpiredPassword'] = '0';
+        if (empty($user_hash)) {
+            return false;
+        }
+        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
+            // Old way - just md5 password
+            return strtolower($password_md5) == $user_hash;
+        }
+
+        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
+    }
+
+    /**
+     * @param $email
+     * @return null|string|SugarBean|User
+     */
+    public function retrieve_by_email_address($email)
+    {
+        $email1 = strtoupper($email);
+        $q = <<<EOQ
+
+		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
+		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
+EOQ;
+
+
+        $res = $this->db->query($q);
+        $rows = array();
+        while ($row = $this->db->fetchByAssoc($res)) {
+            $rows[] = $row;
+        }
+
+        if (count($rows) > 1) {
+            $GLOBALS['log']->fatal('ambiguous user email address');
+        }
+        if (!empty($rows[0]['id'])) {
+            return $this->retrieve($rows[0]['id']);
+        }
+        return '';
+    }
+
+    /**
+     * @param $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Load a user based on the user_name in $this
+     * @param string $username_password Password
+     * @param bool $password_encoded Is password md5-encoded or plain text?
+     * @return null|User -- this if load was successul and null if load failed.
+     */
+    public function load_user($username_password, $password_encoded = false)
+    {
+        unset($GLOBALS['login_error']);
+        if (isset($_SESSION['loginattempts'])) {
+            $_SESSION['loginattempts'] += 1;
+        } else {
+            $_SESSION['loginattempts'] = 1;
+        }
+        if ($_SESSION['loginattempts'] > 5) {
+            $GLOBALS['log']->fatal(
+                'SECURITY: ' . $this->user_name . ' has attempted to login '
+                . $_SESSION['loginattempts'] . ' times from IP address: ' . $_SERVER['REMOTE_ADDR'] . '.'
+            );
+
+            return null;
+        }
+
+        $GLOBALS['log']->debug("Starting user load for $this->user_name");
+
+        if (!isset($this->user_name) || $this->user_name == ""
+            || !isset($username_password) || $username_password == "") {
+            return null;
+        }
+
+        if (!$password_encoded) {
+            $username_password = md5($username_password);
+        }
+        $row = self::findUserPassword($this->user_name, $username_password);
+        if (empty($row) || !empty($GLOBALS['login_error'])) {
+            $GLOBALS['log']->fatal(
+                'SECURITY: User authentication for ' . $this->user_name . ' failed - could not Load User from Database'
+            );
+
+            return null;
+        }
+
+        // now fill in the fields.
+        $this->loadFromRow($row);
+        $this->loadPreferences();
+
+        if ($this->status != "Inactive") {
+            $this->authenticated = true;
+        }
+
+        unset($_SESSION['loginattempts']);
+
+        return $this;
     }
 
     /**
@@ -964,7 +1263,8 @@ EOQ;
         $GLOBALS['log']->debug("Starting password change for $this->user_name");
 
         if (!isset($new_password) || $new_password == "") {
-            $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'] . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
+            $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1']
+                . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
             return false;
         }
         if ($this->error_string = $this->passwordValidationCheck($new_password)) {
@@ -973,12 +1273,15 @@ EOQ;
 
 
         //check old password current user is not an admin or current user is an admin editing themselves
-        if (!$current_user->isAdminForModule('Users') || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
+        if (!$current_user->isAdminForModule('Users') || ($current_user->isAdminForModule(
+                    'Users'
+                ) && ($current_user->id == $this->id))) {
             //check old password first
             $row = self::findUserPassword($this->user_name, md5($username_password));
             if (empty($row)) {
                 $GLOBALS['log']->warn("Incorrect old password for " . $this->user_name . "");
-                $this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1'] . $this->user_name . $mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
+                $this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1']
+                    . $this->user_name . $mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
 
                 return false;
             }
@@ -988,6 +1291,10 @@ EOQ;
         return true;
     }
 
+    /**
+     * @param $newPassword
+     * @return string
+     */
     public function passwordValidationCheck($newPassword)
     {
         global $sugar_config, $mod_strings;
@@ -1025,24 +1332,201 @@ EOQ;
         return $message;
     }
 
+    /**
+     * Is this user an admin for the specified module
+     *
+     * @param $module
+     * @return bool
+     */
+    public function isAdminForModule($module)
+    {
+        if (empty($this->id)) {
+            // empty user is no admin
+            return false;
+        }
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        $adminModules = $this->getAdminModules();
+
+        $module = $this->_fixupModuleForACL($module);
+
+        if (in_array($module, $adminModules)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Is this user a system wide admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if (isset($this->is_admin) && ($this->is_admin == '1' || $this->is_admin === 'on')
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * List the modules a user has admin access to
+     *
+     * @return array
+     */
+    public function getAdminModules()
+    {
+        if (!isset($_SESSION[$this->user_name . '_get_admin_modules_for_user'])) {
+            $_SESSION[$this->user_name . '_get_admin_modules_for_user'] = $this->_getModulesForACL('admin');
+        }
+
+        return $_SESSION[$this->user_name . '_get_admin_modules_for_user'];
+    }
+
+    /**
+     * Helper function that enumerates the list of modules and checks if they are an admin/dev.
+     * The code was just too similar to copy and paste.
+     *
+     * @param string $type
+     * @return array
+     */
+    protected function _getModulesForACL($type = 'dev')
+    {
+        global $beanList;
+        $myModules = array();
+
+        if (!is_array($beanList)) {
+            return $myModules;
+        }
+
+        // These modules don't take kindly to the studio trying to play about with them.
+        static $ignoredModuleList = array('iFrames', 'Feeds', 'Home', 'Dashboard', 'Calendar', 'Activities', 'Reports');
+
+
+        $actions = ACLAction::getUserActions($this->id);
+
+        foreach ($beanList as $module => $val) {
+            // Remap the module name
+            $module = $this->_fixupModuleForACL($module);
+            if (in_array($module, $myModules)) {
+                // Already have the module in the list
+                continue;
+            }
+            if (in_array($module, $ignoredModuleList)) {
+                // You can't develop on these modules.
+                continue;
+            }
+
+            $focus = SugarModule::get($module)->loadBean();
+            if ($focus instanceof SugarBean) {
+                $key = $focus->acltype;
+            } else {
+                $key = 'module';
+            }
+
+            if (($this->isAdmin() && isset($actions[$module][$key]))
+            ) {
+                $myModules[] = $module;
+            }
+        }
+
+        return $myModules;
+    }
+
+    /**
+     * Helper function to remap some modules around ACL wise
+     *
+     * @param $module
+     * @return string
+     */
+    protected function _fixupModuleForACL($module)
+    {
+        if ($module == 'ContractTypes') {
+            $module = 'Contracts';
+        }
+        if (preg_match('/Product[a-zA-Z]*/', $module)) {
+            $module = 'Products';
+        }
+
+        return $module;
+    }
+
+    /**
+     * Sets new password and resets password expiration timers
+     * @param string $new_password
+     * @param string $system_generated
+     */
+    public function setNewPassword($new_password, $system_generated = '0')
+    {
+        $user_hash = self::getPasswordHash($new_password);
+        $this->setPreference('loginexpiration', '0');
+        $this->setPreference('lockout', '');
+        $this->setPreference('loginfailed', '0');
+        $this->savePreferencesToDB();
+        //set new password
+        $now = TimeDate::getInstance()->nowDb();
+        $query = "UPDATE $this->table_name SET user_hash='$user_hash', "
+            . "system_generated_password='$system_generated', pwd_last_changed='$now' where id='$this->id'";
+        $this->db->query($query, true, "Error setting new password for $this->user_name: ");
+        $_SESSION['hasExpiredPassword'] = '0';
+    }
+
+    /**
+     * Generate a new hash from plaintext password
+     * @param string $password
+     * @return string
+     */
+    public static function getPasswordHash($password)
+    {
+        if (!defined('CRYPT_MD5') || !constant('CRYPT_MD5')) {
+            // does not support MD5 crypt - leave as is
+            if (defined('CRYPT_EXT_DES') && constant('CRYPT_EXT_DES')) {
+                return crypt(
+                    strtolower(md5($password)),
+                    "_.012" . substr(
+                        str_shuffle('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'),
+                        -4
+                    )
+                );
+            }
+            // plain crypt cuts password to 8 chars, which is not enough
+            // fall back to old md5
+            return strtolower(md5($password));
+        }
+
+        return @crypt(strtolower(md5($password)));
+    }
+
+    /**
+     * @return bool
+     */
     public function is_authenticated()
     {
         return $this->authenticated;
     }
 
+    /**
+     *
+     */
     public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }
 
+    /**
+     *
+     */
     public function fill_in_additional_detail_fields()
     {
-        // jmorais@dri Bug #56269
         parent::fill_in_additional_detail_fields();
-        // ~jmorais@dri
-        global $locale;
 
-        $query = "SELECT u1.first_name, u1.last_name from users  u1, users  u2 where u1.id = u2.reports_to_id AND u2.id = '$this->id' and u1.deleted=0";
+        $query = "SELECT u1.first_name, u1.last_name from users  u1, users  u2 "
+            . "where u1.id = u2.reports_to_id AND u2.id = '$this->id' and u1.deleted=0";
         $result = $this->db->query($query, true, "Error filling in additional detail fields");
 
         $row = $this->db->fetchByAssoc($result);
@@ -1053,13 +1537,15 @@ EOQ;
             $this->reports_to_name = '';
         }
 
-
         $this->_create_proper_name_field();
     }
 
-    public function retrieve_user_id(
-    $user_name
-    ) {
+    /**
+     * @param $user_name
+     * @return bool
+     */
+    public function retrieve_user_id($user_name)
+    {
         $userFocus = new User;
         $userFocus->retrieve_by_string_fields(array('user_name' => $user_name));
         if (empty($userFocus->id)) {
@@ -1070,7 +1556,8 @@ EOQ;
     }
 
     /**
-     * @return -- returns a list of all users in the system.
+     * @param bool $ieVerified
+     * @return bool -- returns a list of all users in the system.
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
      * All Rights Reserved..
      * Contributor(s): ______________________________________..
@@ -1118,7 +1605,8 @@ EOQ;
         $dup_users = $this->db->fetchByAssoc($result);
 
         if (!empty($dup_users)) {
-            $this->error_string .= $mod_strings['ERR_USER_NAME_EXISTS_1'] . $this->user_name . $mod_strings['ERR_USER_NAME_EXISTS_2'];
+            $this->error_string .= $mod_strings['ERR_USER_NAME_EXISTS_1']
+                . $this->user_name . $mod_strings['ERR_USER_NAME_EXISTS_2'];
             $verified = false;
         }
 
@@ -1127,7 +1615,8 @@ EOQ;
 
             if (($remaining_admins <= 1) && ($this->is_admin != '1') && ($this->id == $current_user->id)) {
                 $GLOBALS['log']->debug("Number of remaining administrator accounts: {$remaining_admins}");
-                $this->error_string .= $mod_strings['ERR_LAST_ADMIN_1'] . $this->user_name . $mod_strings['ERR_LAST_ADMIN_2'];
+                $this->error_string .= $mod_strings['ERR_LAST_ADMIN_1']
+                    . $this->user_name . $mod_strings['ERR_LAST_ADMIN_2'];
                 $verified = false;
             }
         }
@@ -1141,6 +1630,9 @@ EOQ;
         return $verified;
     }
 
+    /**
+     * @return array
+     */
     public function get_list_view_data()
     {
         global $mod_strings;
@@ -1148,25 +1640,52 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $mod_strings['LBL_CHECKMARK']);
+            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage(
+                'check_inline',
+                '',
+                null,
+                null,
+                '.gif',
+                $mod_strings['LBL_CHECKMARK']
+            );
         } elseif (!$this->is_admin) {
             $user_fields['IS_ADMIN'] = '';
         }
         if ($this->is_group) {
-            $user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $mod_strings['LBL_CHECKMARK']);
+            $user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage(
+                'check_inline',
+                '',
+                null,
+                null,
+                '.gif',
+                $mod_strings['LBL_CHECKMARK']
+            );
         } else {
             $user_fields['IS_GROUP_IMAGE'] = '';
         }
 
-
         if ($this->is_admin) {
-            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', translate('LBL_CHECKMARK', 'Users'));
+            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage(
+                'check_inline',
+                '',
+                null,
+                null,
+                '.gif',
+                translate('LBL_CHECKMARK', 'Users')
+            );
         } elseif (!$this->is_admin) {
             $user_fields['IS_ADMIN'] = '';
         }
 
         if ($this->is_group) {
-            $user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', translate('LBL_CHECKMARK', 'Users'));
+            $user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage(
+                'check_inline',
+                '',
+                null,
+                null,
+                '.gif',
+                translate('LBL_CHECKMARK', 'Users')
+            );
         } else {
             $user_fields['NAME'] = empty($this->name) ? '' : $this->name;
         }
@@ -1177,41 +1696,20 @@ EOQ;
         return $user_fields;
     }
 
+    /**
+     * @param $list_form
+     */
     public function list_view_parse_additional_sections(&$list_form)
     {
         return $list_form;
     }
 
     /**
-     * getAllUsers
-     *
-     * Returns all active and inactive users
-     * @return Array of all users in the system
+     * @param $order_by
+     * @param $where
+     * @param string $relate_link_join
+     * @return string
      */
-    public static function getAllUsers()
-    {
-        $active_users = get_user_array(false);
-        $inactive_users = get_user_array(false, "Inactive");
-        $result = $active_users + $inactive_users;
-        asort($result);
-
-        return $result;
-    }
-
-    /**
-     * getActiveUsers
-     *
-     * Returns all active users
-     * @return Array of active users in the system
-     */
-    public static function getActiveUsers()
-    {
-        $active_users = get_user_array(false);
-        asort($active_users);
-
-        return $active_users;
-    }
-
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         include('modules/Users/field_arrays.php');
@@ -1247,6 +1745,8 @@ EOQ;
         return $query;
     }
 
+    // fn
+
     /** Returns a list of the associated users
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
      * All Rights Reserved..
@@ -1260,6 +1760,11 @@ EOQ;
         return $this->build_related_list($query, new Meeting());
     }
 
+    // fn
+
+    /**
+     * @return array
+     */
     public function get_calls()
     {
         // First, get the list of IDs.
@@ -1280,14 +1785,20 @@ EOQ;
         $verts = array('Love', 'Links', 'Pipeline', 'RipCurl', 'SugarLite');
 
         if ($this->hasPersonalEmail()) {
-            $r = $this->db->query('SELECT count(*) AS c FROM emails WHERE deleted=0 AND assigned_user_id = \'' . $this->id . '\' AND type = \'inbound\' AND status = \'unread\'');
+            $r = $this->db->query(
+                'SELECT count(*) AS c FROM emails WHERE deleted=0 AND assigned_user_id = \''
+                . $this->id . '\' AND type = \'inbound\' AND status = \'unread\''
+            );
             $a = $this->db->fetchByAssoc($r);
             if (in_array($theme, $verts)) {
                 $count .= '<br />';
             } else {
                 $count .= '&nbsp;&nbsp;&nbsp;&nbsp;';
             }
-            $count .= '<a href=' . $default . '&type=inbound>' . translate('LBL_LIST_TITLE_MY_INBOX', 'Emails') . ': (' . $a['c'] . ' ' . $new . ')</a>';
+            $count .= '<a href=' . $default . '&type=inbound>' . translate(
+                'LBL_LIST_TITLE_MY_INBOX',
+                'Emails'
+                ) . ': (' . $a['c'] . ' ' . $new . ')</a>';
 
             if (!in_array($theme, $verts)) {
                 $count .= ' - ';
@@ -1296,7 +1807,6 @@ EOQ;
 
         $r = $this->db->query('SELECT id FROM users WHERE users.is_group = 1 AND deleted = 0');
         $groupIds = '';
-        $groupNew = '';
         while ($a = $this->db->fetchByAssoc($r)) {
             if ($groupIds != '') {
                 $groupIds .= ', ';
@@ -1307,7 +1817,8 @@ EOQ;
         $total = 0;
         if (strlen($groupIds) > 0) {
             $groupQuery = 'SELECT count(*) AS c FROM emails ';
-            $groupQuery .= ' WHERE emails.deleted=0 AND emails.assigned_user_id IN (' . $groupIds . ') AND emails.type = \'inbound\' AND emails.status = \'unread\'';
+            $groupQuery .= ' WHERE emails.deleted=0 AND emails.assigned_user_id IN (' . $groupIds
+                . ') AND emails.type = \'inbound\' AND emails.status = \'unread\'';
             $r = $this->db->query($groupQuery);
             if (is_resource($r)) {
                 $a = $this->db->fetchByAssoc($r);
@@ -1322,7 +1833,10 @@ EOQ;
         if (empty($count)) {
             $count .= '&nbsp;&nbsp;&nbsp;&nbsp;';
         }
-        $count .= '<a href=index.php?module=Emails&action=ListViewGroup>' . translate('LBL_LIST_TITLE_GROUP_INBOX', 'Emails') . ': (' . $total . ' ' . $new . ')</a>';
+        $count .= '<a href=index.php?module=Emails&action=ListViewGroup>' . translate(
+            'LBL_LIST_TITLE_GROUP_INBOX',
+            'Emails'
+            ) . ': (' . $total . ' ' . $new . ')</a>';
 
         $out = '<script type="text/javascript" language="Javascript">';
         $out .= 'var welcome = document.getElementById("welcome");';
@@ -1333,6 +1847,23 @@ EOQ;
         echo $out;
     }
 
+    /**
+     * performs a rudimentary check to verify if a given user has setup personal
+     * InboundEmail
+     *
+     * @return bool
+     */
+    public function hasPersonalEmail()
+    {
+        $focus = new InboundEmail;
+        $focus->retrieve_by_string_fields(array('group_id' => $this->id));
+
+        return !empty($focus->id);
+    }
+
+    /**
+     * @return array
+     */
     public function getPreferredEmail()
     {
         $ret = array();
@@ -1351,6 +1882,9 @@ EOQ;
         return $ret;
     }
 
+    /**
+     * @return array
+     */
     public function getUsersNameAndEmail()
     {
         // Bug #48555 Not User Name Format of User's locale.
@@ -1365,8 +1899,15 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $this->name);
     }
 
-// fn
+    /*
+     *
+     * Here are the multi level admin access check functions.
+     *
+     */
 
+    /**
+     * @return array
+     */
     public function getSystemDefaultNameAndEmail()
     {
         $email = new Email();
@@ -1375,23 +1916,6 @@ EOQ;
         $fullName = $return['name'];
 
         return array('email' => $prefAddr, 'name' => $fullName);
-    }
-
-// fn
-
-    /**
-     * sets User email default in config.php if not already set by install - i.
-     * e., upgrades
-     */
-    public function setDefaultsInConfig()
-    {
-        global $sugar_config;
-        $sugar_config['email_default_client'] = 'sugar';
-        $sugar_config['email_default_editor'] = 'html';
-        ksort($sugar_config);
-        write_array_to_file('sugar_config', $sugar_config, 'config.php');
-
-        return $sugar_config;
     }
 
     /**
@@ -1422,10 +1946,6 @@ EOQ;
                 $fromaddr = $user->email1;
             } elseif (!empty($user->email2) && isset($user->email2)) {
                 $fromaddr = $user->email2;
-            } else {
-                $r = $user->db->query("SELECT value FROM config WHERE name = 'fromaddress'");
-                $a = $user->db->fetchByAssoc($r);
-                $fromddr = $a['value'];
             }
         }
 
@@ -1438,18 +1958,25 @@ EOQ;
     /**
      * returns opening <a href=xxxx for a contact, account, etc
      * cascades from User set preference to System-wide default
+     * @param $emailAddress
+     * @param $focus
+     * @param string $contact_id
+     * @param string $ret_module
+     * @param string $ret_action
+     * @param string $ret_id
+     * @param string $class
      * @return string    link
-     * @param attribute the email addy
-     * @param focus the parent bean
-     * @param contact_id
-     * @param return_module
-     * @param return_action
-     * @param return_id
-     * @param class
      */
     public function getEmailLink2(
-    $emailAddress, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
-    ) {
+        $emailAddress,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
+    )
+    {
         $emailLink = '';
         global $sugar_config;
 
@@ -1469,7 +1996,7 @@ EOQ;
             require_once('modules/Emails/EmailUI.php');
             $emailUI = new EmailUI();
             for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-                $emailField = 'email' . (string) ($i + 1);
+                $emailField = 'email' . (string)($i + 1);
                 $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
                 if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
                     $focus->$emailField = $emailAddress;
@@ -1486,24 +2013,44 @@ EOQ;
     }
 
     /**
+     * sets User email default in config.php if not already set by install - i.
+     * e., upgrades
+     */
+    public function setDefaultsInConfig()
+    {
+        global $sugar_config;
+        $sugar_config['email_default_client'] = 'sugar';
+        $sugar_config['email_default_editor'] = 'html';
+        ksort($sugar_config);
+        write_array_to_file('sugar_config', $sugar_config, 'config.php');
+
+        return $sugar_config;
+    }
+
+    /**
      * returns opening <a href=xxxx for a contact, account, etc
      * cascades from User set preference to System-wide default
+     * @param $attribute
+     * @param $focus
+     * @param string $contact_id
+     * @param string $ret_module
+     * @param string $ret_action
+     * @param string $ret_id
+     * @param string $class
      * @return string    link
-     * @param attribute the email addy
-     * @param focus the parent bean
-     * @param contact_id
-     * @param return_module
-     * @param return_action
-     * @param return_id
-     * @param class
      */
     public function getEmailLink(
-    $attribute, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
-    ) {
+        $attribute,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
+    )
+    {
         require_once('modules/Emails/EmailUI.php');
-        $emailLink = '';
         global $sugar_config;
-
 
         if (!isset($sugar_config['email_default_client'])) {
             $this->setDefaultsInConfig();
@@ -1565,96 +2112,6 @@ EOQ;
         return $ret1 . "<br />" . $ret2;
     }
 
-    /*
-     *
-     * Here are the multi level admin access check functions.
-     *
-     */
-
-    /**
-     * Helper function to remap some modules around ACL wise
-     *
-     * @return string
-     */
-    protected function _fixupModuleForACL($module)
-    {
-        if ($module == 'ContractTypes') {
-            $module = 'Contracts';
-        }
-        if (preg_match('/Product[a-zA-Z]*/', $module)) {
-            $module = 'Products';
-        }
-
-        return $module;
-    }
-
-    /**
-     * Helper function that enumerates the list of modules and checks if they are an admin/dev.
-     * The code was just too similar to copy and paste.
-     *
-     * @return array
-     */
-    protected function _getModulesForACL($type = 'dev')
-    {
-        $isDev = $type == 'dev';
-        $isAdmin = $type == 'admin';
-
-        global $beanList;
-        $myModules = array();
-
-        if (!is_array($beanList)) {
-            return $myModules;
-        }
-
-        // These modules don't take kindly to the studio trying to play about with them.
-        static $ignoredModuleList = array('iFrames', 'Feeds', 'Home', 'Dashboard', 'Calendar', 'Activities', 'Reports');
-
-
-        $actions = ACLAction::getUserActions($this->id);
-
-        foreach ($beanList as $module => $val) {
-            // Remap the module name
-            $module = $this->_fixupModuleForACL($module);
-            if (in_array($module, $myModules)) {
-                // Already have the module in the list
-                continue;
-            }
-            if (in_array($module, $ignoredModuleList)) {
-                // You can't develop on these modules.
-                continue;
-            }
-
-            $focus = SugarModule::get($module)->loadBean();
-            if ($focus instanceof SugarBean) {
-                $key = $focus->acltype;
-            } else {
-                $key = 'module';
-            }
-
-            if (($this->isAdmin() && isset($actions[$module][$key]))
-            ) {
-                $myModules[] = $module;
-            }
-        }
-
-        return $myModules;
-    }
-
-    /**
-     * Is this user a system wide admin
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        if (isset($this->is_admin) && ($this->is_admin == '1' || $this->is_admin === 'on')
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Is this user a developer for any module
      *
@@ -1674,23 +2131,9 @@ EOQ;
     }
 
     /**
-     * List the modules a user has developer access to
-     *
-     * @return array
-     */
-    public function getDeveloperModules()
-    {
-        static $developerModules;
-        if (!isset($_SESSION[$this->user_name . '_get_developer_modules_for_user'])) {
-            $_SESSION[$this->user_name . '_get_developer_modules_for_user'] = $this->_getModulesForACL('dev');
-        }
-
-        return $_SESSION[$this->user_name . '_get_developer_modules_for_user'];
-    }
-
-    /**
      * Is this user a developer for the specified module
      *
+     * @param $module
      * @return bool
      */
     public function isDeveloperForModule($module)
@@ -1715,43 +2158,17 @@ EOQ;
     }
 
     /**
-     * List the modules a user has admin access to
+     * List the modules a user has developer access to
      *
      * @return array
      */
-    public function getAdminModules()
+    public function getDeveloperModules()
     {
-        if (!isset($_SESSION[$this->user_name . '_get_admin_modules_for_user'])) {
-            $_SESSION[$this->user_name . '_get_admin_modules_for_user'] = $this->_getModulesForACL('admin');
+        if (!isset($_SESSION[$this->user_name . '_get_developer_modules_for_user'])) {
+            $_SESSION[$this->user_name . '_get_developer_modules_for_user'] = $this->_getModulesForACL('dev');
         }
 
-        return $_SESSION[$this->user_name . '_get_admin_modules_for_user'];
-    }
-
-    /**
-     * Is this user an admin for the specified module
-     *
-     * @return bool
-     */
-    public function isAdminForModule($module)
-    {
-        if (empty($this->id)) {
-            // empty user is no admin
-            return false;
-        }
-        if ($this->isAdmin()) {
-            return true;
-        }
-
-        $adminModules = $this->getAdminModules();
-
-        $module = $this->_fixupModuleForACL($module);
-
-        if (in_array($module, $adminModules)) {
-            return true;
-        }
-
-        return false;
+        return $_SESSION[$this->user_name . '_get_developer_modules_for_user'];
     }
 
     /**
@@ -1770,15 +2187,50 @@ EOQ;
         }
     }
 
+    /**
+     * @param string $order_by
+     * @param string $where
+     * @param array $filter
+     * @param array $params
+     * @param int $show_deleted
+     * @param string $join_type
+     * @param bool $return_array
+     * @param null $parentbean
+     * @param bool $singleSelect
+     * @param bool $ifListForExport
+     * @return string
+     */
     public function create_new_list_query(
-    $order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false
-    ) {    //call parent method, specifying for array to be returned
-        $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    )
+    {    //call parent method, specifying for array to be returned
+        $ret_array = parent::create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            true,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
+        );
 
         //if this is being called from webservices, then run additional code
         if (!empty($GLOBALS['soap_server_object'])) {
 
-            //if this is a single select, then secondary queries are being run that may result in duplicate rows being returned through the
+            //if this is a single select, then secondary queries are being run that may result in
+            // duplicate rows being returned through the
             //left joins with meetings/tasks/call.  We need to change the left joins to include a null check (bug 40250)
             if ($singleSelect) {
                 //retrieve the 'from' string and make lowercase for easier manipulation
@@ -1838,39 +2290,13 @@ EOQ;
     }
 
     /**
-     * Method for password generation
-     *
-     * @static
-     * @return string password
-     */
-    public static function generatePassword()
-    {
-        $res = $GLOBALS['sugar_config']['passwordsetting'];
-        $charBKT = '';
-        //chars to select from
-        $LOWERCASE = "abcdefghijklmnpqrstuvwxyz";
-        $NUMBER = "0123456789";
-        $UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $SPECIAL = '~!@#$%^&*()_+=-{}|';
-        $condition = 0;
-        $charBKT .= $UPPERCASE . $LOWERCASE . $NUMBER;
-        $password = "";
-        $length = '6';
-
-        // Create random characters for the ones that doesnt have requirements
-        for ($i = 0; $i < $length - $condition; $i++) {  // loop and create password
-            $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
-        }
-
-        return $password;
-    }
-
-    /**
      * Send new password or link to user
      *
      * @param string $templateId Id of email template
      * @param array $additionalData additional params: link, url, password
-     * @return array status: true|false, message: error message, if status = false and message = '' it means that send method has returned false
+     * @return array status: true|false, message: error message, if status = false and message = '' it means that send
+     *     method has returned false
+     * @throws phpmailerException
      */
     public function sendEmailForPassword($templateId, array $additionalData = array())
     {
@@ -1912,14 +2338,12 @@ EOQ;
 
         $itemail = $this->emailAddress->getPrimaryAddress($this);
         //retrieve IT Admin Email
-        //_ppd( $emailTemp->body_html);
         //retrieve email defaults
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
         require_once('include/SugarPHPMailer.php');
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
-        //$mail->IsHTML(true);
         $mail->From = $defaults['email'];
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
@@ -1984,10 +2408,18 @@ EOQ;
     }
 
     // Bug #48014 Must to send password to imported user if this action is required
+
+    /**
+     * @return bool|void
+     */
     public function afterImportSave()
     {
         if (
-                $this->user_hash == false && !$this->is_group && !$this->portal_only && isset($GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON']) && $GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON']
+            $this->user_hash == false
+            && !$this->is_group
+            && !$this->portal_only
+            && isset($GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON'])
+            && $GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON']
         ) {
             $backUpPost = $_POST;
             $_POST = array(
@@ -2017,6 +2449,9 @@ EOQ;
         }
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getEditorType()
     {
         $editorType = $this->getPreference('editor_type');
@@ -2028,19 +2463,26 @@ EOQ;
         return $editorType;
     }
 
-    public function getSubThemes() {
+    /**
+     * @return array
+     */
+    public function getSubThemes()
+    {
         $sugarTheme = new SugarTheme(array());
         $subThemes = $sugarTheme->getSubThemes();
         return $subThemes;
     }
 
-    public function getSubTheme() {
+    /**
+     * @return mixed|null
+     */
+    public function getSubTheme()
+    {
         $subTheme = $this->getPreference('subtheme');
-        if(!$subTheme) {
+        if (!$subTheme) {
             $sugarTheme = new SugarTheme(array());
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
     }
-
 }
