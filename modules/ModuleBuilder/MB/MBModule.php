@@ -496,7 +496,7 @@ class MBModule
             $class [ 'requires' ] [] = MB_TEMPLATES . '/' . $template . '/' . ucfirst ( $template ) . '.php' ;
         }
         $class [ 'importable' ] = $this->config [ 'importable' ] ;
-        $class [ 'inline_edit' ] = $this->config [ 'inline_edit' ] ;
+        $class [ 'inline_edit' ] = isset($this->config [ 'inline_edit' ]) ? $this->config [ 'inline_edit' ] : null;
         $this->mbvardefs->updateVardefs () ;
         $class [ 'fields' ] = $this->mbvardefs->vardefs [ 'fields' ] ;
         $class [ 'fields_string' ] = var_export_helper ( $this->mbvardefs->vardef [ 'fields' ] ) ;
