@@ -52,26 +52,20 @@ require_once 'include/UploadStream.php';
  */
 class UploadMultipleFiles
 {
-    public $field_name;
-    public $stored_file_name;
-    public $uploaded_file_name;
-    public $original_file_name;
-    public $temp_file_location;
-    public $index;
-    public $use_soap = false;
-    public $file;
-    public $file_ext;
-    public $mime_type;
+    /**
+     * @var string
+     */
     protected static $url = "upload/";
-
     /**
      * Upload errors
      * @var array
      */
     protected static $filesError = array(
         UPLOAD_ERR_OK => 'UPLOAD_ERR_OK - There is no error, the file uploaded with success.',
-        UPLOAD_ERR_INI_SIZE => 'UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-        UPLOAD_ERR_FORM_SIZE => 'UPLOAD_ERR_FORM_SIZE - The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+        UPLOAD_ERR_INI_SIZE => 'UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize
+            directive in php.ini.',
+        UPLOAD_ERR_FORM_SIZE => 'UPLOAD_ERR_FORM_SIZE - The uploaded file exceeds the MAX_FILE_SIZE
+            directive that was specified in the HTML form.',
         UPLOAD_ERR_PARTIAL => 'UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.',
         UPLOAD_ERR_NO_FILE => 'UPLOAD_ERR_NO_FILE - No file was uploaded.',
         5 => 'UNKNOWN ERROR',
@@ -79,6 +73,46 @@ class UploadMultipleFiles
         UPLOAD_ERR_CANT_WRITE => 'UPLOAD_ERR_CANT_WRITE - Failed to write file to disk.',
         UPLOAD_ERR_EXTENSION => 'UPLOAD_ERR_EXTENSION - A PHP extension stopped the file upload.',
     );
+    /**
+     * @var string
+     */
+    public $field_name;
+    /**
+     * @var
+     */
+    public $stored_file_name;
+    /**
+     * @var
+     */
+    public $uploaded_file_name;
+    /**
+     * @var
+     */
+    public $original_file_name;
+    /**
+     * @var
+     */
+    public $temp_file_location;
+    /**
+     * @var int
+     */
+    public $index;
+    /**
+     * @var bool
+     */
+    public $use_soap = false;
+    /**
+     * @var
+     */
+    public $file;
+    /**
+     * @var
+     */
+    public $file_ext;
+    /**
+     * @var
+     */
+    public $mime_type;
 
     /**
      * Create upload file handler
@@ -91,18 +125,6 @@ class UploadMultipleFiles
         // i.e., for Emails, it is "email_attachmentX" where X is 0-9
         $this->field_name = $field_name;
         $this->index = $index;
-    }
-
-    /**
-     * Setup for SOAP upload
-     * @param string $filename Name for the file
-     * @param string $file
-     */
-    public function set_for_soap($filename, $file)
-    {
-        $this->stored_file_name = $filename;
-        $this->use_soap = true;
-        $this->file = $file;
     }
 
     /**
@@ -125,6 +147,7 @@ class UploadMultipleFiles
      * Get URL of the uploaded file related to the document
      * @param SugarBean $document
      * @param string $type Type of the document, if different from $document
+     * @return string
      */
     public static function get_upload_url($document, $type = null)
     {
@@ -136,28 +159,10 @@ class UploadMultipleFiles
     }
 
     /**
-     * Try renaming a file to bean_id name
-     * @param string $filename
-     * @param string $bean_id
-     */
-    protected static function tryRename($filename, $bean_id)
-    {
-        $fullname = "upload://$bean_id.$filename";
-        if (file_exists($fullname)) {
-            if (!rename($fullname, "upload://$bean_id")) {
-                $GLOBALS['log']->fatal("unable to rename file: $fullname => $bean_id");
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * builds a URL path for an anchor tag
      * @param string stored_file_name File name in filesystem
      * @param string bean_id note bean ID
+     * @param bool $skip_rename
      * @return string path with file name
      */
     public static function get_file_path($stored_file_name, $bean_id, $skip_rename = false)
@@ -183,6 +188,26 @@ class UploadMultipleFiles
     }
 
     /**
+     * Try renaming a file to bean_id name
+     * @param string $filename
+     * @param string $bean_id
+     * @return bool
+     */
+    protected static function tryRename($filename, $bean_id)
+    {
+        $fullname = "upload://$bean_id.$filename";
+        if (file_exists($fullname)) {
+            if (!rename($fullname, "upload://$bean_id")) {
+                $GLOBALS['log']->fatal("unable to rename file: $fullname => $bean_id");
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * duplicates an already uploaded file in the filesystem.
      * @param string old_id ID of original note
      * @param string new_id ID of new (copied) note
@@ -190,8 +215,6 @@ class UploadMultipleFiles
      */
     public static function duplicate_file($old_id, $new_id, $file_name)
     {
-        global $sugar_config;
-
         // current file system (GUID)
         $source = "upload://$old_id";
 
@@ -218,6 +241,61 @@ class UploadMultipleFiles
     }
 
     /**
+     * deletes a file
+     * @param string bean_id ID of the parent bean
+     * @param string file_name File's name
+     * @return bool
+     */
+    public static function unlink_file($bean_id, $file_name = '')
+    {
+        if (file_exists("upload://$bean_id$file_name")) {
+            return unlink("upload://$bean_id$file_name");
+        }
+        return false;
+    }
+
+    /**
+     * Return real FS path of the file
+     * @param string $path
+     * @return bool|string
+     */
+    public static function realpath($path)
+    {
+        if (substr($path, 0, 9) == "upload://") {
+            $path = UploadStream::path($path);
+        }
+        $ret = realpath($path);
+
+        return $ret ? $ret : $path;
+    }
+
+    /**
+     * Return path of uploaded file relative to uploads dir
+     * @param string $path
+     * @return bool|string
+     */
+    public static function relativeName($path)
+    {
+        if (substr($path, 0, 9) == "upload://") {
+            $path = substr($path, 9);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Setup for SOAP upload
+     * @param string $filename Name for the file
+     * @param string $file
+     */
+    public function set_for_soap($filename, $file)
+    {
+        $this->stored_file_name = $filename;
+        $this->use_soap = true;
+        $this->file = $file;
+    }
+
+    /**
      * Get upload error from system
      * @return string upload error
      */
@@ -228,6 +306,75 @@ class UploadMultipleFiles
         }
 
         return false;
+    }
+
+    /**
+     * Guess MIME type for file
+     * @param string $filename
+     * @return string MIME type
+     */
+    public function getMimeSoap($filename)
+    {
+
+        if (function_exists('ext2mime')) {
+            $mime = ext2mime($filename);
+        } else {
+            $mime = ' application/octet-stream';
+        }
+
+        return $mime;
+
+    }
+
+    /**
+     * gets note's filename
+     * @return string
+     */
+    public function get_stored_file_name()
+    {
+        return $this->stored_file_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_temp_file_location()
+    {
+        return $this->temp_file_location;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_uploaded_file_name()
+    {
+        return $this->uploaded_file_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mime_type()
+    {
+        return $this->mime_type;
+    }
+
+    /**
+     * Returns the contents of the uploaded file
+     */
+    public function get_file_contents()
+    {
+
+        // Need to call
+        if (!isset($this->temp_file_location)) {
+            $this->confirm_upload();
+        }
+
+        if (($data = @file_get_contents($this->temp_file_location)) === false) {
+            return false;
+        }
+
+        return $data;
     }
 
     /**
@@ -299,24 +446,6 @@ class UploadMultipleFiles
     }
 
     /**
-     * Guess MIME type for file
-     * @param string $filename
-     * @return string MIME type
-     */
-    public function getMimeSoap($filename)
-    {
-
-        if (function_exists('ext2mime')) {
-            $mime = ext2mime($filename);
-        } else {
-            $mime = ' application/octet-stream';
-        }
-
-        return $mime;
-
-    }
-
-    /**
      * Get MIME type for uploaded file
      * @param array $_FILES_element $_FILES element required
      * @return string MIME type
@@ -348,49 +477,6 @@ class UploadMultipleFiles
 
         return $mime;
     }
-
-    /**
-     * gets note's filename
-     * @return string
-     */
-    public function get_stored_file_name()
-    {
-        return $this->stored_file_name;
-    }
-
-    public function get_temp_file_location()
-    {
-        return $this->temp_file_location;
-    }
-
-    public function get_uploaded_file_name()
-    {
-        return $this->uploaded_file_name;
-    }
-
-    public function get_mime_type()
-    {
-        return $this->mime_type;
-    }
-
-    /**
-     * Returns the contents of the uploaded file
-     */
-    public function get_file_contents()
-    {
-
-        // Need to call
-        if (!isset($this->temp_file_location)) {
-            $this->confirm_upload();
-        }
-
-        if (($data = @file_get_contents($this->temp_file_location)) === false) {
-            return false;
-        }
-
-        return $data;
-    }
-
 
     /**
      * creates a file's name for preparation for saving
@@ -476,7 +562,6 @@ class UploadMultipleFiles
     public function upload_doc($bean, $bean_id, $doc_type, $file_name, $mime_type)
     {
         if (!empty($doc_type) && $doc_type != 'Sugar') {
-            global $sugar_config;
             $destination = $this->get_upload_path($bean_id);
             sugar_rename($destination, str_replace($bean_id, $bean_id . '_' . $file_name, $destination));
             $new_destination = $this->get_upload_path($bean_id . '_' . $file_name);
@@ -538,51 +623,12 @@ class UploadMultipleFiles
     }
 
     /**
-     * deletes a file
-     * @param string bean_id ID of the parent bean
-     * @param string file_name File's name
-     */
-    public static function unlink_file($bean_id, $file_name = '')
-    {
-        if (file_exists("upload://$bean_id$file_name")) {
-            return unlink("upload://$bean_id$file_name");
-        }
-    }
-
-    /**
      * Get upload file location prefix
      * @return string prefix
      */
     public function get_upload_dir()
     {
         return "upload://";
-    }
-
-    /**
-     * Return real FS path of the file
-     * @param string $path
-     */
-    public static function realpath($path)
-    {
-        if (substr($path, 0, 9) == "upload://") {
-            $path = UploadStream::path($path);
-        }
-        $ret = realpath($path);
-
-        return $ret ? $ret : $path;
-    }
-
-    /**
-     * Return path of uploaded file relative to uploads dir
-     * @param string $path
-     */
-    public static function relativeName($path)
-    {
-        if (substr($path, 0, 9) == "upload://") {
-            $path = substr($path, 9);
-        }
-
-        return $path;
     }
 }
 
