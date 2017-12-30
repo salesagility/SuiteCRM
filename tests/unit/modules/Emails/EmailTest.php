@@ -747,7 +747,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Administrator', $email->created_by_name);
         $this->assertEquals('Administrator', $email->modified_by_name);
         $this->assertEquals('Send Error', $email->type_name);
-        $this->assertEquals('', $email->name);
+        $this->assertEquals('(no subject)', $email->name);
         $this->assertEquals('DetailView', $email->link_action);
     }
 
