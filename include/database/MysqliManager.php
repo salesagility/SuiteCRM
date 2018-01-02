@@ -128,7 +128,7 @@ class MysqliManager extends MysqlManager
 		static $queryMD5 = array();
 
 		parent::countQuery($sql);
-		$GLOBALS['log']->info('Query:' . $sql);
+		$GLOBALS['log']->info('Query:' . $this->removeLineBreaks($sql));
 		$this->checkConnection();
 		$this->query_time = microtime(true);
 		$this->lastsql = $sql;
@@ -275,7 +275,7 @@ class MysqliManager extends MysqlManager
 			//mysqli connector has a separate parameter for port.. We need to separate it out from the host name
 			$dbhost=$configOptions['db_host_name'];
             $dbport=isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
-			
+
 			$pos=strpos($configOptions['db_host_name'],':');
 			if ($pos !== false) {
 				$dbhost=substr($configOptions['db_host_name'],0,$pos);
@@ -311,7 +311,7 @@ class MysqliManager extends MysqlManager
 	    }
 
 		// cn: using direct calls to prevent this from spamming the Logs
-	    
+
 	    $collation = $this->getOption('collation');
 	    if(!empty($collation)) {
 	    	$names = "SET NAMES 'utf8' COLLATE '$collation'";
