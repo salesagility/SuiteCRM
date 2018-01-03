@@ -3,39 +3,64 @@ require_once('include/ListView/ListViewSmarty.php');
 require_once('modules/AOS_PDF_Templates/formLetter.php');
 
 
-class AccountsListViewSmarty extends ListViewSmarty {
-
-	function __construct(){
-
-		parent::__construct();
-		$this->targetList = true;
-
-	}
-
+/**
+ * Class AccountsListViewSmarty
+ */
+class AccountsListViewSmarty extends ListViewSmarty
+{
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     * please update your code, use __construct instead
      */
-    function AccountsListViewSmarty(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+    public function AccountsListViewSmarty()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
+            'please update your code';
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    /**
+     * AccountsListViewSmarty constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->targetList = true;
+    }
 
+    /**
+     * @param $file
+     * @param $data
+     * @param $htmlVar
+     * @return bool|void
+     */
+    public function process($file, $data, $htmlVar)
+    {
+        $this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
 
-	protected function buildAddAccountContactsToTargetList()
-	{
-		global $app_strings;
-		unset($_REQUEST[session_name()]);
-		unset($_REQUEST['PHPSESSID']);
-		$current_query_by_page = htmlentities(json_encode($_REQUEST));
+        parent::process($file, $data, $htmlVar);
 
-		$js = <<<EOF
+        if (!ACLController::checkAccess($this->seed->module_dir, 'export', true) || !$this->export) {
+            $this->ss->assign('exportLink', $this->buildExportLink());
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildAddAccountContactsToTargetList()
+    {
+        global $app_strings;
+        unset($_REQUEST[session_name()]);
+        unset($_REQUEST['PHPSESSID']);
+        $current_query_by_page = htmlentities(json_encode($_REQUEST));
+
+        $js = <<<EOF
              if(sugarListView.get_checks_count() < 1) {
                  alert('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
                  return false;
@@ -99,63 +124,59 @@ class AccountsListViewSmarty extends ListViewSmarty {
  			    input.setAttribute ( 'type' , 'hidden' );
  			    form.appendChild ( input ) ;
  			}
- 			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist', 'form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'}, 'passthru_data':{'do_contacts' : 1 }   } );
+ 			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist',
+ 			'form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'}, 'passthru_data':{'do_contacts' : 1 }
+ 			} );
 EOF;
-		$js = str_replace(array("\r","\n"),'',$js);
-		return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
-	}
+        $js = str_replace(array("\r", "\n"), '', $js);
+        return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview \" " .
+            "onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
+    }
 
+    /**
+     * @param string $id
+     * @return string
+     */
+    public function buildExportLink($id = 'export_link')
+    {
+        global $app_strings;
 
-	function process($file, $data, $htmlVar) {
+        $script = "";
+        if (ACLController::checkAccess($this->seed->module_dir, 'export', true)) {
+            if ($this->export) {
+                $script = parent::buildExportLink($id);
+            }
+        }
 
-		$this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
+        $script .= "<a href='javascript:void(0)' id='map_listview_top' " .
+            " onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
+            "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
+            "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
 
-		parent::process($file, $data, $htmlVar);
+        return formLetter::LVSmarty() . $script;
+    }
 
-		if(!ACLController::checkAccess($this->seed->module_dir,'export',true) || !$this->export) {
-			$this->ss->assign('exportLink', $this->buildExportLink());
-		}
-	}
+    /**
+     * override
+     * @param string $id
+     * @param string $location
+     * @return string
+     */
+    protected function buildActionsLink($id = 'actions_link', $location = 'top')
+    {
+        $ret = parent::buildActionsLink($id, $location);
 
+        $replaces = array(
+            6 => 7,
+        );
 
-	/**
-	 * override
-	 */
-	protected function buildActionsLink($id = 'actions_link', $location = 'top') {
-		$ret = parent::buildActionsLink($id, $location);
+        foreach ($replaces as $i => $j) {
+            $tmp = $ret['buttons'][$j];
+            $ret['buttons'][$j] = $ret['buttons'][$i];
+            $ret['buttons'][$i] = $tmp;
+        }
 
-		$replaces = array(
-			6 => 7,
-		);
-
-		foreach($replaces as $i => $j) {
-			$tmp = $ret['buttons'][$j];
-			$ret['buttons'][$j] = $ret['buttons'][$i];
-			$ret['buttons'][$i] = $tmp;
-		}
-
-		return $ret;
-	}
-	
-	function buildExportLink($id = 'export_link'){
-		global $app_strings;
-		global $sugar_config;
-
-		$script = "";
-		if(ACLController::checkAccess($this->seed->module_dir,'export',true)) {
-			if($this->export) {
-                		$script = parent::buildExportLink($id);
-            		}
-        	}
-
-            $script .= "<a href='javascript:void(0)' id='map_listview_top' " .
-                    " onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
-                    "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
-                    "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
-
-		return formLetter::LVSmarty().$script;
-	}
-
+        return $ret;
+    }
 }
 
-?>
