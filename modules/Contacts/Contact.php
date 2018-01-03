@@ -50,98 +50,434 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // Contact is used to store customer information.
+
+/**
+ * Class Contact
+ */
 class Contact extends Person
 {
+    /**
+     * @var
+     */
     public $field_name_map;
+
     // Stored fields
+
+    /**
+     * @var
+     */
     public $id;
+
+    /**
+     * @var string
+     */
     public $name = '';
+
+    /**
+     * @var
+     */
     public $lead_source;
+
+    /**
+     * @var
+     */
     public $date_entered;
+
+    /**
+     * @var
+     */
     public $date_modified;
+
+    /**
+     * @var
+     */
     public $modified_user_id;
+
+    /**
+     * @var
+     */
     public $assigned_user_id;
+
+    /**
+     * @var
+     */
     public $created_by;
+
+    /**
+     * @var
+     */
     public $created_by_name;
+
+    /**
+     * @var
+     */
     public $modified_by_name;
 
+    /**
+     * @var
+     */
     public $description;
+
+    /**
+     * @var
+     */
     public $salutation;
+
+    /**
+     * @var
+     */
     public $first_name;
+
+    /**
+     * @var
+     */
     public $last_name;
+
+    /**
+     * @var
+     */
     public $title;
+
+    /**
+     * @var
+     */
     public $department;
+
+    /**
+     * @var
+     */
     public $birthdate;
+
+    /**
+     * @var
+     */
     public $reports_to_id;
+
+    /**
+     * @var
+     */
     public $do_not_call;
+
+    /**
+     * @var
+     */
     public $phone_home;
+
+    /**
+     * @var
+     */
     public $phone_mobile;
+
+    /**
+     * @var
+     */
     public $phone_work;
+
+    /**
+     * @var
+     */
     public $phone_other;
+
+    /**
+     * @var
+     */
     public $phone_fax;
+
+    /**
+     * @var
+     */
     public $email1;
+
+    /**
+     * @var
+     */
     public $email_and_name1;
+
+    /**
+     * @var
+     */
     public $email_and_name2;
+
+    /**
+     * @var
+     */
     public $email2;
+
+    /**
+     * @var
+     */
     public $assistant;
+
+    /**
+     * @var
+     */
     public $assistant_phone;
+
+    /**
+     * @var
+     */
     public $email_opt_out;
+
+    /**
+     * @var
+     */
     public $primary_address_street;
+
+    /**
+     * @var
+     */
     public $primary_address_city;
+
+    /**
+     * @var
+     */
     public $primary_address_state;
+
+    /**
+     * @var
+     */
     public $primary_address_postalcode;
+
+    /**
+     * @var
+     */
     public $primary_address_country;
+
+    /**
+     * @var
+     */
     public $alt_address_street;
+
+    /**
+     * @var
+     */
     public $alt_address_city;
+
+    /**
+     * @var
+     */
     public $alt_address_state;
+
+    /**
+     * @var
+     */
     public $alt_address_postalcode;
+
+    /**
+     * @var
+     */
     public $alt_address_country;
+
+    /**
+     * @var
+     */
     public $portal_name;
+
+    /**
+     * @var
+     */
     public $portal_app;
+
+    /**
+     * @var
+     */
     public $portal_active;
+
+    /**
+     * @var
+     */
     public $contacts_users_id;
+
     // These are for related fields
+
+    /**
+     * @var
+     */
     public $bug_id;
+
+    /**
+     * @var
+     */
     public $account_name;
+
+    /**
+     * @var
+     */
     public $account_id;
+
+    /**
+     * @var
+     */
     public $report_to_name;
+
+    /**
+     * @var
+     */
     public $opportunity_role;
+
+    /**
+     * @var
+     */
     public $opportunity_rel_id;
+
+    /**
+     * @var
+     */
     public $opportunity_id;
+
+    /**
+     * @var
+     */
     public $case_role;
+
+    /**
+     * @var
+     */
     public $case_rel_id;
+
+    /**
+     * @var
+     */
     public $case_id;
+
+    /**
+     * @var
+     */
     public $task_id;
+
+    /**
+     * @var
+     */
     public $note_id;
+
+    /**
+     * @var
+     */
     public $meeting_id;
+
+    /**
+     * @var
+     */
     public $call_id;
+
+    /**
+     * @var
+     */
     public $email_id;
+
+    /**
+     * @var
+     */
     public $assigned_user_name;
+
+    /**
+     * @var
+     */
     public $accept_status;
+
+    /**
+     * @var
+     */
     public $accept_status_id;
+
+    /**
+     * @var
+     */
     public $accept_status_name;
+
+    /**
+     * @var
+     */
     public $alt_address_street_2;
+
+    /**
+     * @var
+     */
     public $alt_address_street_3;
+
+    /**
+     * @var
+     */
     public $opportunity_role_id;
+
+    /**
+     * @var
+     */
     public $portal_password;
+
+    /**
+     * @var
+     */
     public $primary_address_street_2;
+
+    /**
+     * @var
+     */
     public $primary_address_street_3;
+
+    /**
+     * @var
+     */
     public $campaign_id;
+
+    /**
+     * @var
+     */
     public $sync_contact;
+
+    /**
+     * @var
+     */
     public $full_name; // l10n localized name
+
+    /**
+     * @var
+     */
     public $invalid_email;
+
+    /**
+     * @var string
+     */
     public $table_name = "contacts";
+
+    /**
+     * @var string
+     */
     public $rel_account_table = "accounts_contacts";
+
     //This is needed for upgrade.  This table definition moved to Opportunity module.
+
+    /**
+     * @var string
+     */
     public $rel_opportunity_table = "opportunities_contacts";
 
+    /**
+     * @var string
+     */
     public $object_name = "Contact";
+
+    /**
+     * @var string
+     */
     public $module_dir = 'Contacts';
+
+    /**
+     * @var bool
+     */
     public $new_schema = true;
+
+    /**
+     * @var bool
+     */
     public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array(
+
+    /**
+     * @var array
+     */
+    public $additional_column_fields = array(
         'bug_id',
         'assigned_user_name',
         'account_name',
@@ -155,7 +491,10 @@ class Contact extends Person
         'email_id'
     );
 
-    public $relationship_fields = Array(
+    /**
+     * @var array
+     */
+    public $relationship_fields = array(
         'account_id' => 'accounts',
         'bug_id' => 'bugs',
         'call_id' => 'calls',
@@ -168,17 +507,14 @@ class Contact extends Person
         'contacts_users_id' => 'user_sync'
     );
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     * please update your code, use __construct instead
      */
     public function Contact()
     {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
+            'please update your code';
         if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
         } else {
@@ -187,8 +523,19 @@ class Contact extends Person
         self::__construct();
     }
 
+    /**
+     * Contact constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-    function add_list_count_joins(&$query, $where)
+    /**
+     * @param string $query
+     * @param string $where
+     */
+    public function add_list_count_joins(&$query, $where)
     {
         // accounts.name
         if (stristr($where, "accounts.name")) {
@@ -206,14 +553,19 @@ class Contact extends Person
 
     }
 
-    function listviewACLHelper()
+    /**
+     * @return string[]
+     */
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
-        $is_owner = false;
         //MFH BUG 18281; JChi #15255
         $is_owner = !empty($this->assigned_user_id) && $this->assigned_user_id == $GLOBALS['current_user']->id;
-        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view',
-                $is_owner)
+        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
+            'Accounts',
+            'view',
+            $is_owner
+            )
         ) {
             $array_assign['ACCOUNT'] = 'a';
         } else {
@@ -224,7 +576,20 @@ class Contact extends Person
         return $array_assign;
     }
 
-    function create_new_list_query(
+    /**
+     * @param string $order_by
+     * @param string $where
+     * @param array $filter
+     * @param array $params
+     * @param int $show_deleted
+     * @param string $join_type
+     * @param bool $return_array
+     * @param null $parentbean
+     * @param bool $singleSelect
+     * @param bool $ifListForExport
+     * @return String
+     */
+    public function create_new_list_query(
         $order_by,
         $where,
         $filter = array(),
@@ -235,29 +600,62 @@ class Contact extends Person
         $parentbean = null,
         $singleSelect = false,
         $ifListForExport = false
-    ) {
+    )
+    {
         //if this is from "contact address popup" action, then process popup list query
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ContactAddressPopup') {
-            return $this->address_popup_create_new_list_query($order_by, $where, $filter, $params, $show_deleted,
-                $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
+            return $this->address_popup_create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
 
         } else {
             //any other action goes to parent function in sugarbean
             if (strpos($order_by, 'sync_contact') !== false) {
-                //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
+                //we have found that the user is ordering by the sync_contact field,
+                // it would be troublesome to sort by this field
                 //and perhaps a performance issue, so just remove it
                 $order_by = '';
             }
 
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect, $ifListForExport);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect,
+                $ifListForExport
+            );
         }
 
 
     }
 
 
-    function address_popup_create_new_list_query(
+    /**
+     * @param $order_by
+     * @param $where
+     * @param array $filter
+     * @param array $params
+     * @param int $show_deleted
+     * @param string $join_type
+     * @param bool $return_array
+     * @param null $parentbean
+     * @param bool $singleSelect
+     * @return string
+     */
+    public function address_popup_create_new_list_query(
         $order_by,
         $where,
         $filter = array(),
@@ -267,11 +665,21 @@ class Contact extends Person
         $return_array = false,
         $parentbean = null,
         $singleSelect = false
-    ) {
+    )
+    {
         //if this is any action that is not the contact address popup, then go to parent function in sugarbean
         if (isset($_REQUEST['action']) && $_REQUEST['action'] !== 'ContactAddressPopup') {
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
         }
 
         $custom_join = $this->getCustomJoin();
@@ -296,7 +704,8 @@ class Contact extends Person
 	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0
 	                    LEFT JOIN accounts
 	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 ";
-        $from_query .= "LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 ";
+        $from_query .= "LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = " .
+            "'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 ";
         $from_query .= "LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
         $from_query .= $custom_join['join'];
         $ret_array['from'] = $from_query;
@@ -305,7 +714,6 @@ class Contact extends Person
         $where_auto = '1=1';
         if ($show_deleted == 0) {
             $where_auto = " $this->table_name.deleted=0 ";
-            //$where_auto .= " AND accounts.deleted=0  ";
         } elseif ($show_deleted == 1) {
             $where_auto = " $this->table_name.deleted=1 ";
         }
@@ -336,14 +744,21 @@ class Contact extends Person
     }
 
 
-    function create_export_query($order_by, $where, $relate_link_join = '')
+    /**
+     * @param $order_by
+     * @param $where
+     * @param string $relate_link_join
+     * @return string
+     */
+    public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
+        // email_addresses_non_primary needed for get_field_order_mapping()
         $query = "SELECT
                                 contacts.*,
                                 email_addresses.email_address email_address,
-                                '' email_addresses_non_primary, " . // email_addresses_non_primary needed for get_field_order_mapping()
+                                '' email_addresses_non_primary, " .
             "accounts.name as account_name,
                                 users.user_name as assigned_user_name ";
         $query .= $custom_join['select'];
@@ -351,12 +766,15 @@ class Contact extends Person
         $query .= "LEFT JOIN users
 	                                ON contacts.assigned_user_id=users.id ";
         $query .= "LEFT JOIN accounts_contacts
-	                                ON ( contacts.id=accounts_contacts.contact_id and (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))
+	                                ON ( contacts.id=accounts_contacts.contact_id and
+	                                (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))
 	                                LEFT JOIN accounts
 	                                ON accounts_contacts.account_id=accounts.id ";
 
         //join email address table too.
-        $query .= ' LEFT JOIN  email_addr_bean_rel on contacts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module=\'Contacts\' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1 ';
+        $query .= ' LEFT JOIN  email_addr_bean_rel on contacts.id = email_addr_bean_rel.bean_id and ' .
+            'email_addr_bean_rel.bean_module=\'Contacts\' and email_addr_bean_rel.deleted=0 and ' .
+            'email_addr_bean_rel.primary_address=1 ';
         $query .= ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ';
 
         $query .= $custom_join['join'];
@@ -378,7 +796,10 @@ class Contact extends Person
         return $query;
     }
 
-    function fill_in_additional_list_fields()
+    /**
+     *
+     */
+    public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         $this->_create_proper_name_field();
@@ -391,14 +812,17 @@ class Contact extends Person
         }
     }
 
-    function fill_in_additional_detail_fields()
+    /**
+     *
+     */
+    public function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         if (empty($this->id)) {
             return;
         }
 
-        global $locale, $app_list_strings, $current_user;
+        global $locale;
 
         // retrieve the account information and the information about the person the contact reports to.
         $query = "SELECT acc.id, acc.name, con_reports_to.first_name, con_reports_to.last_name
@@ -429,8 +853,15 @@ class Contact extends Person
             if (null === $locale || !is_object($locale) || !method_exists($locale, 'getLocaleFormattedName')) {
                 $GLOBALS['log']->fatal('Call to a member function getLocaleFormattedName() on ' . gettype($locale));
             } else {
-                $this->report_to_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'], '', '',
-                    '', null, true);
+                $this->report_to_name = $locale->getLocaleFormattedName(
+                    $row['first_name'],
+                    $row['last_name'],
+                    '',
+                    '',
+                    '',
+                    null,
+                    true
+                );
             }
         } else {
             $this->account_name = '';
@@ -465,19 +896,19 @@ class Contact extends Person
      * where a user can select if they would like to sync a particular
      * contact to Outlook
      */
-    function load_contacts_users_relationship()
+    public function load_contacts_users_relationship()
     {
         global $current_user;
 
         $this->load_relationship("user_sync");
 
-        if(!isset($this->user_sync)) {
+        if (!isset($this->user_sync)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not set');
             $beanIDs = null;
-        } elseif(!is_object($this->user_sync)) {
+        } elseif (!is_object($this->user_sync)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
             $beanIDs = null;
-        } elseif(!method_exists($this->user_sync, 'get')) {
+        } elseif (!method_exists($this->user_sync, 'get')) {
             $GLOBALS['log']->fatal('Contact::$user_sync::get() is not a function');
             $beanIDs = null;
         } else {
@@ -489,9 +920,12 @@ class Contact extends Person
         }
     }
 
-    function get_list_view_data($filter_fields = array())
+    /**
+     * @param array $filter_fields
+     * @return array
+     */
+    public function get_list_view_data($filter_fields = array())
     {
-
         $temp_array = parent::get_list_view_data();
 
         if ($filter_fields && !empty($filter_fields['sync_contact'])) {
@@ -507,10 +941,12 @@ class Contact extends Person
     /**
      * builds a generic search based on the query string using or
      * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
      */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
 
         array_push($where_clauses, "contacts.last_name like '$the_query_string%'");
@@ -540,7 +976,12 @@ class Contact extends Person
         return $the_where;
     }
 
-    function set_notification_body($xtpl, $contact)
+    /**
+     * @param $xtpl
+     * @param $contact
+     * @return mixed
+     */
+    public function set_notification_body($xtpl, $contact)
     {
         global $locale;
 
@@ -550,7 +991,11 @@ class Contact extends Person
         return $xtpl;
     }
 
-    function get_contact_id_by_email($email)
+    /**
+     * @param $email
+     * @return array|null
+     */
+    public function get_contact_id_by_email($email)
     {
         $email = trim($email);
         if (empty($email)) {
@@ -567,9 +1012,12 @@ class Contact extends Person
         return empty($result) ? null : $result;
     }
 
-    function save_relationship_changes($is_update, $exclude = array())
+    /**
+     * @param bool $is_update
+     * @param array $exclude
+     */
+    public function save_relationship_changes($is_update, $exclude = array())
     {
-
         //if account_id was replaced unlink the previous account_id.
         //this rel_fields_before_value is populated by sugarbean during the retrieve call.
         if (!empty($this->account_id) and !empty($this->rel_fields_before_value['account_id']) and
@@ -582,7 +1030,11 @@ class Contact extends Person
         parent::save_relationship_changes($is_update);
     }
 
-    function bean_implements($interface)
+    /**
+     * @param $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -592,7 +1044,11 @@ class Contact extends Person
         return false;
     }
 
-    function get_unlinked_email_query($type = array())
+    /**
+     * @param array $type
+     * @return string
+     */
+    public function get_unlinked_email_query($type = array())
     {
         return get_unlinked_email_query($type, $this);
     }
@@ -604,18 +1060,16 @@ class Contact extends Person
      * - string 'all': add this contact for all users
      * - comma deliminated lists of teams and/or users
      *
-     * @param string $list_of_user
+     * @param $list_of_users
      */
-    function process_sync_to_outlook($list_of_users)
+    public function process_sync_to_outlook($list_of_users)
     {
         static $focus_user;
 
         // cache this object since we'll be reusing it a bunch
         if (!($focus_user instanceof User)) {
-
             $focus_user = new User();
         }
-
 
         if (empty($list_of_users)) {
             return;
@@ -629,11 +1083,11 @@ class Contact extends Person
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                if(!isset($this->user_sync)) {
+                if (!isset($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not set');
-                } elseif(!is_object($this->user_sync)) {
+                } elseif (!is_object($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
-                } elseif(!method_exists($this->user_sync, 'add')) {
+                } elseif (!method_exists($this->user_sync, 'add')) {
                     $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
                 } else {
                     $this->user_sync->add($hash['id']);
@@ -646,11 +1100,11 @@ class Contact extends Person
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    if(!isset($this->user_sync)) {
+                    if (!isset($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not set');
-                    } elseif(!is_object($this->user_sync)) {
+                    } elseif (!is_object($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
-                    } elseif(!method_exists($this->user_sync, 'add')) {
+                    } elseif (!method_exists($this->user_sync, 'add')) {
                         $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
                     } else {
                         $this->user_sync->add($user_id ? $user_id : $focus_user->id);
