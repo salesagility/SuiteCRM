@@ -523,7 +523,6 @@ $beanFiles['OAuth2Clients'] = 'modules/OAuth2Clients/OAuth2Clients.php';
 $modInvisList[] = 'OAuth2Clients';
 
 
-
 $beanList['SurveyResponses'] = 'SurveyResponses';
 $beanFiles['SurveyResponses'] = 'modules/SurveyResponses/SurveyResponses.php';
 $modules_exempt_from_availability_check['SurveyResponses'] = 'SurveyResponses';
@@ -549,11 +548,9 @@ $report_include_modules['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
 $modInvisList[] = 'SurveyQuestionOptions';
 
 
-
 if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
     include('custom/application/Ext/Include/modules.ext.php');
 }
-?>
