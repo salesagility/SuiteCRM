@@ -52,20 +52,56 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class EmailAddress extends SugarEmailAddress
 {
-	var $disable_row_level_security = true;
+    /**
+     * @var bool $disable_row_level_security
+     */
+	public $disable_row_level_security = true;
 
-	function __construct()
+    /**
+     * @var int|bool $opt_out
+     */
+    public $opt_out = 0;
+
+    /**
+     * @var int|bool $confirm_opt_in
+     */
+	public $confirm_opt_in = 0;
+
+	/**
+     * @var int|bool $invalid_email
+     */
+	public $invalid_email = 0;
+
+	/**
+     * @var TimeDate $opt_in_email_created
+     */
+    public $opt_in_email_created;
+
+    /**
+     * EmailAddress constructor.
+     */
+    function __construct()
 	{
 		parent::__construct();
 	}
 
+    /**
+     * @param string $id
+     * @param string $module
+     * @param array $new_addrs
+     * @param string $primary
+     * @param string $replyTo
+     * @param string $invalid
+     * @param string $optOut
+     * @param bool $in_workflow
+     * @return null|string
+     */
 	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
 	{
 		if ( func_num_args() > 1 ) {
-		    parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
-		}
-		else {
-		    SugarBean::save($id);
+		    return parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+		} else {
+		    return SugarBean::save($id);
 		}
 	}
 }
