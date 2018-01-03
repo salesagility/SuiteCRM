@@ -931,9 +931,9 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-panel-container .container-close {
-  overflow: hidden;
+  overflow: visible;
   text-decoration: none;
-  text-indent: -10000em;
+  text-indent: 0em;
 }
 
 .mask {
@@ -1010,7 +1010,7 @@ span.yui-carousel-first-button-disabled {
   position: absolute;
   top: 3px;
   right:0;
-  width: 25px;
+  width: 40px;
   height: 15px;
   background: transparent url('../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
   cursor: pointer;
@@ -3047,7 +3047,7 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse
 {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -110px;
   right: 10px;
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
@@ -3057,7 +3057,7 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-clip-left .collapse {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
 }
 .yui-layout .yui-layout-clip-left .collapse:hover, .yui-layout .yui-layout-clip-right .collapse {
   top: 4px;
@@ -3067,7 +3067,7 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse {
   left: 5px;
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
   top: 4px;
@@ -3076,28 +3076,28 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-clip-right .collapse {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -0 -110px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -0 -110px;
 }
 
 .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse
 {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -220px;
   border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-clip-top .collapse {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')no-repeat -20px -240px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')no-repeat -20px -240px;
   border: 1px solid $panel-default-border;
 }
 
 .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse
 {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
   right: 5px;
 }
 
 .yui-layout .yui-layout-clip-bottom .collapse {
-  background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat -20px -180px;
   border: 1px solid$panel-default-border;
 }
 
@@ -3193,7 +3193,7 @@ div.yui-layout-hd h2 {
   width: 6px;
   top: 45%;
   left: 0;
-  background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png') no-repeat 0 -5px;
 }
 
 .yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob
@@ -3202,7 +3202,7 @@ div.yui-layout-hd h2 {
   height: 6px;
   width: 16px;
   left: 45%;
-  background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat -20px 0;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png') no-repeat -20px 0;
 }
 
 .yui-log {
@@ -4065,7 +4065,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-resize .yui-resize-handle-inner-r, .yui-resize .yui-resize-handle-inner-l
 {
-  background: transparent url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png') no-repeat 0 -5px;
   height: 16px;
   width: 5px;
   position: absolute;
@@ -4074,7 +4074,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-resize .yui-resize-handle-inner-t, .yui-resize .yui-resize-handle-inner-b
 {
-  background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat -20px 0;
+  background: transparent url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png') no-repeat -20px 0;
   height: 5px;
   width: 16px;
   position: absolute;
@@ -4082,25 +4082,25 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize .yui-resize-handle-br {
-  background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+  background-image: url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png');
   background-position: -22px -62px;
   background-repeat: no-repeat;
 }
 
 .yui-resize .yui-resize-handle-tr {
-  background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+  background-image: url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png');
   background-position: -22px -42px;
   background-repeat: no-repeat;
 }
 
 .yui-resize .yui-resize-handle-tl {
-  background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+  background-image: url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png');
   background-position: -22px -82px;
   background-repeat: no-repeat;
 }
 
 .yui-resize .yui-resize-handle-bl {
-  background-image: url( ../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png );
+  background-image: url('../../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png');
   background-position: -22px -23px;
   background-repeat: no-repeat;
 }
@@ -5948,7 +5948,7 @@ div.bodywrapper {
 }
 
 .sugar-progress-bar {
-  background: $progress-bar-bg url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
+  background: $progress-bar-bg url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
   height: 16px;
   width: 0;
 }
@@ -5960,7 +5960,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
   position:relative;
   top:-3px;
   width:9px;
-  background : transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')  no-repeat scroll 0 -70px;
+  background : transparent url('../../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')  no-repeat scroll 0 -70px;
 }
 
 .sugar-message-prompt {
