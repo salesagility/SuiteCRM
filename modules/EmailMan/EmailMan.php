@@ -628,7 +628,7 @@ class EmailMan extends SugarBean
         if (
                 $module instanceof Basic &&
                 $sugar_config['email_enable_confirm_opt_in'] &&
-                !$module->getEmailAddressConfirmOptIn('email1')
+                empty($module->getEmailAddressConfirmOptIn('email1')->confirm_opt_in)
         ) {
             global $log;
             $log->warn('An email is not confirmed opt in: '. $module->email1);
