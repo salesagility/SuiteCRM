@@ -50,7 +50,13 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
  */
 class UploadStream
 {
+    /**
+     *
+     */
     const STREAM_NAME = "upload";
+    /**
+     * @var
+     */
     protected static $upload_dir;
 
     /**
@@ -88,7 +94,10 @@ class UploadStream
                 }
             }
 
-            $GLOBALS['log']->fatal('Stream ' . UploadStream::STREAM_NAME . ' is not listed in suhosin.executor.include.whitelist and blocked because of it');
+            $GLOBALS['log']->fatal(
+                'Stream ' . UploadStream::STREAM_NAME . ' is not listed in suhosin.executor.include.whitelist ' .
+                'and blocked because of it'
+            );
 
             return false;
         }
@@ -100,7 +109,10 @@ class UploadStream
             foreach ($streams as $stream) {
                 $stream = explode('://', $stream, 2);
                 if ($stream[0] == UploadStream::STREAM_NAME) {
-                    $GLOBALS['log']->fatal('Stream ' . UploadStream::STREAM_NAME . 'is listed in suhosin.executor.include.blacklist and blocked because of it');
+                    $GLOBALS['log']->fatal(
+                        'Stream ' . UploadStream::STREAM_NAME . 'is listed in suhosin.executor.include.blacklist ' .
+                        'and blocked because of it'
+                    );
 
                     return false;
                 }
@@ -109,14 +121,28 @@ class UploadStream
             return true;
         }
 
-        $GLOBALS['log']->fatal('Suhosin blocks all streams, please define ' . UploadStream::STREAM_NAME . ' stream in suhosin.executor.include.whitelist');
+        $GLOBALS['log']->fatal(
+            'Suhosin blocks all streams, please define ' . UploadStream::STREAM_NAME . ' stream in ' .
+            'suhosin.executor.include.whitelist'
+        );
 
         return false;
     }
 
     /**
+     * Check if upload dir is writable
+     * @return bool
+     * @throws Exception
+     */
+    public static function writable()
+    {
+        return is_writable(self::getDir());
+    }
+
+    /**
      * Get upload directory
      * @return string
+     * @throws Exception
      */
     public static function getDir()
     {
@@ -134,15 +160,6 @@ class UploadStream
     }
 
     /**
-     * Check if upload dir is writable
-     * @return bool
-     */
-    public static function writable()
-    {
-        return is_writable(self::getDir());
-    }
-
-    /**
      * Register the stream
      */
     public static function register()
@@ -151,9 +168,27 @@ class UploadStream
     }
 
     /**
+     * Ensure upload subdir exists
+     * @param string $path Upload stream path (with upload://)
+     * @param bool $writable
+     * @return boolean
+     * @throws Exception
+     */
+    public static function ensureDir($path, $writable = true)
+    {
+        $path = self::path($path);
+        if (!is_dir($path)) {
+            return sugar_mkdir($path, 0755, true);
+        }
+
+        return true;
+    }
+
+    /**
      * Get real FS path of the upload stream file
      * @param string $path Upload stream path (with upload://)
      * @return string FS path
+     * @throws Exception
      */
     public static function path($path)
     {
@@ -167,26 +202,30 @@ class UploadStream
     }
 
     /**
-     * Ensure upload subdir exists
-     * @param string $path Upload stream path (with upload://)
-     * @param bool $writable
-     * @return boolean
+     * @param $upload
+     * @param $path
+     * @return bool
+     * @throws Exception
      */
-    public static function ensureDir($path, $writable = true)
+    public static function move_uploaded_file($upload, $path)
     {
-        $path = self::path($path);
-        if (!is_dir($path)) {
-            return sugar_mkdir($path, 0755, true);
-        }
-
-        return true;
+        return move_uploaded_file($upload, self::path($path));
     }
 
+    /**
+     *
+     */
     public function dir_closedir()
     {
         closedir($this->dirp);
     }
 
+    /**
+     * @param $path
+     * @param $options
+     * @return bool
+     * @throws Exception
+     */
     public function dir_opendir($path, $options)
     {
         $this->dirp = opendir(self::path($path));
@@ -194,36 +233,68 @@ class UploadStream
         return !empty($this->dirp);
     }
 
+    /**
+     * @return bool|string
+     */
     public function dir_readdir()
     {
         return readdir($this->dirp);
     }
 
+    /**
+     *
+     */
     public function dir_rewinddir()
     {
-        return rewinddir($this->dirp);
+        rewinddir($this->dirp);
     }
 
+    /**
+     * @param $path
+     * @param $mode
+     * @param $options
+     * @return bool
+     * @throws Exception
+     */
     public function mkdir($path, $mode, $options)
     {
         return mkdir(self::path($path), $mode, ($options & STREAM_MKDIR_RECURSIVE) != 0);
     }
 
+    /**
+     * @param $path_from
+     * @param $path_to
+     * @return bool
+     * @throws Exception
+     */
     public function rename($path_from, $path_to)
     {
         return rename(self::path($path_from), self::path($path_to));
     }
 
+    /**
+     * @param $path
+     * @param $options
+     * @return bool
+     * @throws Exception
+     */
     public function rmdir($path, $options)
     {
         return rmdir(self::path($path));
     }
 
+    /**
+     * @param $cast_as
+     * @return mixed
+     */
     public function stream_cast($cast_as)
     {
         return $this->fp;
     }
 
+    /**
+     * @return bool
+     */
     public function stream_close()
     {
         fclose($this->fp);
@@ -231,21 +302,37 @@ class UploadStream
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function stream_eof()
     {
         return feof($this->fp);
     }
 
+    /**
+     * @return bool
+     */
     public function stream_flush()
     {
         return fflush($this->fp);
     }
 
+    /**
+     * @param $operation
+     * @return bool
+     */
     public function stream_lock($operation)
     {
         return flock($this->fp, $operation);
     }
 
+    /**
+     * @param $path
+     * @param $mode
+     * @return bool
+     * @throws Exception
+     */
     public function stream_open($path, $mode)
     {
         $fullpath = self::path($path);
@@ -266,36 +353,66 @@ class UploadStream
         return !empty($this->fp);
     }
 
+    /**
+     * @param $count
+     * @return bool|string
+     */
     public function stream_read($count)
     {
         return fread($this->fp, $count);
     }
 
+    /**
+     * @param $offset
+     * @param int $whence
+     * @return bool
+     */
     public function stream_seek($offset, $whence = SEEK_SET)
     {
         return fseek($this->fp, $offset, $whence) == 0;
     }
 
+    /**
+     * @param $option
+     * @param $arg1
+     * @param $arg2
+     * @return bool
+     */
     public function stream_set_option($option, $arg1, $arg2)
     {
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function stream_stat()
     {
         return fstat($this->fp);
     }
 
+    /**
+     * @return bool|int
+     */
     public function stream_tell()
     {
         return ftell($this->fp);
     }
 
+    /**
+     * @param $data
+     * @return bool|int
+     */
     public function stream_write($data)
     {
         return fwrite($this->fp, $data);
     }
 
+    /**
+     * @param $path
+     * @return bool
+     * @throws Exception
+     */
     public function unlink($path)
     {
         unlink(self::path($path));
@@ -303,14 +420,15 @@ class UploadStream
         return true;
     }
 
+    /**
+     * @param $path
+     * @param $flags
+     * @return array
+     * @throws Exception
+     */
     public function url_stat($path, $flags)
     {
         return @stat(self::path($path));
-    }
-
-    public static function move_uploaded_file($upload, $path)
-    {
-        return move_uploaded_file($upload, self::path($path));
     }
 }
 
