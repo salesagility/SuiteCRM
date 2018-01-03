@@ -1,10 +1,12 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -40,7 +42,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Includes generic helper functions used throughout the application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -59,6 +60,14 @@ class JSON
 {
 
     /**
+     * @deprecated use JSON::encode() instead
+     */
+    public static function encodeReal($string)
+    {
+        return self::encode($string);
+    }
+
+    /**
      * JSON encode a string
      *
      * @param array $string
@@ -70,16 +79,22 @@ class JSON
     {
         $encodedString = json_encode($string);
 
-        if ($encodeSpecial)
-        {
+        if ($encodeSpecial) {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
-            foreach($charMap as $c => $enc)
-            {
+            foreach ($charMap as $c => $enc) {
                 $encodedString = str_replace($c, $enc, $encodedString);
             }
         }
 
         return $encodedString;
+    }
+
+    /**
+     * @deprecated use JSON::decode() instead
+     */
+    public static function decodeReal($string)
+    {
+        return self::decode($string);
     }
 
     /**
@@ -90,24 +105,8 @@ class JSON
      * @param bool $assoc
      * @return string
      */
-    public static function decode($string, $examineEnvelope=false, $assoc = true)
+    public static function decode($string, $examineEnvelope = false, $assoc = true)
     {
-        return json_decode($string,$assoc);
-    }
-
-    /**
-     * @deprecated use JSON::encode() instead
-     */
-    public static function encodeReal($string)
-    {
-        return self::encode($string);
-    }
-
-    /**
-     * @deprecated use JSON::decode() instead
-     */
-    public static function decodeReal($string)
-    {
-        return self::decode($string);
+        return json_decode($string, $assoc);
     }
 }
