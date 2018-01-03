@@ -40,10 +40,10 @@
 *}
 <span class="email-opt-in-container">
     {if $OPT_IN_STATUS === "OPT_IN_PENDING_EMAIL_CONFIRMED"}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$MOD.LBL_OPT_IN_CONFIRMED}">✓</span>
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
     {elseif $OPT_IN_STATUS === "OPT_IN_PENDING_EMAIL_SENT"}
-        <span class="email-opt-in email-opt-in-sent" title="{$MOD.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
+        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
     {elseif $OPT_IN_STATUS === "OPT_IN_PENDING_EMAIL_NOT_SENT"}
-        <span class="email-opt-in email-opt-in-not-sent" title="{$MOD.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
+        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
     {/if}
 </span>
