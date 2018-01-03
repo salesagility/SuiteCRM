@@ -14109,6 +14109,26 @@ p.msg {
   footer {
     display: none;
     visibility: collapse; } }
+.email-link {
+  display: block;
+  float: left; }
+
+.confirm-opt-in-tick {
+  float: right;
+  padding: 0 10px; }
+
+.email-opt-in {
+  font-size: 28px; }
+
+.email-opt-in-not-sent {
+  color: #76BEC1; }
+
+.email-opt-in-sent {
+  color: #76BEC1; }
+
+.email-opt-in-confirmed {
+  color: #6EA674; }
+
 /**** Edit view ***/
 /*Import VCard*/
 .import-vcard {

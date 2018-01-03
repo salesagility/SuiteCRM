@@ -12373,7 +12373,7 @@ div.qtip.qtip-default {
 
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
-  border: 2px solid #A5E8D6; }
+  border: 2px solid #c4e3f5; }
 
 .search_form .view .dateTimeRangeChoice {
   display: block;
@@ -14109,6 +14109,26 @@ p.msg {
   footer {
     display: none;
     visibility: collapse; } }
+.email-link {
+  display: block;
+  float: left; }
+
+.confirm-opt-in-tick {
+  float: right;
+  padding: 0 10px; }
+
+.email-opt-in {
+  font-size: 28px; }
+
+.email-opt-in-not-sent {
+  color: #76C1B7; }
+
+.email-opt-in-sent {
+  color: #76C1B7; }
+
+.email-opt-in-confirmed {
+  color: #6EA674; }
+
 /**** Edit view ***/
 /*Import VCard*/
 .import-vcard {
