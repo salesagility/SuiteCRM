@@ -69,6 +69,12 @@ $viewdefs[$module_name]['DetailView'] = array(
 
         'LBL_EMAIL_INFORMATION' => array(
             array(
+                'opt_in' => array(
+                    'name' => 'opt_in',
+                    'label' => 'LBL_OPT_IN',
+                ),
+            ),
+            array(
                 'from_addr_name' => array(
                     'name' => 'from_addr_name',
                     'label' => 'LBL_FROM',

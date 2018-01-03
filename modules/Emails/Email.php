@@ -4225,4 +4225,50 @@ eoq;
         $mail->Body = $this->decodeDuringSend($mail->Body);
         $this->description = $mail->Body;
     }
+
+
+    public function getEmailAddressConfirmOptInTick($emailField)
+    {
+        global $sugar_config;
+        global $app_list_strings;
+        global $app_strings;
+        global $mod_strings;
+
+        $tickHtml = '';
+
+        if ($sugar_config['email_enable_confirm_opt_in']) {
+            $template = new Sugar_Smarty();
+            $template->assign('APP', $app_strings);
+            $template->assign('APP_LIST_STRINGS', $app_list_strings);
+            $template->assign('MOD', $mod_strings);
+            $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
+            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
+        }
+
+        return $tickHtml;
+    }
+
+    /**
+     *
+     * @global array $sugar_config
+     * @global \LoggerManager $log
+     * @param string $emailField
+     * @return \EmailAddress
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     */
+    public function getEmailAddressConfirmOptIn($emailField)
+    {
+        global $sugar_config;
+
+        if (!$sugar_config['email_enable_confirm_opt_in']) {
+            global $log;
+            $log->warn('Confirm Opt In is not enabled.');
+            return false;
+        }
+
+        $emailAddressId = $this->getEmailAddressId($emailField);
+
+        return  BeanFactory::getBean('EmailAddresses', $emailAddressId);
+    }
 } // end class def
