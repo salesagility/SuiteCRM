@@ -1645,7 +1645,7 @@ $app_strings = array(
     'LBL_SCENARIO_MAKETING_DESCRIPTION' => 'This scenario facilitates the management of marketing items',
     'LBL_SCENARIO_FINANCE_DESCRIPTION' => 'This scenario facilitates the management of finance related items',
     'LBL_SCENARIO_SERVICE_DESCRIPTION' => 'This scenario facilitates the management of service related items',
-    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario faciliates the management of project related items',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario facilitates the management of project related items',
 
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
