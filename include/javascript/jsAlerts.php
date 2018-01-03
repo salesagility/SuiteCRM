@@ -61,6 +61,9 @@ EOQ;
 	}
 	function addAlert($type, $name, $subtitle, $description, $countdown, $redirect='')
     {
+        if ($countdown < 0) {
+            $countdown = 0;
+        }
 		$script = 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).');' . "\n";
         $this->script .= $script;
 	}
@@ -99,7 +102,7 @@ EOQ;
 
 		// cn: get a boundary limiter
 		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
-		$dateTimeNow = $timedate->nowDb();
+    $dateTimeNow = $timedate->getNow()->modify("-60 seconds")->asDb();
 
 		global $db;
 		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
