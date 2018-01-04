@@ -293,15 +293,8 @@ class SugarEmailAddress extends SugarBean {
         }
 
         $db = DBManagerFactory::getInstance();
-        $result = $db->query(
-            sprintf(
-                "SELECT %s* FROM email_addresses WHERE id = %s AND deleted = 0%s",
-                $db->dbType == 'mssql' ? 'top 1 ' : '',
-                $db->quoted($id),
-                $db->dbType == 'mysql' ? ' limit 1' : ''
-            )
-        );
-        if ($db->getAffectedRowCount($result) === 0) {
+        $query = sprintf("SELECT * FROM email_addresses WHERE id = %s AND deleted = 0", $db->quoted($id));
+        if ($db->getOne($query) === false) {
             throw new DomainException('Empty or invalid bean id');
         }
 
