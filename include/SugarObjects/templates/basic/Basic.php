@@ -127,7 +127,7 @@ class Basic extends SugarBean
 
         if ($emailAddress->confirm_opt_in == "1") {
             return "OPT_IN_PENDING_EMAIL_CONFIRMED";
-        } elseif($emailAddress->opt_in_email_created) {
+        } elseif(!empty($emailAddress->opt_in_email_created)) {
             return "OPT_IN_PENDING_EMAIL_SENT";
         } elseif(empty($emailAddress->opt_in_email_created)) {
             return "OPT_IN_PENDING_EMAIL_NOT_SENT";
@@ -142,7 +142,7 @@ class Basic extends SugarBean
      * @global array $sugar_config
      * @global \LoggerManager $log
      * @param string $emailField
-     * @return \EmailAddress
+     * @return \EmailAddress|\SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
@@ -159,8 +159,9 @@ class Basic extends SugarBean
         }
 
         $emailAddressId = $this->getEmailAddressId($emailField);
-
-        return  BeanFactory::getBean('EmailAddresses', $emailAddressId);
+        /** @var EmailAddress $emailAddressBean */
+        $emailAddressBean = BeanFactory::getBean('EmailAddresses');
+        return  $emailAddressBean->retrieve($emailAddressId);
     }
 
     /**
@@ -183,12 +184,13 @@ class Basic extends SugarBean
             return null;
         }
 
-        if (empty($this->emailAddress->addresses)) {
+//        if (empty($this->emailAddress->addresses)) {
             $this->retrieve();
-        }
+//        }
 
         $found = false;
-        foreach ($this->emailAddress->addresses as $address) {
+        $addresses = $this->emailAddress->addresses;
+        foreach ($addresses as $address) {
             if ($this->cleanUpEmailAddress($address['email_address']) === $emailAddress) {
                 $found = true;
                 $emailAddressId = $address['email_address_id'];
