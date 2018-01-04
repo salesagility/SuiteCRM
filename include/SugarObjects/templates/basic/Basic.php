@@ -152,7 +152,7 @@ class Basic extends SugarBean
 
         global $sugar_config;
 
-        if (!$sugar_config['email_enable_confirm_opt_in']) {
+        if (!$sugar_config['email_enable_confirm_opt_in']) {#
             global $log;
             $log->warn('Confirm Opt In is not enabled.');
             return false;
@@ -184,9 +184,7 @@ class Basic extends SugarBean
             return null;
         }
 
-//        if (empty($this->emailAddress->addresses)) {
-            $this->retrieve();
-//        }
+        $this->retrieve();
 
         $found = false;
         $addresses = $this->emailAddress->addresses;
