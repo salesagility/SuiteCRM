@@ -295,7 +295,8 @@ class SugarEmailAddress extends SugarBean {
         $db = DBManagerFactory::getInstance();
         $query = sprintf("SELECT * FROM email_addresses WHERE id = %s AND deleted = 0", $db->quoted($id));
         if ($db->getOne($query) === false) {
-            throw new DomainException('Empty or invalid bean id');
+            $GLOBALS['log']->error("Missing Email ID ($id)");
+            return false;
         }
 
         // do we have to update the address?
