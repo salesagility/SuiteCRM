@@ -390,7 +390,7 @@ abstract class DBManager
         if ($do_the_dump) {
             if ($slow_query_time_msec < ($this->query_time * 1000)) {
                 // Then log both the query and the query time
-                $this->log->fatal('Slow Query (time:' . $this->query_time . "\n" . $query);
+                $this->log->fatal('Slow Query (time:' . $this->query_time . "\n" . $query . ')');
 
                 return true;
             }
