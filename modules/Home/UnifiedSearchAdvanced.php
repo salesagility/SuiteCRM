@@ -353,7 +353,6 @@ class UnifiedSearchAdvanced {
                 $lv->select = false;
                 $lv->showMassupdateFields = false;
                 $lv->email = false;
-                $lv->showFilterIcon = false;
 
                 $lv->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 10);
                 $lv->ss->assign('showFilterIcon', 0);
