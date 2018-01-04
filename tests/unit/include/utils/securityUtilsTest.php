@@ -93,9 +93,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
             'ResourceCalendar' => 'ResourceCalendar',
             'AOBH_BusinessHours' => 'AOBH_BusinessHours',
             'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
-            'SecurityGroups' => 'SecurityGroups',
-            'Surveys' => 'Surveys'
-
+            'SecurityGroups' => 'SecurityGroups'
         );
 
         $allowed = query_module_access_list(new User('1'));
