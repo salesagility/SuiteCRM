@@ -20,11 +20,6 @@ $surveyName = !empty($_REQUEST['name']) ? $_REQUEST['name'] : 'Survey';
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <img height=100 src="survey_logo.jpg"/>
-        </div>
-    </div>
     <div class="row well">
         <div class="col-md-offset-2 col-md-8">
             <h1><?php echo $surveyName; ?></h1>
