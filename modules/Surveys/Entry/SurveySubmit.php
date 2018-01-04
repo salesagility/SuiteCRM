@@ -143,7 +143,7 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
         }
     }
     $response->save();
-    header('Location: index.php?entryPoint=surveyThanks');
+    header('Location: index.php?entryPoint=surveyThanks' . $survey->name);
 }
 
 function do404()

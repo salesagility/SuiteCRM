@@ -1,3 +1,9 @@
+<?php
+
+$surveyName = !empty($_REQUEST['name']) ? $_REQUEST['name'] : 'Survey';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?= $survey->name ?></title>
+    <title><?php echo $surveyName; ?></title>
 
     <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
     <link href="custom/include/javascript/rating/rating.min.css" rel="stylesheet">
@@ -21,7 +27,7 @@
     </div>
     <div class="row well">
         <div class="col-md-offset-2 col-md-8">
-            <h1><?= $survey->name ?></h1>
+            <h1><?php echo $surveyName; ?></h1>
             <p>Thanks for completing this survey.</p>
         </div>
     </div>
