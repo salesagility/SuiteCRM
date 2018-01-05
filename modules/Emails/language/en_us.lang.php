@@ -50,7 +50,7 @@ $mod_strings = array(
     'LBL_BUTTON_CREATE' => 'Create',
     'LBL_BUTTON_EDIT' => 'Edit',
     'LBL_BUTTON_EDIT_EDIT_DRAFT' => 'Edit Draft',
-    'LBL_QS_DISABLED' => '(QuickSearch is not availible for this module. Please use the select button.)',
+    'LBL_QS_DISABLED' => '(QuickSearch is not available for this module. Please use the select button.)',
     'LBL_SIGNATURE_PREPEND' => 'Signature above reply',
     'LBL_IMPORT' => 'Import',
     'LBL_LOADING' => 'Loading',
@@ -309,7 +309,7 @@ $mod_strings = array(
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPPORT' => 'SMTP Port:',
@@ -371,6 +371,6 @@ $mod_strings = array(
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
     
-    'ERR_NO_RETURN_ID' => 'Attacment is not found.',
+    'ERR_NO_RETURN_ID' => 'Attachment is not found.',
 );
 
