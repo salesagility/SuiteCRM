@@ -147,7 +147,6 @@ class AOP_Case_Updates extends Basic
             $doc->removeChild($doc->doctype);
             $doc->replaceChild($doc->firstChild->firstChild->firstChild, $doc->firstChild);
             $description = $doc->saveHTML();
-
         }
 
         $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
