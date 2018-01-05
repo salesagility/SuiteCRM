@@ -14118,13 +14118,13 @@ p.msg {
   padding: 0 10px; }
 
 .email-opt-in {
-  font-size: 28px; }
+  font-size: 14px; }
 
 .email-opt-in-not-sent {
-  color: #70D1DF; }
+  color: #dadbdc; }
 
 .email-opt-in-sent {
-  color: #70D1DF; }
+  color: #dadbdc; }
 
 .email-opt-in-confirmed {
   color: #6EA674; }
