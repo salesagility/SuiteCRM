@@ -2719,24 +2719,27 @@ class InboundEmail extends SugarBean
                     'SELECT * FROM folders WHERE folders.id LIKE "' . $this->id . '" OR ' .
                     'folders.parent_folder LIKE "' . $this->id . '"'
                 );
-                $inboxNames = array_values(array_splice($inboxFolders, 1));
+                $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
+
                     $name = '';
                     $folder = new SugarFolder();
                     $folder->retrieve($row['id']);
+
                     switch ($row['folder_type']) {
                         case 'inbound':
                             if (!$row['has_child']) {
                                 if (in_array($row['name'], $inboxNames)) {
                                     // We have the folder, all is good
-                                    unset($inboxNames[$row['name']]);
+                                    unset($inboxNames[array_search($row['name'], $inboxNames)]);
                                 } else {
                                     // We have a folder we shouldn't have
+                                    $folder->id = $row['id'];
                                     $folder->delete();
                                 }
-                                continue;
+                            } else {
+                                $name = $inboxFolders[0] . ' (' . $this->name . ')';
                             }
-                            $name = $this->mailbox . ' (' . $this->name . ')';
                             break;
                         case 'draft':
                             $name = $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')';
@@ -2749,10 +2752,11 @@ class InboundEmail extends SugarBean
                             break;
                     }
 
-                    $folder = new SugarFolder();
-                    $folder->retrieve($row['id']);
-                    $folder->name = $name;
-                    $folder->save();
+                    if ($name) {
+                        $folder->name = $name;
+                        $folder->save();
+                    }
+
                 }
                 // Any inbox folder we don't have yet we need to create
                 foreach ($inboxNames as $newInboxFolder) {
