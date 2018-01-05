@@ -1131,8 +1131,8 @@ $app_strings = array(
     'LBL_EMAIL_EDIT_CONTACT_WARN' => 'Only the Primary address will be used when working with Contacts.',
 
     'LBL_EMAIL_EMPTYING_TRASH' => 'Emptying Trash',
-    'LBL_EMAIL_DELETING_OUTBOUND' => 'Deleteting outbound server',
-    'LBL_EMAIL_CLEARING_CACHE_FILES' => 'CLearing cache files',
+    'LBL_EMAIL_DELETING_OUTBOUND' => 'Deleting outbound server',
+    'LBL_EMAIL_CLEARING_CACHE_FILES' => 'Clearing cache files',
 
     'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER' => 'Folder name must be unique and not empty. Please try again.',
     'LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER' => 'Cannot delete a folder. Either the folder or its children has emails or a mail box associated to it.',
@@ -1658,7 +1658,7 @@ $app_strings = array(
     'LBL_SCENARIO_MAKETING_DESCRIPTION' => 'This scenario facilitates the management of marketing items',
     'LBL_SCENARIO_FINANCE_DESCRIPTION' => 'This scenario facilitates the management of finance related items',
     'LBL_SCENARIO_SERVICE_DESCRIPTION' => 'This scenario facilitates the management of service related items',
-    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario faciliates the management of project related items',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario facilitates the management of project related items',
 
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
@@ -2010,7 +2010,7 @@ $app_strings = array(
     'UPLOAD_ERROR_TEXT_SIZEINFO' => 'ERROR: There was an error during upload. Error code: {0} - {1}. The upload_maxsize is {2} ',
     'UPLOAD_ERROR_HOME_TEXT' => 'ERROR: There was an error during your upload, please contact an administrator for help.',
     'UPLOAD_MAXIMUM_EXCEEDED' => 'Size of Upload ({0} bytes) Exceeded Allowed Maximum: {1} bytes',
-    'UPLOAD_REQUEST_ERROR' => 'An error has occured. Please refresh your page and try again.',
+    'UPLOAD_REQUEST_ERROR' => 'An error has occurred. Please refresh your page and try again.',
 
     //508 used Access Keys
     'LBL_EDIT_BUTTON_KEY' => 'i',
