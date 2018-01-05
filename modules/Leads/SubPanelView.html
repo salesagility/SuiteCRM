@@ -44,18 +44,18 @@
 <!-- BEGIN: main -->
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	<tr height="20" >
-	<td scope="col" nowrap width="15%" ><slot>{MOD.LBL_LIST_NAME}</slot></td>
-	<td scope="col" nowrap width="15%" ><slot>{MOD.LBL_LIST_REFERED_BY}</slot></td>
-	<td scope="col" nowrap width="15%" ><slot>{MOD.LBL_LIST_LEAD_SOURCE}</slot></td>
-	<td scope="col" width="45%" ><slot>{MOD.LBL_LIST_LEAD_SOURCE_DESCRIPTION}</slot></td>
+	<td scope="col" nowrap width="15%" ><span>{MOD.LBL_LIST_NAME}</span></td>
+	<td scope="col" nowrap width="15%" ><span>{MOD.LBL_LIST_REFERED_BY}</span></td>
+	<td scope="col" nowrap width="15%" ><span>{MOD.LBL_LIST_LEAD_SOURCE}</span></td>
+	<td scope="col" width="45%" ><span>{MOD.LBL_LIST_LEAD_SOURCE_DESCRIPTION}</span></td>
 	</tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-				<td scope="row" nowrap valign=TOP ><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Leads&record={LEAD.ID}" >{LEAD.FIRST_NAME} {LEAD.LAST_NAME}</a></slot></td>
-    	    	<td nowrap valign=TOP ><slot>{LEAD.REFERED_BY}</slot></td>
-    			<td nowrap valign=TOP ><slot>{LEAD.LEAD_SOURCE}</slot></td>
-    	<td valign=TOP ><slot>{LEAD.LEAD_SOURCE_DESCRIPTION}</slot></td>
+				<td scope="row" nowrap valign=TOP ><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Leads&record={LEAD.ID}" >{LEAD.FIRST_NAME} {LEAD.LAST_NAME}</a></span></td>
+    	    	<td nowrap valign=TOP ><span>{LEAD.REFERED_BY}</span></td>
+    			<td nowrap valign=TOP ><span>{LEAD.LEAD_SOURCE}</span></td>
+    	<td valign=TOP ><span>{LEAD.LEAD_SOURCE_DESCRIPTION}</span></td>
     	
 </tr>
 

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_SALUTATION' => 'Salutation',
@@ -68,12 +72,11 @@ $mod_strings = array(
     'LBL_ALT_ADDRESS_STATE' => 'Alternate State',
     'LBL_ALT_ADDRESS_POSTALCODE' => 'Alternate Postal Code',
     'LBL_ALT_ADDRESS_COUNTRY' => 'Alternate Country',
-    'LBL_STREET' => 'Other Address',
     'LBL_PRIMARY_STREET' => 'Address',
     'LBL_ALT_STREET' => 'Other Address',
+    'LBL_STREET' => 'Other Address',
     'LBL_CITY' => 'City',
     'LBL_STATE' => 'State',
-    'LBL_POSTALCODE' => 'Postal Code',
     'LBL_POSTAL_CODE' => 'Postal Code',
     'LBL_COUNTRY' => 'Country',
     'LBL_CONTACT_INFORMATION' => 'Contact Information',

@@ -320,8 +320,12 @@ function display_case_attachments($case)
  */
 function quick_edit_case_updates($case)
 {
-    global $action, $app_strings, $mod_strings;
-
+    global $action;
+    global $app_strings;
+    global $currentModule;
+    global $current_language;
+    $mod_strings = return_module_language($current_language, 'Cases');
+    #
     //on DetailView only
     if ($action !== 'DetailView') {
         return;

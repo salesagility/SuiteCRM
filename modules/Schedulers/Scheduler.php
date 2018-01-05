@@ -739,16 +739,16 @@ class Scheduler extends SugarBean {
 			echo '
 			<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th width="25%" colspan="2"><slot>
+					<th width="25%" colspan="2"><span>
 						'.$mod_strings['LBL_WARN_CURL_TITLE'].'
-					</slot></td>
+					</span></td>
 				</tr>
 				<tr class="oddListRowS1" >
-					<td scope="row" valign=TOP width="20%"><slot>
+					<td scope="row" valign=TOP width="20%"><span>
 						'.$mod_strings['LBL_WARN_CURL'].'
-					<td scope="row" valign=TOP width="80%"><slot>
+					<td scope="row" valign=TOP width="80%"><span>
 						<span class=error>'.$mod_strings['LBL_WARN_NO_CURL'].'</span>
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>
 			<br>';
@@ -783,16 +783,16 @@ class Scheduler extends SugarBean {
 			echo '
 				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th><slot>
+					<th><span>
 						'.$mod_strings['LBL_CRON_INSTRUCTIONS_WINDOWS'].'
-					</slot></th>
+					</span></th>
 				</tr>
 				<tr class="evenListRowS1">
-					<td scope="row" valign="top" width="70%"><slot>
+					<td scope="row" valign="top" width="70%"><span>
 						'.$mod_strings['LBL_CRON_WINDOWS_DESC'].'<br>
 						<b>cd '.realpath('./').'<br>
 						php.exe -f cron.php</b>
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>';
 		} else {
@@ -805,18 +805,18 @@ class Scheduler extends SugarBean {
 			echo '
 				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th><slot>
+					<th><span>
 						'.$mod_strings['LBL_CRON_INSTRUCTIONS_LINUX'].'
-					</slot></th>
+					</span></th>
 				</tr>
 				<tr>
-					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><slot style="font-weight:unset;">
+					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><span style="font-weight:unset;">
 						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br>
                         <b>sudo crontab -e -u '.$webServerUser.'</b><br> '.$mod_strings['LBL_CRON_LINUX_DESC2'].'<br>
 						<b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1</b>
 						<br>'.$error.'
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>';
 		}

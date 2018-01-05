@@ -310,7 +310,12 @@ echo get_validate_chart_js();
         $chart_size = 'hBarF',
         $current_module_strings = null
     ) {
-		global $app_strings, $charset, $lang, $barChartColors, $current_user;
+		global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language;
+
+		// set $current_module_strings to 'Charts' module strings by default
+        if (empty($current_module_strings)) {
+            $current_module_strings = return_module_language($current_language, 'Charts');
+        }
 
 		$kDelim = $current_user->getPreference('num_grp_sep');
 

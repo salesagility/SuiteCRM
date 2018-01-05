@@ -164,7 +164,7 @@ function disableReturnSubmission(e) {
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <th width="100%" align="left" scope="row" colspan="4">
-                                <h2><slot>{$MOD.LBL_WIZARD_SCENARIOS}</slot></h2>
+                                <h2><span>{$MOD.LBL_WIZARD_SCENARIOS}</span></h2>
                             </th>
                         </tr>
                         <tr>
@@ -173,8 +173,8 @@ function disableReturnSubmission(e) {
                         {if $scenarios|@count > 0}
                             {foreach from=$scenarios item=item key=key}
                                 <tr>
-                                    <td scope="row" nowrap="nowrap"><slot>{$item.title}:</slot>&nbsp;{sugar_help text=$item.description}</td>
-                                    <td colspan="3"><slot><input type='checkbox' name='scenarios[]' value={$item.key} checked>  {$item.moduleOverview}</slot></td>
+                                    <td scope="row" nowrap="nowrap"><span>{$item.title}:</span>&nbsp;{sugar_help text=$item.description}</td>
+                                    <td colspan="3"><span><input type='checkbox' name='scenarios[]' value={$item.key} checked>  {$item.moduleOverview}</span></td>
                                 </tr>
                             {/foreach}
                         {else}
@@ -342,7 +342,7 @@ function disableReturnSubmission(e) {
                         <table width="100%" cellpadding="0" cellspacing="0">
                             <tr id="mailsettings1">
                                 <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_MAIL_SMTPSERVER}</span> <span class="required" id="required_mail_smtpserver"></span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255" value="{$mail_smtpserver}"></slot></td>
+                                <td width="30%" ><span><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255" value="{$mail_smtpserver}"></span></td>
                                 <td width="20%" scope="row"><span id="mail_smtpport_label">{$MOD.LBL_MAIL_SMTPPORT}</span></td>
                                 <td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5" value="{$mail_smtpport}"></td>
                             </tr>
@@ -359,13 +359,13 @@ function disableReturnSubmission(e) {
                             </tr>
                             <tr id="smtp_auth1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span> <span class="required"></span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="255" value="{$mail_smtpuser}" tabindex='1' ></slot></td>
+                                <td width="30%" ><span><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="255" value="{$mail_smtpuser}" tabindex='1' ></span></td>
                                 <td scope="row">&nbsp;</td>
                                 <td >&nbsp;</td>
                             </tr>
                             <tr id="smtp_auth2">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span> <span class="required"></span></td>
-                                <td width="30%" ><slot><input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" value="{$mail_smtppass}" tabindex='1'></slot></td>
+                                <td width="30%" ><span><input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" value="{$mail_smtppass}" tabindex='1'></span></td>
                                 <td scope="row">&nbsp;</td>
                                 <td >&nbsp;</td>
                             </tr>
@@ -377,10 +377,10 @@ function disableReturnSubmission(e) {
                                     </span>
                                 </td>
                                 <td width="30%">
-                                     <slot>
+                                     <span>
                                      <input type="hidden" name="notify_allow_default_outbound" id="notify_allow_default_outbound_hidden_input" value="0">
                                      <input id='notify_allow_default_outbound' name='notify_allow_default_outbound' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_allow_default_outbound_on}>
-                                     </slot>
+                                     </span>
                                 </td>                
                                 <td scope="row">&nbsp;</td>
                                 <td >&nbsp;</td>

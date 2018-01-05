@@ -237,6 +237,21 @@ EOD
         if(!empty($_REQUEST['scrollToCal'])){
             $this->ss->assign('scroll_to_cal', true);
         }
+
+        
+        
+        $this->ss->assign('SUBTHEMES', $this->bean->getSubThemes());
+        $this->ss->assign('SUBTHEME', $this->bean->getSubTheme());
+        
+
+        require_once('modules/Emails/EmailUI.php');
+        $efocus = new Email();
+        $efocus->email2init();
+        //$efocus->et->preflightUser($current_user);
+        $out = $efocus->et->displayEmailFrame('modules/Users/_baseEmail.tpl');
+        echo $out;
+        echo "<script>var composePackage = null;</script>";
+
         $this->ev->process($processSpecial,$processFormName);
 
 		echo $this->ev->display($this->showTitle);

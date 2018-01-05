@@ -60,8 +60,13 @@ class SugarpdfFactory
      * @param array $sugarpdf_object_map
      * @return a|null|Sugarpdf
      */
-    public function loadSugarpdf($type = 'default', $module = null, $bean = null, $sugarpdf_object_map = array())
+    public function loadSugarpdf($type, $module = null, $bean = null, $sugarpdf_object_map = array())
     {
+
+        // set $type = 'default' by default
+        if (empty($type)) {
+            $type = 'default';
+        }
         $type = strtolower(basename($type));
         //SugarpdfFactory::_loadConfig($sugarpdf, $type);
         //first let's check if the module handles this Tcpdf

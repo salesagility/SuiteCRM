@@ -131,8 +131,13 @@ class DynamicField
      * @param $key
      * @param $value
      */
-    public function setLabel($language = 'en_us', $key = null, $value = null)
+    public function setLabel($language, $key = null, $value = null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $params ['label_' . $key] = $value;
         require_once 'modules/ModuleBuilder/parsers/parser.label.php';
         $parser = new ParserLabel($this->module);

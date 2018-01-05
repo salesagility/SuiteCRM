@@ -123,6 +123,9 @@ if( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus
 }elseif( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==2)  || ($focus->campaign_type=='Email') ){
     $campaign_type = 'email';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
+}elseif( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==4) || ($focus->campaign_type == 'Survey')){
+    $campaign_type = 'survey';
+    $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
 }else{
     $campaign_type = 'general';
 }
@@ -140,6 +143,16 @@ $popup_request_data = array(
     );
 $ss->assign('encoded_users_popup_request_data', $json->encode($popup_request_data));
 
+
+$popup_request_data = array(
+    'call_back_function' => 'set_return',
+    'form_name' => 'wizform',
+    'field_to_name_array' => array(
+        'id' => 'survey_id',
+        'name' => 'survey_name',
+        ),
+    );
+$ss->assign('encoded_surveys_popup_request_data', $json->encode($popup_request_data));
 
 //set default values
 $ss->assign("CALENDAR_LANG", "en");
@@ -172,10 +185,14 @@ $focus->list_view_parse_additional_sections($ss);
 
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
-if((!isset($focus->status)) && (!isset($focus->id)))
+$ss->assign("SURVEY_ID", $focus->survey_id );
+$ss->assign("SURVEY_NAME", $focus->survey_name );
+
+if((!isset($focus->status)) && (!isset($focus->id))){
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], 'Planning'));
-else
+}else{
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], $focus->status));
+}
 
 //hide frequency options if this is not a newsletter
 if($campaign_type == 'newsletter'){
@@ -273,6 +290,10 @@ if($campaign_type == 'general'){
     //Assign Email as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_EMAIL']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='Email'");
+    $ss->assign("HIDE_CAMPAIGN_TYPE", true);
+}elseif($campaign_type == 'survey'){
+    $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_SURVEY']);
+    $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='Survey'");
     $ss->assign("HIDE_CAMPAIGN_TYPE", true);
 }else{
     //Assign NewsLetter as type of campaign being created an disable the select widget
@@ -393,13 +414,19 @@ $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_
 
 // ----- show target lists...
 
+if (!isset($targetListDataArray)) {
+    $targetListDataArray = array();
+}
+if (!isset($targetListDataAssoc)) {
+    $targetListDataAssoc = array();
+}
+
 $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
 
-$targetListDataArray = array();
-$targetListDataAssoc = array();
-if (isset($targetList) && $targetList) {
-    foreach ($targetList as $prospectLst) {
-        $nxt = array(
+if($targetList) {$targetListDataArray = array();
+    $targetListDataAssoc = array();
+    if (isset($targetList) && $targetList) {foreach ($targetList as $prospectLst) {
+        $next = array(
             'id' => $prospectLst->id,
             'name' => $prospectLst->name,
             //'type' => $prospectLst->type,
@@ -407,9 +434,11 @@ if (isset($targetList) && $targetList) {
             'type' => $prospectLst->list_type,
             'count' => $prospectLst->get_entry_count(),
         );
-        $targetListDataArray[] = $nxt;
-        $targetListDataAssoc[$prospectLst->id] = $nxt;
+        $targetListDataArray[] = $next;
+        $targetListDataAssoc[$prospectLst->id] = $next;
     }
+} else {
+    $GLOBALS['log']->warn('There are no outbound target lists available for campaign .');}
 } else {
     $GLOBALS['log']->warn('No target list is created');
 }
@@ -579,7 +608,7 @@ if($campaign_type == 'general'){
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
-}elseif($campaign_type == 'email'){
+}elseif($campaign_type == 'email' || $campaign_type = 'survey'){
     $steps = create_email_steps();
     if($focus->id) {
         $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
@@ -629,12 +658,19 @@ if(isset($_REQUEST['wizardtype'])) {
         case '3':
             $ss->assign('campaign_type', 'Telesales');
             break;
+        case '4':
+            $ss->assign('campaign_type', 'Survey');
+            break;
     }
 }
 
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
-if(!$focus->id) {
+/**
+ * Marketing dropdown on summary page stores the last selected value in session
+ * but we should unset it before user select an other campaign
+ */
+if(!$focus->id && isset($campaign_id) && $campaign_id) {
     unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 }
 

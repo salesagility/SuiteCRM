@@ -41,7 +41,13 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
-class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
+class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
+{
+
+	/**
+	 * @var string
+	 */
+	public $mail_smtppass;
 
 	function __construct(){
 		parent::__construct();
@@ -51,7 +57,13 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 		if(!$this->mail_smtppass && $this->id) {
 			$bean = new OutboundEmailAccounts();
 			$bean->retrieve($this->id);
-			$this->mail_smtppass = $bean->mail_smtppass;
+			if(!$bean->mail_smtppass) {
+				$GLOBALS['log']->warn("Unable to send email via SMTP using an empty password.");
+                $GLOBALS['log']->info("Please ensure that the email settings are configured correctly");
+				$this->mail_smtppass = null;
+			} else {
+				$this->mail_smtppass = $bean->mail_smtppass;
+			}
 		}
 		$this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
 		$results = parent::save($check_notify);

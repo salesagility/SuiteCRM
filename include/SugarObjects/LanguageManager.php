@@ -41,6 +41,8 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+require_once __DIR__.'/translated_prefix.php';
 /**
  * Language files management
  * @api
@@ -159,7 +161,7 @@ class LanguageManager
 	 * @param string module_dir the module_dir to clear
 	 * @param string lang the name of the language file we are clearing this is for sugar_cache
 	 */
-	private static function _clearCache($module_dir = '', $lang = null)
+	private static function _clearCache($module_dir, $lang = null)
     {
 		if(!empty($module_dir) && !empty($lang)){
 			$file = sugar_cached('modules/').$module_dir.'/language/'.$lang.'.lang.php';
@@ -306,6 +308,4 @@ class LanguageManager
     }
 }
 
-function translated_prefix($key){
-	return '[translated]' . $key;
-}
+

@@ -73,16 +73,16 @@
 <!-- END: list_nav_row -->
  <tr height="20">
 	<td scope="col"  NOWRAP>{CHECKALL}</td>
-	<td scope="col" width="35%" ><slot><a href="{ORDER_BY}id" class="listViewThLinkS1">{MOD.LBL_ID}{arrow_start}{campaign_name_arrow}{arrow_end}</a></slot></td>
-	<td scope="col" width="20%" ><slot><a href="{ORDER_BY}activity_date" class="listViewThLinkS1">{MOD.LBL_LIST_ACTIVITY_DATE}{arrow_start}{activity_date_arrow}{arrow_end}</a></slot></td>
-	<td scope="col" width="45%"  nowrap><slot><a href="{ORDER_BY}campaign_name1" class="listViewThLinkS1">{MOD.LBL_LIST_CAMPAIGN_NAME}{arrow_start}{campaign_objective_arrow}{arrow_end}</a></slot></td>
+	<td scope="col" width="35%" ><span><a href="{ORDER_BY}id" class="listViewThLinkS1">{MOD.LBL_ID}{arrow_start}{campaign_name_arrow}{arrow_end}</a></span></td>
+	<td scope="col" width="20%" ><span><a href="{ORDER_BY}activity_date" class="listViewThLinkS1">{MOD.LBL_LIST_ACTIVITY_DATE}{arrow_start}{activity_date_arrow}{arrow_end}</a></span></td>
+	<td scope="col" width="45%"  nowrap><span><a href="{ORDER_BY}campaign_name1" class="listViewThLinkS1">{MOD.LBL_LIST_CAMPAIGN_NAME}{arrow_start}{campaign_objective_arrow}{arrow_end}</a></span></td>
  </tr>
 <!-- BEGIN: row -->
  <tr height="20" class="{ROW_COLOR}S1">
 	<td valign="top">{PREROW}</td>
-	<td scope='row' valign=TOP><slot><{TAG_TYPE} href="javascript:void(0)"  onclick="send_back('CampaignLog','{CAMPAIGNLOG.ID}');">{CAMPAIGNLOG.ID}</{TAG_TYPE}></slot></td>
-	<td valign=TOP><slot>{CAMPAIGNLOG.ACTIVITY_DATE}</slot></td>
-	<td nowrap="nowrap" valign="top"><slot>{CAMPAIGNLOG.CAMPAIGN_NAME1}</slot></td>
+	<td scope='row' valign=TOP><span><{TAG_TYPE} href="javascript:void(0)"  onclick="send_back('CampaignLog','{CAMPAIGNLOG.ID}');">{CAMPAIGNLOG.ID}</{TAG_TYPE}></span></td>
+	<td valign=TOP><span>{CAMPAIGNLOG.ACTIVITY_DATE}</span></td>
+	<td nowrap="nowrap" valign="top"><span>{CAMPAIGNLOG.CAMPAIGN_NAME1}</span></td>
  </tr>
  <tr>
     <td colspan="20" class="listViewHRS1"></td>
