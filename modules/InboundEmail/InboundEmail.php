@@ -2603,9 +2603,6 @@ class InboundEmail extends SugarBean
 
         $this->mailbox = $_REQUEST['mailbox'];
         $inboxFolders = explode(',', $this->mailbox);
-        if (count($inboxFolders) > 1) {
-            $this->mailbox = $inboxFolders[0];
-        }
 
         $this->mailbox_type = 'pick'; // forcing this
 
@@ -2680,17 +2677,17 @@ class InboundEmail extends SugarBean
             $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
             $row = $this->db->fetchByAssoc($foldersFound);
 
-            if(empty($row)) {
+            if (empty($row)) {
 
                 $this->createFolder(
-                    $inboxFolders[0] . ' ('.$this->name.')',
+                    $inboxFolders[0],
                     "inbound",
                     $focusUser,
                     $this->id
                 );
 
-                foreach ($inboxFolders as $key => $folder){
-                    if($key == 0){
+                foreach ($inboxFolders as $key => $folder) {
+                    if ($key == 0) {
                         continue;
                     }
                     $this->createFolder(
@@ -2701,12 +2698,12 @@ class InboundEmail extends SugarBean
                 }
 
                 $this->createFolder(
-                    $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
+                    $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')',
                     "draft",
                     $focusUser
                 );
                 $this->createFolder(
-                    $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
+                    $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')',
                     "sent",
                     $focusUser
                 );
@@ -2718,20 +2715,34 @@ class InboundEmail extends SugarBean
 
             } else {
                 // Update folders
-                $foldersFound = $this->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$this->id.'" OR '.
-                    'folders.parent_folder LIKE "'.$this->id.'"');
-                while($row = $this->db->fetchRow($foldersFound)) {
+                $foldersFound = $this->db->query(
+                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->id . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->id . '"'
+                );
+                $inboxNames = array_values(array_splice($inboxFolders, 1));
+                while ($row = $this->db->fetchRow($foldersFound)) {
                     $name = '';
-                    switch ($row['folder_type'])
-                    {
+                    $folder = new SugarFolder();
+                    $folder->retrieve($row['id']);
+                    switch ($row['folder_type']) {
                         case 'inbound':
-                            $name = $this->mailbox . ' ('.$this->name.')';
+                            if (!$row['has_child']) {
+                                if (in_array($row['name'], $inboxNames)) {
+                                    // We have the folder, all is good
+                                    unset($inboxNames[$row['name']]);
+                                } else {
+                                    // We have a folder we shouldn't have
+                                    $folder->delete();
+                                }
+                                continue;
+                            }
+                            $name = $this->mailbox . ' (' . $this->name . ')';
                             break;
                         case 'draft':
-                            $name = $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')';
+                            $name = $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')';
                             break;
                         case 'sent':
-                            $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')';
+                            $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')';
                             break;
                         case 'archived':
                             $name = $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'];
@@ -2742,6 +2753,14 @@ class InboundEmail extends SugarBean
                     $folder->retrieve($row['id']);
                     $folder->name = $name;
                     $folder->save();
+                }
+                // Any inbox folder we don't have yet we need to create
+                foreach ($inboxNames as $newInboxFolder) {
+                    $this->createFolder(
+                        $newInboxFolder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
             }
             //If this is the first personal account the user has setup mark it as default for them.
@@ -2771,7 +2790,7 @@ class InboundEmail extends SugarBean
         $folder = new SugarFolder();
         $folder->name = $name;
         $folder->folder_type = $type;
-        $folder->has_child = $isMailbox;
+        $folder->has_child = $id ? 1 : 0;
         $folder->is_dynamic = 1;
         $folder->dynamic_query = $this->generateDynamicFolderQuery("sent", $focusUser->id);
         $folder->created_by = $focusUser->id;
