@@ -371,6 +371,6 @@ $mod_strings = array(
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
     
-    'ERR_NO_RETURN_ID' => 'Attachment is not found.',
+    'ERR_NO_RETURN_ID' => 'Attachment not found.',
 );
 
