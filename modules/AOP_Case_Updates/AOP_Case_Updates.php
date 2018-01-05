@@ -117,7 +117,7 @@ class AOP_Case_Updates extends Basic
     public function save($check_notify = false)
     {
         $this->name = SugarCleaner::cleanHtml($this->name);
-        $this->description = SugarCleaner::cleanHtml($this->description);
+        $this->parseDescription();
         parent::save($check_notify);
         if (file_exists('custom/modules/AOP_Case_Updates/CaseUpdatesHook.php')) {
             require_once 'custom/modules/AOP_Case_Updates/CaseUpdatesHook.php';
@@ -132,6 +132,22 @@ class AOP_Case_Updates extends Basic
         $hook->sendCaseUpdate($this);
 
         return $this->id;
+    }
+
+    /**
+     * Fixes unclosed HTML tags
+     */
+    private function parseDescription()
+    {
+        $description = SugarCleaner::cleanHtml($this->description);
+
+        $doc = new DOMDocument();
+        $doc->loadHTML($description);
+        $doc->removeChild($doc->doctype);
+        $doc->replaceChild($doc->firstChild->firstChild->firstChild, $doc->firstChild);
+        $description = $doc->saveHTML();
+
+        $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
     }
 
     /**
