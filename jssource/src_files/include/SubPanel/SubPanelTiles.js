@@ -284,7 +284,7 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
 
     current_subpanel_url = url;
 
-    var loadingImg = '<img src="themes/SuiteP/images/loading.gif">';
+    var loadingImg = '<img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif">';
     $("#list_subpanel_" + child_field.toLowerCase()).html(loadingImg);
 
     $.ajax({
