@@ -117,7 +117,12 @@ class Basic extends SugarBean
     {
         $emailAddress = $this->getEmailAddressConfirmOptIn($emailField);
 
-        if($emailAddress !== null) {
+        $doNotDisplayOptInTickForModule = array(
+            'Users',
+            'Employees'
+        );
+
+        if($emailAddress !== null && !in_array($this->module_name, $doNotDisplayOptInTickForModule, true)) {
             if($emailAddress->invalid_email) {
                 return 'INVALID_EMAIL';
             }
