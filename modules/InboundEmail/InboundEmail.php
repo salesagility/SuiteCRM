@@ -2600,7 +2600,13 @@ class InboundEmail extends SugarBean
         if ($this->protocol == "pop3") {
             $_REQUEST['mailbox'] = "INBOX";
         }
+
         $this->mailbox = $_REQUEST['mailbox'];
+        $inboxFolders = explode(',', $this->mailbox);
+        if (count($inboxFolders) > 1) {
+            $this->mailbox = $inboxFolders[0];
+        }
+
         $this->mailbox_type = 'pick'; // forcing this
 
 
@@ -2673,82 +2679,43 @@ class InboundEmail extends SugarBean
             // Folders
             $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
             $row = $this->db->fetchByAssoc($foldersFound);
-            $sf = new SugarFolder();
+
             if(empty($row)) {
-                // Create Folders
-                $params = array(
-                    // Inbox
-                    "inbound" => array(
-                        'name' => $this->mailbox . ' ('.$this->name.')',
-                        'folder_type' => "inbound",
-                        'has_child' => 1,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("inbound", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // My Drafts
-                    "draft" => array(
-                        'name' => $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
-                        'folder_type' => "draft",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("draft", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Sent Emails
-                    "sent" => array(
-                        'name' => $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
-                        'folder_type' => "sent",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("sent", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Archived Emails
-                    "archived" => array(
-                        'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
-                        'folder_type' => "archived",
-                        'has_child' => 0,
-                        'dynamic_query' => '',
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
+
+                $this->createFolder(
+                    $inboxFolders[0] . ' ('.$this->name.')',
+                    "inbound",
+                    $focusUser,
+                    $this->id
                 );
 
-
-                require_once("include/SugarFolders/SugarFolders.php");
-
-                $parent_id = '';
-
-
-                foreach ($params as $type => $type_params) {
-                    if ($type == "inbound") {
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->new_with_id = false;
-                        $folder->id = $this->id;
-                        $folder->save();
-
-                        $parent_id = $folder->id;
-                    } else {
-                        $params[$type]['parent_folder'] = $parent_id;
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->save();
+                foreach ($inboxFolders as $key => $folder){
+                    if($key == 0){
+                        continue;
                     }
+                    $this->createFolder(
+                        $folder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
+
+                $this->createFolder(
+                    $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
+                    "draft",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
+                    "sent",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+                    "archived",
+                    $focusUser
+                );
+
             } else {
                 // Update folders
                 $foldersFound = $this->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$this->id.'" OR '.
@@ -2790,6 +2757,36 @@ class InboundEmail extends SugarBean
 
             return false;
         }
+    }
+
+    /**
+     * @param $name
+     * @param $type
+     * @param $focusUser
+     * @param int $id
+     * @return int
+     */
+    private function createFolder($name, $type, $focusUser, $id = 0)
+    {
+        $folder = new SugarFolder();
+        $folder->name = $name;
+        $folder->folder_type = $type;
+        $folder->has_child = $isMailbox;
+        $folder->is_dynamic = 1;
+        $folder->dynamic_query = $this->generateDynamicFolderQuery("sent", $focusUser->id);
+        $folder->created_by = $focusUser->id;
+        $folder->modified_by = $focusUser->id;
+
+        if ($id) {
+            $folder->new_with_id = false;
+            $folder->id = $id;
+        } else {
+            $folder->parent_folder = $this->id;
+        }
+
+        $folder->save();
+
+        return $folder->id;
     }
 
     /**
