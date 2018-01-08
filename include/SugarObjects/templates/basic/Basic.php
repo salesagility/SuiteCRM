@@ -107,7 +107,6 @@ class Basic extends SugarBean
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
 
-
         if($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if($emailAddress->invalid_email) {
                 return 'INVALID_EMAIL';
@@ -169,6 +168,7 @@ class Basic extends SugarBean
     {
         global $log;
 
+        $this->validateSugarEmailAddressField($emailField);
         $emailAddress = $this->cleanUpEmailAddress($this->{$emailField});
 
         if (!$emailAddress) {

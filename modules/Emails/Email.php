@@ -4237,31 +4237,6 @@ eoq;
 
     /**
      *
-     * @global array $sugar_config
-     * @global \LoggerManager $log
-     * @param string $emailField
-     * @return \EmailAddress
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
-     */
-    public function fromSugarEmailAddressField($emailField)
-    {
-        global $sugar_config;
-
-        if (!$sugar_config['email_enable_confirm_opt_in']) {
-            global $log;
-            $log->warn('Confirm Opt In is not enabled.');
-            return false;
-        }
-
-        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
-
-        return  BeanFactory::getBean('EmailAddresses', $emailAddressId);
-    }
-
-
-    /**
-     *
      * @param string $emailField
      * @throws InvalidArgumentException
      */
