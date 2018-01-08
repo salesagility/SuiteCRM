@@ -27,23 +27,17 @@
 .navbar-inverse {
   background: $navbar-bg;
 
-  .with-home-icon {
+  .navbar-brand,
+  .navbar-nav > li > a.with-home-icon {
     display: inline-block;
-    background-image: url('../../../../../themes/SuiteP/images/p_icon_home.png');
-    background-position: 14px ($navbar-height / 3);
-    background-position: 0px 8px;
-    background-repeat: no-repeat;
     color: $navbar-menu-link-color;
     padding: 0;
-    overflow: hidden;
-    width: 28px;
-    line-height: $navbar-height;
-    text-indent: -9999px;
-    content: '';
+    line-height: $navbar-toolbar-height;
+    font-size: $navbar-toolbar-height / 2;
   }
 
-  a:hover.with-home-icon {
-    background-image: url('../../../../../themes/SuiteP/images/p_icon_home_hover.png');
+  .navbar-nav > li > a.with-home-icon:hover {
+    color: $navbar-menu-link-color-hover;
   }
 
   .dropdown-menu > li > a {
