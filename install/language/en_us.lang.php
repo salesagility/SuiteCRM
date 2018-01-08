@@ -149,7 +149,6 @@ $mod_strings = array(
 	'LBL_UPLOAD_MAX_FILESIZE_TITLE'     => 'Upload File Size',
 	'ERR_URL_BLANK'						=> 'Provide the base URL for the SuiteCRM instance.',
 	'ERR_UW_NO_UPDATE_RECORD'			=> 'Could not locate installation record of',
-	'ERROR_FLAVOR_INCOMPATIBLE'			=> 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
 	'ERROR_LICENSE_EXPIRED'				=> "Error: Your license expired ",
 	'ERROR_LICENSE_EXPIRED2'			=> " day(s) ago. Please go to the <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  in the Admin screen to enter your new license key. If you do not enter a new license key within 30 days of your license key expiration, you will no longer be able to log in to this application.",
 	'ERROR_MANIFEST_TYPE'				=> 'Manifest file must specify the package type.',
