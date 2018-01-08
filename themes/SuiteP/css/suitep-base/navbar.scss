@@ -2,11 +2,19 @@
 
 // Mix ins:
 @mixin alertButton() {
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-  background-position: 0 0;
   background-color: $navbar-bg;
   border: none;
   box-shadow: none;
+  color: $navbar-alert-color;
+  font-size: $navbar-toolbar-height;
+}
+
+@mixin alertButtonMobile() {
+  background-color: $mobile-navbar-toolbar-bg;
+  border: none;
+  box-shadow: none;
+  color: $navbar-mobile-toolbar-color;
+  font-size: $navbar-toolbar-height - ($navbar-toolbar-height / 4);
 }
 
 //Style
@@ -1024,12 +1032,6 @@
   opacity: 1;
 }
 
-.desktop_notifications > button {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../../themes/SuiteP/images/p_icon_alert.png");
-  background-position: 0 0;
-  background-repeat: no-repeat;
-}
-
 .desktop_notifications > .dropdown-menu {
   left: auto;
 }
@@ -1050,6 +1052,7 @@
 }
 
 .desktop_notifications .alertsButton {
+  @include alertButton();
   background-color: transparent;
   margin-top: 0;
   border: none;
@@ -1120,7 +1123,7 @@
 }
 
 .desktop_notifications .has-alerts .alert-info {
-  background-color: inherit;
+  background-color: $navbar-alert-body-bg;
   color: $navbar-alert-link-color;
   padding: 0;
   border: 1px solid $navbar-alert-seperator;
@@ -1129,13 +1132,13 @@
 }
 
 .desktop_notifications .has-alerts .text-info {
-  color: $navbar-menu-link-color;
+  color: $navbar-alert-link-color;
 }
 
 .desktop_notifications .has-alerts p {
   font-size: 12px;
-  background-color: $main-bg;
-  color: $main-font-color;
+  background-color: $navbar-alert-body-bg;
+  color: $navbar-alert-body-color;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   line-height: 20px;
@@ -1157,6 +1160,7 @@
   font-size: 14px;
   font-weight: bold;
   background-color: $navbar-alert-title-bg;
+  color: $navbar-alert-title-color;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   line-height: 20px;
@@ -1244,18 +1248,14 @@
     left: -140px;
   }
 
-  .mobile-bar .btn {
-    line-height: $navbar-toolbar-height;
-  }
-
   .mobile-bar .desktop_notifications {
     // add margin for alert_count
     margin-right: 4px;
   }
 
   .mobile-bar .desktop_notifications .alert_count {
-    top: -16px;
-    left: 4px;
+    top: -12px;
+    left: 24px;
   }
 
   .mobile-bar .desktop_notifications .dropdown-menu.has-alerts {
@@ -1426,39 +1426,27 @@
 
   .desktop_notifications > button {
     background-color: $mobile-navbar-toolbar-bg;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    //margin-right: 20px;
-    //float: left;
-    width: 28px;
-    height: 28px;
     border: none;
   }
 
   .desktop_notifications > button:hover {
-    background-color: $mobile-navbar-toolbar-bg;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    background-color: $mobile-navbar-toolbar-bg;
-    border: none;
+    @include alertButtonMobile();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:active {
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    background-color: $mobile-navbar-toolbar-bg
+    @include alertButtonMobile();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    background-color: $mobile-navbar-toolbar-bg
+    @include alertButtonMobile();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    background-color: $mobile-navbar-toolbar-bg
+    @include alertButtonMobile();
+  }
+
+  .desktop_notifications .alertsButton {
+    @include alertButtonMobile();
   }
 
   /*override bootstrap*/
@@ -1466,9 +1454,7 @@
   .desktop_notifications .btn-success.active,
   .desktop_notifications .btn-success:active,
   .desktop_notifications.open > .dropdown-toggle.btn-success {
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
-    background-color: $mobile-navbar-toolbar-bg;
+    @include alertButtonMobile();
     border: none;
   }
 
@@ -1920,7 +1906,7 @@
 
   .desktop_notifications > .btn-success:hover {
     background-color: $navbar-bg;
-    color: #F5F5F5;
+    color: $navbar-alert-color-hover;
     border: none;
   }
 
@@ -2033,7 +2019,7 @@
 
   .mobile-bar {
     margin-top: 0;
-    height: $navbar-toolbar-height;
+    height: $navbar-toolbar-height + ($navbar-toolbar-height / 8);
     line-height: $navbar-toolbar-height;
   }
 

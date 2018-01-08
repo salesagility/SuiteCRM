@@ -988,10 +988,14 @@ $navbar-quick-create-menu-color-hover: $color-80;
 $navbar-quick-create-menu-seperator: $color-20;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
+$navbar-alert-color: $navbar-link-color;
+$navbar-alert-color-hover: $navbar-link-color-hover;
 $navbar-alert-count-link-color: $color-80;
 $navbar-alert-link-color: $color-80;
-$navbar-alert-body-color: $color-1;
+$navbar-alert-body-color: $main-font-color;
+$navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
+$navbar-alert-title-color: $main-font-color;
 $navbar-alert-seperator: $navbar-menu-seperator;
 $navbar-alert-count-bg: $color-50;
 

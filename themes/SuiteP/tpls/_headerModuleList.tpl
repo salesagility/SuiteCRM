@@ -513,7 +513,7 @@
                     </div>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
@@ -625,7 +625,7 @@
                     </form>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
@@ -721,7 +721,7 @@
                     </form>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
