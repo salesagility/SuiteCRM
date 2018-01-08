@@ -224,7 +224,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         $request['inbound_email_record'] = $inboundEmail->id;
 
         if (empty($folder)) {
-            if(!empty($inboundEmail->mailbox)) {
+            if (!empty($inboundEmail->mailbox)) {
                 $request['folder'] = $inboundEmail->mailbox;
             } elseif (!empty($inboundEmail->mailboxarray)
                 && is_array($inboundEmail->mailboxarray)
