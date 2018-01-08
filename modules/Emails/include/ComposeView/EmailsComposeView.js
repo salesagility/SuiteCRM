@@ -513,15 +513,7 @@
       var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (inputIndex, inputValue) {
-        if ($(inputValue).attr('type').toLowerCase() === 'file') {
-          for (var fileIndex = 0; fileIndex < inputValue.files.length; fileIndex++) {
-            var file = inputValue.files[fileIndex];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            formData.append($(inputValue).attr('name'), file);
-            fileCount++;
-          }
-        } else {
+        if ($(inputValue).attr('type').toLowerCase() !== 'file') {
           if ($(inputValue).attr('name') === 'action') {
             formData.append('refer_' + $(inputValue).attr('name'), $(inputValue).val());
             formData.append($(inputValue).attr('name'), 'send');
@@ -534,7 +526,9 @@
       });
 
       $(this).find('select').each(function (i, v) {
-        formData.append($(v).attr('name'), $(v).val());
+        if (typeof $(v).attr('is_file') === 'undefined') {
+          formData.append($(v).attr('name'), $(v).val());
+        }
       });
 
       $(this).find('textarea').each(function (i, v) {
@@ -891,14 +885,6 @@
 
       $(this).find('input').each(function (i, v) {
         if ($(v).attr('type').toLowerCase() === 'file') {
-          for (i = 0; i < v.files.length; i++) {
-            var file = v.files[i];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            formData.append($(v).attr('name'), file);
-            fileCount++;
-          }
-        } else {
           var name = $(v).attr('name');
           if (name === 'action') {
             formData.append(name, 'SaveDraft');
@@ -911,7 +897,9 @@
       });
 
       $(this).find('select').each(function (i, v) {
-        formData.append($(v).attr('name'), $(v).val());
+        if (typeof $(v).attr('is_file') === 'undefined') {
+          formData.append($(v).attr('name'), $(v).val());
+        }
       });
 
       $(this).find('textarea').each(function (i, v) {
@@ -989,14 +977,6 @@
 
         $(this).find('input').each(function (i, v) {
           if ($(v).attr('type').toLowerCase() === 'file') {
-            for (i = 0; i < v.files.length; i++) {
-              var file = v.files[i];
-              var reader = new FileReader();
-              reader.readAsDataURL(file);
-              formData.append($(v).attr('name'), file);
-              fileCount++;
-            }
-          } else {
             var name = $(v).attr('name');
             if (name === 'action') {
               formData.append(name, 'Delete');
@@ -1009,7 +989,9 @@
         });
 
         $(this).find('select').each(function (i, v) {
-          formData.append($(v).attr('name'), $(v).val());
+          if (typeof $(v).attr('is_file') === 'undefined') {
+            formData.append($(v).attr('name'), $(v).val());
+          }
         });
 
         $(this).find('textarea').each(function (i, v) {
@@ -1311,6 +1293,7 @@
           var fileInput = $('<select></select>')
             .attr('style', 'display:none')
             .attr('id', id)
+            .attr('is_file', true)
             .attr('name', 'template_attachment[]')
             .attr('multiple', 'multiple');
 
