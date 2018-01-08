@@ -2660,7 +2660,7 @@ class InboundEmail extends SugarBean
 
             $focusUser = new User();
             $focusUser->retrieve($groupId);
-            $mailerId = (isset($_REQUEST['outbound_emaihttp://localhost:9001/SuiteCRM-github-develop/index.php?module=Users&action=EditView&record=1#l'])) ? $_REQUEST['outbound_email'] : "";
+            $mailerId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
 
             $oe = new OutboundEmail();
             $oe->getSystemMailerSettings($focusUser, $mailerId);
