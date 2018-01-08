@@ -108,7 +108,7 @@ class Basic extends SugarBean
 
 
 
-        if($emailAddress !== null && !in_array($this->module_name, $doNotDisplayOptInTickForModule, true)) {
+        if($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if($emailAddress->invalid_email) {
                 return 'INVALID_EMAIL';
             }
@@ -145,16 +145,18 @@ class Basic extends SugarBean
 
         global $sugar_config;
 
-        if (!$sugar_config['email_enable_confirm_opt_in']) {#
+        /** @var EmailAddress $emailAddressBean */
+        $emailAddressBean = BeanFactory::getBean('EmailAddresses');
+
+        if (!$sugar_config['email_enable_confirm_opt_in']) {
             global $log;
             $log->warn('Confirm Opt In is not enabled.');
-            return false;
+            $emailAddressBean->confirm_opt_in = true;
+            return $emailAddressBean;
         }
 
         $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
-        /** @var EmailAddress $emailAddressBean */
-        $emailAddressBean = BeanFactory::getBean('EmailAddresses');
-        return  $emailAddressBean->retrieve($emailAddressId);
+        return $emailAddressBean->retrieve($emailAddressId);
     }
 
     /**
