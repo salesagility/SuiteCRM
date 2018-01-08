@@ -55,5 +55,5 @@ function displayEmailAddressOptInField($focus, $field, $value, $view)
     if(empty($focus->id) && empty($focus->from_name)) {
         return '';
     }
-    return $focus->getEmailAddressConfirmOptInTick('from_name');
+    return $focus->getConfirmOptInTickFromSugarEmailAddressField('from_name');
 }

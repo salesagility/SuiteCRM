@@ -83,27 +83,11 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressConfirmOptInTick($emailField)
+    public function getConfirmOptInTickFromSugarEmailAddressField($emailField)
     {
-        global $sugar_config;
-        global $app_list_strings;
-        global $app_strings;
-        global $mod_strings;
+        $this->validateSugarEmailAddressField($emailField);
 
-        $this->getEmailAddressValidateArguments($emailField);
-
-        $tickHtml = '';
-
-        if ($sugar_config['email_enable_confirm_opt_in']) {
-            $template = new Sugar_Smarty();
-            $template->assign('APP', $app_strings);
-            $template->assign('APP_LIST_STRINGS', $app_list_strings);
-            $template->assign('MOD', $mod_strings);
-            $template->assign('OPT_IN_STATUS', $this->getEmailAddressOptInStatus($emailField));
-            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
-        }
-
-        return $tickHtml;
+        return $this->displayOptInFromSugarEmailAddressField($emailField);
     }
 
 
@@ -113,9 +97,9 @@ class Basic extends SugarBean
      * @param string $emailField
      * @return string
      */
-    public function getEmailAddressOptInStatus($emailField)
+    public function getOptInStatusFromSugarField($emailField)
     {
-        $emailAddress = $this->getEmailAddressFromSugarField($emailField);
+        $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
         $doNotDisplayOptInTickForModule = array(
             'Users',
@@ -153,9 +137,9 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressFromSugarField($emailField)
+    public function fromSugarEmailAddressField($emailField)
     {
-        $this->getEmailAddressValidateArguments($emailField);
+        $this->validateSugarEmailAddressField($emailField);
 
         global $sugar_config;
 
@@ -165,7 +149,7 @@ class Basic extends SugarBean
             return false;
         }
 
-        $emailAddressId = $this->getEmailAddressId($emailField);
+        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
         /** @var EmailAddress $emailAddressBean */
         $emailAddressBean = BeanFactory::getBean('EmailAddresses');
         return  $emailAddressBean->retrieve($emailAddressId);
@@ -179,7 +163,7 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    protected function getEmailAddressId($emailField)
+    protected function getIdFromSugarEmailAddressField($emailField)
     {
         global $log;
 
@@ -212,15 +196,42 @@ class Basic extends SugarBean
         return $emailAddressId;
     }
 
+    protected function displayOptInFromSugarEmailAddressField($emailField)
+    {
+        global $sugar_config;
+        global $app_list_strings;
+        global $app_strings;
+        global $mod_strings;
+
+        $tickHtml = '';
+
+        if ($sugar_config['email_enable_confirm_opt_in']) {
+            $template = new Sugar_Smarty();
+            $template->assign('APP', $app_strings);
+            $template->assign('APP_LIST_STRINGS', $app_list_strings);
+            $template->assign('MOD', $mod_strings);
+            $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
+            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
+        }
+
+        return $tickHtml;
+    }
+
     /**
      *
      * @param string $emailField
      * @throws InvalidArgumentException
      */
-    private function getEmailAddressValidateArguments($emailField)
+    protected function validateSugarEmailAddressField($emailField)
     {
-        if (!is_string($emailField) || !preg_match('/^email\d+/', $emailField)) {
-            throw new InvalidArgumentException('emailField string is invalid, "' . $emailField . '" given.');
+        if (!is_string($emailField)) {
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. email1');
+        }
+
+        if (!preg_match('/^email\d+/', $emailField)) {
+            throw new InvalidArgumentException(
+                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. email1'
+            );
         }
     }
 

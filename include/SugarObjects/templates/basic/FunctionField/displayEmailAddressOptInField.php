@@ -58,5 +58,5 @@ function displayEmailAddressOptInField($focus, $field, $value, $view)
         return '';
     }
 
-    return $focus->getEmailAddressConfirmOptInTick($field);
+    return $focus->getConfirmOptInTickFromSugarEmailAddressField($field);
 }

@@ -4226,28 +4226,6 @@ eoq;
         $this->description = $mail->Body;
     }
 
-
-    public function getEmailAddressConfirmOptInTick($emailField)
-    {
-        global $sugar_config;
-        global $app_list_strings;
-        global $app_strings;
-        global $mod_strings;
-
-        $tickHtml = '';
-
-        if ($sugar_config['email_enable_confirm_opt_in']) {
-            $template = new Sugar_Smarty();
-            $template->assign('APP', $app_strings);
-            $template->assign('APP_LIST_STRINGS', $app_list_strings);
-            $template->assign('MOD', $mod_strings);
-            $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
-            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
-        }
-
-        return $tickHtml;
-    }
-
     /**
      *
      * @global array $sugar_config
@@ -4257,7 +4235,7 @@ eoq;
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressFromSugarField($emailField)
+    public function fromSugarEmailAddressField($emailField)
     {
         global $sugar_config;
 
@@ -4267,8 +4245,35 @@ eoq;
             return false;
         }
 
-        $emailAddressId = $this->getEmailAddressId($emailField);
+        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
 
         return  BeanFactory::getBean('EmailAddresses', $emailAddressId);
+    }
+
+
+    /**
+     *
+     * @param string $emailField
+     * @throws InvalidArgumentException
+     */
+    protected function validateSugarEmailAddressField($emailField)
+    {
+        if (!is_string($emailField)) {
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. email1');
+        }
+
+        $validFieldNames = array(
+            'email_address',
+            'to',
+            'from',
+            'cc',
+            'bcc'
+        );
+
+        if (!in_array($emailField, $validFieldNames, true)) {
+            throw new InvalidArgumentException(
+                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. email_address'
+            );
+        }
     }
 } // end class def
