@@ -115,7 +115,7 @@ class Basic extends SugarBean
      */
     public function getEmailAddressOptInStatus($emailField)
     {
-        $emailAddress = $this->getEmailAddressConfirmOptIn($emailField);
+        $emailAddress = $this->getEmailAddressFromSugarField($emailField);
 
         $doNotDisplayOptInTickForModule = array(
             'Users',
@@ -153,7 +153,7 @@ class Basic extends SugarBean
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressConfirmOptIn($emailField)
+    public function getEmailAddressFromSugarField($emailField)
     {
         $this->getEmailAddressValidateArguments($emailField);
 

@@ -4257,7 +4257,7 @@ eoq;
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function getEmailAddressConfirmOptIn($emailField)
+    public function getEmailAddressFromSugarField($emailField)
     {
         global $sugar_config;
 
