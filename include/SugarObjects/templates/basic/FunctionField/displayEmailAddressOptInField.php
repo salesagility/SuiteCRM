@@ -52,7 +52,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function displayEmailAddressOptInField($focus, $field, $value, $view)
 {
-    global $app_strings, $app_list_strings, $mod_strings;
 
     if(empty($view)) {
         return '';
