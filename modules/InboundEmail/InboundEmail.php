@@ -2680,7 +2680,7 @@ class InboundEmail extends SugarBean
             if (empty($row)) {
 
                 $this->createFolder(
-                    $inboxFolders[0],
+                    $inboxFolders[0] . ' ('.$this->name.')',
                     "inbound",
                     $focusUser,
                     $this->id
@@ -2688,6 +2688,9 @@ class InboundEmail extends SugarBean
 
                 foreach ($inboxFolders as $key => $folder) {
                     if ($key == 0) {
+                        continue;
+                    }
+                    if ($this->folderIsRequestTrashOrSent($folder)) {
                         continue;
                     }
                     $this->createFolder(
@@ -2760,13 +2763,14 @@ class InboundEmail extends SugarBean
                 }
                 // Any inbox folder we don't have yet we need to create
                 foreach ($inboxNames as $newInboxFolder) {
-                    if ($newInboxFolder != $_REQUEST['trashFolder'] && $newInboxFolder != $_REQUEST['sentFolder']) {
-                        $this->createFolder(
-                            $newInboxFolder,
-                            "inbound",
-                            $focusUser
-                        );
+                    if ($this->folderIsRequestTrashOrSent($newInboxFolder)) {
+                        continue;
                     }
+                    $this->createFolder(
+                        $newInboxFolder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
             }
             //If this is the first personal account the user has setup mark it as default for them.
@@ -2812,6 +2816,15 @@ class InboundEmail extends SugarBean
         $folder->save();
 
         return $folder->id;
+    }
+
+    /**
+     * @param $folderName
+     * @return bool
+     */
+    private function folderIsRequestTrashOrSent($folderName)
+    {
+        return $folderName == $_REQUEST['trashFolder'] || $folderName == $_REQUEST['sentFolder'];
     }
 
     /**
