@@ -41,6 +41,11 @@
 
 class Basic extends SugarBean
 {
+    protected static $doNotDisplayOptInTickForModule = array(
+        'Users',
+        'Employees'
+    );
+
     /**
      * Constructor
      */
@@ -101,10 +106,7 @@ class Basic extends SugarBean
     {
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
-        $doNotDisplayOptInTickForModule = array(
-            'Users',
-            'Employees'
-        );
+
 
         if($emailAddress !== null && !in_array($this->module_name, $doNotDisplayOptInTickForModule, true)) {
             if($emailAddress->invalid_email) {
