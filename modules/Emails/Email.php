@@ -4268,12 +4268,12 @@ eoq;
     protected function validateSugarEmailAddressField($emailField)
     {
         if (!is_string($emailField)) {
-            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. email1');
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
         }
 
         if (!in_array($emailField, self::$validFieldNames, true)) {
             throw new InvalidArgumentException(
-                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. email_address'
+                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. from_name'
             );
         }
     }
