@@ -466,19 +466,10 @@ class InboundEmail extends SugarBean
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
         foreach ($emailHeaders as $i=> $emailHeader) {
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
 
-            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno'], FT_UID);
-
-            if(isset($structure->parts[0]->parts))
-            {
-                // has attachment
-                $emailHeaders[$i]['has_attachment'] = true;
-            } else{
-                // no attachment
-                $emailHeaders[$i]['has_attachment'] = false;
-            }
+            $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
         }
-
 
         usort(
             $emailHeaders,
@@ -504,6 +495,27 @@ class InboundEmail extends SugarBean
             "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
+
+    /**
+     * @param $imapStructure
+     * @return bool
+     */
+    private function mesageStructureHasAttachment($imapStructure)
+    {
+        if (isset($imapStructure->parts)) {
+            foreach ($imapStructure->parts as $part) {
+                if ($this->mesageStructureHasAttachment($part)) {
+                    return true;
+                }
+            }
+        } else {
+            if (isset($imapStructure->disposition) && $imapStructure->disposition == 'attachment') {
+                return true;
+            }
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     ////	CUSTOM LOGIC HOOKS
     /**
@@ -2648,7 +2660,7 @@ class InboundEmail extends SugarBean
 
             $focusUser = new User();
             $focusUser->retrieve($groupId);
-            $mailerId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
+            $mailerId = (isset($_REQUEST['outbound_emaihttp://localhost:9001/SuiteCRM-github-develop/index.php?module=Users&action=EditView&record=1#l'])) ? $_REQUEST['outbound_email'] : "";
 
             $oe = new OutboundEmail();
             $oe->getSystemMailerSettings($focusUser, $mailerId);
