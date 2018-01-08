@@ -964,11 +964,19 @@ $navbar-menu-link-color: $color-81;
 $navbar-menu-link-color-hover: $color-50;
 $navbar-menu-seperator: $color-18;
 $navbar-menu-current-seperator: $color-50;
+$navbar-mobile-toolbar-color: $color-81;
+
+$navbar-home-color: $navbar-link-color;
+$navbar-home-color-hover: $navbar-link-color-hover;
 
 $navbar-search-bg: $color-11;
 $navbar-search-btn-bg: $color-23;
 $navbar-search-text-color: $color-32;
 $navbar-search-color: $color-59;
+$navbar-search-btn-color: $navbar-link-color;
+$navbar-search-btn-color-hover: $navbar-link-color-hover;
+$navbar-search-query-btn-color: $navbar-link-color;
+$navbar-search-query-btn-color-hover: $navbar-link-color-hover;
 
 $navbar-quick-create-link-color: $color-81;
 $navbar-quick-create-mobile-btn-bg: $color-33;

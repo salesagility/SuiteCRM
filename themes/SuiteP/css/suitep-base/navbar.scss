@@ -30,14 +30,22 @@
   .navbar-brand,
   .navbar-nav > li > a.with-home-icon {
     display: inline-block;
-    color: $navbar-menu-link-color;
+    color: $navbar-home-color;
     padding: 0;
     line-height: $navbar-toolbar-height;
     font-size: $navbar-toolbar-height / 2;
   }
 
   .navbar-nav > li > a.with-home-icon:hover {
-    color: $navbar-menu-link-color-hover;
+    color: $navbar-home-color-hover;
+  }
+
+  .navbar-toggle .icon-bar {
+    background-color: $navbar-home-color;
+  }
+
+  .navbar-toggle .icon-bar:hover {
+    color: $navbar-home-color-hover;
   }
 
   .dropdown-menu > li > a {
@@ -746,25 +754,17 @@
 
 .searchform button {
   display: block;
-  background-color: #65697A;
-  background-image: none, url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-  background-position: 14px 8px;
-  background-repeat: no-repeat;
-  color: $navbar-menu-link-color;
+  font-size: $navbar-toolbar-height / 2;
+  color: $navbar-search-btn-color;
   padding: 10px 10px 10px 10px;
-  margin-left: -50px;
   border: none;
   border-radius: 0 3px 3px 0;
   float: left;
-  overflow: hidden;
-  width: 50px;
   height: auto;
-  text-indent: -9999px;
 }
 
 .searchform button:hover {
-  background-color: $navbar-search-btn-bg;
-  background-position: 14px -46px;
+  color: $navbar-search-btn-color-hover;
 }
 
 .globalLinks-desktop ul li a {
@@ -1218,6 +1218,15 @@
 
 @media (max-width: 750px) {
 
+  .mobile-bar > .toolbar > .navbar-nav {
+    margin: 0;
+
+    .btn {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+  }
+
   .modulelinks .dropdown-menu {
     top: $navbar-toolbar-height + 10px;
   }
@@ -1326,24 +1335,16 @@
   }
 
   .navbar-search .searchbutton {
-    background-color: transparent;
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     padding: 0;
-    //margin: 0 10px 0 0;
     border: none;
-    overflow: hidden;
     width: 28px;
-    height: 28px;
+    color: $navbar-mobile-toolbar-color;
     line-height:  $navbar-toolbar-height;
-    text-indent: -9999px;
+    font-size:  $navbar-toolbar-height / 2;
   }
 
-  .navbar-search.open .searchbutton {
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 0;
-    background-color: transparent;
+  .navbar-search.open .searchbutton.btn {
+    margin-bottom: 0;
   }
 
   .navbar-search .dropdown-menu {
@@ -1351,13 +1352,11 @@
   }
 
   .searchformdropdown .btn {
-    background-image: url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
     background-color: $navbar-search-bg;
-
+    font-size:  $navbar-toolbar-height / 2;
   }
 
   .searchformdropdown .btn:hover {
-    background-image: url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
     background-color: $navbar-search-btn-bg;
   }
   /* overridding bootstrap needs to be stacked */
@@ -1778,50 +1777,35 @@
   }
 
   .navbar-search .searchbutton {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-repeat: no-repeat;
     padding: 0;
     border: none;
-    overflow: hidden;
-    text-indent: -9999px;
-    background-size: 25px auto;
-    background-position: center -47px;
+    color: $navbar-link-color;
+    font-size: $navbar-toolbar-height / 2 + 4;
     width: 40px;
     height: 40px;
   }
   
   .navbar-search .btn-default.searchbutton {
-    background-size: 25px auto;
     width: 40px;
     height: 40px;
+    color: $navbar-link-color;
   }
     
 
   .navbar-search .btn-default.searchbutton:active {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-repeat: no-repeat;
     padding: 0;
     border: none;
-    overflow: hidden;
-    text-indent: -9999px;
-    background-size: 25px auto;
     width: 40px;
     height: 40px;
+    color: $navbar-link-color;
   }
 
   .navbar-search .btn-default.searchbutton:hover {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-repeat: no-repeat;
     padding: 0;
     border: none;
-    overflow: hidden;
-    text-indent: -9999px;
-    background-size: 25px auto;
     width: 40px;
     height: 40px;
+    color: $navbar-link-color-hover;
   }
   
   
@@ -1846,9 +1830,9 @@
   }
 
   .navbar-search.open .searchformdropdown button {
+    font-size: $navbar-toolbar-height / 2;
     height: $global-search-height;
     width: $global-search-height;
-    background-position: 5px 5px;
   }
 
   .tablet-bar .navbar-search.open .dropdown-menu {
@@ -1865,31 +1849,19 @@
   }
 
   .tablet-bar > .toolbar > li.open .searchbutton {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    background-size: 38px 38px;
-    padding: 12px 0 12px 0;
     border: none;
-    overflow: hidden;
     width: $navbar-toolbar-height;
-    text-indent: -9999px;
   }
 
   .tablet-bar > .toolbar > li.open .searchbutton:hover {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    background-size: 38px 38px;
-    padding: 12px 0 12px 0;
     border: none;
     overflow: hidden;
     width: $navbar-toolbar-height;
-    text-indent: -9999px;
   }
 
+  .tablet-bar > .toolbar > li.open .searchbutton:before {
+    content: "\f108"; // .suitepicon-action-clear
+  }
   .desktop_notifications .btn-danger:hover {
     @include alertButton();
   }
@@ -2079,9 +2051,8 @@
   }
 
   .mobile-bar .searchbutton.btn-default:hover {
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 0;
     border: none;
+    color: $navbar-mobile-toolbar-color;
     background-color: $mobile-navbar-toolbar-bg;
   }
 
@@ -2145,7 +2116,7 @@
   }
 
   .desktop-bar > .toolbar > li > .btn.searchbutton {
-    background-size: 25px auto;
+    font-size: $navbar-toolbar-height / 2;
   }
 
 
@@ -2192,29 +2163,17 @@
   }
 
   .desktop-bar > .toolbar > li.navbar-search.open .btn-default.searchbutton {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
-    background-position: 0 0;
-    background-size: 38px 38px;
-    background-repeat: no-repeat;
-    padding: 12px 0 12px 0;
     border: none;
-    overflow: hidden;
     width: $navbar-toolbar-height;
-    text-indent: -9999px;
   }
 
   .desktop-bar > .toolbar > li.navbar-search.open .btn-default.searchbutton:hover {
-    background-color: transparent;
-    background-image: url("../../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
-    background-position: 0 0;
-    background-size: 38px 38px;
-    background-repeat: no-repeat;
-    padding: 12px 0 12px 0;
     border: none;
-    overflow: hidden;
     width: $navbar-toolbar-height;
-    text-indent: -9999px;
+  }
+
+  .desktop-bar > .toolbar > li.navbar-search.open .btn-default.searchbutton:before {
+    content: "\f108"; // .suitepicon-action-clear
   }
 
   .usermenucollapsed.btn-default {
@@ -2360,18 +2319,8 @@
 
   .navbar-search .dropdown-menu button:active {
     display: block;
-    background-color: transparent;
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-position: 13px 10px;
-    background-repeat: no-repeat;
     color: $navbar-menu-link-color;
-    padding: 12px 12px 12px 12px;
-    margin-left: -50px;
     border: none;
-    float: left;
-    overflow: hidden;
-    width: 50px;
-    text-indent: -9999px;
   }
 
   .searchformdropdown .btn {
@@ -2384,34 +2333,20 @@
 
   .searchformdropdown button:focus {
     display: block;
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-position: 13px 10px;
-    background-repeat: no-repeat;
-    color: $navbar-menu-link-color;
-    padding: 12px 12px 12px 12px;
-    margin-left: -50px;
+    color: $navbar-search-query-btn-color;
     border: none;
     float: left;
-    overflow: hidden;
-    width: 50px;
-    text-indent: -9999px;
   }
 
   .searchformdropdown button {
     margin: 0;
     display: block;
-    background-image: none, url("../../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../../themes/SuiteP/images/p_search_button.png");
-    background-position: 5px 10px;
-    background-repeat: no-repeat;
-    color: $navbar-menu-link-color;
+    color: $navbar-search-query-btn-color;
     padding: 0;
-    margin-left: -50px;
     border: none;
     float: left;
-    overflow: hidden;
     height: $global-search-height;
     width: $global-search-height;
-    text-indent: -9999px;
   }
 
   .searchformdropdown .btn-group button:hover {
@@ -2449,6 +2384,20 @@
 }
 
 @media (min-width: 1561px) {
+  .searchform button {
+    display: block;
+    font-size: $navbar-toolbar-height / 2;
+    color: $navbar-search-query-btn-color;
+    padding: 10px 10px 10px 10px;
+    border: none;
+    border-radius: 0 3px 3px 0;
+    float: left;
+    height: auto;
+  }
+
+  .searchform button:hover {
+    color: $navbar-search-query-btn-color-hover;
+  }
   .desktop-toolbar {
     width: 60%;
   }

@@ -493,8 +493,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -507,7 +506,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
@@ -528,10 +527,10 @@
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
                         <div class="input-group">
-                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                            <input type="text" class="form-control query_string " name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
@@ -590,8 +589,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -604,7 +602,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
@@ -621,7 +619,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
@@ -687,8 +685,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -701,7 +698,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
@@ -718,7 +715,7 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
