@@ -223,6 +223,15 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         $request['folder_type'] = $folderObj->getType();
         $request['inbound_email_record'] = $inboundEmail->id;
 
+        if (empty($folder)) {
+            if(!empty($inboundEmail->mailbox)) {
+                $request['folder'] = $inboundEmail->mailbox;
+            } elseif (!empty($inboundEmail->mailboxarray)
+                && is_array($inboundEmail->mailboxarray)
+                && count($inboundEmail->mailboxarray)) {
+                $request['folder'] = $inboundEmail->mailboxarray[0];
+            }
+        }
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
         $endOffset = floor(($total - 1) / $limit) * $limit;
