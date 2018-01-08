@@ -162,8 +162,6 @@ class Basic extends SugarBean
      * @global \LoggerManager $log
      * @param string $emailField
      * @return string|null EmailAddress ID or null on error
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
      */
     protected function getIdFromSugarEmailAddressField($emailField)
     {
