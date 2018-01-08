@@ -1287,17 +1287,56 @@
   $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
     var confirmed = function (args) {
-      var self = $('[name="' + args.form_name + '"]');
+      var form = $('[name="' + args.form_name + '"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
-      }, function (resp) {
-        var r = JSON.parse(resp);
-        $(self).find('[name="name"]').val(r.data.subject);
-        tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
-        tinymce.activeEditor.change();
+      }, function (jsonResponse) {
+        var response = JSON.parse(jsonResponse);
+        loadTemplateAttachments(response);
+        $(form).find('[name="name"]').val(response.data.subject);
+        tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
       });
       set_return(args);
     };
+
+    var loadTemplateAttachments = function (response) {
+      $('.file-attachments').empty();
+      if (typeof response.data.attachments !== 'undefined' && response.data.attachments.length > 0) {
+        for (i = 0; i < response.data.attachments.length; i++) {
+          var id = response.data.attachments[i]['id'];
+          var fileGroupContainer = $('<div></div>')
+            .addClass('attachment-group-container')
+            .appendTo($('.file-attachments'));
+
+          var fileInput = $('<select></select>')
+            .attr('style', 'display:none')
+            .attr('id', id)
+            .attr('name', 'template_attachment[]')
+            .attr('multiple', 'multiple');
+
+          var fileOptions = $('<option></option>')
+            .attr('selected', 'selected')
+            .attr('value', id)
+            .appendTo(fileInput);
+
+          fileInput.appendTo(fileGroupContainer);
+          var fileLabel = $('<label></label>')
+            .attr('for', 'file_' + id)
+            .html('<span class="glyphicon glyphicon-paperclip"></span>')
+            .appendTo(fileGroupContainer);
+
+          var fileContainer = $('<div class="attachment-file-container"></div>');
+          fileContainer.appendTo(fileLabel);
+          fileContainer.append('<span class="attachment-name"> ' + response.data.attachments[i]['name'] + ' </span>');
+
+          var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+          removeAttachment.click(function () {
+            $(this).parent().remove();
+          });
+          fileGroupContainer.append(removeAttachment);
+        }
+      }
+    }
 
     var mb = messageBox();
     mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
@@ -1315,7 +1354,6 @@
       mb.remove();
     });
   };
-
 
   $.fn.EmailsComposeView.onParentSelect = function (args) {
     set_return(args);
