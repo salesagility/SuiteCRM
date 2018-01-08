@@ -80,11 +80,6 @@ $dictionary['email_addresses'] = array(
             'default'        => 0,
             'vname'         => 'LBL_OPT_OUT',
         ),
-        'opt_in_email_created' => array(
-            'name'            => 'opt_in_email_created',
-            'type'            => 'datetime',
-            'vname'         => 'LBL_OPT_IN_EMAIL_CREATED',
-        ),
         'confirm_opt_in' => array(
             'name'            => 'confirm_opt_in',
             'type'            => 'bool',

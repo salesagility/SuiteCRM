@@ -72,10 +72,6 @@ class EmailAddress extends SugarEmailAddress
      */
 	public $invalid_email = 0;
 
-	/**
-     * @var TimeDate $opt_in_email_created
-     */
-    public $opt_in_email_created;
 
     /**
      * EmailAddress constructor.
