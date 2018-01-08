@@ -2760,11 +2760,13 @@ class InboundEmail extends SugarBean
                 }
                 // Any inbox folder we don't have yet we need to create
                 foreach ($inboxNames as $newInboxFolder) {
-                    $this->createFolder(
-                        $newInboxFolder,
-                        "inbound",
-                        $focusUser
-                    );
+                    if ($newInboxFolder != $_REQUEST['trashFolder'] && $newInboxFolder != $_REQUEST['sentFolder']) {
+                        $this->createFolder(
+                            $newInboxFolder,
+                            "inbound",
+                            $focusUser
+                        );
+                    }
                 }
             }
             //If this is the first personal account the user has setup mark it as default for them.
