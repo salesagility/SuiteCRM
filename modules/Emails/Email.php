@@ -432,6 +432,15 @@ class Email extends Basic
      */
     public $to_name;
 
+    protected static $validFieldNames = array(
+        'email_address',
+        'to',
+        'from',
+        'from_name',
+        'cc',
+        'bcc'
+    );
+
     /**
      * sole constructor
      */
@@ -4262,15 +4271,7 @@ eoq;
             throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. email1');
         }
 
-        $validFieldNames = array(
-            'email_address',
-            'to',
-            'from',
-            'cc',
-            'bcc'
-        );
-
-        if (!in_array($emailField, $validFieldNames, true)) {
+        if (!in_array($emailField, self::$validFieldNames, true)) {
             throw new InvalidArgumentException(
                 '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. email_address'
             );
