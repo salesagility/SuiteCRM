@@ -80,7 +80,7 @@ class EmailAddress extends SugarEmailAddress
     /**
      * EmailAddress constructor.
      */
-    function __construct()
+    public function __construct()
 	{
 		parent::__construct();
 	}
@@ -96,7 +96,7 @@ class EmailAddress extends SugarEmailAddress
      * @param bool $in_workflow
      * @return null|string
      */
-	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
+	public function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
 	{
 		if ( func_num_args() > 1 ) {
 		    return parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
