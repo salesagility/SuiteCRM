@@ -312,8 +312,8 @@ abstract class AbstractMetaDataImplementation
      * Must be the exact inverse of _loadFromFile
      * Obtains the additional variables, such as module_name, to include in beginning of the file (as required by ModuleBuilder) from the internal variable _variables, set in the Constructor
      * @param string $filename       The full path to the file to contain the layout
-     * @param array $defs        	Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
-     * @param boolean $useVariables	Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
+     * @param array $defs               Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
+     * @param boolean $useVariables     Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
      * @param bool $forPopup
      */
     protected function _saveToFile($filename, $defs, $useVariables = true, $forPopup = false)
@@ -364,7 +364,7 @@ abstract class AbstractMetaDataImplementation
      *
      * 1. The starting point is the module's fielddefs, sourced from the Bean
      * 2. Second comes any overrides from the layouts themselves. Note though that only visible fields are included in a layoutdef, which
-     * 	  means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
+     *    means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
      *
      * Thus to determine the current fielddef for any given field, we take the fielddef defined in the module's Bean and then override with first the base layout,
      * then the customlayout, then finally the working layout...
@@ -410,7 +410,61 @@ abstract class AbstractMetaDataImplementation
      * @param string $type
      * @return mixed
      */
-    abstract public function getFileName($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION);
+
+
+ public function getFileName($view, $moduleName, $type = MB_BASEMETADATALOCATION)
+    {
+        return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
+    }
+
+    /**
+     * Construct a full pathname for the requested metadata, in a specific package
+     *
+     * @param string $view           The view type, that is, EditView, DetailView etc
+     * @param string $moduleName     The name of the module that will use this layout
+     * @param string $packageName    The name of the package to use
+     * @param string $type
+     * @return string               The file name
+     */
+    public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+
+        $type = strtolower ( $type ) ;
+
+        // BEGIN ASSERTIONS
+        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION)
+        {
+            // just warn rather than die
+            $GLOBALS [ 'log' ]->warning ( "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized" ) ;
+        }
+        // END ASSERTIONS
+
+        $filenames = array (    MB_DASHLETSEARCH => 'dashletviewdefs',
+                                                        MB_DASHLET => 'dashletviewdefs',
+                                                        MB_LISTVIEW => 'listviewdefs' ,
+                                                        MB_BASICSEARCH => 'searchdefs' ,
+                                                        MB_ADVANCEDSEARCH => 'searchdefs' ,
+                                                        MB_EDITVIEW => 'editviewdefs' ,
+                                                        MB_DETAILVIEW => 'detailviewdefs' ,
+                                                        MB_QUICKCREATE => 'quickcreatedefs',
+                                                        MB_POPUPSEARCH => 'popupdefs',
+                                                        MB_POPUPLIST => 'popupdefs',
+                                                        ) ;
+
+        switch ( $type)
+        {
+            case MB_HISTORYMETADATALOCATION :
+                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
+            default :
+                // get the module again, all so we can call this method statically without relying on the module stored in the class variables
+                $mb = new ModuleBuilder ( ) ;
+                $module = & $mb->getPackageModule ( $packageName, $moduleName ) ;
+                return $module->getModuleDir () . '/metadata/' . $filenames [ $view ] . '.php' ;
+        }
+
+    }
+}
+
 
 }
 
