@@ -45,14 +45,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * @param \Basic $focus
- * @param $field
- * @param $value
- * @param $view
+ * @param string $field
+ * @param mixed $value
+ * @param string $view
  * @return string
  */
 function displayEmailAddressOptInField($focus, $field, $value, $view)
 {
-
     if(empty($view)) {
         return '';
     }
