@@ -3796,7 +3796,7 @@ class InboundEmail extends SugarBean
         // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
         $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
-        return SugarCleaner::cleanHtml($msgPart, false);
+        return SugarCleaner::cleanHtml($msgPart, true);
     }
 
 
