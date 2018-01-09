@@ -1,19 +1,19 @@
 <?php
+
+require_once __DIR__ . '/../TemplateSampleService.php';
+
 class smpl_Lead_Sample{
 		function getType() {
 			return 'Leads';
 		}
 		
 		function getBody() {
-        global $locale, $sugar_config;
-        $baseUrl = $sugar_config['site_url'];
-        $logoUrlArr = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
-        $logoUrl = $baseUrl . '/' . $logoUrlArr[0];
+        global $locale;
 			return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
 <tbody style="text-align: left;">
 <tr>
 <td valign="top">
-<p><img src="'. $logoUrl .'" style="float: left;"/>&nbsp;</p>
+<p><img src="'. TemplateSampleService::getAbsoluteLogoUrl() .'" style="float: left;"/>&nbsp;</p>
 </td>
 <td style="font-weight: bold; text-align: right;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET','AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN','AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE','AOS_PDF_Templates').'</div></td>
 </tr>
