@@ -57,6 +57,7 @@ if(!isset($_POST['dashName'])){
     $html .='<option value="2">2</option>';
     $html .='<option value="3">3</option>';
     $html .='</select></td>';
+    $html .='</tr>';
     $html .='</table>';
     $html .='</form>';
 
