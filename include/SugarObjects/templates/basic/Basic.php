@@ -130,7 +130,6 @@ class Basic extends SugarBean
      * @global \LoggerManager $log
      * @param string $emailField
      * @return \EmailAddress
-     * @throws RuntimeException
      * @throws InvalidArgumentException
      */
     public function fromSugarEmailAddressField($emailField)
