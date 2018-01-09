@@ -171,7 +171,9 @@ class Basic extends SugarBean
             return null;
         }
 
-        $this->retrieve();
+        if(empty($this->id)) {
+            $this->retrieve();
+        }
 
         $found = false;
         $addresses = $this->emailAddress->addresses;
