@@ -94,8 +94,6 @@ class Basic extends SugarBean
 
 
     /**
-     * @global array $sugar_config
-     * @global \LoggerManager $log
      * @param string $emailField
      * @return string
      */
