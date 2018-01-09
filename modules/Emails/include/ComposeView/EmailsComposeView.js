@@ -1138,10 +1138,10 @@
             });
 
             var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
-
-            $(selectFrom).val(
-              $(selectFrom).find('[inboundid="' + selectedInboundEmail + '"]').val()
-            );
+            var selectInboundEmailOption = $(selectFrom).find('[inboundid="' + selectedInboundEmail + '"]');
+            if (selectInboundEmailOption.val()) {
+              $(selectFrom).val(selectInboundEmailOption.val());
+            }
 
             $(selectFrom).change(function (e) {
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
