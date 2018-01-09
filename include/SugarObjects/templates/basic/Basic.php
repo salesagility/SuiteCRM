@@ -81,8 +81,6 @@ class Basic extends SugarBean
     /**
      * edit view should show confirm opt in (only if enabled)
      *
-     * @global array $sugar_config
-     * @global array $app_strings
      * @param string $emailField
      * @return string
      * @throws \InvalidArgumentException
