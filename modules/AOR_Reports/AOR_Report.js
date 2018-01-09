@@ -38,6 +38,13 @@ $(document).ready(function () {
       var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
       _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
       var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+      
+      // Fix bug - change local date format to db date format
+			if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {        		
+					var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+					fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date($.datepicker.parseDate(formatString, fieldInput)));                      
+			}
+      
       _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
     });
 
@@ -74,6 +81,13 @@ $(document).ready(function () {
       var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
       _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
       var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+      
+      // Fix bug - change local date format to db date format
+			if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {        		
+					var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+					fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date($.datepicker.parseDate(formatString, fieldInput)));                      
+			}
+      
       _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
     });
     _form.submit();
@@ -127,6 +141,13 @@ function changeReportPage(record, offset, group_value, table_id) {
     var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
     query += "&parameter_type[]=" + fieldType;
     var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+    
+    // Fix bug - change local date format to db date format
+		if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {        		
+				var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+				fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date($.datepicker.parseDate(formatString, fieldInput)));                      
+		}
+    
     query += "&parameter_value[]=" + fieldInput;
   });
 
