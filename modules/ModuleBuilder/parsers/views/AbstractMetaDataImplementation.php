@@ -407,8 +407,8 @@ abstract class AbstractMetaDataImplementation
     /**
      * Construct a full pathname for the requested metadata
      *
-     * @param string $view           The view type, that is, EditView, DetailView etc
-     * @param string $moduleName     The name of the module that will use this layout
+     * @param string $view The view type, that is, EditView, DetailView etc
+     * @param string $moduleName The name of the module that will use this layout
      * @param string $type
      * @return string               The file name
      */
@@ -420,46 +420,49 @@ abstract class AbstractMetaDataImplementation
     /**
      * Construct a full pathname for the requested metadata, in a specific package
      *
-     * @param string $view           The view type, that is, EditView, DetailView etc
-     * @param string $moduleName     The name of the module that will use this layout
-     * @param string $packageName    The name of the package to use
+     * @param string $view The view type, that is, EditView, DetailView etc
+     * @param string $moduleName The name of the module that will use this layout
+     * @param string $packageName The name of the package to use
      * @param string $type
      * @return string               The file name
      */
     public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
 
-        $type = strtolower ( $type ) ;
+        $type = strtolower($type);
 
         // BEGIN ASSERTIONS
-        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION)
-        {
+        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION) {
             // just warn rather than die
-            $GLOBALS [ 'log' ]->warning ( "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized" ) ;
+            $GLOBALS ['log']->warning(
+                "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized"
+            );
         }
         // END ASSERTIONS
 
-        $filenames = array (  	MB_DASHLETSEARCH => 'dashletviewdefs',
+        $filenames = array(
+            MB_DASHLETSEARCH => 'dashletviewdefs',
             MB_DASHLET => 'dashletviewdefs',
-            MB_LISTVIEW => 'listviewdefs' ,
-            MB_BASICSEARCH => 'searchdefs' ,
-            MB_ADVANCEDSEARCH => 'searchdefs' ,
-            MB_EDITVIEW => 'editviewdefs' ,
-            MB_DETAILVIEW => 'detailviewdefs' ,
+            MB_LISTVIEW => 'listviewdefs',
+            MB_BASICSEARCH => 'searchdefs',
+            MB_ADVANCEDSEARCH => 'searchdefs',
+            MB_EDITVIEW => 'editviewdefs',
+            MB_DETAILVIEW => 'detailviewdefs',
             MB_QUICKCREATE => 'quickcreatedefs',
             MB_POPUPSEARCH => 'popupdefs',
             MB_POPUPLIST => 'popupdefs',
-        ) ;
+        );
 
-        switch ( $type)
-        {
+        switch ($type) {
             case MB_HISTORYMETADATALOCATION :
-                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
+                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
+                    . $moduleName . '/metadata/' . $filenames [$view] . '.php';
             default :
-                // get the module again, all so we can call this method statically without relying on the module stored in the class variables
-                $mb = new ModuleBuilder ( ) ;
-                $module = & $mb->getPackageModule ( $packageName, $moduleName ) ;
-                return $module->getModuleDir () . '/metadata/' . $filenames [ $view ] . '.php' ;
+                // get the module again, all so we can call this method statically
+                // without relying on the module stored in the class variables
+                $mb = new ModuleBuilder ();
+                $module = &$mb->getPackageModule($packageName, $moduleName);
+                return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
         }
 
     }
