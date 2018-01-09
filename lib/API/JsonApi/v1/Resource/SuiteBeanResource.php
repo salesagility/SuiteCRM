@@ -460,34 +460,22 @@ class SuiteBeanResource extends Resource
             return;
         }
 
+        $fileFieldName = $fieldName . '_file';
+
+        $this->attributes[$fieldName] = $bean->{$fieldName};
+
+
         if ($bean instanceof \Document) {
-            $this->retrieveFileFromDocumentBean($bean, $fieldName);
-        } elseif ($bean instanceof \File) {
-            $this->retrieveFileFromFileBean($bean, $fieldName);
+            // Get file
+            $file_path = \UploadStream::getDir() . '/' . $bean->document_revision_id;
         } else {
-            throw new ApiException(
-              '[SuiteBeanResource][retrieveFileFromBean][Unsupported Type] '.
-              $bean->module_name
-            );
+            // File Or Note
+            $file_path = \UploadStream::getDir() . '/' . $bean->id;
         }
-    }
-
-    /**
-     * @param \Note $bean
-     * @param string $fieldName
-     * @throws ApiException
-     */
-    private function retrieveFileFromFileBean(\Note $bean, $fieldName)
-    {
-        $fileFieldName = $fieldName . '_file';
-
-        $this->attributes[$fieldName] = $bean->{$fieldName};
-        // Get file
-        $file_path = \UploadStream::getDir() . '/' . $bean->id;
 
         if (empty($file_path)) {
             throw new ApiException(
-                '[SugarBeanResource] [retrieveFileFromFileBean][Unable to find file] Note: ' .
+                '[SugarBeanResource] [retrieveFileFromBean][Unable to find file] File: ' .
                 $bean->id
             );
         }
@@ -496,40 +484,7 @@ class SuiteBeanResource extends Resource
 
         if ($file_contents === false) {
             throw new ApiException(
-                '[SugarBeanResource] [retrieveFileFromFileBean][Unable to get file contents] FileName: ' .
-                $this->attributes[$fieldName]
-            );
-        }
-
-        $file = base64_encode($file_contents);
-        $this->attributes[$fileFieldName] = $file;
-    }
-
-    /**
-     * @param \Document $bean
-     * @param string $fieldName
-     * @throws ApiException
-     */
-    private function retrieveFileFromDocumentBean(\Document $bean, $fieldName)
-    {
-        $fileFieldName = $fieldName . '_file';
-
-        $this->attributes[$fieldName] = $bean->{$fieldName};
-        // Get file
-        $file_path = \UploadStream::getDir() . '/' . $bean->document_revision_id;
-
-        if (empty($file_path)) {
-            throw new ApiException(
-                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to find file] Document: ' .
-                $bean->id
-            );
-        }
-
-        $file_contents = file_get_contents($file_path);
-
-        if ($file_contents === false) {
-            throw new ApiException(
-                '[SugarBeanResource] [retrieveFileFromDocumentBean][Unable to get file contents] FileName: ' .
+                '[SugarBeanResource] [retrieveFileFromBean][Unable to get file contents] FileName: ' .
                 $this->attributes[$fieldName]
             );
         }
