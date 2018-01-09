@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/upload_file.php');
-require_once('include/SugarObjects/templates/file/File.php');
+require_once __DIR__.'/../../include/upload_file.php' ;
+require_once __DIR__.'/../..include/SugarObjects/templates/file/File.php';
 
 // Note is used to store customer information.
 class Note extends File
