@@ -288,7 +288,7 @@ tr#pagination {
   text-align: left;
   white-space: nowrap;
   font-weight: 700;
-  color: $default-btn-color;
+  color: $list-view-header-color;
 }
 
 .list tr td[scope=col] {
@@ -425,7 +425,7 @@ a.listViewTdToolsS1 {
   font-size: 13px;
   font-weight: 700;
   padding-right: 10px;
-  color: $default-btn-color;
+  color: $list-view-header-color;
 }
 
 .list {
@@ -684,7 +684,7 @@ a.listViewTdToolsS1 {
 }
 
 .list tr th a:visited {
-  color: $default-btn-color;
+  color: $list-view-header-color;
 }
 
 .list tr td[scope=col] a:link {
@@ -696,7 +696,7 @@ a.listViewTdToolsS1 {
 }
 
 .list .pagination td table td span.pageNumbers {
-  color: $default-btn-color;
+  color: $list-view-header-color;
 }
 
 .list tr.pagination td.buttons ul.clickMenu > li > a:link {

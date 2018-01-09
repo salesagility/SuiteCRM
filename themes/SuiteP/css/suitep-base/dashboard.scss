@@ -72,7 +72,7 @@
 }
 
 #pageContainer .dashletcontainer .hd .icon {
-  fill: $default-btn-color;
+  fill: $dashlet-title-color;
 }
 
 .dashletPanel thead {
@@ -494,7 +494,7 @@ td.dashlet-title > h3 > span {
 .dashletPanel .h3Row h3 {
   font-size: 13px;
   font-weight: bold;
-  color: $default-btn-color;
+  color: $dashlet-title-color;
   margin: 0 0 0 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -505,7 +505,7 @@ td.dashlet-title > h3 > span {
 }
 
 #dashletbuttons {
-  color: $danger-btn-bg;
+  color: $dashlet-btn-color;
   margin: 0 2px 0 2px;
 }
 

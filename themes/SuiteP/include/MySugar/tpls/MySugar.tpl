@@ -102,7 +102,7 @@
 
         {if !$lock_homepage}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}<span class="suitepicon suitepicon-action-caret"></span></a>
                 {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
             </li>
         {/if}
