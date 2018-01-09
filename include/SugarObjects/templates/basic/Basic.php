@@ -107,16 +107,16 @@ class Basic extends SugarBean
                 return 'INVALID_EMAIL';
             }
 
-            if ($emailAddress->opt_out == "1") {
+            if ($emailAddress->opt_out == '1') {
                 return 'OPT_OUT';
             }
 
-            if ($emailAddress->confirm_opt_in == "1") {
-                return "OPT_IN_PENDING_EMAIL_CONFIRMED";
+            if ($emailAddress->confirm_opt_in == '1') {
+                return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
             } elseif(!empty($emailAddress->opt_in_email_created)) {
-                return "OPT_IN_PENDING_EMAIL_SENT";
+                return 'OPT_IN_PENDING_EMAIL_SENT';
             } elseif(empty($emailAddress->opt_in_email_created)) {
-                return "OPT_IN_PENDING_EMAIL_NOT_SENT";
+                return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
             }
         }
 
