@@ -609,7 +609,7 @@ class SugarFolder
 
         $grp = array();
 
-        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+        $folders = $this->retrieveFoldersForProcessing($focusUser, true);
         $subscriptions = $this->getSubscriptions($focusUser);
 
         foreach ($folders as $a) {
