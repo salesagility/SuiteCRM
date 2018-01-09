@@ -58,6 +58,10 @@
                         // Fix for issue #1082 - change local date format to db date format
                         if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
                             if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+                                // Fix bug - non ISO date format being converted to incorrect date value
+                            	var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+                            	fieldInput = $.datepicker.parseDate(formatString, fieldInput);
+                            
                                 fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
                             }
                         }
