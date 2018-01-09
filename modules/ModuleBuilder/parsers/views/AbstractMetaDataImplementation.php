@@ -344,7 +344,7 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if($this->shouldAppendOriginalViewTemplateDefs($defs)) {
+        if($this->hasToAppendOriginalViewTemplateDefs($defs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
             if(!empty($templateMeta)) {
                 $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\''. $this->_viewName . '\'][\'templateMeta\'] = '.$templateMeta;
@@ -359,10 +359,10 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
-     * @param $defs The definitions to save
+     * @param $defs array The definitions to save
      * @return bool
      */
-    private function shouldAppendOriginalViewTemplateDefs($defs)
+    private function hasToAppendOriginalViewTemplateDefs($defs)
     {
         if (empty($this->_originalViewTemplateDefs)) {
             return false;
