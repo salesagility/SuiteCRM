@@ -85,8 +85,7 @@ class Basic extends SugarBean
      * @global array $app_strings
      * @param string $emailField
      * @return string
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getConfirmOptInTickFromSugarEmailAddressField($emailField)
     {
