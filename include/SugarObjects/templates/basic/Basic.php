@@ -194,6 +194,10 @@ class Basic extends SugarBean
         return $emailAddressId;
     }
 
+    /**
+     * @param string $emailField
+     * @return string
+     */
     protected function displayOptInFromSugarEmailAddressField($emailField)
     {
         global $sugar_config;
