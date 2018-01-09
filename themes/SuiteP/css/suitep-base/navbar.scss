@@ -943,12 +943,8 @@
 .quickcreatetop .dropdown-toggle {
   display: inline-block;
   font-size: 13px;
-  background-color: $navbar-quick-create-btn-bg;
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-position: 80px 0px;
-  background-repeat: no-repeat;
   color: $navbar-quick-create-link-color;
-  padding: 8px 32px 8px 10px;
+  padding: 8px 8px 8px 10px;
   border-radius: 3px;
   letter-spacing: 2px;
   text-align: center;
@@ -956,7 +952,14 @@
   cursor: pointer;
 }
 
+.quickcreatetop .suitepicon-action-caret {
+  line-height: 4px;
+  font-size: 10px;
+  margin-left: 8px;
+}
+
 .create.quickcreatetop .dropdown-toggle {
+    background-color: $navbar-quick-create-btn-bg;
 	height:40px;
 	line-height:37px;
 	padding-top:0;
@@ -1284,12 +1287,17 @@
 
   .quickcreatetop .dropdown-toggle {
     background-color: $navbar-quick-create-mobile-btn-bg;
-    background-position: 80px -7px;
-    padding: 5px 32px 5px 12px;
+    padding: 5px 5px 5px 12px;
     text-decoration: none;
  
   }
-  
+
+  .quickcreatetop .suitepicon-action-caret {
+      line-height: 8px;
+      font-size: 10px;
+      margin-left: 8px;
+  }
+
   .create.quickcreatetop .dropdown-toggle {
 	height:auto;
 	line-height:100%;
@@ -1632,6 +1640,12 @@
     width: 100%;
   }
 
+  .quickcreatetop .suitepicon-action-caret {
+    line-height: 30px;
+    font-size: 10px;
+    margin-left: 8px;
+  }
+
   .navbar-search .searchformdropdown .input-group {
     width: 100%;
   }
@@ -1666,10 +1680,6 @@
   }
 
   .usermenucollapsed.btn-default {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-left: 0;
     border: none;
     width: 42px;
