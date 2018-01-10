@@ -118,10 +118,18 @@ class templateParser
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
             if (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) {
-                if ($value != '') {
-                    $dt = explode(' ', $value);
-                    $value = $dt[0];
-                }
+			
+                if(strpos($name, 'dates') > 0)
+				{
+					$value = $value;
+				}
+				else
+				{
+					if ($value != '') {
+						$dt = explode(' ', $value);
+						$value = $dt[0];
+					}
+				}
             }
             if ($value != '' && is_string($value)) {
                 $string = str_replace("\$$name", $value, $string);
