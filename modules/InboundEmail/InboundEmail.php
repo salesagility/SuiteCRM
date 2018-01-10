@@ -2674,7 +2674,9 @@ class InboundEmail extends SugarBean
             $ieId = $this->save();
 
             // Folders
-            $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
+            $foldersFound = $this->db->query(
+                'SELECT folders.id FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '"'
+            );
             $row = $this->db->fetchByAssoc($foldersFound);
 
             if (empty($row)) {
@@ -2719,8 +2721,8 @@ class InboundEmail extends SugarBean
             } else {
                 // Update folders
                 $foldersFound = $this->db->query(
-                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->id . '" OR ' .
-                    'folders.parent_folder LIKE "' . $this->id . '"'
+                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
                 );
                 $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
