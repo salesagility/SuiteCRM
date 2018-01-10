@@ -212,13 +212,6 @@ class Person extends Basic
             );
         }
 
-        // User Profile specific save for Email addresses
-
-        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
-            return false;
-        }
-
         return $this->id;
     }
 
