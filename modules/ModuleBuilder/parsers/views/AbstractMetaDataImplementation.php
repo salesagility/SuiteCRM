@@ -344,7 +344,7 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if(!empty($this->_originalViewTemplateDefs)) {
+        if($this->hasToAppendOriginalViewTemplateDefs($defs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
             if(!empty($templateMeta)) {
                 $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\''. $this->_viewName . '\'][\'templateMeta\'] = '.$templateMeta;
@@ -353,10 +353,25 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n?>\n";
 
-
         if (sugar_file_put_contents($filename, $out) === false) {
             $GLOBALS ['log']->fatal(get_class($this) . ": could not write new viewdef file " . $filename);
         }
+    }
+
+    /**
+     * @param $defs array The definitions to save
+     * @return bool
+     */
+    private function hasToAppendOriginalViewTemplateDefs($defs)
+    {
+        if (empty($this->_originalViewTemplateDefs)) {
+            return false;
+        }
+        if (is_array($defs) && isset($defs[$this->_viewName])) {
+            // The defs are already being saved we don't want to duplicate them
+            return false;
+        }
+        return true;
     }
 
     /**
