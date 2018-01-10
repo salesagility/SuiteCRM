@@ -979,6 +979,11 @@ class SugarBean
                 $submodule = new $submoduleclass();
                 $subwhere = $where_definition;
 
+                if($this_subpanel->parent_bean->table_name == "fp_events") {
+                    if (strpos($where_definition, strtolower($submodulename) ) === false) {
+                        $subwhere = str_replace("contacts", strtolower($submodulename), $subwhere);
+                    }
+                }
 
                 $list_fields = $this_subpanel->get_list_fields();
                 foreach ($list_fields as $list_key => $list_field) {
