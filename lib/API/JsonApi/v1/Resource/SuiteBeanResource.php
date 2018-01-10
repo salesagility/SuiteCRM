@@ -449,7 +449,7 @@ class SuiteBeanResource extends Resource
 
     /**
      * Set the attributes to download a base64 encoded file
-     * @param \File $bean
+     * @param \File|\Note|\Document $bean
      * @param string $fieldName
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
@@ -466,7 +466,7 @@ class SuiteBeanResource extends Resource
 
 
         if ($bean instanceof \Document) {
-            // Get file
+            // Document file
             $file_path = \UploadStream::getDir() . '/' . $bean->document_revision_id;
         } else {
             // File Or Note
