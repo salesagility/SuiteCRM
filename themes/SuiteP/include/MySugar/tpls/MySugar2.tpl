@@ -67,7 +67,7 @@
 <!-- Construct Dashlets -->
 <div id="pageContainer" class="yui-skin-sam">
     <div class="row" id="pageNum_{$activePage}_div">
-        <table width="100%" style="table-layout: fixed;">
+        <table width="100%" class="dashletTable">
             <tr>
                 {counter assign=hiddenCounter start=0 print=false}
                 {foreach from=$columns key=colNum item=data}
