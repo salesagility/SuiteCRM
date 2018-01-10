@@ -394,7 +394,7 @@ class Popup_Picker
 
 
         if (count($summary_list) > 0) {
-            $summary_list = array_csort($summary_list, 'sort_value', SORT_DESC);
+            array_multisort(array_column($summary_list, 'sort_value'), SORT_DESC, $summary_list);
 
             foreach ($summary_list as $list) {
                 if ($list['module'] === 'Tasks') {
@@ -414,6 +414,9 @@ class Popup_Picker
         $template = new Sugar_Smarty();
         $template->assign('app', $app_strings);
         $template->assign('mod', $mod_strings);
+        $theme = SugarThemeRegistry::current();
+        $css = $theme->getCSS();
+        $template->assign('css', $css);
         $template->assign('theme', SugarThemeRegistry::current());
         $template->assign('langHeader', get_language_header());
         $template->assign('summaryList', $summary_list);

@@ -994,7 +994,7 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/SuiteCRM/api/public/index.php/$1 [L]
+    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
@@ -1223,9 +1223,17 @@ function insert_default_settings(){
     global $setup_sugar_version;
     global $sugar_db_version;
 
+    $fromAddress = 'do_not_reply@example.com';
+    if (isset($_SESSION['smtp_from_addr']) && $_SESSION['smtp_from_addr']) {
+        $fromAddress = $_SESSION['smtp_from_addr'];
+    }
+    $fromName = 'SuiteCRM';
+    if (isset($_SESSION['smtp_from_name']) && $_SESSION['smtp_from_name']) {
+        $fromName = $_SESSION['smtp_from_name'];
+    }
 
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', '$fromAddress')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', '$fromName')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");

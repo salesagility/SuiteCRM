@@ -221,4 +221,3 @@ $mod_strings = array(
     'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
 );
 
-?>

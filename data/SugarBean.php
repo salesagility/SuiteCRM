@@ -1447,10 +1447,10 @@ class SugarBean
 
         $result = $this->db->query($count_query, true, "Error running count query for $this->object_name List: ");
         while ($row = $this->db->fetchByAssoc($result, true)) {
-            $num_rows_in_query += current($row);
+            $num_rows_in_query = current($row);
         }
 
-        return $num_rows_in_query;
+        return (int)$num_rows_in_query;
     }
 
     /**
@@ -2354,15 +2354,16 @@ class SugarBean
                 }
 
                 if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
-                    $this->$key = SugarCleaner::cleanHtml($this->$key, true);
+                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
                 } elseif (
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
                 ) {
-                    $this->$key = SugarCleaner::cleanHtml($this->$key);
+                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
                 }
             }
         }
+
     }
 
     /**
@@ -4305,6 +4306,8 @@ class SugarBean
             $field_name = $rel_field_name['name'];
             if (!empty($this->$field_name)) {
                 $this->fetched_rel_row[$rel_field_name['name']] = $this->$field_name;
+            } else {
+                $this->fetched_rel_row[$rel_field_name['name']] = '';
             }
         }
         //make a copy of fields in the relationship_fields array. These field values will be used to

@@ -132,6 +132,28 @@ class EmailsController extends SugarController
     public function action_ComposeView()
     {
         $this->view = 'compose';
+        // For viewing the Compose as modal from other modules we need to load the Emails language strings
+        if (isset($_REQUEST['in_popup']) && $_REQUEST['in_popup']){
+            if (!is_file('cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js')) {
+                require_once ('include/language/jsLanguage.php');
+                jsLanguage::createModuleStringsCache('Emails', $GLOBALS['current_language']);
+            }
+            echo '<script src="cache/jsLanguage/Emails/'. $GLOBALS['current_language'] . '.js"></script>';
+        }
+        if (isset($_REQUEST['ids']) && isset($_REQUEST['targetModule'])){
+            $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
+            foreach ($toAddressIds as $id){
+                $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
+                if($destinataryBean && $destinataryBean->email1){
+                    $idLine = '<input type="hidden" class="email-compose-view-to-list" ';
+                    $idLine .= 'data-record-module="' . $_REQUEST['targetModule'] . '" ';
+                    $idLine .= 'data-record-id="' . $id . '" ';
+                    $idLine .= 'data-record-name="' . $destinataryBean->name . '" ';
+                    $idLine .= 'data-record-email="' . $destinataryBean->email1 . '">';
+                    echo $idLine;
+                }
+            }
+        }
     }
 
     /**

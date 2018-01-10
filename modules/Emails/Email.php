@@ -3183,7 +3183,8 @@ class Email extends Basic
             'Emails'); // hard-coding for Home screen ListView
 
         if ($this->status != 'replied') {
-            $email_fields['QUICK_REPLY'] = '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=' . $this->id . '&inbound_email_id=' . $this->id . '">' . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
+            $email_fields['QUICK_REPLY'] = '<a href="index.php?module=Emails&action=ReplyTo&record='. $this->id .'">'
+                . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
             $email_fields['STATUS'] = ($email_fields['REPLY_TO_STATUS'] == 1 ? $mod_strings['LBL_REPLIED'] : $email_fields['STATUS']);
         } else {
             $email_fields['QUICK_REPLY'] = $mod_strings['LBL_REPLIED'];
