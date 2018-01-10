@@ -311,26 +311,16 @@ function showConditionCurrentModuleFields(ln, value){
 }
 
 var moduleFieldsPendingFinished = 0;
-var moduleFieldsPendingFinishedCallback = null;
 
-var setModuleFieldsPendingFinishedCallback = function(callback) {
-    moduleFieldsPendingFinishedCallback = callback;
-};
-
-var testModuleFieldsPandingFinihed = function() {
-    moduleFieldsPendingFinished--;
-    if(moduleFieldsPendingFinished==0) {
-        moduleFieldsPendingFinished = true;
-        if(moduleFieldsPendingFinishedCallback) {
-            moduleFieldsPendingFinishedCallback();
-        }
+var testModuleFieldsPendingFinished = function () {
+  moduleFieldsPendingFinished--;
+  if (moduleFieldsPendingFinished <= 0) {
+    moduleFieldsPendingFinished = true;
+    if (moduleFieldsPendingFinishedCallback) {
+      moduleFieldsPendingFinishedCallback();
     }
+  }
 };
-
-
-
-
-
 
 function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView, logic_value, condition_order, parenthesis){
     if(overrideView === undefined){
@@ -350,11 +340,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
             success: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
         var callback2 = {
@@ -362,11 +352,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).onchange = function(){showConditionModuleFieldType(ln, undefined, overrideView);};
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
         var callback3 = {
@@ -374,11 +364,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 enableQS(false);
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
 
