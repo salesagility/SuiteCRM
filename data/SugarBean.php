@@ -979,6 +979,14 @@ class SugarBean
                 $submodule = new $submoduleclass();
                 $subwhere = $where_definition;
 
+                if($subpanel_def->search_query != '') {
+                    if($_REQUEST['collection_basic'][0] != 'null') {
+                        $subwhere = $subwhere . ' AND ' . str_replace(strtolower($_REQUEST['collection_basic'][0]),strtolower($submodulename),$subpanel_def->search_query);
+                    } else {
+                        $subwhere = $subwhere . ' AND ' . str_replace('meetings',strtolower($submodulename),$subpanel_def->search_query);
+                    }
+                }
+
 
                 $list_fields = $this_subpanel->get_list_fields();
                 foreach ($list_fields as $list_key => $list_field) {

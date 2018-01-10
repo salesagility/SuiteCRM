@@ -217,6 +217,10 @@ class SubPanel
 
 		//function returns the query that was used to populate sub-panel data.
 
+		if($this->subpanel_defs->search_query == '') {
+			$this->subpanel_defs->search_query = $this->search_query;
+		}
+
 		$query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean,$this->subpanel_defs);
 		$this->subpanel_query=$query;
 		$ob_contents = ob_get_contents();
@@ -394,18 +398,21 @@ class SubPanel
 
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
+
 		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
-			$arrayValues = array_values($subpanel_defs['collection_list']);
+			$arrayValues = is_array($this->collections) ? array_values($this->collections) : array_values($subpanel_defs['collection_list']);
 			$collection = array_shift($arrayValues);
-			$module = $collection['module'];
+			$module = $collection;
 		} else {
 			$module = $subpanel_defs['module'];
 		}
 		if($module) {
 			$seed = BeanFactory::getBean($module);
 		} else {
+			$module = 'Meetings';
 			$seed = new Meeting();
 		}
+
 
 		$_REQUEST['searchFormTab'] = 'basic_search';
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
