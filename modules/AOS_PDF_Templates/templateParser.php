@@ -117,7 +117,7 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) {
+            if ($field_defs[$fieldName]['type']=="date") {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
