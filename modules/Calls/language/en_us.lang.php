@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 
 $mod_strings = array(
     'LBL_BLANK' => ' ',
@@ -158,6 +159,8 @@ $mod_strings = array(
     'LBL_SAVE' => 'Save',
 
     'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
-
+    'LBL_LIST_STATUS'=>'Status',
+    'LBL_LIST_DATE_MODIFIED'=>'Date Modified',
+    'LBL_LIST_DUE_DATE'=>'Due Date',
 );
 

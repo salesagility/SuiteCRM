@@ -121,7 +121,6 @@ $mod_strings = array(
     'ERR_UW_REMOVE_FAILED' => 'Could not remove file ',
     'ERR_UW_UPDATE_CONFIG' => "Error updating config.php with new version information.",
     'ERR_UW_UPLOAD_ERROR' => "There was an error uploading the file, please try again!<br>\n",
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
