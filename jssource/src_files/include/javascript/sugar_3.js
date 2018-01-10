@@ -3363,8 +3363,8 @@ SUGAR.util = function () {
             $dialog.dialog("option", "position", {my: 'left top', at: 'right top', of: $(el)});
           }
 
-          $dialog.dialog('open');
           $(".ui-dialog").appendTo("#content");
+          $dialog.dialog('open');
         }
 
 				success = function (data) {
