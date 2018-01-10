@@ -171,7 +171,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      * @param string $type
      * @return string               The file name
      */
-    public function getFileName($view, $moduleName, $type = MB_BASEMETADATALOCATION)
+    public function getFileName($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
         return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
     }
