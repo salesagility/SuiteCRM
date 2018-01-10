@@ -466,19 +466,10 @@ class InboundEmail extends SugarBean
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
         foreach ($emailHeaders as $i=> $emailHeader) {
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
 
-            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno'], FT_UID);
-
-            if(isset($structure->parts[0]->parts))
-            {
-                // has attachment
-                $emailHeaders[$i]['has_attachment'] = true;
-            } else{
-                // no attachment
-                $emailHeaders[$i]['has_attachment'] = false;
-            }
+            $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
         }
-
 
         usort(
             $emailHeaders,
@@ -504,6 +495,29 @@ class InboundEmail extends SugarBean
             "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
+
+    /**
+     * @param $imapStructure
+     * @return bool
+     */
+    private function mesageStructureHasAttachment($imapStructure)
+    {
+        if (!isset($imapStructure->parts)
+            && isset($imapStructure->disposition)
+            && $imapStructure->disposition == 'attachment') {
+            return true;
+        }
+
+        if (isset($imapStructure->parts)) {
+            foreach ($imapStructure->parts as $part) {
+                if ($this->mesageStructureHasAttachment($part)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     ////	CUSTOM LOGIC HOOKS
     /**
