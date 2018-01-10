@@ -133,7 +133,7 @@ class Sugar_Smarty extends Smarty
 			}
 		}
 		///
-		return parent::fetch($resource_name, $cache_id, $compile_id, $display);
+		return parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
 	}
 
 

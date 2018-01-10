@@ -462,7 +462,7 @@ eoq;
     {
         $tick = '';
         if ($myBean instanceof Basic) {
-            $tick = $myBean->getEmailAddressConfirmOptInTick($emailField);
+            $tick = $myBean->getConfirmOptInTickFromSugarEmailAddressField($emailField);
         } else {
             global $log;
             $log->warn('Trying to get an email field of non-Basic object');

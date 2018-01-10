@@ -432,6 +432,15 @@ class Email extends Basic
      */
     public $to_name;
 
+    protected static $validFieldNames = array(
+        'email_address',
+        'to',
+        'from',
+        'from_name',
+        'cc',
+        'bcc'
+    );
+
     /**
      * sole constructor
      */
@@ -4224,5 +4233,23 @@ eoq;
         $mail->Body = wordwrap($plainText, 996);
         $mail->Body = $this->decodeDuringSend($mail->Body);
         $this->description = $mail->Body;
+    }
+
+    /**
+     *
+     * @param string $emailField
+     * @throws InvalidArgumentException
+     */
+    protected function validateSugarEmailAddressField($emailField)
+    {
+        if (!is_string($emailField)) {
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
+        }
+
+        if (!in_array($emailField, self::$validFieldNames, true)) {
+            throw new InvalidArgumentException(
+                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. from_name'
+            );
+        }
     }
 } // end class def
