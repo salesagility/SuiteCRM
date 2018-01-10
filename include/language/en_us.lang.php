@@ -2355,6 +2355,7 @@ $app_strings = array(
     'LBL_SUBTHEME_OPTIONS_DUSK' => 'Dusk',
     'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
+    'LBL_CONFIRMED_OPT_IN_DATE' => 'Confirmed Opt In Date',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
