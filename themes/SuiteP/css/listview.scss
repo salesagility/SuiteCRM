@@ -1802,9 +1802,13 @@ div.qtip.qtip-default {
   padding: initial;
 }
 
-.modal-content .search_form .view select,
-.modal-content .search_form .view select#saved_search_select {
+.modal-content .search_form .view select {
   border: 2px solid #A5E8D6;
+
+  &:not([multiple]) {
+    padding: 0 35px 0 5px;
+    width: auto;
+  }
 }
 
 .search_form .view .dateTimeRangeChoice {
