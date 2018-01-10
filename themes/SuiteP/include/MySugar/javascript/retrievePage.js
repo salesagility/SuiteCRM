@@ -73,6 +73,7 @@ var dashletsPageInit = function() {
                 // add buttons
                 var removeButton = $('<button class="btn btn-xs btn-danger"><img src="themes/SuiteP/images/id-ff-remove-nobg.svg"></button>');
                 removeButton.click(function(a) {
+                    const _this = $(this);
                     var id = $(this).parents('.panel').index();
 
                     $.ajax({
@@ -96,7 +97,15 @@ var dashletsPageInit = function() {
                                 },
 
                                 success: function (data) {
+                                    let modelTabItem = $(_this).closest('.panel');
+                                    let tabItem = tabs.eq(modelTabItem.index());
 
+                                    if (tabItem.hasClass('active')) {
+                                        $('> a', tabs.eq(0)).trigger('click');
+                                    }
+
+                                    modelTabItem.remove();
+                                    tabItem.remove();
                                 },
                                 error: function (request, error) {
 
@@ -109,9 +118,6 @@ var dashletsPageInit = function() {
                         }
                     })
 
-
-                    $($('ul.nav-dashboard > li')[$(this).parents('.panel').index()]).remove();
-                    $(this).parents('.panel').remove()
                 });
                 removeButton.appendTo(panelTemplate.find('.panel-title'));
             }
