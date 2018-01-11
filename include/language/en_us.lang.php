@@ -495,7 +495,11 @@ $app_list_strings = array(
             'Prospects' => 'Target',
 
         ),
-
+    'parent_type_workflow' => array(
+        'AOS_Quotes' => 'Quotes',
+        'AOS_Invoices' => 'Invoices',
+        'AOS_Contracts' => 'Contracts',
+    ),
     'issue_priority_default_key' => 'Medium',
     'issue_priority_dom' => array(
             'Urgent' => 'Urgent',
