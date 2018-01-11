@@ -65,7 +65,9 @@
 						{if $showFilterIcon}
 							{include file='include/ListView/ListViewSearchLink.tpl'}
 						{/if}
-						{include file='include/ListView/ListViewColumnsFilterLink.tpl'}
+                        {if empty($hideColumnFilter)}
+							{include file='include/ListView/ListViewColumnsFilterLink.tpl'}
+                        {/if}
 
 						&nbsp;{$selectedObjectsSpan}
 					</td>

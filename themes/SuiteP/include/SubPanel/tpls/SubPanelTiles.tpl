@@ -12,7 +12,8 @@
             {if $subpanel_tabs_properties.$i.expanded_subpanels == true}
                 <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
             {else}
-                <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
+                    <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse"
+                       href="#subpanel_{$subpanel_tab}" aria-expanded="false" onclick="showSubPanel('{$subpanel_tab}')">
             {/if}
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>

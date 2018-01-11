@@ -80,7 +80,7 @@ $mod_strings = array(
     'LBL_SEND_TEST_EMAIL' => 'Send Test Email',
 
     // for outbound email dialog
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPPORT' => 'SMTP Port:',

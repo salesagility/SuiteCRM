@@ -133,7 +133,7 @@ var validate = new Array();
 var maxHours = 24;
 var requiredTxt = 'Missing Required Field:';
 var invalidTxt = 'Invalid Value:';
-var secondsSinceLoad = 0;
+var scriptStartedTime = Date.now();
 var alertsTimeoutId;
 var inputsWithErrors = new Array();
 var tabsWithErrors = new Array();
@@ -254,7 +254,7 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['redirect'] = redirect;
 }
 function checkAlerts() {
-  secondsSinceLoad += 1;
+  var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
   var mj = 0;
   var alertmsg = '';
   for (mj = 0; mj < alertList.length; mj++) {
