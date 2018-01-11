@@ -283,11 +283,11 @@ class chart
                   </tr>    
                   <tr>
                       <td colspan="100%">
-                          <table style="border: none;" class="main_table" width="100%" cellspacing="0" cellpadding="0" border="0">
+                          <table style="border: none; table-layout: fixed; width: 100%;" class="main_table" width="100%" cellspacing="0" cellpadding="0" border="0">
                               <tr>
-                                  <td class="top_row" style="text-align: left; width: 100px; white-space: nowrap;"><a id="prev_month" href="index.php?module=Project&action=ResourceList"><img width="6" height="10" border="0" align="absmiddle" alt="Previous Month" src="themes/default/images/calendar_previous.gif"> '.$mod_strings['LBL_RESOURCE_CHART_PREVIOUS_MONTH'].'</a></td>
-                                  <td class="top_row" style="text-align: center; width: 98%;"><span class="heading_chart">'.$mod_strings['LBL_RESOURCE_CHART'].'</span></td>
-                                  <td class="top_row" style="padding-right:5px; text-align: right; width: 100px; white-space: nowrap;"><a id="next_month" href="index.php?module=Project&action=ResourceList">'.$mod_strings['LBL_RESOURCE_CHART_NEXT_MONTH'].' <img width="6" height="10" border="0" align="absmiddle" alt="Next Month" src="themes/default/images/calendar_next.gif"></a></td>
+                                  <td class="top_row" style="text-align: left; width: 20%;"><a id="prev_month" href="index.php?module=Project&action=ResourceList"><img width="6" height="10" border="0" align="absmiddle" alt="Previous Month" src="themes/default/images/calendar_previous.gif"> '.$mod_strings['LBL_RESOURCE_CHART_PREVIOUS_MONTH'].'</a></td>
+                                  <td class="top_row" style="text-align: center; width: 60%;"><span class="heading_chart">'.$mod_strings['LBL_RESOURCE_CHART'].'</span></td>
+                                  <td class="top_row" style="padding-right:5px; text-align: right; width: 20%;"><a id="next_month" href="index.php?module=Project&action=ResourceList">'.$mod_strings['LBL_RESOURCE_CHART_NEXT_MONTH'].' <img width="6" height="10" border="0" align="absmiddle" alt="Next Month" src="themes/default/images/calendar_next.gif"></a></td>
                               </tr>
                           </table>
                       </td>

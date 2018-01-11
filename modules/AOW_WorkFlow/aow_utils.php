@@ -77,9 +77,6 @@ function getModuleFields(
             $mod = new $beanList[$module]();
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
-                    if (isset($arr['reportable']) && $arr['reportable'] === false ) {
-                        continue;
-                    }
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array($arr['name'],
                                 $blockedModuleFields[$mod->module_dir]
