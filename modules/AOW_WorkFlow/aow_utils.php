@@ -42,10 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-function getModuleFields($module, $view='EditView', $value = '', $valid = array())
-{
+function getModuleFields(
+    $module,
+    $view = 'EditView',
+    $value = '',
+    $valid = array(),
+    $override = array()
+) {
     global $app_strings, $beanList, $current_user;
-
 
     $blockedModuleFields = array(
         // module = array( ... fields )
@@ -73,31 +77,33 @@ function getModuleFields($module, $view='EditView', $value = '', $valid = array(
             $mod = new $beanList[$module]();
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
-                    if (isset($arr['reportable']) && $arr['reportable'] === false ) {
-                        continue;
-                    }
-                        if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
-                            if (in_array($arr['name'],
-                                    $blockedModuleFields[$mod->module_dir]
-                                ) && !$current_user->isAdmin()
-                            ) {
-                                $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
-                                continue;
-                            }
-                        }
-                        if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
-                                    $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
+                    if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
+                        if (in_array($arr['name'],
+                                $blockedModuleFields[$mod->module_dir]
+                            ) && !$current_user->isAdmin()
                         ) {
-                            if (isset($arr['vname']) && $arr['vname'] !== '') {
-                                $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
-                            } else {
-                                $fields[$name] = $name;
-                            }
-                            if ($arr['type'] === 'relate' && isset($arr['id_name']) && $arr['id_name'] !== '') {
-                                $unset[] = $arr['id_name'];
-                            }
+                            $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
+                            continue;
                         }
+                    }
 
+                    if ($arr['type'] !== 'link'
+                        && $name !== 'currency_name'
+                        && $name !== 'currency_symbol'
+                        && (empty($valid) || in_array($arr['type'], $valid))
+                        && ((!isset($arr['source']) || $arr['source'] !== 'non-db')
+                            || ($arr['type'] === 'relate' && isset($arr['id_name']))
+                            || in_array($name, $override))
+                        ) {
+                        if (isset($arr['vname']) && $arr['vname'] !== '') {
+                            $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
+                        } else {
+                            $fields[$name] = $name;
+                        }
+                        if ($arr['type'] === 'relate' && isset($arr['id_name']) && $arr['id_name'] !== '') {
+                            $unset[] = $arr['id_name'];
+                        }
+                    }
                 }
             } //End loop.
 

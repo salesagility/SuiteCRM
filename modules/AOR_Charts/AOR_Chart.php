@@ -222,7 +222,7 @@ class AOR_Chart extends Basic {
             $chartPicture->replaceImageMapTitle("data", $labels);
         }
         ob_start();
-        $chartPicture->render('');
+        $chartPicture->render(null);
         $img = ob_get_clean();
         if($asDataURI){
             return 'data:image/png;base64,'.base64_encode($img);
