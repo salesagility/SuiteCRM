@@ -54,7 +54,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'comment' => 'Full PDF text',
                 'rows' => 6,
                 'cols' => 80,
-                'dbType' => 'mediumtext',
+                'dbType' => 'longtext',
             ),
         'active' =>
             array(
