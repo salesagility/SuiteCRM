@@ -103,5 +103,3 @@ $mod_strings = array(
     'COLUMN_TITLE_PARENT_ENUM' => 'Parent DropDown',
 );
 
-
-?>

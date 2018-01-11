@@ -402,22 +402,24 @@ if (!isset($targetListDataAssoc)) {
 
 $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
 
-if($targetList) {
-    $targetListData = array();
-    foreach ($targetList as $prospectLst) {
-        $next = array(
-            'id' => $prospectLst->id,
-            'name' => $prospectLst->name,
-            //'type' => $prospectLst->type,
-            'description' => $prospectLst->description,
-            'type' => $prospectLst->list_type,
-            'count' => $prospectLst->get_entry_count(),
-        );
-        $targetListDataArray[] = $next;
-        $targetListDataAssoc[$prospectLst->id] = $next;
+if($targetList) {$targetListDataArray = array();
+$targetListDataAssoc = array();
+if (isset($targetList) && $targetList) {foreach($targetList as $prospectLst) {
+    $next = array(
+        'id' => $prospectLst->id,
+        'name' => $prospectLst->name,
+        //'type' => $prospectLst->type,
+        'description' => $prospectLst->description,
+        'type' => $prospectLst->list_type,
+        'count' => $prospectLst->get_entry_count(),
+    );
+    $targetListDataArray[] = $next;
+    $targetListDataAssoc[$prospectLst->id] = $next;
     }
 } else {
-    $GLOBALS['log']->warn('There are no outbound target lists available for campaign .');
+    $GLOBALS['log']->warn('There are no outbound target lists available for campaign .');}
+} else {
+    $GLOBALS['log']->warn('No target list is created');
 }
 
 

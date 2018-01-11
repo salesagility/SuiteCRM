@@ -582,15 +582,23 @@ class AOR_Report extends Basic
             $max_rows = 20;
         }
 
-        $total_rows = 0;
-        $count_sql = explode('ORDER BY', $report_sql);
-        $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+        // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
+        $fieldCount = count($this->getReportFields());
+        if(!$fieldCount){
+            $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
+        }
 
-        // We have a count query.  Run it and get the results.
-        $result = $this->db->query($count_query);
-        $assoc = $this->db->fetchByAssoc($result);
-        if (!empty($assoc['c'])) {
-            $total_rows = $assoc['c'];
+        $total_rows = 0;
+        if($fieldCount){
+            $count_sql = explode('ORDER BY', $report_sql);
+            $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+
+            // We have a count query.  Run it and get the results.
+            $result = $this->db->query($count_query);
+            $assoc = $this->db->fetchByAssoc($result);
+            if (!empty($assoc['c'])) {
+                $total_rows = $assoc['c'];
+            }
         }
 
         $html = "<table class='list aor_reports' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
@@ -713,7 +721,7 @@ class AOR_Report extends Basic
 
             if ($fields[$label]['display']) {
                 $html .= "<th scope='col'>";
-                $html .= "<div style='white-space: normal;' width='100%' align='left'>";
+                $html .= "<div style='color:#444;'>";
                 $html .= $field->label;
                 $html .= "</div></th>";
             }
@@ -724,17 +732,19 @@ class AOR_Report extends Basic
         $html .= "</thead>";
         $html .= "<tbody>";
 
-        if ($offset >= 0) {
-            $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
-        } else {
-            $result = $this->db->query($report_sql);
+        if($fieldCount){
+            if ($offset >= 0) {
+                $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
+            } else {
+                $result = $this->db->query($report_sql);
+            }
         }
 
         $row_class = 'oddListRowS1';
 
 
         $totals = array();
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($fieldCount && $row = $this->db->fetchByAssoc($result)) {
             $html .= "<tr class='" . $row_class . "' height='20'>";
 
             foreach ($fields as $name => $att) {
@@ -749,8 +759,17 @@ class AOR_Report extends Basic
                     if ($att['function'] == 'COUNT' || !empty($att['params'])) {
                         $html .= $row[$name];
                     } else {
-                        $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name],
-                            '', $currency_id);
+                        $att['params']['record_id'] = $row[$att['alias'] . '_id'];
+                        $html .= getModuleField(
+                            $att['module'],
+                            $att['field'],
+                            $att['field'],
+                            'DetailView',
+                            $row[$name],
+                            '',
+                            $currency_id,
+                            $att['params']
+                        );
                     }
 
                     if ($att['total']) {
@@ -1237,12 +1256,18 @@ class AOR_Report extends Basic
         $query = array(),
         SugarBean $rel_module = null
     ) {
-
+        // Alias to keep lines short
+        $db = $this->db;
         if (!isset($query['join'][$alias])) {
 
             switch ($type) {
                 case 'custom':
-                    $query['join'][$alias] = 'LEFT JOIN ' . $this->db->quoteIdentifier($module->get_custom_table_name()) . ' ' . $this->db->quoteIdentifier($name) . ' ON ' . $this->db->quoteIdentifier($parentAlias) . '.id = ' . $this->db->quoteIdentifier($name) . '.id_c ';
+                    $customTable = $module->get_custom_table_name();
+                    $query['join'][$alias] =
+                        'LEFT JOIN ' .
+                        $db->quoteIdentifier($customTable) .' '. $db->quoteIdentifier($alias) .
+                        ' ON ' .
+                        $db->quoteIdentifier($parentAlias) . '.id = ' . $db->quoteIdentifier($name) . '.id_c ';
                     break;
 
                 case 'relationship':
@@ -1250,27 +1275,27 @@ class AOR_Report extends Basic
                         $params['join_type'] = 'LEFT JOIN';
                         if ($module->$name->relationship_type != 'one-to-many') {
                             if ($module->$name->getSide() == REL_LHS) {
-                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                                $params['right_join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $db->quoteIdentifier($parentAlias);
                             } else {
-                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
-                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                                $params['right_join_table_alias'] = $db->quoteIdentifier($parentAlias);
+                                $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $db->quoteIdentifier($alias);
                             }
 
                         } else {
-                            $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
-                            $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            $params['right_join_table_alias'] = $db->quoteIdentifier($parentAlias);
+                            $params['join_table_alias'] = $db->quoteIdentifier($alias);
+                            $params['left_join_table_alias'] = $db->quoteIdentifier($parentAlias);
                         }
                         $linkAlias = $parentAlias . "|" . $alias;
-                        $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
+                        $params['join_table_link_alias'] = $db->quoteIdentifier($linkAlias);
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
                         if ($rel_module != null) {
                             $query['join'][$alias] .= $this->build_report_access_query($rel_module,
-                                $this->db->quoteIdentifier($alias));
+                                $db->quoteIdentifier($alias));
                         }
                         $query['id_select'][$alias] = $join['select'] . " AS '" . $alias . "_id'";
                         $query['id_select_group'][$alias] = $join['select'];
@@ -1289,7 +1314,6 @@ class AOR_Report extends Basic
     function build_report_access_query(SugarBean $module, $alias)
     {
 
-        $module->table_name = $alias;
         $where = '';
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
             global $current_user;

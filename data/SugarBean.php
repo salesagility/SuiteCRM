@@ -736,8 +736,8 @@ class SugarBean
      *
      * Internal Function, do not override.
      */
-    public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def = null)
+    public static function get_union_related_list($parentbean, $order_by = '', $sort_order = '', $where = '',
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def= null)
     {
         if (is_null($subpanel_def)) {
             $GLOBALS['log']->fatal('subpanel_def is null');
@@ -1032,7 +1032,7 @@ class SugarBean
      * @return array $fetched data.
      */
     public function process_union_list_query($parent_bean, $query,
-                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def = null, $query_row_count = '', $secondary_queries = array())
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def= null, $query_row_count = '', $secondary_queries = array())
     {
         if (is_null($subpanel_def)) {
             $GLOBALS['log']->fatal('subpanel_def is null');
@@ -4023,6 +4023,8 @@ class SugarBean
             $field_name = $rel_field_name['name'];
             if (!empty($this->$field_name)) {
                 $this->fetched_rel_row[$rel_field_name['name']] = $this->$field_name;
+            } else {
+                $this->fetched_rel_row[$rel_field_name['name']] = '';
             }
         }
         //make a copy of fields in the relationship_fields array. These field values will be used to

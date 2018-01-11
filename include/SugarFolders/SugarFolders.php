@@ -214,11 +214,11 @@ class SugarFolder
     {
         global $current_user;
 
-        if(empty($user)) {
-            $focusUser = $current_user;
+        if(null === $user) {
+            $user = $current_user;
         }
 
-        if (empty($focusUser->id)) {
+        if (empty($user->id)) {
             $GLOBALS['log']->fatal("*** FOLDERS: tried to update folder subscriptions for a user with no ID");
 
             return false;
@@ -245,10 +245,10 @@ class SugarFolder
             }
         }
 
-        $this->clearSubscriptions();
+        $this->clearSubscriptions($user);
 
         foreach ($cleanSubscriptions as $id) {
-            $this->insertFolderSubscription($id, $focusUser->id);
+            $this->insertFolderSubscription($id, $user->id);
         }
     }
 
@@ -300,13 +300,18 @@ class SugarFolder
 
     /**
      * Deletes subscriptions to folders in preparation for reset
+     * @param User|null $user User
      */
-    public function clearSubscriptions()
+    public function clearSubscriptions($user = null)
     {
         global $current_user;
+        
+        if(!$user) {
+            $user = $current_user;
+        }
 
-        if (!empty($current_user->id)) {
-            $q = "DELETE FROM folders_subscriptions WHERE assigned_user_id = '{$current_user->id}'";
+        if (!empty($user->id)) {
+            $q = "DELETE FROM folders_subscriptions WHERE assigned_user_id = '{$user->id}'";
             $r = $this->db->query($q);
         }
     }
@@ -571,13 +576,12 @@ class SugarFolder
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
             if (!empty($a['folder_type']) &&
-                $a['folder_type'] !== $myArchiveTypeString &&
-                $a['created_by'] === $current_user->id
+                $a['folder_type'] !== $myArchiveTypeString 
             ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
-                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "' . $a['id'] . '"');
+                    $children = $this->db->query("SELECT * FROM folders WHERE parent_folder = '" . $a['id'] . "'");
                     while ($b = $this->db->fetchByAssoc($children)) {
                         $a['children'][] = $b;
                     }
@@ -605,7 +609,7 @@ class SugarFolder
 
         $grp = array();
 
-        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+        $folders = $this->retrieveFoldersForProcessing($focusUser);
         $subscriptions = $this->getSubscriptions($focusUser);
 
         foreach ($folders as $a) {
@@ -648,7 +652,7 @@ class SugarFolder
         );
 
         try {
-            $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+            $folders = $this->retrieveFoldersForProcessing($focusUser);
             $subscriptions = $this->getSubscriptions($focusUser);
 
             foreach ($folders as $a) {

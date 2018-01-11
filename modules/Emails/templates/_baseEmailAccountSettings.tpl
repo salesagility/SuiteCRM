@@ -78,22 +78,6 @@
         <input type="hidden" id="reverse" name="reverse">
     </form>
     <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-{*
-    <table cellpadding="0" cellspacing="0" border="0" >
-        <tr>
-            <td NOWRAP style="padding-bottom: 2px;">
-                <button class="button" id="checkEmailButton" onclick="SUGAR.email2.folders.startEmailAccountCheck();"><img src="themes/default/images/icon_email_check.gif" alt=$mod_strings.LBL_CHECKEMAIL align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_CHECK}</button>
-                <button class="button" id="composeButton" onclick="SUGAR.email2.composeLayout.c0_composeNewEmail();"><img src="themes/default/images/icon_email_compose.gif" alt=$mod_strings.LBL_COMPOSEEMAIL align="absmiddle" border="0"> {$mod_strings.LNK_NEW_SEND_EMAIL}</button>
-                <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings();"><img src="themes/default/images/icon_email_settings.gif" alt=$mod_strings.LBL_EMAILSETTINGS align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_SETTINGS}</button>
-            </td>
-            <td NOWRAP align="right" style="padding-bottom: 2px;">
-                <a href="index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module=Emails&help_action=index&key={$server_unique_key}" width='13' height='13' alt='{$app_strings.LNK_HELP}' border='0' align='absmiddle' target="_blank"></a>
-                &nbsp;
-                <a href="index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module=Emails&help_action=index&key={$server_unique_key}" class='utilsLink' target="_blank">{$app_strings.LNK_HELP}</a>
-            </td>
-        </tr>
-    </table>
-*}
 
     {include file="modules/Emails/templates/overlay.tpl"}
 
