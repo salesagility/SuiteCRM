@@ -5435,7 +5435,10 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 100000!important;
+  top: 50%!important;
+  left: 50%!important;
+  transform: translate(-50%, -50%)!important;
+  z-index: 16000;
 }
 
 /* popup dialog on home page */
