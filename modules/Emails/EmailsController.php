@@ -132,6 +132,28 @@ class EmailsController extends SugarController
     public function action_ComposeView()
     {
         $this->view = 'compose';
+        // For viewing the Compose as modal from other modules we need to load the Emails language strings
+        if (isset($_REQUEST['in_popup']) && $_REQUEST['in_popup']){
+            if (!is_file('cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js')) {
+                require_once ('include/language/jsLanguage.php');
+                jsLanguage::createModuleStringsCache('Emails', $GLOBALS['current_language']);
+            }
+            echo '<script src="cache/jsLanguage/Emails/'. $GLOBALS['current_language'] . '.js"></script>';
+        }
+        if (isset($_REQUEST['ids']) && isset($_REQUEST['targetModule'])){
+            $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
+            foreach ($toAddressIds as $id){
+                $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
+                if($destinataryBean && $destinataryBean->email1){
+                    $idLine = '<input type="hidden" class="email-compose-view-to-list" ';
+                    $idLine .= 'data-record-module="' . $_REQUEST['targetModule'] . '" ';
+                    $idLine .= 'data-record-id="' . $id . '" ';
+                    $idLine .= 'data-record-name="' . $destinataryBean->name . '" ';
+                    $idLine .= 'data-record-email="' . $destinataryBean->email1 . '">';
+                    echo $idLine;
+                }
+            }
+        }
     }
 
     /**
@@ -164,11 +186,9 @@ class EmailsController extends SugarController
                 // We need to ensure that drafts will still show
                 // in the list view
                 if ($this->bean->status !== 'draft') {
-                    $this->bean->status = 'send_error';
                     $this->bean->save();
-                } else {
-                    $this->bean->status = 'send_error';
                 }
+                $this->bean->status = 'send_error';
         }
 
             $this->view = 'sendemail';
@@ -374,15 +394,24 @@ class EmailsController extends SugarController
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
+                $oe = new OutboundEmail();
+                $oe->retrieve($storedOptions['outbound_email']);
+                
                 $dataAddress = array(
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'from' => $storedOptions['from_addr']
+                        'from' => $storedOptions['from_addr'],
+                        'name' => $inboundEmail->name,
+                        'oe' => $oe->mail_smtpuser,
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                    'isGroupEmailAccount' => $isGroupEmailAccount
+                    'isGroupEmailAccount' => $isGroupEmailAccount,
+                    'outboundEmail' => array(
+                        'id' => $oe->id,
+                        'name' => $oe->name,
+                    ),
                 );
 
                 // Include signature
@@ -412,6 +441,28 @@ class EmailsController extends SugarController
 
                 $data[] = $dataAddress;
             }
+        }
+
+        $oe = new OutboundEmail();
+        if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
+            $system = $oe->getSystemMailerSettings();
+            $data[] = array(
+                'type' => 'system',
+                'id' => $system->id,
+                'attributes' => array(
+                    'from' => $system->mail_smtpuser,
+                    'name' => $system->name,
+                    'oe' => $system->mail_smtpuser,
+                ),
+                'prepend' => false,
+                'isPersonalEmailAccount' => false,
+                'isGroupEmailAccount' => true,
+                'outboundEmail' => array(
+                    'id' => $system->id,
+                    'name' => $system->name,
+                ),
+                'emailSignatures' => $defaultEmailSignature,
+            );
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
@@ -466,7 +517,12 @@ class EmailsController extends SugarController
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list('', "mailbox_id = '" . $db->quote($_REQUEST['inbound_email_record']) . "' AND uid = '{$db->quote($_REQUEST['uid'])}'");
+        
+        $inboundEmailRecordIdQuoted = $db->quote($_REQUEST['inbound_email_record']);
+        $uidQuoted = $db->quote($_REQUEST['uid']);
+        
+        $result = $emails->get_full_list('', "mailbox_id = '" . $inboundEmailRecordIdQuoted . "' AND uid = '" . $uidQuoted . "'");
+
         if (empty($result)) {
             $this->view = 'detailnonimported';
         } else {
@@ -643,6 +699,20 @@ class EmailsController extends SugarController
         global $db;
         global $mod_strings;
 
+                
+        global $current_user;
+        $email = new Email();
+        $email->email2init();
+        $ie = new InboundEmail();
+        $ie->email = $email;
+        $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        if(!$accounts) {
+            $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
+            SugarApplication::appendErrorMessage(
+                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>");
+        }
+        
+        
         if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
         } else {
@@ -799,8 +869,6 @@ class EmailsController extends SugarController
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
-        $hasAccess = false;
-
         // Check that user is allowed to use inbound email account
         $hasAccessToInboundEmailAccount = false;
         $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
@@ -860,11 +928,14 @@ class EmailsController extends SugarController
             $isAllowedToUseOutboundEmail = true;
         }
 
-        $hasAccess =
-            ($hasAccessToInboundEmailAccount === true) &&
-            ($isFromAddressTheSame === true) &&
-            ($isAllowedToUseOutboundEmail === true);
+        // The inbound email account is an empty object, we assume the user has access
+        if (empty($requestedInboundEmail->id)) {
+            $hasAccessToInboundEmailAccount = true;
+            $isFromAddressTheSame = true;
+        }
 
-        return $hasAccess;
+        return $hasAccessToInboundEmailAccount === true &&
+            $isFromAddressTheSame === true &&
+            $isAllowedToUseOutboundEmail === true;
     }
 }

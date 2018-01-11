@@ -300,7 +300,6 @@ tr#pagination {
   border-right: none;
   text-align: left;
   white-space: nowrap;
-  color: $default-btn-color;
 }
 
 .edit .list tr th {
@@ -2765,7 +2764,7 @@ listViewLinkButton {
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
   min-width: 32px;
-  padding: 11px 10px 12px 10px;
+  height: 31px;
 }
 
 .action-link-top li.sugar_action_button,

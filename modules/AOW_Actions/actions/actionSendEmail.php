@@ -357,8 +357,10 @@ class actionSendEmail extends actionBase {
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
         $template->body_html = str_replace("\$url",$url,$template->body_html);
+        $template->body_html = str_replace("\$sugarurl",$cleanUrl,$template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
         $template->body = str_replace("\$url",$url,$template->body);
+        $template->body = str_replace("\$sugarurl",$cleanUrl,$template->body);
     }
 
     function getAttachments(EmailTemplate $template){

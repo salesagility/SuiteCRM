@@ -261,28 +261,4 @@ $hours2 .= '</select>';
     </div>
 </div>
 
-<script id="script" type="text/javascript">
-
-    YAHOO.util.Event.onDOMReady(function()
-    {
-        var now = new Date();
-        Calendar.setup ({
-
-            inputField : "date",
-            ifFormat : cal_date_format,
-            daFormat : "%m/%d/%Y %I:%M%P",
-            button : "date_start_trigger",
-            singleClick : true,
-            step : 1,
-            weekNumbers: false,
-            startWeekday: 0
-
-
-        });
-
-    });
-
-
-</script>
-
-<script id="script2" type="text/javascript" src="jsscource/src_files/include/javascript/sugar_3.js " > </script>
+<script id="script" type="text/javascript" src="jsscource/src_files/include/javascript/sugar_3.js " > </script>

@@ -323,6 +323,112 @@
 
 }
 
+
+.bean-attachments:empty {
+  display: none;
+}
+
+.bean-attachments {
+
+  background: $main-alternate-bg;
+  border: 1px solid $email-attachment-container-border;
+  border-radius: 4px;
+  line-height: $email-attachment-height + ($email-attachment-padding * 2);
+  margin: 5px 0;
+  min-height: $email-attachment-height + ($email-attachment-padding * 2);
+
+  label {
+    border-radius: 4px;
+    color: $email-attachment-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: $page-font-size;
+    line-height: $email-attachment-height + ($email-attachment-padding * 2);
+    margin-bottom: 0;
+    min-height: $email-attachment-height + ($email-attachment-padding * 2);
+  }
+
+  label * {
+    pointer-events: none;
+  }
+
+  input[type=file] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    z-index: -1;
+  }
+
+  .bean-attachment-group-container {
+    background-color: $email-attachment-group-bg;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: $email-attachment-height + ($email-attachment-padding * 2);
+    min-height: $email-attachment-height + ($email-attachment-padding * 2);
+    margin: 5px;
+  }
+
+  .bean-attachment-file-container {
+    background-color: $email-attachment-bg;
+    border-radius: 4px;
+    color: $email-attachment-color;
+    font-size: $email-attachment-font-size;
+    display: inline-block;
+    min-height: $email-attachment-height + ($email-attachment-padding * 2);
+    line-height: $email-attachment-height + ($email-attachment-padding * 2);
+    margin: 5px;
+  }
+
+  .bean-attachment-type {
+    margin: 0 2px 0 0;
+    padding: $email-attachment-padding;
+  }
+
+  .bean-attachment-name {
+    font-weight: normal;
+    margin: 0 2px 0 0;
+    padding: $email-attachment-padding;
+  }
+
+  .bean-attachment-size {
+    font-weight: normal;
+    margin: 0 5px 0 0;
+    padding: $email-attachment-padding;
+  }
+
+  .bean-attachment-remove {
+    background-color: $email-attachment-remove-bg;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 5px 0 0;
+    padding: $email-attachment-padding;
+
+    .glyphicon {
+      cursor: pointer;
+    }
+  }
+
+  a.bean-attachment-remove {
+    color: $email-panel-color
+  }
+
+  .bean-attachment-blank {
+    background-color: $email-attachment-bg;
+    padding: $email-attachment-padding ($email-attachment-padding * 2);
+    line-height: $email-attachment-height + ($email-attachment-padding * 2);
+
+    .glyphicon {
+      top: 0;
+      bottom: 0;
+      cursor: pointer;
+    }
+  }
+
+}
+
+
 .document-attachments:empty {
   display: none;
 }

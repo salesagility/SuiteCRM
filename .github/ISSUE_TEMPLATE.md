@@ -1,5 +1,6 @@
 <!--- Provide a general summary of the issue in the **Title** above -->
 <!--- Before you open an issue, please check if a similar issue already exists or has been closed before. --->
+<!--- If you have discovered a security risk please report it by emailing security@suitecrm.com. This will be delivered to the product team who handle security issues. Please don't disclose security bugs publicly until they have been handled by the security team. --->
 
 #### Issue
 <!--- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$connector_strings = array (
+$connector_strings = array(
     'LBL_GET_STARTED' => 'Get Started!',
     'LBL_TOS1' => 'Terms of Use',
     'LBL_TOS3' => 'Privacy Policy',
@@ -54,5 +54,3 @@ $connector_strings = array (
     'LBL_ENGAGE' => 'Engage Customers',
     'LBL_ENGAGE_SUB' => 'with conversation starters',
 );
-
-?>

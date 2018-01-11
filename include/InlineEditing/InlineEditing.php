@@ -519,10 +519,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-	if($vardef['type'] == "url")
-	{
-		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
-	}
+    if ($vardef['type'] == "url") {
+        $link = (substr($value, 0, 7) == 'http://' || substr($value, 0, 8) == 'https://' ?
+            $value : 'http://' . $value);
+        $value = '<a href=' . $link . ' target="_blank">' . $value . '</a>';
+    }
 	
 	if($vardef['type'] == "currency"){
 		if($_REQUEST['view'] != "DetailView"){			

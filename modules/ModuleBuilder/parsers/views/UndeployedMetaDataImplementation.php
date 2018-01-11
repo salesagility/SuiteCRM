@@ -109,7 +109,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         $loaded = null ;
         foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type )
     	{
-			$this->_sourceFilename = $this->getFileName ( $view, $moduleName, $packageName , $type ) ;
+            $this->_sourceFilename = $this->getFileNameInPackage($view, $moduleName, $packageName, $type);
 			if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 				$layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
 			}else{
@@ -129,7 +129,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         }
 
         $this->_viewdefs = $loaded ;
-        $sourceFilename = $this->getFileName ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
+        $sourceFilename = $this->getFileNameInPackage($view, $moduleName, $packageName, MB_BASEMETADATALOCATION);
         if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 			$layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
 		}else{
@@ -137,7 +137,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 		}
 		$this->_originalViewdefs = $layout ;
 		$this->_fielddefs = $fielddefs ;
-        $this->_history = new History ( $this->getFileName ( $view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION ) ) ;
+        $this->_history = new History($this->getFileNameInPackage($view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION)) ;
     }
 
     function getLanguage ()
@@ -152,63 +152,15 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
     function deploy ($defs)
     {
         //If we are pulling from the History Location, that means we did a restore, and we need to save the history for the previous file.
-    	if ($this->_sourceFilename == $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_HISTORYMETADATALOCATION )
-    	&& file_exists($this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION ))) {
-        	$this->_history->append ( $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION )) ;
+        if ($this->_sourceFilename == $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)
+        && file_exists($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION))) {
+            $this->_history->append($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION));
         } else {
     		$this->_history->append ( $this->_sourceFilename ) ;
         }
-        $filename = $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION ) ;
+        $filename = $this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION);
         $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . "->deploy(): writing to " . $filename ) ;
         $this->_saveToFile ( $filename, $defs ) ;
     }
-
-    /*
-     * Construct a full pathname for the requested metadata
-     * @param string view           The view type, that is, EditView, DetailView etc
-     * @param string modulename     The name of the module that will use this layout
-     * @param string type
-     */
-    public function getFileName ($view , $moduleName , $packageName , $type = MB_BASEMETADATALOCATION)
-    {
-
-        $type = strtolower ( $type ) ;
-
-        // BEGIN ASSERTIONS
-        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION)
-        {
-            // just warn rather than die
-            $GLOBALS [ 'log' ]->warning ( "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized" ) ;
-        }
-        // END ASSERTIONS
-
-        $filenames = array (  	MB_DASHLETSEARCH => 'dashletviewdefs',
-        						MB_DASHLET => 'dashletviewdefs',
-        						MB_LISTVIEW => 'listviewdefs' ,
-        						MB_BASICSEARCH => 'searchdefs' ,
-        						MB_ADVANCEDSEARCH => 'searchdefs' ,
-        						MB_EDITVIEW => 'editviewdefs' ,
-        						MB_DETAILVIEW => 'detailviewdefs' ,
-        						MB_QUICKCREATE => 'quickcreatedefs',
-					        	MB_POPUPSEARCH => 'popupdefs',
-					        	MB_POPUPLIST => 'popupdefs',
-        						) ;
-
-        switch ( $type)
-        {
-            case MB_HISTORYMETADATALOCATION :
-                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
-            default :
-                // get the module again, all so we can call this method statically without relying on the module stored in the class variables
-                $mb = new ModuleBuilder ( ) ;
-                $module = & $mb->getPackageModule ( $packageName, $moduleName ) ;
-                return $module->getModuleDir () . '/metadata/' . $filenames [ $view ] . '.php' ;
-        }
-
-    }
-    
-    public function getModuleDir(){
-		return $this->module->key_name;
-	}
 }
 ?>
