@@ -68,6 +68,15 @@ class EmailAddress extends SugarEmailAddress
      */
     public $invalid_email = 0;
 
+    /**
+     * @var TimeDate $opt_in_email_created
+     */
+    public $opt_in_email_created;
+
+    /**
+     * @var TimeDate $confirmed_opt_in_date
+     */
+    public $confirmed_opt_in_date;
 
     /**
      * EmailAddress constructor.
@@ -103,5 +112,16 @@ class EmailAddress extends SugarEmailAddress
         } else {
             return SugarBean::save($id);
         }
+    }
+
+    /**
+     * Confirm opt in
+     */
+    public function confirmOptIn()
+    {
+        global $timedate;
+        $date = new DateTime();
+        $this->confirmed_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
+        $this->confirm_opt_in = 1;
     }
 }

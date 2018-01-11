@@ -1526,6 +1526,7 @@ class Email extends Basic
                 if (!empty($toaddr)) {
                     $toId = $this->emailAddress->getEmailGUID($toaddr);
                     $this->linkEmailToAddress($toId, 'to');
+                    $this->checkOptInFromEmailAddressId($toId);
                 }
             }
         }
@@ -1540,6 +1541,7 @@ class Email extends Basic
                 if (!empty($ccAddr)) {
                     $ccId = $this->emailAddress->getEmailGUID($ccAddr);
                     $this->linkEmailToAddress($ccId, 'cc');
+                    $this->checkOptInFromEmailAddressId($ccId);
                 }
             }
         }
@@ -1553,6 +1555,7 @@ class Email extends Basic
                 if (!empty($bccAddr)) {
                     $bccId = $this->emailAddress->getEmailGUID($bccAddr);
                     $this->linkEmailToAddress($bccId, 'bcc');
+                    $this->checkOptInFromEmailAddressId($bccId);
                 }
             }
         }
@@ -4236,20 +4239,158 @@ eoq;
     }
 
     /**
-     *
      * @param string $emailField
+     * @return string
+     */
+    public function getEmailAddressConfirmOptInTick($emailField)
+    {
+        global $sugar_config;
+        global $app_list_strings;
+        global $app_strings;
+        global $mod_strings;
+
+        $tickHtml = '';
+
+        if ($sugar_config['email_enable_confirm_opt_in']) {
+            $template = new Sugar_Smarty();
+            $template->assign('APP', $app_strings);
+            $template->assign('APP_LIST_STRINGS', $app_list_strings);
+            $template->assign('MOD', $mod_strings);
+            $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
+            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
+        }
+
+        return $tickHtml;
+    }
+
+    /**
+     *
+     * @global array $sugar_config
+     * @global \LoggerManager $log
+     * @param string $emailField
+     * @return \EmailAddress
+     * @throws RuntimeException
      * @throws InvalidArgumentException
+     */
+    public function getEmailAddressConfirmOptIn($emailField)
+    {
+        global $sugar_config;
+
+        if (!$sugar_config['email_enable_confirm_opt_in']) {
+            global $log;
+            $log->warn('Confirm Opt In is not enabled.');
+
+            return false;
+        }
+
+        $emailAddressId = $this->getEmailAddressId($emailField);
+
+        return BeanFactory::getBean('EmailAddresses', $emailAddressId);
+    }
+
+    /**
+     * @param string $id
+     */
+    private function checkOptInFromEmailAddressId($id = '')
+    {
+        global $sugar_config;
+        global $log;
+
+        if ($id === '') {
+            $log->fatal('Empty Email Id');
+        }
+
+        $emailAddresses = BeanFactory::getBean('EmailAddresses');
+        if ($sugar_config['email_enable_auto_send_opt_in']) {
+            /** @var \EmailAddress $emailAddress */
+            $emailAddress = $emailAddresses->retrieve($id);
+            if (
+                ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
+                || ($_REQUEST['send_opt_in_checkbox'] == 'true')
+            ) {
+                $this->sendOptInEmail($emailAddress);
+            }
+        }
+    }
+
+    /**
+     * @param EmailAddress $emailAddress
+     * @return bool
+     */
+    private function sendOptInEmail(EmailAddress $emailAddress)
+    {
+        global $sugar_config;
+        global $timedate;
+        global $log;
+        global $db;
+
+        require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
+
+        if (!$sugar_config['email_enable_confirm_opt_in']) {
+            $log->warning('Confirm Opt In is not enabled.');
+
+            return false;
+        }
+
+
+        if (!$sugar_config['aop']['confirmed_opt_in_template_id']) {
+            $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
+
+            return false;
+        }
+
+
+        if (!$this->parent_name || !$this->parent_type) {
+            $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
+            $log->warning($msg);
+
+            return false;
+        }
+
+        // Send email template
+
+        $params = array(
+            'individual_email' => '1',
+            'email_template' => $sugar_config['aop']['confirmed_opt_in_template_id'],
+            'email_to_type' => array(
+                0 => 'to',
+            ),
+            'email_target_type' => array(
+                0 => 'Email Address',
+            ),
+            'email' => array(
+                0 => $emailAddress->email_address,
+            ),
+        );
+
+
+        // Get Related Contact | Lead | Target
+        $query = ' SELECT * FROM email_addresses' .
+            ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
+            ' WHERE email_address LIKE \'' . $db->quote($emailAddress->email_address) . '\'';
+
+        $dbResult = $db->query($query);
+        $row = $db->fetchByAssoc($dbResult);
+
+        $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
+
+        $actionSendEmail = new actionSendEmail();
+        $actionSendEmail->run_action($bean, $params);
+
+        $date = new DateTime();
+        $emailAddress->opt_in_email_created = $date->format($timedate::DB_DATETIME_FORMAT);
+        $emailAddress->save();
+
+        return true;
+    }
+
+    /**
+     * @param string $emailField eg from_name
      */
     protected function validateSugarEmailAddressField($emailField)
     {
         if (!is_string($emailField)) {
             throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
-        }
-
-        if (!in_array($emailField, self::$validFieldNames, true)) {
-            throw new InvalidArgumentException(
-                '$emailField is invalid, "' . $emailField . '" given. Expected valid name eg. from_name'
-            );
         }
     }
 } // end class def

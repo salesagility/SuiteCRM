@@ -86,6 +86,7 @@ $mod_strings = array(
     'LBL_DESCRIPTION' => 'Description',
     'LBL_EDIT_ALT_TEXT' => 'Edit Plain Text',
     'LBL_SEND_IN_PLAIN_TEXT' => 'Send in Plain Text',
+    'LBL_SEND_CONFIRM_OPT_IN' => 'Send Opt In Email',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_EMAIL_SELECTOR_SELECT' => 'Select',
     'LBL_EMAIL_SELECTOR_CLEAR' => 'Clear',
