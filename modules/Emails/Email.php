@@ -4303,7 +4303,10 @@ eoq;
         if ($sugar_config['email_enable_auto_send_opt_in']) {
             /** @var \EmailAddress $emailAddress */
             $emailAddress = $emailAddresses->retrieve($id);
-            if ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created)) {
+            if (
+                ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
+                || ($_REQUEST['send_opt_in_checkbox'] == 'true')
+            ) {
                 $this->sendOptInEmail($emailAddress);
             }
         }
