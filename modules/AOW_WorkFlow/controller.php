@@ -30,15 +30,21 @@ class AOW_WorkFlowController extends SugarController {
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
-            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
-                $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+            if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
+                $module = getRelatedModule($_REQUEST['aow_module'], $_REQUEST['rel_field']);
             } else {
                 $module = $_REQUEST['aow_module'];
             }
-            echo getModuleFields($module,$_REQUEST['view'],$_REQUEST['aow_value']);
+            $override = array();
+            if (isset($_REQUEST['override']) && is_array($_REQUEST['override'])) {
+                $override = $_REQUEST['override'];
+            }
+            $view = isset($_REQUEST['view']) ? $_REQUEST['view'] : 'EditView';
+            $value = isset($_REQUEST['aow_value']) ? $_REQUEST['aow_value'] : '';
+
+            echo getModuleFields($module, $view, $value, array(), $override);
         }
         die;
-
     }
 
     protected function action_getRelatedModule()

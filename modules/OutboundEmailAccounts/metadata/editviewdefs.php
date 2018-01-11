@@ -52,6 +52,17 @@ $viewdefs [$module_name] =
                             ),
                         'lbl_editview_panel1' =>
                             array (
+                                
+                                array(
+                                        'name' => 'smtp_from_name',
+                                        'label' => 'LBL_SMTP_FROM_NAME',
+                                    ),
+                                
+                                array(
+                                        'name' => 'smtp_from_addr',
+                                        'label' => 'LBL_SMTP_FROM_ADDR',
+                                    ),
+                                
                                 array(
                                     'name' => 'email_provider_chooser',
                                     'label' => 'LBL_CHOOSE_EMAIL_PROVIDER',
