@@ -632,7 +632,16 @@ $dictionary['Email'] = array(
                 'include' => 'modules/Emails/include/displayEmailAddressOptInField.php',
                 'onListView' =>  true
             ),
-
+        ),
+        'send_opt_in_checkbox' => array(
+            'name' => 'send_opt_in_checkbox',
+            'type' => 'bool',
+            'default' => false,
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+            'source' => 'non-db',
         ),
     ), /* end fields() array */
     'relationships' => array(
