@@ -4298,11 +4298,9 @@ eoq;
 
         if ($id === '') {
             $log->fatal('Empty Email Id');
-        }
-
-        $emailAddresses = BeanFactory::getBean('EmailAddresses');
-        if ($sugar_config['email_enable_auto_send_opt_in']) {
+        } elseif ($sugar_config['email_enable_auto_send_opt_in']) {
             /** @var \EmailAddress $emailAddress */
+            $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
             if (
                 ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
