@@ -1257,6 +1257,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(/** @lang sql */
             null, $results['query']);
 
+
         // test
         $GLOBALS['log']->reset();
         $bean = new Contact();

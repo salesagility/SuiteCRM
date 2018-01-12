@@ -65,7 +65,9 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     exit();
 }
 
-require_once 'vendor/autoload.php';
+$BASE_DIR = realpath(dirname(__DIR__));
+
+require_once $BASE_DIR.'/vendor/autoload.php';
 
 // config|_override.php
 if (is_file('config.php')) {

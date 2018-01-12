@@ -72,7 +72,7 @@ class EmailsViewCompose extends ViewEdit {
      */
     public function preDisplay()
     {
-        global $current_user;
+        global $current_user, $mod_strings, $log;
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
@@ -96,6 +96,26 @@ class EmailsViewCompose extends ViewEdit {
         $this->ev->ss->assign('RETURN_ACTION', isset($_GET['return_action']) ? $_GET['return_action'] : '');
         $this->ev->ss->assign('RETURN_ID', isset($_GET['return_id']) ? $_GET['return_id'] : '');
         $this->ev->ss->assign('IS_MODAL', isset($_GET['in_popup']) ? $_GET['in_popup'] : false);
+        
+        $attachmentName = $mod_strings['LBL_ATTACHMENT'];
+        if(isset($_GET['return_module']) && isset($_GET['return_id'])) {
+            $attachmentName = $attachmentName . ' (' . $_GET['return_module'] . ')';
+            $attachment = BeanFactory::getBean($_GET['return_module'], $_GET['return_id']);
+            if(!$attachment) {
+                SugarApplication::appendErrorMessage($mod_strings['ERR_NO_RETURN_ID']);
+                $log->fatal('Attacment is not found. Requested return id is not related to an exists Bean.');
+            } else {
+                if(isset($attachment->name) && $attachment->name) {
+                    $attachmentName = $attachment->name;
+                } else if(isset($attachment->title) && $attachment->title) {
+                    $attachmentName = $attachment->title;
+                } else if(isset($attachment->subject) && $attachment->subject) {
+                    $attachmentName = $attachment->subject;
+                }
+            }
+        }
+        $this->ev->ss->assign('ATTACHMENT_NAME', $attachmentName);
+        
         $this->ev->setup(
             $this->module,
             $this->bean,

@@ -37,8 +37,9 @@
   "autoload": {
     "psr-4": {
       "SuiteCRM\\": [
-        "lib/SuiteCRM/",
-        "tests/SuiteCRM/"
+        "lib/",
+        "tests/SuiteCRM/",
+        "tests/unit/lib/SuiteCRM/"
       ]
     }
   },

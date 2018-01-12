@@ -55,7 +55,7 @@ if (ACLController::checkAccess('Surveys', 'list', true)) {
         Array(
             "index.php?module=Surveys&action=index&return_module=Surveys&return_action=DetailView",
             $mod_strings['LNK_LIST'],
-            "View",
+            "List",
             'Surveys'
         );
 }

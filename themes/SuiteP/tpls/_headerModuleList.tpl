@@ -86,7 +86,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
-                                    {if count($shortcutTopMenu.$name) > 0}
+                                    {if is_array($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0}
                                         <li class="mobile-current-actions" role="presentation">
                                            <ul class="mobileCurrentTab">
                                                {foreach from=$shortcutTopMenu.$name item=item}
@@ -103,7 +103,7 @@
                                     {/if}
                             {/if}
 
-                                    {if count($recentRecords) > 0}
+                                    {if is_array($recentRecords) && count($recentRecords) > 0}
                                         <li class="recent-links-title" role="presentation">
                                             <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
                                         </li>
@@ -125,7 +125,7 @@
                                          </li>
                                     {/if}
 
-                                    {if count($favoriteRecords) > 0}
+                                    {if is_array($favoriteRecords) && count($favoriteRecords) > 0}
                                         <li class="favorite-links-title" role="presentation">
                                             <a><strong>{$APP.LBL_FAVORITES}</strong></a>
                                         </li>
@@ -183,12 +183,14 @@
                                             {assign var=foundFavorits value=true}
                                         {/if}
                                     {/foreach}
-                                    {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
+                                    {if $foundRecents || $foundFavorits
+                                        || (is_array($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0)}
 
                                         <ul class="dropdown-menu" role="menu">
                                             <li class="current-module-action-links">
                                                 <ul>
-                                                    {if count($shortcutTopMenu.$name) > 0}
+                                                    {if is_array($shortcutTopMenu.$name)
+                                                        && count($shortcutTopMenu.$name) > 0}
                                                         {foreach from=$shortcutTopMenu.$name item=item}
                                                             {if $item.URL == "-"}
                                                                 {*<li><a></a><span>&nbsp;</span></li>*}
@@ -332,7 +334,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <ul>
-                                            {if count($shortcutTopMenu) > 0}
+                                            {if is_array($shortcutTopMenu) && count($shortcutTopMenu) > 0}
                                                 {foreach from=$shortcutTopMenu.$submodule item=item}
                                                     {if $item.URL == "-"}
                                                         {*<li><a></a><span>&nbsp;</span></li>*}
@@ -779,7 +781,8 @@
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
                             <ul>
-                                {if count($shortcutTopMenu.$name) > 0}
+                                {if isset($shortcutTopMenu.$name) && is_array($shortcutTopMenu)
+                                    && count($shortcutTopMenu.$name) > 0}
                                     <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                     {foreach from=$shortcutTopMenu.$name item=item}
                                         {if $item.URL == "-"}
@@ -800,7 +803,7 @@
                 </div>
                 
                 <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
-                {if count($recentRecords) > 0}
+                {if is_array($recentRecords) && count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 {/if}
                     <ul class="nav nav-pills nav-stacked">
@@ -819,7 +822,7 @@
                 </div>
      
                 <div id="favoritesSidebar" class="favoritesSidebar">
-                {if count($favoriteRecords) > 0}
+                {if is_array($favoriteRecords) && count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                 {/if}
                     <ul class="nav nav-pills nav-stacked">

@@ -581,7 +581,7 @@ class SugarFolder
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
-                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "' . $a['id'] . '"');
+                    $children = $this->db->query("SELECT * FROM folders WHERE parent_folder = '" . $a['id'] . "'");
                     while ($b = $this->db->fetchByAssoc($children)) {
                         $a['children'][] = $b;
                     }

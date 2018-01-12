@@ -48,7 +48,6 @@
     {/literal}
 </script>
 
-<link rel="stylesheet" type="text/css" href="{sugar_getjspath file="themes/SuiteP/css/studio.css"}" />
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file="include/ytree/TreeView/css/folders/tree.css"}" />
 
 <script type="text/javascript" src='{sugar_getjspath file ='modules/ModuleBuilder/javascript/studio2.js'}' ></script>

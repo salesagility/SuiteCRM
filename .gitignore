@@ -89,6 +89,27 @@ node_modules/
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
 themes/SuiteP/css/*.css
+themes/SuiteP/css/bootstrap/theme.css.map
+themes/SuiteP/css/dawn/style.css.map
+themes/SuiteP/css/dawn/variables.css
+themes/SuiteP/css/dawn/color-palette.css.map
+themes/SuiteP/css/dawn/color-palette.css
+themes/SuiteP/css/dawn/variables.css.map
+themes/SuiteP/css/day/color-palette.css.map
+themes/SuiteP/css/day/color-palette.css
+themes/SuiteP/css/day/style.css.map
+themes/SuiteP/css/day/variables.css
+themes/SuiteP/css/day/variables.css.map
+themes/SuiteP/css/dusk/color-palette.css.map
+themes/SuiteP/css/dusk/color-palette.css
+themes/SuiteP/css/dusk/style.css.map
+themes/SuiteP/css/dusk/variables.css
+themes/SuiteP/css/dusk/variables.css.map
+themes/SuiteP/css/night/color-palette.css.map
+themes/SuiteP/css/night/color-palette.css
+themes/SuiteP/css/night/style.css.map
+themes/SuiteP/css/night/variables.css
+themes/SuiteP/css/night/variables.css.map
 !themes/SuiteP/css/studio.css
 !themes/SuiteP/css/chart.css
 !themes/SuiteP/css/bubbles.css
