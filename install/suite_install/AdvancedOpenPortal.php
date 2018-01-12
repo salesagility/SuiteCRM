@@ -275,9 +275,9 @@ function getTemplates()
         'description' => 'Email template to send to a contact to confirm they have opted in.',
         'subject' => 'Confirm Opt In',
         'type' => 'system',
-        'body' => 'Hi \$user_first_name \$user_last_name, \n Please confirm that you have opted in by selecting the following link: \$sugarurl/index.php?entryPoint=ConfirmOptIn&from=\$contact_email1',
+        'body' => 'Hi \$contact_first_name \$contact_last_name, \n Please confirm that you have opted in by selecting the following link: \$sugarurl/index.php?entryPoint=ConfirmOptIn&from=\$contact_email1',
         'body_html' =>
-            '<p>Hi $user_first_name $user_last_name,</p>
+            '<p>Hi $contact_first_name $contact_last_name,</p>
              <p>
                 Please confirm that you have opted in by selecting the following link:
                 <a href="$sugarurl/index.php?entryPoint=ConfirmOptIn&from=$contact_email1">Opt In</a>
