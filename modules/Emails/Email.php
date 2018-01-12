@@ -4351,7 +4351,7 @@ eoq;
      * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
      * @return bool
      */
-    private function sendOptInEmailToEmailAddressById($id = '', $sendOptInCheckbox = null)
+    private function sendOptInEmailToEmailAddressById($id, $sendOptInCheckbox = null)
     {
         global $sugar_config;
         global $log;
@@ -4366,9 +4366,9 @@ eoq;
         
         $ret = false;
 
-        if ($id === '') {
+        if (!$id) {
             $log->fatal('Empty Email Id');
-        } elseif ($sugar_config['email_enable_auto_send_opt_in']) {
+        } elseif (isset($sugar_config['email_enable_auto_send_opt_in']) && $sugar_config['email_enable_auto_send_opt_in']) {
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
@@ -4384,16 +4384,18 @@ eoq;
     }
 
     /**
-     * @global $sugar_config;
-     * @global $timedate;
-     * @global $log;
-     * @global $db;
+     * @global array $sugar_config
+     * @global array $app_strings
+     * @global SugarDateTime $timedate
+     * @global LoggerManager $log
+     * @global DBManager $db
      * @param EmailAddress $emailAddress
      * @return bool
      */
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $sugar_config;
+        global $app_strings;
         global $timedate;
         global $log;
         global $db;
@@ -4408,8 +4410,8 @@ eoq;
 
 
         if (!$sugar_config['email_templates']['confirmed_opt_in_template_id']) {
-            $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
-
+            $log->fatal('Opt In Email Template is not configured. Please set up in email settings.');
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
             return false;
         }
 
