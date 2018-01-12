@@ -884,7 +884,7 @@
       var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (i, v) {
-        if ($(v).attr('type').toLowerCase() === 'file') {
+        if ($(v).attr('type').toLowerCase() !== 'file') {
           var name = $(v).attr('name');
           if (name === 'action') {
             formData.append(name, 'SaveDraft');
@@ -976,7 +976,7 @@
         var formData = new FormData(jQueryFormComposeView);
 
         $(this).find('input').each(function (i, v) {
-          if ($(v).attr('type').toLowerCase() === 'file') {
+          if ($(v).attr('type').toLowerCase() !== 'file') {
             var name = $(v).attr('name');
             if (name === 'action') {
               formData.append(name, 'Delete');
