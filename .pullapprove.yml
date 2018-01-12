@@ -31,7 +31,8 @@ groups:
   assessers:
     required: 1
 
-    teams: suitecrm-core
+    teams: 
+      - suitecrm-core
 
     approve_by_comment:
       enabled: true
