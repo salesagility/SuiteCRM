@@ -171,9 +171,8 @@ class Basic extends SugarBean
             return null;
         }
 
-        if(empty($this->id)) {
-            $this->retrieve();
-        }
+        // List view requires us to retrieve the mail so we can see the email addresses
+        $this->retrieve();
 
         $found = false;
         $addresses = $this->emailAddress->addresses;

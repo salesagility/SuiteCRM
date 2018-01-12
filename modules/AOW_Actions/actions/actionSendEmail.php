@@ -23,7 +23,8 @@
  */
 
 
-require_once('modules/AOW_Actions/actions/actionBase.php');
+require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
+require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
@@ -267,7 +268,7 @@ class actionSendEmail extends actionBase {
 
     function run_action(SugarBean $bean, $params = array(), $in_save=false){
 
-        include_once('modules/EmailTemplates/EmailTemplate.php');
+        include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
@@ -310,7 +311,7 @@ class actionSendEmail extends actionBase {
     function parse_template(SugarBean $bean, &$template, $object_override = array()){
         global $sugar_config;
 
-        require_once('modules/AOW_Actions/actions/templateParser.php');
+        require_once __DIR__ . '/templateParser.php';
 
         $object_arr[$bean->module_dir] = $bean->id;
 
@@ -357,8 +358,10 @@ class actionSendEmail extends actionBase {
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
         $template->body_html = str_replace("\$url",$url,$template->body_html);
+        $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
         $template->body = str_replace("\$url",$url,$template->body);
+        $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
     function getAttachments(EmailTemplate $template){
