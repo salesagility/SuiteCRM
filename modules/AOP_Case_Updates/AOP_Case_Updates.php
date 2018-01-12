@@ -152,6 +152,12 @@ class AOP_Case_Updates extends Basic
             $dom->removeChild($dom->doctype);
             $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
             $description = $dom->saveHTML();
+
+            foreach (libxml_get_errors() as $xmlError) {
+                $GLOBALS['log']->warn(sprintf('%s in %s', trim($xmlError->message), get_class($this)));
+            }
+
+            libxml_clear_errors();
         }
 
         $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
