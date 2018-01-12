@@ -39,8 +39,47 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once __DIR__ . ' /../include/ConfirmOptIn.php';
-$confirmOptIn = new ConfirmOptIn();
-$confirmOptIn->pre_display();
-echo $confirmOptIn->display();
-sugar_cleanup();
+
+/**
+ * Class confirm_opt_in
+ */
+class ConfirmOptIn
+{
+    /**
+     * @var EmailAddress $emailAddress
+     */
+    private $emailAddress;
+
+    /**
+     * Set up
+     */
+    public function pre_display()
+    {
+        $emailAddress = BeanFactory::getBean('EmailAddresses');
+        $this->emailAddress = $emailAddress->retrieve_by_string_fields(
+            array(
+                'email_address' => $_REQUEST['from']
+            )
+        );
+
+        if ($this->emailAddress) {
+            $this->emailAddress->confirmOptIn();
+            $this->emailAddress->save();
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function display()
+    {
+        global $app_list_strings, $app_strings, $mod_strings;
+        $template = new Sugar_Smarty();
+        $template->assign('APP_LIST_STRINGS', $app_list_strings);
+        $template->assign('APP', $app_strings);
+        $template->assign('MOD', $mod_strings);
+        $template->assign('FOCUS', $this->emailAddress);
+
+        return $template->fetch('include/SugarObjects/templates/basic/tpls/entrypoints_confirm_opt_in.tpl');
+    }
+}
