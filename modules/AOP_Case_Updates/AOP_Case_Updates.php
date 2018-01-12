@@ -142,11 +142,14 @@ class AOP_Case_Updates extends Basic
         $description = SugarCleaner::cleanHtml($this->description);
 
         if (preg_match('/<[^<]+>/', $description, $matches) !== 0) {
-            $doc = new DOMDocument();
-            $doc->loadHTML($description);
-            $doc->removeChild($doc->doctype);
-            $doc->replaceChild($doc->firstChild->firstChild->firstChild, $doc->firstChild);
-            $description = $doc->saveHTML();
+            $dom = new DOMDocument();
+            $dom->loadHTML($description);
+            foreach ($dom->getElementsByTagName('head') as $headElement) {
+                $headElement->parentNode->removeChild($headElement);
+            }
+            $dom->removeChild($dom->doctype);
+            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
+            $description = $dom->saveHTML();
         }
 
         $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
