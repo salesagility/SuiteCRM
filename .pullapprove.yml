@@ -13,12 +13,6 @@ groups:
 
     users: all
 
-    approve_by_comment:
-      enabled: false
-
-    reset_on_push:
-      enabled: true
-
     github_reviews:
       enabled: true
 
