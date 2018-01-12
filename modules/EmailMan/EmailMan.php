@@ -566,11 +566,19 @@ class EmailMan extends SugarBean
         return true;
     }
 
+    /**
+     * @param SugarPHPMailer $mail
+     * @param int $save_emails
+     * @param bool $testmode
+     * @return bool
+     */
     public function sendEmail($mail, $save_emails = 1, $testmode = false)
     {
         $this->test = $testmode;
 
-        global $beanList, $beanFiles, $sugar_config;
+        global $beanList;
+        global $beanFiles;
+        global $sugar_config;
         global $mod_strings;
         global $locale;
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
@@ -609,6 +617,26 @@ class EmailMan extends SugarBean
         $module->retrieve($this->related_id);
         $module->emailAddress->handleLegacyRetrieve($module);
 
+        $confirm_opt_in_enabled =
+            array_key_exists('email_enable_confirm_opt_in', $sugar_config)
+            && $sugar_config['email_enable_confirm_opt_in'] == true;
+
+        if ($confirm_opt_in_enabled && !$this->isOptInConfirmed($module)) {
+            $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
+
+            $autosend_email =
+                array_key_exists('email_enable_auto_send_opt_in', $sugar_config)
+                && $sugar_config['email_enable_auto_send_opt_in'] == true;
+
+            if ($autosend_email) {
+                $this->sendConfirmedOptInEmail($module);
+            }
+
+            // block sending campaign email
+            $this->set_as_sent($module->email1, true, null, null, 'blocked');
+            return true;
+        }
+
         //check to see if bean has a primary email address
         if (!$this->is_primary_email_address($module)) {
             //no primary email address designated, do not send out email, create campaign log
@@ -624,7 +652,9 @@ class EmailMan extends SugarBean
             $GLOBALS['log']->fatal('Encountered invalid email address: ' . $module->email1 . " Emailman id=$this->id");
             return true;
         }
-        
+
+
+        $SugarEmailAddress =$module->fromSugarEmailAddressField('email1');
         if (
                 $module instanceof Basic &&
                 $sugar_config['email_enable_confirm_opt_in'] &&
@@ -965,4 +995,66 @@ class EmailMan extends SugarBean
     {
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
+
+    /**
+     * @param \Contact|\Account|\Prospect|\SugarBean $bean
+     * @return bool
+     */
+    private function isOptInConfirmed(SugarBean $bean)
+    {
+        $email_address = trim($bean->email1);
+
+        if (empty($email_address)) {
+            return false;
+        }
+
+        $query = 'SELECT * '
+                .'FROM email_addr_bean_rel '
+                .'JOIN email_addresses on email_addr_bean_rel.email_address_id = email_addresses.id '
+                .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\'';
+
+        $result = $bean->db->query($query);
+        $row = $this->db->fetchByAssoc($result);
+
+        if (!empty($row) && $row['confirm_opt_in'] == '1') {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @param SugarBean $bean
+     * @return bool
+     */
+    private function sendConfirmedOptInEmail(SugarBean $bean)
+    {
+        $email_address = trim($bean->email1);
+
+        if (empty($email_address)) {
+            return false;
+        }
+
+        $query = 'SELECT * '
+                .'FROM email_addr_bean_rel '
+                .'WHERE bean_id = \''.$bean->id .'\'';
+
+        $result = $bean->db->query($query);
+        $row = $this->db->fetchByAssoc($result);
+
+        if (!empty($row)) {
+            /** @var \Email $email */
+            $email = BeanFactory::getBean('Emails');
+            /** @var \EmailAddress $emailAddress */
+            $emailAddress = BeanFactory::getBean('EmailAddresses', $row['email_address_id']);
+            $email->parent_name = $bean->module_name;
+            $email->parent_type = $bean->module_name;
+            $email->sendOptInEmail($emailAddress);
+
+            return true;
+        }
+        return false;
+    }
+
 }

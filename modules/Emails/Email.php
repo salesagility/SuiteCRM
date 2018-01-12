@@ -4383,7 +4383,7 @@ eoq;
      * @param EmailAddress $emailAddress
      * @return bool
      */
-    private function sendOptInEmail(EmailAddress $emailAddress)
+    public function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $sugar_config;
         global $timedate;
