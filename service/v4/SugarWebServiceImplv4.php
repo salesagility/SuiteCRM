@@ -215,26 +215,27 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
         $select_fields,
         $link_name_to_fields_array,
         $track_view = false
-    )
-	{
-	    $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, $track_view);
-		$relationshipList = $result['relationship_list'];
-		$returnRelationshipList = array();
-		foreach($relationshipList as $rel){
-			$link_output = array();
-			foreach($rel as $row){
-				$rowArray = array();
-				foreach($row['records'] as $record){
-					$rowArray[]['link_value'] = $record;
-				}
-				$link_output[] = array('name' => $row['name'], 'records' => $rowArray);
-			}
-			$returnRelationshipList[]['link_list'] = $link_output;
-		}
+    ) {
+        $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array,
+            $track_view);
+        $relationshipList = $result['relationship_list'];
+        $returnRelationshipList = array();
+        foreach ($relationshipList as $rel) {
+            $link_output = array();
+            foreach ($rel as $row) {
+                $rowArray = array();
+                foreach ($row['records'] as $record) {
+                    $rowArray[]['link_value'] = $record;
+                }
+                $link_output[] = array('name' => $row['name'], 'records' => $rowArray);
+            }
+            $returnRelationshipList[]['link_list'] = $link_output;
+        }
 
-		$result['relationship_list'] = $returnRelationshipList;
-		return $result;
-	}
+        $result['relationship_list'] = $returnRelationshipList;
+
+        return $result;
+    }
 
 	    /**
      * Retrieve a list of beans.  This is the primary method for getting list of SugarBeans from Sugar using the SOAP API.

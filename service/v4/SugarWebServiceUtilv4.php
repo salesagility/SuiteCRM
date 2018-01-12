@@ -92,23 +92,22 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         $show_deleted = 0,
         $favorites = false,
         $single_select = false
-    )
-	{
-		$GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
-		if(isset($_SESSION['show_deleted']))
-		{
-			$show_deleted = 1;
-		}
+    ) {
+        $GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
+        if (isset($_SESSION['show_deleted'])) {
+            $show_deleted = 1;
+        }
 
-		$params = array();
-		if(!empty($favorites)) {
-		  $params['favorites'] = true;
-		}
+        $params = array();
+        if (!empty($favorites)) {
+            $params['favorites'] = true;
+        }
 
         $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
             $singleSelect);
-		return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
-	}
+
+        return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
+    }
 
 	/**
      * Convert modules list to Web services result
