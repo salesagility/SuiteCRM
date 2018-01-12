@@ -4409,12 +4409,12 @@ eoq;
         }
 
 
-        if (!$sugar_config['email_templates']['confirmed_opt_in_template_id']) {
-            $log->fatal('Opt In Email Template is not configured. Please set up in email settings.');
+        if (!$sugar_config['aop']['confirmed_opt_in_template_id']) {
+            $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
             return false;
         }
-
+        
 
         if (!$this->parent_name || !$this->parent_type) {
             $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
@@ -4427,7 +4427,7 @@ eoq;
 
         $params = array(
             'individual_email' => '1',
-            'email_template' => $sugar_config['email_templates']['confirmed_opt_in_template_id'],
+            'email_template' => $sugar_config['aop']['confirmed_opt_in_template_id'],
             'email_to_type' => array(
                 0 => 'to',
             ),
