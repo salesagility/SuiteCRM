@@ -443,6 +443,7 @@ class Email extends Basic
 
     /**
      * sole constructor
+     * @global $current_user
      */
     public function __construct()
     {
@@ -531,6 +532,7 @@ class Email extends Basic
 
     /**
      * @param string $filename
+     * @global $sugar_config
      * @return bool
      */
     public function safeAttachmentName($filename)
@@ -680,6 +682,8 @@ class Email extends Basic
      * @param $toaddress
      * @param string $mail_sendtype
      * @param string $fromname
+     * @global $current_user
+     * @global $app_strings
      * @return array
      */
     public function sendEmailTest(
@@ -776,6 +780,14 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
+     * @global $timedate
+     * @global $beanList
+     * @global $beanFiles
      * @return bool
      */
     public function email2Send($request)
@@ -1322,6 +1334,7 @@ class Email extends Basic
      *
      * @param $module string module name
      * @param $idsArray array of record ids to get the email address for
+     * @global $local
      * @return string (config-specified) delimited list of email addresses
      */
     public function getNamePlusEmailAddressesForCompose($module, $idsArray)
@@ -1400,6 +1413,7 @@ class Email extends Basic
     ////	SAVERS
     /**
      * @param bool $check_notify
+     * @global $current_user
      * @return bool|string
      */
     public function save($check_notify = false)
@@ -1808,6 +1822,8 @@ class Email extends Basic
 
     /**
      * creates the standard "Reply" info at the top of the forwarded message
+     * @global $mod_string
+     * @global $current_user
      * @return string
      */
     public function getReplyHeader()
@@ -1878,6 +1894,7 @@ class Email extends Basic
 
     /**
      * Ensures that the user is able to send outbound emails
+     * @global $current_user
      */
     public function check_email_settings()
     {
@@ -1914,6 +1931,8 @@ class Email extends Basic
 
     /**
      * outputs JS to set fields in the MassUpdate form in the "My Inbox" view
+     * @global $mod_strings
+     * @return string
      */
     public function js_set_archived()
     {
@@ -1994,6 +2013,8 @@ class Email extends Basic
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function pickOneButton()
@@ -2127,6 +2148,7 @@ class Email extends Basic
 
     /**
      * handles attachments of various kinds when sending email
+     * @global $mod_strings
      */
     public function handleAttachments()
     {
@@ -2327,6 +2349,7 @@ class Email extends Basic
 
     /**
      * Handles file attachments with multiple files
+     * @global $mod_strings
      */
     public function handleMultipleFileAttachments()
     {
@@ -2592,6 +2615,7 @@ class Email extends Basic
      * @param object $mail SugarPHPMailer object
      * @param string $mailer_id
      * @param string $ieId
+     * @global $current_user
      * @return object mail SugarPHPMailer object
      */
     public function setMailer($mail, $mailer_id = '', $ieId = '')
@@ -2633,6 +2657,7 @@ class Email extends Basic
     /**
      * Preps SugarPHPMailer object for HTML or Plain text sends
      * @param SugarPHPMailer $mail
+     * @global $current_user
      * @return Email
      */
     public function handleBody($mail)
@@ -2670,6 +2695,7 @@ class Email extends Basic
 
     /**
      * Retrieve function from handlebody() to unit test easily
+     * @sugar_config
      * @param SugarPHPMailer $mail
      */
     public function handleBodyInHTMLformat($mail)
@@ -2699,6 +2725,10 @@ class Email extends Basic
 
     /**
      * Sends Email
+     * @global $mod_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
      * @return bool True on success
      */
     public function send()
@@ -3018,8 +3048,9 @@ class Email extends Basic
         return $query;
     } // fn
 
-
     /**
+     * @global $timedate
+     * @global $mod_strings
      * fill_in_additional_list_fields
      */
     public function fill_in_additional_list_fields()
@@ -3056,6 +3087,8 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $mod_strings
      * fill_in_additional_detail_fields
      */
     public function fill_in_additional_detail_fields()
@@ -3175,6 +3208,11 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $theme
+     * @global $current_user
+     * @global $timedate
+     * @global $mod_strings
      * @return array
      */
     public function get_list_view_data()
@@ -3265,6 +3303,10 @@ class Email extends Basic
     }
 
     /**
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $currentModule
+     * @global $current_language
      * @return string
      */
     public function quickCreateForm()
@@ -3281,6 +3323,11 @@ class Email extends Basic
     }
 
     /**
+     * @global timedate
+     * @global $current_user
+     * @global $beanList
+     * @global $sugar_config
+     * @gloabl $app_strings
      *  Searches all imported emails and returns the result set as an array.
      * @param string $sort
      * @param string $direction
@@ -3402,6 +3449,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the query used for searching imported emails.
      *
      * @return String Query to be executed.
@@ -3455,6 +3503,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the where clause for searching imported emails.
      * @return array|string
      */
@@ -3549,6 +3598,11 @@ class Email extends Basic
 
 
     /**
+     * @global $app_list_strings
+     * @global $app_strings
+     * @global $mod_strings
+     * @global $theme
+     * @global $current_user
      * @param string $where
      * @return string
      */
@@ -3693,6 +3747,8 @@ eoq;
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function userSelectTable()
@@ -3795,7 +3851,9 @@ eoq;
     }
 
     /**
-     * @param sting $type
+     * @global $theme
+     * @global $mod_strings
+     * @param string $type
      * @return string
      */
     public function checkInbox($type)
@@ -4239,6 +4297,10 @@ eoq;
     }
 
     /**
+     * @global $sugar_config
+     * @global $app_list_strings
+     * @global $app_strings
+     * @global $mod_strings
      * @param string $emailField
      * @return string
      */
@@ -4289,6 +4351,8 @@ eoq;
     }
 
     /**
+     * @global $sugar_config
+     * @global $log
      * @param string $id
      */
     private function checkOptInFromEmailAddressId($id = '')
@@ -4312,6 +4376,10 @@ eoq;
     }
 
     /**
+     * @global $sugar_config;
+     * @global $timedate;
+     * @global $log;
+     * @global $db;
      * @param EmailAddress $emailAddress
      * @return bool
      */
