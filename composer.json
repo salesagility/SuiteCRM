@@ -40,7 +40,8 @@
         "lib/",
         "tests/SuiteCRM/",
         "tests/unit/lib/SuiteCRM/"
-      ]
+      ],
+      "Api\\": "Api/"
     }
   },
   "extra": {}
