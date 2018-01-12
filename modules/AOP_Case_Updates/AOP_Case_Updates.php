@@ -142,6 +142,8 @@ class AOP_Case_Updates extends Basic
         $description = SugarCleaner::cleanHtml($this->description);
 
         if (preg_match('/<[^<]+>/', $description, $matches) !== 0) {
+            // remove external warning, if HTML is not valid
+            libxml_use_internal_errors(true);
             $dom = new DOMDocument();
             $dom->loadHTML($description);
             foreach ($dom->getElementsByTagName('head') as $headElement) {
