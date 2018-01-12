@@ -1540,7 +1540,7 @@ class Email extends Basic
                 if (!empty($toaddr)) {
                     $toId = $this->emailAddress->getEmailGUID($toaddr);
                     $this->linkEmailToAddress($toId, 'to');
-                    $this->checkOptInFromEmailAddressId($toId);
+                    $this->sendOptInEmailToEmailAddressById($toId);
                 }
             }
         }
@@ -1555,7 +1555,7 @@ class Email extends Basic
                 if (!empty($ccAddr)) {
                     $ccId = $this->emailAddress->getEmailGUID($ccAddr);
                     $this->linkEmailToAddress($ccId, 'cc');
-                    $this->checkOptInFromEmailAddressId($ccId);
+                    $this->sendOptInEmailToEmailAddressById($ccId);
                 }
             }
         }
@@ -1569,7 +1569,7 @@ class Email extends Basic
                 if (!empty($bccAddr)) {
                     $bccId = $this->emailAddress->getEmailGUID($bccAddr);
                     $this->linkEmailToAddress($bccId, 'bcc');
-                    $this->checkOptInFromEmailAddressId($bccId);
+                    $this->sendOptInEmailToEmailAddressById($bccId);
                 }
             }
         }
@@ -4342,14 +4342,29 @@ eoq;
     }
 
     /**
+     * Send OptIn Email to EmailAddress By Id
+     * return success state or false if it's disabled in config
+     * 
      * @global $sugar_config
      * @global $log
      * @param string $id
+     * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
+     * @return bool
      */
-    private function checkOptInFromEmailAddressId($id = '')
+    private function sendOptInEmailToEmailAddressById($id = '', $sendOptInCheckbox = null)
     {
         global $sugar_config;
         global $log;
+        
+        if(is_null($sendOptInCheckbox)) {
+            if(!isset($_REQUEST['send_opt_in_checkbox'])) {
+                $sendOptInCheckbox = true;
+            } else {
+                $sendOptInCheckbox = $_REQUEST['send_opt_in_checkbox'] == 'true' ? true : false;
+            }
+        }
+        
+        $ret = false;
 
         if ($id === '') {
             $log->fatal('Empty Email Id');
@@ -4359,11 +4374,13 @@ eoq;
             $emailAddress = $emailAddresses->retrieve($id);
             if (
                 ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
-                || ($_REQUEST['send_opt_in_checkbox'] == 'true')
+                || $sendOptInCheckbox
             ) {
-                $this->sendOptInEmail($emailAddress);
+                $ret = $this->sendOptInEmail($emailAddress);
             }
         }
+        
+        return $ret;
     }
 
     /**
