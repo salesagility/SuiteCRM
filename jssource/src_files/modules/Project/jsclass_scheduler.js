@@ -835,14 +835,13 @@ SugarWidgetSchedulerAttendees.form_add_attendees_from_selection_list = function 
 }
 
 SugarWidgetSchedulerAttendees.openSelectorPopup = function (module) {
-  var url = "index.php%3Fmodule%3DAccounts%26action%3DSubPanelViewer%26subpanel%3Dcontacts%26record%3Db1f53412-87c1-38df-02c1-5a4cbf2d75bb%26sugar_body_only%3D1";
   var data = {
     "call_back_function": "SugarWidgetSchedulerAttendees.form_add_attendees_from_selection_list",
-    "form_name": "DetailView",
+    "form_name": "",
     "field_to_name_array": {"id": "subpanel_id"},
     "passthru_data": {
       "child_field": "contacts",
-      "return_url": url,
+      "return_url": "",
       "link_field_name": "contacts",
       "module_name": "contacts",
       "refresh_page": 0
