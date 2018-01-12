@@ -658,7 +658,7 @@ class EmailMan extends SugarBean
         if (
                 $module instanceof Basic &&
                 $sugar_config['email_enable_confirm_opt_in'] &&
-                $module->fromSugarEmailAddressField('email1')->confirm_opt_in
+                $SugarEmailAddress->confirm_opt_in == '0'
         ) {
             global $log;
             $log->warn('An email is not confirmed opt in: '. $module->email1);
@@ -1011,7 +1011,7 @@ class EmailMan extends SugarBean
         $query = 'SELECT * '
                 .'FROM email_addr_bean_rel '
                 .'JOIN email_addresses on email_addr_bean_rel.email_address_id = email_addresses.id '
-                .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\'';
+                .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\' AND email_addr_bean_rel.deleted=0';
 
         $result = $bean->db->query($query);
         $row = $this->db->fetchByAssoc($result);
@@ -1038,7 +1038,7 @@ class EmailMan extends SugarBean
 
         $query = 'SELECT * '
                 .'FROM email_addr_bean_rel '
-                .'WHERE bean_id = \''.$bean->id .'\'';
+                .'WHERE bean_id = \''.$bean->id .'\' and email_addr_bean_rel.deleted = 0';
 
         $result = $bean->db->query($query);
         $row = $this->db->fetchByAssoc($result);
