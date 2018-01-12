@@ -4390,7 +4390,7 @@ eoq;
         }
 
 
-        if (!$sugar_config['aop']['confirmed_opt_in_template_id']) {
+        if (!$sugar_config['email_templates']['confirmed_opt_in_template_id']) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
 
             return false;
@@ -4408,7 +4408,7 @@ eoq;
 
         $params = array(
             'individual_email' => '1',
-            'email_template' => $sugar_config['aop']['confirmed_opt_in_template_id'],
+            'email_template' => $sugar_config['email_templates']['confirmed_opt_in_template_id'],
             'email_to_type' => array(
                 0 => 'to',
             ),
