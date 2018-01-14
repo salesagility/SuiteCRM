@@ -410,51 +410,51 @@ eoq;
         $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" '
             . 'data-record-id="" data-module-name=""  data-email-address="">';
 
-            if (is_array($emailField)) {
-                $emailFields = $emailField;
-            } else {
-                $emailFields = array($emailField);
-            }
+        if (is_array($emailField)) {
+            $emailFields = $emailField;
+        } else {
+            $emailFields = array($emailField);
+        }
 
 
-            if($checkAllEmail) {
-                $i = 1;
+        if ($checkAllEmail) {
+            $i = 1;
+            $emailField = 'email' . $i;
+            while (isset($myBean->{$emailField})) {
+                $emailFields[] = $emailField;
+                $i++;
                 $emailField = 'email' . $i;
-                while(isset($myBean->{$emailField})) {
-                    $emailFields[] = $emailField;
-                    $i++;
-                    $emailField = 'email' . $i;
-                }
-                $emailFields = array_unique($emailFields);
             }
+            $emailFields = array_unique($emailFields);
+        }
 
-            foreach ($emailFields as $emailField) {
-                if (!empty($composeData)) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+        foreach ($emailFields as $emailField) {
+            if (!empty($composeData)) {
+                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
                     data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
-                        $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
-                        '"  data-email-address="' . $composeData['to_addrs'] . '">';
-                } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+                    $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
+                    '"  data-email-address="' . $composeData['to_addrs'] . '">';
+            } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
+                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
                     data-module="' . $myBean->module_name . '" ' . 'data-record-id="' .
-                        $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' .
-                        $myBean->{$emailField} . '">';
-                } else {
-                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                    $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' .
+                    $myBean->{$emailField} . '">';
+            } else {
+                $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+            }
+            $optOut = false;
+            if (isset($myBean->emailAddress->addresses)) {
+                $addresses = $myBean->emailAddress->addresses;
+                foreach ($addresses as $address) {
+                    if ($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                        $optOut = true;
+                    }
                 }
-                $optOut = false;
-                if (isset($myBean->emailAddress->addresses)) {
-                    $addresses = $myBean->emailAddress->addresses;
-                    foreach ($addresses as $address) {
-                        if ($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
-                            $optOut = true;
-                        }
-                    }
-                    if (!$optOut) {
-                        break;
-                    }
+                if (!$optOut) {
+                    break;
                 }
             }
+        }
 
         return $emailLink;
     }

@@ -88,33 +88,33 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
 				$client = $defaultPref;
 			}
 
-			if($client == 'sugar')
-			{
-			    $composeData = array(
-			        'load_id' => $layout_def['fields']['ID'],
-                    'load_module' => $this->layout_manager->defs['module_name'],
-                    'parent_type' => $this->layout_manager->defs['module_name'],
-                    'parent_id' => $layout_def['fields']['ID'],
-			        'to_addrs' => $layout_def['fields']['EMAIL1'],
-			        'return_module' => $module,
-			        'return_action' => $action,
-			        'return_id' => $record
-			    );
-                if(isset($layout_def['fields']['FULL_NAME'])){
-                    $composeData['parent_name'] = $layout_def['fields']['FULL_NAME'];
-                    $composeData['to_email_addrs'] = sprintf("%s <%s>", $layout_def['fields']['FULL_NAME'], $layout_def['fields']['EMAIL1']);
-                } else {
-                    $composeData['to_email_addrs'] = $layout_def['fields']['EMAIL1'];
-                }
-                require_once('modules/Emails/EmailUI.php');
-                $emailUi = new EmailUI();
-                $link = $emailUi->populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true,
-                    $composeData);
-			} else {
-				$link = '<a href="mailto:' . $value .'" >';
-			}
+        if ($client == 'sugar') {
+            $composeData = array(
+                'load_id' => $layout_def['fields']['ID'],
+                'load_module' => $this->layout_manager->defs['module_name'],
+                'parent_type' => $this->layout_manager->defs['module_name'],
+                'parent_id' => $layout_def['fields']['ID'],
+                'to_addrs' => $layout_def['fields']['EMAIL1'],
+                'return_module' => $module,
+                'return_action' => $action,
+                'return_id' => $record
+            );
+            if (isset($layout_def['fields']['FULL_NAME'])) {
+                $composeData['parent_name'] = $layout_def['fields']['FULL_NAME'];
+                $composeData['to_email_addrs'] = sprintf("%s <%s>", $layout_def['fields']['FULL_NAME'],
+                    $layout_def['fields']['EMAIL1']);
+            } else {
+                $composeData['to_email_addrs'] = $layout_def['fields']['EMAIL1'];
+            }
+            require_once('modules/Emails/EmailUI.php');
+            $emailUi = new EmailUI();
+            $link = $emailUi->populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true,
+                $composeData);
+        } else {
+            $link = '<a href="mailto:' . $value . '" >';
+        }
 
-			return $link.$value.'</a>';
+        return $link . $value . '</a>';
 
 	}
 } // end class def
