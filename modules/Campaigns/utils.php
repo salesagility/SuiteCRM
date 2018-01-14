@@ -127,6 +127,25 @@ function get_campaign_mailboxes_with_stored_options() {
 	return $ret;
 }
 
+function get_campaign_mailboxes_with_stored_options_outbound() {
+	$ret = array();
+
+    if(!class_exists('OutboundEmail')) {
+        require('modules/OutboundEmail/OutboundEmail.php');
+    }
+
+    $q = "SELECT * FROM outbound_email WHERE deleted='0'";
+
+    $db = DBManagerFactory::getInstance();
+
+    $r = $db->query($q);
+
+    while($a = $db->fetchByAssoc($r)) {
+        $ret[$a['id']] = $a;
+    }
+	return $ret;
+}
+
 function log_campaign_activity($identifier, $activity, $update=true, $clicked_url_key=null) {
 
     $return_array = array();

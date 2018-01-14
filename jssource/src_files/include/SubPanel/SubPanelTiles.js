@@ -283,12 +283,30 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     }
 
     current_subpanel_url = url;
-    var returnstuff = http_fetch_sync(url + '&inline=' + inline + '&ajaxSubpanel=true');
-    request_id++;
-    got_data(returnstuff, inline);
-    if ($('#whole_subpanel_' + child_field).hasClass('panel panel-default sub-panel')) {
-      $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
-    }
+
+    var loadingImg = '<img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif">';
+    $("#list_subpanel_" + child_field.toLowerCase()).html(loadingImg);
+
+    $.ajax({
+      type: "GET",
+      async: true,
+      cache: false,
+      url: url + '&inline=' + inline + '&ajaxSubpanel=true',
+      success: function(data) {
+        request_map[request_id] = child_field;
+        var returnstuff = {
+          "responseText": data,
+          "responseXML": '',
+          "request_id": request_id
+        };
+        got_data(returnstuff, inline);
+        if ($('#whole_subpanel_' + child_field).hasClass('useFooTable')) {
+          $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
+        }
+        request_id++;
+      }
+    });
+
   } else {
 
     var subpanel = document.getElementById('subpanel_' + child_field);

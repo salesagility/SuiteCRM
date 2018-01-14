@@ -1186,9 +1186,17 @@ function insert_default_settings(){
     global $setup_sugar_version;
     global $sugar_db_version;
 
+    $fromAddress = 'do_not_reply@example.com';
+    if (isset($_SESSION['smtp_from_addr']) && $_SESSION['smtp_from_addr']) {
+        $fromAddress = $_SESSION['smtp_from_addr'];
+    }
+    $fromName = 'SuiteCRM';
+    if (isset($_SESSION['smtp_from_name']) && $_SESSION['smtp_from_name']) {
+        $fromName = $_SESSION['smtp_from_name'];
+    }
 
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
-    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', '$fromAddress')");
+    $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', '$fromName')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
     $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");
@@ -1855,44 +1863,6 @@ if ( !function_exists('validate_manifest') ) {
         }
 
         return true; // making this a bit more relaxed since we updated the language extraction and merge capabilities
-
-        /*
-        if( isset($manifest['acceptable_sugar_versions']) ){
-            $version_ok = false;
-            $matches_empty = true;
-            if( isset($manifest['acceptable_sugar_versions']['exact_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['exact_matches'] as $match ){
-                    if( $match == $sugar_version ){
-                        $version_ok = true;
-                    }
-                }
-            }
-            if( !$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['regex_matches'] as $match ){
-                    if( preg_match( "/$match/", $sugar_version ) ){
-                        $version_ok = true;
-                    }
-                }
-            }
-
-            if( !$matches_empty && !$version_ok ){
-                die( $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version );
-            }
-        }
-
-        if( isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0 ){
-            $flavor_ok = false;
-            foreach( $manifest['acceptable_sugar_flavors'] as $match ){
-                if( $match == $sugar_flavor ){
-                    $flavor_ok = true;
-                }
-            }
-            if( !$flavor_ok ){
-                //die( $mod_strings['ERROR_FLAVOR_INCOMPATIBLE'] . $sugar_flavor );
-            }
-        }*/
     }
 }
 

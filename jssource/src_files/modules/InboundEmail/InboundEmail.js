@@ -268,6 +268,7 @@ function getFoldersListForInboundAccount(module_name, action, pageTarget, width,
     if (Connect.url) URL = Connect.url + "&" +  url;
     Connect.asyncRequest("POST", URL, {success:SI.listDlg._updateContent, failure:SI.listDlg.hide, scope:SI.listDlg});
     SI.listDlg.show();
+    SI.listDlg.center();
 
 } // fn
 

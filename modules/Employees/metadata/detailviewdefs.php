@@ -159,13 +159,11 @@ array (
         ),
         5 => 
         array (
-          0 => '',
-          1 => 'phone_fax',
+          0 => 'phone_fax',
         ),
         6 => 
         array (
-          0 => '',
-          1 => 'phone_home',
+          0 => 'phone_home',
         ),
         7 => 
         array (

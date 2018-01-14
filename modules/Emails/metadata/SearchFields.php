@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,11 +42,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once "include/utils/additional_details.php";
+$module_name = 'Emails';
+$searchFields[$module_name] = array(
+    'name' => array('query_type' => 'default'),
+    'current_user_only' => array(
+        'query_type' => 'default',
+        'db_field' => array('assigned_user_id'),
+        'my_items' => true,
+        'vname' => 'LBL_CURRENT_USER_FILTER',
+        'type' => 'bool',
+    ),
+    'assigned_user_id' => array('query_type' => 'default'),
+    'category_id' => array(
+        'query_type' => 'default',
+        'options' => 'email_category_dom',
+        'template_var' => 'CATEGORY_OPTIONS',
+    ),
 
-
-function additionalDetailsFP_events($fields = array(), SugarBean $bean = null, $params = array())
-{
-    return additional_details($fields, $bean, $params);
-}
-
+    //Range Search Support
+    'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+    'start_range_date_entered' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    'end_range_date_entered' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    'range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+    'start_range_date_modified' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    'end_range_date_modified' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    //Range Search Support
+);

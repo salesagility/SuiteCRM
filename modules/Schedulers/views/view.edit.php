@@ -61,7 +61,7 @@ class SchedulersViewEdit extends ViewEdit {
     /**
 	 * @see SugarView::_getModuleTitleListParam()
 	 */
-	protected function _getModuleTitleListParam()
+	protected function _getModuleTitleListParam($browserTitle = false)
 	{
 	    global $mod_strings;
 

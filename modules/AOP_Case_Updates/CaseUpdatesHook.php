@@ -296,7 +296,7 @@ class CaseUpdatesHook
             return;
         }
         $case = BeanFactory::getBean('Cases', $caseId);
-        if (!empty($case->id)) {
+        if (empty($case->id)) {
             return;
         }
         if (array_key_exists($case->status, $statusMap)) {
