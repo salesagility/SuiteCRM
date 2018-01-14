@@ -73,11 +73,8 @@ class ConfirmOptIn
      */
     public function display()
     {
-        global $app_list_strings, $app_strings, $mod_strings;
+        
         $template = new Sugar_Smarty();
-        $template->assign('APP_LIST_STRINGS', $app_list_strings);
-        $template->assign('APP', $app_strings);
-        $template->assign('MOD', $mod_strings);
         $template->assign('FOCUS', $this->emailAddress);
 
         return $template->fetch('include/SugarObjects/templates/basic/tpls/entrypoints_confirm_opt_in.tpl');

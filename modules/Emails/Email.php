@@ -1540,7 +1540,7 @@ class Email extends Basic
                 if (!empty($toaddr)) {
                     $toId = $this->emailAddress->getEmailGUID($toaddr);
                     $this->linkEmailToAddress($toId, 'to');
-                    $this->checkOptInFromEmailAddressId($toId);
+                    $this->sendOptInEmailToEmailAddressById($toId);
                 }
             }
         }
@@ -1555,7 +1555,7 @@ class Email extends Basic
                 if (!empty($ccAddr)) {
                     $ccId = $this->emailAddress->getEmailGUID($ccAddr);
                     $this->linkEmailToAddress($ccId, 'cc');
-                    $this->checkOptInFromEmailAddressId($ccId);
+                    $this->sendOptInEmailToEmailAddressById($ccId);
                 }
             }
         }
@@ -1569,7 +1569,7 @@ class Email extends Basic
                 if (!empty($bccAddr)) {
                     $bccId = $this->emailAddress->getEmailGUID($bccAddr);
                     $this->linkEmailToAddress($bccId, 'bcc');
-                    $this->checkOptInFromEmailAddressId($bccId);
+                    $this->sendOptInEmailToEmailAddressById($bccId);
                 }
             }
         }
@@ -4298,26 +4298,17 @@ eoq;
 
     /**
      * @global $sugar_config
-     * @global $app_list_strings
-     * @global $app_strings
-     * @global $mod_strings
      * @param string $emailField
      * @return string
      */
     public function getEmailAddressConfirmOptInTick($emailField)
     {
         global $sugar_config;
-        global $app_list_strings;
-        global $app_strings;
-        global $mod_strings;
 
         $tickHtml = '';
 
         if ($sugar_config['email_enable_confirm_opt_in']) {
             $template = new Sugar_Smarty();
-            $template->assign('APP', $app_strings);
-            $template->assign('APP_LIST_STRINGS', $app_list_strings);
-            $template->assign('MOD', $mod_strings);
             $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
             $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
         }
@@ -4351,41 +4342,60 @@ eoq;
     }
 
     /**
+     * Send OptIn Email to EmailAddress By Id
+     * return success state or false if it's disabled in config
+     * 
      * @global $sugar_config
      * @global $log
      * @param string $id
+     * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
+     * @return bool
      */
-    private function checkOptInFromEmailAddressId($id = '')
+    private function sendOptInEmailToEmailAddressById($id, $sendOptInCheckbox = null)
     {
         global $sugar_config;
         global $log;
+        
+        if(is_null($sendOptInCheckbox)) {
+            if(!isset($_REQUEST['send_opt_in_checkbox'])) {
+                $sendOptInCheckbox = true;
+            } else {
+                $sendOptInCheckbox = $_REQUEST['send_opt_in_checkbox'] == 'true' ? true : false;
+            }
+        }
+        
+        $ret = false;
 
-        if ($id === '') {
+        if (!$id) {
             $log->fatal('Empty Email Id');
-        } elseif ($sugar_config['email_enable_auto_send_opt_in']) {
+        } elseif (isset($sugar_config['email_enable_auto_send_opt_in']) && $sugar_config['email_enable_auto_send_opt_in']) {
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
             if (
                 ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
-                || ($_REQUEST['send_opt_in_checkbox'] == 'true')
+                || $sendOptInCheckbox
             ) {
-                $this->sendOptInEmail($emailAddress);
+                $ret = $this->sendOptInEmail($emailAddress);
             }
         }
+        
+        return $ret;
     }
 
     /**
-     * @global $sugar_config;
-     * @global $timedate;
-     * @global $log;
-     * @global $db;
+     * @global array $sugar_config
+     * @global array $app_strings
+     * @global SugarDateTime $timedate
+     * @global LoggerManager $log
+     * @global DBManager $db
      * @param EmailAddress $emailAddress
      * @return bool
      */
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $sugar_config;
+        global $app_strings;
         global $timedate;
         global $log;
         global $db;
@@ -4401,10 +4411,10 @@ eoq;
 
         if (!$sugar_config['aop']['confirmed_opt_in_template_id']) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
-
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
             return false;
         }
-
+        
 
         if (!$this->parent_name || !$this->parent_type) {
             $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';

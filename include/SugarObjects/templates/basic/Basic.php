@@ -206,7 +206,7 @@ class Basic extends SugarBean
 
         $tickHtml = '';
 
-        if ($sugar_config['email_enable_confirm_opt_in']) {
+        if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in']) {
             $template = new Sugar_Smarty();
             $template->assign('APP', $app_strings);
             $template->assign('APP_LIST_STRINGS', $app_list_strings);

@@ -42,8 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $app_strings;
-
 $themedef = array(
     'name' => 'Suite P',
     'description' => 'SuiteCRM Responsive Theme',
@@ -63,15 +61,21 @@ $themedef = array(
         'sub_themes' => array(
             'vname' => 'LBL_SUBTHEME_OPTIONS',
             'type' => 'select',
-            'options' => array(
-                $app_strings['LBL_SUBTHEMES'] => array(
-                    'Dawn'  => $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'],
-                    'Day'   => $app_strings['LBL_SUBTHEME_OPTIONS_DAY'],
-                    'Dusk'  => $app_strings['LBL_SUBTHEME_OPTIONS_DUSK'],
-                    'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
-                ),
-            ),
-            'default' => 'Dawn',
         ),
     ),
 );
+
+
+global $app_strings;
+
+if (!empty($app_strings)) {
+    $themedef['config_options']['sub_themes']['options'] = array(
+        $app_strings['LBL_SUBTHEMES'] => array(
+            'Dawn' => $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'],
+            'Day' => $app_strings['LBL_SUBTHEME_OPTIONS_DAY'],
+            'Dusk' => $app_strings['LBL_SUBTHEME_OPTIONS_DUSK'],
+            'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
+        ),
+    );
+    $themedef['config_options']['sub_themes']['default'] = $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'];
+}
