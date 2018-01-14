@@ -2401,7 +2401,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_PRE_ADD].'(PCLZIP_CB_PRE_ADD, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_POST_ADD](PCLZIP_CB_POST_ADD, $v_local_header);
       if ($v_result == 0) {
         // ----- Change the file status
         $p_header['status'] = "skipped";
@@ -2544,7 +2544,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_POST_ADD].'(PCLZIP_CB_POST_ADD, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_POST_ADD](PCLZIP_CB_POST_ADD, $v_local_header);
       if ($v_result == 0) {
         // ----- Ignored
         $v_result = 1;
@@ -3306,7 +3306,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_PRE_EXTRACT].'(PCLZIP_CB_PRE_EXTRACT, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_PRE_EXTRACT](PCLZIP_CB_PRE_EXTRACT, $v_local_header);
       if ($v_result == 0) {
         // ----- Change the file status
         $p_entry['status'] = "skipped";
@@ -3580,7 +3580,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_POST_EXTRACT].'(PCLZIP_CB_POST_EXTRACT, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_POST_EXTRACT](PCLZIP_CB_POST_EXTRACT, $v_local_header);
 
       // ----- Look for abort result
       if ($v_result == 2) {
@@ -3630,7 +3630,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_PRE_EXTRACT].'(PCLZIP_CB_PRE_EXTRACT, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_PRE_EXTRACT](PCLZIP_CB_PRE_EXTRACT, $v_local_header);
       if ($v_result == 0) {
         // ----- Change the file status
         $p_entry['status'] = "skipped";
@@ -3706,7 +3706,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Call the callback
       // Here I do not use call_user_func() because I need to send a reference to the
       // header.
-      eval('$v_result = '.$p_options[PCLZIP_CB_POST_EXTRACT].'(PCLZIP_CB_POST_EXTRACT, $v_local_header);');
+        $v_result = $p_options[PCLZIP_CB_POST_EXTRACT](PCLZIP_CB_POST_EXTRACT, $v_local_header);
 
       // ----- Look for abort result
       if ($v_result == 2) {

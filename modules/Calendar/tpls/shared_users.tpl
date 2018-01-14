@@ -110,7 +110,6 @@
 				<h4 class="modal-title">{$MOD.LBL_EDIT_USERLIST}</h4>
 			</div>
 			<div class="modal-body">
-				<!--->
 				<div class="container-fluid">
 					<div class="panel panel-default ">
 						<div class="panel-heading  panel-heading-collapse">
@@ -151,7 +150,6 @@
 						</div>
 					</div>
 				</div>
-				<!--->
 			</div>
 			<div class="modal-footer">
 				<button id="sharedCalUsersSelectBtn" data-dismiss="modal" class="btn btn-default" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>

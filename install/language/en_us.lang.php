@@ -149,7 +149,6 @@ $mod_strings = array(
 	'LBL_UPLOAD_MAX_FILESIZE_TITLE'     => 'Upload File Size',
 	'ERR_URL_BLANK'						=> 'Provide the base URL for the SuiteCRM instance.',
 	'ERR_UW_NO_UPDATE_RECORD'			=> 'Could not locate installation record of',
-	'ERROR_FLAVOR_INCOMPATIBLE'			=> 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
 	'ERROR_LICENSE_EXPIRED'				=> "Error: Your license expired ",
 	'ERROR_LICENSE_EXPIRED2'			=> " day(s) ago. Please go to the <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  in the Admin screen to enter your new license key. If you do not enter a new license key within 30 days of your license key expiration, you will no longer be able to log in to this application.",
 	'ERROR_MANIFEST_TYPE'				=> 'Manifest file must specify the package type.',
@@ -585,6 +584,9 @@ $contact_user_link_guid',
 	),
 
 	// SMTP settings
+    
+    'LBL_FROM_NAME' => '"From" Name:',
+    'LBL_FROM_ADDR' => '"From" Address:',
 
 	'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from SuiteCRM, as sent from the specified email account.',
 	'LBL_CHOOSE_EMAIL_PROVIDER'        => 'Choose your Email provider:',
@@ -651,7 +653,7 @@ $contact_user_link_guid',
 	'LBL_DECIMAL_SEP' => 'Decimal symbol:',
 	'LBL_NAME_FORMAT' => 'Name Format:',
 	'UPLOAD_LOGO' => 'Please wait, logo uploading..',
-	'ERR_UPLOAD_FILETYPE' => 'File type do not allowed, please upload a jpeg or png.',
+	'ERR_UPLOAD_FILETYPE' => 'File type not allowed, please upload a jpeg or png.',
 	'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occured.',
 	'ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
 	'ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',

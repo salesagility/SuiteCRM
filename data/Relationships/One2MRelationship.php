@@ -158,9 +158,9 @@ class One2MRelationship extends M2MRelationship
             } else { // For non self-referencing, remove all the relationships from the many (RHS) side
             	$this->removeAll($rhs->$rhsLinkName);
             }
-            
+
             // Add relationship
-            parent::add($lhs, $rhs, $additionalFields);
+            return parent::add($lhs, $rhs, $additionalFields);
         }
     }
 

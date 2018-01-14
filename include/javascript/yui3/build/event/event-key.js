@@ -1,11 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('event-key',function(Y){Y.Env.evt.plugins.key={on:function(type,fn,id,spec,o){var a=Y.Array(arguments,0,true),parsed,etype,criteria,ename;parsed=spec&&spec.split(':');if(!spec||spec.indexOf(':')==-1||!parsed[1]){a[0]='key'+((parsed&&parsed[0])||'press');return Y.on.apply(Y,a);}
-etype=parsed[0];criteria=(parsed[1])?parsed[1].split(/,|\+/):null;ename=(Y.Lang.isString(id)?id:Y.stamp(id))+spec;ename=ename.replace(/,/g,'_');if(!Y.getEvent(ename)){Y.on(type+etype,function(e){var passed=false,failed=false,i,crit,critInt;for(i=0;i<criteria.length;i=i+1){crit=criteria[i];critInt=parseInt(crit,10);if(Y.Lang.isNumber(critInt)){if(e.charCode===critInt){passed=true;}else{failed=true;}}else if(passed||!failed){passed=(e[crit+'Key']);failed=!passed;}}
-if(passed){Y.fire(ename,e);}},id);}
-a.splice(2,2);a[0]=ename;return Y.on.apply(Y,a);}};},'3.3.0',{requires:['node-base']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("event-key",function(a){a.Env.evt.plugins.key={on:function(e,g,b,k,c){var i=a.Array(arguments,0,true),f,j,h,d;f=k&&k.split(":");if(!k||k.indexOf(":")==-1||!f[1]){i[0]="key"+((f&&f[0])||"press");return a.on.apply(a,i);}j=f[0];h=(f[1])?f[1].split(/,|\+/):null;d=(a.Lang.isString(b)?b:a.stamp(b))+k;d=d.replace(/,/g,"_");if(!a.getEvent(d)){a.on(e+j,function(p){var q=false,m=false,n,l,o;for(n=0;n<h.length;n=n+1){l=h[n];o=parseInt(l,10);if(a.Lang.isNumber(o)){if(p.charCode===o){q=true;}else{m=true;}}else{if(q||!m){q=(p[l+"Key"]);m=!q;}}}if(q){a.fire(d,p);}},b);}i.splice(2,2);i[0]=d;return a.on.apply(a,i);}};},"3.3.0",{requires:["node-base"]});

@@ -63,11 +63,11 @@ class SchedulersViewEdit extends ViewEdit
     }
 
     /**
-     * @see SugarView::_getModuleTitleListParam()
-     */
-    protected function _getModuleTitleListParam($browserTitle = false)
-    {
-        global $mod_strings;
+	 * @see SugarView::_getModuleTitleListParam()
+	 */
+	protected function _getModuleTitleListParam($browserTitle = false)
+	{
+	    global $mod_strings;
 
         return "<a href='index.php?module=Schedulers&action=index'>" . $mod_strings['LBL_MODULE_TITLE'] . "</a>";
     }

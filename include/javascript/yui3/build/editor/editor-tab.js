@@ -1,9 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('editor-tab',function(Y){var EditorTab=function(){EditorTab.superclass.constructor.apply(this,arguments);},HOST='host';Y.extend(EditorTab,Y.Base,{_onNodeChange:function(e){var action='indent';if(e.changedType==='tab'){if(!e.changedNode.test('li, li *')){e.changedEvent.halt();e.preventDefault();if(e.changedEvent.shiftKey){action='outdent';}
-this.get(HOST).execCommand(action,'');}}},initializer:function(){this.get(HOST).on('nodeChange',Y.bind(this._onNodeChange,this));}},{NAME:'editorTab',NS:'tab',ATTRS:{host:{value:false}}});Y.namespace('Plugin');Y.Plugin.EditorTab=EditorTab;},'3.3.0',{requires:['editor-base'],skinnable:false});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("editor-tab",function(C){var B=function(){B.superclass.constructor.apply(this,arguments);},A="host";C.extend(B,C.Base,{_onNodeChange:function(E){var D="indent";if(E.changedType==="tab"){if(!E.changedNode.test("li, li *")){E.changedEvent.halt();E.preventDefault();if(E.changedEvent.shiftKey){D="outdent";}this.get(A).execCommand(D,"");}}},initializer:function(){this.get(A).on("nodeChange",C.bind(this._onNodeChange,this));}},{NAME:"editorTab",NS:"tab",ATTRS:{host:{value:false}}});C.namespace("Plugin");C.Plugin.EditorTab=B;},"3.3.0",{requires:["editor-base"],skinnable:false});

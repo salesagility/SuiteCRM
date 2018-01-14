@@ -31,50 +31,38 @@ $chart = <<<EOD
                     if(dataPoints !== undefined && dataPoints.length > 0)
                         largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
 
-                    if(largest === null || largest < maxYForSmallNumbers)
-                        largest = maxYForSmallNumbers;
-                    return(largest);
+                    if (largest === null || largest < maxYForSmallNumbers) {
+                      return maxYForSmallNumbers;
+                    }
+                    return(null);
                 }
 
             function resizeGraph(graph)
             {
-                var maxWidth = 900;
-                var maxHeight = 500;
-                var maxTextSize = 10;
-
-                if($(window).width() * 0.8 > maxWidth)
-                    graph.width  = maxWidth;
-                else
-                    graph.width = $(window).width() * 0.8;
-                if($(window).width() * 0.5 > maxHeight)
-                    graph.height = maxHeight;
-                else
-                    graph.height = $(window).width() * 0.5;
-
-
-
-                var text_size = Math.min(12, ($(window).width() / 1000) * 10 );
-                if(text_size > maxTextSize) text_size = maxTextSize;
-                graph.__object__["properties"]["chart.text.size"] = text_size;
-                graph.__object__["properties"]["chart.key.text.size"] = text_size;
-
-                RGraph.redrawCanvas(graph);
+              var maxHeight = 500;
+              var maxTextSize = 10;
+    
+              graph.width = $(graph).parent().width();
+              graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
+    
+              var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
+              graph.__object__["properties"]["chart.text.size"] = text_size;
+              graph.__object__["properties"]["chart.key.text.size"] = text_size;
+                
+              RGraph.redrawCanvas(graph);
             }
 
             function resizeGraphs()
             {
-
-
-             var graphs = $(".resizableCanvas");
-             $.each(graphs,function(i,v){
+              var graphs = $(".resizableCanvas");
+              $.each(graphs,function(i,v){
                 resizeGraph(v);
-
-             });
+              });
             }
 
             $(window).resize(function ()
             {
-                resizeGraphs();
+              resizeGraphs();
             });
 
 

@@ -85,7 +85,7 @@ $dictionary['AOS_PDF_Templates'] = array(
             array(
                 'name' => 'description',
                 'vname' => 'LBL_DESCRIPTION',
-                'type' => 'html',
+                'type' => 'longtext',
                 'comment' => 'Full text of the note',
                 'rows' => '6',
                 'cols' => '80',
