@@ -1014,7 +1014,7 @@ EOQ;
         }
 
         if ($onelower && strtoupper($newPassword) === $newPassword) {
-            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+            $messages[] = $mod_strings['ERR_PASSWORD_ONELOWER'];
         }
 
         if ($onenumber && !preg_match('/[0-9]/', $newPassword)) {
