@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
 
@@ -1305,16 +1309,23 @@ protected function checkQuery($sql, $object_name = false)
      *
      * @deprecated
      *
-     * @param  SugarBean $bean         the bean from which table we will generate insert stmts
-     * @param  string $select_query the query which will give us the set of objects we want to place into our insert statement
-     * @param  int    $start        the first row to query
-     * @param  int    $count        the number of rows to query
-     * @param  string $table        the table to query from
+     * @param  SugarBean $bean the bean from which table we will generate insert stmts
+     * @param  string $select_query the query which will give us the set of objects that
+     * we want to place into our insert statement
+     * @param  int $start the first row to query
+     * @param  int $count the number of rows to query
+     * @param  string $table the table to query from
      * @param bool $is_related_query
      * @return string SQL insert statement
      */
-	public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table, $is_related_query = false)
-	{
+    public function generateInsertSQL(
+        SugarBean $bean,
+        $select_query,
+        $start,
+        $count = -1,
+        $table = null,
+        $is_related_query = false
+    ) {
 		$this->log->info('call to DBManager::generateInsertSQL() is deprecated');
 		global $sugar_config;
 
@@ -2518,16 +2529,16 @@ protected function checkQuery($sql, $object_name = false)
 		}
 	}
 
-	/**
-	 * Returns SQL defintions for all columns in a table
-	 *
-	 * @param  array  $fieldDefs  Vardef-format field def
-	 * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
-	 * @param  string $tablename      Optional, table name
-	 * @return string SQL column definitions
-	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired = false, $tablename)
-	{
+    /**
+     * Returns SQL defintions for all columns in a table
+     *
+     * @param  array $fieldDefs Vardef-format field def
+     * @param  bool $ignoreRequired Optional, true if we should ignor this being a required field
+     * @param  string $tablename Optional, table name
+     * @return string SQL column definitions
+     */
+    protected function columnSQLRep($fieldDefs, $ignoreRequired = false, $tablename = null)
+    {
 		$columns = array();
 
 		if ($this->isFieldArray($fieldDefs)) {

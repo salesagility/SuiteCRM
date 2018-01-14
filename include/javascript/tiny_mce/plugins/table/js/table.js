@@ -8,6 +8,7 @@ function insertTable() {
 	var cols = 2, rows = 2, border = 0, cellpadding = -1, cellspacing = -1, align, width, height, className, caption, frame, rules;
 	var html = '', capEl, elm;
 	var cellLimit, rowLimit, colLimit;
+	var cellStyles, newCellStyles, parsedStyles;
 
 	tinyMCEPopup.restoreSelection();
 
@@ -21,9 +22,9 @@ function insertTable() {
 	// Get form data
 	cols = formObj.elements['cols'].value;
 	rows = formObj.elements['rows'].value;
-	border = formObj.elements['border'].value != "" ? formObj.elements['border'].value : 0;
-	cellpadding = formObj.elements['cellpadding'].value != "" ? formObj.elements['cellpadding'].value : "";
-	cellspacing = formObj.elements['cellspacing'].value != "" ? formObj.elements['cellspacing'].value : "";
+	border = formObj.elements['border'].value !== "" ? formObj.elements['border'].value : "";
+	cellpadding = formObj.elements['cellpadding'].value !== "" ? formObj.elements['cellpadding'].value : "";
+	cellspacing = formObj.elements['cellspacing'].value !== "" ? formObj.elements['cellspacing'].value : "";
 	align = getSelectValue(formObj, "align");
 	frame = getSelectValue(formObj, "tframe");
 	rules = getSelectValue(formObj, "rules");
@@ -58,20 +59,6 @@ function insertTable() {
 
 	// Update table
 	if (action == "update") {
-		dom.setAttrib(elm, 'cellPadding', cellpadding, true);
-		dom.setAttrib(elm, 'cellSpacing', cellspacing, true);
-
-		if (!isCssSize(border)) {
-			dom.setAttrib(elm, 'border', border);
-		} else {
-			dom.setAttrib(elm, 'border', '');
-		}
-
-		if (border == '') {
-			dom.setStyle(elm, 'border-width', '');
-			dom.setStyle(elm, 'border', '');
-			dom.setAttrib(elm, 'border', '');
-		}
 
 		dom.setAttrib(elm, 'align', align);
 		dom.setAttrib(elm, 'frame', frame);
@@ -128,12 +115,54 @@ function insertTable() {
 				elm.style.width = getCSSSize(width);
 		}*/
 
-		if (bordercolor != "") {
-			elm.style.borderColor = bordercolor;
-			elm.style.borderStyle = elm.style.borderStyle == "" ? "solid" : elm.style.borderStyle;
-			elm.style.borderWidth = cssSize(border);
-		} else
-			elm.style.borderColor = '';
+		if (!inst.settings.table_style_by_css) {
+			dom.setAttrib(elm, 'cellPadding', nonCssSize(cellpadding), true);
+		} else {
+			dom.setAttrib(elm, 'cellPadding', '');
+		}
+
+		if (cellspacing !== "") {
+			elm.style.borderSpacing = cssSize(cellspacing);
+		} else {
+			elm.style.borderSpacing = "";
+		}
+
+		if (!inst.settings.table_style_by_css && !isCssSize(border)) {
+			dom.setAttrib(elm, 'border', border);
+		} else if (inst.settings.table_style_by_css || (border !== '' && isCssSize(border))) {
+			dom.setAttrib(elm, 'border', '');
+		}
+
+		if (border === "") {
+			dom.setStyle(elm, 'border-width', '');
+			dom.setStyle(elm, 'border', '');
+			dom.setAttrib(elm, 'border', '');
+		}
+
+		elm.style.borderColor = bordercolor;
+
+		if (inst.settings.table_style_by_css) {
+
+			parsedStyles = dom.parseStyle(style);
+
+			if (parsedStyles.border) {
+				styleTDTH(elm, "border", parsedStyles.border);
+			}
+			if (border !== "") {
+				styleTDTH(elm, "border-width", cssSize(border));
+			} else {
+				styleTDTH(elm, "border-width", '');
+			}
+			if (cellpadding !== "") {
+				styleTDTH(elm, "padding", cssSize(cellpadding));
+			} else {
+				styleTDTH(elm, "padding", '');
+			}
+
+			styleTDTH(elm, "border-color", bordercolor);
+
+			styleTDTH(elm, "border-style", elm.style.borderStyle);
+		}
 
 		elm.style.backgroundColor = bgcolor;
 		elm.style.height = getCSSSize(height);
@@ -158,12 +187,14 @@ function insertTable() {
 	html += '<table';
 
 	html += makeAttrib('id', id);
-	if (!isCssSize(border)) {
+	if (!inst.settings.table_style_by_css && !isCssSize(border)) {
 		html += makeAttrib('border', border);
 	}
 
-	html += makeAttrib('cellpadding', cellpadding);
-	html += makeAttrib('cellspacing', cellspacing);
+	if (!inst.settings.table_style_by_css) {
+		html += makeAttrib('cellpadding', nonCssSize(cellpadding));
+	}
+
 	html += makeAttrib('data-mce-new', '1');
 
 	if (width && inst.settings.inline_styles) {
@@ -205,14 +236,45 @@ function insertTable() {
 			html += '<caption></caption>';
 	}
 
+	if (inst.settings.table_style_by_css) {
+
+		parsedStyles = dom.parseStyle(style);
+
+		newCellStyles = {};
+		if (parsedStyles.border) {
+			newCellStyles.border = parsedStyles.border;
+		}
+		if (border !== "") {
+			newCellStyles["border-width"] = cssSize(border);
+		}
+		if (cellpadding !== "") {
+			newCellStyles.padding = cssSize(cellpadding);
+		}
+		if (bordercolor !== "") {
+			newCellStyles["border-color"] = bordercolor;
+		}
+		if (parsedStyles["border-style"]) {
+			newCellStyles["border-style"] = parsedStyles["border-style"];
+		}
+
+		if (dom.serializeStyle(newCellStyles) !== "") {
+			cellStyles = " style='" + dom.serializeStyle(newCellStyles) +"'";
+		} else {
+			cellStyles = "";
+		}
+
+	} else {
+		cellStyles = "";
+	}
+
 	for (var y=0; y<rows; y++) {
 		html += "<tr>";
 
 		for (var x=0; x<cols; x++) {
 			if (!tinymce.isIE || tinymce.isIE11)
-				html += '<td><br data-mce-bogus="1"/></td>';
+				html += '<td' + cellStyles + '><br data-mce-bogus="1"/></td>';
 			else
-				html += '<td></td>';
+				html += '<td' + cellStyles + '></td>';
 		}
 
 		html += "</tr>";
@@ -254,7 +316,7 @@ function insertTable() {
 		}
 
 		try {
-			// IE9 might fail to do this selection 
+			// IE9 might fail to do this selection
 			inst.selection.setCursorLocation(tdorth[0], 0);
 		} catch (ex) {
 			// Ignore
@@ -267,6 +329,42 @@ function insertTable() {
 	inst.execCommand('mceEndUndoLevel', false, {}, {skip_undo: true});
 
 	tinyMCEPopup.close();
+}
+
+function styleTDTH (elm, name, value) {
+	if (elm.tagName === "TD" || elm.tagName === "TH") {
+		dom.setStyle(elm, name, value);
+	} else {
+		if (elm.children) {
+			for (var i = 0; i < elm.children.length; i++) {
+				styleTDTH(elm.children[i], name, value);
+			}
+		}
+	}
+}
+
+function getTDTHOverallStyle (elm, name) {
+	var cells = dom.select("td,th", elm), firstChildStyle;
+
+	function checkChildren(firstChildStyle, elms) {
+
+		for (var i = 0; i < elms.length; i++) {
+			var currentStyle = dom.getStyle(elms[i], name);
+			if (typeof firstChildStyle === "undefined") {
+				firstChildStyle = currentStyle;
+			}
+			if (firstChildStyle != currentStyle) {
+				return "";
+			}
+		}
+
+		return firstChildStyle;
+
+	}
+
+	firstChildStyle = checkChildren(firstChildStyle, cells);
+
+	return firstChildStyle;
 }
 
 function makeAttrib(attrib, value) {
@@ -300,9 +398,9 @@ function init() {
 	document.getElementById('bordercolor_pickcontainer').innerHTML = getColorPickerHTML('bordercolor_pick','bordercolor');
 	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor');
 
-	var cols = 2, rows = 2, border = tinyMCEPopup.getParam('table_default_border', '0'), cellpadding = tinyMCEPopup.getParam('table_default_cellpadding', ''), cellspacing = tinyMCEPopup.getParam('table_default_cellspacing', '');
+	var cols = 2, rows = 2, border = tinyMCEPopup.getParam('table_default_border', ''), cellpadding = tinyMCEPopup.getParam('table_default_cellpadding', ''), cellspacing = tinyMCEPopup.getParam('table_default_cellspacing', '');
 	var align = "", width = "", height = "", bordercolor = "", bgcolor = "", className = "";
-	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "", rules = "", frame = "";
+	var id = "", summary = "", style = "", dir = "", lang = "", background = "", rules = "", frame = "";
 	var inst = tinyMCEPopup.editor, dom = inst.dom;
 	var formObj = document.forms[0];
 	var elm = dom.getParent(inst.selection.getNode(), "table");
@@ -323,7 +421,7 @@ function init() {
 
 	if (elm && action != "insert") {
 		var rowsAr = elm.rows;
-		var cols = 0;
+		cols = 0;
 		for (var i=0; i<rowsAr.length; i++)
 			if (rowsAr[i].cells.length > cols)
 				cols = rowsAr[i].cells.length;
@@ -333,8 +431,8 @@ function init() {
 
 		st = dom.parseStyle(dom.getAttrib(elm, "style"));
 		border = trimSize(getStyle(elm, 'border', 'borderWidth'));
-		cellpadding = dom.getAttrib(elm, 'cellpadding', "");
-		cellspacing = dom.getAttrib(elm, 'cellspacing', "");
+		cellpadding = dom.getAttrib(elm, 'cellpadding', '') || getTDTHOverallStyle(elm, 'padding');
+		cellspacing = dom.getAttrib(elm, 'cellspacing', '') || trimSize(getStyle(elm, 'border-spacing'));
 		width = trimSize(getStyle(elm, 'width', 'width'));
 		height = trimSize(getStyle(elm, 'height', 'height'));
 		bordercolor = convertRGBToHex(getStyle(elm, 'bordercolor', 'borderLeftColor'));
@@ -429,6 +527,11 @@ function cssSize(value, def) {
 	return value;
 }
 
+function nonCssSize(value) {
+	var parsedInt = parseInt(value, 10) || "";
+	return parsedInt.toString();
+}
+
 function changedBackgroundImage() {
 	var formObj = document.forms[0];
 	var st = dom.parseStyle(formObj.style.value);
@@ -443,7 +546,7 @@ function changedBorder() {
 	var st = dom.parseStyle(formObj.style.value);
 
 	// Update border width if the element has a color
-	if (formObj.border.value != "" && (isCssSize(formObj.border.value) || formObj.bordercolor.value != ""))
+	if (formObj.border.value !== "" && (tinyMCEPopup.editor.settings.table_style_by_css || isCssSize(formObj.border.value)))
 		st['border-width'] = cssSize(formObj.border.value);
 	else {
 		if (!formObj.border.value) {
@@ -455,19 +558,26 @@ function changedBorder() {
 	formObj.style.value = dom.serializeStyle(st);
 }
 
+function changedCellSpacing() {
+	var formObj = document.forms[0];
+	var st = dom.parseStyle(formObj.style.value);
+
+	if (formObj.cellspacing.value !== "")
+		st['border-spacing'] = cssSize(formObj.cellspacing.value);
+	else {
+		st['border-spacing'] = '';
+	}
+
+	formObj.style.value = dom.serializeStyle(st);
+}
+
 function changedColor() {
 	var formObj = document.forms[0];
 	var st = dom.parseStyle(formObj.style.value);
 
 	st['background-color'] = formObj.bgcolor.value;
 
-	if (formObj.bordercolor.value != "") {
-		st['border-color'] = formObj.bordercolor.value;
-
-		// Add border-width if it's missing
-		if (!st['border-width'])
-			st['border-width'] = cssSize(formObj.border.value, 1);
-	}
+	st['border-color'] = formObj.bordercolor.value;
 
 	formObj.style.value = dom.serializeStyle(st);
 }

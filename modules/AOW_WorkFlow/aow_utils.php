@@ -49,12 +49,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param string $view
  * @param string $value
  * @param array $valid
+ * @param array $override
  * @return string HTML for availible module fields
  */
-function getModuleFields($module, $view = 'EditView', $value = '', $valid = array())
-{
+function getModuleFields(
+    $module,
+    $view = 'EditView',
+    $value = '',
+    $valid = array(),
+    $override = array()
+) {
     global $app_strings, $beanList, $current_user;
-
 
     $blockedModuleFields = array(
         // module = array( ... fields )
@@ -82,7 +87,6 @@ function getModuleFields($module, $view = 'EditView', $value = '', $valid = arra
             $mod = new $beanList[$module]();
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
-
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array($arr['name'],
                                 $blockedModuleFields[$mod->module_dir]
@@ -92,9 +96,15 @@ function getModuleFields($module, $view = 'EditView', $value = '', $valid = arra
                             continue;
                         }
                     }
-                    if ($arr['type'] != 'link' && ((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'],
-                                $valid)) && $name != 'currency_name' && $name != 'currency_symbol'
-                    ) {
+
+                    if ($arr['type'] !== 'link'
+                        && $name !== 'currency_name'
+                        && $name !== 'currency_symbol'
+                        && (empty($valid) || in_array($arr['type'], $valid))
+                        && ((!isset($arr['source']) || $arr['source'] !== 'non-db')
+                            || ($arr['type'] === 'relate' && isset($arr['id_name']))
+                            || in_array($name, $override))
+                        ) {
                         if (isset($arr['vname']) && $arr['vname'] !== '') {
                             $fields[$name] = rtrim(translate($arr['vname'], $mod->module_dir), ':');
                         } else {
@@ -392,17 +402,22 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
-        if( $view == 'EditView' &&  ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')){
-            $contents = str_replace('"'.$vardef['id_name'].'"','{/literal}"{$fields.'.$vardef['name'].'.id_name}"{literal}', $contents);
-            $contents = str_replace('"'.$vardef['name'].'"','{/literal}"{$fields.'.$vardef['name'].'.name}"{literal}', $contents);
+        if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+            $contents = str_replace('"' . $vardef['id_name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
+            $contents = str_replace('"' . $vardef['name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+        }
+        if ($view == 'DetailView' && $vardef['type'] == 'image') {
+            $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
+        }
+        // hack to disable one of the js calls in this control
+        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }
 
-        // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) && ( $vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
-            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
-
         // Save it to the cache file
-        if($fh = @sugar_fopen($file, 'w')) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             fputs($fh, $contents);
             fclose($fh);
         }
@@ -565,22 +580,32 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     }
 
     $ss->assign("QS_JS", $quicksearch_js);
-    $ss->assign("fields",$fieldlist);
-    $ss->assign("form_name",$view);
-    $ss->assign("bean",$focus);
+    $ss->assign("fields", $fieldlist);
+    $ss->assign("form_name", $view);
+    $ss->assign("bean", $focus);
 
-    // add in any additional strings
+    // Add in any additional strings
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
-
-    //$return = str_replace($fieldname,$ss->fetch($file));
+    $ss->assign("module", $module);
+    if ($params['record_id']) {
+        $ss->assign("record_id", $params['record_id']);
+    }
 
     return $ss->fetch($file);
 }
 
 
-
-function getDateField($module, $aow_field, $view='EditView', $value, $field_option = true){
+/**
+ * @param string $module
+ * @param string $aow_field
+ * @param string $view
+ * @param $value
+ * @param bool $field_option
+ * @return string
+ */
+function getDateField($module, $aow_field, $view='EditView', $value = null, $field_option = true)
+{
     global $app_list_strings;
 
     $value = json_decode(html_entity_decode_utf8($value), true);

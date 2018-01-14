@@ -1,11 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('datatype-date-parse',function(Y){var LANG=Y.Lang;Y.mix(Y.namespace("DataType.Date"),{parse:function(data){var date=null;if(!(LANG.isDate(data))){date=new Date(data);}
-else{return date;}
-if(LANG.isDate(date)&&(date!="Invalid Date")&&!isNaN(date)){return date;}
-else{return null;}}});Y.namespace("Parsers").date=Y.DataType.Date.parse;},'3.3.0',{requires:['yui-base']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("datatype-date-parse",function(b){var a=b.Lang;b.mix(b.namespace("DataType.Date"),{parse:function(d){var c=null;if(!(a.isDate(d))){c=new Date(d);}else{return c;}if(a.isDate(c)&&(c!="Invalid Date")&&!isNaN(c)){return c;}else{return null;}}});b.namespace("Parsers").date=b.DataType.Date.parse;},"3.3.0",{requires:["yui-base"]});

@@ -215,7 +215,7 @@ CAL.repeat_tab_handle = function (module_name) {
 CAL.GR_update_user = function (user_id) {
   var callback = {
     success: function (o) {
-      res = eval(o.responseText);
+      SUGAR.util.globalEval('res = (' + o.responseText + ')');
       GLOBAL_REGISTRY.focus.users_arr_hash = undefined;
     }
   };
@@ -230,7 +230,8 @@ CAL.GR_update_focus = function (module, record) {
   } else {
     var callback = {
       success: function (o) {
-        res = eval(o.responseText);
+        SUGAR.util.globalEval("retValue = " + o.responseText);
+        res = retValue;
         SugarWidgetScheduler.update_time();
         if (CAL.record_editable) {
           CAL.enable_buttons();
@@ -295,53 +296,53 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
   }
 
 
-	if(module_name == "Tasks") {
-		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
-		var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
+  if (module_name == "Tasks") {
+    var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
+    var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-		$.ajax(url)
-			.done(function (data) {
-				eval(data); // produces var result = {body:{}, caption:"", width:300}
-				$('.modal-cal-tasks-edit .modal-body .container-fluid').html(result.body);
-			})
-			.fail(function () {
-				$('.modal-cal-tasks-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
-			}).always(function () {
-					//console.log("complete");
-			});
+    $.ajax(url)
+      .done(function (data) {
+        SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
+        $('.modal-cal-tasks-edit .modal-body .container-fluid').html(result.body);
+      })
+      .fail(function () {
+        $('.modal-cal-tasks-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+      }).always(function () {
+      //console.log("complete");
+    });
 
-		$('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
-		$('.modal-cal-tasks-edit').modal('show');
-		$('#btn-view-task').unbind().click(function(){
-			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
-		});
-		$('#btn-tasks-full-form').unbind().click(function(){
-			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
-		});
-	} else if(module_name == "FP_events") {
-		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
-		var body =  SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
+    $('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
+    $('.modal-cal-tasks-edit').modal('show');
+    $('#btn-view-task').unbind().click(function () {
+      window.location.assign('index.php?module=' + cal_event.module + '&action=DetailView&record=' + cal_event.record);
+    });
+    $('#btn-tasks-full-form').unbind().click(function () {
+      window.location.assign('index.php?module=' + cal_event.module + '&action=EditView&record=' + cal_event.record);
+    });
+  } else if (module_name == "FP_events") {
+    var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
+    var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-		$.ajax(url)
-			.done(function (data) {
-				eval(data); // produces var result = {body:{}, caption:"", width:300}
-				$('.modal-cal-events-edit .modal-body .container-fluid').html(result.body);
-			})
-			.fail(function () {
-				$('.modal-cal-events-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
-			}).always(function () {
-			//console.log("complete");
-		});
+    $.ajax(url)
+      .done(function (data) {
+        SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
+        $('.modal-cal-events-edit .modal-body .container-fluid').html(result.body);
+      })
+      .fail(function () {
+        $('.modal-cal-events-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+      }).always(function () {
+      //console.log("complete");
+    });
 
-		$('.modal-cal-events-edit .modal-body .container-fluid').html(body);
-		$('.modal-cal-events-edit').modal('show');
-		$('#btn-view-events').unbind().click(function(){
-			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
-		});
-		$('#btn-events-full-form').unbind().click(function(){
-			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
-		});
-	}
+    $('.modal-cal-events-edit .modal-body .container-fluid').html(body);
+    $('.modal-cal-events-edit').modal('show');
+    $('#btn-view-events').unbind().click(function () {
+      window.location.assign('index.php?module=' + cal_event.module + '&action=DetailView&record=' + cal_event.record);
+    });
+    $('#btn-events-full-form').unbind().click(function () {
+      window.location.assign('index.php?module=' + cal_event.module + '&action=EditView&record=' + cal_event.record);
+    });
+  }
 
   if (to_open && CAL.records_openable) {
     CAL.get("form_content").style.display = "none";
@@ -365,7 +366,8 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
     var callback = {
       success: function (o) {
         try {
-          res = eval("(" + o.responseText + ")");
+          SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+          res = retValue;
         } catch (err) {
           alert(CAL.lbl_error_loading);
           CAL.editDialog.cancel();
@@ -393,7 +395,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
           }
           CAL.get("radio_call").setAttribute("disabled", "disabled");
           CAL.get("radio_meeting").setAttribute("disabled", "disabled");
-          eval(res.gr);
+          SUGAR.util.globalEval(res.gr);
           SugarWidgetScheduler.update_time();
           if (CAL.record_editable) {
             CAL.enable_buttons();
@@ -436,32 +438,32 @@ CAL.edit_all_recurrences = function () {
     CAL.load_form(module, record, true);
   }
 }
- CAL.remove_shared = function (record_id, edit_all_recurrences) {
-     if (typeof edit_all_recurrences == "undefined")
-         edit_all_recurrences = false;
-     var e;
-     var arr = new Array();
-     if (CAL.enable_repeat && edit_all_recurrences) {
-         var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
-         CAL.each(nodes, function (i, v) {
-             var record = nodes[i].getAttribute("record");
-             if (!CAL.contains(arr, record))
-                 arr.push(record);
-             nodes[i].parentNode.removeChild(nodes[i]);
-             CAL.destroy_ui(nodes[i].id);
-         });
-     }
-     CAL.each(CAL.shared_users, function (user_id, v) {
-         if (e = CAL.get(record_id + '____' + v)) {
-             CAL.destroy_ui(e.id);
-             e.parentNode.removeChild(e);
-         }
-         CAL.basic.remove({record: record_id, user_id: user_id});
-         CAL.each(arr, function (i, id) {
-             CAL.basic.remove({record: id, user_id: user_id});
-         });
-     });
- }
+CAL.remove_shared = function (record_id, edit_all_recurrences) {
+  if (typeof edit_all_recurrences == "undefined")
+    edit_all_recurrences = false;
+  var e;
+  var arr = new Array();
+  if (CAL.enable_repeat && edit_all_recurrences) {
+    var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
+    CAL.each(nodes, function (i, v) {
+      var record = nodes[i].getAttribute("record");
+      if (!CAL.contains(arr, record))
+        arr.push(record);
+      nodes[i].parentNode.removeChild(nodes[i]);
+      CAL.destroy_ui(nodes[i].id);
+    });
+  }
+  CAL.each(CAL.shared_users, function (user_id, v) {
+    if (e = CAL.get(record_id + '____' + v)) {
+      CAL.destroy_ui(e.id);
+      e.parentNode.removeChild(e);
+    }
+    CAL.basic.remove({record: record_id, user_id: user_id});
+    CAL.each(arr, function (i, id) {
+      CAL.basic.remove({record: id, user_id: user_id});
+    });
+  });
+}
 CAL.change_activity_type = function (mod_name) {
   if (typeof CAL.current_params.module_name != "undefined")
     if (CAL.current_params.module_name == mod_name)
@@ -475,13 +477,15 @@ CAL.change_activity_type = function (mod_name) {
   CAL.load_create_form(CAL.current_params);
 }
 CAL.load_create_form = function (params) {
+  CAL.reset_edit_dialog();
   CAL.disable_buttons();
   ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
   CAL.repeat_tab_handle(CAL.current_params.module_name);
   var callback = {
     success: function (o) {
       try {
-        res = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        res = retValue;
       } catch (err) {
         alert(CAL.lbl_error_loading);
         $('.modal-cal-edit').modal('hide');
@@ -626,7 +630,8 @@ CAL.dialog_save = function () {
   var callback = {
     success: function (o) {
       try {
-        res = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        res = retValue;
       } catch (err) {
         alert(CAL.lbl_error_saving);
         $('.modal-cal-edit').modal('hide');
@@ -738,7 +743,8 @@ CAL.refresh = function () {
   var callback = {
     success: function (o) {
       try {
-        var activities = eval("(" + o.responseText + ")");
+        SUGAR.util.globalEval("retValue = (" + o.responseText + ")");
+        var activities = retValue;
       } catch (err) {
         alert(CAL.lbl_error_saving);
         ajaxStatus.hideStatus();
@@ -904,210 +910,209 @@ $($.fullCalendar).ready(function () {
     var headerFormatDayWeek = 'dddd D';
     var headerFormatMonth = 'dddd';
     var headerFormat = headerFormatDayWeek;
-    if(global_view == 'sharedMonth' || global_view == 'month') {
+    if (global_view == 'sharedMonth' || global_view == 'month') {
       headerFormat = headerFormatMonth;
     }
 
 
-
-     $('#calendar' + user_id).fullCalendar({
-       header: {
-         left: '',
-         center: '',
-         right: ''
-       },
-       lang: global_langPrefix,
-       views: views,
-       minTime: global_start_time,
-       maxTime: global_end_time,
-       selectHelper: true,
-       selectable: true,
-       selectOverlap: true, //overlap of events !
-       slotMinutes: global_timeslots,
-       defaultDate: global_year + "-" + global_month + "-" + global_day,
-       editable: global_edit,
-       //weekNumbers: true,
-       disableDragging: global_items_draggable,
-       eventLimit: true, // allow "more" link when too many events
-       defaultView: global_view,
-       firstDay: global_start_week_day,
-       height: global_basic_min_height,
-       columnFormat: headerFormat,
-       select: function (date, jsEvent, view) {
-         if (global_edit == true) {
-           var date_start = date.format(global_datetime_format);
-           var date_end = jsEvent.format(global_datetime_format);
-           var date_duration = jsEvent.diff(date);
+    $('#calendar' + user_id).fullCalendar({
+      header: {
+        left: '',
+        center: '',
+        right: ''
+      },
+      locale: global_langPrefix,
+      views: views,
+      minTime: global_start_time,
+      maxTime: global_end_time,
+      selectHelper: true,
+      selectable: true,
+      selectOverlap: true, //overlap of events !
+      slotMinutes: global_timeslots,
+      defaultDate: global_year + "-" + global_month + "-" + global_day,
+      editable: global_edit,
+      //weekNumbers: true,
+      disableDragging: global_items_draggable,
+      eventLimit: true, // allow "more" link when too many events
+      defaultView: global_view,
+      firstDay: global_start_week_day,
+      height: global_basic_min_height,
+      columnFormat: headerFormat,
+      select: function (date, jsEvent, view) {
+        if (global_edit == true) {
+          var date_start = date.format(global_datetime_format);
+          var date_end = jsEvent.format(global_datetime_format);
+          var date_duration = jsEvent.diff(date);
 
            if (date.hasTime() == false) {
              var date_end = date.add(1, 'days').format(global_datetime_format);
            }
 
-           /*
-            * When user clicks on the top of the date in the month view
-            * redirect the user to the day view.
-            *
-            * We need to allow user to select over multiple days.
-            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-            **/
-           if ($(view.target).hasClass('fc-day-top') && date_duration <= 86400000) {
-             var dateStr = $(view.target).attr('data-date');
-             var dateMoment = new moment(dateStr);
-             var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
-             window.location.href = url;
-             return false;
-           }
+          /*
+           * When user clicks on the top of the date in the month view
+           * redirect the user to the day view.
+           *
+           * We need to allow user to select over multiple days.
+           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+           **/
+          if ($(view.target).hasClass('fc-day-top') && date_duration <= 86400000) {
+            var dateStr = $(view.target).attr('data-date');
+            var dateMoment = new moment(dateStr);
+            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+            window.location.href = url;
+            return false;
+          }
 
-           CAL.dialog_create(date_start, date_end, user_id);
-         }
-       },
-       eventClick: function (calEvent, jsEvent, view) {
-         if (global_edit == true) {
-           CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
-         }
-       },
-       eventDrop: function (event, delta, revertFunc) {
-         //event_datetime = event.start.format("YYYY-MM-DD HH:mm:ss");
-         event_datetime = event.start.format(global_datetime_format);
-         var data = {
-           "current_module": event.module,
-           "record": event.record,
-           "datetime": event_datetime,
-           "calendar_style": "basic"
-         };
+          CAL.dialog_create(date_start, date_end, user_id);
+        }
+      },
+      eventClick: function (calEvent, jsEvent, view) {
+        if (global_edit == true) {
+          CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
+        }
+      },
+      eventDrop: function (event, delta, revertFunc) {
+        //event_datetime = event.start.format("YYYY-MM-DD HH:mm:ss");
+        event_datetime = event.start.format(global_datetime_format);
+        var data = {
+          "current_module": event.module,
+          "record": event.record,
+          "datetime": event_datetime,
+          "calendar_style": "basic"
+        };
 
-         if (event.allDay == true) {
-           // this is a full day event.
-           data.allDay = true;
-           data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
-         }
-         var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
+        if (event.allDay == true) {
+          // this is a full day event.
+          data.allDay = true;
+          data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
+        }
+        var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
 
-         $.ajax({
-           method: "POST",
-           url: url,
-           data: data
-         })
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: data
+        })
 
-       },
-       navLinks: true,
-       navLinkDayClick: function (weekStart, jsEvent) {
-         if (global_edit == true) {
-           /*
-            * When user clicks on the day numbers in the month view
-            * redirect the user to the day view.
-            *
-            * We need to allow user to select over multiple days.
-            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-            **/
-           if ($(jsEvent.currentTarget).hasClass('fc-day-number')) {
-             var dateStr = $(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');
-             var dateMoment = new moment(dateStr);
-             var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
-             window.location.href = url;
-             return false;
-           }
+      },
+      navLinks: true,
+      navLinkDayClick: function (weekStart, jsEvent) {
+        if (global_edit == true) {
+          /*
+           * When user clicks on the day numbers in the month view
+           * redirect the user to the day view.
+           *
+           * We need to allow user to select over multiple days.
+           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+           **/
+          if ($(jsEvent.currentTarget).hasClass('fc-day-number')) {
+            var dateStr = $(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');
+            var dateMoment = new moment(dateStr);
+            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+            window.location.href = url;
+            return false;
+          }
 
-           /*
-            * When user clicks on the day header in the week view
-            * redirect the user to the day view.
-            *
-            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-            **/
-           var dayHeader = $(jsEvent.currentTarget).closest('.fc-day-header');
-           var momentObj = moment($(dayHeader).attr('data-date'));
-           var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
-           window.location.href = url;
-           return false;
-         }
-       },
-       eventResize: function (event, delta, revertFunc) {
-         var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
+          /*
+           * When user clicks on the day header in the week view
+           * redirect the user to the day view.
+           *
+           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+           **/
+          var dayHeader = $(jsEvent.currentTarget).closest('.fc-day-header');
+          var momentObj = moment($(dayHeader).attr('data-date'));
+          var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
+          window.location.href = url;
+          return false;
+        }
+      },
+      eventResize: function (event, delta, revertFunc) {
+        var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
 
-         var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
-         var minutes = event.end.diff(event.start, 'minutes') % 60;
+        var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
+        var minutes = event.end.diff(event.start, 'minutes') % 60;
 
-				var data = {
-					"current_module": event.module,
-					"record": event.record,
-					"duration_hours": hours,
-					"duration_minutes": minutes
-				};
-				$.ajax({
-					method: "POST",
-					url: url,
-					data: data
-				})
-			},
-			events: all_events,
-			eventRender: function (event, element) {
-				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
+        var data = {
+          "current_module": event.module,
+          "record": event.record,
+          "duration_hours": hours,
+          "duration_minutes": minutes
+        };
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: data
+        })
+      },
+      events: all_events,
+      eventRender: function (event, element) {
+        var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
         var title = '<div class="qtip-title-text">' + event.title + '</div>'
-					+ '<div class="qtip-title-buttons">'
-					+ '</div>';
-				var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
+          + '<div class="qtip-title-buttons">'
+          + '</div>';
+        var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-           if ($('#cal_module').val() != "Home") {
-             element.qtip({
-               content: {
-                 title: {
-                   text: title,
-                   button: true,
-                 },
+        if ($('#cal_module').val() != "Home") {
+          element.qtip({
+            content: {
+              title: {
+                text: title,
+                button: true,
+              },
 
-							text: body,
-						},
-						events: {
-							render: function(event, api) {
-								$.ajax(url)
-									.done(function (data) {
-										eval(data); // produces var result = {body:{}, caption:"", width:300}
-										var divCaption = "#qtip-"+api.id+"-title";
-										var divBody = "#qtip-"+api.id+"-content";
-										if(data.caption != "") {
-											$(divCaption).html(result.caption);
-										}
-										api.set('content.text', result.body);
-									})
-									.fail(function () {
-										$(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
-									})
-									.always(function () {
-										//console.log("complete");
-									});
-							}
-						},
-						position: {
-							my: 'bottom left',
-							at: 'top left'
-						},
-						show: {solo: true},
-						hide: {event: false},
-						style: {
-							width: 224,
-							padding: 5,
-							color: 'black',
-							textAlign: 'left',
-							border: {
-								width: 1,
-								radius: 3
-							},
-							tip: 'bottomLeft',
-							classes: {
-								tooltip: 'ui-widget',
-								tip: 'ui-widget',
-								title: 'ui-widget-header',
-								content: 'ui-widget-content'
-							}
-						}
-					});
-				}
-			},
-		}).ready(function() {
-       // Force calendar to render the events again,
-       // ensuring that the event are correctly rendered.
-       $(window).resize();
-     });
+              text: body,
+            },
+            events: {
+              render: function (event, api) {
+                $.ajax(url)
+                  .done(function (data) {
+                    SUGAR.util.globalEval(data); // produces var result = {body:{}, caption:"", width:300}
+                    var divCaption = "#qtip-" + api.id + "-title";
+                    var divBody = "#qtip-" + api.id + "-content";
+                    if (data.caption != "") {
+                      $(divCaption).html(result.caption);
+                    }
+                    api.set('content.text', result.body);
+                  })
+                  .fail(function () {
+                    $(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+                  })
+                  .always(function () {
+                    //console.log("complete");
+                  });
+              }
+            },
+            position: {
+              my: 'bottom left',
+              at: 'top left'
+            },
+            show: {solo: true},
+            hide: {event: false},
+            style: {
+              width: 224,
+              padding: 5,
+              color: 'black',
+              textAlign: 'left',
+              border: {
+                width: 1,
+                radius: 3
+              },
+              tip: 'bottomLeft',
+              classes: {
+                tooltip: 'ui-widget',
+                tip: 'ui-widget',
+                title: 'ui-widget-header',
+                content: 'ui-widget-content'
+              }
+            }
+          });
+        }
+      },
+    }).ready(function () {
+      // Force calendar to render the events again,
+      // ensuring that the event are correctly rendered.
+      $(window).resize();
+    });
 
     if ($('#calendar_title_' + user_id).length == 0) {
       var calendar = $("#calendar" + user_id + " > .fc-view-container");

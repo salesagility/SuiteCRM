@@ -310,6 +310,13 @@ function saveField($field, $id, $module, $value)
 {
 
     global $current_user;
+
+    if ($module == 'Users' && $field == 'is_admin' && !$current_user->is_admin) {
+        $err = 'SECURITY: Only admin user can change user type';
+        $GLOBALS['log']->fatal($err);
+        throw new RuntimeException($err);
+    }
+
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -345,7 +352,14 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        if($bean->ACLAccess("edit") || is_admin($current_user)) {
+        $adminOnlyModules = array('Users', 'Employees');
+
+        $enabled = true;
+        if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
+            $enabled = false;
+        }
+
+        if(($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
             if(!$bean->save($check_notify)) {
                 $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
             }
@@ -506,10 +520,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-	if($vardef['type'] == "url")
-	{
-		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
-	}
+    if ($vardef['type'] == "url") {
+        $link = (substr($value, 0, 7) == 'http://' || substr($value, 0, 8) == 'https://' ?
+            $value : 'http://' . $value);
+        $value = '<a href=' . $link . ' target="_blank">' . $value . '</a>';
+    }
 	
 	if($vardef['type'] == "currency"){
 		if($_REQUEST['view'] != "DetailView"){			
