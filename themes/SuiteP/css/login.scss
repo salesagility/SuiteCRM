@@ -90,7 +90,7 @@ div.p_login #loginform .input-group input {
 div.p_login #loginform .input-group input#fp_user_name,
 div.p_login #loginform .input-group input#user_name,
 #user_name:-webkit-autofill,
-div.p_login #loginform .input-group input#user_password {
+div.p_login #loginform .input-group input#username_password {
   background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../themes/SuiteP/images/login_bg.png");
   background-repeat: no-repeat;
 }
@@ -103,7 +103,7 @@ div.p_login #loginform .input-group input#user_name {
   background-repeat: no-repeat;
 }
 
-div.p_login #loginform .input-group input#user_password {
+div.p_login #loginform .input-group input#username_password {
   background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
   background-position: 12px -51px;
   background-repeat: no-repeat;

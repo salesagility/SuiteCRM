@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 var yahooSlots=new Array();function addNewRowToView(id){var curRow=document.getElementById(id);var parent=curRow.parentNode;var newRow=document.createElement('tr');var newRow=parent.insertRow(parent.rows.length);var re=/studiorow[0-9]+/g;var cell=newRow.insertCell(0);cell.innerHTML=curRow.cells[0].innerHTML.replace(re,'studiorow'+slotCount);cell.className=curRow.cells[0].className;for(var j=1;j<curRow.cells.length;j++){var cell=newRow.insertCell(j);cell.innerHTML='&nbsp;';cell.className=curRow.cells[j].className;}
 var index=parent.rows.length;for(var i=0;i<parent.rows.length;i++){if(parent.rows[i].id==id){index=i+1;}}

@@ -297,17 +297,17 @@ class PopupSmarty extends ListViewSmarty{
         $seed,
         $file = null,
         $where = null,
-        $params = array(),
+        $params = Array(),
         $offset = 0,
         $limit = -1,
-        $filter_fields = array(),
+        $filter_fields = Array(),
         $id_field = 'id',
-		$id = null
+        $id = null
     ) {
-        $args = func_get_args();
+		$args = func_get_args();
+		return call_user_func_array(array($this, '_setup'), $args);
+	}
 
-        return call_user_func_array(array($this, '_setup'), $args);
-    }
 	function _setup($file) {
 
 	    if(isset($this->_popupMeta)){

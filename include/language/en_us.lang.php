@@ -2439,6 +2439,7 @@ $app_strings = array(
     'LBL_OK' => 'Ok',
 
     'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_COLUMN_CHOOSER' => 'Column Chooser',
     'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
     'LBL_DISPLAYED' => 'Displayed',
     'LBL_HIDDEN' => 'Hidden',
@@ -3491,16 +3492,6 @@ $app_list_strings['aow_operator_list']['Contains'] = 'Contains';
 $app_list_strings['aow_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aow_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aow_operator_list']['is_null'] = 'Is Null';
-$app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-$app_list_strings['aow_sql_operator_list']['Contains'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['Starts_With'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['Ends_With'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['is_null'] = 'IS NULL';
 $app_list_strings['aow_process_status_list']['Complete'] = 'Complete';
 $app_list_strings['aow_process_status_list']['Running'] = 'Running';
 $app_list_strings['aow_process_status_list']['Pending'] = 'Pending';
