@@ -133,7 +133,7 @@ var validate = new Array();
 var maxHours = 24;
 var requiredTxt = 'Missing Required Field:';
 var invalidTxt = 'Invalid Value:';
-var secondsSinceLoad = 0;
+var scriptStartedTime = Date.now();
 var alertsTimeoutId;
 var inputsWithErrors = new Array();
 var tabsWithErrors = new Array();
@@ -254,7 +254,7 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['redirect'] = redirect;
 }
 function checkAlerts() {
-  secondsSinceLoad += 1;
+  var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
   var mj = 0;
   var alertmsg = '';
   for (mj = 0; mj < alertList.length; mj++) {
@@ -944,9 +944,9 @@ function validate_form(formname, startsWith) {
         var bail = false;
 
 
-        //If a field is not required and it is blank or is binarydependant, skip validation.
+        //If a field is not required and it is blank or is binarydependant or is callback, skip validation.
         //Example of binary dependant fields would be the hour/min/meridian dropdowns in a date time combo widget, which require further processing than a blank check
-        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep')) {
+        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep' && validate[formname][i][jstypeIndex]  != 'callback')) {
           continue;
         }
 
@@ -1277,6 +1277,7 @@ function validate_form(formname, startsWith) {
       isError = false;
     }
   }
+
 
 //END BUG# 15102
 
