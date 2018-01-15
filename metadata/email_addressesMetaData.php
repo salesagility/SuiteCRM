@@ -92,11 +92,18 @@ $dictionary['email_addresses'] = array(
             'vname'         => 'LBL_CONFIRM_OPT_IN',
         ),
 
-        'confirmed_opt_in_date' => array(
-            'name' => 'confirmed_opt_in_date',
+        'confirm_opt_in_date' => array(
+            'name' => 'confirm_opt_in_date',
             'type' => 'datetime',
-            'vname' => 'LBL_CONFIRMED_OPT_IN_DATE',
+            'vname' => 'LBL_CONFIRM_OPT_IN_DATE',
         ),
+
+        'confirm_opt_in_sent_date' => array(
+            'name' => 'confirm_opt_in_sent_date',
+            'type' => 'datetime',
+            'vname' => 'LBL_CONFIRM_OPT_IN_SENT_DATE',
+        ),
+        
         'date_created' => array(
             'name'            => 'date_created',
             'type'            => 'datetime',

@@ -4420,7 +4420,7 @@ eoq;
         }
 
         
-        $confirmOptInTemplateId = $sugar_config['aop']['confirmed_opt_in_template_id'];
+        $confirmOptInTemplateId = $sugar_config['aop']['confirm_opt_in_template_id'];
         if(!$confirmOptInTemplateId) {
             $configurator = new Configurator();
             $confirmOptInTemplateId = $configurator->config['email_confirm_opt_in_email_template_id'];

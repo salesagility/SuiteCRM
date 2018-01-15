@@ -2356,7 +2356,8 @@ $app_strings = array(
     'LBL_SUBTHEME_OPTIONS_DUSK' => 'Dusk',
     'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
-    'LBL_CONFIRMED_OPT_IN_DATE' => 'Confirmed Opt In Date',
+    'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
+    'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt in requires the email to be related to Account/Contact/Lead/Target',
 );

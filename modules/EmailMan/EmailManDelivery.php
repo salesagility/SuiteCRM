@@ -266,6 +266,14 @@ do {
                     $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));
                 } else {
                     $GLOBALS['log']->debug("Confirm Opt In Email delivery SUCCESS:" . print_r($row, true));
+                    $date = new DateTime();
+                    $emailAddress->retrieve($emailAddress->email_address[0]['email_address_id']);
+                    $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+                    $emailAddress->save();
+                    $emailman->retrieve_by_string_fields(array(
+                        'related_id' => $emailman->related_id
+                    ));
+                    $emailman->mark_deleted($emailman->id);
                 }
             } else {
                 $log->warn('Confirm Opt In email in queue but Confirm Opt In is disabled.');
