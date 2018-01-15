@@ -1731,7 +1731,7 @@ class Email extends Basic
         }
 
         $noteArray = array();
-        $q = "SELECT id FROM notes WHERE parent_id = '" . $id . "'";
+        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = '" . $id . "'";
         $r = $this->db->query($q);
 
         while ($a = $this->db->fetchByAssoc($r)) {
