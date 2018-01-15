@@ -629,14 +629,6 @@ class EmailMan extends SugarBean
         if ($confirm_opt_in_enabled && !$this->isOptInConfirmed($module)) {
             $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
 
-            $autosend_email =
-                array_key_exists('email_enable_auto_send_opt_in', $sugar_config)
-                && $sugar_config['email_enable_auto_send_opt_in'] == true;
-
-            if ($autosend_email) {
-                $this->sendConfirmedOptInEmail($module);
-            }
-
             // block sending campaign email
             $this->set_as_sent($module->email1, true, null, null, 'blocked');
             return true;
