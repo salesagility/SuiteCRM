@@ -27,6 +27,7 @@ groups:
 
     teams: 
       - suitecrm-core
+      - owner
 
     approve_by_comment:
       enabled: true
@@ -46,7 +47,7 @@ groups:
     required: 1
 
     teams:
-      - owners
+      - owner
 
     approve_by_comment:
       enabled: true
