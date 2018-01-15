@@ -2289,7 +2289,10 @@ class Email extends Basic
 
         ///////////////////////////////////////////////////////////////////////////
         ////    ATTACHMENTS FROM DRAFTS
-        if (($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+        if (($this->type == 'out' || $this->type == 'draft')
+            && $this->status == 'draft'
+            && isset($_REQUEST['record'])
+            && empty($_REQUEST['ignoreParentAttachments'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS

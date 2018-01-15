@@ -1306,6 +1306,13 @@
         .attr('type', 'hidden')
         .attr('name', 'removeAttachment')
         .appendTo($('.file-attachments'));
+      if (!isDraft) {
+        $('<input>')
+          .attr('type', 'hidden')
+          .attr('name', 'ignoreParentAttachments')
+          .attr('value', '1')
+          .appendTo($('.file-attachments'));
+      }
       for (i = 0; i < response.data.attachments.length; i++) {
         var id = response.data.attachments[i]['id'];
         var fileGroupContainer = $('<div></div>')
