@@ -1262,7 +1262,7 @@
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
       if (typeof response.data !== "undefined") {
-        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response, false);
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
       if (typeof response.errors !== "undefined") {
         $.fn.EmailsComposeView.showAjaxErrorMessage(response);
@@ -1292,13 +1292,14 @@
     });
   };
 
-  $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response, areTemplateAttachments) {
+  $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
+    var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
     $('.file-attachments').empty();
-    var inputName = 'dummy_attachment[]';
-    var removeName = 'remove_attachment[]';
-    if (areTemplateAttachments) {
-      var inputName = 'template_attachment[]';
-      var removeName = 'temp_remove_attachment[]';
+    var inputName = 'template_attachment[]';
+    var removeName = 'temp_remove_attachment[]';
+    if (isDraft) {
+      var inputName = 'dummy_attachment[]';
+      var removeName = 'remove_attachment[]';
     }
     if (typeof response.data.attachments !== 'undefined' && response.data.attachments.length > 0) {
       var removeDraftAttachmentInput = $('<input>')
@@ -1337,7 +1338,7 @@
         removeAttachment.click(function () {
           $(this).parent().hide();
           $(this).parent().find('[name="' + inputName + '"]').attr('name', removeName);
-          if (!areTemplateAttachments) {
+          if (isDraft) {
             removeDraftAttachmentInput.val(removeDraftAttachmentInput.val() + '::' + id);
           }
         });
@@ -1354,7 +1355,7 @@
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function (jsonResponse) {
         var response = JSON.parse(jsonResponse);
-        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response, true);
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
         $(form).find('[name="name"]').val(response.data.subject);
         tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
       });
