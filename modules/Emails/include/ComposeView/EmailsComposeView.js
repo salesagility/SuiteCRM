@@ -1092,7 +1092,7 @@
               var selectOption = $('<option></option>');
               selectOption.attr('value', v.attributes.from);
               selectOption.attr('inboundId', v.id);
-              selectOption.attr('infos', '(<b>Reply-to:</b> ' + v.attributes.from + ', <b>From:</b> ' + v.attributes.oe + ')');
+              selectOption.attr('infos', '(<b>Reply-to:</b> ' + v.attributes.reply_to + ', <b>From:</b> ' + v.attributes.from + ')');
               selectOption.html(v.attributes.name);
               selectOption.appendTo(selectFrom);
 

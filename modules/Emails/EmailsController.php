@@ -401,9 +401,9 @@ class EmailsController extends SugarController
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'from' => $storedOptions['reply_to_addr'],
+                        'reply_to' => $storedOptions['reply_to_addr'],
                         'name' => $storedOptions['from_name'],
-                        'oe' => $storedOptions['from_addr'],
+                        'from' => $storedOptions['from_addr'],
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
