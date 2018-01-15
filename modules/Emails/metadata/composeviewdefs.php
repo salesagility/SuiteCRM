@@ -143,12 +143,6 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'name' => 'is_only_plain_text',
                     'label' => 'LBL_SEND_IN_PLAIN_TEXT'
                 )
-            ),
-            array(
-                array(
-                    'name' => 'send_opt_in_checkbox',
-                    'label' => 'LBL_SEND_CONFIRM_OPT_IN'
-                )
             )
         )
     )
