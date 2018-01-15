@@ -622,11 +622,7 @@ class EmailMan extends SugarBean
         $module->retrieve($this->related_id);
         $module->emailAddress->handleLegacyRetrieve($module);
 
-        $confirm_opt_in_enabled =
-            array_key_exists('email_enable_confirm_opt_in', $sugar_config)
-            && $sugar_config['email_enable_confirm_opt_in'] == true;
-
-        if ($confirm_opt_in_enabled && !$this->isOptInConfirmed($module)) {
+        if ($this->shouldBlockEmail($module)) {
             $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
 
             // block sending campaign email
@@ -992,6 +988,50 @@ class EmailMan extends SugarBean
     {
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
+
+    /**
+     * @param \Contact|\Account|\Prospect|\SugarBean $bean
+     * @return bool
+     */
+    private function shouldBlockEmail(SugarBean $bean)
+    {
+        global $sugar_config;
+
+        $optInLevel = isset($sugar_config['email_enable_confirm_opt_in']) ? $sugar_config['email_enable_confirm_opt_in'] : '';
+
+        // Find email address
+        $email_address = trim($bean->email1);
+
+        if (empty($email_address)) {
+            return false;
+        }
+
+        $query = 'SELECT * '
+            .'FROM email_addr_bean_rel '
+            .'JOIN email_addresses on email_addr_bean_rel.email_address_id = email_addresses.id '
+            .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\' AND email_addr_bean_rel.deleted=0';
+
+        $result = $bean->db->query($query);
+        $row = $this->db->fetchByAssoc($result);
+
+
+        if (!empty($row)) {
+            if ($row['out_out'] == '1' || $row['out_out'] == 'true') {
+                return true;
+            } elseif ($optInLevel === '' && $row['confirm_opt_in'] !== 'opt-in') {
+                return true;
+            } elseif (
+                $optInLevel === 'opt-in'
+                && ($row['confirm_opt_in'] === 'opt-in' || $row['confirm_opt_in'] === 'confirmed-opt-in')) {
+                return true;
+            } elseif ($optInLevel === 'confirmed-opt-in' && $row['confirm_opt_in'] === 'confirmed-opt-in') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      * @param \Contact|\Account|\Prospect|\SugarBean $bean
