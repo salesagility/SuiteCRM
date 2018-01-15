@@ -495,7 +495,7 @@ $app_list_strings = array(
             'Prospects' => 'Target',
 
         ),
-    'parent_type_workflow' => array(
+    'parent_line_items' => array(
         'AOS_Quotes' => 'Quotes',
         'AOS_Invoices' => 'Invoices',
         'AOS_Contracts' => 'Contracts',
