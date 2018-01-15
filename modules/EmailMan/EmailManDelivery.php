@@ -44,6 +44,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/SugarPHPMailer.php';
 
+global $sugar_config;
+
+$confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+
 $test = false;
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'test') {
     $test = true;
@@ -114,7 +118,7 @@ if ($test) {
     $select_query .= " FROM $emailman->table_name";
     $select_query .= " WHERE send_date_time <= " . $db->now();
     $select_query .= " AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " . $db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),
-            "datetime") . "))";
+            "datetime") . ")) " . ($confirmOptInEnabled ? ' OR related_confirm_opt_in = 1 ' : ' AND related_confirm_opt_in = 0');
 
     if (!empty($campaign_id)) {
         $select_query .= " AND campaign_id='{$campaign_id}'";
@@ -145,11 +149,11 @@ do {
     while ($row = $db->fetchByAssoc($result)) {
         //verify the queue item before further processing.
         //we have found cases where users have taken away access to email templates while them message is in queue.
-        if (empty($row['campaign_id'])) {
+        if ((empty($row['related_confirm_opt_in']) || $row['related_confirm_opt_in'] == '0') && empty($row['campaign_id'])) {
             $GLOBALS['log']->fatal('Skipping emailman entry with empty campaign id' . print_r($row, true));
             continue;
         }
-        if (empty($row['marketing_id'])) {
+        if ((empty($row['related_confirm_opt_in']) || $row['related_confirm_opt_in'] == '0') && empty($row['marketing_id'])) {
             $GLOBALS['log']->fatal('Skipping emailman entry with empty marketing id' . print_r($row, true));
             continue;  //do not process this row .
         }
@@ -159,7 +163,7 @@ do {
             $current_user->retrieve($row['user_id']);
         }
 
-        if (!$emailman->verify_campaign($row['marketing_id'])) {
+        if ((empty($row['related_confirm_opt_in']) || $row['related_confirm_opt_in'] == '0') && !$emailman->verify_campaign($row['marketing_id'])) {
             $GLOBALS['log']->fatal('Error verifying templates for the campaign, exiting');
             continue;
         }
@@ -248,11 +252,26 @@ do {
             $mail->oe->mail_smtpssl = $outboundEmailAccount->mail_smtpssl;
         }
 
-        if (!$emailman->sendEmail($mail, $massemailer_email_copy, $test)) {
-            $GLOBALS['log']->fatal("Email delivery FAILURE:" . print_r($row, true));
+        if((empty($row['related_confirm_opt_in']) || $row['related_confirm_opt_in'] == '0')) {
+            if (!$emailman->sendEmail($mail, $massemailer_email_copy, $test)) {
+                $GLOBALS['log']->fatal("Email delivery FAILURE:" . print_r($row, true));
+            } else {
+                $GLOBALS['log']->debug("Email delivery SUCCESS:" . print_r($row, true));
+            }
         } else {
-            $GLOBALS['log']->debug("Email delivery SUCCESS:" . print_r($row, true));
+            if($confirmOptInEnabled) {
+                $emailAddress = new EmailAddress();
+                $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
+                if(!$emailman->sendOptInEmail($emailAddress, $row['related_type'], $row['related_id'])) {
+                    $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));
+                } else {
+                    $GLOBALS['log']->debug("Confirm Opt In Email delivery SUCCESS:" . print_r($row, true));
+                }
+            } else {
+                $log->warn('Confirm Opt In email in queue but Confirm Opt In is disabled.');
+            }
         }
+        
         if ($mail->isError()) {
             $GLOBALS['log']->fatal("Email delivery error:" . print_r($row, true) . $mail->ErrorInfo);
         }

@@ -27,15 +27,32 @@ class ContactsListViewSmarty extends ListViewSmarty {
     }
 
 
-	function process($file, $data, $htmlVar) {
-		parent::process($file, $data, $htmlVar);
+    /**
+     * 
+     * @global array $sugar_config
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
+     *
+     */
+    public function process($file, $data, $htmlVar) {
 
-        	if(!ACLController::checkAccess($this->seed->module_dir,'export',true) || !$this->export) {
-			$this->ss->assign('exportLink', $this->buildExportLink());
-		}
-	}
+        global $sugar_config;
 
-	function buildExportLink($id = 'export_link'){
+        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+
+        if ($confirmOptInEnabled) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
+
+        parent::process($file, $data, $htmlVar);
+
+        if (!ACLController::checkAccess($this->seed->module_dir, 'export', true) || !$this->export) {
+            $this->ss->assign('exportLink', $this->buildExportLink());
+        }
+    }
+
+    function buildExportLink($id = 'export_link'){
 		global $app_strings;
 		global $sugar_config;
 

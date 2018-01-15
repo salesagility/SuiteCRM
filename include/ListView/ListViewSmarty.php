@@ -79,14 +79,51 @@ class ListViewSmarty extends ListViewDisplay
         parent::__construct();
         $this->ss = new Sugar_Smarty();
     }
+            
+    /**
+     * 
+     * @global array $app_strings
+     * @global array $sugar_config
+     * @return string|boolean
+     */
+    public function buildSendConfirmOptInEmailToPersonAndCompany() {
+        
+        global $app_strings, $sugar_config;
+        
+        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+
+        if (!$confirmOptInEnabled) {
+            $this->warn('Confirm Opt In disabled');
+            return false;
+        }
+        
+        $js = "sListView.send_form("
+                . "true, "
+                . "'{$this->seed->module_name}', "
+                . "'index.php?entryPoint=sendConfirmOptInEmail&method=confirmOptInSelected', "
+                . "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', "
+                . "null, "
+                . "'', "
+                . "true, "
+                . "function (resp) {"
+                . " alert(resp);"
+                . "});";
+        $linkHTML = "<a href='javascript:void(0)' "
+                . "class=\"parent-dropdown-action-handler\" "
+                . "id=\"targetlist_listview \" "
+                . "onclick=\"$js\">"
+                . "{$app_strings['LBL_SEND_CONFIRM_OPT_IN_EMAIL']}"
+                . "</a>";
+        return $linkHTML;
+    }
 
     /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
-     *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_public string the corresponding html public in xtpl per row
+     * 
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
     function process($file, $data, $htmlpublic) {

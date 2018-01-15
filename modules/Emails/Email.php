@@ -4347,7 +4347,7 @@ eoq;
      * 
      * @global $sugar_config
      * @global $log
-     * @param string $id
+     * @param string $id EmailAddresses bean ID
      * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
      * @return bool
      */
@@ -4382,15 +4382,17 @@ eoq;
         
         return $ret;
     }
-
+    
     /**
+     * 
      * @global array $sugar_config
      * @global array $app_strings
      * @global SugarDateTime $timedate
-     * @global LoggerManager $log
+     * @global \LoggerManager $log
      * @global DBManager $db
      * @param EmailAddress $emailAddress
-     * @return bool
+     * @return boolean
+     * @throws Exception
      */
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
@@ -4399,6 +4401,15 @@ eoq;
         global $timedate;
         global $log;
         global $db;
+        
+        global $sugar_config;
+        
+        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+
+        if (!$confirmOptInEnabled) {
+            $this->warn('Confirm Opt In disabled');
+            return false;
+        }
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
 
@@ -4408,26 +4419,41 @@ eoq;
             return false;
         }
 
+        
+        $confirmOptInTemplateId = $sugar_config['aop']['confirmed_opt_in_template_id'];
+        if(!$confirmOptInTemplateId) {
+            $configurator = new Configurator();
+            $confirmOptInTemplateId = $configurator->config['email_confirm_opt_in_email_template_id'];
+        }
 
-        if (!$sugar_config['aop']['confirmed_opt_in_template_id']) {
+        if (!$confirmOptInTemplateId) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
             return false;
         }
-        
 
+        // Send email template
+        
         if (!$this->parent_name || !$this->parent_type) {
             $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
-            $log->warning($msg);
-
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
+            $log->fatal($msg);
             return false;
+        }
+        
+        $emailAddressString = $emailAddress->email_address;
+        if(!$this->isValidEmail($emailAddressString)) {
+            $emailAddressString = $emailAddress->email_address[0]['email_address'];
+            if(!$this->isValidEmail($emailAddressString)) {
+                throw new Exception('Invalid email address: ' . $emailAddressString);
+            }
         }
 
         // Send email template
 
         $params = array(
             'individual_email' => '1',
-            'email_template' => $sugar_config['aop']['confirmed_opt_in_template_id'],
+            'email_template' => $confirmOptInTemplateId,
             'email_to_type' => array(
                 0 => 'to',
             ),
@@ -4435,7 +4461,7 @@ eoq;
                 0 => 'Email Address',
             ),
             'email' => array(
-                0 => $emailAddress->email_address,
+                0 => $emailAddressString,
             ),
         );
 
@@ -4443,7 +4469,7 @@ eoq;
         // Get Related Contact | Lead | Target
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address LIKE \'' . $db->quote($emailAddress->email_address) . '\'';
+            ' WHERE email_address LIKE \'' . $db->quote($emailAddressString) . '\'';
 
         $dbResult = $db->query($query);
         $row = $db->fetchByAssoc($dbResult);
@@ -4460,6 +4486,15 @@ eoq;
         return true;
     }
 
+    /**
+     * 
+     * @param string $emailAddressString
+     * @return boolean
+     */
+    private function isValidEmail($emailAddressString) {
+        return filter_var($emailAddressString, FILTER_VALIDATE_EMAIL);
+    }
+    
     /**
      * @param string $emailField eg from_name
      */

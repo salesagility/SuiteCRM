@@ -39,8 +39,5 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once __DIR__ . ' /../include/ConfirmOptIn.php';
-$confirmOptIn = new ConfirmOptIn();
-$confirmOptIn->pre_display();
-echo $confirmOptIn->display();
-sugar_cleanup();
+require_once __DIR__ . '/../include/EntryPointConfirmOptIn.php';
+new EntryPointConfirmOptIn();

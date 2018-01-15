@@ -40,6 +40,26 @@ class ProspectsListViewSmarty extends ListViewSmarty {
 
         return $script;
     }
+    
+    /**
+     * 
+     * @global array $sugar_config
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
+     */
+    public function process($file, $data, $htmlpublic) {
+
+        global $sugar_config;
+
+        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+
+        if ($confirmOptInEnabled) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
+
+        parent::process($file, $data, $htmlpublic);
+    }
 
 }
 

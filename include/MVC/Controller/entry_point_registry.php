@@ -58,7 +58,7 @@ $entry_point_registry = array(
 	'WebToPersonCapture' => array('file' => 'modules/Campaigns/WebToPersonCapture.php', 'auth' => false),
     'removeme' => array('file' => 'modules/Campaigns/RemoveMe.php', 'auth' => false),
     'ConfirmOptIn' => array(
-        'file' => 'include/SugarObjects/templates/basic/entrypoints/confirm_opt_in.php',
+        'file' => 'include/entryPointConfirmOptInConnector.php',
         'auth' => false
     ),
     'acceptDecline' => array('file' => 'modules/Contacts/AcceptDecline.php', 'auth' => false),
@@ -92,6 +92,7 @@ $entry_point_registry = array(
 	'setCampaignMarketingAndTemplate' => array('file' => 'modules/Campaigns/WizardCampaignSave.php', 'auth' => true),
 	'survey' => array('file' => 'modules/Surveys/Entry/Survey.php', 'auth' => false),
 	'surveySubmit' => array('file' => 'modules/Surveys/Entry/SurveySubmit.php', 'auth' => false),
+    'sendConfirmOptInEmail' => array('file' => 'include/entryPointConfirmOptInConnector.php', 'auth' => true),
 );
 
 ?>
