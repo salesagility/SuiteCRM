@@ -655,7 +655,7 @@ class EmailMan extends SugarBean
         if (
                 $module instanceof Basic &&
                 $sugar_config['email_enable_confirm_opt_in'] &&
-                $SugarEmailAddress->confirm_opt_in == '0'
+                $SugarEmailAddress->confirm_opt_in === ''
         ) {
             global $log;
             $log->warn('An email is not confirmed opt in: '. $module->email1);
@@ -663,7 +663,7 @@ class EmailMan extends SugarBean
             $success = false;
         } elseif ((!isset($module->email_opt_out) || ($module->email_opt_out !== 'on' && $module->email_opt_out !== 1 && $module->email_opt_out !== '1')) && (!isset($module->invalid_email) || ($module->invalid_email !== 'on' && $module->invalid_email !== 1 && $module->invalid_email !== '1'))) {
             $lower_email_address = strtolower($module->email1);
-            //test against indivdual address.
+            //test against individual address.
             if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
                 $this->set_as_sent($lower_email_address, true, null, null, 'blocked');
                 return true;
@@ -1013,7 +1013,7 @@ class EmailMan extends SugarBean
         $result = $bean->db->query($query);
         $row = $this->db->fetchByAssoc($result);
 
-        if (!empty($row) && $row['confirm_opt_in'] == '1') {
+        if (!empty($row) && $row['confirm_opt_in'] === 'confirmed_opt_in') {
             return true;
         }
 

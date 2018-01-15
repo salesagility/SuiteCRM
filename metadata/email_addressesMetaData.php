@@ -87,8 +87,10 @@ $dictionary['email_addresses'] = array(
         ),
         'confirm_opt_in' => array(
             'name'            => 'confirm_opt_in',
-            'type'            => 'bool',
-            'default'        => 0,
+            'type'            => 'enum',
+            'length' => 255,
+            'default'        => '',
+            'options' => 'email_settings_opt_in_dom',
             'vname'         => 'LBL_CONFIRM_OPT_IN',
         ),
 

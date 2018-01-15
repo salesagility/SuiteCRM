@@ -59,9 +59,9 @@ class EmailAddress extends SugarEmailAddress
     public $opt_out = 0;
 
     /**
-     * @var int|bool $confirm_opt_in
+     * @var string|enum $confirm_opt_in
      */
-    public $confirm_opt_in = 0;
+    public $confirm_opt_in = '';
 
     /**
      * @var int|bool $invalid_email
@@ -122,6 +122,6 @@ class EmailAddress extends SugarEmailAddress
         global $timedate;
         $date = new DateTime();
         $this->confirmed_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = 1;
+        $this->confirm_opt_in = 'confirm-opt-in';
     }
 }
