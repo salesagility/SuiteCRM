@@ -2,6 +2,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -29,51 +32,15 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 *}
-{include file="_head.tpl" theme_template=true}
-<body onMouseOut="closeMenus();">
-<a name="top"></a>
-{$DCSCRIPT}
-{if $AUTHENTICATED}
-<header>
-    <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
-    </div>
-    {include file="_globalLinks.tpl" theme_template=true}
-    {include file="_welcome.tpl" theme_template=true}
-    {include file="_notification.tpl" theme_template=true}
-    <div class="clear"></div>
-    {include file="_headerSearch.tpl" theme_template=true}
-    <div class="clear"></div>
-    {if !$AUTHENTICATED}
-        <br /><br />
-    {/if}
-
-    <div class="clear"></div>
-
-</header>
-
-{/if}
-
-{literal}
-    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png'  title='empty' style='display:none'></iframe>
-<input id='ajaxUI-history-field' type='hidden'>
-<script type='text/javascript'>
-    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded)
-    {
-        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
-        YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
-        {/if}{literal}
-    }
-</script>
-{/literal}
-
-<main>
-    <div id="content" {if !$AUTHENTICATED}class="noLeftColumn" {/if}>
-        <table style="" id="contentTable"><tr><td>
+<div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
+    <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
+        <span class="badge"><span class="alert_count hidden" >0</span> <span class="glyphicon glyphicon-bell"></span></span>
+    </button>
+    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+</div>
