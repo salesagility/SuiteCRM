@@ -477,10 +477,10 @@ class EmailsController extends SugarController
     {
         $data['attachments'] = array();
 
-        if(!empty($_REQUEST['id'])){
+        if (!empty($_REQUEST['id'])) {
             $attachmentBeans = BeanFactory::getBean('Notes')
                 ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'");
-            foreach($attachmentBeans as $attachmentBean) {
+            foreach ($attachmentBeans as $attachmentBean) {
                 $data['attachments'][] = array(
                     'id' => $attachmentBean->id,
                     'name' => $attachmentBean->name,
