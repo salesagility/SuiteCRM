@@ -467,7 +467,34 @@ class EmailsController extends SugarController
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
         echo utf8_decode($dataEncoded);
+        $this->view = 'ajax';
+    }
 
+    /**
+     * Returns attachment data to ajax call
+     */
+    public function action_GetDraftAttachmentData()
+    {
+        $data['attachments'] = array();
+
+        if(!empty($_REQUEST['id'])){
+            $attachmentBeans = BeanFactory::getBean('Notes')
+                ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'");
+            foreach($attachmentBeans as $attachmentBean) {
+                $data['attachments'][] = array(
+                    'id' => $attachmentBean->id,
+                    'name' => $attachmentBean->name,
+                    'file_mime_type' => $attachmentBean->file_mime_type,
+                    'filename' => $attachmentBean->filename,
+                    'parent_type' => $attachmentBean->parent_type,
+                    'parent_id' => $attachmentBean->parent_id,
+                    'description' => $attachmentBean->description,
+                );
+            }
+        }
+
+        $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
+        echo utf8_decode($dataEncoded);
         $this->view = 'ajax';
     }
 
