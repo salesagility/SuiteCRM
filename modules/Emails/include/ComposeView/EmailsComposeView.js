@@ -940,6 +940,7 @@
             $(id).val(response.data.id);
           }
           $(self).find('input[name=record]').val(response.data.id);
+          $.fn.EmailsComposeView.checkForDraftAttachments(response.data.id);
         }
       }).fail(function (response) {
         "use strict";
@@ -1069,20 +1070,7 @@
       }
 
       if (self.find("[name=record]").val().length > 0) {
-        // Check if this is a draft email with attachments
-        $.ajax({
-          "url": 'index.php?module=Emails&action=GetDraftAttachmentData&id=' + self.find("[name=record]").val()
-        }).done(function (jsonResponse) {
-          var response = JSON.parse(jsonResponse);
-          if (typeof response.data !== "undefined") {
-            $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response, false);
-          }
-          if (typeof response.errors !== "undefined") {
-            $.fn.EmailsComposeView.showAjaxErrorMessage(response);
-          }
-        }).error(function (response) {
-          console.error(response);
-        });
+        $.fn.EmailsComposeView.checkForDraftAttachments(self.find("[name=record]").val());
       }
 
       if (typeof opts.tinyMceOptions.setup === "undefined") {
@@ -1265,6 +1253,23 @@
     self.construct();
 
     return $(self);
+  };
+
+  $.fn.EmailsComposeView.checkForDraftAttachments = function (id) {
+    // Check if this is a draft email with attachments
+    $.ajax({
+      "url": 'index.php?module=Emails&action=GetDraftAttachmentData&id=' + id
+    }).done(function (jsonResponse) {
+      var response = JSON.parse(jsonResponse);
+      if (typeof response.data !== "undefined") {
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response, false);
+      }
+      if (typeof response.errors !== "undefined") {
+        $.fn.EmailsComposeView.showAjaxErrorMessage(response);
+      }
+    }).error(function (response) {
+      console.error(response);
+    });
   };
 
   $.fn.EmailsComposeView.showAjaxErrorMessage = function (response) {
