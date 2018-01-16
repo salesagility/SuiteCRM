@@ -67,6 +67,18 @@ class EntryPointConfirmOptIn
         
         $method = isset($request['method']) && $request['method'] ? $request['method'] : null;
         
+        $output = $this->callMethod($method);
+        
+        echo $output;
+        sugar_cleanup();
+    }
+    
+    /**
+     * 
+     * @param string $method
+     * @return string
+     */
+    protected function callMethod($method) {
         switch($method) {
             case 'confirmOptInSelected':
                 $output = $this->methodConfirmOptInSelected($post);
@@ -75,9 +87,7 @@ class EntryPointConfirmOptIn
                 $output = $this->methodConfirmOptInUser($request);
                 break;
         }
-        
-        echo $output;
-        sugar_cleanup();
+        return $output;
     }
     
     /**
