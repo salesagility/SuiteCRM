@@ -61,11 +61,6 @@ class ConfirmOptIn
                 'email_address' => $_REQUEST['from']
             )
         );
-
-        if ($this->emailAddress) {
-            $this->emailAddress->confirmOptIn();
-            $this->emailAddress->save();
-        }
     }
 
     /**

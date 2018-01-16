@@ -111,7 +111,7 @@ class Basic extends SugarBean
                 return 'OPT_OUT';
             }
 
-            if ($emailAddress->confirm_opt_in == '1') {
+            if ($emailAddress->confirm_opt_in == 'confirmed-opt-in') {
                 return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
             } elseif(!empty($emailAddress->opt_in_email_created)) {
                 return 'OPT_IN_PENDING_EMAIL_SENT';
@@ -144,7 +144,7 @@ class Basic extends SugarBean
         if (!$sugar_config['email_enable_confirm_opt_in']) {
             global $log;
             $log->warn('Confirm Opt In is not enabled.');
-            $emailAddressBean->confirm_opt_in = true;
+            $emailAddressBean->confirm_opt_in = 'confirmed-opt-in';
             return $emailAddressBean;
         }
 
