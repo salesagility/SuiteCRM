@@ -622,14 +622,6 @@ class EmailMan extends SugarBean
         $module->retrieve($this->related_id);
         $module->emailAddress->handleLegacyRetrieve($module);
 
-        if ($this->shouldBlockEmail($module)) {
-            $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
-
-            // block sending campaign email
-            $this->set_as_sent($module->email1, true, null, null, 'blocked');
-            return true;
-        }
-
         //check to see if bean has a primary email address
         if (!$this->is_primary_email_address($module)) {
             //no primary email address designated, do not send out email, create campaign log
@@ -643,6 +635,14 @@ class EmailMan extends SugarBean
         if (!$this->valid_email_address($module->email1)) {
             $this->set_as_sent($module->email1, true, null, null, 'invalid email');
             $GLOBALS['log']->fatal('Encountered invalid email address: ' . $module->email1 . " Emailman id=$this->id");
+            return true;
+        }
+
+        if ($this->shouldBlockEmail($module)) {
+            $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
+
+            // block sending campaign email
+            $this->set_as_sent($module->email1, true, null, null, 'blocked');
             return true;
         }
 
