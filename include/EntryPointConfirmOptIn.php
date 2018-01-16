@@ -39,10 +39,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Class confirm_opt_in
  */
-class EntryPointConfirmOptIn 
+class EntryPointConfirmOptIn  
 {
 
     /**
