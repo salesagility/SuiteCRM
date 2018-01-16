@@ -4366,10 +4366,7 @@ eoq;
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
-            if (
-                ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->opt_in_email_created))
-                || ($_REQUEST['send_opt_in_checkbox'] == 'true')
-            ) {
+            if ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->opt_in_email_created)) {
                 $this->sendOptInEmail($emailAddress);
             }
         }
