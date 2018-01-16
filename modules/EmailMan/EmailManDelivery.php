@@ -271,7 +271,8 @@ do {
                     $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
                     $emailAddress->save();
                     $emailman->retrieve_by_string_fields(array(
-                        'related_id' => $emailman->related_id
+                        'related_id' => $emailman->related_id,
+                        'related_confirm_opt_in' => '1',
                     ));
                     $emailman->mark_deleted($emailman->id);
                 }
