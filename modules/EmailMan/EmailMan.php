@@ -990,6 +990,7 @@ class EmailMan extends SugarBean
     }
 
     /**
+     * @global $sugar_config;
      * @param \Contact|\Account|\Prospect|\SugarBean $bean
      * @return bool
      */
