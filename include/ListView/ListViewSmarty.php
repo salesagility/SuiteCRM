@@ -97,23 +97,10 @@ class ListViewSmarty extends ListViewDisplay
             return false;
         }
         
-        $js = "sListView.send_form("
-                . "true, "
-                . "'{$this->seed->module_name}', "
-                . "'index.php?entryPoint=sendConfirmOptInEmail&method=confirmOptInSelected', "
-                . "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', "
-                . "null, "
-                . "'', "
-                . "true, "
-                . "function (resp) {"
-                . " alert(resp);"
-                . "});";
-        $linkHTML = "<a href='javascript:void(0)' "
-                . "class=\"parent-dropdown-action-handler\" "
-                . "id=\"targetlist_listview \" "
-                . "onclick=\"$js\">"
-                . "{$app_strings['LBL_SEND_CONFIRM_OPT_IN_EMAIL']}"
-                . "</a>";
+        $linkTpl = new Sugar_Smarty();
+        $linkTpl->assign('module_name', $this->seed->module_name);
+        $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
+        
         return $linkHTML;
     }
 
