@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class confirm_opt_in
  */
-class EntryPointConfirmOptIn  
+class EntryPointConfirmOptInHandler
 {
 
     /**
