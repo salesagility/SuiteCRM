@@ -1026,7 +1026,7 @@ class EmailMan extends SugarBean
         $row = $bean->db->fetchByAssoc($result);
 
         if (!empty($row)) {
-            if ($row['out_out'] == '1') {
+            if ($row['opt_out'] == '1') {
                 return true;
             } elseif($row['invalid_email'] == '1') {
                 return true;
