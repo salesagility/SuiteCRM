@@ -1018,7 +1018,9 @@ class EmailMan extends SugarBean
         if (!empty($row)) {
             if ($row['out_out'] == '1' || $row['out_out'] == 'true') {
                 return true;
-            } elseif ($optInLevel === '' && $row['confirm_opt_in'] !== 'opt-in') {
+            } elseif (
+                $optInLevel === ''
+                && ($row['confirm_opt_in'] === 'opt-in' || $row['confirm_opt_in'] === 'confirmed-opt-in')) {
                 return true;
             } elseif (
                 $optInLevel === 'opt-in'
