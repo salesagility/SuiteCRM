@@ -567,11 +567,11 @@ class EmailMan extends SugarBean
     }
 
     /**
-     * @global $beanList;
-     * @global $beanFiles;
-     * @global $sugar_config;
-     * @global $mod_strings;
-     * @global $locale;
+     * @global array $beanList;
+     * @global array $beanFiles;
+     * @global Configurator|array $sugar_config;
+     * @global array $mod_strings;
+     * @global Localization $locale;
      * @param SugarPHPMailer $mail
      * @param int $save_emails
      * @param bool $testmode
