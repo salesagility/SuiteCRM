@@ -646,18 +646,20 @@ class EmailMan extends SugarBean
             return true;
         }
 
-
-        $SugarEmailAddress =$module->fromSugarEmailAddressField('email1');
         if (
-                $module instanceof Basic &&
-                $sugar_config['email_enable_confirm_opt_in'] &&
-                $SugarEmailAddress->confirm_opt_in === ''
-        ) {
-            global $log;
-            $log->warn('An email is not confirmed opt in: '. $module->email1);
-            $this->set_as_sent($module->email1, true, null, null, 'blocked');
-            $success = false;
-        } elseif ((!isset($module->email_opt_out) || ($module->email_opt_out !== 'on' && $module->email_opt_out !== 1 && $module->email_opt_out !== '1')) && (!isset($module->invalid_email) || ($module->invalid_email !== 'on' && $module->invalid_email !== 1 && $module->invalid_email !== '1'))) {
+            (
+                !isset($module->email_opt_out)
+                || (
+                    $module->email_opt_out !== 'on'
+                    && $module->email_opt_out !== 1
+                    && $module->email_opt_out !== '1'
+                )
+            )
+            && (
+                !isset($module->invalid_email)
+                || ($module->invalid_email !== 'on' && $module->invalid_email !== 1 && $module->invalid_email !== '1')
+            )) {
+            // If email address is not opted out or the email is valid
             $lower_email_address = strtolower($module->email1);
             //test against individual address.
             if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
@@ -992,7 +994,7 @@ class EmailMan extends SugarBean
     /**
      * @global array|Configurator $sugar_config;
      * @param \Contact|\Account|\Prospect|\SugarBean $bean
-     * @return bool
+     * @return bool true === block email from being sent
      */
     private function shouldBlockEmail(SugarBean $bean)
     {
@@ -1010,14 +1012,18 @@ class EmailMan extends SugarBean
         $query = 'SELECT * '
             .'FROM email_addr_bean_rel '
             .'JOIN email_addresses on email_addr_bean_rel.email_address_id = email_addresses.id '
-            .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\' AND email_addr_bean_rel.deleted=0';
+            .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\' '
+            .'AND email_addr_bean_rel.deleted=0 '
+            .'AND email_addr_bean_rel.primary_address=1 '
+            .'AND email_addresses.email_address LIKE \''. $bean->db->quote($email_address) .'\'';
 
         $result = $bean->db->query($query);
-        $row = $this->db->fetchByAssoc($result);
-
+        $row = $bean->db->fetchByAssoc($result);
 
         if (!empty($row)) {
-            if ($row['out_out'] == '1' || $row['out_out'] == 'true') {
+            if ($row['out_out'] == '1') {
+                return true;
+            } elseif($row['invalid_email'] == '1') {
                 return true;
             } elseif (
                 $optInLevel === ''
