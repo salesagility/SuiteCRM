@@ -39,47 +39,47 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * Class confirm_opt_in
  */
-class EntryPointConfirmOptIn
+class EntryPointConfirmOptIn 
 {
+
     /**
      * @var EmailAddress $emailAddress
      */
     private $emailAddress;
-    
+
     /**
      * 
      * @param array $request
      * @param array $post
      */
     public function __construct($request = null, $post = null) {
-        
-        if(is_null($request)) {
+
+        if (is_null($request)) {
             $request = $_REQUEST;
         }
-        
-        if(is_null($post)) {
+
+        if (is_null($post)) {
             $post = $_POST;
         }
-        
+
         $method = isset($request['method']) && $request['method'] ? $request['method'] : null;
-        
+
         $output = $this->callMethod($method);
-        
+
         echo $output;
         sugar_cleanup();
     }
-    
+
     /**
      * 
      * @param string $method
      * @return string
      */
     protected function callMethod($method) {
-        switch($method) {
+        switch ($method) {
             case 'confirmOptInSelected':
                 $output = $this->methodConfirmOptInSelected($post);
                 break;
@@ -89,7 +89,7 @@ class EntryPointConfirmOptIn
         }
         return $output;
     }
-    
+
     /**
      * 
      * @global array $sugar_config
@@ -97,9 +97,9 @@ class EntryPointConfirmOptIn
      * @return string|boolean
      */
     private function methodConfirmOptInSelected($post) {
-        
+
         global $sugar_config;
-        
+
         $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
 
         if (!$confirmOptInEnabled) {
@@ -107,24 +107,24 @@ class EntryPointConfirmOptIn
             return false;
         }
 
-        
+
         $module = $post['module'];
         $uids = explode(',', $post['uid']);
         $emailMan = new EmailMan();
         $err = 0;
         $msg = '';
-        foreach($uids as $uid) {
-            if(!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
+        foreach ($uids as $uid) {
+            if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
                 $err++;
             }
         }
-        
-        if($err) {
+
+        if ($err) {
             $msg = 'Incorrect Bean ID. ';
         } else {
             $msg = 'All ' . $module . ' added to email queue.';
         }
-        
+
         return $msg;
     }
 
@@ -134,23 +134,23 @@ class EntryPointConfirmOptIn
      * @param array $request
      * @return string
      */
-    private function methodConfirmOptInUser($request)
-    {
+    private function methodConfirmOptInUser($request) {
         $emailAddress = BeanFactory::getBean('EmailAddresses');
         $this->emailAddress = $emailAddress->retrieve_by_string_fields(
-            array(
-                'email_address' => $request['from']
-            )
+                array(
+                    'email_address' => $request['from']
+                )
         );
 
         if ($this->emailAddress) {
             $this->emailAddress->confirmOptIn();
             $this->emailAddress->save();
         }
-                
+
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
     }
+
 }
