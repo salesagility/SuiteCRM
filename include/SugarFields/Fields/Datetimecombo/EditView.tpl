@@ -42,6 +42,11 @@
 {{if !empty($displayParams.idName)}}
     {{assign var=idname value=$displayParams.idName}}
 {{/if}}
+{{if !empty($displayParams.originalFieldName)}}
+    {{assign var=originalFieldName value=$displayParams.originalFieldName}}
+{{else}}
+    {{assign var=originalFieldName value=$idName}}
+{{/if}}
 
 {{assign var=flag_field value=$vardef.name|cat:_flag}}
 <table border="0" cellpadding="0" cellspacing="0" class="dateTime">
@@ -84,7 +89,7 @@ function set_{{$idname}}_values(form) {ldelim}
 </tr>
 {{/if}}
 </table>
-<input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$idname}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
+<input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$originalFieldName}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
 <script type="text/javascript" src="{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}"></script>
 <script type="text/javascript">
 var combo_{{$idname}} = new Datetimecombo("{$fields[{{sugarvar key='name' stringFormat=true}}].value}", "{{$idname}}", "{$TIME_FORMAT}", "{{$tabindex}}", '{{$displayParams.showNoneCheckbox}}', false, true);

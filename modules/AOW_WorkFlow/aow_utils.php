@@ -341,6 +341,14 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         if( $vardef['type'] == 'datetimecombo') {
             $vardef['type'] = 'datetime';
         }
+        if( $vardef['type'] == 'datetime') {
+            $vardef['type'] = 'datetimecombo';
+        }
+        if( $vardef['type'] == 'datetimecombo') {
+            $displayParams['originalFieldName'] = $aow_field;
+            $displayParams['idName']
+                = str_replace('[', 'SCRMLSQBR', str_replace(']', 'SCRMRSQBR', $aow_field));
+        }
 
         // trim down textbox display
         if( $vardef['type'] == 'text' ) {
