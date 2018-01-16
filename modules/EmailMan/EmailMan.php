@@ -940,6 +940,11 @@ class EmailMan extends SugarBean
 
     public function is_primary_email_address($bean)
     {
+
+        if(!isset($bean->email1)) {
+            return false;
+        }
+
         $email_address = trim($bean->email1);
 
         if (empty($email_address)) {
