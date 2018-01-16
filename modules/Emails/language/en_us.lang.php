@@ -371,6 +371,6 @@ $mod_strings = array(
     'LBL_MARK_READ' => 'Mark As Read',
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
-    'LBL_OPT_IN_EMAIL_CREATED' => 'Opt In Email Sent',
+    'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Opt In Email Sent',
 );
 

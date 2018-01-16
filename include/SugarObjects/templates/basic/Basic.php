@@ -113,9 +113,9 @@ class Basic extends SugarBean
 
             if ($emailAddress->confirm_opt_in == '1') {
                 return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-            } elseif(!empty($emailAddress->opt_in_email_created)) {
+            } elseif(!empty($emailAddress->confirm_opt_in_sent_date)) {
                 return 'OPT_IN_PENDING_EMAIL_SENT';
-            } elseif(empty($emailAddress->opt_in_email_created)) {
+            } elseif(empty($emailAddress->confirm_opt_in_sent_date)) {
                 return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
             }
         }

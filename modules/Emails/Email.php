@@ -4373,7 +4373,7 @@ eoq;
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
             if (
-                ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->opt_in_email_created))
+                ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->confirm_opt_in_sent_date))
                 || $sendOptInCheckbox
             ) {
                 $ret = $this->sendOptInEmail($emailAddress);
@@ -4480,7 +4480,7 @@ eoq;
         $actionSendEmail->run_action($bean, $params);
 
         $date = new DateTime();
-        $emailAddress->opt_in_email_created = $date->format($timedate::DB_DATETIME_FORMAT);
+        $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
         $emailAddress->save();
 
         return true;
