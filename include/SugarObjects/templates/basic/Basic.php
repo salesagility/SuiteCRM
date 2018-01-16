@@ -97,13 +97,12 @@ class Basic extends SugarBean
      * @param string $emailField
      * @return string
      */
-    public function getOptInStatusFromSugarField($emailField)
-    {
+    public function getOptInStatusFromSugarField($emailField) {
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
 
-        if($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
-            if($emailAddress->invalid_email) {
+        if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
+            if ($emailAddress->invalid_email) {
                 return 'INVALID_EMAIL';
             }
 
@@ -113,9 +112,9 @@ class Basic extends SugarBean
 
             if ($emailAddress->confirm_opt_in == '1') {
                 return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-            } elseif(!empty($emailAddress->confirm_opt_in_sent_date)) {
+            } elseif (!empty($emailAddress->confirm_opt_in_sent_date)) {
                 return 'OPT_IN_PENDING_EMAIL_SENT';
-            } elseif(empty($emailAddress->confirm_opt_in_sent_date)) {
+            } elseif (empty($emailAddress->confirm_opt_in_sent_date)) {
                 return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
             }
         }
