@@ -274,6 +274,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'duplicate_merge_dom_value' => 0,
     'audited' => 0,
     'reportable' => 0,
+    'options' => 'parent_line_items',
     'len' => 100,
     'dbType' => 'varchar',
     'studio' => 'hidden',
