@@ -27,6 +27,7 @@ groups:
 
     teams: 
       - suitecrm-core
+      - owner
 
     approve_by_comment:
       enabled: true
@@ -37,3 +38,20 @@ groups:
 
     author_approval:
       ignored: true
+
+  owners:
+    conditions:
+      labels:
+        - enhancement
+
+    required: 1
+
+    teams:
+      - owner
+
+    approve_by_comment:
+      enabled: true
+      approve_regex: '^Approved'
+
+    github_reviews:
+      enabled: false
