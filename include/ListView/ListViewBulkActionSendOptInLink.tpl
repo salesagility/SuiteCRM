@@ -1,4 +1,4 @@
-{**
+{*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,7 +49,9 @@
             null,
             '',
             true,
+            {literal}
             function (resp) {
                 alert(resp);
             }
+            {/literal}
         );">{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}</a>

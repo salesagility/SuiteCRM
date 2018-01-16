@@ -262,7 +262,17 @@ do {
                 } else {
                     $GLOBALS['log']->debug("Confirm Opt In Email delivery SUCCESS:" . print_r($row, true));
                     $date = new DateTime();
-                    $emailAddress->retrieve($emailAddress->email_address[0]['email_address_id']);
+                    
+                    if (is_string($emailAddress->email_address)) {
+                        $emailAddressString = $emailAddress->email_address;
+                    } elseif (is_array($emailAddress->email_address) && is_string($emailAddress->email_address[0]['email_address'])) {
+                        $emailAddressString = $emailAddress->email_address[0]['email_address'];
+                    } else {
+                        $log->fatal('Incorrect Email Address');
+                        return false;
+                    }
+                    
+                    $emailAddress->retrieve($emailAddressString);
                     $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
                     $emailAddress->save();
                     $emailman->retrieve_by_string_fields(array(

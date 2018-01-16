@@ -71,7 +71,7 @@ class EntryPointConfirmOptInHandler
 
         $method = isset($request['method']) && $request['method'] ? $request['method'] : null;
 
-        $output = $this->callMethod($method);
+        $output = $this->callMethod($method, $post, $request);
 
         echo $output;
         sugar_cleanup();
@@ -80,9 +80,11 @@ class EntryPointConfirmOptInHandler
     /**
      * 
      * @param string $method
+     * @param array $post
+     * @param array $request
      * @return string
      */
-    protected function callMethod($method) {
+    protected function callMethod($method, $post, $request) {
         switch ($method) {
             case 'confirmOptInSelected':
                 $output = $this->methodConfirmOptInSelected($post);

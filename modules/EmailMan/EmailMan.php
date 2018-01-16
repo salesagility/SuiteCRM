@@ -992,7 +992,6 @@ class EmailMan extends SugarBean
         }
         
         $relatedBean = BeanFactory::getBean($module, $uid);
-        $emailAddresses = $relatedBean->emailAddresses->addresses;
         
         $this->related_type = $relatedBean->module_dir;
         $this->related_id = $relatedBean->id;
@@ -1027,7 +1026,7 @@ class EmailMan extends SugarBean
             if($focus) {
                 $address = $emailAddress->getPrimaryAddress($focus, $focus->id);
                 $guid = $emailAddress->getEmailGUID($address);
-                $emailAddress->retrieve($quid);
+                $emailAddress->retrieve($guid);
             } else {
                 $log->error('Incorrect bean');
                 return false;
@@ -1070,7 +1069,8 @@ class EmailMan extends SugarBean
         $emailTemplate = new EmailTemplate();
         
         $confirmOptInTemplateId = 
-                $sugar_config['aop']['confirm_opt_in_template_id'];
+                isset($sugar_config['aop']['confirm_opt_in_template_id']) ?
+                $sugar_config['aop']['confirm_opt_in_template_id'] : null;
         if(!$confirmOptInTemplateId) {
             $configurator = new Configurator();
             $confirmOptInTemplateId = 
@@ -1103,14 +1103,30 @@ class EmailMan extends SugarBean
         $mailer->Body = from_html($emailTemplate->body_html);
         $mailer->Body_html = from_html($emailTemplate->body_html);
         $mailer->AltBody = from_html($emailTemplate->body);
+        
+        if (is_string($emailAddress->email_address)) {
+            $emailAddressString = $emailAddress->email_address;
+        } elseif (is_array($emailAddress->email_address) && is_string($emailAddress->email_address[0]['email_address'])) {
+            $emailAddressString = $emailAddress->email_address[0]['email_address'];
+        } else {
+            $log->fatal('Incorrect Email Address');
+            return false;
+        }
 
-        $mailer->addAddress($emailAddress->email_address[0]['email_address'], $focus->name);
+        $mailer->addAddress($emailAddressString, $focus->name);
 
         $mailer->replace('user_first_name', 
                 isset($focus->first_name) ? $focus->first_name : $focus->name);
         $mailer->replace('user_last_name', 
                 isset($focus->last_name) ? $focus->last_name : '');
-        $mailer->replace('contact_email1', $emailAddress->email_address[0]['email_address']);
+        $mailer->replace('contact_email1', $emailAddressString);
+        
+        $mailer->replace('contact_first_name', 
+                isset($focus->first_name) ? $focus->first_name : $focus->name);
+        $mailer->replace('contact_last_name', 
+                isset($focus->last_name) ? $focus->last_name : '');
+        $mailer->replace('emailaddress_email_address', $emailAddressString);
+        
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 
         if (!$mailer->send()) {
