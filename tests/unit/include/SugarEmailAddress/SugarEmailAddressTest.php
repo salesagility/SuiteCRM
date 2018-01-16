@@ -842,7 +842,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             'invalid_email' => '0',
             'opt_out' => '0',
             'opt_in_email_created' => null,
-            'confirm_opt_in' => '0',
+            'confirm_opt_in' => null,
             'confirmed_opt_in_date' => null,
             'date_created' => $a['date_created'],
             'date_modified' => $a['date_modified'],
