@@ -1559,7 +1559,7 @@ $app_strings = array(
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_TITLE' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS' => 'Add Contacts To Target List',
-    'LBL_SEND_CONFIRM_OPT_IN_EMAIL' => 'Send Confirm OptIn Email',
+    'LBL_SEND_CONFIRM_OPT_IN_EMAIL' => 'Send Confirm Opt In Email',
     'LBL_ADDITIONAL_DETAILS_CLOSE_TITLE' => 'Click to Close',
     'LBL_ADDITIONAL_DETAILS_CLOSE' => 'Close',
     'LBL_ADDITIONAL_DETAILS' => 'Additional Details',
@@ -2359,7 +2359,7 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
-    'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt in requires the email to be related to Account/Contact/Lead/Target',
+    'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
