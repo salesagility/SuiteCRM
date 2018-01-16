@@ -41,6 +41,18 @@
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
+<form action="index.php" method="post" name="DetailView" id="formDetailView">
+    <input type="hidden" name="module" value="{$module}">
+    <input type="hidden" name="record" value="{$fields.id.value}">
+    <input type="hidden" name="return_action">
+    <input type="hidden" name="return_module">
+    <input type="hidden" name="return_id">
+    <input type="hidden" name="module_tab">
+    <input type="hidden" name="isDuplicate" value="false">
+    <input type="hidden" name="offset" value="{$offset}">
+    <input type="hidden" name="action" value="EditView">
+    <input type="hidden" name="sugar_body_only">
+</form>
 <div class="detail-view">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
