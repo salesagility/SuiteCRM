@@ -990,7 +990,7 @@ class EmailMan extends SugarBean
     }
 
     /**
-     * @global $sugar_config;
+     * @global array|Configurator $sugar_config;
      * @param \Contact|\Account|\Prospect|\SugarBean $bean
      * @return bool
      */
@@ -1034,67 +1034,4 @@ class EmailMan extends SugarBean
 
         return false;
     }
-
-
-    /**
-     * @param \Contact|\Account|\Prospect|\SugarBean $bean
-     * @return bool
-     */
-    private function isOptInConfirmed(SugarBean $bean)
-    {
-        $email_address = trim($bean->email1);
-
-        if (empty($email_address)) {
-            return false;
-        }
-
-        $query = 'SELECT * '
-                .'FROM email_addr_bean_rel '
-                .'JOIN email_addresses on email_addr_bean_rel.email_address_id = email_addresses.id '
-                .'WHERE email_addr_bean_rel.bean_id = \''.$bean->id .'\' AND email_addr_bean_rel.deleted=0';
-
-        $result = $bean->db->query($query);
-        $row = $this->db->fetchByAssoc($result);
-
-        if (!empty($row) && $row['confirm_opt_in'] === 'confirmed_opt_in') {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * @param SugarBean $bean
-     * @return bool
-     */
-    private function sendConfirmedOptInEmail(SugarBean $bean)
-    {
-        $email_address = trim($bean->email1);
-
-        if (empty($email_address)) {
-            return false;
-        }
-
-        $query = 'SELECT * '
-                .'FROM email_addr_bean_rel '
-                .'WHERE bean_id = \''.$bean->id .'\' and email_addr_bean_rel.deleted = 0';
-
-        $result = $bean->db->query($query);
-        $row = $this->db->fetchByAssoc($result);
-
-        if (!empty($row)) {
-            /** @var \Email $email */
-            $email = BeanFactory::getBean('Emails');
-            /** @var \EmailAddress $emailAddress */
-            $emailAddress = BeanFactory::getBean('EmailAddresses', $row['email_address_id']);
-            $email->parent_name = $bean->module_name;
-            $email->parent_type = $bean->module_name;
-            $email->sendOptInEmail($emailAddress);
-
-            return true;
-        }
-        return false;
-    }
-
 }
