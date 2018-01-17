@@ -997,7 +997,8 @@ class EmailMan extends SugarBean
         $this->related_id = $relatedBean->id;
         $this->related_confirm_opt_in = true;
         
-        return $this->save();
+        $ret = $this->save();
+        return $ret;
     }
     
     /**

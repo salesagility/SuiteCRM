@@ -116,10 +116,10 @@ class EntryPointConfirmOptInHandler
 
         $module = $post['module'];
         $uids = explode(',', $post['uid']);
-        $emailMan = new EmailMan();
         $err = 0;
         $msg = '';
         foreach ($uids as $uid) {
+            $emailMan = new EmailMan();
             if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
                 $err++;
             }
