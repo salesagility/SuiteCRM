@@ -415,7 +415,7 @@ class actionSendEmail extends actionBase {
         }
 
         //now create email
-        if (@$mail->Send()) {
+        if ($mail->Send()) {
             $emailObj->to_addrs= implode(',',$emailTo);
             $emailObj->cc_addrs= implode(',',$emailCc);
             $emailObj->bcc_addrs= implode(',',$emailBcc);

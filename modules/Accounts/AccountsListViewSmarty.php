@@ -106,19 +106,33 @@ EOF;
 	}
 
 
-	function process($file, $data, $htmlVar) {
 
-		$this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
+    /**
+     * 
+     * @global array $sugar_config
+     * @param File $file deprecated
+     * @param array $data
+     * @param string $htmlVar
+     */
+    public function process($file, $data, $htmlVar) {
 
-		parent::process($file, $data, $htmlVar);
+        global $sugar_config;
 
-		if(!ACLController::checkAccess($this->seed->module_dir,'export',true) || !$this->export) {
-			$this->ss->assign('exportLink', $this->buildExportLink());
-		}
-	}
+        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
 
+        $this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
+        if ($confirmOptInEnabled) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
 
-	/**
+        parent::process($file, $data, $htmlVar);
+
+        if (!ACLController::checkAccess($this->seed->module_dir, 'export', true) || !$this->export) {
+            $this->ss->assign('exportLink', $this->buildExportLink());
+        }
+    }
+
+    /**
 	 * override
 	 */
 	protected function buildActionsLink($id = 'actions_link', $location = 'top') {

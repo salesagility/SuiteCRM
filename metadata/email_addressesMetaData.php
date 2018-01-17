@@ -80,11 +80,7 @@ $dictionary['email_addresses'] = array(
             'default'        => 0,
             'vname'         => 'LBL_OPT_OUT',
         ),
-        'opt_in_email_created' => array(
-            'name' => 'opt_in_email_created',
-            'type' => 'datetime',
-            'vname' => 'LBL_OPT_IN_EMAIL_CREATED',
-        ),
+        
         'confirm_opt_in' => array(
             'name'            => 'confirm_opt_in',
             'type'            => 'enum',
@@ -94,11 +90,18 @@ $dictionary['email_addresses'] = array(
             'vname'         => 'LBL_CONFIRM_OPT_IN',
         ),
 
-        'confirmed_opt_in_date' => array(
-            'name' => 'confirmed_opt_in_date',
+        'confirm_opt_in_date' => array(
+            'name' => 'confirm_opt_in_date',
             'type' => 'datetime',
-            'vname' => 'LBL_CONFIRMED_OPT_IN_DATE',
+            'vname' => 'LBL_CONFIRM_OPT_IN_DATE',
         ),
+
+        'confirm_opt_in_sent_date' => array(
+            'name' => 'confirm_opt_in_sent_date',
+            'type' => 'datetime',
+            'vname' => 'LBL_CONFIRM_OPT_IN_SENT_DATE',
+        ),
+        
         'date_created' => array(
             'name'            => 'date_created',
             'type'            => 'datetime',

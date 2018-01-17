@@ -69,14 +69,14 @@ class EmailAddress extends SugarEmailAddress
     public $invalid_email = 0;
 
     /**
-     * @var TimeDate $opt_in_email_created
+     * @var TimeDate $confirm_opt_in_date
      */
-    public $opt_in_email_created;
+    public $confirm_opt_in_date;
 
     /**
-     * @var TimeDate $confirmed_opt_in_date
+     * @var TimeDate $confirm_opt_in_sent_date
      */
-    public $confirmed_opt_in_date;
+    public $confirm_opt_in_sent_date;
 
     /**
      * EmailAddress constructor.
@@ -121,7 +121,7 @@ class EmailAddress extends SugarEmailAddress
     {
         global $timedate;
         $date = new DateTime();
-        $this->confirmed_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
+        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
         $this->confirm_opt_in = 'confirmed-opt-in';
     }
 }

@@ -269,7 +269,7 @@ function getTemplates()
 					     <p>You may review this Case at: $sugarurl/index.php?module=Cases&action=DetailView&record=$acase_id;</p>'
     );
 
-    $templates['confirmed_opt_in_template'] = array(
+    $templates['confirm_opt_in_template'] = array(
         'name' => 'Confirmed Opt In',
         'published' => 'off',
         'description' => 'Email template to send to a contact to confirm they have opted in.',
