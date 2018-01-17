@@ -71,11 +71,6 @@
                                 fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
                             }
                         }
-                        if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
-                            if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
-                                fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
-                            }
-                        }
                         _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
                     });
                     _form.submit();
