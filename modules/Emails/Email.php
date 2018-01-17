@@ -4345,8 +4345,8 @@ eoq;
      * Send OptIn Email to EmailAddress By Id
      * return success state or false if it's disabled in config
      * 
-     * @global $sugar_config
-     * @global $log
+     * @global array $sugar_config
+     * @global LoggerManager $log
      * @param string $id
      * @return bool
      */
