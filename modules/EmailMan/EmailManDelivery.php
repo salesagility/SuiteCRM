@@ -46,7 +46,8 @@ require_once 'include/SugarPHPMailer.php';
 
 global $sugar_config;
 
-$confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+$configurator = new Configurator();
+$confirmOptInEnabled = $configurator->isConfirmOptInEnabled();
 
 $test = false;
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'test') {

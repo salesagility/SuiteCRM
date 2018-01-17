@@ -97,22 +97,16 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     * 
-     * @global array $sugar_config
+     *
      * @param array $post
      * @return string|boolean
      */
-    private function methodConfirmOptInSelected($post) {
-
-        global $sugar_config;
-
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+    private function methodConfirmOptInSelected($post)
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
-
 
         $module = $post['module'];
         $uids = explode(',', $post['uid']);

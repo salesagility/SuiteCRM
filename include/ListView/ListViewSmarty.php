@@ -81,22 +81,16 @@ class ListViewSmarty extends ListViewDisplay
     }
             
     /**
-     * 
-     * @global array $app_strings
-     * @global array $sugar_config
+     *
      * @return string|boolean
      */
-    public function buildSendConfirmOptInEmailToPersonAndCompany() {
-        
-        global $app_strings, $sugar_config;
-        
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+    public function buildSendConfirmOptInEmailToPersonAndCompany()
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
-        
+
         $linkTpl = new Sugar_Smarty();
         $linkTpl->assign('module_name', $this->seed->module_name);
         $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');

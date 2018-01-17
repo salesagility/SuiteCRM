@@ -4368,7 +4368,7 @@ eoq;
                 $this->sendOptInEmail($emailAddress);
             }
         }
-        
+
         return $ret;
     }
 
@@ -4391,23 +4391,12 @@ eoq;
         global $log;
         global $db;
 
-        global $sugar_config;
-
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
-
-        if (!$sugar_config['email_enable_confirm_opt_in']) {
-            $log->warning('Confirm Opt In is not enabled.');
-
-            return false;
-        }
-
 
         $confirmOptInTemplateId = $sugar_config['aop']['confirm_opt_in_template_id'];
         if(!$confirmOptInTemplateId) {

@@ -338,4 +338,21 @@ class Configurator
         }
         $this->handleOverride(true);
     }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            isset($this->config['email_enable_confirm_opt_in'])
+            && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt sub disabled');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
 }

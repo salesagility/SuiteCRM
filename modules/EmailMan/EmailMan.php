@@ -1005,19 +1005,14 @@ class EmailMan extends SugarBean
 
     /**
      *
-     * @global array $sugar_config
      * @param string $module
      * @param string $uid
      * @return boolean
      */
-    public function addOptInEmailToEmailQueue($module, $uid) {
-
-        global $sugar_config;
-
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+    public function addOptInEmailToEmailQueue($module, $uid)
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
@@ -1032,28 +1027,25 @@ class EmailMan extends SugarBean
     }
 
     /**
-     *
-     * @global array $sugar_config
+     * @global LoggerManager $log
      * @param EmailAddress $emailAddress
      * @param string $type
      * @param string $id
      * @return boolean
      * @throws Exception
      */
-    public function sendOptInEmail(EmailAddress $emailAddress, $type, $id) {
+    public function sendOptInEmail(EmailAddress $emailAddress, $type, $id)
+    {
+        global $log;
 
-        global $sugar_config;
-
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
+        $focus = BeanFactory::getBean($type, $id);
         $guid = $emailAddress->id;
         if(!$guid) {
-            $focus = BeanFactory::getBean($type, $id);
             if($focus) {
                 $address = $emailAddress->getPrimaryAddress($focus, $focus->id);
                 $guid = $emailAddress->getEmailGUID($address);
@@ -1064,7 +1056,6 @@ class EmailMan extends SugarBean
             }
         }
 
-        $focus = BeanFactory::getBean($type, $id);
         if(!$focus) {
             throw new Exception('Email address has not related bean.');
         }
@@ -1076,22 +1067,19 @@ class EmailMan extends SugarBean
     /**
      *
      * @global LoggerManager $log
-     * @global array $sugar_config
-     * @param SugarBean $focus
+     * @global array $app_strings
+     * @param SugarBean|Person|Company $focus
      * @param EmailAddress $emailAddress
      * @return boolean
      */
-    private function sendOptInEmailViaMailer(
-        SugarBean $focus,
-        EmailAddress $emailAddress
-    ) {
+    private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
+    {
 
-        global $log,  $sugar_config;
+        global $log;
+        global $app_strings;
 
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
@@ -1145,12 +1133,6 @@ class EmailMan extends SugarBean
         }
 
         $mailer->addAddress($emailAddressString, $focus->name);
-
-        $mailer->replace('user_first_name',
-                isset($focus->first_name) ? $focus->first_name : $focus->name);
-        $mailer->replace('user_last_name',
-                isset($focus->last_name) ? $focus->last_name : '');
-        $mailer->replace('contact_email1', $emailAddressString);
 
         $mailer->replace('contact_first_name',
                 isset($focus->first_name) ? $focus->first_name : $focus->name);
