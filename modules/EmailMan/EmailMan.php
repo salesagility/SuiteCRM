@@ -938,13 +938,6 @@ class EmailMan extends SugarBean
         return true;
     }
 
-    /*
-     * This function takes in the given bean and searches for a related email address
-     * that has been designated as primary.  If one is found, true is returned
-     * If no primary email address is found, then false is returned
-     *
-     */
-
     /**
      * This function takes in the given bean and searches for a related email address
      * that has been designated as primary.  If one is found, true is returned
