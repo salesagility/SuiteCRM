@@ -4348,10 +4348,9 @@ eoq;
      * @global $sugar_config
      * @global $log
      * @param string $id
-     * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
      * @return bool
      */
-    private function sendOptInEmailToEmailAddressById($id, $sendOptInCheckbox = null)
+    private function sendOptInEmailToEmailAddressById($id)
     {
         global $sugar_config;
         global $log;
