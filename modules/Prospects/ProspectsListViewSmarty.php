@@ -51,7 +51,7 @@ class ProspectsListViewSmarty extends ListViewSmarty {
     public function process($file, $data, $htmlpublic)
     {
         $configurator = new Configurator();
-        if (!$configurator->isConfirmOptInEnabled()) {
+        if ($configurator->isConfirmOptInEnabled()) {
             $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
         }
 

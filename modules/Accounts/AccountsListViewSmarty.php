@@ -119,7 +119,7 @@ EOF;
         $this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
 
         $configurator = new Configurator();
-        if (!$configurator->isConfirmOptInEnabled()) {
+        if ($configurator->isConfirmOptInEnabled()) {
             $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
         }
 

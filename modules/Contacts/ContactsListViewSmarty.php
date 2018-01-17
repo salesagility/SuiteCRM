@@ -37,7 +37,7 @@ class ContactsListViewSmarty extends ListViewSmarty {
     public function process($file, $data, $htmlVar)
     {
         $configurator = new Configurator();
-        if (!$configurator->isConfirmOptInEnabled()) {
+        if ($configurator->isConfirmOptInEnabled()) {
             $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
         }
 

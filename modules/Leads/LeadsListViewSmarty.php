@@ -37,7 +37,7 @@ class LeadsListViewSmarty extends ListViewSmarty {
     {
 
         $configurator = new Configurator();
-        if (!$configurator->isConfirmOptInEnabled()) {
+        if ($configurator->isConfirmOptInEnabled()) {
             $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
         }
 
