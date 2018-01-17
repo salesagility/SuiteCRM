@@ -111,19 +111,29 @@ class EntryPointConfirmOptInHandler
         $module = $post['module'];
         $uids = explode(',', $post['uid']);
         $err = 0;
+        $warn = 0;
         $msg = '';
         foreach ($uids as $uid) {
             $emailMan = new EmailMan();
             if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
                 $err++;
             }
+            if($emailMan->getLastOptInWarn()) {
+                $warn++;
+            }
         }
 
+
+        // TODO: Make translatable
         if ($err) {
             $msg = 'Incorrect Bean ID. ';
         } else {
             $msg = 'All ' . $module . ' added to email queue.';
+            if($warn) {
+                $msg .= " but some email wasn't opt in: ($warn times)";
+            }
         }
+
 
         return $msg;
     }

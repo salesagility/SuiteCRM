@@ -1010,6 +1010,12 @@ class EmailMan extends SugarBean
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
 
+    private $optInWarn;
+
+    public function getLastOptInWarn() {
+        return $this->optInWarn;
+    }
+
     /**
      *
      * @param string $module
@@ -1019,6 +1025,7 @@ class EmailMan extends SugarBean
     public function addOptInEmailToEmailQueue($module, $uid)
     {
         $ret = false;
+        $this->optInWarn = false;
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
             return false;
@@ -1048,6 +1055,11 @@ class EmailMan extends SugarBean
                 $this->related_confirm_opt_in = true;
 
                 $ret = $this->save();
+            } else {
+                $log = LoggerManager::getLogger();
+                $log->warn('Email Address is not opt-in:' . $foundBean->email1);
+                $ret = true;
+                $this->optInWarn = true;
             }
         }
 
