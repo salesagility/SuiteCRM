@@ -46,6 +46,7 @@
     </div>
     {include file="_globalLinks.tpl" theme_template=true}
     {include file="_welcome.tpl" theme_template=true}
+    {include file="_notification.tpl" theme_template=true}
     <div class="clear"></div>
     {include file="_headerSearch.tpl" theme_template=true}
     <div class="clear"></div>

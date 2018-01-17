@@ -1671,16 +1671,16 @@ class Email extends Basic
 
         if (count($return) > 0) {
             if (isset($return['from'])) {
-                $this->from_addr = implode(", ", $return['from']);
+                $this->from_addr_name = implode(", ", $return['from']);
             }
             if (isset($return['to'])) {
-                $this->to_addrs = implode(", ", $return['to']);
+                $this->to_addrs_names = implode(", ", $return['to']);
             }
             if (isset($return['cc'])) {
-                $this->cc_addrs = implode(", ", $return['cc']);
+                $this->cc_addrs_names = implode(", ", $return['cc']);
             }
             if (isset($return['bcc'])) {
-                $this->bcc_addrs = implode(", ", $return['bcc']);
+                $this->bcc_addrs_names = implode(", ", $return['bcc']);
             }
         }
     }
