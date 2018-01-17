@@ -538,9 +538,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $timedate->to_display_date_time($value);
-        //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
-        //$fieldlist[$fieldname]['value'] = $value;
+        $displayValue = $timedate->to_display_date_time($value);
+        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else {
         $fieldlist[$fieldname]['value'] = $value;
