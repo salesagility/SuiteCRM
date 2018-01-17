@@ -336,18 +336,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
-        //TODO Fix datetimecomebo
-        //temp work around
-        if( $vardef['type'] == 'datetimecombo') {
-            $vardef['type'] = 'datetime';
-        }
         if( $vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
         }
         if( $vardef['type'] == 'datetimecombo') {
             $displayParams['originalFieldName'] = $aow_field;
-            $displayParams['idName']
-                = str_replace('[', 'SCRMLSQBR', str_replace(']', 'SCRMRSQBR', $aow_field));
+            // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
+            $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
         // trim down textbox display
@@ -543,7 +538,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
+        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $timedate->to_display_date_time($value);
         //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         //$fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;
@@ -593,6 +588,15 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     return $ss->fetch($file);
 }
 
+/**
+ *  Convert a bracketed variable into a string that can become a JS variable
+ *
+ * @param $variable
+ * @return mixed
+ */
+function createBracketVariableAlias($variable){
+    return str_replace('[', 'SCRMLSQBR', str_replace(']', 'SCRMRSQBR', $variable));
+}
 
 /**
  * @param string $module
