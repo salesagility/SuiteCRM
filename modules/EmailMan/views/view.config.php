@@ -172,7 +172,7 @@ class ViewConfig extends SugarView
         }
         $this->ss->assign('DEFAULT_EMAIL_DELETE_ATTACHMENTS', $preserveAttachments);
 
-        $emailEnableConfirmOptIn = isset($configurator->config['email_enable_confirm_opt_in']) ? $configurator->config['email_enable_confirm_opt_in'] : $configurator->config['aop']['confirm_opt_in_template_id'];
+        $emailEnableConfirmOptIn = isset($configurator->config['email_enable_confirm_opt_in']) ? $configurator->config['email_enable_confirm_opt_in'] : '';
 
         $this->ss->assign(
             'EMAIL_ENABLE_CONFIRM_OPT_IN',
