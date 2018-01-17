@@ -209,6 +209,9 @@ EOD;
         $row = $db->fetchByAssoc($result);
 
         while ($row != null){
+            if(isset($row['lead_source']) && $app_list_strings['lead_source_dom'][$row['lead_source']] ) {
+                $row['lead_source'] = $app_list_strings['lead_source_dom'][$row['lead_source']];
+            }
             $dataSet[] = $row;
             $row = $db->fetchByAssoc($result);
         }
