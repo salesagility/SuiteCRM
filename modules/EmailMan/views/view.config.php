@@ -149,9 +149,12 @@ class ViewConfig extends SugarView
             throw new RuntimeException('email_enable_auto_send_opt_in is missing in the config. Please repair config.');
         }
 
-        $emailEnableAutoSendConfirmOptIn = isset($configurator->config['email_enable_auto_send_opt_in']) ?
+        $isEmailEnableAutoSendConfirmOptIn = isset($configurator->config['email_enable_auto_send_opt_in']) ?
             $configurator->config['email_enable_auto_send_opt_in'] :
-            '';
+            false;
+
+        $emailEnableAutoSendConfirmOptIn = $isEmailEnableAutoSendConfirmOptIn ? 'checked' : '';
+
         $this->ss->assign('EMAIL_ENABLE_AUTO_SEND_OPT_IN', $emailEnableAutoSendConfirmOptIn);
 
         ///////////////////////////////////////////////////////////////////////////////
