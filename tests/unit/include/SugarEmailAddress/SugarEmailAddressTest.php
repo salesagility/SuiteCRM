@@ -840,6 +840,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             'email_address' => 'test@email.com',
             'email_address_caps' => 'TEST@EMAIL.COM',
             'invalid_email' => '0',
+            'invalid_email' => '0',
             'opt_out' => '0',
             'confirm_opt_in_date' => null,
             'confirm_opt_in_sent_date' => null,
