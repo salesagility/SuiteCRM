@@ -122,6 +122,6 @@ class EmailAddress extends SugarEmailAddress
         global $timedate;
         $date = new DateTime();
         $this->confirmed_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = 'confirm-opt-in';
+        $this->confirm_opt_in = 'confirmed-opt-in';
     }
 }
