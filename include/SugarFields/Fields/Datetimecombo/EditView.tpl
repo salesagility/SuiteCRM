@@ -51,13 +51,13 @@
 {{assign var=flag_field value=$vardef.name|cat:_flag}}
 <table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 <tr valign="middle">
-<td nowrap>
+<td nowrap class="dateTimeComboColumn">
 <input autocomplete="off" type="text" id="{{$idname}}_date" class="datetimecombo_date" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}" size="11" maxlength="10" title='{{$vardef.help}}' tabindex="{{$tabindex}}" onblur="combo_{{$idname}}.update();" onchange="combo_{{$idname}}.update(); {{if isset($displayParams.updateCallback)}}{{$displayParams.updateCallback}}{{/if}}"   {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}} >
 {capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{{$idname}}_trigger"{/capture}
 {sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
 {{if empty($displayParams.splitDateTime)}}
 </td>
-<td nowrap>
+<td nowrap class="dateTimeComboColumn">
 {{else}}
 <br>
 {{/if}}
@@ -89,7 +89,11 @@ function set_{{$idname}}_values(form) {ldelim}
 </tr>
 {{/if}}
 </table>
-<input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$originalFieldName}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
+{{if empty($displayParams.originalFieldName)}}
+    <input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$originalFieldName}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
+{{else}}
+    <input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$originalFieldName}}" value="{$fields.$originalFieldName.value}">
+{{/if}}
 <script type="text/javascript" src="{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}"></script>
 <script type="text/javascript">
 var combo_{{$idname}} = new Datetimecombo("{$fields[{{sugarvar key='name' stringFormat=true}}].value}", "{{$idname}}", "{$TIME_FORMAT}", "{{$tabindex}}", '{{$displayParams.showNoneCheckbox}}', false, true);
