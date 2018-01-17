@@ -97,12 +97,14 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     *
+     * @global array $app_strings
      * @param array $post
      * @return string|boolean
      */
     private function methodConfirmOptInSelected($post)
     {
+        global $app_strings;
+
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
             return false;
@@ -110,28 +112,32 @@ class EntryPointConfirmOptInHandler
 
         $module = $post['module'];
         $uids = explode(',', $post['uid']);
-        $err = 0;
-        $warn = 0;
+        $confirmedOptInEmailsSent = 0;
+        $errors = 0;
+        $warnings = 0;
         $msg = '';
+
         foreach ($uids as $uid) {
             $emailMan = new EmailMan();
             if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
-                $err++;
-            }
-            if($emailMan->getLastOptInWarn()) {
-                $warn++;
+                $errors++;
+            } elseif($emailMan->getLastOptInWarn()) {
+                $warnings++;
+            } else {
+                $confirmedOptInEmailsSent++;
             }
         }
 
+        if ($confirmedOptInEmailsSent > 0) {
+            $msg .= sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'], $confirmedOptInEmailsSent);
+        }
 
-        // TODO: Make translatable
-        if ($err) {
-            $msg = 'Incorrect Bean ID. ';
-        } else {
-            $msg = 'All ' . $module . ' added to email queue.';
-            if($warn) {
-                $msg .= " but some email wasn't opt in: ($warn times)";
-            }
+        if($warnings > 0) {
+            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'], $warnings);
+        }
+
+        if ($errors > 0) {
+            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'], $errors);
         }
 
 
