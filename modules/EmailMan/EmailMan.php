@@ -945,7 +945,14 @@ class EmailMan extends SugarBean
      *
      */
 
-    public function is_primary_email_address($bean)
+    /**
+     * This function takes in the given bean and searches for a related email address
+     * that has been designated as primary.  If one is found, true is returned
+     * If no primary email address is found, then false is returned
+     * @param SugarBean|Company|Person|Basic $bean
+     * @return bool
+     */
+    public function is_primary_email_address(SugarBean $bean)
     {
 
         if(!isset($bean->email1)) {
@@ -1007,22 +1014,43 @@ class EmailMan extends SugarBean
      *
      * @param string $module
      * @param string $uid
-     * @return boolean
+     * @return boolean|string
      */
     public function addOptInEmailToEmailQueue($module, $uid)
     {
+        $ret = false;
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
+        /** @var Person|Company|Basic $relatedBean */
         $relatedBean = BeanFactory::getBean($module, $uid);
+        /** @var EmailAddress $emailAddress */
+        $emailAddress = BeanFactory::getBean('EmailAddresses');
+        $beansList = $emailAddress->getBeansByEmailAddress($relatedBean->email1);
 
-        $this->related_type = $relatedBean->module_dir;
-        $this->related_id = $relatedBean->id;
-        $this->related_confirm_opt_in = true;
+        $foundBean = null;
+        /** @var SugarBean|Company|Person $bean */
+        foreach ($beansList as $bean) {
+            if ($bean->id === $relatedBean->id) {
+                $foundBean = $bean;
+                break;
+            }
+        }
 
-        $ret = $this->save();
+        if ($foundBean !== null) {
+            $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
+            if ($emailAddress->confirm_opt_in === 'opt-in') {
+
+                $this->related_type = $relatedBean->module_dir;
+                $this->related_id = $relatedBean->id;
+                $this->related_confirm_opt_in = true;
+
+                $ret = $this->save();
+            }
+        }
+
         return $ret;
     }
 
