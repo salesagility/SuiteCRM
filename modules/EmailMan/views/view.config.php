@@ -164,7 +164,7 @@ class ViewConfig extends SugarView
             'EMAIL_ENABLE_CONFIRM_OPT_IN',
             get_select_options_with_id(
                 $app_list_strings['email_settings_opt_in_dom'],
-                $configurator->config['email_enable_auto_send_opt_in']
+                $configurator->config['email_enable_confirm_opt_in']
             )
         );
         
