@@ -2356,6 +2356,7 @@ $app_strings = array(
     'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
     'LBL_CONFIRMED_OPT_IN_DATE' => 'Confirmed Opt In Date',
+    'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
