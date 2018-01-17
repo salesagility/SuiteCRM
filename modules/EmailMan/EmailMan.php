@@ -1112,6 +1112,7 @@ class EmailMan extends SugarBean
         global $app_strings;
 
         $configurator = new Configurator();
+        $sugar_config = $configurator->config;
         if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
