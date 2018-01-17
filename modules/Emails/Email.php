@@ -4355,15 +4355,7 @@ eoq;
     {
         global $sugar_config;
         global $log;
-        
-        if(is_null($sendOptInCheckbox)) {
-            if(!isset($_REQUEST['send_opt_in_checkbox'])) {
-                $sendOptInCheckbox = true;
-            } else {
-                $sendOptInCheckbox = $_REQUEST['send_opt_in_checkbox'] == 'true' ? true : false;
-            }
-        }
-        
+
         $ret = false;
 
         if (!$id) {
