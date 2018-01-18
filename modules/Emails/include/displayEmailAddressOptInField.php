@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
+ * @global array $app_strings
  * @param \Email $focus
  * @param string $field
  * @param mixed $value
@@ -52,12 +53,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
 {
+    global $app_strings;
+
     $addressField = 'from_name';
 
     if (empty($focus->id)) {
         $log = LoggerManager::getLogger();
         $log->error('Email ID is Empty');
-        SugarApplication::appendErrorMessage($app_strings['ERR_EMPTY_EMAIL_ID']); // TODO
+        SugarApplication::appendErrorMessage($app_strings['ERR_EMPTY_EMAIL_ID']);
         return '';
     }
     
