@@ -554,9 +554,9 @@ $contact_user_link_guid',
 
     'LBL_DBCONF_TITLE_USER_INFO_LABEL' => 'User',
     'LBL_DBCONFIG_MSG3_LABEL' => 'Database Name',
-    'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install:',
+    'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install.',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
-    'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located ( such as localhost or www.mydomain.com ):',
+    'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '',
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
