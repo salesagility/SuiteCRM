@@ -47,6 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/MySettings/TabController.php');
+require_once('include/SugarFields/SugarFieldHandler.php');
 
 $tabs_def = urldecode(isset($_REQUEST['display_tabs_def']) ? $_REQUEST['display_tabs_def'] : '');
 $DISPLAY_ARR = array();
@@ -99,19 +100,22 @@ function populateFromRow(&$focus,$row){
         $e_fields = array_merge($e_fields,array('title','department','employee_status'));
     }
     // Also add custom fields
+    $sfh = new SugarFieldHandler();
     foreach ($focus->field_defs as $fieldName => $field ) {
         if ( isset($field['source']) && $field['source'] == 'custom_fields' ) {
-            $e_fields[] = $fieldName;
+
+            $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
+            $sf = $sfh->getSugarField($type);
+            if ($sf != null)
+            {
+                $sf->save($focus, $_POST, $fieldName, $field, '');
+            }
+            else
+            {
+                $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
+            }
         }
     }
     $nullvalue='';
-	foreach($e_fields as $field)
-	{
-		$rfield = $field; // fetch returns it in lowercase only
-		if(isset($row[$rfield]))
-		{
-			$focus->$field = $row[$rfield];
-		}
-	}
 }
 ?>
