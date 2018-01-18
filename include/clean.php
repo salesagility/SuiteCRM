@@ -192,8 +192,7 @@ class SugarCleaner
             // remove all HTML tags
             $sugarCleaner = new SugarCleaner();
             $purifier = $sugarCleaner->purifier;
-            $config = HTMLPurifier_Config::create(null);
-            $clean_html = $purifier->purify($dirty_html_decoded, $config);
+            $clean_html = $purifier->purify($dirty_html_decoded);
         } else {
             // encode all HTML tags
             $clean_html = $dirty_html_decoded;
