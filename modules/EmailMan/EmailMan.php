@@ -654,7 +654,7 @@ class EmailMan extends SugarBean
         }
 
         if ($this->shouldBlockEmail($module)) {
-            $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
+            $GLOBALS['log']->warn('Email Address was sent due to not being confirm opt in' . $module->email1);
 
             // block sending campaign email
             $this->set_as_sent($module->email1, true, null, null, 'blocked');
