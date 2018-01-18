@@ -1121,13 +1121,8 @@ class EmailMan extends SugarBean
 
         $emailTemplate = new EmailTemplate();
 
-        $confirmOptInTemplateId =
-                isset($sugar_config['aop']['confirm_opt_in_template_id']) ?
-                $sugar_config['aop']['confirm_opt_in_template_id'] : null;
-        if(!$confirmOptInTemplateId) {
-            $confirmOptInTemplateId =
-                $configurator->config['email_confirm_opt_in_email_template_id'];
-        }
+        $configurator = new Configurator();
+        $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
 
         if (!$confirmOptInTemplateId) {
             $log->fatal(
