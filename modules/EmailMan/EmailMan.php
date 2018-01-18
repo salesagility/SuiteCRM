@@ -1221,13 +1221,16 @@ class EmailMan extends SugarBean
                 return true;
             } elseif (
                 $optInLevel === ''
-                && ($row['confirm_opt_in'] === 'opt-in' || $row['confirm_opt_in'] === 'confirmed-opt-in')) {
+                && $row['confirm_opt_in'] !== 'opt-in'
+                && $row['confirm_opt_in'] !== 'confirmed-opt-in') {
                 return true;
             } elseif (
                 $optInLevel === 'opt-in'
-                && ($row['confirm_opt_in'] === 'opt-in' || $row['confirm_opt_in'] === 'confirmed-opt-in')) {
+                && false === ($row['confirm_opt_in'] === 'opt-in'
+                    || $row['confirm_opt_in'] === 'confirmed-opt-in')
+            ) {
                 return true;
-            } elseif ($optInLevel === 'confirmed-opt-in' && $row['confirm_opt_in'] === 'confirmed-opt-in') {
+            } elseif ($optInLevel == 'confirmed-opt-in' && $row['confirm_opt_in'] !== 'confirmed-opt-in') {
                 return true;
             }
         }
