@@ -1011,6 +1011,9 @@ class EmailMan extends SugarBean
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
 
+    /**
+     * @return bool
+     */
     public function getLastOptInWarn() {
         $warn = $this->optInWarn;
         $this->optInWarn = false;
