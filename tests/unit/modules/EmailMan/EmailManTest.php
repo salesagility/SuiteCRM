@@ -160,13 +160,13 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         $emailMan = new EmailMan();
 
         //test without setting any attributes
-        $result = $emailMan->sendEmail(new Email(), 1, true);
+        $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(false, $result);
 
         //test with related type attribute set
         $emailMan->related_type = 'Contacts';
         $emailMan->related_id = 1;
-        $result = $emailMan->sendEmail(new Email(), 1, true);
+        $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(true, $result);
     }
 

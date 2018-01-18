@@ -97,39 +97,49 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     * 
-     * @global array $sugar_config
+     * @global array $app_strings
      * @param array $post
      * @return string|boolean
      */
-    private function methodConfirmOptInSelected($post) {
+    private function methodConfirmOptInSelected($post)
+    {
+        global $app_strings;
 
-        global $sugar_config;
-
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
-
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
 
-
         $module = $post['module'];
         $uids = explode(',', $post['uid']);
-        $err = 0;
+        $confirmedOptInEmailsSent = 0;
+        $errors = 0;
+        $warnings = 0;
         $msg = '';
+
         foreach ($uids as $uid) {
             $emailMan = new EmailMan();
             if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
-                $err++;
+                $errors++;
+            } elseif($emailMan->getLastOptInWarn()) {
+                $warnings++;
+            } else {
+                $confirmedOptInEmailsSent++;
             }
         }
 
-        if ($err) {
-            $msg = 'Incorrect Bean ID. ';
-        } else {
-            $msg = 'All ' . $module . ' added to email queue.';
+        if ($confirmedOptInEmailsSent > 0) {
+            $msg .= sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'], $confirmedOptInEmailsSent);
         }
+
+        if($warnings > 0) {
+            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'], $warnings);
+        }
+
+        if ($errors > 0) {
+            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'], $errors);
+        }
+
 
         return $msg;
     }

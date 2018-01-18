@@ -44,21 +44,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
+ * @global array $app_strings
  * @param \Email $focus
  * @param string $field
  * @param mixed $value
  * @param string $view
  * @return string
  */
-function displayEmailAddressOptInField($focus, $field, $value, $view)
+function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
 {
+    global $app_strings;
+
     $addressField = 'from_name';
 
-    if (empty($focus->id) && empty($focus->{$addressField})) {
+    if (empty($focus->id)) {
+        $log = LoggerManager::getLogger();
+        $log->error('Email ID is Empty');
+        SugarApplication::appendErrorMessage($app_strings['ERR_EMPTY_EMAIL_ID']);
         return '';
     }
+    
+    if (
+        filter_var($focus->from_name, FILTER_VALIDATE_EMAIL) &&
+        !filter_var($focus->from_addr, FILTER_VALIDATE_EMAIL)
+    ) {
+        $log->error('Email address is stored in "from_name" field instead of "from_addr"');
+    }
 
-    if (empty($focus->{$addressField})) {
+    if (empty($focus->from_name)) {
         $addressField = 'from_addr';
     }
 

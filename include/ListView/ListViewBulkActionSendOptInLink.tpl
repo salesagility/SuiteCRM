@@ -36,14 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<a 
-    href="javascript:void(0)" 
-    class="parent-dropdown-action-handler" 
-    id="targetlist_listview" 
+<a
+    href="javascript:void(0)"
+    class="parent-dropdown-action-handler"
+    id="targetlist_listview"
     onclick="
         sListView.send_form(
-            true, 
-            '{$module_name}', 
+            true,
+            '{$module_name}',
             'index.php?entryPoint=sendConfirmOptInEmail&method=confirmOptInSelected',
             '{$APP.LBL_LISTVIEW_NO_SELECTED}',
             null,

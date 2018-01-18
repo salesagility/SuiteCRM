@@ -136,10 +136,26 @@ class ViewConfig extends SugarView
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
 
         $configurator = new Configurator();
-        $this->ss->assign('EMAIL_ENABLE_AUTO_SEND_OPT_IN', ($configurator->config['email_enable_auto_send_opt_in']) ? "checked='checked'" : "");
 
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
-        $this->ss->assign('EMAIL_OPT_IN_TEMPLATES', get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']));
+        if (empty($email_templates_arr)) {
+            throw new RuntimeException('System Email templates are missing');
+        }
+
+        $email_templates_options =  get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']);
+        $this->ss->assign('EMAIL_OPT_IN_TEMPLATES', $email_templates_options);
+
+        if (!isset($configurator->config['email_enable_auto_send_opt_in'])) {
+            throw new RuntimeException('email_enable_auto_send_opt_in is missing in the config. Please repair config.');
+        }
+
+        $isEmailEnableAutoSendConfirmOptIn = isset($configurator->config['email_enable_auto_send_opt_in']) ?
+            $configurator->config['email_enable_auto_send_opt_in'] :
+            false;
+
+        $emailEnableAutoSendConfirmOptIn = $isEmailEnableAutoSendConfirmOptIn ? 'checked' : '';
+
+        $this->ss->assign('EMAIL_ENABLE_AUTO_SEND_OPT_IN', $emailEnableAutoSendConfirmOptIn);
 
         ///////////////////////////////////////////////////////////////////////////////
         ////	USER EMAIL DEFAULTS
@@ -158,13 +174,16 @@ class ViewConfig extends SugarView
             $preserveAttachments = 'CHECKED';
         }
         $this->ss->assign('DEFAULT_EMAIL_DELETE_ATTACHMENTS', $preserveAttachments);
-        
-        
-        $enableConfirmOptIn = '';
-        if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'] == true) {
-            $enableConfirmOptIn = 'CHECKED';
-        }
-        $this->ss->assign('EMAIL_ENABLE_CONFIRM_OPT_IN', $enableConfirmOptIn);
+
+        $emailEnableConfirmOptIn = isset($configurator->config['email_enable_confirm_opt_in']) ? $configurator->config['email_enable_confirm_opt_in'] : '';
+
+        $this->ss->assign(
+            'EMAIL_ENABLE_CONFIRM_OPT_IN',
+            get_select_options_with_id(
+                $app_list_strings['email_settings_opt_in_dom'],
+                $emailEnableConfirmOptIn
+            )
+        );
         
         ////	END USER EMAIL DEFAULTS
         ///////////////////////////////////////////////////////////////////////////////

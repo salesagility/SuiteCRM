@@ -4297,26 +4297,6 @@ eoq;
     }
 
     /**
-     * @global $sugar_config
-     * @param string $emailField
-     * @return string
-     */
-    public function getEmailAddressConfirmOptInTick($emailField)
-    {
-        global $sugar_config;
-
-        $tickHtml = '';
-
-        if ($sugar_config['email_enable_confirm_opt_in']) {
-            $template = new Sugar_Smarty();
-            $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
-            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
-        }
-
-        return $tickHtml;
-    }
-
-    /**
      *
      * @global array $sugar_config
      * @global \LoggerManager $log
@@ -4345,25 +4325,16 @@ eoq;
      * Send OptIn Email to EmailAddress By Id
      * return success state or false if it's disabled in config
      * 
-     * @global $sugar_config
-     * @global $log
-     * @param string $id EmailAddresses bean ID
-     * @param bool|null $sendOptInCheckbox  - optional, default is true. Overwrite by $_REQUEST
+     * @global array $sugar_config
+     * @global LoggerManager $log
+     * @param string $id
      * @return bool
      */
-    private function sendOptInEmailToEmailAddressById($id, $sendOptInCheckbox = null)
+    private function sendOptInEmailToEmailAddressById($id)
     {
         global $sugar_config;
         global $log;
-        
-        if(is_null($sendOptInCheckbox)) {
-            if(!isset($_REQUEST['send_opt_in_checkbox'])) {
-                $sendOptInCheckbox = true;
-            } else {
-                $sendOptInCheckbox = $_REQUEST['send_opt_in_checkbox'] == 'true' ? true : false;
-            }
-        }
-        
+
         $ret = false;
 
         if (!$id) {
@@ -4372,75 +4343,56 @@ eoq;
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
-            if (
-                ($emailAddress->confirm_opt_in != '1' && empty($emailAddress->confirm_opt_in_sent_date))
-                || $sendOptInCheckbox
-            ) {
-                $ret = $this->sendOptInEmail($emailAddress);
+
+            if ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->confirm_opt_in_sent_date)) {
+                $this->sendOptInEmail($emailAddress);
             }
         }
-        
+
         return $ret;
     }
-    
+
     /**
-     * 
-     * @global array $sugar_config
+     *
      * @global array $app_strings
-     * @global SugarDateTime $timedate
-     * @global \LoggerManager $log
-     * @global DBManager $db
      * @param EmailAddress $emailAddress
      * @return boolean
      * @throws Exception
      */
-    private function sendOptInEmail(EmailAddress $emailAddress)
+    public function sendOptInEmail(EmailAddress $emailAddress)
     {
-        global $sugar_config;
         global $app_strings;
-        global $timedate;
-        global $log;
-        global $db;
         
-        global $sugar_config;
-        
-        $confirmOptInEnabled = isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in'];
+        $ret = false;
 
-        if (!$confirmOptInEnabled) {
-            $this->warn('Confirm Opt In disabled');
-            return false;
+        $db = $this->db;
+        $log = LoggerManager::getLogger();
+        $timedate = new TimeDate();
+        $configurator = new Configurator();
+        $sugar_config =  $configurator->config;
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return $ret;
         }
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
 
-        if (!$sugar_config['email_enable_confirm_opt_in']) {
-            $log->warning('Confirm Opt In is not enabled.');
-
-            return false;
-        }
-
-        
-        $confirmOptInTemplateId = $sugar_config['aop']['confirm_opt_in_template_id'];
-        if(!$confirmOptInTemplateId) {
-            $configurator = new Configurator();
-            $confirmOptInTemplateId = $configurator->config['email_confirm_opt_in_email_template_id'];
-        }
+        $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
 
         if (!$confirmOptInTemplateId) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
-            return false;
+            return $ret;
         }
 
         // Send email template
-        
+
         if (!$this->parent_name || !$this->parent_type) {
             $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
             $log->fatal($msg);
-            return false;
+            return $ret;
         }
-        
+
         $emailAddressString = $emailAddress->email_address;
         if(!$this->isValidEmail($emailAddressString)) {
             $emailAddressString = $emailAddress->email_address[0]['email_address'];
@@ -4466,35 +4418,43 @@ eoq;
         );
 
 
-        // Get Related Contact | Lead | Target
+        // Get Related Contact | Lead | Target etc.
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address LIKE \'' . $db->quote($emailAddressString) . '\'';
+            ' WHERE email_address_id  = LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
+                ' AND email_addr_bean_rel.primary_address = 1 AND deleted = 0';
 
         $dbResult = $db->query($query);
-        $row = $db->fetchByAssoc($dbResult);
+        while ($row = $db->fetchByAssoc($dbResult)) {
+            
+            if ($ret) {
+                throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
+            }
 
-        $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
+            $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
-        $actionSendEmail = new actionSendEmail();
-        $actionSendEmail->run_action($bean, $params);
+            $actionSendEmail = new actionSendEmail();
+            $actionSendEmail->run_action($bean, $params);
 
-        $date = new DateTime();
-        $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $emailAddress->save();
+            $date = new DateTime();
+            $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+            $emailAddress->save();
+            
+            $ret = true;
+        } 
 
-        return true;
+        return $ret;
     }
 
     /**
-     * 
+     *
      * @param string $emailAddressString
      * @return boolean
      */
     private function isValidEmail($emailAddressString) {
         return filter_var($emailAddressString, FILTER_VALIDATE_EMAIL);
     }
-    
+
     /**
      * @param string $emailField eg from_name
      */

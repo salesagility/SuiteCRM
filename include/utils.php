@@ -293,7 +293,8 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
-        'email_enable_confirm_opt_in' => true,
+        'email_enable_auto_send_opt_in' => false,
+        'email_enable_confirm_opt_in' => '',
         'filter_module_fields' => array(
             'Users' => array(
                 'show_on_employees',

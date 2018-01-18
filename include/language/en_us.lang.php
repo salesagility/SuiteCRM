@@ -3903,4 +3903,19 @@ $app_list_strings['surveys_matrix_options'][2] = 'Dissatisfied';
 
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'] = 'Pending Confirm opt in, Confirm opt in not sent';
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'] = 'Pending Confirm opt in, Confirm opt in sent';
-$app_strings['LBL_OPT_IN_CONFIRMED'] = 'Opted in';
+$app_strings['LBL_OPT_IN'] = 'Opted in';
+$app_strings['LBL_OPT_IN_CONFIRMED'] = 'Confirmed Opted in';
+$app_strings['LBL_OPT_IN_OPT_OUT'] = 'Opted Out';
+$app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
+
+$app_list_strings['email_settings_opt_in_dom'] = array(
+    '' => 'Disabled',
+    'opt-in' => 'Opt In',
+    'confirmed-opt-in' => 'Confirmed Opt In'
+);
+
+$app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';
+$app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'] = 'Unable to send email to %s email address(es), because they are not opted in. ';
+$app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%s email address do not have a valid id. ';
+
+$app_strings['ERR_EMPTY_EMAIL_ID'] = 'Email ID is Empty';
