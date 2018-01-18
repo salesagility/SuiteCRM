@@ -47,6 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/MySettings/TabController.php');
+require_once('include/SugarFields/SugarFieldHandler.php');
 
 $tabs_def = urldecode(isset($_REQUEST['display_tabs_def']) ? $_REQUEST['display_tabs_def'] : '');
 $DISPLAY_ARR = array();
