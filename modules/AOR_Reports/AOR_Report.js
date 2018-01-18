@@ -132,7 +132,7 @@ function changeReportPage(record, offset, group_value, table_id) {
 
   $.get(query).done(
     function (data) {
-      $('#report_table_' + table_id).replaceWith(data);
+      $('#report_table_' + table_id + group_value).replaceWith(data);
     }
   );
 }

@@ -339,7 +339,7 @@ class AOR_Report extends Basic
 
                         return $html;
                     } else {
-                        return $this->build_group_report($offset, $links, array(), create_guid());
+                        return $this->build_group_report($offset, $links, array());
                     }
                 } else {
                     throw new Exception('incorrect results');
@@ -407,9 +407,9 @@ class AOR_Report extends Basic
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = array())
+    function build_group_report($offset = -1, $links = true, $extra = array(), $subgroup = '')
     {
-        global $beanList, $timedate;
+        global $beanList, $timedate, $app_strings;
 
         $html = '';
         $query = '';
@@ -423,7 +423,7 @@ class AOR_Report extends Basic
             $query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
         }
 
-        if ($field_id != '') {
+        if ($field_id != '' && empty($subgroup)) {
             $field = new AOR_Field();
             $field->retrieve($field_id);
 
@@ -547,17 +547,35 @@ class AOR_Report extends Basic
             $result = $this->db->query($query);
 
             while ($row = $this->db->fetchByAssoc($result)) {
-                if ($html != '') {
+                if ($html !== '') {
                     $html .= '<br />';
                 }
+                $groupValue = $row[$field_label];
+                $groupDisplay = $this->getModuleFieldByGroupValue($beanList, $groupValue);
+                if (empty(trim($groupValue))) {
+                    $groupValue = '_empty';
+                    $groupDisplay = $app_strings['LBL_NONE'];
+                }
 
-                $html .= $this->build_report_html($offset, $links, $row[$field_label], create_guid(), $extra);
+                $html .= '<div class="panel panel-default">
+                            <div class="panel-heading ">
+                                <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
+                                    <div class="col-xs-10 col-sm-11 col-md-11">
+                                        ' . $groupDisplay . '
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
+                                <div class="tab-content">';
+
+                $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
+                $html .= '</div></div></div>';
 
             }
         }
 
         if ($html == '') {
-            $html = $this->build_report_html($offset, $links, '', create_guid(), $extra);
+            $html = $this->build_report_html($offset, $links, $subgroup, create_guid(), $extra);
         }
 
         return $html;
@@ -600,88 +618,14 @@ class AOR_Report extends Basic
             }
         }
 
-        $html = "<table class='list aor_reports' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
-
-        if ($offset >= 0) {
-            $start = 0;
-            $end = 0;
-            $previous_offset = 0;
-            $next_offset = 0;
-            $last_offset = 0;
-
-            if ($total_rows > 0) {
-                $start = $offset + 1;
-                $end = (($offset + $max_rows) < $total_rows) ? $offset + $max_rows : $total_rows;
-                $previous_offset = ($offset - $max_rows) < 0 ? 0 : $offset - $max_rows;
-                $next_offset = $offset + $max_rows;
-                if (is_int($total_rows / $max_rows)) {
-                    $last_offset = $max_rows * ($total_rows / $max_rows - 1);
-                } else {
-                    $last_offset = $max_rows * floor($total_rows / $max_rows);
-                }
-
-            }
-
-            $html .= "<thead><tr class='pagination'>";
-
-
-            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
-
-            $html .= "<td colspan='18'>
-                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><H3><a href=\"javascript:void(0)\" class=\"collapseLink\" onclick=\"groupedReportToggler.toggleList(this);\"><img border=\"0\" id=\"detailpanel_1_img_hide\" src=\"themes/SuiteR/images/basic_search.gif\"></a>$moduleFieldByGroupValue</H3></td>
-                        <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
-
-            if ($offset == 0) {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('start_off.gif') . "' alt='Start' align='absmiddle' border='0'>
-                </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous_off.gif') . "' alt='Previous' align='absmiddle' border='0'>
-                </button>";
-            } else {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('start.gif') . "' alt='Start' align='absmiddle' border='0'>
-                </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous.gif') . "' alt='Previous' align='absmiddle' border='0'>
-                </button>";
-            }
-            $html .= " <span class='pageNumbers'>(" . $start . " - " . $end . " of " . $total_rows . ")</span>";
-            if ($next_offset < $total_rows) {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('next.gif') . "' alt='Next' align='absmiddle' border='0'>
-                    </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('end.gif') . "' alt='End' align='absmiddle' border='0'>
-                    </button>";
-            } else {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
-                    </button>
-                     <button type='button' id='listViewEndButton_top$dashletPaginationButtons' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('end_off.gif') . "' alt='End' align='absmiddle' border='0'>
-                    </button>";
-
-            }
-
-            $html .= "</td>
-                       </table>
-                      </td>";
-
-            $html .= "</tr></thead>";
-        } else {
-
-            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
-
-            $html = "<H3>$moduleFieldByGroupValue</H3>" . $html;
-        }
+        $html='<div class="list-view-rounded-corners">';
+        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
 
-        $html .= "<thead>";
-        $html .= "<tr>";
+        $html .= '<thead>';
+        $html .= '<tr>';
 
         $fields = array();
         $i = 0;
@@ -720,16 +664,86 @@ class AOR_Report extends Basic
 
             if ($fields[$label]['display']) {
                 $html .= "<th scope='col'>";
-                $html .= "<div style='color:#444;'>";
+                $html .= "<div>";
                 $html .= $field->label;
                 $html .= "</div></th>";
             }
             ++$i;
         }
 
-        $html .= "</tr>";
-        $html .= "</thead>";
-        $html .= "<tbody>";
+        $html .= '</tr>';
+
+        if ($offset >= 0) {
+            $start = 0;
+            $end = 0;
+            $previous_offset = 0;
+            $next_offset = 0;
+            $last_offset = 0;
+
+            if ($total_rows > 0) {
+                $start = $offset + 1;
+                $end = (($offset + $max_rows) < $total_rows) ? $offset + $max_rows : $total_rows;
+                $previous_offset = ($offset - $max_rows) < 0 ? 0 : $offset - $max_rows;
+                $next_offset = $offset + $max_rows;
+                if (is_int($total_rows / $max_rows)) {
+                    $last_offset = $max_rows * ($total_rows / $max_rows - 1);
+                } else {
+                    $last_offset = $max_rows * floor($total_rows / $max_rows);
+                }
+
+            }
+
+            $html .= '<tr id="pagination" class="pagination-unique" role="presentation">';
+
+            $html .= "<td colspan='$i'>
+                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                        <td nowrap=\"nowrap\" class=\"paginationActionButtons\" ></td>";
+
+            $html .= '<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">';
+            if ($offset == 0) {
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
+                    <img src='" . SugarThemeRegistry::current()->getImageURL('start_off.gif') . "' alt='Start' align='absmiddle' border='0'>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
+                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous_off.gif') . "' alt='Previous' align='absmiddle' border='0'>
+                </button>";
+            } else {
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                    <img src='" . SugarThemeRegistry::current()->getImageURL('start.gif') . "' alt='Start' align='absmiddle' border='0'>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous.gif') . "' alt='Previous' align='absmiddle' border='0'>
+                </button>";
+            }
+            $html .= '</td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons">';
+            $html .= ' <div class="pageNumbers">(' . $start . ' - ' . $end . ' of ' . $total_rows . ')</div>';
+            $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
+            if ($next_offset < $total_rows) {
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                        <img src='" . SugarThemeRegistry::current()->getImageURL('next.gif') . "' alt='Next' align='absmiddle' border='0'>
+                    </button>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                        <img src='" . SugarThemeRegistry::current()->getImageURL('end.gif') . "' alt='End' align='absmiddle' border='0'>
+                    </button>";
+            } else {
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
+                        <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
+                    </button>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
+                        <img src='" . SugarThemeRegistry::current()->getImageURL('end_off.gif') . "' alt='End' align='absmiddle' border='0'>
+                    </button>";
+
+            }
+
+            $html .= '</td><td nowrap="nowrap" width="4px" class="paginationActionButtons"></td>
+                       </table>
+                      </td>';
+
+            $html .= '</tr>';
+        }
+
+        $html .= '</thead>';
+        $html .= '<tbody>';
 
         if($fieldCount){
             if ($offset >= 0) {
@@ -788,7 +802,7 @@ class AOR_Report extends Basic
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= "</table>";
+        $html .= '</table></div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -799,11 +813,11 @@ class AOR_Report extends Basic
                                             $(e).toggle();
                                         }
                                     });
-                                    if($(elem).find('img').first().attr('src') == 'themes/SuiteR/images/basic_search.gif') {
-                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/advanced_search.gif');
+                                    if($(elem).find('img').first().attr('src') == '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."') {
+                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('advanced_search.gif')."');
                                     }
                                     else {
-                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/basic_search.gif');
+                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."');
                                     }
                                 }
 
@@ -863,22 +877,29 @@ class AOR_Report extends Basic
         $currency = new Currency();
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
+        $showTotal = false;
         $html = '';
-        $html .= "<tbody>";
-        $html .= "<tr>";
+        $html .= "<thead class='fc-head'>";
+        $html .= "<tr class='mbfooter'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
             if ($field['total']) {
-                $totalLabel = $field['label'] . " " . $app_list_strings['aor_total_options'][$field['total']];
-                $html .= "<th>{$totalLabel}</th>";
+                $showTotal = true;
+                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][$field['total']];
+                $html .= "<th>{$totalLabel}</td>";
             } else {
-                $html .= "<th></th>";
+                $html .= '<th></th>';
             }
         }
-        $html .= "</tr>";
-        $html .= "<tr>";
+        $html .= '</tr></thead>';
+
+        if (!$showTotal) {
+            return '';
+        }
+
+        $html .= "</body><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -911,13 +932,13 @@ class AOR_Report extends Basic
                     default:
                         break;
                 }
-                $html .= "<td>" . $total . "</td>";
+                $html .= '<td>' . $total . '</td>';
             } else {
-                $html .= "<td></td>";
+                $html .= '<td></td>';
             }
         }
-        $html .= "</tr>";
-        $html .= "</tbody>";
+        $html .= '</tr>';
+        $html .= '</body>';
 
         return $html;
     }
@@ -1236,7 +1257,11 @@ class AOR_Report extends Basic
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";
 
                 if ($field->group_display == 1 && $group_value) {
-                    $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+                    if ($group_value === '_empty') {
+                        $query['where'][] = '(' . $select_field . " = '' OR " . $select_field . ' IS NULL) AND ';
+                    } else {
+                        $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+                    }
                 }
 
                 ++$i;
