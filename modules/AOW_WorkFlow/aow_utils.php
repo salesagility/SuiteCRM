@@ -595,10 +595,11 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 /**
  *  Convert a bracketed variable into a string that can become a JS variable
  *
- * @param $variable
- * @return mixed
+ * @param string $variable
+ * @return string
  */
-function createBracketVariableAlias($variable){
+function createBracketVariableAlias($variable)
+{
     return str_replace('[', 'SCRMLSQBR', str_replace(']', 'SCRMRSQBR', $variable));
 }
 
