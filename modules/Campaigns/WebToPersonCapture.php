@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -118,28 +118,33 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
+        
+        $optInEmailFields = array();
+        $optInPrefix = 'opt_in_';
+
         if (!empty($person)) {
 
             $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
             $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
-            foreach($filteredFieldsFromPersonBean[0]->fields as $field) {
+            foreach ($filteredFieldsFromPersonBean[0]->fields as $field) {
                 $possiblePersonCaptureFields[] = $field[1];
             }
 
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
-                if ($k === 'client_id_address' || $k === 'req_id'
-                    || $k === 'moduleDir' || $k === 'dup_checked') {
+                if ($k === 'client_id_address' || $k === 'req_id' || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
-                }
-                if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
-                    if (in_array($k, $possiblePersonCaptureFields)) {
-                        $person->$k = $v;
-                    } else {
-                        $GLOBALS['log']->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
+                } elseif (preg_match('/^' . $optInPrefix . '/', $k)) {
+                    $optInEmailFields[] = substr($k, strlen($optInPrefix));
+                } else {
+                    if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
+                        if (in_array($k, $possiblePersonCaptureFields)) {
+                            $person->$k = $v;
+                        } else {
+                            LoggerManager::getLogger()->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
+                        }
                     }
                 }
-
             }
         }
 
@@ -200,6 +205,31 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
+        
+        
+        if (!empty($optInEmailFields)) {
+            foreach ($optInEmailFields as $optInEmailField) {
+                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                    $sea = new SugarEmailAddress();
+                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    if ($sea->retrieve($emailId)) {
+                        $sea->optIn();
+                        $sea->saveEmail($person->id, $moduleDir);
+                    } else {
+                        $msg = 'Error retrieving an email address.';
+                        LoggerManager::getLogger()->fatal($msg);
+                        throw new RuntimeException($msg);
+                    }
+                } else {
+                    $personClass = get_class($person);
+                    $msg = "Incorrect email field for Opt In at person. Person type: $personClass, field: $optInEmailField.";
+                    LoggerManager::getLogger()->fatal($msg);
+                    throw new RuntimeException($msg);
+                }
+            }
+        }
+
+
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
