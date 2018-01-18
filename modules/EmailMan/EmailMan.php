@@ -592,7 +592,7 @@ class EmailMan extends SugarBean
      * @param bool $testmode
      * @return bool
      */
-    public function sendEmail($mail, $save_emails = 1, $testmode = false)
+    public function sendEmail(SugarPHPMailer $mail, $save_emails = 1, $testmode = false)
     {
         $this->test = $testmode;
 
@@ -654,7 +654,7 @@ class EmailMan extends SugarBean
         }
 
         if ($this->shouldBlockEmail($module)) {
-            $GLOBALS['log']->debug('Email Address was sent due to not being confirm opt in' . $module->email1);
+            $GLOBALS['log']->warn('Email Address was sent due to not being confirm opt in' . $module->email1);
 
             // block sending campaign email
             $this->set_as_sent($module->email1, true, null, null, 'blocked');
@@ -1011,6 +1011,9 @@ class EmailMan extends SugarBean
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
 
+    /**
+     * @return bool
+     */
     public function getLastOptInWarn() {
         $warn = $this->optInWarn;
         $this->optInWarn = false;

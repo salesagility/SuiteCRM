@@ -4297,26 +4297,6 @@ eoq;
     }
 
     /**
-     * @global $sugar_config
-     * @param string $emailField
-     * @return string
-     */
-    public function getEmailAddressConfirmOptInTick($emailField)
-    {
-        global $sugar_config;
-
-        $tickHtml = '';
-
-        if ($sugar_config['email_enable_confirm_opt_in']) {
-            $template = new Sugar_Smarty();
-            $template->assign('OPT_IN', $this->getEmailAddressOptInStatus($emailField));
-            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
-        }
-
-        return $tickHtml;
-    }
-
-    /**
      *
      * @global array $sugar_config
      * @global \LoggerManager $log

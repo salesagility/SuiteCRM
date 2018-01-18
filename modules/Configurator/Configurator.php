@@ -349,14 +349,18 @@ class Configurator
             && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
 
         if (!$confirmOptInEnabled) {
-            $this->logger->warn('Confirm Opt sub disabled');
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
         }
 
         return $confirmOptInEnabled;
 
     }
-    
+
+    /**
+     * @return null|string
+     */
     public function getConfirmOptInTemplateId() {
+        /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
         if(!$confirmOptInTemplateId) {
             $confirmOptInTemplateId = 

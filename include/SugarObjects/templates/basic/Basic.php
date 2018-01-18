@@ -215,17 +215,11 @@ class Basic extends SugarBean
     protected function displayOptInFromSugarEmailAddressField($emailField)
     {
         global $sugar_config;
-        global $app_list_strings;
-        global $app_strings;
-        global $mod_strings;
 
         $tickHtml = '';
 
         if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in']  !== '') {
             $template = new Sugar_Smarty();
-            $template->assign('APP', $app_strings);
-            $template->assign('APP_LIST_STRINGS', $app_list_strings);
-            $template->assign('MOD', $mod_strings);
             $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
             $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
         }
