@@ -357,11 +357,11 @@ class Configurator
     }
     
     public function getConfirmOptInTemplateId() {
-        $confirmOptInTemplateId = $configurator->config['email_confirm_opt_in_email_template_id'];
+        $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
         if(!$confirmOptInTemplateId) {
             $confirmOptInTemplateId = 
-                isset($sugar_config['aop']['confirm_opt_in_template_id']) ? 
-                    $sugar_config['aop']['confirm_opt_in_template_id'] : 
+                isset($this->config['aop']['confirm_opt_in_template_id']) ?
+                    $this->config['aop']['confirm_opt_in_template_id'] :
                     null;
         }
         
