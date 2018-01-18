@@ -4374,24 +4374,20 @@ eoq;
 
     /**
      *
-     * @global array $sugar_config
      * @global array $app_strings
-     * @global SugarDateTime $timedate
-     * @global \LoggerManager $log
-     * @global DBManager $db
      * @param EmailAddress $emailAddress
      * @return boolean
      * @throws Exception
      */
     public function sendOptInEmail(EmailAddress $emailAddress)
     {
-        global $sugar_config;
         global $app_strings;
-        global $timedate;
-        global $log;
-        global $db;
 
+        $db = $this->db;
+        $log = LoggerManager::getLogger();
+        $timedate = new TimeDate();
         $configurator = new Configurator();
+        $sugar_config =  $configurator->config;
         if (!$configurator->isConfirmOptInEnabled()) {
             return false;
         }
