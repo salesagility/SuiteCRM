@@ -4398,8 +4398,6 @@ eoq;
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
 
-        
-        $configurator = new Configurator();
         $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
 
         if (!$confirmOptInTemplateId) {
