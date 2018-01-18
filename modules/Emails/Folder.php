@@ -109,6 +109,7 @@ class Folder
 
                 $this->id = $row['parent_folder'];
                 $this->type = $row['folder_type'];
+                $this->mailbox = $row['name'];
 
             }
 

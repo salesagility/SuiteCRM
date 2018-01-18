@@ -344,7 +344,7 @@ $mod_strings = array(
 // PROJECT RESOURCES STRINGS
     'LBL_RESOURCE_NAME' => 'Name',
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
     'LBL_MAIL_SMTPTYPE' => 'SMTP Server Type:',
@@ -441,7 +441,7 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_RE' => 'RE:',
     'LBL_BUTTON_CREATE' => 'Create',
     'LBL_BUTTON_EDIT' => 'Edit',
-    'LBL_QS_DISABLED' => '(QuickSearch is not availible for this module. Please use the select button.)',
+    'LBL_QS_DISABLED' => '(QuickSearch is not available for this module. Please use the select button.)',
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
     'LBL_ERROR_SELECT_MODULE' => 'Please select a module for the Related to field',
     'ERR_ARCHIVE_EMAIL' => 'Error: Select emails to archive.',

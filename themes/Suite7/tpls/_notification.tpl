@@ -1,11 +1,10 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,37 +37,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if(!$GLOBALS['current_user']->isAdminForModule('Users')){
-	sugar_die('No Access');
-}
-$record = '';
-if(isset($_REQUEST['record'])) $record = $_REQUEST['record'];
-?>
-<form action="index.php" method="post" name="DetailView" id="form">
-
-			<input type="hidden" name="module" value="Users">
-			<input type="hidden" name="user_id" value="">
-			<input type="hidden" name="record" value="<?php echo $record; ?>">
-			<input type="hidden" name="isDuplicate" value=''>
-			
-			
-			<input type="hidden" name="action">
-</form>
-
-<?php
-
-$users = get_user_array(true, "Active", $record);
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'],array($mod_strings['LBL_MODULE_NAME']), true);
-echo "<form action='index.php' name='Users'>
-<input type='hidden' name='action' value='ListRoles'>
-<input type='hidden' name='module' value='Users'>
-<select name='record' onchange='document.Users.submit();'>";
-echo get_select_options_with_id($users, $record);
-echo "</select></form>";
-if(!empty($record)){
-    $hideTeams = true; // to not show the teams subpanel in the following file
-	require_once('modules/ACLRoles/DetailUserRole.php');
-}
-
-
-?>
+*}
+<div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
+    <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
+        <span class="badge"><span class="alert_count hidden" >0</span> <span class="glyphicon glyphicon-bell"></span></span>
+    </button>
+    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+</div>
