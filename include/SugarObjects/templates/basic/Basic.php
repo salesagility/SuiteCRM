@@ -100,6 +100,12 @@ class Basic extends SugarBean
     public function getOptInStatusFromSugarField($emailField) {
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
+        $configurator = new Configurator();
+        $configurator->config;
+
+        if ($configurator->config['email_enable_confirm_opt_in'] === '') {
+            return 'OPT_IN_DISABLED';
+        }
 
         if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
 
