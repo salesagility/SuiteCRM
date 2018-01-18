@@ -3905,6 +3905,8 @@ $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'] = 'Pending Confirm opt in, Con
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'] = 'Pending Confirm opt in, Confirm opt in sent';
 $app_strings['LBL_OPT_IN'] = 'Opted in';
 $app_strings['LBL_OPT_IN_CONFIRMED'] = 'Confirmed Opted in';
+$app_strings['LBL_OPT_IN_OPT_OUT'] = 'Opted Out';
+$app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
 $app_list_strings['email_settings_opt_in_dom'] = array(
     '' => 'Disabled',
