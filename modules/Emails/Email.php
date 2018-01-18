@@ -4398,11 +4398,9 @@ eoq;
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
 
-        $confirmOptInTemplateId = $sugar_config['aop']['confirm_opt_in_template_id'];
-        if(!$confirmOptInTemplateId) {
-            $configurator = new Configurator();
-            $confirmOptInTemplateId = $configurator->config['email_confirm_opt_in_email_template_id'];
-        }
+        
+        $configurator = new Configurator();
+        $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
 
         if (!$confirmOptInTemplateId) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
