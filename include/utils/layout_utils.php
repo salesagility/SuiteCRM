@@ -299,10 +299,6 @@ EOHTML;
     echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
     echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
 
-    if(SugarThemeRegistry::current() == "SuiteR") {
-        echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
-    }
-
     echo '</head>';
     echo  '<body class="popupBody">';
 }
