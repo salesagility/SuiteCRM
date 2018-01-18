@@ -355,8 +355,12 @@ class Configurator
         return $confirmOptInEnabled;
 
     }
-    
+
+    /**
+     * @return null|string
+     */
     public function getConfirmOptInTemplateId() {
+        /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
         if(!$confirmOptInTemplateId) {
             $confirmOptInTemplateId = 
