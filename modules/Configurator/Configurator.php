@@ -349,7 +349,7 @@ class Configurator
             && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
 
         if (!$confirmOptInEnabled) {
-            $this->logger->warn('Confirm Opt sub disabled');
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
         }
 
         return $confirmOptInEnabled;
