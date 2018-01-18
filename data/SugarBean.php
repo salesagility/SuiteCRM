@@ -4099,6 +4099,8 @@ class SugarBean
                                 $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
                                 $this->$field = $timedate->to_display_date($merge_time);
                                 $this->$rel_field = $timedate->to_display_time($merge_time);
+                            } elseif (empty($disable_date_format)) {
+                                $this->$field = $timedate->to_display_date($this->$field, false);
                             }
                         } else {
                             if (empty($disable_date_format)) {
