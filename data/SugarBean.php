@@ -4092,20 +4092,19 @@ class SugarBean
                     if ($type == 'date') {
                         if ($this->$field == '0000-00-00' || empty($this->$field)) {
                             $this->$field = '';
-                        } elseif (!empty($this->field_name_map[$field]['rel_field'])) {
-                            $rel_field = $this->field_name_map[$field]['rel_field'];
-
-                            if (!empty($this->$rel_field) && empty($disable_date_format)) {
-                                $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
-                                $this->$field = $timedate->to_display_date($merge_time);
-                                $this->$rel_field = $timedate->to_display_time($merge_time);
-                            } elseif (empty($disable_date_format)) {
-                                $this->$field = $timedate->to_display_date($this->$field, false);
+                            continue;
+                        }
+                        if (empty($disable_date_format)) {
+                            if (!empty($this->field_name_map[$field]['rel_field'])) {
+                                $rel_field = $this->field_name_map[$field]['rel_field'];
+                                if (!empty($this->$rel_field)) {
+                                    $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
+                                    $this->$field = $timedate->to_display_date($merge_time);
+                                    $this->$rel_field = $timedate->to_display_time($merge_time);
+                                    continue;
+                                }
                             }
-                        } else {
-                            if (empty($disable_date_format)) {
-                                $this->$field = $timedate->to_display_date($this->$field, false);
-                            }
+                            $this->$field = $timedate->to_display_date($this->$field, false);
                         }
                     } elseif ($type == 'datetime' || $type == 'datetimecombo') {
                         if ($this->$field == '0000-00-00 00:00:00' || empty($this->$field)) {
