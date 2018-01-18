@@ -592,7 +592,7 @@ class EmailMan extends SugarBean
      * @param bool $testmode
      * @return bool
      */
-    public function sendEmail($mail, $save_emails = 1, $testmode = false)
+    public function sendEmail(SugarPHPMailer $mail, $save_emails = 1, $testmode = false)
     {
         $this->test = $testmode;
 
