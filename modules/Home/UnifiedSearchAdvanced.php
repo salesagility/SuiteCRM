@@ -355,6 +355,8 @@ class UnifiedSearchAdvanced {
                 $lv->email = false;
 
                 $lv->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 10);
+                $lv->ss->assign('showFilterIcon', 0);
+                $lv->ss->assign('hideColumnFilter', 1);
 
                 $module_results[$moduleName] = '<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
                 $module_counts[$moduleName] = $lv->data['pageData']['offsets']['total'];

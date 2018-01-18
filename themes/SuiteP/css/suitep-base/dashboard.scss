@@ -314,6 +314,10 @@ div#chartDashlets {
   margin: 15px 15px 15px 0;
 }
 
+.dashletTable {
+  table-layout: fixed;
+}
+
 .hd-center {
   padding: 0;
   margin: 0;
@@ -570,7 +574,6 @@ td.dashlet-title > h3 > span {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   overflow: hidden;
-  overflow-y: scroll;
   max-height: 650px;
 }
 
@@ -583,8 +586,9 @@ td.dashlet-title > h3 > span {
   height: 30px;
 }
 
+
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
-  display: block;
+  display: flex; 
   border-bottom: none;
   float: none;
   width: auto;
@@ -599,6 +603,7 @@ td.dashlet-title > h3 > span {
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row]{
   display: block;
+  list-style: none;
   float: left;
   width: auto;
 }
@@ -656,7 +661,7 @@ td.dashlet-title > h3 > span {
     width: 25%;
 
   }
-  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child {
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child{
     clear: both;
   }
 

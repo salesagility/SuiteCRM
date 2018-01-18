@@ -208,17 +208,14 @@ class ListViewDataEmails extends ListViewData
         switch ($folder->getType()) {
 
             case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 $this->searchType = "imap";
                 break;
 
             case "draft":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
                 $this->searchType = "crm";
                 break;
 
             case "trash":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
                 $this->searchType = "imap";
                 break;
 
@@ -229,6 +226,31 @@ class ListViewDataEmails extends ListViewData
         }
 
         return $this->searchType;
+    }
+
+    /**
+     * @param $folder
+     * @param $inboundEmail
+     */
+    private function setInboundEmailMailbox($folder, $inboundEmail)
+    {
+        switch ($folder->getType()) {
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+                break;
+
+            case "draft":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                break;
+
+            case "trash":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
+                break;
+
+            default:
+                $inboundEmail->mailbox = $folder->mailbox;
+                break;
+        }
     }
 
 
@@ -657,6 +679,7 @@ class ListViewDataEmails extends ListViewData
 
 
             $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
+            $this->setInboundEmailMailbox($folderObj, $inboundEmail);
 
 
             // search in draft in CRM db?

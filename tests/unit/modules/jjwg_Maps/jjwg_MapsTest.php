@@ -165,22 +165,6 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('mysqli_result', $result);
     }
 
-    public function testgetGoogleMapsGeocode()
-    {
-        $jjwgMaps = new jjwg_Maps();
-
-        //test with invalid value
-        $expected = array(
-                'address' => '',
-                'status' => 'INVALID_REQUEST',
-                'lat' => null,
-                'lng' => null,
-        );
-
-        $actual = $jjwgMaps->getGoogleMapsGeocode('');
-        $this->assertSame($expected, $actual);
-    }
-
     public function testdefineMapsAddress()
     {
         $jjwgMaps = new jjwg_Maps();

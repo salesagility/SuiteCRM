@@ -66,6 +66,11 @@ class NoteSoap
     }
 
 
+    /**
+     * @param array $note
+     * @param bool $portal
+     * @return string
+     */
     function saveFile($note, $portal = false)
     {
         global $sugar_config;

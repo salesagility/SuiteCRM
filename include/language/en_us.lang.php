@@ -479,8 +479,12 @@ $app_list_strings = array(
 
         'Prospects' => 'Target',
 
+        ),
+    'parent_line_items' => array(
+        'AOS_Quotes' => 'Quotes',
+        'AOS_Invoices' => 'Invoices',
+        'AOS_Contracts' => 'Contracts',
     ),
-
     'issue_priority_default_key' => 'Medium',
     'issue_priority_dom' => array(
         'Urgent' => 'Urgent',
@@ -1133,6 +1137,8 @@ $app_strings = array(
     'LBL_EMAIL_EMPTYING_TRASH' => 'Emptying Trash',
     'LBL_EMAIL_DELETING_OUTBOUND' => 'Deleting outbound server',
     'LBL_EMAIL_CLEARING_CACHE_FILES' => 'Clearing cache files',
+    'LBL_EMAIL_EMPTY_MSG' => 'No emails to display.',
+    'LBL_EMAIL_EMPTY_ADDR_MSG' => 'No email addresses to display.',
 
     'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER' => 'Folder name must be unique and not empty. Please try again.',
     'LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER' => 'Cannot delete a folder. Either the folder or its children has emails or a mail box associated to it.',
@@ -1144,7 +1150,7 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_EMPTY' => 'Please enter some search criteria.',
     'LBL_EMAIL_ERROR_GENERAL_TITLE' => 'An error has occurred',
     'LBL_EMAIL_ERROR_MESSAGE_DELETED' => 'Message Removed from Server',
-    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either message Removed from Server or moved to a different folder',
+    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either the message was removed from Server or moved to a different folder',
     'LBL_EMAIL_ERROR_MAILSERVERCONNECTION' => 'Connection to the mail server failed. Please contact your Administrator',
     'LBL_EMAIL_ERROR_MOVE' => 'Moving email between servers and/or mail accounts is not supported at this time.',
     'LBL_EMAIL_ERROR_MOVE_TITLE' => 'Move Error',

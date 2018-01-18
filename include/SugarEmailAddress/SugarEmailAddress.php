@@ -329,17 +329,9 @@ class SugarEmailAddress extends SugarBean
             return false;
         }
 
-
-        // update email address
-
         $db = DBManagerFactory::getInstance();
-
-        $_id = $db->quote($id);
-        $query = "SELECT * FROM email_addresses WHERE id = '{$_id}' AND deleted = 0 LIMIT 1";
-        $requests = $db->query($query);
-        $row = $requests->fetch_assoc();
-
-        if (!$row) {
+        $query = sprintf("SELECT * FROM email_addresses WHERE id = %s AND deleted = 0", $db->quoted($id));
+        if ($db->getOne($query) === false) {
             $GLOBALS['log']->error("Missing Email ID ($id)");
             return false;
         }

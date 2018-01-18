@@ -513,15 +513,7 @@
       var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (inputIndex, inputValue) {
-        if ($(inputValue).attr('type').toLowerCase() === 'file') {
-          for (var fileIndex = 0; fileIndex < inputValue.files.length; fileIndex++) {
-            var file = inputValue.files[fileIndex];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            formData.append($(inputValue).attr('name'), file);
-            fileCount++;
-          }
-        } else {
+        if ($(inputValue).attr('type').toLowerCase() !== 'file') {
           if ($(inputValue).attr('name') === 'action') {
             formData.append('refer_' + $(inputValue).attr('name'), $(inputValue).val());
             formData.append($(inputValue).attr('name'), 'send');
@@ -534,7 +526,9 @@
       });
 
       $(this).find('select').each(function (i, v) {
-        formData.append($(v).attr('name'), $(v).val());
+        if (typeof $(v).attr('is_file') === 'undefined') {
+          formData.append($(v).attr('name'), $(v).val());
+        }
       });
 
       $(this).find('textarea').each(function (i, v) {
@@ -891,14 +885,6 @@
 
       $(this).find('input').each(function (i, v) {
         if ($(v).attr('type').toLowerCase() === 'file') {
-          for (i = 0; i < v.files.length; i++) {
-            var file = v.files[i];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            formData.append($(v).attr('name'), file);
-            fileCount++;
-          }
-        } else {
           var name = $(v).attr('name');
           if (name === 'action') {
             formData.append(name, 'SaveDraft');
@@ -911,7 +897,9 @@
       });
 
       $(this).find('select').each(function (i, v) {
-        formData.append($(v).attr('name'), $(v).val());
+        if (typeof $(v).attr('is_file') === 'undefined') {
+          formData.append($(v).attr('name'), $(v).val());
+        }
       });
 
       $(this).find('textarea').each(function (i, v) {
@@ -989,14 +977,6 @@
 
         $(this).find('input').each(function (i, v) {
           if ($(v).attr('type').toLowerCase() === 'file') {
-            for (i = 0; i < v.files.length; i++) {
-              var file = v.files[i];
-              var reader = new FileReader();
-              reader.readAsDataURL(file);
-              formData.append($(v).attr('name'), file);
-              fileCount++;
-            }
-          } else {
             var name = $(v).attr('name');
             if (name === 'action') {
               formData.append(name, 'Delete');
@@ -1009,7 +989,9 @@
         });
 
         $(this).find('select').each(function (i, v) {
-          formData.append($(v).attr('name'), $(v).val());
+          if (typeof $(v).attr('is_file') === 'undefined') {
+            formData.append($(v).attr('name'), $(v).val());
+          }
         });
 
         $(this).find('textarea').each(function (i, v) {
@@ -1138,10 +1120,10 @@
             });
 
             var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
-
-            $(selectFrom).val(
-              $(selectFrom).find('[inboundid="' + selectedInboundEmail + '"]').val()
-            );
+            var selectInboundEmailOption = $(selectFrom).find('[inboundid="' + selectedInboundEmail + '"]');
+            if (selectInboundEmailOption.val()) {
+              $(selectFrom).val(selectInboundEmailOption.val());
+            }
 
             $(selectFrom).change(function (e) {
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
@@ -1287,17 +1269,57 @@
   $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
     var confirmed = function (args) {
-      var self = $('[name="' + args.form_name + '"]');
+      var form = $('[name="' + args.form_name + '"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
-      }, function (resp) {
-        var r = JSON.parse(resp);
-        $(self).find('[name="name"]').val(r.data.subject);
-        tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
-        tinymce.activeEditor.change();
+      }, function (jsonResponse) {
+        var response = JSON.parse(jsonResponse);
+        loadTemplateAttachments(response);
+        $(form).find('[name="name"]').val(response.data.subject);
+        tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
       });
       set_return(args);
     };
+
+    var loadTemplateAttachments = function (response) {
+      $('.file-attachments').empty();
+      if (typeof response.data.attachments !== 'undefined' && response.data.attachments.length > 0) {
+        for (i = 0; i < response.data.attachments.length; i++) {
+          var id = response.data.attachments[i]['id'];
+          var fileGroupContainer = $('<div></div>')
+            .addClass('attachment-group-container')
+            .appendTo($('.file-attachments'));
+
+          var fileInput = $('<select></select>')
+            .attr('style', 'display:none')
+            .attr('id', id)
+            .attr('is_file', true)
+            .attr('name', 'template_attachment[]')
+            .attr('multiple', 'multiple');
+
+          var fileOptions = $('<option></option>')
+            .attr('selected', 'selected')
+            .attr('value', id)
+            .appendTo(fileInput);
+
+          fileInput.appendTo(fileGroupContainer);
+          var fileLabel = $('<label></label>')
+            .attr('for', 'file_' + id)
+            .html('<span class="glyphicon glyphicon-paperclip"></span>')
+            .appendTo(fileGroupContainer);
+
+          var fileContainer = $('<div class="attachment-file-container"></div>');
+          fileContainer.appendTo(fileLabel);
+          fileContainer.append('<span class="attachment-name"> ' + response.data.attachments[i]['name'] + ' </span>');
+
+          var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+          removeAttachment.click(function () {
+            $(this).parent().remove();
+          });
+          fileGroupContainer.append(removeAttachment);
+        }
+      }
+    }
 
     var mb = messageBox();
     mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
@@ -1315,7 +1337,6 @@
       mb.remove();
     });
   };
-
 
   $.fn.EmailsComposeView.onParentSelect = function (args) {
     set_return(args);
@@ -1347,6 +1368,9 @@
         italic: {inline: 'i'},
         underline: {inline: 'u'}
       },
+      convert_urls:true,
+      relative_urls:false,
+      remove_script_host:false,
     }
   };
 }(jQuery));

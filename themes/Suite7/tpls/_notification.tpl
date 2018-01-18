@@ -1,12 +1,10 @@
-<?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,23 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-global $mod_strings, $app_strings, $sugar_config;
-
-if (ACLController::checkAccess('Surveys', 'edit', true)) {
-    $module_menu[] =
-        Array(
-            "index.php?module=Surveys&action=EditView&return_module=Surveys&return_action=DetailView",
-            $mod_strings['LNK_NEW_RECORD'],
-            "Add",
-            'Surveys'
-        );
-}
-if (ACLController::checkAccess('Surveys', 'list', true)) {
-    $module_menu[] =
-        Array(
-            "index.php?module=Surveys&action=index&return_module=Surveys&return_action=DetailView",
-            $mod_strings['LNK_LIST'],
-            "List",
-            'Surveys'
-        );
-}
+*}
+<div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
+    <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
+        <span class="badge"><span class="alert_count hidden" >0</span> <span class="glyphicon glyphicon-bell"></span></span>
+    </button>
+    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+</div>

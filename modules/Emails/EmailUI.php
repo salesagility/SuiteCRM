@@ -108,16 +108,15 @@ class EmailUI
         self::__construct();
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    ////	CORE
-    /**
-     * Renders the frame for emails
-     * @throws \RuntimeException
+	///////////////////////////////////////////////////////////////////////////
+	////	CORE
+	/**
+	 * Renders the frame for emails
+	 *@throws \RuntimeException
      */
-    function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl")
-    {
+	function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl") {
 
-        require_once("include/OutboundEmail/OutboundEmail.php");
+		require_once("include/OutboundEmail/OutboundEmail.php");
 
         global $app_strings, $app_list_strings;
         global $mod_strings;
@@ -431,14 +430,14 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-            
+
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
                 $emailFields = array($emailField);
             }
-            
-            
+
+
             if($checkAllEmail) {
                 $i = 1;
                 $emailField = 'email' . $i;
@@ -449,7 +448,7 @@ eoq;
                 }
                 $emailFields = array_unique($emailFields);
             }
-            
+
             foreach($emailFields as $emailField) {
                 if (property_exists($myBean, $emailField)) {
                     $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
@@ -2011,17 +2010,16 @@ eoq;
         $this->writeCacheFile('robin', $lastRobin, $ie->id, 'folders', "robin.cache.php");
     } // fn
 
-    /**
-     * returns the metadata defining a single email message for display.  Uses cache file if it exists
-     * @return array
-     */
-    function getSingleMessage($ie)
-    {
+	/**
+	 * returns the metadata defining a single email message for display.  Uses cache file if it exists
+	 * @return array
+	 */
+function getSingleMessage($ie)
 
-        global $timedate;
-        global $app_strings, $mod_strings;
-        $ie->retrieve($_REQUEST['ieId']);
-        $noCache = true;
+		{global $timedate;
+		global $app_strings,$mod_strings;
+		$ie->retrieve($_REQUEST['ieId']);
+		$noCache = true;
 
         $ie->mailbox = $_REQUEST['mbox'];
         $filename = $_REQUEST['mbox'] . $_REQUEST['uid'] . ".php";
@@ -2100,10 +2098,9 @@ eoq;
             $GLOBALS['log']->debug("EMAILUI: getSingleMessage() using cache file [ " . $_REQUEST['mbox'] . $_REQUEST['uid'] . ".php ]");
         }
 
-        $this->setReadFlag($_REQUEST['ieId'], $_REQUEST['mbox'], $_REQUEST['uid']);
-
-        return $out;
-    }
+		$this->setReadFlag($_REQUEST['ieId'], $_REQUEST['mbox'], $_REQUEST['uid']);
+		return $out;
+	}
 
 
     /**
