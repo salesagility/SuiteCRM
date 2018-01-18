@@ -100,21 +100,37 @@ class Basic extends SugarBean
     public function getOptInStatusFromSugarField($emailField) {
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
 
+        $configurator = new Configurator();
+        $configurator->config;
+
+        if ($configurator->config['email_enable_confirm_opt_in'] === '') {
+            return 'OPT_IN_DISABLED';
+        }
 
         if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
-            if ($emailAddress->invalid_email) {
-                return 'INVALID_EMAIL';
+
+
+            if ($emailAddress->invalid_email == '1') {
+                return 'INVALID';
             }
 
             if ($emailAddress->opt_out == '1') {
                 return 'OPT_OUT';
             }
 
-            if ($emailAddress->confirm_opt_in == 'confirmed-opt-in') {
+            if (
+                $emailAddress->confirm_opt_in == 'confirmed-opt-in'
+            ) {
                 return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-            } elseif (!empty($emailAddress->confirm_opt_in_sent_date)) {
+            } elseif (
+                $emailAddress->confirm_opt_in == 'opt-in'
+                && !empty($emailAddress->confirm_opt_in_sent_date)
+            ) {
                 return 'OPT_IN_PENDING_EMAIL_SENT';
-            } elseif (empty($emailAddress->confirm_opt_in_sent_date)) {
+            } elseif (
+                empty($emailAddress->confirm_opt_in_sent_date)
+                && $emailAddress->confirm_opt_in !== ''
+            ) {
                 return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
             }
         }
