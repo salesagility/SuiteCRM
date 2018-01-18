@@ -4382,6 +4382,8 @@ eoq;
     public function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
+        
+        $ret = false;
 
         $db = $this->db;
         $log = LoggerManager::getLogger();
@@ -4389,7 +4391,7 @@ eoq;
         $configurator = new Configurator();
         $sugar_config =  $configurator->config;
         if (!$configurator->isConfirmOptInEnabled()) {
-            return false;
+            return $ret;
         }
 
         require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
@@ -4399,7 +4401,7 @@ eoq;
         if (!$confirmOptInTemplateId) {
             $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
-            return false;
+            return $ret;
         }
 
         // Send email template
@@ -4408,7 +4410,7 @@ eoq;
             $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
             SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
             $log->fatal($msg);
-            return false;
+            return $ret;
         }
 
         $emailAddressString = $emailAddress->email_address;
@@ -4436,24 +4438,32 @@ eoq;
         );
 
 
-        // Get Related Contact | Lead | Target
+        // Get Related Contact | Lead | Target etc.
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address LIKE \'' . $db->quote($emailAddressString) . '\'';
+            ' WHERE email_address_id  = LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
+                ' AND email_addr_bean_rel.primary_address = 1 AND deleted = 0';
 
         $dbResult = $db->query($query);
-        $row = $db->fetchByAssoc($dbResult);
+        while ($row = $db->fetchByAssoc($dbResult)) {
+            
+            if ($ret) {
+                throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
+            }
 
-        $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
+            $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
-        $actionSendEmail = new actionSendEmail();
-        $actionSendEmail->run_action($bean, $params);
+            $actionSendEmail = new actionSendEmail();
+            $actionSendEmail->run_action($bean, $params);
 
-        $date = new DateTime();
-        $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $emailAddress->save();
+            $date = new DateTime();
+            $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+            $emailAddress->save();
+            
+            $ret = true;
+        } 
 
-        return true;
+        return $ret;
     }
 
     /**
