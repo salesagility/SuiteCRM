@@ -570,7 +570,6 @@ td.dashlet-title > h3 > span {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   overflow: hidden;
-  //overflow-y: scroll; <- removed scroll bar.
   max-height: 650px;
 }
 
@@ -585,7 +584,7 @@ td.dashlet-title > h3 > span {
 
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
-  display: flex; // changed from block
+  display: flex; 
   border-bottom: none;
   float: none;
   width: auto;
@@ -655,7 +654,7 @@ td.dashlet-title > h3 > span {
   }
   .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[valign=top] {
     float: left;
-    width: 25%;//changed from 25%
+    width: 25%;
 
   }
   .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child{
