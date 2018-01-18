@@ -76,6 +76,14 @@ class EmailMan extends SugarBean
     public $test = false;
     public $notes_array = array();
     public $verified_email_marketing_ids = array();
+    
+    
+    /**
+     * last opt in warning stored
+     *
+     * @var bool 
+     */
+    private $optInWarn;
 
     public function toString()
     {
@@ -1003,10 +1011,10 @@ class EmailMan extends SugarBean
         $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
     }
 
-    private $optInWarn;
-
     public function getLastOptInWarn() {
-        return $this->optInWarn;
+        $warn = $this->optInWarn;
+        $this->optInWarn = false;
+        return $warn;
     }
 
     /**
