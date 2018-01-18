@@ -6,3 +6,6 @@ modules:
     \SuiteCRM\Test\Driver\WebDriver:
       host: "selenium-hub"
       port: "4444"
+      restart: true
+      clear_cookies: false
+      wait: 3

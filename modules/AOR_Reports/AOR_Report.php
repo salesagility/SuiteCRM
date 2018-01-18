@@ -577,15 +577,23 @@ class AOR_Report extends Basic
             $max_rows = 20;
         }
 
-        $total_rows = 0;
-        $count_sql = explode('ORDER BY', $report_sql);
-        $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+        // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
+        $fieldCount = count($this->getReportFields());
+        if(!$fieldCount){
+            $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
+        }
 
-        // We have a count query.  Run it and get the results.
-        $result = $this->db->query($count_query);
-        $assoc = $this->db->fetchByAssoc($result);
-        if (!empty($assoc['c'])) {
-            $total_rows = $assoc['c'];
+        $total_rows = 0;
+        if($fieldCount){
+            $count_sql = explode('ORDER BY', $report_sql);
+            $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+
+            // We have a count query.  Run it and get the results.
+            $result = $this->db->query($count_query);
+            $assoc = $this->db->fetchByAssoc($result);
+            if (!empty($assoc['c'])) {
+                $total_rows = $assoc['c'];
+            }
         }
 
         $html = "<table class='list aor_reports' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
@@ -719,17 +727,19 @@ class AOR_Report extends Basic
         $html .= "</thead>";
         $html .= "<tbody>";
 
-        if ($offset >= 0) {
-            $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
-        } else {
-            $result = $this->db->query($report_sql);
+        if($fieldCount){
+            if ($offset >= 0) {
+                $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
+            } else {
+                $result = $this->db->query($report_sql);
+            }
         }
 
         $row_class = 'oddListRowS1';
 
 
         $totals = array();
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($fieldCount && $row = $this->db->fetchByAssoc($result)) {
             $html .= "<tr class='" . $row_class . "' height='20'>";
 
             foreach ($fields as $name => $att) {

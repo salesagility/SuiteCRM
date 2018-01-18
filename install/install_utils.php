@@ -1900,44 +1900,6 @@ if ( !function_exists('validate_manifest') ) {
         }
 
         return true; // making this a bit more relaxed since we updated the language extraction and merge capabilities
-
-        /*
-        if( isset($manifest['acceptable_sugar_versions']) ){
-            $version_ok = false;
-            $matches_empty = true;
-            if( isset($manifest['acceptable_sugar_versions']['exact_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['exact_matches'] as $match ){
-                    if( $match == $sugar_version ){
-                        $version_ok = true;
-                    }
-                }
-            }
-            if( !$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['regex_matches'] as $match ){
-                    if( preg_match( "/$match/", $sugar_version ) ){
-                        $version_ok = true;
-                    }
-                }
-            }
-
-            if( !$matches_empty && !$version_ok ){
-                die( $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version );
-            }
-        }
-
-        if( isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0 ){
-            $flavor_ok = false;
-            foreach( $manifest['acceptable_sugar_flavors'] as $match ){
-                if( $match == $sugar_flavor ){
-                    $flavor_ok = true;
-                }
-            }
-            if( !$flavor_ok ){
-                //die( $mod_strings['ERROR_FLAVOR_INCOMPATIBLE'] . $sugar_flavor );
-            }
-        }*/
     }
 }
 

@@ -493,8 +493,12 @@ $app_list_strings = array(
 
         'Prospects' => 'Target',
 
+        ),
+    'parent_line_items' => array(
+        'AOS_Quotes' => 'Quotes',
+        'AOS_Invoices' => 'Invoices',
+        'AOS_Contracts' => 'Contracts',
     ),
-
     'issue_priority_default_key' => 'Medium',
     'issue_priority_dom' => array(
         'Urgent' => 'Urgent',
@@ -1216,8 +1220,8 @@ $app_strings = array(
     'LBL_EMAIL_EDIT_MAILING_LIST' => 'Edit Mailing List',
 
     'LBL_EMAIL_EMPTYING_TRASH' => 'Emptying Trash',
-    'LBL_EMAIL_DELETING_OUTBOUND' => 'Deleteting outbound server',
-    'LBL_EMAIL_CLEARING_CACHE_FILES' => 'CLearing cache files',
+    'LBL_EMAIL_DELETING_OUTBOUND' => 'Deleting outbound server',
+    'LBL_EMAIL_CLEARING_CACHE_FILES' => 'Clearing cache files',
     'LBL_EMAIL_EMPTY_MSG' => 'No emails to display.',
     'LBL_EMAIL_EMPTY_ADDR_MSG' => 'No email addresses to display.',
 
@@ -1233,7 +1237,7 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_GENERAL_TITLE' => 'An error has occurred',
     'LBL_EMAIL_ERROR_LIST_NAME' => 'An email list with that name already exists',
     'LBL_EMAIL_ERROR_MESSAGE_DELETED' => 'Message Removed from Server',
-    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either message Removed from Server or moved to a different folder',
+    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either the message was removed from Server or moved to a different folder',
     'LBL_EMAIL_ERROR_MAILSERVERCONNECTION' => 'Connection to the mail server failed. Please contact your Administrator',
     'LBL_EMAIL_ERROR_MOVE' => 'Moving email between servers and/or mail accounts is not supported at this time.',
     'LBL_EMAIL_ERROR_MOVE_TITLE' => 'Move Error',
@@ -1888,7 +1892,7 @@ $app_strings = array(
     'LBL_SCENARIO_MAKETING_DESCRIPTION' => 'This scenario facilitates the management of marketing items',
     'LBL_SCENARIO_FINANCE_DESCRIPTION' => 'This scenario facilitates the management of finance related items',
     'LBL_SCENARIO_SERVICE_DESCRIPTION' => 'This scenario facilitates the management of service related items',
-    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario faciliates the management of project related items',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION' => 'This scenario facilitates the management of project related items',
 
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
@@ -2298,7 +2302,7 @@ $app_strings = array(
     'UPLOAD_ERROR_TEXT_SIZEINFO' => 'ERROR: There was an error during upload. Error code: {0} - {1}. The upload_maxsize is {2} ',
     'UPLOAD_ERROR_HOME_TEXT' => 'ERROR: There was an error during your upload, please contact an administrator for help.',
     'UPLOAD_MAXIMUM_EXCEEDED' => 'Size of Upload ({0} bytes) Exceeded Allowed Maximum: {1} bytes',
-    'UPLOAD_REQUEST_ERROR' => 'An error has occured. Please refresh your page and try again.',
+    'UPLOAD_REQUEST_ERROR' => 'An error has occurred. Please refresh your page and try again.',
 
     //508 used Access Keys
     'LBL_EDIT_BUTTON_KEY' => 'i',
