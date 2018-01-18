@@ -1665,7 +1665,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * Update Opt In state to 'OPT-IN'
      * 
-     * @return string ID
+     * @return string| ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
      */
     public function optIn() {
@@ -1676,9 +1676,12 @@ class SugarEmailAddress extends SugarBean
             throw new RuntimeException($msg);
         }
         
-        $this->retrieve();
-        $this->confirm_opt_in = 'OPT-IN';
-        $ret = parent::save();
+        if ($this->retrieve() && $this->confirm_opt_in === '') {
+            $this->confirm_opt_in = 'OPT-IN';
+            $ret = parent::save();
+        } else {
+            $ret = false;
+        }
         
         return $ret;
     }
