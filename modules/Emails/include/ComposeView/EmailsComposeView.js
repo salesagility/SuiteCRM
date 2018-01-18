@@ -884,7 +884,7 @@
       var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (i, v) {
-        if ($(v).attr('type').toLowerCase() === 'file') {
+        if ($(v).attr('type').toLowerCase() !== 'file') {
           var name = $(v).attr('name');
           if (name === 'action') {
             formData.append(name, 'SaveDraft');
@@ -940,6 +940,7 @@
             $(id).val(response.data.id);
           }
           $(self).find('input[name=record]').val(response.data.id);
+          $.fn.EmailsComposeView.checkForDraftAttachments(response.data.id);
         }
       }).fail(function (response) {
         "use strict";
@@ -976,7 +977,7 @@
         var formData = new FormData(jQueryFormComposeView);
 
         $(this).find('input').each(function (i, v) {
-          if ($(v).attr('type').toLowerCase() === 'file') {
+          if ($(v).attr('type').toLowerCase() !== 'file') {
             var name = $(v).attr('name');
             if (name === 'action') {
               formData.append(name, 'Delete');
@@ -1068,6 +1069,10 @@
         self.attr('id', self.generateID());
       }
 
+      if (self.find("[name=record]").val().length > 0) {
+        $.fn.EmailsComposeView.checkForDraftAttachments(self.find("[name=record]").val());
+      }
+
       if (typeof opts.tinyMceOptions.setup === "undefined") {
         opts.tinyMceOptions.setup = self.tinyMceSetup;
       }
@@ -1149,23 +1154,7 @@
           }
 
           if (typeof json.errors !== "undefined") {
-            var message = '';
-            $.each(json.errors, function (i, v) {
-              message = message + v.title;
-            });
-            var mb = messageBox();
-            mb.setBody('message');
-            mb.show();
-
-            mb.on('ok', function () {
-              "use strict";
-              mb.remove();
-            });
-
-            mb.on('cancel', function () {
-              "use strict";
-              mb.remove();
-            });
+            $.fn.EmailsComposeView.showAjaxErrorMessage(json);
           }
         }).error(function (response) {
           console.error(response);
@@ -1266,6 +1255,105 @@
     return $(self);
   };
 
+  $.fn.EmailsComposeView.checkForDraftAttachments = function (id) {
+    // Check if this is a draft email with attachments
+    $.ajax({
+      "url": 'index.php?module=Emails&action=GetDraftAttachmentData&id=' + id
+    }).done(function (jsonResponse) {
+      var response = JSON.parse(jsonResponse);
+      if (typeof response.data !== "undefined") {
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
+      }
+      if (typeof response.errors !== "undefined") {
+        $.fn.EmailsComposeView.showAjaxErrorMessage(response);
+      }
+    }).error(function (response) {
+      console.error(response);
+    });
+  };
+
+  $.fn.EmailsComposeView.showAjaxErrorMessage = function (response) {
+    var message = '';
+    $.each(response.errors, function (i, v) {
+      message = message + v.title;
+    });
+    var mb = messageBox();
+    mb.setBody(message);
+    mb.show();
+
+    mb.on('ok', function () {
+      "use strict";
+      mb.remove();
+    });
+
+    mb.on('cancel', function () {
+      "use strict";
+      mb.remove();
+    });
+  };
+
+  $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
+    var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
+    $('.file-attachments').empty();
+    var inputName = 'template_attachment[]';
+    var removeName = 'temp_remove_attachment[]';
+    if (isDraft) {
+      var inputName = 'dummy_attachment[]';
+      var removeName = 'remove_attachment[]';
+    }
+    if (typeof response.data.attachments !== 'undefined' && response.data.attachments.length > 0) {
+      var removeDraftAttachmentInput = $('<input>')
+        .attr('type', 'hidden')
+        .attr('name', 'removeAttachment')
+        .appendTo($('.file-attachments'));
+      if (!isDraft) {
+        $('<input>')
+          .attr('type', 'hidden')
+          .attr('name', 'ignoreParentAttachments')
+          .attr('value', '1')
+          .appendTo($('.file-attachments'));
+      }
+      for (i = 0; i < response.data.attachments.length; i++) {
+        var id = response.data.attachments[i]['id'];
+        var fileGroupContainer = $('<div></div>')
+          .addClass('attachment-group-container')
+          .appendTo($('.file-attachments'));
+
+        var fileInput = $('<select></select>')
+          .attr('style', 'display:none')
+          .attr('id', id)
+          .attr('is_file', true)
+          .attr('name', inputName)
+          .attr('multiple', 'multiple');
+
+        var fileOptions = $('<option></option>')
+          .attr('selected', 'selected')
+          .attr('value', id)
+          .appendTo(fileInput);
+
+        fileInput.appendTo(fileGroupContainer);
+        var fileLabel = $('<label></label>')
+          .attr('for', 'file_' + id)
+          .html('<span class="glyphicon glyphicon-paperclip"></span>')
+          .appendTo(fileGroupContainer);
+
+        var fileContainer = $('<div class="attachment-file-container"></div>');
+        fileContainer.appendTo(fileLabel);
+        fileContainer.append('<span class="attachment-name"> ' + response.data.attachments[i]['name'] + ' </span>');
+
+        var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+        removeAttachment.click(function () {
+          $(this).parent().hide();
+          $(this).parent().find('[name="' + inputName + '"]').attr('name', removeName);
+          if (isDraft) {
+            removeDraftAttachmentInput.val(removeDraftAttachmentInput.val() + '::' + id);
+          }
+        });
+        fileGroupContainer.append(removeAttachment);
+      }
+    }
+  };
+
   $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
     var confirmed = function (args) {
@@ -1274,52 +1362,12 @@
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function (jsonResponse) {
         var response = JSON.parse(jsonResponse);
-        loadTemplateAttachments(response);
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
         $(form).find('[name="name"]').val(response.data.subject);
         tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
       });
       set_return(args);
     };
-
-    var loadTemplateAttachments = function (response) {
-      $('.file-attachments').empty();
-      if (typeof response.data.attachments !== 'undefined' && response.data.attachments.length > 0) {
-        for (i = 0; i < response.data.attachments.length; i++) {
-          var id = response.data.attachments[i]['id'];
-          var fileGroupContainer = $('<div></div>')
-            .addClass('attachment-group-container')
-            .appendTo($('.file-attachments'));
-
-          var fileInput = $('<select></select>')
-            .attr('style', 'display:none')
-            .attr('id', id)
-            .attr('is_file', true)
-            .attr('name', 'template_attachment[]')
-            .attr('multiple', 'multiple');
-
-          var fileOptions = $('<option></option>')
-            .attr('selected', 'selected')
-            .attr('value', id)
-            .appendTo(fileInput);
-
-          fileInput.appendTo(fileGroupContainer);
-          var fileLabel = $('<label></label>')
-            .attr('for', 'file_' + id)
-            .html('<span class="glyphicon glyphicon-paperclip"></span>')
-            .appendTo(fileGroupContainer);
-
-          var fileContainer = $('<div class="attachment-file-container"></div>');
-          fileContainer.appendTo(fileLabel);
-          fileContainer.append('<span class="attachment-name"> ' + response.data.attachments[i]['name'] + ' </span>');
-
-          var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
-          removeAttachment.click(function () {
-            $(this).parent().remove();
-          });
-          fileGroupContainer.append(removeAttachment);
-        }
-      }
-    }
 
     var mb = messageBox();
     mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
