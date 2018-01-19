@@ -876,7 +876,7 @@ class AOR_Report extends Basic
         $showTotal = false;
         $html = '';
         $html .= "<thead class='fc-head'>";
-        $html .= "<tr class='mbfooter'>";
+        $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
