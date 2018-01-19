@@ -95,7 +95,7 @@ a:hover {
 // Fix ajax loader in the edit view
 // Since the z-index is inline the only way to override it is to use the !important
 .mask {
-  z-index: 3 !important;
+  z-index: 2 !important;
 }
 
 #ajaxloading_c {

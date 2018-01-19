@@ -4003,7 +4003,7 @@ class SugarBean
 
         global $module, $action;
         //Just to get optimistic locking working for this release
-        if ($this->optimistic_lock && $module == $this->module_dir && $action == 'EditView') {
+        if ($this->optimistic_lock && $module == $this->module_dir && $action == 'EditView' && isset($_REQUEST["record"]) && $id == $_REQUEST['record']) {
             $_SESSION['o_lock_id'] = $id;
             $_SESSION['o_lock_dm'] = $this->date_modified;
             $_SESSION['o_lock_on'] = $this->object_name;
