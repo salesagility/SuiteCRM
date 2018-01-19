@@ -88,9 +88,8 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             require_once 'modules/Emails/EmailUI.php';
 
             $emailUI = new EmailUI();
-            $bean = $defines['focus'];
-            $button = $emailUI->populateComposeViewFields($bean, $emailField = 'email1', $checkAllEmail = true,
-                    $composeData = null) . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+            $button = $emailUI->populateComposeViewFields($defines['focus'])
+                . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'] . '</a>';
         }
 
         return $button;
