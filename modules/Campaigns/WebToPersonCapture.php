@@ -214,7 +214,10 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
                         $sea->optIn();
+                        $savedRequest = $_REQUEST;
+                        $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);
+                        $_REQUEST = $savedRequest;
                     } else {
                         $msg = 'Error retrieving an email address.';
                         LoggerManager::getLogger()->fatal($msg);
