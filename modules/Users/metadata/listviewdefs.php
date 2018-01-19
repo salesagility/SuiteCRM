@@ -91,4 +91,3 @@ $listViewDefs['Users'] = array(
         'link' => true,
         'default' => false),
 );
-?>

@@ -781,5 +781,3 @@ function portal_set_newsletters($session, $subscribe_ids, $unsubscribe_ids){
 
     return $error->get_soap_array();
 }
-
-?>

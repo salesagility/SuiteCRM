@@ -93,4 +93,3 @@ class AM_ProjectTemplates_sugar extends Basic {
 }
 
 }
-?>

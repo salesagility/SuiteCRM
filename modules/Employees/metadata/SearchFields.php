@@ -71,4 +71,4 @@ $searchFields['Employees'] =
 		      
 		'employee_status'=> array('query_type'=>'default', 'options' => 'employee_status_dom', 'template_var' => 'STATUS_OPTIONS', 'options_add_blank' => true)
 	);
-?>
+

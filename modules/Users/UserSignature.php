@@ -125,4 +125,3 @@ class UserSignature extends SugarBean {
 	function fill_in_additional_detail_fields() {
 	}
 } // end class definition
-?>

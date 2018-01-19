@@ -75,4 +75,3 @@
     $action_view_map['inlinefieldsave'] = 'inlinefieldsave';
     $action_view_map['pluginlist'] = 'plugins';
     $action_view_map['downloadplugin'] = 'downloadplugin';
-?>

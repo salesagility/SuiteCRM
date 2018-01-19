@@ -63,4 +63,3 @@ header("Content-Length: " . filesize($local_location));
 	        echo file_get_contents($download_location);
 	   
 		@ob_flush();
-?>

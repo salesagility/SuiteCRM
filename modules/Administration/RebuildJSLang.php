@@ -52,4 +52,3 @@ if(is_admin($current_user)){
 else{
 	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
-?>

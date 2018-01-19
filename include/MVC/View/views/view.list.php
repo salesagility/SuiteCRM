@@ -356,5 +356,3 @@ class ViewList extends SugarView
         return new SearchForm($seed, $module, $action);
     }
 }
-
-?>

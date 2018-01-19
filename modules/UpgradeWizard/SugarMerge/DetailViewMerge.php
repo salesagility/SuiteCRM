@@ -97,4 +97,3 @@ class DetailViewMerge extends EditViewMerge{
 	}
 		
 }
-?>

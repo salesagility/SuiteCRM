@@ -66,5 +66,4 @@ $dictionary['contacts_bugs'] = array('table' => 'contacts_bugs'
             'join_key_lhs' => 'contact_id', 'join_key_rhs' => 'bug_id'))
 
 
-)
-?>
+);

@@ -64,4 +64,3 @@ function get_html_edit(){
 	} 
 
 }
-?>

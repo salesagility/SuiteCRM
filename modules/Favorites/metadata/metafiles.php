@@ -52,4 +52,4 @@ $module_name = 'Favorites';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
-?>
+

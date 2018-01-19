@@ -106,5 +106,3 @@ else {
 	$_REQUEST['mass']=$merge_ids;
 }
 require('modules/MergeRecords/Step3.php');
- 
-?>

@@ -170,6 +170,3 @@ class SugarFieldHandler
         return $string;
     }
 }
-
-
-?>

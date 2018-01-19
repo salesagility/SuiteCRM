@@ -71,4 +71,3 @@ $file_access_control_map = array(
 		),
 	)
 );
-?>

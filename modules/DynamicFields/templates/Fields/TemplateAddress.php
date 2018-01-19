@@ -67,5 +67,3 @@ class TemplateAddress extends TemplateField
         
     }
 }
-
-?>

@@ -709,5 +709,3 @@ class SearchForm {
         return $str;
     }
 }
-
-?>

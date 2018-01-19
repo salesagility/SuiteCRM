@@ -144,5 +144,3 @@ $ListView->xTemplateAssign("EDIT_INLINE_PNG",  SugarThemeRegistry::current()->ge
 $ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME']. $header_text );
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "OPPORTUNITY");
-
-?>

@@ -98,5 +98,3 @@ function installSSHooks()
     }
 
 }
-
-?>

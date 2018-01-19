@@ -48,5 +48,3 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'show_raw') {
 	$popup = new Popup_Picker();
 	echo $popup->process_page();
 }
-
-?>

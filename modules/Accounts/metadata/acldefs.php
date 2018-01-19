@@ -61,4 +61,3 @@ $acldefs['Accounts'] = array (
     'EditView' => 'EditView',
   ),
 );
-?>

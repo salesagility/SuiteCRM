@@ -64,4 +64,3 @@ if(is_admin($current_user)){
 	
 	$layout_defs['SecurityGroupRoles']['subpanel_setup']['aclroles']['top_buttons'] = array();
 }
-?>

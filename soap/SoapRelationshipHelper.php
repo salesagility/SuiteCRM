@@ -509,5 +509,3 @@ function get_linked_records($get_module, $from_module, $get_id) {
 
 	return $id_arr;
 }
-
-?>

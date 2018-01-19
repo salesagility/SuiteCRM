@@ -81,8 +81,3 @@ $popupMeta = array('moduleMain' => 'ProspectList',
 							),
 
 						);
-
-
-?>
- 
- 

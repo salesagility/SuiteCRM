@@ -118,4 +118,3 @@ $smarty->assign('tabGroupSelected_lang', $tabGroupSelected_lang);
 
 $smarty->assign('available_languages', get_languages());
 $smarty->display("modules/Studio/TabGroups/EditViewTabs.tpl");
-?>

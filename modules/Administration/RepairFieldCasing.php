@@ -143,4 +143,3 @@ if(is_admin($current_user)) {
     echo '<br>'.$mod_strings['LBL_DIAGNOSTIC_DONE'];
 
 }
-?>

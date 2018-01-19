@@ -132,5 +132,3 @@ if(file_exists($uploadHta) && filesize($uploadHta)) {
 /* Commenting out as this shows on upgrade screen
  * echo "\n" . $mod_strings['LBL_HT_DONE']. "<br />\n";
 */
-
-?>

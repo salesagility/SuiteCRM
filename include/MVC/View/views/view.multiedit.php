@@ -101,4 +101,3 @@ require_once('include/EditView/EditView2.php');
 		}
  	}
  }
-?>

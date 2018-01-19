@@ -64,4 +64,3 @@ class ViewHtml extends SugarView{
  	}
 
 }
-?>

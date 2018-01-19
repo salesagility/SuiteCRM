@@ -94,7 +94,4 @@ if (!defined('sugarEntry') || !sugarEntry)
 			$smarty->assign('MOD', $mod_strings);
 			$smarty->assign('checkbox_output', $checkbox_output);
 			$smarty->assign('checkbox_values', $checkbox_values);
-			$smarty->display("modules/Administration/templates/QuickRepairAndRebuild.tpl");			
-			
-			
-?>
+			$smarty->display("modules/Administration/templates/QuickRepairAndRebuild.tpl");

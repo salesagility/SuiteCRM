@@ -193,4 +193,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         return $amount;
 
     } //end function format_number
-?>

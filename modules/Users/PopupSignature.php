@@ -97,4 +97,3 @@ $xtpl->parse('main.textarea');
 //Add Custom Fields
 $xtpl->parse('main');
 $xtpl->out('main');
-?>

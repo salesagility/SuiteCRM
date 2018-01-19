@@ -828,5 +828,3 @@ eoq;
         return false;
     }
 } // end class def
-
-?>

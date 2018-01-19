@@ -52,4 +52,3 @@
  	'searchfields'	  =>    'modules/Opportunities/metadata/SearchFields.php',
 
  );
-?>

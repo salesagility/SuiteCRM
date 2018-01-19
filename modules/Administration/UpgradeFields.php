@@ -131,4 +131,3 @@ echo '<br>Done<br>';
 if ($simulate) {
 	echo '<a href="index.php?module=Administration&action=UpgradeFields&run=true">Execute non-simulation mode</a>';
 }
-?>

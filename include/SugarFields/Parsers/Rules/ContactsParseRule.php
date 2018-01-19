@@ -97,4 +97,3 @@ function parsePanels(& $panels, $view) {
 }
 
 }
-?>

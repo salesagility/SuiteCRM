@@ -113,6 +113,3 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
 		),
 	),
 );
-
-
-?>

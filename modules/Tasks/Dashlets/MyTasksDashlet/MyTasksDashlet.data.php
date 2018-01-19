@@ -103,6 +103,3 @@ $dashletData['MyTasksDashlet']['columns'] = array('set_complete' => array('width
         																    'ACLTag' => 'CONTACT',// like id, link etc.
         																    'related_fields' => array('contact_id')),
                                                                          );
-
-
-?>

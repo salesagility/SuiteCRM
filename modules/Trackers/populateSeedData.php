@@ -120,5 +120,3 @@ function getSessionId() {
 
 $test = new populateSeedData();
 $test->start();
-
-?>

@@ -82,5 +82,3 @@ public function getList($args, $module) {
 }
 
 }
-
-?>

@@ -72,4 +72,3 @@ class FP_events extends FP_events_sugar {
 
 	}
 }
-?>

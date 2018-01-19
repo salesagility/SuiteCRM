@@ -212,5 +212,3 @@ if (@getimagesize($logo) === FALSE) {
 if (@getimagesize($small_logo) === FALSE) {
     $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
 }
-
-?>

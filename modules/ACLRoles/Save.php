@@ -75,4 +75,3 @@ if(!empty($_REQUEST['name'])){
 }
 
 header("Location: index.php?module=ACLRoles&action=DetailView&record=". $role->id);
-?>

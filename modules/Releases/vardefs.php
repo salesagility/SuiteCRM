@@ -128,4 +128,3 @@ $dictionary['Release'] = array('table' => 'releases'
        array('name' =>'idx_releases', 'type'=>'index', 'fields'=>array('name','deleted')),
                                                       )
                             );
-?>

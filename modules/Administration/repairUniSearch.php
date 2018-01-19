@@ -53,4 +53,3 @@ if(file_exists($src_file)) {
 }
 
 echo "\n--- " . $mod_strings['LBL_DONE'] . "---<br />\n";
-?>

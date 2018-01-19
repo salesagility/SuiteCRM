@@ -44,5 +44,3 @@ class SugarWidgetFieldEmail extends SugarWidgetFieldVarchar
 
 
 }
-
-?>

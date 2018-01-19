@@ -176,4 +176,3 @@ class InvadersDashlet extends Dashlet {
     }
 }
 
-?>

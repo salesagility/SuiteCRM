@@ -87,4 +87,3 @@ function toggle_domain_name(list_type)  {ldelim}
 
 
 );
-?>

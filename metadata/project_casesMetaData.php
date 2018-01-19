@@ -69,4 +69,3 @@ $dictionary['projects_cases'] = array (
         ),
     ),
 );
-?>

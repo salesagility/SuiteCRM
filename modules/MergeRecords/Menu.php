@@ -49,5 +49,3 @@ global $mod_strings, $app_strings;
 $module_menu = Array(
 //Nothing here yet
 );
-
-?>

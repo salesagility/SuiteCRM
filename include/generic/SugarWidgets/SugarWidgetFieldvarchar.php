@@ -104,5 +104,3 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
  		return $str;
  }
 }
-
-?>

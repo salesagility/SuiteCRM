@@ -370,4 +370,3 @@ VardefManager::createVardef('Tasks', 'Task', array(
     'assignable',
     'security_groups',
 ));
-?>

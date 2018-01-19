@@ -61,4 +61,3 @@ $fields_array['EmailTemplate'] = array ('column_fields' => Array("id"
 	),
     'required_fields' => array("name"=>1),
 );
-?>

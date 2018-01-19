@@ -55,5 +55,3 @@ class ContactsListViewSmarty extends ListViewSmarty {
 	}
 
 }
-
-?>

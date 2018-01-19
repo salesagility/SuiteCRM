@@ -85,4 +85,4 @@ class ProjectViewEdit extends ViewEdit {
 
  	}
 }
-?>
+

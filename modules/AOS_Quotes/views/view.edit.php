@@ -63,4 +63,3 @@ class AOS_QuotesViewEdit extends ViewEdit {
 		}
 	}
 }
-?>

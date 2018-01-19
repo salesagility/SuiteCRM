@@ -60,5 +60,4 @@ $dictionary['meetings_leads'] = array ( 'table' => 'meetings_leads'
 							  'relationship_type'=>'many-to-many',
 							  'join_table'=> 'meetings_leads', 'join_key_lhs'=>'meeting_id', 'join_key_rhs'=>'lead_id'))
 
-)
-?>
+);

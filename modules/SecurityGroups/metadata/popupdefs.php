@@ -14,6 +14,3 @@ $popupMeta = array('moduleMain' => 'SecurityGroup',
 							'search'   => 'modules/' . $module_name . '/metadata/searchdefs.php',
 							
 						);
-?>
- 
- 

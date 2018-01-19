@@ -168,5 +168,3 @@ if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 	$resp = json_encode($resp);
 	echo $resp;
 }
-
-?>

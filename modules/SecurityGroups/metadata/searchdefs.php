@@ -17,4 +17,3 @@ $module_name = 'SecurityGroups';
 						),
 					),
  			   );
-?>

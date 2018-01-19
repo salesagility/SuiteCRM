@@ -67,4 +67,3 @@ $dictionary['SecurityGroup'] = array(
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('SecurityGroups','SecurityGroup', array('basic','assignable'));
-?>

@@ -100,7 +100,3 @@ $(document).ready(function(){
 });
 </script>
 EOF;
-
-
-?>
-

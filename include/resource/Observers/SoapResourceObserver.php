@@ -96,4 +96,3 @@ sugar_cleanup(true);
 }
 
 }
-?>

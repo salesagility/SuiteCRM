@@ -92,5 +92,3 @@ class Group extends User {
 	}
 
 } // end class def
-
-?>

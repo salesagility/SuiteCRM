@@ -230,4 +230,3 @@ else {
 
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 SugarApplication::headerRedirect($header_URL);
-?>

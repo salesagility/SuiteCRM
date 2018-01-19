@@ -74,5 +74,3 @@ class MyLeadsDashlet extends DashletGeneric {
     }
 
 }
-
-?>

@@ -81,4 +81,3 @@ class TemplateSectionLine_sugar extends Basic {
 	}
 		
 }
-?>

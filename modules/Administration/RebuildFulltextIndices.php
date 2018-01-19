@@ -79,4 +79,3 @@ foreach ($beanFiles as $beanname=>$beanpath) {
 
 	}
 }
-?>

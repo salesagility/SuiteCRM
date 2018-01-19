@@ -924,4 +924,3 @@ class ModuleBuilderController extends SugarController
     }
 
 }
-?>

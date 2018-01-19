@@ -84,4 +84,3 @@ class EmployeesController extends SugarController{
 	}
 
 }
-?>

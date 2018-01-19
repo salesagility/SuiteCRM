@@ -81,4 +81,3 @@ class QuickCreate extends EditView {
         $this->ss->assign('CALENDAR_FDOW', $current_user->get_first_day_of_week());
     }
 }
-?>

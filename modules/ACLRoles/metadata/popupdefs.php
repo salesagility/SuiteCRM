@@ -48,6 +48,3 @@ $popupMeta = array('moduleMain' => 'ACLRole',
 	'searchInputs' => array('name'),
 	'searchdefs'   => array('name' => array('name' => 'name', 'label' => 'LBL_NAME',),)		
 );
-?>
- 
- 

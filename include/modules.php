@@ -556,4 +556,3 @@ if (file_exists('include/modules_override.php')) {
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
     include('custom/application/Ext/Include/modules.ext.php');
 }
-?>

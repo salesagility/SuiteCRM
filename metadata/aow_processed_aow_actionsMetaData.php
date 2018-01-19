@@ -56,5 +56,4 @@ $dictionary['aow_processed_aow_actions'] = array ( 'table' => 'aow_processed_aow
         'join_table'=> 'aow_processed_aow_actions', 'join_key_lhs'=>'aow_processed_id', 'join_key_rhs'=>'aow_action_id'))
 
 
-)
-?>
+);

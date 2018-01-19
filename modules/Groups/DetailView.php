@@ -77,4 +77,3 @@ $xtpl->assign('USER_NAME', $focus->user_name);
 
 $xtpl->parse('main');
 $xtpl->out('main');
-?>

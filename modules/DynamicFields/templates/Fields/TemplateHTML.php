@@ -118,6 +118,3 @@ class TemplateHTML extends TemplateField{
     
     
 }
-
-
-?>

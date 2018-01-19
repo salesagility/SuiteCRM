@@ -804,4 +804,3 @@ if(!empty($_REQUEST['func'])) {
     echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
 }
       $ss->display('modules/Campaigns/WizardMarketing.html');
-?>

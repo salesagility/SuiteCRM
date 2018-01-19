@@ -68,5 +68,3 @@ class SugarWidgetSubPanelActivitiesStatusField extends SugarWidgetField
 		return $value;
 	}
 }
-
-?>

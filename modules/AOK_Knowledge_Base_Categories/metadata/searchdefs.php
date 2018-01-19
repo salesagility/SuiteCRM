@@ -61,4 +61,3 @@ $module_name = 'AOK_Knowledge_Base_Categories';
 						),
 					),
  			   );
-?>

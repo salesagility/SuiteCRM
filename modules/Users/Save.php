@@ -521,4 +521,3 @@ $redirect .= isset($_REQUEST['type']) ? "&type={$_REQUEST['type']}" : ''; // cn:
 $redirect .= isset($_REQUEST['return_id']) ? "&return_id={$_REQUEST['return_id']}" : '';
 $redirect .= ($new_pwd!='') ? "&pwd_set=".$new_pwd : '';
 header("Location: {$redirect}");
-?>

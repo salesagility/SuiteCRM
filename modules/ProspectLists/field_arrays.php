@@ -57,4 +57,3 @@ $fields_array['ProspectList'] = array ('column_fields' => array(
 	),
     'required_fields' =>  array('name'=>1,'list_type'=>2),
 );
-?>

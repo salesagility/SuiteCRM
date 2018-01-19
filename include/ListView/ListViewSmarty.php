@@ -304,5 +304,3 @@ class ListViewSmarty extends ListViewDisplay
         return $str;
     }
 }
-
-?>

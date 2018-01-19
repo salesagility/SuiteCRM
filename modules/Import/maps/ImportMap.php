@@ -414,6 +414,3 @@ class ImportMap extends SugarBean
     }
 
 }
-
-
-?>

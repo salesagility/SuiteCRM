@@ -71,5 +71,3 @@ if(empty($badAccts)) {
 		echo "<a href='index.php?module=InboundEmail&action=EditView&record={$id}' target='_blank'>{$acctName}</a><br />";
 	}
 }
-
-?>

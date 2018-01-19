@@ -266,5 +266,3 @@ class ListViewMerge extends EditViewMerge{
 		return $new; 
 	}	
 }
-
-?>

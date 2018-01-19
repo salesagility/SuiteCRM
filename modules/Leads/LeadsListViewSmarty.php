@@ -55,5 +55,3 @@ class LeadsListViewSmarty extends ListViewSmarty {
 	}
 
 }
-
-?>

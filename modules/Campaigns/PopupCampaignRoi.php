@@ -199,5 +199,3 @@ $chart= new campaign_charts();
 
 $xtpl->parse("main");
 $xtpl->out("main");
-
-?>

@@ -79,4 +79,3 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
 			. " onclick='open_popup(\"$module_name\",600,400,\"$initial_filter\",false,false,$json_encoded_php_array);' />\n";
 	}
 }
-?>

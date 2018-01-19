@@ -108,6 +108,3 @@ $sugarpdf_default = array(
                                                 "iso-8859-7 (Greek)","iso-8859-9 (Turkish)","iso-8859-11 (Thai)","iso-8859-15 (Western Europe)",
                                                 "iso-8859-16 (Central Europe)","koi8-r (Russian)","koi8-u (Ukrainian)")),
 );
-
-
-?>

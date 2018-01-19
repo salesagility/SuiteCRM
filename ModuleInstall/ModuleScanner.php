@@ -880,5 +880,3 @@ function MSLoadManifest($manifest_file)
 	include( $manifest_file );
 	return array($manifest, $installdefs);
 }
-
-?>

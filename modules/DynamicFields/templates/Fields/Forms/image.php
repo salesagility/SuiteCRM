@@ -62,5 +62,3 @@ function get_body(&$ss, $vardef){
     $ss->assign('hideDuplicatable', 'false');
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/image.tpl');
  }
-
-?>

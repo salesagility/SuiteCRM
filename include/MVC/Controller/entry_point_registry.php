@@ -90,5 +90,3 @@ $entry_point_registry = array(
 	'surveySubmit' => array('file' => 'modules/Surveys/Entry/SurveySubmit.php', 'auth' => false),
 	'surveyThanks' => array('file' => 'modules/Surveys/Entry/Thanks.php', 'auth' => false),
 );
-
-?>

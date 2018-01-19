@@ -157,4 +157,3 @@ class FieldsMetaData extends SugarBean {
 		return $this->name;
 	}
 }
-?>

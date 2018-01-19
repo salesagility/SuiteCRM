@@ -103,4 +103,3 @@ $ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE'] 
 
 $ListView->processListView($focus_list, "main", "PROJECT");
 
-?>

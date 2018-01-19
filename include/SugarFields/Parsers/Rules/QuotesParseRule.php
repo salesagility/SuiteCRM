@@ -146,4 +146,3 @@ function preParse($panels, $view) {
 }
 
 }
-?>

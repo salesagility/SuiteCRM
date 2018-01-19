@@ -528,4 +528,3 @@ function get_related_name($field_def,$id_value) {
     }
     return false;
 }
-?>

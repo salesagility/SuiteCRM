@@ -59,4 +59,3 @@ class CampaignsController extends SugarController{
 
 
 }
-?>

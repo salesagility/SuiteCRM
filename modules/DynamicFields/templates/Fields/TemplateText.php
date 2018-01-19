@@ -83,6 +83,3 @@ class TemplateText extends TemplateField{
 
 
 }
-
-
-?>

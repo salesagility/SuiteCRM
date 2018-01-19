@@ -74,4 +74,3 @@ class EmailTemplatesViewClassic extends ViewClassic {
 
 
 }
-?>

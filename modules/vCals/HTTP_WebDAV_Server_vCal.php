@@ -458,6 +458,3 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         }
 
     }
-
-
-?>

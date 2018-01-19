@@ -30,4 +30,3 @@ $module_name = 'AOP_Case_Updates';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
-?>

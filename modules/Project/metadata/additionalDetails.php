@@ -60,7 +60,3 @@ function additionalDetailsProject($fields) {
 				 'editLink' => "index.php?action=EditView&module=Project&return_module=Project&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Project&return_module=Project&record={$fields['ID']}");
 }
- 
- ?>
- 
- 

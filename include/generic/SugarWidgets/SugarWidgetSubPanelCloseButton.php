@@ -74,5 +74,3 @@ class SugarWidgetSubPanelCloseButton extends SugarWidgetField
 
 	}
 }
-
-?>

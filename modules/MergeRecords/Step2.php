@@ -215,4 +215,3 @@ $form_top = <<<EOQ
         </script>
 EOQ;
 echo $form_top;
-?>

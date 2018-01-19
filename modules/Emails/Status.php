@@ -111,5 +111,3 @@ require_once('modules/DynamicFields/templates/Files/DetailView.php');
 
 $xtpl->parse("main");
 $xtpl->out("main");
-
-?>

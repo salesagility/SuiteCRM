@@ -49,4 +49,3 @@ require_once 'php-saml/lib/Saml2/Error.php';
 require_once 'php-saml/lib/Saml2/Settings.php';
 require_once 'php-saml/lib/Saml2/Response.php';
 require_once 'php-saml/compatibility.php';
-?>

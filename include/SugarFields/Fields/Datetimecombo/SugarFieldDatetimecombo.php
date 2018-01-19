@@ -210,4 +210,3 @@ class SugarFieldDatetimecombo extends SugarFieldBase {
         return $date->asDb();
     }
 }
-?>

@@ -124,4 +124,3 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
 		return $button;
 	}
 }
-?>

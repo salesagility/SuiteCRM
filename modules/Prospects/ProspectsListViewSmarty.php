@@ -42,5 +42,3 @@ class ProspectsListViewSmarty extends ListViewSmarty {
     }
 
 }
-
-?>

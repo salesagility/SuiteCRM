@@ -96,4 +96,3 @@ if(!empty($_REQUEST['identifier'])) {
 	
 }
 sugar_cleanup();
-?>

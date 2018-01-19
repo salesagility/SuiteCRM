@@ -66,4 +66,3 @@ abstract class ext_rest extends source{
  		$this->_url = $url;
  	}
 }
-?>

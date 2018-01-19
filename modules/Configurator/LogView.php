@@ -169,4 +169,3 @@ if (!empty ($_REQUEST['display'])) {
 
 	}
 }
-?>

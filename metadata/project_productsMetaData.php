@@ -69,4 +69,3 @@ $dictionary['projects_products'] = array (
         ),
     ),
 );
-?>

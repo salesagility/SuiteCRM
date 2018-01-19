@@ -252,4 +252,3 @@ $layout_defs['Activities'] = array( // the key to the layout_defs must be the na
 		),
 	),
 );
-?>

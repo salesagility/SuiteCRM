@@ -143,4 +143,3 @@ $smarty->assign('editImage',$editImage);
 $deleteImage = SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_DELETE']);
 $smarty->assign('deleteImage',$deleteImage);
 $smarty->display("modules/Studio/DropDowns/EditView.tpl");
-?>

@@ -429,9 +429,3 @@ FROM prospect_lists_prospects plp
 	}
 
 }
-
-
-
-
-
-?>

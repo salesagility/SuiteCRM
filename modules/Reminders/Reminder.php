@@ -713,5 +713,3 @@ class Reminder extends Basic
     }
 
 }
-
-?>

@@ -108,4 +108,3 @@ class AOS_Products extends AOS_Products_sugar {
 	}
 
 }
-?>

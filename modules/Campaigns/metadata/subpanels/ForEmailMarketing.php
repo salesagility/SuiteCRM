@@ -51,4 +51,3 @@ $subpanel_layout = array(
 
 	'list_fields' => array(),
 );
-?>

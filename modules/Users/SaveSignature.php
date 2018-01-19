@@ -73,4 +73,3 @@ window.close();
 </script>';
 
 echo $js;
-?>

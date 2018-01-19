@@ -105,5 +105,3 @@ $ListView->setHeaderTitle($project_module_strings['LBL_PROJECT_TASK_SUBPANEL_TIT
 $ListView->setHeaderText($button);
 $ListView->setQuery('', '', 'order_number', 'project_task');
 $ListView->processListView($focus_list, 'main', 'project_task');
-
-?>

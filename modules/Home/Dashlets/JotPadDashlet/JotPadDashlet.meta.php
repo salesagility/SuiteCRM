@@ -47,4 +47,4 @@ $dashletMeta['JotPadDashlet'] = array('title'       => 'LBL_TITLE', // array ind
                                       'description' => 'LBL_DESCRIPTION', // array index in language pack 
                                       'icon'        => 'icon_JotPad_32.gif', 
                                       'category'    => 'Tools');
-?>
+

@@ -124,4 +124,3 @@ $chartDefs = array(
 if(file_exists('custom/Charts/chartDefs.ext.php')){
 	include_once('custom/Charts/chartDefs.ext.php');	
 }
-?>

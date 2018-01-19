@@ -430,5 +430,3 @@ class SavedSearch extends SugarBean
 
     }
 }
-
-?>

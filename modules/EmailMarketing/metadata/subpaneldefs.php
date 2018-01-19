@@ -67,4 +67,3 @@ $layout_defs['EmailMarketing'] = array(
 		),
 	)
 );
-?>

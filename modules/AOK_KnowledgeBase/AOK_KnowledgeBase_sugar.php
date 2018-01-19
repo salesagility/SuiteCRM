@@ -100,4 +100,3 @@ class AOK_KnowledgeBase_sugar extends Basic {
 }
 
 }
-?>

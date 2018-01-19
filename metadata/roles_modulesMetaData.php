@@ -90,6 +90,4 @@ $dictionary['roles_modules'] = array (
 			'fields' => array ('module_id')
 		),
 	),
-)
-                                  
-?>
+);

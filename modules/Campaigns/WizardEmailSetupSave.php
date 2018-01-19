@@ -130,5 +130,3 @@ function clean_up_post($prefix){
          }               
     }
 }
-
-?>

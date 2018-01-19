@@ -423,5 +423,3 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 //$ss->assign("JAVASCRIPT", get_validate_record_js());
 
 $ss->display('modules/Campaigns/WizardEmailSetup.html');
-
-?>

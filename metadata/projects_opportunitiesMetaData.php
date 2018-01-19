@@ -70,4 +70,3 @@ $dictionary['projects_opportunities'] = array (
         ),
     ),
 );
-?>

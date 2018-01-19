@@ -69,4 +69,3 @@ class AOK_KnowledgeBaseViewDetail extends ViewDetail {
         $this->bean->description = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->description));
     }
 }
-?>

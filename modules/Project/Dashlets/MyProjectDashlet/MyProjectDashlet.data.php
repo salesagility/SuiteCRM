@@ -62,5 +62,3 @@ $dashletData['MyProjectDashlet']['columns'] = array('name' => array('width'   =>
 								 'status' => array('width' => '5',
                                                                                     'label' => 'LBL_STATUS'),
 );
-
-?>

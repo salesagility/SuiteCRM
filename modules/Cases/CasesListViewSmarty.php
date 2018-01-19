@@ -42,5 +42,3 @@ class CasesListViewSmarty extends ListViewSmarty {
     }
 
 }
-
-?>

@@ -73,4 +73,3 @@ class PopupQuickCreate extends SubpanelQuickCreate{
 		return $this->ev->display(false, true);
 	}
 }
-?>

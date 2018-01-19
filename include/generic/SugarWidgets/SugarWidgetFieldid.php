@@ -49,5 +49,3 @@ class SugarWidgetFieldId extends SugarWidgetReportField
 
 
 }
-
-?>

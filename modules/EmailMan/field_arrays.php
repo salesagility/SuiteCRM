@@ -92,4 +92,3 @@ $fields_array['EmailMan'] = array ('column_fields' => Array(
 		, 'prospect_email'
         ),
 );
-?>

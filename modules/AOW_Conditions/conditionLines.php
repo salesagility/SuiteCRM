@@ -103,5 +103,3 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     return $html;
 }
-
-?>

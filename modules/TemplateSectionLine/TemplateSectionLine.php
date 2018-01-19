@@ -48,4 +48,3 @@ class TemplateSectionLine extends TemplateSectionLine_sugar {
 	}
 	
 }
-?>

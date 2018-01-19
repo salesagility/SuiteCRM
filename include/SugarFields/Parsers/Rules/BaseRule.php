@@ -94,5 +94,3 @@ function getMatch($mixed, $regExp) {
 }
 
 }
-
-?>

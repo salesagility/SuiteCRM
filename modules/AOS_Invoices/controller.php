@@ -78,5 +78,3 @@ class AOS_InvoicesController extends SugarController {
     	}
 
 }
-
-?> 

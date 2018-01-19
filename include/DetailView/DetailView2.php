@@ -137,4 +137,3 @@ class DetailView2 extends EditView
     }
 
 }
-?>

@@ -317,4 +317,3 @@ function insert_popup_footer()
 </html>
 EOQ;
 }
-?>

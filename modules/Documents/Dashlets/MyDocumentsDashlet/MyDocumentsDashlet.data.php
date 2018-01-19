@@ -102,4 +102,3 @@ $dashletData['MyDocumentsDashlet']['columns'] =  array('document_name' => array(
                                                                     ),
                                                                   ),
                                                );
-?>
