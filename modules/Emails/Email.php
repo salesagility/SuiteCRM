@@ -432,8 +432,18 @@ class Email extends Basic
      */
     public $to_name;
 
+    protected static $validFieldNames = array(
+        'email_address',
+        'to',
+        'from',
+        'from_name',
+        'cc',
+        'bcc'
+    );
+
     /**
      * sole constructor
+     * @global $current_user
      */
     public function __construct()
     {
@@ -522,6 +532,7 @@ class Email extends Basic
 
     /**
      * @param string $filename
+     * @global $sugar_config
      * @return bool
      */
     public function safeAttachmentName($filename)
@@ -671,6 +682,8 @@ class Email extends Basic
      * @param $toaddress
      * @param string $mail_sendtype
      * @param string $fromname
+     * @global $current_user
+     * @global $app_strings
      * @return array
      */
     public function sendEmailTest(
@@ -767,6 +780,14 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
+     * @global $timedate
+     * @global $beanList
+     * @global $beanFiles
      * @return bool
      */
     public function email2Send($request)
@@ -1313,6 +1334,7 @@ class Email extends Basic
      *
      * @param $module string module name
      * @param $idsArray array of record ids to get the email address for
+     * @global $local
      * @return string (config-specified) delimited list of email addresses
      */
     public function getNamePlusEmailAddressesForCompose($module, $idsArray)
@@ -1391,6 +1413,7 @@ class Email extends Basic
     ////	SAVERS
     /**
      * @param bool $check_notify
+     * @global $current_user
      * @return bool|string
      */
     public function save($check_notify = false)
@@ -1517,6 +1540,7 @@ class Email extends Basic
                 if (!empty($toaddr)) {
                     $toId = $this->emailAddress->getEmailGUID($toaddr);
                     $this->linkEmailToAddress($toId, 'to');
+                    $this->sendOptInEmailToEmailAddressById($toId);
                 }
             }
         }
@@ -1531,6 +1555,7 @@ class Email extends Basic
                 if (!empty($ccAddr)) {
                     $ccId = $this->emailAddress->getEmailGUID($ccAddr);
                     $this->linkEmailToAddress($ccId, 'cc');
+                    $this->sendOptInEmailToEmailAddressById($ccId);
                 }
             }
         }
@@ -1544,6 +1569,7 @@ class Email extends Basic
                 if (!empty($bccAddr)) {
                     $bccId = $this->emailAddress->getEmailGUID($bccAddr);
                     $this->linkEmailToAddress($bccId, 'bcc');
+                    $this->sendOptInEmailToEmailAddressById($bccId);
                 }
             }
         }
@@ -1796,6 +1822,8 @@ class Email extends Basic
 
     /**
      * creates the standard "Reply" info at the top of the forwarded message
+     * @global $mod_string
+     * @global $current_user
      * @return string
      */
     public function getReplyHeader()
@@ -1866,6 +1894,7 @@ class Email extends Basic
 
     /**
      * Ensures that the user is able to send outbound emails
+     * @global $current_user
      */
     public function check_email_settings()
     {
@@ -1902,6 +1931,8 @@ class Email extends Basic
 
     /**
      * outputs JS to set fields in the MassUpdate form in the "My Inbox" view
+     * @global $mod_strings
+     * @return string
      */
     public function js_set_archived()
     {
@@ -1982,6 +2013,8 @@ class Email extends Basic
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function pickOneButton()
@@ -2115,6 +2148,7 @@ class Email extends Basic
 
     /**
      * handles attachments of various kinds when sending email
+     * @global $mod_strings
      */
     public function handleAttachments()
     {
@@ -2315,6 +2349,7 @@ class Email extends Basic
 
     /**
      * Handles file attachments with multiple files
+     * @global $mod_strings
      */
     public function handleMultipleFileAttachments()
     {
@@ -2580,6 +2615,7 @@ class Email extends Basic
      * @param object $mail SugarPHPMailer object
      * @param string $mailer_id
      * @param string $ieId
+     * @global $current_user
      * @return object mail SugarPHPMailer object
      */
     public function setMailer($mail, $mailer_id = '', $ieId = '')
@@ -2621,6 +2657,7 @@ class Email extends Basic
     /**
      * Preps SugarPHPMailer object for HTML or Plain text sends
      * @param SugarPHPMailer $mail
+     * @global $current_user
      * @return Email
      */
     public function handleBody($mail)
@@ -2658,6 +2695,7 @@ class Email extends Basic
 
     /**
      * Retrieve function from handlebody() to unit test easily
+     * @sugar_config
      * @param SugarPHPMailer $mail
      */
     public function handleBodyInHTMLformat($mail)
@@ -2687,6 +2725,10 @@ class Email extends Basic
 
     /**
      * Sends Email
+     * @global $mod_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
      * @return bool True on success
      */
     public function send()
@@ -3006,8 +3048,9 @@ class Email extends Basic
         return $query;
     } // fn
 
-
     /**
+     * @global $timedate
+     * @global $mod_strings
      * fill_in_additional_list_fields
      */
     public function fill_in_additional_list_fields()
@@ -3044,6 +3087,8 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $mod_strings
      * fill_in_additional_detail_fields
      */
     public function fill_in_additional_detail_fields()
@@ -3163,6 +3208,11 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $theme
+     * @global $current_user
+     * @global $timedate
+     * @global $mod_strings
      * @return array
      */
     public function get_list_view_data()
@@ -3254,6 +3304,10 @@ class Email extends Basic
     }
 
     /**
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $currentModule
+     * @global $current_language
      * @return string
      */
     public function quickCreateForm()
@@ -3270,6 +3324,11 @@ class Email extends Basic
     }
 
     /**
+     * @global timedate
+     * @global $current_user
+     * @global $beanList
+     * @global $sugar_config
+     * @gloabl $app_strings
      *  Searches all imported emails and returns the result set as an array.
      * @param string $sort
      * @param string $direction
@@ -3391,6 +3450,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the query used for searching imported emails.
      *
      * @return String Query to be executed.
@@ -3444,6 +3504,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the where clause for searching imported emails.
      * @return array|string
      */
@@ -3538,6 +3599,11 @@ class Email extends Basic
 
 
     /**
+     * @global $app_list_strings
+     * @global $app_strings
+     * @global $mod_strings
+     * @global $theme
+     * @global $current_user
      * @param string $where
      * @return string
      */
@@ -3682,6 +3748,8 @@ eoq;
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function userSelectTable()
@@ -3784,7 +3852,9 @@ eoq;
     }
 
     /**
-     * @param sting $type
+     * @global $theme
+     * @global $mod_strings
+     * @param string $type
      * @return string
      */
     public function checkInbox($type)
@@ -4225,5 +4295,174 @@ eoq;
         $mail->Body = wordwrap($plainText, 996);
         $mail->Body = $this->decodeDuringSend($mail->Body);
         $this->description = $mail->Body;
+    }
+
+    /**
+     *
+     * @global array $sugar_config
+     * @global \LoggerManager $log
+     * @param string $emailField
+     * @return \EmailAddress
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     */
+    public function getEmailAddressConfirmOptIn($emailField)
+    {
+        global $sugar_config;
+
+        if (!$sugar_config['email_enable_confirm_opt_in']) {
+            global $log;
+            $log->warn('Confirm Opt In is not enabled.');
+
+            return false;
+        }
+
+        $emailAddressId = $this->getEmailAddressId($emailField);
+
+        return BeanFactory::getBean('EmailAddresses', $emailAddressId);
+    }
+
+    /**
+     * Send OptIn Email to EmailAddress By Id
+     * return success state or false if it's disabled in config
+     * 
+     * @global array $sugar_config
+     * @global LoggerManager $log
+     * @param string $id
+     * @return bool
+     */
+    private function sendOptInEmailToEmailAddressById($id)
+    {
+        global $sugar_config;
+        global $log;
+
+        $ret = false;
+
+        if (!$id) {
+            $log->fatal('Empty Email Id');
+        } elseif (isset($sugar_config['email_enable_auto_send_opt_in']) && $sugar_config['email_enable_auto_send_opt_in']) {
+            /** @var \EmailAddress $emailAddress */
+            $emailAddresses = BeanFactory::getBean('EmailAddresses');
+            $emailAddress = $emailAddresses->retrieve($id);
+
+            if ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->confirm_opt_in_sent_date)) {
+                $this->sendOptInEmail($emailAddress);
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     *
+     * @global array $app_strings
+     * @param EmailAddress $emailAddress
+     * @return boolean
+     * @throws Exception
+     */
+    public function sendOptInEmail(EmailAddress $emailAddress)
+    {
+        global $app_strings;
+        
+        $ret = false;
+
+        $db = $this->db;
+        $log = LoggerManager::getLogger();
+        $timedate = new TimeDate();
+        $configurator = new Configurator();
+        $sugar_config =  $configurator->config;
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return $ret;
+        }
+
+        require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
+
+        $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
+
+        if (!$confirmOptInTemplateId) {
+            $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
+            return $ret;
+        }
+
+        // Send email template
+
+        if (!$this->parent_name || !$this->parent_type) {
+            $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
+            $log->fatal($msg);
+            return $ret;
+        }
+
+        $emailAddressString = $emailAddress->email_address;
+        if(!$this->isValidEmail($emailAddressString)) {
+            $emailAddressString = $emailAddress->email_address[0]['email_address'];
+            if(!$this->isValidEmail($emailAddressString)) {
+                throw new Exception('Invalid email address: ' . $emailAddressString);
+            }
+        }
+
+        // Send email template
+
+        $params = array(
+            'individual_email' => '1',
+            'email_template' => $confirmOptInTemplateId,
+            'email_to_type' => array(
+                0 => 'to',
+            ),
+            'email_target_type' => array(
+                0 => 'Email Address',
+            ),
+            'email' => array(
+                0 => $emailAddressString,
+            ),
+        );
+
+
+        // Get Related Contact | Lead | Target etc.
+        $query = ' SELECT * FROM email_addresses' .
+            ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
+            ' WHERE email_address_id  = LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
+                ' AND email_addr_bean_rel.primary_address = 1 AND deleted = 0';
+
+        $dbResult = $db->query($query);
+        while ($row = $db->fetchByAssoc($dbResult)) {
+            
+            if ($ret) {
+                throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
+            }
+
+            $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
+
+            $actionSendEmail = new actionSendEmail();
+            $actionSendEmail->run_action($bean, $params);
+
+            $date = new DateTime();
+            $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+            $emailAddress->save();
+            
+            $ret = true;
+        } 
+
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $emailAddressString
+     * @return boolean
+     */
+    private function isValidEmail($emailAddressString) {
+        return filter_var($emailAddressString, FILTER_VALIDATE_EMAIL);
+    }
+
+    /**
+     * @param string $emailField eg from_name
+     */
+    protected function validateSugarEmailAddressField($emailField)
+    {
+        if (!is_string($emailField)) {
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
+        }
     }
 } // end class def

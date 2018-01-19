@@ -104,7 +104,8 @@ class EmailManTest extends PHPUnit_Framework_TestCase
             'IN_QUEUE' => '0',
             'SEND_ATTEMPTS' => '0',
             'DELETED' => '0',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
+            'RELATED_CONFIRM_OPT_IN' => '0',
+            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
         );
 
         $actual = $emailMan->get_list_view_data();
@@ -159,13 +160,13 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         $emailMan = new EmailMan();
 
         //test without setting any attributes
-        $result = $emailMan->sendEmail(new Email(), 1, true);
+        $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(false, $result);
 
         //test with related type attribute set
         $emailMan->related_type = 'Contacts';
         $emailMan->related_id = 1;
-        $result = $emailMan->sendEmail(new Email(), 1, true);
+        $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(true, $result);
     }
 
@@ -186,7 +187,6 @@ class EmailManTest extends PHPUnit_Framework_TestCase
 
         //test without setting any email
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
-
     }
 
     public function testcreate_export_query()

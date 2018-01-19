@@ -122,7 +122,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertSame('0', $this->ea->addresses[1]['invalid_email']);
         self::assertSame('0', $this->ea->addresses[1]['opt_out']);
         self::assertNull($this->ea->addresses[1]['email_address_id']);
-
     }
 
 
@@ -176,7 +175,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(0, $c->email_opt_out);
         self::assertEquals(0, $c->invalid_email);
         self::assertEquals('test6@email.com', $c->email2);
-
     }
 
 
@@ -547,7 +545,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateAddresses()
     {
-
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -775,7 +772,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         } else {
             unset($_REQUEST);
         }
-
     }
 
     /**
@@ -811,58 +807,58 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     public function testUpdateFlags()
     {
 
-        $this->markTestIncomplete('testUpdateFlags');
-//        $db = DBManagerFactory::getInstance();
-//
-//        // test
-//        $i = 1;
-//        $q = /** @lang sql */
-//            "
-//          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
-//          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
-//        ";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
-//        $db->query($q);
-//
-//        $this->ea->addAddress('test@email.com', true);
-//
-//        $q = /** @lang sql */
-//            "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
-//        $db->query($q);
-//
-//        $this->ea->updateFlags();
-//
-//        $q = /** @lang sql */
-//            "SELECT * FROM email_addresses WHERE email_address_caps = 'TEST@EMAIL.COM'";
-//        $r = $db->query($q);
-//        $a = $db->fetchByAssoc($r);
-//
-//        self::assertSame(array(
-//            'id' => $a['id'],
-//            'email_address' => 'test@email.com',
-//            'email_address_caps' => 'TEST@EMAIL.COM',
-//            'invalid_email' => '0',
-//            'opt_out' => '0',
-//            'date_created' => $a['date_created'],
-//            'date_modified' => $a['date_modified'],
-//            'deleted' => '0',
-//        ), $a);
-//
-//
-//        $q = /** @lang sql */
-//            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
-//        $db->query($q);
+        // test
+        $i = 1;
+        $q = /** @lang sql */
+            "
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
+        ";
+        $db->query($q);
+        $q = /** @lang sql */
+            "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
+        $db->query($q);
+        $q = /** @lang sql */
+            "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
+        $db->query($q);
+
+        $this->ea->addAddress('test@email.com', true);
+
+        $q = /** @lang sql */
+            "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
+        $db->query($q);
+
+        $this->ea->updateFlags();
+
+        $q = /** @lang sql */
+            "SELECT * FROM email_addresses WHERE email_address_caps = 'TEST@EMAIL.COM'";
+        $r = $db->query($q);
+        $a = $db->fetchByAssoc($r);
+
+        self::assertSame(array(
+            'id' => $a['id'],
+            'email_address' => 'test@email.com',
+            'email_address_caps' => 'TEST@EMAIL.COM',
+            'invalid_email' => '0',
+            'opt_out' => '0',
+            'confirm_opt_in' => null,
+            'confirm_opt_in_date' => null,
+            'confirm_opt_in_sent_date' => null,
+            'date_created' => $a['date_created'],
+            'date_modified' => $a['date_modified'],
+            'deleted' => '0',
+        ), $a);
+
+
+        $q = /** @lang sql */
+            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
+        $db->query($q);
+        $q = /** @lang sql */
+            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
+        $db->query($q);
+        $q = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
+        $db->query($q);
     }
 
     /**
@@ -941,7 +937,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             'name' => 'te st@ema il.com',
             'email' => '',
         ), $result);
-
     }
 
     /**
@@ -1154,7 +1149,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $result = $this->ea->getReplyToAddress($c, true);
         self::assertEquals('', $result);
-
     }
 
     /**
@@ -1162,7 +1156,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAddressesByGUID()
     {
-
         $db = DBManagerFactory::getInstance();
 
         // test
@@ -1203,7 +1196,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getAddressesByGUID($id, $module);
         self::assertCount(0, $result);
-
     }
 
     /**
@@ -1480,7 +1472,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetEmailAddressWidgetDuplicatesView()
     {
-
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
@@ -1772,7 +1763,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $module = 'Employees';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Users', $result);
-
     }
 
     /**
@@ -1790,7 +1780,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $this->ea->stash(null, null);
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -1843,5 +1832,4 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log'] = $logger;
     }
-
 }

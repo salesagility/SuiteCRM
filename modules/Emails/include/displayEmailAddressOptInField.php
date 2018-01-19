@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,33 +34,46 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-    'LBL_ID' => 'ID',
-    'LBL_DATE_ENTERED' => 'Date Created',
-    'LBL_DATE_MODIFIED' => 'Date Modified',
-    'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_NAME' => 'Modified By Name',
-    'LBL_CREATED' => 'Created By',
-    'LBL_DESCRIPTION' => 'Description',
-    'LBL_DELETED' => 'Deleted',
-    'LBL_NAME' => 'Name',
-    'LBL_CREATED_USER' => 'Created by User',
-    'LBL_MODIFIED_USER' => 'Modified by User',
-    'LBL_LIST_NAME' => 'Name',
-    'LBL_EDIT_BUTTON' => 'Edit',
-    'LBL_REMOVE' => 'Remove',
 
-    // Emails
-    'LBL_OPT_IN' => 'Opt In',
-    'LBL_OPT_IN_PENDING_EMAIL_NOT_SENT' => 'Pending Confirm opt in, Confirm opt in not sent',
-    'LBL_OPT_IN_PENDING_EMAIL_SENT' => 'Pending Confirm opt in, Confirm opt in sent',
-    'LBL_OPT_IN_CONFIRMED' => 'Opted in',
-);
+/**
+ * @global array $app_strings
+ * @param \Email $focus
+ * @param string $field
+ * @param mixed $value
+ * @param string $view
+ * @return string
+ */
+function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
+{
+    global $app_strings;
+
+    $addressField = 'from_name';
+
+    if (empty($focus->id)) {
+        $log = LoggerManager::getLogger();
+        $log->error('Email ID is Empty');
+        SugarApplication::appendErrorMessage($app_strings['ERR_EMPTY_EMAIL_ID']);
+        return '';
+    }
+    
+    if (
+        filter_var($focus->from_name, FILTER_VALIDATE_EMAIL) &&
+        !filter_var($focus->from_addr, FILTER_VALIDATE_EMAIL)
+    ) {
+        $log->error('Email address is stored in "from_name" field instead of "from_addr"');
+    }
+
+    if (empty($focus->from_name)) {
+        $addressField = 'from_addr';
+    }
+
+    return $focus->getConfirmOptInTickFromSugarEmailAddressField($addressField);
+}

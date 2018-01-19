@@ -2207,7 +2207,7 @@ sugarListView.prototype.send_form_for_emails = function (select, currentModule, 
   return false;
 }
 
-sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info) {
+sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info, ajax, callback) {
   if (document.MassUpdate.select_entire_list.value == 1) {
 
     if (sugarListView.get_checks_count() < 1) {
@@ -2300,8 +2300,17 @@ sugarListView.prototype.send_form = function (select, currentModule, action, no_
   }
 
   document.MassUpdate.parentNode.appendChild(newForm);
-
-  newForm.submit();
+  if (ajax) {
+    var _callback = callback ? callback : null;
+    $.post($('form[name="newForm"]').attr('action'), $('form[name="newForm"]').serialize(), function (resp) {
+      if (_callback) {
+        _callback(resp);
+      }
+    });
+    return false;
+  } else {
+    newForm.submit();
+  }
   // awu Bug 18624: Fixing issue where a canceled Export and unselect of row will persist the uid field, clear the field
   document.MassUpdate.uid.value = '';
 

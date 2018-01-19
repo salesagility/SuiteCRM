@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,91 +37,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-
-/**
- * Stub class, exists only to allow Link class easily use the SugarEmailAddress class
- */
-class EmailAddress extends SugarEmailAddress
-{
-    /**
-     * @var bool $disable_row_level_security
-     */
-    public $disable_row_level_security = true;
-
-    /**
-     * @var int|bool $opt_out
-     */
-    public $opt_out = 0;
-
-    /**
-     * @var string|enum $confirm_opt_in
-     */
-    public $confirm_opt_in = '';
-
-    /**
-     * @var int|bool $invalid_email
-     */
-    public $invalid_email = 0;
-
-    /**
-     * @var TimeDate $confirm_opt_in_date
-     */
-    public $confirm_opt_in_date;
-
-    /**
-     * @var TimeDate $confirm_opt_in_sent_date
-     */
-    public $confirm_opt_in_sent_date;
-
-    /**
-     * EmailAddress constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * @param string $id
-     * @param string $module
-     * @param array $new_addrs
-     * @param string $primary
-     * @param string $replyTo
-     * @param string $invalid
-     * @param string $optOut
-     * @param bool $in_workflow
-     * @return null|string
-     */
-    public function save(
-        $id = '',
-        $module = '',
-        $new_addrs = array(),
-        $primary = '',
-        $replyTo = '',
-        $invalid = '',
-        $optOut = '',
-        $in_workflow = false
-    ) {
-        if (func_num_args() > 1) {
-            return parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
-        } else {
-            return SugarBean::save($id);
-        }
-    }
-
-    /**
-     * Confirm opt in
-     */
-    public function confirmOptIn()
-    {
-        global $timedate;
-        $date = new DateTime();
-        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = 'confirmed-opt-in';
-    }
-}
+*}
+<span class="email-opt-in-container">
+    {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
+        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
+        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
+        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
+    {elseif $OPT_IN_STATUS === 'INVALID'}
+        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
+    {/if}
+</span>
