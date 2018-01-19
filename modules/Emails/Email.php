@@ -4464,5 +4464,9 @@ eoq;
         if (!is_string($emailField)) {
             throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
         }
+        
+        if ($emailField === 'from_name') {
+            LoggerManager::getLogger()->error('from_name is invalid email address field.');
+        }
     }
 } // end class def

@@ -77,7 +77,7 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
-
+    
     /**
      * edit view should show confirm opt in (only if enabled)
      *
@@ -221,7 +221,7 @@ class Basic extends SugarBean
         if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in']  !== '') {
             $template = new Sugar_Smarty();
             $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
-            $tickHtml = $template->fetch('include/SugarObjects/templates/basic/tpls/displayEmailAddressOptInField.tpl');
+            $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');
         }
 
         return $tickHtml;
