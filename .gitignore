@@ -99,3 +99,4 @@ BrowserStackLocal
 browserstack.err
 cache/
 custom/**/
+.sass-cache/
