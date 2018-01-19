@@ -77,7 +77,7 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
-
+    
     /**
      * edit view should show confirm opt in (only if enabled)
      *
