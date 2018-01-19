@@ -84,6 +84,34 @@ class SugarEmailAddress extends SugarBean
      * @var int
      */
     public $index;
+    
+
+    /**
+     * possible values: ['', 'opt-in', 'confirmed-opt-in']
+     * @var string|enum $confirm_opt_in
+     */
+    public $confirm_opt_in = '';
+
+    /**
+     * @var int|bool $opt_out
+     */
+    public $opt_out;
+
+    /**
+     * @var int|bool $invalid_email
+     */
+    public $invalid_email;
+
+    /**
+     * @var TimeDate $confirm_opt_in_date
+     */
+    public $confirm_opt_in_date;
+
+    /**
+     * @var TimeDate $confirm_opt_in_sent_date
+     */
+    public $confirm_opt_in_sent_date;
+
 
     /**
      * Sole constructor
@@ -1662,8 +1690,20 @@ class SugarEmailAddress extends SugarBean
         }
     }
     
+
     /**
-     * Update Opt In state to 'OPT-IN'
+     * Confirm opt in
+     */
+    public function confirmOptIn()
+    {
+        global $timedate;
+        $date = new DateTime();
+        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
+        $this->confirm_opt_in = 'confirmed-opt-in';
+    }
+    
+    /**
+     * Update Opt In state to 'opt-in'
      * 
      * @return string| ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
@@ -1676,8 +1716,8 @@ class SugarEmailAddress extends SugarBean
             throw new RuntimeException($msg);
         }
         
-        if ($this->retrieve() && $this->confirm_opt_in === '') {
-            $this->confirm_opt_in = 'OPT-IN';
+        if ($this->retrieve() && !$this->confirm_opt_in) {
+            $this->confirm_opt_in = 'opt-in';
             $ret = parent::save();
         } else {
             $ret = false;

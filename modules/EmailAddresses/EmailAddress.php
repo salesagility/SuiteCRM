@@ -51,39 +51,17 @@ class EmailAddress extends SugarEmailAddress
     /**
      * @var bool $disable_row_level_security
      */
-    public $disable_row_level_security = true;
-
-    /**
-     * @var int|bool $opt_out
-     */
-    public $opt_out = 0;
-
-    /**
-     * @var string|enum $confirm_opt_in
-     */
-    public $confirm_opt_in = '';
-
-    /**
-     * @var int|bool $invalid_email
-     */
-    public $invalid_email = 0;
-
-    /**
-     * @var TimeDate $confirm_opt_in_date
-     */
-    public $confirm_opt_in_date;
-
-    /**
-     * @var TimeDate $confirm_opt_in_sent_date
-     */
-    public $confirm_opt_in_sent_date;
-
+    public $disable_row_level_security;
+    
     /**
      * EmailAddress constructor.
      */
     public function __construct()
     {
         parent::__construct();
+        $this->disable_row_level_security = true;
+        $this->opt_out = 0;
+        $this->invalid_email = 0;
     }
 
     /**
@@ -113,15 +91,5 @@ class EmailAddress extends SugarEmailAddress
             return SugarBean::save($id);
         }
     }
-
-    /**
-     * Confirm opt in
-     */
-    public function confirmOptIn()
-    {
-        global $timedate;
-        $date = new DateTime();
-        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = 'confirmed-opt-in';
-    }
+    
 }
