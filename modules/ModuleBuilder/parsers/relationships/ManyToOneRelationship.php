@@ -83,7 +83,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * BUILD methods called during the build
      */
 	
-	function buildLabels ()
+	function buildLabels($update = false)
     {
         return $this->one_to_many->buildLabels();
     }
@@ -133,9 +133,9 @@ class ManyToOneRelationship extends AbstractRelationship
     	$this->one_to_many->setname($relationshipName);
     }
     
-    public function setReadonly ()
+    public function setReadonly ($set = true)
     {
-        parent::setReadonly();
+        parent::setReadonly($set);
     	$this->one_to_many->setReadonly();
     }
     

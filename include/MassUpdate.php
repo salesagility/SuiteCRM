@@ -748,16 +748,14 @@ EOQ;
 	}
 
     /**
-     * Add a generic widget to lookup Users
-     *
-     * @param string $displayname Name to display in the popup window
-     * @param string $varname name of the variable
-     * @param string $id_name name of the id in vardef
-     * @param string $mod_type name of the module, either "Contact" or "Releases" currently
-     * @return string
-     */
-    public function addUserName($displayname, $varname, $id_name = '', $mod_type = null)
-    {
+	  * Add a generic widget to lookup Users
+	  ** @param string $displayname Name to display in the popup window
+	  * @param string $varname name of the variable
+	  * @param string $id_name name of the id in vardef
+	  * @param string $mod_type name of the module, either "Contact" or "Releases" currently
+	  *@return string
+	*/
+    public function addUserName($displayname, $varname, $id_name, $mod_type= null){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -815,18 +813,17 @@ addToValidateBinaryDependency('MassUpdate', '{$varname}', 'alpha', false, '{$app
 EOHTML;
 	}
 
-    /**
-     * Add a generic module popup selection popup window HTML code.
-     * Currently supports Contact and Releases
-     *
-     * @param string $displayname Name to display in the popup window
-     * @param string $varname Name of the variable
-     * @param string $id_name Name of the id in vardef
-     * @param string $mod_type Name of the module, either "Contact" or "Releases" currently
-     * @return string
+
+	/**
+	  * Add a generic module popup selection popup window HTML code.
+	  * Currently supports Contact and Releases
+	  ** @param string $displayname Name to display in the popup window
+	  * @param string $varname Name of the variable
+	  * @param string $id_name Name of the id in vardef
+	  * @param string $mod_type Name of the module, either "Contact" or "Releases" currently
+	  *@return string
      */
-    function addGenericModuleID($displayname, $varname, $id_name = '', $mod_type = null)
-    {
+	function addGenericModuleID($displayname, $varname, $id_name, $mod_type= null){
 		global $app_strings;
 
 		if(empty($id_name))

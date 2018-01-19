@@ -98,8 +98,10 @@ class Link2
                     $this->def = $this->def[0];
                 } elseif (isset($this->def[1]['side']) && $this->def[1]['side'] == 'left') {
                     $this->def = $this->def[1];
-                } else {
+                } elseif (isset($this->def[0])){
                     $this->def = $this->def[0];
+                } else {
+                    $GLOBALS['log']->fatal('Link definition not found for: ' . $linkName);
                 }
             }
             if (empty($this->def['name'])) {
@@ -121,7 +123,11 @@ class Link2
         $this->relationship_fields = (!empty($this->def['rel_fields'])) ? $this->def['rel_fields'] : array();
 
         if (!$this->loadedSuccesfully()) {
-            $GLOBALS['log']->fatal("{$this->name} for {$this->def['relationship']} failed to load\n");
+            $logFunction = 'fatal';
+            if (!isset($this->def['source']) || $this->def['source'] === 'non-db') {
+                $logFunction = 'warn';
+            }
+            $GLOBALS['log']->$logFunction("{$this->name} for {$this->def['relationship']} failed to load\n");
         }
         //Following behavior is tied to a property(ignore_role) value in the vardef. It alters the values of 2 properties, ignore_role_filter and add_distinct.
         //the property values can be altered again before any requests are made.
@@ -176,16 +182,22 @@ class Link2
      */
     public function query($params)
     {
-        return $this->relationship->load($this, $params);
+        if(is_object($this->relationship) && method_exists($this->relationship, 'load')) {
+            return $this->relationship->load($this, $params);
+        } else {
+            $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
+            return null;
+        }
     }
 
     /**
+     * @param array $params
      * @return array ids of records related through this link
      */
-    public function get()
+    public function get($params = array())
     {
         if (!$this->loaded) {
-            $this->load();
+            $this->load($params);
         }
 
         return array_keys($this->rows);
@@ -418,15 +430,19 @@ class Link2
             }
 
             //now load from the rows
-            foreach ($rows as $id => $vals) {
-                if (empty($this->beans[$id])) {
-                    $tmpBean = BeanFactory::getBean($rel_module, $id);
-                    if ($tmpBean !== false) {
-                        $result[$id] = $tmpBean;
+            if(is_array($rows) || is_object($rows)) {
+                foreach ((array)$rows as $id => $vals) {
+                    if (empty($this->beans[$id])) {
+                        $tmpBean = BeanFactory::getBean($rel_module, $id);
+                        if ($tmpBean !== false) {
+                            $result[$id] = $tmpBean;
+                        }
+                    } else {
+                        $result[$id] = $this->beans[$id];
                     }
-                } else {
-                    $result[$id] = $this->beans[$id];
                 }
+            } else {
+                $GLOBALS['log']->fatal('"rows" should be an array or object');
             }
 
             //If we did a complete load, cache the result in $this->beans
@@ -487,6 +503,53 @@ class Link2
                 $success = $this->relationship->add($this->focus, $key, $additional_values);
             } else {
                 $success = $this->relationship->add($key, $this->focus, $additional_values);
+            }
+
+            if ($success == false) {
+                $failures[] = $key->id;
+            }
+        }
+
+        if (!empty($failures)) {
+            return $failures;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * @param $rel_keys
+     * @param array $additional_values
+     * @return array|bool
+     */
+    public function remove($rel_keys)
+    {
+        if (!is_array($rel_keys)) {
+            $rel_keys = array($rel_keys);
+        }
+
+        $failures = array();
+
+        foreach ($rel_keys as $key) {
+            //We must use beans for LogicHooks and other business logic to fire correctly
+            if (!($key instanceof SugarBean)) {
+                $key = $this->getRelatedBean($key);
+                if (!($key instanceof SugarBean)) {
+                    $GLOBALS['log']->error('Unable to load related bean by id');
+
+                    return false;
+                }
+            }
+
+            if (empty($key->id) || empty($this->focus->id)) {
+                return false;
+            }
+
+            if ($this->getSide() == REL_LHS) {
+                $success = $this->relationship->remove($this->focus, $key);
+            } else {
+                $success = $this->relationship->remove($key, $this->focus);
             }
 
             if ($success == false) {

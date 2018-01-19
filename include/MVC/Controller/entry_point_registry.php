@@ -86,4 +86,7 @@ $entry_point_registry = array(
 	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
 	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
 	'setCampaignMarketingAndTemplate' => array('file' => 'modules/Campaigns/WizardCampaignSave.php', 'auth' => true),
+	'survey' => array('file' => 'modules/Surveys/Entry/Survey.php', 'auth' => false),
+	'surveySubmit' => array('file' => 'modules/Surveys/Entry/SurveySubmit.php', 'auth' => false),
+	'surveyThanks' => array('file' => 'modules/Surveys/Entry/Thanks.php', 'auth' => false),
 );

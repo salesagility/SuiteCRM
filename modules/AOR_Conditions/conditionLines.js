@@ -139,7 +139,7 @@ var ParenthesisHandler = {
             '   <td>' +
             '       <input type="hidden" name="aor_conditions_parenthesis[' + ((_condln ? _condln : condln)) + ']" value="START">' +
             '       <button type="button" class="button parenthesis-remove-btn" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');">' +
-            '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
+            '          -' +
             '       </button>' +
             '       <input type="hidden" name="aor_conditions_deleted[' + (_condln ? _condln : condln) + ']" id="aor_conditions_deleted' + (_condln ? _condln : condln) + '" value="0" data-delete-id="' + condition_id + '">' +
             '       <input type="hidden" name="aor_conditions_id[' + (_condln ? _condln : condln) + ']" id="aor_conditions_id' + (_condln ? _condln : condln) + '" value="' + condition_id + '">' +
@@ -423,14 +423,13 @@ function insertConditionHeader(){
     var nxtCell = 0;
     var view = action_sugar_grp1;
     tablehead = document.createElement("thead");
-    tablehead.id = "conditionLines_head";
-    document.getElementById('conditionLines').appendChild(tablehead);
+    tablehead.id = "aor_conditionLines_head";
+    document.getElementById('aor_conditionLines').appendChild(tablehead);
 
     var x=tablehead.insertRow(-1);
-    x.id='conditionLines_head';
+    x.id='aor_conditionLines_head';
 
     var a=x.insertCell(nxtCell++);
-    //a.style.color="rgb(68,68,68)";
 
     if(view === 'EditView') {
         var cellLogic = x.insertCell(nxtCell++);
@@ -438,28 +437,22 @@ function insertConditionHeader(){
     }
 
     var b=x.insertCell(nxtCell++);
-    b.style.color="rgb(0,0,0)";
     b.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_MODULE_PATH');
 
     var c=x.insertCell(nxtCell++);
-    c.style.color="rgb(0,0,0)";
     c.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_FIELD');
 
     var d=x.insertCell(nxtCell++);
-    d.style.color="rgb(0,0,0)";
     d.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_OPERATOR');
 
     var e=x.insertCell(nxtCell++);
-    e.style.color="rgb(0,0,0)";
     e.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE_TYPE');
 
     var f=x.insertCell(nxtCell++);
-    f.style.color="rgb(0,0,0)";
     f.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE');
 
     if(view === 'EditView') {
         var h = x.insertCell(-1);
-        h.style.color = "rgb(0,0,0)";
         h.innerHTML = SUGAR.language.get('AOR_Conditions', 'LBL_PARAMETER');
     }
 }
@@ -468,10 +461,10 @@ function insertConditionLine(condition){
 
     var nxtCell = 0;
     var view = action_sugar_grp1;
-    if (document.getElementById('conditionLines_head') == null) {
+    if (document.getElementById('aor_conditionLines_head') == null) {
         insertConditionHeader();
     } else {
-        document.getElementById('conditionLines_head').style.display = '';
+        document.getElementById('aor_conditionLines_head').style.display = '';
     }
 
     var tablebody = document.getElementById('aor_conditions_body');
@@ -479,7 +472,7 @@ function insertConditionLine(condition){
         tablebody = document.createElement("tbody");
         tablebody.id = "aor_conditions_body";
         tablebody.className = "connectedSortableConditions";
-        document.getElementById('conditionLines').appendChild(tablebody);
+        document.getElementById('aor_conditionLines').appendChild(tablebody);
     }
 
     if(view == 'EditView' && condition.parenthesis) {
@@ -497,7 +490,7 @@ function insertConditionLine(condition){
 
         var a = x.insertCell(nxtCell++);
         if(action_sugar_grp1 == 'EditView'){
-            a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+            a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'>-</button><br>";
             a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
         } else{
             a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
@@ -579,7 +572,7 @@ function markConditionLineDeleted(ln)
 
     condln_count--;
     if(condln_count == 0){
-        document.getElementById('conditionLines_head').style.display = "none";
+        document.getElementById('aor_conditionLines_head').style.display = "none";
     }
 
     // remove condition header if doesn't exists any more condition in area
@@ -590,7 +583,7 @@ function markConditionLineDeleted(ln)
         }
     });
     if(!found) {
-        $('#conditionLines_head').remove();
+        $('#aor_conditionLines_head').remove();
     }
 
     LogicalOperatorHandler.hideUnnecessaryLogicSelects();
@@ -600,8 +593,8 @@ function markConditionLineDeleted(ln)
 
 function clearConditionLines(){
 
-    if(document.getElementById('conditionLines') != null){
-        var cond_rows = document.getElementById('conditionLines').getElementsByTagName('tr');
+    if(document.getElementById('aor_conditionLines') != null){
+        var cond_rows = document.getElementById('aor_conditionLines').getElementsByTagName('tr');
         var cond_row_length = cond_rows.length;
         var i;
         for (i=0; i < cond_row_length; i++) {

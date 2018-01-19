@@ -115,6 +115,7 @@ function getModuleFields(
 
         }
     }
+    asort($fields);
     if($view == 'JSON'){
         return json_encode($fields);
     }
@@ -594,9 +595,14 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
  * @param bool $field_option
  * @return string
  */
-function getDateField($module, $aow_field, $view='EditView', $value = null, $field_option = true)
+function getDateField($module, $aow_field, $view, $value = null, $field_option = true)
 {
     global $app_list_strings;
+
+    // set $view = 'EditView' as default
+    if (!$view) {
+        $view = 'EditView';
+    }
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 

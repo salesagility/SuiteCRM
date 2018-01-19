@@ -59,11 +59,16 @@ nbproject/
 .*.sw[a-z]
 *.un~
 Session.vim
+tags
 # Windows
 Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+# Microsoft Visual Studio
+*.sln
+*.suo
+*.phpproj
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -73,37 +78,53 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+#Ingore composer files
+composer.lock
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
 
 #Ignore Sass Generated files in SuiteP
-themes/SuiteP/studio.css
-themes/SuiteP/studio.css.map
-themes/SuiteP/sidebar.css
-themes/SuiteP/sidebar.css.map
-themes/SuiteP/projects.css
-themes/SuiteP/projects.css.map
-themes/SuiteP/panels.css
-themes/SuiteP/panels.css.map
-themes/SuiteP/navbar.css
-themes/SuiteP/navbar.css.map
-themes/SuiteP/main.css
-themes/SuiteP/main.css.map
-themes/SuiteP/login.css
-themes/SuiteP/login.css.map
-themes/SuiteP/listview.css
-themes/SuiteP/listview.css.map
-themes/SuiteP/forms.css
-themes/SuiteP/forms.css.map
-themes/SuiteP/editview.css
-themes/SuiteP/editview.css.map
-themes/SuiteP/detailview.css
-themes/SuiteP/detailview.css.map
-themes/SuiteP/dashboard.css
-themes/SuiteP/dashboard.css.map
-themes/SuiteP/cases.css
-themes/SuiteP/cases.css.map
-themes/SuiteP/campaigns.css
-themes/SuiteP/campaigns.css.map
-themes/SuiteP/calendar.css
-themes/SuiteP/calendar.css.map
-themes/SuiteP/admin.css
-themes/SuiteP/admin.css.map
+themes/SuiteP/css/*.map
+themes/SuiteP/css/*.css
+themes/SuiteP/css/bootstrap/theme.css.map
+themes/SuiteP/css/dawn/style.css.map
+themes/SuiteP/css/dawn/variables.css
+themes/SuiteP/css/dawn/color-palette.css.map
+themes/SuiteP/css/dawn/color-palette.css
+themes/SuiteP/css/dawn/variables.css.map
+themes/SuiteP/css/day/color-palette.css.map
+themes/SuiteP/css/day/color-palette.css
+themes/SuiteP/css/day/style.css.map
+themes/SuiteP/css/day/variables.css
+themes/SuiteP/css/day/variables.css.map
+themes/SuiteP/css/dusk/color-palette.css.map
+themes/SuiteP/css/dusk/color-palette.css
+themes/SuiteP/css/dusk/style.css.map
+themes/SuiteP/css/dusk/variables.css
+themes/SuiteP/css/dusk/variables.css.map
+themes/SuiteP/css/night/color-palette.css.map
+themes/SuiteP/css/night/color-palette.css
+themes/SuiteP/css/night/style.css.map
+themes/SuiteP/css/night/variables.css
+themes/SuiteP/css/night/variables.css.map
+!themes/SuiteP/css/studio.css
+!themes/SuiteP/css/chart.css
+!themes/SuiteP/css/bubbles.css
+!themes/SuiteP/css/print.css
+!themes/SuiteP/css/noramalize.css
+!themes/SuiteP/css/bootstrap.css
+!themes/SuiteP/css/dashboardstyle.css
+!themes/SuiteP/css/wizard.css.css
+!themes/SuiteP/css/deprecated.css
+!themes/SuiteP/css/fonts.css
+!themes/SuiteP/css/footable.core.css
+!themes/SuiteP/css/style.css
+tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err

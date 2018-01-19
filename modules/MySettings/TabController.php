@@ -265,38 +265,10 @@ function get_tabs($user)
 			$display_tabs[$key] = $value;
 	}
 
-    ////////////////////////////////////////////////////////////////////
-    // Jenny - Bug 6286: If someone has "old school roles" defined (before 4.0) and upgrades, 
-    // then they can't remove those old roles through the UI. Also, when new tabs are added, 
-    // users who had any of those "old school roles" defined have no way of being able to see 
-    // those roles. We need to disable role checking.
-	
-    //$roleCheck = query_user_has_roles($user->id);
-    $roleCheck = 0;
-    ////////////////////////////////////////////////////////////////////
-		if($roleCheck)
-		{
-			//grabs modules a user has access to via roles
-			$role_tabs = get_user_allowed_modules($user->id);
-	
-			// adds modules to display_tabs if existant in roles
-			foreach($role_tabs as $key=>$value)
-			{
-				if(!isset($display_tabs[$key]))
-					$display_tabs[$key] = $value;
-			}
-		}
-		
 		// removes tabs from display_tabs if not existant in roles
 		// or exist in the hidden tabs
 		foreach($display_tabs as $key=>$value)
 		{
-			if($roleCheck)
-			{			
-				if(!isset($role_tabs[$key]))
-					unset($display_tabs[$key]);
-			}
-			
 			if(!isset($system_tabs[$key]))
 				unset($display_tabs[$key]);
 			if(isset($hide_tabs[$key]))
@@ -306,12 +278,6 @@ function get_tabs($user)
 		// removes tabs from hide_tabs if not existant in roles
 		foreach($hide_tabs as $key=>$value)
 		{
-			if($roleCheck)
-			{
-				if(!isset($role_tabs[$key]))
-					unset($hide_tabs[$key]);
-			}
-			
 			if(!isset($system_tabs[$key]))
 				unset($hide_tabs[$key]);
 		}

@@ -217,7 +217,7 @@ function showModuleFieldType(ln, value){
 function insertConditionHeader(){
     tablehead = document.createElement("thead");
     tablehead.id = "conditionLines_head";
-    document.getElementById('conditionLines').appendChild(tablehead);
+    document.getElementById('aow_conditionLines').appendChild(tablehead);
 
     var x=tablehead.insertRow(-1);
     x.id='conditionLines_head';
@@ -257,7 +257,7 @@ function insertConditionLine(){
 
     tablebody = document.createElement("tbody");
     tablebody.id = "aow_conditions_body" + condln;
-    document.getElementById('conditionLines').appendChild(tablebody);
+    document.getElementById('aow_conditionLines').appendChild(tablebody);
 
 
     var x = tablebody.insertRow(-1);
@@ -298,7 +298,7 @@ function insertConditionLine(){
     condln++;
     condln_count++;
 
-    $('.edit-view-field #conditionLines').find('tbody').last().find('select').change(function () {
+    $('.edit-view-field #aow_conditionLines').find('tbody').last().find('select').change(function () {
         $(this).find('td').last().removeAttr("style");
         $(this).find('td').height($(this).find('td').last().height() + 8);
     });
@@ -337,8 +337,8 @@ function markConditionLineDeleted(ln)
 
 function clearConditionLines(){
 
-    if(document.getElementById('conditionLines') != null){
-        var cond_rows = document.getElementById('conditionLines').getElementsByTagName('tr');
+    if(document.getElementById('aow_conditionLines') != null){
+        var cond_rows = document.getElementById('aow_conditionLines').getElementsByTagName('tr');
         var cond_row_length = cond_rows.length;
         var i;
         for (i=0; i < cond_row_length; i++) {

@@ -95,6 +95,9 @@ class AOR_Condition extends Basic
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
+        if(!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])){
+            return;
+        }
         foreach ($post_data[$key . 'field'] as $i => $field) {
 
             if ($post_data[$key . 'deleted'][$i] == 1) {

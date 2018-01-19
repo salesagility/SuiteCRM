@@ -141,6 +141,9 @@ class UserViewHelper {
         $edit_self = $current_user->id == $this->bean->id;
         $admin_edit_self = is_admin($current_user) && $edit_self;
 
+        if(isset($_REQUEST['showEmailSettingsPopup']) && $_REQUEST['showEmailSettingsPopup']) {
+            $this->ss->assign('showEmailSettingsPopup', true);
+        }
 
         $this->ss->assign('IS_FOCUS_ADMIN', is_admin($this->bean));
 
@@ -705,6 +708,12 @@ class UserViewHelper {
             $this->ss->assign('EMAIL_LINK_TYPE', $app_list_strings['dom_email_link_type'][$raw_email_link_type]);
         }
 
+        $rawEditorType = $this->bean->getEditorType();
+        if ( $this->viewType == 'EditView' ) {
+            $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $rawEditorType));
+        } else {
+            $this->ss->assign('EDITOR_TYPE', $app_list_strings['dom_editor_type'][$rawEditorType]);
+        }
         /////	END EMAIL OPTIONS
         ///////////////////////////////////////////////////////////////////////////////
 
@@ -712,7 +721,6 @@ class UserViewHelper {
         /////////////////////////////////////////////
         /// Handle email account selections for users
         /////////////////////////////////////////////
-        $hide_if_can_use_default = true;
         if( !($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') ) {
             // email smtp
             $systemOutboundEmail = new OutboundEmail();
@@ -751,8 +759,6 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPPORT',$mail_smtpport);
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
-        $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
     }
 
 

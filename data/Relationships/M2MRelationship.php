@@ -456,8 +456,21 @@ class M2MRelationship extends SugarRelationship
             $where .= " AND $rel_table.$targetKey=$whereTable.id";
         }
 
+        $SelectIncludedMiddleTableFields = '';
+        if (isset($params['include_middle_table_fields']) && $params['include_middle_table_fields'] === true) {
+             $middle_table_field_defs = $this->def['fields'];
+             $middle_table = array();
+             foreach($middle_table_field_defs as $field_def) {
+                if($field_def['name'] === 'id') {
+                     continue;
+                }
+                $middle_table[] = $field_def['name'];
+             }
+             $SelectIncludedMiddleTableFields = ', ' . implode(',', $middle_table);
+        }
+
         if (empty($params['return_as_array'])) {
-            $query = "SELECT $targetKey id FROM $from WHERE $where AND $rel_table.deleted=$deleted";
+            $query = "SELECT $targetKey id $SelectIncludedMiddleTableFields FROM $from WHERE $where AND $rel_table.deleted=$deleted";
             if(!empty($order_by)) $query .= ' ORDER BY '.$order_by;
             //Limit is not compatible with return_as_array
             if (!empty($params['limit']) && $params['limit'] > 0) {

@@ -280,7 +280,12 @@ if (isset($_REQUEST['return_module']) && isset($_REQUEST['return_action']) && is
     if (isset($_REQUEST['from_wiz']) && $_REQUEST['from_wiz']) {
 
         if (isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
-            $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardMarketing&return_id=" . $_REQUEST['campaign_id'] . "&campaign_id=" . $_REQUEST['campaign_id'] . "&show_wizard_marketing&jump=3&marketing_id=" . $_REQUEST['marketing_id'] . "&record=" . $_REQUEST['marketing_id'];
+            $header_URL =
+                "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=Wi".
+                "zardMarketing&return_id=" . $_REQUEST['campaign_id'] . "&campaign_id=" . $_REQUEST['campaign_id'] .
+                "&show_wizard_marketing&jump=3&marketing_id=" . (isset($_POST['marketing_id']) && $_POST['marketing_id']
+                    ? $_POST['marketing_id'] : $_REQUEST['marketing_id']) . "&record=" . (isset($_POST['marketing_id'])
+                && $_POST['marketing_id'] ? $_POST['marketing_id'] : $_REQUEST['marketing_id']);
             header($header_URL);
         } else {
             header("Location: index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}&from=test");

@@ -171,11 +171,12 @@ class ViewResetmodule extends SugarView
     {
         $module = StudioModuleFactory::getStudioModule( $this->module ) ;
         $sources = $module->getViewMetadataSources();
-        
+
         $out = "";
         foreach($sources as $view)
         {
-            $file = DeployedMetaDataImplementation::getFileName($view['type'], $this->module);
+            $deployedMetaDataImplementation = new DeployedMetaDataImplementation($view, $this->module);
+            $file = $deployedMetaDataImplementation->getFileName($view['type'], $this->module, null);
             if (file_exists($file)) {
                 unlink($file);
                 $out .= "Removed layout {$view['type']}.php<br/>";

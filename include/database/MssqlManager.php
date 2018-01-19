@@ -657,8 +657,10 @@ class MssqlManager extends DBManager
                 $exists = strpos($strip_array[$patt . $i], $strip_beg);
                 if ($exists >= 0) {
                     $nested_pos = strrpos($strip_array[$patt . $i], $strip_beg);
-                    $strip_array[$patt . $i] = substr($p_sql, $nested_pos + $beg_sin, $sec_sin - ($nested_pos + $beg_sin) + 1);
-                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr($p_sql, $sec_sin + 1);
+                    $strip_array[$patt . $i] = substr($p_sql, $nested_pos + $beg_sin,
+                        $sec_sin - ($nested_pos + $beg_sin) + 1);
+                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr($p_sql,
+                            $sec_sin + 1);
                     ++$i;
                     continue;
                 }
@@ -872,7 +874,7 @@ class MssqlManager extends DBManager
 
             // Bug # 44923 - This breaks the query and does not properly filter isnull
             // as there are other functions such as ltrim and rtrim.
-            /* else if (strncasecmp($psql, 'isnull', 6) != 0)
+            /* elseif (strncasecmp($psql, 'isnull', 6) != 0)
                 $alias_beg_pos = strpos($psql, " "); */
 
             if ($alias_beg_pos > 0) {
@@ -1761,6 +1763,7 @@ EOQ;
         if ($changes['data_type'] == 'date') {
             $changes['before'] = str_replace(' 00:00:00', '', $changes['before']);
         }
+
         return parent::save_audit_records($bean, $changes);
     }
 
@@ -1942,6 +1945,7 @@ EOQ;
     protected function quoteTerm($term)
     {
         $term = str_replace('%', '*', $term); // Mssql wildcard is *
+
         return '"' . str_replace('"', '', $term) . '"';
     }
 

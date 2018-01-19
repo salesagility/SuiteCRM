@@ -374,7 +374,7 @@ class Calendar {
 	public function add_activities($user,$type='sugar'){
 		global $timedate;
 		$start_date_time = $this->date_time;
-		if($this->view == 'agendaWeek' || $this->view == 'sharedWeek'){
+		if($this->view == 'agendaWeek'|| $this->view == 'basicWeek'  || $this->view == 'sharedWeek'){
 			$start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
 			$end_date_time = $start_date_time->get("+7 days");
 		}else if($this->view == 'month' || $this->view == "sharedMonth"){

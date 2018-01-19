@@ -59,14 +59,16 @@ $dictionary['EmailTemplate'] = array(
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record created'
+            'comment' => 'Date record created',
+            'inline_edit' => false
         ),
         'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record last modified'
+            'comment' => 'Date record last modified',
+            'inline_edit' => false
         ),
         'modified_user_id' => array(
             'name' => 'modified_user_id',

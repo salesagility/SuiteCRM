@@ -35,43 +35,91 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function Alerts() {
+
+/**
+ *
+ * @class
+ * @member {string} title
+ * @member {object} options
+ * @member {string} options.body
+ * @member {string} options.url_redirect
+ * @member {string} options.target_module
+ * @member {string} options.type warning danger info primary success
+ * @see https://getbootstrap.com/docs/3.3/css/#helper-classes
+ */
+var AlertObj = function() {
+  this.title = 'Alert';
+  this.options = {};
+  this.options.body = ' ';
+  this.options.url_redirect = '';
+  this.options.target_module = '';
+  this.options.type= 'info';
 };
 
+/**
+ *
+ * @namespace
+ */
+var Alerts = function () {
+};
+
+/**
+ *
+ * @type {Array}
+ */
 Alerts.prototype.replaceMessages = [];
 
+/**
+ * Enable Notifications API
+ */
 Alerts.prototype.enable = function () {
+  var alert = new AlertObj();
+
   if (!("Notification" in window)) {
-    Alerts.prototype.show({title: "This browser does not support desktop notifications"});
+    alert.title =  "This browser does not support desktop notifications";
+    Alerts.prototype.show(alert);
     return;
   }
+
   Notification.requestPermission(function (permission) {
     if (permission === "granted") {
-      Alerts.prototype.show({title: "Desktop notifications are now enabled for this web browser."});
+      alert.title =  "Desktop notifications are now enabled for this web browser.";
     }
     else {
-      Alerts.prototype.show({title: "Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again."});
+      alert.title = "Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";
     }
+
+    Alerts.prototype.show(alert);
   });
-}
+};
+
+/**
+ * Request permission to use Notification API
+ */
 Alerts.prototype.requestPermission = function () {
   if (!("Notification" in window)) {
     return;
   }
+
   Notification.requestPermission();
-}
+};
+
+/**
+ * Show an alert to the user
+ * @param {AlertObj} AlertObj
+ */
 Alerts.prototype.show = function (AlertObj) {
   Alerts.prototype.requestPermission();
   if (("Notification" in window)) {
     if (Notification.permission === "granted") {
       if (typeof AlertObj.options !== "undefined") {
         if (typeof AlertObj.options.target_module !== "undefined") {
-          AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=' + AlertObj.options.target_module + 's.gif';
+          SUGAR.themes.theme_name = undefined;
+          AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' +
+            SUGAR.themes.theme_name + '&imageName=' +
+            AlertObj.options.target_module + 's.gif';
         }
-        if (typeof AlertObj.options.type !== "undefined") {
-          AlertObj.options.type = AlertObj.options.type;
-        }
-        else {
+        if (typeof AlertObj.options.type === "undefined") {
           AlertObj.options.type = 'info';
         }
       }
@@ -105,8 +153,13 @@ Alerts.prototype.show = function (AlertObj) {
       }
     }
   }
-}
+};
 
+
+/**
+ * Add alert to manager instead of showing it to the user
+ * @param {AlertObj} AlertObj
+ */
 Alerts.prototype.addToManager = function (AlertObj) {
   var url = 'index.php', name = AlertObj.title, description, url_redirect, is_read = 0, target_module, type = 'info';
   if (typeof AlertObj.options !== "undefined") {
@@ -132,13 +185,17 @@ Alerts.prototype.addToManager = function (AlertObj) {
     is_read: is_read,
     target_module: target_module,
     type: type
-  }).done(function (data) {
   }).fail(function (data) {
-    console.log(data);
+    console.error(data);
   }).always(function () {
     Alerts.prototype.updateManager();
   });
-}
+};
+
+/**
+ * Redirect to login page
+ * @return {boolean}
+ */
 Alerts.prototype.redirectToLogin = function () {
   var getQueryParams = function (qs) {
     qs = qs.split('+').join(' ');
@@ -151,65 +208,82 @@ Alerts.prototype.redirectToLogin = function () {
     return params;
   };
   var params = getQueryParams(document.location.search);
-  if (params.entryPoint != 'Changenewpassword' && params.module != 'Users' && params.action != 'Login') {
+  params.entryPoint = undefined;
+  if (params.entryPoint !== 'Changenewpassword' && params.module !== 'Users' && params.action !== 'Login') {
     document.location.href = 'index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';
     return true;
   }
   return false;
-}
+};
+
+/**
+ * Update Alert Manager (Navigation bar element)
+ */
 Alerts.prototype.updateManager = function () {
   var url = 'index.php?module=Alerts&action=get&to_pdf=1';
   $.ajax(url).done(function (data) {
-    if (data == 'lost session') {
+    if (data === 'lost session') {
       Alerts.prototype.redirectToLogin();
       return false;
     }
 
     // remove the jsAlert message
-    for(replaceMessage in Alerts.prototype.replaceMessages) {
-      data = data.replace(Alerts.prototype.replaceMessages[replaceMessage].search, Alerts.prototype.replaceMessages[replaceMessage].replace);
+    for (var replaceMessage in Alerts.prototype.replaceMessages) {
+      data = data.replace(
+        Alerts.prototype.replaceMessages[replaceMessage].search,
+        Alerts.prototype.replaceMessages[replaceMessage].replace
+      );
     }
 
-    $('div#alerts').html(data);
-    $('div.alerts').css('width', '200px');
-    var alertCount = $('#alerts').find('div.module-alert').size();
-    $('.alert_count').html(alertCount);
+    var alertsDiv = $('.desktop_notifications #alerts');
+    alertsDiv.html(data);
+
+    var alerts = $('<div></div>');
+    $(data).appendTo(alerts);
+    var alertCount = $(alerts).children('.alert').length;
+    var alertCountDiv = $('.alert_count');
+    var desktopNotificationsDiv = $('.desktop_notifications');
+    var alertButtonDiv = $('.alertsButton');
+
+
+    alertCountDiv.html(alertCount);
     if (alertCount > 0) {
-      $('div#alerts').addClass('has-alerts');
-      $('#desktop_notifications').addClass('has-alerts');
-      $('.alertsButton').removeClass('btn-').addClass('btn-danger');
-      $('.alert_count').removeClass('hidden');
+      alertsDiv.addClass('has-alerts');
+      desktopNotificationsDiv.addClass('has-alerts');
+      alertButtonDiv.removeClass('btn-').addClass('btn-danger');
+      alertCountDiv.removeClass('hidden');
     }
     else {
-      $('#desktop_notifications').removeClass('has-alerts');
-      $('div#alerts').removeClass('has-alerts');
-      $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
-      $('.alert_count').addClass('hidden');
+      desktopNotificationsDiv.removeClass('has-alerts');
+      alertsDiv.removeClass('has-alerts');
+      alertButtonDiv.removeClass('btn-danger').addClass('btn-success');
+      alertCountDiv.addClass('hidden');
     }
-  }).fail(function () {
-  }).always(function () {
   });
-}
+};
+
+/**
+ * Mark alert as read
+ * @param {string} id
+ */
 Alerts.prototype.markAsRead = function (id) {
   var url = 'index.php?module=Alerts&action=markAsRead&record=' + id + '&to_pdf=1';
-  $.ajax(url).done(function (data) {
+  $.ajax(url).done(function () {
     Alerts.prototype.updateManager();
-  }).fail(function () {
-  }).always(function () {
   });
-}
-function AlertObj() {
-  this.title = 'Alert';
-  this.options = {body: ' ', url_redirect: null, target_module: null, type: 'info'};
-}
+};
+
+/**
+ * Runs timer to update alerts
+ */
 $(document).ready(function () {
   Alerts.prototype.replaceMessages = [
-    {search: SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"), replace: ""},
-    {search: SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"), replace: ""},
+    {search: SUGAR.language.translate("app", "MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"), replace: ""},
+    {search: SUGAR.language.translate("app", "MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"), replace: ""}
   ];
   var updateMissed = function () {
     Alerts.prototype.updateManager();
     setTimeout(updateMissed, 60000);
-  }
+  };
   setTimeout(updateMissed, 2000);
 });

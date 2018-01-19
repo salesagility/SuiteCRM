@@ -228,7 +228,8 @@
       lineContainer.removeClass('hidden');
       lineContainer.attr('id', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
       lineContainer.attr('name', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
-
+      // Add line item to lines container
+      $(lineContainer).appendTo('.email-address-lines-container');
 
       // Set up line item
       // use the value if the tabindex value for email has been passed in from metadata (defined in include/EditView/EditView.tpl
@@ -245,9 +246,7 @@
       emailField.attr('id', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
       emailField.attr('tabindex', tabIndexCount);
       emailField.attr('enabled', "true");
-      if (address != '') {
-        emailField.prop('value', address);
-      }
+      emailField.attr('value', address);
       emailField.eaw = _eaw;
       emailField.on('blur', function (e) {
         emailField.eaw.retrieveEmailAddress(e);
@@ -298,7 +297,7 @@
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
       if (replyToCheckbox.length == 1) {
-        replyToCheckbox.attr('name', this.module + _eaw.id + '"emailAddressReplyToFlag');
+        replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
         replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('tabindex', tabIndexCount);
@@ -306,35 +305,6 @@
         replyToCheckbox.eaw = _eaw;
         replyToCheckbox.prop("checked", (replyToFlag == '1'));
         _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
-        //replyToCheckbox.click(function () {
-        //  var form = document.forms[_eaw.emailView];
-        //  if (!form) {
-        //    form = document.forms['editContactForm'];
-        //  }
-        //  var nav = new String(navigator.appVersion);
-        //
-        //  if (nav.match(/MSIE/gim)) {
-        //    for (i = 0; i < form.elements.length; i++) {
-        //      var id = new String(form.elements[i].id);
-        //      if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //        form.elements[i].checked = false;
-        //      }
-        //    }
-        //  }
-        //  for (i = 0; i < form.elements.length; i++) {
-        //    var id = new String(form.elements[i].id);
-        //    if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //      _eaw.replyToFlagObject[_eaw.id] = false;
-        //    }
-        //  } // for
-        //  if (_eaw.replyToFlagObject[this.id]) {
-        //    _eaw.replyToFlagObject[this.id] = false;
-        //    this.checked = false;
-        //  } else {
-        //    _eaw.replyToFlagObject[this.id] = true;
-        //    this.checked = true;
-        //  } // else
-        //});
       }
 
 
@@ -348,9 +318,6 @@
         optOutCheckbox.attr('enabled', "true");
         optOutCheckbox.eaw = _eaw;
         optOutCheckbox.prop("checked", (optOutFlag == '1'));
-        //optOutCheckbox.click(function () {
-        //  _eaw.toggleCheckbox(this);
-        //});
       }
 
 
@@ -364,9 +331,6 @@
         invalidCheckbox.attr('enabled', "true");
         invalidCheckbox.eaw = _eaw;
         invalidCheckbox.prop("checked", (invalidFlag == '1'));
-        //invalidCheckbox.click(function () {
-        //  _eaw.toggleCheckbox(this);
-        //});
       }
 
 
@@ -389,9 +353,6 @@
         .attr('id', 'Users_email_widget_id' + _eaw.totalEmailAddresses);
       lineContainer.find('input#emailAddressWidget')
         .attr('id', 'emailAddressWidget' + _eaw.totalEmailAddresses);
-
-      // Add line item to lines container
-      $(lineContainer).appendTo('.email-address-lines-container');
 
       // Add validation to field
       _eaw.EmailAddressValidation(
@@ -536,3 +497,6 @@
   };
   emailAddressWidgetLoaded = true;
 })();
+$(document).ready(function(){
+  $('.email-address-primary-flag[checked="checked"]').click();
+});
