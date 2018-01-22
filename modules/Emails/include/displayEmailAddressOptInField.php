@@ -59,8 +59,7 @@ function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
 
     if (empty($focus->id)) {
         $log = LoggerManager::getLogger();
-        $log->error('Email ID is Empty');
-        SugarApplication::appendErrorMessage($app_strings['ERR_EMPTY_EMAIL_ID']);
+        $log->warn('Email ID is Empty');
         return '';
     }
     
