@@ -133,6 +133,7 @@ $mod_strings = array(
     'LBL_CAMPAIGN_LEAD_SUBPANEL_TITLE' => 'Leads',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_LOG_ENTRIES_CONTACT_TITLE' => 'Contacts Created',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 
     //error messages.
     'ERR_SENDING_NOW' => 'Messages are being delivered , please try this later.',

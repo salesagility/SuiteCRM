@@ -2369,6 +2369,15 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
+
+    // footer
+    'LBL_SUITE_TOP' => 'Back to top',
+    'LBL_SUITE_SUPERCHARGED' => 'Supercharged by SuiteCRM',
+    'LBL_SUITE_POWERED_BY' => 'Powered By SugarCRM',
+    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
+    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
+    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
+    'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
