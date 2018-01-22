@@ -86,7 +86,7 @@ $dictionary['OAuth2Tokens'] = array(
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '4098',
+            'len' => '4000',
         ),
         'refresh_token' => array(
             'name' => 'refresh_token',
@@ -95,7 +95,7 @@ $dictionary['OAuth2Tokens'] = array(
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '4098',
+            'len' => '4000',
         ),
         'refresh_token_expires' => array(
             'name' => 'refresh_token_expires',
