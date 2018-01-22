@@ -59,7 +59,8 @@ class BeanFactory
     public static $hits = 0;
 
     /**
-     * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory to prevent multiple retrieves per request.
+     * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory
+     * to prevent multiple retrieves per request.
      * If no id is passed, a new bean is created.
      *
      * @static
@@ -67,7 +68,8 @@ class BeanFactory
      * @param string $module
      * @param string $id
      * @param array  $params  A name/value array of parameters. Names: encode, deleted,
-     *                        If $params is boolean we revert to the old arguments (encode, deleted), and use $params as $encode.
+     *                        If $params is boolean we revert to the old arguments (encode, deleted),
+ *                            and use $params as $encode.
      *                        This will be changed to using only $params in later versions.
      * @param bool   $deleted @see SugarBean::retrieve
      *
@@ -197,8 +199,9 @@ class BeanFactory
                     //If a bean isn't in the database yet, we need to hold onto it.
                     if (!empty(self::$loadedBeans[$info['module']][$info['id']]->in_save)) {
                         ++self::$total;
-                    } //Beans that have been used recently should be held in memory if possible
-                    elseif (!empty(self::$touched[$info['module']][$info['id']]) && self::$touched[$info['module']][$info['id']] > 0) {
+                    } elseif (!empty(self::$touched[$info['module']][$info['id']])
+                        && self::$touched[$info['module']][$info['id']] > 0) {
+                        //Beans that have been used recently should be held in memory if possible
                         --self::$touched[$info['module']][$info['id']];
                         ++self::$total;
                     } else {
