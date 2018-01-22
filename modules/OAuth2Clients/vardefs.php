@@ -70,7 +70,7 @@ $dictionary['OAuth2Clients'] = array(
             'required'=>true,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '4098',
+            'len' => '4000',
         ),
         'redirect_url' => array (
             'name' => 'redirect_url',
