@@ -3917,4 +3917,4 @@ $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email h
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'] = 'Unable to send email to %s email address(es), because they are not opted in. ';
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%s email address do not have a valid id. ';
 
-$app_strings['ERR_EMPTY_EMAIL_ID'] = 'Email ID is Empty';
+$app_strings['ERR_EMPTY_EMAIL_ID'] = 'Only imported emails can display the opt in status';
