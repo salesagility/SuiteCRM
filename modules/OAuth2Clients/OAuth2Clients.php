@@ -47,4 +47,8 @@ class OAuth2Clients extends SugarBean {
     public $object_name = 'OAuth2Clients';
     public $module_dir = 'OAuth2Clients';
     public $disable_row_level_security = true;
+
+    public $is_confidential;
+    public $secret;
+    public $redirect_uri;
 }
