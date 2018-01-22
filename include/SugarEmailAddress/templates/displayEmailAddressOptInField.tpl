@@ -1,11 +1,11 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,30 +37,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-$mod_strings = array(
-    'LBL_ID' => 'ID',
-    'LBL_DATE_ENTERED' => 'Date Created',
-    'LBL_DATE_MODIFIED' => 'Date Modified',
-    'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_NAME' => 'Modified By Name',
-    'LBL_CREATED' => 'Created By',
-    'LBL_DESCRIPTION' => 'Description',
-    'LBL_DELETED' => 'Deleted',
-    'LBL_NAME' => 'Name',
-    'LBL_CREATED_USER' => 'Created by User',
-    'LBL_MODIFIED_USER' => 'Modified by User',
-    'LBL_LIST_NAME' => 'Name',
-    'LBL_EDIT_BUTTON' => 'Edit',
-    'LBL_REMOVE' => 'Remove',
-
-    // Emails
-    'LBL_OPT_IN' => 'Opt In',
-    'LBL_OPT_IN_PENDING_EMAIL_NOT_SENT' => 'Pending Confirm opt in, Confirm opt in not sent',
-    'LBL_OPT_IN_PENDING_EMAIL_SENT' => 'Pending Confirm opt in, Confirm opt in sent',
-    'LBL_OPT_IN_CONFIRMED' => 'Opted in',
-);
+*}
+<span class="email-opt-in-container">
+    {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
+        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
+        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
+        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
+    {elseif $OPT_IN_STATUS === 'INVALID'}
+        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
+    {/if}
+</span>
