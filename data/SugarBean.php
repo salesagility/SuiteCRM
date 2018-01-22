@@ -1932,7 +1932,9 @@ class SugarBean
         } else {
             $this->db->insert($this);
             //we need to update the bean.
-            $this->retrieve($this->id);
+            if(!defined("SUGARCRM_IS_INSTALLING")){
+                $this->retrieve($this->id);
+            }
         }
 
         if (empty($GLOBALS['updating_relationships']) && empty($GLOBALS['saving_relationships']) && empty($GLOBALS['resavingRelatedBeans'])) {
