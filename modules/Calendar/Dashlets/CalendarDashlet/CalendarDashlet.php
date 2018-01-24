@@ -48,7 +48,7 @@ class CalendarDashlet extends Dashlet {
     function CalendarDashlet($id, $def) {
         $this->loadLanguage('CalendarDashlet','modules/Calendar/Dashlets/');
 
-		parent::Dashlet($id); 
+		parent::Dashlet($id);
          
 		$this->isConfigurable = true; 
 		$this->hasScript = true;  
@@ -106,7 +106,12 @@ class CalendarDashlet extends Dashlet {
     function displayOptions() {
         global $app_strings,$mod_strings;        
         $ss = new Sugar_Smarty();
-        $ss->assign('MOD', $this->dashletStrings);        
+        $ss->assign('titleLbl', $this->dashletStrings['LBL_CONFIGURE_TITLE']);
+        $ss->assign('saveLbl', $app_strings['LBL_SAVE_BUTTON_LABEL']);
+        $ss->assign('configureView', $this->dashletStrings['LBL_CONFIGURE_VIEW']);
+        $ss->assign('viewDay', $this->dashletStrings['LBL_VIEW_DAY']);
+        $ss->assign('viewWeek', $this->dashletStrings['LBL_VIEW_WEEK']);
+        $ss->assign('MOD', $this->dashletStrings);
         $ss->assign('title', $this->title);
         $ss->assign('view', $this->view);
         $ss->assign('id', $this->id);

@@ -51,23 +51,23 @@
 <input type='hidden' name='configure' value='true'>
 <table width="400" cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
-    <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_TITLE}</td>
+    <td valign='top' nowrap class='dataLabel'>{$titleLbl}</td>
     <td valign='top' class='dataField'>
     <input type="text" class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
 <tr>
-    <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_VIEW}</td>
+    <td valign='top' nowrap class='dataLabel'>{$configureView}</td>
     <td valign='top' class='dataField'>
     <select name="view">
-    		<option value="agendaDay" {if $view == "agendaDay"} selected {/if}>{$MOD.LBL_VIEW_DAY}</option>
-    		<option value="agendaWeek" {if $view == "agendaWeek"} selected {/if}>{$MOD.LBL_VIEW_WEEK}</option>
+    		<option value="agendaDay" {if $view == "agendaDay"} selected {/if}>{$viewDay}</option>
+    		<option value="agendaWeek" {if $view == "agendaWeek"} selected {/if}>{$viewWeek}</option>
     </select>
     </td>
 </tr>
 <tr>
     <td align="right" colspan="2">
-        <input type='submit' class='button' value='{$MOD.LBL_SAVE_BUTTON_LABEL}'>
+        <input type='submit' class='button' value='{$saveLbl}'>
    	</td>
 </tr>
 </table>
