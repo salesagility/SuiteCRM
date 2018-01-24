@@ -55,8 +55,7 @@
     {elseif $APP_CONFIG.email_enable_confirm_opt_in == 'confirmed-opt-in'}
         {*confirmed-opt-in*}
         {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-            <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
-            <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓✓</span>
         {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
             <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
         {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
