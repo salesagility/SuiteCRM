@@ -4422,8 +4422,9 @@ eoq;
         // Get Related Contact | Lead | Target etc.
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address_id  = LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
-                ' AND email_addr_bean_rel.primary_address = 1 AND deleted = 0';
+            ' WHERE email_address_id LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
+                ' AND email_addr_bean_rel.primary_address = 1 '
+                . 'AND email_addresses.deleted = 0 AND email_addr_bean_rel.deleted = 0';
 
         $dbResult = $db->query($query);
         while ($row = $db->fetchByAssoc($dbResult)) {
@@ -4435,10 +4436,14 @@ eoq;
             $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
             $actionSendEmail = new actionSendEmail();
-            $actionSendEmail->run_action($bean, $params);
-
             $date = new DateTime();
-            $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+            if(!$actionSendEmail->run_action($bean, $params)) {
+                $emailAddress->confirm_opt_in_fail_date = $now;
+            } else {
+                $emailAddress->confirm_opt_in_fail_date = null;
+                $emailAddress->confirm_opt_in_sent_date = $now;
+            }
             $emailAddress->save();
             
             $ret = true;

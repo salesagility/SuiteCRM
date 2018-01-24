@@ -679,4 +679,5 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 ); // END STRINGS DEFS

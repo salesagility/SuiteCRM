@@ -382,6 +382,10 @@ p.msg {
   color: $opt-in-tick-color-not-sent;
 }
 
+.email-opt-in-failed {
+  color: $opt-in-tick-color-failed;
+}
+
 .email-opt-in-sent {
   color: $opt-in-tick-color-sent;
 }

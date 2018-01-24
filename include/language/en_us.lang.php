@@ -2367,6 +2367,7 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
+    'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Confirmed Opt In Fail Date',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
 
@@ -3910,6 +3911,7 @@ $app_list_strings['surveys_matrix_options'][1] = 'Neither Satisfied nor Dissatis
 $app_list_strings['surveys_matrix_options'][2] = 'Dissatisfied';
 
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'] = 'Pending Confirm opt in, Confirm opt in not sent';
+$app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'] = 'Confirm opt in email sending failed';
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'] = 'Pending Confirm opt in, Confirm opt in sent';
 $app_strings['LBL_OPT_IN'] = 'Opted in';
 $app_strings['LBL_OPT_IN_CONFIRMED'] = 'Confirmed Opted in';
