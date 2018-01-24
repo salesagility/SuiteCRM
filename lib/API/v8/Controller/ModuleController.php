@@ -66,6 +66,7 @@ use SuiteCRM\API\v8\Library\FiltersLib;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\ApplicationLanguage;
 
@@ -438,13 +439,21 @@ class ModuleController extends ApiController
             $bean = \BeanFactory::getBean($moduleName, $beanID);
 
             if ($bean instanceof \SugarBean) {
-                throw new \DomainException(
-                    sprintf('Bean id %s already exists in %s module', $beanID, $moduleName)
+                return $this->generateJsonApiExceptionResponse(
+                    $req,
+                    $res,
+                    new Exception(sprintf(
+                        'Bean id %s already exists in %s module', $beanID, $moduleName
+                    ))
                 );
             }
 
             if (!isValidId($beanID)) {
-                throw new \InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
+                return $this->generateJsonApiExceptionResponse(
+                    $req,
+                    $res,
+                    new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID))
+                );
             }
         }
 
