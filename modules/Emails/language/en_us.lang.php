@@ -376,5 +376,6 @@ $mod_strings = array(
     'ERR_NO_RETURN_ID' => 'Attachment not found.',
 
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
 
