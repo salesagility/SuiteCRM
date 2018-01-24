@@ -54,4 +54,3 @@ require_once('modules/UpgradeWizard/SugarMerge/EditViewMerge.php');
 class QuickCreateMerge extends EditViewMerge{
 	protected $viewDefs = 'QuickCreate';
 }
-?>

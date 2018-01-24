@@ -400,4 +400,3 @@ function getReleaseDropDown(){
 	}
 	return $releases;
 }
-?>

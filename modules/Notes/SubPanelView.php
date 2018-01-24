@@ -120,4 +120,3 @@ if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($
 }
 
 }
-?>

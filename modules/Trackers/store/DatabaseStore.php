@@ -89,5 +89,3 @@ class DatabaseStore implements Store {
 	   $GLOBALS['db']->query($query);
     }
 }
-
-?>

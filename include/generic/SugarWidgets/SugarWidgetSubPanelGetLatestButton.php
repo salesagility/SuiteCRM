@@ -81,5 +81,3 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
 	}
 		
 }
-
-?>

@@ -94,4 +94,3 @@ $fields_array['Account'] = array ('column_fields' => Array(
 		),
         'required_fields' => array("name"=>1),
 );
-?>

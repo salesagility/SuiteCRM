@@ -63,4 +63,3 @@ class AOK_Knowledge_Base_Categories extends AOK_Knowledge_Base_Categories_sugar 
 
 
 }
-?>

@@ -47,4 +47,3 @@ function perform_save(&$focus){
 		$focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
 	}	
 }
-?>

@@ -66,4 +66,3 @@ $body1 = "
 		refreshOpener();
 	</script>";
 echo  $body1;
-?>

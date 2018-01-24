@@ -86,4 +86,3 @@ class AOS_Invoices extends AOS_Invoices_sugar {
         parent::mark_deleted($id);
     }
 }
-?>

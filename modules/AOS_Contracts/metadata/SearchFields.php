@@ -47,4 +47,3 @@ $searchFields['AOS_Contracts'] =
        'end_range_total_contract_value' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 
 	);
-?>

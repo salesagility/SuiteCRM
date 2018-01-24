@@ -51,5 +51,3 @@ if(is_admin($current_user))
         $ss->display('modules/Administration/templates/RebuildSprites.tpl');
     }
 }
-
-?>

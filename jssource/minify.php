@@ -167,6 +167,3 @@ if(isset($_REQUEST['root_directory'])){
 
     }
 }
-
-
-?>

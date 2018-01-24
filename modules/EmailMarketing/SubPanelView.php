@@ -89,5 +89,3 @@ $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$currentModule."&retu
 $ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME'] );
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "EMAILMARKETING");
-
-?>

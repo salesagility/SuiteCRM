@@ -68,4 +68,3 @@ $fields_array['Campaign'] = array ('column_fields' => array(
 				'status'=>3, 'campaign_type'=>4
 	),
 );
-?>

@@ -138,5 +138,3 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 		
 	}
 }
-
-?>

@@ -127,4 +127,3 @@ $layout_defs["AM_ProjectTemplates"] = array(
 
 
 );
-?>

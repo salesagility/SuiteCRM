@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -2211,7 +2211,7 @@ class SugarBean
      * The id field should not be set otherwise.
      *
      * @param bool $check_notify Optional, default false, if set to true assignee of the record is notified via email.
-     * @return string
+     * @return string ID
      * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
@@ -4495,18 +4495,19 @@ class SugarBean
                     if ($type == 'date') {
                         if ($this->$field == '0000-00-00' || empty($this->$field)) {
                             $this->$field = '';
-                        } elseif (!empty($this->field_name_map[$field]['rel_field'])) {
-                            $rel_field = $this->field_name_map[$field]['rel_field'];
-
-                            if (!empty($this->$rel_field) && empty($disable_date_format)) {
-                                $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
-                                $this->$field = $timedate->to_display_date($merge_time);
-                                $this->$rel_field = $timedate->to_display_time($merge_time);
+                            continue;
+                        }
+                        if (empty($disable_date_format)) {
+                            if (!empty($this->field_name_map[$field]['rel_field'])) {
+                                $rel_field = $this->field_name_map[$field]['rel_field'];
+                                if (!empty($this->$rel_field)) {
+                                    $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
+                                    $this->$field = $timedate->to_display_date($merge_time);
+                                    $this->$rel_field = $timedate->to_display_time($merge_time);
+                                    continue;
+                                }
                             }
-                        } else {
-                            if (empty($disable_date_format)) {
-                                $this->$field = $timedate->to_display_date($this->$field, false);
-                            }
+                            $this->$field = $timedate->to_display_date($this->$field, false);
                         }
                     } elseif ($type == 'datetime' || $type == 'datetimecombo') {
                         if ($this->$field == '0000-00-00 00:00:00' || empty($this->$field)) {

@@ -74,4 +74,3 @@ class ProspectsViewDetail extends ViewDetail {
  		parent::display();
  	}
 }
-?>

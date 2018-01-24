@@ -100,4 +100,3 @@ $fields_array['Lead'] = array ('column_fields' => Array("id"
 		),
     'required_fields' =>  array("last_name"=>1),
 );
-?>

@@ -62,4 +62,3 @@ class SugarWidgetSubPanelConcat extends SugarWidgetField
 		return $value;
 	}
 }
-?>

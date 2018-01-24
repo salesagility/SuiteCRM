@@ -60,4 +60,3 @@ class SugarSoapService2 extends NusoapSoap{
 	} // fn
 			
 } // clazz
-?>

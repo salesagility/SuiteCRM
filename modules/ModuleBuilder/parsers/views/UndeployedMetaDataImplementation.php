@@ -227,4 +227,3 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 		return $this->module->key_name;
 	}
 }
-?>

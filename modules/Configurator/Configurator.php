@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -338,4 +338,42 @@ class Configurator
         }
         $this->handleOverride(true);
     }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            isset($this->config['email_enable_confirm_opt_in'])
+            && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmOptInTemplateId() {
+        /** @var null|string $confirmOptInTemplateId */
+        $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
+        if(!$confirmOptInTemplateId) {
+            $confirmOptInTemplateId = 
+                isset($this->config['aop']['confirm_opt_in_template_id']) ?
+                    $this->config['aop']['confirm_opt_in_template_id'] :
+                    null;
+        }
+        
+        if (!$confirmOptInTemplateId) {
+            $this->logger->warn('Confirm Opt template is not set');
+        }
+        
+        return $confirmOptInTemplateId;
+    }
+    
 }

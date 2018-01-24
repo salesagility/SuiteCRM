@@ -823,4 +823,3 @@ if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {
 if (file_exists('custom/modules/Schedulers/Ext/ScheduledTasks/scheduledtasks.ext.php')) {
     require('custom/modules/Schedulers/Ext/ScheduledTasks/scheduledtasks.ext.php');
 }
-?>

@@ -62,4 +62,3 @@ class ViewVcard extends SugarView
 		$vcard->saveVCard();
  	}
 }
-?>

@@ -72,4 +72,3 @@ $vardefs = array(
     ),
     'indices' => array()
 );
-?>

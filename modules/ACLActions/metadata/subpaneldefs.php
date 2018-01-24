@@ -71,6 +71,3 @@ $layout_defs['UserRoles'] = array(
 	),
 	
 );
-
-
-?>

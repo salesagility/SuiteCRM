@@ -68,4 +68,3 @@ $fields_array['Bug'] = array ('column_fields' => Array("id"
 		),
         'required_fields' => array('name'=>1),
 );
-?>

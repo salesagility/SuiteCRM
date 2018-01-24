@@ -161,4 +161,3 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 		return parent::display($defines, $additionalFormFields);
 	}
 }
-?>

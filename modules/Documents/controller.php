@@ -44,4 +44,3 @@ class DocumentsController extends SugarController
         $this->view = 'popup';
     }
 }
-?>

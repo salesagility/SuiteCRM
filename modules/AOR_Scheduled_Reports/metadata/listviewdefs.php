@@ -50,4 +50,3 @@ array (
     'default' => false,
   ),
 );
-?>

@@ -100,4 +100,3 @@ class FP_events_sugar extends Basic {
 }
 
 }
-?>

@@ -60,5 +60,3 @@ if(isset($_REQUEST['module']))
 $vcard->loadContact($_REQUEST['contact_id'], $module);
 
 $vcard->saveVCard();
-
-?>

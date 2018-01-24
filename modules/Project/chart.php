@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
  * 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd. 
  * 
  * This program is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU Affero General Public License version 3 as published by the 
@@ -241,7 +241,7 @@ class chart
               </td>
               <td scope="row_val" nowrap="nowrap" >
                   <input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/>
-                  <img border="0" id="date_start_trigger" style="position:relative; top:0px" alt="Enter Date" src="themes/SuiteR/images/jscalendar.gif?v=bkg9uGiXORNgnseXwmsUqg">
+                  '.SugarThemeRegistry::current()->getImage('jscalendar','id="date_start_trigger" style="position:relative; top:0px" border="0"').'
               </td>
               <td scope="row_label" nowrap="nowrap" >
                   <label for="field_chart">&nbsp;</label>

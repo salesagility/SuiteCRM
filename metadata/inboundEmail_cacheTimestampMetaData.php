@@ -67,5 +67,3 @@ $dictionary['InboundEmail_cacheTimestamp'] = array ('table' => 'inbound_email_ca
 	'relationships' => array (
 	), /* end relationships */
 );
-
-?>

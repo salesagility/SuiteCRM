@@ -58,4 +58,4 @@ $dashletData['PipelineBySalesStageDashlet']['searchFields'] = array(
                 'type'  => 'enum',
             ),
         );
-?>
+

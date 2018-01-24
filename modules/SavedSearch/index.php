@@ -89,5 +89,3 @@ elseif(!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
 else {
 	include('modules/SavedSearch/ListView.php');
 }
-
-?>

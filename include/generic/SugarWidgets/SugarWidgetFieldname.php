@@ -286,5 +286,3 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return $group_by;
 	}
 }
-
-?>

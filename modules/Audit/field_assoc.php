@@ -85,5 +85,3 @@ $moduleAssocFieldsArray = array('Account' =>
                                     )
                                 ),
                             );
-
-?>

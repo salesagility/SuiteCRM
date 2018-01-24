@@ -68,4 +68,3 @@ class DropDownTree extends MBPackageTree{
 		return translate('LBL_SECTION_PACKAGES');
 	}
 }
-?>

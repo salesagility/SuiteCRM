@@ -233,4 +233,3 @@ class ViewPopup extends SugarView{
 		}
 	}
 }
-?>

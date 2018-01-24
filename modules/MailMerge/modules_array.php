@@ -44,4 +44,3 @@ $modules_array = array('Accounts' => 'Accounts',
 					   'Contacts' => 'Contacts',
 					   'Leads' => 'Leads',
 					   'Opportunities' => 'Opportunities');
-?>

@@ -76,4 +76,3 @@ if(is_admin($current_user)
 $ListView->setHeaderTitle($current_module_strings['LBL_LIST_MY_PROJECT_TASKS'].$header_text);
 $ListView->setQuery($where, "", "date_due,priority desc", "PROJECT_TASK");
 $ListView->processListView($seedProjectTask, "main", "PROJECT_TASK");
-?>

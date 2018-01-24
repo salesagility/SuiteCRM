@@ -354,4 +354,3 @@ EOQ;
         return $output_html;
 	}
 } // end of class Popup_Picker
-?>

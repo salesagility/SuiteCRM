@@ -349,4 +349,3 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 //$focus->displayCronInstructions();
-?>

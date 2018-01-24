@@ -99,4 +99,3 @@ $layout_defs['AOS_Quotes'] = array(
 	),
 ),
 );
-?>

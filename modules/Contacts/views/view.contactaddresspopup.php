@@ -77,4 +77,3 @@ class ContactsViewContactAddressPopup extends SugarView {
 		echo $popup->process_page_for_address();
  	}
 }
-?>

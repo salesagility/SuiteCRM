@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -79,14 +79,32 @@ class ListViewSmarty extends ListViewDisplay
         parent::__construct();
         $this->ss = new Sugar_Smarty();
     }
+            
+    /**
+     *
+     * @return string|boolean
+     */
+    public function buildSendConfirmOptInEmailToPersonAndCompany()
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return false;
+        }
+
+        $linkTpl = new Sugar_Smarty();
+        $linkTpl->assign('module_name', $this->seed->module_name);
+        $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
+        
+        return $linkHTML;
+    }
 
     /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
-     *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_public string the corresponding html public in xtpl per row
+     * 
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
     function process($file, $data, $htmlpublic) {
@@ -304,5 +322,3 @@ class ListViewSmarty extends ListViewDisplay
         return $str;
     }
 }
-
-?>

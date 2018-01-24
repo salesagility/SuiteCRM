@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -299,10 +299,6 @@ EOHTML;
     echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
     echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
 
-    if(SugarThemeRegistry::current() == "SuiteR") {
-        echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
-    }
-
     echo '</head>';
     echo  '<body class="popupBody">';
 }
@@ -321,4 +317,3 @@ function insert_popup_footer()
 </html>
 EOQ;
 }
-?>

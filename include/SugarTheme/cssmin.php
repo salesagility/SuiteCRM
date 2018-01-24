@@ -205,4 +205,3 @@ function cssmin_decode_url($match)
 	{
 	return "url(" . base64_decode($match[1]) . ")";
 	}
-?>

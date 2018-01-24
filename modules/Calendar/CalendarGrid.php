@@ -644,5 +644,3 @@ class CalendarGrid {
 		return $str;
 	}
 }
-
-?>

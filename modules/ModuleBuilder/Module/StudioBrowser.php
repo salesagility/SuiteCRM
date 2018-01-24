@@ -80,10 +80,4 @@ class StudioBrowser{
 		uksort($nodes,'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
 		return $nodes;
 	}
-
-	
-	
-	
-	
 }
-?>

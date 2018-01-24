@@ -88,4 +88,3 @@ if(!empty($return_id))
 // now that the delete has been performed, return to given location
 
 header("Location: $return_location");
-?>

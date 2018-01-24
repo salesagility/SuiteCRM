@@ -115,4 +115,3 @@ $viewdefs['Bugs']['EditView'] = array(
 ),
 
 );
-?>

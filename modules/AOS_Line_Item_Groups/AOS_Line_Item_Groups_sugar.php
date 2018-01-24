@@ -67,4 +67,3 @@ class AOS_Line_Item_Groups_sugar extends Basic {
 }
 
 }
-?>

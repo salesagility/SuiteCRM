@@ -283,5 +283,3 @@ function define_image($num, $total)
 
     }
 }
-    
-?>

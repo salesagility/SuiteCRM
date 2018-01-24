@@ -108,6 +108,3 @@ notify_setrequired(document.ConfigureSettings);
 
 EOQ;
 }
-
-
-?>

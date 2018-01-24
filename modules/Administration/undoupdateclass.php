@@ -54,4 +54,3 @@ foreach ($beanFiles as $Classname => $filename){
 		rename($Newfilename,$filename);
 	}
 }
-?>

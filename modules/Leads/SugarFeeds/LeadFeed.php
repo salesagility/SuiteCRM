@@ -66,4 +66,4 @@ class LeadFeed extends FeedLogicBase {
 		
     }
 }
-?>
+

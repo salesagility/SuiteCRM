@@ -101,5 +101,3 @@ ob_end_flush();
 fwrite($fp, "done\n");
 die();
 // close cURL resource, and free up system resources
-
-?>

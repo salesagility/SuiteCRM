@@ -81,4 +81,3 @@ $fields_array['Relationship'] = array ('column_fields' => Array(
 	),
     'required_fields' =>   array("relationship_name"=>1),
 );
-?>

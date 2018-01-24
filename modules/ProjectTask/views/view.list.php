@@ -283,5 +283,3 @@ class ProjectTaskViewList extends ViewList{
 		}
  	}
 }
-
-?>

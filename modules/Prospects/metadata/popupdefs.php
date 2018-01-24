@@ -60,8 +60,3 @@ $popupMeta = array('moduleMain' => 'Prospect',
 									'createButton' => 'LNK_NEW_PROSPECT'
 								  )
 						);
-
-
-?>
- 
- 

@@ -13,4 +13,3 @@ $viewdefs['ACLRoles']['DetailView'] = array(
     
     
 );
-?>

@@ -780,7 +780,3 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
     return $nav_html;
 }
-    
-
-
-?>

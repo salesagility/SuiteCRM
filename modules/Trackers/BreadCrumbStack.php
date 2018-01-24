@@ -267,5 +267,3 @@ class BreadCrumbStack {
       return $s;
    }
 }
-
-?>

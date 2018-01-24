@@ -208,4 +208,3 @@ class MyMeetingsDashlet extends DashletGeneric {
     }
 }
 
-?>

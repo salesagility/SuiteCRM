@@ -361,3 +361,31 @@ p.msg {
     @include hideWhenPrinting()
   }
 }
+
+
+.email-link {
+    display: block;
+    float: left;
+}
+
+.confirm-opt-in-tick {
+    float: right;
+    padding: 0 10px;
+}
+
+
+.email-opt-in {
+  font-size: 14px;
+}
+
+.email-opt-in-not-sent {
+  color: $opt-in-tick-color-not-sent;
+}
+
+.email-opt-in-sent {
+  color: $opt-in-tick-color-sent;
+}
+
+.email-opt-in-confirmed {
+  color: $confirm-opt-in-tick-color-in-confirmed;
+}

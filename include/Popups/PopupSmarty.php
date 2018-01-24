@@ -580,4 +580,3 @@ EOQ;
 		return $qc->process($this->module);
 	}
 }
-?>

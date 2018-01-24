@@ -155,5 +155,3 @@ class StandardField extends DynamicField
     
     
 }
-
-?>

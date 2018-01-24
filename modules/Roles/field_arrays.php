@@ -57,4 +57,3 @@ $fields_array['Role'] = array ('column_fields' => array (
 		'name'=>1,
 	),
 );
-?>

@@ -245,4 +245,3 @@ class EmailMarketing extends SugarBean
 		return $errors;
 	}
 }
-?>

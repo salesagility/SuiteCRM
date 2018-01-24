@@ -162,7 +162,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //execute the method with required data preset and verify it returns expected result
         $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
         $totals = array('label' => array(10, 20, 30));
-        $expected = '<tbody><tr><th>total Sum</th></tr><tr><td>60</td></tr></tbody>';
+        $expected = "<thead class='fc-head'><tr><th>total Sum</td></tr></thead></body><tr class='oddListRowS1'><td>60</td></tr></body>";
 
         $aor_Report = new AOR_Report();
         $actual = $aor_Report->getTotalHTML($fields, $totals);

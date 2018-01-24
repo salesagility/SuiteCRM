@@ -284,4 +284,3 @@ foreach ($admin_group_header as $key=>$values) {
 
 	}
 }
-?>

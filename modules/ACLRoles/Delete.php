@@ -45,5 +45,3 @@ if(isset($_REQUEST['record'])){
 }
 require_once('include/formbase.php');
 handleRedirect();
-
-?>

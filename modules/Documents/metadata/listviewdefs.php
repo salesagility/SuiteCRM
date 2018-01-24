@@ -122,4 +122,3 @@ $listViewDefs['Documents'] = array(
     'default' => true,
   )
 );
-?>

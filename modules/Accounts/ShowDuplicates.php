@@ -162,6 +162,3 @@ else
 $xtpl->assign('INPUT_FIELDS',$input);
 $xtpl->parse('main');
 $xtpl->out('main');
-
-
-?>

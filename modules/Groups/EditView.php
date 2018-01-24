@@ -81,5 +81,3 @@ if (empty($_REQUEST['return_id'])) {
 }
 $xtpl->parse("main");
 $xtpl->out("main");
-
-?>

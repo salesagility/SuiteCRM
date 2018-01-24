@@ -337,6 +337,3 @@ class TemplateRelatedTextField extends TemplateText{
     }
     
 }
-
-
-?>

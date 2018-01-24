@@ -56,5 +56,4 @@ $dictionary['accounts_bugs'] = array ( 'table' => 'accounts_bugs'
 							  'rhs_module'=> 'Bugs', 'rhs_table'=> 'bugs', 'rhs_key' => 'id',
 							  'relationship_type'=>'many-to-many',
 							  'join_table'=> 'accounts_bugs', 'join_key_lhs'=>'account_id', 'join_key_rhs'=>'bug_id'))
-)
-?>
+);

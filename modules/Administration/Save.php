@@ -81,4 +81,3 @@ foreach ($_POST as $key => $val) {
 
 
 header("Location: index.php?action={$_POST['return_action']}&module={$_POST['return_module']}");
-?>

@@ -61,4 +61,3 @@ $acldefs['Opportunities'] = array (
     'EditView' => 'EditView',
   ),
 );
-?>

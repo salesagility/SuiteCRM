@@ -90,4 +90,3 @@ $listViewDefs['Bugs'] = array(
         'id' => 'ASSIGNED_USER_ID',
         'default' => true)
 );
-?>

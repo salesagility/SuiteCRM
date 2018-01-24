@@ -62,4 +62,3 @@ class ImportMapCsv extends ImportMapOther
      */
     public $enclosure;
 }
-?>

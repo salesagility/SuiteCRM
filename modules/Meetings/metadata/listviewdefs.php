@@ -123,4 +123,3 @@ array (
 	'default' => true
   ),  
 );
-?>

@@ -41,4 +41,3 @@ $module_name = 'AOW_WorkFlow';
 						),
 					),
  			   );
-?>

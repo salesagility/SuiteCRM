@@ -150,6 +150,3 @@ $dictionary['ACLRole'] = array('table' => 'acl_roles', 'comment' => 'ACL Role de
     )
 
 );
-
-
-?>

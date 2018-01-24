@@ -351,4 +351,3 @@ class component{
  		$this->_source = $source;
  	}
 }
-?>

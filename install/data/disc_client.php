@@ -57,4 +57,3 @@ $disc_client_ignore = array (
 
 $disc_client_no_sync = array (
 );
-?>

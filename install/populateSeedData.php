@@ -508,6 +508,3 @@ foreach($sugar_demodata['project_seed_data']['audit']['project_tasks'] as $v){
 
     $project_task_id_counter++;
 }
-
-
-?>

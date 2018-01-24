@@ -72,4 +72,3 @@ $layout_defs['AOS_Product_Categories'] = array(
         ),
     ),
 );
-?>

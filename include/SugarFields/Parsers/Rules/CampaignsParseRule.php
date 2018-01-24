@@ -90,4 +90,3 @@ function preParse($panels, $view) {
 }
 
 }
-?>

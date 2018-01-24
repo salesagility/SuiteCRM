@@ -114,4 +114,3 @@
 	} 
 	ob_clean();
 	header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);
-?>

@@ -346,4 +346,3 @@ $layout_defs['History'] = array(
 		),
 	),
 );
-?>

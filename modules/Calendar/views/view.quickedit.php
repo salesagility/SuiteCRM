@@ -115,5 +115,3 @@ class CalendarViewQuickEdit extends SugarView {
 		echo json_encode($json_arr);
 	}
 }
-
-?>

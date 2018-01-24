@@ -59,4 +59,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     }
     print 1;
     exit;
-?>

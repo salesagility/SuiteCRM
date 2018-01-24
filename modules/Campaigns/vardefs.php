@@ -382,4 +382,3 @@ $dictionary['Campaign'] = array('audited' => true,
 );
 VardefManager::createVardef('Campaigns', 'Campaign', array('default', 'assignable', 'security_groups',
 ));
-?>

@@ -82,7 +82,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         }
     //set execution time back to what it was   
     ini_set('max_execution_time',$tmp_time);
-
-    
- 
-?>

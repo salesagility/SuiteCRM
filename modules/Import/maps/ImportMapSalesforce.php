@@ -162,5 +162,3 @@ class ImportMapSalesforce extends ImportMapOther
 	}
 }
 
-
-?>

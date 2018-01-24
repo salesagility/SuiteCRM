@@ -143,4 +143,3 @@ if ( $relationship != '' ) {
 
 handleRedirect();
 exit;
-?>

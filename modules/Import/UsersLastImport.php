@@ -235,4 +235,4 @@ class UsersLastImport extends SugarBean
     }
 
 }
-?>
+

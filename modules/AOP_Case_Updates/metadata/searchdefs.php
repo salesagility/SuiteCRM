@@ -39,4 +39,3 @@ $module_name = 'AOP_Case_Updates';
 						),
 					),
  			   );
-?>

@@ -82,4 +82,3 @@ switch($_REQUEST['commitStep']) {
 }
 
 savePersistence($persistence);
-?>

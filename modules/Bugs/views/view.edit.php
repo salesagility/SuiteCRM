@@ -70,4 +70,3 @@ class BugsViewEdit extends ViewEdit {
  		parent::display();
  	}
 }
-?>

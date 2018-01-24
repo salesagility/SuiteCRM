@@ -66,4 +66,3 @@ class SugarLogStore implements Store {
        $GLOBALS['log']->info(var_export($values, true));
     }
 }
-?>

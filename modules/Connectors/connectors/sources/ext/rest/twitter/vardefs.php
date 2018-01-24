@@ -6,5 +6,3 @@ $dictionary['twitter_api'] = array(
 
 
 );
-
-?>

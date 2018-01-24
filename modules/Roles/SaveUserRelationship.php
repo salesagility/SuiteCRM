@@ -67,5 +67,3 @@ echo "  window.opener.location.reload();\n";
 echo "	window.location=\"{$header_URL}\";\n";
 echo "// -->\n";
 echo "</script>";
-
-?>

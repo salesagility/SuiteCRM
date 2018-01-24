@@ -94,6 +94,3 @@ EOQ;
 }else{
 	echo 'No Module Selected';
 }	
-
-
-?>

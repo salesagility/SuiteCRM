@@ -130,4 +130,3 @@ $dictionary['Role'] = array('table' => 'roles'
                                                    )
 
                             );
-?>

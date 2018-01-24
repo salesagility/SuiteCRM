@@ -94,5 +94,3 @@ class MyBugsDashlet extends DashletGeneric {
         return $this->configureSS->fetch($this->configureTpl);
     }
 }
-
-?>

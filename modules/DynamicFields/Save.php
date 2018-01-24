@@ -72,5 +72,3 @@ $af = new AddField();
 $af->add_field($name, $html,$label, 'window.opener.');
 echo $af->get_script('window.opener.');
 echo "\n<script>window.close();</script>";
-
-?>

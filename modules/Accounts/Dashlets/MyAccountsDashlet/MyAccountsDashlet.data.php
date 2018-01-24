@@ -226,4 +226,3 @@ $dashletData['MyAccountsDashlet']['columns'] =  array (
     'default' => false,
   ),
 );
-?>

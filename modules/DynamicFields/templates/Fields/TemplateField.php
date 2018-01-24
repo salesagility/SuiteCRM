@@ -577,6 +577,3 @@ class TemplateField{
 	}
 
 }
-
-
-?>

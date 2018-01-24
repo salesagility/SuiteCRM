@@ -187,4 +187,3 @@ class SearchMerge extends ListViewMerge{
 	}	
 	
 }
-?>

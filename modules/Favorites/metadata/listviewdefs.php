@@ -49,4 +49,3 @@ array (
     'default' => true,
   ),
 );
-?>

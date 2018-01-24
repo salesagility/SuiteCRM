@@ -330,4 +330,4 @@ function get_attendee_list($session, $module_name, $id){
 	$xml = base64_encode($xml);
 	return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
-?>
+

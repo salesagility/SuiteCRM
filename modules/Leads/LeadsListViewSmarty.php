@@ -26,16 +26,31 @@ class LeadsListViewSmarty extends ListViewSmarty {
         self::__construct();
     }
 
+    /**
+     *
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
+     * @return bool|void
+     */
+    public function process($file, $data, $htmlVar)
+    {
 
-	function process($file, $data, $htmlVar) {
-		parent::process($file, $data, $htmlVar);
+        $configurator = new Configurator();
+        if ($configurator->isConfirmOptInEnabled()) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
 
-        	if(!ACLController::checkAccess($this->seed->module_dir,'export',true) || !$this->export) {
-			$this->ss->assign('exportLink', $this->buildExportLink());
-		}
-	}
+        $ret = parent::process($file, $data, $htmlVar);
 
-	function buildExportLink($id = 'export_link'){
+        if (!ACLController::checkAccess($this->seed->module_dir, 'export', true) || !$this->export) {
+            $this->ss->assign('exportLink', $this->buildExportLink());
+        }
+
+        return $ret;
+    }
+
+    function buildExportLink($id = 'export_link'){
 		global $app_strings;
 		global $sugar_config;
 
@@ -55,5 +70,3 @@ class LeadsListViewSmarty extends ListViewSmarty {
 	}
 
 }
-
-?>

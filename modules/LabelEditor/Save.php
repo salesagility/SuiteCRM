@@ -66,6 +66,3 @@ if(isset($_REQUEST['multi_edit'])){
 	}
 	header("Location:$location" );
 }
-
-
-?>

@@ -89,4 +89,3 @@ $dashletData['MyOpportunitiesDashlet']['columns'] = array('name' => array('width
 														  'next_step' => array('width' => '10', 
 														        'label' => 'LBL_NEXT_STEP'),                                                                         
                                                            );
-?>

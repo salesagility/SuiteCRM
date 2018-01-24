@@ -88,4 +88,3 @@ class AOS_PDF_Templates_sugar extends Basic {
 }
 
 }
-?>

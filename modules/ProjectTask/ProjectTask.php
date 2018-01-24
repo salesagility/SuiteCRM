@@ -744,4 +744,3 @@ function getUtilizationDropdown($focus, $field, $value, $view) {
 
     return translate('project_task_utilization_options', '', $focus->$field);
 }
-?>

@@ -127,6 +127,3 @@ class ImportMapAct extends ImportMapOther
         }
     }
 }
-
-
-?>

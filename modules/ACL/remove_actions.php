@@ -56,6 +56,3 @@ if(is_admin($current_user)){
 	if(!$foundOne)
 		echo 'No ACL modules found that needed to be removed';
 }
-
-
-?>

@@ -94,6 +94,3 @@ $dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('wi
                                                    'assigned_user_name' => array('width'   => '8', 
                                                                                  'label'   => 'LBL_LIST_ASSIGNED_USER'),
                                                                          );
-
-
-?>

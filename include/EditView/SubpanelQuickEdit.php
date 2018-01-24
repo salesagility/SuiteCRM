@@ -166,4 +166,3 @@ class SubpanelQuickEdit{
 		echo $this->ev->display(false, true);
 	}
 }
-?>

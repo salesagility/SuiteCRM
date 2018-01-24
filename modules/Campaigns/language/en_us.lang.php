@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -133,6 +133,7 @@ $mod_strings = array(
     'LBL_CAMPAIGN_LEAD_SUBPANEL_TITLE' => 'Leads',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_LOG_ENTRIES_CONTACT_TITLE' => 'Contacts Created',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 
     //error messages.
     'ERR_SENDING_NOW' => 'Messages are being delivered , please try this later.',

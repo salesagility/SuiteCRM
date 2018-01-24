@@ -101,4 +101,3 @@ ob_end_flush();
 flush();
 sugar_cleanup();
 exit();
-?>

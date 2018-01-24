@@ -59,4 +59,3 @@ $layout_defs['Roles'] = array(
 		),
 	),
 );
-?>

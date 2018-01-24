@@ -115,4 +115,3 @@ class AccountsViewDetail extends ViewDetail {
  	}
 }
 
-?>

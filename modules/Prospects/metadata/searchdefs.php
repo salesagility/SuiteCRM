@@ -66,4 +66,3 @@ $searchdefs['Prospects'] = array(
 					),
 				),
 		   );
-?>

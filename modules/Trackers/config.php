@@ -58,4 +58,3 @@ $tracker_config =
       ),
     ),
   );
-?>

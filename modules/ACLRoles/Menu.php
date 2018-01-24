@@ -58,4 +58,3 @@ if (is_admin($current_user)) {
     $module_menu[] = Array("index.php?module=Users&action=index&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_MANAGE_USERS_TITLE'], "List");
     $module_menu[] = Array("index.php?module=SecurityGroups&action=config&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_CONFIG_SECURITYGROUPS_TITLE'], "Security_Groups");
 }
-?>

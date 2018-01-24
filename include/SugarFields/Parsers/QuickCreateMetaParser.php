@@ -281,4 +281,3 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 
 
 }
-?>

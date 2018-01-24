@@ -75,5 +75,3 @@ class ProjectViewList extends ViewList{
         $this->lv = new ProjectListViewSmarty();
     }
 }
-
-?>

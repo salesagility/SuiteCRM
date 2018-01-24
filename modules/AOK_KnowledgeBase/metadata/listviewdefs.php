@@ -105,4 +105,3 @@ array (
     'default' => false,
   ),
 );
-?>
