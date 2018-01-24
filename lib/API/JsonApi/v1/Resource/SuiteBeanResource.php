@@ -201,6 +201,11 @@ class SuiteBeanResource extends Resource
 
         if (empty($sugarBean)) {
             $sugarBean = \BeanFactory::newBean($this->type);
+
+            if (!empty($this->id)) {
+                $sugarBean->new_with_id = true;
+                $sugarBean->id = $this->id;
+            }
         }
 
         foreach ($sugarBean->field_defs as $fieldName => $definition) {
