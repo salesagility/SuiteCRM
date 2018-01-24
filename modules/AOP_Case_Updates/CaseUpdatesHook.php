@@ -376,7 +376,7 @@ class CaseUpdatesHook
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
 
-        if (!$emailTemplate) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail template is empty');
 
             return false;
@@ -525,7 +525,7 @@ class CaseUpdatesHook
 
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
-        if (!$emailTemplate || !$aop_config['case_creation_email_template_id']) {
+        if (!$emailTemplate->id || !$aop_config['case_creation_email_template_id']) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendCreationEmail template is empty');
 
             return false;
@@ -620,7 +620,7 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
-            if ($email_template) {
+            if ($email_template->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
                     $emails = array();
