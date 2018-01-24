@@ -67,7 +67,7 @@ class AOS_Products extends AOS_Products_sugar {
 
             }
             else {
-                $this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$_FILES['uploadimage']['name'];
+                $this->product_image= $sugar_config['upload_dir'].$_FILES['uploadimage']['name'];
                 move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$_FILES['uploadimage']['name']);
 
             }
