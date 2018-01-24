@@ -102,41 +102,29 @@ class Basic extends SugarBean
 
         $configurator = new Configurator();
         $configurator->config;
+        
+        $ret = 'UNKNOWN_OPT_IN_STATUS';
 
         if ($configurator->config['email_enable_confirm_opt_in'] === '') {
-            return 'OPT_IN_DISABLED';
-        }
-
-        if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
-
+            $ret = 'OPT_IN_DISABLED';
+        } elseif ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
 
             if ($emailAddress->invalid_email == '1') {
-                return 'INVALID';
-            }
-
-            if ($emailAddress->opt_out == '1') {
-                return 'OPT_OUT';
-            }
-
-            if (
-                $emailAddress->confirm_opt_in == 'confirmed-opt-in'
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-            } elseif (
-                $emailAddress->confirm_opt_in == 'opt-in'
-                && !empty($emailAddress->confirm_opt_in_sent_date)
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_SENT';
-            } elseif (
-                empty($emailAddress->confirm_opt_in_sent_date)
-                && $emailAddress->confirm_opt_in !== ''
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+                $ret = 'INVALID';
+            } elseif ($emailAddress->opt_out == '1') {
+                $ret = 'OPT_OUT';
+            } elseif ($emailAddress->confirm_opt_in !== '' && empty($emailAddress->confirm_opt_in_sent_date)) {
+                $ret = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+            } elseif ($emailAddress->confirm_opt_in == 'opt-in' && !empty($emailAddress->confirm_opt_in_sent_date)) {
+                $ret = 'OPT_IN_PENDING_EMAIL_SENT';
+            } elseif ($emailAddress->confirm_opt_in == 'opt-in' && empty($emailAddress->confirm_opt_in_sent_date)) {
+                $ret = 'OPT_IN_PENDING_EMAIL_FAILED';
+            } elseif ($emailAddress->confirm_opt_in == 'confirmed-opt-in') {
+                $ret = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
             }
         }
 
-        // Otherwise
-        return 'UNKNOWN_OPT_IN_STATUS';
+        return $ret;
     }
 
     /**
