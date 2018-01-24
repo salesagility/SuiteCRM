@@ -112,6 +112,11 @@ class SugarEmailAddress extends SugarBean
      */
     public $confirm_opt_in_sent_date;
 
+    /**
+     * @var TimeDate $confirm_opt_in_sent_date
+     */
+    public $confirm_opt_in_fail_date;
+
 
     /**
      * Sole constructor

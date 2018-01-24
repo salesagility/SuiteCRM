@@ -616,7 +616,7 @@ class FP_eventsController extends SugarController
         $mail->AddAddress($emailTo);
 
         //now create email
-        if (@$mail->Send()) {
+        if ($mail->send()) {
             $emailObj->to_addrs= '';
             $emailObj->type= 'out';
             $emailObj->deleted = '0';
