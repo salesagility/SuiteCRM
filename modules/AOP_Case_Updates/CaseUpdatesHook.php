@@ -525,7 +525,7 @@ class CaseUpdatesHook
 
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
-        if (!$emailTemplate->id || !$aop_config['case_creation_email_template_id']) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendCreationEmail template is empty');
 
             return false;
