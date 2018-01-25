@@ -45,6 +45,16 @@
                         _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
                         var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
 
+                        // datetime combo fields
+                        if (typeof fieldInput === 'undefined'
+                          && $("[name='aor_conditions_value\\["+ln+"\\]']").val()
+                          && $("[name='aor_conditions_value\\["+ln+"\\]']").hasClass('DateTimeCombo')) {
+                            var datetime = $("[name='aor_conditions_value\\["+ln+"\\]']").val();
+                            var date = datetime.substr(0,10);
+                            var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
+                            fieldInput = datetime.replace(date, formatDate) + ':00';
+                        }
+
                         // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
                         if($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length){
                             var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
