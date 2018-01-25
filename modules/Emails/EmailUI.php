@@ -472,6 +472,7 @@ eoq;
                 foreach($addresses as $address) {
                     if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
                         $optOut = true;
+                        $emailLink .= '<span class="email-line-through">';
                     }
                 }
                 if(!$optOut) {
@@ -489,6 +490,7 @@ eoq;
      * @param string $emailField
      * @throws RuntimeException
      * @throws InvalidArgumentException
+     * @return string
      */
     private function getEmailAddressConfirmOptInTick($myBean, $emailField)
     {
