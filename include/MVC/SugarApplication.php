@@ -669,21 +669,55 @@ class SugarApplication {
      * @access	public
      * @param	string	$url	The URL to redirect to
      */
-    public static function appendErrorMessage($error_message) {
-        if (empty($_SESSION['user_error_message']) || !is_array($_SESSION['user_error_message'])) {
-            $_SESSION['user_error_message'] = array();
-        }
-        $_SESSION['user_error_message'][] = $error_message;
+    public static function appendErrorMessage($message) {
+        self::appendMessage('user_error_message', $message);
     }
 
     public static function getErrorMessages() {
-        if (isset($_SESSION['user_error_message']) && is_array($_SESSION['user_error_message'])) {
-            $msgs = $_SESSION['user_error_message'];
-            unset($_SESSION['user_error_message']);
+        $messages = self::getMessages('user_error_message');
+        return $messages;
+    }
+    
+    public static function appendSuccessMessage($message) {
+        self::appendMessage('user_success_message', $message);
+    }
+
+    public static function getSuccessMessages() {
+        $messages = self::getMessages('user_success_message');
+        return $messages;
+    }
+    
+    protected static function appendMessage($type, $message) {
+        
+        self::validateMessageType($type);
+        
+        if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
+            $_SESSION[$type] = array();
+        }
+        if(!in_array($message, $_SESSION[$type])) {
+            $_SESSION[$type][] = $message;
+        }
+    }
+    
+    protected static function getMessages($type) {
+        
+        self::validateMessageType($type);
+        
+        if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
+            $msgs = $_SESSION[$type];
+            unset($_SESSION[$type]);
             return $msgs;
         } else {
             return array();
         }
+    }
+    
+    protected static function validateMessageType($type) {
+        
+        if(!in_array($type, array('user_error_message', 'user_success_message'))) {
+            throw new Exception('Incorrect application message type: ' . $type);
+        }
+        
     }
 
     /**
