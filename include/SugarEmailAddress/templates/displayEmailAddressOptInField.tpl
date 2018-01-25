@@ -39,7 +39,9 @@
  */
 *}
 <span class="email-opt-in-container">
-    {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
+    {if $OPT_IN_STATUS === 'OPT_IN'}
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
         <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
         <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
     {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
