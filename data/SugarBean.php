@@ -4243,7 +4243,7 @@ class SugarBean
      * @param string|int $id Optional, default -1, is set to -1 id value from the bean is used, else, passed value is used
      * @param bool $encode Optional, default true, encodes the values fetched from the database.
      * @param bool $deleted Optional, default true, if set to false deleted filter will not be added.
-     * @return SugarBean
+     * @return SugarBean|null
      *
      * Internal function, do not override.
      */
