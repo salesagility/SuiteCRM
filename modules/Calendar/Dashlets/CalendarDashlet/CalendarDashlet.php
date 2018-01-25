@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -50,7 +50,9 @@ class CalendarDashlet extends Dashlet
     public $view = 'week';
 
     /**
-     * @see Dashlet::__construct()
+     * CalendarDashlet constructor.
+     * @param $id string
+     * @param $def array
      */
     public function __construct($id, $def)
     {
@@ -150,13 +152,14 @@ class CalendarDashlet extends Dashlet
     }
 
     /**
-     * @see Dashlet::saveOptions()
+     * @param $req array
+     * @return array
      */
     public function saveOptions($req)
     {
         $options = array();
-        $options['title'] = $_REQUEST['title'];
-        $options['view'] = $_REQUEST['view'];
+        $options['title'] = $req['title'];
+        $options['view'] = $req['view'];
 
         return $options;
     }
