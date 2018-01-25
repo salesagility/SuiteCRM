@@ -1897,7 +1897,12 @@ class SugarBean
         require_once("data/BeanFactory.php");
         BeanFactory::registerBean($this->module_name, $this);
 
-
+        if (empty($GLOBALS['updating_relationships']) && empty($GLOBALS['saving_relationships']) && empty($GLOBALS['resavingRelatedBeans'])) {
+            $GLOBALS['saving_relationships'] = true;
+            // let subclasses save related field changes
+            $this->save_relationship_changes($isUpdate);
+            $GLOBALS['saving_relationships'] = false;
+        }
         if ($isUpdate && !$this->update_date_entered) {
             unset($this->date_entered);
         }
@@ -1931,18 +1936,6 @@ class SugarBean
             $this->db->update($this);
         } else {
             $this->db->insert($this);
-            //we need to update the bean.
-            if(!defined("SUGARCRM_IS_INSTALLING")){
-                $this->retrieve($this->id);
-            }
-        }
-
-        if (empty($GLOBALS['updating_relationships']) && empty($GLOBALS['saving_relationships']) && empty($GLOBALS['resavingRelatedBeans'])) {
-            $GLOBALS['saving_relationships'] = true;
-            // let subclasses save related field changes
-            $this->save_relationship_changes($isUpdate);
-            $GLOBALS['saving_relationships'] = false;
-
         }
 
         if (empty($GLOBALS['resavingRelatedBeans'])) {

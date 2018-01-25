@@ -434,14 +434,15 @@ class CaseUpdatesHook
         if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
             return;
         }
+        if (!$bean->fetched_row) {
+            return;
+        }
         if (!empty($arguments['related_bean'])) {
             $contact = $arguments['related_bean'];
         } else {
             $contact = BeanFactory::getBean('Contacts', $arguments['related_id']);
         }
-        if(isset($contact->id) && !empty($contact->id)){
-            $this->sendCreationEmail($bean, $contact);
-        }
+        $this->sendCreationEmail($bean, $contact);
     }
 
     /**
