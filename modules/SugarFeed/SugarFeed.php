@@ -424,7 +424,7 @@ class SugarFeed extends Basic {
             if ( isset($reply->created_by) ) {
                 $user = loadBean('Users');
                 $user->retrieve($reply->created_by);
-                $image_url = 'index.php?entryPoint=download&id='.$user->picture.'&type=SugarFieldImage&isTempFile=1&isProfile=1';
+                $image_url = 'index.php?entryPoint=download&id='.$user->id.'_photo&type=Users';
             }
             $replyHTML .= '<div style="float: left; margin-right: 3px; width: 50px; height: 50px;"><!--not_in_theme!--><img src="'.$image_url.'" style="max-width: 50px; max-height: 50px;"></div> ';
             $replyHTML .= str_replace("{this.CREATED_BY}",get_assigned_user_name($reply->created_by),html_entity_decode($reply->name)).'<br>';
