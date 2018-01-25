@@ -71,7 +71,7 @@ class ContactsController extends SugarController
     /**
      * action: Send Confirm Opt In Email to Contact
      * 
-     * @global type $app_strings
+     * @global array $app_strings
      */
     public function action_sendConfirmOptInEmail() {
         global $app_strings;

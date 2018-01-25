@@ -375,7 +375,7 @@ class Configurator
     }
     
     public function getConfirmOptInEnumValue() {
-        // TODO: use this function everywhere to make the code more clear
+        // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
         $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : '';
         return $ret;
     }

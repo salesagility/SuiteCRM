@@ -664,29 +664,47 @@ class SugarApplication {
     }
 
     /**
-     * Redirect to another URL
+     * Storing messages into session
      *
      * @access	public
-     * @param	string	$url	The URL to redirect to
+     * @param string $message
      */
     public static function appendErrorMessage($message) {
         self::appendMessage('user_error_message', $message);
     }
 
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
     public static function getErrorMessages() {
         $messages = self::getMessages('user_error_message');
         return $messages;
     }
     
+    /**
+     * Storing messages into session
+     *
+     * @access	public
+     * @param string $message
+     */
     public static function appendSuccessMessage($message) {
         self::appendMessage('user_success_message', $message);
     }
 
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
     public static function getSuccessMessages() {
         $messages = self::getMessages('user_success_message');
         return $messages;
     }
     
+    /**
+     * Storing messages into session
+     * @param string $message
+     */
     protected static function appendMessage($type, $message) {
         
         self::validateMessageType($type);
@@ -699,6 +717,10 @@ class SugarApplication {
         }
     }
     
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
     protected static function getMessages($type) {
         
         self::validateMessageType($type);
@@ -712,6 +734,11 @@ class SugarApplication {
         }
     }
     
+    /**
+     * 
+     * @param string $type possible message types: ['user_error_message', 'user_success_message']
+     * @throws Exception message type should be valid
+     */
     protected static function validateMessageType($type) {
         
         if(!in_array($type, array('user_error_message', 'user_success_message'))) {
