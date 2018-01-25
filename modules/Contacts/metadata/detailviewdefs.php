@@ -48,24 +48,7 @@ array (
       array (
         'buttons' => 
         array(
-            
-                            'SEND_CONFIRM_OPT_IN_EMAIL' => array(
-                                'customCode' => '<input type="submit" class="button" title="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}" onclick="this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'Contacts\'; this.form.module_tab.value=\'Contacts\';" name="send_confirm_opt_in_email" value="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}"/>',
-                                'sugar_html' =>
-                                array(
-                                    'type' => 'submit',
-                                    'value' => '{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}',
-                                    'htmlOptions' =>
-                                    array(
-                                        'class' => 'button',
-                                        'id' => 'send_confirm_opt_in_email',
-                                        'title' => '{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}',
-                                        'onclick' => 'this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'Contacts\'; this.form.module_tab.value=\'Contacts\';',
-                                        'name' => 'send_confirm_opt_in_email',
-                                    ),
-                                ),
-                            ),
-            
+            'SEND_CONFIRM_OPT_IN_EMAIL' => EmailAddress::getSendConfirmOptInEmailActionLinkDefs('Contacts'),
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',

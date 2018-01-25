@@ -48,6 +48,7 @@ array (
       array (
         'buttons' => 
         array (
+            'SEND_CONFIRM_OPT_IN_EMAIL' => EmailAddress::getSendConfirmOptInEmailActionLinkDefs('Leads'),
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
