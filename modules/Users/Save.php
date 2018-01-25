@@ -380,7 +380,12 @@ if (!$focus->verify_data()) {
     if ((isset($_POST['old_password']) || $focus->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] == 'true')) {
-        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
+        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {            
+
+            if ($focus->error_string) {
+                SugarApplication::appendErrorMessage($focus->error_string);
+            }
+
             if ((isset($_POST['page']) && $_POST['page'] == 'EditView')) {
                 header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record'] . "&error_password=" . urlencode($focus->error_string));
                 exit;
