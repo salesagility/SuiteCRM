@@ -134,6 +134,11 @@ if (!empty($_POST['saveConfig'])) {
             $_POST['passwordsetting_lockoutexpiration'] = 2;
         }
 
+        $configurator->config['passwordsetting']['oneupper'] = $_POST['passwordsetting_oneupper'];
+        $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
+        $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
+        $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
+        
         $configurator->saveConfig();
 
         $focus->saveConfig();
