@@ -1754,35 +1754,35 @@ class SugarEmailAddress extends SugarBean
      * @return array ViewDefs for Confirm Opt In action link
      */
     public static function getSendConfirmOptInEmailActionLinkDefs($module, $returnModule = null, $returnAction = null, $moduleTab = null) {
-        
+
         $configurator = new Configurator();
         $configOptInEnabled = $configurator->isConfirmOptInEnabled();
-        
+
         $disabledAttribute = $configOptInEnabled ? '' : 'disabled="disabled"';
         $hiddenClass = $configOptInEnabled ? '' : 'hidden';
-        
-        if(is_null($returnModule)) {
+
+        if (is_null($returnModule)) {
             $returnModule = $module;
         }
-        
-        if(is_null($returnAction)) {
+
+        if (is_null($returnAction)) {
             $returnAction = $module;
         }
-        
-        if(is_null($moduleTab)) {
+
+        if (is_null($moduleTab)) {
             $moduleTab = $module;
         }
-        
+
         $ret = array(
-            'customCode' => 
-                '<input type="submit" class="button ' . 
-                $hiddenClass . '" ' . $disabledAttribute . 
-                ' title="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}" onclick="this.form.return_module.value=\'' . 
-                $returnModule . '\'; this.form.return_action.value=\'' . 
-                $returnAction . '\'; this.form.return_id.value=\'{$fields.id.value}\'; ' . 
-                'this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'' . 
-                $module . '\'; this.form.module_tab.value=\'' . $moduleTab . 
-                '\';" name="send_confirm_opt_in_email" value="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}"/>',
+            'customCode' =>
+            '<input type="submit" class="button ' .
+            $hiddenClass . '" ' . $disabledAttribute .
+            ' title="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}" onclick="this.form.return_module.value=\'' .
+            $returnModule . '\'; this.form.return_action.value=\'' .
+            $returnAction . '\'; this.form.return_id.value=\'{$fields.id.value}\'; ' .
+            'this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'' .
+            $module . '\'; this.form.module_tab.value=\'' . $moduleTab .
+            '\';" name="send_confirm_opt_in_email" value="{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}"/>',
             'sugar_html' =>
             array(
                 'type' => 'submit',
@@ -1792,19 +1792,19 @@ class SugarEmailAddress extends SugarBean
                     'class' => 'button ' . $hiddenClass,
                     'id' => 'send_confirm_opt_in_email',
                     'title' => '{$APP.LBL_SEND_CONFIRM_OPT_IN_EMAIL}',
-                    'onclick' => 'this.form.return_module.value=\'' . $returnModule . 
-                        '\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; ' . 
-                        'this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'' . $module . 
-                        '\'; this.form.module_tab.value=\'' . $moduleTab . '\';',
+                    'onclick' => 'this.form.return_module.value=\'' . $returnModule .
+                    '\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; ' .
+                    'this.form.action.value=\'sendConfirmOptInEmail\'; this.form.module.value=\'' . $module .
+                    '\'; this.form.module_tab.value=\'' . $moduleTab . '\';',
                     'name' => 'send_confirm_opt_in_email',
                 ),
             ),
         );
-        
-        if(!$configOptInEnabled) {
+
+        if (!$configOptInEnabled) {
             $ret['sugar_html']['htmlOptions']['disabled'] = true;
         }
-        
+
         return $ret;
     }
 

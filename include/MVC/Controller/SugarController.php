@@ -1109,19 +1109,19 @@ class SugarController
      */
     public function action_sendConfirmOptInEmail() {
         global $app_strings;
-        
-        if(!in_array($this->bean->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects'))) {
-            $msg = $app_strings['LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON'];            
+
+        if (!in_array($this->bean->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects'))) {
+            $msg = $app_strings['LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON'];
             SugarApplication::appendErrorMessage($msg);
-        } else {        
+        } else {
             $configurator = new Configurator();
             $confirmOptInEnabled = $configurator->isConfirmOptInEnabled();
-            if(!$confirmOptInEnabled) {
-                $msg = $app_strings['LBL_CONFIRM_OPT_IN_IS_DISABLED'];            
+            if (!$confirmOptInEnabled) {
+                $msg = $app_strings['LBL_CONFIRM_OPT_IN_IS_DISABLED'];
                 SugarApplication::appendErrorMessage($msg);
             } else {
                 $emailAddressStringCaps = strtoupper($this->bean->email1);
-                if($emailAddressStringCaps) {
+                if ($emailAddressStringCaps) {
 
                     $emailAddress = new EmailAddress();
                     $emailAddress->retrieve_by_string_fields(array(
@@ -1132,16 +1132,15 @@ class SugarController
 
                     $success = $emailMan->sendOptInEmail($emailAddress, $this->bean->module_name, $this->bean->id);
 
-                    if(!$success) {
+                    if (!$success) {
                         $msg = $app_strings['LBL_CONFIRM_EMAIL_SENDING_FAILED'];
                         SugarApplication::appendErrorMessage($msg);
                     } else {
                         $msg = $app_strings['LBL_CONFIRM_EMAIL_SENT'];
                         SugarApplication::appendSuccessMessage($msg);
                     }
-
                 } else {
-                    $msg = $app_strings['LBL_CONTACT_HAS_NO_PRIMARY_EMAIL'];            
+                    $msg = $app_strings['LBL_CONTACT_HAS_NO_PRIMARY_EMAIL'];
                     SugarApplication::appendErrorMessage($msg);
                 }
             }

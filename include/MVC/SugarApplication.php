@@ -740,11 +740,10 @@ class SugarApplication {
      * @throws Exception message type should be valid
      */
     protected static function validateMessageType($type) {
-        
-        if(!in_array($type, array('user_error_message', 'user_success_message'))) {
+
+        if (!in_array($type, array('user_error_message', 'user_success_message'))) {
             throw new Exception('Incorrect application message type: ' . $type);
         }
-        
     }
 
     /**
