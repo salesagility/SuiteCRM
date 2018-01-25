@@ -1,7 +1,8 @@
 /**** Panels ****/
 
 .panel {
-  margin-bottom: 0;
+  margin-top: 7px;
+  margin-bottom: 0px;
 }
 
 .panel-body {
@@ -65,7 +66,7 @@
 }
 
 #EditView_tabs .panel-default > .panel-heading > a {
-	padding-top:0px;
+	padding-top:10px;
 }
 
 
@@ -115,7 +116,7 @@
   font-family: 'Glyphicons Halflings';
   content: "\2212";
   font-weight: 100;
-  line-height: 40px/$panel-height-divisor;
+  //line-height: 40px/$panel-height-divisor;
 }
 
 
