@@ -1533,7 +1533,7 @@ select.ui-widget-content {
   display: block;
 }
 #email1_span table {
-  display: flex;
+  display: block;
 }
 
 #email1_span tbody {
@@ -1546,6 +1546,7 @@ select.ui-widget-content {
 
 #email1_span td {
   display: block;
+  overflow: hidden;
 }
 
 
