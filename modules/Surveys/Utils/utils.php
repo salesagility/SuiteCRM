@@ -9,3 +9,16 @@ function survey_url_display(Surveys $survey)
 
     return "<a href='$url'>$url</a>";
 }
+
+/**
+ * @param Surveys $survey
+ * @param string $name
+ * @param string $value
+ * @param string $view
+ * @return string
+ * @todo need to implement? defined at modules/Surveys/vardefs.php:105
+ */
+function happiness_question_display(Surveys $survey, $name, $value, $view) {
+    $ret = '';
+    return $ret;
+}
