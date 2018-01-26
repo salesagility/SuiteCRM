@@ -1149,7 +1149,7 @@ class SugarEmailAddress extends SugarBean
      * @param int $optInFlag
      * @return String GUID of Email Address or '' if cleaned address was empty.
      */
-    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag)
+    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = 0)
     {
         // sanity checks to avoid SQL injection.
         $invalid = intval($invalid);
@@ -1247,7 +1247,7 @@ class SugarEmailAddress extends SugarBean
                 $guid = create_guid();
                 $now = TimeDate::getInstance()->nowDb();
                 $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out, confirm_opt_in)
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out, $new_confirmed_opt_in)";
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out, '" . $this->db->quote($new_confirmed_opt_in) ."')";
                 $this->db->query($qa);
             }
 

@@ -789,6 +789,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => '0',
             ),
             1 => array(
                 'email_address' => 'test21@email.com',
@@ -797,6 +798,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => '0'
             ),
         ), $this->ea->addresses);
     }
@@ -982,7 +984,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         // test
         $result = $this->ea->getEmailGUID('test@email.com');
-        self::assertEquals($result, 'test_email_1');
+        self::assertEquals('test_email_1', $result);
         self::assertFalse(isValidId($result));
 
         // test
