@@ -274,7 +274,7 @@ do {
                 } else {
                     $GLOBALS['log']->debug("Confirm Opt In Email delivery SUCCESS:" . print_r($row, true));
                     $emailAddress->confirm_opt_in_fail_date = null;
-                    
+
                     if (is_string($emailAddress->email_address)) {
                         $emailAddressString = $emailAddress->email_address;
                     } elseif (is_array($emailAddress->email_address) && is_string($emailAddress->email_address[0]['email_address'])) {

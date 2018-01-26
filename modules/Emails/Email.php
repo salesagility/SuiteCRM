@@ -4445,6 +4445,7 @@ eoq;
             $now = $date->format($timedate::DB_DATETIME_FORMAT);
             if(!$actionSendEmail->run_action($bean, $params)) {
                 $emailAddress->confirm_opt_in_fail_date = $now;
+                $emailAddress->confirm_opt_in_sent_date = $now;
             } else {
                 $emailAddress->confirm_opt_in_fail_date = null;
                 $emailAddress->confirm_opt_in_sent_date = $now;
