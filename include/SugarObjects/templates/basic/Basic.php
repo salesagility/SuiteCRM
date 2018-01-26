@@ -112,7 +112,7 @@ class Basic extends SugarBean
             return EmailAddressIndicator::OPT_IN_DISABLED;
         } elseif (
             $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
-            && EmailAddressIndicator::isOptedInStatus($this->getConfirmOptInStatusFromFlags())
+            && EmailAddressIndicator::isOptedInStatus($this->getConfirmOptInStatus($emailAddress))
         ) {
             return EmailAddressIndicator::OPT_IN;
         } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
