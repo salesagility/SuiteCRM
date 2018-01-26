@@ -1110,7 +1110,6 @@ class SugarController
     public function action_sendConfirmOptInEmail() {
         global $app_strings;
 
-        
         if ($this->bean instanceof Company || $this->bean instanceof Person) {
             $msg = $app_strings['LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON'];
             SugarApplication::appendErrorMessage($msg);
