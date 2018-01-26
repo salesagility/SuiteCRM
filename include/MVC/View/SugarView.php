@@ -631,6 +631,9 @@ class SugarView
                     }
                     if (!empty($moduleTab)) {
                         $topTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        if (count($topTabs) >= $max_tabs - 1) {
+                            $extraTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        }
                     }
                 }
 
@@ -641,6 +644,12 @@ class SugarView
 
                 $groupTabs[$tabIdx]['modules'] = $topTabs;
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
+            }
+        }
+
+        foreach($groupTabs as $key => $tabGroup) {
+            if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
+                unset($groupTabs[$key]['modules'][$moduleTab]);
             }
         }
 
