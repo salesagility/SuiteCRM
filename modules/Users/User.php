@@ -587,7 +587,9 @@ class User extends Person
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                    SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                }
             } else {
                 if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
@@ -595,8 +597,10 @@ class User extends Person
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            $this->factor_auth = $tmpUser->factor_auth;
-            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            if($tmpUser) {
+                $this->factor_auth = $tmpUser->factor_auth;
+                $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            }
         }
 
         if ($this->factor_auth && $isUpdate && is_admin($current_user)) {

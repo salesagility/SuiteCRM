@@ -102,7 +102,7 @@ class SugarCleaner
         $hidden_tags = array('script' => true, 'style' => true, 'title' => true, 'head' => true);
         $config->set('Core.HiddenElements', $hidden_tags);
         $config->set('Cache.SerializerPath', sugar_cached("htmlclean"));
-        $config->set('URI.Base', $sugar_config['site_url']);
+        $config->set('URI.Base', isset($sugar_config['site_url']) ? $sugar_config['site_url'] : null);
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
