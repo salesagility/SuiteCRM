@@ -1331,8 +1331,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         self::assertTrue(is_string($result));
 
-        self::assertNotEquals($noModuleResult, $result);
-
         // test
         $_POST['return_id'] = 'test_contact_1';
         $_POST['return_module'] = 'Contacts';
@@ -1351,8 +1349,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
         self::assertEquals($result, false);
-
-        self::assertEquals($noModuleResult, $result);
 
         // test
         $_REQUEST['full_form'] = true;
