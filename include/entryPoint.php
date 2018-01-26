@@ -70,7 +70,7 @@ $autoloader = $BASE_DIR.'/vendor/autoload.php';
 if(file_exists($autoloader)) {
     require_once $autoloader;
 } else {
-    die('Composer autoloader not found. Please install/update composer for install SuiteCRM, run "composer update" command.');
+    die('Composer autoloader not found. please run "composer install"');
 }
 
 // config|_override.php
