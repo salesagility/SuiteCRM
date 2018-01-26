@@ -1227,6 +1227,7 @@ class EmailMan extends SugarBean
         $result = $bean->db->query($query);
         $row = $bean->db->fetchByAssoc($result);
 
+        $emailOptInStatus = new \SuiteCRM\Enumerator\EmailOptInStatus();
         if (!empty($row)) {
             if ($row['opt_out'] == '1') {
                 return true;
@@ -1238,11 +1239,14 @@ class EmailMan extends SugarBean
                 return false;
             } elseif (
                 $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === 'opt-in'
-                    || $row['confirm_opt_in'] === 'confirmed-opt-in')
+                && false === ($row['confirm_opt_in'] === $emailOptInStatus::OPT_IN
+                    || $row['confirm_opt_in'] === $emailOptInStatus::CONFIRMED_OPT_IN)
             ) {
                 return true;
-            } elseif ($optInLevel == 'confirmed-opt-in' && $row['confirm_opt_in'] !== 'confirmed-opt-in') {
+            } elseif (
+                $optInLevel == $emailOptInStatus::CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== $emailOptInStatus::CONFIRMED_OPT_IN
+            ) {
                 return true;
             }
         }

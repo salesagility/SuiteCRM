@@ -4340,12 +4340,17 @@ eoq;
 
         if (!$id) {
             $log->fatal('Empty Email Id');
-        } elseif (isset($sugar_config['email_enable_auto_send_opt_in']) && $sugar_config['email_enable_auto_send_opt_in']) {
+        } elseif (
+            isset($sugar_config['email_enable_auto_send_opt_in'])
+            && $sugar_config['email_enable_auto_send_opt_in']
+        ) {
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
 
-            if ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->confirm_opt_in_sent_date)) {
+            if (
+                $emailAddress->confirm_opt_in != \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN
+                && empty($emailAddress->confirm_opt_in_sent_date)) {
                 $this->sendOptInEmail($emailAddress);
             }
         }

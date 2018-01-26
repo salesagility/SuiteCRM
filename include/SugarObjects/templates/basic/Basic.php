@@ -190,7 +190,7 @@ class Basic extends SugarBean
         if (!$sugar_config['email_enable_confirm_opt_in']) {
             $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
-            $emailAddressBean->confirm_opt_in = 'confirmed-opt-in';
+            $emailAddressBean->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
             return $emailAddressBean;
         }
 

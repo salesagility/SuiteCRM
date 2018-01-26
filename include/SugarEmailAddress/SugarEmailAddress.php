@@ -89,6 +89,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * possible values: ['', 'opt-in', 'confirmed-opt-in']
      * @var string|enum $confirm_opt_in
+     * @see \SuiteCRM\Enumerator\EmailOptInStatus
      */
     public $confirm_opt_in = '';
 
@@ -1771,7 +1772,7 @@ class SugarEmailAddress extends SugarBean
         global $timedate;
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = 'confirmed-opt-in';
+        $this->confirm_opt_in = \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN;
     }
     
     /**
