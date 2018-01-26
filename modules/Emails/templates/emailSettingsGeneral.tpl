@@ -54,7 +54,7 @@
                 {html_options options=$emailCheckInterval.options selected=$emailCheckInterval.selected name='emailCheckInterval' id='emailCheckInterval'}
             </td>
             <td scope="row">
-                {$app_strings.LBL_EMAIL_SIGNATURES}:
+                {$app_strings.LBL_DEFAULT_EMAIL_SIGNATURES}:
             </td>
             <td>
                 {$signaturesSettings} {$signatureButtons}

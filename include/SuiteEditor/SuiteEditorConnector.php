@@ -42,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once 'include/SuiteEditor/SuiteEditorInterface.php';
-include_once 'include/SuiteEditor/SuiteEditorSettings.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForDirectHTML.php';
-include_once 'include/SuiteEditor/SuiteEditorDirectHTML.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForTinyMCE.php';
-include_once 'include/SuiteEditor/SuiteEditorTinyMCE.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForMozaik.php';
-include_once 'include/SuiteEditor/SuiteEditorMozaik.php';
-include_once 'include/SuiteEditor/SuiteEditorConnector.php';
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorInterface.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettings.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForDirectHTML.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorDirectHTML.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForTinyMCE.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorTinyMCE.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForMozaik.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorMozaik.php');
 
 /**
  * Class SuiteEditor
@@ -75,7 +74,8 @@ class SuiteEditorConnector
                     editor.on('focus', function(e){
                         onClickTemplateBody();
                     });
-                }
+                },
+                plugins: ['code', 'table', 'link'],
             }");
     }
 
@@ -131,7 +131,7 @@ class SuiteEditorConnector
 
         $smarty = new Sugar_Smarty();
         $smarty->assign('editor', $editor->getHtml());
-        return $smarty->fetch('include/SuiteEditor/tpls/SuiteEditorConnector.tpl');
+        return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorConnector.tpl'));
     }
 
 }

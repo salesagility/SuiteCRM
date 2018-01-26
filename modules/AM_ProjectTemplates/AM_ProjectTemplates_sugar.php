@@ -46,7 +46,7 @@ class AM_ProjectTemplates_sugar extends Basic {
 	var $module_dir = 'AM_ProjectTemplates';
 	var $object_name = 'AM_ProjectTemplates';
 	var $table_name = 'am_projecttemplates';
-	var $importable = false;
+	var $importable = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 		var $id;
 		var $name;

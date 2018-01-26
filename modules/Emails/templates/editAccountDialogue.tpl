@@ -243,7 +243,7 @@
                 <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
             </td>
             <td>
-                <input type="text" id="inbound_mail_smtpuser" name="mail_smtpuser" size="30" maxlength="64">
+                <input type="text" id="inbound_mail_smtpuser" name="mail_smtpuser" size="30" maxlength="255">
             </td>
         </tr>
         <tr class="yui-hidden" id="inboundAccountRequiredPassword">
@@ -252,7 +252,7 @@
                 <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
             </td>
             <td>
-                <input type="password" id="inbound_mail_smtppass" name="mail_smtppass" size="30" maxlength="64">
+                <input type="password" id="inbound_mail_smtppass" name="mail_smtppass" size="30" maxlength="255">
             </td>
         </tr>
 
@@ -266,7 +266,7 @@
                        type='button'
                        accessKey="{$app_strings.LBL_SAVE_BUTTON_KEY}"
                        class="button"
-                       onClick='SUGAR.email2.accounts.saveIeAccount();'
+                       onClick='SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());'
                        name="button" id="saveButton" value="  {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}  ">
                 &nbsp;
                 <input title="{$app_strings.LBL_EMAIL_SETTINGS_ADD_ACCOUNT}"

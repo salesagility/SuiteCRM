@@ -58,7 +58,7 @@ global $current_language;
 global $currentModule;
 global $theme;
 
-$json=new JSON(JSON_LOOSE_TYPE);
+$json = new JSON();
 
 $current_module_strings = return_module_language($current_language, 'MergeRecords');
 

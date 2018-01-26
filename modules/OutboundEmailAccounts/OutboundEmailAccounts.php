@@ -41,7 +41,13 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
-class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
+class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
+{
+
+	/**
+	 * @var string
+	 */
+	public $mail_smtppass;
 
 	function __construct(){
 		parent::__construct();
@@ -51,7 +57,13 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 		if(!$this->mail_smtppass && $this->id) {
 			$bean = new OutboundEmailAccounts();
 			$bean->retrieve($this->id);
-			$this->mail_smtppass = $bean->mail_smtppass;
+			if(!$bean->mail_smtppass) {
+				$GLOBALS['log']->warn("Unable to send email via SMTP using an empty password.");
+                $GLOBALS['log']->info("Please ensure that the email settings are configured correctly");
+				$this->mail_smtppass = null;
+			} else {
+				$this->mail_smtppass = $bean->mail_smtppass;
+			}
 		}
 		$this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
 		$results = parent::save($check_notify);
@@ -177,6 +189,8 @@ HTML;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
 					var mail_sendtype = 'SMTP'; 
+                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
+                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
 					var postDataString =
 						'mail_type=system&' +
 						'mail_sendtype=' + mail_sendtype + '&' +
@@ -186,8 +200,8 @@ HTML;
 						"mail_smtpuser=" + trim(document.getElementById('mail_smtpuser').value) + "&" +
 						"mail_smtppass=" + trim(document.getElementById('mail_smtppass').value) + "&" +
 						"outboundtest_to_address=" + toAddress + '&' +
-						'outboundtest_from_address=' + '$adminNotifyFromAddress' + '&' +
-						'mail_from_name=' + '$adminNotifyFromName';
+						'outboundtest_from_address=' + adminNotifyFromAddress + '&' +
+						'mail_from_name=' + adminNotifyFromName;
 					//YAHOO.util.Connect.asyncRequest("POST", "index.php?action=EmailUIAjax&module=Emails&emailUIAction=testOutbound&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 					YAHOO.util.Connect.asyncRequest("POST", "index.php?action=testOutboundEmail&module=EmailMan&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 				}

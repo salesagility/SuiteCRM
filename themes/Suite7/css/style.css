@@ -2834,7 +2834,7 @@ input, select, textarea, button {
 }
 
 /* for the main screen navigation tabs */
-#moduleList ul li,
+#moduleList ul li
 {
   font-size: 12px;
 }
@@ -4893,9 +4893,9 @@ ul#quick-nav ul li:hover {
 }
 
 #desktop_notifications {
-  position: absolute;
+  position: relative;
   top: 8px;
-  right: 320px;
+  right: 20px;
   width: 35px;
   float: left;
   z-index: 55;

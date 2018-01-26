@@ -300,7 +300,6 @@ tr#pagination {
   border-right: none;
   text-align: left;
   white-space: nowrap;
-  color: $default-btn-color;
 }
 
 .edit .list tr th {
@@ -1801,9 +1800,13 @@ div.qtip.qtip-default {
   padding: initial;
 }
 
-.modal-content .search_form .view select,
-.modal-content .search_form .view select#saved_search_select {
+.modal-content .search_form .view select {
   border: 2px solid #A5E8D6;
+
+  &:not([multiple]) {
+    padding: 0 35px 0 5px;
+    width: auto;
+  }
 }
 
 .search_form .view .dateTimeRangeChoice {
@@ -2765,7 +2768,7 @@ listViewLinkButton {
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
   min-width: 32px;
-  padding: 11px 10px 12px 10px;
+  height: 31px;
 }
 
 .action-link-top li.sugar_action_button,

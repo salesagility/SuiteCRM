@@ -734,6 +734,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 [data-workflow-action] .lines select {
+  width: auto;
   margin-top: 8px;
 }
 
@@ -1869,12 +1870,25 @@ font[color=red] {
     border-bottom-right-radius: 4px;
   }
 
-  .input-group-btn:last-child>.btn,
-  .input-group-btn:last-child>.btn-group {
+  .input-group-btn:last-child > .btn,
+  .input-group-btn:last-child > .btn-group {
     margin-left: 8px;
   }
 
   .email-address-input-group .email-address-remove-button {
     margin-left: 8px;
   }
+}
+
+#conditionLines tr td.dateTimeComboColumn{
+  width: auto;
+}
+
+#conditionLines select.datetimecombo_time{
+  width: 50%;
+}
+
+#conditionLines table.dateTime{
+  background-color: inherit;
+
 }

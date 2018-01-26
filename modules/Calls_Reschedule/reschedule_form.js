@@ -112,9 +112,24 @@ function get_form() {
       dialog.show();
 
       document.getElementById('call_id').value = id.value;
-      eval(document.getElementById('script').innerHTML);
-      eval(document.getElementById('script2').innerHTML);
 
+      var manageCalendar = function () {
+          if(YAHOO.widget.Calendar) {
+              Calendar.setup ({
+                  inputField : 'date',
+                  ifFormat : cal_date_format,
+                  daFormat : '%m/%d/%Y %I:%M%P',
+                  button : 'date_start_trigger',
+                  singleClick : true,
+                  step : 1,
+                  weekNumbers: false,
+                  startWeekday: 0
+              });
+          }
+      };
+
+      document.getElementById('date_start_trigger').addEventListener('click', manageCalendar);
+      SUGAR.util.evalScript(document.getElementById('script').innerHTML);
     }
 
   };

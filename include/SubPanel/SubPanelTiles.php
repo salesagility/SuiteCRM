@@ -357,16 +357,23 @@ class SubPanelTiles
             $tabs_properties[$t]['div_display'] = $div_display;
             $tabs_properties[$t]['opp_display'] = $opp_display;
 
-            // Get Subpanel
-            include_once('include/SubPanel/SubPanel.php');
-            $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
+            $tabs_properties[$t]['subpanel_body'] = '';
+            $tabs_properties[$t]['buttons'] = '';
 
-            $arr = array();
-            // TODO: Remove x-template:
-            $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView('include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
+            // We only preload this subpanel's contents if it's expanded
+            if ($tabs_properties[$t]['expanded_subpanels']){
+                // Get Subpanel
+                include_once('include/SubPanel/SubPanel.php');
+                $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
 
-            // Get subpanel buttons
-            $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+                $arr = array();
+                // TODO: Remove x-template:
+                $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
+                    'include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
+
+                // Get subpanel buttons
+                $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+            }
 
             array_push($tab_names, $tab);
         }

@@ -59,11 +59,17 @@ EOQ;
 			$this->addAlert($app_strings['ERROR_JS_ALERT_SYSTEM_CLASS'], $app_strings['ERROR_JS_ALERT_TIMEOUT_TITLE'],'', $app_strings['ERROR_JS_ALERT_TIMEOUT_MSG_2'], (session_cache_expire()) * 60 , 'index.php');
 		}
 	}
-	function addAlert($type, $name, $subtitle, $description, $countdown, $redirect='')
+
+    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '')
     {
-		$script = 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).');' . "\n";
+        if ($countdown < 0) {
+            $countdown = 0;
+        }
+        $script = 'addAlert(' . json_encode($type) . ',' . json_encode($name) . ',' . json_encode($subtitle)
+            . ',' . json_encode(str_replace(array("\r", "\n"), array('', '<br>'), $description))
+            . ',' . $countdown . ',' . json_encode($redirect) . ');' . "\n";
         $this->script .= $script;
-	}
+    }
 
     function getScript()
     {
@@ -99,7 +105,7 @@ EOQ;
 
 		// cn: get a boundary limiter
 		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
-		$dateTimeNow = $timedate->nowDb();
+    $dateTimeNow = $timedate->getNow()->modify("-60 seconds")->asDb();
 
 		global $db;
 		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');

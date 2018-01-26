@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
@@ -307,6 +310,20 @@ class InboundEmail extends SugarBean
 
 
     /**
+     * @return bool
+     */
+    public function isPersonalEmailAccount() {
+        return (bool)$this->is_personal;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGroupEmailAccount() {
+        return !$this->isPersonalEmailAccount();
+    }
+
+    /**
      * @param int $offset
      * @param int $pageSize
      * @param array $order
@@ -351,38 +368,91 @@ class InboundEmail extends SugarBean
         $filterCriteria = NULL;
 
 
-        foreach($filter as $filterField => $filterFieldValue) {
-            if(empty($filterFieldValue))
-            {
-                continue;
+        if(!empty($filter)) {
+            foreach($filter as $filterField => $filterFieldValue) {
+                if(empty($filterFieldValue))
+                {
+                    continue;
+                }
+
+                // Convert to a blank string as NULL will break the IMAP request
+                if($filterCriteria == NULL) {
+                    $filterCriteria = '';
+                }
+
+                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
             }
-
-            // Convert to a blank string as NULL will break the IMAP request
-            if($filterCriteria == NULL) {
-                $filterCriteria = '';
-            }
-
-            $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
-        }
-        // Returns an array of msgno's which are sorted and filtered
-        $emailSortedHeaders = imap_sort(
-            $this->conn,
-            $sortCriteria,
-            $sortOrder,
-            FT_UID,
-            $filterCriteria
-        );
-
-        $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
-
-        // paginate
-        if($offset === "end") {
-            $offset = $lastSequenceNumber - $pageSize;
-        } else if($offset <= 0) {
-            $offset = 0;
         }
 
-        $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
+        if (empty($filterCriteria) && $sortCriteria === SORTDATE) {
+            // Performance fix when no filters are enabled
+            $totalMsgs = imap_num_msg($this->conn);
+            $mailboxInfo['Nmsgs'] = $totalMsgs;
+
+            if ($sortOrder === 0) {
+                // Ascending order
+                if ($offset === "end") {
+                    $firstMsg = $totalMsgs - (int)$pageSize;
+                    $lastMsg = $totalMsgs;
+                } else if ($offset <= 0) {
+                    $firstMsg = 1;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                } else {
+                    $firstMsg = (int)$offset;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                }
+            } else {
+                // Descending order
+                if($offset === "end") {
+                    $firstMsg = 1;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                } else if($offset <= 0) {
+                    $firstMsg = $totalMsgs - (int)$pageSize;
+                    $lastMsg = $totalMsgs;
+                } else {
+                    $offset = ($totalMsgs - (int)$offset) - (int)$pageSize;
+                    $firstMsg = $offset;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                }
+            }
+            $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
+            $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
+
+            $sequence  = $firstMsg . ':' . $lastMsg;
+            $emailSortedHeaders = imap_fetch_overview(
+                $this->conn,
+                $sequence
+            );
+
+            $uids = array_map(
+                function($x) {
+                    return $x->uid;
+                },
+                $emailSortedHeaders
+            );
+        } else {
+            // Filtered case and other sorting cases
+            // Returns an array of msgno's which are sorted and filtered
+            $emailSortedHeaders = imap_sort(
+                $this->conn,
+                $sortCriteria,
+                $sortOrder,
+                SE_UID,
+                $filterCriteria
+            );
+
+            $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
+
+            $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
+
+            // paginate
+            if($offset === "end") {
+                $offset = $lastSequenceNumber - $pageSize;
+            } else if($offset <= 0) {
+                $offset = 0;
+            }
+        }
+
 
         $uids = implode(',', $uids);
 
@@ -396,30 +466,28 @@ class InboundEmail extends SugarBean
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
         foreach ($emailHeaders as $i=> $emailHeader) {
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
 
-            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno'], FT_UID);
-
-            if(isset($structure->parts[0]->parts))
-            {
-                // has attachment
-                $emailHeaders[$i]['has_attachment'] = true;
-            } else{
-                // no attachment
-                $emailHeaders[$i]['has_attachment'] = false;
-            }
+            $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
         }
 
-
-        usort($emailHeaders, function($a, $b) use($sortCRM){  // defaults to DESC order
-            if($a[$sortCRM] === $b[$sortCRM]) {
-                return 0;
-            } else if($a[$sortCRM] < $b[$sortCRM]) {
-                return 1;
-            } else {
-                return -1;
+        usort(
+            $emailHeaders,
+            function($a, $b) use($sortCRM) {  // defaults to DESC order
+                if($a[$sortCRM] === $b[$sortCRM]) {
+                    return 0;
+                } else if($a[$sortCRM] < $b[$sortCRM]) {
+                    return 1;
+                } else {
+                    return -1;
+                }
             }
-        });
-        if(!$sortOrder) array_reverse($emailHeaders); // Make it ASC order
+        );
+
+        // Make it ASC order
+        if(!$sortOrder) {
+            array_reverse($emailHeaders);
+        };
 
 
         return array(
@@ -427,6 +495,29 @@ class InboundEmail extends SugarBean
             "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
+
+    /**
+     * @param $imapStructure
+     * @return bool
+     */
+    private function mesageStructureHasAttachment($imapStructure)
+    {
+        if (!isset($imapStructure->parts)
+            && isset($imapStructure->disposition)
+            && $imapStructure->disposition == 'attachment') {
+            return true;
+        }
+
+        if (isset($imapStructure->parts)) {
+            foreach ($imapStructure->parts as $part) {
+                if ($this->mesageStructureHasAttachment($part)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     ////	CUSTOM LOGIC HOOKS
     /**
@@ -2505,6 +2596,10 @@ class InboundEmail extends SugarBean
         }
         $ie_name = $_REQUEST['ie_name'];
 
+        $stored_options = $this->getStoredOptions();
+        $stored_options['outbound_email'] = $_REQUEST['outbound_email'];
+        $this->setStoredOptions($stored_options);
+
         $this->is_personal = 1;
         $this->name = $ie_name;
         $this->group_id = $groupId;
@@ -2519,7 +2614,10 @@ class InboundEmail extends SugarBean
         if ($this->protocol == "pop3") {
             $_REQUEST['mailbox'] = "INBOX";
         }
+
         $this->mailbox = $_REQUEST['mailbox'];
+        $inboxFolders = explode(',', $this->mailbox);
+
         $this->mailbox_type = 'pick'; // forcing this
 
 
@@ -2590,110 +2688,105 @@ class InboundEmail extends SugarBean
             $ieId = $this->save();
 
             // Folders
-            $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
+            $foldersFound = $this->db->query(
+                'SELECT folders.id FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '"'
+            );
             $row = $this->db->fetchByAssoc($foldersFound);
-            $sf = new SugarFolder();
-            if(empty($row)) {
-                // Create Folders
-                $params = array(
-                    // Inbox
-                    "inbound" => array(
-                        'name' => $this->mailbox . ' ('.$this->name.')',
-                        'folder_type' => "inbound",
-                        'has_child' => 1,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("inbound", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // My Drafts
-                    "draft" => array(
-                        'name' => $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
-                        'folder_type' => "draft",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("draft", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Sent Emails
-                    "sent" => array(
-                        'name' => $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
-                        'folder_type' => "sent",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("sent", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Archived Emails
-                    "archived" => array(
-                        'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
-                        'folder_type' => "archived",
-                        'has_child' => 0,
-                        'dynamic_query' => '',
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
+
+            if (empty($row)) {
+
+                $this->createFolder(
+                    $inboxFolders[0] . ' ('.$this->name.')',
+                    "inbound",
+                    $focusUser,
+                    $this->id
                 );
 
-
-                require_once("include/SugarFolders/SugarFolders.php");
-
-                $parent_id = '';
-
-
-                foreach ($params as $type => $type_params) {
-                    if ($type == "inbound") {
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->new_with_id = false;
-                        $folder->id = $this->id;
-                        $folder->save();
-
-                        $parent_id = $folder->id;
-                    } else {
-                        $params[$type]['parent_folder'] = $parent_id;
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->save();
+                foreach ($inboxFolders as $key => $folder) {
+                    if ($key == 0) {
+                        continue;
                     }
+                    if ($this->folderIsRequestTrashOrSent($folder)) {
+                        continue;
+                    }
+                    $this->createFolder(
+                        $folder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
+
+                $this->createFolder(
+                    $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')',
+                    "draft",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')',
+                    "sent",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+                    "archived",
+                    $focusUser
+                );
+
             } else {
                 // Update folders
-                $foldersFound = $this->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$this->id.'" OR '.
-                    'folders.parent_folder LIKE "'.$this->id.'"');
-                while($row = $this->db->fetchRow($foldersFound)) {
+                $foldersFound = $this->db->query(
+                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
+                );
+                $inboxNames = array_splice($inboxFolders, 1);
+                while ($row = $this->db->fetchRow($foldersFound)) {
+
                     $name = '';
-                    switch ($row['folder_type'])
-                    {
+                    $folder = new SugarFolder();
+                    $folder->retrieve($row['id']);
+
+                    switch ($row['folder_type']) {
                         case 'inbound':
-                            $name = $this->mailbox . ' ('.$this->name.')';
+                            if (!$row['has_child']) {
+                                if (in_array($row['name'], $inboxNames)) {
+                                    // We have the folder, all is good
+                                    unset($inboxNames[array_search($row['name'], $inboxNames)]);
+                                } else {
+                                    // We have a folder we shouldn't have
+                                    $folder->id = $row['id'];
+                                    $folder->delete();
+                                }
+                            } else {
+                                $name = $inboxFolders[0] . ' (' . $this->name . ')';
+                            }
                             break;
                         case 'draft':
-                            $name = $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')';
+                            $name = $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')';
                             break;
                         case 'sent':
-                            $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')';
+                            $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')';
                             break;
                         case 'archived':
                             $name = $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'];
                             break;
                     }
 
-                    $folder = new SugarFolder();
-                    $folder->retrieve($row['id']);
-                    $folder->name = $name;
-                    $folder->save();
+                    if ($name) {
+                        $folder->name = $name;
+                        $folder->save();
+                    }
+
+                }
+                // Any inbox folder we don't have yet we need to create
+                foreach ($inboxNames as $newInboxFolder) {
+                    if ($this->folderIsRequestTrashOrSent($newInboxFolder)) {
+                        continue;
+                    }
+                    $this->createFolder(
+                        $newInboxFolder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
             }
             //If this is the first personal account the user has setup mark it as default for them.
@@ -2709,6 +2802,45 @@ class InboundEmail extends SugarBean
 
             return false;
         }
+    }
+
+    /**
+     * @param $name
+     * @param $type
+     * @param $focusUser
+     * @param int $id
+     * @return int
+     */
+    private function createFolder($name, $type, $focusUser, $id = 0)
+    {
+        $folder = new SugarFolder();
+        $folder->name = $name;
+        $folder->folder_type = $type;
+        $folder->has_child = $id ? 1 : 0;
+        $folder->is_dynamic = 1;
+        $folder->dynamic_query = $this->generateDynamicFolderQuery("sent", $focusUser->id);
+        $folder->created_by = $focusUser->id;
+        $folder->modified_by = $focusUser->id;
+
+        if ($id) {
+            $folder->new_with_id = false;
+            $folder->id = $id;
+        } else {
+            $folder->parent_folder = $this->id;
+        }
+
+        $folder->save();
+
+        return $folder->id;
+    }
+
+    /**
+     * @param $folderName
+     * @return bool
+     */
+    private function folderIsRequestTrashOrSent($folderName)
+    {
+        return $folderName == $_REQUEST['trashFolder'] || $folderName == $_REQUEST['sentFolder'];
     }
 
     /**
@@ -3715,7 +3847,7 @@ class InboundEmail extends SugarBean
         // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
         $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
-        return SugarCleaner::cleanHtml($msgPart, false);
+        return SugarCleaner::cleanHtml($msgPart, true);
     }
 
 
@@ -3810,7 +3942,7 @@ class InboundEmail extends SugarBean
         // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
         $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
-        return SugarCleaner::cleanHtml($msgPart, false);
+        return SugarCleaner::cleanHtml($msgPart, true);
     }
 
     /**
@@ -4077,7 +4209,7 @@ class InboundEmail extends SugarBean
 	 * @param array $breadcrumb Default 0, build up of the parts mapping
 	 * @param bool $forDisplay Default false
 	 */
-	function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay) {
+	public function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay= null) {
 		global $sugar_config;
 		/*
 			Primary body types for a part of a mail structure (imap_fetchstructure returned object)
@@ -4352,11 +4484,7 @@ class InboundEmail extends SugarBean
             }
         }
 
-        //if(empty($message_id) && !isset($message_id)) {
-        if (empty($message_id) || !isset($message_id)) {
-            $GLOBALS['log']->debug('*********** NO MESSAGE_ID.');
-            $message_id = $this->getMessageId($header);
-        }
+        $message_id = $this->getMessageId($header);
 
         // generate compound messageId
         $this->compoundMessageId = trim($message_id) . trim($deliveredTo);
@@ -4368,10 +4496,10 @@ class InboundEmail extends SugarBean
         $this->compoundMessageId = md5($this->compoundMessageId);
 
         $query = 'SELECT count(emails.id) AS c FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-        $r = $this->db->query($query, true);
-        $a = $this->db->fetchByAssoc($r);
+        $results = $this->db->query($query, true);
+        $row = $this->db->fetchByAssoc($results);
 
-        if ($a['c'] > 0) {
+        if ($row['c'] > 0) {
             $GLOBALS['log']->debug('InboundEmail found a duplicate email with ID (' . $this->compoundMessageId . ')');
 
             return false; // we have a dupe and don't want to import the email'
@@ -4566,13 +4694,13 @@ class InboundEmail extends SugarBean
             if (!$dupeCheckResult && !empty($this->compoundMessageId)) {
                 // we have a duplicate email
                 $query = 'SELECT id FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
 
                 $this->email = new Email();
-                $this->email->id = $a['id'];
+                $this->email->id = $row['id'];
 
-                return $a['id'];
+                return $row['id'];
             } // if
             return "";
         } // else
@@ -5629,10 +5757,10 @@ class InboundEmail extends SugarBean
                 $query = 'SELECT id FROM cases WHERE case_number = '
                     . $this->db->quoted($sub3)
                     . ' and deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
-                if (!empty($a['id'])) {
-                    return $a['id'];
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
+                if (!empty($row['id'])) {
+                    return $row['id'];
                 }
             }
         }
@@ -5654,6 +5782,24 @@ class InboundEmail extends SugarBean
 
         return self::get_stored_options_static($option_name, $default_value, $stored_options);
     }
+
+    /**
+     * Returns the stored options property un-encoded and un serialised.
+     * @return array
+     */
+    public function getStoredOptions()
+    {
+        return unserialize(base64_decode($this->stored_options));
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setStoredOptions($options)
+    {
+        $this->stored_options = base64_encode(serialize($this->stored_options));
+    }
+
 
     /**
      * @param $option_name
@@ -6009,6 +6155,10 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to
+     *
+     * @param string $id user id
+     * @param bool $includePersonal
+     * @return array
      */
     public function retrieveAllByGroupId($id, $includePersonal = true)
     {
@@ -6378,7 +6528,7 @@ class InboundEmail extends SugarBean
                     }
 
                     if (!empty($msgNo)) {
-                        $importStatus = $this->importOneEmail($msgNo, $uid);
+                        $importStatus = $this->returnImportedEmail($msgNo, $uid);
                         // add to folder
                         if ($importStatus) {
                             $sugarFolder->addBean($this->email);
@@ -6653,7 +6803,7 @@ class InboundEmail extends SugarBean
 
             }
 
-            $this->importOneEmail($msgNo, $uid, true);
+            $this->returnImportedEmail($msgNo, $uid, true);
             $this->email->id = '';
             $this->email->new_with_id = false;
             $ret = 'import';
@@ -7570,7 +7720,7 @@ eoq;
         foreach ($msgNumbers as $msgNumber) {
             $uid = $this->getMessageUID($msgNumber, $protocol);
             $GLOBALS['log']->info('Importing message no: ' . $msgNumber);
-            $this->importOneEmail($msgNumber, $uid, false, false);
+            $this->returnImportedEmail($msgNumber, $uid, false, false);
         }
     }
 

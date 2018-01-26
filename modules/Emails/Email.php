@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -287,16 +288,6 @@ class Email extends Basic
     public $replyDelimiter = "> ";
 
     /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
-
-    /**
      * @var string $emailRawSource
      */
     public $emailRawSource;
@@ -403,6 +394,10 @@ class Email extends Basic
      */
     public $orphaned;
 
+    /**
+     * @var Link2 $notes
+     */
+    public $notes;
 
     /**
      * sole constructor
@@ -869,7 +864,38 @@ class Email extends Basic
                 $this->type = 'out';
                 $this->status = 'sent';
             }
-        }
+
+        // This code is 7.8.x LTS specific, from 7.9 onwards it is found in EmailsController and can be deleted here
+        if (!empty($_REQUEST['data_parent_id1'])) {
+            $macro_nv = array();
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($this->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                array(
+                    'subject' => $this->name,
+                    'body_html' => $this->description_html,
+                    'body' => $this->description,
+                ),
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $this->description_html = $templateData['body_html'];
+            $this->description = $templateData['body'];
+
+        } // End of 7.8.x code
+    }
 
         if (isset($_REQUEST['parent_type']) && empty($_REQUEST['parent_type']) &&
             isset($_REQUEST['parent_id']) && empty($_REQUEST['parent_id'])
@@ -1379,7 +1405,12 @@ class Email extends Basic
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
-            $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+
+            if ($this->cleanEmails($this->from_addr_name) === '') {
+                $this->from_addr_name = $this->cleanEmails($this->from_name);
+            } else {
+                $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+            }
             $this->to_addrs_names = $this->cleanEmails($this->to_addrs_names);
             $this->cc_addrs_names = $this->cleanEmails($this->cc_addrs_names);
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
@@ -1638,16 +1669,16 @@ class Email extends Basic
 
         if (count($return) > 0) {
             if (isset($return['from'])) {
-                $this->from_addr = implode(", ", $return['from']);
+                $this->from_addr_name = implode(", ", $return['from']);
             }
             if (isset($return['to'])) {
-                $this->to_addrs = implode(", ", $return['to']);
+                $this->to_addrs_names = implode(", ", $return['to']);
             }
             if (isset($return['cc'])) {
-                $this->cc_addrs = implode(", ", $return['cc']);
+                $this->cc_addrs_names = implode(", ", $return['cc']);
             }
             if (isset($return['bcc'])) {
-                $this->bcc_addrs = implode(", ", $return['bcc']);
+                $this->bcc_addrs_names = implode(", ", $return['bcc']);
             }
         }
     }
@@ -1731,7 +1762,7 @@ class Email extends Basic
         }
 
         $noteArray = array();
-        $q = "SELECT id FROM notes WHERE parent_id = '" . $id . "'";
+        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = '" . $id . "'";
         $r = $this->db->query($q);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -2289,7 +2320,10 @@ class Email extends Basic
 
         ///////////////////////////////////////////////////////////////////////////
         ////    ATTACHMENTS FROM DRAFTS
-        if (($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+        if (($this->type == 'out' || $this->type == 'draft')
+            && $this->status == 'draft'
+            && isset($_REQUEST['record'])
+            && empty($_REQUEST['ignoreParentAttachments'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS
@@ -2593,31 +2627,23 @@ class Email extends Basic
     public function handleBody($mail)
     {
         global $current_user;
-        ///////////////////////////////////////////////////////////////////////
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        // the if() below is HIGHLY dependent on the Javascript unchecking the Send HTML Email box
-        // HTML email
-        if ((isset($_REQUEST['setEditor']) /* from Email EditView navigation */
-                && $_REQUEST['setEditor'] == 1
-                && trim($_REQUEST['description_html']) != '')
-            || trim($this->description_html) != '' /* from email templates */
-            && $current_user->getPreference('email_editor_option',
-                'global') !== 'plain' //user preference is not set to plain text
-        ) {
-            $this->handleBodyInHTMLformat($mail);
-        } else {
+
+        // User preferences should takee precedence over everything else
+        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
+        $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
+
+        $sendEmailsInPlainText = false;
+        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
+            $sendEmailsInPlainText = true;
+        }
+
+        if($alwaysSendEmailsInPlainText === true) {
             // plain text only
-            $this->description_html = '';
-            $mail->IsHTML(false);
-            $plainText = from_html($this->description);
-            $plainText = str_replace("&nbsp;", " ", $plainText);
-            $plainText = str_replace("</p>", "</p><br />", $plainText);
-            $plainText = strip_tags(br2nl($plainText));
-            $plainText = str_replace("&amp;", "&", $plainText);
-            $plainText = str_replace("&#39;", "'", $plainText);
-            $mail->Body = wordwrap($plainText, 996);
-            $mail->Body = $this->decodeDuringSend($mail->Body);
-            $this->description = $mail->Body;
+            $this->handleBodyInPlainTextFormat($mail);
+        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
+        } else {
+            $this->handleBodyInHTMLformat($mail);
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -2627,8 +2653,6 @@ class Email extends Basic
                 break;
             }
         }
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        ///////////////////////////////////////////////////////////////////////
 
         return $mail;
     }
@@ -2701,7 +2725,8 @@ class Email extends Basic
             }
         }
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
@@ -2713,6 +2738,8 @@ class Email extends Basic
         // FROM NAME
         if (!empty($this->from_name)) {
             $mail->FromName = $this->from_name;
+        } elseif (!empty($this->from_addr_name)) {
+            $mail->FromName = $this->from_addr_name;
         } else {
             $mail->FromName = $current_user->getPreference('mail_fromname');
             $this->from_name = $mail->FromName;
@@ -3088,7 +3115,7 @@ class Email extends Basic
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
 
-        if (empty($this->name) && empty($_REQUEST['record'])) {
+        if (empty($this->name) && empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
             $this->name = $mod_strings['LBL_NO_SUBJECT'];
         }
 
@@ -3157,7 +3184,8 @@ class Email extends Basic
             'Emails'); // hard-coding for Home screen ListView
 
         if ($this->status != 'replied') {
-            $email_fields['QUICK_REPLY'] = '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=' . $this->id . '&inbound_email_id=' . $this->id . '">' . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
+            $email_fields['QUICK_REPLY'] = '<a href="index.php?module=Emails&action=ReplyTo&record='. $this->id .'">'
+                . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
             $email_fields['STATUS'] = ($email_fields['REPLY_TO_STATUS'] == 1 ? $mod_strings['LBL_REPLIED'] : $email_fields['STATUS']);
         } else {
             $email_fields['QUICK_REPLY'] = $mod_strings['LBL_REPLIED'];
@@ -3905,15 +3933,19 @@ eoq;
             $bean = BeanFactory::getBean('Emails');
         }
 
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             $bean = $bean->retrieve($_REQUEST['id']);
         }
 
 
-        foreach ($_REQUEST as $fieldName => $field) {
+        foreach ($request as $fieldName => $field) {
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }
+        }
+
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
         }
 
 
@@ -4006,14 +4038,13 @@ eoq;
         }
 
 
-        if (empty($bean->to_addrs)) {
-            if (!empty($request['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
-            }
 
-            if (!empty($bean->to_addrs_names)) {
-                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
-            }
+        if (!empty($request['to_addrs_names'])) {
+            $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+        }
+
+        if (!empty($bean->to_addrs_names)) {
+            $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
         }
 
 
@@ -4029,8 +4060,9 @@ eoq;
             // Strip out name from email address
             // eg Angel Mcmahon <sales.vegan@example.it>
             if (count($matches) > 3) {
-                $display = trim($matches[1]);
                 $email = $matches[2];
+                $display = (str_replace($email, '', $address));
+                $display = (trim(str_replace('"', '', $display)));
             } else {
                 $email = $address;
                 $display = '';
@@ -4044,7 +4076,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => $display,
+                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
             );
         }
 
@@ -4154,6 +4186,45 @@ eoq;
             }
         }
 
+        // When use is sending email after selecting forward or reply to
+        // We need to generate a new id
+        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+            $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
+            if(in_array($_REQUEST['refer_action'], $referActions)) {
+                $bean->id = create_guid();
+                $bean->new_with_id = true;
+                $bean->type = 'out';
+                $bean->status = 'draft';
+            }
+        }
+
         return $bean;
+    }
+
+    /**
+     * @param Note $note
+     */
+    public function attachNote(Note $note)
+    {
+        $this->load_relationship('notes');
+        $this->notes->addBean($note);
+    }
+
+    /**
+     * @param $mail
+     */
+    protected function handleBodyInPlainTextFormat($mail)
+    {
+        $this->description_html = '';
+        $mail->IsHTML(false);
+        $plainText = from_html($this->description);
+        $plainText = str_replace("&nbsp;", " ", $plainText);
+        $plainText = str_replace("</p>", "</p><br />", $plainText);
+        $plainText = strip_tags(br2nl($plainText));
+        $plainText = str_replace("&amp;", "&", $plainText);
+        $plainText = str_replace("&#39;", "'", $plainText);
+        $mail->Body = wordwrap($plainText, 996);
+        $mail->Body = $this->decodeDuringSend($mail->Body);
+        $this->description = $mail->Body;
     }
 } // end class def

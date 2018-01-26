@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,11 +34,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'include/formbase.php';
+
+require_once 'modules/Campaigns/utils.php';
 
 $moduleDir = '';
 if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null) {
@@ -58,8 +60,11 @@ $mod_strings = return_module_language($sugar_config['default_language'], $module
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign_id = $_POST['campaign_id'];
     $campaign = new Campaign();
+    $campaign_id = $campaign->db->quote($_POST['campaign_id']);
+    if(!isValidId($campaign_id)) {
+        throw new RuntimeException('Invalid ID requested in Person Capture');
+    }
     $camp_query = "select name,id from campaigns where id='$campaign_id'";
     $camp_query .= ' and deleted=0';
     $camp_result = $campaign->db->query($camp_query);
@@ -114,16 +119,27 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
         if (!empty($person)) {
+
+            $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
+            $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
+            foreach($filteredFieldsFromPersonBean[0]->fields as $field) {
+                $possiblePersonCaptureFields[] = $field[1];
+            }
+
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
                 if ($k === 'client_id_address' || $k === 'req_id'
                     || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
-                } else {
-                    if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
+                }
+                if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
+                    if (in_array($k, $possiblePersonCaptureFields)) {
                         $person->$k = $v;
+                    } else {
+                        $GLOBALS['log']->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
                     }
                 }
+
             }
         }
 
@@ -131,12 +147,12 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             //create campaign log
             $camplog = new CampaignLog();
-            $camplog->campaign_id = $_POST['campaign_id'];
+            $camplog->campaign_id = $campaign_id;
             $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
-            $camplog->activity_type = $person->object_name;
+            $camplog->activity_type = strtolower($person->object_name);
             $camplog->target_type = $person->module_dir;
-            $campaign_log->activity_date = $timedate->now();
+            $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
@@ -216,7 +232,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $query_string .= 'error=1';
             }
 
-            $redirect_url = $redirect_url.$query_string;
+            $redirect_url .= $query_string;
 
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
