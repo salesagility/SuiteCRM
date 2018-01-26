@@ -468,10 +468,12 @@ eoq;
                     $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
                 }
                 $optOut = false;
-                $addresses = $myBean->emailAddress->addresses;
-                foreach($addresses as $address) {
-                    if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
-                        $optOut = true;
+                if(isset($myBean->emailAddress) && isset($myBean->emailAddress->addresses)) {
+                    $addresses = $myBean->emailAddress->addresses;
+                    foreach($addresses as $address) {
+                        if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                            $optOut = true;
+                        }
                     }
                 }
                 if(!$optOut) {

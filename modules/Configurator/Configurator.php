@@ -344,9 +344,7 @@ class Configurator
      */
     public function isConfirmOptInEnabled()
     {
-        $confirmOptInEnabled =
-            isset($this->config['email_enable_confirm_opt_in'])
-            && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
+        $confirmOptInEnabled = $this->getConfirmOptInEnumValue() === 'confirmed-opt-in';
 
         if (!$confirmOptInEnabled) {
             $this->logger->warn('Confirm Opt in is disabled in email settings');
@@ -374,6 +372,17 @@ class Configurator
         }
         
         return $confirmOptInTemplateId;
+    }
+    
+    /**
+     * returns Confirm Opt In Enum Value from configuration
+     * 
+     * @return string
+     */
+    public function getConfirmOptInEnumValue() {
+        // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
+        $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : '';
+        return $ret;
     }
     
 }

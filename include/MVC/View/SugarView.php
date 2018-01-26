@@ -766,10 +766,17 @@ class SugarView
 
             $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
 
-            $errorMessages = SugarApplication::getErrorMessages();
-            if (!empty($errorMessages)) {
-                foreach ($errorMessages as $error_message) {
-                    echo '<p class="error">' . $error_message . '</p>';
+            $messages = SugarApplication::getErrorMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="error">' . $message . '</p>';
+                }
+            }
+            
+            $messages = SugarApplication::getSuccessMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="success">' . $message . '</p>';
                 }
             }
         }
