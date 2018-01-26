@@ -1709,6 +1709,7 @@ $app_strings = array(
     'LBL_LOGOUT' => 'Log Out',
     'LBL_CANCEL' => 'Cancel',
     'LBL_VERIFY' => 'Verify',
+    'LBL_RESEND' => 'Resend',
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
