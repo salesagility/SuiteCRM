@@ -89,21 +89,45 @@
                   var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
                   _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
 
-                  // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-                  if ($('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').length) {
-                    var fieldValue = $('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').val();
-                    var fieldSign = $('#aor_conditions_value\\[' + ln + '\\]\\[1\\]').val();
-                    var fieldNumber = $('#aor_conditions_value\\[' + ln + '\\]\\[2\\]').val();
-                    var fieldTime = $('#aor_conditions_value\\[' + ln + '\\]\\[3\\]').val();
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldValue + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldSign + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldNumber + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldTime + '">');
-                  }
+                        // datetime combo fields
+                        if (typeof fieldInput === 'undefined'
+                          && $("[name='aor_conditions_value\\["+ln+"\\]']").val()
+                          && $("[name='aor_conditions_value\\["+ln+"\\]']").hasClass('DateTimeCombo')) {
+                            var datetime = $("[name='aor_conditions_value\\["+ln+"\\]']").val();
+                            var date = datetime.substr(0,10);
+                            var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
+                            fieldInput = datetime.replace(date, formatDate) + ':00';
+                        }
 
+                        // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+                        if($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length){
+                            var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
+                            var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
+                            var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
+                            var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldValue+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldSign+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldNumber+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldTime+'">');
+                        }
+                        // Fix for issue #1082 - change local date format to db date format
+                        if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
+                            if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+                                fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
+                            }
+                        }
+                        _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
+                    });
+                    _form.submit();
                 });
-                _form.submit();
-              });
+
+                // Make sure to change dates back to the user format
+                $('.aor_conditions_id').each(function(index, elem){
+                    if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) {
+                        var dateValue = new Date( $('#aor_conditions_value\\['+index+'\\]').val() );
+                        var dateValueinUserFormat = dateValue.toLocaleFormat(cal_date_format);
+                        $('#aor_conditions_value\\['+index+'\\]').val(dateValueinUserFormat)
+                    }
+                });
             });
             {/literal}
         </script>

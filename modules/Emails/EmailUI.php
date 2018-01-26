@@ -42,13 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -421,12 +414,10 @@ eoq;
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true)
+    public function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true, $composeData = null)
     {
         global $focus;
         $myBean = $focus;
-
-        $emailLink = '';
 
         if (!empty($bean)) {
             $myBean = $bean;
@@ -434,47 +425,51 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
-        // focus is set?
-        if (!is_object($myBean)) {
-            $GLOBALS['log']->warn('incorrect bean');
+        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" '
+            . 'data-record-id="" data-module-name=""  data-email-address="">';
+
+        if (is_array($emailField)) {
+            $emailFields = $emailField;
         } else {
-
-            if (is_array($emailField)) {
-                $emailFields = $emailField;
-            } else {
-                $emailFields = array($emailField);
-            }
+            $emailFields = array($emailField);
+        }
 
 
-            if($checkAllEmail) {
-                $i = 1;
+        if ($checkAllEmail) {
+            $i = 1;
+            $emailField = 'email' . $i;
+            while (isset($myBean->{$emailField})) {
+                $emailFields[] = $emailField;
+                $i++;
                 $emailField = 'email' . $i;
-                while(isset($myBean->{$emailField})) {
-                    $emailFields[] = $emailField;
-                    $i++;
-                    $emailField = 'email' . $i;
-                }
-                $emailFields = array_unique($emailFields);
             }
+            $emailFields = array_unique($emailFields);
+        }
 
-            foreach($emailFields as $emailField) {
-                if (property_exists($myBean, $emailField)) {
-                    $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
+        foreach ($emailFields as $emailField) {
+            if (!empty($composeData)) {
+                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+                    data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
+                    $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
+                    '"  data-email-address="' . $composeData['to_addrs'] . '">';
+            } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
+                $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+                    data-module="' . $myBean->module_name . '" ' . 'data-record-id="' .
+                    $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' .
+                    $myBean->{$emailField} . '">'
                             . $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
-                } else {
-                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
-                }
-                $optOut = false;
+            } else {
+                $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+            }
+            $optOut = false;
+            if (isset($myBean->emailAddress->addresses)) {
                 $addresses = $myBean->emailAddress->addresses;
-                foreach($addresses as $address) {
-                    if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                foreach ($addresses as $address) {
+                    if ($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
                         $optOut = true;
                     }
                 }
-                if(!$optOut) {
+                if (!$optOut) {
                     break;
                 }
             }
@@ -980,7 +975,7 @@ eoq;
 
         return $userPreferences;
     }
-    
+
     public function getUserPrefsJS($useRequestedRecord = false)
     {
         return $this->getUserPreferencesJS($useRequestedRecord);
@@ -3035,7 +3030,7 @@ eoq;
                     $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS'];
                 }
             }
-           
+
 
             $type = $mod_strings['LBL_MAILBOX_TYPE_GROUP_FOLDER'];
             $ieAccountsShowOptionsMeta[] = array(
