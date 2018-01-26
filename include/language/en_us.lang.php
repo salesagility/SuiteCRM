@@ -1709,6 +1709,7 @@ $app_strings = array(
     'LBL_LOGOUT' => 'Log Out',
     'LBL_CANCEL' => 'Cancel',
     'LBL_VERIFY' => 'Verify',
+    'LBL_RESEND' => 'Resend',
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
@@ -3933,3 +3934,6 @@ $app_list_strings['email_settings_opt_in_dom'] = array(
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'] = 'Unable to send email to %s email address(es), because they are not opted in. ';
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%s email address do not have a valid id. ';
+
+$app_strings['ERR_TWO_FACTOR_FAILED'] = 'Two Factor Authentication failed';
+$app_strings['ERR_TWO_FACTOR_CODE_SENT'] = 'Two Factor Authentication code sent.';
