@@ -129,7 +129,7 @@ class Basic extends SugarBean
     }
     
     /**
-     * 
+     * @see EmailAddressIndicator
      * @param EmailAddress $emailAddress
      * @return string
      */
