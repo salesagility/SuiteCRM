@@ -79,26 +79,10 @@ class AccountsViewDetail extends ViewDetail {
 		formLetter::DVPopupHtml('Accounts');
 
 		$this->dv->process();
-		global $mod_strings;
+		
 		if(ACLController::checkAccess('Contacts', 'edit', true)) {
-			$push_billing = '<input class="button" title="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_LABEL'] .
-								 '" type="button" onclick=\'open_contact_popup("Contacts", 600, 600, "&account_name=' .
-								 $this->bean->name . '&html=change_address' .
-								 '&primary_address_street=' . str_replace(array("\rn", "\r", "\n"), array('','','<br>'), urlencode($this->bean->billing_address_street)) .
-								 '&primary_address_city=' . $this->bean->billing_address_city .
-								 '&primary_address_state=' . $this->bean->billing_address_state .
-								 '&primary_address_postalcode=' . $this->bean->billing_address_postalcode .
-								 '&primary_address_country=' . $this->bean->billing_address_country .
-								 '", true, false);\' value="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_TITLE']. '">';
-			$push_shipping = '<input class="button" title="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_LABEL'] .
-								 '" type="button" onclick=\'open_contact_popup("Contacts", 600, 600, "&account_name=' .
-								 $this->bean->name . '&html=change_address' .
-								 '&primary_address_street=' . str_replace(array("\rn", "\r", "\n"), array('','','<br>'), urlencode($this->bean->shipping_address_street)) .
-								 '&primary_address_city=' . $this->bean->shipping_address_city .
-								 '&primary_address_state=' . $this->bean->shipping_address_state .
-								 '&primary_address_postalcode=' . $this->bean->shipping_address_postalcode .
-								 '&primary_address_country=' . $this->bean->shipping_address_country .
-								 '", true, false);\' value="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_TITLE'] . '">';
+			$push_billing = $this->generatePushCode('billing');
+			$push_shipping = $this->generatePushCode('shipping');
 		} else {
 			$push_billing = '';
 			$push_shipping = '';
@@ -113,6 +97,24 @@ class AccountsViewDetail extends ViewDetail {
 		}
 		echo $this->dv->display();
  	}
+
+	function generatePushCode($param)
+	{
+	    global $mod_strings;
+	    $address_fields = array('street', 'city', 'state', 'postalcode','country');
+
+	    $html = '<input class="button" title="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_LABEL'] .
+		     '" type="button" onclick=\'open_contact_popup("Contacts", 600, 600, "&account_name=' .
+		     $this->bean->name . '&html=change_address';
+
+	    foreach ($address_fields as $value) {
+	    	$field_name = $param.'_address_'.$value;
+	    	$html .= '&primary_address_'.$value.'='.str_replace(array("\rn", "\r", "\n"), array('','','<br>'), urlencode($this->bean->$field_name)) ;
+	    }
+
+	    $html .= '", true, false);\' value="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_TITLE']. '">';
+	    return $html;
+	}
 }
 
 ?>
