@@ -2383,7 +2383,7 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON' => 'Confirm Opt In Email sending only for Accounts/Contacts/Leads/Prospects',
     'LBL_CONFIRM_OPT_IN_IS_DISABLED' => 'Confirm Opt In Email sending is disabled, enable Confirm Opt In option in Email Settings or contact your Administrator.',
     'LBL_CONTACT_HAS_NO_PRIMARY_EMAIL' => 'Confirm Opt In Email sending is not possible because the Contact has not Primary Email Address',
-    'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sennding failed',
+    'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sending failed',
     'LBL_CONFIRM_EMAIL_SENT' => 'Confirm Opt In Email sent successfully',
 );
 
