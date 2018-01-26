@@ -88,7 +88,10 @@
                   _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
                   var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
                   _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
-
+		
+		  if($("input[name='aor_conditions_value["+ln+"]").attr('type') === 'radio'){
+                      var fieldInput = $("input[name='aor_conditions_value["+ln+"]']:checked").val();
+                  }
                         // datetime combo fields
                         if (typeof fieldInput === 'undefined'
                           && $("[name='aor_conditions_value\\["+ln+"\\]']").val()
