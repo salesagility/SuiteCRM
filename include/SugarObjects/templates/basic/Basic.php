@@ -100,50 +100,72 @@ class Basic extends SugarBean
     public function getOptInStatusFromSugarField($emailField) {
         $emailAddress = $this->fromSugarEmailAddressField($emailField);
         $configurator = new Configurator();
-        $configurator->config;
         
-        $ret = 'UNKNOWN_OPT_IN_STATUS';
+        $ret = 'INVALID_OPT_IN_SETTINGS';
         
         if ($configurator->config['email_enable_confirm_opt_in'] === '') {
             $ret = 'OPT_IN_DISABLED';
+        } else if($configurator->config['email_enable_confirm_opt_in'] === 'opt-in') {
+            $ret = $this->getConfirmOptInStatus($emailAddress);
+            if(in_array($ret, array(
+                'OPT_IN_PENDING_EMAIL_CONFIRMED',
+                'OPT_IN_PENDING_EMAIL_SENT',
+                'OPT_IN_PENDING_EMAIL_NOT_SENT',
+                'OPT_IN_PENDING_EMAIL_FAILED',
+            ))) {
+                $ret = 'OPT_IN';
+            }
+        } else if($configurator->config['email_enable_confirm_opt_in'] === 'confirm-opt-in') {
+            $ret = $this->getConfirmOptInStatus($emailAddress);
         } else {
-            
-            if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
-                
-                if ($emailAddress->invalid_email == '1') {
-                    $ret = 'INVALID';
+            LoggerManager::getLogger()->warn('Invalid ENUM value of Opt In settings: ' . $configurator->config['email_enable_confirm_opt_in']);
+        }
+        
+        return $ret;
+    }
+    
+    /**
+     * 
+     * @param EmailAddress $emailAddress
+     * @return string
+     */
+    private function getConfirmOptInStatus(EmailAddress $emailAddress = null) {
+        
+        $ret = 'UNKNOWN_OPT_IN_STATUS';
+        
+        if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
+
+            if ($emailAddress->invalid_email == '1') {
+                $ret = 'INVALID';
+            } else {
+                if ($emailAddress->opt_out == '1') {
+                    $ret = 'OPT_OUT';
                 } else {
-                    if ($emailAddress->opt_out == '1') {
-                        $ret = 'OPT_OUT';
-                    } else {
-                        if (
+                    if (
                             $emailAddress->confirm_opt_in == 'confirmed-opt-in'
-                        ) {
-                            $ret = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-                        } elseif (
+                    ) {
+                        $ret = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
+                    } elseif (
                             $emailAddress->confirm_opt_in == 'opt-in'
-                        ) {
-                            if($emailAddress->confirm_opt_in_fail_date) {
-                                $ret = 'OPT_IN_PENDING_EMAIL_FAILED';
-                            } elseif (!empty($emailAddress->confirm_opt_in_sent_date)) {
-                                $ret = 'OPT_IN_PENDING_EMAIL_SENT';
-                            } else {
-                                LoggerManager::getLogger()->warn('Unknown Opt In status detected - email address is "opt-in" but no failed nor sent date');
-                            }
-                        } elseif (
-                            empty($emailAddress->confirm_opt_in_sent_date)
-                            && $emailAddress->confirm_opt_in !== ''
-                        ) {
-                            $ret = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+                    ) {
+                        if ($emailAddress->confirm_opt_in_fail_date) {
+                            $ret = 'OPT_IN_PENDING_EMAIL_FAILED';
+                        } elseif (!empty($emailAddress->confirm_opt_in_sent_date)) {
+                            $ret = 'OPT_IN_PENDING_EMAIL_SENT';
                         } else {
-                            LoggerManager::getLogger()->warn('Unknown Opt In status detected');
+                            LoggerManager::getLogger()->warn('Unknown Opt In status detected - email address is "opt-in" but no failed nor sent date');
                         }
+                    } elseif (
+                            empty($emailAddress->confirm_opt_in_sent_date) && $emailAddress->confirm_opt_in !== ''
+                    ) {
+                        $ret = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+                    } else {
+                        LoggerManager::getLogger()->warn('Unknown Opt In status detected');
                     }
                 }
             }
-        
         }
-        
+
         return $ret;
     }
 
@@ -152,7 +174,7 @@ class Basic extends SugarBean
      * @global array $sugar_config
      * @global \LoggerManager $log
      * @param string $emailField
-     * @return \EmailAddress
+     * @return \EmailAddress|null
      * @throws InvalidArgumentException
      */
     public function fromSugarEmailAddressField($emailField)
@@ -226,7 +248,7 @@ class Basic extends SugarBean
 
         $tickHtml = '';
 
-        if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in']  !== '') {
+        if (isset($sugar_config['email_enable_confirm_opt_in']) && ($sugar_config['email_enable_confirm_opt_in']  !== '' || $sugar_config['email_enable_confirm_opt_in'] === 'opt-in')) {
             $template = new Sugar_Smarty();
             $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
             $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');

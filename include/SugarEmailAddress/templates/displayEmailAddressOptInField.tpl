@@ -39,36 +39,20 @@
  */
 *}
 <span class="email-opt-in-container">
-    {if $APP_CONFIG.email_enable_confirm_opt_in == 'opt-in'}
-        {*opt-in*}
-        {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-            <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-            <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-            <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_FAILED'}
-            <span class="email-opt-in email-opt-in-failed" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_FAILED}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-            <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}"></span>
-        {elseif $OPT_IN_STATUS === 'INVALID'}
+    {if $OPT_IN_STATUS === 'OPT_IN'}
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
+        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
+        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
+        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_FAILED'}
+        <span class="email-opt-in email-opt-in-failed" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_FAILED}">✓</span>
+    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
+        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
+    {elseif $OPT_IN_STATUS === 'INVALID'}
         <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-        {/if}
-    {elseif $APP_CONFIG.email_enable_confirm_opt_in == 'confirmed-opt-in'}
-        {*confirmed-opt-in*}
-        {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-            <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-            <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_FAILED'}
-            <span class="email-opt-in email-opt-in-failed" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_FAILED}">✓</span>
-        {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-            <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}"></span>
-        {elseif $OPT_IN_STATUS === 'INVALID'}
-        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-        {/if}
     {/if}
-
 </span>

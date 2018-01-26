@@ -1073,10 +1073,10 @@ class EmailMan extends SugarBean
     /**
      * @global LoggerManager $log
      * @param EmailAddress $emailAddress
-     * @param string $type
-     * @param string $id
-     * @return boolean
-     * @throws Exception
+     * @param string $type related person bean module name
+     * @param string $id related person bean module id
+     * @return boolean return true on success otherwise false
+     * @throws Exception email addresses have to having a related bean
      */
     public function sendOptInEmail(EmailAddress $emailAddress, $type, $id)
     {
@@ -1114,7 +1114,7 @@ class EmailMan extends SugarBean
      * @global array $app_strings
      * @param SugarBean|Person|Company $focus
      * @param EmailAddress $emailAddress
-     * @return boolean
+     * @return boolean return true on success otherwise false
      */
     private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {
@@ -1146,6 +1146,8 @@ class EmailMan extends SugarBean
 
         $emailTemplate->retrieve($confirmOptInTemplateId);
 
+        include_once 'include/SugarPHPMailer.php';
+        
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 
