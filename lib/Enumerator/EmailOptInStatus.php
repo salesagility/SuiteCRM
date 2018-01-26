@@ -42,9 +42,9 @@ namespace SuiteCRM\Enumerator;
 
 
 /**
- * Class ExceptionCode
+ * Class EmailOptInStatus
  * @package SuiteCRM\Enumerator
- * Holds al opp in status codes
+ * Holds all opt in status codes
  */
 class EmailOptInStatus
 {

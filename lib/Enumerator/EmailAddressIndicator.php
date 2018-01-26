@@ -42,9 +42,10 @@ namespace SuiteCRM\Enumerator;
 
 
 /**
- * Class ExceptionCode
+ * Class EmailAddressIndicator
  * @package SuiteCRM\Enumerator
- * Holds al opp in status codes
+ * All status codes and other such flags
+ * used by the email address indicator
  */
 class EmailAddressIndicator
 {
@@ -60,6 +61,10 @@ class EmailAddressIndicator
     const INVALID = 'INVALID';
 
 
+    /**
+     * @param string $emailAddressIndicatorStatus
+     * @return bool
+     */
     public static function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS)
     {
         return in_array($emailAddressIndicatorStatus, array(
