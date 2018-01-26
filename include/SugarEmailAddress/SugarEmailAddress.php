@@ -1211,12 +1211,13 @@ class SugarEmailAddress extends SugarBean
         // determine how we are going to put in this address - UPDATE or INSERT
         if (!empty($duplicate_email['id'])) {
 
-            // TODO: Update or remove if statement
             // address_caps matches - see if we're changing fields
-//            if ($duplicate_email['invalid_email'] != $new_invalid ||
-//                $duplicate_email['opt_out'] != $new_opt_out ||
-//                (trim($duplicate_email['email_address']) != $address)
-//            ) {
+            if (
+                $duplicate_email['invalid_email'] != $new_invalid
+                || $duplicate_email['opt_out'] != $new_opt_out
+                || $duplicate_email['confirm_opt_in'] != $new_confirmed_opt_in
+                || (trim($duplicate_email['email_address']) != $address)
+            ) {
                 $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                     'SET email_address=\'' . $address . '\', ' .
                     'invalid_email=' . $new_invalid . ', ' .
@@ -1236,7 +1237,7 @@ class SugarEmailAddress extends SugarBean
                         'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                     $upd_r = $this->db->query($upd_q);
                 }
-//            }
+            }
 
             return $duplicate_email['id'];
         } else {
