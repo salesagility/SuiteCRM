@@ -102,19 +102,7 @@ $dictionary['Surveys'] = array(
                 'include' => 'modules/Surveys/Utils/utils.php'
             ),
         ),
-        'happiness_question'       => array(
-            'required' => false,
-            'name'     => 'happiness_question',
-            'vname'    => 'LBL_HAPPINESS_QUESTION',
-            'type'     => 'function',
-            'source'   => 'non-db',
-            'function' => array(
-                'name'    => 'happiness_question_display',
-                'returns' => 'html',
-                'include' => 'modules/Surveys/Utils/utils.php'
-            ),
-
-        ),
+        
         'submit_text'              => array(
             'required'   => false,
             'name'       => 'submit_text',
