@@ -457,9 +457,9 @@ $contact_user_link_guid',
         'subject' => 'Two Factor Authentication Code',
         'type' => 'system',
         'description' => "This template is used to send a user a code for Two Factor Authentication.",
-        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>You Two Factor Authentication code is <b>$code</b>.</p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
+        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Two Factor Authentication code is <b>$code</b>.</p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
         'txt_body' =>
-            'You Two Factor Authentication code is $code.',
+            'Two Factor Authentication code is $code.',
         'name' => 'Two Factor Authentication email',
     ),
 
