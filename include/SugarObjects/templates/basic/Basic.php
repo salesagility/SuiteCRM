@@ -137,9 +137,9 @@ class Basic extends SugarBean
             $emailAddress !== null
             && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
         ) {
-            if ($emailAddress->invalid_email === (int)1) {
+            if ((int)$emailAddress->invalid_email === 1) {
                 return EmailAddressIndicator::INVALID;
-            } elseif ($emailAddress->opt_out === (int)1) {
+            } elseif ((int)$emailAddress->opt_out === 1) {
                 return EmailAddressIndicator::OPT_OUT;
             } elseif ($emailAddress->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
@@ -158,7 +158,7 @@ class Basic extends SugarBean
                 empty($emailAddress->confirm_opt_in_sent_date)
                 && $emailAddress->confirm_opt_in !== EmailOptInStatus::DISABLED
             ) {
-                $ret = EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
             } else {
                 $log->warn('Unknown Opt In status detected');
                 return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;

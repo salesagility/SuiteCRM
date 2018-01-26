@@ -554,6 +554,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $invalid GUID of invalid address
      * @param string $optOut
      * @param bool $in_workflow
+     * @param bool $opt_in
      * @return null
      */
     public function saveEmail(
@@ -984,6 +985,10 @@ class SugarEmailAddress extends SugarBean
      * @param string $addr Email address
      * @param bool $primary Default false
      * @param bool $replyTo Default false
+     * @param bool $invalid Default false
+     * @param bool $optOut Default false
+     * @param string $email_id
+     * @param bool $optIn Default false
      */
     public function addAddress(
         $addr,
@@ -1141,6 +1146,7 @@ class SugarEmailAddress extends SugarBean
      * @param String $id - the GUID of the original SugarEmailAddress bean,
      *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
      *        to propagate to the new SugarEmailAddress - see bug 39188
+     * @param int $optInFlag
      * @return String GUID of Email Address or '' if cleaned address was empty.
      */
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag)
@@ -1187,31 +1193,50 @@ class SugarEmailAddress extends SugarBean
             }
         }
 
-        // TODO: confirmed opt in check
-        if ($opt_out !== 1 && $invalid !== 1) {
-            $optInStatus = $this->getOptInStatus();
+        // confirmed opt in check
+        $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
+        $this->retrieve($id);
+        $optInIndication = $this->getOptInIndication();
+        if (
+           $isValidEmailAddress
+           && EmailAddressIndicator::isOptedInStatus($optInIndication)
+           && (int)$optInFlag === 1
+        ) {
+           $new_confirmed_opt_in = $this->confirm_opt_in;
+        } else {
+            // Reset the opt in status
+           $new_confirmed_opt_in = EmailOptInStatus::DISABLED;
         }
-        // TODO: get opt in status
-        // TODO: compare $optInFlag against the opt in status
-        // TODO: decide how we should be updated.
-
 
         // determine how we are going to put in this address - UPDATE or INSERT
         if (!empty($duplicate_email['id'])) {
 
+            // TODO: Update or remove if statement
             // address_caps matches - see if we're changing fields
-            if ($duplicate_email['invalid_email'] != $new_invalid ||
-                $duplicate_email['opt_out'] != $new_opt_out ||
-                (trim($duplicate_email['email_address']) != $address)
-            ) {
+//            if ($duplicate_email['invalid_email'] != $new_invalid ||
+//                $duplicate_email['opt_out'] != $new_opt_out ||
+//                (trim($duplicate_email['email_address']) != $address)
+//            ) {
                 $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                     'SET email_address=\'' . $address . '\', ' .
                     'invalid_email=' . $new_invalid . ', ' .
                     'opt_out=' . $new_opt_out . ', ' .
+                    'confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ' .
                     'date_modified=' . $this->db->now() . ' ' .
                     'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                 $upd_r = $this->db->query($upd_q);
-            }
+
+                if ($new_confirmed_opt_in === EmailOptInStatus::DISABLED) {
+                    // reset confirm opt in
+                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+                        'SET '.
+                        'confirm_opt_in_date=NULL,' .
+                        'confirm_opt_in_sent_date=NULL,' .
+                        'confirm_opt_in_fail_date=NULL ' .
+                        'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
+                    $upd_r = $this->db->query($upd_q);
+                }
+//            }
 
             return $duplicate_email['id'];
         } else {
@@ -1220,8 +1245,8 @@ class SugarEmailAddress extends SugarBean
             if (!empty($address)) {
                 $guid = create_guid();
                 $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out)
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out)";
+                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out, confirm_opt_in)
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out, $new_confirmed_opt_in)";
                 $this->db->query($qa);
             }
 
@@ -1881,7 +1906,7 @@ class SugarEmailAddress extends SugarBean
      * @see EmailAddressIndicator
      * @return string
      */
-    public function getOptInStatus() {
+    public function getOptInIndication() {
         $configurator = new Configurator();
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
 
@@ -1914,9 +1939,9 @@ class SugarEmailAddress extends SugarBean
         if (
             !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
         ) {
-            if ($this->invalid_email === (int)1) {
+            if ((int)$this->invalid_email === 1) {
                 return EmailAddressIndicator::INVALID;
-            } elseif ($this->opt_out === (int)1) {
+            } elseif ((int)$this->opt_out === 1) {
                 return EmailAddressIndicator::OPT_OUT;
             } elseif ($this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
