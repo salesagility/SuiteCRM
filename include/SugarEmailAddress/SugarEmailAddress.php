@@ -53,6 +53,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("include/JSON.php");
 
+use SuiteCRM\Enumerator\EmailAddressIndicator;
+use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class SugarEmailAddress extends SugarBean
 {
@@ -118,6 +120,13 @@ class SugarEmailAddress extends SugarBean
      */
     public $confirm_opt_in_fail_date;
 
+    /**
+     * @var array $doNotDisplayOptInTickForModule
+     */
+    protected static $doNotDisplayOptInTickForModule = array(
+        'Users',
+        'Employees'
+    );
 
     /**
      * Sole constructor
@@ -1179,6 +1188,9 @@ class SugarEmailAddress extends SugarBean
         }
 
         // TODO: confirmed opt in check
+        if ($opt_out !== 1 && $invalid !== 1) {
+            $optInStatus = $this->getOptInStatus();
+        }
         // TODO: get opt in status
         // TODO: compare $optInFlag against the opt in status
         // TODO: decide how we should be updated.
@@ -1863,6 +1875,76 @@ class SugarEmailAddress extends SugarBean
         return $ret;
     }
 
+
+    /**
+     * Uses the configuration to determine opt in status
+     * @see EmailAddressIndicator
+     * @return string
+     */
+    public function getOptInStatus() {
+        $configurator = new Configurator();
+        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+
+        if ($enableConfirmedOptIn === EmailOptInStatus::DISABLED) {
+            return EmailAddressIndicator::OPT_IN_DISABLED;
+        } elseif (
+            $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
+            && EmailAddressIndicator::isOptedInStatus($this->getConfirmOptInStatusFromFlags())
+        ) {
+            return EmailAddressIndicator::OPT_IN;
+        } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
+            return $this->getConfirmOptInStatusFromFlags();
+        } else {
+            $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
+            LoggerManager::getLogger()->warn($msg);
+            return EmailAddressIndicator::INVALID_OPT_IN_SETTINGS;
+        }
+    }
+
+    /**
+     * Determines the opt in status without considering the configurataion
+     * @see EmailAddressIndicator
+     * @return string
+     */
+    private function getConfirmOptInStatusFromFlags()
+    {
+        $log = LoggerManager::getLogger();
+
+
+        if (
+            !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
+        ) {
+            if ($this->invalid_email === (int)1) {
+                return EmailAddressIndicator::INVALID;
+            } elseif ($this->opt_out === (int)1) {
+                return EmailAddressIndicator::OPT_OUT;
+            } elseif ($this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
+            } elseif (
+                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
+                && !empty($this->confirm_opt_in_sent_date)
+                && !empty($this->confirm_opt_in_fail_date)
+            ) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
+            } elseif (
+                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
+                && !empty($this->confirm_opt_in_sent_date)
+            ) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
+            } elseif (
+                empty($this->confirm_opt_in_sent_date)
+                && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
+            ) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
+            } else {
+                $log->warn('Unknown Opt In status detected');
+                return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+            }
+        }
+
+        return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+    }
+
 } // end class def
 
 
@@ -1876,6 +1958,7 @@ class SugarEmailAddress extends SugarBean
  */
 function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
 {
+    // TODO: Move this into an other file eg utils.php
     $sea = new SugarEmailAddress();
     $sea->setView($view);
 

@@ -44,16 +44,12 @@ use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class Basic extends SugarBean
 {
+    /**
+     * @var array
+     */
     protected static $doNotDisplayOptInTickForModule = array(
         'Users',
         'Employees'
-    );
-
-    private static $optInStatus = array(
-        EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
-        EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
-        EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
-        EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
     );
 
     /**
@@ -113,10 +109,10 @@ class Basic extends SugarBean
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
         
         if ($enableConfirmedOptIn === EmailOptInStatus::DISABLED) {
-            $ret = EmailAddressIndicator::OPT_IN_DISABLED;
+            return EmailAddressIndicator::OPT_IN_DISABLED;
         } elseif (
             $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
-            && in_array($this->getConfirmOptInStatus($emailAddress), self::$optInStatus, true)
+            && EmailAddressIndicator::isOptedInStatus($this->getConfirmOptInStatusFromFlags())
         ) {
             return EmailAddressIndicator::OPT_IN;
         } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
@@ -136,29 +132,28 @@ class Basic extends SugarBean
     private function getConfirmOptInStatus(EmailAddress $emailAddress = null)
     {
         $log = LoggerManager::getLogger();
-        $ret = EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
 
         if (
             $emailAddress !== null
             && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
         ) {
             if ($emailAddress->invalid_email === (int)1) {
-                $ret = EmailAddressIndicator::INVALID;
+                return EmailAddressIndicator::INVALID;
             } elseif ($emailAddress->opt_out === (int)1) {
-                $ret = EmailAddressIndicator::OPT_OUT;
+                return EmailAddressIndicator::OPT_OUT;
             } elseif ($emailAddress->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
-                $ret = EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
                 $emailAddress->confirm_opt_in === EmailOptInStatus::OPT_IN
                 && !empty($emailAddress->confirm_opt_in_sent_date)
                 && !empty($emailAddress->confirm_opt_in_fail_date)
             ) {
-                $ret = EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
             } elseif (
                 $emailAddress->confirm_opt_in === EmailOptInStatus::OPT_IN
                 && !empty($emailAddress->confirm_opt_in_sent_date)
             ) {
-                $ret = EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
             } elseif (
                 empty($emailAddress->confirm_opt_in_sent_date)
                 && $emailAddress->confirm_opt_in !== EmailOptInStatus::DISABLED
@@ -166,10 +161,11 @@ class Basic extends SugarBean
                 $ret = EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
             } else {
                 $log->warn('Unknown Opt In status detected');
+                return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
             }
         }
 
-        return $ret;
+        return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
     }
 
     /**

@@ -48,14 +48,25 @@ namespace SuiteCRM\Enumerator;
  */
 class EmailAddressIndicator
 {
-    const INVALID = 'INVALID';
-    const OPT_OUT = 'OPT_OUT';
-    const OPT_IN = 'OPT_IN';
-    const OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-    const OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
-    const OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
-    const OPT_IN_PENDING_EMAIL_FAILED = 'OPT_IN_PENDING_EMAIL_FAILED';
-    const UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
     const INVALID_OPT_IN_SETTINGS = 'INVALID_OPT_IN_SETTINGS';
+    const OPT_IN = 'OPT_IN';
     const OPT_IN_DISABLED = 'OPT_IN_DISABLED';
+    const OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
+    const OPT_IN_PENDING_EMAIL_FAILED = 'OPT_IN_PENDING_EMAIL_FAILED';
+    const OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+    const OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
+    const OPT_OUT = 'OPT_OUT';
+    const UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
+    const INVALID = 'INVALID';
+
+
+    public static function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS)
+    {
+        return in_array($emailAddressIndicatorStatus, array(
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
+        ), true);
+    }
 }
