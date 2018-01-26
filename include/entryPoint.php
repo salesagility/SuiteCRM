@@ -66,8 +66,12 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
-
-require_once $BASE_DIR.'/vendor/autoload.php';
+$autoloader = $BASE_DIR.'/vendor/autoload.php';
+if(file_exists($autoloader)) {
+    require_once $autoloader;
+} else {
+    die('Composer autoloader not found. Please install/update composer for install SuiteCRM, run "composer update" command.');
+}
 
 // config|_override.php
 if (is_file('config.php')) {
