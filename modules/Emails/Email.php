@@ -699,6 +699,20 @@ class Email extends Basic
             $return['status'] = false;
             $return['errorMessage'] = $app_strings['LBL_EMAIL_ERROR_PREPEND'] . $mail->ErrorInfo;
 
+
+
+
+
+
+//TODO PGR: fill proper fullSmtpLog 
+$mail->fullSmtpLog = "um\ndois\ntres\nquatro\ncinco"; 
+$return['fullSmtpLog'] = $mail->fullSmtpLog;
+
+
+
+
+
+
             return $return;
         } // if
         $return['status'] = true;

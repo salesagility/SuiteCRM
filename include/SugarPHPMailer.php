@@ -62,13 +62,13 @@ class SugarPHPMailer extends PHPMailer
     public $disclosureText;
     public $isHostEmpty = false;
     public $opensslOpened = true;
-
+    public $phpMailerFullLog='';
     /**
      * Sole constructor
      */
-    public function __construct()
+    public function __construct($exceptions = null)
     {
-        parent::__construct();
+        parent::__construct($exceptions);
         global $locale;
         global $current_user;
         global $sugar_config;
@@ -357,7 +357,7 @@ eoq;
      * @return bool
      * @throws \phpmailerException
      */
-    public function smtpConnect($options = array())
+    public function smtpConnectOLD($options = array())
     {
         $connection = parent::smtpConnect();
         if (!$connection) {
@@ -371,6 +371,58 @@ eoq;
 
         return $connection;
     } // fn
+
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     * @throws \phpmailerException
+     */
+    public function smtpConnect($options = array())
+    {
+        $GLOBALS['log']->fatal("------------ Entering smtpConnect");
+        $this->phpMailerFullLog='';
+        $phpMailerExceptionMsg='';
+        try {
+            $saveExceptionsState = $this->exceptions;
+            $this->exceptions = true;
+            $this->Debugoutput = function($str, $level) {
+                $this->phpMailerFullLog .= "$level: $str\n";
+            };
+
+            $this->SMTPDebug = 3;
+            //$mail->Debugoutput='html';
+
+           $connection = parent::smtpConnect();
+           $this->exceptions =  $saveExceptionsState;
+        }
+        catch (Exception $e) {
+            $phpMailerExceptionMsg=$e->getMessage();
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->fatal("Internal PHPMailer smtpConnect Exception: { $phpMailerExceptionMsg } ---------------");
+            }
+        }
+        
+        $line = strtok($this->phpMailerFullLog, "\n");
+
+        while ($line !== false) {
+            //$GLOBALS['log']->fatal("smtpConnect: { $line }");
+            $line = strtok( "\n" );
+        }
+        if (!$connection) {
+            global $app_strings;
+            if (isset($this->oe) && $this->oe->type === 'system') {
+                $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND'].' '.$phpMailerExceptionMsg);
+            } else {
+                $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND'].' '.$phpMailerExceptionMsg);
+            } // else
+        }
+        $GLOBALS['log']->fatal("------------ Exiting smtpConnect");
+
+        return $connection;
+    }
+
 
     /**
      * overloads PHPMailer::PreSend() to allow for empty messages to go out.
@@ -405,6 +457,29 @@ eoq;
         }
 
         return false;
+    }
+
+    public function send() 
+    {
+       $GLOBALS['log']->fatal("------------ Entering SugarMailer send");
+       $this->phpMailerFullLog='';
+       //Use these to override some fields for tests:
+       //$this->From = 'me@here.com';
+       //$this->Sender = 'me@here.com';
+       $this->Password='wrong';
+       //$this->FromName = 'My Name';
+       $GLOBALS['log']->fatal("PHPMailer Send Function override: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
+
+       $ret = parent::send();
+
+       $line = strtok($this->phpMailerFullLog, "\n");
+       while ($line !== false) {
+            //$GLOBALS['log']->fatal("smtp send: { $line }");
+            $line = strtok( "\n" );
+       }
+       $GLOBALS['log']->fatal("------------ Exiting SugarMailer send");
+
+       return $ret;
     }
 
 } // end class definition
