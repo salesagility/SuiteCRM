@@ -487,7 +487,13 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
             $saveExceptionsState = $this->exceptions;
             $this->exceptions = true;
             $this->Debugoutput = function($str, $level) {
-                $this->fullSmtpLog .= "$level: $str\n";
+                static $previousIs334 = false;  
+                if ($previousIs334) {
+                    $this->fullSmtpLog .= "$level: CLIENT -> SERVER: ---obfuscated---\n";
+                } else {
+                    $this->fullSmtpLog .= "$level: $str\n";
+                }
+                $previousIs334 = (strpos($str, 'SERVER -> CLIENT: 334') !== false);
             };
 
             $this->SMTPDebug = 3;
@@ -495,13 +501,13 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
             $ret = parent::send();
             $this->exceptions =  $saveExceptionsState;
         }
-        catch (Exception $e) {
+        catch (NOTException $e) {
             $phpMailerExceptionMsg=$e->errorMessage();
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->fatal("Internal PHPMailer phpmailerException: { $phpMailerExceptionMsg } ---------------");
             }
         }
-        catch (\Exception $e) {
+        catch (\NOTException $e) {
             $phpMailerExceptionMsg=$e->getMessage();
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->fatal("Internal PHPMailer Exception: { $phpMailerExceptionMsg } ---------------");

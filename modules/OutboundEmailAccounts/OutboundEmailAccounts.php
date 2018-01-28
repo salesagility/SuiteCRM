@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -155,19 +155,18 @@ HTML;
 					EmailMan.testOutboundDialog.show();
 				}
                 
-                function showFullSmtpLogDialog(headerText, bodyHtml, dialogType) {
+                                function showFullSmtpLogDialog(headerText, bodyHtml, dialogType) {
 
-                    var config = { };
-                    config.type = dialogType;
-                    config.title = headerText;
-                    config.msg = bodyHtml;
-                    config.modal = false;
-                    config.width = 900;
-                    YAHOO.SUGAR.MessageBox.show(config);
-                }
+                                     var config = { };
+                                     config.type = dialogType;
+                                     config.title = headerText;
+                                     config.msg = bodyHtml;
+                                     config.modal = false;
+                                     config.width = 600;
+                                     YAHOO.SUGAR.MessageBox.show(config);
+                                }
 				
-				function sendTestEmail()
-				{
+				function sendTestEmail() {
 					var toAddress = document.getElementById("outboundtest_to_address").value;
 					
 					if (trim(toAddress) == "") 
@@ -190,24 +189,24 @@ HTML;
 							var responseObject = YAHOO.lang.JSON.parse(o.responseText);
 							if (responseObject.status)
 								overlay("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", "{$APP['LBL_EMAIL_TEST_NOTIFICATION_SENT']}", 'alert');
-							else {
+       							else {
                                 
-                                var dialogBody = 
-                                    "<div style='padding: 10px'>"+
-                                        "<div class='well'>" + responseObject.errorMessage + "</div>" +
-                                        "<div >" +
-                                            "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
-                                                "See Full SMTP Log"+
-                                            "</button>" +
-                                            "<div class='collapse' id='fullSmtpLog'>"+
-                                                "<pre style='height: 300px; overflow: scroll;'>" +
-                                                    responseObject.fullSmtpLog + 
-                                                "</pre>" +
-                                            "</div>" +
-                                        "</div>"+
-                                    "</div>";
-                                    showFullSmtpLogDialog("Send Test Email", dialogBody, 'alert');
-                            }
+                                                           var dialogBody = 
+                                                            "<div style='padding: 10px'>"+
+                                                               "<div class='well'>" + responseObject.errorMessage + "</div>" +
+                                                               "<div >" +
+                                                                   "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
+                                                                       "See Full SMTP Log"+
+                                                                  "</button>" +
+                                                                   "<div class='collapse' id='fullSmtpLog'>"+
+                                                                       "<pre style='height: 300px; overflow: scroll;'>" +
+                                                                           responseObject.fullSmtpLog + 
+                                                                       "</pre>" +
+                                                                   "</div>" +
+                                                               "</div>"+
+                                                           "</div>";
+                                                           showFullSmtpLogDialog("Send Test Email", dialogBody, 'alert');
+                                                        }
 						}
 					};
 
