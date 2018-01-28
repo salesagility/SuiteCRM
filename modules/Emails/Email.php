@@ -654,7 +654,7 @@ class Email extends Basic
     ) {
         global $current_user, $app_strings;
         $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
-        $mail = new SugarPHPMailer();
+        $mail = new SugarPHPMailer(true);
         $mail->Mailer = strtolower($mail_sendtype);
         if ($mail->Mailer == 'smtp') {
             $mail->Host = $mailserver_url;
@@ -705,7 +705,7 @@ class Email extends Basic
 
 
 //TODO PGR: fill proper fullSmtpLog 
-$mail->fullSmtpLog = "um\ndois\ntres\nquatro\ncinco"; 
+//$mail->fullSmtpLog = "um\ndois\ntres\nquatro\ncinco"; 
 $return['fullSmtpLog'] = $mail->fullSmtpLog;
 
 

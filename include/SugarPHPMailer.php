@@ -62,7 +62,7 @@ class SugarPHPMailer extends PHPMailer
     public $disclosureText;
     public $isHostEmpty = false;
     public $opensslOpened = true;
-    public $phpMailerFullLog='';
+    public $fullSmtpLog='';
     /**
      * Sole constructor
      */
@@ -72,6 +72,7 @@ class SugarPHPMailer extends PHPMailer
         global $locale;
         global $current_user;
         global $sugar_config;
+$GLOBALS['log']->fatal("------------ Construct SugarPHPMailer with exceptions $exceptions");
 
         $admin = new Administration();
         $admin->retrieveSettings();
@@ -357,7 +358,7 @@ eoq;
      * @return bool
      * @throws \phpmailerException
      */
-    public function smtpConnectOLD($options = array())
+    public function smtpConnect($options = array())
     {
         $connection = parent::smtpConnect();
         if (!$connection) {
@@ -379,47 +380,56 @@ eoq;
      * @return bool
      * @throws \phpmailerException
      */
-    public function smtpConnect($options = array())
+    public function smtpConnectNOT($options = array())
     {
         $GLOBALS['log']->fatal("------------ Entering smtpConnect");
-        $this->phpMailerFullLog='';
+        $this->fullSmtpLog='';
         $phpMailerExceptionMsg='';
         try {
             $saveExceptionsState = $this->exceptions;
             $this->exceptions = true;
             $this->Debugoutput = function($str, $level) {
-                $this->phpMailerFullLog .= "$level: $str\n";
+                $this->fullSmtpLog .= "$level: $str\n";
             };
 
             $this->SMTPDebug = 3;
             //$mail->Debugoutput='html';
-
+           $connection = NULL;
            $connection = parent::smtpConnect();
            $this->exceptions =  $saveExceptionsState;
         }
         catch (Exception $e) {
+            $phpMailerExceptionMsg=$e->errorMessage();
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->fatal("Internal PHPMailer smtpConnect phpmailerException: { $phpMailerExceptionMsg } ---------------");
+            }
+        }
+        catch (\Exception $e) {
             $phpMailerExceptionMsg=$e->getMessage();
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->fatal("Internal PHPMailer smtpConnect Exception: { $phpMailerExceptionMsg } ---------------");
             }
         }
-        
-        $line = strtok($this->phpMailerFullLog, "\n");
+
+/*        $line = strtok($this->fullSmtpLog, "\n");
 
         while ($line !== false) {
-            //$GLOBALS['log']->fatal("smtpConnect: { $line }");
+            $GLOBALS['log']->fatal("smtpConnect: { $line }");
             $line = strtok( "\n" );
         }
-        if (!$connection) {
+*/
+        if (false) {
+//        if (!isset($connection) || (!$connection)) {
             global $app_strings;
+            $GLOBALS['log']->fatal("------------ if !connection ");
             if (isset($this->oe) && $this->oe->type === 'system') {
                 $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND'].' '.$phpMailerExceptionMsg);
             } else {
                 $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND'].' '.$phpMailerExceptionMsg);
             } // else
         }
+$this->setError('----- Set error: '.$phpMailerExceptionMsg);
         $GLOBALS['log']->fatal("------------ Exiting smtpConnect");
-
         return $connection;
     }
 
@@ -462,7 +472,7 @@ eoq;
     public function send() 
     {
        $GLOBALS['log']->fatal("------------ Entering SugarMailer send");
-       $this->phpMailerFullLog='';
+       $this->fullSmtpLog='';
        //Use these to override some fields for tests:
        //$this->From = 'me@here.com';
        //$this->Sender = 'me@here.com';
@@ -470,11 +480,40 @@ eoq;
        //$this->FromName = 'My Name';
        $GLOBALS['log']->fatal("PHPMailer Send Function override: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
 
-       $ret = parent::send();
 
-       $line = strtok($this->phpMailerFullLog, "\n");
+        $this->fullSmtpLog='';
+        $phpMailerExceptionMsg='';
+        try {
+            $saveExceptionsState = $this->exceptions;
+            $this->exceptions = true;
+            $this->Debugoutput = function($str, $level) {
+                $this->fullSmtpLog .= "$level: $str\n";
+            };
+
+            $this->SMTPDebug = 3;
+
+            $ret = parent::send();
+            $this->exceptions =  $saveExceptionsState;
+        }
+        catch (Exception $e) {
+            $phpMailerExceptionMsg=$e->errorMessage();
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->fatal("Internal PHPMailer phpmailerException: { $phpMailerExceptionMsg } ---------------");
+            }
+        }
+        catch (\Exception $e) {
+            $phpMailerExceptionMsg=$e->getMessage();
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->fatal("Internal PHPMailer Exception: { $phpMailerExceptionMsg } ---------------");
+            }
+        }
+
+
+
+
+       $line = strtok($this->fullSmtpLog, "\n");
        while ($line !== false) {
-            //$GLOBALS['log']->fatal("smtp send: { $line }");
+            $GLOBALS['log']->fatal("smtp send: { $line }");
             $line = strtok( "\n" );
        }
        $GLOBALS['log']->fatal("------------ Exiting SugarMailer send");
