@@ -140,8 +140,9 @@ class Spots extends Basic
             }
         }
         $this->config = json_encode($jsonConfig);
+        parent::save($check_notify);
 
-        return parent::save($check_notify);
+        SugarApplication::redirect('index.php?module=' . $this->module_name);
     }
 
     /**
