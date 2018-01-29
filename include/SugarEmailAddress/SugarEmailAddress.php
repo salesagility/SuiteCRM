@@ -1199,7 +1199,7 @@ class SugarEmailAddress extends SugarBean
         $optInIndication = $this->getOptInIndication();
         if (
            $isValidEmailAddress
-           && EmailAddressIndicator::isOptedInStatus($optInIndication)
+           && $this->isOptedInStatus($optInIndication)
            && (int)$optInFlag === 1
         ) {
            $new_confirmed_opt_in = $this->confirm_opt_in;
@@ -1533,17 +1533,23 @@ class SugarEmailAddress extends SugarBean
         $prefillData = $this->getAddressesByGUID($focus->id, $focus->module_dir);
 
         foreach ($prefillData as $addressItem) {
-            $key = ($addressItem['primary_address'] == 1) ? 'primary' : "";
+            $key = ($addressItem['primary_address'] == 1) ? 'primary' : '';
             $key = ($addressItem['reply_to_address'] == 1) ? 'reply_to' : $key;
             $key = ($addressItem['opt_out'] == 1) ? 'opt_out' : $key;
             $key = ($addressItem['invalid_email'] == 1) ? 'invalid' : $key;
             $key = ($addressItem['opt_out'] == 1) && ($addressItem['invalid_email'] == 1) ? 'opt_out_invalid' : $key;
 
-            $assign[] = array(
+            $emailAddress = array(
                 'key' => $key,
-                'address' => $current_user->getEmailLink2($addressItem['email_address'],
-                        $focus) . $addressItem['email_address'] . "</a>"
+                'address' => $current_user->getEmailLink2($addressItem['email_address'], $focus)
             );
+
+            if(empty($emailAddress['address'])) {
+                // Email Link is missing, lets just print the email address in plain text instead.
+                $emailAddress['address'] = $addressItem['email_address'];
+            }
+
+            $assign[] =$emailAddress;
         }
 
 
@@ -1810,7 +1816,7 @@ class SugarEmailAddress extends SugarBean
         global $timedate;
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN;
+        $this->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
     }
     
     /**
@@ -1915,7 +1921,7 @@ class SugarEmailAddress extends SugarBean
             return EmailAddressIndicator::OPT_IN_DISABLED;
         } elseif (
             $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
-            && EmailAddressIndicator::isOptedInStatus($this->getOptInIndicationFromFlags())
+            && $this->isOptedInStatus($this->getOptInIndicationFromFlags())
         ) {
             return EmailAddressIndicator::OPT_IN;
         } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
@@ -1948,7 +1954,6 @@ class SugarEmailAddress extends SugarBean
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
                 $this->confirm_opt_in === EmailOptInStatus::OPT_IN
-                && !empty($this->confirm_opt_in_sent_date)
                 && !empty($this->confirm_opt_in_fail_date)
             ) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
@@ -1971,31 +1976,20 @@ class SugarEmailAddress extends SugarBean
         return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
     }
 
-} // end class def
-
-
-/**
- * Convenience function for MVC (Mystique)
- * @param object $focus SugarBean
- * @param string $field unused
- * @param string $value unused
- * @param string $view DetailView or EditView
- * @return string
- */
-function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
-{
-    // TODO: Move this into an other file eg utils.php
-    $sea = new SugarEmailAddress();
-    $sea->setView($view);
-
-    if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
-        $module = $focus->module_dir;
-        if ($view == 'ConvertLead' && $module == "Contacts") {
-            $module = "Leads";
-        }
-
-        return $sea->getEmailAddressWidgetEditView($focus->id, $module, false, '', $tabindex);
+    /**
+     * @param string $emailAddressIndicatorStatus
+     * @return bool
+     */
+    private function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS)
+    {
+        return in_array($emailAddressIndicatorStatus, array(
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
+        ), true);
     }
 
-    return $sea->getEmailAddressWidgetDetailView($focus);
-}
+} // end class def
+
+require_once __DIR__.'/getEmailAddressWidget.php';

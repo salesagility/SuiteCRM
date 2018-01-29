@@ -41,6 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  * ****************************************************************************** */
 
+use SuiteCRM\Enumerator\EmailOptInStatus;
+
 class EmailMan extends SugarBean
 {
     public $id;
@@ -1227,7 +1229,6 @@ class EmailMan extends SugarBean
         $result = $bean->db->query($query);
         $row = $bean->db->fetchByAssoc($result);
 
-        $emailOptInStatus = new \SuiteCRM\Enumerator\EmailOptInStatus();
         if (!empty($row)) {
             if ($row['opt_out'] == '1') {
                 return true;
@@ -1239,13 +1240,13 @@ class EmailMan extends SugarBean
                 return false;
             } elseif (
                 $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === $emailOptInStatus::OPT_IN
-                    || $row['confirm_opt_in'] === $emailOptInStatus::CONFIRMED_OPT_IN)
+                && false === ($row['confirm_opt_in'] === EmailOptInStatus::OPT_IN
+                    || $row['confirm_opt_in'] === EmailOptInStatus::CONFIRMED_OPT_IN)
             ) {
                 return true;
             } elseif (
-                $optInLevel == $emailOptInStatus::CONFIRMED_OPT_IN
-                && $row['confirm_opt_in'] !== $emailOptInStatus::CONFIRMED_OPT_IN
+                $optInLevel == EmailOptInStatus::CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== EmailOptInStatus::CONFIRMED_OPT_IN
             ) {
                 return true;
             }

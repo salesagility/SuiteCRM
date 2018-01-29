@@ -38,25 +38,27 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Enumerator;
-
-
 /**
- * Class EmailAddressIndicator
- * @package SuiteCRM\Enumerator
- * All status codes and other such flags
- * used by the email address indicator
+ * Convenience function for MVC (Mystique)
+ * @param SugarBean $focus
+ * @param string $field unused
+ * @param string $value unused
+ * @param string $view DetailView or EditView
+ * @return string
  */
-class EmailAddressIndicator
+function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
 {
-    const INVALID_OPT_IN_SETTINGS = 'INVALID_OPT_IN_SETTINGS';
-    const OPT_IN = 'OPT_IN';
-    const OPT_IN_DISABLED = 'OPT_IN_DISABLED';
-    const OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-    const OPT_IN_PENDING_EMAIL_FAILED = 'OPT_IN_PENDING_EMAIL_FAILED';
-    const OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
-    const OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
-    const OPT_OUT = 'OPT_OUT';
-    const UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
-    const INVALID = 'INVALID';
+    $sea = new SugarEmailAddress();
+    $sea->setView($view);
+
+    if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
+        $module = $focus->module_dir;
+        if ($view == 'ConvertLead' && $module == "Contacts") {
+            $module = "Leads";
+        }
+
+        return $sea->getEmailAddressWidgetEditView($focus->id, $module, false, '', $tabindex);
+    }
+
+    return $sea->getEmailAddressWidgetDetailView($focus);
 }
