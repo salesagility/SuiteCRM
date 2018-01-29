@@ -351,6 +351,8 @@ function setClusterControl() {
     // Setting padding to 5 px will offset the control
     // from the edge of the map
     clusterControlDiv.style.padding = '6px';
+    clusterControlDiv.style.marginTop = '4px';
+    clusterControlDiv.style.marginRight = '170px';
 
     // Set CSS for the control border
     var controlUI = document.createElement('div');
