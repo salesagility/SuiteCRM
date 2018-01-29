@@ -1977,8 +1977,8 @@ class SugarEmailAddress extends SugarBean
 
 
     /**
-     * @return bool
-     * @throws RuntimeException
+     * @return bool true when the an confirm optin email was successfully sent
+     * @throws Exception
      */
     private function isConfirmOptInEmailSent ()
     {
@@ -2003,6 +2003,10 @@ class SugarEmailAddress extends SugarBean
         }
     }
 
+    /**
+     * @return bool true when the an confirm optin email failed to send
+     * @throws Exception
+     */
     private function isConfirmOptInEmailFailed ()
     {
         if (empty($this->confirm_opt_in_fail_date)) {
@@ -2026,6 +2030,9 @@ class SugarEmailAddress extends SugarBean
         }
     }
 
+    /**
+     * @return bool if confirm opt in email has not yet been sent
+     */
     private function isConfirmOptInEmailNotSent ()
     {
         if (
@@ -2037,6 +2044,9 @@ class SugarEmailAddress extends SugarBean
         return false;
     }
 
+    /**
+     * @return bool true when confirmed opt in has been set
+     */
     private function isConfirmedOptIn()
     {
         return $this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN;
