@@ -58,27 +58,66 @@ use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class SugarEmailAddress extends SugarBean
 {
+
+    /**
+     * @var string $table_name
+     */
     public $table_name = 'email_addresses';
+
+    /**
+     * @var string $module_name
+     */
     public $module_name = "EmailAddresses";
+
+    /** @var string $module_dir */
     public $module_dir = 'EmailAddresses';
+
+    /** @var string  $object_name */
     public $object_name = 'EmailAddress';
 
-    //bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
-    //allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
+
+    /**
+     * bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
+     * allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
+     * @var string  $regex
+     */
     public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
+
+    /** @var bool $disable_custom_fields */
     public $disable_custom_fields = true;
  
     /**
      * @var DBManager
      */
     public $db;
-    
+
+    /**
+     * @var Sugar_Smarty  $smarty
+     */
     public $smarty;
-    public $addresses = array(); // array of emails
+
+    /** @var EmailAddress[] $addresses email addresses*/
+    public $addresses = array();
+
+    /**
+     * @var string $view
+     */
     public $view = '';
+
+    /**
+     * @var
+     */
     private $stateBeforeWorkflow;
 
+    /**
+     * @var string $email_address
+     */
     public $email_address;
+
+    /**
+     * @var string $email_address_caps
+     */
+    public $email_address_caps;
 
     public static $count = 0;
 
