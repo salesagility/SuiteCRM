@@ -1830,4 +1830,9 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log'] = $logger;
     }
+
+    public function testGetOptInIndication ()
+    {
+
+    }
 }

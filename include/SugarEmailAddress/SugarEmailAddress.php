@@ -1937,43 +1937,135 @@ class SugarEmailAddress extends SugarBean
      * Determines the opt in status without considering the configuration
      * @see EmailAddressIndicator
      * @return string
+     * @throws  RuntimeException
      */
     private function getOptInIndicationFromFlags()
     {
         $log = LoggerManager::getLogger();
 
-
-        if (
-            !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
-        ) {
+        if (!in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if ((int)$this->invalid_email === 1) {
                 return EmailAddressIndicator::INVALID;
-            } elseif ((int)$this->opt_out === 1) {
+            }
+
+            if ((int)$this->opt_out === 1) {
                 return EmailAddressIndicator::OPT_OUT;
-            } elseif ($this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
+            }
+
+
+            if ($this->isConfirmedOptIn()) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
-            } elseif (
-                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
-                && !empty($this->confirm_opt_in_fail_date)
-            ) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
-            } elseif (
-                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
-                && !empty($this->confirm_opt_in_sent_date)
-            ) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
-            } elseif (
-                empty($this->confirm_opt_in_sent_date)
-                && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
-            ) {
+            } elseif ($this->isConfirmOptInEmailNotSent()) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
-            } else {
-                $log->warn('Unknown Opt In status detected');
-                return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+            } elseif ($this->isConfirmOptInEmailSent()) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
+            } elseif ($this->isConfirmOptInEmailFailed()) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
             }
         }
 
-        return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+        return EmailAddressIndicator::NO_OPT_IN_STATUS;
+    }
+
+
+    /**
+     * @return bool
+     * @throws RuntimeException
+     */
+    private function isConfirmOptInEmailSent ()
+    {
+        if (empty($this->confirm_opt_in_sent_date)) {
+            return false;
+        }
+
+        try {
+            $maxdate = $this->dateMax($this->confirm_opt_in_sent_date, $this->confirm_opt_in_fail_date);
+            if ($maxdate === $this->confirm_opt_in_fail_date) {
+                return false;
+            } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
+                return true;
+            } else {
+                throw new Exception('its impossible email sending state');
+            }
+        } catch (RuntimeException $e) {
+            if (!empty($this->confirm_opt_in_fail_date)) {
+                throw $e;
+            }
+            return true;
+        }
+    }
+
+    private function isConfirmOptInEmailFailed ()
+    {
+        if (empty($this->confirm_opt_in_fail_date)) {
+            return false;
+        }
+
+        try {
+            $maxdate = $this->dateMax($this->confirm_opt_in_sent_date, $this->confirm_opt_in_fail_date);
+            if ($maxdate === $this->confirm_opt_in_fail_date) {
+                return true;
+            } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
+                return false;
+            } else {
+                throw new Exception('its impossible email sending state');
+            }
+        } catch (RuntimeException $e) {
+            if (!empty($this->confirm_opt_in_sent_date)) {
+                throw $e;
+            }
+            return false;
+        }
+    }
+
+    private function isConfirmOptInEmailNotSent ()
+    {
+        if (
+            empty($this->confirm_opt_in_sent_date)
+            && empty($this->confirm_opt_in_fail_date)
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    private function isConfirmedOptIn()
+    {
+        return $this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN;
+    }
+
+    /**
+     * @param string $date1
+     * @param string $date2
+     * @return bool
+     * @throws \RuntimeException
+     */
+    private function dateCompare($date1, $date2)
+    {
+        $time1 = strtotime($date1);
+        $time2 = strtotime($date2);
+
+        $err = 'unable to convert strtotime: ';
+        if ($time1 === -1) {
+            throw new RuntimeException($err . $date1);
+        }
+
+        if ($time2 === -1) {
+            throw new RuntimeException($err . $date2);
+        }
+
+        return $time1 > $time2;
+    }
+
+
+    /**
+     * @param string $date1
+     * @param string $date2
+     * @return string
+     */
+    private function dateMax($date1, $date2)
+    {
+        return $this->dateCompare($date1, $date2) ? $date1 : $date2;
     }
 
     /**
