@@ -148,18 +148,18 @@ function getRelatedModule($module, $rel_field){
     if($module == $rel_field){
         return $module;
     }
-
+    $relations = explode(':', $rel_field);
     $mod = new $beanList[$module]();
-
-    if(isset($arr['module']) && $arr['module'] != '') {
-        return $arr['module'];
-    } else if($mod->load_relationship($rel_field)){
-        return $mod->$rel_field->getRelatedModuleName();
+    foreach ($relations as $r) {
+        if($mod->load_relationship($r)){
+            $module = $mod->$r->getRelatedModuleName();
+            $mod = new $beanList[$module]();
+        }
     }
-
     return $module;
-
 }
+
+
 
 function getModuleTreeData($module){
     global $beanList, $app_list_strings;
