@@ -1203,6 +1203,11 @@ class SugarEmailAddress extends SugarBean
            && (int)$optInFlag === 1
         ) {
            $new_confirmed_opt_in = $this->confirm_opt_in;
+        } elseif (
+            $isValidEmailAddress
+            && (int)$optInFlag === 1
+        ) {
+            $new_confirmed_opt_in = EmailOptInStatus::OPT_IN;
         } else {
             // Reset the opt in status
            $new_confirmed_opt_in = EmailOptInStatus::DISABLED;
