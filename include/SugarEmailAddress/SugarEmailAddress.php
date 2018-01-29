@@ -1955,7 +1955,10 @@ class SugarEmailAddress extends SugarBean
 
             if ($this->isConfirmedOptIn()) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
-            } elseif ($this->isConfirmOptInEmailNotSent()) {
+            } elseif (
+                $this->isConfirmOptInEmailNotSent()
+                && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
+            ) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
             } elseif ($this->isConfirmOptInEmailSent()) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
