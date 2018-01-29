@@ -389,6 +389,7 @@ class SugarEmailAddress extends SugarBean
         if ($email->email_address != $address) {
             $_address = $db->quote($address);
             $_addressCaps = $db->quote(strtoupper($address));
+            $_id = $db->quoted($id);
             $query =
                 "UPDATE email_addresses 
                   SET 
@@ -410,13 +411,14 @@ class SugarEmailAddress extends SugarBean
 
         $_primary = (bool)$primary ? '1' : '0';
         $_replyTo = (bool)$replyTo ? '1' : '0';
+        $_id = $db->quoted($id);
         $query =
             "UPDATE email_addr_bean_rel 
               SET 
                 primary_address = '{$_primary}', 
                 reply_to_address = '{$_replyTo}' 
               WHERE 
-                email_address_id = '{$_id}' AND             
+                email_address_id = {$_id} AND             
                 bean_module = 'Users' AND 
                 bean_id = '{$current_user->id}' AND
                 deleted = 0";
