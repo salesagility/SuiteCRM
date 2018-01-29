@@ -48,7 +48,7 @@ $themedef = array(
     'name' => 'Suite P',
     'description' => 'SuiteCRM Responsive Theme',
     'version' => array(
-        'regex_matches' => array('.*'),
+        'regex_matches' => array('.+'),
     ),
     'group_tabs' => true,
     'classic' => true,
@@ -78,5 +78,5 @@ if(!empty($app_strings['LBL_SUBTHEMES'])) {
             'Night' => $app_strings['LBL_SUBTHEME_OPTIONS_NIGHT'],
         ),
     );
-    $themedef['config_options']['sub_themes']['default'] = $app_strings['LBL_SUBTHEME_OPTIONS_DAWN'];
+    $themedef['config_options']['sub_themes']['default'] = 'Dawn';
 }
