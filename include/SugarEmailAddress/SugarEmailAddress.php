@@ -1973,7 +1973,7 @@ class SugarEmailAddress extends SugarBean
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
             LoggerManager::getLogger()->warn($msg);
-            return EmailAddressIndicator::INVALID_OPT_IN_SETTINGS;
+            return EmailAddressIndicator::NO_OPT_IN_STATUS;
         }
     }
 
@@ -2129,7 +2129,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $emailAddressIndicatorStatus
      * @return bool
      */
-    private function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS)
+    private function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::NO_OPT_IN_STATUS)
     {
         return in_array($emailAddressIndicatorStatus, array(
             EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
