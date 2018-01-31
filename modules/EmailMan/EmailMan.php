@@ -1232,19 +1232,27 @@ class EmailMan extends SugarBean
         if (!empty($row)) {
             if ($row['opt_out'] == '1') {
                 return true;
-            } elseif($row['invalid_email'] == '1') {
+            }
+
+            if($row['invalid_email'] == '1') {
                 return true;
-            } elseif (
+            }
+
+            if (
                 $optInLevel === ''
                 && $row['opt_out'] == '0') {
                 return false;
-            } elseif (
+            }
+
+            if (
                 $optInLevel === 'opt-in'
                 && false === ($row['confirm_opt_in'] === EmailOptInStatus::OPT_IN
                     || $row['confirm_opt_in'] === EmailOptInStatus::CONFIRMED_OPT_IN)
             ) {
                 return true;
-            } elseif (
+            }
+
+            if (
                 $optInLevel == EmailOptInStatus::CONFIRMED_OPT_IN
                 && $row['confirm_opt_in'] !== EmailOptInStatus::CONFIRMED_OPT_IN
             ) {
