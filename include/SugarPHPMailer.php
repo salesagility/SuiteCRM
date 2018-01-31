@@ -475,10 +475,10 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
        $this->fullSmtpLog='';
        //Use these to override some fields for tests:
        //$this->From = 'me@here.com';
+       //$this->FromName = 'My Name';
        //$this->Sender = 'me@here.com';
        $this->Password='wrong';
-       //$this->FromName = 'My Name';
-       $GLOBALS['log']->fatal("PHPMailer Send Function override: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
+       $GLOBALS['log']->fatal("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
 
 
         $this->fullSmtpLog='';
@@ -501,13 +501,13 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
             $ret = parent::send();
             $this->exceptions =  $saveExceptionsState;
         }
-        catch (NOTException $e) {
+        catch (Exception $e) {
             $phpMailerExceptionMsg=$e->errorMessage();
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->fatal("Internal PHPMailer phpmailerException: { $phpMailerExceptionMsg } ---------------");
             }
         }
-        catch (\NOTException $e) {
+        catch (\Exception $e) {
             $phpMailerExceptionMsg=$e->getMessage();
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->fatal("Internal PHPMailer Exception: { $phpMailerExceptionMsg } ---------------");
