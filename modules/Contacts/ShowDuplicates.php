@@ -82,22 +82,23 @@ $GLOBALS['check_notify'] = FALSE;
 $query = 'select id, first_name, last_name, title from contacts where deleted=0 ';
 $duplicates = $_POST['duplicate'];
 $count = count($duplicates);
-if ($count > 0)
-{
-	$query .= "and (";
-	$first = true;
-	foreach ($duplicates as $duplicate_id)
-	{
-		if (!$first) $query .= ' OR ';
-		$first = false;
-		$query .= "id='$duplicate_id' ";
-	}
-	$query .= ')';
+$db = DBManagerFactory::getInstance();
+if ($count > 0) {
+    $query .= "and (";
+    $first = true;
+    foreach ($duplicates as $duplicate_id) {
+        if (!$first) {
+            $query .= ' OR ';
+        }
+        $first = false;
+        $duplicateIdQuoted = $db->quote($dublicate_id);
+        $query .= "id='$duplicateIdQuoted' ";
+    }
+    $query .= ')';
 }
 
 $duplicateContacts = array();
 
-$db = DBManagerFactory::getInstance();
 $result = $db->query($query);
 $i=0;
 while (($row=$db->fetchByAssoc($result)) != null) {

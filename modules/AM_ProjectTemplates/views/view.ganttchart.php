@@ -40,7 +40,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/splitter.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.blockUI.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.validate.min.js"></script>';
-		echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
+	echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
+	echo '<script type="text/javascript" src="include/javascript/qtip/jquery.qtip.min.js"></script>';
 
 
         $project_template = new AM_ProjectTemplates();
