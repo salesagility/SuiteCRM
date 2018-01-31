@@ -61,7 +61,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       width: 140px;
       min-width: 140px;
       overflow-x: auto;
-      max-height: 440px;
+      max-height: 320px;
       overflow-y: auto;
       white-space: nowrap;
       font-size: 12px;
@@ -195,7 +195,7 @@ var markerClusterer = null;
 var markerClustererToggle = null;
 var clusterControlDiv = null;
 // Clusterer Images - Protocol Independent
-MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m";
 
 // Drawing Controls
 var drawingManager = null;
