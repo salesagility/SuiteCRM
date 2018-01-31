@@ -220,7 +220,6 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             $now = $date->format($timedate::DB_DATETIME_FORMAT);
                             if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
                                 $sea->confirm_opt_in_fail_date = $now;
-                                $sea->confirm_opt_in_sent_date = $now;
                             } else {
                                 $sea->confirm_opt_in_fail_date = null;
                                 $sea->confirm_opt_in_sent_date = $now;

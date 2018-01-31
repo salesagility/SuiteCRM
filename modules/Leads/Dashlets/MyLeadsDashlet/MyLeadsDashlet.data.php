@@ -68,7 +68,7 @@ $dashletData['MyLeadsDashlet']['columns'] = array('name' => array('width'       
                                                   'email1' => array('width' => '30',
                                                                     'label' => 'LBL_EMAIL_ADDRESS',
                                                                     'sortable' => false,
-                                                                    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+                                                                    'customCode' => '{$EMAIL1_LINK}',
 																	'default' => true),
                                                   'account_name' => array('width' => '40', 
 												  						  'label' => 'LBL_ACCOUNT_NAME'),

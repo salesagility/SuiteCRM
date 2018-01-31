@@ -434,8 +434,6 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
         // focus is set?
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
@@ -461,24 +459,29 @@ eoq;
 
             foreach($emailFields as $emailField) {
                 if (property_exists($myBean, $emailField)) {
+                    $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
-                            . $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
-                } else {
-                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
-                }
-                $optOut = false;
-                if(isset($myBean->emailAddress) && isset($myBean->emailAddress->addresses)) {
-                    $addresses = $myBean->emailAddress->addresses;
-                    foreach($addresses as $address) {
-                        if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
-                            $optOut = true;
-                            $emailLink .= '<span class="email-line-through">';
+                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+
+                    $optOut = false;
+                    if(isset($myBean->emailAddress) && isset($myBean->emailAddress->addresses)) {
+                        $addresses = $myBean->emailAddress->addresses;
+                        foreach($addresses as $address) {
+                            if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
+                                $optOut = true;
+                            }
                         }
                     }
-                }
-                if(!$optOut) {
-                    break;
+
+                    if ($optOut) {
+                        $emailLink .= '<span class="email-line-through">'. $email_tick . $myBean->{$emailField} . '</a></span>';
+                    } else {
+                        $emailLink .= $email_tick . $myBean->{$emailField}. '</a>';
+                        break;
+                    }
+
+                } else {
+                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
                 }
             }
         }

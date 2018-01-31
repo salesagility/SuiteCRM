@@ -58,27 +58,66 @@ use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class SugarEmailAddress extends SugarBean
 {
+
+    /**
+     * @var string $table_name
+     */
     public $table_name = 'email_addresses';
+
+    /**
+     * @var string $module_name
+     */
     public $module_name = "EmailAddresses";
+
+    /** @var string $module_dir */
     public $module_dir = 'EmailAddresses';
+
+    /** @var string  $object_name */
     public $object_name = 'EmailAddress';
 
-    //bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
-    //allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
+
+    /**
+     * bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
+     * allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
+     * @var string  $regex
+     */
     public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
+
+    /** @var bool $disable_custom_fields */
     public $disable_custom_fields = true;
  
     /**
      * @var DBManager
      */
     public $db;
-    
+
+    /**
+     * @var Sugar_Smarty  $smarty
+     */
     public $smarty;
-    public $addresses = array(); // array of emails
+
+    /** @var EmailAddress[] $addresses email addresses*/
+    public $addresses = array();
+
+    /**
+     * @var string $view
+     */
     public $view = '';
+
+    /**
+     * @var
+     */
     private $stateBeforeWorkflow;
 
+    /**
+     * @var string $email_address
+     */
     public $email_address;
+
+    /**
+     * @var string $email_address_caps
+     */
+    public $email_address_caps;
 
     public static $count = 0;
 
@@ -1201,10 +1240,15 @@ class SugarEmailAddress extends SugarBean
         $optInIndication = $this->getOptInIndication();
         if (
            $isValidEmailAddress
-           && EmailAddressIndicator::isOptedInStatus($optInIndication)
+           && $this->isOptedInStatus($optInIndication)
            && (int)$optInFlag === 1
         ) {
            $new_confirmed_opt_in = $this->confirm_opt_in;
+        } elseif (
+            $isValidEmailAddress
+            && (int)$optInFlag === 1
+        ) {
+            $new_confirmed_opt_in = EmailOptInStatus::OPT_IN;
         } else {
             // Reset the opt in status
            $new_confirmed_opt_in = EmailOptInStatus::DISABLED;
@@ -1535,17 +1579,23 @@ class SugarEmailAddress extends SugarBean
         $prefillData = $this->getAddressesByGUID($focus->id, $focus->module_dir);
 
         foreach ($prefillData as $addressItem) {
-            $key = ($addressItem['primary_address'] == 1) ? 'primary' : "";
+            $key = ($addressItem['primary_address'] == 1) ? 'primary' : '';
             $key = ($addressItem['reply_to_address'] == 1) ? 'reply_to' : $key;
             $key = ($addressItem['opt_out'] == 1) ? 'opt_out' : $key;
             $key = ($addressItem['invalid_email'] == 1) ? 'invalid' : $key;
             $key = ($addressItem['opt_out'] == 1) && ($addressItem['invalid_email'] == 1) ? 'opt_out_invalid' : $key;
 
-            $assign[] = array(
+            $emailAddress = array(
                 'key' => $key,
-                'address' => $current_user->getEmailLink2($addressItem['email_address'],
-                        $focus) . $addressItem['email_address'] . "</a>"
+                'address' => $current_user->getEmailLink2($addressItem['email_address'], $focus)
             );
+
+            if(empty($emailAddress['address'])) {
+                // Email Link is missing, lets just print the email address in plain text instead.
+                $emailAddress['address'] = $addressItem['email_address'];
+            }
+
+            $assign[] =$emailAddress;
         }
 
 
@@ -1812,7 +1862,7 @@ class SugarEmailAddress extends SugarBean
         global $timedate;
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN;
+        $this->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
     }
     
     /**
@@ -1917,7 +1967,7 @@ class SugarEmailAddress extends SugarBean
             return EmailAddressIndicator::OPT_IN_DISABLED;
         } elseif (
             $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
-            && EmailAddressIndicator::isOptedInStatus($this->getOptInIndicationFromFlags())
+            && $this->isOptedInStatus($this->getOptInIndicationFromFlags())
         ) {
             return EmailAddressIndicator::OPT_IN;
         } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
@@ -1925,7 +1975,7 @@ class SugarEmailAddress extends SugarBean
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
             LoggerManager::getLogger()->warn($msg);
-            return EmailAddressIndicator::INVALID_OPT_IN_SETTINGS;
+            return EmailAddressIndicator::NO_OPT_IN_STATUS;
         }
     }
 
@@ -1933,71 +1983,164 @@ class SugarEmailAddress extends SugarBean
      * Determines the opt in status without considering the configuration
      * @see EmailAddressIndicator
      * @return string
+     * @throws  RuntimeException
      */
     private function getOptInIndicationFromFlags()
     {
         $log = LoggerManager::getLogger();
 
-
-        if (
-            !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)
-        ) {
+        if (!in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if ((int)$this->invalid_email === 1) {
                 return EmailAddressIndicator::INVALID;
-            } elseif ((int)$this->opt_out === 1) {
+            }
+
+            if ((int)$this->opt_out === 1) {
                 return EmailAddressIndicator::OPT_OUT;
-            } elseif ($this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN) {
+            }
+
+
+            if ($this->isConfirmedOptIn()) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
-                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
-                && !empty($this->confirm_opt_in_sent_date)
-                && !empty($this->confirm_opt_in_fail_date)
-            ) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
-            } elseif (
-                $this->confirm_opt_in === EmailOptInStatus::OPT_IN
-                && !empty($this->confirm_opt_in_sent_date)
-            ) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
-            } elseif (
-                empty($this->confirm_opt_in_sent_date)
+                $this->isConfirmOptInEmailNotSent()
                 && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
             ) {
                 return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
-            } else {
-                $log->warn('Unknown Opt In status detected');
-                return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+            } elseif ($this->isConfirmOptInEmailSent()) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
+            } elseif ($this->isConfirmOptInEmailFailed()) {
+                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
             }
         }
 
-        return EmailAddressIndicator::UNKNOWN_OPT_IN_STATUS;
+        return EmailAddressIndicator::NO_OPT_IN_STATUS;
+    }
+
+
+    /**
+     * @return bool true when the an confirm optin email was successfully sent
+     * @throws Exception
+     */
+    private function isConfirmOptInEmailSent ()
+    {
+        if (empty($this->confirm_opt_in_sent_date)) {
+            return false;
+        }
+
+        try {
+            $maxdate = $this->dateMax($this->confirm_opt_in_sent_date, $this->confirm_opt_in_fail_date);
+            if ($maxdate === $this->confirm_opt_in_fail_date) {
+                return false;
+            } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
+                return true;
+            } else {
+                throw new Exception('its impossible email sending state');
+            }
+        } catch (RuntimeException $e) {
+            if (!empty($this->confirm_opt_in_fail_date)) {
+                throw $e;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * @return bool true when the an confirm optin email failed to send
+     * @throws Exception
+     */
+    private function isConfirmOptInEmailFailed ()
+    {
+        if (empty($this->confirm_opt_in_fail_date)) {
+            return false;
+        }
+
+        try {
+            $maxdate = $this->dateMax($this->confirm_opt_in_sent_date, $this->confirm_opt_in_fail_date);
+            if ($maxdate === $this->confirm_opt_in_fail_date) {
+                return true;
+            } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
+                return false;
+            } else {
+                throw new Exception('its impossible email sending state');
+            }
+        } catch (RuntimeException $e) {
+            if (!empty($this->confirm_opt_in_sent_date)) {
+                throw $e;
+            }
+            return false;
+        }
+    }
+
+    /**
+     * @return bool if confirm opt in email has not yet been sent
+     */
+    private function isConfirmOptInEmailNotSent ()
+    {
+        if (
+            empty($this->confirm_opt_in_sent_date)
+            && empty($this->confirm_opt_in_fail_date)
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool true when confirmed opt in has been set
+     */
+    private function isConfirmedOptIn()
+    {
+        return $this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN;
+    }
+
+    /**
+     * @param string $date1
+     * @param string $date2
+     * @return bool
+     * @throws \RuntimeException
+     */
+    private function dateCompare($date1, $date2)
+    {
+        $time1 = strtotime($date1);
+        $time2 = strtotime($date2);
+
+        $err = 'unable to convert strtotime: ';
+        if ($time1 === -1) {
+            throw new RuntimeException($err . $date1);
+        }
+
+        if ($time2 === -1) {
+            throw new RuntimeException($err . $date2);
+        }
+
+        return $time1 > $time2;
+    }
+
+
+    /**
+     * @param string $date1
+     * @param string $date2
+     * @return string
+     */
+    private function dateMax($date1, $date2)
+    {
+        return $this->dateCompare($date1, $date2) ? $date1 : $date2;
+    }
+
+    /**
+     * @param string $emailAddressIndicatorStatus
+     * @return bool
+     */
+    private function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::NO_OPT_IN_STATUS)
+    {
+        return in_array($emailAddressIndicatorStatus, array(
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
+            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
+        ), true);
     }
 
 } // end class def
 
-
-/**
- * Convenience function for MVC (Mystique)
- * @param object $focus SugarBean
- * @param string $field unused
- * @param string $value unused
- * @param string $view DetailView or EditView
- * @return string
- */
-function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
-{
-    // TODO: Move this into an other file eg utils.php
-    $sea = new SugarEmailAddress();
-    $sea->setView($view);
-
-    if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
-        $module = $focus->module_dir;
-        if ($view == 'ConvertLead' && $module == "Contacts") {
-            $module = "Leads";
-        }
-
-        return $sea->getEmailAddressWidgetEditView($focus->id, $module, false, '', $tabindex);
-    }
-
-    return $sea->getEmailAddressWidgetDetailView($focus);
-}
+require_once __DIR__.'/getEmailAddressWidget.php';
