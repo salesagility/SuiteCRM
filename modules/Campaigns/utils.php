@@ -219,13 +219,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
 
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
 
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $dataArrayValue;
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
 
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
 
@@ -304,13 +298,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
             
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $dataArrayValue;
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
             
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
             
