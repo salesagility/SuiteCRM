@@ -1177,7 +1177,7 @@ class EmailMan extends SugarBean
         $mailer->addAddress($emailAddressString, $focus->name);
 
         $mailer->replace('contact_first_name',
-                isset($focus->first_name) ? $focus->first_name : $focus->name);
+                isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
                 isset($focus->last_name) ? $focus->last_name : '');
         $mailer->replace('emailaddress_email_address', $emailAddressString);
