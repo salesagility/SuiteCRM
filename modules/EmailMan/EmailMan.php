@@ -1244,15 +1244,15 @@ class EmailMan extends SugarBean
 
             if (
                 $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === EmailAddress::OPT_IN_STATUS
-                    || $row['confirm_opt_in'] === EmailAddress::CONFIRMED_OPT_IN)
+                && false === ($row['confirm_opt_in'] === EmailAddress::COI_STAT_OPT_IN_STATUS
+                    || $row['confirm_opt_in'] === EmailAddress::COI_STAT_CONFIRMED_OPT_IN)
             ) {
                 return true;
             }
 
             if (
-                $optInLevel == EmailAddress::CONFIRMED_OPT_IN
-                && $row['confirm_opt_in'] !== EmailAddress::CONFIRMED_OPT_IN
+                $optInLevel == EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== EmailAddress::COI_STAT_CONFIRMED_OPT_IN
             ) {
                 return true;
             }
