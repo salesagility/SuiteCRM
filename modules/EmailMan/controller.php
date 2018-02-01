@@ -150,5 +150,7 @@ class EmailManController extends SugarController
         ksort($sugar_config);
 
         $configurator->handleOverride();
+        
+        SugarThemeRegistry::clearAllCaches();
     }
 }
