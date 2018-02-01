@@ -2,7 +2,6 @@
 
 use SuiteCRM\Test\TestLogger;
 use SuiteCRM\Enumerator\EmailOptInStatus;
-use SuiteCRM\Enumerator\EmailAddressIndicator;
 
 /** @noinspection PhpUndefinedClassInspection */
 class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
@@ -1846,7 +1845,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_DISABLED,
+            EmailAddress::OPT_IN_DISABLED,
             $emailAddress->getOptInIndication()
         );
 
@@ -1857,7 +1856,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in = EmailOptInStatus::OPT_IN;
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_DISABLED,
+            EmailAddress::OPT_IN_DISABLED,
             $emailAddress->getOptInIndication()
         );
 
@@ -1870,7 +1869,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_DISABLED,
+            EmailAddress::OPT_IN_DISABLED,
             $emailAddress->getOptInIndication()
         );
 
@@ -1883,7 +1882,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_DISABLED,
+            EmailAddress::OPT_IN_DISABLED,
             $emailAddress->getOptInIndication()
         );
 
@@ -1898,7 +1897,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_DISABLED,
+            EmailAddress::OPT_IN_DISABLED,
             $emailAddress->getOptInIndication()
         );
 
@@ -1915,7 +1914,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '';
 
         $this->assertEquals(
-            EmailAddressIndicator::NO_OPT_IN_STATUS,
+            EmailAddress::NO_OPT_IN_STATUS,
             $emailAddress->getOptInIndication()
         );
 
@@ -1926,7 +1925,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in = EmailOptInStatus::OPT_IN;
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN,
+            EmailAddress::OPT_IN,
             $emailAddress->getOptInIndication()
         );
 
@@ -1939,7 +1938,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN,
+            EmailAddress::OPT_IN,
             $emailAddress->getOptInIndication()
         );
 
@@ -1952,7 +1951,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN,
+            EmailAddress::OPT_IN,
             $emailAddress->getOptInIndication()
         );
 
@@ -1967,7 +1966,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN,
+            EmailAddress::OPT_IN,
             $emailAddress->getOptInIndication()
         );
 
@@ -1985,7 +1984,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '';
 
         $this->assertEquals(
-            EmailAddressIndicator::NO_OPT_IN_STATUS,
+            EmailAddress::NO_OPT_IN_STATUS,
             $emailAddress->getOptInIndication()
         );
 
@@ -1996,7 +1995,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in = EmailOptInStatus::OPT_IN;
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
+            EmailAddress::OPT_IN_PENDING_EMAIL_NOT_SENT,
             $emailAddress->getOptInIndication()
         );
 
@@ -2009,7 +2008,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
+            EmailAddress::OPT_IN_PENDING_EMAIL_FAILED,
             $emailAddress->getOptInIndication()
         );
 
@@ -2022,7 +2021,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
+            EmailAddress::OPT_IN_PENDING_EMAIL_SENT,
             $emailAddress->getOptInIndication()
         );
 
@@ -2037,7 +2036,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
+            EmailAddress::OPT_IN_PENDING_EMAIL_CONFIRMED,
             $emailAddress->getOptInIndication()
         );
     }

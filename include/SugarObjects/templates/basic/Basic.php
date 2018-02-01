@@ -39,7 +39,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Enumerator\EmailAddressIndicator;
 use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class Basic extends SugarBean
