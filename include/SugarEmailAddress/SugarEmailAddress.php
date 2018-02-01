@@ -1061,7 +1061,9 @@ class SugarEmailAddress extends SugarBean
             $replyToFlag = ($replyTo) ? '1' : '0';
             $invalidFlag = ($invalid) ? '1' : '0';
             $optOutFlag = ($optOut) ? '1' : '0';
-            $optInFlag = ($optIn) ? '1' : '0';
+            if(!is_null($optIn)) {
+                $optInFlag = ($optIn) ? '1' : '0';
+            }
 
             $addr = trim($addr);
 
@@ -1075,16 +1077,22 @@ class SugarEmailAddress extends SugarBean
                     $this->addresses[$k]['primary_address'] = '0';
                 }
             }
-
-            $this->addresses[] = array(
+            
+            $addr = array(
                 'email_address' => $addr,
                 'primary_address' => $primaryFlag,
                 'reply_to_address' => $replyToFlag,
                 'invalid_email' => $invalidFlag,
                 'opt_out' => $optOutFlag,
                 'email_address_id' => $email_id,
-                'confirm_opt_in_flag' => $optInFlag
+                'confirm_opt_in_flag' => null,
             );
+            
+            if(!is_null($optIn)) {
+                $addr['confirm_opt_in_flag'] = $optInFlag;
+            }
+
+            $this->addresses[] = $addr;
         } else {
             $GLOBALS['log']->fatal("SUGAREMAILADDRESS: address did not valid [ {$addr} ]");
         }
