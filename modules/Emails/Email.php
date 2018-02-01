@@ -4390,12 +4390,8 @@ eoq;
             return $ret;
         }
 
-        // Send email template
-
+        // Prevent sending an opt in email multiple time
         if (!$this->parent_name || !$this->parent_type) {
-            $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
-            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
-            $log->fatal($msg);
             return $ret;
         }
 
