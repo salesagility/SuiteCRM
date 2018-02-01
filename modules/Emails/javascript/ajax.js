@@ -352,7 +352,7 @@ var AjaxObject = {
                     "<div class='well'>" + responseObject.errorMessage + "</div>" +
                     "<div >" +
                        "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" +
-                            "Full SMTP Log" +
+                            app_strings.LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG +
                         "</button>" +
                         "<div class='collapse' id='fullSmtpLog'>" +
                             "<pre style='height: 300px; overflow: scroll;'>" +

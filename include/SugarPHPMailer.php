@@ -373,67 +373,6 @@ eoq;
         return $connection;
     } // fn
 
-
-    /**
-     * @param array $options
-     *
-     * @return bool
-     * @throws \phpmailerException
-     */
-    public function smtpConnectNOT($options = array())
-    {
-        $GLOBALS['log']->fatal("------------ Entering smtpConnect");
-        $this->fullSmtpLog='';
-        $phpMailerExceptionMsg='';
-        try {
-            $saveExceptionsState = $this->exceptions;
-            $this->exceptions = true;
-            $this->Debugoutput = function($str, $level) {
-                $this->fullSmtpLog .= "$level: $str\n";
-            };
-
-            $this->SMTPDebug = 3;
-            //$mail->Debugoutput='html';
-           $connection = NULL;
-           $connection = parent::smtpConnect();
-           $this->exceptions =  $saveExceptionsState;
-        }
-        catch (Exception $e) {
-            $phpMailerExceptionMsg=$e->errorMessage();
-            if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->fatal("Internal PHPMailer smtpConnect phpmailerException: { $phpMailerExceptionMsg } ---------------");
-            }
-        }
-        catch (\Exception $e) {
-            $phpMailerExceptionMsg=$e->getMessage();
-            if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->fatal("Internal PHPMailer smtpConnect Exception: { $phpMailerExceptionMsg } ---------------");
-            }
-        }
-
-/*        $line = strtok($this->fullSmtpLog, "\n");
-
-        while ($line !== false) {
-            $GLOBALS['log']->fatal("smtpConnect: { $line }");
-            $line = strtok( "\n" );
-        }
-*/
-        if (false) {
-//        if (!isset($connection) || (!$connection)) {
-            global $app_strings;
-            $GLOBALS['log']->fatal("------------ if !connection ");
-            if (isset($this->oe) && $this->oe->type === 'system') {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND'].' '.$phpMailerExceptionMsg);
-            } else {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND'].' '.$phpMailerExceptionMsg);
-            } // else
-        }
-$this->setError('----- Set error: '.$phpMailerExceptionMsg);
-        $GLOBALS['log']->fatal("------------ Exiting smtpConnect");
-        return $connection;
-    }
-
-
     /**
      * overloads PHPMailer::PreSend() to allow for empty messages to go out.
      *
@@ -469,24 +408,31 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
         return false;
     }
 
+    /**
+     * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues
+     *
+     * @return bool
+     */
     public function send() 
     {
-       $GLOBALS['log']->fatal("------------ Entering SugarMailer send");
-       $this->fullSmtpLog='';
-       //Use these to override some fields for tests:
-       //$this->From = 'me@here.com';
-       //$this->FromName = 'My Name';
-       //$this->Sender = 'me@here.com';
-       $this->Password='wrong';
-       $GLOBALS['log']->fatal("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-
+        //Use these to override some fields for tests when debugging SMTP issues:
+        //$this->Host     = "smtp.myserver.com";
+        //$this->From     = 'me@here.com';
+        //$this->FromName = 'My Name';
+        //$this->Sender   = 'me@here.com';
+        //$this->Password = 'wrong';
+        //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
 
         $this->fullSmtpLog='';
         $phpMailerExceptionMsg='';
+
         try {
             $saveExceptionsState = $this->exceptions;
             $this->exceptions = true;
+
+            // pass callabck function for PHPMailer to call to provide log :
             $this->Debugoutput = function($str, $level) {
+                // obfuscate part of response if previous line was a server 334 request, for authentication data: 
                 static $previousIs334 = false;  
                 if ($previousIs334) {
                     $this->fullSmtpLog .= "$level: CLIENT -> SERVER: ---obfuscated---\n";
@@ -497,34 +443,31 @@ $this->setError('----- Set error: '.$phpMailerExceptionMsg);
             };
 
             $this->SMTPDebug = 3;
-
             $ret = parent::send();
             $this->exceptions =  $saveExceptionsState;
         }
         catch (Exception $e) {
-            $phpMailerExceptionMsg=$e->errorMessage();
+            $phpMailerExceptionMsg=$e->errorMessage(); //Pretty error messages from PHPMailer
             if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->fatal("Internal PHPMailer phpmailerException: { $phpMailerExceptionMsg } ---------------");
+                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
             }
         }
-        catch (\Exception $e) {
-            $phpMailerExceptionMsg=$e->getMessage();
+        catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
+            $phpMailerExceptionMsg=$e->getMessage(); //generic error messages from anything else
             if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->fatal("Internal PHPMailer Exception: { $phpMailerExceptionMsg } ---------------");
+                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
             }
         }
 
-
-
-
-       $line = strtok($this->fullSmtpLog, "\n");
-       while ($line !== false) {
-            $GLOBALS['log']->fatal("smtp send: { $line }");
-            $line = strtok( "\n" );
-       }
-       $GLOBALS['log']->fatal("------------ Exiting SugarMailer send");
-
-       return $ret;
+        /* uncomment this to send full log into suitecrm.log:
+        $line = strtok($this->fullSmtpLog, "\n");
+        while ($line !== false) {
+             $GLOBALS['log']->debug("smtp send: { $line }");
+             $line = strtok( "\n" );
+        }
+        $GLOBALS['log']->debug("------------ Exiting SugarMailer send");
+        */
+        return $ret;
     }
 
 } // end class definition

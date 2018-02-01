@@ -192,18 +192,18 @@ HTML;
        							else {
                                 
                                                            var dialogBody = 
-                                                            "<div style='padding: 10px'>"+
+                                                            "<div style='padding: 10px'>" +
                                                                "<div class='well'>" + responseObject.errorMessage + "</div>" +
                                                                "<div >" +
                                                                    "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
-                                                                       "See Full SMTP Log"+
+                                                                       "{$APP['LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG']}" +
                                                                   "</button>" +
-                                                                   "<div class='collapse' id='fullSmtpLog'>"+
+                                                                   "<div class='collapse' id='fullSmtpLog'>" +
                                                                        "<pre style='height: 300px; overflow: scroll;'>" +
                                                                            responseObject.fullSmtpLog + 
                                                                        "</pre>" +
                                                                    "</div>" +
-                                                               "</div>"+
+                                                               "</div>" +
                                                            "</div>";
                                                            showFullSmtpLogDialog("Send Test Email", dialogBody, 'alert');
                                                         }
