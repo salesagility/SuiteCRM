@@ -68,7 +68,7 @@
             <div><input id='sort_order_asc_radio' type='radio' name='sortOrder' value='ASC'
                         {if $selectedSortOrder == 'ASC'}checked{/if}>&nbsp;<span
                         onclick='document.getElementById("sort_order_asc_radio").checked = true'
-                        style="cursor: pointer; cursor: hand">{$MOD.LBL_ASCENDING}</span></div>
+                        style="cursor: pointer; cursor: hand">{$MOD.LBL_ASCENDING}</span>
             </div>
         </div>
     </div>
