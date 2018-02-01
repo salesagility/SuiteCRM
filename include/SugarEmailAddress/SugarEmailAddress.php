@@ -53,11 +53,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("include/JSON.php");
 
-use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class SugarEmailAddress extends SugarBean
 {
 
+    // Opt In Flags (Ticks)
     const OPT_IN = 'OPT_IN';
     const OPT_IN_DISABLED = 'OPT_IN_DISABLED';
     const OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
@@ -69,6 +69,11 @@ class SugarEmailAddress extends SugarBean
     const UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
     const INVALID = 'INVALID';
     const NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
+    
+    // Opt In Status    
+    const DISABLED = '';
+    const OPT_IN_STATUS = 'opt-in';
+    const CONFIRMED_OPT_IN = 'confirmed-opt-in';
     
     /**
      * @var string $table_name
@@ -141,7 +146,6 @@ class SugarEmailAddress extends SugarBean
     /**
      * possible values: ['', 'opt-in', 'confirmed-opt-in']
      * @var string|enum $confirm_opt_in
-     * @see \SuiteCRM\Enumerator\EmailOptInStatus
      */
     public $confirm_opt_in = '';
 
@@ -1260,10 +1264,10 @@ class SugarEmailAddress extends SugarBean
                 $isValidEmailAddress
                 && (int)$optInFlag === 1
             ) {
-                $new_confirmed_opt_in = EmailOptInStatus::OPT_IN;
+                $new_confirmed_opt_in = self::OPT_IN_STATUS;
             } else {
                 // Reset the opt in status
-               $new_confirmed_opt_in = EmailOptInStatus::DISABLED;
+               $new_confirmed_opt_in = self::DISABLED;
             }
         }
 
@@ -1287,7 +1291,7 @@ class SugarEmailAddress extends SugarBean
                 $upd_r = $this->db->query($upd_q);
 
                 if(!is_null($optInFlag)) {
-                    if ($new_confirmed_opt_in === EmailOptInStatus::DISABLED) {
+                    if ($new_confirmed_opt_in === self::DISABLED) {
                         // reset confirm opt in
                         $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                             'SET '.
@@ -1877,7 +1881,7 @@ class SugarEmailAddress extends SugarBean
         global $timedate;
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
+        $this->confirm_opt_in = self::CONFIRMED_OPT_IN;
     }
     
     /**
@@ -1999,14 +2003,14 @@ class SugarEmailAddress extends SugarBean
 
         $ret = self::UNKNOWN_OPT_IN_STATUS;
         
-        if ($enableConfirmedOptIn === EmailOptInStatus::DISABLED) {
+        if ($enableConfirmedOptIn === self::DISABLED) {
             $ret = self::OPT_IN_DISABLED;
         } elseif (
-            $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
+            $enableConfirmedOptIn === self::OPT_IN_STATUS
             && $this->isOptedInStatus($this->getOptInIndicationFromFlags())
         ) {
             $ret = self::OPT_IN;
-        } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
+        } elseif ($enableConfirmedOptIn === self::CONFIRMED_OPT_IN) {
             $ret = $this->getOptInIndicationFromFlags();
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
@@ -2043,7 +2047,7 @@ class SugarEmailAddress extends SugarBean
                 $ret = self::OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
                 $this->isConfirmOptInEmailNotSent()
-                && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
+                && $this->confirm_opt_in !== self::DISABLED
             ) {
                 $ret = self::OPT_IN_PENDING_EMAIL_NOT_SENT;
             } elseif ($this->isConfirmOptInEmailSent()) {
@@ -2132,7 +2136,7 @@ class SugarEmailAddress extends SugarBean
      */
     private function isConfirmedOptIn()
     {
-        $ret =  $this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN;
+        $ret =  $this->confirm_opt_in === self::CONFIRMED_OPT_IN;
         return $ret;
     }
 

@@ -39,7 +39,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class Basic extends SugarBean
 {
@@ -133,7 +132,7 @@ class Basic extends SugarBean
         if (!$sugar_config['email_enable_confirm_opt_in']) {
             $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
-            $emailAddressBean->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
+            $emailAddressBean->confirm_opt_in = self::CONFIRMED_OPT_IN;
             return $emailAddressBean;
         }
 
@@ -196,7 +195,7 @@ class Basic extends SugarBean
         if(isset($sugar_config['email_enable_confirm_opt_in'])) {
             $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
 
-            if ($emailConfigEnableConfirmOptIn !== EmailOptInStatus::DISABLED) {
+            if ($emailConfigEnableConfirmOptIn !== self::DISABLED) {
                 $template = new Sugar_Smarty();
                 $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
                 $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');
