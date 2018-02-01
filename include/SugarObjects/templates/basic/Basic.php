@@ -81,38 +81,6 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
-    
-    /**
-     * edit view should show confirm opt in (only if enabled)
-     *
-     * @param string $emailField
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    public function getConfirmOptInTickFromSugarEmailAddressField($emailField)
-    {
-        $this->validateSugarEmailAddressField($emailField);
-
-        return $this->displayOptInFromSugarEmailAddressField($emailField);
-    }
-
-
-    /**
-     * @param string $emailField
-     * @return string
-     */
-    public function getOptInStatusFromSugarField($emailField) {
-        $emailAddress = $this->fromSugarEmailAddressField($emailField);
-        $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
-        if (empty($emailAddress)) {
-            LoggerManager::getLogger()->warn('Empty email address');
-            return '';
-        }
-
-        return $emailAddress->getOptInIndication();
-    }
 
     /**
      * Return Email address from an email address field eg email1
@@ -120,7 +88,7 @@ class Basic extends SugarBean
      * @return \EmailAddress|null
      * @throws InvalidArgumentException
      */
-    public function fromSugarEmailAddressField($emailField)
+    public function getEmailAddressFromEmailField($emailField)
     {
         $this->validateSugarEmailAddressField($emailField);
         $configurator = new Configurator();
@@ -136,7 +104,7 @@ class Basic extends SugarBean
             return $emailAddressBean;
         }
 
-        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
+        $emailAddressId = $this->getEmailAddressId($emailField);
         return $emailAddressBean->retrieve($emailAddressId);
     }
 
@@ -146,7 +114,7 @@ class Basic extends SugarBean
      * @return string|null EmailAddress ID or null on error
      * @throws \InvalidArgumentException
      */
-    protected function getIdFromSugarEmailAddressField($emailField)
+    private function getEmailAddressId($emailField)
     {
         $log = LoggerManager::getLogger();
 
@@ -160,7 +128,10 @@ class Basic extends SugarBean
         }
 
         // List view requires us to retrieve the mail so we can see the email addresses
-        $this->retrieve();
+        if(!$this->retrieve()) {
+            $log->fatal('A Basic can not retrive.');
+            return null;
+        }
 
         $found = false;
         $addresses = $this->emailAddress->addresses;
@@ -179,83 +150,6 @@ class Basic extends SugarBean
         }
 
         return $emailAddressId;
-    }
-
-    /**
-     * @param string $emailField
-     * @return string
-     */
-    protected function displayOptInFromSugarEmailAddressField($emailField)
-    {
-        global $app_strings;
-        
-        $configurator = new Configurator();
-        $sugar_config = $configurator->config;
-
-        $tickHtml = '';
-
-        if(isset($sugar_config['email_enable_confirm_opt_in'])) {
-            $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
-
-            if ($emailConfigEnableConfirmOptIn !== EmailAddress::COI_STAT_DISABLED) {
-                $template = new Sugar_Smarty();
-                
-                $optInStatus = $this->getOptInStatusFromSugarField($emailField);
-                switch($optInStatus) {
-                    case EmailAddress::COI_FLAG_OPT_IN:
-                        $optInFlagClass = 'hidden';
-                        $optInFlagTitle = '';
-                        $optInFlagText = '';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_IN:
-                        $optInFlagClass = 'email-opt-in-confirmed';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN'];
-                        $optInFlagText = '&#10004;';
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
-                        $optInFlagClass = 'email-opt-in-confirmed';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
-                        $optInFlagText = '&#10004;&#10004;';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
-                        $optInFlagClass = 'email-opt-in-sent';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'];
-                        $optInFlagText = '&#10004;';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
-                        $optInFlagClass = 'email-opt-in-not-sent';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'];
-                        $optInFlagText = '&#10004;';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
-                        $optInFlagClass = 'email-opt-in-failed';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'];
-                        $optInFlagText = '&#10004;';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_OUT:
-                        $optInFlagClass = 'email-opt-in-opt-out';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_OPT_OUT'];
-                        $optInFlagText = '❌';
-                        break;
-                    case EmailAddress::COI_FLAG_INVALID:
-                        $optInFlagClass = 'email-opt-in-invalid';
-                        $optInFlagTitle = $app_strings['LBL_OPT_IN_INVALID'];
-                        $optInFlagText = '?';
-                        break;
-                    default:
-                        $optInFlagClass = 'hidden';
-                        $optInFlagTitle = '';
-                        $optInFlagText = '';
-                        break;
-                }
-                
-                $template->assign('optInFlagClass', $optInFlagClass);
-                $template->assign('optInFlagTitle', $optInFlagTitle);
-                $template->assign('optInFlagText', $optInFlagText);
-                $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');
-            }
-        }
-
-        return $tickHtml;
     }
 
     /**

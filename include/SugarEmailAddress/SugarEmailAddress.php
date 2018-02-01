@@ -1261,7 +1261,7 @@ class SugarEmailAddress extends SugarBean
         if(!is_null($optInFlag)) {
             $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
             $this->retrieve($id);
-            $optInIndication = $this->getOptInIndication();
+            $optInIndication = $this->getOptInStatus();
             if (
                $isValidEmailAddress
                && $this->isOptedInStatus($optInIndication)
@@ -2005,7 +2005,7 @@ class SugarEmailAddress extends SugarBean
      * Uses the configuration to determine opt in status
      * @return string
      */
-    public function getOptInIndication() {
+    public function getOptInStatus() {
         $configurator = new Configurator();
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
 
@@ -2194,6 +2194,85 @@ class SugarEmailAddress extends SugarBean
             self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
             self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
         ), true);
+    }
+    
+    
+    
+    /**
+     * @return string
+     */
+    public function getOptInStatusTickHTML()
+    {
+        
+        global $app_strings;
+        
+        $configurator = new Configurator();
+        $sugar_config = $configurator->config;
+
+        $tickHtml = '';
+
+        if(isset($sugar_config['email_enable_confirm_opt_in'])) {
+            $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
+
+            if ($emailConfigEnableConfirmOptIn !== EmailAddress::COI_STAT_DISABLED) {
+                $template = new Sugar_Smarty();
+                
+                $optInStatus = $this->getOptInStatus();
+                switch($optInStatus) {
+                    case EmailAddress::COI_FLAG_OPT_IN:
+                        $optInFlagClass = 'hidden';
+                        $optInFlagTitle = '';
+                        $optInFlagText = '';
+                        break;
+                    case EmailAddress::COI_FLAG_OPT_IN:
+                        $optInFlagClass = 'email-opt-in-confirmed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN'];
+                        $optInFlagText = '&#10004;';
+                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
+                        $optInFlagClass = 'email-opt-in-confirmed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
+                        $optInFlagText = '&#10004;&#10004;';
+                        break;
+                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
+                        $optInFlagClass = 'email-opt-in-sent';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
+                        $optInFlagClass = 'email-opt-in-not-sent';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
+                        $optInFlagClass = 'email-opt-in-failed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case EmailAddress::COI_FLAG_OPT_OUT:
+                        $optInFlagClass = 'email-opt-in-opt-out';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_OPT_OUT'];
+                        $optInFlagText = '❌';
+                        break;
+                    case EmailAddress::COI_FLAG_INVALID:
+                        $optInFlagClass = 'email-opt-in-invalid';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_INVALID'];
+                        $optInFlagText = '?';
+                        break;
+                    default:
+                        $optInFlagClass = 'hidden';
+                        $optInFlagTitle = '';
+                        $optInFlagText = '';
+                        break;
+                }
+                
+                $template->assign('optInFlagClass', $optInFlagClass);
+                $template->assign('optInFlagTitle', $optInFlagTitle);
+                $template->assign('optInFlagText', $optInFlagText);
+                $tickHtml = $template->fetch('include/SugarEmailAddress/templates/optInStatusTick.tpl');
+            }
+        }
+
+        return $tickHtml;
     }
 
 } // end class def

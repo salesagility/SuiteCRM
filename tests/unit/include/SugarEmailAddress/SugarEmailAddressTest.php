@@ -1845,7 +1845,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, opt in
@@ -1856,7 +1856,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -1869,7 +1869,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -1882,7 +1882,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
 
@@ -1897,7 +1897,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         //
@@ -1914,7 +1914,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_NO_OPT_IN_STATUS,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, opt in
@@ -1925,7 +1925,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -1938,7 +1938,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -1951,7 +1951,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
 
@@ -1966,7 +1966,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
 
@@ -1984,7 +1984,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_NO_OPT_IN_STATUS,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status
@@ -1995,7 +1995,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -2008,7 +2008,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
         // Test opt in status, email failed
@@ -2021,7 +2021,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
 
 
@@ -2036,7 +2036,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
-            $emailAddress->getOptInIndication()
+            $emailAddress->getOptInStatus()
         );
     }
 }
