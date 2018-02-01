@@ -218,11 +218,14 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             $emailman = new EmailMan();
                             $date = new DateTime();
                             $now = $date->format($timedate::DB_DATETIME_FORMAT);
-                            if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
-                                $sea->confirm_opt_in_fail_date = $now;
-                            } else {
-                                $sea->confirm_opt_in_fail_date = null;
-                                $sea->confirm_opt_in_sent_date = $now;
+                            $configurator = new Configurator();
+                            if($configurator->isConfirmOptInEnabled()) {
+                                if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                                    $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
+                                    $sea->confirm_opt_in_fail_date = $now;
+                                } else {
+                                    $sea->confirm_opt_in_sent_date = $now;
+                                }
                             }
                         }
                         $savedRequest = $_REQUEST;
@@ -306,8 +309,16 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
-                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+                
+                if(isset($errors) && $errors) {
+                    echo 'Success but some error occured: <br>'; // TODO: translate strings and template!
+                    foreach($errors as $error) {
+                        echo "$error<br>";
+                    }
+                } else {
+                    //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
+                    echo 'Success';
+                }
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }

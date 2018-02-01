@@ -1077,7 +1077,7 @@ class EmailMan extends SugarBean
      * @param EmailAddress $emailAddress
      * @param string $type related person bean module name
      * @param string $id related person bean module id
-     * @return boolean return true on success otherwise false
+     * @return boolean|null return true on success otherwise false if sending failed, return null if confirm opt in disabled
      * @throws Exception email addresses have to having a related bean
      */
     public function sendOptInEmail(EmailAddress $emailAddress, $type, $id)
@@ -1086,7 +1086,7 @@ class EmailMan extends SugarBean
 
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
-            return false;
+            return null;
         }
 
         $focus = BeanFactory::getBean($type, $id);
