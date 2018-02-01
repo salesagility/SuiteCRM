@@ -72,7 +72,6 @@ class SugarPHPMailer extends PHPMailer
         global $locale;
         global $current_user;
         global $sugar_config;
-$GLOBALS['log']->fatal("------------ Construct SugarPHPMailer with exceptions $exceptions");
 
         $admin = new Administration();
         $admin->retrieveSettings();
@@ -460,6 +459,7 @@ eoq;
         }
 
         /* uncomment this to send full log into suitecrm.log:
+        // TODO: make this dependent on a flag set in config_override.php
         $line = strtok($this->fullSmtpLog, "\n");
         while ($line !== false) {
              $GLOBALS['log']->debug("smtp send: { $line }");

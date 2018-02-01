@@ -361,7 +361,7 @@ var AjaxObject = {
                         "</div>" +
                     "</div>"+
                 "</div>";
-                this.showFullSmtpLogDialog("Send Test Email", dialogBody, 'plain');
+                this.showFullSmtpLogDialog(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS, dialogBody, 'plain');
         }
         },
         showFullSmtpLogDialog: function(headerText, bodyHtml, dialogType) {

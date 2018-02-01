@@ -205,7 +205,7 @@ HTML;
                                                                    "</div>" +
                                                                "</div>" +
                                                            "</div>";
-                                                           showFullSmtpLogDialog("Send Test Email", dialogBody, 'alert');
+                                                           showFullSmtpLogDialog("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", dialogBody, 'alert');
                                                         }
 						}
 					};
