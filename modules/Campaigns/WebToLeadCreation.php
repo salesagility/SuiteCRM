@@ -152,6 +152,15 @@ if (!empty($focus)) {
 
 $xtpl->assign("REDIRECT_URL_DEFAULT",'http://');
 
+if(isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
+    $campaign = new Campaign();
+    if($campaign) {
+        $campaign->retrieve($_REQUEST['campaign_id']);
+        $xtpl->assign('CAMPAIGN_ID', $campaign->id);
+        $xtpl->assign('CAMPAIGN_NAME', $campaign->name);
+    }
+}
+
 $xtpl->parse("main");
 $xtpl->out("main");
 
