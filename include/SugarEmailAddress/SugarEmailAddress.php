@@ -65,7 +65,6 @@ class SugarEmailAddress extends SugarBean
     const COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
     const COI_FLAG_OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
     const COI_FLAG_OPT_OUT = 'OPT_OUT';
-    const COI_FLAG_INVALID_OPT_IN_SETTINGS = 'INVALID_OPT_IN_SETTINGS'; // TODO: for some reason it's unused!!!!
     const COI_FLAG_UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
     const COI_FLAG_INVALID = 'INVALID';
     const COI_FLAG_NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
@@ -2018,8 +2017,6 @@ class SugarEmailAddress extends SugarBean
         $configurator = new Configurator();
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
 
-        $ret = self::COI_FLAG_UNKNOWN_OPT_IN_STATUS;
-        
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
             $ret = self::COI_FLAG_OPT_IN_DISABLED;
         } elseif (
@@ -2230,41 +2227,36 @@ class SugarEmailAddress extends SugarBean
                 
                 $optInStatus = $this->getOptInStatus();
                 switch($optInStatus) {
-                    case EmailAddress::COI_FLAG_OPT_IN:
-                        $optInFlagClass = 'hidden';
-                        $optInFlagTitle = '';
-                        $optInFlagText = '';
-                        break;
-                    case EmailAddress::COI_FLAG_OPT_IN:
+                    case self::COI_FLAG_OPT_IN:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN'];
                         $optInFlagText = '&#10004;';
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
                         $optInFlagText = '&#10004;&#10004;';
                         break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
                         $optInFlagClass = 'email-opt-in-sent';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'];
                         $optInFlagText = '&#10004;';
                         break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
                         $optInFlagClass = 'email-opt-in-not-sent';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'];
                         $optInFlagText = '&#10004;';
                         break;
-                    case EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
                         $optInFlagClass = 'email-opt-in-failed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'];
                         $optInFlagText = '&#10004;';
                         break;
-                    case EmailAddress::COI_FLAG_OPT_OUT:
+                    case self::COI_FLAG_OPT_OUT:
                         $optInFlagClass = 'email-opt-in-opt-out';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_OPT_OUT'];
                         $optInFlagText = '❌';
                         break;
-                    case EmailAddress::COI_FLAG_INVALID:
+                    case self::COI_FLAG_INVALID:
                         $optInFlagClass = 'email-opt-in-invalid';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_INVALID'];
                         $optInFlagText = '?';
