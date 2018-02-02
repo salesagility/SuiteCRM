@@ -545,6 +545,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateAddresses()
     {
+        $_GLOBALS['sugar_config']['show_log_trace'] = true;
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
