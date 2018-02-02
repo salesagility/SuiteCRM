@@ -545,7 +545,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateAddresses()
     {
-        $_GLOBALS['sugar_config']['show_log_trace'] = true;
+        
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -556,9 +556,9 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db = DBManagerFactory::getInstance();
 
 
-        // test
-        $results = $this->ea->populateAddresses('', '');
-        self::assertEquals(null, $results);
+//        // test
+//        $results = $this->ea->populateAddresses('', '');
+//        self::assertEquals(null, $results);
 
         // test
         $_REQUEST['emailAddressWidget'] = true;
