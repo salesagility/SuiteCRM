@@ -4325,7 +4325,7 @@ eoq;
             $emailAddress = $emailAddresses->retrieve($id);
 
             if (
-                $emailAddress->confirm_opt_in != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
                 && empty($emailAddress->confirm_opt_in_sent_date)) {
                 $this->sendOptInEmail($emailAddress);
             }

@@ -145,6 +145,7 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * possible values: ['', 'opt-in', 'confirmed-opt-in']
+     * @todo do not use this but keep up to date for reports
      * @var string|enum $confirm_opt_in
      */
     public $confirm_opt_in = '';
@@ -1267,7 +1268,7 @@ class SugarEmailAddress extends SugarBean
                && $this->isOptedInStatus($optInIndication)
                && (int)$optInFlag === 1
             ) {
-               $new_confirmed_opt_in = $this->confirm_opt_in;
+               $new_confirmed_opt_in = $this->getConfirmedOptInState();
             } elseif (
                 $isValidEmailAddress
                 && (int)$optInFlag === 1
@@ -1326,6 +1327,14 @@ class SugarEmailAddress extends SugarBean
 
             return $guid;
         }
+    }
+    
+    /**
+     * @todo use settings and dates instead, remove this variable if its possible
+     * @return string
+     */
+    public function getConfirmedOptInState() {
+        return $this->confirm_opt_in;
     }
 
     /**
@@ -2055,7 +2064,7 @@ class SugarEmailAddress extends SugarBean
                 $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
                 $this->isConfirmOptInEmailNotSent()
-                && $this->confirm_opt_in !== self::COI_STAT_DISABLED
+                && $this->getConfirmedOptInState() !== self::COI_STAT_DISABLED
             ) {
                 $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT;
             } elseif ($this->isConfirmOptInEmailSent()) {
@@ -2144,7 +2153,7 @@ class SugarEmailAddress extends SugarBean
      */
     private function isConfirmedOptIn()
     {
-        $ret =  $this->confirm_opt_in === self::COI_STAT_CONFIRMED_OPT_IN;
+        $ret =  $this->getConfirmedOptInState() === self::COI_STAT_CONFIRMED_OPT_IN;
         return $ret;
     }
 

@@ -1052,7 +1052,7 @@ class EmailMan extends SugarBean
 
         if ($foundBean !== null) {
             $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
-            if ($emailAddress->confirm_opt_in === 'opt-in') {
+            if ($emailAddress->getConfirmedOptIn() === 'opt-in') {
 
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
