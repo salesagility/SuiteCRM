@@ -611,7 +611,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $invalid GUID of invalid address
      * @param string $optOut
      * @param bool $in_workflow
-     * @param bool $opt_in
+     * @param bool|null $opt_in
      * @return null
      */
     public function saveEmail(
@@ -1211,7 +1211,7 @@ class SugarEmailAddress extends SugarBean
      * @param String $id - the GUID of the original SugarEmailAddress bean,
      *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
      *        to propagate to the new SugarEmailAddress - see bug 39188
-     * @param int $optInFlag
+     * @param int|null $optInFlag
      * @return String GUID of Email Address or '' if cleaned address was empty.
      */
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
@@ -2208,6 +2208,7 @@ class SugarEmailAddress extends SugarBean
     
     
     /**
+     * @global array $app_strings
      * @return string
      */
     public function getOptInStatusTickHTML()
