@@ -116,13 +116,19 @@ class Sugar_Smarty extends Smarty
      * @global array $app_list_strings
      * @global array $app_strings
      * @global array $mod_strings
+     * @global array $sugar_config
      * @param string $resource_name
      * @param string|null $cache_id
      * @param string|null $compile_id
      * @param boolean $display
      * @return string
      */
-    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
+    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
+    {
+        global $app_list_strings;
+        global $app_strings;
+        global $mod_strings;
+        global $sugar_config;
 
         /// Try and fetch the tpl from the theme folder
         /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
@@ -137,11 +143,10 @@ class Sugar_Smarty extends Smarty
         }
         ///
 
-        global $app_list_strings, $app_strings, $mod_strings;
-
         $this->assign('APP_LIST_STRINGS', $app_list_strings);
         $this->assign('APP', $app_strings);
         $this->assign('MOD', $mod_strings);
+        $this->assign('APP_CONFIG', $sugar_config);
 
         return parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
     }

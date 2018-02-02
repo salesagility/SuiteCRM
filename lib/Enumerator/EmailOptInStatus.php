@@ -1,4 +1,4 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,21 +37,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-*}
-<span class="email-opt-in-container">
-    {if $OPT_IN_STATUS === 'OPT_IN'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">&#10004;&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_FAILED'}
-        <span class="email-opt-in email-opt-in-failed" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_FAILED}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
-    {elseif $OPT_IN_STATUS === 'INVALID'}
-        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-    {/if}
-</span>
+
+namespace SuiteCRM\Enumerator;
+
+
+/**
+ * Class EmailOptInStatus
+ * @package SuiteCRM\Enumerator
+ * Holds all opt in status codes
+ */
+class EmailOptInStatus
+{
+    const DISABLED = '';
+    const OPT_IN = 'opt-in';
+    const CONFIRMED_OPT_IN = 'confirmed-opt-in';
+}

@@ -1,4 +1,4 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,21 +37,27 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-*}
-<span class="email-opt-in-container">
-    {if $OPT_IN_STATUS === 'OPT_IN'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">&#10004;&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_FAILED'}
-        <span class="email-opt-in email-opt-in-failed" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_FAILED}">&#10004;</span>
-    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
-    {elseif $OPT_IN_STATUS === 'INVALID'}
-        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-    {/if}
-</span>
+
+namespace SuiteCRM\Enumerator;
+
+
+/**
+ * Class EmailAddressIndicator
+ * @package SuiteCRM\Enumerator
+ * All status codes and other such flags
+ * used by the email address indicator
+ */
+class EmailAddressIndicator
+{
+    const OPT_IN = 'OPT_IN';
+    const OPT_IN_DISABLED = 'OPT_IN_DISABLED';
+    const OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
+    const OPT_IN_PENDING_EMAIL_FAILED = 'OPT_IN_PENDING_EMAIL_FAILED';
+    const OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+    const OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
+    const OPT_OUT = 'OPT_OUT';
+    const INVALID_OPT_IN_SETTINGS = 'INVALID_OPT_IN_SETTINGS';
+    const UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
+    const INVALID = 'INVALID';
+    const NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
+}

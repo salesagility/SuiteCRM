@@ -393,3 +393,7 @@ p.msg {
 .email-opt-in-confirmed {
   color: $confirm-opt-in-tick-color-in-confirmed;
 }
+
+.email-line-through {
+  text-decoration: line-through;
+}
