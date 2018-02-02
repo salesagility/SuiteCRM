@@ -4335,7 +4335,8 @@ eoq;
     }
 
     /**
-     *
+     * @deprecated DO NOT CALL THIS, remove this function as we have a similar working version in EmailMan.php
+     * @see same functionaliti implemented in EmailMam::sendOptInEmail() method. Use that instead this
      * @global array $app_strings
      * @param EmailAddress $emailAddress
      * @return boolean
