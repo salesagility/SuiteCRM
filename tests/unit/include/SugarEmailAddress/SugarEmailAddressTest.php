@@ -590,10 +590,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             throw new Exception('Assert error 4');
         }
         self::assertEquals(array(), $this->ea->addresses);
-        if(false !== (bool)$results) {
-            throw new Exception('Assert error 5, results: '.print_r($results, true));
-        }
-        self::assertEquals(false, (bool)$results);
 
         // test
         unset($_REQUEST);
@@ -601,10 +597,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = array();
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 6');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -613,10 +605,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 7');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -625,10 +613,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 9');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -637,10 +621,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 10');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -649,10 +629,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 11');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -661,10 +637,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 12');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -673,10 +645,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 13');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -685,10 +653,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 14');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -697,10 +661,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 15');
-        }
-        self::assertEquals(false, $results);
         
         // test
         unset($_REQUEST);
@@ -709,10 +669,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 16');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -721,10 +677,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 17');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -733,10 +685,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressId0'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 18');
-        }
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -746,10 +694,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalidemailAddress'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if(false !== $results) {
-            throw new Exception('Assert error 19');
-        }
-        self::assertEquals(false, $results);
 
         // test
         $i = 1;
@@ -774,10 +718,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        if(false !== $results) {
-            throw new Exception('Assert error 20');
-        }
-        self::assertEquals(false, $results);
 
         $q = /** @lang sql */
             "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
@@ -800,10 +740,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        if(false !== $results) {
-            throw new Exception('Assert error 21');
-        }
-        self::assertEquals(false, $results);
         self::assertSame(array(
             2 => array(
                 'email_address' => 'test@email.com',
