@@ -2222,7 +2222,7 @@ class SugarEmailAddress extends SugarBean
         if(isset($sugar_config['email_enable_confirm_opt_in'])) {
             $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
 
-            if ($emailConfigEnableConfirmOptIn !== EmailAddress::COI_STAT_DISABLED) {
+            if ($emailConfigEnableConfirmOptIn !== self::COI_STAT_DISABLED) {
                 $template = new Sugar_Smarty();
                 
                 $optInStatus = $this->getOptInStatus();
