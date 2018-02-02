@@ -474,9 +474,13 @@ eoq;
                     }
 
                     if ($optOut) {
-                        $emailLink .= '<span class="email-line-through">'. $email_tick . $myBean->{$emailField} . '</a></span>';
+                        $emailLink .= '<span class="email-line-through">'. $email_tick . $myBean->{$emailField} . '</span>';
                     } else {
-                        $emailLink .= $email_tick . $myBean->{$emailField}. '</a>';
+                        $emailLink .= $email_tick . $myBean->{$emailField};
+                    }
+                    $emailLink .= '</a>';
+                    
+                    if(!$optOut) {
                         break;
                     }
 
