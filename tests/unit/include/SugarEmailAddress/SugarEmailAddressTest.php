@@ -786,7 +786,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
-                'confirm_opt_in_flag' => '0',
+                'confirm_opt_in_flag' => null,
             ),
             1 => array(
                 'email_address' => 'test21@email.com',
@@ -795,7 +795,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
-                'confirm_opt_in_flag' => '0'
+                'confirm_opt_in_flag' => null
             ),
         ), $this->ea->addresses);
     }
