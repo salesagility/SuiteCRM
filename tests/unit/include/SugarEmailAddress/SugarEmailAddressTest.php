@@ -591,9 +591,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         }
         self::assertEquals(array(), $this->ea->addresses);
         if(false !== $results) {
-            echo 'RESULTS GIVEN: ';
-            var_dump($results);
-            throw new Exception('Assert error 5');
+            throw new Exception('Assert error 5, results: '.print_r($results, true));
         }
         self::assertEquals(false, $results);
 
