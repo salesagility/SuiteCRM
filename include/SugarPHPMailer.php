@@ -63,8 +63,10 @@ class SugarPHPMailer extends PHPMailer
     public $isHostEmpty = false;
     public $opensslOpened = true;
     public $fullSmtpLog='';
+
     /**
-     * Sole constructor
+     * Constructor.
+     * @param boolean $exceptions Should we throw external exceptions?
      */
     public function __construct($exceptions = null)
     {
@@ -459,7 +461,6 @@ eoq;
         }
 
         /* uncomment this to send full log into suitecrm.log:
-        // TODO: make this dependent on a flag set in config_override.php
         $line = strtok($this->fullSmtpLog, "\n");
         while ($line !== false) {
              $GLOBALS['log']->debug("smtp send: { $line }");
