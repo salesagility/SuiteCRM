@@ -1938,7 +1938,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $state
      * @return boolean
      */
-    private function setConfirmedOptInState($state) {
+    public function setConfirmedOptInState($state) {
         $this->confirm_opt_in = $state;
         $ret = parent::save();
         return $ret;
