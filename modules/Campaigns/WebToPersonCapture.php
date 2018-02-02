@@ -312,14 +312,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             } else {
                 
                 if(isset($errors) && $errors) {
-                    echo 'Success but some error occured: <br>'; // TODO: translate strings and template!
-                    foreach($errors as $error) {
-                        echo "$error<br>";
-                    }
-                } else {
-                    //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                    echo 'Success';
+                    $log = LoggerManager::getLogger();
+                    $log->error('Success but some error occured: ' . implode(', ', $errors)); 
                 }
+                
+                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
+                echo 'Success';
+                
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
