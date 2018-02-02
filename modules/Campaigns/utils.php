@@ -193,14 +193,14 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             $data['target_id'] = "'" . create_guid() . "'";
             $data['target_type'] = "'Prospects'";
             $data['id'] = "'" . create_guid() . "'";
-            $data['campaign_id'] = "'" . $row['campaign_id'] . "'";
-            $data['target_tracker_key'] = "'" . $identifier . "'";
-            $data['activity_type'] = "'" . $activity . "'";
+            $data['campaign_id'] = $db->quoted($row['campaign_id']);
+            $data['target_tracker_key'] = $db->quoted($identifier);
+            $data['activity_type'] = $db->quoted($activity);
             $data['activity_date'] = "'" . TimeDate::getInstance()->nowDb() . "'";
             $data['hits'] = 1;
             $data['deleted'] = 0;
             if (!empty($clicked_url_key)) {
-                $data['related_id'] = "'" . $clicked_url_key . "'";
+                $data['related_id'] = $db->quoted($clicked_url_key);
                 $data['related_type'] = "'" . 'CampaignTrackers' . "'";
             }
 
@@ -219,13 +219,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
 
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
 
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $db->quote($dataArrayValue);
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
 
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
 
@@ -276,18 +270,18 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             return $return_array;
         } elseif ($row) {
             $data['id'] = "'" . create_guid() . "'";
-            $data['campaign_id'] = "'" . $row['campaign_id'] . "'";
-            $data['target_tracker_key'] = "'" . $identifier . "'";
-            $data['target_id'] = "'" . $row['target_id'] . "'";
-            $data['target_type'] = "'" . $row['target_type'] . "'";
-            $data['activity_type'] = "'" . $activity . "'";
+            $data['campaign_id'] = $db->quoted($row['campaign_id']);
+            $data['target_tracker_key'] = $db->quoted($identifier);
+            $data['target_id'] = $db->quoted($row['target_id']);
+            $data['target_type'] = $db->quoted($row['target_type']);
+            $data['activity_type'] = $db->quoted($activity);
             $data['activity_date'] = "'" . TimeDate::getInstance()->nowDb() . "'";
-            $data['list_id'] = "'" . $row['list_id'] . "'";
-            $data['marketing_id'] = "'" . $row['marketing_id'] . "'";
+            $data['list_id'] = $db->quoted($row['list_id']);
+            $data['marketing_id'] = $db->quoted($row['marketing_id']);
             $data['hits'] = 1;
             $data['deleted'] = 0;
             if (!empty($clicked_url_key)) {
-                $data['related_id'] = "'" . $clicked_url_key . "'";
+                $data['related_id'] = $db->quoted($clicked_url_key);
                 $data['related_type'] = "'" . 'CampaignTrackers' . "'";
             }
             //values for return array..
@@ -304,13 +298,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
             
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $db->quote($dataArrayValue);
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
             
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
             
