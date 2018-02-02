@@ -102,7 +102,7 @@ class Folder
                 // root node (inbound)
 
                 $this->id = $row['id'];
-
+                $this->mailbox = $row['name'];
             } else {
 
                 // child node

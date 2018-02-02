@@ -229,10 +229,10 @@ class ListViewDataEmails extends ListViewData
     }
 
     /**
-     * @param $folder
-     * @param $inboundEmail
+     * @param Folder $folder
+     * @param InboundEmail $inboundEmail
      */
-    private function setInboundEmailMailbox($folder, $inboundEmail)
+    private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
         switch ($folder->getType()) {
             case "sent":
@@ -248,7 +248,7 @@ class ListViewDataEmails extends ListViewData
                 break;
 
             default:
-                $inboundEmail->mailbox = $folder->mailbox;
+                $inboundEmail->mailbox = empty($folder->id) ? '' : $folder->mailbox;
                 break;
         }
     }

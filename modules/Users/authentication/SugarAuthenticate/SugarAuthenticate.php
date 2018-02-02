@@ -243,7 +243,7 @@ class SugarAuthenticate{
      */
     function postSessionAuthenticate() {
 
-        global $action, $allowed_actions, $sugar_config;
+        global $action, $allowed_actions, $sugar_config, $app_strings;
         $_SESSION['userTime']['last'] = time();
         $user_unique_key = (isset($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
         $server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
@@ -284,7 +284,8 @@ class SugarAuthenticate{
                         if (!$this->userAuthenticate->factorAuthenticateCheck()) {
                             $GLOBALS['log']->debug('FACTOR AUTH: User factor auth failed so we show token input form');
 
-                            self::addFactorMessage('Two Factor Authentication failed');
+                            $msg = $app_strings['ERR_TWO_FACTOR_FAILED'];
+                            self::addFactorMessage($msg);
                             $this->userAuthenticate->showFactorTokenInput();
                         } else {
                             $GLOBALS['log']->debug('FACTOR AUTH: User factor auth success!');
@@ -298,7 +299,8 @@ class SugarAuthenticate{
                         if ($this->userAuthenticate->sendFactorTokenToUser()) {
                             $GLOBALS['log']->debug('FACTOR AUTH: Factor Token sent to User');
 
-                            self::addFactorMessage('Two factor authentication code sent.');
+                            $msg = $app_strings['ERR_TWO_FACTOR_CODE_SENT'];
+                            self::addFactorMessage($msg);
 
                             $this->userAuthenticate->showFactorTokenInput();
 

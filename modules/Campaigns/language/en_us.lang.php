@@ -150,6 +150,7 @@ $mod_strings = array(
     'LBL_CAMPAIGN_FREQUENCY' => 'Frequency:',
     'LBL_NEWSLETTERS' => 'View Newsletters',
     'LBL_NEWSLETTER' => 'Newsletter',
+    'LBL_SURVEY' => 'Survey',
     'LBL_NEWSLETTER_FORENTRY'=>'NewsLetter',
     'LBL_CREATE_NEWSLETTER' => 'Create Newsletter',
     'LBL_LIST_NAME' => 'Name',

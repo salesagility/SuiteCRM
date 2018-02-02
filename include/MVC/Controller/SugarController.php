@@ -1100,5 +1100,52 @@ class SugarController
             $this->do_action = $this->action;
         }
     }
+    
+        
+    /**
+     * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
+     * 
+     * @global array $app_strings using for user messages about error/success status of action
+     */
+    public function action_sendConfirmOptInEmail() {
+        global $app_strings;
+
+        if (!($this->bean instanceof Company || $this->bean instanceof Person)) {
+            $msg = $app_strings['LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON'];
+            SugarApplication::appendErrorMessage($msg);
+        } else {
+            $configurator = new Configurator();
+            $confirmOptInEnabled = $configurator->isConfirmOptInEnabled();
+            if (!$confirmOptInEnabled) {
+                $msg = $app_strings['LBL_CONFIRM_OPT_IN_IS_DISABLED'];
+                SugarApplication::appendErrorMessage($msg);
+            } else {
+                $emailAddressStringCaps = strtoupper($this->bean->email1);
+                if ($emailAddressStringCaps) {
+
+                    $emailAddress = new EmailAddress();
+                    $emailAddress->retrieve_by_string_fields(array(
+                        'email_address_caps' => $emailAddressStringCaps,
+                    ));
+
+                    $emailMan = new EmailMan();
+
+                    $success = $emailMan->sendOptInEmail($emailAddress, $this->bean->module_name, $this->bean->id);
+
+                    if (!$success) {
+                        $msg = $app_strings['LBL_CONFIRM_EMAIL_SENDING_FAILED'];
+                        SugarApplication::appendErrorMessage($msg);
+                    } else {
+                        $msg = $app_strings['LBL_CONFIRM_EMAIL_SENT'];
+                        SugarApplication::appendSuccessMessage($msg);
+                    }
+                } else {
+                    $msg = $app_strings['LBL_CONTACT_HAS_NO_PRIMARY_EMAIL'];
+                    SugarApplication::appendErrorMessage($msg);
+                }
+            }
+        }
+        $this->view = 'detail';
+    }
 
 }

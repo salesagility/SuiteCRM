@@ -210,14 +210,26 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         if (!empty($optInEmailFields)) {
             foreach ($optInEmailFields as $optInEmailField) {
                 if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
-                    $sea = new SugarEmailAddress();
+                    $sea = new EmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
                         $sea->optIn();
+                        if($sea->confirm_opt_in === 'opt-in') {
+                            $emailman = new EmailMan();
+                            $date = new DateTime();
+                            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                            if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                                $sea->confirm_opt_in_fail_date = $now;
+                            } else {
+                                $sea->confirm_opt_in_fail_date = null;
+                                $sea->confirm_opt_in_sent_date = $now;
+                            }
+                        }
                         $savedRequest = $_REQUEST;
                         $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);
                         $_REQUEST = $savedRequest;
+                        $sea->save();
                     } else {
                         $msg = 'Error retrieving an email address.';
                         LoggerManager::getLogger()->fatal($msg);

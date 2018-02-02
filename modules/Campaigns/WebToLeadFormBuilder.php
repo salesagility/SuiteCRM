@@ -306,6 +306,12 @@ HTML;
      * @return string
      */
     private static function getOptInCheckboxHTML($fieldName) {
+        
+        $configurator = new Configurator();
+        if(!isset($configurator->config['email_enable_confirm_opt_in']) || !$configurator->config['email_enable_confirm_opt_in']) {
+            return '';
+        }
+        
         $tpl = new Sugar_Smarty();
         $tpl->assign('fieldName', $fieldName);
         $html = $tpl->fetch('modules/Campaigns/WebToLeadFormBuilderOptInCheckbox.tpl');
