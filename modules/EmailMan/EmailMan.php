@@ -1052,7 +1052,7 @@ class EmailMan extends SugarBean
 
         if ($foundBean !== null) {
             $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
-            if ($emailAddress->getConfirmedOptIn() === 'opt-in') {
+            if ($emailAddress->getConfirmedOptIn() === SugarEmailAddress::COI_STAT_OPT_IN) {
 
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
@@ -1243,8 +1243,8 @@ class EmailMan extends SugarBean
             }
 
             if (
-                $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === EmailAddress::COI_STAT_OPT_IN_STATUS
+                $optInLevel === SugarEmailAddress::COI_STAT_OPT_IN
+                && false === ($row['confirm_opt_in'] === EmailAddress::COI_STAT_OPT_IN
                     || $row['confirm_opt_in'] === EmailAddress::COI_STAT_CONFIRMED_OPT_IN)
             ) {
                 return true;

@@ -3926,8 +3926,8 @@ $app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
 $app_list_strings['email_settings_opt_in_dom'] = array(
     '' => 'Disabled',
-    'opt-in' => 'Opt In',
-    'confirmed-opt-in' => 'Confirmed Opt In'
+    SugarEmailAddress::COI_STAT_OPT_IN => 'Opt In',
+    SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN => 'Confirmed Opt In'
 );
 
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';
