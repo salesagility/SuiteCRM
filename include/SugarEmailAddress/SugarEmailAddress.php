@@ -1329,7 +1329,6 @@ class SugarEmailAddress extends SugarBean
     }
     
     /**
-     * @todo use settings and dates instead, remove this variable if its possible
      * @return string
      */
     public function getConfirmedOptInState() {
