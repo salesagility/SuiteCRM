@@ -1029,7 +1029,7 @@ function _mergeCustomAppListStrings($file, $app_list_strings)
  */
 function return_application_language($language)
 {
-    global $app_strings, $sugar_config;
+    global $app_strings, $sugar_config, $app_list_strings;
 
     $cache_key = 'app_strings.'.$language;
 

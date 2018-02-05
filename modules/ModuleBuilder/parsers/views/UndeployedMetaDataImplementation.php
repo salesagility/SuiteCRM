@@ -49,7 +49,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
 
-    private $_packageName ;
+    protected $_packageName ;
 
    /*
      * Constructor

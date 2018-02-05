@@ -96,7 +96,9 @@ class RSSDashlet extends Dashlet
         $ss->assign('height', $this->height);
         $ss->assign('rss_output', $this->getRSSOutput($this->url));
         $str = $ss->fetch('modules/Home/Dashlets/RSSDashlet/RSSDashlet.tpl');
-        return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str; // return parent::display for title and such
+
+        // Return parent::display for title and such
+        return parent::display() . $str . '<br />';
     }
 
     /**

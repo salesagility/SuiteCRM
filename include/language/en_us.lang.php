@@ -1137,7 +1137,7 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_EMPTY' => 'Please enter some search criteria.',
     'LBL_EMAIL_ERROR_GENERAL_TITLE' => 'An error has occurred',
     'LBL_EMAIL_ERROR_MESSAGE_DELETED' => 'Message Removed from Server',
-    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either message Removed from Server or moved to a different folder',
+    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either the message was removed from Server or moved to a different folder',
     'LBL_EMAIL_ERROR_MAILSERVERCONNECTION' => 'Connection to the mail server failed. Please contact your Administrator',
     'LBL_EMAIL_ERROR_MOVE' => 'Moving email between servers and/or mail accounts is not supported at this time.',
     'LBL_EMAIL_ERROR_MOVE_TITLE' => 'Move Error',
@@ -2056,6 +2056,9 @@ $app_strings = array(
 
     'LBL_CATEGORY' => 'Category',
     'LBL_LIST_CATEGORY' => 'Category',
+
+    'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
+    'LBL_PRIMARY_GROUP' => "Primary Group",
 
     'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
     'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',

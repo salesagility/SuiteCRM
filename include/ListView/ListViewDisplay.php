@@ -415,7 +415,7 @@ class ListViewDisplay {
         if($client == 'sugar') {
 		    require_once 'modules/Emails/EmailUI.php';
 		    $emailUI =  new EmailUI();
-            $script = $emailUI->populateComposeViewFields(). $app_strings['LBL_EMAIL_COMPOSE'];
+            $script = $emailUI->populateComposeViewFields(). $app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
         } else {
             $script = "<a href='javascript:void(0)' " .
                 "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".

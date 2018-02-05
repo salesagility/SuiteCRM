@@ -695,7 +695,43 @@ function setODataTable() {
             "bStateSave": true,
             "bProcessing": true,
             "sDom": '<Tlfrtip>',
-            "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
+            "oTableTools": {
+                //Define the buttons beneath the Map
+                "aButtons": [
+                    {
+                        //Copy Column Data.
+                        "sExtends": "copy",
+                        "sButtonText": "Copy",
+                        "mColumns": "all"
+
+                    },
+                    {
+                        //Export columns to CSV
+                        "sExtends": "csv",
+                        "sButtonText": "CSV",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Columns to XLS
+                        "sExtends": "xls",
+                        "sButtonText": "XLS",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Visible columns to PDF
+                        "sExtends": "pdf",
+                        "sButtonText": "PDF",
+                        "mColumns": [1,2,3,4,5,6],
+                    },
+                    {
+                        //Move to "Print" page.
+                        "sExtends": "print",
+                        "sButtonText": "Print",
+                        "mColumns": "all"
+                    },
+                ],
+                "sSwfPath": "http://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
+            },
             "fnDrawCallback": function(oSettings) {
                 if (typeof window.parent.resizeDataTables == 'function') {
                     window.parent.resizeDataTables();

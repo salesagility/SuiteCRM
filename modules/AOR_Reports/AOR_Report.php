@@ -456,7 +456,7 @@ class AOR_Report extends Basic
                     '_USD') && isset($field_module->field_defs['currency_id'])
             ) {
                 if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                    $query['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
+                    $query_array['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
                 } else {
                     $query_array['select'][$table_alias . '_currency_id'] = $table_alias . ".currency_id AS '" . $table_alias . "_currency_id'";
                 }
@@ -466,7 +466,7 @@ class AOR_Report extends Basic
                 $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
                 // Fix for #1251 - added a missing parameter to the function call
                 $query_array = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                    $table_alias, $field_module, 'custom', $query);
+                    $table_alias, $field_module, 'custom', $query_array);
             } else {
                 $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
             }
