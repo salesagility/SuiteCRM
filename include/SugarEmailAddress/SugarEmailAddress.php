@@ -2231,6 +2231,7 @@ class SugarEmailAddress extends SugarBean
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN'];
                         $optInFlagText = '&#10004;';
+                        break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
