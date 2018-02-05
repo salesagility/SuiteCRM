@@ -406,8 +406,8 @@ eoq;
 
     /**
      *
-     * @global ? $focus
-     * @param ?|null $bean
+     * @global SugarBean $focus
+     * @param SugarBean|null $bean
      * @param string $emailField
      * @param bool $checkAllEmail
      * @param string|null $innerText
