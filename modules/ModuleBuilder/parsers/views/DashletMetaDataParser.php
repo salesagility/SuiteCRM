@@ -190,7 +190,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
             $writeTodashletName = $dashletName = $this->implementation->module->key_name . 'Dashlet';
         }
 
-        $this->implementation->_history->append($file);
+        $this->implementation->getHistory()->append($file);
         if ($populate) {
             $this->_populateFromRequest();
         }
