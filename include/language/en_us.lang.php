@@ -38,12 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-include_once __DIR__ . '/../SugarPHPMailer.php';
-
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
 $app_list_strings = array(
@@ -3926,10 +3920,11 @@ $app_strings['LBL_OPT_IN_CONFIRMED'] = 'Confirmed Opted in';
 $app_strings['LBL_OPT_IN_OPT_OUT'] = 'Opted Out';
 $app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
+/** @see SugarEmailAddress */
 $app_list_strings['email_settings_opt_in_dom'] = array(
     '' => 'Disabled',
-    SugarEmailAddress::COI_STAT_OPT_IN => 'Opt In',
-    SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN => 'Confirmed Opt In'
+    'opt-in' => 'Opt In',
+    'confirmed-opt-in' => 'Confirmed Opt In'
 );
 
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';

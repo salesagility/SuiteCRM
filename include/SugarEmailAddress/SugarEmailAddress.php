@@ -143,9 +143,10 @@ class SugarEmailAddress extends SugarBean
     
 
     /**
-     * possible values: ['', self::COI_STAT_OPT_IN, self::COI_STAT_CONFIRMED_OPT_IN]
-     * @todo do not use this but keep up to date for reports
-     * @var string|enum $confirm_opt_in
+     * @see SugarEmailAddress::COI_STAT_DISABLED
+     * @see SugarEmailAddress::COI_STAT_OPT_IN
+     * @see SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
+     * @var string $confirm_opt_in
      */
     public $confirm_opt_in = '';
 
@@ -1204,14 +1205,14 @@ class SugarEmailAddress extends SugarBean
     /**
      * Creates or Updates an entry in the email_addresses table, depending
      * on if the email address submitted matches a previous entry (case-insensitive)
-     * @param String $addr - email address
+     * @param string $addr - email address
      * @param int $invalid - is the email address marked as Invalid?
      * @param int $opt_out - is the email address marked as Opt-Out?
-     * @param String $id - the GUID of the original SugarEmailAddress bean,
+     * @param string $id - the GUID of the original SugarEmailAddress bean,
      *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
      *        to propagate to the new SugarEmailAddress - see bug 39188
      * @param int|null $optInFlag
-     * @return String GUID of Email Address or '' if cleaned address was empty.
+     * @return string GUID of Email Address or '' if cleaned address was empty.
      */
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
@@ -1329,7 +1330,6 @@ class SugarEmailAddress extends SugarBean
     }
     
     /**
-     * @todo use settings and dates instead, remove this variable if its possible
      * @return string
      */
     public function getConfirmedOptInState() {
@@ -1901,9 +1901,10 @@ class SugarEmailAddress extends SugarBean
     }
     
     /**
-     * Update Opt In state to self::COI_STAT_OPT_IN
-     * 
-     * @return string| ID or false on failed
+     * Update Opt In state to SugarEmailAddress::COI_STAT_OPT_IN
+     *
+     * @see SugarEmailAddress::COI_STAT_OPT_IN
+     * @return string|bool ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
      */
     public function optIn() {

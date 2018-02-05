@@ -1228,31 +1228,31 @@ class EmailMan extends SugarBean
         $row = $bean->db->fetchByAssoc($result);
 
         if (!empty($row)) {
-            if ($row['opt_out'] == '1') {
+            if ((int)$row['opt_out'] === 1) {
                 return true;
             }
 
-            if($row['invalid_email'] == '1') {
+            if((int)$row['invalid_email'] === 1) {
                 return true;
             }
 
             if (
-                $optInLevel === ''
-                && $row['opt_out'] == '0') {
+                $optInLevel === SugarEmailAddress::COI_STAT_DISABLED
+                && (int)$row['opt_out'] === 0) {
                 return false;
             }
 
             if (
                 $optInLevel === SugarEmailAddress::COI_STAT_OPT_IN
-                && false === ($row['confirm_opt_in'] === EmailAddress::COI_STAT_OPT_IN
-                    || $row['confirm_opt_in'] === EmailAddress::COI_STAT_CONFIRMED_OPT_IN)
+                && false === ($row['confirm_opt_in'] === SugarEmailAddress::COI_STAT_OPT_IN
+                    || $row['confirm_opt_in'] === SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN)
             ) {
                 return true;
             }
 
             if (
-                $optInLevel == EmailAddress::COI_STAT_CONFIRMED_OPT_IN
-                && $row['confirm_opt_in'] !== EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                $optInLevel == SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
             ) {
                 return true;
             }
