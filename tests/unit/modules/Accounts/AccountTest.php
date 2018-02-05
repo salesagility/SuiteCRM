@@ -104,7 +104,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
             'JJWG_MAPS_LNG_C' => '0.00000000',
             'JJWG_MAPS_LAT_C' => '0.00000000',
             'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address=""></a>',
+            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick="$(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address=""></a>',
             'ENCODED_NAME' => null,
             'CITY' => null,
             'BILLING_ADDRESS_STREET' => null,

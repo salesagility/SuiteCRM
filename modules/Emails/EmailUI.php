@@ -433,8 +433,9 @@ eoq;
         }
 
 
-        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
+        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+                    . ' onclick=" $(document).openComposeViewModal(this);"'
+                    . ' data-module="" data-record-id="" data-module-name=""  data-email-address="">';
         $emailLinkOverwriten = false;
 
         // focus is set?
@@ -462,15 +463,24 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
-                    data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
-                        $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
-                        '"  data-email-address="' . $composeData['to_addrs'] . '">';
+                    $emailLink =
+                        '<a href="javascript:void(0);"  onclick="$(document).openComposeViewModal(this);" data-module="'
+                        . $composeData['parent_type'] . '" ' . 'data-record-id="'
+                        . $composeData['parent_id'] . '" data-module-name="'
+                        . $composeData['parent_name']
+                        . '"  data-email-address="'
+                        . $composeData['to_addrs'] . '">';
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $emailLinkOverwriten = true;
-                    $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+                    $emailLink =
+                        '<a class="email-link" href="javascript:void(0);" '
+                        . ' onclick="$(document).openComposeViewModal(this);"'
+                        . ' data-module="'
+                        . $myBean->module_name . '" ' . 'data-record-id="'
+                        . $myBean->id . '" data-module-name="'
+                        . $myBean->name . '"  data-email-address="'
+                        . $myBean->{$emailField} . '">';
 
                     $optOut = false;
                     if (isset($myBean->emailAddress->addresses)) {
