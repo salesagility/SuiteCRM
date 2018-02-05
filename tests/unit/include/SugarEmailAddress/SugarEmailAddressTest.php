@@ -1835,7 +1835,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         //
         // Test Scenario: when email_enable_confirm_opt_in is disabled
-        $sugar_config['email_enable_confirm_opt_in'] = EmailAddress::COI_STAT_DISABLED;
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_DISABLED;
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -1849,7 +1849,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
 
         $this->assertEquals(
             EmailAddress::COI_FLAG_OPT_IN_DISABLED,
@@ -1860,7 +1860,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
@@ -1873,12 +1873,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            SugarEmailAddress::COI_FLAG_OPT_IN_DISABLED,
             $emailAddress->getOptInStatus()
         );
 
@@ -1887,30 +1887,30 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
         $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            SugarEmailAddress::COI_FLAG_OPT_IN_DISABLED,
             $emailAddress->getOptInStatus()
         );
 
         //
         // Test Scenario: when email_enable_confirm_opt_in is opt in
-        $sugar_config['email_enable_confirm_opt_in'] = EmailAddress::COI_STAT_OPT_IN;
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_OPT_IN;
 
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_DISABLED;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_DISABLED;
         $emailAddress->confirm_opt_in_date = '';
         $emailAddress->confirm_opt_in_fail_date = '';
         $emailAddress->confirm_opt_in_sent_date = '';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_NO_OPT_IN_STATUS,
+            SugarEmailAddress::COI_FLAG_NO_OPT_IN_STATUS,
             $emailAddress->getOptInStatus()
         );
 
@@ -1918,10 +1918,10 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN,
+            SugarEmailAddress::COI_FLAG_OPT_IN,
             $emailAddress->getOptInStatus()
         );
 
@@ -1929,7 +1929,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
@@ -1942,7 +1942,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
@@ -1956,31 +1956,31 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
         $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN,
+            SugarEmailAddress::COI_FLAG_OPT_IN,
             $emailAddress->getOptInStatus()
         );
 
 
         //
         // Test Scenario: when email_enable_confirm_opt_in is confirmed opt in
-        $sugar_config['email_enable_confirm_opt_in'] = EmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
 
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_DISABLED;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_DISABLED;
         $emailAddress->confirm_opt_in_date = '';
         $emailAddress->confirm_opt_in_fail_date = '';
         $emailAddress->confirm_opt_in_sent_date = '';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_UNKNOWN_OPT_IN_STATUS,
+            SugarEmailAddress::COI_FLAG_UNKNOWN_OPT_IN_STATUS,
             $emailAddress->getOptInStatus()
         );
 
@@ -1988,10 +1988,10 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
             $emailAddress->getOptInStatus()
         );
 
@@ -1999,12 +1999,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
             $emailAddress->getOptInStatus()
         );
 
@@ -2012,12 +2012,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT,
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT,
             $emailAddress->getOptInStatus()
         );
 
@@ -2026,13 +2026,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
-        $emailAddress->confirm_opt_in = EmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
         $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
         $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
         $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
 
         $this->assertEquals(
-            EmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
             $emailAddress->getOptInStatus()
         );
     }
