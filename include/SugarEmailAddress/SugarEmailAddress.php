@@ -143,9 +143,10 @@ class SugarEmailAddress extends SugarBean
     
 
     /**
-     * possible values: ['', self::COI_STAT_OPT_IN, self::COI_STAT_CONFIRMED_OPT_IN]
-     * @todo do not use this but keep up to date for reports
-     * @var string|enum $confirm_opt_in
+     * @see SugarEmailAddress::COI_STAT_DISABLED
+     * @see SugarEmailAddress::COI_STAT_OPT_IN
+     * @see SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
+     * @var string $confirm_opt_in
      */
     public $confirm_opt_in = '';
 
@@ -1900,9 +1901,10 @@ class SugarEmailAddress extends SugarBean
     }
     
     /**
-     * Update Opt In state to self::COI_STAT_OPT_IN
-     * 
-     * @return string| ID or false on failed
+     * Update Opt In state to SugarEmailAddress::COI_STAT_OPT_IN
+     *
+     * @see SugarEmailAddress::COI_STAT_OPT_IN
+     * @return string|bool ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
      */
     public function optIn() {
@@ -2230,6 +2232,7 @@ class SugarEmailAddress extends SugarBean
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN'];
                         $optInFlagText = '&#10004;';
+                        break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
