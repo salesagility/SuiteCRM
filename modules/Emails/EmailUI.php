@@ -506,6 +506,7 @@ eoq;
 
                     } else {
                         $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
+                        $emailLinkOverwriten = false;
                     }
                 }
             }
