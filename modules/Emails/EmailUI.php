@@ -434,8 +434,8 @@ eoq;
 
 
         $emailLink = '<a class="email-link" href="javascript:void(0);"'
-                    . ' onclick=" $(document).openComposeViewModal(this);"'
-                    . ' data-module="" data-record-id="" data-module-name=""  data-email-address="">';
+                    . ' onclick="$(document).openComposeViewModal(this);"'
+                    . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
         $emailLinkOverwriten = false;
 
         // focus is set?
@@ -464,22 +464,22 @@ eoq;
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
                     $emailLink =
-                        '<a href="javascript:void(0);"  onclick="$(document).openComposeViewModal(this);" data-module="'
+                        '<a href="javascript:void(0);" onclick="$(document).openComposeViewModal(this);" data-module="'
                         . $composeData['parent_type'] . '" ' . 'data-record-id="'
                         . $composeData['parent_id'] . '" data-module-name="'
                         . $composeData['parent_name']
-                        . '"  data-email-address="'
+                        . '" data-email-address="'
                         . $composeData['to_addrs'] . '">';
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $emailLinkOverwriten = true;
                     $emailLink =
-                        '<a class="email-link" href="javascript:void(0);" '
+                        '<a class="email-link" href="javascript:void(0);"'
                         . ' onclick="$(document).openComposeViewModal(this);"'
                         . ' data-module="'
                         . $myBean->module_name . '" ' . 'data-record-id="'
                         . $myBean->id . '" data-module-name="'
-                        . $myBean->name . '"  data-email-address="'
+                        . $myBean->name . '" data-email-address="'
                         . $myBean->{$emailField} . '">';
 
                     $optOut = false;
@@ -529,12 +529,16 @@ eoq;
      */
     private function getEmailAddressConfirmOptInTick($myBean, $emailField)
     {
+        $log = LoggerManager::getLogger();
         $tick = '';
         if ($myBean instanceof Basic) {
             $emailAddress = $myBean->getEmailAddressFromEmailField($emailField);
-            $tick = $emailAddress->getOptInStatusTickHTML();
+            if($emailAddress instanceof SugarEmailAddress) {
+                $tick = $emailAddress->getOptInStatusTickHTML();
+            } else {
+                $log->warn('Trying to get an email field of non-Basic object');
+            }
         } else {
-            global $log;
             $log->warn('Trying to get an email field of non-Basic object');
         }
         return $tick;
