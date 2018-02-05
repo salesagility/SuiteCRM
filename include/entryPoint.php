@@ -66,8 +66,12 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
-
-require_once $BASE_DIR.'/vendor/autoload.php';
+$autoloader = $BASE_DIR.'/vendor/autoload.php';
+if(file_exists($autoloader)) {
+    require_once $autoloader;
+} else {
+    die('Composer autoloader not found. please run "composer install"');
+}
 
 // config|_override.php
 if (is_file('config.php')) {

@@ -174,17 +174,18 @@ class Currency extends SugarBean
 		return $list_form;
 	}
 
-	function retrieve_id_by_name($name) {
-	 	$query = "select id from currencies where name='$name' and deleted=0;";
-	 	$result = $this->db->query($query);
-	 	if($result){
-	 	$row = $this->db->fetchByAssoc($result);
-	 	if($row){
-	 		return $row['id'];
-	 	}
-	 	}
-	 	return '';
-	}
+    function retrieve_id_by_name($name) {
+        $nameQuoted = $this->db->quote($name);
+        $query = "select id from currencies where name='$nameQuoted' and deleted=0;";
+        $result = $this->db->query($query);
+        if ($result) {
+            $row = $this->db->fetchByAssoc($result);
+            if ($row) {
+                return $row['id'];
+            }
+        }
+        return '';
+    }
 
     function retrieve($id = -99, $encode = true, $deleted = true){
      	if($id == '-99'){

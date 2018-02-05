@@ -424,7 +424,7 @@ class Email extends Basic
      * @var string
      */
     public $AltBody;
-    
+
     public $msgNo;
 
     /**
@@ -1790,7 +1790,7 @@ class Email extends Basic
         }
 
         $noteArray = array();
-        $q = "SELECT id FROM notes WHERE parent_id = '" . $id . "'";
+        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = '" . $id . "'";
         $r = $this->db->query($q);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -2357,7 +2357,10 @@ class Email extends Basic
 
         ///////////////////////////////////////////////////////////////////////////
         ////    ATTACHMENTS FROM DRAFTS
-        if (($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+        if (($this->type == 'out' || $this->type == 'draft')
+            && $this->status == 'draft'
+            && isset($_REQUEST['record'])
+            && empty($_REQUEST['ignoreParentAttachments'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS
@@ -3159,7 +3162,7 @@ class Email extends Basic
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
 
-        if (empty($this->name) && empty($_REQUEST['record'])) {
+        if (empty($this->name) && empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
             $this->name = $mod_strings['LBL_NO_SUBJECT'];
         }
 
@@ -4301,7 +4304,7 @@ eoq;
     /**
      * Send OptIn Email to EmailAddress By Id
      * return success state or false if it's disabled in config
-     * 
+     *
      * @global array $sugar_config
      * @global LoggerManager $log
      * @param string $id
@@ -4345,7 +4348,7 @@ eoq;
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
-        
+
         $ret = false;
 
         $db = $this->db;
@@ -4400,13 +4403,13 @@ eoq;
         // Get Related Contact | Lead | Target etc.
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address_id LIKE \'' . $db->quote($emailAddress->id) . '\'' . 
+            ' WHERE email_address_id LIKE \'' . $db->quote($emailAddress->id) . '\'' .
                 ' AND email_addr_bean_rel.primary_address = 1 '
                 . 'AND email_addresses.deleted = 0 AND email_addr_bean_rel.deleted = 0';
 
         $dbResult = $db->query($query);
         while ($row = $db->fetchByAssoc($dbResult)) {
-            
+
             if ($ret) {
                 throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
             }
@@ -4422,9 +4425,9 @@ eoq;
                 $emailAddress->confirm_opt_in_sent_date = $now;
             }
             $emailAddress->save();
-            
+
             $ret = true;
-        } 
+        }
 
         return $ret;
     }
@@ -4446,7 +4449,7 @@ eoq;
         if (!is_string($emailField)) {
             throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
         }
-        
+
         if ($emailField === 'from_name') {
             LoggerManager::getLogger()->error('from_name is invalid email address field.');
         }

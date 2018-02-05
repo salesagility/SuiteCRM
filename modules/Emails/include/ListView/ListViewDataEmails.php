@@ -501,7 +501,7 @@ class ListViewDataEmails extends ListViewData
 
         switch ($field) {
             case 'from_addr_name':
-                $ret = $emailHeader['from'];
+                $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['from']));
                 break;
             case 'to_addrs_names':
                 $ret = mb_decode_mimeheader($emailHeader['to']);

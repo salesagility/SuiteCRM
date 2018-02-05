@@ -280,32 +280,33 @@ $query .= 			"LEFT JOIN users
 		return $this->build_related_list2($query, new Contact(), $temp);
 	}
 
-	function update_currency_id($fromid, $toid){
-		$idequals = '';
+    function update_currency_id($fromid, $toid) {
+        $idequals = '';
 
-		$currency = new Currency();
-		$currency->retrieve($toid);
-		foreach($fromid as $f){
-			if(!empty($idequals)){
-				$idequals .=' or ';
-			}
-			$idequals .= "currency_id='$f'";
-		}
+        $currency = new Currency();
+        $currency->retrieve($toid);
+        foreach ($fromid as $f) {
+            if (!empty($idequals)) {
+                $idequals .= ' or ';
+            }
+            $fQuoted = $this->db->quote($f);
+            $idequals .= "currency_id='$fQuoted'";
+        }
 
-		if(!empty($idequals)){
-			$query = "select amount, id from opportunities where (". $idequals. ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
-			$result = $this->db->query($query);
-			while($row = $this->db->fetchByAssoc($result)){
+        if (!empty($idequals)) {
+            $query = "select amount, id from opportunities where (" . $idequals . ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
+            $result = $this->db->query($query);
+            while ($row = $this->db->fetchByAssoc($result)) {
+                $currencyIdQuoted = $this->db->quote($currency->id);
+                $currencyConvertToDollarRowAmountQuoted = $this->db->quote($currency->convertToDollar($row['amount']));
+                $rowIdQuoted = $this->db->quote($row['id']);
+                $query = "update opportunities set currency_id='" . $currencyIdQuoted . "', amount_usdollar='" . $currencyConvertToDollarRowAmountQuoted . "' where id='" . $rowIdQuoted . "';";
+                $this->db->query($query);
+            }
+        }
+    }
 
-				$query = "update opportunities set currency_id='".$currency->id."', amount_usdollar='".$currency->convertToDollar($row['amount'])."' where id='".$row['id']."';";
-				$this->db->query($query);
-
-			}
-
-	}
-	}
-
-	function get_list_view_data(){
+    function get_list_view_data(){
 		global $locale, $current_language, $current_user, $mod_strings, $app_list_strings, $sugar_config;
 		$app_strings = return_application_language($current_language);
         $params = array();
