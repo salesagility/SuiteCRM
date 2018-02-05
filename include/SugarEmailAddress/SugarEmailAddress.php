@@ -53,12 +53,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("include/JSON.php");
 
-use SuiteCRM\Enumerator\EmailAddressIndicator;
-use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class SugarEmailAddress extends SugarBean
 {
 
+    // Opt In Flags (for Ticks)
+    const COI_FLAG_OPT_IN = 'OPT_IN';
+    const COI_FLAG_OPT_IN_DISABLED = 'OPT_IN_DISABLED';
+    const COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED = 'OPT_IN_PENDING_EMAIL_CONFIRMED';
+    const COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED = 'OPT_IN_PENDING_EMAIL_FAILED';
+    const COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT = 'OPT_IN_PENDING_EMAIL_NOT_SENT';
+    const COI_FLAG_OPT_IN_PENDING_EMAIL_SENT = 'OPT_IN_PENDING_EMAIL_SENT';
+    const COI_FLAG_OPT_OUT = 'OPT_OUT';
+    const COI_FLAG_UNKNOWN_OPT_IN_STATUS = 'UNKNOWN_OPT_IN_STATUS';
+    const COI_FLAG_INVALID = 'INVALID';
+    const COI_FLAG_NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
+    
+    // Opt In Status    
+    const COI_STAT_DISABLED = '';
+    const COI_STAT_OPT_IN = 'opt-in';
+    const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
+    
     /**
      * @var string $table_name
      */
@@ -128,9 +143,9 @@ class SugarEmailAddress extends SugarBean
     
 
     /**
-     * possible values: ['', 'opt-in', 'confirmed-opt-in']
+     * possible values: ['', self::COI_STAT_OPT_IN, self::COI_STAT_CONFIRMED_OPT_IN]
+     * @todo do not use this but keep up to date for reports
      * @var string|enum $confirm_opt_in
-     * @see \SuiteCRM\Enumerator\EmailOptInStatus
      */
     public $confirm_opt_in = '';
 
@@ -595,7 +610,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $invalid GUID of invalid address
      * @param string $optOut
      * @param bool $in_workflow
-     * @param bool $opt_in
+     * @param bool|null $opt_in
      * @return null
      */
     public function saveEmail(
@@ -607,7 +622,7 @@ class SugarEmailAddress extends SugarBean
         $invalid = '',
         $optOut = '',
         $in_workflow = false,
-        $opt_in = false
+        $optIn = null
     ) {
         if (gettype($id) == "boolean") {
             $GLOBALS['log']->fatal('SugarEmailAddress::saveEmail() Invalid arguments - Parent method SugarBean::save
@@ -643,7 +658,7 @@ class SugarEmailAddress extends SugarBean
                         $address['invalid_email'],
                         $address['opt_out'],
                         $emailId,
-                        $address['confirm_opt_in_flag']);// this will save the email address if not found
+                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null);// this will save the email address if not found
 
                     //verify linkage and flags.
                     $upd_eabr = "";
@@ -1046,7 +1061,9 @@ class SugarEmailAddress extends SugarBean
             $replyToFlag = ($replyTo) ? '1' : '0';
             $invalidFlag = ($invalid) ? '1' : '0';
             $optOutFlag = ($optOut) ? '1' : '0';
-            $optInFlag = ($optIn) ? '1' : '0';
+            if(!is_null($optIn)) {
+                $optInFlag = ($optIn) ? '1' : '0';
+            }
 
             $addr = trim($addr);
 
@@ -1060,16 +1077,22 @@ class SugarEmailAddress extends SugarBean
                     $this->addresses[$k]['primary_address'] = '0';
                 }
             }
-
-            $this->addresses[] = array(
+            
+            $addr = array(
                 'email_address' => $addr,
                 'primary_address' => $primaryFlag,
                 'reply_to_address' => $replyToFlag,
                 'invalid_email' => $invalidFlag,
                 'opt_out' => $optOutFlag,
                 'email_address_id' => $email_id,
-                'confirm_opt_in_flag' => $optInFlag
+                'confirm_opt_in_flag' => null,
             );
+            
+            if(!is_null($optIn)) {
+                $addr['confirm_opt_in_flag'] = $optInFlag;
+            }
+
+            $this->addresses[] = $addr;
         } else {
             $GLOBALS['log']->fatal("SUGAREMAILADDRESS: address did not valid [ {$addr} ]");
         }
@@ -1187,10 +1210,10 @@ class SugarEmailAddress extends SugarBean
      * @param String $id - the GUID of the original SugarEmailAddress bean,
      *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
      *        to propagate to the new SugarEmailAddress - see bug 39188
-     * @param int $optInFlag
+     * @param int|null $optInFlag
      * @return String GUID of Email Address or '' if cleaned address was empty.
      */
-    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = 0)
+    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
         // sanity checks to avoid SQL injection.
         $invalid = intval($invalid);
@@ -1235,23 +1258,25 @@ class SugarEmailAddress extends SugarBean
         }
 
         // confirmed opt in check
-        $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
-        $this->retrieve($id);
-        $optInIndication = $this->getOptInIndication();
-        if (
-           $isValidEmailAddress
-           && $this->isOptedInStatus($optInIndication)
-           && (int)$optInFlag === 1
-        ) {
-           $new_confirmed_opt_in = $this->confirm_opt_in;
-        } elseif (
-            $isValidEmailAddress
-            && (int)$optInFlag === 1
-        ) {
-            $new_confirmed_opt_in = EmailOptInStatus::OPT_IN;
-        } else {
-            // Reset the opt in status
-           $new_confirmed_opt_in = EmailOptInStatus::DISABLED;
+        if(!is_null($optInFlag)) {
+            $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
+            $this->retrieve($id);
+            $optInIndication = $this->getOptInStatus();
+            if (
+               $isValidEmailAddress
+               && $this->isOptedInStatus($optInIndication)
+               && (int)$optInFlag === 1
+            ) {
+               $new_confirmed_opt_in = $this->getConfirmedOptInState();
+            } elseif (
+                $isValidEmailAddress
+                && (int)$optInFlag === 1
+            ) {
+                $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+            } else {
+                // Reset the opt in status
+               $new_confirmed_opt_in = self::COI_STAT_DISABLED;
+            }
         }
 
         // determine how we are going to put in this address - UPDATE or INSERT
@@ -1261,27 +1286,29 @@ class SugarEmailAddress extends SugarBean
             if (
                 $duplicate_email['invalid_email'] != $new_invalid
                 || $duplicate_email['opt_out'] != $new_opt_out
-                || $duplicate_email['confirm_opt_in'] != $new_confirmed_opt_in
+                || (!is_null($optInFlag) && $duplicate_email['confirm_opt_in'] != $new_confirmed_opt_in)
                 || (trim($duplicate_email['email_address']) != $address)
             ) {
                 $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                     'SET email_address=\'' . $address . '\', ' .
                     'invalid_email=' . $new_invalid . ', ' .
                     'opt_out=' . $new_opt_out . ', ' .
-                    'confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ' .
+                    (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
                     'date_modified=' . $this->db->now() . ' ' .
                     'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                 $upd_r = $this->db->query($upd_q);
 
-                if ($new_confirmed_opt_in === EmailOptInStatus::DISABLED) {
-                    // reset confirm opt in
-                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
-                        'SET '.
-                        'confirm_opt_in_date=NULL,' .
-                        'confirm_opt_in_sent_date=NULL,' .
-                        'confirm_opt_in_fail_date=NULL ' .
-                        'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
-                    $upd_r = $this->db->query($upd_q);
+                if(!is_null($optInFlag)) {
+                    if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
+                        // reset confirm opt in
+                        $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+                            'SET '.
+                            'confirm_opt_in_date=NULL,' .
+                            'confirm_opt_in_sent_date=NULL,' .
+                            'confirm_opt_in_fail_date=NULL ' .
+                            'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
+                        $upd_r = $this->db->query($upd_q);
+                    }
                 }
             }
 
@@ -1292,13 +1319,21 @@ class SugarEmailAddress extends SugarBean
             if (!empty($address)) {
                 $guid = create_guid();
                 $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out, confirm_opt_in)
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out, '" . $this->db->quote($new_confirmed_opt_in) ."')";
+                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
                 $this->db->query($qa);
             }
 
             return $guid;
         }
+    }
+    
+    /**
+     * @todo use settings and dates instead, remove this variable if its possible
+     * @return string
+     */
+    public function getConfirmedOptInState() {
+        return $this->confirm_opt_in;
     }
 
     /**
@@ -1862,11 +1897,11 @@ class SugarEmailAddress extends SugarBean
         global $timedate;
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
-        $this->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
+        $this->confirm_opt_in = self::COI_STAT_CONFIRMED_OPT_IN;
     }
     
     /**
-     * Update Opt In state to 'opt-in'
+     * Update Opt In state to self::COI_STAT_OPT_IN
      * 
      * @return string| ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
@@ -1879,13 +1914,33 @@ class SugarEmailAddress extends SugarBean
             throw new RuntimeException($msg);
         }
         
-        if ($this->retrieve() && !$this->confirm_opt_in) {
-            $this->confirm_opt_in = 'opt-in';
-            $ret = parent::save();
-        } else {
-            $ret = false;
+        if(!$this->retrieve()) {
+            $msg = 'Retrieve email address for opt-in failed.';
+            LoggerManager::getLogger()->fatal($msg);
+            throw new RuntimeException($msg);
         }
         
+        $state = $this->isConfirmedOptIn() ? self::COI_STAT_CONFIRMED_OPT_IN : self::COI_STAT_OPT_IN;
+        if(!$this->setConfirmedOptInState($state)) {
+            $msg = 'set confirm opt in state of email address "' . $this->email_address . '" failed.';
+            LoggerManager::getLogger()->fatal($msg);
+            throw new RuntimeException($msg);
+        }
+        
+        $ret = parent::save();
+       
+        
+        return $ret;
+    }
+    
+    /**
+     * 
+     * @param string $state
+     * @return boolean
+     */
+    public function setConfirmedOptInState($state) {
+        $this->confirm_opt_in = $state;
+        $ret = parent::save();
         return $ret;
     }
     
@@ -1956,32 +2011,32 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * Uses the configuration to determine opt in status
-     * @see EmailAddressIndicator
      * @return string
      */
-    public function getOptInIndication() {
+    public function getOptInStatus() {
         $configurator = new Configurator();
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
 
-        if ($enableConfirmedOptIn === EmailOptInStatus::DISABLED) {
-            return EmailAddressIndicator::OPT_IN_DISABLED;
+        if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
+            $ret = self::COI_FLAG_OPT_IN_DISABLED;
         } elseif (
-            $enableConfirmedOptIn === EmailOptInStatus::OPT_IN
+            $enableConfirmedOptIn === self::COI_STAT_OPT_IN
             && $this->isOptedInStatus($this->getOptInIndicationFromFlags())
         ) {
-            return EmailAddressIndicator::OPT_IN;
-        } elseif ($enableConfirmedOptIn === EmailOptInStatus::CONFIRMED_OPT_IN) {
-            return $this->getOptInIndicationFromFlags();
+            $ret = self::COI_FLAG_OPT_IN;
+        } elseif ($enableConfirmedOptIn === self::COI_STAT_CONFIRMED_OPT_IN) {
+            $ret = $this->getOptInIndicationFromFlags();
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
             LoggerManager::getLogger()->warn($msg);
-            return EmailAddressIndicator::NO_OPT_IN_STATUS;
+            $ret = self::COI_FLAG_NO_OPT_IN_STATUS;
         }
+        
+        return $ret;
     }
 
     /**
      * Determines the opt in status without considering the configuration
-     * @see EmailAddressIndicator
      * @return string
      * @throws  RuntimeException
      */
@@ -1991,29 +2046,34 @@ class SugarEmailAddress extends SugarBean
 
         if (!in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if ((int)$this->invalid_email === 1) {
-                return EmailAddressIndicator::INVALID;
+                $ret = self::COI_FLAG_INVALID;
+                return $ret;
             }
 
             if ((int)$this->opt_out === 1) {
-                return EmailAddressIndicator::OPT_OUT;
+                $ret = self::COI_FLAG_OPT_OUT;
+                return $ret;
             }
 
+            $ret = self::COI_FLAG_UNKNOWN_OPT_IN_STATUS;
 
             if ($this->isConfirmedOptIn()) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED;
+                $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED;
             } elseif (
                 $this->isConfirmOptInEmailNotSent()
-                && $this->confirm_opt_in !== EmailOptInStatus::DISABLED
+                && $this->getConfirmedOptInState() !== self::COI_STAT_DISABLED
             ) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT;
+                $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT;
             } elseif ($this->isConfirmOptInEmailSent()) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT;
+                $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT;
             } elseif ($this->isConfirmOptInEmailFailed()) {
-                return EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED;
+                $ret = self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED;
             }
+            return $ret;
         }
 
-        return EmailAddressIndicator::NO_OPT_IN_STATUS;
+        $ret = self::COI_FLAG_NO_OPT_IN_STATUS;
+        return $ret;
     }
 
 
@@ -2090,7 +2150,8 @@ class SugarEmailAddress extends SugarBean
      */
     private function isConfirmedOptIn()
     {
-        return $this->confirm_opt_in === EmailOptInStatus::CONFIRMED_OPT_IN;
+        $ret =  $this->getConfirmedOptInState() === self::COI_STAT_CONFIRMED_OPT_IN;
+        return $ret;
     }
 
     /**
@@ -2131,14 +2192,91 @@ class SugarEmailAddress extends SugarBean
      * @param string $emailAddressIndicatorStatus
      * @return bool
      */
-    private function isOptedInStatus($emailAddressIndicatorStatus = EmailAddressIndicator::NO_OPT_IN_STATUS)
+    private function isOptedInStatus($emailAddressIndicatorStatus = self::COI_FLAG_NO_OPT_IN_STATUS)
     {
-        return in_array($emailAddressIndicatorStatus, array(
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_CONFIRMED,
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_SENT,
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_NOT_SENT,
-            EmailAddressIndicator::OPT_IN_PENDING_EMAIL_FAILED,
+        $ret = in_array($emailAddressIndicatorStatus, array(
+            self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
+            self::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT,
+            self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
+            self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
         ), true);
+        return $ret;
+    }
+    
+    
+    
+    /**
+     * @global array $app_strings
+     * @return string
+     */
+    public function getOptInStatusTickHTML()
+    {
+        
+        global $app_strings;
+        
+        $configurator = new Configurator();
+        $sugar_config = $configurator->config;
+
+        $tickHtml = '';
+
+        if(isset($sugar_config['email_enable_confirm_opt_in'])) {
+            $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
+
+            if ($emailConfigEnableConfirmOptIn !== self::COI_STAT_DISABLED) {
+                $template = new Sugar_Smarty();
+                
+                $optInStatus = $this->getOptInStatus();
+                switch($optInStatus) {
+                    case self::COI_FLAG_OPT_IN:
+                        $optInFlagClass = 'email-opt-in-confirmed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
+                        $optInFlagClass = 'email-opt-in-confirmed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
+                        $optInFlagText = '&#10004;&#10004;';
+                        break;
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
+                        $optInFlagClass = 'email-opt-in-sent';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
+                        $optInFlagClass = 'email-opt-in-not-sent';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
+                        $optInFlagClass = 'email-opt-in-failed';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'];
+                        $optInFlagText = '&#10004;';
+                        break;
+                    case self::COI_FLAG_OPT_OUT:
+                        $optInFlagClass = 'email-opt-in-opt-out';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_OPT_OUT'];
+                        $optInFlagText = '❌';
+                        break;
+                    case self::COI_FLAG_INVALID:
+                        $optInFlagClass = 'email-opt-in-invalid';
+                        $optInFlagTitle = $app_strings['LBL_OPT_IN_INVALID'];
+                        $optInFlagText = '?';
+                        break;
+                    default:
+                        $optInFlagClass = 'hidden';
+                        $optInFlagTitle = '';
+                        $optInFlagText = '';
+                        break;
+                }
+                
+                $template->assign('optInFlagClass', $optInFlagClass);
+                $template->assign('optInFlagTitle', $optInFlagTitle);
+                $template->assign('optInFlagText', $optInFlagText);
+                $tickHtml = $template->fetch('include/SugarEmailAddress/templates/optInStatusTick.tpl');
+            }
+        }
+
+        return $tickHtml;
     }
 
 } // end class def

@@ -41,8 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  * ****************************************************************************** */
 
-use SuiteCRM\Enumerator\EmailOptInStatus;
-
 class EmailMan extends SugarBean
 {
     public $id;
@@ -1054,7 +1052,7 @@ class EmailMan extends SugarBean
 
         if ($foundBean !== null) {
             $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
-            if ($emailAddress->confirm_opt_in === 'opt-in') {
+            if ($emailAddress->getConfirmedOptIn() === SugarEmailAddress::COI_STAT_OPT_IN) {
 
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
@@ -1077,7 +1075,7 @@ class EmailMan extends SugarBean
      * @param EmailAddress $emailAddress
      * @param string $type related person bean module name
      * @param string $id related person bean module id
-     * @return boolean return true on success otherwise false
+     * @return boolean|null return true on success otherwise false if sending failed, return null if confirm opt in disabled
      * @throws Exception email addresses have to having a related bean
      */
     public function sendOptInEmail(EmailAddress $emailAddress, $type, $id)
@@ -1086,7 +1084,7 @@ class EmailMan extends SugarBean
 
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
-            return false;
+            return null;
         }
 
         $focus = BeanFactory::getBean($type, $id);
@@ -1177,7 +1175,7 @@ class EmailMan extends SugarBean
         $mailer->addAddress($emailAddressString, $focus->name);
 
         $mailer->replace('contact_first_name',
-                isset($focus->first_name) ? $focus->first_name : $focus->name);
+                isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
                 isset($focus->last_name) ? $focus->last_name : '');
         $mailer->replace('emailaddress_email_address', $emailAddressString);
@@ -1245,16 +1243,16 @@ class EmailMan extends SugarBean
             }
 
             if (
-                $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === EmailOptInStatus::OPT_IN
-                    || $row['confirm_opt_in'] === EmailOptInStatus::CONFIRMED_OPT_IN)
+                $optInLevel === SugarEmailAddress::COI_STAT_OPT_IN
+                && false === ($row['confirm_opt_in'] === EmailAddress::COI_STAT_OPT_IN
+                    || $row['confirm_opt_in'] === EmailAddress::COI_STAT_CONFIRMED_OPT_IN)
             ) {
                 return true;
             }
 
             if (
-                $optInLevel == EmailOptInStatus::CONFIRMED_OPT_IN
-                && $row['confirm_opt_in'] !== EmailOptInStatus::CONFIRMED_OPT_IN
+                $optInLevel == EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== EmailAddress::COI_STAT_CONFIRMED_OPT_IN
             ) {
                 return true;
             }

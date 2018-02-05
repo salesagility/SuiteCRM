@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../SugarPHPMailer.php';
+
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
 $app_list_strings = array(
@@ -1567,7 +1569,6 @@ $app_strings = array(
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_TITLE' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS' => 'Add Contacts To Target List',
-    'LBL_SEND_CONFIRM_OPT_IN_EMAIL' => 'Send Confirm Opt In Email',
     'LBL_ADDITIONAL_DETAILS_CLOSE_TITLE' => 'Click to Close',
     'LBL_ADDITIONAL_DETAILS_CLOSE' => 'Close',
     'LBL_ADDITIONAL_DETAILS' => 'Additional Details',
@@ -3927,8 +3928,8 @@ $app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
 $app_list_strings['email_settings_opt_in_dom'] = array(
     '' => 'Disabled',
-    'opt-in' => 'Opt In',
-    'confirmed-opt-in' => 'Confirmed Opt In'
+    SugarEmailAddress::COI_STAT_OPT_IN => 'Opt In',
+    SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN => 'Confirmed Opt In'
 );
 
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';

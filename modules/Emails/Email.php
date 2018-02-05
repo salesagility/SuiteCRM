@@ -4297,30 +4297,6 @@ eoq;
         $this->description = $mail->Body;
     }
 
-    /**
-     *
-     * @global array $sugar_config
-     * @global \LoggerManager $log
-     * @param string $emailField
-     * @return \EmailAddress
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
-     */
-    public function getEmailAddressConfirmOptIn($emailField)
-    {
-        global $sugar_config;
-
-        if (!$sugar_config['email_enable_confirm_opt_in']) {
-            global $log;
-            $log->warn('Confirm Opt In is not enabled.');
-
-            return false;
-        }
-
-        $emailAddressId = $this->getEmailAddressId($emailField);
-
-        return BeanFactory::getBean('EmailAddresses', $emailAddressId);
-    }
 
     /**
      * Send OptIn Email to EmailAddress By Id
@@ -4349,7 +4325,7 @@ eoq;
             $emailAddress = $emailAddresses->retrieve($id);
 
             if (
-                $emailAddress->confirm_opt_in != \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN
+                $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
                 && empty($emailAddress->confirm_opt_in_sent_date)) {
                 $this->sendOptInEmail($emailAddress);
             }
@@ -4359,13 +4335,14 @@ eoq;
     }
 
     /**
-     *
+     * @deprecated DO NOT CALL THIS, remove this function as we have a similar working version in EmailMan.php
+     * @see same functionality implemented in EmailMam::sendOptInEmail() method. Use that instead this
      * @global array $app_strings
      * @param EmailAddress $emailAddress
      * @return boolean
      * @throws Exception
      */
-    public function sendOptInEmail(EmailAddress $emailAddress)
+    private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
         
@@ -4442,7 +4419,6 @@ eoq;
             if(!$actionSendEmail->run_action($bean, $params)) {
                 $emailAddress->confirm_opt_in_fail_date = $now;
             } else {
-                $emailAddress->confirm_opt_in_fail_date = null;
                 $emailAddress->confirm_opt_in_sent_date = $now;
             }
             $emailAddress->save();

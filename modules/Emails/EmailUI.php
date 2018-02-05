@@ -417,22 +417,26 @@ eoq;
      * @global ? $focus
      * @param ?|null $bean
      * @param string $emailField
+     * @param string|null $innerText
      * @return string
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true)
+    public function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true, $innerText = null)
     {
         global $focus;
         $myBean = $focus;
-
-        $emailLink = '';
 
         if (!empty($bean)) {
             $myBean = $bean;
         } else {
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
+
+        
+        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+                'data-record-id="" data-module-name=""  data-email-address="">';
+        $emailLinkOverwriten = false;
 
         // focus is set?
         if (!is_object($myBean)) {
@@ -460,6 +464,7 @@ eoq;
             foreach($emailFields as $emailField) {
                 if (property_exists($myBean, $emailField)) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
+                    $emailLinkOverwriten = true;
                     $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
                         'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
 
@@ -474,9 +479,13 @@ eoq;
                     }
 
                     if ($optOut) {
-                        $emailLink .= '<span class="email-line-through">'. $email_tick . $myBean->{$emailField} . '</a></span>';
+                        $emailLink .= '<span class="email-line-through">'. $email_tick . $myBean->{$emailField} . '</span>';
                     } else {
-                        $emailLink .= $email_tick . $myBean->{$emailField}. '</a>';
+                        $emailLink .= $email_tick . $myBean->{$emailField};
+                    }
+                    $emailLink .= '</a>';
+                    
+                    if(!$optOut) {
                         break;
                     }
 
@@ -484,6 +493,10 @@ eoq;
                     $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
                 }
             }
+        }
+        
+        if(!$emailLinkOverwriten) {
+            $emailLink .= ($innerText . '</a>');
         }
 
         return $emailLink;
@@ -501,7 +514,8 @@ eoq;
     {
         $tick = '';
         if ($myBean instanceof Basic) {
-            $tick = $myBean->getConfirmOptInTickFromSugarEmailAddressField($emailField);
+            $emailAddress = $myBean->getEmailAddressFromEmailField($emailField);
+            $tick = $emailAddress->getOptInStatusTickHTML();
         } else {
             global $log;
             $log->warn('Trying to get an email field of non-Basic object');

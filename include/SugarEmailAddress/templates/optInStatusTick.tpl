@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,18 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-namespace SuiteCRM\Enumerator;
-
-
-/**
- * Class EmailOptInStatus
- * @package SuiteCRM\Enumerator
- * Holds all opt in status codes
- */
-class EmailOptInStatus
-{
-    const DISABLED = '';
-    const OPT_IN = 'opt-in';
-    const CONFIRMED_OPT_IN = 'confirmed-opt-in';
-}
+*}
+<span class="email-opt-in-container">
+    <span class="email-opt-in {$optInFlagClass}" title="{$optInFlagTitle}">{$optInFlagText}</span>
+</span>

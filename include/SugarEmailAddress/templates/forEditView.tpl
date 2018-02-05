@@ -122,7 +122,11 @@ var emailAddressWidgetLoaded = false;
                 {if $useOptIn == true}
 					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 						<label class="text-sm col-xs-12">{$app_strings.LBL_OPT_IN}</label>
-						<div><input type="checkbox" name="" title="{$app_strings.LBL_OPT_IN}" id="email-address-opted-in-flag" class="email-address-opted-in-flag" value="" enabled="true"></div>
+						<div>
+                                                    <input type="hidden" name="shouldSaveOptInFlag" value="1">
+                                                    <input type="checkbox" name="" title="{$app_strings.LBL_OPT_IN}" 
+                                                           id="email-address-opted-in-flag" class="email-address-opted-in-flag" value="" enabled="true">
+                                                </div>
 					</div>
                 {/if}
 			</div>

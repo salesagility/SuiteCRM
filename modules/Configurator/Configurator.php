@@ -345,7 +345,7 @@ class Configurator
     public function isConfirmOptInEnabled()
     {
         $confirmOptInEnabled =
-            $this->getConfirmOptInEnumValue() === \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN;
+            $this->getConfirmOptInEnumValue() === EmailAddress::COI_STAT_CONFIRMED_OPT_IN;
 
         if (!$confirmOptInEnabled) {
             $this->logger->warn('Confirm Opt in is disabled in email settings');

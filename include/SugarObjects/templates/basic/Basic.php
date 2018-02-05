@@ -39,8 +39,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Enumerator\EmailAddressIndicator;
-use SuiteCRM\Enumerator\EmailOptInStatus;
 
 class Basic extends SugarBean
 {
@@ -83,38 +81,6 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
-    
-    /**
-     * edit view should show confirm opt in (only if enabled)
-     *
-     * @param string $emailField
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    public function getConfirmOptInTickFromSugarEmailAddressField($emailField)
-    {
-        $this->validateSugarEmailAddressField($emailField);
-
-        return $this->displayOptInFromSugarEmailAddressField($emailField);
-    }
-
-
-    /**
-     * @param string $emailField
-     * @return string
-     */
-    public function getOptInStatusFromSugarField($emailField) {
-        $emailAddress = $this->fromSugarEmailAddressField($emailField);
-        $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
-        if (empty($emailAddress)) {
-            LoggerManager::getLogger()->warn('Empty email address');
-            return '';
-        }
-
-        return $emailAddress->getOptInIndication();
-    }
 
     /**
      * Return Email address from an email address field eg email1
@@ -122,7 +88,7 @@ class Basic extends SugarBean
      * @return \EmailAddress|null
      * @throws InvalidArgumentException
      */
-    public function fromSugarEmailAddressField($emailField)
+    public function getEmailAddressFromEmailField($emailField)
     {
         $this->validateSugarEmailAddressField($emailField);
         $configurator = new Configurator();
@@ -134,11 +100,11 @@ class Basic extends SugarBean
         if (!$sugar_config['email_enable_confirm_opt_in']) {
             $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
-            $emailAddressBean->confirm_opt_in = EmailOptInStatus::CONFIRMED_OPT_IN;
+            $emailAddressBean->setConfirmedOptInState(EmailAddress::COI_STAT_CONFIRMED_OPT_IN);
             return $emailAddressBean;
         }
 
-        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
+        $emailAddressId = $this->getEmailAddressId($emailField);
         return $emailAddressBean->retrieve($emailAddressId);
     }
 
@@ -148,7 +114,7 @@ class Basic extends SugarBean
      * @return string|null EmailAddress ID or null on error
      * @throws \InvalidArgumentException
      */
-    protected function getIdFromSugarEmailAddressField($emailField)
+    private function getEmailAddressId($emailField)
     {
         $log = LoggerManager::getLogger();
 
@@ -162,7 +128,10 @@ class Basic extends SugarBean
         }
 
         // List view requires us to retrieve the mail so we can see the email addresses
-        $this->retrieve();
+        if(!$this->retrieve()) {
+            $log->fatal('A Basic can not retrive.');
+            return null;
+        }
 
         $found = false;
         $addresses = $this->emailAddress->addresses;
@@ -181,30 +150,6 @@ class Basic extends SugarBean
         }
 
         return $emailAddressId;
-    }
-
-    /**
-     * @param string $emailField
-     * @return string
-     */
-    protected function displayOptInFromSugarEmailAddressField($emailField)
-    {
-        $configurator = new Configurator();
-        $sugar_config = $configurator->config;
-
-        $tickHtml = '';
-
-        if(isset($sugar_config['email_enable_confirm_opt_in'])) {
-            $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
-
-            if ($emailConfigEnableConfirmOptIn !== EmailOptInStatus::DISABLED) {
-                $template = new Sugar_Smarty();
-                $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
-                $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');
-            }
-        }
-
-        return $tickHtml;
     }
 
     /**
