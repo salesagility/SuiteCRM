@@ -1829,7 +1829,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetOptInIndication ()
+    public function testGetOptInStatus ()
     {
         global $sugar_config;
 
