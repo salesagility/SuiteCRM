@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/../SugarPHPMailer.php';
++include_once __DIR__ . '/../SugarEmailAddress/SugarEmailAddress.php';
 
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
