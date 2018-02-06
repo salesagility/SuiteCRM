@@ -87,7 +87,8 @@ $mod_strings = array(
     'LNK_NEW_CAMPAIGN' => 'Create Campaign (Classic)',
     'LNL_NEW_CAMPAIGN_WIZARD' => 'Create Campaign',
     'LNK_CAMPAIGN_LIST' => 'View Campaigns',
-    'LNK_NEW_PROSPECT' => 'Create Target',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaigns',
+	'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'View Targets',
     'LNK_NEW_PROSPECT_LIST' => 'Create Target List',
     'LNK_PROSPECT_LIST_LIST' => 'View Target Lists',
@@ -133,7 +134,6 @@ $mod_strings = array(
     'LBL_CAMPAIGN_LEAD_SUBPANEL_TITLE' => 'Leads',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_LOG_ENTRIES_CONTACT_TITLE' => 'Contacts Created',
-    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 
     //error messages.
     'ERR_SENDING_NOW' => 'Messages are being delivered , please try this later.',
