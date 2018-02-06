@@ -583,6 +583,23 @@ $dictionary['Email'] = array(
             'side' => 'left',
             'vname' => 'LBL_EMAIL_TEMPLATE',
         ),
+        'opt_in' => array(
+            'name' => 'opt_in',
+            'vname' => 'LBL_OPT_IN',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayEmailAddressOptInField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayEmailAddressOptInField.php',
+                'onListView' =>  true
+            ),
+        ),
     ), /* end fields() array */
     'relationships' => array(
         'emails_assigned_user' => array(

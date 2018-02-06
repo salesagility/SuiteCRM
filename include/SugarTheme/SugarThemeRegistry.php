@@ -149,6 +149,11 @@ class SugarThemeRegistry
             self::buildRegistry();
         }
 
+        if (self::$_currentTheme === null && !empty(self::$_themes)) {
+            $themes = array_keys(self::$_themes);
+            self::$_currentTheme = $themes[0];
+        }
+
         $current_theme = self::$_currentTheme;
         return self::$_themes[$current_theme];
     }

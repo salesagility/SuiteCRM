@@ -320,4 +320,4 @@ echo '
 		}
 	}
 	switchMsg();
-</script>'
+</script>';

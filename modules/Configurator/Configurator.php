@@ -338,4 +338,42 @@ class Configurator
         }
         $this->handleOverride(true);
     }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            isset($this->config['email_enable_confirm_opt_in'])
+            && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmOptInTemplateId() {
+        /** @var null|string $confirmOptInTemplateId */
+        $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
+        if(!$confirmOptInTemplateId) {
+            $confirmOptInTemplateId = 
+                isset($this->config['aop']['confirm_opt_in_template_id']) ?
+                    $this->config['aop']['confirm_opt_in_template_id'] :
+                    null;
+        }
+        
+        if (!$confirmOptInTemplateId) {
+            $this->logger->warn('Confirm Opt template is not set');
+        }
+        
+        return $confirmOptInTemplateId;
+    }
+    
 }

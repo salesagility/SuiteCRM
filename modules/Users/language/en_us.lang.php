@@ -154,7 +154,6 @@ $mod_strings = array(
     'LBL_FIRST_NAME' => 'First Name',
     'LBL_SYSTEM_GENERATED_PASSWORD' => 'System Generated Password',
     'LBL_GENERATE_PASSWORD_BUTTON_LABEL' => 'Reset Password',
-    'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
     'LBL_GROUP_DESC' => 'Use for assigning items to a group (example: for Inbound Email). This type cannot login through the SuiteCRM web interface.',
     'LBL_GROUP_USER' => 'Group User',
     'LBL_HIDE_TABS' => 'Hide Modules',
@@ -372,8 +371,7 @@ $mod_strings = array(
     'LBL_WIZARD_SKIP_BUTTON' => 'Skip',
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
-    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>
-below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
@@ -390,15 +388,13 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_WIZARD_FINISH9' => 'Configure the Application ',
     'LBL_WIZARD_FINISH10' => 'Use Studio to create and manage application fields and layouts.',
     'LBL_WIZARD_FINISH11' => 'Visit SuiteCRM Site ',
-    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a
-    system administrator or end user of the application.',
+    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a system administrator or end user of the application.',
     'LBL_WIZARD_FINISH14' => 'Documentation ',
     'LBL_WIZARD_FINISH15' => 'Product Guides and Release Notes ',
     'LBL_WIZARD_FINISH16' => 'Knowledge Base ',
     'LBL_WIZARD_FINISH17' => 'Tips from SuiteCRM',
     'LBL_WIZARD_FINISH18' => 'Forums ',
-    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community
-    to discuss topics of interest with each other and with SuiteCRM Developers ',
+    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community to discuss topics of interest with each other and with SuiteCRM Developers ',
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
@@ -418,13 +414,8 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_DELETED' => 'Deleted',
     'LBL_HIDEOPTIONS' => 'Hide Options',
     'LBL_SHOWOPTIONS' => 'Show Options',
-    'LBL_SUITE_SUPERCHARGED' => "Supercharged by SuiteCRM",
-    'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
-    'LBL_SUITE_TOP' => "Back to top",
     'LBL_SUITE_PRINT' => "Print this page",
-    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
-    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
-    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
+
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
     'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
