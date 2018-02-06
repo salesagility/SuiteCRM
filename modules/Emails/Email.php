@@ -566,7 +566,7 @@ class Email extends SugarBean {
 			}
 
         // This code is 7.8.x LTS specific, from 7.9 onwards it is found in EmailsController and can be deleted here
-        if (!empty($_REQUEST['data_parent_id1'])) {
+        if (!empty($_REQUEST['parent_type']) && !empty($_REQUEST['parent_id'])) {
             $macro_nv = array();
             $focusName = $request['parent_type'];
             $focus = BeanFactory::getBean($focusName, $request['parent_id']);
