@@ -56,6 +56,12 @@ $dictionary['Case'] = array(
             'type' => 'readonly',
             'source' => 'non-db',
         ),
+        'description' => array(
+            'name' => 'description',
+            'vname' => 'LBL_DESCRIPTION',
+            'type' => 'text',
+            'comment' => 'Full text of the description',
+        ),
         'account_name' => array(
             'name' => 'account_name',
             'rname' => 'name',
