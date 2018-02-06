@@ -98,7 +98,7 @@ class AORReportsDashlet extends Dashlet
     public function displayOptions()
     {
         ob_start();
-        global $current_language, $app_list_strings, $datetime, $mod_strings;
+        global $current_language, $app_list_strings, $datetime,$mod_strings;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
         $optionsSmarty = new Sugar_Smarty();
         $optionsSmarty->assign('MOD', $mod_strings);
