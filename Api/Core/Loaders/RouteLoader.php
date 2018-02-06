@@ -1,11 +1,13 @@
 <?php
-namespace Api\Core\Configure;
+namespace Api\Core\Loaders;
 
 use Slim\App;
 
-class Route
+class RouteLoader
 {
     /**
+     * Load all app routes
+     *
      * @param App $app
      */
     public static function configureRoutes(App $app)

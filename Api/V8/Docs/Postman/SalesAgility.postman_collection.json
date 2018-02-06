@@ -11,76 +11,62 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Server info",
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48797686-48de-4f3b-8234-d9c5a83ba5ef",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": [
-								{
-									"key": "accessToken",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "callBackUrl",
-									"type": "any"
-								},
-								{
-									"key": "authUrl",
-									"type": "any"
-								},
-								{
-									"key": "accessTokenUrl",
-									"type": "any"
-								},
-								{
-									"key": "clientId",
-									"type": "any"
-								},
-								{
-									"key": "clientSecret",
-									"type": "any"
-								},
-								{
-									"key": "clientAuth",
-									"type": "any"
-								},
-								{
-									"key": "grantType",
-									"type": "any"
-								},
-								{
-									"key": "scope",
-									"type": "any"
-								},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "username",
-									"type": "any"
+									"value": "{{username}}",
+									"description": "",
+									"type": "text"
 								},
 								{
 									"key": "password",
-									"type": "any"
-								},
-								{
-									"key": "tokenType",
-									"value": "Bearer",
-									"type": "string"
-								},
-								{
-									"key": "redirectUri",
-									"type": "any"
-								},
-								{
-									"key": "refreshToken",
-									"type": "any"
+									"value": "{{password}}",
+									"description": "",
+									"type": "text"
 								}
 							]
 						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/Api/V8/login",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"Api",
+								"V8",
+								"login"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Server info",
+					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -89,41 +75,122 @@
 								{
 									"key": "username",
 									"value": "admin",
-									"description": "",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "password",
 									"value": "admin",
-									"description": "",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "grant_type",
 									"value": "password",
-									"description": "",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "scope",
 									"value": "",
-									"description": "",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "client_id",
 									"value": "1",
-									"description": "",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "client_secret",
 									"value": "admin",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/Api/V8/version?XDEBUG_SESSION_START=PHPSTORM",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"Api",
+								"V8",
+								"version"
+							],
+							"query": [
+								{
+									"key": "XDEBUG_SESSION_START",
+									"value": "PHPSTORM",
+									"equals": true
+								}
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get records by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{suitecrm71.url}}/Api/V8/module/Accounts/10f5e470-f34b-f69c-7e6b-5a786c861146",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"Api",
+								"V8",
+								"module",
+								"Accounts",
+								"10f5e470-f34b-f69c-7e6b-5a786c861146"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48797686-48de-4f3b-8234-d9c5a83ba5ef",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
 									"description": "",
 									"type": "text",
 									"disabled": true
@@ -131,14 +198,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{suitecrm.url}}/Api/V8/server_info?XDEBUG_SESSION_START=PHPSTORM",
+							"raw": "{{suitecrm71.url}}/Api/V8/logout?XDEBUG_SESSION_START=PHPSTORM",
 							"host": [
-								"{{suitecrm.url}}"
+								"{{suitecrm71.url}}"
 							],
 							"path": [
 								"Api",
 								"V8",
-								"server_info"
+								"logout"
 							],
 							"query": [
 								{

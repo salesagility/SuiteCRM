@@ -1,15 +1,17 @@
 <?php
-namespace Api\Core\Configure;
+namespace Api\Core\Loaders;
 
 use Slim\App;
 
-class Middleware
+class MiddlewareLoader
 {
     /**
+     * Load all system default middleware
+     *
      * @param App $app
      * @param string $middlewareConfig
      */
-    public static function configureMiddleware(App $app, string $middlewareConfig)
+    public static function configureMiddleware(App $app, $middlewareConfig)
     {
         $middlewares = require $middlewareConfig;
 

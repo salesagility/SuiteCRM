@@ -1,5 +1,3 @@
-# FIXME: To be removed once virtualhost does not use .htaccess anymore
-
 Require all granted
 
 RewriteEngine On
@@ -7,4 +5,3 @@ RewriteCond %{REQUEST_FILENAME} !Api/index.php$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L,QSA]
-RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
