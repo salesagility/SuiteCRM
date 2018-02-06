@@ -4343,12 +4343,17 @@ eoq;
 
         if (!$id) {
             $log->fatal('Empty Email Id');
-        } elseif (isset($sugar_config['email_enable_auto_send_opt_in']) && $sugar_config['email_enable_auto_send_opt_in']) {
+        } elseif (
+            isset($sugar_config['email_enable_auto_send_opt_in'])
+            && $sugar_config['email_enable_auto_send_opt_in']
+        ) {
             /** @var \EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
 
-            if ($emailAddress->confirm_opt_in != 'confirmed-opt-in' && empty($emailAddress->confirm_opt_in_sent_date)) {
+            if (
+                $emailAddress->confirm_opt_in != \SuiteCRM\Enumerator\EmailOptInStatus::CONFIRMED_OPT_IN
+                && empty($emailAddress->confirm_opt_in_sent_date)) {
                 $this->sendOptInEmail($emailAddress);
             }
         }
@@ -4388,12 +4393,8 @@ eoq;
             return $ret;
         }
 
-        // Send email template
-
+        // Prevent sending an opt in email multiple time
         if (!$this->parent_name || !$this->parent_type) {
-            $msg = 'Opt in requires the email to be related to Account/Contact/Lead/Target';
-            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_RELATION_INCORRECT']);
-            $log->fatal($msg);
             return $ret;
         }
 
@@ -4425,8 +4426,9 @@ eoq;
         // Get Related Contact | Lead | Target etc.
         $query = ' SELECT * FROM email_addresses' .
             ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
-            ' WHERE email_address_id  = LIKE \'' . $db->quote($emailAddress->id) . '\'' .
-                ' AND email_addr_bean_rel.primary_address = 1 AND deleted = 0';
+            ' WHERE email_address_id LIKE \'' . $db->quote($emailAddress->id) . '\'' .
+                ' AND email_addr_bean_rel.primary_address = 1 '
+                . 'AND email_addresses.deleted = 0 AND email_addr_bean_rel.deleted = 0';
 
         $dbResult = $db->query($query);
         while ($row = $db->fetchByAssoc($dbResult)) {
@@ -4438,10 +4440,14 @@ eoq;
             $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
             $actionSendEmail = new actionSendEmail();
-            $actionSendEmail->run_action($bean, $params);
-
             $date = new DateTime();
-            $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+            if(!$actionSendEmail->run_action($bean, $params)) {
+                $emailAddress->confirm_opt_in_fail_date = $now;
+            } else {
+                $emailAddress->confirm_opt_in_fail_date = null;
+                $emailAddress->confirm_opt_in_sent_date = $now;
+            }
             $emailAddress->save();
 
             $ret = true;

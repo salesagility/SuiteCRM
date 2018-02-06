@@ -102,6 +102,12 @@ $dictionary['email_addresses'] = array(
             'vname' => 'LBL_CONFIRM_OPT_IN_SENT_DATE',
         ),
         
+        'confirm_opt_in_fail_date' => array(
+            'name' => 'confirm_opt_in_fail_date',
+            'type' => 'datetime',
+            'vname' => 'LBL_CONFIRM_OPT_IN_FAIL_DATE',
+        ),
+        
         'date_created' => array(
             'name'            => 'date_created',
             'type'            => 'datetime',

@@ -451,6 +451,17 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
+    
+    
+    'two_factor_auth_email' => array(
+        'subject' => 'Two Factor Authentication Code',
+        'type' => 'system',
+        'description' => "This template is used to send a user a code for Two Factor Authentication.",
+        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Two Factor Authentication code is <b>$code</b>.</p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
+        'txt_body' =>
+            'Two Factor Authentication code is $code.',
+        'name' => 'Two Factor Authentication email',
+    ),
 
     // SMTP settings
 
