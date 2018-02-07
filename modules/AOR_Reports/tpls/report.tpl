@@ -60,10 +60,11 @@
                             var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
                             var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
                             var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
-                            var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldValue+'">');
-                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldSign+'">');
-                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldNumber+'">');
-                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldTime+'">');
+                            var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();
+                            _form.append('<input type="hidden" name="parameter_date_value[]" value="'+fieldValue+'">');
+                            _form.append('<input type="hidden" name="parameter_date_sign[]" value="'+fieldSign+'">');
+                            _form.append('<input type="hidden" name="parameter_date_number[]" value="'+fieldNumber+'">');
+                            _form.append('<input type="hidden" name="parameter_date_time[]" value="'+fieldTime+'">');
                         }
                         // Fix for issue #1082 - change local date format to db date format
                         if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
