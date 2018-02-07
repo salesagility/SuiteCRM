@@ -137,11 +137,7 @@ class AOR_Report extends Basic
     {
         $result = parent::ACLAccess($view, $is_owner, $in_group);
         if ($result && $this->report_module !== '') {
-            $moduleToCheck = $this->report_module;
-            if ($moduleToCheck === 'AOS_Products_Quotes') {
-                $moduleToCheck = 'AOS_Quotes';
-            }
-            $result = ACLController::checkAccess($moduleToCheck, 'list', true);
+            $result = ACLController::checkAccess($this->report_module, 'list', true);
         }
 
         return $result;
