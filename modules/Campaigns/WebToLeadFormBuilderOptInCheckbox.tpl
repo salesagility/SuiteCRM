@@ -37,5 +37,5 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
  
- <label>opt-in</label><input type="checkbox" id="opt_in_{$fieldName}" name="opt_in_{$fieldName}">
+ <label>{$APP.LBL_OPT_IN_TITLE}</label><input type="checkbox" id="opt_in_{$fieldName}" name="opt_in_{$fieldName}">
  

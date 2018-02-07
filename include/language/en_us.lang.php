@@ -2361,6 +2361,7 @@ $app_strings = array(
     'LBL_SUBTHEME_OPTIONS_DUSK' => 'Dusk',
     'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
+    'LBL_OPT_IN_TITLE' => 'Opt In',
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Confirmed Opt In Fail Date',
