@@ -2017,20 +2017,21 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus() {
         $configurator = new Configurator();
         $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
             $ret = self::COI_FLAG_OPT_IN_DISABLED;
         } elseif (
             $enableConfirmedOptIn === self::COI_STAT_OPT_IN
-            && $this->isOptedInStatus($this->getOptInIndicationFromFlags())
+            && $this->isOptedInStatus($optInFromFlags)
         ) {
             $ret = self::COI_FLAG_OPT_IN;
         } elseif ($enableConfirmedOptIn === self::COI_STAT_CONFIRMED_OPT_IN) {
-            $ret = $this->getOptInIndicationFromFlags();
+            $ret = $optInFromFlags;
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
             LoggerManager::getLogger()->warn($msg);
-            $ret = self::COI_FLAG_NO_OPT_IN_STATUS;
+            $ret = $optInFromFlags;
         }
         
         return $ret;
