@@ -434,6 +434,7 @@ eoq;
 
 
         $emailLink = '<a class="email-link" href="javascript:void(0);"'
+                    . ' onclick="$(document).openComposeViewModal(this);"'
                     . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
         $emailLinkOverwritten = false;
 

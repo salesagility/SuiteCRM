@@ -2028,10 +2028,14 @@ class SugarEmailAddress extends SugarBean
             $ret = self::COI_FLAG_OPT_IN;
         } elseif ($enableConfirmedOptIn === self::COI_STAT_CONFIRMED_OPT_IN) {
             $ret = $optInFromFlags;
+        } elseif ($optInFromFlags === self::COI_FLAG_INVALID) {
+            $ret = $optInFromFlags;
+        } elseif ($optInFromFlags === self::COI_FLAG_OPT_OUT) {
+            $ret = $optInFromFlags;
         } else {
             $msg = 'Invalid ENUM value of Opt In settings: ' . $enableConfirmedOptIn;
             LoggerManager::getLogger()->warn($msg);
-            $ret = $optInFromFlags;
+            $ret = self::COI_FLAG_NO_OPT_IN_STATUS;
         }
         
         return $ret;
