@@ -198,7 +198,7 @@ if($db->supports("create_user")){
     <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
             <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
-            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+            <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
             <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
             <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
