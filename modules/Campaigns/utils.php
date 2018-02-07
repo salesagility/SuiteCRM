@@ -275,20 +275,20 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             $return_array['target_type'] = $row['target_type'];
             return $return_array;
         } elseif ($row) {
-            $data['id'] = "'" . create_guid() . "'";
-            $data['campaign_id'] = "'" . $row['campaign_id'] . "'";
-            $data['target_tracker_key'] = "'" . $identifier . "'";
-            $data['target_id'] = "'" . $row['target_id'] . "'";
-            $data['target_type'] = "'" . $row['target_type'] . "'";
-            $data['activity_type'] = "'" . $activity . "'";
-            $data['activity_date'] = "'" . TimeDate::getInstance()->nowDb() . "'";
-            $data['list_id'] = "'" . $row['list_id'] . "'";
-            $data['marketing_id'] = "'" . $row['marketing_id'] . "'";
+            $data['id'] = create_guid();
+            $data['campaign_id'] = $row['campaign_id'];
+            $data['target_tracker_key'] = $identifier;
+            $data['target_id'] = $row['target_id'];
+            $data['target_type'] = $row['target_type'];
+            $data['activity_type'] = $activity;
+            $data['activity_date'] = TimeDate::getInstance()->nowDb();
+            $data['list_id'] = $row['list_id'];
+            $data['marketing_id'] = $row['marketing_id'];
             $data['hits'] = 1;
             $data['deleted'] = 0;
             if (!empty($clicked_url_key)) {
-                $data['related_id'] = "'" . $clicked_url_key . "'";
-                $data['related_type'] = "'" . 'CampaignTrackers' . "'";
+                $data['related_id'] = $clicked_url_key;
+                $data['related_type'] = 'CampaignTrackers';
             }
             //values for return array..
             $return_array['target_id'] = $row['target_id'];
