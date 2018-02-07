@@ -317,7 +317,7 @@ class DynamicField
      *
      * @return array select=>select columns, join=>prebuilt join statement
      */
-    public function getJOIN($expandedList = false, $includeRelates = false, $where = false)
+    public function getJOIN($expandedList = false, $includeRelates = false, &$where = false)
     {
         if (!$this->bean->hasCustomFields()) {
             return array(
@@ -351,7 +351,7 @@ class DynamicField
                     $relateJoinInfo = $this->getRelateJoin($field, $jtAlias . $jtCount);
                     $select .= $relateJoinInfo['select'];
                     $join .= $relateJoinInfo['from'];
-                    //bug 27654 martin
+
                     if ($where) {
                         $pattern = '/' . $field['name'] . '\slike/i';
                         $replacement = $relateJoinInfo['name_field'] . ' like';

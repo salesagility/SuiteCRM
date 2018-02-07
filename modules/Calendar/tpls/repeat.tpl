@@ -143,7 +143,7 @@
 			if(typeof validate != "undefined" && typeof validate['CalendarRepeatForm'] != "undefined"){
 				removeFromValidate('CalendarRepeatForm', 'repeat_until');
 			}
-			addToValidateMoreThan('CalendarRepeatForm', 'repeat_count', 'int', true,'{/literal}{$MOD.LBL_REPEAT_COUNT}{literal}', 1);			
+			addToValidateMoreThan('CalendarRepeatForm', 'repeat_count', 'int', true, "{/literal}{$MOD.LBL_REPEAT_COUNT}{literal}", 1);
 		}else{
 			document.forms['CalendarRepeatForm'].repeat_count.setAttribute("disabled","disabled");			
 			document.forms['CalendarRepeatForm'].repeat_until.removeAttribute("disabled");
@@ -152,7 +152,7 @@
 			if(typeof validate != "undefined" && typeof validate['CalendarRepeatForm'] != "undefined"){
 				removeFromValidate('CalendarRepeatForm', 'repeat_count');
 			}
-			addToValidate('CalendarRepeatForm', 'repeat_until', 'date', true,'{/literal}{$MOD.LBL_REPEAT_UNTIL}{literal}');			
+			addToValidate('CalendarRepeatForm', 'repeat_until', 'date', true, "{/literal}{$MOD.LBL_REPEAT_UNTIL}{literal}");
 		}
 		
 		// prevent an issue when a calendar date picker is hidden under a dialog
