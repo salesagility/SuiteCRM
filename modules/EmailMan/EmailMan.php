@@ -1052,7 +1052,13 @@ class EmailMan extends SugarBean
 
         if ($foundBean !== null) {
             $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
-            if ($emailAddress->getOptInStatus() === SugarEmailAddress::COI_STAT_OPT_IN) {
+            $optInStatus = $emailAddress->getOptInStatus();
+            if (
+                $optInStatus === SugarEmailAddress::COI_STAT_OPT_IN
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED
+            ) {
 
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
