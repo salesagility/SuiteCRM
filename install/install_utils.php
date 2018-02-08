@@ -957,8 +957,8 @@ EOQ;
     Options +FollowSymLinks
     RewriteEngine On
     RewriteBase {$basePath}
-    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
-    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
