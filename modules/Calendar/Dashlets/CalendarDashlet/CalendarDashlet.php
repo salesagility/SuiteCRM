@@ -63,7 +63,10 @@ class CalendarDashlet extends Dashlet {
 
 		// seedBean is need to set the calendar icon
 		$this->seedBean  = BeanFactory::newBean('Calendar');
-		$this->seedBean->module_name = 'Calendar';
+		if(!isset($this->seedBean->module_name)) {
+            $this->seedBean = new stdClass();
+            $this->seedBean->module_name = 'Calendar';
+        }
              
     }
 
