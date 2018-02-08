@@ -43,14 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-/*********************************************************************************
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
-
 require_once("include/JSON.php");
 
 
@@ -65,12 +57,12 @@ class SugarEmailAddress extends SugarBean
     //allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
     public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
     public $disable_custom_fields = true;
- 
+
     /**
      * @var DBManager
      */
     public $db;
-    
+
     public $smarty;
     public $addresses = array(); // array of emails
     public $view = '';
@@ -84,7 +76,7 @@ class SugarEmailAddress extends SugarBean
      * @var int
      */
     public $index;
-    
+
 
     /**
      * possible values: ['', 'opt-in', 'confirmed-opt-in']
@@ -141,7 +133,8 @@ class SugarEmailAddress extends SugarBean
      * Legacy email address handling.  This is to allow support for SOAP or customizations
      * @param SugarBean $bean
      */
-    public function handleLegacySave($bean) {
+    public function handleLegacySave($bean)
+    {
         if ($this->needsToParseLegacyAddresses($bean)){
             $this->parseLegacyEmailAddresses($bean);
         }
@@ -157,40 +150,28 @@ class SugarEmailAddress extends SugarBean
      */
     private function needsToParseLegacyAddresses($bean)
     {
-        if (!empty($this->addresses)){
-            // We already have addresses, don't want to overwrite them
-            return false;
-        }
-        if(isset($_REQUEST) && isset($_REQUEST[$bean->module_dir . '_email_widget_id'])){
-            // Non legacy way of handling emails
-            return false;
-        }
-        if (isset($_REQUEST) && isset($_REQUEST['massupdate'])){
-            // No need to update the emails on a mass update
-            return false;
-        }
-        return true;
-    }
+        if (
+            !isset($_REQUEST)
+            || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])
+            || !isset($_REQUEST['massupdate'])
+        ) {
+            if (empty($this->addresses)) {
+                $this->addresses = array();
+                $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
+                $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
 
-    /**
-     * @param SugarBean $bean
-     */
-    private function parseLegacyEmailAddresses($bean)
-    {
-        $this->addresses = array();
-        $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
-        $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
-
-        $isPrimary = true;
-        for ($i = 1; $i <= 10; $i++) {
-            $email = 'email' . $i;
-            if (isset($bean->$email) && !empty($bean->$email)) {
-                $opt_out_field = $email . '_opt_out';
-                $invalid_field = $email . '_invalid';
-                $field_optOut = (isset($bean->$opt_out_field)) ? $bean->$opt_out_field : $optOut;
-                $field_invalid = (isset($bean->$invalid_field)) ? $bean->$invalid_field : $invalid;
-                $this->addAddress($bean->$email, $isPrimary, false, $field_invalid, $field_optOut);
-                $isPrimary = false;
+                $isPrimary = true;
+                for ($i = 1; $i <= 10; $i++) {
+                    $email = 'email' . $i;
+                    if (isset($bean->$email) && !empty($bean->$email)) {
+                        $opt_out_field = $email . '_opt_out';
+                        $invalid_field = $email . '_invalid';
+                        $field_optOut = (isset($bean->$opt_out_field)) ? $bean->$opt_out_field : $optOut;
+                        $field_invalid = (isset($bean->$invalid_field)) ? $bean->$invalid_field : $invalid;
+                        $this->addAddress($bean->$email, $isPrimary, false, $field_invalid, $field_optOut);
+                        $isPrimary = false;
+                    }
+                }
             }
         }
     }
@@ -556,7 +537,10 @@ class SugarEmailAddress extends SugarBean
             ($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::saveEmail()');
         }
 
-        if (empty($this->addresses) || $in_workflow) {
+        if(
+            empty($this->addresses)
+            || $in_workflow === true
+        ) {
             $this->populateAddresses($id, $module, $new_addrs, $primary);
         }
 
@@ -1702,7 +1686,7 @@ class SugarEmailAddress extends SugarBean
             }
         }
     }
-    
+
 
     /**
      * Confirm opt in
@@ -1714,28 +1698,28 @@ class SugarEmailAddress extends SugarBean
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
         $this->confirm_opt_in = 'confirmed-opt-in';
     }
-    
+
     /**
      * Update Opt In state to 'opt-in'
-     * 
+     *
      * @return string| ID or false on failed
      * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
      */
     public function optIn() {
-        
+
         if (!$this->id) {
             $msg = 'Trying to update opt-in email address without email address ID.';
             LoggerManager::getLogger()->fatal($msg);
             throw new RuntimeException($msg);
         }
-        
+
         if ($this->retrieve() && !$this->confirm_opt_in) {
             $this->confirm_opt_in = 'opt-in';
             $ret = parent::save();
         } else {
             $ret = false;
         }
-        
+
         return $ret;
     }
 
