@@ -443,10 +443,6 @@ eoq;
             $GLOBALS['log']->warn('incorrect bean');
         } else {
 
-            if (!empty($myBean->id)) {
-                $myBean->retrieve();
-            }
-
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
@@ -488,6 +484,11 @@ eoq;
                                 if (
                                     $address['email_address'] === $myBean->{$emailField}
                                 ) {
+
+                                    if (!empty($myBean->id)) {
+                                        $myBean->retrieve();
+                                    }
+
                                     if ((int)$address['opt_out'] === 1) {
                                         $optOut = true;
                                     }
@@ -534,7 +535,7 @@ eoq;
                 }
             }
 
-
+            $emailLink .= '</a>';
             return $emailLink;
         }
     }
