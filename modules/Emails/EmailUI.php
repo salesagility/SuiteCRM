@@ -442,7 +442,11 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-            $myBean->retrieve();
+
+            if (!empty($myBean->id)) {
+                $myBean->retrieve();
+            }
+
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
@@ -472,8 +476,6 @@ eoq;
                         . $composeData['to_addrs'] . '">';
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
-                    $emailLinkOverwritten = true;
-
                     $optOut = false;
                     $invalid = false;
                     if (isset($myBean->emailAddress->addresses)) {
@@ -485,63 +487,59 @@ eoq;
                             foreach ($addresses as $address) {
                                 if (
                                     $address['email_address'] === $myBean->{$emailField}
-                                    && (int)$address['opt_out']
                                 ) {
-                                    $optOut = true;
-                                }
+                                    if ((int)$address['opt_out'] === 1) {
+                                        $optOut = true;
+                                    }
 
-                                if (
-                                    $address['email_address'] === $myBean->{$emailField}
-                                    && (int)$address['invalid_email']
-                                ) {
-                                    $invalid = true;
+                                    if ((int)$address['invalid_email'] === 1) {
+                                        $invalid = true;
+                                    }
+
+                                    if (
+                                        $optOut === true
+                                        || $invalid === true
+                                    ) {
+                                        $emailLink =
+                                            '<a class="email-link" href="javascript:void(0);"'
+                                            . ' data-module="'
+                                            . $myBean->module_name . '" ' . 'data-record-id="'
+                                            . $myBean->id . '" data-module-name="'
+                                            . $myBean->name . '" data-email-address="'
+                                            . $myBean->{$emailField} . '">';
+                                        $emailLinkOverwritten = true;
+                                        $emailLink .= $email_tick;
+                                        $emailLink .= '<span class="email-line-through">';
+                                        $emailLink .= $myBean->{$emailField};
+                                        $emailLink .= '</span>';
+                                    } else {
+                                        $emailLink =
+                                            '<a class="email-link" href="javascript:void(0);"'
+                                            . ' onclick="$(document).openComposeViewModal(this);"'
+                                            . ' data-module="'
+                                            . $myBean->module_name . '" ' . 'data-record-id="'
+                                            . $myBean->id . '" data-module-name="'
+                                            . $myBean->name . '" data-email-address="'
+                                            . $myBean->{$emailField} . '">';
+                                        $emailLinkOverwritten = true;
+                                        $emailLink .= $email_tick . $myBean->{$emailField};
+                                    }
+                                    $emailLink .= '</a>';
+                                    return $emailLink;
                                 }
                             }
                         }
-
-                        if (
-                            $optOut === true
-                            || $invalid === true
-                        ) {
-                            $emailLink =
-                                '<a class="email-link" href="javascript:void(0);"'
-                                . ' data-module="'
-                                . $myBean->module_name . '" ' . 'data-record-id="'
-                                . $myBean->id . '" data-module-name="'
-                                . $myBean->name . '" data-email-address="'
-                                . $myBean->{$emailField} . '">';
-                            $emailLink .= '<span class="email-line-through">';
-                            $emailLink .= $email_tick;
-                            $emailLink .= $myBean->{$emailField};
-                            $emailLink .= '</span>';
-                        } else {
-                            $emailLink =
-                                '<a class="email-link" href="javascript:void(0);"'
-                                . ' onclick="$(document).openComposeViewModal(this);"'
-                                . ' data-module="'
-                                . $myBean->module_name . '" ' . 'data-record-id="'
-                                . $myBean->id . '" data-module-name="'
-                                . $myBean->name . '" data-email-address="'
-                                . $myBean->{$emailField} . '">';
-                            $emailLink .= $email_tick . $myBean->{$emailField};
-                        }
-
-                        $emailLink .= '</a>';
-
-                        if ($optOut === false) {
-                            break;
-                        }
-
                     } else {
                         $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
                         $emailLinkOverwritten = false;
                     }
+
+                    if (!$emailLinkOverwritten) {
+                        $emailLink .= ($innerText . '</a>');
+                    }
                 }
             }
 
-            if (!$emailLinkOverwritten) {
-                $emailLink .= ($innerText . '</a>');
-            }
 
             return $emailLink;
         }
