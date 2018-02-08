@@ -4499,7 +4499,7 @@ class SugarBean
      * passed value is used
      * @param bool $encode Optional, default true, encodes the values fetched from the database.
      * @param bool $deleted Optional, default true, if set to false deleted filter will not be added.
-     * @return SugarBean
+     * @return SugarBean|null
      *
      * Internal function, do not override.
      */

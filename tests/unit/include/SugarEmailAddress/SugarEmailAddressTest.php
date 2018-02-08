@@ -543,6 +543,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateAddresses()
     {
+        
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -555,17 +556,26 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         // test
         $results = $this->ea->populateAddresses('', '');
+        if(null !== $results) {
+            throw new Exception('Assert error 1');
+        }
         self::assertEquals(null, $results);
 
         // test
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', '');
+        if(null !== $results) {
+            throw new Exception('Assert error 2');
+        }
         self::assertEquals(null, $results);
 
         // test
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $results = $this->ea->populateAddresses('', $module);
+        if(null !== $results) {
+            throw new Exception('Assert error 3');
+        }
         self::assertEquals(null, $results);
 
         // test
@@ -574,8 +584,10 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $results = $this->ea->populateAddresses('', $module);
+        if(array() !== $this->ea->addresses) {
+            throw new Exception('Assert error 4');
+        }
         self::assertEquals(array(), $this->ea->addresses);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -583,7 +595,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = array();
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -592,7 +603,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -601,7 +611,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -610,7 +619,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -619,7 +627,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -628,7 +635,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -637,7 +643,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -646,7 +651,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -655,7 +659,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
         
         // test
         unset($_REQUEST);
@@ -664,7 +667,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -673,7 +675,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalidemailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -682,7 +683,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddressId0'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         unset($_REQUEST);
@@ -692,7 +692,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalidemailAddress'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        self::assertEquals(false, $results);
 
         // test
         $i = 1;
@@ -717,7 +716,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        self::assertEquals(false, $results);
 
         $q = /** @lang sql */
             "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
@@ -740,7 +738,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        self::assertEquals(false, $results);
         self::assertSame(array(
             2 => array(
                 'email_address' => 'test@email.com',
@@ -787,6 +784,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => null,
             ),
             1 => array(
                 'email_address' => 'test21@email.com',
@@ -795,6 +793,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => null
             ),
         ), $this->ea->addresses);
     }
@@ -980,7 +979,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         // test
         $result = $this->ea->getEmailGUID('test@email.com');
-        self::assertEquals($result, 'test_email_1');
+        self::assertEquals('test_email_1', $result);
         self::assertFalse(isValidId($result));
 
         // test
@@ -1327,8 +1326,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         self::assertTrue(is_string($result));
 
-        self::assertNotEquals($noModuleResult, $result);
-
         // test
         $_POST['return_id'] = 'test_contact_1';
         $_POST['return_module'] = 'Contacts';
@@ -1347,8 +1344,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
         self::assertEquals($result, false);
-
-        self::assertEquals($noModuleResult, $result);
 
         // test
         $_REQUEST['full_form'] = true;
@@ -1829,5 +1824,214 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         // test
         $GLOBALS['log'] = $logger;
+    }
+
+
+    public function testGetOptInStatus ()
+    {
+        global $sugar_config;
+
+        //
+        // Test Scenario: when email_enable_confirm_opt_in is disabled
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_DISABLED;
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+
+        $this->assertEquals(
+            EmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, opt in
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+
+        $this->assertEquals(
+            EmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            EmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            $emailAddress->getOptInStatus()
+        );
+
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_DISABLED,
+            $emailAddress->getOptInStatus()
+        );
+
+        //
+        // Test Scenario: when email_enable_confirm_opt_in is opt in
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_OPT_IN;
+
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_DISABLED;
+        $emailAddress->confirm_opt_in_date = '';
+        $emailAddress->confirm_opt_in_fail_date = '';
+        $emailAddress->confirm_opt_in_sent_date = '';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_NO_OPT_IN_STATUS,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, opt in
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            EmailAddress::COI_FLAG_OPT_IN,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            EmailAddress::COI_FLAG_OPT_IN,
+            $emailAddress->getOptInStatus()
+        );
+
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN,
+            $emailAddress->getOptInStatus()
+        );
+
+
+        //
+        // Test Scenario: when email_enable_confirm_opt_in is confirmed opt in
+        $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_DISABLED;
+        $emailAddress->confirm_opt_in_date = '';
+        $emailAddress->confirm_opt_in_fail_date = '';
+        $emailAddress->confirm_opt_in_sent_date = '';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_UNKNOWN_OPT_IN_STATUS,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2017-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED,
+            $emailAddress->getOptInStatus()
+        );
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_OPT_IN;
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT,
+            $emailAddress->getOptInStatus()
+        );
+
+
+        // Test opt in status, email failed
+        $emailAddress = new SugarEmailAddress();
+        $emailAddress->email_address = 'test@example.com';
+        $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
+        $emailAddress->confirm_opt_in = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+        $emailAddress->confirm_opt_in_date = '2018-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_fail_date = '2015-01-01 10:10:00';
+        $emailAddress->confirm_opt_in_sent_date = '2017-01-01 10:10:00';
+
+        $this->assertEquals(
+            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
+            $emailAddress->getOptInStatus()
+        );
     }
 }

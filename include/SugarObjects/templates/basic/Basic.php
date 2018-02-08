@@ -39,8 +39,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 class Basic extends SugarBean
 {
+    /**
+     * @var array
+     */
     protected static $doNotDisplayOptInTickForModule = array(
         'Users',
         'Employees'
@@ -77,105 +81,42 @@ class Basic extends SugarBean
     {
         return "$this->name";
     }
-    
-    /**
-     * edit view should show confirm opt in (only if enabled)
-     *
-     * @param string $emailField
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    public function getConfirmOptInTickFromSugarEmailAddressField($emailField)
-    {
-        $this->validateSugarEmailAddressField($emailField);
-
-        return $this->displayOptInFromSugarEmailAddressField($emailField);
-    }
-
 
     /**
+     * Return Email address from an email address field eg email1
      * @param string $emailField
-     * @return string
-     */
-    public function getOptInStatusFromSugarField($emailField) {
-        $emailAddress = $this->fromSugarEmailAddressField($emailField);
-
-        $configurator = new Configurator();
-        $configurator->config;
-
-        if ($configurator->config['email_enable_confirm_opt_in'] === '') {
-            return 'OPT_IN_DISABLED';
-        }
-
-        if ($emailAddress !== null && !in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
-
-
-            if ($emailAddress->invalid_email == '1') {
-                return 'INVALID';
-            }
-
-            if ($emailAddress->opt_out == '1') {
-                return 'OPT_OUT';
-            }
-
-            if (
-                $emailAddress->confirm_opt_in == 'confirmed-opt-in'
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_CONFIRMED';
-            } elseif (
-                $emailAddress->confirm_opt_in == 'opt-in'
-                && !empty($emailAddress->confirm_opt_in_sent_date)
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_SENT';
-            } elseif (
-                empty($emailAddress->confirm_opt_in_sent_date)
-                && $emailAddress->confirm_opt_in !== ''
-            ) {
-                return 'OPT_IN_PENDING_EMAIL_NOT_SENT';
-            }
-        }
-
-        // Otherwise
-        return 'UNKNOWN_OPT_IN_STATUS';
-    }
-
-    /**
-     *
-     * @global array $sugar_config
-     * @global \LoggerManager $log
-     * @param string $emailField
-     * @return \EmailAddress
+     * @return \EmailAddress|null
      * @throws InvalidArgumentException
      */
-    public function fromSugarEmailAddressField($emailField)
+    public function getEmailAddressFromEmailField($emailField)
     {
         $this->validateSugarEmailAddressField($emailField);
-
-        global $sugar_config;
+        $configurator = new Configurator();
+        $sugar_config = $configurator->config;
 
         /** @var EmailAddress $emailAddressBean */
         $emailAddressBean = BeanFactory::getBean('EmailAddresses');
 
         if (!$sugar_config['email_enable_confirm_opt_in']) {
-            global $log;
+            $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
-            $emailAddressBean->confirm_opt_in = 'confirmed-opt-in';
+            $emailAddressBean->setConfirmedOptInState(SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN);
             return $emailAddressBean;
         }
 
-        $emailAddressId = $this->getIdFromSugarEmailAddressField($emailField);
+        $emailAddressId = $this->getEmailAddressId($emailField);
         return $emailAddressBean->retrieve($emailAddressId);
     }
 
     /**
      *
-     * @global \LoggerManager $log
      * @param string $emailField
      * @return string|null EmailAddress ID or null on error
+     * @throws \InvalidArgumentException
      */
-    protected function getIdFromSugarEmailAddressField($emailField)
+    private function getEmailAddressId($emailField)
     {
-        global $log;
+        $log = LoggerManager::getLogger();
 
         $this->validateSugarEmailAddressField($emailField);
         $emailAddress = $this->cleanUpEmailAddress($this->{$emailField});
@@ -187,7 +128,10 @@ class Basic extends SugarBean
         }
 
         // List view requires us to retrieve the mail so we can see the email addresses
-        $this->retrieve();
+        if(!$this->retrieve()) {
+            $log->fatal('A Basic can not retrive.');
+            return null;
+        }
 
         $found = false;
         $addresses = $this->emailAddress->addresses;
@@ -206,25 +150,6 @@ class Basic extends SugarBean
         }
 
         return $emailAddressId;
-    }
-
-    /**
-     * @param string $emailField
-     * @return string
-     */
-    protected function displayOptInFromSugarEmailAddressField($emailField)
-    {
-        global $sugar_config;
-
-        $tickHtml = '';
-
-        if (isset($sugar_config['email_enable_confirm_opt_in']) && $sugar_config['email_enable_confirm_opt_in']  !== '') {
-            $template = new Sugar_Smarty();
-            $template->assign('OPT_IN_STATUS', $this->getOptInStatusFromSugarField($emailField));
-            $tickHtml = $template->fetch('include/SugarEmailAddress/templates/displayEmailAddressOptInField.tpl');
-        }
-
-        return $tickHtml;
     }
 
     /**

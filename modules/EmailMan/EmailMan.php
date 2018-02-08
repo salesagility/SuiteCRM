@@ -1052,7 +1052,13 @@ class EmailMan extends SugarBean
 
         if ($foundBean !== null) {
             $emailAddress->retrieve_by_string_fields(array('email_address' => $foundBean->email1));
-            if ($emailAddress->confirm_opt_in === 'opt-in') {
+            $optInStatus = $emailAddress->getOptInStatus();
+            if (
+                $optInStatus === SugarEmailAddress::COI_STAT_OPT_IN
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT
+                || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED
+            ) {
 
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
@@ -1073,10 +1079,10 @@ class EmailMan extends SugarBean
     /**
      * @global LoggerManager $log
      * @param EmailAddress $emailAddress
-     * @param string $type
-     * @param string $id
-     * @return boolean
-     * @throws Exception
+     * @param string $type related person bean module name
+     * @param string $id related person bean module id
+     * @return boolean|null return true on success otherwise false if sending failed, return null if confirm opt in disabled
+     * @throws Exception email addresses have to having a related bean
      */
     public function sendOptInEmail(EmailAddress $emailAddress, $type, $id)
     {
@@ -1084,7 +1090,7 @@ class EmailMan extends SugarBean
 
         $configurator = new Configurator();
         if (!$configurator->isConfirmOptInEnabled()) {
-            return false;
+            return null;
         }
 
         $focus = BeanFactory::getBean($type, $id);
@@ -1114,7 +1120,7 @@ class EmailMan extends SugarBean
      * @global array $app_strings
      * @param SugarBean|Person|Company $focus
      * @param EmailAddress $emailAddress
-     * @return boolean
+     * @return boolean return true on success otherwise false
      */
     private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {
@@ -1146,6 +1152,8 @@ class EmailMan extends SugarBean
 
         $emailTemplate->retrieve($confirmOptInTemplateId);
 
+        include_once 'include/SugarPHPMailer.php';
+        
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 
@@ -1173,7 +1181,7 @@ class EmailMan extends SugarBean
         $mailer->addAddress($emailAddressString, $focus->name);
 
         $mailer->replace('contact_first_name',
-                isset($focus->first_name) ? $focus->first_name : $focus->name);
+                isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
                 isset($focus->last_name) ? $focus->last_name : '');
         $mailer->replace('emailaddress_email_address', $emailAddressString);
@@ -1226,21 +1234,32 @@ class EmailMan extends SugarBean
         $row = $bean->db->fetchByAssoc($result);
 
         if (!empty($row)) {
-            if ($row['opt_out'] == '1') {
+            if ((int)$row['opt_out'] === 1) {
                 return true;
-            } elseif($row['invalid_email'] == '1') {
+            }
+
+            if((int)$row['invalid_email'] === 1) {
                 return true;
-            } elseif (
-                $optInLevel === ''
-                && $row['opt_out'] == '0') {
+            }
+
+            if (
+                $optInLevel === SugarEmailAddress::COI_STAT_DISABLED
+                && (int)$row['opt_out'] === 0) {
                 return false;
-            } elseif (
-                $optInLevel === 'opt-in'
-                && false === ($row['confirm_opt_in'] === 'opt-in'
-                    || $row['confirm_opt_in'] === 'confirmed-opt-in')
+            }
+
+            if (
+                $optInLevel === SugarEmailAddress::COI_STAT_OPT_IN
+                && false === ($row['confirm_opt_in'] === SugarEmailAddress::COI_STAT_OPT_IN
+                    || $row['confirm_opt_in'] === SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN)
             ) {
                 return true;
-            } elseif ($optInLevel == 'confirmed-opt-in' && $row['confirm_opt_in'] !== 'confirmed-opt-in') {
+            }
+
+            if (
+                $optInLevel == SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && $row['confirm_opt_in'] !== SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN
+            ) {
                 return true;
             }
         }

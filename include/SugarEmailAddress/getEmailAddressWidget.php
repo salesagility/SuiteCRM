@@ -1,4 +1,4 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,18 +37,28 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-*}
-<span class="email-opt-in-container">
-    {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
-    {elseif $OPT_IN_STATUS === 'INVALID'}
-        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-    {/if}
-</span>
+
+/**
+ * Convenience function for MVC (Mystique)
+ * @param SugarBean $focus
+ * @param string $field unused
+ * @param string $value unused
+ * @param string $view DetailView or EditView
+ * @return string
+ */
+function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
+{
+    $sea = new SugarEmailAddress();
+    $sea->setView($view);
+
+    if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
+        $module = $focus->module_dir;
+        if ($view == 'ConvertLead' && $module == "Contacts") {
+            $module = "Leads";
+        }
+
+        return $sea->getEmailAddressWidgetEditView($focus->id, $module, false, '', $tabindex);
+    }
+
+    return $sea->getEmailAddressWidgetDetailView($focus);
+}
