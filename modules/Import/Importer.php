@@ -440,6 +440,7 @@ class Importer
         switch ($fieldDef['type'])
         {
             case 'enum':
+            case 'dynamicenum':
             case 'multienum':
                 if ( isset($fieldDef['type']) && $fieldDef['type'] == "multienum" )
                     $returnValue = $this->ifs->multienum($rowValue,$fieldDef);
