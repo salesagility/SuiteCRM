@@ -57,7 +57,7 @@ class ACLController {
 		if(is_admin($current_user))return true;
 		//calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
 
-      if ($category == 'AOS_Products_Quotes') {
+      if ($category === 'AOS_Products_Quotes') {
           return ACLAction::userHasAccess(
                   $current_user->id,
                   'AOS_Quotes',
