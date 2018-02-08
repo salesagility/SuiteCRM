@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,10 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -57,11 +58,13 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	 *
 	 * @param STRING $name
 	 * @param STRING $password
+     * @param bool $fallback
 	 * @return STRING id - used for loading the user
 	 *
 	 * Contributions by Erik Mitchell erikm@logicpd.com
 	 */
-	function authenticateUser($name, $password) {
+    public function authenticateUser($name, $password, $fallback = false)
+    {
 
 		$server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
 		$port = $GLOBALS['ldap_config']->settings['ldap_port'];
@@ -277,14 +280,18 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 			return $user->id;
 
 	}
+
 	/**
 	 * this is called when a user logs in
 	 *
 	 * @param STRING $name
 	 * @param STRING $password
-	 * @return boolean
+     * @param bool $fallback
+     * @param array $PARAMS
+     * @return bool
 	 */
-	function loadUserOnLogin($name, $password) {
+    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = Array())
+    {
 
 	    global $mod_strings;
 
@@ -441,5 +448,3 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 }
-
-?>
