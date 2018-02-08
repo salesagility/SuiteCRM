@@ -92,8 +92,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $req = $_REQUEST;
         }
 
-        $c->email1 = 'test3@email.com';
-        $c->email2 = 'test4@email.com';
         $_REQUEST['useEmailWidget'] = true;
         $_REQUEST['massupdate'] = true;
         $this->ea->handleLegacySave($c);

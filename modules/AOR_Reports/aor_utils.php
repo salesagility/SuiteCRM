@@ -432,9 +432,14 @@ function calculateQuarters($offsetMonths = 0)
  */
 function convertToDateTime($value)
 {
-    global $current_user;
+    global $current_user, $timedate;
 
     $user_dateformat = $current_user->getPreference('datef');
+
+    // In some cases the date string already is in database format
+    if ($timedate->check_matching_format($value, $timedate->get_db_date_format())) {
+        $user_dateformat = $timedate->get_db_date_format();
+    }
 
     switch ($user_dateformat) {
         case 'Y-m-d':
