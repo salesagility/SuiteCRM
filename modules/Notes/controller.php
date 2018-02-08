@@ -58,6 +58,12 @@
 		{
 			$_REQUEST['relate_id'] = false;
 		}
+
+		    // If Note is related to a Contact, we automatically fill the Contact field
+        if ($_REQUEST['parent_type'] === 'Contacts') {
+            $this->bean->contact_id = $_REQUEST['parent_id'];
+            $this->bean->contact_name = $_REQUEST['parent_name'];
+        }
 		
 		$GLOBALS['log']->debug('PERFORMING NOTES SAVE');
 		$upload_file = new UploadFile('uploadfile');
