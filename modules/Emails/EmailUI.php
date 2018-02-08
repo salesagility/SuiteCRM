@@ -502,12 +502,11 @@ eoq;
                                     ) {
                                         $emailLink =
                                             '<a class="email-link" href="javascript:void(0);"'
-                                            . ' data-module="'
-                                            . $myBean->module_name . '" ' . 'data-record-id="'
+                                            . ' onclick="$(document).openComposeViewModal(this);"'
+                                            . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLinkOverwritten = true;
                                         $emailLink .= $email_tick;
                                         $emailLink .= '<span class="email-line-through">';
                                         $emailLink .= $myBean->{$emailField};
@@ -521,8 +520,8 @@ eoq;
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLinkOverwritten = true;
                                         $emailLink .= $email_tick . $myBean->{$emailField};
+
                                     }
                                     $emailLink .= '</a>';
                                     return $emailLink;
@@ -531,11 +530,6 @@ eoq;
                         }
                     } else {
                         $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
-                        $emailLinkOverwritten = false;
-                    }
-
-                    if (!$emailLinkOverwritten) {
-                        $emailLink .= ($innerText . '</a>');
                     }
                 }
             }
