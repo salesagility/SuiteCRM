@@ -2987,9 +2987,14 @@ eoq;
             );
         }
 
-        //Retrieve the grou folders
+        //Retrieve the group folders
+	//In case there are no results found SugarFolder::retrieveFoldersForProcessing() throws exception
+	//and scripts halts, this will ensure scripts continue executing and outputs group folder correctly
         $f = new SugarFolder();
-        $groupFolders = $f->getGroupFoldersForSettings($current_user);
+	try{
+	    $groupFolders = $f->getGroupFoldersForSettings($current_user);
+	}
+        catch (Exception $e){}
 
         foreach ($groupFolders as $singleGroup) {
             //Retrieve the related IE accounts.
