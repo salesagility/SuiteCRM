@@ -1,7 +1,8 @@
 /**** Panels ****/
 
 .panel {
-  margin-bottom: 0;
+  margin-top: 7px;
+  margin-bottom: 0px;
 }
 
 .panel-body {
@@ -65,7 +66,8 @@
 }
 
 #EditView_tabs .panel-default > .panel-heading > a {
-	padding-top:0px;
+	padding-top:10px;
+  padding-top:10px;
 }
 
 
@@ -115,7 +117,6 @@
   font-family: 'Glyphicons Halflings';
   content: "\2212";
   font-weight: 100;
-  line-height: 40px/$panel-height-divisor;
 }
 
 
@@ -171,7 +172,7 @@ div.sub-panel {
 .table-responsive.list .pagination tr,
 .table-responsive.list .pagination  td,
 .table-responsive.list .pagination  th {
-    border: 0;
+  border: 0;
 }
 
 .sub-panel tbody tr td .sugar_action_button > a:link {

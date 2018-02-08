@@ -79,21 +79,22 @@ class ViewShowDuplicates extends SugarView
 
         $duplicates = $_POST['duplicate'];
         $count = count($duplicates);
-        if ($count > 0)
-        {
+        $db = DBManagerFactory::getInstance();
+        if ($count > 0) {
             $query .= "and (";
             $first = true;
-            foreach ($duplicates as $duplicate_id)
-            {
-                if (!$first) $query .= ' OR ';
+            foreach ($duplicates as $duplicate_id) {
+                if (!$first) {
+                    $query .= ' OR ';
+                }
                 $first = false;
-                $query .= "id='$duplicate_id' ";
+                $duplicateIdQuoted = $db->quote($dublicate_id);
+                $query .= "id='$duplicateIdQuoted' ";
             }
             $query .= ')';
         }
 
         $duplicateLeads = array();
-        $db = DBManagerFactory::getInstance();
         $result = $db->query($query);
         $i=0;
         while (($row=$db->fetchByAssoc($result)) != null) {
