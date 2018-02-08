@@ -36,6 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
- 
- <label>{$APP.LBL_OPT_IN_TITLE}</label><input type="checkbox" id="opt_in_{$fieldName}" name="opt_in_{$fieldName}">
+    <div class="col" style="padding-left: 0;">
+        <label>{$APP.LBL_OPT_IN_TITLE}:</label><input type="checkbox" id="opt_in_{$fieldName}" name="opt_in_{$fieldName}">
+    </div>
+
+
  

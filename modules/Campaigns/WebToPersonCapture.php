@@ -317,7 +317,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 }
                 
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+                echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
                 
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
