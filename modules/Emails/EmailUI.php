@@ -461,41 +461,36 @@ eoq;
                 $emailFields = array_unique($emailFields);
             }
 
-            foreach ($emailFields as $emailField) {
-                if (!empty($composeData)) {
-                    $emailLink =
-                        '<a href="javascript:void(0);" onclick="$(document).openComposeViewModal(this);" data-module="'
-                        . $composeData['parent_type'] . '" ' . 'data-record-id="'
-                        . $composeData['parent_id'] . '" data-module-name="'
-                        . $composeData['parent_name']
-                        . '" data-email-address="'
-                        . $composeData['to_addrs'] . '">';
-                } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
-                    $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
+        foreach ($emailFields as $emailField) {
+            if (!empty($composeData)) {
+                $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+                    ' .
+                    'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="'
+                    .$composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name']
+                    .'"  data-email-address="' . $composeData['to_addrs'] . '">';
+            } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
+                $email_tick = $this->getEmailAddressConfirmOptInTick( $myBean, $emailField);
                     $optOut = false;
                     $invalid = false;
-                    if (isset($myBean->emailAddress->addresses)) {
-                        if (
-                            isset($myBean->emailAddress)
-                            && isset($myBean->emailAddress->addresses)
-                        ) {
-                            $addresses = $myBean->emailAddress->addresses;
-                            foreach ($addresses as $address) {
-                                if (
-                                    $address['email_address'] === $myBean->{$emailField}
-                                ) {
+                            if (isset($myBean->emailAddress->addresses)) {
+            if (
+                isset($myBean->emailAddress)
+            &&isset($myBean->emailAddress->addresses)
+                ) {$addresses = $myBean->emailAddress->addresses;
+                foreach ($addresses as $address) {
+                    if ($address['email_address'] === $myBean->{$emailField} ) {
 
                                     if (!empty($myBean->id)) {
                                         $myBean->retrieve();
                                     }
 
-                                    if ((int)$address['opt_out'] === 1) {
-                                        $optOut = true;
-                                    }
+                                    if ( (int)$address['opt_out']=== 1) {
+                        $optOut = true;
+                    }
 
-                                    if ((int)$address['invalid_email'] === 1) {
-                                        $invalid = true;
-                                    }
+                if ((int)$address['invalid_email'] === 1) {
+                    $invalid = true;
+        }
 
                                     if (
                                         $optOut === true

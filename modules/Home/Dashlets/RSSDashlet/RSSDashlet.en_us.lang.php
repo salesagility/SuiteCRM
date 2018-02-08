@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dashletStrings['RSSDashlet'] = array(
     'LBL_TITLE' => 'News Feed',
     'LBL_DESCRIPTION' => 'News Feed',
-    'LBL_SAVING' => 'Parsing ...',
+    'LBL_SAVING' => 'Parsing...',
     'LBL_SAVED' => 'Complete',
     'LBL_AUTO_SCROLL' => 'Auto Scroll',
     'LBL_SCROLL_SPEED' => 'Scroll Speed (%)',

@@ -1394,6 +1394,8 @@ select[size] {
   background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-color: $input-select-option;
   background-size: 52px 52px;
+  background: none;
+  overflow-y: hidden;
   color: $main-font-color;
   padding: 0 52px 0 5px;
   border-color: $input-select-bg;
@@ -1405,8 +1407,6 @@ select[size] {
   height:100%;
   -webkit-appearance: none;
   appearance: none;
-  scrollbar-base-color: $input-select-bg;
-  scrollbar-arrow-color: $input-select-bg;
   border-size: 1px;
   -moz-appearance: none;
 }
@@ -1546,6 +1546,7 @@ select.ui-widget-content {
 
 #email1_span td {
   display: block;
+  overflow: hidden;
 }
 
 

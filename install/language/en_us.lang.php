@@ -279,6 +279,7 @@ $mod_strings = array(
     'LBL_REG_CONF_1' => 'Please complete the short form below to receive product announcements, training news, special offers and special event invitations from SuiteCRM. We do not sell, rent, share or otherwise distribute the information collected here to third parties.',
     'LBL_REG_CONF_3' => 'Thank you for registering. Click on the Finish button to login to SuiteCRM. You will need to log in for the first time using the username "admin" and the password you entered in step 2.',
     'LBL_REG_TITLE' => 'Registration',
+
     'LBL_REQUIRED' => '* Required field',
 
     'LBL_SITECFG_ADMIN_Name' => 'SuiteCRM Application Admin Name',
@@ -531,7 +532,7 @@ $contact_user_link_guid',
     'LBL_NUMBER_GROUPING_SEP' => '1000s separator:',
     'LBL_DECIMAL_SEP' => 'Decimal symbol:',
     'LBL_NAME_FORMAT' => 'Name Format:',
-    'UPLOAD_LOGO' => 'Please wait, logo uploading..',
+    'UPLOAD_LOGO' => 'Please wait, logo uploading...',
     'ERR_UPLOAD_FILETYPE' => 'File type not allowed, please upload a jpeg or png.',
     'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occurred.',
     'ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
