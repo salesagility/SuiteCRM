@@ -175,7 +175,7 @@ initMySugar = function () {
         fillInConfigureDiv = function (data) {
           ajaxStatus.hideStatus();
           try {
-            SUGAR.util.globalEval(data.responseText);
+            SUGAR.util.globalEval(data.responseText.trim());
           }
           catch (e) {
             result = [];
@@ -468,7 +468,7 @@ initMySugar = function () {
         ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 
         var success = function (data) {
-          SUGAR.util.globalEval(data.responseText);
+          SUGAR.util.globalEval(data.responseText.trim());
 
           if ($('*[id=dashletsList]').length > 1) {
             dashletsListDiv = $('*[id=dashletsList].modal-body');
@@ -633,7 +633,7 @@ initMySugar = function () {
         searchResultsDiv.style.display = '';
 
         var success = function (data) {
-          SUGAR.util.globalEval(data.responseText);
+          SUGAR.util.globalEval(data.responseText.trim());
 
           searchResultsDiv.innerHTML = response['html'];
         };

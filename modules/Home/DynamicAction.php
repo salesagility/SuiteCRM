@@ -55,3 +55,4 @@ if(isset($_REQUEST['commit_session'])) {
     session_commit();
 }
 echo $res;
+exit;
