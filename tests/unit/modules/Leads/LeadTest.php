@@ -192,7 +192,7 @@ class LeadTest extends PHPUnit_Framework_TestCase
             'EMAIL1_LINK' =>
                 '<a class="email-link" href="javascript:void(0);"'
                 . ' onclick="$(document).openComposeViewModal(this);" data-module="Leads"'
-                . ' data-record-id="" data-module-name="" data-email-address=""></a>',
+                . ' data-record-id="" data-module-name=" " data-email-address=""></a>',
             'ACC_NAME_FROM_ACCOUNTS' => null,
         );
 
