@@ -61,8 +61,8 @@
 
         // If Note is related to a Contact, we automatically fill the Contact field
         if ($_REQUEST['parent_type'] === 'Contacts'
-						&& !empty($_REQUEST['parent_id'])
-						&& !empty($_REQUEST['parent_name'])) {
+            && !empty($_REQUEST['parent_id'])
+            && !empty($_REQUEST['parent_name'])) {
             $this->bean->contact_id = $_REQUEST['parent_id'];
             $this->bean->contact_name = $_REQUEST['parent_name'];
         }
