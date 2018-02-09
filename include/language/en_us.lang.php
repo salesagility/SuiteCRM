@@ -3931,7 +3931,7 @@ $app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
 /** @see SugarEmailAddress */
 $app_list_strings['email_settings_opt_in_dom'] = array(
-    'disabled' => 'Disabled',
+    '' => 'Disabled',
     'opt-in' => 'Opt In',
     'confirmed-opt-in' => 'Confirmed Opt In'
 );
