@@ -49,12 +49,18 @@ function complexLayoutInit() {
 	    		border:true,
 	            hideOnLayout: true,
 	            height: 400,
-				units: [{
-					position: "center",
-				    scroll:false, // grid should autoScroll itself
-				    split:true,
-				    body: "<div id='emailGrid'></div><div id='dt-pag-nav'></div> "
-				},{
+            units: [{
+              position: "top",
+              height: '64',
+              scroll: false,
+              split: true,
+              body: "<div id='dt-pag-nav'></div> "
+            }, {
+              position: "center",
+              scroll: false, // grid should autoScroll itself
+              split: true,
+              body: "<div id='emailGrid'></div>"
+            }, {
 					position: "bottom",
 				    scroll:true,
 				    collapse: false,

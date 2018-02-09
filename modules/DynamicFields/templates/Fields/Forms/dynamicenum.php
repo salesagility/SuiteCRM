@@ -110,7 +110,7 @@ function get_body(&$ss, $vardef){
     $ss->assign('dropdown_name',(!empty($vardef['options']) ? $vardef['options'] : ''));
 
     require_once('include/JSON.php');
-    $json = new JSON(JSON_LOOSE_TYPE);
+    $json = new JSON();
     $ss->assign('app_list_strings', "''");
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/dynamicenum.tpl');
 }

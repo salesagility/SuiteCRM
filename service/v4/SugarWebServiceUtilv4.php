@@ -82,24 +82,32 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
      * if the list should filter for favorites.  Should eventually update the SugarBean function as well.
      *
      */
-    function get_data_list($seed, $order_by = "", $where = "", $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $favorites = false)
-	{
-		$GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
-		if(isset($_SESSION['show_deleted']))
-		{
-			$show_deleted = 1;
-		}
-		// Fix bug with sort order in get_entry_list
-		// $order_by=$seed->process_order_by($order_by, null);
+    function get_data_list(
+        $seed,
+        $order_by = "",
+        $where = "",
+        $row_offset = 0,
+        $limit = -1,
+        $max = -1,
+        $show_deleted = 0,
+        $favorites = false,
+        $single_select = false
+    ) {
+        $GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
+        if (isset($_SESSION['show_deleted'])) {
+            $show_deleted = 1;
+        }
 
-		$params = array();
-		if(!empty($favorites)) {
-		  $params['favorites'] = true;
-		}
+        $params = array();
+        if (!empty($favorites)) {
+            $params['favorites'] = true;
+        }
 
-		$query = $seed->create_new_list_query($order_by, $where,array(),$params, $show_deleted);
-		return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
-	}
+        $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
+            $singleSelect);
+
+        return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
+    }
 
 	/**
      * Convert modules list to Web services result

@@ -4,7 +4,7 @@
 
 <ul class="noBullet" id="subpanel_list">
 {foreach from=$subpanel_tabs key=i item=subpanel_tab}
-    <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
+    <li class="noBullet useFooTable" id="whole_subpanel_{$subpanel_tab}">
         {$subpanel_tabs_properties.$i.collapse_subpanels}
         <div class="panel panel-default sub-panel">
             <div class="panel-heading panel-heading-collapse">
@@ -12,7 +12,8 @@
             {if $subpanel_tabs_properties.$i.expanded_subpanels == true}
                 <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
             {else}
-                <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
+                    <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse"
+                       href="#subpanel_{$subpanel_tab}" aria-expanded="false" onclick="showSubPanel('{$subpanel_tab}')">
             {/if}
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>

@@ -66,7 +66,7 @@ class Tree {
 
   function __construct($name) {
 		$this->_name=$name;
-		$this->json=new JSON(JSON_LOOSE_TYPE);
+		$this->json = new JSON();
   }
 
     /**

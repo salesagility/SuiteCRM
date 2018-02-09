@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 define ( 'MB_TEMPLATES', 'include/SugarObjects/templates' ) ;
 define ( 'MB_IMPLEMENTS', 'include/SugarObjects/implements' ) ;
@@ -207,13 +212,13 @@ class MBModule
         return $this->mblanguage->getModStrings ( $language ) ;
     }
 
-    function setModStrings ($language = 'en_us' , $mod_strings)
+    function setModStrings($language = 'en_us', $mod_strings = array())
     {
-        $language .= '.lang.php' ;
-        $this->mblanguage->strings [ $language ] = $mod_strings ;
+        $language .= '.lang.php';
+        $this->mblanguage->strings [$language] = $mod_strings;
     }
 
-	function setLabel ($language = 'en_us' , $key , $value)
+    function setLabel($language = 'en_us', $key, $value = null)
     {
     	$language .= '.lang.php' ;
         $this->mblanguage->strings [ $language ] [ $key ] = $value ;
@@ -225,7 +230,7 @@ class MBModule
         }
     }
 
-    function deleteLabel ($language = 'en_us' , $key)
+    function deleteLabel($language = 'en_us', $key = null)
     {
    		foreach ($this->mblanguage->strings as $lang => $values) {
         	if (!empty($values[$key])) {
@@ -243,7 +248,7 @@ class MBModule
         $this->save();
     }
 
-    function getLabel ($language = 'en_us' , $key)
+    function getLabel($language = 'en_us', $key = null)
     {
         $language .= '.lang.php' ;
         if (empty ( $this->mblanguage->strings [ $language ] [ $key ] ))
@@ -260,19 +265,19 @@ class MBModule
         return $this->mblanguage->getAppListStrings ( $language ) ;
     }
 
-    function setAppListStrings ($language = 'en_us' , $app_list_strings)
+    function setAppListStrings($language = 'en_us', $app_list_strings = array())
     {
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] = $app_list_strings ;
     }
 
-    function setDropDown ($language = 'en_us' , $key , $value)
+    function setDropDown($language = 'en_us', $key = null, $value = null)
     {
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] [ $key ] = $value ;
     }
 
-    function deleteDropDown ($language = 'en_us' , $key)
+    function deleteDropDown($language = 'en_us', $key = null)
     {
         $language .= '.lang.php' ;
         unset ( $this->mblanguage->appListStrings [ $language ] [ $key ] ) ;
@@ -920,4 +925,3 @@ class MBModule
     }
 
 }
-?>

@@ -206,7 +206,8 @@ class Document extends File {
             }
 
             if ((isset($_POST['load_signed_id']) and !empty($_POST['load_signed_id']))) {
-                $query="update linked_documents set deleted=1 where id='".$_POST['load_signed_id']."'";
+                $loadSignedIdQuoted = $this->db->quote($_POST['load_signed_id']);
+                $query="update linked_documents set deleted=1 where id='".$loadSignedIdQuoted."'";
                 $this->db->query($query);
             }
         }

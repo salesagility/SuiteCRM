@@ -92,6 +92,7 @@ $mod_strings = array (
 	'LNK_NEW_CAMPAIGN' => 'Create Campaign (Classic)',
 	'LNL_NEW_CAMPAIGN_WIZARD' => 'Create Campaign',
 	'LNK_CAMPAIGN_LIST' => 'View Campaigns',
+	'LNK_IMPORT_CAMPAIGNS' => 'Import Campaigns',
 	'LNK_NEW_PROSPECT' => 'Create Target',
 	'LNK_PROSPECT_LIST' => 'View Targets',
 	'LNK_NEW_PROSPECT_LIST' => 'Create Target List',
