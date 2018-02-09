@@ -2211,7 +2211,6 @@ class SugarEmailAddress extends SugarBean
         if(isset($sugar_config['email_enable_confirm_opt_in'])) {
             $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
 
-            if ($emailConfigEnableConfirmOptIn !== self::COI_STAT_DISABLED) {
                 $template = new Sugar_Smarty();
 
                 $optInStatus = $this->getOptInStatus();
@@ -2252,7 +2251,7 @@ class SugarEmailAddress extends SugarBean
                         $optInFlagText = '?';
                         break;
                     default:
-                        $optInFlagClass = 'hidden';
+                        $optInFlagClass = '';
                         $optInFlagTitle = '';
                         $optInFlagText = '';
                         break;
@@ -2263,7 +2262,6 @@ class SugarEmailAddress extends SugarBean
                 $template->assign('optInFlagText', $optInFlagText);
                 $tickHtml = $template->fetch('include/SugarEmailAddress/templates/optInStatusTick.tpl');
             }
-        }
 
         return $tickHtml;
     }
