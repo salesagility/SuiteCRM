@@ -281,6 +281,10 @@ tr#pagination {
   white-space: nowrap;
 }
 
+.list tbody tr th{
+	color:$main-font-color;
+	}
+	
 .list tr th {
   font-size: 13px;
   padding: 16px 10px 16px 10px;
