@@ -167,6 +167,9 @@ class Administration extends SugarBean
                 if (strpos($def, "mail_") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }
+                if (strpos($def, "smtp") !== false) {
+                    $this->settings[$def] = $oe->$def;
+                }
             }
         }
 
