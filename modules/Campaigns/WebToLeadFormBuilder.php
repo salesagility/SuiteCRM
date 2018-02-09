@@ -310,7 +310,7 @@ HTML;
         $configurator = new Configurator();
         if(
             !isset($configurator->config['email_enable_confirm_opt_in'])
-            || $configurator->config['email_enable_confirm_opt_in'] !== SugarEmailAddress::COI_STAT_DISABLED
+            || $configurator->config['email_enable_confirm_opt_in'] === SugarEmailAddress::COI_STAT_DISABLED
         ) {
             return '';
         }
