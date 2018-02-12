@@ -62,7 +62,7 @@ class SugarEmailAddress extends SugarBean
     const COI_FLAG_NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
 
     // Opt In Status
-    const COI_STAT_DISABLED = '';
+    const COI_STAT_DISABLED = 'not-opt-in';
     const COI_STAT_OPT_IN = 'opt-in';
     const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
 
