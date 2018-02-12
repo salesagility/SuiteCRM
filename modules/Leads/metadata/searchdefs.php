@@ -36,8 +36,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-$searchdefs ['Leads'] = 
+global $app_list_strings;
+$configurator = new Configurator();
+$searchdefs ['Leads'] =
 array (
   'layout' => 
   array (
@@ -169,3 +170,15 @@ array (
     ),
   ),
 );
+
+if($configurator->isConfirmOptInEnabled() || $configurator->isOptInEnabled()) {
+    $searchdefs['Leads']['layout']['advanced_search']['optinprimary'] =
+        array (
+            'name' => 'optinprimary',
+            'label' => 'LBL_OPT_IN_FLAG_PRIMARY',
+            'type' => 'enum',
+            'options' => $app_list_strings['email_confirmed_opt_in_dom'],
+            'default' => true,
+            'width' => '10%',
+        );
+}
