@@ -68,47 +68,47 @@ class OAuth2Tokens extends SugarBean
     public $disable_row_level_security = true;
 
     /**
-     * @var
+     * @var string
      */
     public $token_type;
 
     /**
-     * @var
+     * @var bool
      */
     public $token_is_revoked;
 
     /**
-     * @var
+     * @var string
      */
     public $access_token_expires;
 
     /**
-     * @var
+     * @var string
      */
     public $access_token;
 
     /**
-     * @var
+     * @var string
      */
     public $refresh_token_expires;
 
     /**
-     * @var
+     * @var string
      */
     public $refresh_token;
 
     /**
-     * @var
+     * @var string
      */
     public $scopes;
 
     /**
-     * @var
+     * @var string
      */
     public $state;
 
     /**
-     * @var
+     * @var string
      */
     public $client;
 
