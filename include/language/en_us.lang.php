@@ -1710,6 +1710,7 @@ $app_strings = array(
     'LBL_MASS_UPDATE' => 'Mass Update',
     'LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE' => 'There are no fields available for the Mass Update operation',
     'LBL_OPT_OUT_FLAG_PRIMARY' => 'Opt out Primary Email',
+    'LBL_OPT_IN_FLAG_PRIMARY' => 'Opt in Primary Email',
     'LBL_MEETINGS' => 'Meetings',
     'LBL_MEETING' => 'Meeting',
     'LBL_MEETING_GO_BACK' => 'Go back to the meeting',
