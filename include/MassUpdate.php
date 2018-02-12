@@ -374,6 +374,8 @@ eoq;
 	{
 		global $app_strings;
 		global $current_user;
+		$configurator = new Configurator();
+		$sugar_config = $configurator->config;
 
 		if($this->sugarbean->bean_implements('ACL') && ( !ACLController::checkAccess($this->sugarbean->module_dir, 'edit', true) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true) ) ){
 			return '';
@@ -508,9 +510,31 @@ eoq;
 			$this->sugarbean->object_name == 'Lead' ||
 			$this->sugarbean->object_name == 'Prospect') {
 
-			$html .= "<tr><td width='15%'  scope='row' class='dataLabel'>$lang_optout_primaryemail</td><td width='35%' class='dataField'><select name='optout_primary'><option value=''>{$GLOBALS['app_strings']['LBL_NONE']}</option><option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option><option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option></select></td></tr>";
+            $optOutPrimaryEmail =
+                "<tr>"
+                . "<td width='15%'  scope='row' class='dataLabel'>$lang_optout_primaryemail</td>"
+                . "<td width='35%' class='dataField'>"
+                . "<select name='optout_primary'>"
+                .   "<option value=''>{$app_strings['LBL_NONE']}</option>"
+                .   "<option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option>"
+                .   "<option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option>"
+                . "</select>"
+                . "</td>".
+                "</tr>";
 
-			}
+            $html .= $optOutPrimaryEmail;
+
+            if($configurator->isConfirmOptInEnabled() || $configurator->isOptInEnabled()) {
+                $optInPrimaryEmail =
+                    '<tr>'
+                    . '<td width="15%" scope="row" class="dataLabel">'
+                    .   $app_strings['LBL_OPT_IN_FLAG_PRIMARY']
+                    . '</td>'
+                    . '<td><input type="checkbox" name="optInPrimaryEmail"></td>'
+                    . '</tr>';
+                $html .= $optInPrimaryEmail;
+            }
+        }
 		$html .="</table>";
 
 		 $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td class='buttons'><input onclick='return sListView.send_mass_update(\"selected\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\")' type='submit' id='update_button' name='Update' value='{$lang_update}' class='button'>&nbsp;<input onclick='javascript:toggleMassUpdateForm();' type='button' id='cancel_button' name='Cancel' value='{$GLOBALS['app_strings']['LBL_CANCEL_BUTTON_LABEL']}' class='button'>";
