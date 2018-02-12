@@ -66,4 +66,11 @@ function display_email_lines($focus, $field, $value, $view){
         return $html;
     }
 
+    if ($view === 'DetailView') {
+        if (is_array($params['email'])) {
+            return implode($params['email'], '; ');
+        }
+    }
+
+    return 'N/A';
 }
