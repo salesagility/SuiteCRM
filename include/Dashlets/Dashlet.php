@@ -242,7 +242,7 @@ class Dashlet
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
         $template->assign('DELETE_ICON',$this->setDeleteIcon());
-        if(!empty($this->seedBean) && !empty($this->seedBean->module_name)) {
+        if(!empty($this->seedBean->module_name)) {
             $template->assign('DASHLET_MODULE', $this->seedBean->module_name);
         }
         $template->assign('DASHLET_BUTTON_ARIA_EDIT', translate('LBL_DASHLET_EDIT', 'Home'));
