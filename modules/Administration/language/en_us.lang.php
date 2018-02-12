@@ -760,12 +760,12 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     // OAuth
-    'LBL_OAUTH_TITLE' => "OAuth Keys",
-    'LBL_OAUTH' => "OAuth key management",
-    'LBL_OAUTH2_CLIENTS_TITLE' => "OAuth Clients",
-    'LBL_OAUTH2_CLIENTS' => "OAuth clients management",
-    'LBL_OAUTH2_TOKENS_TITLE' => "OAuth Tokens",
-    'LBL_OAUTH2_TOKENS' => "OAuth token management",
+    'LBL_OAUTH_TITLE' => 'OAuth Keys',
+    'LBL_OAUTH' => 'OAuth key management',
+    'LBL_OAUTH2_CLIENTS_TITLE' => 'OAuth Clients',
+    'LBL_OAUTH2_CLIENTS' => 'OAuth clients management',
+    'LBL_OAUTH2_TOKENS_TITLE' => 'OAuth Tokens',
+    'LBL_OAUTH2_TOKENS' => 'OAuth token management',
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Error: Unable to create sprites because the imagecreatetruecolor function cannot be loaded',
