@@ -1884,6 +1884,15 @@ class SugarEmailAddress extends SugarBean
     }
 
     /**
+     * Reset opt in
+     */
+    public function resetOptIn()
+    {
+        $this->confirm_opt_in = '';
+        parent::save();
+    }
+
+    /**
      * Update Opt In state to SugarEmailAddress::COI_STAT_OPT_IN
      *
      * @see SugarEmailAddress::COI_STAT_OPT_IN

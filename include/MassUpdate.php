@@ -308,24 +308,40 @@ eoq;
 							$newbean->parent_type = null;
 						}
 
-						$email_address_id = '';
+						// get primary address id
+                        $email_address_id = '';
+						$email_address_value = array();
+                        if (isset($this->sugarbean->emailAddress)) {
+                            if (!empty($this->sugarbean->emailAddress->addresses)) {
+                                foreach($this->sugarbean->emailAddress->addresses as $key => $emailAddressRow) {
+                                    if ($emailAddressRow['primary_address'] == '1') {
+                                        $email_address_id = $emailAddressRow['email_address_id'];
+                                        $email_address_value = $emailAddressRow;
+                                        break;
+                                    } // if
+                                } // foreach
+                            } // if
+
+                        } // if
+
+                        $setOptOutPrimaryEmailAddress = false;
 	                    if (!empty($_POST['optout_primary'])) {
+	                        $setOptOutPrimaryEmailAddress = true;
 	                    	$optout_flag_value = 0;
 	                    	if ($_POST['optout_primary'] == 'true') {
 	                    		$optout_flag_value = 1;
 	                    	} // if
-	                    	if (isset($this->sugarbean->emailAddress)) {
-	                    		if (!empty($this->sugarbean->emailAddress->addresses)) {
-	                    			foreach($this->sugarbean->emailAddress->addresses as $key =>$emailAddressRow) {
-	                    				if ($emailAddressRow['primary_address'] == '1') {
-	                    					$email_address_id = $emailAddressRow['email_address_id'];
-	                    					break;
-										} // if
-									} // foreach
-								} // if
-
-							} // if
 	                    } // if
+
+
+                        $setOptInPrimaryEmailAddress = false;
+                        if (!empty($_POST['optin_primary'])) {
+                            $setOptInPrimaryEmailAddress = true;
+                            $optin_flag_value = false;
+                            if ($_POST['optin_primary'] === 'true') {
+                                $optin_flag_value = true;
+                            } // if
+                        } // if
 
 						// Fix for issue 1549: mass update the cases, and change the state value from open to close,
 						// Status value can still display New, Assigned, Pending Input (even though it should not)
@@ -350,9 +366,20 @@ eoq;
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
-	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
-	    					$GLOBALS['db']->query($query);
+						    /** @var EmailAddress $primaryEmailAddress */
+                            $primaryEmailAddress = BeanFactory::getBean('EmailAddresses', $email_address_id);
+						    if ($setOptOutPrimaryEmailAddress) {
+                                $primaryEmailAddress->opt_out = (bool)$optout_flag_value;
+                            }
 
+                            if ($setOptInPrimaryEmailAddress) {
+						        if($optin_flag_value === true) {
+                                    $primaryEmailAddress->OptIn();
+                                } else {
+                                    $primaryEmailAddress->resetOptIn();
+                                }
+                            }
+                            $primaryEmailAddress->save();
 						} // if
 
 						if(!empty($old_reports_to_id) && method_exists($newbean, 'update_team_memberships')) {
@@ -530,7 +557,13 @@ eoq;
                     . '<td width="15%" scope="row" class="dataLabel">'
                     .   $app_strings['LBL_OPT_IN_FLAG_PRIMARY']
                     . '</td>'
-                    . '<td><input type="checkbox" name="optInPrimaryEmail"></td>'
+                    . '<td>'
+                    . "<select name='optin_primary'>"
+                    .   "<option value=''>{$app_strings['LBL_NONE']}</option>"
+                    .   "<option value='false'>{$GLOBALS['app_list_strings']['checkbox_dom']['2']}</option>"
+                    .   "<option value='true'>{$GLOBALS['app_list_strings']['checkbox_dom']['1']}</option>"
+                    . "</select>"
+                    . '</td>'
                     . '</tr>';
                 $html .= $optInPrimaryEmail;
             }
