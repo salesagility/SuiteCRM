@@ -42,16 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth2Tokens',
-    'LBL_MODULE_TITLE' => 'OAuth2Tokens',
-    'LBL_MODULE_ID'=> 'OAuth2Tokens',
-    'LBL_CLIENT'=> 'Client',
-    'LBL_TOKEN_IS_REVOKED'=> 'Revoked',
-    'LBL_ACCESS_TOKEN_TYPE'=> 'Token type',
-    'LBL_ACCESS_TOKEN_EXPIRES'=> 'Access token expires',
-    'LBL_REFRESH_TOKEN_EXPIRES'=> 'Refresh token expires',
-    'LBL_GRANT_TYPE'=> 'Grant type',
-    'LBL_SCOPES'=> 'Scopes',
-    'LBL_SCOPES'=> 'Scopes',
-);
+/**
+ * Class OAuth2TokensViewList
+ */
+class OAuth2TokensViewList extends ViewList
+{
+    /**
+     *
+     */
+    public function preDisplay()
+    {
+        parent::preDisplay();
+        $this->lv->export = false;
+        $this->lv->showMassupdateFields = false;
+        $this->lv->show_mass_update_form = false;
+        $this->lv->quickViewLinks = false;
+    }
+}

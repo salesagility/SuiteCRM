@@ -42,18 +42,81 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OAuth2Tokens extends SugarBean {
+/**
+ * Class OAuth2Tokens
+ */
+class OAuth2Tokens extends SugarBean
+{
+    /**
+     * @var string
+     */
     public $table_name = 'oauth2tokens';
+
+    /**
+     * @var string
+     */
     public $object_name = 'OAuth2Tokens';
+
+    /**
+     * @var string
+     */
     public $module_dir = 'OAuth2Tokens';
+
+    /**
+     * @var bool
+     */
     public $disable_row_level_security = true;
+
+    /**
+     * @var
+     */
     public $token_type;
+
+    /**
+     * @var
+     */
     public $token_is_revoked;
+
+    /**
+     * @var
+     */
     public $access_token_expires;
+
+    /**
+     * @var
+     */
     public $access_token;
+
+    /**
+     * @var
+     */
     public $refresh_token_expires;
+
+    /**
+     * @var
+     */
     public $refresh_token;
+
+    /**
+     * @var
+     */
     public $scopes;
+
+    /**
+     * @var
+     */
     public $state;
+
+    /**
+     * @var
+     */
     public $client;
+
+    /**
+     * @see SugarBean::get_summary_text()
+     */
+    public function get_summary_text()
+    {
+        return "$this->name";
+    }
 }

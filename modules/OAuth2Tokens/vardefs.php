@@ -42,44 +42,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['OAuth2Tokens'] = array(
+$dictionary['OAuth2Tokens'] = [
     'table' => 'oauth2tokens',
     'audited' => false,
     'comment' => 'Provides tokens for security services',
-    'fields' => array(
-        'id' => array (
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
-            'required'=>true,
+            'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'token_is_revoked' => array(
+        ],
+        'token_is_revoked' => [
             'name' => 'token_is_revoked',
             'vname' => 'LBL_TOKEN_IS_REVOKED',
             'type' => 'bool',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'token_type' => array(
+        ],
+        'token_type' => [
             'name' => 'token_type',
             'vname' => 'LBL_ACCESS_TOKEN_TYPE',
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'access_token_expires' => array(
+        ],
+        'access_token_expires' => [
             'name' => 'access_token_expires',
             'vname' => 'LBL_ACCESS_TOKEN_EXPIRES',
             'type' => 'datetime',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'access_token' => array(
+        ],
+        'access_token' => [
             'name' => 'access_token',
             'vname' => 'LBL_ACCESS_TOKEN',
             'type' => 'varchar',
@@ -87,8 +87,8 @@ $dictionary['OAuth2Tokens'] = array(
             'reportable' => false,
             'api-visible' => false,
             'len' => '4000',
-        ),
-        'refresh_token' => array(
+        ],
+        'refresh_token' => [
             'name' => 'refresh_token',
             'vname' => 'LBL_REFRESH_TOKEN',
             'type' => 'varchar',
@@ -96,24 +96,24 @@ $dictionary['OAuth2Tokens'] = array(
             'reportable' => false,
             'api-visible' => false,
             'len' => '4000',
-        ),
-        'refresh_token_expires' => array(
+        ],
+        'refresh_token_expires' => [
             'name' => 'refresh_token_expires',
             'vname' => 'LBL_REFRESH_TOKEN_EXPIRES',
             'type' => 'datetime',
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'grant_type' => array(
+        ],
+        'grant_type' => [
             'name' => 'grant_type',
             'vname' => 'LBL_GRANT_TYPE',
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'scopes' => array(
+        ],
+        'scopes' => [
             'name' => 'scopes',
             'vname' => 'LBL_SCOPES',
             'type' => 'varchar',
@@ -121,8 +121,8 @@ $dictionary['OAuth2Tokens'] = array(
             'reportable' => false,
             'api-visible' => false,
             'len' => '1024'
-        ),
-        'state' => array(
+        ],
+        'state' => [
             'name' => 'state',
             'vname' => 'LBL_STATE',
             'type' => 'varchar',
@@ -130,8 +130,8 @@ $dictionary['OAuth2Tokens'] = array(
             'reportable' => false,
             'api-visible' => false,
             'len' => '1024'
-        ),
-        'client' => array(
+        ],
+        'client' => [
             'name' => 'client',
             'vname' => 'LBL_CLIENT',
             'type' => 'varchar',
@@ -139,19 +139,19 @@ $dictionary['OAuth2Tokens'] = array(
             'reportable' => false,
             'api-visible' => false,
             'len' => '1024'
-        ),
-    ),
+        ],
+    ],
     'optimistic_locking' => true,
-);
-if (!class_exists('VardefManager')){
+];
+if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
 
 VardefManager::createVardef(
     'OAuth2Tokens',
     'OAuth2Tokens',
-    array(
+    [
         'default',
 
-    )
+    ]
 );
