@@ -132,6 +132,19 @@ $searchFields['Accounts'] = array (
     ),
     'vname' => 'LBL_ANY_EMAIL',
   ),
+    'optinprimary' =>
+        array (
+            'type' => 'enum',
+            'options' => 'email_confirmed_opt_in_dom',
+            'query_type' => 'default',
+            'operator' => 'subquery',
+            'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND eabr.primary_address = \'1\' AND ea.confirm_opt_in LIKE',
+            'db_field' =>
+                array (
+                    0 => 'id',
+                ),
+            'vname' => 'LBL_OPT_IN_FLAG_PRIMARY',
+        ),
   'website' => 
   array (
     'query_type' => 'default',
