@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+global $app_list_strings;
+$configurator = new Configurator();
 $searchdefs['Prospects'] = array(
 				'templateMeta' => array(
 						'maxColumns' => '3',
@@ -66,3 +67,14 @@ $searchdefs['Prospects'] = array(
 					),
 				),
 		   );
+if($configurator->isConfirmOptInEnabled() || $configurator->isOptInEnabled()) {
+    $searchdefs['Prospects']['layout']['advanced_search']['optinprimary'] =
+        array (
+            'name' => 'optinprimary',
+            'label' => 'LBL_OPT_IN_FLAG_PRIMARY',
+            'type' => 'enum',
+            'options' => $app_list_strings['email_confirmed_opt_in_dom'],
+            'default' => true,
+            'width' => '10%',
+        );
+}
