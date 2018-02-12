@@ -108,7 +108,7 @@ class EmailManTest extends PHPUnit_Framework_TestCase
             'EMAIL1_LINK' =>
                 '<a class="email-link" href="javascript:void(0);"'
                 . ' onclick="$(document).openComposeViewModal(this);"'
-                . ' data-module="" data-record-id="" data-module-name="" data-email-address=""></a>',
+                . ' data-module="EmailMan" data-record-id="" data-module-name="" data-email-address=""></a>',
         );
 
         $actual = $emailMan->get_list_view_data();
