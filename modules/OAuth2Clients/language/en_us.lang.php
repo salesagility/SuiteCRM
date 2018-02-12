@@ -49,6 +49,6 @@ $mod_strings = array (
     'LBL_IS_CONFIDENTIAL'=> 'Is confidential',
     'LBL_SECRET'=> 'Secret',
 
-    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth2Clients',
-    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth2Client',
+    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth2 Clients',
+    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth2 Client',
 );

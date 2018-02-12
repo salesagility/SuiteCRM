@@ -64,6 +64,10 @@ $viewdefs[$module_name]['DetailView'] = [
                     [
                         'name' => 'is_confidential',
                     ],
+                3 =>
+                    [
+                        'name' => 'id',
+                    ],
             ],
         'LBL_PANEL_ASSIGNMENT' =>
             [
