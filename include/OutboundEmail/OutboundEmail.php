@@ -337,7 +337,13 @@ class OutboundEmail {
 
 				if(isset($opts['outbound_email'])) {
 					$mailer = "id = '{$opts['outbound_email']}'";
-				} else {
+				} 
+                elseif( isset($opts['from_addr']) ){
+                    // Lookup outbound email settings for this account
+                    $account = $this->getOutgoingMailerSettingsForSpecificAccount( $opts['from_addr'] );
+                    $mailer = "id = '{$account->id}'";
+                }
+                else {
 					$mailer = "id = '{$ieId}'";
 				}
 			} else {
@@ -415,6 +421,39 @@ class OutboundEmail {
 
 		return $ret;
 	}
+
+    /**
+	 * 
+     * Retrieves the system's Outbound options for a specified email address
+	 */
+	function getOutgoingMailerSettingsForSpecificAccount($email_account_address) {
+		$q = "SELECT id FROM outbound_email WHERE deleted = 0 and mail_smtpuser = '$email_account_address'";
+		$r = $this->db->query($q);
+		$a = $this->db->fetchByAssoc($r);
+
+		if(empty($a)) {
+			$this->id = "";
+			$this->name = 'system';
+			$this->type = 'system';
+			$this->user_id = '1';
+			$this->mail_sendtype = 'SMTP';
+			$this->mail_smtptype = 'other';
+			$this->mail_smtpserver = '';
+			$this->mail_smtpport = 25;
+			$this->mail_smtpuser = '';
+			$this->mail_smtppass = '';
+			$this->mail_smtpauth_req = 1;
+			$this->mail_smtpssl = 0;
+			$this->mail_smtpdisplay = $this->_getOutboundServerDisplay($this->mail_smtptype,$this->mail_smtpserver);
+			$this->save();
+			$ret = $this;
+		} else {
+			$ret = $this->retrieve($a['id']);
+		}
+
+		return $ret;
+	}
+
 
 	/**
 	 * Populates this instance
