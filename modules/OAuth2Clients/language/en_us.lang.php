@@ -43,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth2Clients',
-    'LBL_MODULE_TITLE' => 'OAuth2Clients',
-    'LBL_MODULE_ID'=> 'OAuth2Clients',
+    'LBL_MODULE_NAME' => 'OAuth Clients',
+    'LBL_MODULE_TITLE' => 'OAuth Clients',
+    'LBL_MODULE_ID'=> 'OAuth Clients',
     'LBL_IS_CONFIDENTIAL'=> 'Is confidential',
     'LBL_SECRET'=> 'Secret',
 
-    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth2 Clients',
-    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth2 Client',
+    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth Clients',
+    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth Client',
 );
