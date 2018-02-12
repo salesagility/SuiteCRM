@@ -38,14 +38,10 @@
  ********************************************************************************/
 
 function display_email_lines($focus, $field, $value, $view){
-
+    global $app_list_strings;
     $params = unserialize(base64_decode($value));
 
-
     if($view == 'EditView') {
-
-        global $app_list_strings;
-
         $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
 				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
@@ -67,10 +63,37 @@ function display_email_lines($focus, $field, $value, $view){
     }
 
     if ($view === 'DetailView') {
-        if (is_array($params['email'])) {
-            return implode($params['email'], '; ');
+        $recipients = [];
+        $result = [];
+
+        if (isset($params['email_target_type'])) {
+            $typeValues = $params['email'];
+            foreach ($params['email_target_type'] as $key => $type) {
+                if (in_array($type, array_keys($app_list_strings['aor_email_type_list']), true)) {
+                    switch ($type) {
+                        case 'Specify User':
+                            $recipients['User'][] = BeanFactory::getBean('Users', $typeValues[$key])->name;
+                            break;
+                        case 'Email Address':
+                            $recipients['Emails'][] = $typeValues[$key];
+                            break;
+                        case 'Users':
+                            $recipients['Users'][] = $typeValues[$key][0];
+                            break;
+                    }
+                }
+            }
         }
+
+        array_walk(
+            $recipients,
+            function ($recipients, $type) use (&$result) {
+                $result[] = sprintf('%s: %s', $type, implode(', ', $recipients));
+            }
+        );
+
+        return implode("<br><br>", $result);
     }
 
-    return 'N/A';
+    return '';
 }
