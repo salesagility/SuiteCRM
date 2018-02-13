@@ -205,7 +205,10 @@ class PhpBrowserDriverHelper extends \Codeception\Module
         }
     }
 
-    // Add other methods to get environmental variables here...
+    /**
+     * @return string
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function getClientSecret()
     {
         $env = getenv('INSTANCE_CLIENT_SECRET');
