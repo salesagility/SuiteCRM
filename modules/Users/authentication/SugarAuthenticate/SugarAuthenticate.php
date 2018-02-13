@@ -293,8 +293,15 @@ class SugarAuthenticate{
                     } else {
                         $GLOBALS['log']->debug('FACTOR AUTH: User did not sent back the token so we send a new one and redirect to token input form');
 
-                        // if(!$this->userAuthenticate->isFactorTokenSent()) {
-                        //     $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
+                        if (
+                            $this->userAuthenticate->isFactorTokenSent()
+                            && $this->userAuthenticate->isUserRequestedResendToken() === false
+                        ) {
+                            $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
+                            $this->userAuthenticate->showFactorTokenInput();
+                        } else {
+                            $GLOBALS['log']->fatal('DEBUG: token already sent');
+                        }
 
                         if ($this->userAuthenticate->sendFactorTokenToUser()) {
                             $GLOBALS['log']->debug('FACTOR AUTH: Factor Token sent to User');
@@ -303,8 +310,6 @@ class SugarAuthenticate{
                             self::addFactorMessage($msg);
 
                             $this->userAuthenticate->showFactorTokenInput();
-
-                            //$this->userAuthenticate->redirectToLogout(); // todo : maybe its not needed - just a conflict merge issue...??
                         } else {
                             $GLOBALS['log']->debug('FACTOR AUTH: failed to send factor token to user so just redirect to the logout url and kick off ');
 
@@ -312,10 +317,6 @@ class SugarAuthenticate{
 
                             $this->userAuthenticate->redirectToLogout();
                         }
-
-                        // } else {
-                        //     $GLOBALS['log']->fatal('DEBUG: token already sent');
-                        // }
                     }
                 } else {
                     $GLOBALS['log']->debug('FACTOR AUTH: User factor authenticated already');
