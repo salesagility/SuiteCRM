@@ -28,6 +28,30 @@ class OAuth2Cest
     }
 
     /**
+     * I want to ensure that I get the correct response when I send incorrect client details
+     * @param apiTester $I
+     * @param \Helper\PhpBrowserDriverHelper $browserDriverHelper
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     */
+    public function TestScenarioInvalidClient(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
+    {
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'username' => $I->getAdminUser(),
+                'password' => $I->getAdminPassword(),
+                'grant_type' => 'password',
+                'scope' => '',
+                'client_id' => '',
+                'client_secret' => ''
+            )
+        );
+        $I->seeResponseCodeIs(401);
+    }
+
+    /**
      * As a Rest API Client, I want to login so that I can get a JWT token
      * @param apiTester $I
      *
