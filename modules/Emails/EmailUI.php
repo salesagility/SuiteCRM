@@ -536,6 +536,21 @@ eoq;
     }
 
     /**
+     * @return string
+     */
+    public function createBulkActionEmailLink()
+    {
+        global $app_strings;
+        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);"'
+            . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
+        $emailLink .= $app_strings['LBL_EMAIL_COMPOSE'];
+        $emailLink .= '</a>';
+
+        return $emailLink;
+    }
+
+    /**
      *
      * @param Basic|Object $myBean
      * @param string $emailField
