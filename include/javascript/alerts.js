@@ -43,8 +43,8 @@ Notification.requestPermission();};Alerts.prototype.show=function(AlertObj){Aler
 SUGAR.themes.theme_name+'&imageName='+
 AlertObj.options.target_module+'s.gif';}
 if(typeof AlertObj.options.type==="undefined"){AlertObj.options.type='info';}}
-var notification=new Notification(AlertObj.title,AlertObj.options);if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){notification.onclick=function(){window.open(AlertObj.options.url_redirect);}}
-notification.onclose=function(){Alerts.prototype.addToManager(AlertObj);}}}
+var notification=new Notification(AlertObj.title,AlertObj.options);if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){notification.onclick=function(){window.open(AlertObj.options.url_redirect);}}}
+Alerts.prototype.addToManager(AlertObj);}
 else{var message=AlertObj.title;if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.body!=="undefined"){message+='\n'+AlertObj.options.body;}
 message+=SUGAR.language.translate('app_strings','MSG_JS_ALERT_MTG_REMINDER_CALL_MSG')+"\n\n";if(confirm(message)){if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){window.location=AlertObj.options.url_redirect;}}}
 else{Alerts.prototype.addToManager(AlertObj);}}}}};Alerts.prototype.addToManager=function(AlertObj){var url='index.php',name=AlertObj.title,description,url_redirect,is_read=0,target_module,type='info';if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.url_redirect!=="undefined"){url_redirect=AlertObj.options.url_redirect}

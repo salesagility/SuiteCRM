@@ -125,6 +125,7 @@ class EmailMarketing extends SugarBean
 			$this->time_start = $date_start_array[1];
         	$this->date_start = $date_start_array[0];
         }
+
         return $this;
 	}
 

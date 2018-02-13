@@ -62,7 +62,7 @@ class SugarEmailAddress extends SugarBean
     const COI_FLAG_NO_OPT_IN_STATUS = 'NO_OPT_IN_STATUS';
 
     // Opt In Status
-    const COI_STAT_DISABLED = '';
+    const COI_STAT_DISABLED = 'not-opt-in';
     const COI_STAT_OPT_IN = 'opt-in';
     const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
 
@@ -1431,6 +1431,10 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * Returns the HTML/JS for the EmailAddress widget
+     * @global LoggerManager $log
+     * @global array $app_strings
+     * @global array $dictionary
+     * @global array $beanList
      * @param string $parent_id ID of parent bean, generally $focus
      * @param string $module $focus' module
      * @param bool asMetadata Default false
@@ -1451,7 +1455,10 @@ class SugarEmailAddress extends SugarBean
             $this->smarty = new Sugar_Smarty();
         }
 
-        global $app_strings, $dictionary, $beanList;
+        global $app_strings;
+        global $dictionary;
+        global $beanList;
+        $configurator = new Configurator();
 
         $prefill = 'false';
 
@@ -1557,7 +1564,14 @@ class SugarEmailAddress extends SugarBean
         } else {
             $this->smarty->assign('useOptOut', true);
             $this->smarty->assign('useInvalid', true);
-            $this->smarty->assign('useOptIn', true);
+            if (
+                $configurator->isOptInEnabled()
+                || $configurator->isConfirmOptInEnabled()
+            ) {
+                $this->smarty->assign('useOptIn', true);
+            } else {
+                $this->smarty->assign('useOptIn', false);
+            }
         }
 
         $template = empty($tpl) ? "include/SugarEmailAddress/templates/forEditView.tpl" : $tpl;
@@ -1881,6 +1895,15 @@ class SugarEmailAddress extends SugarBean
         $date = new DateTime();
         $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
         $this->confirm_opt_in = self::COI_STAT_CONFIRMED_OPT_IN;
+    }
+
+    /**
+     * Reset opt in
+     */
+    public function resetOptIn()
+    {
+        $this->confirm_opt_in = '';
+        parent::save();
     }
 
     /**
@@ -2211,7 +2234,6 @@ class SugarEmailAddress extends SugarBean
         if(isset($sugar_config['email_enable_confirm_opt_in'])) {
             $emailConfigEnableConfirmOptIn = $sugar_config['email_enable_confirm_opt_in'];
 
-            if ($emailConfigEnableConfirmOptIn !== self::COI_STAT_DISABLED) {
                 $template = new Sugar_Smarty();
 
                 $optInStatus = $this->getOptInStatus();
@@ -2252,7 +2274,7 @@ class SugarEmailAddress extends SugarBean
                         $optInFlagText = '?';
                         break;
                     default:
-                        $optInFlagClass = 'hidden';
+                        $optInFlagClass = '';
                         $optInFlagTitle = '';
                         $optInFlagText = '';
                         break;
@@ -2263,7 +2285,6 @@ class SugarEmailAddress extends SugarBean
                 $template->assign('optInFlagText', $optInFlagText);
                 $tickHtml = $template->fetch('include/SugarEmailAddress/templates/optInStatusTick.tpl');
             }
-        }
 
         return $tickHtml;
     }
