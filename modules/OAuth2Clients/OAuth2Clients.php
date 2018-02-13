@@ -83,7 +83,9 @@ class OAuth2Clients extends SugarBean
      */
     public function save($check_notify = false)
     {
-        $this->secret = crypt($this->secret);
+        if (!empty($_REQUEST['new_secret'])) {
+            $this->secret = crypt($_REQUEST['new_secret']);
+        }
         return parent::save();
     }
 }

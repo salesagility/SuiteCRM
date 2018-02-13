@@ -66,10 +66,13 @@ $viewdefs[$module_name]['EditView'] = [
                     ],
                 3 =>
                     [
-                        'secret' => [
-                            'name' => 'secret',
-                            'label' => 'LBL_SECRET_HASHED',
-                        ]
+                        0 =>
+                            [
+                                'name' => 'new_secret',
+                                'label' => 'LBL_SECRET_HASHED',
+                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
+                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                            ],
                     ],
             ],
     ],
