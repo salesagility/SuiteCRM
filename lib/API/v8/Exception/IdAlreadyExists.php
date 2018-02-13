@@ -38,30 +38,40 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Enumerator;
+namespace SuiteCRM\API\v8\Exception;
 
+use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class ExceptionCode
- * @package SuiteCRM\Enumerator
- * Holds all the error codes for exceptions
- * Convention: [Sub_System]_[Error_Name] = unique integer
+ * Class IdAlreadyExists
+ * @package SuiteCRM\API\v8\Exception
  */
-class ExceptionCode
+class IdAlreadyExists extends ApiException
 {
-    const APPLICATION_UNHANDLED_BEHAVIOUR = 6000;
-    const APPLICTAION_MODULE_NOT_FOUND = 6005;
-    const API_EXCEPTION = 8000;
-    const API_CONTENT_NEGOTIATION_FAILED = 8005;
-    const API_INVALID_BODY = 8010;
-    const API_MODULE_NOT_FOUND = 8015;
-    const API_MISSING_REQUIRED = 8020;
-    const API_DATE_CONVERTION_SUGARBEAN = 8025;
-    const API_USER_NOT_ACTIVE = 8030;
-    const API_NOT_IMPLEMENTED = 8035;
-    const API_RESERVED_KEYWORD_NOT_ALLOWED = 8040;
-    const API_RELATIONSHIP_NOT_FOUND = 8045;
-    const API_RECORD_NOT_FOUND = 8050;
-    const API_VIEWDEF_NOT_FOUND = 8055;
-    const API_ID_ALREADY_EXISTS = 8060;
+    /**
+     * IdAlreadyInUse constructor.
+     * @param string $message Bean id %s already exists in %s module
+     * @param int $code
+     * @param $previous
+     */
+    public function __construct($message = '', $code = ExceptionCode::API_ID_ALREADY_EXISTS, $previous = null)
+    {
+        parent::__construct('[IdAlreadyExists] '.$message, $code, $previous);
+    }
+
+    /**
+     * @return int
+     */
+    public function getHttpStatus()
+    {
+        return 403;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDetail()
+    {
+        return '';
+    }
 }

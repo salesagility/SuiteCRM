@@ -62,6 +62,7 @@ use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\NotFound;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\API\v8\Exception\IdAlreadyExists;
 use SuiteCRM\API\v8\Library\FiltersLib;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
@@ -442,9 +443,9 @@ class ModuleController extends ApiController
                 return $this->generateJsonApiExceptionResponse(
                     $req,
                     $res,
-                    new Exception(sprintf(
+                    new IdAlreadyExists(sprintf(
                         'Bean id %s already exists in %s module', $beanID, $moduleName
-                    ))
+                    ), ExceptionCode::API_ID_ALREADY_EXISTS)
                 );
             }
 
