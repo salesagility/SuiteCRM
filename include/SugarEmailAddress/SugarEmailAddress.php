@@ -1431,6 +1431,10 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * Returns the HTML/JS for the EmailAddress widget
+     * @global LoggerManager $log
+     * @global array $app_strings
+     * @global array $dictionary
+     * @global array $beanList
      * @param string $parent_id ID of parent bean, generally $focus
      * @param string $module $focus' module
      * @param bool asMetadata Default false
@@ -1451,7 +1455,10 @@ class SugarEmailAddress extends SugarBean
             $this->smarty = new Sugar_Smarty();
         }
 
-        global $app_strings, $dictionary, $beanList;
+        global $app_strings;
+        global $dictionary;
+        global $beanList;
+        $configurator = new Configurator();
 
         $prefill = 'false';
 
@@ -1557,7 +1564,14 @@ class SugarEmailAddress extends SugarBean
         } else {
             $this->smarty->assign('useOptOut', true);
             $this->smarty->assign('useInvalid', true);
-            $this->smarty->assign('useOptIn', true);
+            if (
+                $configurator->isOptInEnabled()
+                || $configurator->isConfirmOptInEnabled()
+            ) {
+                $this->smarty->assign('useOptIn', true);
+            } else {
+                $this->smarty->assign('useOptIn', false);
+            }
         }
 
         $template = empty($tpl) ? "include/SugarEmailAddress/templates/forEditView.tpl" : $tpl;
