@@ -204,4 +204,22 @@ class PhpBrowserDriverHelper extends \Codeception\Module
             return $env;
         }
     }
+
+    // Add other methods to get environmental variables here...
+    public function getClientSecret()
+    {
+        $env = getenv('INSTANCE_CLIENT_SECRET');
+        if($env === false) {
+            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
+            $config = $webDriver->_getConfig();
+            if(empty($config['INSTANCE_CLIENT_SECRET'])) {
+                // return default
+                return 'client_secret';
+            } else {
+                return $config['instance_admin_password'];
+            }
+        } else {
+            return $env;
+        }
+    }
 }
