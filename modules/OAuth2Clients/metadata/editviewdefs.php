@@ -66,7 +66,10 @@ $viewdefs[$module_name]['EditView'] = [
                     ],
                 3 =>
                     [
-                        'name' => 'secret',
+                        'secret' => [
+                            'name' => 'secret',
+                            'label' => 'LBL_SECRET_HASHED',
+                        ]
                     ],
             ],
     ],

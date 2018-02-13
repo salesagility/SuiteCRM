@@ -48,6 +48,7 @@ $mod_strings = array (
     'LBL_MODULE_ID'=> 'OAuth Clients',
     'LBL_IS_CONFIDENTIAL'=> 'Is confidential',
     'LBL_SECRET'=> 'Secret',
+    'LBL_SECRET_HASHED'=> 'Secret (This value will not be accessible once you press save. Make sure to remember it.)',
 
     'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth Clients',
     'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth Client',

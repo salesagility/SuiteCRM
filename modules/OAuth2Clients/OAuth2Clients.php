@@ -74,4 +74,13 @@ class OAuth2Clients extends SugarBean
     {
         return "$this->name";
     }
+
+    /**
+     * @see SugarBean::get_summary_text()
+     */
+    public function save($check_notify = false)
+    {
+        $this->secret = crypt($this->secret);
+        return parent::save();
+    }
 }
