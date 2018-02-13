@@ -321,6 +321,6 @@ class SugarAuthenticateUser
      */
     public function isUserRequestedResendToken()
     {
-        return $_REQUEST['action'] && $_REQUEST['action'] === 'Resend';
+        return isset($_REQUEST['action']) && $_REQUEST['action'] === 'Resend';
     }
 }
