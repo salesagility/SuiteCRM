@@ -2450,10 +2450,8 @@ sugarListView.prototype.toggleSelected = function () {
         jQuery('ul[name=selectActionsBottom]').each(function () {
             jQuery(this).removeAttr("style").addClass("show");
         });
-        $(selectActionsDisabled).removeAttr("style").removeClass("show");
-        $(selectActionsDisabled).removeAttr("style").addClass("hide");
-        $(selectActionsDisabledBottom).removeAttr("style").removeClass("show");
-        $(selectActionsDisabledBottom).removeAttr("style").addClass("hide");
+        $(selectActionsDisabled).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("show").addClass("hide");
         jQuery('div[id=selectActionsDisabled]').each(function () {
             jQuery(this).removeAttr("style").addClass("hide");
         });
@@ -2462,10 +2460,8 @@ sugarListView.prototype.toggleSelected = function () {
         });
     } else {
         $(selectedRecords).hide();
-        $(selectActions).removeAttr("style").removeClass("show");
-        $(selectActions).removeAttr("style").addClass("hide");
-        $(selectActionsBottom).removeAttr("style").removeClass("show");
-        $(selectActionsBottom).removeAttr("style").addClass("hide");
+        $(selectActions).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsBottom).removeAttr("style").removeClass("show").addClass("hide");
         $(".selectActionsDisabled").removeAttr("style").addClass("show");
         jQuery('ul[name=selectActions]').each(function () {
             jQuery(this).removeAttr("style").addClass("hide");
@@ -2473,10 +2469,8 @@ sugarListView.prototype.toggleSelected = function () {
         jQuery('ul[name=selectActions]').each(function () {
             jQuery(this).removeAttr("style").addClass("hide");
         });
-        $(selectActionsDisabled).removeAttr("style").removeClass("hide");
-        $(selectActionsDisabled).removeAttr("style").addClass("show");
-        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide");
-        $(selectActionsDisabledBottom).removeAttr("style").addClass("show");
+        $(selectActionsDisabled).removeAttr("style").removeClass("hide").addClass("show");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide").addClass("show");
         jQuery('div[id=selectActionsDisabled]').each(function () {
             jQuery(this).removeAttr("style").addClass("show");
         });
