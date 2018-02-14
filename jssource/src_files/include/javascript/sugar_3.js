@@ -2475,7 +2475,7 @@ sugarListView.prototype.toggleSelected = function () {
         });
         $(selectActionsDisabled).removeAttr("style").removeClass("hide");
         $(selectActionsDisabled).removeAttr("style").addClass("show");
-        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide")
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide");
         $(selectActionsDisabledBottom).removeAttr("style").addClass("show");
         jQuery('div[id=selectActionsDisabled]').each(function () {
             jQuery(this).removeAttr("style").addClass("show");
