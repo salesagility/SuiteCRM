@@ -55,6 +55,11 @@ class ResourceServer
      */
     private $server;
 
+    private static $ROUTES_EXEMPT_FROM_AUTH = [
+        'oauth/access_token',
+        'v8/swagger.json',
+    ];
+
     /**
      * @param OAuthResourceServer $server
      */
@@ -74,7 +79,7 @@ class ResourceServer
     {
         global $current_user;
         try {
-            if ($request->getUri()->getPath() !== 'oauth/access_token') {
+            if (!in_array($request->getUri()->getPath(), self::$ROUTES_EXEMPT_FROM_AUTH)) {
                 $request = $this->server->validateAuthenticatedRequest($request);
 
                 // validate user is still active

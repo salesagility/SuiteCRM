@@ -102,6 +102,13 @@ $dictionary['Reminder'] = array(
             'massupdate' => false,
             'studio' => false,
         ),
+        'popup_viewed' => [
+            'name' => 'popup_viewed',
+            'type' => 'bool',
+            'default' => '0',
+            'importable' => true,
+            'duplicate_merge' => 'disabled',
+        ]
     ),
     'indices' => array(
         array('name' => 'idx_reminder_name', 'type' => 'index', 'fields' => array('name')),
