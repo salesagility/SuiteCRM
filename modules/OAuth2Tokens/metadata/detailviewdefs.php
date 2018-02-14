@@ -50,7 +50,6 @@ $viewdefs[$module_name]['DetailView'] = [
         ],
         'form' => [
             'buttons' => array(
-                'DELETE',
             )
         ]
     ],
