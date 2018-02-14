@@ -1978,7 +1978,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $emailAddress->confirm_opt_in_sent_date = '';
 
         $this->assertEquals(
-            SugarEmailAddress::COI_FLAG_UNKNOWN_OPT_IN_STATUS,
+            SugarEmailAddress::COI_STAT_DISABLED,
             $emailAddress->getOptInStatus()
         );
 

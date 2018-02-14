@@ -208,13 +208,34 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         
         
         if (!empty($optInEmailFields)) {
+            // Look for opted out
+            $optedOut = array();
+            foreach ($optInEmailFields as $i => $optInEmailField) {
+                if (stristr($optInEmailField, '_default') !== false) {
+                    $emailField = str_replace('_default', '', $optInEmailField);
+
+                    if(!in_array($emailField, $optInEmailFields)) {
+                        $optedOut[] = $emailField;
+                    }
+
+                    $optInEmailFields[$i] = $emailField;
+                }
+            }
+
+            $optInEmailFields = array_unique($optInEmailFields);
+
             foreach ($optInEmailFields as $optInEmailField) {
                 if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
                     $sea = new EmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
-                        $sea->optIn();
-                        
+                        if(in_array($optInEmailField, $optedOut)) {
+                            $sea->resetOptIn();
+                            continue;
+                        } else {
+                            $sea->optIn();
+                        }
+
                         $configurator = new Configurator();
                         if($configurator->isConfirmOptInEnabled()) {
                             $emailman = new EmailMan();

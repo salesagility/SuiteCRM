@@ -47,19 +47,22 @@ require_once('modules/MySettings/StoreQuery.php');
 class ViewList extends SugarView
 {
     /**
-     * @var string
+     * @var string $type
      */
     public $type = 'list';
 
     /**
-     * @var ListViewSmartyEmails
+     * @var ListViewSmartyEmails $lv
      */
     public $lv;
 
     /**
-     * @var
+     * @var SearchForm $searchForm
      */
     public $searchForm;
+
+    /** @var  array $savedSearchData */
+    public $savedSearchData;
 
     /**
      * @var
@@ -67,7 +70,7 @@ class ViewList extends SugarView
     public $use_old_search;
 
     /**
-     * @var
+     * @var bool $headers
      */
     public $headers;
 
@@ -77,22 +80,22 @@ class ViewList extends SugarView
     public $seed;
 
     /**
-     * @var array
+     * @var array $params
      */
     public $params;
 
     /**
-     * @var
+     * @var array $listViewDefs
      */
     public $listViewDefs;
 
     /**
-     * @var StoreQuery
+     * @var StoreQuery $storeQuery
      */
     public $storeQuery;
 
     /**
-     * @var string
+     * @var string $where
      */
     public $where = '';
 
