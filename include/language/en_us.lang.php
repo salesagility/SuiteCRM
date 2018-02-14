@@ -2890,7 +2890,6 @@ $app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
 $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
-$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
 $app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
 $app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';

@@ -108,7 +108,7 @@ class AOR_Report extends Basic
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
         set_time_limit(3600);
 
-        if (empty($this->id)) {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aor_conditions_id']);
             unset($_POST['aor_fields_id']);
         }
