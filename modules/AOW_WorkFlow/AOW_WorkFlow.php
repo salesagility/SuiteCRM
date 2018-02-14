@@ -126,8 +126,9 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -684,6 +685,8 @@ class AOW_WorkFlow extends Basic
                     default:
                         if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
+                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                            $value = 0;
                         }
                         break;
                 }

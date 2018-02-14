@@ -79,7 +79,7 @@ class ListViewSmarty extends ListViewDisplay
         parent::__construct();
         $this->ss = new Sugar_Smarty();
     }
-            
+
     /**
      *
      * @return string|boolean
@@ -94,14 +94,14 @@ class ListViewSmarty extends ListViewDisplay
         $linkTpl = new Sugar_Smarty();
         $linkTpl->assign('module_name', $this->seed->module_name);
         $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
-        
+
         return $linkHTML;
     }
 
     /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
-     * 
+     *
      * @param file $file Template file to use
      * @param array $data from ListViewData
      * @param string $htmlVar the corresponding html public in xtpl per row

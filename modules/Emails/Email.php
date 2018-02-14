@@ -700,7 +700,7 @@ class Email extends Basic
     ) {
         global $current_user, $app_strings;
         $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
-        $mail = new SugarPHPMailer();
+        $mail = new SugarPHPMailer(true);
         $mail->Mailer = strtolower($mail_sendtype);
         if ($mail->Mailer == 'smtp') {
             $mail->Host = $mailserver_url;
@@ -744,7 +744,7 @@ class Email extends Basic
             ob_clean();
             $return['status'] = false;
             $return['errorMessage'] = $app_strings['LBL_EMAIL_ERROR_PREPEND'] . $mail->ErrorInfo;
-
+            $return['fullSmtpLog'] = $mail->fullSmtpLog;
             return $return;
         } // if
         $return['status'] = true;
