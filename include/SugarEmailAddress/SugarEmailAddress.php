@@ -1902,7 +1902,7 @@ class SugarEmailAddress extends SugarBean
      */
     public function resetOptIn()
     {
-        $this->confirm_opt_in = '';
+        $this->confirm_opt_in = self::COI_STAT_DISABLED;
         parent::save();
     }
 
@@ -2067,6 +2067,11 @@ class SugarEmailAddress extends SugarBean
                 return $ret;
             }
 
+            if ($this->isNotOptIn()) {
+                $ret = self::COI_STAT_DISABLED;
+                return $ret;
+            }
+
             $ret = self::COI_FLAG_UNKNOWN_OPT_IN_STATUS;
 
             if ($this->isConfirmedOptIn()) {
@@ -2164,6 +2169,14 @@ class SugarEmailAddress extends SugarBean
     {
         $ret =  $this->getConfirmedOptInState() === self::COI_STAT_CONFIRMED_OPT_IN;
         return $ret;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNotOptIn()
+    {
+        return $this->confirm_opt_in === self::COI_STAT_DISABLED;
     }
 
     /**
