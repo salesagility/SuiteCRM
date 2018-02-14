@@ -1465,15 +1465,15 @@ class EmailMan extends SugarBean
         }
 
         /** @var Surveys $survey */
-        $survey = BeanFactory::getBean('SA_Surveys', $this->current_campaign->sa_survey_id);
+        $survey = BeanFactory::getBean('Surveys', $this->current_campaign->survey_id);
         $url = '';
         if ($module->module_dir == 'Contacts') {
             $url = $survey->getCampaignSurveyLink($module, $this->target_tracker_key);
         }
 
         foreach ($templateData as $key => $str) {
-            $str = str_replace('$sa_surveys_survey_url_display', $url, $str);
-            $templateData[$key] = $this->current_emailtemplate->parse_template_bean($str, 'SA_Surveys', $survey);
+            $str = str_replace('$surveys_survey_url_display', $url, $str);
+            $templateData[$key] = $this->current_emailtemplate->parse_template_bean($str, 'Surveys', $survey);
         }
 
         return $templateData;
