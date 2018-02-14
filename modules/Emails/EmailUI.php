@@ -42,13 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -71,7 +64,7 @@ class EmailUI
     );
     public $userCacheDir = '';
     public $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
-								   JOIN emails_text on emails.id = emails_text.email_id
+                                   JOIN emails_text on emails.id = emails_text.email_id
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
     /**
@@ -108,16 +101,15 @@ class EmailUI
         self::__construct();
     }
 
-	///////////////////////////////////////////////////////////////////////////
-	////	CORE
-	/**
-	 * Renders the frame for emails
-	 *@throws \RuntimeException
+    ///////////////////////////////////////////////////////////////////////////
+    ////	CORE
+    /**
+     * Renders the frame for emails
+     * @throws \RuntimeException
      */
     public function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl")
-
-
-        {require_once("include/OutboundEmail/OutboundEmail.php");
+    {
+        require_once("include/OutboundEmail/OutboundEmail.php");
 
         global $app_strings, $app_list_strings;
         global $mod_strings;
@@ -270,10 +262,10 @@ class EmailUI
             !empty($defaultSignatureId));
         if (!empty($defaultSignatureId)) {
             $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
+                    </span>';
         } else {
             $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
+                    </span>';
         }
         $this->smarty->assign('signatureButtons', $signatureButtons);
         $this->smarty->assign('signaturePrepend', $prependSignature == 'true' ? 'CHECKED' : '');
@@ -313,31 +305,31 @@ class EmailUI
         $out .= $tree->generate_header();
         $out .= $tree->generateNodesNoInit(true, 'email2treeinit');
         $out .= <<<eoq
-			<script type="text/javascript" language="javascript">
+            <script type="text/javascript" language="javascript">
 
-				var loader = new YAHOO.util.YUILoader({
-				    require : [
-				    	"layout", "element", "tabview", "menu",
-				    	"cookie", "sugarwidgets"
-				    ],
-				    loadOptional: true,
-				    skin: { base: 'blank', defaultSkin: '' },
-				    onSuccess: email2init,
-				    allowRollup: true,
-				    base: "include/javascript/yui/build/"
-				});
-				loader.addModule({
-				    name :"sugarwidgets",
-				    type : "js",
-				    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
-				    varName: "YAHOO.SUGAR",
-				    requires: ["datatable", "dragdrop", "treeview", "tabview", "calendar"]
-				});
-				loader.insert();
+                var loader = new YAHOO.util.YUILoader({
+                    require : [
+                        "layout", "element", "tabview", "menu",
+                        "cookie", "sugarwidgets"
+                    ],
+                    loadOptional: true,
+                    skin: { base: 'blank', defaultSkin: '' },
+                    onSuccess: email2init,
+                    allowRollup: true,
+                    base: "include/javascript/yui/build/"
+                });
+                loader.addModule({
+                    name :"sugarwidgets",
+                    type : "js",
+                    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+                    varName: "YAHOO.SUGAR",
+                    requires: ["datatable", "dragdrop", "treeview", "tabview", "calendar"]
+                });
+                loader.insert();
 
-				{$preloadFolder};
+                {$preloadFolder};
 
-			</script>
+            </script>
 eoq;
 
 
@@ -414,19 +406,27 @@ eoq;
 
     /**
      *
-     * @global ? $focus
-     * @param ?|null $bean
+     * @global SugarBean $focus
+     * @param SugarBean|null $bean
      * @param string $emailField
+     * @param bool $checkAllEmail
+     * @param string|null $innerText
+     * @param string|null $composeData
      * @return string
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true)
-    {
+    public function populateComposeViewFields(
+        $bean = null,
+        $emailField = 'email1',
+        $checkAllEmail = true,
+        $innerText = null,
+        $composeData = null
+    ) {
         global $focus;
         $myBean = $focus;
-
-        $emailLink = '';
+        $configurator = new Configurator();
+        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
 
         if (!empty($bean)) {
             $myBean = $bean;
@@ -434,8 +434,12 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-            'data-record-id="" data-module-name=""  data-email-address="">';
+
+        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);"'
+            . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
+        $emailLinkOverwritten = false;
+
         // focus is set?
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
@@ -448,10 +452,10 @@ eoq;
             }
 
 
-            if($checkAllEmail) {
+            if ($checkAllEmail) {
                 $i = 1;
                 $emailField = 'email' . $i;
-                while(isset($myBean->{$emailField})) {
+                while (isset($myBean->{$emailField})) {
                     $emailFields[] = $emailField;
                     $i++;
                     $emailField = 'email' . $i;
@@ -459,26 +463,109 @@ eoq;
                 $emailFields = array_unique($emailFields);
             }
 
-            foreach($emailFields as $emailField) {
-                if (property_exists($myBean, $emailField)) {
-                    $emailLink = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-                        'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">'
-                            . $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
-                } else {
-                    $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
-                }
-                $optOut = false;
-                $addresses = $myBean->emailAddress->addresses;
-                foreach($addresses as $address) {
-                    if($address['email_address'] == $myBean->{$emailField} && (int)$address['opt_out']) {
-                        $optOut = true;
+            foreach ($emailFields as $emailField) {
+                if (!empty($composeData)) {
+                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
+                    ' .
+                        'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="'
+                        . $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name']
+                        . '"  data-email-address="' . $composeData['to_addrs'] . '">';
+                } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
+                    $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
+                    $optOut = false;
+                    $invalid = false;
+
+                    if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
+                        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+                            . ' onclick="$(document).openComposeViewModal(this);"'
+                            . ' data-module="'
+                            . $myBean->module_name . '" ' . 'data-record-id="'
+                            . $myBean->id . '" data-module-name="'
+                            . $myBean->name . '" data-email-address="'
+                            . $myBean->{$emailField} . '">';
+
+                        $emailLink .= $myBean->{$emailField} . '</a>';
+                        return $emailLink;
+                    }
+
+
+                    if (isset($myBean->emailAddress->addresses)) {
+                        if (
+                            isset($myBean->emailAddress)
+                            && isset($myBean->emailAddress->addresses)
+                        ) {
+                            $addresses = $myBean->emailAddress->addresses;
+                            foreach ($addresses as $address) {
+                                if ($address['email_address'] === $myBean->{$emailField}) {
+
+                                    if (!empty($myBean->id)) {
+                                        $myBean->retrieve();
+                                    }
+
+                                    if ((int)$address['opt_out'] === 1) {
+                                        $optOut = true;
+                                    }
+
+                                    if ((int)$address['invalid_email'] === 1) {
+                                        $invalid = true;
+                                    }
+
+                                    if (
+                                        $optOut === true
+                                        || $invalid === true
+                                    ) {
+                                        $emailLink =
+                                            '<a class="email-link" href="javascript:void(0);"'
+                                            . ' onclick="$(document).openComposeViewModal(this);"'
+                                            . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
+                                            . $myBean->id . '" data-module-name="'
+                                            . $myBean->name . '" data-email-address="'
+                                            . $myBean->{$emailField} . '">';
+                                        $emailLink .= $email_tick;
+                                        $emailLink .= '<span class="email-line-through">';
+                                        $emailLink .= $myBean->{$emailField};
+                                        $emailLink .= '</span>';
+                                    } else {
+                                        $emailLink =
+                                            '<a class="email-link" href="javascript:void(0);"'
+                                            . ' onclick="$(document).openComposeViewModal(this);"'
+                                            . ' data-module="'
+                                            . $myBean->module_name . '" ' . 'data-record-id="'
+                                            . $myBean->id . '" data-module-name="'
+                                            . $myBean->name . '" data-email-address="'
+                                            . $myBean->{$emailField} . '">';
+                                        $emailLink .= $email_tick . $myBean->{$emailField};
+
+                                    }
+                                    $emailLink .= '</a>';
+
+                                    return $emailLink;
+                                }
+                            }
+                        }
+                    } else {
+                        $GLOBALS['log']->warn(get_class($myBean) . ' does not have email1 field');
                     }
                 }
-                if(!$optOut) {
-                    break;
-                }
             }
+
+            $emailLink .= '</a>';
+
+            return $emailLink;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function createBulkActionEmailLink()
+    {
+        global $app_strings;
+        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);"'
+            . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
+        $emailLink .= $app_strings['LBL_EMAIL_COMPOSE'];
+        $emailLink .= '</a>';
 
         return $emailLink;
     }
@@ -489,16 +576,23 @@ eoq;
      * @param string $emailField
      * @throws RuntimeException
      * @throws InvalidArgumentException
+     * @return string
      */
     private function getEmailAddressConfirmOptInTick($myBean, $emailField)
     {
+        $log = LoggerManager::getLogger();
         $tick = '';
         if ($myBean instanceof Basic) {
-            $tick = $myBean->getConfirmOptInTickFromSugarEmailAddressField($emailField);
+            $emailAddress = $myBean->getEmailAddressFromEmailField($emailField);
+            if ($emailAddress instanceof SugarEmailAddress) {
+                $tick = $emailAddress->getOptInStatusTickHTML();
+            } else {
+                $log->warn('Trying to get an email field of non-Basic object');
+            }
         } else {
-            global $log;
             $log->warn('Trying to get an email field of non-Basic object');
         }
+
         return $tick;
     }
 
@@ -960,7 +1054,6 @@ eoq;
         );
 
 
-
         // current_user
         $user = array(
             'emailAddresses' => $user->emailAddress->getAddressesByGUID($user->id, 'Users'),
@@ -980,7 +1073,7 @@ eoq;
 
         return $userPreferences;
     }
-    
+
     public function getUserPrefsJS($useRequestedRecord = false)
     {
         return $this->getUserPreferencesJS($useRequestedRecord);
@@ -1691,10 +1784,10 @@ eoq;
         $smarty->assign("JS_CUSTOM_VERSION", $GLOBALS['sugar_config']['js_custom_version']);
         if (!empty($focus->reply_to_email)) {
             $replyTo = "
-				<tr>
-		        <td class=\"tabDetailViewDL\"><slot>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</slot></td>
-		        <td colspan=3 class=\"tabDetailViewDF\"><slot>" . $focus->reply_to_addr . "</slot></td>
-		        </tr>";
+                <tr>
+                <td class=\"tabDetailViewDL\"><slot>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</slot></td>
+                <td colspan=3 class=\"tabDetailViewDF\"><slot>" . $focus->reply_to_addr . "</slot></td>
+                </tr>";
             $smarty->assign("REPLY_TO", $replyTo);
         }
         ///////////////////////////////////////////////////////////////////////////////
@@ -2036,9 +2129,8 @@ eoq;
      * @return array
      */
     public function getSingleMessage($ie)
-
-
-        {global $timedate;
+    {
+        global $timedate;
         global $app_strings, $mod_strings;
         $ie->retrieve($_REQUEST['ieId']);
         $noCache = true;
@@ -2099,14 +2191,14 @@ eoq;
         if (!empty($out['meta']['email']['cc_addrs'])) {
             $ccs = $this->generateExpandableAddrs($out['meta']['email']['cc_addrs']);
             $out['meta']['cc'] = <<<eoq
-				<tr>
-					<td NOWRAP valign="top" class="displayEmailLabel">
-						{$app_strings['LBL_EMAIL_CC']}:
-					</td>
-					<td class="displayEmailValue">
-						{$ccs}
-					</td>
-				</tr>
+                <tr>
+                    <td NOWRAP valign="top" class="displayEmailLabel">
+                        {$app_strings['LBL_EMAIL_CC']}:
+                    </td>
+                    <td class="displayEmailValue">
+                        {$ccs}
+                    </td>
+                </tr>
 eoq;
         }
 
@@ -2120,9 +2212,10 @@ eoq;
             $GLOBALS['log']->debug("EMAILUI: getSingleMessage() using cache file [ " . $_REQUEST['mbox'] . $_REQUEST['uid'] . ".php ]");
         }
 
-		$this->setReadFlag($_REQUEST['ieId'], $_REQUEST['mbox'], $_REQUEST['uid']);
-		return $out;
-	}
+        $this->setReadFlag($_REQUEST['ieId'], $_REQUEST['mbox'], $_REQUEST['uid']);
+
+        return $out;
+    }
 
 
     /**
@@ -3035,7 +3128,7 @@ eoq;
                     $server_url = $app_strings['LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS'];
                 }
             }
-           
+
 
             $type = $mod_strings['LBL_MAILBOX_TYPE_GROUP_FOLDER'];
             $ieAccountsShowOptionsMeta[] = array(
@@ -3256,7 +3349,7 @@ eoq;
         $date = date("r");
         $the_string = <<<eoq
 <?php // created: {$date}
-	\$cacheFile = {$arrayString};
+    \$cacheFile = {$arrayString};
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {

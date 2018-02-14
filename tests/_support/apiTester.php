@@ -67,10 +67,10 @@ class apiTester extends \Codeception\Actor
                 'password' => $password,
                 'grant_type' => 'password',
                 'scope' => '',
-                'client_id' => $I->getClientID()
+                'client_id' => $I->getClientID(),
+                'client_secret' => $I->getClientSecret()
             )
         );
-
         $I->canSeeResponseIsJson();
         $I->seeResponseCodeIs(200);
 

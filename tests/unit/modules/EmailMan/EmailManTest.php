@@ -105,7 +105,10 @@ class EmailManTest extends PHPUnit_Framework_TestCase
             'SEND_ATTEMPTS' => '0',
             'DELETED' => '0',
             'RELATED_CONFIRM_OPT_IN' => '0',
-            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
+            'EMAIL1_LINK' =>
+                '<a class="email-link" href="javascript:void(0);"'
+                . ' onclick="$(document).openComposeViewModal(this);"'
+                . ' data-module="EmailMan" data-record-id="" data-module-name="" data-email-address=""></a>',
         );
 
         $actual = $emailMan->get_list_view_data();

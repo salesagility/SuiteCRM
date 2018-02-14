@@ -273,7 +273,7 @@ class ModulesCest
         // Test create a note with a binary document
         $I->comment('Create a notes resource and attach binary a document');
         $filenameBinaryFile = 'testFile.png';
-        $pathToBinaryFile = codecept_data_dir().'/'.$filenameBinaryFile;
+        $pathToBinaryFile = codecept_data_dir() . $filenameBinaryFile;
         $binaryFile = file_get_contents($pathToBinaryFile);
         $binaryFileEncoded = base64_encode($binaryFile);
 

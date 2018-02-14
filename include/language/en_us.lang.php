@@ -38,10 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
 $app_list_strings = array(
@@ -1398,7 +1394,6 @@ $app_strings = array(
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY' => 'L',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS' => 'Add Contacts To Target List',
-    'LBL_SEND_CONFIRM_OPT_IN_EMAIL' => 'Send Confirm Opt In Email',
     'LBL_ADDITIONAL_DETAILS_CLOSE_TITLE' => 'Click to Close',
     'LBL_ADDITIONAL_DETAILS' => 'Additional Details',
     'LBL_ADMIN' => 'Admin',
@@ -1512,6 +1507,7 @@ $app_strings = array(
     'LBL_LOCALE_NAME_EXAMPLE_TITLE' => 'Code Monkey Extraordinaire',
     'LBL_CANCEL' => 'Cancel',
     'LBL_VERIFY' => 'Verify',
+    'LBL_RESEND' => 'Resend',
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
@@ -1722,7 +1718,7 @@ $app_strings = array(
     'NTC_DATE_FORMAT' => '(yyyy-mm-dd)',
     'NTC_DELETE_CONFIRMATION_MULTIPLE' => 'Are you sure you want to delete selected record(s)?',
     'NTC_TEMPLATE_IS_USED' => 'The template is used in at least one email marketing record. Are you sure you want to delete it?',
-    'NTC_TEMPLATES_IS_USED' => 'The following templates are used in email marketing records. Are you sure you want to delete them?\n',
+    'NTC_TEMPLATES_IS_USED' => 'The following templates are used in email marketing records. Are you sure you want to delete them?' . PHP_EOL,
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_DELETE_CONFIRMATION_NUM' => 'Are you sure you want to delete the ',
     'NTC_UPDATE_CONFIRMATION_NUM' => 'Are you sure you want to update the ',
@@ -1744,14 +1740,17 @@ $app_strings = array(
     'LBL_MANAGE_SUBSCRIPTIONS' => 'Manage Subscriptions',
     'LBL_MANAGE_SUBSCRIPTIONS_FOR' => 'Manage Subscriptions for ',
     // Ajax status strings
-    'LBL_LOADING' => 'Loading ...',
-    'LBL_SAVING_LAYOUT' => 'Saving Layout ...',
+    'LBL_LOADING' => 'Loading...',
+    'LBL_SEARCHING' => 'Searching...',
+    'LBL_SAVING_LAYOUT' => 'Saving Layout...',
     'LBL_SAVED_LAYOUT' => 'Layout has been saved.',
     'LBL_SAVED' => 'Saved',
     'LBL_SAVING' => 'Saving',
     'LBL_DISPLAY_COLUMNS' => 'Display Columns',
     'LBL_HIDE_COLUMNS' => 'Hide Columns',
-    'LBL_PROCESSING_REQUEST' => 'Processing..',
+    'LBL_SEARCH_CRITERIA' => 'Search Criteria',
+    'LBL_SAVED_VIEWS' => 'Saved Views',
+    'LBL_PROCESSING_REQUEST' => 'Processing...',
     'LBL_REQUEST_PROCESSED' => 'Done',
     'LBL_AJAX_FAILURE' => 'Ajax failure',
     'LBL_MERGE_DUPLICATES' => 'Merge',
@@ -1835,10 +1834,10 @@ $app_strings = array(
 
     // MySugar status strings
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
@@ -2084,10 +2083,20 @@ $app_strings = array(
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
     'LBL_CONFIRM_OPT_IN_TITLE' => 'Confirmed Opt In',
+    'LBL_OPT_IN_TITLE' => 'Opt In',
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
+    'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Confirmed Opt In Fail Date',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
+
+    'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
+    'LBL_PRIMARY_GROUP' => "Primary Group",
+
+    'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
+    'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
+    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
+    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
     // footer
     'LBL_SUITE_TOP' => 'Back to top',
@@ -2097,6 +2106,12 @@ $app_strings = array(
     'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
     'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
     'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
+    'LBL_SEND_CONFIRM_OPT_IN_EMAIL' => 'Send Confirm Opt In Email',
+    'LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON' => 'Confirm Opt In Email sending only for Accounts/Contacts/Leads/Prospects',
+    'LBL_CONFIRM_OPT_IN_IS_DISABLED' => 'Confirm Opt In Email sending is disabled, enable Confirm Opt In option in Email Settings or contact your Administrator.',
+    'LBL_CONTACT_HAS_NO_PRIMARY_EMAIL' => 'Confirm Opt In Email sending is not possible because the Contact has not Primary Email Address',
+    'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sending failed',
+    'LBL_CONFIRM_EMAIL_SENT' => 'Confirm Opt In Email sent successfully',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3548,12 +3563,14 @@ $app_list_strings['surveys_matrix_options'][1] = 'Neither Satisfied nor Dissatis
 $app_list_strings['surveys_matrix_options'][2] = 'Dissatisfied';
 
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'] = 'Pending Confirm opt in, Confirm opt in not sent';
+$app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'] = 'Confirm opt in email sending failed';
 $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'] = 'Pending Confirm opt in, Confirm opt in sent';
 $app_strings['LBL_OPT_IN'] = 'Opted in';
 $app_strings['LBL_OPT_IN_CONFIRMED'] = 'Confirmed Opted in';
 $app_strings['LBL_OPT_IN_OPT_OUT'] = 'Opted Out';
 $app_strings['LBL_OPT_IN_INVALID'] = 'Invalid';
 
+/** @see SugarEmailAddress */
 $app_list_strings['email_settings_opt_in_dom'] = array(
     '' => 'Disabled',
     'opt-in' => 'Opt In',
@@ -3563,3 +3580,7 @@ $app_list_strings['email_settings_opt_in_dom'] = array(
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL'] = 'The confirm opt in email has been added to the email queue for %s email address(es). ';
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'] = 'Unable to send email to %s email address(es), because they are not opted in. ';
 $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%s email address do not have a valid id. ';
+
+$app_strings['ERR_TWO_FACTOR_FAILED'] = 'Two Factor Authentication failed';
+$app_strings['ERR_TWO_FACTOR_CODE_SENT'] = 'Two Factor Authentication code sent.';
+$app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your interest.';

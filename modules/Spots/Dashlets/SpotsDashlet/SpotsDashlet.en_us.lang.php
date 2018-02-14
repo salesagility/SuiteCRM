@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dashletStrings['SpotsDashlet'] = array(
     'LBL_TITLE' => 'Spots',
     'LBL_DESCRIPTION' => 'Spots report of your data',
-    'LBL_SAVING' => 'Saving Spots ...',
+    'LBL_SAVING' => 'Saving Spots...',
     'LBL_SAVED' => 'Saved',
     'LBL_CONFIGURE_TITLE' => 'Title',
     'LBL_SPOTS_TO_LOAD' => 'Spots to Load',

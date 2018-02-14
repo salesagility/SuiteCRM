@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,49 +34,44 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+namespace SuiteCRM\API\v8\Exception;
 
+use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * @global array $app_strings
- * @param \Email $focus
- * @param string $field
- * @param mixed $value
- * @param string $view
- * @return string
+ * Class IdAlreadyExists
+ * @package SuiteCRM\API\v8\Exception
  */
-function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
+class IdAlreadyExists extends ApiException
 {
-    global $app_strings;
-    $log = LoggerManager::getLogger();
+    /**
+     * IdAlreadyInUse constructor.
+     * @param string $message Bean id %s already exists in %s module
+     * @param int $code
+     * @param $previous
+     */
+    public function __construct($message = '', $code = ExceptionCode::API_ID_ALREADY_EXISTS, $previous = null)
+    {
+        parent::__construct('[IdAlreadyExists] '.$message, $code, $previous);
+    }
 
-    $addressField = 'from_name';
+    /**
+     * @return int
+     */
+    public function getHttpStatus()
+    {
+        return 403;
+    }
 
-    if (empty($focus->id)) {
-        $log = LoggerManager::getLogger();
-        $log->warn('Email ID is Empty');
+    /**
+     * @return string
+     */
+    public function getDetail()
+    {
         return '';
     }
-    
-    if (
-        filter_var($focus->from_name, FILTER_VALIDATE_EMAIL) &&
-        !filter_var($focus->from_addr, FILTER_VALIDATE_EMAIL)
-    ) {
-        $log->error('Email address is stored in "from_name" field instead of "from_addr"');
-    }
-
-    if (empty($focus->from_name)) {
-        $addressField = 'from_addr';
-    }
-
-    $emailAddress = $focus->getEmailAddressFromEmailField($addressField);
-    $tick = $emailAddress->getOptInStatusTickHTML();
-    
-    return $tick;
 }

@@ -75,6 +75,21 @@ $EmailTemp->text_only = 0;
 $id =$EmailTemp->save();
 $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
 
+
+//Two Factor Authentication code template
+$EmailTemp = new EmailTemplate();
+$EmailTemp->name = $mod_strings['two_factor_auth_email']['name'];
+$EmailTemp->description = $mod_strings['two_factor_auth_email']['description'];
+$EmailTemp->subject = $mod_strings['two_factor_auth_email']['subject'];
+$EmailTemp->type = $mod_strings['two_factor_auth_email']['type'];
+$EmailTemp->body = $mod_strings['two_factor_auth_email']['txt_body'];
+$EmailTemp->body_html = $mod_strings['two_factor_auth_email']['body'];
+$EmailTemp->deleted = 0;
+$EmailTemp->published = 'off';
+$EmailTemp->text_only = 0;
+$id =$EmailTemp->save();
+$sugar_config['passwordsetting']['factoremailtmpl'] = $id;
+
 // set all other default settings
 $sugar_config['passwordsetting']['forgotpasswordON'] = true;
 $sugar_config['passwordsetting']['SystemGeneratedPasswordON'] = true;

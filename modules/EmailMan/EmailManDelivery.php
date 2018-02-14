@@ -264,12 +264,16 @@ do {
             if ($confirmOptInEnabled) {
                 $emailAddress = new EmailAddress();
                 $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
+                
+                $date = new DateTime();
+                $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                    
                 if (!$emailman->sendOptInEmail($emailAddress, $row['related_type'], $row['related_id'])) {
                     $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));
+                    $emailAddress->confirm_opt_in_fail_date = $now;
                 } else {
                     $GLOBALS['log']->debug("Confirm Opt In Email delivery SUCCESS:" . print_r($row, true));
-                    $date = new DateTime();
-                    
+
                     if (is_string($emailAddress->email_address)) {
                         $emailAddressString = $emailAddress->email_address;
                     } elseif (is_array($emailAddress->email_address) && is_string($emailAddress->email_address[0]['email_address'])) {
@@ -280,7 +284,7 @@ do {
                     }
                     
                     $emailAddress->retrieve($emailAddressString);
-                    $emailAddress->confirm_opt_in_sent_date = $date->format($timedate::DB_DATETIME_FORMAT);
+                    $emailAddress->confirm_opt_in_sent_date = $now;
                     $emailAddress->save();
                     $emailman->retrieve_by_string_fields(array(
                         'related_id' => $emailman->related_id,

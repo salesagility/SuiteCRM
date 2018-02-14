@@ -401,9 +401,9 @@ class EmailsController extends SugarController
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
+                        'reply_to' => $storedOptions['reply_to_addr'],
+                        'name' => $storedOptions['from_name'],
                         'from' => $storedOptions['from_addr'],
-                        'name' => $inboundEmail->name,
-                        'oe' => $oe->mail_smtpuser,
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
@@ -467,7 +467,36 @@ class EmailsController extends SugarController
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
         echo utf8_decode($dataEncoded);
+        $this->view = 'ajax';
+    }
 
+    /**
+     * Returns attachment data to ajax call
+     */
+    public function action_GetDraftAttachmentData()
+    {
+        $data['attachments'] = array();
+
+        if(!empty($_REQUEST['id'])){
+            $bean = BeanFactory::getBean('Emails', $_REQUEST['id']);
+            $data['draft'] = $bean->status == 'draft' ? 1 : 0;
+            $attachmentBeans = BeanFactory::getBean('Notes')
+                ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'");
+            foreach($attachmentBeans as $attachmentBean) {
+                $data['attachments'][] = array(
+                    'id' => $attachmentBean->id,
+                    'name' => $attachmentBean->name,
+                    'file_mime_type' => $attachmentBean->file_mime_type,
+                    'filename' => $attachmentBean->filename,
+                    'parent_type' => $attachmentBean->parent_type,
+                    'parent_id' => $attachmentBean->parent_id,
+                    'description' => $attachmentBean->description,
+                );
+            }
+        }
+
+        $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
+        echo utf8_decode($dataEncoded);
         $this->view = 'ajax';
     }
 
