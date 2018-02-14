@@ -54,6 +54,7 @@ $dictionary['OAuth2Tokens'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'token_is_revoked' => [
             'name' => 'token_is_revoked',
@@ -70,6 +71,7 @@ $dictionary['OAuth2Tokens'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'access_token_expires' => [
             'name' => 'access_token_expires',
@@ -78,6 +80,7 @@ $dictionary['OAuth2Tokens'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'access_token' => [
             'name' => 'access_token',
@@ -87,6 +90,7 @@ $dictionary['OAuth2Tokens'] = [
             'reportable' => false,
             'api-visible' => false,
             'len' => '4000',
+            'inline_edit' => false,
         ],
         'refresh_token' => [
             'name' => 'refresh_token',
@@ -96,6 +100,7 @@ $dictionary['OAuth2Tokens'] = [
             'reportable' => false,
             'api-visible' => false,
             'len' => '4000',
+            'inline_edit' => false,
         ],
         'refresh_token_expires' => [
             'name' => 'refresh_token_expires',
@@ -104,14 +109,18 @@ $dictionary['OAuth2Tokens'] = [
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'grant_type' => [
             'name' => 'grant_type',
             'vname' => 'LBL_GRANT_TYPE',
-            'type' => 'varchar',
+            'type' => 'enum',
+            'options' => 'oauth_grant_type_dom',
+            'default' => 'Password Grant',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'state' => [
             'name' => 'state',
@@ -120,7 +129,8 @@ $dictionary['OAuth2Tokens'] = [
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '1024'
+            'len' => '1024',
+            'inline_edit' => false,
         ],
         'client' => [
             'name' => 'client',
@@ -129,7 +139,8 @@ $dictionary['OAuth2Tokens'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '1024'
+            'len' => '1024',
+            'inline_edit' => false,
         ],
     ],
     'optimistic_locking' => true,

@@ -3945,3 +3945,11 @@ $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%
 $app_strings['ERR_TWO_FACTOR_FAILED'] = 'Two Factor Authentication failed';
 $app_strings['ERR_TWO_FACTOR_CODE_SENT'] = 'Two Factor Authentication code sent.';
 $app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your interest.';
+
+
+$app_list_strings['oauth2_grant_type_dom'] = array(
+    'implicit' => 'Implicit',
+    'client-credentials' => 'Client Credentials',
+    'password' => 'Password Grant',
+    'authorization-code' => 'Authorization Code'
+);

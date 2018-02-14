@@ -43,15 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth Clients',
-    'LBL_MODULE_TITLE' => 'OAuth Clients',
-    'LBL_MODULE_ID'=> 'OAuth Clients',
+    'LBL_MODULE_NAME' => 'OAuth2 Clients',
+    'LBL_MODULE_TITLE' => 'OAuth2 Clients',
+    'LBL_MODULE_ID'=> 'OAuth2 Clients',
     'LBL_IS_CONFIDENTIAL'=> 'Is confidential',
     'LBL_SECRET'=> 'Secret',
     'LBL_SECRET_HASHED'=> 'Change secret',
     'LBL_LEAVE_BLANK'=> 'Leave blank unless changing',
     'LBL_REMEMBER_SECRET'=> 'Please take a note of the secret as it will not be available after you save.',
 
-    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth Clients',
-    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth Client',
+    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth2 Clients',
+    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth2 Client',
 );

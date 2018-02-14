@@ -41,13 +41,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $module_name = 'OAuth2Tokens';
+
+$viewdefs[$module_name]['ListView'] = [
+    'templateMeta' => [
+        'form' => [
+            'actions' => [
+                [
+                    'customCode' => '<a href="javascript:void(0)" class="parent-dropdown-handler" id="delete_listview_top" onclick="return false;"><label class="selected-actions-label hidden-mobile">{$APP.LBL_BULK_ACTION_BUTTON_LABEL_MOBILE}</label><label class="selected-actions-label hidden-desktop">{$APP.LBL_BULK_ACTION_BUTTON_LABEL}</label></a>',
+                ],
+                [
+                    'customCode' => '<a onclick="bulkRevokeTokens()" title="{$MOD.LBL_REVOKE_TOKENS}">{$MOD.LBL_REVOKE_TOKENS}</a>'
+                ],
+            ],
+        ],
+        'includes' => [
+            [
+                'file' => 'modules/OAuth2Tokens/include/RevokeBulk.js',
+            ],
+        ],
+        'options' => [
+            'hide_edit_link' => true,
+        ]
+    ]
+];
+
 $listViewDefs[$module_name] = [
     'client' => [
         'label' => 'LBL_CLIENT',
         'default' => true,
         'link' => true,
     ],
-    'token_type' => [
+    'grant_type' => [
         'label' => 'LBL_ACCESS_TOKEN_TYPE',
         'default' => true,
     ],
@@ -55,12 +79,12 @@ $listViewDefs[$module_name] = [
         'label' => 'LBL_TOKEN_IS_REVOKED',
         'default' => true,
     ],
-    'grant_type' => [
-        'label' => 'LBL_GRANT_TYPE',
+    'access_token_expires' => [
+        'label' => 'LBL_ACCESS_TOKEN_EXPIRES',
         'default' => true,
     ],
-    'state' => [
-        'label' => 'LBL_STATE',
+    'refresh_token_expires' => [
+        'label' => 'LBL_REFRESH_TOKEN_EXPIRES',
         'default' => true,
     ],
 ];
