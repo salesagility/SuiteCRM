@@ -465,11 +465,10 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
-                    ' .
-                        'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="'
-                        . $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name']
-                        . '"  data-email-address="' . $composeData['to_addrs'] . '">';
+                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
+                        'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
+                        $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
+                        '"  data-email-address="' . $composeData['to_addrs'] . '">';
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $optOut = false;
