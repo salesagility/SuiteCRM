@@ -79,9 +79,6 @@ $viewdefs[$module_name]['DetailView'] = [
                     'name' => 'grant_type',
                 ],
                 [
-                    'name' => 'scopes',
-                ],
-                [
                     'name' => 'state',
                 ],
             ],

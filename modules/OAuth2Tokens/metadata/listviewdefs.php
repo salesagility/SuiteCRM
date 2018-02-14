@@ -63,8 +63,4 @@ $listViewDefs[$module_name] = [
         'label' => 'LBL_STATE',
         'default' => true,
     ],
-    'scopes' => [
-        'label' => 'LBL_SCOPES',
-        'default' => true,
-    ],
 ];

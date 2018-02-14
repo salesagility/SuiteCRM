@@ -113,15 +113,6 @@ $dictionary['OAuth2Tokens'] = [
             'reportable' => false,
             'api-visible' => false,
         ],
-        'scopes' => [
-            'name' => 'scopes',
-            'vname' => 'LBL_SCOPES',
-            'type' => 'varchar',
-            'required' => false,
-            'reportable' => false,
-            'api-visible' => false,
-            'len' => '1024'
-        ],
         'state' => [
             'name' => 'state',
             'vname' => 'LBL_STATE',
