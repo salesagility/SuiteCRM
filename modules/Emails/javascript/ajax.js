@@ -342,7 +342,37 @@ var AjaxObject = {
 
   ieSendSuccess: function (o) {
     SUGAR.hideMessageBox();
-    SUGAR.showMessageBox(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT, app_strings.LBL_EMAIL_TEST_NOTIFICATION_SENT, 'plain');
+        var responseObject = YAHOO.lang.JSON.parse(o.responseText);
+        if (responseObject.status) {
+           SUGAR.showMessageBox(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT, app_strings.LBL_EMAIL_TEST_NOTIFICATION_SENT, 'plain');
+        } else {
+
+            var dialogBody =
+                "<div style='padding: 10px'>" +
+                    "<div class='well'>" + responseObject.errorMessage + "</div>" +
+                    "<div >" +
+                       "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" +
+                            app_strings.LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG +
+                        "</button>" +
+                        "<div class='collapse' id='fullSmtpLog'>" +
+                            "<pre style='height: 300px; overflow: scroll;'>" +
+                               responseObject.fullSmtpLog +
+                            "</pre>" +
+                        "</div>" +
+                    "</div>"+
+                "</div>";
+                this.showFullSmtpLogDialog(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS, dialogBody, 'plain');
+        }
+        },
+        showFullSmtpLogDialog: function(headerText, bodyHtml, dialogType) {
+
+                var config = { };
+                config.type = dialogType;
+                config.title = headerText;
+                config.msg = bodyHtml;
+                //config.modal = false;
+                config.width = 600;
+                YAHOO.SUGAR.MessageBox.show(config);
   },
 
   /**

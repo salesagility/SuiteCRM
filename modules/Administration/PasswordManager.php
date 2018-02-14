@@ -138,7 +138,7 @@ if (!empty($_POST['saveConfig'])) {
         $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
         $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
         $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
-        
+
         $configurator->saveConfig();
 
         $focus->saveConfig();
@@ -170,19 +170,11 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-//echo "sugar_config[authenticationClass]: " . $sugar_config['authenticationClass'];
-//if (array_key_exists('authenticationClass', $sugar_config) && $sugar_config['authenticationClass'] == 'SAMLAuthenticate') {
-//   $sugar_smarty->assign('saml_enabled_checked', true);
-//} else {
-//	$sugar_smarty->assign('saml_enabled_checked', false);
-//}
-
-
-if (!function_exists('mcrypt_cbc')) {
-    $sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
-    $sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
-} else {
-    $sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
+if(!function_exists('mcrypt_cbc')){
+	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
+}else{
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
 }
 $sugar_smarty->assign("settings", $focus->settings);
 
