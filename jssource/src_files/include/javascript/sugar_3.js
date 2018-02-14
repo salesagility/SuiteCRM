@@ -2434,25 +2434,50 @@ sugarListView.prototype.check_item = function (cb, form) {
 
 sugarListView.prototype.toggleSelected = function () {
 
-  var numSelected = sugarListView.get_num_selected();
-  var selectedRecords = document.getElementById("selectedRecordsTop");
-  var selectActions = document.getElementById("selectActions");
-  var selectActionsDisabled = document.getElementById("selectActionsDisabled");
-  if (numSelected > 0) {
-    $(selectedRecords).removeAttr("style").addClass("show");
-    $(".selectActionsDisabled").hide();
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).removeAttr("style").addClass("show");
-    });
+    var numSelected = sugarListView.get_num_selected();
+    var selectedRecords = document.getElementById("selectedRecordsTop");
+    var selectActions = document.getElementById("actionLinkTop");
+    var selectActionsDisabled = document.getElementById("select_actions_disabled_top");
+    var selectActionsBottom = document.getElementById("actionLinkBottom");
+    var selectActionsDisabledBottom = document.getElementById("select_actions_disabled_bottom");
 
-  } else {
-    $(selectedRecords).hide();
-    $(".selectActionsDisabled").removeAttr("style").addClass("show");
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).hide();
-    });
-  }
-
+    if (numSelected > 0) {
+        $(selectedRecords).removeAttr("style").addClass("show");
+        $(".selectActionsDisabled").hide();
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('ul[name=selectActionsBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("show").addClass("hide");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+    } else {
+        $(selectedRecords).hide();
+        $(selectActions).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsBottom).removeAttr("style").removeClass("show").addClass("hide");
+        $(".selectActionsDisabled").removeAttr("style").addClass("show");
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("hide").addClass("show");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide").addClass("show");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+    }
 }
 
 /**#28000, remove the  unselect record id from MassUpdate.uid **/
