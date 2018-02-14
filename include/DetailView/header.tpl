@@ -51,7 +51,7 @@ SUGAR.util.doWhen(function(){
 </script>
 
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%" id="">
+<table cellpadding="0" cellspacing="0" border="0" id="" class="action_buttons_container">
 <tr>
 <td class="buttons" align="left" NOWRAP width="80%">
 <div class="actionsContainer">
