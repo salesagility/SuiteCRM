@@ -7437,6 +7437,9 @@ TimeGrid.mixin({
 			startTimeText = this.getEventTimeText(event, null, false); // displayEnd=false
 		}
 
+		var title = event.title;
+        var res = title.split(" ", 1);
+
 		return '<a class="' + classes.join(' ') + '"' +
 			(event.url ?
 				' href="' + htmlEscape(event.url) + '"' :
@@ -7459,7 +7462,7 @@ TimeGrid.mixin({
 						) +
 					(event.title ?
 						'<div class="fc-title">' +
-							(event.title) +
+							(res) +
 						'</div>' :
 						''
 						) +
