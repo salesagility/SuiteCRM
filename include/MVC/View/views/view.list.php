@@ -187,6 +187,13 @@ class ViewList extends SugarView
         if (!isset($_REQUEST['query'])) {
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
+        } elseif (!empty($_REQUEST['update_stored_query'])) {
+            $updateKey = $_REQUEST['update_stored_query_key'];
+            $updateValue = $_REQUEST[$updateKey];
+            $this->storeQuery->loadQuery($this->module);
+            $this->storeQuery->populateRequest();
+            $_REQUEST[$updateKey] = $updateValue;
+            $this->storeQuery->saveFromRequest($this->module);
         } else {
             $this->storeQuery->saveFromRequest($this->module);
         }

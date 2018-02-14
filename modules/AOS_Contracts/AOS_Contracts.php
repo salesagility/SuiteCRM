@@ -73,8 +73,9 @@ class AOS_Contracts extends AOS_Contracts_sugar {
         self::__construct();
     }
 
-	function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['group_id']);
             unset($_POST['product_id']);
             unset($_POST['service_id']);

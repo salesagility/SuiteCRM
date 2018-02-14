@@ -2035,7 +2035,15 @@ class SugarBean
             foreach ($this->email_addresses_non_primary as $mail) {
                 $this->emailAddress->addAddress($mail);
             }
-            $this->emailAddress->save($this->id, $this->module_dir);
+            $this->emailAddress->saveEmail(
+                $this->id,
+                $this->module_dir,
+                '',
+                '',
+                '',
+                '',
+                '',
+                $this->in_workflow);
         }
 
         if (isset($this->custom_fields)) {

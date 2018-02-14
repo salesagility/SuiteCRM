@@ -156,14 +156,6 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-//echo "sugar_config[authenticationClass]: " . $sugar_config['authenticationClass'];
-//if (array_key_exists('authenticationClass', $sugar_config) && $sugar_config['authenticationClass'] == 'SAMLAuthenticate') {
-//   $sugar_smarty->assign('saml_enabled_checked', true);	
-//} else {
-//	$sugar_smarty->assign('saml_enabled_checked', false);
-//}
-
-
 if(!function_exists('mcrypt_cbc')){
 	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
