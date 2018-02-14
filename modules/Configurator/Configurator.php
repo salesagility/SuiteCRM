@@ -377,11 +377,10 @@ class Configurator
     public function getConfirmOptInTemplateId() {
         /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
-        if(!$confirmOptInTemplateId) {
+        if (empty($confirmOptInTemplateId)) {
             $confirmOptInTemplateId = 
-                isset($this->config['aop']['confirm_opt_in_template_id']) ?
-                    $this->config['aop']['confirm_opt_in_template_id'] :
-                    null;
+                isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
+                    $this->config['system_email_templates']['confirm_opt_in_template_id'] : null;
         }
         
         if (!$confirmOptInTemplateId) {

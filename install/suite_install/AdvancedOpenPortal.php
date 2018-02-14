@@ -43,7 +43,6 @@
  */
 function install_aop()
 {
-
     require_once __DIR__ . '/../../modules/EmailTemplates/EmailTemplate.php';
     global $sugar_config;
     $sugar_config['aop']['enable_portal'] = false;
@@ -267,21 +266,6 @@ function getTemplates()
 					     <p><strong>$contact_first_name $contact_last_name, said:</strong></p>
 					     <p style="padding-left:30px;">$aop_case_updates_description</p>
 					     <p>You may review this Case at: $sugarurl/index.php?module=Cases&action=DetailView&record=$acase_id;</p>'
-    );
-
-    $templates['confirm_opt_in_template'] = array(
-        'name' => 'Confirmed Opt In',
-        'published' => 'off',
-        'description' => 'Email template to send to a contact to confirm they have opted in.',
-        'subject' => 'Confirm Opt In',
-        'type' => 'system',
-        'body' => 'Hi $contact_first_name $contact_last_name, \n Please confirm that you have opted in by selecting the following link: $sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_email_address',
-        'body_html' =>
-            '<p>Hi $contact_first_name $contact_last_name,</p>
-             <p>
-                Please confirm that you have opted in by selecting the following link:
-                <a href="$sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_email_address">Opt In</a>
-             </p>'
     );
 
     return $templates;
