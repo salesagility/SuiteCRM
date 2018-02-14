@@ -75,12 +75,16 @@ abstract class DashletGenericChart extends Dashlet
 
     /**
      * Module used in this Dashlet
+     *  
+     * In practive this sets the Module from which vardefs will be loaded into $app_list_strings, $app_strings etc... Don't override this if you want your Dashlet to use the .data.php and .lang.php
+     * files from the Dashlets directory.
+     * 
      * @var string
      */
     protected $_seedName;
 
     /**
-     * Array of fields and thier defintions that we are searching on
+     * Array of fields and their defintions that we are searching on
      * @var array
      */
     protected $_searchFields;
