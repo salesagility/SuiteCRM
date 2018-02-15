@@ -207,6 +207,21 @@ $mod_strings = array(
     'LBL_CLOSE_BUTTON' => 'Close',
 
     'LBL_CREATE_NEW_RECORD' => 'Create Activity',
-    'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LBL_CREATE_CALL' => 'Log Call',
+    'LBL_CREATE_MEETING' => 'Schedule Meeting',
+
+    'LBL_GENERAL_TAB' => 'Details',
+    'LBL_PARTICIPANTS_TAB' => 'Invitees',
+    'LBL_REPEAT_TAB' => 'Recurrence',
+
+    'LBL_REPEAT_TYPE' => 'Repeat',
+    'LBL_REPEAT_INTERVAL' => 'Every',
+    'LBL_REPEAT_END' => 'End',
+    'LBL_REPEAT_END_AFTER' => 'After',
+    'LBL_REPEAT_OCCURRENCES' => 'recurrences',
+    'LBL_REPEAT_END_BY' => 'By',
+    'LBL_REPEAT_DOW' => 'On',
+    'LBL_REPEAT_UNTIL' => 'Repeat Until',
+    'LBL_REPEAT_COUNT' => 'Number of recurrences',
+    'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
 );
