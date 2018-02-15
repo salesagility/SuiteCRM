@@ -219,7 +219,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
                 // return default
                 return 'client_secret';
             } else {
-                return $config['instance_admin_password'];
+                return $config['instance_client_secret'];
             }
         } else {
             return $env;
