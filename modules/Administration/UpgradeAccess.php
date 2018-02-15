@@ -102,7 +102,6 @@ if (!$status) {
     echo '<p>' . $mod_strings['LBL_HT_NO_WRITE'] . "<span class=stop>{$htaccess_file}</span></p>\n";
     echo '<p>' . $mod_strings['LBL_HT_NO_WRITE_2'] . "</p>\n";
     echo "{$redirect_str}\n";
-    exit();
 }
 
 // new content should be prepended to the file
