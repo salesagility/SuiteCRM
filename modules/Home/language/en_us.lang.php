@@ -205,4 +205,8 @@ $mod_strings = array(
     'LBL_SEND_INVITES' => 'Save & Send Invites',
     'LBL_CANCEL_BUTTON' => 'Cancel',
     'LBL_CLOSE_BUTTON' => 'Close',
+
+    'LBL_CREATE_NEW_RECORD' => 'Create Activity',
+    'LNK_NEW_MEETING' => 'Schedule Meeting',
+    'LBL_CREATE_CALL' => 'Log Call',
 );
