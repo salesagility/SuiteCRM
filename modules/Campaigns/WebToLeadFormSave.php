@@ -98,8 +98,12 @@ if (stripos($html, "<html") === false) {
     $html = "<html {$langHeader}><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body>" . $html . "</body></html>";
 }
 
-$html = str_replace('Â', ' ', utf8_encode($html));
+if (!mb_detect_encoding($str, 'UTF-8')) {
+    $html = utf8_encode($html);
+}
+$html = str_replace('Â', ' ', $html);
 file_put_contents($form_file, $html);
+$html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
 $xtpl->assign("MOD", $mod_strings);
@@ -107,7 +111,7 @@ $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";
 $webformlink .= "<a href=\"index.php?entryPoint=download&id={$guid}&isTempFile=1&tempName=WebToLeadForm.html&type=temp\">$mod_strings[LBL_DOWNLOAD_WEB_TO_LEAD_FORM]</a>";
 $xtpl->assign("LINK_TO_WEB_FORM",$webformlink);
-$xtpl->assign("RAW_SOURCE", htmlspecialchars($html, ENT_QUOTES, 'iso8859-1'));
+$xtpl->assign("RAW_SOURCE", $html);
 $xtpl->parse("main.copy_source");
 $xtpl->parse("main");
 $xtpl->out("main");
