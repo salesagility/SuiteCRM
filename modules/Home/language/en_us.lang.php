@@ -199,4 +199,10 @@ $mod_strings = array(
 
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',
 
+    'LBL_SAVE_BUTTON' => 'Save',
+    'LBL_DELETE_BUTTON' => 'Delete',
+    'LBL_APPLY_BUTTON' => 'Apply',
+    'LBL_SEND_INVITES' => 'Save & Send Invites',
+    'LBL_CANCEL_BUTTON' => 'Cancel',
+    'LBL_CLOSE_BUTTON' => 'Close',
 );
