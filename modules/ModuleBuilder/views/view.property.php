@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,7 +77,7 @@ class ViewProperty extends SugarView
     }
 
 
-    function init () // pseduo-constuctor - given a well-known name to allow subclasses to call this classes constructor
+    function init($bean = NULL, $view_object_map = Array) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
     {
         $this->editModule = (! empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
         $this->editPackage = (! empty($_REQUEST['view_package'])) ? $_REQUEST['view_package'] : null;

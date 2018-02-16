@@ -671,7 +671,7 @@ $contact_user_link_guid',
 
 	'STAT_CONFIGURATION' => 'Configuration relationships...',
 	'STAT_CREATE_DB' => 'Create database...',
-	//'STAT_CREATE_DB_TABLE' => 'Create database... (table: %s)',
+
 	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
 	'STAT_INSTALL_FINISH' => 'Install finish...',
 	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
