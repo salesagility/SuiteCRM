@@ -332,12 +332,16 @@ class jjwg_MapsController extends SugarController {
 
         // Target List
         $list_id = (!empty($_POST['list_id'])) ? $_POST['list_id'] : '';
+        /** @var ProspectList $list */
         $list = get_module_info('ProspectLists');
         if (!empty($list_id) && is_guid($list_id)) {
             $list->retrieve($list_id);
-            $result['list'] = $list;
+            $result['list']['name'] = $list->name;
         }
         // Selected Area IDs - Validate
+        if (is_string($_POST['selected_ids'])) {
+            $_POST['selected_ids'] = explode(',', $_POST['selected_ids']);
+        }
         $selected_ids = array();
         foreach ($_POST['selected_ids'] as $sel_id) {
             if (is_guid($sel_id)) {

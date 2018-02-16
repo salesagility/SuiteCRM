@@ -278,7 +278,7 @@ HTML;
 			convert_urls : false,
 			plugin_insertdate_dateFormat : '{DATE '+df+'}',
 			pagebreak_separator : "<pagebreak />",
-			extended_valid_elements : "textblock",
+			extended_valid_elements : "textblock,barcode[*]",
 			custom_elements: "textblock",
 		});
 
@@ -302,7 +302,7 @@ HTML;
 			convert_urls : false,
 			remove_redundant_brs : true,
 			plugin_insertdate_dateFormat : '{DATE '+df+'}',
-			extended_valid_elements : "textblock",
+			extended_valid_elements : "textblock,barcode[*]",
 			custom_elements: "textblock",
 		});
 

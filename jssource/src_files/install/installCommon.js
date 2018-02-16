@@ -40,7 +40,7 @@
 
 function showHelp(step)
 {
-  url = 'http://www.sugarcrm.com/forums/';
+  url = 'https://suitecrm.com/suitecrm/forum/suite-forum';
   name = 'helpWindowPopup';
   window.open(url,name);
 }
