@@ -57,8 +57,6 @@ global $app_strings;
 //-----------begin replacing text input tags that have been marked with text area tags
 //get array of text areas strings to process
 $bodyHTML = html_entity_decode($_REQUEST['body_html'],ENT_QUOTES);
-//Bug53791
-$bodyHTML = str_replace(chr(160), " ", $bodyHTML);
 
 while (strpos($bodyHTML, "ta_replace") !== false){
 
