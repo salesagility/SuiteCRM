@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -256,7 +256,7 @@ $mod_strings = array(
 	'LBL_DISABLED_DESCRIPTION_2'		=> 'After this change has been made, you may click the "Start" button below to begin your installation. <i>After the installation is complete, you will want to change the value for \'installer_locked\' to \'true\'.</i>',
 	'LBL_DISABLED_DESCRIPTION'			=> 'The installer has already been run once. As a safety measure, it has been disabled from running a second time. If you are absolutely sure you want to run it again, please go to your config.php file and locate (or add) a variable called \'installer_locked\' and set it to \'false\'. The line should look like this:',
 	'LBL_DISABLED_HELP_1'				=> 'For installation help, please visit the SuiteCRM',
-	'LBL_DISABLED_HELP_LNK'             => 'http://www.suitecrm.com/forum/index',
+	'LBL_DISABLED_HELP_LNK'             => 'https://suitecrm.com/suitecrm/forum/suite-forum',
 	'LBL_DISABLED_HELP_2'				=> 'support forums',
 	'LBL_DISABLED_TITLE_2'				=> 'SuiteCRM Installation has been Disabled',
 	'LBL_DISABLED_TITLE'				=> 'SuiteCRM Installation Disabled',

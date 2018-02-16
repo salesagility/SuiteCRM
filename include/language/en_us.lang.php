@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -3360,7 +3360,6 @@ $app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
 $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
-$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
 $app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
 $app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';

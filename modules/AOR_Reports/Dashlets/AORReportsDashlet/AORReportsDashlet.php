@@ -68,7 +68,7 @@ class AORReportsDashlet extends Dashlet
         $dashletTemplate = get_custom_file_if_exists('modules/AOR_Reports/Dashlets/AORReportsDashlet/dashlet.tpl');
         $dashletSmarty->assign('MOD', $mod_strings);
         $dashletSmarty->assign('dashlet_id', $this->id);
-        $dashletSmarty->assign('report_id', $this->report->id);
+        $dashletSmarty->assign('report_id', $this->report['id']);
         $dashletSmarty->assign('chartHTML', $this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
         $dashletSmarty->assign('parameters', json_encode(array(

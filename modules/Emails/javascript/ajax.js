@@ -688,20 +688,13 @@ AjaxObject.detailView = {
 				shadow	: true
 			});
 
-            SED.quickCreateDialog.renderEvent.subscribe(function() {
-            	var viewH = YAHOO.util.Dom.getViewportHeight();
-            	var contH = 0;
-            	for (var i in this.body.childNodes) {
-            		if (this.body.childNodes[i].clientHeight) {
-            			contH += this.body.childNodes[i].clientHeight;
-            		} else if (this.body.childNodes[i].offsetHeight) {
-            			contH += this.body.childNodes[i].offsetHeight;
-            		} // if
-            	}
-        		this.body.style.width = "800px";
-        		this.body.style.height = (viewH - 75 > contH ? (contH + 10) : (viewH - 75)) + "px";
-        		this.body.style.overflow = "auto";
-            }, SED.quickCreateDialog);
+      SED.quickCreateDialog.renderEvent.subscribe(function () {
+        var viewH = YAHOO.util.Dom.getViewportHeight();
+        var contH = 500;
+        this.body.style.width = "800px";
+        this.body.style.height = (viewH - 75 > contH ? (contH + 10) : (viewH - 75)) + "px";
+        this.body.style.overflow = "auto";
+      }, SED.quickCreateDialog);
 
             SED.quickCreateDialog.hideEvent.subscribe(function(){
 				var qsFields = YAHOO.util.Dom.getElementsByClassName('.sqsEnabled', null, this.body);
