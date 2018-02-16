@@ -91,7 +91,7 @@ if ($count > 0) {
             $query .= ' OR ';
         }
         $first = false;
-        $duplicateIdQuoted = $db->quote($dublicate_id);
+        $duplicateIdQuoted = $db->quote($duplicate_id);
         $query .= "id='$duplicateIdQuoted' ";
     }
     $query .= ')';
