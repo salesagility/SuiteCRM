@@ -199,4 +199,29 @@ $mod_strings = array(
 
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',
 
+    'LBL_SAVE_BUTTON' => 'Save',
+    'LBL_DELETE_BUTTON' => 'Delete',
+    'LBL_APPLY_BUTTON' => 'Apply',
+    'LBL_SEND_INVITES' => 'Save & Send Invites',
+    'LBL_CANCEL_BUTTON' => 'Cancel',
+    'LBL_CLOSE_BUTTON' => 'Close',
+
+    'LBL_CREATE_NEW_RECORD' => 'Create Activity',
+    'LBL_CREATE_CALL' => 'Log Call',
+    'LBL_CREATE_MEETING' => 'Schedule Meeting',
+
+    'LBL_GENERAL_TAB' => 'Details',
+    'LBL_PARTICIPANTS_TAB' => 'Invitees',
+    'LBL_REPEAT_TAB' => 'Recurrence',
+
+    'LBL_REPEAT_TYPE' => 'Repeat',
+    'LBL_REPEAT_INTERVAL' => 'Every',
+    'LBL_REPEAT_END' => 'End',
+    'LBL_REPEAT_END_AFTER' => 'After',
+    'LBL_REPEAT_OCCURRENCES' => 'recurrences',
+    'LBL_REPEAT_END_BY' => 'By',
+    'LBL_REPEAT_DOW' => 'On',
+    'LBL_REPEAT_UNTIL' => 'Repeat Until',
+    'LBL_REPEAT_COUNT' => 'Number of recurrences',
+    'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
 );
