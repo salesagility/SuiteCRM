@@ -122,6 +122,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'DynamicFields' => 'DynamicFields',
                 'EAPM' => 'EAPM',
                 'EmailAddresses' => 'EmailAddresses',
+                'EmailAddressesAudit' => 'EmailAddressesAudit',
                 'EmailMan' => 'EmailMan',
                 'EmailMarketing' => 'EmailMarketing',
                 'Emails' => 'Emails',
