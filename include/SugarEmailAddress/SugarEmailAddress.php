@@ -2049,9 +2049,7 @@ class SugarEmailAddress extends SugarBean
         return $ret;
     }
 
-
-} // end class def
-
+    /**
      * Determines the opt in status without considering the configuration
      * @return string
      * @throws  RuntimeException
