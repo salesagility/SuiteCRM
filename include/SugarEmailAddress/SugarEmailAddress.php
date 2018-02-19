@@ -2058,7 +2058,6 @@ class SugarEmailAddress extends SugarBean
     {
         $log = LoggerManager::getLogger();
 
-
         if (!in_array($this->module_name, self::$doNotDisplayOptInTickForModule, true)) {
             if ((int)$this->invalid_email === 1) {
                 $ret = self::COI_FLAG_INVALID;
