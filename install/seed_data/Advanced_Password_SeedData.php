@@ -59,7 +59,7 @@ global $timedate;
 //Sent when the admin generate a new password
 if (
     !isset($sugar_config['passwordsetting']['generatepasswordtmpl'])
-    && empty($sugar_config['passwordsetting']['generatepasswordtmpl'])
+    || empty($sugar_config['passwordsetting']['generatepasswordtmpl'])
 ) {
     $EmailTemp = new EmailTemplate();
     $EmailTemp->name = $mod_strings['advanced_password_new_account_email']['name'];
@@ -79,7 +79,7 @@ if (
 //User generate a link to set a new password
 if (
     !isset($sugar_config['passwordsetting']['lostpasswordtmpl'])
-    && empty($sugar_config['passwordsetting']['lostpasswordtmpl'])
+    || empty($sugar_config['passwordsetting']['lostpasswordtmpl'])
 ) {
     $EmailTemp = new EmailTemplate();
     $EmailTemp->name = $mod_strings['advanced_password_forgot_password_email']['name'];
@@ -99,7 +99,7 @@ if (
 //Two Factor Authentication code template
 if (
     !isset($sugar_config['passwordsetting']['factoremailtmpl'])
-    && empty($sugar_config['passwordsetting']['factoremailtmpl'])
+    || empty($sugar_config['passwordsetting']['factoremailtmpl'])
 ) {
     $EmailTemp = new EmailTemplate();
     $EmailTemp->name = $mod_strings['two_factor_auth_email']['name'];
