@@ -43,9 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require __DIR__ .'/../../config.php';
+require_once __DIR__ .'/../language/en_us.lang.php';
 global $sugar_config;
 global $timedate;
-global $mod_strings;
+
 
 //Sent when the admin generate a new password
 if (
