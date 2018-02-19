@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -118,22 +118,23 @@ class AOR_Field extends Basic
 
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
-                    if (is_array($post_data[$key . $field_name])) {
-                        if ($field_name != 'group_display' && isset($post_data[$key . $field_name][$i])) {
-                            if (is_array($post_data[$key . $field_name][$i])) {
-                                $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
+                    $postField = isset($post_data[$key . $field_name]) ? $post_data[$key . $field_name] : null;
+                    if (is_array($postField)) {
+                        if ($field_name != 'group_display' && isset($postField[$i])) {
+                            if (is_array($postField[$i])) {
+                                $postField[$i] = base64_encode(serialize($postField[$i]));
                             } else if ($field_name == 'value') {
-                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key . $field_name][$i]);
+                                $postField[$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $postField[$i]);
                             }
                             if ($field_name == 'module_path') {
-                                $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_name][$i])));
+                                $postField[$i] = base64_encode(serialize(explode(":", $postField[$i])));
                             }
-                            $field->$field_name = $post_data[$key . $field_name][$i];
+                            $field->$field_name = $postField[$i];
                         }
-                    } else if (is_null($post_data[$key . $field_name])) {
+                    } else if (is_null($postField)) {
                         // do nothing
                     } else {
-                        throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($post_data[$key . $field_name]));
+                        throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));
                     }
 
                 }

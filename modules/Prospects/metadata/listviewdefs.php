@@ -72,4 +72,3 @@ $listViewDefs['Prospects'] = array(
 	    'default' => true,
 	  ),  
 );
-?>

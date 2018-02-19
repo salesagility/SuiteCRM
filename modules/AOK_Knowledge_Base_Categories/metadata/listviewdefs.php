@@ -88,4 +88,3 @@ array (
     'default' => false,
   ),
 );
-?>

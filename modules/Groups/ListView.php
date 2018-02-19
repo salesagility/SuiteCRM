@@ -54,4 +54,3 @@ $ListView->setHeaderTitle($mod_strings['LBL_LIST_TITLE']);
 $ListView->setQuery($where, "", "last_name, first_name", "USER");
 $ListView->show_mass_update=false;
 $ListView->processListView($focus, "main", "USER");
-?>

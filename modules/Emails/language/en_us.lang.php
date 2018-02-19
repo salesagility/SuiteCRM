@@ -86,6 +86,7 @@ $mod_strings = array(
     'LBL_DESCRIPTION' => 'Description',
     'LBL_EDIT_ALT_TEXT' => 'Edit Plain Text',
     'LBL_SEND_IN_PLAIN_TEXT' => 'Send in Plain Text',
+    'LBL_SEND_CONFIRM_OPT_IN' => 'Send Opt In Email',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_EMAIL_SELECTOR_SELECT' => 'Select',
     'LBL_EMAIL_SELECTOR_CLEAR' => 'Clear',
@@ -370,9 +371,12 @@ $mod_strings = array(
     'LBL_MARK_READ' => 'Mark As Read',
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
+    'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Opt In Email Sent',
+    'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Opt In Email Failed',
 
     'ERR_NO_RETURN_ID' => 'Attachment not found.',
 
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
 

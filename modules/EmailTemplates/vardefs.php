@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -59,14 +59,16 @@ $dictionary['EmailTemplate'] = array(
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record created'
+            'comment' => 'Date record created',
+            'inline_edit' => false
         ),
         'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record last modified'
+            'comment' => 'Date record last modified',
+            'inline_edit' => false
         ),
         'modified_user_id' => array(
             'name' => 'modified_user_id',

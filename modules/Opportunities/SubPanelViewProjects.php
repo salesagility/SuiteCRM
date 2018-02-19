@@ -110,5 +110,3 @@ $ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->g
 $ListView->setHeaderTitle($project_module_strings['LBL_OPPORTUNITY_SUBPANEL_TITLE']. $header_text );
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "OPPORTUNITY");
-
-?>

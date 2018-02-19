@@ -431,5 +431,3 @@ function get_farthest_reach(){
 
 //end class RelationshipHandler
 }
-
-?>

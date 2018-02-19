@@ -57,6 +57,4 @@ $subpanel_layout = array(
 			 'width' => '20%',
 		),
 	),
-);		
-
-?>
+);

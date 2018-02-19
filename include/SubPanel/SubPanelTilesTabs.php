@@ -273,4 +273,3 @@ class SubPanelTilesTabs extends SubPanelTiles
 		return $tabs;
 	}
 }
-?>

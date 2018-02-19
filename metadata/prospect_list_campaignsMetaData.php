@@ -97,6 +97,4 @@ $dictionary['prospect_list_campaigns'] = array (
 		'relationship_type'=>'many-to-many',
 		'join_table'=> 'prospect_list_campaigns', 'join_key_lhs'=>'prospect_list_id', 'join_key_rhs'=>'campaign_id')
 	)
-)
-                                  
-?>
+);

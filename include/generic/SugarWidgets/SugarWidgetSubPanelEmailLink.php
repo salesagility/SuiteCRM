@@ -108,8 +108,13 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
             }
             require_once('modules/Emails/EmailUI.php');
             $emailUi = new EmailUI();
-            $link = $emailUi->populateComposeViewFields($bean = null, $emailField = 'email1', $checkAllEmail = true,
-                $composeData);
+            $link = $emailUi->populateComposeViewFields(
+                $bean = null,
+                $emailField = 'email1',
+                $checkAllEmail = true,
+                '',
+                $composeData
+            );
         } else {
             $link = '<a href="mailto:' . $value . '" >';
         }

@@ -99,5 +99,6 @@ $mod_strings = array(
     'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
     'LBL_WIDTH' => 'Width Default',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
 

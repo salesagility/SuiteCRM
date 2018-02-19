@@ -157,4 +157,3 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	}
 
 }
-?>

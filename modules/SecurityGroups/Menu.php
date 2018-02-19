@@ -15,4 +15,3 @@ if(is_admin($current_user)) {
 	$module_menu[] = Array("index.php?module=ACLRoles&action=index&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_MANAGE_ROLES_TITLE'],"Role_Management");
 	$module_menu[] = Array("index.php?module=SecurityGroups&action=config&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_CONFIG_SECURITYGROUPS_TITLE'],"Security_Suite_Settings");
 }
-?>

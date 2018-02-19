@@ -69,4 +69,3 @@ class ViewFavorites extends SugarView
  		$this->ss->display('include/MVC/View/tpls/favorites.tpl');
  	}
 }
-?>

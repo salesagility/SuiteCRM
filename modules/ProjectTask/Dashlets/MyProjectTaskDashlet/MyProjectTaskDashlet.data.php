@@ -157,5 +157,3 @@ $dashletData['MyProjectTaskDashlet']['columns'] = array(
             'default' => false,
         ),
 );
-
-?>

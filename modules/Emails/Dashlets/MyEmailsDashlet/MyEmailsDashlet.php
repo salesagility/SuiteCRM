@@ -78,7 +78,7 @@ class MyEmailsDashlet extends DashletGeneric {
     }
 
 
-    function process() {
+    function process($lvsParams = array(), $id = null) {
         global $current_language, $app_list_strings, $image_path, $current_user;
         //$where = 'emails.deleted = 0 AND emails.assigned_user_id = \''.$current_user->id.'\' AND emails.type = \'inbound\' AND emails.status = \'unread\'';
         $mod_strings = return_module_language($current_language, 'Emails');
@@ -155,4 +155,3 @@ EOQ;
     }
 }
 
-?>

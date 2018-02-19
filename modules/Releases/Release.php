@@ -171,5 +171,3 @@ class Release extends SugarBean {
 
 
 }
-
-?>

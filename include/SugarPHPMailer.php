@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -63,6 +63,11 @@ class SugarPHPMailer extends PHPMailer
     public $isHostEmpty = false;
     public $opensslOpened = true;
     public $fullSmtpLog='';
+
+    /**
+     * @var string
+     */
+    public $Body_html;
 
     /**
      * Constructor.
@@ -410,11 +415,27 @@ eoq;
     }
 
     /**
+     * Replace an Email Template variable placeholder in the email contents
+     * such as Subject, Body Body_html and BodyAlt.
+     * Call this helper function directly before send the email
+     * to replace variables in email contents.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function replace($key, $value) {
+        $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
+        $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
+        $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
+        $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
+    }
+
+    /**
      * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues
      *
      * @return bool
      */
-    public function send() 
+    public function send()
     {
         //Use these to override some fields for tests when debugging SMTP issues:
         //$this->Host     = "smtp.myserver.com";
@@ -433,8 +454,8 @@ eoq;
 
             // pass callabck function for PHPMailer to call to provide log :
             $this->Debugoutput = function($str, $level) {
-                // obfuscate part of response if previous line was a server 334 request, for authentication data: 
-                static $previousIs334 = false;  
+                // obfuscate part of response if previous line was a server 334 request, for authentication data:
+                static $previousIs334 = false;
                 if ($previousIs334) {
                     $this->fullSmtpLog .= "$level: CLIENT -> SERVER: ---obfuscated---\n";
                 } else {

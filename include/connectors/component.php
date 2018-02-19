@@ -56,10 +56,11 @@ class component{
 	 * and loads the SugarBean's fields with the results as defined in the connector
 	 * loadBean configuration mapping
 	 *
-	 * @param $args Array of arguments to pass into getItem
-	 * @param $module String value of the module to map bean to
-	 * @param $bean SugarBean instance to load values into
+	 * @param array $args arguments to pass into getItem
+	 * @param string|null $module value of the module to map bean to
+	 * @param SugarBean|null $bean instance to load values into
 	 * @throws Exception Thrown if results could not be loaded into bean
+	 * @return mixed
 	 */
 	public function fillBean($args=array(), $module=null, $bean=null) {
 	    $result = null;
@@ -81,10 +82,11 @@ class component{
 	 * and loads the SugarBean's fields with the results as defined in the connector
 	 * loadBean configuration mapping
 	 *
-	 * @param $args Array of arguments to pass into getItem
-	 * @param $module String value of the module to map bean to
-	 * @param $bean Array to load SugarBean intances into
+	 * @param array $args arguments to pass into getItem
+	 * @param string|null $module value of the module to map bean to
+	 * @param SugarBean[] $beans load SugarBean instances into
 	 * @throws Exception Thrown if errors are found
+	 * @return mixed
 	 */
 	public function fillBeans($args=array(), $module=null, $beans=array()) {
 		$results = array();
@@ -200,35 +202,38 @@ class component{
  	/**
  	 * mapInput
  	 */
- 	public function mapInput($inputData, $module){
- 		$input_params = array();
- 		$map = $this->getMapping();
- 		if(empty($map['beans'][$module])) {
- 		   return $input_params;
- 		}
- 		$mapping = array_flip($map['beans'][$module]);
- 		$field_defs = $this->getFieldDefs();
- 		foreach($inputData as $arg=>$val){
- 			if(!empty($mapping[$arg]) || !empty($field_defs[$arg])) {
- 				if(!empty($mapping[$arg])){
- 					$arg = $mapping[$arg];
- 				}
-				if(!empty($field_defs[$arg]['input'])){
-					$in_field = $field_defs[$arg]['input'];
-					$temp = explode('.', $in_field);
-					$eval_code = "\$input_params";
-					foreach($temp as $arr_key) {
-						$eval_code .= '[\'' . $arr_key . '\']';
-					}
-					$eval_code .= "= \$val;";
-					eval($eval_code);
-				} else {
-					$input_params[$arg] = $val;
-				}
- 			} //if
-		} //foreach
-		return $input_params;
- 	}
+    public function mapInput($inputData, $module)
+    {
+        $input_params = array();
+        $map = $this->getMapping();
+        if (empty($map['beans'][$module])) {
+            return $input_params;
+        }
+        $mapping = array_flip($map['beans'][$module]);
+        $field_defs = $this->getFieldDefs();
+        foreach ($inputData as $arg => $val) {
+            if (!empty($mapping[$arg]) || !empty($field_defs[$arg])) {
+                if (!empty($mapping[$arg])) {
+                    $arg = $mapping[$arg];
+                }
+                if (!empty($field_defs[$arg]['input'])) {
+                    $in_field = $field_defs[$arg]['input'];
+                    $temp = explode('.', $in_field);
+                    $eval_code = "\$input_params";
+                    foreach ($temp as $arr_key) {
+                        $eval_code .= '[\'' . $arr_key . '\']';
+                    }
+                    $eval_code .= "= \$val;";
+                    eval($eval_code);
+                } else {
+                    $input_params[$arg] = $val;
+                }
+            } //if
+        } //foreach
+
+        return $input_params;
+    }
+
 
  	public function mapOutput($bean, $result){
  		if(is_object($bean)) {
@@ -346,4 +351,3 @@ class component{
  		$this->_source = $source;
  	}
 }
-?>

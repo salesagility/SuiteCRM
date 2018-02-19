@@ -55,4 +55,3 @@ $searchFields[$module_name] =
 			                        and sugarfavorites.assigned_user_id = "{0}"',
 			'db_field'=>array('id')),
 	);
-?>

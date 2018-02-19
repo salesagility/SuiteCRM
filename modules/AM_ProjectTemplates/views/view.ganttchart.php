@@ -199,7 +199,9 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
                             </script>
 							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
                              <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
-							 <span style="position: relative;"  id="copy_all_tasks_help"><!--not_in_theme!--><img border="0" src="themes/SuiteR/images/info_inline.gif" alt="Help class="info" vertical-align="middle"></span>
+							 <span style="position: relative;"  id="copy_all_tasks_help">
+							 '.SugarThemeRegistry::current()->getImage('info_inline','vertical-align="middle"  border="0"',null,null,'.gif').'
+							 </span>
 							<script type="text/javascript">
 
 									var help = $("#copy_all_tasks_help");

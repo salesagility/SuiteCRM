@@ -101,4 +101,3 @@ class ViewSugarpdf extends SugarView{
      }
 
 }
-?>

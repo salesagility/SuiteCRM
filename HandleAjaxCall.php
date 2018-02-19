@@ -56,4 +56,3 @@ if(!is_admin($GLOBALS['current_user'])){
         echo 'no method';
     }
    // sugar_cleanup();
-?>

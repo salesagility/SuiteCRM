@@ -444,5 +444,3 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 }
-
-?>

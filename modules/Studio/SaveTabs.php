@@ -49,4 +49,3 @@ if(!empty($_POST['grouptab_lang'])){
 }else{
 	header('Location: index.php?module=Studio&action=TabGroups');	
 }
-?>
