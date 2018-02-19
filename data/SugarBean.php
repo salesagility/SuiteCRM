@@ -2388,7 +2388,15 @@ class SugarBean
                 foreach ($this->email_addresses_non_primary as $mail) {
                     $this->emailAddress->addAddress($mail);
                 }
-                $this->emailAddress->save($this->id, $this->module_dir);
+                $this->emailAddress->saveEmail(
+                    $this->id,
+                    $this->module_dir,
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    $this->in_workflow);
             }
         }
 
@@ -4499,7 +4507,7 @@ class SugarBean
      * passed value is used
      * @param bool $encode Optional, default true, encodes the values fetched from the database.
      * @param bool $deleted Optional, default true, if set to false deleted filter will not be added.
-     * @return SugarBean
+     * @return SugarBean|null
      *
      * Internal function, do not override.
      */

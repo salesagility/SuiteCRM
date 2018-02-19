@@ -42,9 +42,50 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OAuth2Clients extends SugarBean {
+/**
+ * Class OAuth2Clients
+ */
+class OAuth2Clients extends SugarBean
+{
+    /**
+     * @var string
+     */
     public $table_name = 'oauth2clients';
+
+    /**
+     * @var string
+     */
     public $object_name = 'OAuth2Clients';
+
+    /**
+     * @var string
+     */
     public $module_dir = 'OAuth2Clients';
+
+    /**
+     * @var bool
+     */
     public $disable_row_level_security = true;
+
+    /**
+     * @see SugarBean::get_summary_text()
+     */
+    public function get_summary_text()
+    {
+        return "$this->name";
+    }
+
+    /**
+     * @see SugarBean::save()
+     *
+     * @param bool $check_notify
+     * @return string ID
+     */
+    public function save($check_notify = false)
+    {
+        if (!empty($_REQUEST['new_secret'])) {
+            $this->secret = crypt($_REQUEST['new_secret']);
+        }
+        return parent::save();
+    }
 }

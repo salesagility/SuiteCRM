@@ -208,16 +208,53 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         
         
         if (!empty($optInEmailFields)) {
+            // Look for opted out
+            $optedOut = array();
+            foreach ($optInEmailFields as $i => $optInEmailField) {
+                if (stristr($optInEmailField, '_default') !== false) {
+                    $emailField = str_replace('_default', '', $optInEmailField);
+
+                    if(!in_array($emailField, $optInEmailFields)) {
+                        $optedOut[] = $emailField;
+                    }
+
+                    $optInEmailFields[$i] = $emailField;
+                }
+            }
+
+            $optInEmailFields = array_unique($optInEmailFields);
+
             foreach ($optInEmailFields as $optInEmailField) {
                 if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
-                    $sea = new SugarEmailAddress();
+                    $sea = new EmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
-                        $sea->optIn();
+                        if(in_array($optInEmailField, $optedOut)) {
+                            $sea->resetOptIn();
+                            continue;
+                        } else {
+                            $sea->optIn();
+                        }
+
+                        $configurator = new Configurator();
+                        if($configurator->isConfirmOptInEnabled()) {
+                            $emailman = new EmailMan();
+                            $date = new DateTime();
+                            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                            
+                            if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                                $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
+                                $sea->confirm_opt_in_fail_date = $now;
+                            } else {
+                                $sea->confirm_opt_in_sent_date = $now;
+                            }
+                            
+                        }
                         $savedRequest = $_REQUEST;
                         $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);
                         $_REQUEST = $savedRequest;
+                        $sea->save();
                     } else {
                         $msg = 'Error retrieving an email address.';
                         LoggerManager::getLogger()->fatal($msg);
@@ -294,8 +331,15 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
+                
+                if(isset($errors) && $errors) {
+                    $log = LoggerManager::getLogger();
+                    $log->error('Success but some error occured: ' . implode(', ', $errors)); 
+                }
+                
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+                echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
+                
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }

@@ -767,8 +767,10 @@ class UserTest extends \Codeception\Test\Unit
         $emailAddress =& $account->emailAddress;
         $emailAddress->addAddress('abc@email.com');
 
-        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
-                    data-module="Accounts" data-record-id="" data-module-name="test"  data-email-address="abc@email.com">';
+        $expected =
+            '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);" data-module="Accounts" '
+            . 'data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $account);
         $this->assertSame($expected, $actual);
 
@@ -781,8 +783,10 @@ class UserTest extends \Codeception\Test\Unit
         $emailAddress =& $contact->emailAddress;
         $emailAddress->addAddress('abc@email.com');
 
-        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" 
-                    data-module="Contacts" data-record-id="" data-module-name="test"  data-email-address="abc@email.com">';
+        $expected =
+            '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);" data-module="Contacts"'
+            . ' data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
     }
@@ -800,7 +804,10 @@ class UserTest extends \Codeception\Test\Unit
         $account = new Account();
         $account->name = "test";
 
-        $expected = '<a class="email-link" href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name="test"  data-email-address="">';
+        $expected =
+            '<a class="email-link" href="javascript:void(0);"'
+            . ' onclick=" $(document).openComposeViewModal(this);" data-module="Accounts"'
+            . ' data-record-id="" data-module-name="test"  data-email-address=""></a>';
         $actual = $user->getEmailLink("name", $account);
         $this->assertSame($expected, $actual);
 
@@ -809,7 +816,10 @@ class UserTest extends \Codeception\Test\Unit
         $contact = new Contact();
         $contact->name = "test";
 
-        $expected = "<a href=\"javascript:void(0);\"  onclick=\" $(document).openComposeViewModal(this);\" data-module=\"Contacts\" data-record-id=\"\" data-module-name=\"test\"  data-email-address=\"\">";
+        $expected =
+            '<a href="javascript:void(0);"'
+            . ' onclick="$(document).openComposeViewModal(this);" data-module="Contacts"'
+            . ' data-record-id="" data-module-name="test" data-email-address=""></a>';
         $actual = $user->getEmailLink("name", $contact);
         $this->assertSame($expected, $actual);
     }

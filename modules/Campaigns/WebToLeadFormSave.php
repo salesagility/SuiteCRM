@@ -97,6 +97,8 @@ if (stripos($html, "<html") === false) {
     $langHeader = get_language_header();
     $html = "<html {$langHeader}><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body>" . $html . "</body></html>";
 }
+
+$html = str_replace('Â', ' ', utf8_encode($html));
 file_put_contents($form_file, $html);
 
 $xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');

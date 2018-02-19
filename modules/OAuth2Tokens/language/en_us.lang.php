@@ -43,7 +43,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth2Tokens',
-    'LBL_MODULE_TITLE' => 'OAuth2Tokens',
-    'LBL_MODULE_ID'=> 'OAuth2Tokens',
+    'LBL_MODULE_NAME' => 'OAuth2 Tokens',
+    'LBL_MODULE_TITLE' => 'OAuth2 Tokens',
+    'LBL_MODULE_ID'=> 'OAuth2 Tokens',
+    'LBL_CLIENT'=> 'Client',
+    'LBL_TOKEN_IS_REVOKED'=> 'Revoked',
+    'LBL_ACCESS_TOKEN_TYPE'=> 'Token type',
+    'LBL_ACCESS_TOKEN_EXPIRES'=> 'Access token expires',
+    'LBL_REFRESH_TOKEN_EXPIRES'=> 'Refresh token expires',
+    'LBL_GRANT_TYPE'=> 'Grant type',
+    'LBL_SCOPES'=> 'Scopes',
+    'LBL_REVOKE_TOKEN'=> 'Revoke token',
+    'LBL_REVOKE_TOKENS'=> 'Revoke tokens',
+
+    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
 );

@@ -345,8 +345,23 @@ class Configurator
     public function isConfirmOptInEnabled()
     {
         $confirmOptInEnabled =
-            isset($this->config['email_enable_confirm_opt_in'])
-            && $this->config['email_enable_confirm_opt_in'] === 'confirmed-opt-in';
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_OPT_IN;
 
         if (!$confirmOptInEnabled) {
             $this->logger->warn('Confirm Opt in is disabled in email settings');
@@ -362,11 +377,10 @@ class Configurator
     public function getConfirmOptInTemplateId() {
         /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
-        if(!$confirmOptInTemplateId) {
+        if (empty($confirmOptInTemplateId)) {
             $confirmOptInTemplateId = 
-                isset($this->config['aop']['confirm_opt_in_template_id']) ?
-                    $this->config['aop']['confirm_opt_in_template_id'] :
-                    null;
+                isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
+                    $this->config['system_email_templates']['confirm_opt_in_template_id'] : null;
         }
         
         if (!$confirmOptInTemplateId) {
@@ -374,6 +388,17 @@ class Configurator
         }
         
         return $confirmOptInTemplateId;
+    }
+    
+    /**
+     * returns Confirm Opt In Enum Value from configuration
+     * 
+     * @return string
+     */
+    public function getConfirmOptInEnumValue() {
+        // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
+        $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
+        return $ret;
     }
     
 }

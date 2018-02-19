@@ -75,5 +75,8 @@ function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
         $addressField = 'from_addr';
     }
 
-    return $focus->getConfirmOptInTickFromSugarEmailAddressField($addressField);
+    $emailAddress = $focus->getEmailAddressFromEmailField($addressField);
+    $tick = $emailAddress->getOptInStatusTickHTML();
+    
+    return $tick;
 }

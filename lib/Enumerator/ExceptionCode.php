@@ -63,4 +63,5 @@ class ExceptionCode
     const API_RELATIONSHIP_NOT_FOUND = 8045;
     const API_RECORD_NOT_FOUND = 8050;
     const API_VIEWDEF_NOT_FOUND = 8055;
+    const API_ID_ALREADY_EXISTS = 8060;
 }

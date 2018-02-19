@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -138,6 +138,25 @@ $mod_strings = array(
     'LBL_EXECUTE_TIME' => 'Execute Time',
 
 //jobstrings
+    'LBL_REFRESHJOBS' => 'Refresh Jobs',
+    'LBL_POLLMONITOREDINBOXES' => 'Check Inbound Mail Accounts',
+    'LBL_PERFORMFULLFTSINDEX' => 'Full-text Search Index System',
+
+    'LBL_RUNMASSEMAILCAMPAIGN' => 'Run Nightly Mass Email Campaigns',
+    'LBL_POLLMONITOREDINBOXESFORBOUNCEDCAMPAIGNEMAILS' => 'Run Nightly Process Bounced Campaign Emails',
+    'LBL_PRUNEDATABASE' => 'Prune Database on 1st of Month',
+    'LBL_TRIMTRACKER' => 'Prune Tracker Tables',
+    'LBL_TRIMSUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
+    'LBL_SENDEMAILREMINDERS' => 'Run Email Reminders Sending',
+    'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
+    'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
+
+    'LBL_AODOPTIMISEINDEX' => 'Optimise Advanced OpenDiscovery Index',
+    'LBL_AODINDEXUNINDEXED' => 'Index unindexed documents',
+    'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
+    'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
+    'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
+
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
 );
 

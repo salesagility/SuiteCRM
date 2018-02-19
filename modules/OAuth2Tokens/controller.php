@@ -1,11 +1,9 @@
-{*
-/**
- *
+<?PHP
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +14,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,21 +32,32 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-*}
-<span class="email-opt-in-container">
-    {if $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_CONFIRMED'}
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN_CONFIRMED}">✓</span>
-        <span class="email-opt-in email-opt-in-confirmed" title="{$APP.LBL_OPT_IN}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_SENT'}
-        <span class="email-opt-in email-opt-in-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_SENT}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_IN_PENDING_EMAIL_NOT_SENT'}
-        <span class="email-opt-in email-opt-in-not-sent" title="{$APP.LBL_OPT_IN_PENDING_EMAIL_NOT_SENT}">✓</span>
-    {elseif $OPT_IN_STATUS === 'OPT_OUT'}
-        <span class="email-opt-in email-opt-in-opt-out" title="{$APP.LBL_OPT_IN_OPT_OUT}">❌</span>
-    {elseif $OPT_IN_STATUS === 'INVALID'}
-        <span class="email-opt-in email-opt-in-invalid" title="{$APP.LBL_OPT_IN_INVALID}">?</span>
-    {/if}
-</span>
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+class OAuth2TokensController extends SugarController
+{
+
+    /**
+     * Mass update is only used for revoking tokens at the moment
+     */
+    public function action_massupdate()
+    {
+        if (!empty($_REQUEST['select_entire_list'])) {
+            $tokens = $this->bean->get_full_list();
+            if ($tokens) {
+                foreach ($tokens as $token) {
+                    $token->token_is_revoked = true;
+                    $token->save();
+                }
+            }
+        } elseif (!empty($_REQUEST['mass'])) {
+            foreach ($_REQUEST['mass'] as $id) {
+                $token = BeanFactory::getBean('OAuth2Tokens', $id);
+                $token->token_is_revoked = true;
+                $token->save();
+            }
+        }
+    }
+}
