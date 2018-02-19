@@ -42,14 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require __DIR__ .'/../../config.php';
+require __DIR__ . '/../../config.php';
 
-if(file_exists(__DIR__ .'/../language/'.$current_language.'.lang.php'))
-{
-    require_once __DIR__ .'/../language/'.$current_language.'.lang.php';
-}
-else {
-    require_once __DIR__ .'/../language/en_us.lang.php';
+if (file_exists(__DIR__ . '/../language/' . $current_language . '.lang.php')) {
+    require_once __DIR__ . '/../language/' . $current_language . '.lang.php';
+} else {
+    require_once __DIR__ . '/../language/en_us.lang.php';
 }
 
 global $sugar_config;
@@ -71,7 +69,7 @@ if (
     $EmailTemp->deleted = 0;
     $EmailTemp->published = 'off';
     $EmailTemp->text_only = 0;
-    $id =$EmailTemp->save();
+    $id = $EmailTemp->save();
     $sugar_config['passwordsetting']['generatepasswordtmpl'] = $id;
 }
 
@@ -91,7 +89,7 @@ if (
     $EmailTemp->deleted = 0;
     $EmailTemp->published = 'off';
     $EmailTemp->text_only = 0;
-    $id =$EmailTemp->save();
+    $id = $EmailTemp->save();
     $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
 }
 
@@ -132,4 +130,4 @@ if (!isset($sugar_config['passwordsetting'])) {
 }
 
 
-write_array_to_file( "sugar_config", $sugar_config, "config.php");
+write_array_to_file("sugar_config", $sugar_config, "config.php");
