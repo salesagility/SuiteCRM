@@ -316,7 +316,6 @@ eoq;
 
                         //Call include/formbase.php, but do not call retrieve again
                         populateFromPost('', $newbean, true, true);
-
                         $newbean->save_from_post = false;
 
                         if (!isset($_POST['parent_id'])) {
@@ -409,6 +408,7 @@ eoq;
                     }
                 }
             }
+
         }
         $disable_date_format = $old_value;
     }
