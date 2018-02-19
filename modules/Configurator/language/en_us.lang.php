@@ -161,7 +161,7 @@ $mod_strings = array(
     'LBL_LDAP_SERVER_PORT_DESC' => 'Example: <em>389 or 636 for SSL</em>',
     'LBL_LDAP_GROUP_NAME' => 'Group Name:',
     'LBL_LDAP_GROUP_NAME_DESC' => 'Example <em>cn=suitecrm</em>',
-    'LBL_LDAP_USER_DN_DESC' => 'Example: <em>ou=people,dc=example,dc=com</eM>',
+    'LBL_LDAP_USER_DN_DESC' => 'Example: <em>ou=people,dc=example,dc=com</em>',
     'LBL_LDAP_AUTO_CREATE_USERS_DESC' => 'If an authenticated user does not exist, one will be created in SuiteCRM.',
     'LBL_LDAP_ENC_KEY' => 'Encryption Key:',
     'DEVELOPER_MODE' => 'Developer Mode',
