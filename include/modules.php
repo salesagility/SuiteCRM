@@ -550,7 +550,6 @@ $modInvisList[] = 'SurveyQuestionOptions';
 
 $beanList['EmailAddressesAudit'] = 'EmailAddressAudit';
 $beanFiles['EmailAddressAudit'] = 'modules/EmailAddressesAudit/EmailAddressAudit.php';
-$moduleList[] = 'EmailAddressesAudit';
 
 
 if (file_exists('include/modules_override.php')) {
