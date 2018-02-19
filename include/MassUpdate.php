@@ -382,6 +382,12 @@ eoq;
                         $newbean->save($check_notify);
                         if (!empty($email_address_id)) {
                             /** @var EmailAddress $primaryEmailAddress */
+                            EmailAddressAudit::audit(
+                                $this->sugarbean->module_name,
+                                $id,
+                                array("opt_out" => $optout_flag_value),
+                                $email_address_id
+                            );
                             $primaryEmailAddress = BeanFactory::getBean('EmailAddresses', $email_address_id);
                             if ($setOptOutPrimaryEmailAddress) {
                                 $primaryEmailAddress->opt_out = (bool)$optout_flag_value;
