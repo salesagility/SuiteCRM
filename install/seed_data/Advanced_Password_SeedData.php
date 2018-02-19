@@ -44,6 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require __DIR__ . '/../../config.php';
 
+global $current_language;
+
 if (file_exists(__DIR__ . '/../language/' . $current_language . '.lang.php')) {
     require_once __DIR__ . '/../language/' . $current_language . '.lang.php';
 } else {
