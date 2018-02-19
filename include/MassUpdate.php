@@ -350,6 +350,13 @@ eoq;
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
+                            EmailAddressAudit::audit(
+                                $this->sugarbean->module_name,
+                                $id, array(
+                                    "opt_out" => $optout_flag_value
+                                ),
+                                $emailAddressRow['email_address_id']
+                            );
 	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
 	    					$GLOBALS['db']->query($query);
 

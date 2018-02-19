@@ -99,6 +99,11 @@ $dictionary['EmailAddressAudit'] = array(
             'isnull' => 'true',
             'module' => 'Users'
         ),
+        'created' => array(
+            'name' => 'created',
+            'vname' => 'LBL_CREATED',
+            'type' => 'datetime'
+        ),
     ),
     'relationships'=>array (
     ),

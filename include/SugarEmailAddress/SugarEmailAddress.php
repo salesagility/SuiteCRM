@@ -581,6 +581,7 @@ class SugarEmailAddress extends SugarBean
                     $emailId = isset($address['email_address_id'])
                     && isset($current_links[$address['email_address_id']])
                         ? $address['email_address_id'] : null;
+                    EmailAddressAudit::audit($module, $id, $address, $emailId);
                     $emailId = $this->AddUpdateEmailAddress($address['email_address'],
                         $address['invalid_email'],
                         $address['opt_out'],
@@ -624,6 +625,7 @@ class SugarEmailAddress extends SugarBean
             $delete = "";
             foreach ($current_links as $eabr) {
                 $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
+                EmailAddressAudit::audit($module, $id, $eabr, $eabr["email_address_id"]);
             }
 
             $eabr_unlink = "update email_addr_bean_rel set deleted=1 where id in ({$delete})";
@@ -1739,6 +1741,42 @@ class SugarEmailAddress extends SugarBean
         return $ret;
     }
 
+    /**
+     * Returns email address by parent's GUID AND By email Id
+     *
+     * @param string $id Parent's GUID
+     * @param string $module Parent's module
+     * @param string $id Parent's GUID
+     * @return array
+     */
+    public function getAddressByParentIdAndEmailId($beanId, $moduleName, $emailId)
+    {
+        $return = array();
+        $module = $this->getCorrectedModule($moduleName);
+
+        $q = "SELECT
+                    ea.email_address, ea.email_address_caps, ea.invalid_email,
+                    ea.opt_out, ea.date_created, ea.date_modified,
+                    ear.id, ear.email_address_id, ear.bean_id, ear.bean_module,
+                    ear.primary_address, ear.reply_to_address, ear.deleted
+                FROM
+                    email_addresses ea
+                LEFT JOIN
+                    email_addr_bean_rel ear ON ea.id = ear.email_address_id
+                WHERE
+                    ear.bean_module = '" . $this->db->quote($module) . "' AND
+                    ear.bean_id = '" . $this->db->quote($beanId) . "' AND
+                    ear.deleted = 0 AND ea.id = '" . $this->db->quote($emailId) . "'
+                ORDER BY
+                    ear.reply_to_address, ear.primary_address DESC";
+        $r = $this->db->query($q);
+
+        while ($a = $this->db->fetchByAssoc($r, false)) {
+            return $a;
+        }
+
+        return $return;
+    }
 } // end class def
 
 

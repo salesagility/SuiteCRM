@@ -105,4 +105,123 @@ class EmailAddressAudit extends SugarBean
      * @var string
      */
     public $created;
+
+    /**
+     * Save EmailAddress Audit
+     *
+     * @param string $beanName
+     * @param string $beanId
+     * @param string $emailAddressId
+     * @param string $fieldName
+     * @param string $oldValue
+     * @param string $newValue
+     */
+    public static function saveEmailAddressesAudit($beanName, $beanId, $emailAddressId, $fieldName, $oldValue, $newValue)
+    {
+        global $current_user;
+
+        $emailAddressAudit = new EmailAddressAudit();
+        $emailAddressAudit->beanId = $beanId;
+        $emailAddressAudit->beanName = $beanName;
+        $emailAddressAudit->emailAddressId = $emailAddressId;
+        $emailAddressAudit->fieldName = $fieldName;
+        $emailAddressAudit->oldValue = $oldValue;
+        $emailAddressAudit->newValue = $newValue;
+        $emailAddressAudit->createdBy = $current_user->id;
+        $emailAddressAudit->created = (new DateTime())->format("Y-m-d H:i:s");
+        $emailAddressAudit->save();
+    }
+
+    /**
+     * Audit email adresses changelog
+     *
+     * @param string $beanName
+     * @param string $beanId
+     * @param array $emailAddressData
+     * @param string $emailId
+     *
+     * @return boolean
+     */
+    public static function audit($beanName, $beanId, $emailAddressData = array(), $emailId = null)
+    {
+        if (empty($emailAddressData) || empty($emailId)) {
+            return false;
+        }
+        $sugarEmailAddress = new SugarEmailAddress();
+        $emailAddress = $sugarEmailAddress->getAddressByParentIdAndEmailId($beanId, $beanName, $emailId);
+
+        $selectedEmailAddress = null;
+        if (!empty($emailAddress)) {
+            if (isset($emailAddressData["email_address"])) {
+                if ($emailAddress["email_address"] != $emailAddressData["email_address"]) {
+                    self::saveEmailAddressesAudit(
+                        $beanName,
+                        $beanId,
+                        $emailId,
+                        "email_address",
+                        $emailAddress["email_address"],
+                        $emailAddressData["email_address"]
+                     );
+                }
+            }
+
+            if (isset($emailAddressData["invalid_email"])) {
+                if ($emailAddress["invalid_email"] != $emailAddressData["invalid_email"]) {
+                    self::saveEmailAddressesAudit(
+                        $beanName,
+                        $beanId,
+                        $emailId,
+                        "invalid_email",
+                        $emailAddress["invalid_email"],
+                        $emailAddressData["invalid_email"]
+                     );
+                }
+            }
+
+            if (isset($emailAddressData["opt_out"])) {
+                if ($emailAddress["opt_out"] != $emailAddressData["opt_out"]) {
+                    self::saveEmailAddressesAudit(
+                        $beanName,
+                        $beanId,
+                        $emailId,
+                        "opt_out",
+                        $emailAddress["opt_out"],
+                        $emailAddressData["opt_out"]
+                    );
+                }
+            }
+
+            if (isset($emailAddressData["reply_to_address"])) {
+                if ($emailAddress["reply_to_address"] != $emailAddressData["reply_to_address"]) {
+                    self::saveEmailAddressesAudit(
+                        $beanName,
+                        $beanId,
+                        $emailId,
+                        "reply_to_address",
+                        $emailAddress["reply_to_address"],
+                        $emailAddressData["reply_to_address"]
+                     );
+                }
+            }
+
+            if (isset($emailAddressData["primary_address"])) {
+                if ($emailAddress["primary_address"] != $emailAddressData["primary_address"]) {
+                    self::saveEmailAddressesAudit(
+                        $beanName,
+                        $beanId,
+                        $emailId,
+                        "primary_address",
+                        $emailAddress["primary_address"],
+                        $emailAddressData["primary_address"]
+                    );
+                }
+            }
+
+            if (isset($emailAddressData["deleted"])) {
+                if ($emailAddress["deleted"] == 1) {
+                    self::saveEmailAddressesAudit($beanName, $beanId, $emailId, "deleted", 0, 1);
+                }
+            }
+        }
+    }
 }
