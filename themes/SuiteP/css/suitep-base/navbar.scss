@@ -727,10 +727,12 @@
 }
 
 .mobileheader .modulename a {
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-position: 92.5% 5px;
-  background-repeat: no-repeat;
-  padding: 15px 32px 18px 0;
+  vertical-align: middle;
+}
+
+.mobileheader .suitepicon-action-caret {
+  display: inline-block;
+  margin-left: 4px;
 }
 
 .searchform.navbar-form {

@@ -80,10 +80,9 @@
                 <div id="modulelinks" class="modulelinks">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
-                            <span class="modulename" data-toggle="dropdown"
-                                  aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}
+                            <span class="modulename" data-toggle="dropdown" aria-expanded="false">
+                                {sugar_link id="moduleTab_$name" module=$name data=$module caret=true}
                             </span>
-
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
                                     {if is_array($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0}
