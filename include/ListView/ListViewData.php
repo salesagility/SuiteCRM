@@ -647,19 +647,19 @@ class ListViewData {
 
 	        if($editAccess && !empty($results['editLink']))
 	        {
-	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('edit_inline.png')."\'></a>";
+	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\"suitepicon suitepicon-action-edit\"></span></a>";
 	            $close = true;
 	        }
 	        $close = (!empty($results['viewLink'])) ? true : $close;
-	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=".SugarThemeRegistry::current()->getImageURL('view_inline.png')."></a>" : '');
+	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}> <span class=\"suitepicon suitepicon-action-view\"></span></a>" : '');
 
             if($close == true) {
             	$closeVal = "true";
-            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('close.png')."\'></a>";
+            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'> <span class=\"suitepicon suitepicon-action-clear\"></span></a>";
             } else {
             	$closeVal = "false";
             }
-            $extra .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('info_inline.png')."' class='info'>";
+            $extra .= "',".$closeVal.")\"' class='info suitepicon suiteicon-action-info'>";
 
         return array('fieldToAddTo' => $results['fieldToAddTo'], 'string' => $extra);
     }
