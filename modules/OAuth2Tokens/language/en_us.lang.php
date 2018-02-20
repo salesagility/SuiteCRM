@@ -55,6 +55,7 @@ $mod_strings = array (
     'LBL_SCOPES'=> 'Scopes',
     'LBL_REVOKE_TOKEN'=> 'Revoke token',
     'LBL_REVOKE_TOKENS'=> 'Revoke tokens',
+    'LBL_CLIENT_NAME'=> 'Client name',
 
     'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
 );

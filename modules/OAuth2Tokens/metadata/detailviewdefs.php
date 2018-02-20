@@ -60,7 +60,7 @@ $viewdefs[$module_name]['DetailView'] = [
                     'name' => 'id',
                 ],
                 [
-                    'name' => 'client',
+                    'name' => 'oauth2client',
                 ],
                 [
                     'name' => 'token_is_revoked',
