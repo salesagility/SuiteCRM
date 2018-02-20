@@ -1125,6 +1125,10 @@ input[type=submit]:focus, input[type=button] {
   text-transform: none;
 }
 
+#tab-actions > a {
+ padding-right: 5px;
+}
+
 form[name=DetailView] .button {
   margin: 0 4px 4px 0;
   float: left;
