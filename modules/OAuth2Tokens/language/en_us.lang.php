@@ -46,6 +46,7 @@ $mod_strings = array (
     'LBL_MODULE_NAME' => 'OAuth2 Tokens',
     'LBL_MODULE_TITLE' => 'OAuth2 Tokens',
     'LBL_MODULE_ID'=> 'OAuth2 Tokens',
+    'LBL_TOKEN_ID'=> 'Token ID',
     'LBL_CLIENT'=> 'Client',
     'LBL_TOKEN_IS_REVOKED'=> 'Revoked',
     'LBL_ACCESS_TOKEN_TYPE'=> 'Token type',

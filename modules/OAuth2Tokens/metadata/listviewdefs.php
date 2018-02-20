@@ -66,25 +66,44 @@ $viewdefs[$module_name]['ListView'] = [
 ];
 
 $listViewDefs[$module_name] = [
-    'client' => [
-        'label' => 'LBL_CLIENT',
+    'id' => [
+        'label' => 'LBL_TOKEN_ID',
         'default' => true,
         'link' => true,
+        'sortable' => true,
+    ],
+    'oauth2client' => [
+        'label' => 'LBL_CLIENT',
+        'module' => 'OAuth2Clients',
+        'id' => 'CLIENT',
+        'link' => true,
+        'default' => true,
+        'sortable' => true,
+        'related_fields' => ['client']
     ],
     'grant_type' => [
-        'label' => 'LBL_ACCESS_TOKEN_TYPE',
+        'label' => 'LBL_GRANT_TYPE',
         'default' => true,
+        'sortable' => true,
     ],
     'token_is_revoked' => [
         'label' => 'LBL_TOKEN_IS_REVOKED',
         'default' => true,
+        'sortable' => true,
+    ],
+    'date_entered' => [
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true,
+        'sortable' => true,
     ],
     'access_token_expires' => [
         'label' => 'LBL_ACCESS_TOKEN_EXPIRES',
         'default' => true,
+        'sortable' => true,
     ],
     'refresh_token_expires' => [
         'label' => 'LBL_REFRESH_TOKEN_EXPIRES',
         'default' => true,
+        'sortable' => true,
     ],
 ];

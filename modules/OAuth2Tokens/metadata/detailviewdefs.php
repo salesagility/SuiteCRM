@@ -88,6 +88,7 @@ $viewdefs[$module_name]['DetailView'] = [
                         0 =>
                             [
                                 'name' => 'date_entered',
+                                'label' => 'LBL_DATE_ENTERED',
                                 'customCode' =>
                                     '{$fields.date_entered.value}',
                             ],
