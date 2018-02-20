@@ -40,7 +40,7 @@ buildEditField();
 
 //Global Variables.
 
-var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
+var inlineEditSaveButtonImg = "themes/"+SUGAR.themes.theme_name+"/images/inline_edit_save_icon.svg";
 if($("#inline_edit_icon").length) {
     var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 } else {
@@ -442,7 +442,7 @@ function handleSave(field,id,module,type){
  */
 
 function setValueClose(value){
-    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+    $.get('themes/'+SUGAR.themes.theme_name+'/images/inline_edit_icon.svg', function(data) {
         // Fix for #3136 - replace new line characters with <br /> for html on close.
         value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
 

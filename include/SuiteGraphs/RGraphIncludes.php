@@ -75,7 +75,6 @@ $chart = <<<EOD
                 &&  bar['object']['properties']['chart.tooltips']!== undefined
                 &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
                 {
-                    var stage = encodeURI(bar['object']['properties']['chart.labels'][bar[5]]);
                     var graphId = bar[0]['id'];
                     var divHolder = $("#"+graphId).parent();
                     var module = $(divHolder).find(".module").val();
@@ -85,6 +84,10 @@ $chart = <<<EOD
                     var userId = $(divHolder).find(".userId").val();
                     var startDate = encodeURI($(divHolder).find(".startDate").val());
                     var endDate = encodeURI($(divHolder).find(".endDate").val());
+                    
+                    var keys = window["chartHBarKeys"+graphId];
+                    var stage = encodeURI(keys[bar[5]]);
+                    
                     window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_self');
                 }
             }

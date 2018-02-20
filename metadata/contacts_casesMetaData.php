@@ -57,5 +57,4 @@ $dictionary['contacts_cases'] = array ( 'table' => 'contacts_cases'
 							  'relationship_type'=>'many-to-many',
 							  'join_table'=> 'contacts_cases', 'join_key_lhs'=>'contact_id', 'join_key_rhs'=>'case_id'))
                                   
-)
-?>
+);

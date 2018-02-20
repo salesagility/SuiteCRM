@@ -78,19 +78,25 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+#Ingore composer files
+composer.lock
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
 
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
-themes/SuiteP/css/*.css
-!themes/SuiteP/css/studio.css
-!themes/SuiteP/css/chart.css
-!themes/SuiteP/css/bubbles.css
-!themes/SuiteP/css/print.css
-!themes/SuiteP/css/noramalize.css
-!themes/SuiteP/css/bootstrap.css
-!themes/SuiteP/css/dashboardstyle.css
-!themes/SuiteP/css/wizard.css.css
-!themes/SuiteP/css/deprecated.css
-!themes/SuiteP/css/fonts.css
-!themes/SuiteP/css/footable.core.css
-!themes/SuiteP/css/style.css
+themes/SuiteP/css/*/*.map
+themes/SuiteP/css/*/color-palette.css
+themes/SuiteP/css/*/variables.css
+tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err
+cache/
+custom/**/
+.sass-cache/

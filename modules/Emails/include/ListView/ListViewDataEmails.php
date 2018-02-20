@@ -229,10 +229,10 @@ class ListViewDataEmails extends ListViewData
     }
 
     /**
-     * @param $folder
-     * @param $inboundEmail
+     * @param Folder $folder
+     * @param InboundEmail $inboundEmail
      */
-    private function setInboundEmailMailbox($folder, $inboundEmail)
+    private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
         switch ($folder->getType()) {
             case "sent":
@@ -248,7 +248,7 @@ class ListViewDataEmails extends ListViewData
                 break;
 
             default:
-                $inboundEmail->mailbox = $folder->mailbox;
+                $inboundEmail->mailbox = empty($folder->id) ? '' : $folder->mailbox;
                 break;
         }
     }
@@ -501,7 +501,7 @@ class ListViewDataEmails extends ListViewData
 
         switch ($field) {
             case 'from_addr_name':
-                $ret = $emailHeader['from'];
+                $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['from']));
                 break;
             case 'to_addrs_names':
                 $ret = mb_decode_mimeheader($emailHeader['to']);

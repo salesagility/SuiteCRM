@@ -83,5 +83,3 @@ $dictionary['users_password_link'] = array(
         )
     ) ,
 );
-
-?>

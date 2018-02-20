@@ -323,15 +323,6 @@ class EmailTemplate extends SugarBean
     {
     }
 
-    function get_list_view_data()
-    {
-        global $app_list_strings, $focus, $action, $currentModule;
-        $fields = $this->get_list_view_array();
-        //$fields["DATE_MODIFIED"] = substr($fields["DATE_MODIFIED"], 0, 10);
-        $fields["DATE_MODIFIED"] = isset($fields["DATE_MODIFIED"]) && !empty($fields["DATE_MODIFIED"]) ? substr($fields["DATE_MODIFIED"], 0, 10) : false;
-        return $fields;
-    }
-
 //function all string that match the pattern {.} , also catches the list of found strings.
     //the cache will get refreshed when the template bean instance changes.
     //The found url key patterns are replaced with name value pairs provided as function parameter. $tracked_urls.
@@ -929,4 +920,3 @@ class EmailTemplate extends SugarBean
 
 }
 
-?>

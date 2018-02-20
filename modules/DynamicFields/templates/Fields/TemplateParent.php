@@ -105,6 +105,3 @@ class TemplateParent extends TemplateEnum{
     
     
 }
-
-
-?>

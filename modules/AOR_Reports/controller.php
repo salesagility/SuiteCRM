@@ -76,9 +76,10 @@ class AOR_ReportsController extends SugarController
     protected function action_changeReportPage()
     {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+        $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
         if (!empty($this->bean->id)) {
             $this->bean->user_parameters = requestToUserParameters();
-            echo $this->bean->build_group_report($offset, true);
+            echo $this->bean->build_group_report($offset, true, array(), $group);
         }
 
         die();
@@ -170,6 +171,11 @@ class AOR_ReportsController extends SugarController
 
     protected function action_export()
     {
+        if(!$this->bean->ACLAccess('Export')){
+            SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
+            SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
+            sugar_die('');
+        }
         $this->bean->user_parameters = requestToUserParameters();
         $this->bean->build_report_csv();
         die;
@@ -177,6 +183,11 @@ class AOR_ReportsController extends SugarController
 
     protected function action_downloadPDF()
     {
+        if(!$this->bean->ACLAccess('Export')){
+            SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
+            SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
+            sugar_die('');
+        }
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 
@@ -242,7 +253,7 @@ class AOR_ReportsController extends SugarController
         ob_clean();
         try {
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
-            $pdf->setAutoFont();
+            $pdf->SetAutoFont();
             $pdf->WriteHTML($stylesheet, 1);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);

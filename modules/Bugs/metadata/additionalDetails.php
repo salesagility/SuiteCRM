@@ -77,7 +77,3 @@ function additionalDetailsBug($fields) {
 				 'viewLink' => "index.php?action=DetailView&module=Bugs&return_module=Bugs&record={$fields['ID']}");
 
 }
- 
- ?>
- 
- 

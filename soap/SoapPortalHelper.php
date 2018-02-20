@@ -453,8 +453,3 @@ function portal_get_entry_list_limited($session, $module_name,$where, $order_by,
 
 $invalid_contact_fields = array('portal_password'=>1, 'portal_active'=>1);
 $valid_modules_for_contact = array('Contacts'=>1, 'Cases'=>1, 'Notes'=>1, 'Bugs'=>1, 'Accounts'=>1, 'Leads'=>1, 'KBDocuments'=>1);
-
-
-
-
-?>

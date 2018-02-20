@@ -87,4 +87,3 @@ class ListViewPackages extends ListViewSmarty{
         return $this->ss->fetch($this->tpl);
     }
 }
-?>

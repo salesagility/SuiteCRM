@@ -165,5 +165,3 @@ function ifRadioButton($customFieldName){
     }
     return $custRow;
 }
-
-?>

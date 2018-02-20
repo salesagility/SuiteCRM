@@ -90,5 +90,3 @@ class tracker_monitor extends Monitor {
     }
 
 }
-
-?>

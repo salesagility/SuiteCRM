@@ -108,4 +108,3 @@ $layout_defs['Meetings'] = array(
         ),
     ),
 );
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,18 @@
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
+<form action="index.php" method="post" name="DetailView" id="formDetailView">
+    <input type="hidden" name="module" value="{$module}">
+    <input type="hidden" name="record" value="{$fields.id.value}">
+    <input type="hidden" name="return_action">
+    <input type="hidden" name="return_module">
+    <input type="hidden" name="return_id">
+    <input type="hidden" name="module_tab">
+    <input type="hidden" name="isDuplicate" value="false">
+    <input type="hidden" name="offset" value="{$offset}">
+    <input type="hidden" name="action" value="EditView">
+    <input type="hidden" name="sugar_body_only">
+</form>
 <div class="detail-view">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}

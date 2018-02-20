@@ -78,4 +78,3 @@ class AOW_Processed extends Basic {
 	}
 
 }
-?>

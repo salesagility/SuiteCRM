@@ -21719,6 +21719,3 @@ $sugar_demodata['quotes_seed_data']['quotes'][1] = array(
 	),
 );
 //END Quotes demo data
-
-
-?>

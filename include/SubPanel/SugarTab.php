@@ -120,7 +120,3 @@ class SugarTab
        $this->ss->display('include/SubPanel/tpls/' . $this->type . '.tpl');
     }
 }
-
-
-
-?>

@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -48,7 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Reserved. Contributor(s): ______________________________________..
  * *******************************************************************************/
 
-$GLOBALS['startTime'] = microtime(true);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$GLOBALS['starttTime'] = microtime(true);
 
 set_include_path(
     dirname(__FILE__).'/..'.PATH_SEPARATOR.
@@ -65,6 +65,14 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     exit();
 }
 
+$BASE_DIR = realpath(dirname(__DIR__));
+$autoloader = $BASE_DIR.'/vendor/autoload.php';
+if(file_exists($autoloader)) {
+    require_once $autoloader;
+} else {
+    die('Composer autoloader not found. please run "composer install"');
+}
+
 // config|_override.php
 if (is_file('config.php')) {
     require_once 'config.php'; // provides $sugar_config
@@ -79,13 +87,14 @@ if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])
     exit();
 }
 
+// make sure SugarConfig object is available
+$GLOBALS['sugar_config'] = $sugar_config;
+require_once 'include/SugarObjects/SugarConfig.php';
+
 if (!empty($sugar_config['xhprof_config'])) {
     require_once 'include/SugarXHprof/SugarXHprof.php';
     SugarXHprof::getInstance()->start();
 }
-
-// make sure SugarConfig object is available
-require_once 'include/SugarObjects/SugarConfig.php';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DATA SECURITY MEASURES
@@ -108,7 +117,7 @@ require_once 'include/javascript/jsAlerts.php';
 require_once 'include/TimeDate.php';
 require_once 'include/modules.php'; // provides $moduleList, $beanList, $beanFiles, $modInvisList, $adminOnlyList, $modInvisListActivities
 
-require 'include/utils/autoloader.php';
+require_once 'include/utils/autoloader.php';
 spl_autoload_register(array('SugarAutoLoader', 'autoload'));
 require_once 'data/SugarBean.php';
 require_once 'include/utils/mvc_utils.php';
@@ -178,7 +187,9 @@ if (empty($GLOBALS['installing'])) {
 
     $db = DBManagerFactory::getInstance();
     $db->resetQueryCount();
+    $GLOBALS['db'] = $db;
     $locale = new Localization();
+    $GLOBALS['locale'] = $locale;
 
     // Emails uses the REQUEST_URI later to construct dynamic URLs.
     // IIS does not pass this field to prevent an error, if it is not set, we will assign it to ''.
@@ -187,6 +198,7 @@ if (empty($GLOBALS['installing'])) {
     }
 
     $current_user = new User();
+    $GLOBALS['current_user'] = $current_user;
     $current_entity = null;
     $system_config = new Administration();
     $system_config->retrieveSettings();
