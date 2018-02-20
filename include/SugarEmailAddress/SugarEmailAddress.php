@@ -1621,6 +1621,7 @@ class SugarEmailAddress extends SugarBean
 
             $emailAddress = array(
                 'key' => $key,
+                'email_address_id' => $addressItem["email_address_id"],
                 'address' => $current_user->getEmailLink2($addressItem['email_address'], $focus)
             );
 

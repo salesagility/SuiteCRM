@@ -104,6 +104,12 @@ $dictionary['EmailAddressAudit'] = array(
             'vname' => 'LBL_CREATED',
             'type' => 'datetime'
         ),
+        'deleted' => array(
+            'name' => 'deleted',
+            'vname' => 'LBL_DELETED',
+            'type' => 'bool',
+            'default' => 0
+        )
     ),
     'relationships'=>array (
     ),
