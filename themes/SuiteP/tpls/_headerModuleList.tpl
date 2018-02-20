@@ -114,7 +114,8 @@
                                                             <a title="{$item.module_name}"
                                                                accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg' }"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                                                <span aria-hidden="true">{$item.item_summary_short}</span>
                                                             </a>
                                                             <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
                                                         </li>
@@ -136,7 +137,8 @@
                                                             <a title="{$item.module_name}"
                                                                accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"  class="favorite-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                                                <span aria-hidden="true">{$item.item_summary_short}</span>
                                                             </a>
                                                             <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                                         </li>
@@ -219,6 +221,7 @@
                                                                     <a title="{$item.module_name}"
                                                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
+
                                                                         <span aria-hidden="true">{$item.item_summary_short}</span>
                                                                     </a>
                                                                     <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
@@ -250,6 +253,7 @@
                                                                 <a title="{$item.module_name}"
                                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                    href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                                                                    <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
                                                                     <span aria-hidden="true">{$item.item_summary_short}</span>
                                                                 </a>
                                                                 <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
