@@ -17,3 +17,20 @@
     font-weight: normal !important;
     vertical-align: top;
 }
+
+
+/**
+ * Class Aliases
+ */
+.suitepicon-action-list {
+    @extend .suitepicon-action-view;
+}
+
+
+.suitepicon-action-create {
+    @extend .suitepicon-action-add;
+}
+
+.suitepicon-action-create-lead-vcard {
+    @extend .suitepicon-action-create-contact-vcard;
+}

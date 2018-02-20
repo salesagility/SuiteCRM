@@ -1019,6 +1019,15 @@ $side-bar-header-color: $color-51;
 $side-bar-link-color-hover: $sidebar-bg;
 $side-bar-link-color-hover: $color-14;
 
+$side-bar-action-height: 48px;
+$side-bar-action-font-size: 13px;
+$side-bar-action-icon-font-size: 30px;
+
+// Recently Viewed or Favorites
+$side-bar-links-height: 18px;
+$side-bar-links-font-size: 13px;
+$side-bar-links-icon-font-size: $side-bar-links-height;
+
 // Tabs
 $active-tab-bg: $color-20;
 $active-tab-bg-hover:$color-20;

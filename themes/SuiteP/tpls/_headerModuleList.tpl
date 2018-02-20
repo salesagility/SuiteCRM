@@ -780,8 +780,10 @@
                                             <li><a></a><span>&nbsp;</span></li>
                                         {else}
                                             <li class="actionmenulinks" role="presentation">
-                                                <a href="{$item.URL}" >
-                                                    <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
+                                                <a href="{$item.URL}" data-action-name="{$item.MODULE_NAME}">
+                                                    <div class="side-bar-action-icon">
+                                                        <span class="suitepicon suitepicon-action-{$item.MODULE_NAME|lower|replace:'_':'-'}"></span>
+                                                    </div>
                                                     <div class="actionmenulink">{$item.LABEL}</div>
                                                 </a>
                                             </li>
@@ -803,7 +805,8 @@
                             <div class="recently_viewed_link_container_sidebar">
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                        <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span>{$item.item_summary_short}</span>
+                                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                        <span>{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
@@ -822,7 +825,8 @@
                             <div class="recently_viewed_link_container_sidebar">
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
-                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                        <span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
