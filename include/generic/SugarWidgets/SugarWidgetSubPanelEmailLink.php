@@ -55,6 +55,7 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
     {
         global $current_user;
         global $sugar_config;
+        global $focus;
 
         if (isset($layout_def['varname'])) {
             $key = strtoupper($layout_def['varname']);
@@ -75,11 +76,14 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
         if ($client == 'sugar') {
             require_once('modules/Emails/EmailUI.php');
             $emailUi = new EmailUI();
-            $link = $emailUi->populateComposeViewFields();
-        } else {
-            $link = '<a href="mailto:' . $value . '" >' . $value . '</a>';
+            if ($focus !== null) {
+                return $emailUi->populateComposeViewFields($focus);
+            }
+            if ($current_user !== null) {
+                return $emailUi->populateComposeViewFields($current_user);
+            }
         }
 
-        return $link;
+        return '<a href="mailto:' . $value . '" >' . $value . '</a>';
     }
 }
