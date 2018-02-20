@@ -139,10 +139,11 @@ class EmailAddressAudit extends SugarBean
      * @param string $beanId
      * @param array $emailAddressData
      * @param string $emailId
+     * @param bool $deleted
      *
      * @return boolean
      */
-    public static function audit($beanName, $beanId, $emailAddressData = array(), $emailId = null)
+    public static function audit($beanName, $beanId, $emailAddressData = array(), $emailId = null, $deleted = false)
     {
         if (empty($emailAddressData) || empty($emailId)) {
             return false;
@@ -217,10 +218,8 @@ class EmailAddressAudit extends SugarBean
                 }
             }
 
-            if (isset($emailAddressData["deleted"])) {
-                if ($emailAddress["deleted"] == 1) {
-                    self::saveEmailAddressesAudit($beanName, $beanId, $emailId, "deleted", 0, 1);
-                }
+            if ($deleted) {
+                self::saveEmailAddressesAudit($beanName, $beanId, $emailId, "deleted", 0, 1);
             }
         }
     }

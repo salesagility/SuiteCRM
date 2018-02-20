@@ -683,7 +683,7 @@ class SugarEmailAddress extends SugarBean
             $delete = "";
             foreach ($current_links as $eabr) {
                 $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
-                EmailAddressAudit::audit($module, $id, $eabr, $eabr["email_address_id"]);
+                EmailAddressAudit::audit($module, $id, $eabr, $eabr["email_address_id"], true);
             }
 
             $eabr_unlink = "update email_addr_bean_rel set deleted=1 where id in ({$delete})";
