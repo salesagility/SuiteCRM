@@ -405,5 +405,3 @@ function getAllCustomizedModules() {
 	    return false;
 	}
 }
-
-?>

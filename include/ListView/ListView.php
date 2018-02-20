@@ -1186,7 +1186,7 @@ function getUserVariable($localVarName, $varName) {
         global $currentModule;
         global $app_strings;
 
-        $start_record = $current_offset + 1;
+        $start_record = (int)$current_offset + 1;
 
         if(!is_numeric($col_count))
             $col_count = 20;
@@ -1574,7 +1574,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         reset($data);
 
         //GETTING OFFSET
-        $offset = $this->getOffset($html_varName);
+        $offset = intval($this->getOffset($html_varName));
         $timeStamp = $this->unique_id();
         $_SESSION[$html_varName."_FROM_LIST_VIEW"] = $timeStamp;
 
@@ -1602,7 +1602,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             }
             //ADD OFFSET TO ARRAY
 
-                $fields['OFFSET'] = ($offset + $count + 1);
+            $fields['OFFSET'] = ($offset + $count + 1);
 
             $fields['STAMP'] = $timeStamp;
             if($this->shouldProcess) {
@@ -2064,4 +2064,3 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
  }
 
 }
-?>

@@ -228,7 +228,7 @@ $mod_strings = array(
         ),
         'relationshipsHelp' => array(
             'default' => 'The <b>Relationships</b> that have been created between the module and other modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships. The relationship properties are stored in the database tables belonging to the primary module.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view and edit the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.',
-            'addrelbtn' => 'mouse over help for add relationship..',
+            'addrelbtn' => 'mouse over help for add relationship...',
             'addRelationship' => '<b>Relationships</b> can be created between the module and another custom module or a deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
         ),
         'labelsHelp' => array(
@@ -370,7 +370,7 @@ $mod_strings = array(
     'LBL_NEW_PANEL' => 'New Panel',
     'LBL_NEW_ROW' => 'New Row',
     'LBL_PACKAGE_DELETED' => 'Package Deleted',
-    'LBL_PUBLISHING' => 'Publishing ...',
+    'LBL_PUBLISHING' => 'Publishing...',
     'LBL_PUBLISHED' => 'Published',
     'LBL_SELECT_FILE' => 'Select File',
     'LBL_SUBPANELS' => 'Subpanels',
@@ -570,8 +570,8 @@ $mod_strings = array(
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
     'LBL_EC_VIEWS' => 'customized view(s)',
-    'LBL_EC_SUGARFEEDS' => 'customized Feeds(s)',
-    'LBL_EC_DASHLETS' => 'customized Dashlets(s)',
+    'LBL_EC_SUGARFEEDS' => 'customized Feed(s)',
+    'LBL_EC_DASHLETS' => 'customized Dashlet(s)',
     'LBL_EC_CSS' => 'customized css(s)',
     'LBL_EC_TPLS' => 'customized tpls(s)',
     'LBL_EC_IMAGES' => 'customized image(s)',
@@ -587,8 +587,8 @@ $mod_strings = array(
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
-    'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
-    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
+    'LBL_AJAX_LOADING_TITLE' => 'In Progress...',
+    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading...',
 
 //JS
     'LBL_JS_REMOVE_PACKAGE' => 'Are you sure you wish to remove this package? This will permanently delete all files associated with this package.',

@@ -195,7 +195,7 @@
                     {foreach from=$reminder.invitees item=invitee}
                         <li class="invitees_item">
                             <button class="invitee_btn" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
-                                <img src="index.php?entryPoint=getImage&amp;themeName=SuiteR+&amp;imageName=Users.gif&quot;">
+                                <img src="index.php?entryPoint=getImage&amp;imageName=Users.gif&quot;">
                                 <span class="related-value"> {$invitee.value}</span>
                             </button>
                         </li>

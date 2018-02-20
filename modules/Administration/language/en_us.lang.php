@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -393,8 +393,9 @@ $mod_strings = array(
     'LBL_PASSWORD_TEMPLATE' => 'Email Templates',
     'LBL_PASSWORD_CREATE_TEMPLATE' => 'Create',
     'LBL_PASSWORD_EDIT_TEMPLATE' => 'Edit',
-    'LBL_PASSWORD_GENERATE_TEMPLATE_MSG' => 'Email template containing system-generated password',
-    'LBL_PASSWORD_LOST_TEMPLATE_MSG' => 'Email template containing system-generated link to reset password',
+    'LBL_PASSWORD_GENERATE_TEMPLATE_MSG' => 'For system-generated password',
+    'LBL_PASSWORD_LOST_TEMPLATE_MSG' => 'For system-generated link to reset password',
+    'LBL_TWO_FACTOR_AUTH_EMAIL_TPL' => 'For system-generated two-factor authentication code',
     'LBL_PASSWORD_SYST_GENERATED_PWD_ON' => 'Enable System-Generated Passwords Feature',
     'LBL_PASSWORD_SYST_GENERATED_PWD_HELP' => 'When this feature is enabled, users will be emailed a system-generated link to reset their passwords. Requirements for this feature are: 1) a outbound email server must be configured properly in Email Settings, and 2) users must have valid email addresses in their user records',
     'LBL_PASSWORD_EXP_AFTER' => 'Password Expires upon',
@@ -759,8 +760,12 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     // OAuth
-    'LBL_OAUTH_TITLE' => "OAuth Keys",
-    'LBL_OAUTH' => "OAuth key management",
+    'LBL_OAUTH_TITLE' => 'OAuth Keys',
+    'LBL_OAUTH' => 'OAuth key management',
+    'LBL_OAUTH2_CLIENTS_TITLE' => 'OAuth2 Clients',
+    'LBL_OAUTH2_CLIENTS' => 'Manage which clients have access to the OAuth2 Server',
+    'LBL_OAUTH2_TOKENS_TITLE' => 'OAuth2 Tokens',
+    'LBL_OAUTH2_TOKENS' => 'View session log and revoke active sessions',
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Error: Unable to create sprites because the imagecreatetruecolor function cannot be loaded',
@@ -897,5 +902,22 @@ $mod_strings = array(
     'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission..",
     'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission..",
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
+
+    'LBL_PWDSEC_SETS' => 'Password Security Settings',
+    'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
+    'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
+    'LBL_PWDSEC_MIN_LENGTH' => 'Password minimum length',
+    'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Password minimum length',
+    'LBL_PWDSEC_UPPERCASE' => 'Password should contain uppercase characters',
+    'LBL_PWDSEC_UPPERCASE_DESC' => 'Password should contain uppercase characters',
+    'LBL_PWDSEC_LOWERCASE' => 'Password should contain lowercase characters',
+    'LBL_PWDSEC_LOWERCASE_DESC' => 'Password should contain lowercase characters',
+    'LBL_PWDSEC_NUMBERS' => 'Password should contain numbers',
+    'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contain numbers',
+    'LBL_PWDSEC_SPECCHAR' => 'Password should contain special characters',
+    'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
+    'LBL_PWDSEC_DAYS' => 'Days',
+    'LBL_PWDSEC_CHARS' => 'Characters',
+
 );
 

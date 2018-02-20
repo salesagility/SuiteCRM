@@ -706,5 +706,3 @@ function app_string_duplicate_check($name, &$file_contents)
 	return $file_contents;
 
 }
-
-?>

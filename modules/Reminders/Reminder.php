@@ -64,6 +64,8 @@ class Reminder extends Basic
     var $related_event_module;
     var $related_event_module_id;
 
+    public $popup_viewed;
+
     private static $remindersData = array();
 
     // ---- save and load remainders on EditViews
@@ -292,7 +294,7 @@ class Reminder extends Basic
         ////	END MEETING INTEGRATION
         ///////////////////////////////////////////////////////////////////////
 
-        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1");
+        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1 AND popup_viewed = 0");
 
         if ($popupReminders) {
             foreach ($popupReminders as $popupReminder) {
@@ -357,6 +359,9 @@ class Reminder extends Basic
                                 $timeStart - strtotime($alertDateTimeNow),
                                 $url
                             );
+
+                            $popupReminder->popup_viewed = 1;
+                            $popupReminder->save();
                         }
                     }
                 }
@@ -713,5 +718,3 @@ class Reminder extends Basic
     }
 
 }
-
-?>

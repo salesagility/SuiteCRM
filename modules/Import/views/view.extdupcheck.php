@@ -116,5 +116,3 @@ document.getElementById('goback').onclick = function(){
 EOJAVASCRIPT;
     }
 }
-
-?>

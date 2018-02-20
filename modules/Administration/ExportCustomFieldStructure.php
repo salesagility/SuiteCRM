@@ -58,4 +58,3 @@ header( "Last-Modified: " . TimeDate::httpTime() );
 header( "Cache-Control: post-check=0, pre-check=0", false );
 header("Content-Length: ".strlen($str));
 echo $str;
-?>

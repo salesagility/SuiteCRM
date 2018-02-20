@@ -48,4 +48,3 @@ class SugarFieldDownload extends SugarFieldBase {
         return $this->fetch($this->findTemplate('DetailView.tpl'));
     }
 }
-?>

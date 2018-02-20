@@ -99,5 +99,3 @@
             'dbUSRData' => 'same',
 
         );
-        
-?>

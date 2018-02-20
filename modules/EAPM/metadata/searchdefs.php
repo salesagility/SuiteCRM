@@ -62,4 +62,4 @@ $module_name = 'EAPM';
 							),
 					),
  			   );
-?>
+

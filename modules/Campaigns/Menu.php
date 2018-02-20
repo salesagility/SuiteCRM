@@ -91,6 +91,14 @@ if(ACLController::checkAccess('Campaigns', 'edit', true))
 	);
 if(ACLController::checkAccess('Campaigns', 'edit', true))
 	$module_menu[] = array(
-		"index.php?module=Campaigns&action=WebToLeadCreation&return_module=Campaigns&return_action=index",
+		"index.php?module=Campaigns&action=WebToLeadCreation&return_module=Campaigns&return_action=index" . (isset($_REQUEST['record']) ? ('&campaign_id=' . $_REQUEST['record']) : ''),
 		$mod_strings['LBL_WEB_TO_LEAD'],"Create_Person_Form"
 	);
+if (ACLController::checkAccess('Campaigns', 'import', true)) {
+    $module_menu[] = Array(
+        "index.php?module=Import&action=Step1&import_module=Campaigns&return_module=Campaigns&return_action=index",
+        $mod_strings['LNK_IMPORT_CAMPAIGNS'],
+        "Import",
+        'Campaigns'
+    );
+}

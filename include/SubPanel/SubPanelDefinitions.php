@@ -102,7 +102,9 @@ class aSubPanel
 
         $this->search_query = '';
         if ((!isset($instance_properties['type']) || $instance_properties['type'] != 'collection')) {
-            $this->search_query = $this->buildSearchQuery($this->_instance_properties['module']);
+            if(isset($this->_instance_properties['module'])) {
+                $this->search_query = $this->buildSearchQuery($this->_instance_properties['module']);
+            }
         }
 
         $this->name = $name ;
@@ -117,14 +119,23 @@ class aSubPanel
         $this->mod_strings = $mod_strings ;
 
         if ($this->isCollection ())
-        {
-            $this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
-        } else
-        {
-            if (!is_dir('modules/' . $this->_instance_properties [ 'module' ])){
-                _pstack_trace();
-            }
-            $def_path = 'modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $this->_instance_properties [ 'subpanel_name' ] . '.php' ;
+		{
+			$this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
+		} else
+		{
+			if (!isset( $this->_instance_properties [ 'module' ])){
+				$GLOBALS['log']->fatal('Undefined index: module');
+                $instancePropertiesModule = null;
+            } else {
+				$instancePropertiesModule = $this->_instance_properties [ 'module' ];
+			}
+			if (!is_dir('modules/' . $instancePropertiesModule)){_pstack_trace();
+			}
+			if(!isset($this->_instance_properties [ 'subpanel_name' ])) {
+				$GLOBALS['log']->fatal('Invalid or missing SubPanelDefinition property: subpanel_name');
+                $def_path = null;
+            } else {
+                $subPanelName = $this->_instance_properties ['subpanel_name'];$def_path = 'modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $subPanelName . '.php' ;}
 
             $orig_exists = is_file($def_path);
             $loaded = false;
@@ -316,71 +327,71 @@ class aSubPanel
 
         $listFieldMap = array();
 
-        if (empty ( $this->sub_subpanels ))
-        {
-            $panels = $this->get_inst_prop_value ( 'collection_list' ) ;
-            foreach ( $panels as $panel => $properties )
-            {
-                if (array_key_exists ( $properties [ 'module' ], $modListHeader ) || array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
-                {
-                    $this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
-                }
-            }
-            // if it's empty just dump out as there is nothing to process.
-            if (empty($this->sub_subpanels)) {
-                return false;
-            }
-            //Sync displayed list fields across the subpanels
-            $display_fields = $this->getDisplayFieldsFromCollection($this->sub_subpanels);
-            $query_fields = array();
-            foreach ( $this->sub_subpanels as $key => $subpanel )
-            {
-                $list_fields = $subpanel->get_list_fields();
-                $listFieldMap[$key] = array();
-                $index = 0;
-                foreach($list_fields as $field => $def)
-                {
-                    if (isset($def['vname']) && isset($def['width']))
-                    {
-                        $index++;
-                        if (!empty($def['alias'])) {
-                            $listFieldMap[$key][$def['alias']] = $field;
-                        } else {
-                            $listFieldMap[$key][$field] = $field;
-                        }
-                        if (!isset($display_fields[$def['vname']]))
-                        {
-                            if(count($display_fields) > $index)
-                            {
-                                //Try to insert the new field in an order that makes sense
-                                $start = array_slice($display_fields, 0, $index);
-                                $end = array_slice($display_fields, $index);
-                                $display_fields = array_merge(
-                                    $start,
-                                    array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
-                                    $end
-                                );
-                            } else
-                            {
-                                $display_fields[$def['vname']] = array(
-                                    'name' => empty($def['alias']) ? $field : $def['alias'],
-                                    'vname' => $def['vname'],
-                                    'width' => $def['width'],
-                                );
-                            }
-                        }
-                    } else {
-                        $query_fields[$field] = $def;
-                    }
-                }
-            }
-            foreach ( $this->sub_subpanels as $key => $subpanel )
-            {
-                $list_fields = array();
-                foreach($display_fields as $vname => $def)
-                {
-                    $field = $def['name'];
-                    $list_key = isset($listFieldMap[$key][$field]) ? $listFieldMap[$key][$field] : $field;
+		if (empty ( $this->sub_subpanels ))
+		{
+			$panels = $this->get_inst_prop_value ( 'collection_list' ) ;
+			if(null === $panels) {
+				$GLOBALS['log']->fatal('Incorrect or missing SubPanelDefinition property: collection_list');
+				$panels = array();
+			}foreach ( $panels as $panel => $properties )
+			{
+				if (array_key_exists ( $properties [ 'module' ], $modListHeader ) || array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
+				{
+					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
+				}
+			}
+			// if it's empty just dump out as there is nothing to process.
+			if(empty($this->sub_subpanels)) {return false;
+			}//Sync displayed list fields across the subpanels
+			$display_fields = $this->getDisplayFieldsFromCollection($this->sub_subpanels);
+			$query_fields = array();
+			foreach ( $this->sub_subpanels as $key => $subpanel )
+			{
+				$list_fields = $subpanel->get_list_fields();
+				$listFieldMap[$key] = array();
+				$index = 0;
+				foreach($list_fields as $field => $def)
+				{
+					if (isset($def['vname']) && isset($def['width']))
+					{
+						$index++;
+						if(!empty($def['alias'])){
+							$listFieldMap[$key][$def['alias']] = $field;
+						}else{
+							$listFieldMap[$key][$field] = $field;
+						}if (!isset($display_fields[$def['vname']]))
+						{
+							if(count($display_fields) > $index)
+							{
+								//Try to insert the new field in an order that makes sense
+								$start = array_slice($display_fields, 0, $index);
+								$end = array_slice($display_fields, $index);
+								$display_fields = array_merge(
+									$start,
+									array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
+									$end
+								);
+							} else
+							{
+								$display_fields[$def['vname']] = array(
+									'name' => empty($def['alias']) ? $field : $def['alias'],
+									'vname' => $def['vname'],
+									'width' => $def['width'],
+								);
+							}
+						}
+					} else {
+						$query_fields[$field] = $def;
+					}
+				}
+			}
+			foreach ( $this->sub_subpanels as $key => $subpanel )
+			{
+				$list_fields = array();
+				foreach($display_fields as $vname => $def)
+				{
+					$field = $def['name'];
+					$list_key = isset($listFieldMap[$key][$field]) ? $listFieldMap[$key][$field] : $field;
 
                     if (isset($subpanel->panel_definition['list_fields'][$field]))
                     {
@@ -448,6 +459,7 @@ class aSubPanel
                 }
             }
         }
+        return $display_fields;
     }
 
     function isDatasourceFunction ()

@@ -36,5 +36,5 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 function showHelp(step)
-{url='http://www.sugarcrm.com/forums/';name='helpWindowPopup';window.open(url,name);}
+{url='https://suitecrm.com/suitecrm/forum/suite-forum';name='helpWindowPopup';window.open(url,name);}
 function setFocus(){focus=document.getElementById('button_next2');focus.focus();}

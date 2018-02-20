@@ -86,4 +86,3 @@ class OutboundEmailAccounts_sugar extends Basic {
 	}
 		
 }
-?>

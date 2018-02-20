@@ -55,13 +55,14 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	 * Does the actual authentication of the user and returns an id that will be used
 	 * to load the current user (loadUserOnSession)
 	 *
-	 * @param STRING $name
-	 * @param STRING $password
-	 * @return STRING id - used for loading the user
+	 * @param string $name
+	 * @param string $password
+	 * @param boolean $fallback
+	 * @return string id - used for loading the user
 	 *
 	 * Contributions by Erik Mitchell erikm@logicpd.com
 	 */
-	function authenticateUser($name, $password) {
+	function authenticateUser($name, $password, $fallback=false) {
 
 		$server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
 		$port = $GLOBALS['ldap_config']->settings['ldap_port'];
@@ -280,11 +281,13 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	/**
 	 * this is called when a user logs in
 	 *
-	 * @param STRING $name
-	 * @param STRING $password
+	 * @param string $name
+	 * @param string $password
+	 * @param boolean $fallback - is this authentication a fallback from a failed authentication
+	 * @param array $params
 	 * @return boolean
 	 */
-	function loadUserOnLogin($name, $password) {
+	function loadUserOnLogin($name, $password, $fallback = false, $params = array()) {
 
 	    global $mod_strings;
 
@@ -441,5 +444,3 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 }
-
-?>

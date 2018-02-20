@@ -76,4 +76,3 @@ $dictionary["jjwg_maps_jjwg_areas"] = array (
     ),
   ),
 );
-?>

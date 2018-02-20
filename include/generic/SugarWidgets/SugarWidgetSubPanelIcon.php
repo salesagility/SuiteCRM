@@ -162,4 +162,3 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 		return $ret;
 	}
 }
-?>

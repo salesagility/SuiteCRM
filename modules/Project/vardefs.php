@@ -504,4 +504,3 @@ $dictionary['Project'] = array(
 
 VardefManager::createVardef('Project', 'Project', array('security_groups',
 ));
-?>

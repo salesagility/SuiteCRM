@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -50,13 +50,19 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
 class PopupMetaDataParser extends ListLayoutMetaDataParser
 {
 
-    // Columns is used by the view to construct the listview - each column is built by calling the named function
+    /**
+     * @var array $columns
+     *  Columns is used by the view to construct the listview - each column is built by calling the named function
+     */
     public $columns = array(
         'LBL_DEFAULT' => 'getDefaultFields',
         'LBL_AVAILABLE' => 'getAdditionalFields',
         'LBL_HIDDEN' => 'getAvailableFields'
     );
 
+    /**
+     * @var array $reserveProperties
+     */
     public static $reserveProperties = array(
         'moduleMain',
         'varName',
@@ -67,6 +73,9 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         'addToReserve'
     );
 
+    /**
+     * @var array $defsMap
+     */
     public static $defsMap = array(MB_POPUPSEARCH => 'searchdefs', MB_POPUPLIST => 'listviewdefs');
 
     /**
@@ -74,6 +83,11 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      */
     protected $search;
 
+
+    /**
+     * @var string $_view
+     */
+    protected $_view;
 
     /**
      * Constructor
@@ -180,17 +194,17 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
     {
         if (empty ($this->_packageName)) {
             foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
-                $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, $value);
+                $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null, $value);
                 if (file_exists($file)) {
                     break;
                 }
             }
-            $writeFile = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName);
+            $writeFile = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null);
             if (!file_exists($writeFile)) {
                 mkdir_recursive(dirname($writeFile));
             }
         } else {
-            $writeFile = $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName,
+            $writeFile = $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null,
                 $this->_packageName);
         }
         $this->implementation->_history->append($file);

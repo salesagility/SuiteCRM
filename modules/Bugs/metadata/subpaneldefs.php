@@ -210,4 +210,3 @@ $layout_defs['Bugs'] = array(
         ),
     ),
 );
-?>

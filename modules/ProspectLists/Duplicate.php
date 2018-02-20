@@ -75,4 +75,3 @@ if (isset($_POST['isDuplicate']) && $_POST['isDuplicate'] == true) {
 	}
 }
 header("Location: index.php?action=DetailView&module=ProspectLists&record=$return_id");
-?>

@@ -243,5 +243,3 @@ EOQ;
 //$lc->handleUpdate();
 //echo '<select>'. $lc->getSelectOptions() . '</select>';
 //echo $lc->getTable();
-
-?>
