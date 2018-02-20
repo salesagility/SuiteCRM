@@ -407,7 +407,7 @@ if(check_php_version() === -1) {
         <hr>
     <div id="installcontrols">
         <form action="install3.php" method="post" name="theForm" id="theForm">
-            <input class="button" type="button" onclick="window.open('http://www.suitecrm.com/forum/index');" value="{$mod_strings['LBL_HELP']}" />
+            <input class="button" type="button" onclick="window.open('https://suitecrm.com/suitecrm/forum/suite-forum');" value="{$mod_strings['LBL_HELP']}" />
             <input class="button" type="button" name="Re-check" value="{$mod_strings['LBL_CHECKSYS_RECHECK']}" onclick="callSysCheck();" id="button_next2"/>
         </form>
     </div>

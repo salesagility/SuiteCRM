@@ -75,7 +75,7 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     else if($view == 'DetailView'){
         $html .= '<script src="modules/AOW_Conditions/conditionLines.js"></script>';
-        $html .= "<table border='0' cellspacing='0' width='100%' id='conditionLines'></table>";
+        $html .= "<table border='0' cellspacing='0' width='100%' id='aow_conditionLines'></table>";
 
 
         if(isset($focus->flow_module) && $focus->flow_module != ''){
@@ -103,5 +103,3 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     return $html;
 }
-
-?>

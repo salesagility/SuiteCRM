@@ -70,4 +70,3 @@ $fields_array['InboundEmail'] = array (
 		'service' => 1,
 	),
 );
-?>

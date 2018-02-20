@@ -1,7 +1,8 @@
 /**** Panels ****/
 
 .panel {
-  margin-bottom: 0;
+  margin-top: 7px;
+  margin-bottom: 0px;
 }
 
 .panel-body {
@@ -18,9 +19,10 @@
   padding: 0;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   height: 40px/$panel-height-divisor;
-  vertical-align: middle;
-  line-height:40px/$panel-height-divisor;
+  border-color: $panel-bg;//
 }
 
 .panel-default > .panel-heading > div {
@@ -28,8 +30,7 @@
   font-weight: 500;
   background-color: $panel-expanded-bg;
   color: $panel-expanded-color;
-  line-height: 52px/$panel-height-divisor;
-  height: 52px/$panel-height-divisor;
+  vertical-align: middle;
 }
 
 .panel-default > .panel-body {
@@ -65,7 +66,8 @@
 }
 
 #EditView_tabs .panel-default > .panel-heading > a {
-	padding-top:0px;
+	padding-top:10px;
+  padding-top:10px;
 }
 
 
@@ -115,7 +117,6 @@
   font-family: 'Glyphicons Halflings';
   content: "\2212";
   font-weight: 100;
-  line-height: 40px/$panel-height-divisor;
 }
 
 
@@ -171,7 +172,7 @@ div.sub-panel {
 .table-responsive.list .pagination tr,
 .table-responsive.list .pagination  td,
 .table-responsive.list .pagination  th {
-    border: 0;
+  border: 0;
 }
 
 .sub-panel tbody tr td .sugar_action_button > a:link {
@@ -292,8 +293,8 @@ div.sub-panel {
 
 .subpanel-table.list tr.pagination span.pageNumbers {
   position: relative;
-  /*top: -7px;*/
-  top:5px;
+  /*top: 5px;*/
+  top: -7px;
 }
 
 

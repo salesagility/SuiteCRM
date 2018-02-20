@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -345,7 +345,7 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if (!empty($this->_originalViewTemplateDefs)) {
+        if ($this->hasToAppendOriginalViewTemplateDefs($defs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
             if (!empty($templateMeta)) {
                 $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\'' . $this->_viewName . '\'][\'templateMeta\'] = ' . $templateMeta;
@@ -354,10 +354,25 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n?>\n";
 
-
         if (sugar_file_put_contents($filename, $out) === false) {
             $GLOBALS ['log']->fatal(get_class($this) . ": could not write new viewdef file " . $filename);
         }
+    }
+
+    /**
+     * @param $defs array The definitions to save
+     * @return bool
+     */
+    private function hasToAppendOriginalViewTemplateDefs($defs)
+    {
+        if (empty($this->_originalViewTemplateDefs)) {
+            return false;
+        }
+        if (is_array($defs) && isset($defs[$this->_viewName])) {
+            // The defs are already being saved we don't want to duplicate them
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -413,7 +428,65 @@ abstract class AbstractMetaDataImplementation
      * @param string $type
      * @return string
      */
-    abstract public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION);
+    public function getFileName($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+        return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
+    }
+
+    /**
+     * Construct a full pathname for the requested metadata, in a specific package
+     *
+     * @param string $view The view type, that is, EditView, DetailView etc
+     * @param string $moduleName The name of the module that will use this layout
+     * @param string $packageName The name of the package to use
+     * @param string $type
+     * @return string               The file name
+     */
+    public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+
+        $type = strtolower($type);
+
+        // BEGIN ASSERTIONS
+        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION) {
+            // just warn rather than die
+            $GLOBALS ['log']->warning(
+                "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized"
+            );
+        }
+        // END ASSERTIONS
+
+        $filenames = array(
+            MB_DASHLETSEARCH => 'dashletviewdefs',
+            MB_DASHLET => 'dashletviewdefs',
+            MB_LISTVIEW => 'listviewdefs',
+            MB_BASICSEARCH => 'searchdefs',
+            MB_ADVANCEDSEARCH => 'searchdefs',
+            MB_EDITVIEW => 'editviewdefs',
+            MB_DETAILVIEW => 'detailviewdefs',
+            MB_QUICKCREATE => 'quickcreatedefs',
+            MB_POPUPSEARCH => 'popupdefs',
+            MB_POPUPLIST => 'popupdefs',
+        );
+
+        switch ($type) {
+            case MB_HISTORYMETADATALOCATION :
+                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
+                    . $moduleName . '/metadata/' . $filenames [$view] . '.php';
+            default :
+                // get the module again, all so we can call this method statically
+                // without relying on the module stored in the class variables
+                $mb = new ModuleBuilder ();
+                $module = &$mb->getPackageModule($packageName, $moduleName);
+                return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
+        }
+
+    }
+
+    public function getModuleDir()
+    {
+        return $this->module->key_name;
+    }
 
 }
 

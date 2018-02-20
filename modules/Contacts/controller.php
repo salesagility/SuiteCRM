@@ -67,5 +67,5 @@ class ContactsController extends SugarController
     {
     	$this->view = 'closecontactaddresspopup';
     }    
+
 }
-?>

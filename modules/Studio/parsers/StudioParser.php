@@ -658,4 +658,4 @@ EOQ;
 		return str_replace('{', '{$', $this->curText);
 	}
 }
-?>
+

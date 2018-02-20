@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -432,9 +432,14 @@ function calculateQuarters($offsetMonths = 0)
  */
 function convertToDateTime($value)
 {
-    global $current_user;
+    global $current_user, $timedate;
 
     $user_dateformat = $current_user->getPreference('datef');
+
+    // In some cases the date string already is in database format
+    if ($timedate->check_matching_format($value, $timedate->get_db_date_format())) {
+        $user_dateformat = $timedate->get_db_date_format();
+    }
 
     switch ($user_dateformat) {
         case 'Y-m-d':

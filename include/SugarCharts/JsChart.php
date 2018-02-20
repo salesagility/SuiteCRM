@@ -732,5 +732,3 @@ class JsChart extends SugarChart {
 
 
 }
-
-?>

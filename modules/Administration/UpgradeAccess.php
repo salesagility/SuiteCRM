@@ -63,6 +63,8 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
     Options +FollowSymLinks
     RewriteEngine On
     RewriteBase {$basePath}
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
@@ -132,5 +134,3 @@ if(file_exists($uploadHta) && filesize($uploadHta)) {
 /* Commenting out as this shows on upgrade screen
  * echo "\n" . $mod_strings['LBL_HT_DONE']. "<br />\n";
 */
-
-?>

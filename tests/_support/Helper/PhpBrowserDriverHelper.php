@@ -194,9 +194,30 @@ class PhpBrowserDriverHelper extends \Codeception\Module
         if($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
+            if(empty($config['INSTANCE_CLIENT_ID'])) {
                 // return default
                 return 'admin';
+            } else {
+                return $config['instance_admin_password'];
+            }
+        } else {
+            return $env;
+        }
+    }
+
+    /**
+     * @return string
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function getClientSecret()
+    {
+        $env = getenv('INSTANCE_CLIENT_SECRET');
+        if($env === false) {
+            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
+            $config = $webDriver->_getConfig();
+            if(empty($config['INSTANCE_CLIENT_SECRET'])) {
+                // return default
+                return 'client_secret';
             } else {
                 return $config['instance_admin_password'];
             }

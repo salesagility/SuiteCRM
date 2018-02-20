@@ -102,4 +102,3 @@ class ProjectTaskQuickCreate extends QuickCreate {
         
     }   
 }
-?>

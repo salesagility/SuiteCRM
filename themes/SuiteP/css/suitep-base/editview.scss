@@ -1171,7 +1171,6 @@ li.noBullet {
   color: $required-color;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  float: right;
 }
 
 .error {
@@ -3187,7 +3186,7 @@ table#lineItems tr td table tfoot tr td span {
 }
 
 .modal {
-  z-index: 16000;
+  z-index: 1100;
 }
 
 .detail-view-row .label.col-2-label {
@@ -4132,7 +4131,7 @@ hr {
 
 /* fix schedule bar popup on calendar */
 .ui-dialog {
-  z-index: 1100;
+  z-index: 16000;
 }
 
 @media (max-width: 768px) {
@@ -5235,6 +5234,7 @@ object {
 
 @media (min-width: 980px) {
   #dialog1_c {
+    z-index: 5;
     margin-top: 100px;
     margin-left: 40%;
   }
@@ -5422,7 +5422,7 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 100000!important;
+  z-index: 16000;
 }
 
 /* popup dialog on home page */

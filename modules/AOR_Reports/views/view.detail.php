@@ -64,6 +64,10 @@ class AOR_ReportsViewDetail extends ViewDetail {
     public function preDisplay() {
         global $app_list_strings;
         parent::preDisplay();
+
+        $canExport = $this->bean->ACLAccess('Export');
+        $this->ss->assign('can_export', $canExport);
+
         $this->ss->assign('report_module',$this->bean->report_module);
 
 

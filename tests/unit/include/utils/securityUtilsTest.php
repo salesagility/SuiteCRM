@@ -52,7 +52,8 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'AOW_WorkFlow' => 'AOW_WorkFlow',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
                 'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
-                'EmailTemplates' => 'EmailTemplates'
+                'EmailTemplates' => 'EmailTemplates',
+                'Surveys' => 'Surveys'
 
         );
 
@@ -92,9 +93,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
             'ResourceCalendar' => 'ResourceCalendar',
             'AOBH_BusinessHours' => 'AOBH_BusinessHours',
             'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
-            'SecurityGroups' => 'SecurityGroups',
-            'Surveys' => 'Surveys'
-
+            'SecurityGroups' => 'SecurityGroups'
         );
 
         $allowed = query_module_access_list(new User('1'));

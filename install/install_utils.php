@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -992,8 +992,8 @@ EOQ;
     Options +FollowSymLinks
     RewriteEngine On
     RewriteBase {$basePath}
-    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
-    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
     RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
@@ -1900,44 +1900,6 @@ if ( !function_exists('validate_manifest') ) {
         }
 
         return true; // making this a bit more relaxed since we updated the language extraction and merge capabilities
-
-        /*
-        if( isset($manifest['acceptable_sugar_versions']) ){
-            $version_ok = false;
-            $matches_empty = true;
-            if( isset($manifest['acceptable_sugar_versions']['exact_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['exact_matches'] as $match ){
-                    if( $match == $sugar_version ){
-                        $version_ok = true;
-                    }
-                }
-            }
-            if( !$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches']) ){
-                $matches_empty = false;
-                foreach( $manifest['acceptable_sugar_versions']['regex_matches'] as $match ){
-                    if( preg_match( "/$match/", $sugar_version ) ){
-                        $version_ok = true;
-                    }
-                }
-            }
-
-            if( !$matches_empty && !$version_ok ){
-                die( $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version );
-            }
-        }
-
-        if( isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0 ){
-            $flavor_ok = false;
-            foreach( $manifest['acceptable_sugar_flavors'] as $match ){
-                if( $match == $sugar_flavor ){
-                    $flavor_ok = true;
-                }
-            }
-            if( !$flavor_ok ){
-                //die( $mod_strings['ERROR_FLAVOR_INCOMPATIBLE'] . $sugar_flavor );
-            }
-        }*/
     }
 }
 

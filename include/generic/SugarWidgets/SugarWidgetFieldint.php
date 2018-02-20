@@ -97,5 +97,3 @@ class SugarWidgetFieldInt extends SugarWidgetReportField
  } 
 
 }
-
-?>

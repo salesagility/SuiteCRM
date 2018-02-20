@@ -72,4 +72,3 @@ class MyNotesDashlet extends DashletGeneric {
     }
 
 }
-?>

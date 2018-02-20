@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -201,7 +201,7 @@ $mod_strings = array(
     'LBL_DISABLED_DESCRIPTION_2' => 'After this change has been made, you may click the "Start" button below to begin your installation. <i>After the installation is complete, you will want to change the value for \'installer_locked\' to \'true\'.</i>',
     'LBL_DISABLED_DESCRIPTION' => 'The installer has already been run once. As a safety measure, it has been disabled from running a second time. If you are absolutely sure you want to run it again, please go to your config.php file and locate (or add) a variable called \'installer_locked\' and set it to \'false\'. The line should look like this:',
     'LBL_DISABLED_HELP_1' => 'For installation help, please visit the SuiteCRM',
-    'LBL_DISABLED_HELP_LNK' => 'http://www.suitecrm.com/forum/index',
+    'LBL_DISABLED_HELP_LNK' => 'https://suitecrm.com/suitecrm/forum/suite-forum',
     'LBL_DISABLED_HELP_2' => 'support forums',
     'LBL_DISABLED_TITLE_2' => 'SuiteCRM Installation has been Disabled',
     'LBL_HELP' => 'Help',
@@ -279,6 +279,7 @@ $mod_strings = array(
     'LBL_REG_CONF_1' => 'Please complete the short form below to receive product announcements, training news, special offers and special event invitations from SuiteCRM. We do not sell, rent, share or otherwise distribute the information collected here to third parties.',
     'LBL_REG_CONF_3' => 'Thank you for registering. Click on the Finish button to login to SuiteCRM. You will need to log in for the first time using the username "admin" and the password you entered in step 2.',
     'LBL_REG_TITLE' => 'Registration',
+
     'LBL_REQUIRED' => '* Required field',
 
     'LBL_SITECFG_ADMIN_Name' => 'SuiteCRM Application Admin Name',
@@ -451,6 +452,17 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
+    
+    
+    'two_factor_auth_email' => array(
+        'subject' => 'Two Factor Authentication Code',
+        'type' => 'system',
+        'description' => "This template is used to send a user a code for Two Factor Authentication.",
+        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Two Factor Authentication code is <b>$code</b>.</p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
+        'txt_body' =>
+            'Two Factor Authentication code is $code.',
+        'name' => 'Two Factor Authentication email',
+    ),
 
     // SMTP settings
 
@@ -520,9 +532,9 @@ $contact_user_link_guid',
     'LBL_NUMBER_GROUPING_SEP' => '1000s separator:',
     'LBL_DECIMAL_SEP' => 'Decimal symbol:',
     'LBL_NAME_FORMAT' => 'Name Format:',
-    'UPLOAD_LOGO' => 'Please wait, logo uploading..',
+    'UPLOAD_LOGO' => 'Please wait, logo uploading...',
     'ERR_UPLOAD_FILETYPE' => 'File type not allowed, please upload a jpeg or png.',
-    'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occured.',
+    'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occurred.',
     'ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
     'ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
     'ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL' => 'The uploaded file was only partially uploaded.',
@@ -554,9 +566,9 @@ $contact_user_link_guid',
 
     'LBL_DBCONF_TITLE_USER_INFO_LABEL' => 'User',
     'LBL_DBCONFIG_MSG3_LABEL' => 'Database Name',
-    'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install:',
+    'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install.',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
-    'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located ( such as localhost or www.mydomain.com ):',
+    'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '',
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );

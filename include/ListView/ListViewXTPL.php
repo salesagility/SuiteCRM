@@ -234,6 +234,3 @@ class ListViewXTPL extends ListViewDisplay{
 		}
 	}
 }
-
-
-?>

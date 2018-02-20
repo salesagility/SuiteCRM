@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
  * 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd. 
  * 
  * This program is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU Affero General Public License version 3 as published by the 
@@ -143,6 +143,9 @@ class SugarAuthenticateUser
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function isUserNeedFactorAuthentication()
     {
         global $current_user;
@@ -153,6 +156,9 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function isUserFactorAuthenticated()
     {
         $ret = true;
@@ -162,6 +168,9 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function isUserFactorTokenReceived()
     {
         $ret = false;
@@ -181,6 +190,9 @@ class SugarAuthenticateUser
         return $_SESSION['user_factor_authenticated'];
     }
 
+    /**
+     * @global User $current_user
+     */
     public function showFactorTokenInput()
     {
         global $current_user;
@@ -203,6 +215,9 @@ class SugarAuthenticateUser
         die();
     }
 
+    /**
+     * @return bool
+     */
     public function isFactorTokenSent()
     {
         $ret = false;
@@ -212,6 +227,9 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function sendFactorTokenToUser()
     {
         global $current_user, $sugar_config;
@@ -270,6 +288,9 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     *
+     */
     public function redirectToLogout()
     {
         $GLOBALS['log']->debug('Session destroy and redirect to logout.....');
@@ -279,6 +300,9 @@ class SugarAuthenticateUser
         die();
     }
 
+    /**
+     * @return bool
+     */
     public function isUserLogoutRequest()
     {
         $logout = false;
@@ -289,5 +313,14 @@ class SugarAuthenticateUser
             $logout = true;
         }
         return $logout;
+    }
+
+    /**
+     * Has user has requested to resend the multi/2 factor token?
+     * @return bool true === yes, false === no
+     */
+    public function isUserRequestedResendToken()
+    {
+        return isset($_REQUEST['action']) && $_REQUEST['action'] === 'Resend';
     }
 }

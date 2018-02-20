@@ -189,5 +189,3 @@ if ($isLink){
     		echo $mod_strings['LBL_EMAIL_NOT_SENT'];
     }
     return;
-
-?>

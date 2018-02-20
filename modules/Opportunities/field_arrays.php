@@ -69,4 +69,3 @@ $fields_array['Opportunity'] = array ('column_fields' => Array("id"
 	),
         'required_fields' => Array('name'=>1, 'date_closed'=>2, 'amount'=>3, 'sales_stage'=>4, 'account_name'=>5),
 );
-?>

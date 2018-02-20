@@ -184,4 +184,3 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 		$ListView->processListView($focus, "main", "EMAILMARKETING");
 	}
 }
-?>

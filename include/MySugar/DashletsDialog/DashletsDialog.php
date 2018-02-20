@@ -169,7 +169,7 @@ class DashletsDialog {
                         'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '' ) .'\');',
                         'icon' => $icon,
                         'id' => $files['class'] . '_select',
-                        'module_name'=> $dashletsFiles[$className]['module']
+                        'module_name'=> array_key_exists('module', $dashletsFiles[$className]) ? $dashletsFiles[$className]['module']:""
                     );
 
                     if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]){
@@ -193,5 +193,3 @@ class DashletsDialog {
     }
 
 }
-
-?>

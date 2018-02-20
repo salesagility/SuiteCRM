@@ -212,4 +212,3 @@ function callSysCheck(){
 </html>
 EOQ;
 echo $out;
-?>

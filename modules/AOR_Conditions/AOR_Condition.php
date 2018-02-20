@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -95,6 +95,9 @@ class AOR_Condition extends Basic
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
+        if(!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])){
+            return;
+        }
         foreach ($post_data[$key . 'field'] as $i => $field) {
 
             if ($post_data[$key . 'deleted'][$i] == 1) {

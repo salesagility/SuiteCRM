@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,7 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth2Clients',
-    'LBL_MODULE_TITLE' => 'OAuth2Clients',
-    'LBL_MODULE_ID'=> 'OAuth2Clients',
+    'LBL_MODULE_NAME' => 'OAuth2 Clients',
+    'LBL_MODULE_TITLE' => 'OAuth2 Clients',
+    'LBL_MODULE_ID'=> 'OAuth2 Clients',
+    'LBL_IS_CONFIDENTIAL'=> 'Is confidential',
+    'LBL_SECRET'=> 'Secret',
+    'LBL_SECRET_HASHED'=> 'Change secret',
+    'LBL_LEAVE_BLANK'=> 'Leave blank unless changing',
+    'LBL_REMEMBER_SECRET'=> 'Please take a note of the secret as it will not be available after you save.',
+
+    'LNK_OAUTH2_CLIENT_LIST'=> 'List OAuth2 Clients',
+    'LNK_NEW_OAUTH2_CLIENT'=> 'Create OAuth2 Client',
 );
