@@ -1208,7 +1208,9 @@
   display: inline-block;
 }
 
-
+.navbar-inverse .dropdown-menu.mobile_menu li:last-of-type a {
+  border-bottom: none;
+}
 
 
 @media (max-width: 375px) {
