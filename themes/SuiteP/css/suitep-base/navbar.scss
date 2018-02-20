@@ -624,7 +624,6 @@
   color: $navbar-link-color;
 }
 
-
 .globalLinks-desktop .user-dropdown li a {
   color: $navbar-menu-link-color;
 }
@@ -651,25 +650,36 @@
 }
 
 .usermenu a .caret {
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.svg"), url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.png");
-  background-position: 0 0;
-  background-repeat: no-repeat;
   margin-left: 10px;
   border: 0;
   width: 10px;
   height: 10px;
 }
 
-.usermenu a .user_icon {
-  display: inline-block;
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-  background-position: 0 -1;
-  background-repeat: no-repeat;
-  margin-right: 11px;
-  float: left;
-  width: 42px;
-  height: 42px;
+.globalLinks-desktop .user-menu-button {
+  background-color: $navbar-bg;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
 }
+
+.user-menu li:last-of-type a {
+  border-bottom: none;
+}
+
+//
+.globalLinks-desktop .suitepicon-action-user {
+  color: $navbar-user-color;
+  font-size: $navbar-toolbar-height - 2px;
+  font-weight: 400;
+}
+
+.globalLinks-desktop .suitepicon-action-user:hover {
+  color: $navbar-user-color-hover;
+}
+
 
 .usermenucollapsed {
   margin: 0;
@@ -780,7 +790,7 @@
 }
 
 .globalLinks-desktop .user-dropdown {
-  top: 100%;
+  top: calc(100% + 12px);
   left: auto;
   right: -30px;
 }
@@ -1380,15 +1390,9 @@
     color: $default-btn-color;
     background-color: transparent;
     border-color: transparent;
-    background-image: url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-
   }
 
   .open.globalLinks > .btn-default:active {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1397,10 +1401,6 @@
   }
 
   .open.globalLinks > .btn-default:active:hover {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1409,10 +1409,6 @@
   }
 
   .open.globalLinks > .btn-default.focus:active {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1421,15 +1417,14 @@
   }
 
   .globalLinks-mobile > .btn-default.usermenucollapsed {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-top: 0;
     border: none;
     border-radius: 0;
     width: 28px;
     height: 28px;
+    background-color: $mobile-navbar-toolbar-bg;
+    line-height:  $navbar-toolbar-height;
+    font-size:  $navbar-toolbar-height / 2;
+    color: $navbar-mobile-toolbar-color;
   }
 
   .desktop_notifications > button {
@@ -1692,35 +1687,7 @@
     border-radius: 0;
   }
 
-  /* overridding bootstrap needs to be stacked */
-  .globalLinks-mobile .btn-default.active.focus,
-  .globalLinks-mobile .btn-default.active:focus,
-  .globalLinks-mobile .btn-default.active:hover,
-  .globalLinks-mobile .btn-default:active.focus,
-  .globalLinks-mobile .btn-default:active:focus,
-  .globalLinks-mobile .btn-default:active:hover,
-  .globalLinks-mobile.open>.dropdown-toggle.btn-default.focus,
-  .globalLinks-mobile.open>.dropdown-toggle.btn-default:focus,
-  .globalLinks-mobile.open>.dropdown-toggle.btn-default:hover {
-    color: $default-btn-color;
-    background-color: transparent;
-    border-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-  }
-  .globalLinks-desktop {
-    .btn-default.active,
-    .btn-default:active,
-    .open>.dropdown-toggle.btn-default {
-      background-color: $navbar-bg;
-      background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    }
-  }
-
   .open.globalLinks > .btn-default:active {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1729,10 +1696,6 @@
   }
 
   .open.globalLinks > .btn-default:active:hover {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1741,10 +1704,6 @@
   }
 
   .open.globalLinks > .btn-default.focus:active {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1753,10 +1712,6 @@
   }
 
   .globalLinks-mobile > .btn-default.usermenucollapsed {
-    background-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-top: 0;
     border: none;
     border-radius: 0;
@@ -1764,6 +1719,9 @@
     height: 42px;
   }
 
+  .globalLinks-mobile .suitepicon-action-user {
+    font-size: $navbar-toolbar-height;
+  }
 
   .navbar-search {
     margin-right: 0px;
@@ -2082,7 +2040,6 @@
     text-align: right;
     width: 28%;
     float:right;
-    padding-top:9px;
     padding-right: 0.5%;
   }
 
@@ -2108,7 +2065,6 @@
     height: $navbar-toolbar-height;
     width: $navbar-toolbar-height;
     padding: 0;
-    background-size: 39px auto;
   }
 
   .desktop-bar > .toolbar > li > .btn.searchbutton {
@@ -2187,10 +2143,6 @@
   .globalLinks-desktop.open>.dropdown-toggle.btn-default:focus,
   .globalLinks-desktop.open>.dropdown-toggle.btn-default:hover {
     color: $default-btn-color;
-    background-color: transparent;
-    border-color: transparent;
-    background-image: none, url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-
   }
 }
 
@@ -2368,10 +2320,6 @@
   }
 
   .globalLinks-desktop .dropdown-toggle {
-    background-color: transparent;
-    background-image: none, url("../../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../../themes/SuiteP/images/p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
     margin-left: 0;
     border: none;
     width: 48px;
@@ -2399,6 +2347,7 @@
   }
   .desktop-bar {
     width: 39%;
+    padding-top: 10px;
   }
   .navbar-form.searchform .input-group-btn {
     background: $navbar-search-bg;

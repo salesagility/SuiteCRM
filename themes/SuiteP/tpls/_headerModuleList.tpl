@@ -539,10 +539,10 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
-                            aria-expanded="true">
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-user-small"></span>
                     </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
@@ -637,8 +637,9 @@
 
                     <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
                             aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-user"></span>
                     </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
@@ -730,18 +731,12 @@
                     <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
-
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
-                            aria-expanded="true">
+                    <button id="with-label" class="dropdown-toggle user-menu-button" title="{$CURRENT_USER}"data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-user"></span>
+                        {*<span>{$CURRENT_USER}</span>*}
+                        {*<span class="suitepicon suitepicon-action-caret"></span>*}
                     </button>
-
-                    <button id="with-label" class="dropdown-toggle with-label" data-toggle="dropdown"
-                            aria-expanded="true">
-                        <span class="user_icon"> </span>
-                        <span class="user_label">{$CURRENT_USER}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
