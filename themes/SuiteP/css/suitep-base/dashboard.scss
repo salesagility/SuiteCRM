@@ -286,6 +286,8 @@ ul.subpanelTablist li {
 
 
 .dashletPanel .hd .hd-center .dashletToolSet a {
+  font-size: $dashlet-header-toolset-icon-font-size;
+  color: $dashlet-btn-color;
   padding: 0 2px;
 }
 
@@ -352,6 +354,9 @@ td.dashlet-title > h3 > span {
   margin-left: 8px;
 }
 
+.dashlet-title .suitepicon {
+  font-size: $dashlet-header-icon-font-size;
+}
 
 #moduleDashletsList > table > tbody > tr > td {
   padding: 10px;
