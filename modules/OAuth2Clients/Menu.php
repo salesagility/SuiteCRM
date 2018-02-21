@@ -56,3 +56,11 @@ if (ACLController::checkAccess('OAuth2Clients', 'list', true)) {
         "List"
     ];
 }
+
+if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
+    $module_menu[] = [
+        "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
+        $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
+        "List"
+    ];
+}
