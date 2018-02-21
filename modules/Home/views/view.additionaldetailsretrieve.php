@@ -98,7 +98,7 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
 		    if(!empty($results['editLink']))
 		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_EDIT_BUTTON']."' href='".$results['editLink']."'> <span class=\"suitepicon suitepicon-action-edit\"></span></a>";
 		    if(!empty($results['viewLink']))
-		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_VIEW_BUTTON']."' href='".$results['viewLink']."'> <span class=\"suitepicon suitepicon-action-view\"></span></a>";
+		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_VIEW_BUTTON']."' href='".$results['viewLink']."'> <span class=\"suitepicon suitepicon-action-view-record\"></span></a>";
 		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']."' href='javascript: SUGAR.util.closeStaticAdditionalDetails();'> <span class=\"suitepicon suitepicon-action-clear\"></span></a>";
             }
             $retArray['caption'] .= "";

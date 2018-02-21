@@ -289,6 +289,7 @@ ul.subpanelTablist li {
   font-size: $dashlet-header-toolset-icon-font-size;
   color: $dashlet-btn-color;
   padding: 0 2px;
+  line-height: $dashlet-header-toolset-icon-font-size;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child {
@@ -477,6 +478,7 @@ td.dashlet-title > h3 > span {
   padding-right: 0;
 }
 
+
 .dashletPanel .list tr th {
   padding-top: $dashlet-header-height/2;
   padding-bottom: $dashlet-header-height/2;
@@ -487,6 +489,16 @@ td.dashlet-title > h3 > span {
   padding-bottom: $dashlet-header-padding;
 }
 
+.bd .dashletPanel .list-view-data-icon {
+  color: $dashlet-action-color;
+  font-size: $dashlet-action-icon-font-size;
+  line-height: $dashlet-action-icon-font-size;
+  margin: 0 2px 0 2px;
+}
+
+.bd .dashletPanel .list-view-data-icon:hover{
+  text-decoration: none;
+}
 
 .dashletPanel .h3Row {
   background-color: $dashlet-title-bg;

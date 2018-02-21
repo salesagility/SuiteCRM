@@ -670,13 +670,13 @@
 }
 
 //
-.globalLinks-desktop .suitepicon-action-user {
+.globalLinks-desktop .suitepicon-action-current-user {
   color: $navbar-user-color;
   font-size: $navbar-toolbar-height - 2px;
   font-weight: 400;
 }
 
-.globalLinks-desktop .suitepicon-action-user:hover {
+.globalLinks-desktop .suitepicon-action-current-user:hover {
   color: $navbar-user-color-hover;
 }
 
@@ -1723,7 +1723,7 @@
     height: 42px;
   }
 
-  .globalLinks-mobile .suitepicon-action-user {
+  .globalLinks-mobile .suitepicon-action-current-user {
     font-size: $navbar-toolbar-height;
   }
 

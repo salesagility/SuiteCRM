@@ -1121,8 +1121,11 @@ $dashlet-btn-color: $color-80;
 $dashlet-title-height: 30px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
 $dashlet-header-padding: 5px; // 5 normal 0 small
-$dashlet-header-icon-font-size: 18px;
+$dashlet-header-icon-font-size: 13px;
 $dashlet-header-toolset-icon-font-size: 18px;
+
+$dashlet-action-color: $main-font-color;
+$dashlet-action-icon-font-size: 18px;
 
 // Campaigns
 $campaign-type-color: $fg-color-7;

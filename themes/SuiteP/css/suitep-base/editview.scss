@@ -2066,10 +2066,6 @@ ul.clickMenu li a:hover {
 
 ul.clickMenu > li > span {
   display: inline-block;
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 0% 0%;
-  background-repeat: no-repeat;
-  background-size: 12px auto;
   cursor: pointer;
   margin-top: 9px;
   width: 16px;
@@ -2130,15 +2126,11 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled span {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px 7px;
-  background-repeat: no-repeat;
-  background-size: 12px auto;
-  float: left;
   opacity: .4;
   width: 19px;
   height: 17px;
 }
+
 
 .selectActionsDisabled span.ab {
   padding-left: 5px;

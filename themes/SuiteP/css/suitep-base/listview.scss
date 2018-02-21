@@ -64,19 +64,11 @@ tr#pagination {
 }
 
 #listViewStartButton_top {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px -29px;
-  background-repeat: no-repeat;
   margin-right: 2px;
-  width: 26px;
 }
 
 #listViewStartButton_bottom {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px -29px;
-  background-repeat: no-repeat;
   margin-right: 2px;
-  width: 26px;
 }
 
 #listViewStartButton_top[disabled] {
@@ -128,16 +120,10 @@ tr#pagination {
 }
 
 #listViewPrevButton_top {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px -50px;
-  background-repeat: no-repeat;
   width: 26px;
 }
 
 #listViewPrevButton_bottom {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px -50px;
-  background-repeat: no-repeat;
   width: 26px;
 }
 
@@ -149,19 +135,6 @@ tr#pagination {
   display: none;
 }
 
-#listViewNextButton_top {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 10px -132px;
-  background-repeat: no-repeat;
-  width: 26px;
-}
-
-#listViewNextButton_bottom {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 10px -132px;
-  background-repeat: no-repeat;
-  width: 26px;
-}
 
 #listViewNextButton_top img {
   display: none;
@@ -172,19 +145,11 @@ tr#pagination {
 }
 
 #listViewEndButton_top {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 10px -112px;
-  background-repeat: no-repeat;
   margin-left: 2px;
-  width: 26px;
 }
 
 #listViewEndButton_bottom {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 10px -112px;
-  background-repeat: no-repeat;
   margin-left: 2px;
-  width: 26px;
 }
 
 #listViewEndButton_top img {
@@ -249,11 +214,10 @@ tr#pagination {
 }
 
 .selectedRecords {
-  display: inline;
+  display: inline-block;
   padding: 0;
   margin: 0;
   position: relative;
-  top: -8px;
 }
 
 .selectedRecords.label {
@@ -773,11 +737,14 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop {
   min-height: 16px;
-  line-height: 0;
   position: relative;
   margin-right: 5px;
   min-width: 32px;
   margin-left: 0;
+}
+
+#selectLinkTop .glyphicon, #selectLinkBottom .glyphicon {
+  vertical-align: middle;
 }
 
 #actionLinkBottom {
@@ -1554,20 +1521,26 @@ div#search_form > .advanced input.button:hover {
   color: #fff;
 }
 
-.paginationTable .button {
+.paginationTable .list-view-pagination-button {
+  border: none;
+  border-radius: $btn-border-radius-base;
   background-color: $default-btn-bg;
   color: $default-btn-color;
-  padding: 0 10px 0 10px;
+  margin: 0 2px 0 2px;
+  padding: 0;
   line-height: 26px;
   height: 26px;
+  width: 26px;
+}
+
+.paginationTable .list-view-pagination-button .suitepicon {
+  line-height: 26px;
 }
 
 .paginationTable input[type=submit] {
   background-color: $default-btn-bg;
   color: $default-btn-color;
   padding: 0 10px 0 10px;
-  line-height: 26px;
-  height: 26px;
 }
 
 .paginationTable input[type=button] {
@@ -3275,19 +3248,16 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
 
 #selectLink > li > label {
   margin-bottom: initial;
-  top: -6px;
   margin-right: 8px;
 }
 
 #selectLinkTop > li > label {
   margin-bottom: initial;
-  top: -6px;
   margin-right: 8px;
 }
 
 #selectLinkBottom > li > label {
   margin-bottom: initial;
-  top: -6px;
   margin-right: 8px;
 }
 

@@ -9,6 +9,7 @@
 
 .suitepicon {
     line-height: 1;
+    vertical-align: middle;
 }
 
 .suitepicon:before {
@@ -33,4 +34,8 @@
 
 .suitepicon-action-create-lead-vcard {
     @extend .suitepicon-action-create-contact-vcard;
+}
+
+.suitepicon-module-sugarfeed {
+    @extend .suitepicon-action-alerts-small
 }

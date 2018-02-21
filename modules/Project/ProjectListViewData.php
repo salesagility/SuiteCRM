@@ -59,8 +59,8 @@ class ProjectListViewData extends ListViewData{
     {
         global $app_strings;
 
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('info_inline.gif');
-		$jsdetailviewImage = SugarThemeRegistry::current()->getImageURL('detailview.gif');
+        $jscalendarImage = '<span class="suitepicon suitepicon-action-info"></span>';
+		$jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
 
         $extra = "<span id='adspan_" . $id . "' "
                 . "onclick=\"lvg_dtails('$id')\" "
