@@ -3597,9 +3597,9 @@ $app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your inter
 
 $app_list_strings['oauth2_grant_type_dom'] = array(
     'password' => 'Password Grant',
-    'client-credentials' => 'Client Credentials',
+    'client_credentials' => 'Client Credentials',
     'implicit' => 'Implicit',
-    'authorization-code' => 'Authorization Code'
+    'authorization_code' => 'Authorization Code'
 );
 
 $app_list_strings['oauth2_duration_units'] = [
