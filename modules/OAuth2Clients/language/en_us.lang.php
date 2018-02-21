@@ -62,6 +62,7 @@ $mod_strings = [
     'LBL_ACCESS_TOKEN_EXPIRES' => 'Access token expiry',
     'LBL_REFRESH_TOKEN_EXPIRES' => 'Refresh token expiry',
 
+    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
     'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',
     'LNK_NEW_OAUTH2_CLIENT' => 'Create OAuth2 Client',
 

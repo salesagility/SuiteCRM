@@ -1,11 +1,9 @@
 <?php
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +14,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,31 +32,45 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-    'LBL_MODULE_NAME' => 'OAuth2 Tokens',
-    'LBL_MODULE_TITLE' => 'OAuth2 Tokens',
-    'LBL_MODULE_ID'=> 'OAuth2 Tokens',
-    'LBL_TOKEN_ID'=> 'Token ID',
-    'LBL_CLIENT'=> 'Client',
-    'LBL_TOKEN_IS_REVOKED'=> 'Revoked',
-    'LBL_ACCESS_TOKEN_TYPE'=> 'Token type',
-    'LBL_ACCESS_TOKEN_EXPIRES'=> 'Access token expires',
-    'LBL_REFRESH_TOKEN_EXPIRES'=> 'Refresh token expires',
-    'LBL_GRANT_TYPE'=> 'Grant type',
-    'LBL_SCOPES'=> 'Scopes',
-    'LBL_REVOKE_TOKEN'=> 'Revoke token',
-    'LBL_REVOKE_TOKENS'=> 'Revoke tokens',
-    'LBL_CLIENT_NAME'=> 'Client name',
+$module_name = 'OAuth2Clients';
+$table_name = 'oauth2clients';
 
-    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
-    'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',
-    'LNK_NEW_OAUTH2_CLIENT' => 'Create OAuth2 Client',
-);
+$popupMeta = [
+    'moduleMain' => $module_name,
+    'varName' => 'OAUTH2CLIENTS',
+    'orderBy' => 'name',
+    'whereClauses' =>
+        [
+            'name' => $table_name . '.name',
+        ],
+    'searchInputs' =>
+        [
+            'name',
+        ],
+    'listviewdefs' => [
+        'name' => [
+            'label' => 'LBL_NAME',
+            'default' => true,
+        ],
+        'redirect_url' => [
+            'label' => 'LBL_REDIRECT_URL',
+            'default' => true,
+        ],
+        'is_confidential' => [
+            'label' => 'LBL_IS_CONFIDENTIAL',
+            'default' => true,
+        ],
+    ],
+    'searchdefs' => [
+        'name',
+    ]
+];
+

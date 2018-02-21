@@ -72,6 +72,12 @@ $searchdefs[$module_name] = [
                             'default' => true,
                             'width' => '10%',
                         ],
+                    'oauth2client_name' =>
+                        [
+                            'name' => 'oauth2client_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
                     'token_is_revoked' =>
                         [
                             'name' => 'token_is_revoked',

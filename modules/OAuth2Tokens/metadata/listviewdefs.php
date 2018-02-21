@@ -72,7 +72,7 @@ $listViewDefs[$module_name] = [
         'link' => true,
         'sortable' => true,
     ],
-    'oauth2client' => [
+    'oauth2client_name' => [
         'label' => 'LBL_CLIENT',
         'module' => 'OAuth2Clients',
         'id' => 'CLIENT',

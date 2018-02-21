@@ -116,7 +116,7 @@ $dictionary['OAuth2Tokens'] = [
             'vname' => 'LBL_GRANT_TYPE',
             'type' => 'enum',
             'options' => 'oauth2_grant_type_dom',
-            'default' => 'Password Grant',
+            'default' => 'password',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
@@ -132,8 +132,9 @@ $dictionary['OAuth2Tokens'] = [
             'len' => '1024',
             'inline_edit' => false,
         ],
-        'oauth2client' => [
-            'name' => 'oauth2client',
+        'oauth2client_name' => [
+            'required' => false,
+            'name' => 'oauth2client_name',
             'rname' => 'name',
             'id_name' => 'client',
             'vname' => 'LBL_CLIENT',
@@ -143,10 +144,20 @@ $dictionary['OAuth2Tokens'] = [
             'isnull' => 'true',
             'module' => 'OAuth2Clients',
             'dbType' => 'varchar',
-            'len' => 100,
+            'len' => 255,
             'source' => 'non-db',
             'unified_search' => true,
-            'required' => true,
+            'quicksearch' => 'enabled',
+            'reportable' => true,
+        ],
+        'oauth2clients' => [
+            'name' => 'oauth2clients',
+            'vname' => 'LBL_CLIENT',
+            'type' => 'link',
+            'relationship' => 'oauth2clients_oauth2tokens',
+            'module' => 'OAuth2Clients',
+            'bean_name' => 'OAuth2Clients',
+            'source' => 'non-db',
         ],
         'client' => [
             'name' => 'client',
@@ -157,12 +168,11 @@ $dictionary['OAuth2Tokens'] = [
             'id_name' => 'client',
             'reportable' => false,
             'vname' => 'LBL_CLIENT_ID',
-            'audited' => true,
             'massupdate' => false,
         ],
     ],
     'optimistic_locking' => true,
-    'relationships'
+    'relationships' => [],
 ];
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');

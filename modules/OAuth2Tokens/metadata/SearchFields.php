@@ -42,64 +42,57 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuth2Tokens';
 
-$viewdefs[$module_name]['DetailView'] = [
-    'templateMeta' => [
-        'maxColumns' => '1',
-        'widths' => [
-            ['label' => '30', 'field' => '70'],
+$searchFields[$module_name] = [
+    'id' =>
+        [
+            'query_type' => 'default',
         ],
-        'form' => [
-            'buttons' => array(
-            )
-        ]
+    'token_is_revoked' =>
+        [
+            'query_type' => 'default',
+        ],
+    'grant_type' =>
+        [
+            'query_type' => 'default',
+        ],
+    'oauth2client_name' => [
+        'query_type' => 'default',
+        'db_field' => ['oauth2clients.name']
     ],
-    'panels' => [
-        'default' =>
-            [
-                [
-                    'name' => 'id',
-                ],
-                [
-                    'name' => 'oauth2client_name',
-                ],
-                [
-                    'name' => 'token_is_revoked',
-                ],
-                [
-                    'name' => 'token_type',
-                ],
-                [
-                    'name' => 'access_token_expires',
-                ],
-                [
-                    'name' => 'refresh_token_expires',
-                ],
-                [
-                    'name' => 'grant_type',
-                ],
-                [
-                    'name' => 'state',
-                ],
-            ],
-        'LBL_PANEL_ASSIGNMENT' =>
-            [
-                0 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'date_entered',
-                                'label' => 'LBL_DATE_ENTERED',
-                                'customCode' =>
-                                    '{$fields.date_entered.value}',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'date_modified',
-                                'label' => 'LBL_DATE_MODIFIED',
-                                'customCode' =>
-                                    '{$fields.date_modified.value}',
-                            ],
-                    ],
-            ],
-    ],
+    'range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'start_range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'end_range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'start_range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'end_range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
 ];
