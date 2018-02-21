@@ -513,6 +513,13 @@ a.listViewTdToolsS1 {
   border-bottom: none;
 }
 
+// fix the icon size
+.table-responsive.list > tbody > tr > td .suitepicon {
+  font-size: $list-view-data_icon-font-size;
+  line-height: $list-view-data_icon-font-size;
+  color: $list-view-data-icon-color;
+}
+
 #selectLinkTop .sugar_action_button {
   background-color: $list-view-action-button-bg;
   padding: 0 4px 0 0;
