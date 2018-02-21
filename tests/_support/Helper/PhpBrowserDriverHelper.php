@@ -196,9 +196,9 @@ class PhpBrowserDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config['INSTANCE_CLIENT_ID'])) {
                 // return default
-                return 'admin';
+                return '1';
             } else {
-                return $config['instance_admin_password'];
+                return $config['instance_client_id'];
             }
         } else {
             return $env;
