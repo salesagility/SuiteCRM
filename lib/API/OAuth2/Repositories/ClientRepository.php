@@ -42,6 +42,7 @@ namespace SuiteCRM\API\OAuth2\Repositories;
 
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use SuiteCRM\API\OAuth2\Entities\ClientEntity;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 class ClientRepository implements ClientRepositoryInterface
 {
@@ -56,6 +57,10 @@ class ClientRepository implements ClientRepositoryInterface
         $client->retrieve($clientIdentifier);
         if(empty($client->id)) {
             return null;
+        }
+
+        if($client->allowed_grant_type !== $grantType) {
+            throw OAuthServerException::grantTypeNotAllowedForClient();
         }
 
         if (
