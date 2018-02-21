@@ -127,6 +127,15 @@ $dictionary['OAuth2Clients'] = [
             'api-visible' => false,
             'inline_edit' => false,
         ],
+        'oauth2tokens' => array(
+            'name' => 'oauth2tokens',
+            'vname' => 'LBL_RELATED_OAUTH2TOKENS',
+            'type' => 'link',
+            'relationship' => 'oauth2clients_oauth2tokens',
+            'module' => 'OAuth2Tokens',
+            'bean_name' => 'OAuth2Tokens',
+            'source' => 'non-db',
+        ),
     ],
     'optimistic_locking' => true,
     'relationships' => array(
