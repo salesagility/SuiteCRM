@@ -39,3 +39,18 @@
 .suitepicon-module-sugarfeed {
     @extend .suitepicon-action-alerts-small
 }
+
+// @see sidebar.scss
+.button-toggle-expanded span {
+    @extend .suitepicon;
+    @extend .suitepicon-action-move-left;
+    line-height: 30px;
+    margin-left: 4px;
+}
+
+.button-toggle-collapsed span {
+    @extend .suitepicon;
+    @extend .suitepicon-action-move-right;
+    line-height: 30px;
+    margin-left: 4px;
+}

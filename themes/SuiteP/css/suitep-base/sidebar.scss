@@ -103,33 +103,39 @@
 
 }
 
+//
+a.buttontoggle, a.buttontoggle:link {
+  color: $side-bar-header-color;
+  text-decoration: none;
+}
+
+a.buttontoggle:hover {
+  color: $side-bar-header-color;
+  text-decoration: none;
+}
+
 .button-toggle-collapsed {
   left: 0;
 }
 
-
+//
 .button-toggle-collapsed {
   position: fixed;
   top: 72px;
   background: $sidebar-bg;
-  background-image: none, url("../../../../../themes/SuiteP/images/p_show_sidebar.svg"), url("../../../../../themes/SuiteP/images/p_show_sidebar.png");
-  background-position: center center;
-  background-repeat: no-repeat;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   width: 30px;
   height: 30px;
   z-index: 1000;
   cursor: pointer;
+
 }
 
 .button-toggle-expanded {
   position: fixed;
   top: 72px;
   background: $sidebar-bg;
-  background-image: none, url("../../../../../themes/SuiteP/images/p_hide_sidebar.svg"), url("../../../../../themes/SuiteP/images/p_hide_sidebar.png");
-  background-position: center center;
-  background-repeat: no-repeat;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   width: 30px;
