@@ -4541,7 +4541,7 @@ function get_dashlets_dialog_icon($module = '', $width = '32', $height = '32', $
         return $app_strings['LBL_NO_IMAGE'];
     }
 
-    return SugarThemeRegistry::current()->getImage($iconName, "align=\"$align\" border=\"0\"", $width, $height);
+    return $iconName;
 }
 
 // works nicely to change UTF8 strings that are html entities - good for PDF conversions

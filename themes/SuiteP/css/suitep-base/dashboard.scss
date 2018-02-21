@@ -118,6 +118,11 @@ ul.subpanelTablist li {
 
 }
 
+
+#dashletCategories .suitepicon {
+  margin: 0 4px 0 4px;
+}
+
 #dashletCategories > li {
   display: inline-block;
   font-size: 13px;
@@ -127,7 +132,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -138,7 +143,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:link {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -149,7 +154,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:hover {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -160,7 +165,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:visited {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -171,7 +176,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:active {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -182,7 +187,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:focus {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -192,32 +197,32 @@ ul.subpanelTablist li {
 
 #dashletCategories > li.active a {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:link {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:hover {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:visited {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:active {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:focus {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 
@@ -706,7 +711,10 @@ td.dashlet-title > h3 > span {
   float: left;
 }
 
-
+.edit-dashboard-tabs .suitepicon {
+  font-size: 18px;
+  line-height: 18px;
+}
 
 .dashboardTbList {
   max-width: 90% ;

@@ -166,8 +166,8 @@
                             <div class="panel-heading">
                                 <div>
                                     <div class="col-xs-10 col-sm-11 col-md-11">
-                                        <div>
-                                            <img src="themes/SuiteP/images/sub_panel/Tab.svg">
+                                        <div class="edit-dashboard-tabs">
+                                            <span class="suitepicon suitepicon-mimetype-tab"></span>
                                             <span class="panel-title">Untitled</span>
                                         </div>
                                     </div>
