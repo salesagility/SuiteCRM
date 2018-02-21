@@ -49,7 +49,7 @@ class apiTester extends \Codeception\Actor
      * @param $username
      * @param $password
      */
-    public function login($username, $password)
+    public function loginWithPassword($username, $password)
     {
         $I = $this;
 
@@ -82,6 +82,47 @@ class apiTester extends \Codeception\Actor
     }
 
     /**
+     * Logins into API with Client Credentials grant
+     * @param $username
+     * @param $password
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function loginWithClientCredentials($client_id = 0, $client_secret = 0)
+    {
+        $I = $this;
+
+        if(!empty(self::$accessToken)) {
+            return;
+        }
+        if($client_id === 0) {
+            $client_id = $I->getClientID();
+        }
+        if($client_secret === 0) {
+            $client_secret = $I->getClientSecret();
+        }
+
+        /**
+         * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
+         */
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'grant_type' => 'client_credentials',
+                'client_id' => $client_id,
+                'client_secret' => $client_secret
+            )
+        );
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(200);
+
+        $response = json_decode($I->grabResponse(), true);
+        self::$tokenType = $response['token_type'];
+        self::$tokenExpiresIn =  (int)$response['expires_in'];
+        self::$accessToken = $response['access_token'];
+        self::$refreshToken = $response['refresh_token'];
+    }
+
+    /**
      * Login as admin
      */
     public function loginAsAdmin()
@@ -90,7 +131,7 @@ class apiTester extends \Codeception\Actor
         /**
          * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
          */
-        $I->login(
+        $I->loginWithPassword(
             $I->getAdminUser(),
             $I->getAdminPassword()
         );

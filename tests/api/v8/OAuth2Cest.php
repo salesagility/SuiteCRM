@@ -49,6 +49,16 @@ class OAuth2Cest
             )
         );
         $I->seeResponseCodeIs(401);
+
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'grant_type' => 'client_credentials',
+                'client_id' => '0',
+                'client_secret' => 'invalid secret'
+            )
+        );
+        $I->seeResponseCodeIs(401);
     }
 
     /**
@@ -58,8 +68,21 @@ class OAuth2Cest
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      */
-    public function TestScenarioLogin(apiTester $I)
+    public function TestScenarioLoginWithPassword(apiTester $I)
     {
        $I->loginAsAdmin();
+    }
+
+    /**
+     * I want to be able to login with Client Credentials grant type
+     * @param apiTester $I
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function TestScenarioLoginWithClientCredentials(apiTester $I)
+    {
+       $I->loginWithClientCredentials();
     }
 }
