@@ -4432,7 +4432,13 @@ object {
 .favorite {
   margin-left: 5px;
   float: left;
-  width: 20px;
+  color: $link-color;
+}
+
+@media (min-width: 751px) {
+  .favorite .suitepicon {
+    font-size: 26px;
+  }
 }
 
 .favorite:hover {
