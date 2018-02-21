@@ -49,16 +49,31 @@ class OAuth2Cest
             )
         );
         $I->seeResponseCodeIs(401);
+    }
+
+    /**
+     * I want to make sure only the allowed grant types can be requested for any client
+     * @param apiTester $I
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     */
+    public function TestScenarioGrantTypeNotAllowed(apiTester $I)
+    {
+        $client_id = 'API-ea74-c352-badd-c2be-5a8d9c9d4351';
+        $client_secret = 'secret';
 
         $I->sendPOST(
             $I->getInstanceURL().'/api/oauth/access_token',
             array(
-                'grant_type' => 'client_credentials',
-                'client_id' => '0',
-                'client_secret' => 'invalid secret'
+                'grant_type' => 'password',
+                'client_id' => $client_id,
+                'client_secret' => $client_secret
             )
         );
-        $I->seeResponseCodeIs(401);
+
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(400);
     }
 
     /**
@@ -68,9 +83,9 @@ class OAuth2Cest
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      */
-    public function TestScenarioLoginWithPassword(apiTester $I)
+    public function TestScenarioLoginWithPasswordGrant(apiTester $I)
     {
-       $I->loginAsAdmin();
+        $I->loginAsAdmin();
     }
 
     /**
@@ -79,10 +94,45 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
-     * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioLoginWithClientCredentials(apiTester $I)
+    public function TestScenarioLoginWithClientCredentialsGrant(apiTester $I)
     {
-       $I->loginWithClientCredentials();
+        $client_id = 'API-ea74-c352-badd-c2be-5a8d9c9d4351';
+        $client_secret = 'secret';
+
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'grant_type' => 'client_credentials',
+                'client_id' => $client_id,
+                'client_secret' => $client_secret
+            )
+        );
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(200);
+    }
+
+    /**
+     * I want to be able to login with Client Credentials grant type
+     * @param apiTester $I
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     */
+    public function TestScenarioLoginWithImplicitGrant(apiTester $I)
+    {
+        $client_id = 'API-6d34-6c4c-59be-9fb5-5a8d9cda918f';
+
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/authorize',
+            array(
+                'response_type' => 'token',
+                'client_id' => $client_id,
+                'redirect_uri' => 'https://test.com',
+                'state' => bin2hex(random_bytes(20)),
+            )
+        );
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(200);
     }
 }

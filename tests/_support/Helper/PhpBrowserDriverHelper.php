@@ -196,7 +196,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config['INSTANCE_CLIENT_ID'])) {
                 // return default
-                return '1';
+                return 'API-4c59-f678-cecc-6594-5a8d9c704473';
             } else {
                 return $config['instance_client_id'];
             }
@@ -217,7 +217,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config['INSTANCE_CLIENT_SECRET'])) {
                 // return default
-                return 'client_secret';
+                return 'secret';
             } else {
                 return $config['instance_client_secret'];
             }
