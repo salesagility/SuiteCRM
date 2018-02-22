@@ -32,9 +32,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  */
 function loadSugarChart(chartId,jsonFilename,css,chartConfig){if(document.getElementById(chartId)==null){return false;}
 var labelType,useGradients,nativeTextSupport,animate;(function(){var ua=navigator.userAgent,typeOfCanvas=typeof HTMLCanvasElement,nativeCanvasSupport=(typeOfCanvas=='object'||typeOfCanvas=='function'),textSupport=nativeCanvasSupport&&(typeof document.createElement('canvas').getContext('2d').fillText=='function');labelType='Native';nativeTextSupport=labelType=='Native';useGradients=nativeCanvasSupport;animate=false;})();var delay=500;switch(chartConfig["chartType"]){case"barChart":var handleFailure=function(o){alert('fail');if(o.responseText!==undefined){alert('failed');}}

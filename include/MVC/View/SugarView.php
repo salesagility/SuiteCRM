@@ -33,9 +33,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  */
 
 /**
@@ -1042,7 +1042,7 @@ EOHTML;
         // not reasonably feasible for technical reasons, the Appropriate
         // Legal Notices must display the words "Powered by SugarCRM".
         $attribLinkImg =
-            "<img style='margin-top: 2px' border='0' width='120' height='34' src='include/images/poweredby_sugarcrm_65.png' alt='Powered By SugarCRM'>\n";
+            "<img style='margin-top: 2px' border='0' width='120' height='34' src='include/images/poweredby_sugarcrm_65.png' alt='Powered By Jubilee ICT'>\n";
 
         // handle resizing of the company logo correctly on the fly
         $companyLogoURL = $themeObject->getImageURL('company_logo.png');

@@ -33,9 +33,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  */
 
 //the left value is the key stored in the db and the right value is ie display value
@@ -2104,8 +2104,8 @@ $app_strings = array(
 
     // footer
     'LBL_SUITE_TOP' => 'Back to top',
-    'LBL_SUITE_SUPERCHARGED' => 'Supercharged by SuiteCRM',
-    'LBL_SUITE_POWERED_BY' => 'Powered By SugarCRM',
+    'LBL_SUITE_SUPERCHARGED' => 'Jubilee Insurance | CRM',
+    'LBL_SUITE_POWERED_BY' => 'Powered By Jubilee ICT',
     'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
     'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
     'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',

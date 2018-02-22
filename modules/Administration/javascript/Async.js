@@ -31,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  ********************************************************************************/
 var AjaxObject={ret:'',currentRequestObject:null,timeout:30000,forceAbort:false,_reset:function(){this.timeout=30000;this.forceAbort=false;},handleFailure:function(o){alert('asynchronous call failed.');},startRequest:function(callback,args,forceAbort){if(this.currentRequestObject!=null){if(this.forceAbort==true||callback.forceAbort==true){YAHOO.util.Connect.abort(this.currentRequestObject,null,false);}}
 this.currentRequestObject=YAHOO.util.Connect.asyncRequest('POST',"./index.php?module=Administration&action=Async&to_pdf=true",callback,args);this._reset();},refreshEstimate:function(o){this.ret=YAHOO.lang.JSON.parse(o.responseText);document.getElementById('repairXssDisplay').style.display='inline';document.getElementById('repairXssCount').value=this.ret.count;SUGAR.Administration.RepairXSS.toRepair=this.ret.toRepair;},showRepairXssResult:function(o){var resultCounter=document.getElementById('repairXssResultCount');this.ret=YAHOO.lang.JSON.parse(o.responseText);document.getElementById('repairXssResults').style.display='inline';if(this.ret.msg=='success'){SUGAR.Administration.RepairXSS.repairedCount+=this.ret.count;resultCounter.value=SUGAR.Administration.RepairXSS.repairedCount;}else{resultCounter.value=this.ret;}

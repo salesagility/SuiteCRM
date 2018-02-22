@@ -32,9 +32,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  */
 function DurationDependency(start_field,end_field,duration_field,format){this.duration=0;this.start_field=start_field;this.end_field=end_field;this.duration_field=duration_field;this.format=format;this.lock_end_listener=false;var format_parts=this.format.split(" ");this.date_format=format_parts[0];this.time_format=format_parts[1];if(format_parts.length==3)
 this.time_format+=""+this.time_format[2];this.date_delimiter=/([-.\\/])/.exec(this.date_format)[0];this.time_delimiter=/([.:])/.exec(this.time_format)[0];this.has_meridiem=/p/i.test(this.format);var delimiter=(this.date_delimiter=="."?"\\"+this.date_delimiter:this.date_delimiter);var date_format_cleaned=this.date_format.replace(/%/g,"").replace(new RegExp(delimiter,'g'),"");this.month_pos=date_format_cleaned.search(/m/);this.day_pos=date_format_cleaned.search(/d/);this.year_pos=date_format_cleaned.search(/Y/);if(YAHOO.util.Selector.query('input#'+end_field)[0].value!="")

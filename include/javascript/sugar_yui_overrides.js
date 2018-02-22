@@ -31,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  ********************************************************************************/
 YAHOO.widget.Panel.prototype.configClose=function(type,args,obj){var val=args[0],oClose=this.close,strings=this.cfg.getProperty("strings"),fc;if(val){if(!oClose){if(!this.m_oCloseIconTemplate){this.m_oCloseIconTemplate=document.createElement("a");this.m_oCloseIconTemplate.className="container-close";this.m_oCloseIconTemplate.href="#";}
 oClose=this.m_oCloseIconTemplate.cloneNode(true);fc=this.innerElement.firstChild;if(fc){if(fc.className==this.m_oCloseIconTemplate.className){this.innerElement.replaceChild(oClose,fc);}else{this.innerElement.insertBefore(oClose,fc);}}else{this.innerElement.appendChild(oClose);}
