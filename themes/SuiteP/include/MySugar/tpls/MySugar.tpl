@@ -74,6 +74,7 @@
 
                     <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
                         {$dashboardPages.$tabNum.pageTitle}
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul id="first-tab-menu-xs" class="dropdown-menu">
                         {counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}

@@ -1050,11 +1050,14 @@ $tab-margin-bottom: 5px;
 // Panels
 $panel-collapsed-bg: $color-39;
 $panel-expanded-bg: $color-13;
-$panel-height-divisor: 1; // 1 normal  1.25 small
+$panel-header-height: 32px;
+$panel-header-font-size: 14px;
 $panel-collapsed-color: $color-81;
 $panel-expanded-color: $panel-collapsed-color;
 $panel-button-bg: $color-28;
 $panel-button-bg-hover: $color-20;
+$panel-button-bg-disabled: $disabled-btn-color;
+$panel-button-color: $color-80;
 $campaign-pagination-bg-hover: $color-22;
 
 // Detail view

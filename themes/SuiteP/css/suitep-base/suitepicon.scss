@@ -146,6 +146,14 @@
     @extend .suitepicon-dashlet-charts-funnel;
 }
 
+.suitepicon-module-aos-products-quotes {
+    @extend .suitepicon-module-products;
+}
+
+.suitepicon-module-campaignlog {
+    @extend .suitepicon-module-campaigns;
+}
+
 // @see sidebar.scss
 .button-toggle-expanded span {
     @extend .suitepicon;

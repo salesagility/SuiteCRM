@@ -312,12 +312,11 @@ a#powered_by:hover {
 
 .footer_right a {
   font-size: 12px;
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
-  background-position: right 3px;
-  background-repeat: no-repeat;
   color: #4D4D4D;
   padding-right: 20px;
   letter-spacing: 1px;
+  vertical-align: middle;
+  line-height: 38px;
 }
 
 .footer_right a:hover {
@@ -1978,10 +1977,6 @@ ul.clickMenu form {
   float: left;
 }
 
-ul.clickMenu li.sugar_action_button > form:first-child {
-  padding: 0 15px;
-}
-
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form {
   width: 100%;
 }
@@ -2016,7 +2011,7 @@ ul.clickMenu ul.subnav-sub li a:hover {
 
 ul.clickMenu > li {
   position: relative;
-  color: $default-btn-color;
+  color: $panel-button-color;
   cursor: pointer;
   padding: 5px;
   margin: 0 5px 0 0;
@@ -2027,7 +2022,7 @@ ul.clickMenu > li {
 
 ul.SugarActionMenuIESub li {
   position: relative;
-  color: $default-btn-color;
+  color: $panel-button-color;
   cursor: pointer;
   padding: 5px;
   margin: 0;
@@ -2038,7 +2033,7 @@ ul.SugarActionMenuIESub li {
 
 ul.SugarActionMenuIESub li {
   display: block;
-  color: $default-btn-color;
+  color: $panel-button-color;
   margin: 0 5px 0 0;
   float: left;
   text-decoration: none;
@@ -2046,10 +2041,18 @@ ul.SugarActionMenuIESub li {
 
 ul.clickMenu li a {
   display: block;
-  color: $default-btn-color;
-  margin: 0 5px 0 0;
-  float: left;
+  color: $panel-button-color;
+  margin: 0 0 0 4px;
+  display: inline-block;
   text-decoration: none;
+}
+
+.subpanel-table .clickMenu  > .sugar_action_button > .suitepicon {
+  font-size: inherit;
+  line-height: inherit;
+  color: $panel-button-color;
+  display:inline;
+  margin: 0 4px 0 0;
 }
 
 ul.clickMenu li a.clearSearchIcon {
@@ -2067,9 +2070,6 @@ ul.clickMenu li a:hover {
 ul.clickMenu > li > span {
   display: inline-block;
   cursor: pointer;
-  margin-top: 9px;
-  width: 16px;
-  height: 16px;
 }
 
 @-moz-document url-prefix() {

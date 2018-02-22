@@ -1885,44 +1885,29 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
     }
 
     function getArrowStart() {
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        return "&nbsp;<!--not_in_theme!--><img border='0' src='".$imgFileParts['dirname']."/".$imgFileParts['filename']."";
+        return '';
     }
 
     function getArrowUpDownStart($upDown) {
         $ext = ( SugarThemeRegistry::current()->pngSupport ? "png" : "gif" );
 
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
+        if ($upDown === '_down') {
+            return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
+        } elseif (($upDown === '_up')) {
+            return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
+        } else {
+            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
-        return "&nbsp;<img border='0' src='".SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.{$ext}")."' ";
     }
 
 	function getArrowEnd() {
-		$imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        list($width,$height) = ListView::getArrowImageSize();
-
-		return '.'.$imgFileParts['extension']."' width='$width' height='$height' align='absmiddle' alt=".translate('LBL_SORT').">";
+	    //
+        return '';
     }
 
-    function getArrowUpDownEnd($upDown) {
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
-        }
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.gif"));
-
-        list($width,$height) = ListView::getArrowUpDownImageSize($upDown);
-
-        //get the right alt tag for the sort
-        $sortStr = translate('LBL_ALT_SORT');
-        if($upDown == '_down'){
-            $sortStr = translate('LBL_ALT_SORT_DESC');
-        }elseif($upDown == '_up'){
-            $sortStr = translate('LBL_ALT_SORT_ASC');
-        }
-        return " width='$width' height='$height' align='absmiddle' alt='$sortStr'>";
+    function getArrowUpDownEnd($upDown)
+    {
+        return '';
     }
 
 	function getArrowImageSize() {

@@ -108,18 +108,12 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 					&nbsp;&nbsp;
 					{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 						{if $pageData.ordering.sortOrder == 'ASC'}
-							{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-							{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+							<span class="suitepicon suitepicon-action-sorting-descending"></span>
 						{else}
-							{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-							{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+							<span class="suitepicon suitepicon-action-sorting-ascending"></span>
 						{/if}
 					{else}
-						{capture assign="imageName"}arrow.{$arrowExt}{/capture}
-                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-						{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+						<span class="suitepicon suitepicon-action-sorting-none"></span>
 					{/if}
                     </a>
 				{else}

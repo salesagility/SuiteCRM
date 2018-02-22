@@ -56,6 +56,10 @@
     color: $navbar-home-color-hover;
   }
 
+  .with-home-icon .suitepicon-action-home {
+    line-height: $navbar-toolbar-height;
+  }
+
   .dropdown-menu > li > a {
     line-height: normal;
   }
@@ -965,7 +969,7 @@
 }
 
 .quickcreatetop .suitepicon-action-caret {
-  line-height: 4px;
+  line-height: inherit;
   font-size: 10px;
   margin-left: 8px;
 }
@@ -1238,6 +1242,11 @@
 
 
 @media (max-width: 750px) {
+
+  // Allow mobile user to see the fields they are editing
+  .navbar-fixed-top {
+    position: absolute;
+  }
 
   .mobile-bar > .toolbar > .navbar-nav {
     margin: 0;
