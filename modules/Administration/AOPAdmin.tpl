@@ -150,7 +150,7 @@
                 );' >
     {/literal}
     <span class="suitepicon suitepicon-action-select"></span></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
-                                                                                                onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><img src="{sugar_getimagepath file="id-ff-clear.png"}"></button>
+                                                                                                onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><span class="suitepicon suitepicon-action-clear"></span></button>
 </span>
                 <script type="text/javascript">
                     {literal}

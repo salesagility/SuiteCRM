@@ -56,7 +56,7 @@ onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$f
 	   onclick='if(document.{{$form_name}}.{{$vardef.type_name}}.value != "") open_popup(document.{{$form_name}}.{{$vardef.type_name}}.value, 600, 400, "", true, false, {{$displayParams.popupData}}, "single", true);'><span class="suitepicon suitepicon-action-select"></span></button>
 {{if empty($displayParams.selectOnly)}}
 <button type="button" name="btn_clr_{{sugarvar key='name'}}" {{if !empty($tabindex)}} tabindex="{{$tabindex}}" {{/if}}  title="{$APP.LBL_CLEAR_BUTTON_TITLE}"  class="button lastChild" onclick="this.form.{{sugarvar key='name'}}.value = ''; this.form.{{sugarvar key='id_name'}}.value = '';" value="{$APP.LBL_CLEAR_BUTTON_LABEL}">
-{sugar_getimage alt=$app_strings.LBL_ID_FF_CLEAR name="id-ff-clear" ext=".png" other_attributes=''}
+<span class="suitepicon suitepicon-action-clear"></span>
 </button>
 {{/if}}
 </span>
