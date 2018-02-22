@@ -167,7 +167,7 @@ $xtpl->assign('encoded_assigned_users_popup_request_data', $json->encode($popup_
 if (!empty($focus->assigned_user_name))
     $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 
-$xtpl->assign("assign_user_select", SugarThemeRegistry::current()->getImage('id-ff-select', '', null, null, '.png', $mod_strings['LBL_SELECT']));
+$xtpl->assign("assign_user_select", '<span class="suitepicon suitepicon-action-select"></span>');
 $xtpl->assign("assign_user_clear", SugarThemeRegistry::current()->getImage('id-ff-clear', '', null, null, '.gif', $mod_strings['LBL_ID_FF_CLEAR']));
 //Assign qsd script
 require_once('include/QuickSearchDefaults.php');

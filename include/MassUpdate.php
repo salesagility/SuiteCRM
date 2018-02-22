@@ -779,8 +779,7 @@ EOJS;
 
         $change_parent_button = "<span class='id-ff'><button title='" . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "'  type='button' class='button' value='" . $app_strings['LBL_SELECT_BUTTON_LABEL']
             . "' name='button_parent_name' onclick='open_popup(document.MassUpdate.{$field['type_name']}.value, 600, 400, \"\", true, false, {$encoded_popup_request_data});'>
-			" . SugarThemeRegistry::current()->getImage("id-ff-select", '', null, null, ".png",
-                $app_strings['LBL_ID_FF_SELECT']) . "
+			<span class=\"suitepicon suitepicon-action-select\"></span>
 			</button></span>";
         $parent_type = $field['parent_type'];
         $parent_types = $app_list_strings[$parent_type];
@@ -985,7 +984,7 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsName = $json->encode($qsName);
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
+        $img = '<span class="suitepicon suitepicon-action-select"></span>';
         //
         ///////////////////////////////////////
 
@@ -1060,7 +1059,7 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsParent['populate_list'] = array('mass_' . $varname, 'mass_' . $id_name);
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
+        $img = '<span class="suitepicon suitepicon-action-select"></span>';
         $html = '<td scope="row">' . $displayname . " </td>\n"
             . '<td><input class="sqsEnabled" type="text" autocomplete="off" id="mass_' . $varname . '" name="' . $varname . '" value="" /><input id="mass_' . $id_name . '" type="hidden" name="'
             . $id_name . '" value="" />&nbsp;<span class="id-ff multiple"><button type="button" name="btn1" class="button" title="'
@@ -1105,7 +1104,7 @@ EOHTML;
         );
 
         $qsUser['populate_list'] = array('mass_assigned_user_name', 'mass_assigned_user_id');
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
+        $img ='<span class="suitepicon suitepicon-action-select"></span>';
         $html = <<<EOQ
 		<td width="15%" scope="row">$displayname</td>
 		<td ><input class="sqsEnabled" autocomplete="off" id="mass_assigned_user_name" name='assigned_user_name' type="text" value=""><input id='mass_assigned_user_id' name='assigned_user_id' type="hidden" value="" />

@@ -113,7 +113,7 @@
                                 true
                                 );' >
                         {/literal}
-                <img src="{sugar_getimagepath file="id-ff-select.png"}"></button>
+                <<span class="suitepicon suitepicon-action-select"></span></button>
                 <button type="button" name="btn_clr_case_document_name"
                         id="btn_clr_case_document_name" tabindex="0" title="{$MOD.LBL_CLEAR_CASE_DOCUMENT}"  class="button lastChild"
                         onclick="SUGAR.clearRelateField(this.form, 'case_document_name', 'case_document_id');"  value="{$MOD.LBL_CLEAR_CASE_DOCUMENT}" ><img src="{sugar_getimagepath file="id-ff-clear.png"}"></button>
