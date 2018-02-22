@@ -862,7 +862,7 @@
 			<tr>
 
 				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_START_DATE_TIME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
-				<td  style="display:none;" class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <img src="{sugar_getimagepath file='jscalendar.gif'}" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td  style="display:none;" class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <span class="suitepicon suitepicon-module-calendar" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger"></span>&nbsp;</td>
 				<td  style="display:none;" nowrap><input type="text" size='5' maxlength='5' id='time_start'  name='wiz_step3_time_start' tabindex="1" value="{$MRKT_TIME_START}"/>{$TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{$USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{$TIME_FORMAT}</span></td></tr></table></span>
 					<script type="text/javascript">
 						{literal}
@@ -895,7 +895,7 @@
 								<input type="hidden" id="userTimeFormat" value="{$TIME_FORMAT}">
 								<input autocomplete="off" type="text" id="{$fields.date_start.name}_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_{$fields.date_start.name}.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_{$fields.date_start.name}.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
 								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$fields.date_start.name}_trigger"{/capture}
-								{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
+								<span class="suitepicon suitepicon-module-calendar"></span>&nbsp;
 							</td>
 							<td nowrap colspan="5" style="width:200px;">
 								{literal}

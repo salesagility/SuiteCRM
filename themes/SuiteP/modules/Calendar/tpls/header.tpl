@@ -55,7 +55,7 @@
 	{/if}
 	{if $view != 'year' && !$print}
 	<span class="dateTime">
-					<img border="0" src="{$cal_img}" alt="{$APP.LBL_ENTER_DATE}" id="goto_date_trigger" align="absmiddle">
+		<span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}" id="goto_date_trigger"></span>
 					<input type="hidden" id="goto_date" name="goto_date" value="{$current_date}">
 					<script type="text/javascript">
 					Calendar.setup ({literal}{{/literal}
