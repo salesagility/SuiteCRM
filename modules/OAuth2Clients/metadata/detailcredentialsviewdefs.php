@@ -79,6 +79,10 @@ $viewdefs[$module_name]['DetailView'] = [
                                 'name' => 'duration_unit',
                             ],
                     ],
+                6 =>
+                    [
+                        'name' => 'assigned_user_name',
+                    ],
             ],
         'LBL_PANEL_ASSIGNMENT' =>
             [

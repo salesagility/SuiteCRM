@@ -141,6 +141,49 @@ $dictionary['OAuth2Clients'] = [
             'bean_name' => 'OAuth2Tokens',
             'source' => 'non-db',
         ],
+        'assigned_user_id' => [
+            'name' => 'assigned_user_id',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'vname' => 'LBL_USER',
+            'group' => 'assigned_user_name',
+            'type' => 'relate',
+            'table' => 'users',
+            'module' => 'Users',
+            'reportable' => true,
+            'isnull' => 'false',
+            'dbType' => 'id',
+            'audited' => true,
+            'comment' => 'User ID assigned to record',
+            'duplicate_merge' => 'disabled'
+        ],
+        'assigned_user_name' => [
+            'name' => 'assigned_user_name',
+            'link' => 'assigned_user_link',
+            'vname' => 'LBL_USER',
+            'rname' => 'user_name',
+            'type' => 'relate',
+            'reportable' => false,
+            'source' => 'non-db',
+            'table' => 'users',
+            'id_name' => 'assigned_user_id',
+            'module' => 'Users',
+            'duplicate_merge' => 'disabled'
+        ],
+        'assigned_user_link' => [
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => 'oauth2clients_assigned_user',
+            'vname' => 'LBL_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+            'duplicate_merge' => 'enabled',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'table' => 'users',
+        ],
     ],
     'optimistic_locking' => true,
     'relationships' => [
@@ -153,6 +196,15 @@ $dictionary['OAuth2Clients'] = [
             'lhs_key' => 'id',
             'relationship_type' => 'one-to-many',
         ],
+        'oauth2clients_assigned_user' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'OAuth2Clients',
+            'rhs_table' => 'oauth2clients',
+            'rhs_key' => 'assigned_user_id',
+            'relationship_type' => 'one-to-many'
+        ]
     ],
 ];
 if (!class_exists('VardefManager')) {

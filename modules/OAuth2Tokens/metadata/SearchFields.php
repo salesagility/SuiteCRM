@@ -55,10 +55,11 @@ $searchFields[$module_name] = [
         [
             'query_type' => 'default',
         ],
-    'oauth2client_name' => [
-        'query_type' => 'default',
-        'db_field' => ['oauth2clients.name']
-    ],
+    'oauth2client_name' =>
+        [
+            'query_type' => 'default',
+            'db_field' => ['oauth2clients.name']
+        ],
     'range_access_token_expires' =>
         [
             'query_type' => 'default',

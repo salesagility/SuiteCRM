@@ -51,9 +51,11 @@ $listViewDefs[$module_name] = [
         'label' => 'LBL_ALLOWED_GRANT_TYPE',
         'default' => true,
     ],
-    'is_confidential' => [
-        'label' => 'LBL_IS_CONFIDENTIAL',
+    'assigned_user_name' => [
+        'label' => 'LBL_USER',
+        'module' => 'Users',
+        'id' => 'USER_ID',
         'default' => true,
-        'link' => true,
+        'sortable' => true,
     ],
 ];
