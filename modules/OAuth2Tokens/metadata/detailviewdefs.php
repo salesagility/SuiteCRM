@@ -75,9 +75,6 @@ $viewdefs[$module_name]['DetailView'] = [
                     'name' => 'refresh_token_expires',
                 ],
                 [
-                    'name' => 'grant_type',
-                ],
-                [
                     'name' => 'state',
                 ],
             ],

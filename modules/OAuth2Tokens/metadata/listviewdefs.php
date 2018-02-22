@@ -81,11 +81,6 @@ $listViewDefs[$module_name] = [
         'sortable' => true,
         'related_fields' => ['client']
     ],
-    'grant_type' => [
-        'label' => 'LBL_GRANT_TYPE',
-        'default' => true,
-        'sortable' => true,
-    ],
     'token_is_revoked' => [
         'label' => 'LBL_TOKEN_IS_REVOKED',
         'default' => true,

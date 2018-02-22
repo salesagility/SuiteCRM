@@ -58,6 +58,9 @@ class OAuth2ClientsViewEdit extends ViewEdit
         return parent::getMetaDataFile();
     }
 
+    /**
+     *
+     */
     private function setViewType()
     {
         switch ($this->bean->allowed_grant_type) {
