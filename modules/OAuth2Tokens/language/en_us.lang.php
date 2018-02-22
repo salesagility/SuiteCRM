@@ -57,6 +57,7 @@ $mod_strings = array (
     'LBL_REVOKE_TOKEN'=> 'Revoke token',
     'LBL_REVOKE_TOKENS'=> 'Revoke tokens',
     'LBL_CLIENT_NAME'=> 'Client name',
+    'LBL_USER' => 'Associated user',
 
     'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
     'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',

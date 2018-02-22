@@ -81,6 +81,13 @@ $listViewDefs[$module_name] = [
         'sortable' => true,
         'related_fields' => ['client']
     ],
+    'assigned_user_name' => [
+        'label' => 'LBL_USER',
+        'module' => 'Users',
+        'id' => 'USER_ID',
+        'default' => true,
+        'sortable' => true,
+    ],
     'token_is_revoked' => [
         'label' => 'LBL_TOKEN_IS_REVOKED',
         'default' => true,
