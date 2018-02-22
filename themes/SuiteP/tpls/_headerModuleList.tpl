@@ -810,7 +810,7 @@
                         {foreach from=$recentRecords item=item name=lastViewed}
                             {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar">
-                                {if $item.module_name != 'Emails' && $item.module_name != 'InboundEmail'}<!--Check to ensure that recently viewed emails/email addresses are not displayed in the recently viewed panel.-->
+                                {if $item.module_name != 'Emails' && $item.module_name != 'InboundEmail'}<!--Check to ensure that recently viewed emails or email addresses are not displayed in the recently viewed panel.-->
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
                                         <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span>{$item.item_summary_short}</span>
