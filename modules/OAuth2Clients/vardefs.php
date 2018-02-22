@@ -53,6 +53,7 @@ $dictionary['OAuth2Clients'] = [
             'type' => 'id',
             'required' => true,
             'reportable' => false,
+            'inline_edit' => false,
         ],
         'name' => [
             'name' => 'name',
@@ -60,6 +61,7 @@ $dictionary['OAuth2Clients'] = [
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
+            'inline_edit' => false,
             'duplicate_merge' => 'disabled',
         ],
         'secret' => [
@@ -69,6 +71,7 @@ $dictionary['OAuth2Clients'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
             'len' => '4000',
         ],
         'redirect_url' => [
@@ -77,6 +80,7 @@ $dictionary['OAuth2Clients'] = [
             'type' => 'varchar',
             'required' => false,
             'reportable' => false,
+            'inline_edit' => false,
 
         ],
         'is_confidential' => [
@@ -87,13 +91,14 @@ $dictionary['OAuth2Clients'] = [
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
+            'inline_edit' => false,
         ],
         'allowed_grant_type' => [
             'name' => 'allowed_grant_type',
             'vname' => 'LBL_ALLOWED_GRANT_TYPE',
             'type' => 'enum',
             'options' => 'oauth2_grant_type_dom',
-            'default' => 'Password Grant',
+            'default' => 'password',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,

@@ -42,16 +42,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'OAuth2Clients';
-$metafiles[$module_name] = array(
-    'detailviewdefs' => '',
-    'detailpasswordviewdefs' => 'modules/' . $module_name . '/metadata/detailpasswordviewdefs.php',
-    'detailcredentialsviewdefs' => 'modules/' . $module_name . '/metadata/detailcredentialsviewdefs.php',
-    'editviewdefs' => '',
-    'editpasswordviewdefs' => 'modules/' . $module_name . '/metadata/editpasswordviewdefs.php',
-    'editcredentialsviewdefs' => 'modules/' . $module_name . '/metadata/editcredentialsviewdefs.php',
-    'listviewdefs' => '',
-    'searchdefs' => '',
-    'popupdefs' => '',
-    'searchfields' => '',
-);
+class OAuth2ClientsViewEdit extends ViewEdit
+{
+    /**
+     * @var OAuth2Clients $bean
+     */
+    public $bean;
+
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function getMetaDataFile()
+    {
+        $this->setViewType();
+        return parent::getMetaDataFile();
+    }
+
+    private function setViewType()
+    {
+        switch ($this->bean->allowed_grant_type) {
+            case 'password': $this->type = 'editpassword'; break;
+            case 'client_credentials': $this->type = 'editcredentials'; break;
+        }
+        if (!empty($_REQUEST['action'])) {
+            switch ($_REQUEST['action']) {
+                case 'EditViewPassword': $this->type = 'editpassword'; break;
+                case 'EditViewCredentials': $this->type = 'editcredentials'; break;
+            }
+        }
+    }
+}

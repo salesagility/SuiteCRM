@@ -40,35 +40,48 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $mod_strings, $app_strings;
+$module_name = 'OAuth2Clients';
 
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewPassword&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_PASSWORD_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewCredentials&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_CREDENTIALS_CLIENT'],
-        "Create"
-    ];
-}
-
-if (ACLController::checkAccess('OAuth2Clients', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=index&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_CLIENT_LIST'],
-        "List"
-    ];
-}
-
-if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
-        "List"
-    ];
-}
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+    ],
+    'panels' => [
+        'default' =>
+            [
+                0 =>
+                    [
+                        'name' => 'name',
+                    ],
+                1 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'new_secret',
+                                'label' => 'LBL_SECRET_HASHED',
+                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
+                                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="client_credentials">'
+                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                            ],
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+                3 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'duration_amount',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'duration_unit',
+                            ],
+                    ],
+            ],
+    ],
+];

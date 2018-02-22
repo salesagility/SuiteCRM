@@ -149,6 +149,7 @@ $dictionary['OAuth2Tokens'] = [
             'unified_search' => true,
             'quicksearch' => 'enabled',
             'reportable' => true,
+            'inline_edit' => false,
         ],
         'oauth2clients' => [
             'name' => 'oauth2clients',
@@ -158,6 +159,7 @@ $dictionary['OAuth2Tokens'] = [
             'module' => 'OAuth2Clients',
             'bean_name' => 'OAuth2Clients',
             'source' => 'non-db',
+            'inline_edit' => false,
         ],
         'client' => [
             'name' => 'client',
@@ -169,6 +171,7 @@ $dictionary['OAuth2Tokens'] = [
             'reportable' => false,
             'vname' => 'LBL_CLIENT_ID',
             'massupdate' => false,
+            'inline_edit' => false,
         ],
     ],
     'optimistic_locking' => true,

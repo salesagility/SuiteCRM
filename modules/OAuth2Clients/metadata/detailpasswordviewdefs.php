@@ -40,35 +40,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $mod_strings, $app_strings;
+$module_name = 'OAuth2Clients';
 
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewPassword&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_PASSWORD_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewCredentials&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_CREDENTIALS_CLIENT'],
-        "Create"
-    ];
-}
-
-if (ACLController::checkAccess('OAuth2Clients', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=index&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_CLIENT_LIST'],
-        "List"
-    ];
-}
-
-if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
-        "List"
-    ];
-}
+$viewdefs[$module_name]['DetailView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+    ],
+    'panels' => [
+        'default' =>
+            [
+                0 =>
+                    [
+                        'name' => 'name',
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+                3 =>
+                    [
+                        'name' => 'id',
+                    ],
+                4 =>
+                    [
+                        'name' => 'allowed_grant_type',
+                    ],
+                5 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'duration_amount',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'duration_unit',
+                            ],
+                    ],
+            ],
+        'LBL_PANEL_ASSIGNMENT' =>
+            [
+                0 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'date_entered',
+                                'customCode' =>
+                                    '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'date_modified',
+                                'label' => 'LBL_DATE_MODIFIED',
+                                'customCode' =>
+                                    '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                            ],
+                    ],
+            ],
+    ],
+];

@@ -47,7 +47,7 @@ $listViewDefs[$module_name] = [
         'default' => true,
         'link' => true,
     ],
-    'grant_type' => [
+    'allowed_grant_type' => [
         'label' => 'LBL_ALLOWED_GRANT_TYPE',
         'default' => true,
     ],
