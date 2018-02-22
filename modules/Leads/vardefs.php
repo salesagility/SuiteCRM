@@ -33,9 +33,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  ********************************************************************************/
 
 $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true, 'duplicate_merge' => true,

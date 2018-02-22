@@ -31,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  ********************************************************************************/
 initmySugarCharts=function(){SUGAR.mySugar.sugarCharts=function(){var activeTab=activePage,charts=new Object();return{loadSugarCharts:function(activeTab){var chartFound=false;for(id in charts[activeTab]){if(id!='undefined'){chartFound=true;loadSugarChart(charts[activeTab][id]['chartId'],charts[activeTab][id]['jsonFilename'],charts[activeTab][id]['css'],charts[activeTab][id]['chartConfig']);}}
 charts=new Object();},addToChartsArrayJson:function(json,activeTab){for(id in json){if(json[id]['supported']=="true"){SUGAR.mySugar.sugarCharts.addToChartsArray(json[id]['chartId'],json[id]['filename'],json[id]['css'],json[id]['chartConfig'],activeTab);}}},addToChartsArray:function(chartId,jsonFilename,css,chartConfig,activeTab){if(charts[activeTab]==null){charts[activeTab]=new Object();}

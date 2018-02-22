@@ -31,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * SugarCRM" logo and "Jubilee Insurance | CRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  "Powered by SugarCRM" and "Jubilee Insurance | CRM".
  ********************************************************************************/
 (function(){if(SUGAR.EmailAddressWidget)return;SUGAR.EmailAddressWidget=function(module){if(!SUGAR.EmailAddressWidget.count[module])SUGAR.EmailAddressWidget.count[module]=0;this.count=SUGAR.EmailAddressWidget.count[module];SUGAR.EmailAddressWidget.count[module]++;this.module=module;this.id=this.count;if(document.getElementById(module+'_email_widget_id')){document.getElementById(module+'_email_widget_id').value=this.id;}
 SUGAR.EmailAddressWidget.instances[this.id]=this;}
