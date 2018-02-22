@@ -411,10 +411,8 @@ class Scheduler extends SugarBean {
 			}
 		} elseif(strstr($mins,'*/')) {
 			$mult = str_replace('*/','',$mins);
-			$startMin = (int) $timedate->fromDb($focus->date_time_start)->min;
-			$startFrom = ($startMin % $mult);
-			for($i = $startFrom; $i < (60 + $startFrom); $i += $mult) {
-				$minName[] = $i % 60;
+			for($i = 0; $i < 60; $i += $mult) {
+				$minName[] = $i;
 			}
 
 		} elseif($mins != '*') {
