@@ -127,7 +127,7 @@ $dictionary['OAuth2Clients'] = [
             'api-visible' => false,
             'inline_edit' => false,
         ],
-        'oauth2tokens' => array(
+        'oauth2tokens' => [
             'name' => 'oauth2tokens',
             'vname' => 'LBL_RELATED_OAUTH2TOKENS',
             'type' => 'link',
@@ -135,11 +135,11 @@ $dictionary['OAuth2Clients'] = [
             'module' => 'OAuth2Tokens',
             'bean_name' => 'OAuth2Tokens',
             'source' => 'non-db',
-        ),
+        ],
     ],
     'optimistic_locking' => true,
-    'relationships' => array(
-        'oauth2clients_oauth2tokens' => array(
+    'relationships' => [
+        'oauth2clients_oauth2tokens' => [
             'rhs_module' => 'OAuth2Tokens',
             'rhs_table' => 'oauth2tokens',
             'rhs_key' => 'client',
@@ -147,8 +147,8 @@ $dictionary['OAuth2Clients'] = [
             'lhs_table' => 'oauth2clients',
             'lhs_key' => 'id',
             'relationship_type' => 'one-to-many',
-        ),
-    ),
+        ],
+    ],
 ];
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');

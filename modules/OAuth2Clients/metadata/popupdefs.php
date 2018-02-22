@@ -40,16 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'OAuth2Clients';
-$table_name = 'oauth2clients';
-
 $popupMeta = [
-    'moduleMain' => $module_name,
+    'moduleMain' => 'OAuth2Clients',
     'varName' => 'OAUTH2CLIENTS',
     'orderBy' => 'name',
     'whereClauses' =>
         [
-            'name' => $table_name . '.name',
+            'name' => 'oauth2clients.name',
         ],
     'searchInputs' =>
         [
@@ -60,8 +57,8 @@ $popupMeta = [
             'label' => 'LBL_NAME',
             'default' => true,
         ],
-        'redirect_url' => [
-            'label' => 'LBL_REDIRECT_URL',
+        'grant_type' => [
+            'label' => 'LBL_ALLOWED_GRANT_TYPE',
             'default' => true,
         ],
         'is_confidential' => [
