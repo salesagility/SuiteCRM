@@ -40,38 +40,55 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$popupMeta = [
-    'moduleMain' => 'OAuth2Clients',
-    'varName' => 'OAUTH2CLIENTS',
-    'orderBy' => 'oauth2clients.name',
-    'whereClauses' =>
+$module_name = 'OAuth2Clients';
+
+$searchdefs[$module_name] = [
+    'templateMeta' =>
         [
-            'name' => 'oauth2clients.name',
+            'maxColumns' => '3',
+            'maxColumnsBasic' => '4',
+            'widths' =>
+                [
+                    'label' => '10',
+                    'field' => '30',
+                ],
         ],
-    'searchInputs' =>
+    'layout' =>
         [
-            'id',
-            'name',
-            'allowed_grant_type',
+            'basic_search' =>
+                [
+                    'name' =>
+                        [
+                            'id' => 'name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                ],
+            'advanced_search' =>
+                [
+                    'id' =>
+                        [
+                            'name' => 'id',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'name' =>
+                        [
+                            'name' => 'oauth2client_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'allowed_grant_type' =>
+                        [
+                            'type' => 'enum',
+                            'label' => 'LBL_GRANT_TYPE',
+                            'width' => '10%',
+                            'default' => true,
+                            'name' => 'allowed_grant_type',
+                        ],
+                ],
         ],
-    'listviewdefs' => [
-        'ID' => [
-            'label' => 'LBL_ID',
-            'default' => true,
-            'link' => true,
-        ],
-        'NAME' => [
-            'label' => 'LBL_NAME',
-            'default' => true,
-            'link' => true,
-        ],
-        'ALLOWED_GRANT_TYPE' => [
-            'label' => 'LBL_ALLOWED_GRANT_TYPE',
-            'default' => true,
-        ],
-    ],
-    'searchdefs' => [
-        'name',
-    ]
 ];
+
+
 
