@@ -653,6 +653,10 @@
   padding: 0;
 }
 
+.globalLinks-desktop .suitepicon-action-caret {
+  line-height: 30px;
+}
+
 .usermenu a .caret {
   margin-left: 10px;
   border: 0;
@@ -675,12 +679,11 @@
 
 //
 .globalLinks-desktop .suitepicon-action-current-user {
-  color: $navbar-user-color;
   font-size: $navbar-toolbar-height - 2px;
   font-weight: 400;
 }
 
-.globalLinks-desktop .suitepicon-action-current-user:hover {
+.globalLinks-desktop:hover {
   color: $navbar-user-color-hover;
 }
 
