@@ -93,7 +93,9 @@ class OAuth2Clients extends SugarBean
     private function setDurationValue()
     {
         if (empty($_REQUEST['duration_amount']) || empty($_REQUEST['duration_unit'])) {
-            $this->duration_value = 1;
+            $this->duration_value = 60;
+            $this->duration_amount = 1;
+            $this->duration_unit = 'minute';
             return;
         }
         $amount = $_REQUEST['duration_amount'];
