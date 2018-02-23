@@ -1868,7 +1868,7 @@ table.detail {
 }
 
 .edit td[scope=row] {
-  color: #817D8D;
+  color: $main-font-color;
 }
 
 #EditView hr {
@@ -2124,7 +2124,7 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled {
   display: inline-block;
-  background-color: #94A6B5;
+  background-color: $list-view-action-button-disabled-bg;
   border-radius: 3px;
   vertical-align: bottom;
 }
@@ -2147,7 +2147,7 @@ ul#detailViewActions.clickMenu {
   top: -1px;
   font-size: 14px;
   font-weight: normal;
-  color: #C9D2DA;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   float: left;
@@ -2160,7 +2160,7 @@ ul#detailViewActions.clickMenu {
   top: -1px;
   font-size: 14px;
   font-weight: normal;
-  color: #C9D2DA;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   float: left;
@@ -2168,12 +2168,12 @@ ul#detailViewActions.clickMenu {
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
-  background-color: #94A6B5;
+  background-color: $list-view-action-button-bg;
   padding: 0 8px;
 }
 
 ul.clickMenu.SugarActionMenu li.single a:hover {
-  background-color: #778591;
+  background-color: $list-view-action-button-bg-hover;
 }
 
 .view {

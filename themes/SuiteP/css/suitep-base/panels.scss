@@ -338,7 +338,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
-  background-color: $panel-button-bg;
+  background-color: $panel-button-bg-disabled;
 }
 
 .subpanel-table .pagination button .suitepicon {

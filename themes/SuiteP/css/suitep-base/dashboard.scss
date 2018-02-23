@@ -47,8 +47,12 @@
   width: auto;
   height: auto;
 }
+#pageContainer .dashletcontainer .pagination td button:disabled {
+  background-color: $disabled-btn-bg;
+  color: $disabled-btn-color;
+}
 
-// Fix the icons in the dashlet pagination.
+  // Fix the icons in the dashlet pagination.
 #pageContainer .dashletcontainer .aor_reports .pagination h3 {
   margin: 0;
 }

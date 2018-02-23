@@ -1,22 +1,3 @@
-@font-face {
-    font-family: "suitepicon";
-    src: url("./suitepicon.eot?5e50ccc56b904443909a23ce147be7c0?#iefix") format("embedded-opentype"),
-url("./suitepicon.woff?5e50ccc56b904443909a23ce147be7c0") format("woff"),
-url("./suitepicon.ttf?5e50ccc56b904443909a23ce147be7c0") format("truetype"),
-url("./suitepicon.svg?5e50ccc56b904443909a23ce147be7c0#suitepicon") format("svg");
-}
-
-i {
-    line-height: 1;
-}
-
-i:before {
-    font-family: suitepicon !important;
-    font-style: normal;
-    font-weight: normal !important;
-    vertical-align: top;
-}
-
 .suitepicon-action-above:before {
     content: "\f101";
 }

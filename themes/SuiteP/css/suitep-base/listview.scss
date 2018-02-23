@@ -58,7 +58,7 @@ tr#pagination {
 .list #pagination td .paginationTable .pageNumbers {
   position: static;
   font-weight: bold;
-  color: $default-btn-color;
+  color: $list-view-header-color;
   padding: 0 8px 0 0;
   margin: 0 0 0 0;
 }
@@ -1351,6 +1351,7 @@ form#MassAssign_SecurityGroups {
 
 #massupdate_form {
   margin-top: 20px;
+  color: $mass-update-text-color;
 }
 
 #massupdate_form .buttons {
@@ -1531,8 +1532,8 @@ div#search_form > .advanced input.button:hover {
 .paginationTable .list-view-pagination-button {
   border: none;
   border-radius: $btn-border-radius-base;
-  background-color: $default-btn-bg;
-  color: $default-btn-color;
+  background-color: $list-view-action-button-bg;
+  color: $list-view-button-color;
   margin: 0 2px 0 2px;
   padding: 0;
   line-height: 26px;
@@ -1545,29 +1546,29 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationTable input[type=submit] {
-  background-color: $default-btn-bg;
-  color: $default-btn-color;
+  background-color: $list-view-action-button-bg;
+  color: $list-view-button-color;
   padding: 0 10px 0 10px;
 }
 
 .paginationTable input[type=button] {
-  background-color: $default-btn-bg;
-  color: $default-btn-color;
+  background-color: $list-view-action-button-bg;
+  color: $list-view-button-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
   height: 26px;
 }
 
 .paginationChangeButtons button[type=submit] {
-  background-color: $default-btn-bg;
-  color: $default-btn-color;
+  background-color: $list-view-action-button-bg;
+  color: $list-view-button-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
   height: 26px;
 }
 
 .paginationTable button[disabled] {
-  background-color: $default-btn-bg;
+  background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
@@ -1575,7 +1576,7 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationTable input[type="submit"][disabled] {
-  background-color: $default-btn-bg;
+  background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
@@ -1583,7 +1584,7 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationTable input[type="reset"][disabled] {
-  background-color: $default-btn-bg;
+  background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
@@ -1591,7 +1592,7 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationTable input[type="button"][disabled] {
-  background-color: $default-btn-bg;
+  background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
@@ -1599,7 +1600,7 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationChangeButtons button[type=submit][disabled] {
-  background-color: $default-btn-bg;
+  background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
   padding: 0 10px 0 10px;
   line-height: 26px;
@@ -2876,7 +2877,7 @@ ul#selectLink.clickMenu > li > a {
   float: left;
   display: inline-block;
   text-decoration: none;
-  color: $list-view-action-button-disabled-bg;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   font-weight: normal;
@@ -2887,7 +2888,7 @@ ul#selectLink.clickMenu > li > a {
   float: left;
   display: inline-block;
   text-decoration: none;
-  color: $list-view-action-button-disabled-bg;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   font-weight: normal;
@@ -3247,17 +3248,17 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
 
 #selectLink > li > label {
   margin-bottom: initial;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 #selectLinkTop > li > label {
   margin-bottom: initial;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 #selectLinkBottom > li > label {
   margin-bottom: initial;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 #selectLink > li > label.disabled {

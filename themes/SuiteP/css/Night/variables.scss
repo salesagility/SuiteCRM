@@ -1056,8 +1056,8 @@ $panel-collapsed-color: $color-81;
 $panel-expanded-color: $panel-collapsed-color;
 $panel-button-bg: $color-28;
 $panel-button-bg-hover: $color-20;
-$panel-button-bg-disabled: $disabled-btn-color;
-$panel-button-color: $color-80;
+$panel-button-bg-disabled: $disabled-btn-bg;
+$panel-button-color: $color-81;
 $campaign-pagination-bg-hover: $color-22;
 
 // Detail view
@@ -1072,13 +1072,15 @@ $confirm-opt-in-tick-color-in-confirmed: $color-16;
 // List View
 $list-view-toolbar-bg: $color-39;
 $list-view-header-bg: $color-20;
-$list-view-header-color: $color-80;
+$list-view-header-color: $color-81;
 $list-view-button-color: $color-81;
 $list-view-text-color: $color-46;
 $list-view-link-color: $color-46;
 $list-view-link-hover-color: $color-43;
-$list-view-action-button-disabled-bg: $color-41;
+$list-view-action-button-disabled-bg: $disabled-btn-bg;
 $list-view-action-button-bg: $color-83;
+$list-view-action-button-bg-hover: $color-28;
+$list-view-action-button-disabled-color: $disabled-btn-color;
 $list-view-action-menu-bg: $color-20;
 $list-view-action-menu-link-bg: $color-14;
 $list-view-action-menu-separator: $color-27;
@@ -1087,9 +1089,9 @@ $list-view-choose-columns-hidden: $color-56;
 $list-view-data-icon-font-size: 18px;
 $list-view-data-icon-color: $main-font-color;
 $page-list-view-font-size: 12px;
-
+$mass-update-text-color: $main-font-color;
 // mass assign form
-$mass-assign-color: $color-15;
+$mass-assign-color: $main-font-color;
 $mass-assign-bg: $color-51;
 
 // Filters / Search
@@ -1172,6 +1174,7 @@ $calendar-user-height: 32px;
 $calendar-user-bg: $color-36;
 $calendar-user-height: 40px;
 $calendar-header-bg: $color-39;
+$calendar-header-color: $btn-primary-color;
 // YUI Popup calendar
 $calendar-month-day-header-bg: $color-20;
 $calendar-month-day-header-color: $color-81;
@@ -1185,7 +1188,7 @@ $calendar-nav-button-bg: $color-13;
 $calendar-body-bg: $main-alternate-bg;
 $calendar-body-color: $color-6;
 $calendar-body-header-color: $gray-lighter;
-$calendar-border-color: $color-31;
+
 $calendar-other-month-day-body-bg: $calendar-header-bg;
 $calendar-other-month-day-body-color: $color-12;
 $calendar-tip-bg: $color-65;
@@ -1200,12 +1203,12 @@ $calendar-arrow-button-color: $btn-info-color;
 
 // Qtip popups in the full calendar
 $qtip-font-size: 12px;
-$qtip-btn-color: $color-51;
+$qtip-btn-color: $color-45;
 $qtip-btn-hover: $color-37;
-$qtip-title-bg: $color-9;
-$qtip-title-color: $color-51;
-$qtip-content-bg: $color-11;
-$qtip-content-color: $color-51;
+$qtip-title-bg: $color-13;
+$qtip-title-color: $color-45;
+$qtip-content-bg: $color-12;
+$qtip-content-color: $color-45;
 
 
 // yui
