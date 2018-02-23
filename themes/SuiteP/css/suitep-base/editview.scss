@@ -4349,12 +4349,21 @@ td.inlineEditActive {
   float: right;
 }
 
-#inlineEditSaveButton svg {
-  fill: #F08377;
+.inlineEdit .suitepicon-action-edit {
+  display: none;
 }
 
-#inlineEditSaveButton svg:hover {
-  fill: #F08377;
+.inlineEdit:hover  .suitepicon-action-edit {
+  display: inline-block;
+}
+
+#inlineEditSaveButton .suitepicon {
+  text-decoration: none;
+  line-height: inherit;
+}
+
+#inlineEditSaveButton .suitepicon {
+  text-decoration: none;
 }
 
 #inline_edit_field {
