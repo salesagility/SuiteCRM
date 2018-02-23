@@ -80,6 +80,10 @@
     @extend .suitepicon-module-project-tasks;
 }
 
+.suitepicon-module-am-projecttemplates {
+    @extend .suitepicon-module-project-tasks;
+}
+
 .suitepicon-module-surveyquestionoptions {
     @extend .suitepicon-module-surveys;
 }
