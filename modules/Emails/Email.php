@@ -876,6 +876,7 @@ class Email extends Basic
                 isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id']) &&
                 ($_REQUEST['parent_type'] == 'Accounts' ||
                     $_REQUEST['parent_type'] == 'Contacts' ||
+                    $_REQUEST['parent_type'] == 'Cases' ||
                     $_REQUEST['parent_type'] == 'Leads' ||
                     $_REQUEST['parent_type'] == 'Users' ||
                     $_REQUEST['parent_type'] == 'Prospects')
