@@ -41,6 +41,10 @@ p.msg {
   background-color: $disabled-btn-bg;
 }
 
+.btn-pagination .suitepicon {
+  line-height: inherit;
+}
+
 .buttons .pagination .btn-pagination {
   height: 28px;
   line-height: 18px;
