@@ -68,17 +68,17 @@ $viewdefs[$module_name]['DetailView'] = [
                     [
                         'name' => 'allowed_grant_type',
                     ],
-                5 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'duration_amount',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'duration_unit',
-                            ],
-                    ],
+//                5 =>
+//                    [
+//                        0 =>
+//                            [
+//                                'name' => 'duration_amount',
+//                            ],
+//                        1 =>
+//                            [
+//                                'name' => 'duration_unit',
+//                            ],
+//                    ],
             ],
         'LBL_PANEL_ASSIGNMENT' =>
             [

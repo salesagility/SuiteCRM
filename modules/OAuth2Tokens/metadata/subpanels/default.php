@@ -48,27 +48,27 @@ $subpanel_layout = array(
         array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
     ),
 
-    'where' => 'token_is_revoked = false AND refresh_token_expires > NOW()',
+    'where' => 'token_is_revoked = false AND (refresh_token_expires > NOW() OR refresh_token_expires IS NULL)',
 
     'list_fields' => array(
         'id' => [
-            'label' => 'LBL_TOKEN_ID',
+            'vname' => 'LBL_TOKEN_ID',
             'default' => true,
             'widget_class' => 'SubPanelDetailViewLink',
             'sortable' => true,
         ],
         'date_entered' => [
-            'label' => 'LBL_DATE_ENTERED',
+            'vname' => 'LBL_DATE_ENTERED',
             'default' => true,
             'sortable' => true,
         ],
         'access_token_expires' => [
-            'label' => 'LBL_ACCESS_TOKEN_EXPIRES',
+            'vname' => 'LBL_ACCESS_TOKEN_EXPIRES',
             'default' => true,
             'sortable' => true,
         ],
         'refresh_token_expires' => [
-            'label' => 'LBL_REFRESH_TOKEN_EXPIRES',
+            'vname' => 'LBL_REFRESH_TOKEN_EXPIRES',
             'default' => true,
             'sortable' => true,
         ],
