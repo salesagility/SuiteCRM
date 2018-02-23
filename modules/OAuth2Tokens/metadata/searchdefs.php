@@ -111,6 +111,3 @@ $searchdefs[$module_name] = [
                 ],
         ],
 ];
-
-
-

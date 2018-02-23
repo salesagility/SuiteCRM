@@ -95,7 +95,9 @@ $viewdefs[$module_name]['DetailView'] = [
                                 'name' => 'date_modified',
                                 'label' => 'LBL_DATE_MODIFIED',
                                 'customCode' =>
-                                    '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                                    '{$fields.date_modified.value} ' .
+                                    '{$APP.LBL_BY} ' .
+                                    '{$fields.modified_by_name.value}',
                             ],
                     ],
             ],

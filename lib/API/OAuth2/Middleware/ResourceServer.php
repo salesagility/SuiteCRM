@@ -145,6 +145,8 @@ class ResourceServer
             return $user;
         }
 
+        // We need a User to take ownership of actions, so if we are using a grant type that does not have
+        // an associated User we fall back on the User defined in the OAuth2Clients
         $client = new \OAuth2Clients();
         $client->retrieve($request->getAttribute('oauth_client_id'));
 
