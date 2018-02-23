@@ -421,10 +421,10 @@ class SugarThemeRegistry
         $current = self::current();
         $themeConfig = self::getThemeConfig($current->dirName);
         $subThemes = isset($themeConfig['sub_themes']['options'])
-            ? $themeConfig['sub_themes']['options']['Style'] : [];
-        foreach ($subThemes as &$subTheme) {
-            $subTheme = isset($mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($subTheme)]) ?
-                $mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($subTheme)] : $subTheme;
+            ? reset($themeConfig['sub_themes']['options']) : [];
+        foreach ($subThemes as $key => &$subTheme) {
+            $subTheme = isset($mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($key)]) ?
+                $mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($key)] : $subTheme;
         }
         return $subThemes;
     }
