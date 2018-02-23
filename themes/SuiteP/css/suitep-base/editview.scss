@@ -323,6 +323,11 @@ a#powered_by:hover {
   color: $danger-btn-bg-hover;
 }
 
+.footer_right .suitepicon {
+  line-height: inherit;
+  margin: 0 4px 0 4px;
+}
+
 .subDmenu {
   display: none;
   position: absolute;
