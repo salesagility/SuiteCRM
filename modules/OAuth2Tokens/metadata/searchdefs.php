@@ -78,10 +78,24 @@ $searchdefs[$module_name] = [
                             'default' => true,
                             'width' => '10%',
                         ],
+                    'assigned_user_name' =>
+                        [
+                            'name' => 'assigned_user_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
                     'token_is_revoked' =>
                         [
                             'name' => 'token_is_revoked',
                             'label' => 'LBL_TOKEN_IS_REVOKED',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'active_only' =>
+                        [
+                            'name' => 'active_only',
+                            'label' => 'LBL_IS_ACTIVE',
                             'type' => 'bool',
                             'default' => true,
                             'width' => '10%',
@@ -93,22 +107,6 @@ $searchdefs[$module_name] = [
                             'width' => '10%',
                             'default' => true,
                             'name' => 'grant_type',
-                        ],
-                    'access_token_expires' =>
-                        [
-                            'type' => 'datetimecombo',
-                            'label' => 'LBL_ACCESS_TOKEN_EXPIRES',
-                            'width' => '10%',
-                            'default' => true,
-                            'name' => 'access_token_expires',
-                        ],
-                    'refresh_token_expires' =>
-                        [
-                            'type' => 'datetimecombo',
-                            'label' => 'LBL_REFRESH_TOKEN_EXPIRES',
-                            'width' => '10%',
-                            'default' => true,
-                            'name' => 'refresh_token_expires',
                         ],
                 ],
         ],

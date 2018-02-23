@@ -187,7 +187,8 @@ $dictionary['OAuth2Tokens'] = [
             'dbType' => 'id',
             'audited' => true,
             'comment' => 'User ID assigned to record',
-            'duplicate_merge' => 'disabled'
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
         ],
         'assigned_user_name' => [
             'name' => 'assigned_user_name',
@@ -200,7 +201,8 @@ $dictionary['OAuth2Tokens'] = [
             'table' => 'users',
             'id_name' => 'assigned_user_id',
             'module' => 'Users',
-            'duplicate_merge' => 'disabled'
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
         ],
         'assigned_user_link' => [
             'name' => 'assigned_user_link',
@@ -215,6 +217,7 @@ $dictionary['OAuth2Tokens'] = [
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
             'table' => 'users',
+            'inline_edit' => false,
         ],
     ],
     'optimistic_locking' => true,

@@ -66,22 +66,16 @@ $searchdefs[$module_name] = [
                 ],
             'advanced_search' =>
                 [
-                    'id' =>
-                        [
-                            'name' => 'id',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
                     'name' =>
                         [
-                            'name' => 'oauth2client_name',
+                            'name' => 'name',
                             'default' => true,
                             'width' => '10%',
                         ],
                     'allowed_grant_type' =>
                         [
                             'type' => 'enum',
-                            'label' => 'LBL_GRANT_TYPE',
+                            'label' => 'LBL_ALLOWED_GRANT_TYPE',
                             'width' => '10%',
                             'default' => true,
                             'name' => 'allowed_grant_type',
