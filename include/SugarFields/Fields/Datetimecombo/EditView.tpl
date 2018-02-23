@@ -48,7 +48,7 @@
 <tr valign="middle">
 <td nowrap class="dateTimeComboColumn">
 <input autocomplete="off" type="text" id="{{$idname}}_date" class="datetimecombo_date" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}" size="11" maxlength="10" title='{{$vardef.help}}' tabindex="{{$tabindex}}" onblur="combo_{{$idname}}.update();" onchange="combo_{{$idname}}.update(); {{if isset($displayParams.updateCallback)}}{{$displayParams.updateCallback}}{{/if}}"   {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}} >
-	<span class="suitepicon suitepicon-module-calendar" id="{{$idname}}_trigger" alt="{$APP.LBL_ENTER_DATE}"></span>
+	<button type="button" id="{{$idname}}_trigger" class="btn btn-danger" onclick="return false;"><span class="suitepicon suitepicon-module-calendar"  alt="{$APP.LBL_ENTER_DATE}"></span></button>
 {{if empty($displayParams.splitDateTime)}}
 </td>
 <td nowrap class="dateTimeComboColumn">

@@ -121,6 +121,18 @@
     @extend .suitepicon-module-spots;
 }
 
+.suitepicon-module-user {
+    @extend .suitepicon-module-users;
+}
+
+.suitepicon-module-contact {
+    @extend .suitepicon-module-contacts;
+}
+
+.suitepicon-module-lead {
+    @extend .suitepicon-module-leads;
+}
+
 // Charts
 .suitepicon-module-opportunitiesbyleadsourcebyoutcomedashlet {
     @extend .suitepicon-dashlet-charts-horizontal;

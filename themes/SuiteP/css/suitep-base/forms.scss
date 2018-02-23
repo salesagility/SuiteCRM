@@ -948,6 +948,30 @@ input[type=button].btn-info:focus {
   border: 1px solid $success-btn-bg;
 }
 
+.btn-danger {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:hover {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:active {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:focus {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
 
 .button {
   font-size: $page-font-size;
@@ -1636,7 +1660,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .emailaddresses button {
   background-color: $danger-btn-bg;
-  border: 1px solid transparent;
+  border: 0 px solid transparent;
   border-radius: $border-radius-base;
 }
 
@@ -1681,7 +1705,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-add-line-container .email-address-add-button {
-  padding: 6px 9px 6px 9px;
+  padding: 0;
 }
 
 .email-address-add-line-container .email-address-add-button:focus {
@@ -1707,13 +1731,12 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-input-group .email-address-remove-button {
-  padding: 6px 9px 6px 9px;
   margin-left: 4px;
 }
 
 .email-address-input-group button[disabled].email-address-remove-button {
   font-size: $page-p-size;
-  padding: 6px 9px 6px 9px;
+  padding: 0;
   line-height: 20px;
   width: 36px;
   height: 36px;
