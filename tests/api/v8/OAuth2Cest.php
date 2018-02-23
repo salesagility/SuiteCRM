@@ -111,28 +111,4 @@ class OAuth2Cest
         $I->canSeeResponseIsJson();
         $I->seeResponseCodeIs(200);
     }
-
-    /**
-     * I want to be able to login with Client Credentials grant type
-     * @param apiTester $I
-     *
-     * HTTP Verb: POST
-     * URL: /api/oauth/access_token
-     */
-    public function TestScenarioLoginWithImplicitGrant(apiTester $I)
-    {
-        $client_id = 'API-6d34-6c4c-59be-9fb5-5a8d9cda918f';
-
-        $I->sendPOST(
-            $I->getInstanceURL().'/api/oauth/authorize',
-            array(
-                'response_type' => 'token',
-                'client_id' => $client_id,
-                'redirect_uri' => 'https://test.com',
-                'state' => bin2hex(random_bytes(20)),
-            )
-        );
-        $I->canSeeResponseIsJson();
-        $I->seeResponseCodeIs(200);
-    }
 }
