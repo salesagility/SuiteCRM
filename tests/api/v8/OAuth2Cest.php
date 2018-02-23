@@ -14,6 +14,7 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioInvalidLogin(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
@@ -34,6 +35,7 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioInvalidClient(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
@@ -57,18 +59,16 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioGrantTypeNotAllowed(apiTester $I)
     {
-        $client_id = 'API-ea74-c352-badd-c2be-5a8d9c9d4351';
-        $client_secret = 'secret';
-
         $I->sendPOST(
             $I->getInstanceURL().'/api/oauth/access_token',
             array(
                 'grant_type' => 'password',
-                'client_id' => $client_id,
-                'client_secret' => $client_secret
+                'client_id' => $I->getPasswordGrantClientId(),
+                'client_secret' => $I->getPasswordGrantClientSecret(),
             )
         );
 
