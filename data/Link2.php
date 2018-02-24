@@ -253,11 +253,19 @@ class Link2
         return $this->focus;
     }
 
+       /**
+     * @return Array of related fields
+     */
+    function getRelatedFields(){
+        return $this->relationship_fields;
+    }
+    
     /**
      * @param $name
      *
      * @return string The value for the relationship field $name
      */
+    
     public function getRelatedField($name)
     {
         if (!empty($this->relationship_fields) && !empty($this->relationship_fields[$name])) {
@@ -266,7 +274,7 @@ class Link2
             return null;
         } //For now return null. Later try the relationship object directly.
     }
-
+    
     /**
      * @return SugarRelationship the relationship object this link references
      */
