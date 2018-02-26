@@ -266,7 +266,6 @@ class Link2
      *
      * @return string The value for the relationship field $name
      */
-    
     public function getRelatedField($name)
     {
         if (!empty($this->relationship_fields) && !empty($this->relationship_fields[$name])) {
