@@ -61,7 +61,7 @@
               document.getElementById('detailpanel_parameters').className += ' expanded';
             </script>
         </h4>
-        <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
+        <div id="aor_conditionLines" class="panelContainer" style="min-height: 50px;">
         </div>
         <input id='updateParametersButton' class="panelContainer" type="button"
                value="{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}"/>
