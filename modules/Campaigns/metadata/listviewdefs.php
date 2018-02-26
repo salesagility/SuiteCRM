@@ -75,7 +75,7 @@ $listViewDefs['Campaigns'] = array(
 		'width' => '0.01',
 		'label' => '&nbsp;',
 		'link' => true,
-		'customCode' => ' <a title="{$TRACK_CAMPAIGN_TITLE}" href="index.php?action=TrackDetailView&module=Campaigns&record={$ID}"><!--not_in_theme!--><img border="0" src="{$TRACK_CAMPAIGN_IMAGE}" alt="{$TRACK_VIEW_ALT_TEXT}" width="16px" height="16px"></a> ',
+		'customCode' => ' <a title="{$TRACK_CAMPAIGN_TITLE}" href="index.php?action=TrackDetailView&module=Campaigns&record={$ID}"><!--not_in_theme!--><span class="suitepicon suitepicon-action-view-status"></span></a> ',
 		'default' => true,
 		'studio' => false,
 		'nowrap' => true,

@@ -34,6 +34,15 @@
  * Class Aliases
  * instead of creating mulitple icons in the font we can simply reuse the icons if the names are slightly different
  */
+
+.suitepicon-action-view-status {
+    @extend .suitepicon-module-opportunitiesbyleadsourcebyoutcomedashlet;
+}
+
+.suitepicon-action-view-news {
+    @extend .suitepicon-dashlet-sugarnewsdashlet;
+}
+
 .suitepicon-action-list {
     @extend .suitepicon-action-view;
 }
