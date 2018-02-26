@@ -102,7 +102,7 @@ class DashletsDialog {
 
                     $imageName = $files['class'];
                     if ( !empty($imageName) ) {
-                        $icon = 'default';
+                        $icon = $imageName;
                     }
                 }
                 else{
