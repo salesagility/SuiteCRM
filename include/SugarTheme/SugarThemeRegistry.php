@@ -414,19 +414,21 @@ class SugarThemeRegistry
             $themeobject->clearCache();
         }
     }
-    
-    public static function getSubThemes() {
+
+    public static function getSubThemes()
+    {
         global $mod_strings;
-        $subthemesLabel = $mod_strings['LBL_SUBTHEMES'];
         $current = self::current();
         $themeConfig = self::getThemeConfig($current->dirName);
-        $subThemes = isset($themeConfig['sub_themes']['options']) ? $themeConfig['sub_themes']['options'][$subthemesLabel] : array();
-        foreach($subThemes as &$subTheme) {
-            $subTheme = isset($mod_strings[$subTheme]) ? $mod_strings[$subTheme] : $subTheme;
+        $subThemes = isset($themeConfig['sub_themes']['options'])
+            ? reset($themeConfig['sub_themes']['options']) : [];
+        foreach ($subThemes as $key => &$subTheme) {
+            $subTheme = isset($mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($key)]) ?
+                $mod_strings['LBL_SUBTHEME_OPTIONS_' . strtoupper($key)] : $subTheme;
         }
         return $subThemes;
     }
-    
+
     public static function getSubThemeDefault() {
         $current = self::current();
         $themeConfig = self::getThemeConfig($current->dirName);

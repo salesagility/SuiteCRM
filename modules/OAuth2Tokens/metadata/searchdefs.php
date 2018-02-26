@@ -42,64 +42,72 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuth2Tokens';
 
-$viewdefs[$module_name]['DetailView'] = [
-    'templateMeta' => [
-        'maxColumns' => '1',
-        'widths' => [
-            ['label' => '30', 'field' => '70'],
+$searchdefs[$module_name] = [
+    'templateMeta' =>
+        [
+            'maxColumns' => '3',
+            'maxColumnsBasic' => '4',
+            'widths' =>
+                [
+                    'label' => '10',
+                    'field' => '30',
+                ],
         ],
-        'form' => [
-            'buttons' => array(
-            )
-        ]
-    ],
-    'panels' => [
-        'default' =>
-            [
+    'layout' =>
+        [
+            'basic_search' =>
                 [
-                    'name' => 'id',
+                    'id' =>
+                        [
+                            'id' => 'id',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
                 ],
+            'advanced_search' =>
                 [
-                    'name' => 'oauth2client_name',
+                    'id' =>
+                        [
+                            'name' => 'id',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'oauth2client_name' =>
+                        [
+                            'name' => 'oauth2client_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'assigned_user_name' =>
+                        [
+                            'name' => 'assigned_user_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'token_is_revoked' =>
+                        [
+                            'name' => 'token_is_revoked',
+                            'label' => 'LBL_TOKEN_IS_REVOKED',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'active_only' =>
+                        [
+                            'name' => 'active_only',
+                            'label' => 'LBL_IS_ACTIVE',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'grant_type' =>
+                        [
+                            'type' => 'enum',
+                            'label' => 'LBL_GRANT_TYPE',
+                            'width' => '10%',
+                            'default' => true,
+                            'name' => 'grant_type',
+                        ],
                 ],
-                [
-                    'name' => 'assigned_user_name',
-                ],
-                [
-                    'name' => 'token_is_revoked',
-                ],
-                [
-                    'name' => 'token_type',
-                ],
-                [
-                    'name' => 'access_token_expires',
-                ],
-                [
-                    'name' => 'refresh_token_expires',
-                ],
-                [
-                    'name' => 'state',
-                ],
-            ],
-        'LBL_PANEL_ASSIGNMENT' =>
-            [
-                0 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'date_entered',
-                                'label' => 'LBL_DATE_ENTERED',
-                                'customCode' =>
-                                    '{$fields.date_entered.value}',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'date_modified',
-                                'label' => 'LBL_DATE_MODIFIED',
-                                'customCode' =>
-                                    '{$fields.date_modified.value}',
-                            ],
-                    ],
-            ],
-    ],
+        ],
 ];

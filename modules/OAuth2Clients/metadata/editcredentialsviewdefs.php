@@ -58,36 +58,22 @@ $viewdefs[$module_name]['EditView'] = [
                     ],
                 1 =>
                     [
-                        'name' => 'redirect_url',
-                    ],
-                2 =>
-                    [
-                        'name' => 'is_confidential',
-                    ],
-                3 =>
-                    [
-                        'name' => 'allowed_grant_type',
-                    ],
-                4 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'duration_amount',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'duration_unit',
-                            ],
-                    ],
-                5 =>
-                    [
                         0 =>
                             [
                                 'name' => 'new_secret',
                                 'label' => 'LBL_SECRET_HASHED',
                                 'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
+                                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="client_credentials">'
                                     . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
                             ],
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+                4 =>
+                    [
+                        'name' => 'assigned_user_name',
                     ],
             ],
     ],
