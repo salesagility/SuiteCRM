@@ -93,8 +93,11 @@ if($queryString){
     <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER","AOD_Index");?>' value='<?php echo $queryString;?>'>
     <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON","AOD_Index");?>">&nbsp;
 </form>
+
+<?php
+	if($hits){
+ ?>
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
-    <?php getPaginateHTML($queryString, $start,$amount,$total); ?>
     <thead>
     <tr height='20'>
         <th scope='col' width='10%'data-hide="phone">
@@ -134,21 +137,23 @@ if($queryString){
             </div>
         </th>
     </tr>
+
+<?php getPaginateHTML($queryString, $start,$amount,$total); ?>
+
     </thead>
     <?php
-    if($hits){
-foreach($hits as $hit){
-    echo "<tr>"
-        ."<td>".$hit->label."</td>"
-        ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
-        ."<td>".$hit->summary."</td>"
-        ."<td>".$hit->date_entered."</td>"
-        ."<td>".$hit->date_modified."</td>"
-        ."<td>".getScoreDisplay($hit)."</td>"
-        ."</tr>";
-}
+            foreach($hits as $hit){
+                echo "<tr>"
+                    ."<td>".$hit->label."</td>"
+                    ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
+                    ."<td>".$hit->summary."</td>"
+                    ."<td>".$hit->date_entered."</td>"
+                    ."<td>".$hit->date_modified."</td>"
+                    ."<td>".getScoreDisplay($hit)."</td>"
+                    ."</tr>";
+            }
         }else{
-        echo "<tr><td>".translate("LBL_SEARCH_RESULT_EMPTY","AOD_Index")."</td></td>";
+        echo "<p>".translate("LBL_SEARCH_RESULT_EMPTY","AOD_Index")."</p>";
     }
 ?>
 </table>
@@ -278,7 +283,14 @@ function getPaginateHTML($queryString, $start, $amount, $total){
         $nextImage = SugarThemeRegistry::current()->getImageURL('next.gif');
     }
     ?>
-    <td class="paginationChangeButtons" align="right" nowrap="nowrap" width="1%">
+
+<tr id="pagination" class="pagination-unique" role="presentation">
+		<td colspan="6">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%" class="paginationTable">
+				<tbody><tr>
+					<td nowrap="nowrap" class="paginationActionButtons"> &nbsp; </td>
+					<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">
+
         <form action='index.php'>
             <input type="hidden" name="action" value="UnifiedSearch">
             <input type="hidden" name="module" value="Home">
@@ -291,7 +303,7 @@ function getPaginateHTML($queryString, $start, $amount, $total){
             <button type="submit" id="listViewPrevButton_top" name="listViewPrevButton" class="button" title="Previous" <?php echo $first ? 'disabled="disabled"' : ''?>>
                 <img src="<?php echo $prevImage;?>" alt="Previous" align="absmiddle" border="0">
             </button>
-            <span class="pageNumbers">(<?php echo $total ? $start+1 : 0;?> - <?php echo min($start + $amount,$total);?> of <?php echo $total;?>)</span>
+            <span class="pageNumbers" style="vertical-align: super;">(<?php echo $total ? $start+1 : 0;?> - <?php echo min($start + $amount,$total);?> of <?php echo $total;?>)</span>
             <button type="submit" id="listViewNextButton_top" name="listViewNextButton" title="Next" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
                 <img src="<?php echo $nextImage;?>" alt="Next" align="absmiddle" border="0">
             </button>
@@ -299,6 +311,12 @@ function getPaginateHTML($queryString, $start, $amount, $total){
                 <img src="<?php echo $endImage;?>" alt="End" align="absmiddle" border="0">
             </button>
         </form>
-    </td>
+
+
+					</td>
+				</tr>
+			</tbody></table>
+		</td>
+	</tr>
 <?php
 }
