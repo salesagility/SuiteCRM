@@ -255,7 +255,13 @@ a.buttontoggle:hover {
 .favoritesSidebar li:hover {
   background-color: $side-bar-link-color-hover;
 }
-
+.recentlyViewedSidebar .recent-links-detail .suitepicon {
+  display: inline-block;
+  font-size: $side-bar-links-icon-font-size;
+  line-height: $side-bar-links-height;
+  margin-right: 4px;
+  position: relative;
+}
 .recentlyViewedSidebar .recent_h3{
   font-size: 16px;
   font-weight: bold;

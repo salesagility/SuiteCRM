@@ -1884,6 +1884,10 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         }
     }
 
+    /**
+     * @deprecated
+     * @return string
+     */
     function getArrowStart() {
         return '';
     }

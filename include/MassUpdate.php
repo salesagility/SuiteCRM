@@ -984,7 +984,6 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsName = $json->encode($qsName);
-        $img = '<span class=\"suitepicon suitepicon-action-select\"></span>';
         //
         ///////////////////////////////////////
 
@@ -997,7 +996,7 @@ EOHTML;
     <button title='{$app_strings['LBL_SELECT_BUTTON_TITLE']}'
         type='button' class='button' value='{$app_strings['LBL_SELECT_BUTTON_LABEL']}' name='button'
         onclick='open_popup("$mod_type", 600, 400, "", true, false, {$encoded_popup_request_data});'
-        /><img alt="$img" src="$img"></button></span>
+        /><span class='suitepicon suitepicon-action-select'></span></button></span>
 </td>
 <script type="text/javascript">
 <!--
@@ -1059,7 +1058,6 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsParent['populate_list'] = array('mass_' . $varname, 'mass_' . $id_name);
-        $img = '<span class="suitepicon suitepicon-action-select"></span>';
         $html = '<td scope="row">' . $displayname . " </td>\n"
             . '<td><input class="sqsEnabled" type="text" autocomplete="off" id="mass_' . $varname . '" name="' . $varname . '" value="" /><input id="mass_' . $id_name . '" type="hidden" name="'
             . $id_name . '" value="" />&nbsp;<span class="id-ff multiple"><button type="button" name="btn1" class="button" title="'

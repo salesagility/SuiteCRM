@@ -53,7 +53,6 @@
                     <td align='left'>&nbsp;</td>
                     <td align='right' nowrap='nowrap'>
                         {if $pageData.urls.startPage}
-                            <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}")' >{sugar_getimage name="start" ext=".png" width="14" height="13" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
 							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-first"></span>
 							</button>
@@ -66,7 +65,6 @@
 
                         {/if}
                         {if $pageData.urls.prevPage}
-                            <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.prevPage}")' >{sugar_getimage name="previous" ext=".png" width="8" height="13" alt=$navStrings.previous other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.previous}</a>&nbsp;-->
 							<button title='{$navStrings.previous}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.prevPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-left"></span>
 							</button>
@@ -79,26 +77,22 @@
                         {/if}
                             <span class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</span>
                         {if $pageData.urls.nextPage}
-                            <!--&nbsp;<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.nextPage}")' >{$navStrings.next}&nbsp;{sugar_getimage name="next" ext=".png" width="8" height="13" alt=$navStrings.next other_attributes='align="absmiddle" border="0" '}</a>&nbsp;-->
 							<button title='{$navStrings.next}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.nextPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-right"></span>
 							</button>
 
                         {else}
-                           <!-- &nbsp;{$navStrings.next}&nbsp;{sugar_getimage name="next_off" ext=".png" width="8" height="13" alt=$navStrings.next other_attributes='align="absmiddle" border="0" '}-->
 							<button class='button' title='{$navStrings.next}' disabled>
 								<span class="suitepicon suitepicon-action-right"></span>
 							</button>
 
                         {/if}
 						{if $pageData.urls.endPage  && $pageData.offsets.total != $pageData.offsets.lastOffsetOnPage}
-                            <!--<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.endPage}")' >{$navStrings.end}&nbsp;{sugar_getimage name="end" ext=".png" width="14" height="13" alt=$navStrings.end other_attributes='align="absmiddle" border="0" '}</a></td>-->
 							<button title='{$navStrings.end}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.endPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-last"></span>
 							</button>
 
 						{elseif !$pageData.offsets.totalCounted || $pageData.offsets.total == $pageData.offsets.lastOffsetOnPage}
-                            <!--&nbsp;{$navStrings.end}&nbsp;{sugar_getimage name="end_off" ext=".png" width="14" height="13" alt=$navStrings.end other_attributes='align="absmiddle" border="0" '}-->
 							<button class='button' disabled title='{$navStrings.end}'>
 								<span class="suitepicon suitepicon-action-last"></span>
 							</button>
