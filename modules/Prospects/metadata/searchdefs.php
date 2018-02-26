@@ -79,7 +79,11 @@ $searchdefs['Prospects'] = array(
                 'label' => 'LBL_ASSIGNED_TO',
                 'function' => array('name' => 'get_user_array', 'params' => array(false))
             ),
-
+            'open_opt_out' => array(
+                'name' => 'open_opt_out',
+                'label' => 'LBL_EMAIL_OPT_OUT',
+                'type' => 'bool',
+            ),
         ),
     ),
 );
