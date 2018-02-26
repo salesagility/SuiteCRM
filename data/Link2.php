@@ -253,10 +253,11 @@ class Link2
         return $this->focus;
     }
 
-       /**
-     * @return Array of related fields
-     */
-    function getRelatedFields(){
+    /**
+    * @return Array of related fields
+    */
+    public function getRelatedFields()
+    {
         return $this->relationship_fields;
     }
     
