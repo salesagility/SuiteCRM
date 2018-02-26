@@ -5541,6 +5541,9 @@ class SugarBean
         }
     }
 
+    /**
+     * @return bool
+     */
     protected function hasAutoIncrementFields()
     {
         foreach ($this->field_defs as $key => $field_def){
