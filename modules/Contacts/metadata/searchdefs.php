@@ -162,7 +162,11 @@ $searchdefs['Contacts'] = array(
                         'default' => true,
                         'width' => '10%',
                     ),
-
+                'open_opt_out' => array(
+                    'name' => 'open_opt_out',
+                    'label' => 'LBL_EMAIL_OPT_OUT',
+                    'type' => 'bool',
+                ),
             ),
     )
 );
