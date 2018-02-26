@@ -231,7 +231,7 @@ $searchFields['Accounts'] = array(
 			                        and favorites.assigned_user_id = '{1}'",
         'db_field' => array('id')
     ),
-    'open_opt_out' =>
+    'open_only_opt_out' =>
         array(
             'query_type' => 'format',
             'operator' => 'subquery',

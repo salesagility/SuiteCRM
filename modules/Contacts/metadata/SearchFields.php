@@ -157,7 +157,7 @@ $searchFields['Contacts'] =
             'enable_range_search' => true,
             'is_date_field' => true
         ),
-        'open_opt_out' =>
+        'open_only_opt_out' =>
             array(
                 'query_type' => 'format',
                 'operator' => 'subquery',
