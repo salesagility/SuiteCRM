@@ -38,46 +38,37 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\OAuth2\Repositories;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-use League\OAuth2\Server\Exception\OAuthServerException;
-
-class ClientRepository implements ClientRepositoryInterface
+class OAuth2ClientsViewDetail extends ViewDetail
 {
     /**
-     * {@inheritdoc}
-     * @return null|ClientEntity
+     * @var OAuth2Clients $bean
      */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
+    public $bean;
+
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function getMetaDataFile()
     {
+        $this->setViewType();
+        return parent::getMetaDataFile();
+    }
 
-        $client = new \OAuth2Clients();
-        $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
-            return null;
+    private function setViewType()
+    {
+        switch ($this->bean->allowed_grant_type) {
+            case 'password': $this->type = 'detailpassword'; break;
+            case 'client_credentials': $this->type = 'detailcredentials'; break;
         }
-
-        if($client->allowed_grant_type !== $grantType) {
-            throw OAuthServerException::grantTypeNotAllowedForClient();
+        if (!empty($_REQUEST['action'])) {
+            switch ($_REQUEST['action']) {
+                case 'EditViewPassword': $this->type = 'detailpassword'; break;
+                case 'EditViewCredentials': $this->type = 'detailcredentials'; break;
+            }
         }
-
-        if (
-            $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
-        ) {
-            return null;
-        }
-
-        $clientEntity = new ClientEntity();
-        $clientEntity->setIdentifier($clientIdentifier);
-        $clientEntity->setName($client->name);
-
-        $redirect_url = isset($client->redirect_uri) ? $client->redirect_uri : '';
-        $clientEntity->setRedirectUri($redirect_url);
-
-        return $clientEntity;
     }
 }

@@ -42,53 +42,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuth2Clients';
 
-$viewdefs[$module_name]['EditView'] = [
-    'templateMeta' => [
-        'maxColumns' => '1',
-        'widths' => [
-            ['label' => '30', 'field' => '70'],
+$searchdefs[$module_name] = [
+    'templateMeta' =>
+        [
+            'maxColumns' => '3',
+            'maxColumnsBasic' => '4',
+            'widths' =>
+                [
+                    'label' => '10',
+                    'field' => '30',
+                ],
         ],
-    ],
-    'panels' => [
-        'default' =>
-            [
-                0 =>
-                    [
-                        'name' => 'name',
-                    ],
-                1 =>
-                    [
-                        'name' => 'redirect_url',
-                    ],
-                2 =>
-                    [
-                        'name' => 'is_confidential',
-                    ],
-                3 =>
-                    [
-                        'name' => 'allowed_grant_type',
-                    ],
-                4 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'duration_amount',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'duration_unit',
-                            ],
-                    ],
-                5 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'new_secret',
-                                'label' => 'LBL_SECRET_HASHED',
-                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
-                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
-                            ],
-                    ],
-            ],
-    ],
+    'layout' =>
+        [
+            'basic_search' =>
+                [
+                    'name' =>
+                        [
+                            'id' => 'name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                ],
+            'advanced_search' =>
+                [
+                    'name' =>
+                        [
+                            'name' => 'name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'allowed_grant_type' =>
+                        [
+                            'type' => 'enum',
+                            'label' => 'LBL_ALLOWED_GRANT_TYPE',
+                            'width' => '10%',
+                            'default' => true,
+                            'name' => 'allowed_grant_type',
+                        ],
+                ],
+        ],
 ];

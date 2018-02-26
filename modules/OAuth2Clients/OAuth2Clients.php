@@ -86,6 +86,27 @@ class OAuth2Clients extends SugarBean
         if (!empty($_REQUEST['new_secret'])) {
             $this->secret = crypt($_REQUEST['new_secret']);
         }
+        $this->setDurationValue();
         return parent::save();
+    }
+
+    private function setDurationValue()
+    {
+        if (empty($_REQUEST['duration_amount']) || empty($_REQUEST['duration_unit'])) {
+            $this->duration_value = 60;
+            $this->duration_amount = 1;
+            $this->duration_unit = 'minute';
+            return;
+        }
+        $amount = $_REQUEST['duration_amount'];
+        $value = 1;
+        switch ($_REQUEST['duration_unit']) {
+            case 'month': $value = $amount * 30 * 24 * 60 * 60; break;
+            case 'week': $value = $amount * 7 * 24 * 60 * 60; break;
+            case 'day': $value = $amount * 24 * 60 * 60; break;
+            case 'hour': $value = $amount * 60 * 60; break;
+            case 'minute': $value = $amount * 60; break;
+        }
+        $this->duration_value = $value;
     }
 }

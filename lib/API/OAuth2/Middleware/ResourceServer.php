@@ -77,18 +77,11 @@ class ResourceServer
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
-        global $current_user;
         try {
             if (!in_array($request->getUri()->getPath(), self::$ROUTES_EXEMPT_FROM_AUTH)) {
                 $request = $this->server->validateAuthenticatedRequest($request);
 
-                // validate user is still active
-                $user = new \User();
-                $user->retrieve($request->getAttribute('oauth_user_id'));
-                if($user->status === 'Inactive') {
-                    throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
-                }
-                $current_user  = $user;
+                $this->setCurrentUserGlobal($request);
             }
         } catch (OAuthServerException $exception) {
             $log = new Logger();
@@ -114,5 +107,54 @@ class ResourceServer
 
         // Pass the request and response on to the next responder in the chain
         return $next($request, $response);
+    }
+
+    /**
+     * Suite needs a current_user global for roles, security groups etc.
+     *
+     * @param ServerRequestInterface $request
+     * @throws NotAllowed
+     */
+    private function setCurrentUserGlobal(ServerRequestInterface $request)
+    {
+        global $current_user;
+
+        $user = $this->getUserFromRequest($request);
+
+        // validate user is still active
+        if($user->status === 'Inactive') {
+            throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
+        }
+
+        $current_user = $user;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @return \User
+     *
+     * @throws NotAllowed
+     */
+    private function getUserFromRequest(ServerRequestInterface $request)
+    {
+        $user = new \User();
+
+        $user->retrieve($request->getAttribute('oauth_user_id'));
+
+        if ($user->id) {
+            return $user;
+        }
+
+        // We need a User to take ownership of actions, so if we are using a grant type that does not have
+        // an associated User we fall back on the User defined in the OAuth2Clients
+        $client = new \OAuth2Clients();
+        $client->retrieve($request->getAttribute('oauth_client_id'));
+
+        $user->retrieve($client->assigned_user_id);
+        if ($user->id) {
+            return $user;
+        }
+
+        throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
     }
 }

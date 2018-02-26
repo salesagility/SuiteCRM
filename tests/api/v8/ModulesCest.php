@@ -214,6 +214,53 @@ class ModulesCest
         self::$RECORD = $response['data']['id'];
     }
 
+    /**
+     * Create a new entry
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name} (with id in $_POST)
+     * URL: /api/v8/modules/{module_name}/{id}
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function TestScenarioCreateNewWithClientCredentialsGrant(apiTester $I)
+    {
+        $faker = \Faker\Factory::create();
+        $I->comment('Test create account');
+        $I->loginAsAdminWithClientCredentials();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
+            json_encode(
+                array(
+                    'data' => array(
+                        'id' => '',
+                        'type' => 'Accounts',
+                        'attributes' => array(
+                            'name' => $faker->name()
+                        )
+                    )
+                )
+            )
+        );
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('links', $response);
+        $I->assertArrayHasKey('self', $response['links']);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+
+        self::$RECORD = $response['data']['id'];
+
+        $I->loginAsAdmin();
+    }
+
      /**
       * Create a existing entry
       * @param apiTester $I

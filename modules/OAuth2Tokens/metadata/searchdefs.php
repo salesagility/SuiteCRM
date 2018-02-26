@@ -42,70 +42,72 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuth2Tokens';
 
-$viewdefs[$module_name]['ListView'] = [
-    'templateMeta' => [
-        'form' => [
-            'actions' => [
+$searchdefs[$module_name] = [
+    'templateMeta' =>
+        [
+            'maxColumns' => '3',
+            'maxColumnsBasic' => '4',
+            'widths' =>
                 [
-                    'customCode' => '<a href="javascript:void(0)" class="parent-dropdown-handler" id="delete_listview_top" onclick="return false;"><label class="selected-actions-label hidden-mobile">{$APP.LBL_BULK_ACTION_BUTTON_LABEL_MOBILE}</label><label class="selected-actions-label hidden-desktop">{$APP.LBL_BULK_ACTION_BUTTON_LABEL}</label></a>',
+                    'label' => '10',
+                    'field' => '30',
                 ],
+        ],
+    'layout' =>
+        [
+            'basic_search' =>
                 [
-                    'customCode' => '<a onclick="bulkRevokeTokens()" title="{$MOD.LBL_REVOKE_TOKENS}">{$MOD.LBL_REVOKE_TOKENS}</a>'
+                    'id' =>
+                        [
+                            'id' => 'id',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
                 ],
-            ],
+            'advanced_search' =>
+                [
+                    'id' =>
+                        [
+                            'name' => 'id',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'oauth2client_name' =>
+                        [
+                            'name' => 'oauth2client_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'assigned_user_name' =>
+                        [
+                            'name' => 'assigned_user_name',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'token_is_revoked' =>
+                        [
+                            'name' => 'token_is_revoked',
+                            'label' => 'LBL_TOKEN_IS_REVOKED',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'active_only' =>
+                        [
+                            'name' => 'active_only',
+                            'label' => 'LBL_IS_ACTIVE',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                        ],
+                    'grant_type' =>
+                        [
+                            'type' => 'enum',
+                            'label' => 'LBL_GRANT_TYPE',
+                            'width' => '10%',
+                            'default' => true,
+                            'name' => 'grant_type',
+                        ],
+                ],
         ],
-        'includes' => [
-            [
-                'file' => 'modules/OAuth2Tokens/include/RevokeBulk.js',
-            ],
-        ],
-        'options' => [
-            'hide_edit_link' => true,
-        ]
-    ]
-];
-
-$listViewDefs[$module_name] = [
-    'id' => [
-        'label' => 'LBL_TOKEN_ID',
-        'default' => true,
-        'link' => true,
-        'sortable' => true,
-    ],
-    'oauth2client_name' => [
-        'label' => 'LBL_CLIENT',
-        'module' => 'OAuth2Clients',
-        'id' => 'CLIENT',
-        'link' => true,
-        'default' => true,
-        'sortable' => true,
-        'related_fields' => ['client']
-    ],
-    'assigned_user_name' => [
-        'label' => 'LBL_USER',
-        'module' => 'Users',
-        'id' => 'USER_ID',
-        'default' => true,
-        'sortable' => true,
-    ],
-    'token_is_revoked' => [
-        'label' => 'LBL_TOKEN_IS_REVOKED',
-        'default' => true,
-        'sortable' => true,
-    ],
-    'date_entered' => [
-        'label' => 'LBL_DATE_ENTERED',
-        'default' => true,
-        'sortable' => true,
-    ],
-    'access_token_expires' => [
-        'label' => 'LBL_ACCESS_TOKEN_EXPIRES',
-        'default' => true,
-        'sortable' => true,
-    ],
-    'refresh_token_expires' => [
-        'label' => 'LBL_REFRESH_TOKEN_EXPIRES',
-        'default' => true,
-        'sortable' => true,
-    ],
 ];

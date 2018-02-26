@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuth2Clients';
 
-$viewdefs[$module_name]['EditView'] = [
+$viewdefs[$module_name]['DetailView'] = [
     'templateMeta' => [
         'maxColumns' => '1',
         'widths' => [
@@ -56,37 +56,41 @@ $viewdefs[$module_name]['EditView'] = [
                     [
                         'name' => 'name',
                     ],
-                1 =>
-                    [
-                        'name' => 'redirect_url',
-                    ],
                 2 =>
                     [
                         'name' => 'is_confidential',
                     ],
                 3 =>
                     [
-                        'name' => 'allowed_grant_type',
+                        'name' => 'id',
                     ],
                 4 =>
                     [
-                        0 =>
-                            [
-                                'name' => 'duration_amount',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'duration_unit',
-                            ],
+                        'name' => 'allowed_grant_type',
                     ],
-                5 =>
+                6 =>
+                    [
+                        'name' => 'assigned_user_name',
+                    ],
+            ],
+        'LBL_PANEL_ASSIGNMENT' =>
+            [
+                0 =>
                     [
                         0 =>
                             [
-                                'name' => 'new_secret',
-                                'label' => 'LBL_SECRET_HASHED',
-                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
-                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                                'name' => 'date_entered',
+                                'customCode' =>
+                                    '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'date_modified',
+                                'label' => 'LBL_DATE_MODIFIED',
+                                'customCode' =>
+                                    '{$fields.date_modified.value} ' .
+                                    '{$APP.LBL_BY} ' .
+                                    '{$fields.modified_by_name.value}',
                             ],
                     ],
             ],

@@ -40,55 +40,77 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'OAuth2Clients';
+$module_name = 'OAuth2Tokens';
 
-$viewdefs[$module_name]['EditView'] = [
-    'templateMeta' => [
-        'maxColumns' => '1',
-        'widths' => [
-            ['label' => '30', 'field' => '70'],
+$searchFields[$module_name] = [
+    'id' =>
+        [
+            'query_type' => 'default',
         ],
+    'token_is_revoked' =>
+        [
+            'query_type' => 'default',
+        ],
+    'active_only' => [
+        'query_type' => 'format',
+        'operator' => 'subquery',
+        'checked_only' => true,
+        'subquery' => "SELECT tokenTableAlias.id " .
+            "FROM oauth2tokens as tokenTableAlias " .
+            "WHERE tokenTableAlias.id = oauth2tokens.id " .
+            "AND tokenTableAlias.access_token_expires > NOW()",
+        'db_field' => array('id')
     ],
-    'panels' => [
-        'default' =>
-            [
-                0 =>
-                    [
-                        'name' => 'name',
-                    ],
-                1 =>
-                    [
-                        'name' => 'redirect_url',
-                    ],
-                2 =>
-                    [
-                        'name' => 'is_confidential',
-                    ],
-                3 =>
-                    [
-                        'name' => 'allowed_grant_type',
-                    ],
-                4 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'duration_amount',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'duration_unit',
-                            ],
-                    ],
-                5 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'new_secret',
-                                'label' => 'LBL_SECRET_HASHED',
-                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
-                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
-                            ],
-                    ],
+    'grant_type' =>
+        [
+            'query_type' => 'default',
+            'operator' => 'subquery',
+            'subquery' => 'SELECT id FROM oauth2clients where allowed_grant_type LIKE ',
+            'db_field' => [
+                'client',
             ],
-    ],
+        ],
+    'oauth2client_name' =>
+        [
+            'query_type' => 'default',
+            'db_field' => ['oauth2clients.name']
+        ],
+
+    // Range search
+    'range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'start_range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'end_range_access_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'start_range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
+    'end_range_refresh_token_expires' =>
+        [
+            'query_type' => 'default',
+            'enable_range_search' => true,
+            'is_date_field' => true,
+        ],
 ];
