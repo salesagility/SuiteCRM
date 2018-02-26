@@ -6,12 +6,6 @@
                 <td class="dashlet-title" colspan="2">
                     <h3>
                         <span class="suitepicon suitepicon-module-{$DASHLET_MODULE|lower|replace:'_':'-'}"></span>
-                        {*{capture name="dashlet_img_capture" assign="dashlet_img"}{sugar_getimagepath file_name=$DASHLET_MODULE file_extension='svg' directory='sidebar/modules'}{/capture}*}
-                        {*{if !empty($dashlet_img)}*}
-                            {*<img src="{$dashlet_img}"/>*}
-                        {*{else}*}
-                            {*<img src="themes/SuiteP/images/sidebar/modules/basic.svg"/>*}
-                        {*{/if}*}
                        <span>{$DASHLET_TITLE}</span>
                     </h3>
                 </td>

@@ -129,7 +129,7 @@
 							{if $pageData.ordering.sortOrder == 'ASC'}
                                 {capture assign="arrowAlt"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
                                 {capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-								test{sugar_getimage name="$imageName" ext='gif' width="$arrowWidth" height="$arrowHeight" alt="$arrowAlt" other_attributes='align="absmiddle" border="0"'}
+								{sugar_getimage name="$imageName" ext='gif' width="$arrowWidth" height="$arrowHeight" alt="$arrowAlt" other_attributes='align="absmiddle" border="0"'}
 							{else}
                                 {capture assign="arrowAlt"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
                                 {capture assign="imageName"}arrow_up.{$arrowExt}{/capture}

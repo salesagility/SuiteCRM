@@ -322,7 +322,6 @@
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
                     <li class="navbar-brand-container">
                         <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">
-                            {*{$APP.LBL_BROWSER_TITLE}*}
                             <span class="suitepicon suitepicon-action-home"></span>
                         </a>
                     </li>

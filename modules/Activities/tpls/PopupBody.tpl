@@ -158,7 +158,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                        <as class="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>

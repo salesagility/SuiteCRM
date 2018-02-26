@@ -63,7 +63,7 @@ class AM_ProjectTemplatesListViewData extends ListViewData{
 
         $extra = "<span id='aadspan_" . $id . "' "
                 . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=". $id ."'\" "
-				. " style='position: relative;'><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
+				. "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
 
         //return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
 	}

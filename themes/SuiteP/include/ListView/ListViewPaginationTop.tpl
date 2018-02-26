@@ -56,7 +56,7 @@
 					
 						{/if}
 						{sugar_action_menu id=$link_action_id params=$actionsLink}
-                        {if $actionDisabledLink ne ""}<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}</span></div>{/if}
+                        {if $actionDisabledLink ne ""}<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}</div>{/if}
                         {include file='include/ListView/ListViewButtons.tpl'}
 						{if $showFilterIcon}
 							{include file='include/ListView/ListViewSearchLink.tpl'}
