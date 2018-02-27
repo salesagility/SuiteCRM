@@ -214,7 +214,7 @@
 			<tr height='20' class='{$_rowColor}S1'>
 				{if $prerow}
 				<td>
-				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
+				 {if !$is_admin && $is_admin_for_user && $rowData.IS_ADMIN==1}
 						<input type='checkbox' disabled="disabled" class='listview-checkbox' value='{$rowData.ID}'>
 				 {else}
 	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='listview-checkbox' name='mass[]' value='{$rowData.ID}'>
