@@ -302,5 +302,3 @@ function mark_relationships_deleted($id){
         }
     }
 }
-
-?>

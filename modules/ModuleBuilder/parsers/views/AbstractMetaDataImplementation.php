@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -67,6 +67,7 @@ abstract class AbstractMetaDataImplementation
      * @var string $_moduleName
      */
     protected $_moduleName;
+
     /**
      * @var array $_viewdefs
      */
@@ -164,7 +165,7 @@ abstract class AbstractMetaDataImplementation
     /**
      * Load a layout from a file, given a filename
      * Doesn't do any preprocessing on the viewdefs - just returns them as found for other classes to make sense of
-     * @param string $filename       The full path to the file containing the layout
+     * @param string $filename The full path to the file containing the layout
      * @return array                The layout, null if the file does not exist
      */
     protected function _loadFromFile($filename)
@@ -191,16 +192,16 @@ abstract class AbstractMetaDataImplementation
             }
         }
 
-        if(isset($viewdefs[$this->_moduleName])) {
+        if (isset($viewdefs[$this->_moduleName])) {
             // get view name by performing a case insensitive search on each key
             $key = '';
             foreach ($viewdefs[$this->_moduleName] as $viewdefKey => $viewdefVal) {
-                if(stristr($viewdefKey, $this->_view) !== false) {
+                if (stristr($viewdefKey, $this->_view) !== false) {
                     $key = $viewdefKey;
                     break;
                 }
             }
-            if(!empty($key) && isset($viewdefs[$this->_moduleName][$key]['templateMeta'])) {
+            if (!empty($key) && isset($viewdefs[$this->_moduleName][$key]['templateMeta'])) {
                 $this->_viewName = $key;
                 $this->_originalViewTemplateDefs = $viewdefs[$this->_moduleName][$key]['templateMeta'];
             } else {
@@ -270,20 +271,20 @@ abstract class AbstractMetaDataImplementation
                 //If there are no defs for this view, grab them from the non-popup view
                 if ($view == MB_POPUPLIST) {
                     $this->_view = MB_LISTVIEW;
-                    $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName,
+                    $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
                         MB_CUSTOMMETADATALOCATION));
                     if ($defs == null) {
-                        $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName,
+                        $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
                             MB_BASEMETADATALOCATION));
                     }
                     $this->_view = $view;
                 } else {
                     if ($view == MB_POPUPSEARCH) {
                         $this->_view = MB_ADVANCEDSEARCH;
-                        $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName,
+                        $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
                             MB_CUSTOMMETADATALOCATION));
                         if ($defs == null) {
-                            $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName,
+                            $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
                                 MB_BASEMETADATALOCATION));
                         }
 
@@ -311,9 +312,9 @@ abstract class AbstractMetaDataImplementation
      * Save a layout to a file
      * Must be the exact inverse of _loadFromFile
      * Obtains the additional variables, such as module_name, to include in beginning of the file (as required by ModuleBuilder) from the internal variable _variables, set in the Constructor
-     * @param string $filename       The full path to the file to contain the layout
-     * @param array $defs        	Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
-     * @param boolean $useVariables	Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
+     * @param string $filename The full path to the file to contain the layout
+     * @param array $defs Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
+     * @param boolean $useVariables Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
      * @param bool $forPopup
      */
     protected function _saveToFile($filename, $defs, $useVariables = true, $forPopup = false)
@@ -344,10 +345,10 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if($this->hasToAppendOriginalViewTemplateDefs($defs)) {
+        if ($this->hasToAppendOriginalViewTemplateDefs($defs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
-            if(!empty($templateMeta)) {
-                $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\''. $this->_viewName . '\'][\'templateMeta\'] = '.$templateMeta;
+            if (!empty($templateMeta)) {
+                $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\'' . $this->_viewName . '\'][\'templateMeta\'] = ' . $templateMeta;
             }
         }
 
@@ -379,7 +380,7 @@ abstract class AbstractMetaDataImplementation
      *
      * 1. The starting point is the module's fielddefs, sourced from the Bean
      * 2. Second comes any overrides from the layouts themselves. Note though that only visible fields are included in a layoutdef, which
-     * 	  means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
+     *      means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
      *
      * Thus to determine the current fielddef for any given field, we take the fielddef defined in the module's Bean and then override with first the base layout,
      * then the customlayout, then finally the working layout...
@@ -388,10 +389,10 @@ abstract class AbstractMetaDataImplementation
      * we therefore lack knowledge as to which type of layout we are merging - EditView or ListView. So we can't use internal knowledge of the
      * layout to locate the field definitions. Instead, we need to look for sections of the layout that match the template for a field definition...
      *
-     * @param $fielddefs
-     * @param $layout
+     * @param array $fielddefs
+     * @param array $layout
      */
-    function _mergeFielddefs(&$fielddefs, $layout)
+    protected function _mergeFielddefs(&$fielddefs, $layout)
     {
         foreach ($layout as $key => $def) {
 
@@ -402,12 +403,13 @@ abstract class AbstractMetaDataImplementation
             if (is_array($def)) {
                 if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
                 {
-                    // if this is a module field, then merge in the definition, otherwise this is a new field defined in the layout, so just take the definition
-                    $fielddefs [$def ['name']] = (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']],
-                        $def) : $def;
+                    // if this is a module field, then merge in the definition,
+                    // otherwise this is a new field defined in the layout, so just take the definition
+                    $fielddefs [$def ['name']] =
+                        (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
                 } else {
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
-                    {
+                    // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
+                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
                         $key = strtolower($key);
                         $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
                     } else {
@@ -420,14 +422,13 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
-     * Construct a full pathname for the requested metadata
-     *
-     * @param string $view The view type, that is, EditView, DetailView etc
-     * @param string $moduleName The name of the module that will use this layout
+     * @param string $view
+     * @param string $moduleName
+     * @param string $packageName
      * @param string $type
-     * @return string               The file name
+     * @return string
      */
-    public function getFileName($view, $moduleName, $type = MB_BASEMETADATALOCATION)
+    public function getFileName($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
         return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
     }

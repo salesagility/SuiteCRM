@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -126,8 +126,9 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -165,10 +166,8 @@ class AOW_WorkFlow extends Basic
      * Select and run all active flows
      * @return bool
      */
-    public function run_flows()
-    {
-        $flows = AOW_WorkFlow::get_full_list('',
-            " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
+	public function run_flows()
+		{$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         foreach ($flows as $flow) {
             $flow->run_flow();
@@ -194,19 +193,22 @@ class AOW_WorkFlow extends Basic
     /**
      * Select and run all active flows for the specified bean
      */
-    function run_bean_flows(SugarBean &$bean){
-        if(!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import'){
+    public function run_bean_flows(SugarBean $bean)
+    {
+        if (!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import')) {
 
-            $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
+            $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
             $result = $this->db->query($query, false);
             $flow = new AOW_WorkFlow();
-            while (($row = $bean->db->fetchByAssoc($result)) != null){
-                $flow ->retrieve($row['id']);
-                if($flow->check_valid_bean($bean))
+            while (($row = $bean->db->fetchByAssoc($result)) != null) {
+                $flow->retrieve($row['id']);
+                if ($flow->check_valid_bean($bean)) {
                     $flow->run_actions($bean, true);
+                }
             }
         }
+
         return true;
     }
 
@@ -683,6 +685,8 @@ class AOW_WorkFlow extends Basic
                     default:
                         if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
+                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                            $value = 0;
                         }
                         break;
                 }

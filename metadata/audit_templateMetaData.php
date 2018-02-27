@@ -60,5 +60,4 @@ $dictionary['audit'] =
 				      array ('name' => 'pk', 'type' => 'primary', 'fields' => array('id')),
 				      array ('name' => 'parent_id', 'type' => 'index', 'fields' => array('parent_id'))
 				)
-		)
-?>
+		);

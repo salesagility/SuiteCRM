@@ -115,9 +115,20 @@ var emailAddressWidgetLoaded = false;
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
-					<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_INVALID}" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" title="{$app_strings.LBL_EMAIL_INVALID}" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
+
+                {if $useOptIn == true}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings.LBL_OPT_IN}</label>
+						<div>
+                                                    <input type="hidden" name="shouldSaveOptInFlag" value="1">
+                                                    <input type="checkbox" name="" title="{$app_strings.LBL_OPT_IN}" 
+                                                           id="email-address-opted-in-flag" class="email-address-opted-in-flag" value="" enabled="true">
+                                                </div>
+					</div>
+                {/if}
 			</div>
 		</div>
 

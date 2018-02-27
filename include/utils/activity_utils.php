@@ -138,4 +138,3 @@ function build_related_list_by_user_id($bean, $user_id,$where) {
         return $list;
     }
 }
-?>

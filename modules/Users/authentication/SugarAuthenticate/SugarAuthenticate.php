@@ -50,6 +50,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class SugarAuthenticate{
 	var $userAuthenticateClass = 'SugarAuthenticateUser';
 	var $authenticationDir = 'SugarAuthenticate';
+
+
+    /**
+     * @var SugarAuthenticateUser
+     */
+	public $userAuthenticate;
+
 	/**
 	 * Constructs SugarAuthenticate
 	 * This will load the user authentication class
@@ -229,54 +236,157 @@ class SugarAuthenticate{
 
 
 
-	/**
-	 * Called after a session is authenticated - if this returns false the sessionAuthenticate will return false and destroy the session
-	 * and it will load the  current user
-	 * @return boolean
-	 */
+    /**
+     * Called after a session is authenticated - if this returns false the sessionAuthenticate will return false and destroy the session
+     * and it will load the  current user
+     * @return boolean
+     */
+    function postSessionAuthenticate() {
 
-	function postSessionAuthenticate(){
+        global $action, $allowed_actions, $sugar_config, $app_strings;
+        $_SESSION['userTime']['last'] = time();
+        $user_unique_key = (isset($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
+        $server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
 
-		global $action, $allowed_actions, $sugar_config;
-		$_SESSION['userTime']['last'] = time();
-		$user_unique_key = (isset ($_SESSION['unique_key'])) ? $_SESSION['unique_key'] : '';
-		$server_unique_key = (isset ($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
+        //CHECK IF USER IS CROSSING SITES
+        if (($user_unique_key != $server_unique_key) && (!in_array($action, $allowed_actions)) && (!isset($_SESSION['login_error']))) {
 
-		//CHECK IF USER IS CROSSING SITES
-		if (($user_unique_key != $server_unique_key) && (!in_array($action, $allowed_actions)) && (!isset ($_SESSION['login_error']))) {
+            $GLOBALS['log']->debug('Destroying Session User has crossed Sites');
+            session_destroy();
+            header("Location: index.php?action=Login&module=Users" . $GLOBALS['app']->getLoginRedirect());
+            sugar_cleanup(true);
+        }
+        if (!$this->userAuthenticate->loadUserOnSession($_SESSION['authenticated_user_id'])) {
+            session_destroy();
+            header("Location: index.php?action=Login&module=Users&loginErrorMessage=LBL_SESSION_EXPIRED");
+            $GLOBALS['log']->debug('Current user session does not exist redirecting to login');
+            sugar_cleanup(true);
+        }
 
-			$GLOBALS['log']->debug('Destroying Session User has crossed Sites');
-		    session_destroy();
-			header("Location: index.php?action=Login&module=Users".$GLOBALS['app']->getLoginRedirect());
-			sugar_cleanup(true);
-		}
-		if (!$this->userAuthenticate->loadUserOnSession($_SESSION['authenticated_user_id'])) {
-			session_destroy();
-			header("Location: index.php?action=Login&module=Users&loginErrorMessage=LBL_SESSION_EXPIRED");
-			$GLOBALS['log']->debug('Current user session does not exist redirecting to login');
-			sugar_cleanup(true);
-		}
-		$GLOBALS['log']->debug('Current user is: '.$GLOBALS['current_user']->user_name);
-		return true;
-	}
+        $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: --------------------- CHECK FACTOR AUtH ---------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
 
-	/**
-	 * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
-	 *
-	 */
-	function validateIP() {
-		global $sugar_config;
-		// grab client ip address
-		$clientIP = query_client_ip();
-		$classCheck = 0;
-		// check to see if config entry is present, if not, verify client ip
-		if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
-			// check to see if we've got a current ip address in $_SESSION
-			// and check to see if the session has been hijacked by a foreign ip
-			if (isset ($_SESSION["ipaddress"])) {
-				$session_parts = explode(".", $_SESSION["ipaddress"]);
-				$client_parts = explode(".", $clientIP);
-                if(count($session_parts) < 4) {
+        //session_destroy(); die();
+
+        if (!$this->userAuthenticate->isUserLogoutRequest()) {
+            $GLOBALS['log']->debug('FACTOR AUTH: User needs factor auth, request is not Logout');
+
+            if ($this->userAuthenticate->isUserNeedFactorAuthentication()) {
+                $GLOBALS['log']->debug('FACTOR AUTH: User needs factor auth, set on User Profile page');
+
+                if (!$this->userAuthenticate->isUserFactorAuthenticated()) {
+                    $GLOBALS['log']->debug('FACTOR AUTH: User is not factor authenticated yet');
+
+                    if ($this->userAuthenticate->isUserFactorTokenReceived()) {
+                        $GLOBALS['log']->debug('FACTOR AUTH: User sent back a token in request');
+
+                        if (!$this->userAuthenticate->factorAuthenticateCheck()) {
+                            $GLOBALS['log']->debug('FACTOR AUTH: User factor auth failed so we show token input form');
+
+                            $msg = $app_strings['ERR_TWO_FACTOR_FAILED'];
+                            self::addFactorMessage($msg);
+                            $this->userAuthenticate->showFactorTokenInput();
+                        } else {
+                            $GLOBALS['log']->debug('FACTOR AUTH: User factor auth success!');
+                        }
+                    } else {
+                        $GLOBALS['log']->debug('FACTOR AUTH: User did not sent back the token so we send a new one and redirect to token input form');
+
+                        if (
+                            $this->userAuthenticate->isFactorTokenSent()
+                            && $this->userAuthenticate->isUserRequestedResendToken() === false
+                        ) {
+                            $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
+                            $this->userAuthenticate->showFactorTokenInput();
+                        } else {
+                            $GLOBALS['log']->fatal('DEBUG: token already sent');
+                        }
+
+                        if ($this->userAuthenticate->sendFactorTokenToUser()) {
+                            $GLOBALS['log']->debug('FACTOR AUTH: Factor Token sent to User');
+
+                            $msg = $app_strings['ERR_TWO_FACTOR_CODE_SENT'];
+                            self::addFactorMessage($msg);
+
+                            $this->userAuthenticate->showFactorTokenInput();
+                        } else {
+                            $GLOBALS['log']->debug('FACTOR AUTH: failed to send factor token to user so just redirect to the logout url and kick off ');
+
+                            self::addFactorMessage('Two factor authentication code sending error.');
+
+                            $this->userAuthenticate->redirectToLogout();
+                        }
+                    }
+                } else {
+                    $GLOBALS['log']->debug('FACTOR AUTH: User factor authenticated already');
+                }
+            } else {
+                $GLOBALS['log']->debug('FACTOR AUTH: User does`nt need factor auth');
+            }
+        } else {
+            $GLOBALS['log']->debug('FACTOR AUTH: User Logout requested');
+        }
+
+
+        $GLOBALS['log']->debug('Current user is: ' . $GLOBALS['current_user']->user_name);
+
+        return true;
+    }
+
+    /**
+     * Store message in a session array
+     * @param $msg
+     */
+    public static function addFactorMessage($msg) {
+        if(!isset($_SESSION['factor_message'])) {
+            $_SESSION['factor_message'] = array();
+        }
+        if(!in_array($msg, $_SESSION['factor_message'])) {
+            $_SESSION['factor_message'][] = $msg;
+        }
+    }
+
+    /**
+     * Read back the session messages and clear it;
+     * @return bool|string
+     * @throws \RuntimeException
+     */
+    public static function getFactorMessages($sep = '<br>') {
+        $factorMessage = false;
+        if(isset($_SESSION['factor_message']) && $_SESSION['factor_message']) {
+            if(is_array($_SESSION['factor_message']) || is_object($_SESSION['factor_message'])) {
+                $factorMessage = implode($sep, $_SESSION['factor_message']);
+            } elseif(is_string($_SESSION['factor_message'])) {
+                $factorMessage = $_SESSION['factor_message'];
+            } else {
+                $msg = 'Incorrect login factor message type.';
+                $GLOBALS['log']->warn($msg);
+                throw new RuntimeException($msg);
+            }
+            unset($_SESSION['factor_message']);
+        }
+        return $factorMessage;
+    }
+
+    /**
+     * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
+     *
+     */
+    function validateIP()
+    {
+        global $sugar_config;
+        // grab client ip address
+        $clientIP = query_client_ip();
+        $classCheck = 0;
+        // check to see if config entry is present, if not, verify client ip
+        if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
+            // check to see if we've got a current ip address in $_SESSION
+            // and check to see if the session has been hijacked by a foreign ip
+            if (isset ($_SESSION["ipaddress"])) {
+                $session_parts = explode(".", $_SESSION["ipaddress"]);
+                $client_parts = explode(".", $clientIP);
+                if (count($session_parts) < 4) {
                     $classCheck = 0;
                 }
                 else {

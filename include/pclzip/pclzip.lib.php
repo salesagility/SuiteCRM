@@ -472,7 +472,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     // ----- Look for arguments
     if ($v_size > 1) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Remove form the options list the first argument
       array_shift($v_arg_list);
@@ -712,7 +712,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     // ----- Look for arguments
     if ($v_size > 0) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Look for first arg
       if ((is_integer($v_arg_list[0])) && ($v_arg_list[0] > 77000)) {
@@ -871,7 +871,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     // ----- Look for arguments
     if ($v_size > 1) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Remove form the options list the first argument
       array_shift($v_arg_list);
@@ -1019,7 +1019,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     // ----- Look for arguments
     if ($v_size > 0) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Parse the options
       $v_result = $this->privParseOptions($v_arg_list, $v_size, $v_options,

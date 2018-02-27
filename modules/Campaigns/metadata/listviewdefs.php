@@ -82,4 +82,3 @@ $listViewDefs['Campaigns'] = array(
 		'sortable' => false),
 
 );
-?>

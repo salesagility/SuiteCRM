@@ -46,25 +46,25 @@
     <!-- Start generic footer -->
     <footer>
         <div id="copyright_data">
-            <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
-                <p>{$MOD.LBL_SUITE_DESC1}</p>
+            <div id="dialog2" title="{$APP.LBL_SUITE_SUPERCHARGED}">
+                <p>{$APP.LBL_SUITE_DESC1}</p>
                 <br>
-                <p>{$MOD.LBL_SUITE_DESC2}</p>
+                <p>{$APP.LBL_SUITE_DESC2}</p>
                 <br>
-                <p>{$MOD.LBL_SUITE_DESC3}</p>
+                <p>{$APP.LBL_SUITE_DESC3}</p>
                 <br>
             </div>
-            <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
+            <div id="dialog" title="&copy; {$APP.LBL_SUITE_POWERED_BY}">
                 <p>{$COPYRIGHT}</p>
             </div>
             <div id="copyrightbuttons" class="footer_left">
-                <a id="admin_options">&copy; {$MOD.LBL_SUITE_SUPERCHARGED}</a>
-                <a id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</a>
+                <a id="admin_options">&copy; {$APP.LBL_SUITE_SUPERCHARGED}</a>
+                <a id="powered_by">&copy; {$APP.LBL_SUITE_POWERED_BY}</a>
             </div>
         </div>
     	<div class="footer_right">
     		
-    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$MOD.LBL_SUITE_TOP}</a>
+    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$APP.LBL_SUITE_TOP}</a>
     	</div>
     </footer>
     <!-- END Generic Footer -->
@@ -158,7 +158,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="title-generic">{$MOD.LBL_GENERATE_PASSWORD_BUTTON_TITLE}</h4>
+                <h4 class="modal-title" id="title-generic">{$APP.LBL_GENERATE_PASSWORD_BUTTON_TITLE}</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -166,8 +166,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" type="button" data-dismiss="modal">{$MOD.LBL_CANCEL}</button>
-                <button id="btn-generic" class="btn btn-danger" type="button">{$MOD.LBL_OK}</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">{$APP.LBL_CANCEL}</button>
+                <button id="btn-generic" class="btn btn-danger" type="button">{$APP.LBL_OK}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -56,5 +56,3 @@ $layout_defs['Schedulers'] = array(
 		),
 	),
 );
- 
-?>

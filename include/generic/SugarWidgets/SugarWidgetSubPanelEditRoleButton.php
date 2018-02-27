@@ -73,5 +73,3 @@ class SugarWidgetSubPanelEditRoleButton extends SugarWidgetField
 	}
 	}
 }
-
-?>

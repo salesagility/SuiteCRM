@@ -63,4 +63,3 @@ class AOK_KnowledgeBase extends AOK_KnowledgeBase_sugar {
 
 
 }
-?>

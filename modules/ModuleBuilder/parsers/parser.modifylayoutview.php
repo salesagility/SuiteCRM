@@ -415,7 +415,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     {
         $fields = array();
         if (empty($panels))
-        return;
+        return $fields;
 
         // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined, it goes straight into rows
         // See EditView2 for similar treatment
@@ -521,4 +521,3 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     }
 
 }
-?>

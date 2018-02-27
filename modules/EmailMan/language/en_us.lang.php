@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -55,6 +55,9 @@ $mod_strings = array(
     'LBL_DEFAULT_LOCATION' => 'Default',
 
     'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS' => 'Delete related notes & attachments with deleted Emails',
+    'LBL_EMAIL_ENABLE_CONFIRM_OPT_IN' => 'Opt In Settings',
+    'LBL_EMAIL_ENABLE_SEND_OPT_IN' => 'Automatically Send Opt In Email',
+    'LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID' => 'Confirm Opt In Email Template',
     'LBL_EMAIL_OUTBOUND_CONFIGURATION' => 'Outgoing Mail Configuration',
     'LBL_EMAILS_PER_RUN' => 'Number of emails sent per batch:',
     'LBL_ID' => 'Id',

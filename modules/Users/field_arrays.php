@@ -154,4 +154,3 @@ $fields_array['UserSignature'] = array(
 		'signature',
 	),
 );
-?>

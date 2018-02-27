@@ -470,6 +470,7 @@ FP;
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
     $enabled_tabs[] = 'EmailTemplates';
+    $enabled_tabs[] = 'Surveys';
 
 //Beginning of the scenario implementations
 //We need to load the tabs so that we can remove those which are scenario based and un-selected
@@ -761,5 +762,3 @@ echo $out;
 
 $loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL ) , array('function' => 'redirect', 'arguments' => $loginURL) );
-
-?>

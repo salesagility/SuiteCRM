@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,10 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
+    'ERR_NO_2FACTOR_EMAIL_TMPL' => 'Two-factor email template is not set, please change settings on password management page.',
+    'ERR_NO_2FACTOR_EMAIL_TMPL_CODE' => 'Two-factor email template should contain a $code at least.',
     'LBL_DELETE_USER_CONFIRM' => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
-
     'LBL_DELETE_GROUP_CONFIRM' => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
-
     'LNK_IMPORT_USERS' => 'Import Users',
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the account.',
     'ERR_EMAIL_INCORRECT' => 'Provide a valid email address in order to create and send the password.',
@@ -69,9 +69,13 @@ $mod_strings = array(
     'ERR_REPORT_LOOP' => 'The system detected a reporting loop. A user cannot report to themselves, nor can any of their managers report to them.',
     'ERR_RULES_NOT_MET' => 'The password you entered did not meet the password requirements. Please try again.',
     'ERR_USER_NAME_EXISTS_1' => 'The user name ',
-    'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed. Change the user name to be unique.',
+    'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed. Please change the user name to be unique.',
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
-
+    'ERR_PASSWORD_MINPWDLENGTH' => 'Password should contain at least %d characters.',
+    'ERR_PASSWORD_ONEUPPER' => 'Password should contain uppercase characters.',
+    'ERR_PASSWORD_ONELOWER' => 'Password should contain lowercase characters.',
+    'ERR_PASSWORD_ONENUMBER' => 'Password should contain numbers.',
+    'ERR_PASSWORD_SPECCHARS' => 'Password should contain special characters.',
     'LBL_PASSWORD_SENT' => 'Password Updated',
     'LBL_CANNOT_SEND_PASSWORD' => 'Cannot send password',
     'ERR_EMAIL_NOT_SENT_ADMIN' => 'System is unable to process your request. Please check:',
@@ -80,7 +84,6 @@ $mod_strings = array(
     'ERR_RECIPIENT_EMAIL' => 'Recipient Email Address',
     'ERR_SERVER_STATUS' => 'Your server status',
     'ERR_SERVER_SMTP_EMPTY' => 'The system is unable to send an email to the user. Please check the Outgoing Mail Configuration in <a href="index.php?module=EmailMan&action=config">Email Settings</a>.',
-
     'LBL_ADDRESS_CITY' => 'Address City',
     'LBL_ADDRESS_COUNTRY' => 'Address Country',
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
@@ -89,13 +92,9 @@ $mod_strings = array(
     'LBL_ADDRESS_STREET' => 'Address Street',
     'LBL_ADDRESS' => 'Address',
     'LBL_ADMIN_USER' => 'System Administrator User',
-
-
     'LBL_ADMIN_DESC' => 'User can access the Administration page all records.',
     'LBL_REGULAR_DESC' => 'User can access modules and records based on roles.',
-
     'LBL_PHOTO' => 'Photo',
-
     'LBL_ADMIN' => 'System Administrator',
     'LBL_ADVANCED' => 'Advanced',
     'LBL_ANY_ADDRESS' => 'Any Address:',
@@ -109,10 +108,7 @@ $mod_strings = array(
     'LBL_NO_KEY' => 'Key is not set. Please set key to enable publishing.',
     'LBL_CHOOSE_WHICH' => 'Select which modules are accessible within the top navigation bar. Designate the order in which you would like the modules to appear.',
     'LBL_CITY' => 'City',
-
     'LBL_CLEAR_BUTTON_TITLE' => 'Clear',
-
-
     'LBL_CONFIRM_PASSWORD' => 'Confirm Password',
     'LBL_CONFIRM_REGULAR_USER' => 'You have changed the user type from System Administrator User to Regular User. After saving this change, the user will no longer have system administrator privileges.\n\nClick OK to proceed.\nClick Cancel to return to the record.',
     'LBL_COUNTRY' => 'Country',
@@ -141,9 +137,7 @@ $mod_strings = array(
     'LBL_EMAIL' => 'Email Address',
     'LBL_EMAIL_CHARSET' => 'Outbound Character Set',
     'LBL_EMAIL_LINK_TYPE' => 'Email Client',
-
     'LBL_EMAIL_LINK_TYPE_HELP' => '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
-
     'LBL_EMAIL_NOT_SENT' => 'System is unable to process your request. Please contact the system administrator.',
     'LBL_EMAIL_SIGNATURE_ERROR1' => 'This signature requires a name.',
     'LBL_EMAIL_TEMPLATE_MISSING' => 'No email template is selected for the email containing the password that will be sent to the user. Please select an email template in the Password Management page.',
@@ -160,7 +154,6 @@ $mod_strings = array(
     'LBL_FIRST_NAME' => 'First Name',
     'LBL_SYSTEM_GENERATED_PASSWORD' => 'System Generated Password',
     'LBL_GENERATE_PASSWORD_BUTTON_LABEL' => 'Reset Password',
-    'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
     'LBL_GROUP_DESC' => 'Use for assigning items to a group (example: for Inbound Email). This type cannot login through the SuiteCRM web interface.',
     'LBL_GROUP_USER' => 'Group User',
     'LBL_HIDE_TABS' => 'Hide Modules',
@@ -170,6 +163,12 @@ $mod_strings = array(
     'LBL_LANGUAGE' => 'Language',
     'LBL_LAST_NAME' => 'Last Name',
     'LBL_LAYOUT_OPTIONS' => 'Layout Options',
+    'LBL_SUBTHEMES' => 'Style',
+    'LBL_SUBTHEME_OPTIONS_DAWN' => 'Dawn',
+    'LBL_SUBTHEME_OPTIONS_DAY' => 'Day',
+    'LBL_SUBTHEME_OPTIONS_DUSK' => 'Dusk',
+    'LBL_SUBTHEME_OPTIONS_NIGHT' => 'Night',
+    'LBL_SUBTHEME' => 'Style',
     'LBL_LDAP' => 'LDAP',
     'LBL_LDAP_AUTHENTICATION' => 'LDAP Authentication',
     'LBL_LIST_ACCEPT_STATUS' => 'Accept Status',
@@ -229,7 +228,6 @@ $mod_strings = array(
     'LBL_PASSWORD_EXPIRATION_LOGIN' => 'Your password has expired. Please provide a new password.',
     'LBL_PASSWORD_EXPIRATION_GENERATED' => 'Your password is system-generated',
     'LBL_PASSWORD_EXPIRATION_TIME' => 'Your password has expired. Please provide a new password.',
-
     'LBL_PSW_MODIFIED' => 'Password Last Changed',
     'LBL_PHONE' => 'Phone',
     'LBL_PICK_TZ_DESCRIPTION' => 'Before continuing, please confirm your time zone. Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
@@ -241,7 +239,6 @@ $mod_strings = array(
     'LBL_PROMPT_TIMEZONE' => 'User Wizard Prompt',
     'LBL_PROVIDE_USERNAME_AND_EMAIL' => 'Provide both a User Name and an Email Address.',
     'LBL_PUBLISH_KEY' => 'Publish Key',
-
     'LBL_RECAPTCHA_NEW_CAPTCHA' => 'Get another CAPTCHA',
     'LBL_RECAPTCHA_SOUND' => 'Switch to Sound',
     'LBL_RECAPTCHA_IMAGE' => 'Switch to Image',
@@ -251,7 +248,6 @@ $mod_strings = array(
     'LBL_RECAPTCHA_INVALID_PRIVATE_KEY' => 'Invalid Recaptcha Private Key',
     'LBL_RECAPTCHA_INVALID_REQUEST_COOKIE' => 'The challenge parameter of the verify Recaptcha script was incorrect.',
     'LBL_RECAPTCHA_UNKNOWN' => 'Unknown Recaptcha Error',
-
     'LBL_RECEIVE_NOTIFICATIONS_TEXT' => 'Receive an email notification when a record is assigned to you.',
     'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',
     'LBL_REGULAR_USER' => 'Regular User',
@@ -259,9 +255,7 @@ $mod_strings = array(
     'LBL_REMINDER' => 'Reminders',
     'LBL_REMINDER_POPUP' => 'Popup',
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
-
     // new reminders
-
     'LBL_REMINDERS' => 'Reminders',
     'LBL_REMINDERS_ACTIONS' => 'Actions:',
     'LBL_REMINDERS_POPUP' => 'Popup',
@@ -270,7 +264,6 @@ $mod_strings = array(
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
     'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
-
     'LBL_REPORTS_TO_NAME' => 'Reports to',
     'LBL_REPORTS_TO' => 'Reports to',
     'LBL_REPORTS_TO_ID' => 'Reports to ID:',
@@ -323,10 +316,8 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing',
     'LBL_UPDATE_FINISH' => 'Update complete',
     'LBL_AFFECTED' => 'affected',
-
     'LBL_USER_NAME_FOR_ROLE' => 'Users/Teams/Roles',
     'LBL_SESSION_EXPIRED' => 'You have been logged out because your session has expired.',
-
 // INBOUND EMAIL STRINGS
     'LBL_ASSIGN_TO_USER' => 'Assign To User',
     'LBL_BASIC' => 'Inbound Setup',
@@ -349,10 +340,8 @@ $mod_strings = array(
     'LBL_TOGGLE_ADV' => 'Show Advanced',
 // END INBOUND EMAIL STRINGS
     'LBL_LDAP_EXTENSION_ERROR' => 'LDAP Error: Extensions not loaded',
-
 // PROJECT RESOURCES STRINGS
     'LBL_RESOURCE_NAME' => 'Name',
-
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
     'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
@@ -368,7 +357,6 @@ $mod_strings = array(
     'LBL_EXCHANGE_SMTPUSER' => 'Exchange Username:',
     'LBL_EXCHANGE_SMTPPORT' => 'Exchange Server Port:',
     'LBL_EXCHANGE_SMTPSERVER' => 'Exchange Server:',
-
     'LBL_OK' => 'OK',
     'LBL_CANCEL' => 'Cancel',
     'LBL_DELETE_USER' => 'Delete User',
@@ -383,14 +371,12 @@ $mod_strings = array(
     'LBL_WIZARD_SKIP_BUTTON' => 'Skip',
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
-
     'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
 </td><td><a href="http://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
 </table>',
-
     'LBL_WIZARD_FINISH1' => 'What would you like to do next?',
     'LBL_WIZARD_FINISH2' => 'Start Using SuiteCRM',
     'LBL_WIZARD_FINISH3' => 'Import Data ',
@@ -412,36 +398,24 @@ $mod_strings = array(
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
-
     //Wizard Scenarios
     'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
     'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
     'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation. These options can be changed post-install.',
-
     'LBL_WIZARD_LOCALE_DESC' => 'Specify your time zone and how you would like dates, currencies and names to appear in SuiteCRM.',
     'LBL_WIZARD_SMTP_DESC' => 'Provide your email account username and password for the default outbound email server.',
     'LBL_EAPM_SUBPANEL_TITLE' => 'External Accounts',
-
-    'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-    'LBL_CHECKMARK' => 'Checkmark' /*for 508 compliance fix*/,
-
+    'LBL_EDITLAYOUT' => 'Edit Layout' /* for 508 compliance fix */,
+    'LBL_CHECKMARK' => 'Checkmark' /* for 508 compliance fix */,
     'LBL_OAUTH_TOKENS' => 'OAuth Tokens',
-
     //For export labels
     'LBL_SHOW_ON_EMPLOYEES' => 'Display Employee Record',
-
     'LBL_DATE_ENTERED' => 'Date Entered',
     'LBL_DELETED' => 'Deleted',
     'LBL_HIDEOPTIONS' => 'Hide Options',
     'LBL_SHOWOPTIONS' => 'Show Options',
-
-    'LBL_SUITE_SUPERCHARGED' => "Supercharged by SuiteCRM",
-    'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
-    'LBL_SUITE_TOP' => "Back to top",
     'LBL_SUITE_PRINT' => "Print this page",
-    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
-    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
-    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
+
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
     'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
@@ -449,26 +423,18 @@ $mod_strings = array(
     'LBL_QUICK_DOCUMENT' => 'Create Document',
     'LBL_QUICK_CALL' => 'Log Call',
     'LBL_QUICK_TASK' => 'Create Task',
-
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
     'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
-
-
     'LBL_EMAIL_INFORMATION' => 'EMAIL',
     'LBL_FW' => 'FW:',
     'LBL_RE' => 'RE:',
-
     'LBL_BUTTON_CREATE' => 'Create',
     'LBL_BUTTON_EDIT' => 'Edit',
     'LBL_QS_DISABLED' => '(QuickSearch is not available for this module. Please use the select button.)',
-
-
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
-
     'LBL_ERROR_SELECT_MODULE' => 'Please select a module for the Related to field',
-
     'ERR_ARCHIVE_EMAIL' => 'Error: Select emails to archive.',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_ADD_DASHLETS' => 'Add SuiteCRM Dashlets',
@@ -539,7 +505,6 @@ $mod_strings = array(
     'LBL_TO_ADDRS' => 'To',
     'LBL_USERS_SUBPANEL_TITLE' => 'Users',
     'LBL_USERS' => 'Users',
-
     'LNK_CALL_LIST' => 'Calls',
     'LBL_EMAIL_RELATE' => 'Related To',
     'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
@@ -555,7 +520,6 @@ $mod_strings = array(
     'LNK_SENT_EMAIL_LIST' => 'Sent Emails',
     'LNK_TASK_LIST' => 'Tasks',
     'LNK_VIEW_CALENDAR' => 'Today',
-
     'LBL_LIST_ASSIGNED' => 'Assigned',
     'LBL_LIST_CONTACT_NAME' => 'Contact Name',
     'LBL_LIST_DATE_SENT' => 'Date Sent',
@@ -567,13 +531,10 @@ $mod_strings = array(
     'LBL_LIST_SUBJECT' => 'Subject',
     'LBL_LIST_TO_ADDR' => 'To',
     'LBL_LIST_TYPE' => 'Type',
-
     'WARNING_SETTINGS_NOT_CONF' => 'Warning: Your email settings are not configured to send email.',
-
     // for All emails
     'LBL_BUTTON_RAW_LABEL' => 'Show Raw',
     'LBL_BUTTON_RAW_LABEL_HIDE' => 'Hide Raw',
-
     // for InboundEmail
     'LBL_BUTTON_CHECK' => 'Check Mail',
     'LBL_BUTTON_CHECK_TITLE' => 'Check For New Email',
@@ -587,14 +548,12 @@ $mod_strings = array(
     'LBL_REPLY_HEADER_2' => 'wrote:',
     'LBL_REPLY_TO_ADDRESS' => 'Reply-to Address',
     'LBL_REPLY_TO_NAME' => 'Reply-to Name',
-
     'LBL_LIST_BUG' => 'Bugs',
     'LBL_LIST_CASE' => 'Cases',
     'LBL_LIST_CONTACT' => 'Contacts',
     'LBL_LIST_LEAD' => 'Leads',
     'LBL_LIST_TASK' => 'Tasks',
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
-
     // for Inbox
     'LBL_ALL' => 'All',
     'LBL_ASSIGN_WARN' => 'Ensure that all 2 options are selected.',
@@ -631,13 +590,11 @@ $mod_strings = array(
     'LBL_LIST_TITLE_MY_INBOX' => 'My Inbox',
     'LBL_LIST_TITLE_MY_SENT' => 'My Sent Email',
     'LBL_LIST_TITLE_MY_ARCHIVES' => 'My Archived Emails',
-
     'LNK_MY_DRAFTS' => 'My Drafts',
     'LNK_MY_INBOX' => 'My Email',
     'LNK_VIEW_MY_INBOX' => 'View My Email',
     'LNK_QUICK_REPLY' => 'Reply',
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' => 'No Primary Team specified',
-
     // advanced search
     'LBL_ASSIGNED_TO' => 'Assigned To:',
     'LBL_MEMBER_OF' => 'Parent',
@@ -688,38 +645,36 @@ $mod_strings = array(
     'LBL_CHECKING_ACCOUNT' => 'Checking Account',
     'LBL_OF' => 'of',
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
-
     // for outbound email dialog
     'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
-
-    'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-    'LBL_ATTACHMENT' => 'Attachment' /*for 508 compliance fix*/,
-    'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
-    'LBL_CREATE_CASES' => 'Create Cases' /*for 508 compliance fix*/,
-    'LBL_CREATE_LEADS' => 'Create Leads' /*for 508 compliance fix*/,
-    'LBL_CREATE_CONTACTS' => 'Create Contacts' /*for 508 compliance fix*/,
-    'LBL_CREATE_BUGS' => 'Create Bugs' /*for 508 compliance fix*/,
-    'LBL_CREATE_TASKS' => 'Create Tasks' /*for 508 compliance fix*/,
-    'LBL_CHECK_INLINE' => 'Correct' /*for 508 compliance fix*/,
-    'LBL_CLOSE' => 'Close' /*for 508 compliance fix*/,
-    'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
-    'LBL_WAIT' => 'Wait' /*for 508 compliance fix*/,
-    'LBL_CHECKEMAIL' => 'Check Email' /*for 508 compliance fix*/,
-    'LBL_COMPOSEEMAIL' => 'Compose Email' /*for 508 compliance fix*/,
-    'LBL_EMAILSETTINGS' => 'Email Settings' /*for 508 compliance fix*/,
-
+    'LBL_EDIT_LAYOUT' => 'Edit Layout' /* for 508 compliance fix */,
+    'LBL_ATTACHMENT' => 'Attachment' /* for 508 compliance fix */,
+    'LBL_DELETE_INLINE' => 'Delete' /* for 508 compliance fix */,
+    'LBL_CREATE_CASES' => 'Create Cases' /* for 508 compliance fix */,
+    'LBL_CREATE_LEADS' => 'Create Leads' /* for 508 compliance fix */,
+    'LBL_CREATE_CONTACTS' => 'Create Contacts' /* for 508 compliance fix */,
+    'LBL_CREATE_BUGS' => 'Create Bugs' /* for 508 compliance fix */,
+    'LBL_CREATE_TASKS' => 'Create Tasks' /* for 508 compliance fix */,
+    'LBL_CHECK_INLINE' => 'Correct' /* for 508 compliance fix */,
+    'LBL_CLOSE' => 'Close' /* for 508 compliance fix */,
+    'LBL_HELP' => 'Help' /* for 508 compliance fix */,
+    'LBL_WAIT' => 'Wait' /* for 508 compliance fix */,
+    'LBL_CHECKEMAIL' => 'Check Email' /* for 508 compliance fix */,
+    'LBL_COMPOSEEMAIL' => 'Compose Email' /* for 508 compliance fix */,
+    'LBL_EMAILSETTINGS' => 'Email Settings' /* for 508 compliance fix */,
     // SNIP
     'LBL_EMAILS_MEETINGS_REL' => 'Emails: Meetings',
     'LBL_DATE_MODIFIED' => 'Date Modified',
-
     'LBL_CATEGORY' => 'Category',
     'LBL_LIST_CATEGORY' => 'Category',
     'LBL_EDITOR_TYPE' => 'Editor',
-
-
     'LBL_CONTACTS_SYNC' => 'Contacts Sync',
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
+    'LBL_FACTOR_AUTH' => 'Two Factor Authentication:',
+    'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
+    'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
+    'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 ); // END STRINGS DEFS
-

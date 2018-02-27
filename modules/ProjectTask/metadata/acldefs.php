@@ -68,4 +68,3 @@ $acldefs['ProjectTask'] = array (
     'EditView' => 'EditView',
   ),
 );
-?>

@@ -23,13 +23,27 @@
  */
 
 
-require_once('modules/AOW_Actions/actions/actionBase.php');
+require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
+require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
+    
+    /**
+     *
+     * @var int
+     */
+    protected $lastEmailsFailed;
+    
+    /**
+     *
+     * @var int
+     */
+    protected $lastEmailsSuccess;
 
     function __construct($id = ''){
         parent::__construct($id);
+        $this->clearLastEmailsStatus();
     }
 
     /**
@@ -265,52 +279,98 @@ class actionSendEmail extends actionBase {
         return $emails;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    /**
+     * Return true on success otherwise false.
+     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed() 
+     * methods to get last email sending status
+     * 
+     * @param SugarBean $bean
+     * @param array $params
+     * @param bool $in_save
+     * @return boolean
+     */
+    public function run_action(SugarBean $bean, $params = array(), $in_save = false)
+    {
 
-        include_once('modules/EmailTemplates/EmailTemplate.php');
+        include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
+        
+        $this->clearLastEmailsStatus();
+        
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
-        if($emailTemp->id == ''){
+        if ($emailTemp->id == '') {
             return false;
         }
 
-        $emails = $this->getEmailsFromParams($bean,$params);
+        $emails = $this->getEmailsFromParams($bean, $params);
 
-        if(!isset($emails['to']) || empty($emails['to']))
+        if (!isset($emails['to']) || empty($emails['to']))
             return false;
 
         $attachments = $this->getAttachments($emailTemp);
 
-        if(isset($params['individual_email']) && $params['individual_email']){
+        $ret = true;
+        if (isset($params['individual_email']) && $params['individual_email']) {
 
-            foreach($emails['to'] as $email_to){
+            foreach ($emails['to'] as $email_to) {
                 $emailTemp = new EmailTemplate();
                 $emailTemp->retrieve($params['email_template']);
                 $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
-                $this->parse_template($bean, $emailTemp,$template_override);
-                $this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+                $this->parse_template($bean, $emailTemp, $template_override);
+                if (!$this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+                    $ret = false;
+                    $this->lastEmailsFailed++;
+                } else {
+                    $this->lastEmailsSuccess++;
+                }
             }
-
         } else {
             $this->parse_template($bean, $emailTemp);
-			if($emailTemp->text_only=='1')
-			{
-				$email_body_html = $emailTemp->body;
-			}
-			else 
-			{
-				$email_body_html = $emailTemp->body_html;
-			}
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
+            if ($emailTemp->text_only == '1') {
+                $email_body_html = $emailTemp->body;
+            } else {
+                $email_body_html = $emailTemp->body_html;
+            }
+
+            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+                $ret = false;
+                $this->lastEmailsFailed++;
+            } else {
+                $this->lastEmailsSuccess++;
+            }
         }
-        return true;
+        return $ret;
+    }
+    
+    /**
+     *  clear last email sending status
+     */
+    protected function clearLastEmailsStatus() {
+        $this->lastEmailsFailed = 0;
+        $this->lastEmailsSuccess = 0;
+    }
+    
+    /**
+     * failed emails count at last run_action
+     * @return int
+     */
+    public function getLastEmailsFailed() {
+        return $this->lastEmailsFailed;
+    }
+    
+    /**
+     * successfully sent emails count at last run_action
+     * @return type
+     */
+    public function getLastEmailsSuccess() {
+        return $this->lastEmailsSuccess;
     }
 
     function parse_template(SugarBean $bean, &$template, $object_override = array()){
         global $sugar_config;
 
-        require_once('modules/AOW_Actions/actions/templateParser.php');
+        require_once __DIR__ . '/templateParser.php';
 
         $object_arr[$bean->module_dir] = $bean->id;
 
@@ -357,10 +417,10 @@ class actionSendEmail extends actionBase {
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
         $template->body_html = str_replace("\$url",$url,$template->body_html);
-        $template->body_html = str_replace("\$sugarurl",$cleanUrl,$template->body_html);
+        $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
         $template->body = str_replace("\$url",$url,$template->body);
-        $template->body = str_replace("\$sugarurl",$cleanUrl,$template->body);
+        $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
     function getAttachments(EmailTemplate $template){
@@ -414,7 +474,7 @@ class actionSendEmail extends actionBase {
         }
 
         //now create email
-        if (@$mail->Send()) {
+        if ($mail->Send()) {
             $emailObj->to_addrs= implode(',',$emailTo);
             $emailObj->cc_addrs= implode(',',$emailCc);
             $emailObj->bcc_addrs= implode(',',$emailBcc);

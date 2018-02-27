@@ -164,6 +164,3 @@ class TemplateMultiEnum extends TemplateEnum{
 		parent::save($df);
 	}
 }
-
-
-?>

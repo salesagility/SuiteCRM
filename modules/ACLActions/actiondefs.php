@@ -129,6 +129,3 @@ $GLOBALS['ACLActions'] = array(
 					
 				),),
 );
-
-
-?>

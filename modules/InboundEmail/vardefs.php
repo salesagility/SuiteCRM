@@ -283,5 +283,3 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
 
 VardefManager::createVardef('InboundEmail','InboundEmail', array(
 ));
-
-?>

@@ -76,9 +76,10 @@ class AOR_ReportsController extends SugarController
     protected function action_changeReportPage()
     {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+        $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
         if (!empty($this->bean->id)) {
             $this->bean->user_parameters = requestToUserParameters();
-            echo $this->bean->build_group_report($offset, true);
+            echo $this->bean->build_group_report($offset, true, array(), $group);
         }
 
         die();
@@ -252,7 +253,7 @@ class AOR_ReportsController extends SugarController
         ob_clean();
         try {
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
-            $pdf->setAutoFont();
+            $pdf->SetAutoFont();
             $pdf->WriteHTML($stylesheet, 1);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);

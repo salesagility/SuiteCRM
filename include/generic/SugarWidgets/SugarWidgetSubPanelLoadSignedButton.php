@@ -79,4 +79,3 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
 	}
 		
 }
-?>

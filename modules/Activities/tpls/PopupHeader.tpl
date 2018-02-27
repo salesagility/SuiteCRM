@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,14 +44,7 @@
 
     {$ieCompatMode}
     <meta http-equiv="Content-Type" content="text/html; charset="{$charset}">
-
-    <link href="themes/{$theme}/css/normalize.css" rel="stylesheet">
-    <link href="themes/{$theme}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/{$theme}/css/fonts.css" rel="stylesheet">
-    <link href="themes/{$theme}/css/grid.css" rel="stylesheet">
-    <link href="themes/{$theme}/css/footable.core.css" rel="stylesheet">
-    <link href="themes/{$theme}/css/style.css" rel="stylesheet">
-
+    {$css}
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1_jquery.js"></script>
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js"></script>
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1.js"></script>

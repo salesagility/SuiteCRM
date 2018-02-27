@@ -60,4 +60,3 @@ class AM_TaskTemplates extends AM_TaskTemplates_sugar {
 
 
 }
-?>

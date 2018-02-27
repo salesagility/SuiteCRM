@@ -6,19 +6,41 @@
   "authors": [],
   "minimum-stability": "dev",
   "config": {
-    "vendor-dir": "vendor"
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "5.5.9"
+    }
   },
-  "require": {},
+  "require": {
+    "php": ">=5.5.9",
+    "ext-json": "*",
+    "ext-gd": "*",
+    "ext-curl": "*",
+    "ext-openssl": "*",
+    "slim/slim": "^3.8",
+    "tuupola/slim-jwt-auth": "^2.0",
+    "league/url": "^3.3",
+    "psr/log": "^1.0",
+    "league/oauth2-server": "^5.1",
+    "justinrainbow/json-schema": "^5.2"
+  },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^3.7",
-    "mikey179/vfsStream": "1.4.*"
+    "mikey179/vfsStream": "1.4.*",
+    "codeception/codeception": "^2.0",
+    "fzaninotto/Faker": "^1.6",
+    "jeroendesloovere/vcard": "v1.5",
+    "browserstack/browserstack-local": "dev-master"
   },
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
-    "psr-0": {
-      "": "src/"
+    "psr-4": {
+      "SuiteCRM\\": [
+        "lib/",
+        "tests/SuiteCRM/",
+        "tests/unit/lib/SuiteCRM/"
+      ]
     }
   },
   "extra": {}

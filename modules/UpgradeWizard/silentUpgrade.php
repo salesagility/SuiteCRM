@@ -113,4 +113,3 @@ if($output != 0) {
    echo "***************         silentupgrade failed         ***************: $output\n";
 }
 exit($output);
-?>

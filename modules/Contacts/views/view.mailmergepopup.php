@@ -62,4 +62,3 @@ class ContactsViewMailMergePopup extends SugarView {
 		echo $popup->process_page_for_merge();
  	}	
 }
-?>

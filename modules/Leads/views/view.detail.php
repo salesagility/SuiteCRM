@@ -53,5 +53,3 @@ class LeadsViewDetail extends ViewDetail {
 		parent::display();
  	}	
 }
-
-?>

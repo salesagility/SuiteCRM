@@ -118,5 +118,3 @@ $stepBack		= 0;
 $stepNext		= 1;
 $stepCancel	= 0;
 $stepRecheck	= 0;
-
-?>
