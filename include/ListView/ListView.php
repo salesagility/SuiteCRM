@@ -1892,9 +1892,11 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         return '';
     }
 
+    /**
+     * @param $upDown
+     * @return string
+     */
     function getArrowUpDownStart($upDown) {
-        $ext = ( SugarThemeRegistry::current()->pngSupport ? "png" : "gif" );
-
         if ($upDown === '_down') {
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
@@ -1904,11 +1906,19 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         }
     }
 
+    /**
+     * @deprecated
+     * @return string
+     */
 	function getArrowEnd() {
 	    //
         return '';
     }
 
+    /**
+     * @param $upDown
+     * @return string
+     */
     function getArrowUpDownEnd($upDown)
     {
         return '';
