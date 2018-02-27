@@ -1888,7 +1888,10 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
      * @deprecated
      * @return string
      */
-    function getArrowStart() {
+    function getArrowStart()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowStart is now deprecate and will be removed in a future release');
         return '';
     }
 
@@ -1896,7 +1899,8 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
      * @param $upDown
      * @return string
      */
-    function getArrowUpDownStart($upDown) {
+    function getArrowUpDownStart($upDown)
+    {
         if ($upDown === '_down') {
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
@@ -1910,8 +1914,10 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
      * @deprecated
      * @return string
      */
-	function getArrowEnd() {
-	    //
+	function getArrowEnd()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowEnd is now deprecate and will be removed in a future release');
         return '';
     }
 
@@ -1921,6 +1927,8 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
      */
     function getArrowUpDownEnd($upDown)
     {
+        global $log;
+        $log->deprecated('ListView::getArrowUpDownEnd is now deprecate and will be removed in a future release');
         return '';
     }
 
