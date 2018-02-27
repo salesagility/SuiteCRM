@@ -64,6 +64,7 @@ class ProjectListViewData extends ListViewData{
 
         $extra = "<span id='adspan_" . $id . "' "
                 . "onclick=\"lvg_dtails('$id')\" "
+                . "title=\"".$app_strings['LBL_ADDITIONAL_DETAILS']."\" "
 				. " style='position: relative;'><!--not_in_theme!--><span class=\"suitepicon suitepicon-module-calendar\"></span></span>";
 
    
