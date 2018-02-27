@@ -110,6 +110,7 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 		<tr>
 		<td nowrap="nowrap"><input name='date_due' id='jscal_field' onblur="parseDate(this, '{$USER_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_DUE}">
 			<span id="jscal_trigger" class="suitepicon suitepicon-module-calendar"></span>
+		</td>
 		<td nowrap="nowrap"><input name='time_due' size='5' maxlength='5' tabindex='2' {$READONLY} type="text" value='{$TIME_DUE}'>{$DUE_TIME_MERIDIEM} </td>
 		{if $TIME_MERIDIEM}
         <td><select name='due_meridiem' tabindex="2">{$TIME_MERIDIEM}</select></td>
