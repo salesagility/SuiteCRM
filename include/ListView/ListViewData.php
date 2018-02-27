@@ -647,15 +647,15 @@ class ListViewData {
 
 	        if($editAccess && !empty($results['editLink']))
 	        {
-	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\"suitepicon suitepicon-action-edit\"></span></a>";
+	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\'suitepicon suitepicon-action-edit\'></span></a>";
 	            $close = true;
 	        }
 	        $close = (!empty($results['viewLink'])) ? true : $close;
-	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}> <span class=\"suitepicon suitepicon-action-view-record\"></span></a>" : '');
+	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}> <span class=\'suitepicon suitepicon-action-view-record\'></span></a>" : '');
 
             if($close == true) {
             	$closeVal = "true";
-            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'> <span class=\"suitepicon suitepicon-action-clear\"></span></a>";
+            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'> <span class=\'suitepicon suitepicon-action-clear\'></span></a>";
             } else {
             	$closeVal = "false";
             }
