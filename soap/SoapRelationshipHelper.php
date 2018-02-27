@@ -256,11 +256,11 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
 	}
 
 	if($has_join == false){
-		$query .= " inner join $mod->table_name m2 on $table_alias.$mod2_key = m2.id AND m2.id = '$current_user->id'";
+		$query .= " inner join $mod->table_name m2 on $table_alias.$mod2_key = m2.id";
 	}
 	else{
 		$query .= " inner join $mod->table_name m1 on rt.$mod_key = m1.id ";
-		$query .= " inner join $mod2->table_name m2 on rt.$mod2_key = m2.id AND m2.id = '$current_user->id'";
+		$query .= " inner join $mod2->table_name m2 on rt.$mod2_key = m2.id";
 	}
 
 	if(!empty($relationship_query)){
