@@ -236,7 +236,7 @@ class SavedSearch extends SugarBean
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
         $savedSearchData['module'] = $module;
-
+        
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
