@@ -84,7 +84,9 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                     $product_quote->group_id = $groups[$post_data[$key . 'group_number'][$i]];
                 }
                 if (trim($product_quote->product_id) != '' && trim($product_quote->name) != '' && trim($product_quote->product_unit_price) != '') {
-                    $product_quote->number = ++$j;
+                    if(trim($product_quote->number) === ''){
+						$product_quote->number = ++$j;
+					}
                     $product_quote->assigned_user_id = $parent->assigned_user_id;
                     $product_quote->parent_id = $parent->id;
                     $product_quote->currency_id = $parent->currency_id;
