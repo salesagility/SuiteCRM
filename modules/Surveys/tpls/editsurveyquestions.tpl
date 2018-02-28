@@ -120,10 +120,10 @@
       newRow += "<td><select class='surveyQuestionType' name='survey_questions_types[" + createQuestion.questionCount + "]'>{/literal}{$question_type_options}{literal}</select></td>";
       newRow += "<td>";
 
-      newRow += "<button type='button' class='button moveQuestionUp'><span class="suitepicon suitepicon-action-move-up"></span></button>";
-      newRow += "<button type='button' class='button moveQuestionDown'><span class="suitepicon suitepicon-action-move-down"></span></button>";
+      newRow += "<button type='button' class='button moveQuestionUp'><span class='suitepicon suitepicon-action-move-up'></span></button>";
+      newRow += "<button type='button' class='button moveQuestionDown'><span class='suitepicon suitepicon-action-move-down'></span></button>";
       newRow += "&nbsp;&nbsp;&nbsp;";
-      newRow += "<button type='button' class='button deleteQuestion'><span class="suitepicon suitepicon-action-clear"></span></button>";
+      newRow += "<button type='button' class='button deleteQuestion'><span class='suitepicon suitepicon-action-clear'></span></button>";
       newRow += "</td>";
       newRow += "</tr>";
       newRow += "<tr class='questionOptions' style='display: none;'>";
