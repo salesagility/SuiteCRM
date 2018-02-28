@@ -27,9 +27,6 @@
     list-style-type: none;
   }
 
-  .actionMenuSidebar li a .side-bar-action-icon {
-
-  }
 
   .actionMenuSidebar li a .side-bar-action-icon .suitepicon {
     display: inline-block;
@@ -118,7 +115,7 @@ a.buttontoggle:hover {
   left: 0;
 }
 
-//
+
 .button-toggle-collapsed {
   position: fixed;
   top: 72px;
@@ -223,14 +220,6 @@ a.buttontoggle:hover {
   width: 85%;
 }
 
-.recentlyViewedSidebar .recent-links-detail .suitepicon {
-  display: inline-block;
-  font-size: $side-bar-links-icon-font-size;
-  line-height: $side-bar-links-height;
-  margin-right: 4px;
-  position: relative;
-}
-
 .favoritesSidebar .favorite-links-detail {
   display: inline-block;
   width: 85%;
@@ -255,6 +244,7 @@ a.buttontoggle:hover {
 .favoritesSidebar li:hover {
   background-color: $side-bar-link-color-hover;
 }
+
 .recentlyViewedSidebar .recent-links-detail .suitepicon {
   display: inline-block;
   font-size: $side-bar-links-icon-font-size;
