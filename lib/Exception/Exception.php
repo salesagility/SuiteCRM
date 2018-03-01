@@ -52,6 +52,17 @@ use SuiteCRM\Enumerator\ExceptionCode;
 class Exception extends \Exception
 {
     /**
+     * @var array $source
+     * @see https://tools.ietf.org/html/rfc6901
+     */
+    private $source = array('pointer' => '');
+
+    /**
+     * @var string $detail
+     */
+    private $detail = 'SuiteCRM has encountered an exception which has not been handled';
+
+    /**
      * ApiException constructor.
      * @param string $message API Exception "$message"
      * @param int $code
@@ -69,7 +80,43 @@ class Exception extends \Exception
      */
     public function getDetail()
     {
-        return 'SuiteCRM has encountered an exception which has not been handled';
+        return $this->detail;
+    }
+
+    /**
+     * @param string $detail
+     */
+    public function setDetail($detail)
+    {
+        $this->detail = $detail;
+    }
+
+    /**
+     * @see ApiController::generateJsonApiExceptionResponse()
+     * @see https://tools.ietf.org/html/rfc6901
+     * @return array
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param $source
+     * @see https://tools.ietf.org/html/rfc6901
+     */
+    public function setSource($source)
+    {
+        $this->source['pointer'] = $source;
+    }
+
+    /**
+     * @return int http status code that should be returned back to the client
+     * @see ApiController::generateJsonApiExceptionResponse()
+     */
+    public function getHttpStatus()
+    {
+        return 500;
     }
 
     /**
