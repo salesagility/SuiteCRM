@@ -697,11 +697,13 @@ class SugarView
                 $groupTabs[$tabIdx]['modules'] = $topTabs;
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
             }
-        }
 
-        foreach($groupTabs as $key => $tabGroup) {
-            if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
-                unset($groupTabs[$key]['modules'][$moduleTab]);
+            // Ensure the current active module link is displayed at the bottom of any tab group list
+            // even when the module list is greater than the max tabs limit.
+            foreach($groupTabs as $key => $tabGroup) {
+                if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
+                    unset($groupTabs[$key]['modules'][$moduleTab]);
+                }
             }
         }
 
