@@ -257,6 +257,22 @@ function get_sugar_config_defaults()
 
     $sugar_config_defaults = array(
         'admin_export_only' => false,
+        'anti_malware_scanners' => array(
+            'SuiteCRM\Utility\AntiMalwareScanners\ClamAV' => array(
+                'name' => 'ClamAV',
+                'support_page' => 'https://www.clamav.net/',
+                'enabled' => false,
+                'path' => '/usr/bin/clamscan',
+                'options' => '--stdout --infected'
+            ),
+            'SuiteCRM\Utility\AntiMalwareScanners\SophosAntiVirus' => array(
+                'name' => 'Sophos Anti Virus (Linux)',
+                'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
+                'enabled' => false,
+                'path' => '/opt/sophos-av/bin/savscan',
+                'options' => '-ss'
+            )
+        ),
         'export_delimiter' => ',',
         'export_excel_compatible' => false,
         'cache_dir' => 'cache/',
