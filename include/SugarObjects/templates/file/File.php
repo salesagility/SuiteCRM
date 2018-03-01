@@ -142,9 +142,10 @@ class File extends Basic
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         $ret_val = parent::retrieve($id, $encode, $deleted);
-
-        $this->name = $this->document_name;
-
+        
+        if(!empty($this->document_name)) {
+            $this->name = $this->document_name;
+        }
         return $ret_val;
     }
 
