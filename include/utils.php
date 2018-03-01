@@ -111,6 +111,13 @@ function make_sugar_config(&$sugar_config)
                 'enabled' => false,
                 'path' => '/usr/bin/clamscan',
                 'options' => '--stdout --infected'
+            ),
+            'SuiteCRM\Utility\AntiMalwareScanners\SophosAntiVirus' => array(
+                'name' => 'Sophos Anti Virus (Linux)',
+                'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
+                'enabled' => false,
+                'path' => '/opt/sophos-av/bin/savscan',
+                'options' => '-ss'
             )
         ),
         'export_delimiter' => empty($export_delimiter) ? ',' : $export_delimiter,
