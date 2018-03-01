@@ -1922,6 +1922,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
     }
 
     /**
+     * @deprecated
      * @param $upDown
      * @return string
      */
