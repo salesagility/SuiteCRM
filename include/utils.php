@@ -104,6 +104,15 @@ function make_sugar_config(&$sugar_config)
 
     $sugar_config = array(
         'admin_export_only' => empty($admin_export_only) ? false : $admin_export_only,
+        'anti_malware_scanners' => array(
+            'SuiteCRM\Utility\AntiMalwareScanners\ClamAV' => array(
+                'name' => 'ClamAV',
+                'support_page' => 'https://www.clamav.net/',
+                'enabled' => false,
+                'path' => '/usr/bin/clamscan',
+                'options' => '--stdout --infected'
+            )
+        ),
         'export_delimiter' => empty($export_delimiter) ? ',' : $export_delimiter,
         'cache_dir' => empty($cache_dir) ? 'cache/' : $cache_dir,
         'calculate_response_time' => empty($calculate_response_time) ? true : $calculate_response_time,
