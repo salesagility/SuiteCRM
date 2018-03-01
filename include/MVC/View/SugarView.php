@@ -1482,25 +1482,10 @@ EOHTML;
                     "' module='" .
                     $this->bean->module_dir .
                     "'><div class='favorite_icon_outline'>" .
-                    SugarThemeRegistry::current()->getImage(
-                        'favorite-star-outline',
-                        'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"',
-                        null,
-                        null,
-                        '.gif',
-                        translate('LBL_DASHLET_EDIT', 'Home')
-                    ) .
-                    "</div>
-                                                    <div class='favorite_icon_fill'>" .
-                    SugarThemeRegistry::current()->getImage(
-                        'favorite-star',
-                        'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"',
-                        null,
-                        null,
-                        '.gif',
-                        translate('LBL_DASHLET_EDIT', 'Home')
-                    ) .
-                    "</div></div>";
+                    "<span class='suitepicon suitepicon-favorite-star-outline'></span></div>
+                                                    <div class='favorite_icon_fill' 'title=\"' . translate('LBL_DASHLET_EDIT', 'Home') . '\" border=\"0\"  align=\"absmiddle\"'>" .
+
+                    "<span class='suitepicon suitepicon-favorite-star'></span></div></div>";
             }
         }
 

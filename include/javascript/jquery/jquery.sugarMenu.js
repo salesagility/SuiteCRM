@@ -159,6 +159,7 @@
 
             //create dropdown handle
             dropDownHandle = $(document.createElement("span"));
+            dropDownHandle.addClass('suitepicon suitepicon-action-caret');
             parent.append(dropDownHandle);
 
           } else if (parent.find("span").length == 1) {

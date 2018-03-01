@@ -64,7 +64,7 @@
         </div>
     	<div class="footer_right">
     		
-    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$APP.LBL_SUITE_TOP}</a>
+    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$APP.LBL_SUITE_TOP}<span class="suitepicon suitepicon-action-above"></span> </a>
     	</div>
     </footer>
     <!-- END Generic Footer -->

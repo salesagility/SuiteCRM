@@ -202,7 +202,7 @@
 		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="start_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <span id="start_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_start' tabindex="9">{TIME_START_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_start' tabindex="10">{TIME_START_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_START}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
@@ -228,7 +228,7 @@
 		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="end_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <span id="end_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_end' tabindex="13">{TIME_END_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_end' tabindex="14">{TIME_END_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_END}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>

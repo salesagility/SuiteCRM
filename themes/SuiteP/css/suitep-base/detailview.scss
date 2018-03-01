@@ -12,6 +12,16 @@
 
 }
 
+.vcard {
+  font-size: inherit;
+  border: none;
+  color: $main-font-color;
+}
+
+.vcard .suitepicon {
+  font-size: 18px;
+}
+
 p.msg {
 	padding:10px;
 }
@@ -29,6 +39,10 @@ p.msg {
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: $disabled-btn-bg;
+}
+
+.btn-pagination .suitepicon {
+  line-height: inherit;
 }
 
 .buttons .pagination .btn-pagination {

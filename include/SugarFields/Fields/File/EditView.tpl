@@ -126,9 +126,9 @@ type="file" title='{{$vardef.help}}' size="{{$displayParams.size|default:30}}"
 <span class="id-ff multiple">
 <button type="button" name="{{$idName}}_remoteSelectBtn" id="{{$idName}}_remoteSelectBtn" tabindex="{{$tabindex}}" title="{sugar_translate label="{{$displayParams.accessKeySelectTitle}}"}" class="button firstChild" value="{sugar_translate label="{{$displayParams.accessKeySelectLabel}}"}"
 onclick="SUGAR.field.file.openPopup('{{$idName}}'); return false;">
-{sugar_getimage alt=$app_strings.LBL_ID_FF_SELECT name="id-ff-select" ext=".png" other_attributes=''}</button>
+<span class="suitepicon suitepicon-action-select"></span></button>
 <button type="button" name="{{$idName}}_remoteClearBtn" id="{{$idName}}_remoteClearBtn" tabindex="{{$tabindex}}" title="{$APP.LBL_CLEAR_BUTTON_TITLE}" class="button lastChild" value="{$APP.LBL_CLEAR_BUTTON_LABEL}" onclick="SUGAR.field.file.clearRemote('{{$idName}}'); return false;">
-{sugar_getimage name="id-ff-clear" alt=$app_strings.LBL_ID_FF_CLEAR ext=".png" other_attributes=''}
+<span class="suitepicon suitepicon-action-clear"></span>
 </button>
 </span>
 {{/if}}
