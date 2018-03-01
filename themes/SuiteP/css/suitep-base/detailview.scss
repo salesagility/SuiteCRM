@@ -436,3 +436,7 @@ p.msg {
     @extend  .email-opt-in-confirmed;
   }
 }
+
+.email-opt-in .suitepicon {
+  line-height: inherit;
+}
