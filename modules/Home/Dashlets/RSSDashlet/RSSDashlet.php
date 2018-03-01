@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,7 +48,7 @@ require_once('include/Sugar_Smarty.php');
 
 class RSSDashlet extends Dashlet
 {
-    protected $url = 'http://www.sugarcrm.com/crm/aggregator/rss/1';
+    protected $url = 'https://salesagility.com/component/easyblog/tags/suitecrm?format=feed&type=rss';
     protected $height = '200'; // height of the pad
     protected $images_dir = 'modules/Home/Dashlets/RSSDashlet/images';
 

@@ -1227,6 +1227,7 @@ class AOR_Report extends Basic
                 } else {
                     $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
                 }
+                $select_field_db = $select_field;
 
                 if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
                     if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
@@ -1251,7 +1252,12 @@ class AOR_Report extends Basic
                 }
 
                 if ($field->sort_by != '') {
-                    $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    // If the field is a date, sort by the natural date and not the user-formatted date
+                    if ($data['type'] == 'date' || $data['type'] == 'datetime') {
+                        $query['sort_by'][] = $select_field_db . " " . $field->sort_by;
+                    } else {
+                        $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    }
                 }
 
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";

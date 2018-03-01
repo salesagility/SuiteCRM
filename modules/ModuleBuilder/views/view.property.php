@@ -77,7 +77,7 @@ class ViewProperty extends SugarView
     }
 
 
-    function init($bean = NULL, $view_object_map = Array) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
+    function init($bean = NULL, $view_object_map = Array()) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
     {
         $this->editModule = (! empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
         $this->editPackage = (! empty($_REQUEST['view_package'])) ? $_REQUEST['view_package'] : null;

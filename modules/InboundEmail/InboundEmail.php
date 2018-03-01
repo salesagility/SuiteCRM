@@ -3441,20 +3441,18 @@ class InboundEmail extends SugarBean
                 if (sizeof($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
-                    $acct = new Account();
-                    $acct->retrieve($c->account_id);
-                    $c->account_name = $acct->name;
-                } // if
-            } // if
-            $c->save(true);
-            $caseId = $c->id;
-            $c = new aCase();
-            $c->retrieve($caseId);
-            if ($c->load_relationship('emails')) {
-                $c->emails->add($email->id);
-            } // if
-            if ($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
-                if (!empty($contactIds) && $c->load_relationship('contacts')) {
+					$acct = new Account();
+					$acct->retrieve($c->account_id);
+					$c->account_name = $acct->name;
+				} // if
+			} // if
+			$c->save(true);
+            $c->retrieve($c->id);;
+			if($c->load_relationship('emails')) {
+				$c->emails->add($email->id);
+			} // if
+			if($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
+				if(!empty($contactIds) && $c->load_relationship('contacts')) {
                     if (!$accountIds && count($contactIds) == 1) {
                         $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
                         if ($contact->load_relationship('accounts')) {
@@ -3464,34 +3462,34 @@ class InboundEmail extends SugarBean
                             }
                         }
                     }
-                    $c->contacts->add($contactIds);
-                } // if
-            } // if
-            $c->email_id = $email->id;
-            $email->parent_type = "Cases";
-            $email->parent_id = $caseId;
-            // assign the email to the case owner
-            $email->assigned_user_id = $c->assigned_user_id;
-            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " " . $email->name;
-            $email->save();
-            $GLOBALS['log']->debug('InboundEmail created one case with number: ' . $c->case_number);
-            $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
-            if (!empty($this->stored_options)) {
-                $storedOptions = unserialize(base64_decode($this->stored_options));
-            }
-            if (!empty($createCaseTemplateId)) {
-                $fromName = "";
-                $fromAddress = "";
-                if (!empty($this->stored_options)) {
-                    $fromAddress = $storedOptions['from_addr'];
-                    $fromName = from_html($storedOptions['from_name']);
-                    $replyToName = (!empty($storedOptions['reply_to_name'])) ? from_html($storedOptions['reply_to_name']) : $fromName;
-                    $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
-                } // if
-                $defaults = $current_user->getPreferredEmail();
-                $fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
-                $fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
-                $to[0]['email'] = $contactAddr;
+					$c->contacts->add($contactIds);
+				} // if
+			} // if
+			$c->email_id = $email->id;
+			$email->parent_type = "Cases";
+            $email->parent_id = $c->id;
+			// assign the email to the case owner
+			$email->assigned_user_id = $c->assigned_user_id;
+			$email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;
+			$email->save();
+			$GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
+			$createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
+			if(!empty($this->stored_options)) {
+				$storedOptions = unserialize(base64_decode($this->stored_options));
+			}
+			if(!empty($createCaseTemplateId)) {
+				$fromName = "";
+				$fromAddress = "";
+				if (!empty($this->stored_options)) {
+					$fromAddress = $storedOptions['from_addr'];
+					$fromName = from_html($storedOptions['from_name']);
+					$replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
+					$replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
+				} // if
+				$defaults = $current_user->getPreferredEmail();
+				$fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
+				$fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
+				$to[0]['email'] = $contactAddr;
 
                 // handle to name: address, prefer reply-to
                 if (!empty($email->reply_to_name)) {

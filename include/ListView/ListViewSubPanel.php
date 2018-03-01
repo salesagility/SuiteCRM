@@ -159,7 +159,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $this->smartyTemplate->display($this->smartyTemplatePath);
 
             if (isset($_SESSION['validation'])) {
-                // <a href='http://www.sugarcrm.com'>POWERED&nbsp;BY&nbsp;SUGARCRM</a>
                 print base64_decode('PGEgaHJlZj0naHR0cDovL3d3dy5zdWdhcmNybS5jb20nPlBPV0VSRUQmbmJzcDtCWSZuYnNwO1NVR0FSQ1JNPC9hPg==');
             }
             if (isset($list_data['query'])) {

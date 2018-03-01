@@ -102,6 +102,16 @@ $dictionary['Reminder'] = array(
             'massupdate' => false,
             'studio' => false,
         ),
+        'date_willexecute' => array(
+            'name' => 'date_willexecute',
+            'vname' => 'LBL_DATE_WILLEXECUTE',
+            'type' => 'int',
+            'default' => -1,
+            'len' => 60,
+            'required' => false,
+            'massupdate' => false,
+            'studio' => false,
+        ),
         'popup_viewed' => [
             'name' => 'popup_viewed',
             'type' => 'bool',
