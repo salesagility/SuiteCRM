@@ -90,7 +90,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
     return $this->queryFilterEquals($layout_def);
  }    
  
-    function displayInput(&$layout_def) 
+    function displayInput($layout_def)
     {
         global $app_strings;
         
