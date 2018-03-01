@@ -2254,27 +2254,28 @@ class SugarEmailAddress extends SugarBean
                     case self::COI_FLAG_OPT_IN:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN'];
-                        $optInFlagText = '&#10004;';
+                        $optInFlagText = '<span class="suitepicon suitepicon-action-confirm"></span>';
                         break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED:
                         $optInFlagClass = 'email-opt-in-confirmed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_CONFIRMED'];
-                        $optInFlagText = '&#10004;&#10004;';
+                        $optInFlagText = '<span class="suitepicon suitepicon-action-confirm">';
+                        $optInFlagText .= '</span><span class="suitepicon suitepicon-action-confirm"></span>';
                         break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT:
                         $optInFlagClass = 'email-opt-in-sent';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_SENT'];
-                        $optInFlagText = '&#10004;';
+                        $optInFlagText = '<span class="suitepicon suitepicon-action-confirm"></span>';
                         break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_NOT_SENT:
                         $optInFlagClass = 'email-opt-in-not-sent';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_NOT_SENT'];
-                        $optInFlagText = '&#10004;';
+                        $optInFlagText = '<span class="suitepicon suitepicon-action-confirm"></span>';
                         break;
                     case self::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED:
                         $optInFlagClass = 'email-opt-in-failed';
                         $optInFlagTitle = $app_strings['LBL_OPT_IN_PENDING_EMAIL_FAILED'];
-                        $optInFlagText = '&#10004;';
+                        $optInFlagText = '<span class="suitepicon suitepicon-action-confirm"></span>';
                         break;
                     case self::COI_FLAG_OPT_OUT:
                         $optInFlagClass = 'email-opt-in-opt-out';
