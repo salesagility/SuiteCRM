@@ -164,7 +164,7 @@
                            onclick='open_popup("Documents", 600, 400, "&caller=Documents", true, false, "");'/>
                 {/if}
                 {if $searchFormInPopup}
-                <div style="display: none">
+                <div>
                     {/if}
                     <a id="basic_search_link" href="javascript:void(0)"
                        accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_BASIC_FILTER}</a>

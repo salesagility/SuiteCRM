@@ -58,7 +58,7 @@ The following links offer various ways to view, contribute and collaborate to th
 
 [suitecrm_demo]: https://suitecrm.com/demo
 [suitecrm_forums]: https://suitecrm.com/suitecrm/forum/suite-forum
-[suitecrm_docs]: https://suitecrm.com/wiki
+[suitecrm_docs]: https://docs.suitecrm.com/
 [suitecrm_partners]: https://suitecrm.com/about/about-us/partners
 [suitecrm_ext]: https://store.suitecrm.com/
 

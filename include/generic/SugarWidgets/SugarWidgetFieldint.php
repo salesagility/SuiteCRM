@@ -78,7 +78,7 @@ class SugarWidgetFieldInt extends SugarWidgetReportField
  	return $this->queryFilterEquals($layout_def);
  }
 
- function displayInput(&$layout_def)
+ function displayInput($layout_def)
  {
  	 return '<input type="text" size="20" value="' . $layout_def['input_name0'] . '" name="' . $layout_def['name'] . '">';
 
