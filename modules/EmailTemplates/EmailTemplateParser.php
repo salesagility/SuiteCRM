@@ -52,8 +52,9 @@ class EmailTemplateParser
 
     /**
      * Allowed keys as result
+     * @var array
      */
-    const ALLOWED_ATTRIBUTES = ['subject', 'body_html', 'body'];
+    private static $allowedAttributes = ['subject', 'body_html', 'body'];
 
     /**
      * @var EmailTemplate
@@ -94,7 +95,7 @@ class EmailTemplateParser
     {
         $templateData = [];
 
-        foreach (static::ALLOWED_ATTRIBUTES as $key) {
+        foreach (static::$allowedAttributes as $key) {
             if (property_exists($this->template, $key)) {
                 $templateData[$key] = $this->getParsedValue($this->template->$key);
             }
