@@ -426,8 +426,31 @@ class SugarController
             ' Detail: ' . $exception->getDetail() .
             ' Source: [' . $exception->getSource()['pointer'] . ']';
         $logger->log($exception->getLogLevel(), $logMessage);
+
         http_response_code($exception->getHttpStatus());
-        echo $logMessage;
+
+        if (
+            $this->view === 'ajax'
+            || $this->view === 'ajaxui'
+            || $this->view === 'json'
+        ) {
+            $jsonError = array(
+                'code' => $exception->getCode(),
+                'title' => $exception->getMessage(),
+                'detail' => $exception->getDetail(),
+                'source' => $exception->getSource(),
+            );
+
+            $payload = array(
+                'errors' => array(
+                    $jsonError
+                )
+            );
+
+            echo json_encode($payload);
+        } else {
+            echo $logMessage;
+        }
         $this->handleException($exception);
     }
 
