@@ -48,9 +48,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/Emailable';
 
 // Contact is used to store customer information.
-class Contact extends Person
+class Contact extends Person implements Emailable
 {
     public $field_name_map;
     // Stored fields
@@ -185,6 +186,11 @@ class Contact extends Person
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
+    }
+    
+        
+    public function getEmailBean() {
+        return $this->getEmailAddressFromEmailField($this->email1);
     }
 
 

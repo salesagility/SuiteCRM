@@ -80,7 +80,7 @@ class EmailTemplateParser
      * @param Campaign $campaign
      * @param User $user
      */
-    public function __construct(EmailTemplate $template, Campaign $campaign, User $user)
+    public function __construct(EmailTemplate $template, Campaign $campaign, Emailable $user)
     {
         $this->template = $template;
         $this->campaign = $campaign;

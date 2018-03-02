@@ -43,9 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/Emailable';
 
 // User is used to store customer information.
-class User extends Person
+class User extends Person implements Emailable
 {
 
     // Stored fields
@@ -147,6 +148,11 @@ class User extends Person
         }
         self::__construct();
     }
+       
+    public function getEmailBean() {
+        return $this->getEmailAddressFromEmailField($this->email1);
+    }
+    
 
     protected function _loadUserPreferencesFocus()
     {
