@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once("include/SugarObjects/templates/company/Company.php");
 
-require_once __DIR__ . '/../../include/Emailable';
+require_once __DIR__ . '/../../include/Emailable.php';
 
 // Account is used to store account information.
 class Account extends Company implements Emailable {

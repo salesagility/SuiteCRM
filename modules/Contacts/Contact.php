@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
-require_once __DIR__ . '/../../include/Emailable';
+require_once __DIR__ . '/../../include/Emailable.php';
 
 // Contact is used to store customer information.
 class Contact extends Person implements Emailable
