@@ -56,10 +56,10 @@ require_once('include/SugarObjects/templates/person/Person.php');
 
 
 require_once('include/SugarObjects/templates/person/Person.php');
-require_once __DIR__ . '/../../include/Emailable.php';
+require_once __DIR__ . '/../../include/EmailableInterface.php';
 
 // Lead is used to store profile information for people who may become customers.
-class Lead extends Person implements Emailable {
+class Lead extends Person implements EmailableInterface {
 	var $field_name_map;
 	// Stored fields
 	var $id;

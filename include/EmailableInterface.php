@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-interface Emailable {
+interface EmailableInterface {
     
     
     /**

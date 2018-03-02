@@ -48,10 +48,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
-require_once __DIR__ . '/../../include/Emailable.php';
+require_once __DIR__ . '/../../include/EmailableInterface.php';
 
 // Contact is used to store customer information.
-class Contact extends Person implements Emailable
+class Contact extends Person implements EmailableInterface
 {
     public $field_name_map;
     // Stored fields
