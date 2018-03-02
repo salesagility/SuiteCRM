@@ -434,6 +434,7 @@ class UploadFile
      * moves uploaded temp file to permanent save location
      * @param string $bean_id ID of parent bean
      * @return bool True on success
+     * @throws \SuiteCRM\Exception\MalwareFound
      */
     public function final_move($bean_id)
     {
@@ -449,14 +450,23 @@ class UploadFile
                 $log->fatal('Unable to save file to '. $destination);
                 return false;
             }
-        } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
+
+            $this->scanForMalware($destination);
+        } else {
+            $this->scanForMalware($this->temp_file_location);
+
+            if (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
                 $log->fatal(
                     'Unable to move move_uploaded_file to ' . $destination .
                     ' You should try making the directory writable by the webserver'
                 );
 
                 return false;
+            }
         }
+
+
+
 
         return true;
     }
@@ -579,5 +589,16 @@ class UploadFile
         }
 
         return $path;
+    }
+
+    /**
+     * @param string $path
+     */
+    private function scanForMalware($path)
+    {
+        $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\Scanner();
+        if ($antiMalwareScanner->isAntiMalwareScannersAvailable()) {
+            $antiMalwareScanner->scanPathForMalware($path);
+        }
     }
 }

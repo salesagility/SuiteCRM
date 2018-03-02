@@ -438,6 +438,7 @@ class UploadMultipleFiles
      * moves uploaded temp file to permanent save location
      * @param string bean_id ID of parent bean
      * @return bool True on success
+     * @throws \SuiteCRM\Exception\MalwareFound
      */
     public function final_move($bean_id)
     {
@@ -445,13 +446,18 @@ class UploadMultipleFiles
         if (substr($destination, 0, 9) != "file://") {
             $destination = "uploads://$bean_id";
         }
+
         if ($this->use_soap) {
             if (!file_put_contents($destination, $this->file)) {
                 $GLOBALS['log']->fatal("ERROR: can't save file to $destination");
 
                 return false;
             }
+
+            $this->scanForMalware($destination);
         } else {
+            $this->scanForMalware($this->temp_file_location);
+
             if (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'][$this->index], $destination)) {
                 $GLOBALS['log']->fatal(
                     "ERROR: can't move_uploaded_file to $destination." .
@@ -461,6 +467,7 @@ class UploadMultipleFiles
                 return false;
             }
         }
+
         $this->temp_file_location = '';
         return true;
     }
@@ -583,6 +590,17 @@ class UploadMultipleFiles
         }
 
         return $path;
+    }
+
+    /**
+     * @param string $path
+     */
+    private function scanForMalware($path)
+    {
+        $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\Scanner();
+        if ($antiMalwareScanner->isAntiMalwareScannersAvailable()) {
+            $antiMalwareScanner->scanPathForMalware($path);
+        }
     }
 }
 
