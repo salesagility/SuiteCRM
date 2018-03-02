@@ -105,14 +105,14 @@ function make_sugar_config(&$sugar_config)
     $sugar_config = array(
         'admin_export_only' => empty($admin_export_only) ? false : $admin_export_only,
         'anti_malware_scanners' => array(
-            'SuiteCRM\Utility\AntiMalwareScanners\ClamAV' => array(
-                'name' => 'ClamAV',
+            'SuiteCRM\Utility\AntiMalware\Providers\ClamAV' => array(
+                'name' => 'ClamAV (Linux)',
                 'support_page' => 'https://www.clamav.net/',
                 'enabled' => false,
                 'path' => '/usr/bin/clamscan',
                 'options' => '--stdout --infected'
             ),
-            'SuiteCRM\Utility\AntiMalwareScanners\SophosAntiVirus' => array(
+            'SuiteCRM\Utility\AntiMalware\Providers\SophosAntiVirus' => array(
                 'name' => 'Sophos Anti Virus (Linux)',
                 'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
                 'enabled' => false,
@@ -258,14 +258,14 @@ function get_sugar_config_defaults()
     $sugar_config_defaults = array(
         'admin_export_only' => false,
         'anti_malware_scanners' => array(
-            'SuiteCRM\Utility\AntiMalwareScanners\ClamAV' => array(
-                'name' => 'ClamAV',
+            'SuiteCRM\Utility\AntiMalware\Providers\ClamAV' => array(
+                'name' => 'ClamAV (Linux)',
                 'support_page' => 'https://www.clamav.net/',
                 'enabled' => false,
                 'path' => '/usr/bin/clamscan',
                 'options' => '--stdout --infected'
             ),
-            'SuiteCRM\Utility\AntiMalwareScanners\SophosAntiVirus' => array(
+            'SuiteCRM\Utility\AntiMalware\Providers\SophosAntiVirus' => array(
                 'name' => 'Sophos Anti Virus (Linux)',
                 'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
                 'enabled' => false,
