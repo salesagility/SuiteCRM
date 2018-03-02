@@ -45,8 +45,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 interface Emailable {
     
+    
     /**
-     * return EmailAddress
+     * 
+     * @return EmailAddress
      */
     public function getEmailBean();
     

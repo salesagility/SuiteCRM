@@ -163,6 +163,10 @@ class Account extends Company implements Emailable {
 		}
 	}
         
+        /**
+         * 
+         * @return EmailAddress
+         */
         public function getEmailBean() {
             return $this->getEmailAddressFromEmailField($this->email1);
         }

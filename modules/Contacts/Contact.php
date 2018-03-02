@@ -188,7 +188,11 @@ class Contact extends Person implements Emailable
         self::__construct();
     }
     
-        
+    
+    /**
+     * 
+     * @return EmailAddress
+     */
     public function getEmailBean() {
         return $this->getEmailAddressFromEmailField($this->email1);
     }

@@ -167,7 +167,10 @@ class Lead extends Person implements Emailable {
     }
     
     
-        
+    /**
+     * 
+     * @return EmailAddress
+     */
     public function getEmailBean() {
         return $this->getEmailAddressFromEmailField($this->email1);
     }
