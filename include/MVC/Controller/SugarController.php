@@ -376,11 +376,12 @@ class SugarController
             } elseif (!empty($this->redirect_url)) {
                 $this->redirect();
             }
+        } catch (\SuiteCRM\Exception\Exception $suiteException) {
+            $this->handleSuiteCRMException($suiteException);
+
         } catch (Exception $e) {
             $this->handleException($e);
         }
-
-
     }
 
     protected function showException(Exception $e)
@@ -409,6 +410,25 @@ class SugarController
         } else {
             $logicHook->call_custom_logic('', "handle_exception", $e);
         }
+    }
+
+    /**
+     * Handle SuiteCRM Exceptions
+     * @param \SuiteCRM\Exception\Exception $exception
+     */
+    protected function handleSuiteCRMException(\SuiteCRM\Exception\Exception $exception)
+    {
+        $logger = new \SuiteCRM\Utility\SuiteLogger();
+        $logMessage =
+            ' Code: [' . $exception->getCode() . ']' .
+            ' Status: [' . $exception->getHttpStatus() . ']' .
+            ' Message: ' . $exception->getMessage() .
+            ' Detail: ' . $exception->getDetail() .
+            ' Source: [' . $exception->getSource()['pointer'] . ']';
+        $logger->log($exception->getLogLevel(), $logMessage);
+        http_response_code($exception->getHttpStatus());
+        echo $logMessage;
+        $this->handleException($exception);
     }
 
     /**
