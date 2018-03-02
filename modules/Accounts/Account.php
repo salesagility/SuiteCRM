@@ -46,8 +46,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once("include/SugarObjects/templates/company/Company.php");
 
+require_once __DIR__ . '/../../include/EmailableInterface.php';
+
 // Account is used to store account information.
-class Account extends Company {
+class Account extends Company implements EmailableInterface {
 	var $field_name_map = array();
 	// Stored fields
 	var $date_entered;
@@ -160,6 +162,14 @@ class Account extends Company {
 			$_REQUEST['parent_id'] = '';
 		}
 	}
+        
+        /**
+         * 
+         * @return EmailAddress
+         */
+        public function getEmailBean() {
+            return $this->getEmailAddressFromEmailField($this->email1);
+        }
 
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

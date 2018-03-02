@@ -47,8 +47,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailableInterface.php';
 
-class Prospect extends Person {
+class Prospect extends Person implements EmailableInterface {
     var $field_name_map;
 	// Stored fields
 	var $id;
@@ -123,6 +124,14 @@ class Prospect extends Person {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
+    }
+    
+    /**
+     * 
+     * @return EmailAddress
+     */
+    public function getEmailBean() {
+        return $this->getEmailAddressFromEmailField($this->email1);
     }
 
 
