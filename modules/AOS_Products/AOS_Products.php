@@ -68,7 +68,7 @@ class AOS_Products extends AOS_Products_sugar {
             }
             else {
 
-                $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\Scanner();
+                $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\FileScanner();
                 if ($antiMalwareScanner->isAntiMalwareScannersAvailable()) {
                     $antiMalwareScanner->scanPathForMalware($path);
                 }

@@ -597,7 +597,7 @@ class UploadMultipleFiles
      */
     private function scanForMalware($path)
     {
-        $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\Scanner();
+        $antiMalwareScanner = new \SuiteCRM\Utility\AntiMalware\FileScanner();
         if ($antiMalwareScanner->isAntiMalwareScannersAvailable()) {
             $antiMalwareScanner->scanPathForMalware($path);
         }
