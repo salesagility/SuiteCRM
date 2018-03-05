@@ -67,9 +67,9 @@ class EmailTemplateParser
     private $campaign;
 
     /**
-     * @var User
+     * @var Basic
      */
-    private $user;
+    private $module;
 
     /**
      * @var Surveys
@@ -79,13 +79,13 @@ class EmailTemplateParser
     /**
      * @param EmailTemplate $template
      * @param Campaign $campaign
-     * @param User $user
+     * @param Basic $module
      */
-    public function __construct(EmailTemplate $template, Campaign $campaign, User $user)
+    public function __construct(EmailTemplate $template, Campaign $campaign, Basic $module)
     {
         $this->template = $template;
         $this->campaign = $campaign;
-        $this->user = $user;
+        $this->module = $module;
     }
 
     /**
@@ -141,7 +141,7 @@ class EmailTemplateParser
                 $reference = $this->getSurvey();
                 break;
             case 'contact':
-                $reference = $this->user;
+                $reference = $this->module;
                 break;
             default:
                 $GLOBALS['log']->warn(sprintf('Invalid bean when parsing (%s)', $moduleName));
