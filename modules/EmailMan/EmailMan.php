@@ -972,13 +972,18 @@ class EmailMan extends SugarBean
 
             //parse and replace bean variables.
             $macro_nv = array();
+            $focus_name = 'Contacts';
+            if ($module->module_dir == 'Accounts') {
+                $focus_name = 'Accounts';
+            }
 
-            require_once 'modules/EmailTemplates/EmailTemplateParser.php';
-            $template_data = (new EmailTemplateParser(
-                $this->current_emailtemplate,
-                $this->current_campaign,
-                $module
-            ))->parseVariables();
+
+            $template_data = $this->current_emailtemplate->parse_email_template(array('subject' => $this->current_emailtemplate->subject,
+                'body_html' => $this->current_emailtemplate->body_html,
+                'body' => $this->current_emailtemplate->body,
+                    ), $focus_name, $module, $macro_nv);
+
+            $template_data = $this->parseSurveyEmailTemplate($template_data, $module);
 
             //add email address to this list.
             $macro_nv['sugar_to_email_address'] = $module->email1;
@@ -1466,5 +1471,31 @@ class EmailMan extends SugarBean
         }
 
         return false;
+    }
+
+    /**
+     * @param array $templateData
+     * @param SugarBean $module
+     * @return array
+     */
+    private function parseSurveyEmailTemplate(array $templateData, SugarBean $module)
+    {
+        if ($this->current_campaign->campaign_type !== 'Survey') {
+            return $templateData;
+        }
+
+        /** @var Surveys $survey */
+        $survey = BeanFactory::getBean('Surveys', $this->current_campaign->survey_id);
+        $url = '';
+        if ($module->module_dir == 'Contacts') {
+            $url = $survey->getCampaignSurveyLink($module, $this->target_tracker_key);
+        }
+
+        foreach ($templateData as $key => $str) {
+            $str = str_replace('$surveys_survey_url_display', $url, $str);
+            $templateData[$key] = $this->current_emailtemplate->parse_template_bean($str, 'Surveys', $survey);
+        }
+
+        return $templateData;
     }
 }
