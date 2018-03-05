@@ -137,6 +137,10 @@ class Administration extends SugarBean {
             foreach ($oe->field_defs as $def) {
                 if (strpos($def, "mail_") !== false)
                     $this->settings[$def] = $oe->$def;
+
+                if (strpos($def, "smtp") !== false) {
+                  $this->settings[$def] = $oe->$def;
+                }
             }
         }
 
