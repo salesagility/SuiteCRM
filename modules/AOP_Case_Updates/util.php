@@ -130,23 +130,27 @@ function aop_parse_template($string, $bean_arr)
 
     foreach ($bean_arr as $bean_name => $bean_id) {
 
-        $focus = BeanFactory::getBean($bean_name, $bean_id);
+        if($focus = BeanFactory::getBean($bean_name, $bean_id)) {
 
-        if ($bean_name === 'Leads' || $bean_name === 'Prospects') {
-            $bean_name = 'Contacts';
-        }
-
-        foreach ($focus->field_defs as $key => $field_def) {
-            if (array_key_exists($field_def['type'], $typeMap)) {
-                $focus->field_defs[$key]['type'] = $typeMap[$field_def['type']];
+            if ($bean_name === 'Leads' || $bean_name === 'Prospects') {
+                $bean_name = 'Contacts';
             }
-        }
 
-        if (isset($this) && isset($this->module_dir) && $this->module_dir === 'EmailTemplates') {
-            $string = $this->parse_template_bean($string, $bean_name, $focus);
+            foreach ($focus->field_defs as $key => $field_def) {
+                if (array_key_exists($field_def['type'], $typeMap)) {
+                    $focus->field_defs[$key]['type'] = $typeMap[$field_def['type']];
+                }
+            }
+
+            if (isset($this) && isset($this->module_dir) && $this->module_dir === 'EmailTemplates') {
+                $string = $this->parse_template_bean($string, $bean_name, $focus);
+            } else {
+                $emailTemplate = new EmailTemplate();
+                $string = $emailTemplate->parse_template_bean($string, $bean_name, $focus);
+            }
         } else {
-            $emailTemplate = new EmailTemplate();
-            $string = $emailTemplate->parse_template_bean($string, $bean_name, $focus);
+            $GLOBALS['log']->fatal("No focus retrieved");
+            $GLOBALS['log']->debug("No focus retrieved, bean name was: $bean_name, ID: $bean_id");
         }
     }
 

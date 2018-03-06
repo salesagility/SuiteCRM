@@ -23,28 +23,30 @@
  */
 if(!defined('sugarEntry'))define('sugarEntry', true);
 
+include_once 'modules/Contacts/AOPContactUtils.php';
+
 class JAccountMissingException extends Exception {}
 
+require_once 'modules/AOP_Case_Updates/util.php';
+
+function url_exists($url)
+{
+    if (!$fp = curl_init($url)) return false;
+    return true;
+}
+
+
+if (!isAOPEnabled()) {
+    return;
+}
+global $sugar_config, $mod_strings;
+
+require_once('modules/Contacts/Contact.php');
+
+$bean = new Contact();
+$bean->retrieve($_REQUEST['record']);
+
 try {
-    require_once 'modules/AOP_Case_Updates/util.php';
-
-    function url_exists($url)
-    {
-        if (!$fp = curl_init($url)) return false;
-
-        return true;
-    }
-
-    if (!isAOPEnabled()) {
-        return;
-    }
-    global $sugar_config, $mod_strings;
-
-    require_once('modules/Contacts/Contact.php');
-
-    $bean = new Contact();
-    $bean->retrieve($_REQUEST['record']);
-
     if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_urls", $sugar_config['aop'])) {
         $portalURLs = array_unique($sugar_config['aop']['joomla_urls']);
         // disable only in the selected joomla portal...
@@ -72,18 +74,8 @@ try {
                             //throw new Exception('Contact has no portal account to this url');
                         }
 
-                        $multiplePortalSupportAvailable = false;
-                        $aopXML = $portalURL . '/administrator/components/com_advancedopenportal/advancedopenportal.xml';
-                        if (url_exists($aopXML)) {
-                            $aopv = file_get_contents($aopXML);
-                            if (preg_match('/\<version\>([^<]+)\<\/version\>/', $aopv, $matches)) {
-                                if (version_compare($matches[1], '2.0.1', '>')) {
-                                    $multiplePortalSupportAvailable = true;
-                                }
-                            }
-                        }
-
-                        if ($multiplePortalSupportAvailable) {
+                        if ($multiplePortalSupportAvailable = AOPContactUtils::isMultiplePortalSupportAvailable($portalURL)) {                        
+                        
                             if (!$jaList[0]->joomla_account_id) {
                                 throw new JAccountMissingException('Trying to disable a CRM User without related Joomla Portal Account (1)');
                             }
@@ -128,6 +120,16 @@ try {
         }
     } else {
         SugarApplication::appendErrorMessage($mod_strings['LBL_NO_JOOMLA_URL']);
+    }
+} catch(AOPContactUtilsException $e) {
+    $eCode = $e->getCode();
+    switch($eCode) {
+        case AOPContactUtilsException::UNABLE_READ_PORTAL_VERSION :
+            SugarApplication::appendErrorMessage($mod_strings['LBL_UNABLE_READ_PORTAL_VERSION'] . " ($portalURL)");
+            break;
+
+        default:
+            throw $e;
     }
 } catch (JAccountMissingException $e) {
     SugarApplication::appendErrorMessage($mod_strings['LBL_NO_RELATED_JACCOUNT']);

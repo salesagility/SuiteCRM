@@ -111,8 +111,10 @@ function caseUpdates(record){
 
 
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader("Content-length", params.length);
-    xmlhttp.setRequestHeader("Connection", "close");
+    // TODO: remove it everywhere else because it is a security vulnerability in the browser
+    //xmlhttp.setRequestHeader("Content-length", params.length);
+    //xmlhttp.setRequestHeader("Connection", "close");
+
 
     //When button is clicked
     xmlhttp.onreadystatechange = function() {

@@ -84,7 +84,18 @@ function installAOPHooks()
             'file' => 'modules/Contacts/updatePortal.php',
             'class' => 'updatePortal',
             'function' => 'updateUser',
+        ),        
+        //Contacts
+        array(
+            'module' => 'JAccount',
+            'hook' => 'after_save',
+            'order' => 1,
+            'description' => 'Update Portal',
+            'file' => 'modules/Contacts/updatePortal.php',
+            'class' => 'updatePortal',
+            'function' => 'updateUser',
         ),
+
         // Cases
         array(
             'module' => 'Cases',

@@ -75,6 +75,7 @@ if (!array_key_exists('aop', $cfg->config)) {
     $cfg->config['aop'] = array(
         'enable_aop' => 1,
         'enable_portal' => '',
+        'joomla_url' => '',
         'joomla_urls' => array(),
         'joomla_access_key' => '',
         'distribution_method' => '',
@@ -104,9 +105,11 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
                 preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
         }    
     }
+    $cfg->config['aop']['joomla_url'] = '';
+    
     $cfg->config['aop']['enable_aop'] = !empty($_REQUEST['enable_aop']);
     $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
-    $cfg->config['aop']['joomla_access_key'] = $_REQUEST['joomla_access_key'];
+    $cfg->config['aop']['joomla_access_key'] = isset($_REQUEST['joomla_access_key']) ? $_REQUEST['joomla_access_key'] : null;
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
     $cfg->config['aop']['distribution_user_id'] = $_REQUEST['distribution_user_id'];
     $cfg->config['aop']['distribution_options'] = $_REQUEST['distribution_options'];
@@ -126,11 +129,6 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->saveConfig();
     header('Location: index.php?module=Administration&action=index');
     exit();
-}
-
-if(isset($sugar_config['aop']['joomla_url']) && $sugar_config['aop']['joomla_url']) {
-    $cfg->config['aop']['joomla_url'] = '';
-    $cfg->config['aop']['joomla_urls'][] = $sugar_config['aop']['joomla_url'];
 }
 
 $distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];

@@ -23,38 +23,46 @@
  */
 if(!defined('sugarEntry'))define('sugarEntry', true);
 
+include_once 'modules/Contacts/AOPContactUtils.php';
+require_once 'modules/AOP_Case_Updates/util.php';
+
+function url_exists($url)
+{
+    if (!$fp = curl_init($url)) return false;
+
+    return true;
+}
+
+if (!isAOPEnabled()) {
+    return;
+}
+
+global $sugar_config, $mod_strings;
+
+require_once('modules/Contacts/Contact.php');
+
+$bean = new Contact();
+$bean->retrieve($_REQUEST['record']);
+
+
 try {
-    require_once 'modules/AOP_Case_Updates/util.php';
+    if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_urls", $sugar_config['aop'])) {
 
-    function url_exists($url) {
-        if (!$fp = curl_init($url)) return false;
-        return true;
-    }
-
-    if(!isAOPEnabled()){
-        return;
-    }
-    global $sugar_config, $mod_strings;
-
-    require_once('modules/Contacts/Contact.php');
-
-    $bean = new Contact();
-    $bean->retrieve($_REQUEST['record']);
-
-
-    if(array_key_exists("aop",$sugar_config) && array_key_exists("joomla_urls",$sugar_config['aop'])){
         $portalURLs = array_unique($sugar_config['aop']['joomla_urls']);
         // create only in the selected joomla portal...
-        if(!isset($_REQUEST['selected_portal_url']) || !$_REQUEST['selected_portal_url']) {
+        if (!isset($_REQUEST['selected_portal_url']) || !$_REQUEST['selected_portal_url']) {
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_NO_PORTAL_SELECTED']);
         } else {
             foreach ($portalURLs as $portalURL) {
-                if($portalURL) {
+                if ($portalURL) {
                     if ($_REQUEST['selected_portal_url'] == $portalURL) {
                         $jaList = BeanFactory::getBean('JAccount')->get_full_list('', "contact_id = '{$bean->id}' AND portal_url = '{$_REQUEST['selected_portal_url']}'", false, 1);
-                        if(isset($jaList[0])) {
+                        if (isset($jaList[0])) {
                             $ja = $jaList[0];
-                            $ja->deleted = 0;
+                            $ja->mark_undeleted($ja->id);
+                            // todo: test somehow the marking as undeleted was success? ($ja->deleted = 0? or retrieve again..?)
+                            //$ja->deleted = 0;
+
                         } else {
                             $ja = BeanFactory::getBean('JAccount');
                         }
@@ -63,20 +71,10 @@ try {
                         $ja->email1 = $bean->email1;
                         $ja->contact_id = $bean->id;
                         $ja->portal_url = $_REQUEST['selected_portal_url'];
+                        $ja->deleted = 0;
                         $ja->save();
 
-                        $multiplePortalSupportAvailable = false;
-                        $aopXML = $portalURL . '/administrator/components/com_advancedopenportal/advancedopenportal.xml';
-                        if (url_exists($aopXML)) {
-                            $aopv = file_get_contents($aopXML);
-                            if (preg_match('/\<version\>([^<]+)\<\/version\>/', $aopv, $matches)) {
-                                if (version_compare($matches[1], '2.0.1', '>')) {
-                                    $multiplePortalSupportAvailable = true;
-                                }
-                            }
-                        }
-
-                        if ($multiplePortalSupportAvailable) {
+                        if ($multiplePortalSupportAvailable = AOPContactUtils::isMultiplePortalSupportAvailable($portalURL)) {
                             $url = $portalURL . '/index.php?m=JAccount&option=com_advancedopenportal&task=create&sug=' . $ja->id . '::' . $_REQUEST['record'];
                         } else {
                             if (count($portalURLs) > 1) {
@@ -93,14 +91,20 @@ try {
 
                         $wbsv = file_get_contents($url);
                         $res = json_decode($wbsv);
-                        if(json_last_error() != JSON_ERROR_NONE) {
+                        if (json_last_error() != JSON_ERROR_NONE) {
                             $json_msg = json_last_error();
-                            if($json_msg) {
+                            if ($json_msg) {
                                 $json_msg = " (json parser error: $json_msg)";
                             }
-                            throw new Exception("Incorrect response from Joomla Portal Component$json_msg: ".$wbsv);
+                            throw new Exception("Incorrect response from Joomla Portal Component $json_msg: " . $wbsv);
                         }
+                        
                         // append portal to messages because since multiple portal possible the url doesn't make sense
+                        
+                        if(!is_object($res)) {
+                            trigger_error("Results should be an object, " . gettype($res) . " given");
+                        }
+
                         if (!isset($res->success) || !$res->success) {
                             $ja->mark_deleted($ja->id);
                             $msg = $res->error ? $res->error : ($mod_strings['LBL_CREATE_PORTAL_USER_FAILED'] . " ($portalURL)");
@@ -116,6 +120,16 @@ try {
                         
     } else {
         SugarApplication::appendErrorMessage($mod_strings['LBL_NO_JOOMLA_URL']);
+    }
+} catch(AOPContactUtilsException $e) {
+    $eCode = $e->getCode();
+    switch($eCode) {
+        case AOPContactUtilsException::UNABLE_READ_PORTAL_VERSION :
+            SugarApplication::appendErrorMessage($mod_strings['LBL_UNABLE_READ_PORTAL_VERSION'] . " ($portalURL)");
+            break;
+
+        default:
+            throw $e;
     }
 } catch(JAccountInvalidUserDataException $e) {
     SugarApplication::appendErrorMessage($mod_strings['LBL_INVALID_USER_DATA']);

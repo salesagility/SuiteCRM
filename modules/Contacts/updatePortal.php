@@ -45,35 +45,75 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'modules/AOP_Case_Updates/util.php';
 
 class updatePortal
-{
+{    
+    
+    private static $pwdEmailSent = false;
+
     /**
-     * @param Contact $bean
+     * @param $bean
+     * @return bool
+     * @throws JAccountException
+
      */
     public function updateUser($bean)
     {
-        if (!isAOPEnabled()) {
-            return;
+        if(self::$pwdEmailSent) {
+            $GLOBALS['log']->fatal('Password email already sent');
+            return false;
+
         }
-        if (isset($bean->joomla_account_access) && $bean->joomla_account_access !== '') {
-            global $sugar_config;
-            $aop_config = $sugar_config['aop'];
-
-            $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
-
-            $search = array("\$joomla_pass", "\$portal_address");
-            // TODO: check which joomla url need for us to send because since it's multiple it does not make sense
-            $replace = array($bean->joomla_account_access, implode(', ', $aop_config['joomla_urls']));
+        
+        if (
+            (!isset($bean->joomla_account_access) || !$bean->joomla_account_access) &&
+            isset($_REQUEST['rest_data']) && $_REQUEST['rest_data']
+        ) {
 
 
-            $object_arr['Contacts'] = $bean->id;
-            $body_html = aop_parse_template($template->body_html, $object_arr);
-            $body_html = str_replace($search, $replace, $body_html);
+            if($jAccount = JAccount::getRequestedJAccount($_REQUEST)) {
+                $selectedPortalUrl = $jAccount->portal_url;
+                $bean->joomla_account_access = $jAccount->joomla_account_access;
+            } else {
+                $GLOBALS['log']->fatal("Error occured when trying to get REST requested JAccount (check name-value list or request data)");
+            }
 
-            $body_plain = aop_parse_template($template->body, $object_arr);
-            $body_plain = str_replace($search, $replace, $body_plain);
+            if (!isAOPEnabled()) {
+                $GLOBALS['log']->fatal("AOP is not enabled");
+                return false;
+            }
 
-            $this->sendEmail($bean->email1, $template->subject, $body_html, $body_plain, $bean);
+
+            if (isset($bean->joomla_account_access) && $bean->joomla_account_access !== '') {
+                global $sugar_config;
+                $aop_config = $sugar_config['aop'];
+
+                $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
+
+                $search = array("\$joomla_pass", "\$portal_address");
+                // TODO: check which joomla url need for us to send because since it's multiple it does not make sense
+                $replace = array($bean->joomla_account_access, isset($selectedPortalUrl) ? $selectedPortalUrl : $aop_config['joomla_urls']);
+
+                $object_arr['Contacts'] = $bean->id;
+                $body_html = aop_parse_template($template->body_html, $object_arr);
+                $body_html = str_replace($search, $replace, $body_html);
+
+                $body_plain = aop_parse_template($template->body, $object_arr);
+                $body_plain = str_replace($search, $replace, $body_plain);
+
+                try {
+                    $ok = $this->sendEmail($bean->email1, $template->subject, $body_html, $body_plain, $bean);
+                    if($ok) {
+                        self::$pwdEmailSent = true;
+                    }
+                } catch (phpmailerException $e) {
+                    $ok = false;
+                    $GLOBALS['log']->fatal("phpmailer exception: ".$e->getMessage());
+                }
+                return $ok;
+            }
+
         }
+        
+        return true;
     }
 
     /**
@@ -82,6 +122,8 @@ class updatePortal
      * @param $emailBody
      * @param $altEmailBody
      * @param SugarBean|null $relatedBean
+     * @return bool
+     * @throws phpmailerException
      */
     public function sendEmail($emailTo, $emailSubject, $emailBody, $altEmailBody, SugarBean $relatedBean = null)
     {
@@ -104,7 +146,9 @@ class updatePortal
         $mail->addAddress($emailTo);
 
         //now create email
-        if (@$mail->send()) {
+        $ok = @$mail->send();
+        if ($ok) {
+
             $emailObj->to_addrs_names = $emailTo;
             $emailObj->type = 'out';
             $emailObj->deleted = '0';
@@ -122,5 +166,7 @@ class updatePortal
             $emailObj->status = 'sent';
             $emailObj->save();
         }
+
+        return $ok;
     }
 }

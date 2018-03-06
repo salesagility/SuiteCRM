@@ -118,6 +118,13 @@
                     </div>
                     {/if}
                 {/foreach}
+                
+                {if $config.joomla_url}
+                    <div class="jurl">
+                        <input type='text' name='joomla_urls[]' value='{$config.joomla_url}' ><input type="button" value="-" onclick="$(this).closest('.jurl').remove();"><br>
+                    </div>
+                {/if}
+
                 </div>
                 <input type="button" value="+" onclick="$('#jurls').append($('#jurltpl').html());">
 

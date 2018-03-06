@@ -221,6 +221,7 @@ $mod_strings = array(
 
     'LBL_INVALID_USER_DATA' => 'Trying to create a portal user without name and/or any email address. Please check the contact details',
     'LBL_NO_RELATED_JACCOUNT' => 'Trying to disable a CRM User without related Joomla Portal Account',
+    'LBL_UNABLE_READ_PORTAL_VERSION' => 'Unable to read AOP version from portal',
 
     'LBL_AOS_CONTRACTS' => 'Contracts',
     'LBL_AOS_INVOICES' => 'Invoices',

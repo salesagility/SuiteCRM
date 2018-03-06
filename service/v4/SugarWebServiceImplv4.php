@@ -168,7 +168,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             $cur_id = $current_user->getPreference('currency');
             $nameValueArray['user_currency_id'] = self::$helperObject->get_name_value('user_currency_id', $cur_id);
             $nameValueArray['user_is_admin'] = self::$helperObject->get_name_value('user_is_admin', is_admin($current_user));
-            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team );
+            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', isset($current_user->default_team) ? $current_user->default_team : null );
             $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef') );
             $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef') );
 
@@ -177,8 +177,9 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
             $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
 
-            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page'] );
-            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel'] );
+            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', isset($sugar_config['wl_list_max_entries_per_page']) ? $sugar_config['wl_list_max_entries_per_page'] : null );
+            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', isset($sugar_config['wl_list_max_entries_per_subpanel']) ? $sugar_config['wl_list_max_entries_per_subpanel'] : null );
+
 
 
             $currencyObject = new Currency();
