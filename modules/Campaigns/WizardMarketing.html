@@ -1154,38 +1154,51 @@
 				if(oe_stored_options[mailbox.value]) {
 					var focusOe = oe_stored_options[mailbox.value];
 					// from name
-                                        var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
+                                        
+                                        if(!fn.value) {
+                                            var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
                                                 focusOe.from_name ? focusOe.from_name : (
                                                     focusOe.name ? focusOe.name : ''
                                                 ));
-					if(fromName && fromName != "")
-						fn.value = fromName;
-					else
-						fn.value = '';
+                                            if (fromName && fromName != "") {
+                                                fn.value = fromName;
+                                            } else {
+                                                fn.value = '';
+                                            }
+                                        }
 
 					// from addr
-                                        var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
+                                        if(!fa.value) {
+                                            var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
                                                 focusOe.from_addr ? focusOe.from_addr : (
                                                     focusOe.mail_smtpuser ? focusOe.mail_smtpuser : ''
                                                 ));
-					if(fromAddr && fromAddr != "")
-						fa.value = fromAddr;
-					else
-						fa.value = '';
+                                            if (fromAddr && fromAddr != "") {
+                                                fa.value = fromAddr;
+                                            } else {
+                                                fa.value = '';
+                                            }
+                                        }
                                 }
 				if(ie_stored_options[mailbox.value]) {
 					var focusIe = ie_stored_options[mailbox.value];
 					// reply name
-					if(focusIe.from_name && focusIe.from_name != "")
-						rn.value = focusIe.from_name;
-					else
-						rn.value = '';
+                                        if (!rn.value) {
+                                            if (focusIe.from_name && focusIe.from_name != "") {
+                                                rn.value = focusIe.from_name;
+                                            } else {
+                                                rn.value = '';
+                                            }
+                                        }
 
-					// reply add
-					if(focusIe.from_addr && focusIe.from_addr != "")
-						ra.value = focusIe.from_addr;
-					else
-						ra.value = '';
+                                        // reply add
+                                        if (!ra.value) {
+                                            if(focusIe.from_addr && focusIe.from_addr != "") {
+                                                ra.value = focusIe.from_addr;
+                                            } else {
+                                                ra.value = '';
+                                            }
+                                        }
 				}
 			} else {
 				fn.value = '';
