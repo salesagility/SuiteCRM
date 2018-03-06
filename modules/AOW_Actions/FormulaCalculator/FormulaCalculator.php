@@ -1,12 +1,11 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,34 +38,13 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Class FormulaNode
- */
-class FormulaNode
-{
-    public $text;
-    public $level;
-    public $parent;
-    public $children = array();
-    public $evaluatedValue;
-
-    public function __construct($text, $level, $parent = null)
-    {
-        $this->text = $text;
-        $this->level = $level;
-        $this->parent = $parent;
-    }
-
-    public function addChild($childNode)
-    {
-        $this->children [] = $childNode;
-    }
-
-    public function isLeaf()
-    {
-        return count($this->children) === 0;
-    }
-}
+require_once 'modules/Configurator/Configurator.php';
+require_once('modules/AOW_Actions/FormulaCalculator/FormulaCalculatorPluginLoader.php');
+require_once('lib/SuiteCRM/Enumerator/ExceptionCode.php');
+require_once('lib/SuiteCRM/Exception/Exception.php');
+require_once('modules/AOW_Actions/FormulaCalculator/Exception/FormulaCalculatorException.php');
+require_once('modules/AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorBasePlugin.php');
+require_once('modules/AOW_Actions/FormulaCalculator/Plugins/FormulaCalculatorPluginInterface.php');
 
 /**
  * Class FormulaCalculator
@@ -78,21 +56,34 @@ class FormulaCalculator
     const PARAMETER_SEPARATOR_TERMINAL = ";";
     const CONFIGURATOR_NAME = "SweeterCalc";
 
+    /** @var  array $parameters */
     private $parameters;
+
+    /** @var  array $relationParameters */
     private $relationParameters;
+
+    /** @var  array $currentModule */
     private $currentModule;
+
+    /** @var  string $creatorUserId */
     private $creatorUserId;
+
+    /** @var \Configurator $configurator */
     private $configurator;
+
+    /** @var bool $debugEnabled */
     private $debugEnabled;
+
+    /** @var string $debugFileName */
     private $debugFileName;
 
     /**
      * FormulaCalculator constructor.
      *
-     * @param $parameters
-     * @param $relationParameters
-     * @param $currentModule
-     * @param $creatorUserId
+     * @param array $parameters
+     * @param array $relationParameters
+     * @param array $currentModule
+     * @param string $creatorUserId
      */
     public function __construct($parameters, $relationParameters, $currentModule, $creatorUserId)
     {
@@ -101,19 +92,23 @@ class FormulaCalculator
         $this->currentModule = $currentModule;
         $this->creatorUserId = $creatorUserId;
 
-        require_once 'modules/Configurator/Configurator.php';
         $this->configurator = new Configurator();
         $this->configurator->loadConfig();
 
         $this->debugEnabled = $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugEnabled'] == 1;
-        $this->debugFileName = isset($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName']) ? $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName'] : 'SweeterCalc.log';
+        $this->debugFileName =
+            isset($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName']) ?
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName'] : 'SweeterCalc.log';
+
+        FormulaCalculatorPluginLoader::initialize();
     }
 
     /**
-     * @param $formula
+     * @param string $formula
+     *
+     * @throws \Exception
      *
      * @return mixed|string
-     * @throws Exception
      */
     public function calculateFormula($formula)
     {
@@ -141,7 +136,7 @@ class FormulaCalculator
     }
 
     /**
-     * @param $content
+     * @param string $content
      */
     private function log($content)
     {
@@ -168,15 +163,14 @@ class FormulaCalculator
     }
 
     /**
-     * @param $content
-     * @param $level
-     * @param $node
+     * @param string $content
+     * @param int $level
+     * @param FormulaNode $node
      */
     private function findLexicalElementsOnLevel($content, $level, &$node)
     {
         $characters = preg_split('//u', $content, -1, PREG_SPLIT_NO_EMPTY);
         $terminalLevel = 0;
-        $hasChild = false;
 
         $currentText = "";
         for ($i = 0; $i < count($characters); $i++) {
@@ -199,18 +193,15 @@ class FormulaCalculator
                     $newLevel = $level + 1;
                     $newNode = new FormulaNode($currentText, $newLevel, $node);
                     $node->addChild($newNode);
-
                     $this->findLexicalElementsOnLevel(mb_substr($currentText, 1, -1), $newLevel, $newNode);
-
                     $currentText = "";
-                    $hasChild = true;
                 }
             }
         }
     }
 
     /**
-     * @param $node
+     * @param \FormulaNode $node
      *
      * @return int|mixed|string
      */
@@ -244,10 +235,12 @@ class FormulaCalculator
             foreach ($childItems as $childItem) {
                 $pos = strpos($evaluatedValue, $childItem['value']);
                 if ($pos !== false) {
-                    $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: " . $evaluatedValue);
+                    $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: "
+                        . $evaluatedValue);
                     $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos,
                         strlen($childItem['value']));
-                    $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: " . $evaluatedValue);
+                    $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: "
+                        . $evaluatedValue);
                 }
             }
 
@@ -259,11 +252,57 @@ class FormulaCalculator
 
     /**
      * @param $text
+     *
+     * @return string|null
+     */
+    protected function getFunctionName($text)
+    {
+        $answer = null;
+
+        $pattern = "#^" . self::START_TERMINAL . "([a-zA-Z]*)\(" . "#";
+        if (preg_match($pattern, $text, $m)) {
+            $answer = $m[1];
+        }
+
+        return $answer;
+    }
+
+    /**
+     * @param string $text
      * @param array $childItems
      *
      * @return string
      */
     private function evaluateNode($text, $childItems = array())
+    {
+        $answer = "";
+        $functionName = $this->getFunctionName($text);
+        $plugin = null;
+        try {
+            $plugin = FormulaCalculatorPluginLoader::getPluginInstanceForFunction($functionName);
+            $params = $this->evaluateFunctionParams($functionName, $text, $childItems);
+            $answer = $plugin::getResult($params);
+        } catch (\Exception $e) {
+            $this->log($e->getMessage());
+        }
+
+        /* Do this until evaluateNodeOld exists */
+        if (!$plugin) {
+            $answer = $this->evaluateNodeOld($text, $childItems);
+        }
+
+        return $answer;
+    }
+
+    /**
+     * @todo: move out calculations to external classes
+     *
+     * @param string $text
+     * @param array $childItems
+     *
+     * @return string
+     */
+    private function evaluateNodeOld($text, $childItems = array())
     {
         if (count($childItems) == 0) {
             $this->log("Evaluating node: " . $text . " with no children.");
@@ -355,20 +394,8 @@ class FormulaCalculator
         }
 
         // Mathematical calculations
-        if (($params = $this->evaluateFunctionParams("add", $text, $childItems)) != null) {
-            return $this->parseFloat($params[0]) + $this->parseFloat($params[1]);
-        }
-
-        if (($params = $this->evaluateFunctionParams("subtract", $text, $childItems)) != null) {
-            return $this->parseFloat($params[0]) - $this->parseFloat($params[1]);
-        }
-
         if (($params = $this->evaluateFunctionParams("multiply", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) * $this->parseFloat($params[1]);
-        }
-
-        if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null) {
-            return $this->parseFloat($params[0]) / $this->parseFloat($params[1]);
         }
 
         if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null) {
@@ -547,8 +574,10 @@ class FormulaCalculator
                 $this->log("Single expression parameter not found, trying to parse multi expression parameter...");
                 foreach ($childItems as $childItem) {
                     if (mb_strpos($paramText, $childItem['value']) !== false) {
-                        $this->log("Found multi expression part '" . $childItem['value'] . "' in parameter '$paramText'");
-                        $this->log("Replacing parameter part '" . $childItem['value'] . "' with value '" . $childItem['evaluatedValue'] . "'");
+                        $this->log("Found multi expression part '" . $childItem['value']
+                            . "' in parameter '$paramText'");
+                        $this->log("Replacing parameter part '" . $childItem['value'] . "' with value '"
+                            . $childItem['evaluatedValue'] . "'");
 
                         $paramText = str_replace($childItem['value'], $childItem['evaluatedValue'], $paramText);
                         $replaced = true;
@@ -644,10 +673,10 @@ class FormulaCalculator
     }
 
     /**
-     * @param $format
-     * @param $datestring
-     * @param $ammount
-     * @param $type
+     * @param      $format
+     * @param      $datestring
+     * @param      $ammount
+     * @param      $type
      * @param bool $isTime
      * @param bool $isAdd
      *
@@ -757,7 +786,8 @@ class FormulaCalculator
                 return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
 
             case 'DailyCounter':
-                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date']
+                    ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'];
@@ -765,7 +795,8 @@ class FormulaCalculator
                     return 0;
                 }
             case 'DailyCounterPerUser':
-                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date']
+                    ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
@@ -773,7 +804,8 @@ class FormulaCalculator
                     return 0;
                 }
             case 'DailyCounterPerModule':
-                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date']
+                    ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
@@ -781,7 +813,8 @@ class FormulaCalculator
                     return 0;
                 }
             case 'DailyCounterPerUserPerModule':
-                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date']
+                    ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
@@ -789,6 +822,8 @@ class FormulaCalculator
                     return 0;
                 }
         }
+
+        return null;
     }
 
     /**
@@ -800,32 +835,44 @@ class FormulaCalculator
     {
         switch ($globalVariableType) {
             case 'GlobalCounter':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText] =
+                    $value;
                 break;
             case 'GlobalCounterPerUser':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText] =
+                    $value;
                 break;
             case 'GlobalCounterPerModule':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerModule'][$this->currentModule][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerModule'][$this->currentModule][$parameterText] =
+                    $value;
                 break;
             case 'GlobalCounterPerUserPerModule':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText] =
+                    $value;
                 break;
             case 'DailyCounter':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date'] =
+                    date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'] =
+                    $value;
                 break;
             case 'DailyCounterPerUser':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] =
+                    date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'] =
+                    $value;
                 break;
             case 'DailyCounterPerModule':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] =
+                    date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'] =
+                    $value;
                 break;
             case 'DailyCounterPerUserPerModule':
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] =
+                    date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'] =
+                    $value;
                 break;
         }
 
