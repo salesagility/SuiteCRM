@@ -75,7 +75,7 @@ if (!array_key_exists('aop', $cfg->config)) {
     $cfg->config['aop'] = array(
         'enable_aop' => 1,
         'enable_portal' => '',
-        'joomla_url' => '',
+        'joomla_urls' => array(),
         'joomla_access_key' => '',
         'distribution_method' => '',
         'distribution_options' => '',
@@ -94,12 +94,15 @@ if (!array_key_exists('enable_aop', $cfg->config['aop'])) {
     $cfg->config['aop']['enable_aop'] = 1;
 }
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-    $joomlaUrl = strtolower(trim($_REQUEST['joomla_url']));
-    if (!empty($joomlaUrl)) {
-        $cfg->config['aop']['joomla_url'] =
-            preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
-    } else {
-        $cfg->config['aop']['joomla_url'] = '';
+    foreach($sugar_config['aop']['joomla_urls'] as $k => $portalUrl) {
+        $cfg->config['aop']['joomla_urls'][$k] = '';
+    }
+    foreach($_REQUEST['joomla_urls'] as $jurl) {
+        $joomlaUrl = strtolower(trim($jurl));
+        if (!empty($joomlaUrl)) {
+            $cfg->config['aop']['joomla_urls'][] =
+                preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
+        }    
     }
     $cfg->config['aop']['enable_aop'] = !empty($_REQUEST['enable_aop']);
     $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
@@ -124,6 +127,12 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     header('Location: index.php?module=Administration&action=index');
     exit();
 }
+
+if(isset($sugar_config['aop']['joomla_url']) && $sugar_config['aop']['joomla_url']) {
+    $cfg->config['aop']['joomla_url'] = '';
+    $cfg->config['aop']['joomla_urls'][] = $sugar_config['aop']['joomla_url'];
+}
+
 $distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];
 unset($distribStrings['AOPDefault']);
 $distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['aop']['distribution_method']);

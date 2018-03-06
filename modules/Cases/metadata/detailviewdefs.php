@@ -148,6 +148,16 @@ array (
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
           ),
         ),
+                    
+          8 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'aop_creator_portal',
+                          'label' => 'LBL_CREATOR_PORTAL',
+                      ),
+              ),
+
       ),
       'LBL_AOP_CASE_UPDATES' => 
       array (

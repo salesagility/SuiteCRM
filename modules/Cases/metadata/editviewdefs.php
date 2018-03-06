@@ -173,7 +173,16 @@ array (
         9 =>
         array (
           0 => 'assigned_user_name',
-        ),
+        ),          
+          10 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'aop_creator_portal',
+                          'label' => 'LBL_CREATOR_PORTAL',
+                      ),
+              ),
+
       ),
     ),
   ),

@@ -76,7 +76,7 @@ array (
           ),
           'AOP_CREATE' => 
           array (
-            'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
+            'customCode' => '{if $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\'; return false;" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -85,16 +85,16 @@ array (
               array (
                 'title' => '{$MOD.LBL_CREATE_PORTAL_USER}',
                 'class' => 'button',
-                'onclick' => 'this.form.action.value=\'createPortalUser\';',
+                'onclick' => 'this.form.action.value=\'createPortalUser\'; return false;',
                 'name' => 'buttonCreatePortalUser',
                 'id' => 'createPortalUser_button',
               ),
-              'template' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              'template' => '{if $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
             ),
           ),
           'AOP_DISABLE' => 
           array (
-            'customCode' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\';" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
+            'customCode' => '{if $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\'; return false;" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -103,16 +103,16 @@ array (
               array (
                 'title' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
                 'class' => 'button',
-                'onclick' => 'this.form.action.value=\'disablePortalUser\';',
+                'onclick' => 'this.form.action.value=\'disablePortalUser\'; return false;',
                 'name' => 'buttonDisablePortalUser',
                 'id' => 'disablePortalUser_button',
               ),
-              'template' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              'template' => '{if $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
             ),
           ),
           'AOP_ENABLE' => 
           array (
-            'customCode' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\';" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
+            'customCode' => '{if $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\'; return false;" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -121,11 +121,11 @@ array (
               array (
                 'title' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
                 'class' => 'button',
-                'onclick' => 'this.form.action.value=\'enablePortalUser\';',
-                'name' => 'buttonENablePortalUser',
+                'onclick' => 'this.form.action.value=\'enablePortalUser\'; return false;',
+                'name' => 'buttonEnablePortalUser',
                 'id' => 'enablePortalUser_button',
               ),
-              'template' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              'template' => '{if $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
             ),
           ),
         ),
@@ -150,6 +150,7 @@ array (
         array (
           'file' => 'modules/Leads/Lead.js',
         ),
+          1 => array('file' => 'modules/Contacts/ContactsDetailView.js'),
       ),
       'useTabs' => true,
       'tabDefs' => 

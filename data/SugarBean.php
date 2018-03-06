@@ -2301,6 +2301,7 @@ class SugarBean
      * This method only works for subclasses that implement the same variable names.
      * This method uses the presence of an id field that is not null to signify and update.
      * The id field should not be set otherwise.
+     * Return saved bean ID
      *
      * @param bool $check_notify Optional, default false, if set to true assignee of the record is notified via email.
      * @return string ID

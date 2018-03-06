@@ -658,6 +658,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'importable' => 'false',
                     'studio' => 'true',
                 ),
+            
             'portal_account_disabled' =>
                 array(
                     'name' => 'portal_account_disabled',

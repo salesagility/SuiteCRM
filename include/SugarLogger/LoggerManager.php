@@ -95,6 +95,27 @@ class LoggerManager
  	    $message
  	    )
  	{
+                global $sugar_config;
+
+                // show calls stack trace
+
+                if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace']) {
+                        try {
+                                throw new Exception();
+                        } catch (Exception $e) {
+                                $trace = "\n" . $e->getTraceAsString() . "\n";
+                                if(is_string($message)) {
+                                        $message .= $trace;
+                                } else {
+                                        if(is_array($message)) {
+                                                foreach($message as &$msg) {
+                                                        $msg .= $trace;
+                                                }
+                                        }
+                                }
+                        }
+                }
+
         if ( !isset(self::$_levelMapping[$method]) )
             $method = $this->_level;
  		//if the method is a direct match to our level let's let it through this allows for custom levels

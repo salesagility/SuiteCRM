@@ -2854,6 +2854,8 @@ $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above t
 
 
 //aop
+$app_list_strings['moduleList']['JAccount'] = 'JAccount';
+
 $app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_state_dom'] =
     array(

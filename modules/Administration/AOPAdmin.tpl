@@ -62,7 +62,7 @@
                     $('#enable_portal_row').show();
                 }else{
                     $('#enable_portal').attr('checked', false);
-                    removeFromValidate('ConfigureSettings','joomla_url');
+                    removeFromValidate('ConfigureSettings','joomla_urls');
                     $('#email_settings').hide();
                     $('#distribution_settings').hide();
                     $('#enable_portal_row').hide();
@@ -72,11 +72,12 @@
             $('#enable_aop').change();
             $('#enable_portal').change(function (){
                 if($('#enable_portal').is(":checked") && $('#enable_aop').is(":checked")){
-                    addToValidate('ConfigureSettings','joomla_url','text',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
-                    $('#joomla_url_row').show();
+                    // TODO: check is multiple validation type correct for us and do we need the validation here?
+                    addToValidate('ConfigureSettings','joomla_urls','multiple',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
+                    $('#joomla_urls_row').show();
                 }else{
-                    removeFromValidate('ConfigureSettings','joomla_url');
-                    $('#joomla_url_row').hide();
+                    removeFromValidate('ConfigureSettings','joomla_urls');
+                    $('#joomla_urls_row').hide();
                 }
             });
             $('#enable_portal').change();
@@ -101,10 +102,25 @@
             </td>
 
         </tr>
-        <tr id='joomla_url_row'>
+        <tr id='joomla_urls_row'>
             <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
             <td  >
-                <input type='text' name='joomla_url' value='{$config.joomla_url}' >
+                <div id="jurltpl" style="display: none;">
+                    <div class="jurl">
+                        <input type='text' name='joomla_urls[]' value='' ><input type="button" value="-" onclick="$(this).closest('.jurl').remove();"><br>
+                    </div>
+                </div>
+                <div id="jurls">
+                {foreach from=$config.joomla_urls  item=jurl}
+                    {if $jurl}
+                    <div class="jurl">
+                        <input type='text' name='joomla_urls[]' value='{$jurl}' ><input type="button" value="-" onclick="$(this).closest('.jurl').remove();"><br>
+                    </div>
+                    {/if}
+                {/foreach}
+                </div>
+                <input type="button" value="+" onclick="$('#jurls').append($('#jurltpl').html());">
+
             </td>
 
         </tr>

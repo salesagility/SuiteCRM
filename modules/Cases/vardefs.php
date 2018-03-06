@@ -357,7 +357,15 @@ $dictionary['Case'] = array(
             'source' => 'non-db',
             'id_name' => 'case_id',
             'vname' => 'LBL_AOP_CASE_EVENTS',
-        ),
+        ),        
+        'aop_creator_portal' =>
+            array (
+                'name' => 'aop_creator_portal',
+                'type' => 'url',
+                'len' => 255,
+                'required' => false,
+            ),
+
     ),
     'indices' => array(
         array('name' => 'case_number', 'type' => 'index', 'fields' => array('case_number')),

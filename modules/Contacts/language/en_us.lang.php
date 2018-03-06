@@ -214,6 +214,13 @@ $mod_strings = array(
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
     'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
+    
+    'LBL_ERROR_NO_PORTAL_SELECTED' => 'There isn\'t any portal selected',
+    'LBL_PLEASE_UPDATE_DEPRECATED_PORTAL_ERROR' => 'More than one portal URLs are set but multiple portal is not supported, please update portal component on site: ',
+    'LBL_PLEASE_UPDATE_DEPRECATED_PORTAL_WARNING' => 'Portal component is deprecated, please update portal component on site: ',
+
+    'LBL_INVALID_USER_DATA' => 'Trying to create a portal user without name and/or any email address. Please check the contact details',
+    'LBL_NO_RELATED_JACCOUNT' => 'Trying to disable a CRM User without related Joomla Portal Account',
 
     'LBL_AOS_CONTRACTS' => 'Contracts',
     'LBL_AOS_INVOICES' => 'Invoices',

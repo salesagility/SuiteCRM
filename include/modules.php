@@ -370,6 +370,10 @@ $beanList['AOK_KnowledgeBase'] = 'AOK_KnowledgeBase';
 $beanFiles['AOK_KnowledgeBase'] = 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php';
 $moduleList[] = 'AOK_KnowledgeBase';
 
+$beanList['JAccount'] = 'JAccount';
+$beanFiles['JAccount'] = 'modules/JAccount/JAccount.php';
+$moduleList[] = 'JAccount';
+
 $beanList['Reminders'] = 'Reminder';
 $beanFiles['Reminder'] = 'modules/Reminders/Reminder.php';
 $modInvisList[] = 'Reminders';
@@ -408,6 +412,10 @@ $beanFiles['AOP_Case_Updates'] = 'modules/AOP_Case_Updates/AOP_Case_Updates.php'
 $modules_exempt_from_availability_check['AOP_Case_Updates'] = 'AOP_Case_Updates';
 $report_include_modules['AOP_Case_Updates'] = 'AOP_Case_Updates';
 $modInvisList[] = 'AOP_Case_Updates';
+
+$modules_exempt_from_availability_check['JAccount'] = 'JAccount';
+$report_include_modules['JAccount'] = 'JAccount';
+$modInvisList[] = 'JAccount';
 
 $beanList['AOR_Reports'] = 'AOR_Report';
 $beanFiles['AOR_Report'] = 'modules/AOR_Reports/AOR_Report.php';

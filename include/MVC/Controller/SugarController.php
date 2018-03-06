@@ -385,7 +385,7 @@ class SugarController
 
     protected function showException(Exception $e)
     {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+        $GLOBALS['log']->fatal('Uncaught ' . get_class($e) . ' in Controller: ' . $e->getMessage() . ' (' . $e->getCode() . ')' . "\ntrace info:\n" . $e->getTraceAsString());
         $GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
         if ($prev = $e->getPrevious()) {
             $GLOBALS['log']->fatal("Previous:\n");
