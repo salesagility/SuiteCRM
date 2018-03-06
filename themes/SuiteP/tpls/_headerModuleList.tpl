@@ -802,28 +802,30 @@
                 </div>
                 
                 <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
-                {if is_array($recentRecords) && count($recentRecords) > 0}
+                    {if is_array($recentRecords) && count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
-                {/if}
+                    {/if}
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$recentRecords item=item name=lastViewed}
-                            {if $smarty.foreach.lastViewed.index < 5}
-                            <div class="recently_viewed_link_container_sidebar">
-                                {if $item.module_name != 'Emails' && $item.module_name != 'InboundEmail' && $item.module_name != 'EmailAddresses'}<!--Check to ensure that recently viewed emails or email addresses are not displayed in the recently viewed panel.-->
-                                <li class="recentlinks" role="presentation">
-                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
-                                        <span>{$item.item_summary_short}</span>
-                                    </a>
-                                </li>
+                            {if $item.module_name != 'Emails' && $item.module_name != 'InboundEmail' && $item.module_name != 'EmailAddresses'}<!--Check to ensure that recently viewed emails or email addresses are not displayed in the recently viewed panel.-->
+                                {if $smarty.foreach.lastViewed.index < 5}
+                                    <div class="recently_viewed_link_container_sidebar">
+                                        <li class="recentlinks" role="presentation">
+                                            <a title="{$item.module_name}"
+                                               accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}"
+                                               class="recent-links-detail">
+                                                <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                                <span>{$item.item_summary_short}</span>
+                                            </a>
+                                        </li>
+                                    </div>
                                 {/if}
-                            </div>
                             {/if}
                         {/foreach}
                     </ul>
                 </div>
-     
-                <div id="favoritesSidebar" class="favoritesSidebar">
+                 <div id="favoritesSidebar" class="favoritesSidebar">
                 {if is_array($favoriteRecords) && count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                 {/if}
