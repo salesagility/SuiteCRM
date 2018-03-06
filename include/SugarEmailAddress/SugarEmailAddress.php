@@ -1265,7 +1265,7 @@ class SugarEmailAddress extends SugarBean
 
         // determine how we are going to put in this address - UPDATE or INSERT
         if (!empty($duplicate_email['id'])) {
-
+            $this->retrieve($duplicate_email['id']);
             // address_caps matches - see if we're changing fields
             if (
                 $duplicate_email['invalid_email'] != $new_invalid
@@ -1280,6 +1280,10 @@ class SugarEmailAddress extends SugarBean
                     (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
                     'date_modified=' . $this->db->now() . ' ' .
                     'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
+                // set for audit table detection
+                $this->invalid_email = $new_invalid;
+                $this->opt_out = $new_opt_out;
+                $this->confirm_opt_in = $new_confirmed_opt_in;
                 $upd_r = $this->db->query($upd_q);
 
                 if(!is_null($optInFlag)) {
@@ -1292,9 +1296,13 @@ class SugarEmailAddress extends SugarBean
                             'confirm_opt_in_fail_date=NULL ' .
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                         $upd_r = $this->db->query($upd_q);
+                        // set for audit table detection
+                        $this->confirm_opt_in = null;
                     }
                 }
             }
+
+            $this->auditBean(true);
 
             return $duplicate_email['id'];
         } else {
