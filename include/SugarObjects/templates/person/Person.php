@@ -209,7 +209,7 @@ class Person extends Basic
                 '',
                 '',
                 $this->in_workflow,
-                    isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
+                isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
             );
         }
 
