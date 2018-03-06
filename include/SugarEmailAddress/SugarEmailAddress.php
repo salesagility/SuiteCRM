@@ -1265,7 +1265,8 @@ class SugarEmailAddress extends SugarBean
 
         // determine how we are going to put in this address - UPDATE or INSERT
         if (!empty($duplicate_email['id'])) {
-            $this->retrieve($duplicate_email['id']);
+            $duplicate = clone $this;
+            $duplicate->retrieve($duplicate_email['id']);
             // address_caps matches - see if we're changing fields
             if (
                 $duplicate_email['invalid_email'] != $new_invalid
@@ -1281,9 +1282,9 @@ class SugarEmailAddress extends SugarBean
                     'date_modified=' . $this->db->now() . ' ' .
                     'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                 // set for audit table detection
-                $this->invalid_email = $new_invalid;
-                $this->opt_out = $new_opt_out;
-                $this->confirm_opt_in = $new_confirmed_opt_in;
+                $duplicate->invalid_email = $new_invalid;
+                $duplicate->opt_out = $new_opt_out;
+                $duplicate->confirm_opt_in = $new_confirmed_opt_in;
                 $upd_r = $this->db->query($upd_q);
 
                 if(!is_null($optInFlag)) {
@@ -1297,9 +1298,14 @@ class SugarEmailAddress extends SugarBean
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                         $upd_r = $this->db->query($upd_q);
                         // set for audit table detection
-                        $this->confirm_opt_in = null;
+                        $duplicate->confirm_opt_in = null;
                     }
                 }
+            }
+
+
+            foreach ($this->fetched_row as $fieldName => $fieldValue) {
+                $this->{$fieldName} = $duplicate->{$fieldName};
             }
 
             $this->auditBean(true);
@@ -1308,14 +1314,17 @@ class SugarEmailAddress extends SugarBean
         } else {
             // no case-insensitive address match - it's new, or undeleted.
             $guid = '';
+            $isUpdate = true;
             if (!empty($address)) {
                 $guid = create_guid();
                 $now = TimeDate::getInstance()->nowDb();
                 $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
                 $this->db->query($qa);
+                $isUpdate = false;
             }
 
+            $this->auditBean($isUpdate);
             return $guid;
         }
     }
