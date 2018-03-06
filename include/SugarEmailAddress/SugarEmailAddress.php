@@ -1303,9 +1303,10 @@ class SugarEmailAddress extends SugarBean
                 }
             }
 
-
-            foreach ($this->fetched_row as $fieldName => $fieldValue) {
-                $this->{$fieldName} = $duplicate->{$fieldName};
+            if(!empty($this->fetched_row)) {
+                foreach ($this->fetched_row as $fieldName => $fieldValue) {
+                    $this->{$fieldName} = $duplicate->{$fieldName};
+                }
             }
 
             $this->auditBean(true);
