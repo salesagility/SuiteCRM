@@ -50,7 +50,7 @@ class PathsTest extends \Codeception\Test\Unit
     public function testGetContainersPath()
     {
         $expected =  self::$projectPath.'/lib/API/core/containers.php';
-        $actual = self::$paths->getContainersPath();
+        $actual = self::$paths->getContainersFilePath();
         $this->assertEquals($expected, $actual);
     }
 }
