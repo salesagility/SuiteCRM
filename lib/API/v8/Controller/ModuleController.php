@@ -436,7 +436,14 @@ class ModuleController extends ApiController
             throw $exception;
         }
 
-        if (!empty($beanID = $body['data']['id'])) {
+
+
+        if (
+            isset($body['data']['id'])
+            && !empty($body['data']['id'])
+        ) {
+
+            $beanID = $body['data']['id'];
             $bean = \BeanFactory::getBean($moduleName, $beanID);
 
             if ($bean instanceof \SugarBean) {
