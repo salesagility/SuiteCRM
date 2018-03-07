@@ -3,9 +3,9 @@
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
-* * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 
 require_once('include/MVC/View/SugarView.php');
 
@@ -383,6 +384,10 @@ class SugarController
 
     }
 
+    /**
+     * 
+     * @param Exception $e
+     */
     protected function showException(Exception $e)
     {
         $GLOBALS['log']->fatal('Uncaught ' . get_class($e) . ' in Controller: ' . $e->getMessage() . ' (' . $e->getCode() . ')' . "\ntrace info:\n" . $e->getTraceAsString());
