@@ -958,7 +958,7 @@ class EmailMan extends SugarBean
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
             $mail->Sender = $this->mailbox_from_addr;
-            $mail->From = $this->mailbox_from_addr;
+            $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
             $mail->ClearCustomHeaders();
             $mail->AddCustomHeader('X-CampTrackID:' . $this->target_tracker_key);
@@ -1054,7 +1054,7 @@ class EmailMan extends SugarBean
             $mail->handleAttachments($this->notes_array);
             $tmp_Subject = $mail->Subject;
             $mail->prepForOutbound();
-
+            
             $success = $mail->Send();
             //Do not save the encoded subject.
             $mail->Subject = $tmp_Subject;
