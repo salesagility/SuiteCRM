@@ -129,7 +129,11 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
      * We save the case_status_changes array as json since the way config changes are persisted to config.php
      * means that removing entries is tricky. json simplifies this.
      */
-    $cfg->config['aop']['case_status_changes'] = json_encode(array_combine($_POST['if_status'], $_POST['then_status']));
+    
+    $ifStatus = isset($_POST['if_status']) ? $_POST['if_status'] : null;
+    $thenStatus = isset($_POST['then_status']) ? $_POST['then_status'] : null;
+    
+    $cfg->config['aop']['case_status_changes'] = json_encode(array_combine((array)$ifStatus, (array)$thenStatus));
     $cfg->saveConfig();
     header('Location: index.php?module=Administration&action=index');
     exit();
