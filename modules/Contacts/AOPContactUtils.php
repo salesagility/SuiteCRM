@@ -42,6 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * class AOPContactUtilsException
+ */
 class AOPContactUtilsException extends Exception {
 
     const UNABLE_READ_PORTAL_VERSION = 100;
@@ -55,8 +58,10 @@ class AOPContactUtils {
 
 
     /**
-     * @param $portalURL
-     * @return bool
+     * 
+     * @param string $portalURL
+     * @return boolean
+     * @throws AOPContactUtilsException
      */
     public static function isMultiplePortalSupportAvailable($portalURL) {
         $multiplePortalSupportAvailable = false;
