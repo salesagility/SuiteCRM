@@ -289,6 +289,7 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             'ProjectTask',
             'Project',
             'FP_events',
+            'JAccount',
             'AOR_Reports',
             'Prospects',
             'ACLRoles',
