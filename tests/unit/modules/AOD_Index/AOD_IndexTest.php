@@ -171,6 +171,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
             'DocumentRevisions' => 'DocumentRevision',
             'Documents' => 'Document',
             'FP_events' => 'FP_events',
+            'JAccount' => 'JAccount',
             'Leads' => 'Lead',
             'Meetings' => 'Meeting',
             'Notes' => 'Note',
