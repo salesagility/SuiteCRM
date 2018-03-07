@@ -462,7 +462,7 @@ class ModuleController extends ApiController
                 return $this->generateJsonApiExceptionResponse(
                     $req,
                     $res,
-                    new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID))
+                    new Conflict(sprintf('Bean id %s is invalid', $beanID))
                 );
             }
         }
@@ -473,6 +473,10 @@ class ModuleController extends ApiController
         $sugarBean = $sugarBeanResource
             ->fromJsonApiRequest($body['data'])
             ->toSugarBean();
+
+        if (!$sugarBean->ACLAccess('save')) {
+            throw new NotAllowed();
+        }
 
         /** @var Links $links */
         $links = $this->containers->get('Links');
