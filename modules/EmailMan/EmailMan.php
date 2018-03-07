@@ -895,9 +895,9 @@ class EmailMan extends SugarBean
             if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
                 $this->current_emailtemplate = new EmailTemplate();
 
-                if ($this->resend_type == 'Reminder'){
+                if (isset($this->resend_type) && $this->resend_type == 'Reminder'){
                     $this->current_emailtemplate->retrieve($sugar_config['survey_reminder_template']);
-                } else{
+                } else {
                     $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
                 }
 
