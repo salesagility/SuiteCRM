@@ -92,6 +92,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
             'Bugs' => 'Bugs',
             'ResourceCalendar' => 'ResourceCalendar',
             'AOBH_BusinessHours' => 'AOBH_BusinessHours',
+            'JAccount' => 'JAccount',
             'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
             'SecurityGroups' => 'SecurityGroups'
         );
