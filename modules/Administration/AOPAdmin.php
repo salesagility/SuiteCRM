@@ -95,15 +95,19 @@ if (!array_key_exists('enable_aop', $cfg->config['aop'])) {
     $cfg->config['aop']['enable_aop'] = 1;
 }
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-    foreach($sugar_config['aop']['joomla_urls'] as $k => $portalUrl) {
-        $cfg->config['aop']['joomla_urls'][$k] = '';
+    if(isset($sugar_config['aop']['joomla_urls'])) {
+        foreach($sugar_config['aop']['joomla_urls'] as $k => $portalUrl) {
+            $cfg->config['aop']['joomla_urls'][$k] = '';
+        }
     }
-    foreach($_REQUEST['joomla_urls'] as $jurl) {
-        $joomlaUrl = strtolower(trim($jurl));
-        if (!empty($joomlaUrl)) {
-            $cfg->config['aop']['joomla_urls'][] =
-                preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
-        }    
+    if(isset($_REQUEST['joomla_urls'])) {
+        foreach($_REQUEST['joomla_urls'] as $jurl) {
+            $joomlaUrl = strtolower(trim($jurl));
+            if (!empty($joomlaUrl)) {
+                $cfg->config['aop']['joomla_urls'][] =
+                    preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
+            }    
+        }
     }
     $cfg->config['aop']['joomla_url'] = '';
     
