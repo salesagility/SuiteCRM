@@ -957,9 +957,10 @@ class EmailMan extends SugarBean
 
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
-            $mail->Sender = $this->mailbox_from_addr;
+            $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
             $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
+            
             $mail->ClearCustomHeaders();
             $mail->AddCustomHeader('X-CampTrackID:' . $this->target_tracker_key);
             //CL - Bug 25256 Check if we have a reply_to_name/reply_to_addr value from the email marketing table.  If so use email marketing entry; otherwise current mailbox (inbound email) entry
