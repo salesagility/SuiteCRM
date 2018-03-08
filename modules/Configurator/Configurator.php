@@ -357,7 +357,7 @@ class Configurator
     /**
      *
      * @param string $path
-     * @return boolean
+     * @return boolean|string
      */
     public function checkTempImage($path)
     {
