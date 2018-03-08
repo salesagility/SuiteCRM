@@ -548,7 +548,7 @@ class Meeting extends SugarBean {
 			     $action = "index";
             $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_CLOSEINLINE')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
 			if ($this->ACLAccess('edit')) {
-                $meeting_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></b></a>";
+                $meeting_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></a></b>";
             } else {
                 $meeting_fields['SET_COMPLETE'] = '';
             }
