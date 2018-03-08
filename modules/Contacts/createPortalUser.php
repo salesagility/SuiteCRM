@@ -95,8 +95,6 @@ try {
                         if (isset($jaList[0])) {
                             $ja = $jaList[0];
                             $ja->mark_undeleted($ja->id);
-                            // todo: test somehow the marking as undeleted was success? ($ja->deleted = 0? or retrieve again..?)
-                            //$ja->deleted = 0;
 
                         } else {
                             $ja = BeanFactory::getBean('JAccount');
