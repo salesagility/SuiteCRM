@@ -363,10 +363,10 @@ function quick_edit_case_updates($case)
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
-    <div><label for="update_text"></label></div>
+    <div><label for="update_text">{$mod_strings['LBL_UPDATE_TEXT']}</label></div>
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <div><label></label>
+    <div><label>{$mod_strings['LBL_INTERNAL']}</label>
     <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked ></input>
     </div>
     <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
