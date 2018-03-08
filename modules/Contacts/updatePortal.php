@@ -97,7 +97,7 @@ class updatePortal
                 $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
 
                 $search = array("\$joomla_pass", "\$portal_address");
-                // TODO: check which joomla url need for us to send because since it's multiple it does not make sense
+                
                 $replace = array($bean->joomla_account_access, isset($selectedPortalUrl) ? $selectedPortalUrl : $aop_config['joomla_urls']);
 
                 $object_arr['Contacts'] = $bean->id;
