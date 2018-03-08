@@ -72,7 +72,6 @@
             $('#enable_aop').change();
             $('#enable_portal').change(function (){
                 if($('#enable_portal').is(":checked") && $('#enable_aop').is(":checked")){
-                    // TODO: check is multiple validation type correct for us and do we need the validation here?
                     addToValidate('ConfigureSettings','joomla_urls','multiple',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
                     $('#joomla_urls_row').show();
                 }else{
