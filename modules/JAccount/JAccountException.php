@@ -46,4 +46,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class JAccountException
  */
-class JAccountException extends Exception {}
+class JAccountException extends Exception {
+    
+    const JACCOUNT = 100;
+    
+    public function __construct($message = '', $code = JAccountException::JACCOUNT, $previous = null)
+    {
+        parent::__construct('[JAccount] '.$message.'', $code, $previous);
+    }
+}
