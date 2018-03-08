@@ -149,7 +149,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		<tr height='20' class='{$_rowColor}S1'>
 			{if $prerow}
 			<td width='1%' class='nowrap'>
-			 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
+			 {if !$is_admin && $is_admin_for_user && $rowData.IS_ADMIN==1}
 					<input type='checkbox' disabled="disabled" class='checkbox' value='{$rowData.ID}'>
 			 {else}
                     <input onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='checkbox' name='mass[]' value='{$rowData.ID}'>		 
