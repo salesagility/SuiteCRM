@@ -178,6 +178,37 @@ class JAccount extends Basic
      */
     public $SecurityGroups;
     
+    
+    /**
+     *
+     * @var string 
+     */
+    public $contact_id;
+    
+    /**
+     *
+     * @var string 
+     */
+    public $email1;
+    
+    /**
+     *
+     * @var string 
+     */
+    public $joomla_account_id;
+    
+    /**
+     *
+     * @var string 
+     */
+    public $portal_account_disabled;
+    
+    /**
+     *
+     * @var string 
+     */
+    public $joomla_account_access;
+	
     /**
      * constructor
      */
