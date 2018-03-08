@@ -60,9 +60,8 @@ class updatePortal
     /**
      * 
      * @global array $sugar_config
-     * @param Account|Contact $bean
+     * @param Account|Contact $bean - parameter needs an interface type hinting to using joomla_account_access field with a getter
      * @return boolean
-     * @todo parameter needs an interface type hinting to using joomla_account_access field with a getter
      */
     public function updateUser($bean)
     {
