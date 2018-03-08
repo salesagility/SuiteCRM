@@ -314,7 +314,7 @@ class Task extends SugarBean {
 		if ($this->status != "Completed" && $this->status != "Deferred" )
 		{
 			$setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_LIST_CLOSE','Tasks')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
-		    $task_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></b></a>";
+		    $task_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></a></b>";
 		}
 
         // make sure we grab the localized version of the contact name, if a contact is provided
