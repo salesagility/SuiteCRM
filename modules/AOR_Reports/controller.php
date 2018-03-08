@@ -255,6 +255,7 @@ class AOR_ReportsController extends SugarController
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
             $pdf->SetAutoFont();
             $pdf->WriteHTML($stylesheet, 1);
+            $pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
             $pdf->Output($this->bean->name . '.pdf', "D");
