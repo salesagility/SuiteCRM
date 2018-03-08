@@ -46,4 +46,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class JAccountInvalidUserDataException
  */
-class JAccountInvalidUserDataException extends Exception {}
+class JAccountInvalidUserDataException extends Exception {
+
+    const JACCOUNT_INVALID_USER_DATA = 100;
+    
+    public function __construct($message = '', $code = JAccountInvalidUserDataException::JACCOUNT_INVALID_USER_DATA, $previous = null)
+    {
+        parent::__construct('[JAccount invalid user data] '.$message.'', $code, $previous);
+    }
+}
