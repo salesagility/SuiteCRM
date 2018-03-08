@@ -169,6 +169,8 @@ function aop_parse_template($string, $bean_arr)
  * @return boolean
  */
 function url_exists($url) {
-    if (!$fp = curl_init($url)) return false;
+    if (!$fp = curl_init($url)) {
+        return false;
+    }
     return true;
 }
