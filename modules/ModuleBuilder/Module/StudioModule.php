@@ -42,6 +42,8 @@
 require_once 'data/BeanFactory.php';
 require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
 require_once 'modules/ModuleBuilder/parsers/constants.php';
+require_once 'IconRepository.php';
+
 
 class StudioModule
 {
@@ -204,30 +206,30 @@ class StudioModule
         $sources = array(
             translate('LBL_LABELS') => array(
                 'action' => "module=ModuleBuilder&action=editLabels&view_module={$this->module}",
-                'imageTitle' => 'Labels',
-                'help' => 'labelsBtn'
+                'help' => 'labelsBtn',
+                'icon' => IconRepository::ICON_LABELS,
             ),
             translate('LBL_FIELDS') => array(
                 'action' => "module=ModuleBuilder&action=modulefields&view_package=studio&view_module={$this->module}",
-                'imageTitle' => 'Fields',
-                'help' => 'fieldsBtn'
+                'help' => 'fieldsBtn',
+                'icon' => IconRepository::ICON_FIELDS,
             ),
             translate('LBL_RELATIONSHIPS') => array(
                 'action' => "get_tpl=true&module=ModuleBuilder&action=relationships&view_module={$this->module}",
-                'imageTitle' => 'Relationships',
-                'help' => 'relationshipsBtn'
+                'help' => 'relationshipsBtn',
+                'icon' => IconRepository::ICON_RELATIONSHIPS,
             ),
             translate('LBL_LAYOUTS') => array(
                 'children' => 'getLayouts',
                 'action' => "module=ModuleBuilder&action=wizard&view=layouts&view_module={$this->module}",
-                'imageTitle' => 'Layouts',
-                'help' => 'layoutsBtn'
+                'help' => 'layoutsBtn',
+                'icon' => IconRepository::ICON_LAYOUTS,
             ),
             translate('LBL_SUBPANELS') => array(
                 'children' => 'getSubpanels',
                 'action' => "module=ModuleBuilder&action=wizard&view=subpanels&view_module={$this->module}",
-                'imageTitle' => 'Subpanels',
-                'help' => 'subpanelsBtn'
+                'help' => 'subpanelsBtn',
+                'icon' => IconRepository::ICON_SUBPANELS,
             )
         );
 

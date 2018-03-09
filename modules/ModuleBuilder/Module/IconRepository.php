@@ -3,6 +3,11 @@
 class IconRepository
 {
     const DEFAULT_ICON = 'default';
+    const ICON_LABELS = 'labels';
+    const ICON_FIELDS = 'fields';
+    const ICON_RELATIONSHIPS = 'relationships';
+    const ICON_LAYOUTS = 'layouts';
+    const ICON_SUBPANELS = 'labels';
 
     /**
      * @var array
@@ -17,7 +22,7 @@ class IconRepository
         'SurveyQuestionOptions' => self::DEFAULT_ICON,
         'SurveyQuestionResponses' =>  self::DEFAULT_ICON,
         'SurveyQuestions' => self::DEFAULT_ICON,
-        'SurveyResponses' => self::DEFAULT_ICON,
+        'SurveyResponses' => 'survey-responses',
         'Prospects' => 'targets'
     ];
 
