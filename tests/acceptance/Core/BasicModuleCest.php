@@ -140,6 +140,7 @@ class BasicModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', $this->fakeData->name);
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();

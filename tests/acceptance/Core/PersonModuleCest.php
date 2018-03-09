@@ -138,6 +138,7 @@ class PersonModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->selectOption('#salutation', $this->fakeData->title);
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->fillField('#first_name', $this->fakeData->firstName);

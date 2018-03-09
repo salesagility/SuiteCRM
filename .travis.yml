@@ -11,6 +11,12 @@ sudo: required
 dist: trusty
 services:
   - mysql
+addons:
+  chrome: stable
+
+before_install:
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 install:
   - composer self-update && composer --version
@@ -53,6 +59,9 @@ script:
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps -vvv; fi
+  # RUN Basic Acceptance test
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f
+; fi
 
 after_script:
   - cat suitecrm.log

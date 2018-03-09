@@ -4,13 +4,13 @@ modules:
   config:
     \SuiteCRM\Test\Driver\WebDriver:
       url: "http://localhost/"
-      wait: 5
+      wait: 2
       port: 9515 # ChromeDriver port
       browser: chrome
       window_size: false
       capabilities:
         chromeOptions:
-            args: ["--headless", "--disable-gpu", "window-size=1920x1080"]
-            binary: "google-chrome-stable"
+            args: ["window-size=1920x1080"]
+            binary: "/usr/bin/google-chrome"
 
 
