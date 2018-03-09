@@ -101,4 +101,3 @@ class SugarSession{
 		session_write_close();
 	}
 }
-?>

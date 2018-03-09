@@ -45,4 +45,3 @@ class SugarFieldReadonly extends SugarFieldBase {
     }
     
 }
-?>

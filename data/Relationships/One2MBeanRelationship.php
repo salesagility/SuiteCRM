@@ -187,7 +187,7 @@ class One2MBeanRelationship extends One2MRelationship
         if ($link->getSide() == REL_RHS)
         {
             $rhsID = $this->def['rhs_key'];
-            $id = $link->getFocus()->$rhsID;
+            $id = isset($link->getFocus()->$rhsID) ? $link->getFocus()->$rhsID : '';
             if (!empty($id))
             {
                 $rows[$id] = array('id' => $id);

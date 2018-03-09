@@ -187,6 +187,8 @@
                         displayColumns: cols.join('|'),
                         query: 'true',
                         use_stored_query: 'true',
+                        update_stored_query: 'true',
+                        update_stored_query_key: 'displayColumns',
                         last_search_tab: listViewSearchIcon.getLatestSearchDialogType(),
                         save_columns_order: 'true'
                     }, function () {

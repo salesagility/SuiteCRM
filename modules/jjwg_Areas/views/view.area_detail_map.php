@@ -60,7 +60,7 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView {
     }
   </style>
 
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing"></script>
 
   <script type="text/javascript">
 

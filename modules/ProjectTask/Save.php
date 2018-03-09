@@ -100,4 +100,3 @@ else
 header("Location: index.php?module=$return_module&action=$return_action&record=$return_id");
 
 }
-?>

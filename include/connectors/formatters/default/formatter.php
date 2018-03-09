@@ -152,4 +152,3 @@ class default_formatter {
    	    return '';
    }
 }
-?>

@@ -52,4 +52,3 @@ $module_name = 'AOK_Knowledge_Base_Categories';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
-?>

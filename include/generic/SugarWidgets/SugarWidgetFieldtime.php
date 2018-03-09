@@ -70,5 +70,3 @@ class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
                 }
         }
 }
-
-?>

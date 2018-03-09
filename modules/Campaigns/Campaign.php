@@ -91,6 +91,18 @@ class Campaign extends SugarBean {
 	var $relationship_fields = Array('prospect_list_id'=>'prospect_lists');
 
 	var $new_schema = true;
+        
+        /**
+         *
+         * @var string
+         */
+        public $survey_id;
+        
+        /**
+         *
+         * @var string
+         */
+        public $survey_name;
 
 	function list_view_parse_additional_sections(&$listTmpl) {
 		global $locale;
@@ -436,4 +448,3 @@ class Campaign extends SugarBean {
         return (int)$result['count'];
     }
 }
-?>

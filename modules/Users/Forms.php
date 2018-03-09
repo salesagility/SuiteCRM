@@ -68,4 +68,3 @@ function user_get_confsettings_js() {
     // NO LONGER USED, MOVED TO UserEditView.js
     return '';
 }
-?>

@@ -51,6 +51,3 @@ class TemplateParentType extends TemplateText{
 	}
 
 }
-
-
-?>

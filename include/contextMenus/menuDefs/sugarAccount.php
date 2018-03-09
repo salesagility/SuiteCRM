@@ -72,5 +72,3 @@ $menuDef['sugarAccount'] = array(
           'module' => 'Calls',
           'aclAction' => 'edit'),
     );
-
-?>

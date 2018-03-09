@@ -80,4 +80,3 @@ $listViewDefs['Cases'] = array(
 	    'label' => 'LBL_DATE_ENTERED',
 	    'default' => true),
 );
-?>

@@ -260,7 +260,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
         'contact_name' =>
             array(
                 'name' => 'contact_name',
-                'rname' => 'last_name',
+                'rname' => 'name',
                 'db_concat_fields' => array(0 => 'first_name', 1 => 'last_name'),
                 'id_name' => 'contact_id',
                 'massupdate' => false,
@@ -612,4 +612,3 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
 
 VardefManager::createVardef('Calls', 'Call', array('default', 'assignable', 'security_groups',
 ));
-?>

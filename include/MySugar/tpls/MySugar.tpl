@@ -92,7 +92,7 @@
                         <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
                             <span id="name_{$tabNum}">{$tab.pageTitle}</span>
                         </a>
-                        {if !$lock_homepage}<a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png"></a>{/if}
+                        {if !$lock_homepage}<a id="removeTab_anchor"  onClick="removeDashboardForm({$tabNum});"><span class="suitepicon suitepicon-action-clear"></span></a>{/if}
 
                         </li>{/if}
                 {/foreach}

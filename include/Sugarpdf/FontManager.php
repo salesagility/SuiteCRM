@@ -429,5 +429,3 @@ class FontManager{
         return $this->loadFontFile();
     }
 }
-
-?>

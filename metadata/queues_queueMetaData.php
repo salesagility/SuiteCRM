@@ -140,5 +140,3 @@ $dictionary['queues_queue'] = array ('table' => 'queues_queue',
 		),
 	), /* end relationships */
 );
-
-?>

@@ -207,5 +207,3 @@ if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
 else {
 	header($header_URL);
 }
-
-?>

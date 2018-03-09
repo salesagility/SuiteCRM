@@ -43,7 +43,7 @@ YAHOO.widget.TVAnim = new function() {
 	 * @return {boolean} true if valid, false if not
 	 */
 	this.isValid = function(type) {
-		return ( "undefined" != eval("typeof " + type) );
+		return ( "undefined" != typeof[type] );
 	};
 };
 

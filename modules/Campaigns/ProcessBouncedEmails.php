@@ -238,4 +238,3 @@ function campaign_process_bounced_emails(&$email, &$email_header)
 	return FALSE;
   }
 }
-?>
