@@ -477,7 +477,7 @@ $app_list_strings = array(
 
         'Prospects' => 'Target',
 
-        ),
+    ),
     'parent_line_items' => array(
         'AOS_Quotes' => 'Quotes',
         'AOS_Invoices' => 'Invoices',
@@ -3581,7 +3581,7 @@ $app_list_strings['email_settings_opt_in_dom'] = array(
 );
 
 $app_list_strings['email_confirmed_opt_in_dom'] = array(
-    'not-opt-in' => 'Opt Out',
+    'not-opt-in' => 'Not Opt In',
     'opt-in' => 'Opt In',
     'confirmed-opt-in' => 'Confirmed Opt In'
 );
@@ -3596,8 +3596,16 @@ $app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your inter
 
 
 $app_list_strings['oauth2_grant_type_dom'] = array(
-    'implicit' => 'Implicit',
-    'client-credentials' => 'Client Credentials',
     'password' => 'Password Grant',
-    'authorization-code' => 'Authorization Code'
+    'client_credentials' => 'Client Credentials',
+    'implicit' => 'Implicit',
+    'authorization_code' => 'Authorization Code'
 );
+
+$app_list_strings['oauth2_duration_units'] = [
+    'minute' => 'minutes',
+    'hour' => 'hours',
+    'day' => 'days',
+    'week' => 'weeks',
+    'month' => 'months',
+];

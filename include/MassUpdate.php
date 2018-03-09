@@ -779,8 +779,7 @@ EOJS;
 
         $change_parent_button = "<span class='id-ff'><button title='" . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "'  type='button' class='button' value='" . $app_strings['LBL_SELECT_BUTTON_LABEL']
             . "' name='button_parent_name' onclick='open_popup(document.MassUpdate.{$field['type_name']}.value, 600, 400, \"\", true, false, {$encoded_popup_request_data});'>
-			" . SugarThemeRegistry::current()->getImage("id-ff-select", '', null, null, ".png",
-                $app_strings['LBL_ID_FF_SELECT']) . "
+			<span class=\"suitepicon suitepicon-action-select\"></span>
 			</button></span>";
         $parent_type = $field['parent_type'];
         $parent_types = $app_list_strings[$parent_type];
@@ -985,7 +984,6 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsName = $json->encode($qsName);
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
         //
         ///////////////////////////////////////
 
@@ -998,7 +996,7 @@ EOHTML;
     <button title='{$app_strings['LBL_SELECT_BUTTON_TITLE']}'
         type='button' class='button' value='{$app_strings['LBL_SELECT_BUTTON_LABEL']}' name='button'
         onclick='open_popup("$mod_type", 600, 400, "", true, false, {$encoded_popup_request_data});'
-        /><img alt="$img" src="$img"></button></span>
+        /><span class='suitepicon suitepicon-action-select'></span></button></span>
 </td>
 <script type="text/javascript">
 <!--
@@ -1060,12 +1058,11 @@ EOHTML;
             'no_match_text' => $app_strings['ERR_SQS_NO_MATCH']
         );
         $qsParent['populate_list'] = array('mass_' . $varname, 'mass_' . $id_name);
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
         $html = '<td scope="row">' . $displayname . " </td>\n"
             . '<td><input class="sqsEnabled" type="text" autocomplete="off" id="mass_' . $varname . '" name="' . $varname . '" value="" /><input id="mass_' . $id_name . '" type="hidden" name="'
             . $id_name . '" value="" />&nbsp;<span class="id-ff multiple"><button type="button" name="btn1" class="button" title="'
             . $app_strings['LBL_SELECT_BUTTON_LABEL'] . '"  value="' . $app_strings['LBL_SELECT_BUTTON_LABEL'] . '" onclick='
-            . "'open_popup(\"Accounts\",600,400,\"\",true,false,{$encoded_popup_request_data});' /><img alt=\"$img\" src=\"$img\"></button></span></td>\n";
+            . "'open_popup(\"Accounts\",600,400,\"\",true,false,{$encoded_popup_request_data});' /><span class=\"suitepicon suitepicon-action-select\"></span></button></span></td>\n";
         $html .= '<script type="text/javascript" language="javascript">if(typeof sqs_objects == \'undefined\'){var sqs_objects = new Array;}sqs_objects[\'MassUpdate_' . $varname . '\'] = ' .
             $json->encode($qsParent) . '; registerSingleSmartInputListener(document.getElementById(\'mass_' . $varname . '\'));
 					addToValidateBinaryDependency(\'MassUpdate\', \'' . $varname . '\', \'alpha\', false, \'' . $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $app_strings['LBL_ACCOUNT'] . '\',\'' . $id_name . '\');
@@ -1105,12 +1102,11 @@ EOHTML;
         );
 
         $qsUser['populate_list'] = array('mass_assigned_user_name', 'mass_assigned_user_id');
-        $img = SugarThemeRegistry::current()->getImageURL("id-ff-select.png");
         $html = <<<EOQ
 		<td width="15%" scope="row">$displayname</td>
 		<td ><input class="sqsEnabled" autocomplete="off" id="mass_assigned_user_name" name='assigned_user_name' type="text" value=""><input id='mass_assigned_user_id' name='assigned_user_id' type="hidden" value="" />
 		<span class="id-ff multiple"><button id="mass_assigned_user_name_btn" title="{$app_strings['LBL_SELECT_BUTTON_TITLE']}" type="button" class="button" value='{$app_strings['LBL_SELECT_BUTTON_LABEL']}' name=btn1
-				onclick='open_popup("Users", 600, 400, "", true, false, $encoded_popup_request_data);' /><img src="$img"></button></span>
+				onclick='open_popup("Users", 600, 400, "", true, false, $encoded_popup_request_data);' /><span class="suitepicon suitepicon-action-select"></span></button></span>
 		</td>
 EOQ;
         $html .= '<script type="text/javascript" language="javascript">if(typeof sqs_objects == \'undefined\'){var sqs_objects = new Array;}sqs_objects[\'MassUpdate_assigned_user_name\'] = ' .
@@ -1212,11 +1208,10 @@ EOQ;
 		});
 		</script>
 EOQ;
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
         $html = <<<EOQ
 	<td scope="row" width="20%">$displayname</td>
 	<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}jscal_field' maxlength='10' value="">
-    <img src="$jscalendarImage" id="{$varname}jscal_trigger" align="absmiddle" title="{$app_strings['LBL_MASSUPDATE_DATE']}" alt='{$app_strings['LBL_MASSUPDATE_DATE']}'>&nbsp;<span class="dateFormat">$userformat</span>
+    <span class="suitepicon suitepicon-module-calendar" id="{$varname}jscal_trigger" align="absmiddle" title="{$app_strings['LBL_MASSUPDATE_DATE']}" alt='{$app_strings['LBL_MASSUPDATE_DATE']}'></span>&nbsp;<span class="dateFormat">$userformat</span>
 	$javascriptend</td>
 	<script> addToValidate('MassUpdate','$varname','date',false,'$displayname');</script>
 EOQ;
@@ -1262,7 +1257,7 @@ EOQ;
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
         global $app_strings, $app_list_strings, $theme;
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
+        $jscalendarImage = '<span class="suitepicon suitepicon-module-calendar"></span>';
 
         $javascriptend = <<<EOQ
 		 <script type="text/javascript">
@@ -1282,7 +1277,7 @@ EOQ;
         $html = <<<EOQ
 		<td scope="row" width="20%">$displayname</td>
 		<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}_date' maxlength='10' value="">
-		<img border="0" src="$jscalendarImage" alt='{$app_strings['LBL_MASSUPDATE_DATE']}' id="{$varname}_trigger" title="{$app_strings['LBL_MASSUPDATE_DATE']}"  align="absmiddle">&nbsp;$javascriptend
+		<span class="suitepicon suitepicon-module-calendar"></span>&nbsp;$javascriptend
 
 		<span id="{$varname}_time_section"></span>
 		</td>

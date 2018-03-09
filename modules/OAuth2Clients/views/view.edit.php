@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,33 +34,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+class OAuth2ClientsViewEdit extends ViewEdit
+{
+    /**
+     * @var OAuth2Clients $bean
+     */
+    public $bean;
 
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function getMetaDataFile()
+    {
+        $this->setViewType();
+        return parent::getMetaDataFile();
+    }
 
-
-
-
-global $mod_strings;
-global $app_list_strings;
-global $app_strings;
-global $current_language;
-global $sugar_config;
-global $sugar_flavor;
-global $sugar_version;
-
-$send_version = isset($sugar_version) ? $sugar_version : "";
-$send_edition = isset($sugar_flavor) ? $sugar_flavor : "";
-$send_lang = isset($current_language) ? $current_language : "";
-$send_key = isset($sugar_config['unique_key']) ? $sugar_config['unique_key'] : "";
-
-
-$sugar_smarty = new Sugar_Smarty();
-
-$iframe_url = add_http("www.sugarcrm.com/network/redirect.php?to=training&tmpl=network&version={$send_version}&edition={$send_edition}&language={$send_lang}&key={$send_key}");
-$sugar_smarty->assign('iframeURL', $iframe_url);
-
-echo $sugar_smarty->fetch('modules/Home/TrainingPortal.tpl');
+    /**
+     *
+     */
+    private function setViewType()
+    {
+        switch ($this->bean->allowed_grant_type) {
+            case 'password': $this->type = 'editpassword'; break;
+            case 'client_credentials': $this->type = 'editcredentials'; break;
+        }
+        if (!empty($_REQUEST['action'])) {
+            switch ($_REQUEST['action']) {
+                case 'EditViewPassword': $this->type = 'editpassword'; break;
+                case 'EditViewCredentials': $this->type = 'editcredentials'; break;
+            }
+        }
+    }
+}

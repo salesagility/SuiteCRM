@@ -3,7 +3,7 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,37 +36,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array(
-    'LBL_ASSIGNED_TO_ID'                 => 'Zugewiesene BenutzerID',
-    'LBL_ASSIGNED_TO_NAME'               => 'Zugewiesen an',
-    'LBL_SECURITYGROUPS'                 => 'Berechtigungsgruppen',
-    'LBL_SECURITYGROUPS_SUBPANEL_TITLE'  => 'Berechtigungsgruppen',
-    'LBL_ID'                             => 'ID',
-    'LBL_DATE_ENTERED'                   => 'Erstellt am',
-    'LBL_DATE_MODIFIED'                  => 'Geändert am',
-    'LBL_MODIFIED'                       => 'Geändert von',
-    'LBL_MODIFIED_ID'                    => 'Geändert von ID',
-    'LBL_MODIFIED_NAME'                  => 'Geändert von Name',
-    'LBL_CREATED'                        => 'Erstellt von:',
-    'LBL_CREATED_ID'                     => 'Erstellt von ID:',
-    'LBL_DESCRIPTION'                    => 'Beschreibung',
-    'LBL_DELETED'                        => 'Gelöscht',
-    'LBL_NAME'                           => 'Name',
-    'LBL_CREATED_USER'                   => 'Erstellt von Benutzer:',
-    'LBL_MODIFIED_USER'                  => 'Geändert von',
-    'LBL_LIST_NAME'                      => 'Name',
-    'LBL_EDIT_BUTTON'                    => 'Bearbeiten',
-    'LBL_REMOVE'                         => 'Entfernen',
-    'LBL_LIST_FORM_TITLE'                => 'Survey Responses Liste',
-    'LBL_MODULE_NAME'                    => 'Survey Responses',
-    'LBL_MODULE_TITLE'                   => 'Survey Responses',
-    'LBL_HOMEPAGE_TITLE'                 => 'Mein Survey Responses',
-    'LNK_NEW_RECORD'                     => 'Erstellen Survey Responses',
-    'LNK_LIST'                           => 'Ansicht Survey Responses',
-    'LNK_IMPORT_SURVEYRESPONSES'         => 'Import Survey Responses',
-    'LBL_SEARCH_FORM_TITLE'              => 'Suchen Survey Responses',
-    'LBL_HISTORY_SUBPANEL_TITLE'         => 'Verlauf anzeigen',
-    'LBL_ACTIVITIES_SUBPANEL_TITLE'      => 'Aktivitäten',
-    'LBL_SURVEYRESPONSES_SUBPANEL_TITLE' => 'Survey Responses',
-    'LBL_NEW_FORM_TITLE'                 => 'Neue Survey Responses',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$module_name = 'OAuth2Tokens';
+
+$subpanel_layout = array(
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelTopCreateButton'),
+        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
+    ),
+
+    'where' => 'token_is_revoked = false AND (refresh_token_expires > NOW() OR refresh_token_expires IS NULL)',
+
+    'list_fields' => array(
+        'id' => [
+            'vname' => 'LBL_TOKEN_ID',
+            'default' => true,
+            'widget_class' => 'SubPanelDetailViewLink',
+            'sortable' => true,
+        ],
+        'date_entered' => [
+            'vname' => 'LBL_DATE_ENTERED',
+            'default' => true,
+            'sortable' => true,
+        ],
+        'access_token_expires' => [
+            'vname' => 'LBL_ACCESS_TOKEN_EXPIRES',
+            'default' => true,
+            'sortable' => true,
+        ],
+        'refresh_token_expires' => [
+            'vname' => 'LBL_REFRESH_TOKEN_EXPIRES',
+            'default' => true,
+            'sortable' => true,
+        ],
+    ),
 );

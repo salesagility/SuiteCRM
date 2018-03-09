@@ -147,7 +147,7 @@ switch($time_format)
             <input id="call_id" type="hidden" name="call_id" >
             <label for="date"><?php echo $app_strings['LBL_RESCHEDULE_DATE']; ?></label><br />
             <input id="date" type="textbox" name="date" value="<?php echo $date;?>" />
-            <?php echo SugarThemeRegistry::current()->getImage('jscalendar','id="date_start_trigger" style="position:relative; top:2px" border="0"'); ?>
+            <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span>
 <?php
 //$mins is the minutes option
 $mins = '<select id="date_start_minutes" name="date_start_minutes" class="datetimecombo_time" size="1">';

@@ -1,11 +1,9 @@
-{*
-
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,10 +36,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+$module_name = 'OAuth2Clients';
 
-
-*}
-
-
-<IFRAME frameborder="0" marginwidth="0" marginheight="0" bgcolor="#FFFFFF" SRC="{$iframeURL}" TITLE="{$iframeURL}" NAME="SUGARIFRAME" ID="SUGARIFRAME" WIDTH="100%" height="1000"></IFRAME>
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+    ],
+    'panels' => [
+        'default' =>
+            [
+                0 =>
+                    [
+                        'name' => 'name',
+                    ],
+                1 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'new_secret',
+                                'label' => 'LBL_SECRET_HASHED',
+                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30" autocomplete="dont-fill-this-password">'
+                                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="password">'
+                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                            ],
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+            ],
+    ],
+];

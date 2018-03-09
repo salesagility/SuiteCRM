@@ -45,7 +45,7 @@ if((i%2)==0){className='oddListRowS1';}else{className='evenListRowS1';}
 if(typeof(bean.fields.first_name)=='undefined'){bean.fields.first_name='';}
 if(typeof(bean.fields.email1)=='undefined'||bean.fields.email1==""){bean.fields.email1='&nbsp;';}
 if(typeof(bean.fields.phone_work)=='undefined'||bean.fields.phone_work==""){bean.fields.phone_work='&nbsp;';}
-html+='<tr class="'+className+'">';html+='<td><img src="'+GLOBAL_REGISTRY.config['site_url']+'/index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName='+bean.module+'s.gif"/></td>';html+='<td>'+bean.fields.full_name+'</td>';html+='<td>'+bean.fields.email1+'</td>';html+='<td>'+bean.fields.phone_work+'</td>';html+='<td align="right">';hidden='visible';if(!disabled){}
+html+='<tr class="'+className+'">';html+='<td><span class="suitepicon suitepicon-module-'+bean.module.toLowerCase().replace('_','-')+'"></span></td>';html+='<td>'+bean.fields.full_name+'</td>';html+='<td>'+bean.fields.email1+'</td>';html+='<td>'+bean.fields.phone_work+'</td>';html+='<td align="right">';hidden='visible';if(!disabled){}
 html+='<input type="button" id="invitees_add_'+(i+1)+'" class="button" onclick="this.disabled=true;SugarWidgetSchedulerAttendees.form_add_attendee('+i+');" value="'+GLOBAL_REGISTRY['meeting_strings']['LBL_ADD_BUTTON']+'"/ style="visibility: '+hidden+'"/>';html+='</td>';html+='</tr>';}
 html+='</table>';div.innerHTML=html;}
 SugarWidgetListView.prototype.display_loading=function(){}
@@ -126,8 +126,7 @@ SugarWidgetScheduleRow.prototype.init=function(timeslots){this.timeslots=timeslo
 SugarWidgetScheduleRow.prototype.load=function(thetableid){this.thetableid=thetableid;var self=this;vcalClient=new SugarVCalClient();if(typeof(GLOBAL_REGISTRY['freebusy_adjusted'])=='undefined'||typeof(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id])=='undefined'){global_request_registry[req_count]=[this,'display'];vcalClient.load(this.focus_bean.fields.id,req_count);req_count++;}else{this.display();}}
 SugarWidgetScheduleRow.prototype.display=function(){SUGAR.util.doWhen("document.getElementById('"+this.thetableid+"') != null",function(){var tr;this.thetable=document.getElementById(this.thetableid);if(typeof(this.element)!='undefined'){if(this.element.parentNode!=null)
 this.thetable.deleteRow(this.element.rowIndex);tr=document.createElement('tr');this.thetable.appendChild(tr);}else{tr=this.thetable.insertRow(this.thetable.rows.length);}
-tr.className="schedulerAttendeeRow";$(tr).attr('data-id',this.focus_bean.fields.id);$(tr).attr('data-module',this.focus_bean.module+'s');td=document.createElement('td');tr.appendChild(td);td.scope='row';var img='<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
-+SUGAR.themes.theme_name+'&imageName='+this.focus_bean.module+'s.gif"/>&nbsp;';td.innerHTML=img;td.innerHTML=td.innerHTML;if(this.focus_bean.fields.full_name)
+tr.className="schedulerAttendeeRow";$(tr).attr('data-id',this.focus_bean.fields.id);$(tr).attr('data-module',this.focus_bean.module+'s');td=document.createElement('td');tr.appendChild(td);td.scope='row';var img='<span class="suitepicon suitepicon-module-'+this.focus_bean.module.toLowerCase().replace('_','-')+'"></span>';td.innerHTML=img;td.innerHTML=td.innerHTML;if(this.focus_bean.fields.full_name)
 td.innerHTML+=' '+this.focus_bean.fields.full_name;else
 td.innerHTML+=' '+this.focus_bean.fields.name;this.add_freebusy_nodes(tr);var td=document.createElement('td');tr.appendChild(td);td.className='schedulerAttendeeDeleteCell';td.noWrap=true;td.innerHTML='<a title="'+GLOBAL_REGISTRY['meeting_strings']['LBL_REMOVE']
 +'" class="listViewTdToolsS1" style="text-decoration:none;" '

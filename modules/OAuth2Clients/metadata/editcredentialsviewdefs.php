@@ -3,7 +3,7 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,38 +36,45 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array(
-    'LBL_ASSIGNED_TO_ID'                => '负责人ID',
-    'LBL_ASSIGNED_TO_NAME'              => '负责人',
-    'LBL_SECURITYGROUPS'                => '用户组列表',
-    'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => '用户组',
-    'LBL_ID'                            => 'ID',
-    'LBL_DATE_ENTERED'                  => '创建日期',
-    'LBL_DATE_MODIFIED'                 => '修改日期',
-    'LBL_MODIFIED'                      => '修改人',
-    'LBL_MODIFIED_ID'                   => '修改人ID',
-    'LBL_MODIFIED_NAME'                 => '修改人',
-    'LBL_CREATED'                       => '创建人',
-    'LBL_CREATED_ID'                    => '创建人ID',
-    'LBL_DESCRIPTION'                   => '说明',
-    'LBL_DELETED'                       => '已删除',
-    'LBL_NAME'                          => '名称',
-    'LBL_CREATED_USER'                  => '创建人',
-    'LBL_MODIFIED_USER'                 => '修改人',
-    'LBL_LIST_NAME'                     => '名称',
-    'LBL_EDIT_BUTTON'                   => '编辑',
-    'LBL_REMOVE'                        => '移除',
-    'LBL_LIST_FORM_TITLE'               => 'Surveys 列表',
-    'LBL_MODULE_NAME'                   => 'Surveys',
-    'LBL_MODULE_TITLE'                  => 'Surveys',
-    'LBL_HOMEPAGE_TITLE'                => '我的 Surveys',
-    'LNK_NEW_RECORD'                    => '创建 Surveys',
-    'LNK_LIST'                          => '查看 Surveys',
-    'LNK_IMPORT_SURVEYS'                => 'Import Surveys',
-    'LBL_SEARCH_FORM_TITLE'             => '搜索 Surveys',
-    'LBL_HISTORY_SUBPANEL_TITLE'        => '查看历史记录',
-    'LBL_ACTIVITIES_SUBPANEL_TITLE'     => '活动',
-    'LBL_SURVEYS_SUBPANEL_TITLE'        => 'Surveys',
-    'LBL_NEW_FORM_TITLE'                => '新建 Surveys',
-    'LBL_STATUS'                        => 'Status',
-);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$module_name = 'OAuth2Clients';
+
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+    ],
+    'panels' => [
+        'default' =>
+            [
+                0 =>
+                    [
+                        'name' => 'name',
+                    ],
+                1 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'new_secret',
+                                'label' => 'LBL_SECRET_HASHED',
+                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
+                                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="client_credentials">'
+                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                            ],
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+                4 =>
+                    [
+                        'name' => 'assigned_user_name',
+                    ],
+            ],
+    ],
+];

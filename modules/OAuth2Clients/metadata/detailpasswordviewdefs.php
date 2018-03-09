@@ -1,11 +1,9 @@
-{*
-
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,47 +36,59 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
-
-*}
-
-
-{if $helpFileExists}
-<html {$langHeader}>
-<head>
-<title>{$title}</title>
-{$styleSheet}
-<meta http-equiv="Content-Type" content="text/html; charset={$charset}">
-</head>
-<body onLoad='window.focus();'>
-<table width='100%'>
-<tr>
-    <td align='right'>
-        <a href='javascript:window.print()'>{$MOD.LBL_HELP_PRINT}</a> - 
-        <a href='mailto:?subject="{$MOD.LBL_SUGARCRM_HELP}&body={$currentURL}'>{$MOD.LBL_HELP_EMAIL}</a> - 
-        <a href='#' onmousedown="createBookmarkLink('{$MOD.LBL_SUGARCRM_HELP} - {$moduleName}', '{$currentURL|escape:url}')">{$MOD.LBL_HELP_BOOKMARK}</a>
-    </td>
-</tr>
-</table>
-<table class='edit view'>
-<tr>
-    <td>{include file="$helpPath"}</td>
-</tr>
-</table>
-{literal}
-<script type="text/javascript" language="JavaScript">
-<!--
-function createBookmarkLink(title, url){
-    if (document.all)
-        window.external.AddFavorite(url, title);
-    else if (window.sidebar)
-        window.sidebar.addPanel(title, url, "")
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
--->
-</script>
-{/literal}
-</body>
-</html>	
-{else}
-<IFRAME frameborder="0" marginwidth="0" marginheight="0" bgcolor="#FFFFFF" SRC="{$iframeURL}" TITLE="{$iframeURL}" NAME="SUGARIFRAME" ID="SUGARIFRAME" WIDTH="100%" height="1000"></IFRAME>
-{/if}
+
+$module_name = 'OAuth2Clients';
+
+$viewdefs[$module_name]['DetailView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+    ],
+    'panels' => [
+        'default' =>
+            [
+                0 =>
+                    [
+                        'name' => 'name',
+                    ],
+                2 =>
+                    [
+                        'name' => 'is_confidential',
+                    ],
+                3 =>
+                    [
+                        'name' => 'id',
+                    ],
+                4 =>
+                    [
+                        'name' => 'allowed_grant_type',
+                    ],
+            ],
+        'LBL_PANEL_ASSIGNMENT' =>
+            [
+                0 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'date_entered',
+                                'customCode' =>
+                                    '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'date_modified',
+                                'label' => 'LBL_DATE_MODIFIED',
+                                'customCode' =>
+                                    '{$fields.date_modified.value} ' .
+                                    '{$APP.LBL_BY} ' .
+                                    '{$fields.modified_by_name.value}',
+                            ],
+                    ],
+            ],
+    ],
+];
