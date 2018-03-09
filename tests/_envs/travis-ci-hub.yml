@@ -8,5 +8,9 @@ modules:
       port: 9515 # ChromeDriver port
       browser: chrome
       window_size: false
+      capabilities:
+        chromeOptions:
+            args: ["--headless", "--disable-gpu", "window-size=1920x1080"]
+            binary: "google-chrome"
 
 
