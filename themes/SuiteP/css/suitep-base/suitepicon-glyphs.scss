@@ -361,6 +361,11 @@
 .suitepicon-mimetype-tab:before {
     content: "\f179";
 }
+// do not remove this
+[class*="suitepicon-module"]:before,
+.suitepicon-module-default:before {
+    content: "\f191";
+}
 .suitepicon-module-accounts:before {
     content: "\f17a";
 }
@@ -429,9 +434,6 @@
 }
 .suitepicon-module-contacts:before {
     content: "\f190";
-}
-.suitepicon-module-default:before {
-    content: "\f191";
 }
 .suitepicon-module-direct-reports:before {
     content: "\f192";

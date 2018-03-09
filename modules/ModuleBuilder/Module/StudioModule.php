@@ -191,7 +191,8 @@ class StudioModule
             'module' => $this->module,
             'type' => 'StudioModule',
             'action' => "module=ModuleBuilder&action=wizard&view_module={$this->module}",
-            'children' => $this->getModule()
+            'children' => $this->getModule(),
+            'icon' => IconRepository::getIconName($this->module)
         );
     }
 

@@ -72,7 +72,9 @@ class StudioBrowser{
     }
 		
 	function getNodes(){
-		$this->loadModules();
+        require_once 'IconRepository.php';
+
+        $this->loadModules();
 	    $nodes = array();
 		foreach($this->modules as $module){
 			$nodes[$module->name] = $module->getNodes();
