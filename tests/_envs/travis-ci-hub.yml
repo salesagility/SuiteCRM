@@ -13,4 +13,4 @@ modules:
             args: ["--headless", "--disable-gpu", "window-size=1920x1080"]
             binary: "/usr/bin/google-chrome-stable"
 
-
+#google-chrome-stable: /usr/bin/google-chrome-stable /usr/bin/X11/google-chrome-stable /usr/share/man/man1/google-chrome-stable.1.gz
