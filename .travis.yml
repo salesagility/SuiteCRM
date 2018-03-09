@@ -14,6 +14,16 @@ services:
 addons:
   chrome: stable
 
+env:
+- INSTANCE_URL=http://localhost/;
+- DATABASE_DRIVER=MYSQL
+- DATABASE_NAME=automated_tests
+- DATABASE_HOST=localhost
+- DATABASE_USER=automated_tests
+- DATABASE_PASSWORD=automated_tests
+- INSTANCE_ADMIN_USER=admin
+- INSTANCE_ADMIN_PASSWORD=admin
+
 before_install:
   - whereis google-chrome-stable
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
@@ -50,8 +60,10 @@ before_script:
   - ./vendor/bin/codecept build
 
 script:
-  - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
-  - php tests/testinstall.php
+  # Run the silent installer or the wizard installer ?
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php; else echo "using install wizard; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then php tests/testinstall.php; else ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv --debug; fi
+  # Run the unit tests
   - ./vendor/bin/codecept run unit --steps
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
