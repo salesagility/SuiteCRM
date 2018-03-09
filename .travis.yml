@@ -60,8 +60,7 @@ script:
   # Run API functional tests
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps -vvv; fi
   # RUN Basic Acceptance test
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f
-; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f; fi
 
 after_script:
   - cat suitecrm.log
