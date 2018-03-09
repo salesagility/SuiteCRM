@@ -50,7 +50,7 @@ script:
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
-  - if [[ $(phpenv version-name) == '7.0 ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps -vvv; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps -vvv; fi
 
 after_script:
   - cat suitecrm.log
