@@ -249,7 +249,6 @@ $mod_strings = array(
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_PHP_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of PHP: ',
     'ERROR_SUITECRM_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor (Community Edition, Professional, or Enterprise) of SuiteCRM: ',
     'LBL_LANGPACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_MODULELOADER' => 'Module Loader' /*for 508 compliance fix*/,
     'LBL_PATCHUPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
