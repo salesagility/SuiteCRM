@@ -173,7 +173,7 @@ function validate_user($user_name, $password){
 
 		$GLOBALS['log']->info('End: SoapHelperWebServices->validate_user - validation passed');
 		return true;
-	}else if(function_exists('mcrypt_cbc')){
+	}else if(function_exists('openssl_decrypt')){
 		$password = $this->decrypt_string($password);
 		if($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])){
 			$user->retrieve($_SESSION['authenticated_user_id']);
@@ -1097,7 +1097,7 @@ function validate_user($user_name, $password){
 	 */
 	function decrypt_string($string){
 		$GLOBALS['log']->info('Begin: SoapHelperWebServices->decrypt_string');
-		if(function_exists('mcrypt_cbc')){
+		if(function_exists('openssl_decrypt')){
 			require_once('modules/Administration/Administration.php');
 			$focus = new Administration();
 			$focus->retrieveSettings();
