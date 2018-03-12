@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 $dictionary['email_addresses'] = array(
     'table'        => 'email_addresses',
+    'audited' => true,
     'fields'    => array(
         'id' => array(
             'name'            => 'id',
@@ -79,6 +80,7 @@ $dictionary['email_addresses'] = array(
             'type'            => 'bool',
             'default'        => 0,
             'vname'         => 'LBL_OPT_OUT',
+            'audited' => true,
         ),
         
         'confirm_opt_in' => array(
@@ -88,6 +90,7 @@ $dictionary['email_addresses'] = array(
             'default'        => 'not-opt-in',
             'options' => 'email_settings_opt_in_dom',
             'vname'         => 'LBL_CONFIRM_OPT_IN',
+            'audited' => true,
         ),
 
         'confirm_opt_in_date' => array(
