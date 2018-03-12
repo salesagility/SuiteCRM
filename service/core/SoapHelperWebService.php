@@ -1113,7 +1113,7 @@ function validate_user($user_name, $password){
 			$key = substr(md5($key),0,24);
 		    $iv = "password";
 			$GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
-		    return mcrypt_cbc(MCRYPT_3DES, $key, pack("H*", $buffer), MCRYPT_DECRYPT, $iv);
+			return openssl_decrypt(pack("H*", $buffer), OPENSSL_CIPHER_3DES, $key, $iv);
 		}else{
 			$GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
 			return $string;
