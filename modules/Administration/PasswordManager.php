@@ -170,7 +170,8 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-if(!function_exists('mcrypt_cbc')){
+// Fix - Bug Number 5433 - mcrypt_cbc has been depreciated in php7
+if(!function_exists('mcrypt_encrypt')){
 	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
 }else{
