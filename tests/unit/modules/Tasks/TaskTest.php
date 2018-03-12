@@ -145,7 +145,7 @@ class TaskTest extends PHPUnit_Framework_TestCase
                 'CONTACT_PHONE' => '1234567',
                 'PRIORITY' => 'Medium',
                 'PARENT_MODULE' => 'Accounts',
-                'SET_COMPLETE' => '<a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a>',
+                'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
                 'TITLE' => ": test\nAccount: test",
         );
 
