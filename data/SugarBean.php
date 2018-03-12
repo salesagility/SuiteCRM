@@ -242,7 +242,7 @@ class SugarBean
     public $current_notify_user;
 
     /**
-     * @var bool $fetched_row
+     * @var bool|array $fetched_row
      */
     public $fetched_row = false;
     /**
