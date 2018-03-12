@@ -893,9 +893,9 @@ class EmailMan extends SugarBean
             if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
                 $this->current_emailtemplate = new EmailTemplate();
 
-                if ($this->resend_type == 'Reminder'){
+                if (isset($this->resend_type) && $this->resend_type == 'Reminder'){
                     $this->current_emailtemplate->retrieve($sugar_config['survey_reminder_template']);
-                } else{
+                } else {
                     $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
                 }
 
@@ -955,9 +955,10 @@ class EmailMan extends SugarBean
 
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
-            $mail->Sender = $this->mailbox_from_addr;
-            $mail->From = $this->mailbox_from_addr;
+            $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
+            
             $mail->ClearCustomHeaders();
             $mail->AddCustomHeader('X-CampTrackID:' . $this->getTargetId());
             //CL - Bug 25256 Check if we have a reply_to_name/reply_to_addr value from the email marketing table.  If so use email marketing entry; otherwise current mailbox (inbound email) entry
@@ -1052,7 +1053,7 @@ class EmailMan extends SugarBean
             $mail->handleAttachments($this->notes_array);
             $tmp_Subject = $mail->Subject;
             $mail->prepForOutbound();
-
+            
             $success = $mail->Send();
             //Do not save the encoded subject.
             $mail->Subject = $tmp_Subject;
