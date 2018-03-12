@@ -1532,7 +1532,7 @@ EOQ;
             $emailLink = $emailUI->populateComposeViewFields($focus);
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $focus->$attribute . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
         }
 
         return $emailLink;
