@@ -72,6 +72,7 @@ class AM_ProjectTemplatesViewList extends ViewList{
             
         if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
         {
+            $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
             $this->lv->setup($this->seed, 'modules/AM_ProjectTemplates/tpls/ListViewGeneric.tpl', $this->where, $this->params);
             $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
             echo $this->lv->display();

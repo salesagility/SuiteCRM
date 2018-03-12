@@ -1571,7 +1571,7 @@ class SugarBean
                 return true;
             }
         }
-        $GLOBALS['log']->debug("SugarBean.load_relationships, Error Loading relationship (" . $rel_name . ")");
+        $GLOBALS['log']->debug("SugarBean.load_relationships, failed Loading relationship (" . $rel_name . ")");
         return false;
     }
 
@@ -1919,7 +1919,15 @@ class SugarBean
             foreach ($this->email_addresses_non_primary as $mail) {
                 $this->emailAddress->addAddress($mail);
             }
-            $this->emailAddress->save($this->id, $this->module_dir);
+            $this->emailAddress->saveEmail(
+                $this->id,
+                $this->module_dir,
+                '',
+                '',
+                '',
+                '',
+                '',
+                $this->in_workflow);
         }
 
         if (isset($this->custom_fields)) {

@@ -198,7 +198,7 @@ if($db->supports("create_user")){
     <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
             <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
-            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+            <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
             <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
             <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
@@ -420,7 +420,7 @@ function confirm_drop_tables(yes_no){
 
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 <script type="text/javascript">
@@ -444,4 +444,3 @@ echo $out4;
 echo $out_dd;
 echo $out5;
 
-?>

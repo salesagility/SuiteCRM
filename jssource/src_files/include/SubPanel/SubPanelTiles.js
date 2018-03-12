@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -145,8 +145,8 @@ function set_return_and_save_background(popup_reply_data) {
   var form_name = popup_reply_data.form_name;
   var name_to_value_array = popup_reply_data.name_to_value_array;
   var passthru_data = popup_reply_data.passthru_data;
-  var select_entire_list = typeof( popup_reply_data.select_entire_list ) == 'undefined' ? 0 : popup_reply_data.select_entire_list;
-  var current_query_by_page = popup_reply_data.current_query_by_page.replace(/&quot;/g,'');
+  var select_entire_list = typeof( popup_reply_data.select_entire_list ) === 'undefined' ? 0 : popup_reply_data.select_entire_list;
+  var current_query_by_page = typeof(popup_reply_data.current_query_by_page) === 'undefined' ? '' : popup_reply_data.current_query_by_page.replace(/&quot;/g, '');
   // construct the POST request
   var query_array = new Array();
   if (name_to_value_array != 'undefined') {

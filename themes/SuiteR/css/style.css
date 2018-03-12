@@ -4717,7 +4717,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     text-decoration:none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 981px) {
     .showsearch{
         display:none;
     }

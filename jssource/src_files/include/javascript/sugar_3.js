@@ -2962,7 +2962,7 @@ SUGAR.util = function () {
       }
     },
     evalScript: function (text) {
-      if (isSafari) {
+      if (UA.webkit && !UA.chrome) {
         var waitUntilLoaded = function () {
           SUGAR.evalScript_waitCount--;
           if (SUGAR.evalScript_waitCount == 0) {

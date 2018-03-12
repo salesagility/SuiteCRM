@@ -2800,9 +2800,7 @@ class InboundEmail extends SugarBean {
 				} // if
 			} // if
 			$c->save(true);
-			$caseId = $c->id;
-			$c = new aCase();
-			$c->retrieve($caseId);
+            $c->retrieve($c->id);;
 			if($c->load_relationship('emails')) {
 				$c->emails->add($email->id);
 			} // if
@@ -2822,7 +2820,7 @@ class InboundEmail extends SugarBean {
 			} // if
 			$c->email_id = $email->id;
 			$email->parent_type = "Cases";
-			$email->parent_id = $caseId;
+            $email->parent_id = $c->id;
 			// assign the email to the case owner
 			$email->assigned_user_id = $c->assigned_user_id;
 			$email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;

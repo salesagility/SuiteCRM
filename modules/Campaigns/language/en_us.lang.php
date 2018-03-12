@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -341,7 +341,7 @@ $mod_strings = array (
 	'LBL_MAILBOX_CHECK1_GOOD'   => ' Mail account(s)) with bounce handling detected:',
 	'LBL_MAILBOX_CHECK1_BAD'    => 'No mail account(s) with bounce handling detected.',
 	'LBL_MAILBOX_CHECK2_GOOD'   => ' E-mail Settings have been configured:',
-	'LBL_MAILBOX_CHECK2_BAD'    => 'Please configure your system email address. E-mail Settings have not been configured or are invalid.',
+	'LBL_MAILBOX_CHECK2_BAD'    => 'Please configure your system email address. E-mail Settings have not been configured or are invalid. The \"From\" Address must not contain example.com.',
 	'LBL_SCHEDULER_CHECK_GOOD' => 'Schedulers detected',
 	'LBL_SCHEDULER_CHECK_BAD' =>   'No Schedulers detected',
 	'LBL_SCHEDULER_CHECK1_BAD'  => 'Scheduler has not been set up to process Bounced Campaign Emails.',
@@ -495,7 +495,7 @@ $mod_strings = array (
 	'LBL_CHOOSE_TEMPLATES' => 'Choose Templates',
 	'LBL_CHOOSE_TARGETS' => 'Choose Targets',
 	'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
-	'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window..',
+	'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window...',
 	'LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG' => 'Do you wish to overwrite the selected template? Select "Cancel" to continue without saving.',
 	'LBL_CREATE_MARKETING_RECORD' => 'Next',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
@@ -529,7 +529,7 @@ $mod_strings = array (
 	'LBL_NEWSLETTER_TITLE' => ' A newsletter campaign is a type of email campaign, which allows you to send an email to a single target list.',
 	'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
 	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
-	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
+	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving...',
 	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.',
 	'LBL_PLEASE_SELECT_OPTION' => 'Please select which option you prefer',
 	'LBL_OPTION_SELECT_TEMPLATE' => 'Select an existing template',
