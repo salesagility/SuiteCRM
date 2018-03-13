@@ -502,9 +502,9 @@ class Call extends SugarBean {
 			if(empty($action))
 			    $action = "index";
 
-            $setCompleteUrl = "<a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_CLOSEINLINE')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
+            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_CLOSEINLINE')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
 			if ($this->ACLAccess('edit')) {
-                $call_fields['SET_COMPLETE'] = $setCompleteUrl ."<span class='suitepicon suitepicon-action-clear'></span></a>";
+                $call_fields['SET_COMPLETE'] = $setCompleteUrl ."<span class='suitepicon suitepicon-action-clear'></span></a></b>";
             } else {
                 $call_fields['SET_COMPLETE'] = '';
             }
