@@ -361,8 +361,6 @@
 .suitepicon-mimetype-tab:before {
     content: "\f179";
 }
-// do not remove this
-[class*="suitepicon-module"]:before,
 .suitepicon-module-default:before {
     content: "\f191";
 }
@@ -542,8 +540,4 @@
 }
 .suitepicon-template-issue:before {
     content: "\f1b5";
-}
-// do not remove this
-.suitepicon-admin-default:before {
-    content: "\f160";
 }

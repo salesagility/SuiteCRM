@@ -22,12 +22,15 @@
 /**
  * CSS Fallbacks
  */
+[class*="suitepicon-module"]:before,
 .suitepicon-module- {
     @extend .suitepicon-module-default;
 }
-
 .suitepicon-action- {
     @extend .suitepicon-action-empty-action;
+}
+.suitepicon-admin- {
+    @extend .suitepicon-admin-password;
 }
 
 /**
