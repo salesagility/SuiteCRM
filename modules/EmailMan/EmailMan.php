@@ -972,13 +972,11 @@ class EmailMan extends SugarBean
             $macro_nv = array();
 
             require_once __DIR__ . '/../EmailTemplates/EmailTemplateParser.php';
-            require_once __DIR__ . '/../../include/BeanManager.php';
 
             $template_data = (new EmailTemplateParser(
                 $this->current_emailtemplate,
                 $this->current_campaign,
                 $module,
-                new BeanManager(),
                 $sugar_config['site_url'],
                 $this->getTargetId()
             ))->parseVariables();
