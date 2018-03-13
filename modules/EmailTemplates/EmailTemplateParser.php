@@ -78,11 +78,6 @@ class EmailTemplateParser
     private $module;
 
     /**
-     * @var BeanManager
-     */
-    private $beanManager;
-
-    /**
      * @var string
      */
     private $siteUrl;
@@ -101,7 +96,6 @@ class EmailTemplateParser
      * @param EmailTemplate $template
      * @param Campaign $campaign
      * @param EmailInterface $module
-     * @param BeanManager $beanManager
      * @param string $siteUrl
      * @param string $trackerId
      */
@@ -109,14 +103,12 @@ class EmailTemplateParser
         EmailTemplate $template,
         Campaign $campaign,
         EmailInterface $module,
-        BeanManager $beanManager,
         $siteUrl,
         $trackerId
     ) {
         $this->template = $template;
         $this->campaign = $campaign;
         $this->module = $module;
-        $this->beanManager = $beanManager;
         $this->siteUrl = $siteUrl;
         $this->trackerId = $trackerId;
     }
@@ -171,14 +163,18 @@ class EmailTemplateParser
 
         switch ($moduleName) {
             case 'surveys':
+                if ($this->campaign->survey_id === '') {
+                    $GLOBALS['log']->fatal(sprintf(
+                        'Variable %s could not be parsed, because Campaign has no Survey',
+                        $variable
+                    ));
+                    return $variable;
+                }
                 $reference = $this->getSurvey();
                 break;
             case 'contact':
                 $reference = $this->module;
                 break;
-            default:
-                $GLOBALS['log']->warn(sprintf('Invalid bean when parsing (%s)', $moduleName));
-                return $variable;
         }
 
         if (in_array($attribute, static::$allowedVariables, true)) {
@@ -189,21 +185,24 @@ class EmailTemplateParser
             return $reference->$attribute;
         }
 
-        $GLOBALS['log']->warn(
-            sprintf('%s does not set in %s bean', $attribute, $moduleName)
-        );
+        $GLOBALS['log']->fatal(sprintf(
+            'Variable %s could not be parsed, because attribute %s does not set in %s bean',
+            $variable,
+            $attribute,
+            $moduleName
+        ));
 
         return $variable;
     }
 
     /**
      * @return Surveys
-     * @throws DomainException In case bean is empty, invalid or not found with its id
      */
     public function getSurvey()
     {
+
         if ($this->survey === null) {
-            $this->survey = $this->beanManager->getBeanSafe('Surveys', $this->campaign->survey_id);
+            $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
         }
 
         return $this->survey;
@@ -219,7 +218,7 @@ class EmailTemplateParser
     {
         $value = '';
 
-        if ($attribute === 'survey_url_display' && $this->module instanceof Contact) {
+        if ($attribute === 'survey_url_display' && $this->module instanceof Person) {
             /** @var Contact $contact */
             $contact = $this->module;
             $value = sprintf(
