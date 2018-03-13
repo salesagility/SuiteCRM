@@ -2097,11 +2097,6 @@ $app_strings = array(
     'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
     'LBL_PRIMARY_GROUP' => "Primary Group",
 
-    'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
-    'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
-
     // footer
     'LBL_SUITE_TOP' => 'Back to top',
     'LBL_SUITE_SUPERCHARGED' => 'Supercharged by SuiteCRM',
