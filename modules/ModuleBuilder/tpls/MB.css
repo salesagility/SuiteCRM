@@ -65,14 +65,6 @@ button, .button {
     white-space: nowrap;
 }
 
-.crumbLink {
-    color: #444;
-}
-
-a.crumbLink {
-    text-decoration: none;
-}
-
 .wizardButton {
     border: 0;
 
@@ -88,20 +80,14 @@ a.crumbLink {
 }
 
 .wizardButton TD {
-    border: 1px solid white;
-    padding: 0 0 0 0;
-    background-color: white;
+    padding: 0;
 }
 
 .wizardButton TD:hover {
-    border: 1px solid darkgray;
-    background-color: white;
     cursor: pointer
 }
 
 .wizardButtonDown TD {
-    border: 1px solid black;
-    background-color: lightgray;
     cursor: pointer
 }
 
