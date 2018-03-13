@@ -900,8 +900,6 @@ $mod_strings = array(
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 
     'LBL_PWDSEC_SETS' => 'Password Security Settings',
-    'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
-    'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
     'LBL_PWDSEC_MIN_LENGTH' => 'Password minimum length',
     'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Password minimum length',
     'LBL_PWDSEC_UPPERCASE' => 'Password should contain uppercase characters',
@@ -912,7 +910,6 @@ $mod_strings = array(
     'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contain numbers',
     'LBL_PWDSEC_SPECCHAR' => 'Password should contain special characters',
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
-    'LBL_PWDSEC_DAYS' => 'Days',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
 );
