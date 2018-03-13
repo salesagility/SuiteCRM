@@ -54,12 +54,14 @@ $listViewDefs['Prospects'] = array(
         'label' => 'LBL_LIST_TITLE', 
         'link' => false,
         'default' => true),   
-    'EMAIL1_LINK' => array(
+    'EMAIL1' => array(
         'width' => '20', 
         'label' => 'LBL_LIST_EMAIL_ADDRESS',
         'sortable' => false, 
         'link' => false,
-        'default' => true),           
+        'default' => true,
+        'customCode' => '{$EMAIL1_LINK}',
+    ),           
     'PHONE_WORK' => array(
         'width' => '10', 
         'label' => 'LBL_LIST_PHONE', 
