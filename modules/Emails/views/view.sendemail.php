@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-class EmailsViewSendemail extends ViewAjax
+class EmailsViewSendEmail extends ViewAjax
 {
     /**
      * @var Email $bean
@@ -80,7 +80,7 @@ class EmailsViewSendemail extends ViewAjax
                     'relationships' => array(),
                 );
                 break;
-            case 'sent_error':
+            case 'send_error':
                 $response['errors'] = array(
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,

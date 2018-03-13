@@ -84,5 +84,3 @@ class MyProjectTaskDashlet extends DashletGeneric {
         return $resultArray;
     }
 }
-
-?>

@@ -58,4 +58,3 @@ $viewdefs['AOW_Processed']['DetailView'] = array(
   ),
 )
 );
-?>

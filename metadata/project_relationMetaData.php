@@ -118,5 +118,3 @@ $dictionary['project_relation'] = array(
 		
 		),
 );
-
-?>

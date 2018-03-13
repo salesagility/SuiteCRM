@@ -209,6 +209,27 @@ $layout_defs['Campaigns'] = array(
             'title_key' => 'LBL_OPPORTUNITY_SUBPANEL_TITLE',
             'top_buttons' => array(),
         ),
+        'surveyresponses_campaigns' => array (
+          'order' => 100,
+          'module' => 'SurveyResponses',
+          'subpanel_name' => 'default',
+          'sort_order' => 'asc',
+          'sort_by' => 'id',
+          'title_key' => 'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE',
+          'get_subpanel_data' => 'surveyresponses_campaigns',
+          'top_buttons' =>
+          array (
+            0 =>
+            array (
+              'widget_class' => 'SubPanelTopButtonQuickCreate',
+            ),
+            1 =>
+            array (
+              'widget_class' => 'SubPanelTopSelectButton',
+              'mode' => 'MultiSelect',
+            ),
+          ),
+        ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
             'order' => 900,
@@ -223,4 +244,3 @@ $layout_defs['Campaigns'] = array(
         ),
     ),
 );
-?>

@@ -162,7 +162,7 @@ function pollMonitoredInboxes()
                             $uid = imap_uid($ieX->conn, $msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($ieX->importOneEmail($msgNo, $uid)) {
+                            if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
                                 $sugarFolder->addBean($ieX->email);
                                 if ($ieX->isPop3Protocol()) {
@@ -206,7 +206,7 @@ function pollMonitoredInboxes()
                             } // if
                         } else {
                             if ($ieX->isAutoImport()) {
-                                $ieX->importOneEmail($msgNo, $uid);
+                                $ieX->returnImportedEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
@@ -539,44 +539,44 @@ function pollMonitoredInboxesAOP()
     global $sugar_config;
 
     require_once('modules/Configurator/Configurator.php');
-    require_once('modules/Emails/EmailUI.php');
-
-    $ie = new AOPInboundEmail();
-    $emailUI = new EmailUI();
-    $r = $ie->db->query('SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\' AND mailbox_type != \'bounce\'');
+    $aopInboundEmail = new AOPInboundEmail();
+    $sqlQueryResult = $aopInboundEmail->db->query(
+        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\''.
+        ' AND mailbox_type != \'bounce\''
+    );
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
-    while ($a = $ie->db->fetchByAssoc($r)) {
+    while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
-        $ieX = new AOPInboundEmail();
-        $ieX->retrieve($a['id']);
-        $mailboxes = $ieX->mailboxarray;
+        $aopInboundEmailX = new AOPInboundEmail();
+        $aopInboundEmailX->retrieve($inboundEmailRow['id']);
+        $mailboxes = $aopInboundEmailX->mailboxarray;
         foreach ($mailboxes as $mbox) {
-            $ieX->mailbox = $mbox;
+            $aopInboundEmailX->mailbox = $mbox;
             $newMsgs = array();
             $msgNoToUIDL = array();
             $connectToMailServer = false;
-            if ($ieX->isPop3Protocol()) {
-                $msgNoToUIDL = $ieX->getPop3NewMessagesToDownloadForCron();
+            if ($aopInboundEmailX->isPop3Protocol()) {
+                $msgNoToUIDL = $aopInboundEmailX->getPop3NewMessagesToDownloadForCron();
                 // get all the keys which are msgnos;
                 $newMsgs = array_keys($msgNoToUIDL);
             }
-            if ($ieX->connectMailserver() == 'true') {
+            if ($aopInboundEmailX->connectMailserver() == 'true') {
                 $connectToMailServer = true;
             } // if
 
-            $GLOBALS['log']->debug('Trying to connect to mailserver for [ ' . $a['name'] . ' ]');
+            $GLOBALS['log']->debug('Trying to connect to mailserver for [ ' . $inboundEmailRow['name'] . ' ]');
             if ($connectToMailServer) {
                 $GLOBALS['log']->debug('Connected to mailserver');
-                if (!$ieX->isPop3Protocol()) {
-                    $newMsgs = $ieX->getNewMessageIds();
+                if (!$aopInboundEmailX->isPop3Protocol()) {
+                    $newMsgs = $aopInboundEmailX->getNewMessageIds();
                 }
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
                     require_once("include/SugarFolders/SugarFolders.php");
                     $sugarFolder = new SugarFolder();
-                    $groupFolderId = $ieX->groupfolder_id;
+                    $groupFolderId = $aopInboundEmailX->groupfolder_id;
                     $isGroupFolderExists = false;
                     $users = array();
                     if ($groupFolderId != null && $groupFolderId != "") {
@@ -584,52 +584,52 @@ function pollMonitoredInboxesAOP()
                         $isGroupFolderExists = true;
                     } // if
                     $messagesToDelete = array();
-                    if ($ieX->isMailBoxTypeCreateCase()) {
+                    if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                         require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
-                        $assignManager = new AOPAssignManager($ieX);
+                        $assignManager = new AOPAssignManager($aopInboundEmailX);
                     }
                     foreach ($newMsgs as $k => $msgNo) {
                         $uid = $msgNo;
-                        if ($ieX->isPop3Protocol()) {
+                        if ($aopInboundEmailX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($ieX->conn, $msgNo);
+                            $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($ieX->importOneEmail($msgNo, $uid)) {
+                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX->email);
-                                if ($ieX->isPop3Protocol()) {
+                                $sugarFolder->addBean($aopInboundEmailX->email);
+                                if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
                                     $messagesToDelete[] = $uid;
                                 }
-                                if ($ieX->isMailBoxTypeCreateCase()) {
+                                if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
-                                    $ieX->handleCreateCase($ieX->email, $userId);
+                                    $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if
                             } // if
                         } else {
-                            if ($ieX->isAutoImport()) {
-                                $ieX->importOneEmail($msgNo, $uid);
+                            if ($aopInboundEmailX->isAutoImport()) {
+                                $aopInboundEmailX->returnImportedEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
 
-                                $ieX->getMessagesInEmailCache($msgNo, $uid);
+                                $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($ieX->conn, $msgNo);
-                                $email->name = $ieX->handleMimeHeaderDecode($header->subject);
-                                $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
-                                $email->reply_to_email = $ieX->convertImapToSugarEmailAddress($header->reply_to);
+                                $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
+                                $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
+                                $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
+                                $email->reply_to_email = $aopInboundEmailX->convertImapToSugarEmailAddress($header->reply_to);
                                 if (!empty($email->reply_to_email)) {
                                     $contactAddr = $email->reply_to_email;
                                 } else {
                                     $contactAddr = $email->from_addr;
                                 }
-                                $mailBoxType = $ieX->mailbox_type;
-                                $ieX->handleAutoresponse($email, $contactAddr);
+                                $mailBoxType = $aopInboundEmailX->mailbox_type;
+                                $aopInboundEmailX->handleAutoresponse($email, $contactAddr);
                             } // else
                         } // else
                         $GLOBALS['log']->debug('***** On message [ ' . $current . ' of ' . $total . ' ] *****');
@@ -639,22 +639,22 @@ function pollMonitoredInboxesAOP()
 
                 } // if
                 if ($isGroupFolderExists) {
-                    $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
+                    $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
-                        if ($ieX->isPop3Protocol()) {
-                            $ieX->deleteMessageOnMailServerForPop3(implode(",", $messagesToDelete));
+                        if ($aopInboundEmailX->isPop3Protocol()) {
+                            $aopInboundEmailX->deleteMessageOnMailServerForPop3(implode(",", $messagesToDelete));
                         } else {
-                            $ieX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'], $messagesToDelete));
+                            $aopInboundEmailX->deleteMessageOnMailServer(implode($app_strings['LBL_EMAIL_DELIMITER'], $messagesToDelete));
                         }
                     }
                 }
             } else {
-                $GLOBALS['log']->fatal("SCHEDULERS: could not get an IMAP connection resource for ID [ {$a['id']} ]. Skipping mailbox [ {$a['name']} ].");
+                $GLOBALS['log']->fatal("SCHEDULERS: could not get an IMAP connection resource for ID [ {$inboundEmailRow['id']} ]. Skipping mailbox [ {$inboundEmailRow['name']} ].");
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($ieX->conn);
-        imap_close($ieX->conn, CL_EXPUNGE);
+        imap_expunge($aopInboundEmailX->conn);
+        imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
     } // while
     return true;
 }
@@ -823,4 +823,3 @@ if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {
 if (file_exists('custom/modules/Schedulers/Ext/ScheduledTasks/scheduledtasks.ext.php')) {
     require('custom/modules/Schedulers/Ext/ScheduledTasks/scheduledtasks.ext.php');
 }
-?>

@@ -125,5 +125,3 @@ class SugarWidget
 	    return strtoupper(substr($column_name,0,22) . substr(md5(strtolower($column_name)), 0, 6));
     }
 }
-
-?>

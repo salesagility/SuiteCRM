@@ -1,0 +1,1912 @@
+/**** FORM ****/
+
+fieldset {
+  margin-bottom: 0;
+}
+
+table {
+  margin-bottom: 0;
+}
+
+pre {
+  margin-bottom: 0;
+}
+
+p {
+  font-size: $page-p-size;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a {
+}
+
+form {
+  margin: 0;
+}
+
+textarea {
+  font-family: $page-font-family;
+}
+
+
+.checkbox {
+  display: inline-block;
+  background: url('../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  visibility: visible;
+}
+
+input[type=checkbox] {
+  display: inline-block;
+  background: url('../../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  visibility: visible;
+}
+
+input[type=radio] {
+  display: inline-block;
+  background: url('../../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
+  padding: 0;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  visibility: visible;
+}
+
+input[type=checkbox]:focus {
+  outline: 0;
+}
+
+input[type=radio]:focus {
+  outline: 0;
+}
+
+input[type=checkbox] {
+  background-position: 0 0;
+}
+
+input[type=checkbox]:checked {
+  background-position: -18px 0;
+}
+
+input[type=checkbox]:disabled {
+  background-position: -36px 0;
+}
+
+input[type=checkbox]:disabled:checked {
+  background-position: -54px 0;
+}
+
+input[type=checkbox]:checked:disabled {
+  background-position: -54px 0;
+}
+
+input[type=radio] {
+  background-position: 0 0;
+}
+
+input[type=radio]:checked {
+  background-position: -18px 0;
+}
+
+input[type=radio]:disabled {
+  background-position: -36px 0;
+}
+
+input[type=radio]:disabled:checked {
+  background-position: -54px 0;
+}
+
+input[type=radio]:checked:disabled {
+  background-position: -54px 0;
+}
+
+td.nowrap input[type=checkbox] {
+  margin-top: 3px;
+}
+
+input[type=text]:disabled {
+  background: $default-text-disabled-color;
+  border: 1px solid $default-text-disabled-border-color;
+}
+
+
+#bigbutton {
+  padding: 10px 0 10px 0;
+  border-radius: 0;
+}
+
+div.input-group input {
+  margin: 0 auto;
+  max-width: 100% ;
+  min-width: 100% ;
+}
+
+.button-primary:active {
+  background-image: none;
+}
+
+.button-primary.active {
+  background-image: none;
+}
+
+.open > .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.button-primary.disabled {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled] {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary.disabled:hover {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled]:hover {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary:hover {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary.disabled:focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled]:focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary:focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary.disabled.focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled].focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary.focus {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary.disabled:active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled]:active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary:active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary.disabled.active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary[disabled].active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+fieldset[disabled] .btn-primary.active {
+  background-color: $disabled-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button-primary .badge {
+  background-color: $main-alternate-bg;
+  color: $link-color;
+  padding: 5px;
+}
+
+
+#EditView_tabs .edit .button {
+  background-color: $danger-btn-bg;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#ConvertLead .edit .button {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#EditView_tabs .id-ff-remove {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#ConvertLead .id-ff-remove {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#EditView_tabs .edit [type="button"] {
+  background-color: $danger-btn-bg;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+.edit-view-row [data-label=LBL_CONDITION_LINES].label {
+  display: none;
+}
+
+.edit-view-row [data-label=LBL_ACTION_LINES].label {
+  display: none;
+}
+
+[field="condition_lines"].col-sm-8 {
+  display: block;
+  width: 100%;
+}
+
+#conditionLines {
+  display: block;
+}
+
+#conditionLines > thead {
+  display: block;
+}
+
+#conditionLines > thead td {
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: $main-font-color;
+  font-weight: bold;
+  font-size: $page-font-size;
+}
+
+.detail-view-field #conditionLines thead td:first-of-type {
+  height: 36px;
+}
+
+
+#conditionLines thead td:first-of-type {
+  height: 32px;
+  border-top-left-radius: 4px;
+}
+
+
+#conditionLines thead td:last-of-type {
+  padding-left: 8px;
+  border-top-right-radius: 4px;
+  width: 26%;
+}
+
+
+#conditionLines > thead > tr {
+  display: block;
+}
+
+
+#conditionLines > tbody {
+  display: block;
+}
+
+#conditionLines > tbody > tr {
+  display: block;
+  background-color: $main-bg;
+  border-bottom: 5px $main-alternate-bg solid;
+}
+
+#conditionLines > tbody > tr > td {
+  vertical-align: top;
+}
+
+
+#conditionLines td:first-of-type {
+  display: inline-block;
+  width: 48px;
+}
+
+#conditionLines td:not(:first-of-type) {
+  display: inline-block;
+  width: 16.667%; // 100 / 6 columns
+}
+
+#conditionLines tbody td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+#conditionLines tbody td:first-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#conditionLines tbody td:last-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 26%;
+}
+
+
+#conditionLines td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+#conditionLines input {
+  margin-top: 8px;
+
+}
+
+#conditionLines input.sqsEnabled {
+  width: 62.5%;
+}
+
+#conditionLines input[type=checkbox] {
+  margin-top: 24px;
+}
+
+
+#conditionLines textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
+
+#conditionLines select {
+  width: 95%;
+  margin-top: 8px;
+}
+
+@media (max-width: 1800px) {
+  // Date type
+  #conditionLines select[id$="][0]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines select[id$="][1]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines input[id$="][2]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines select[id$="][3]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+}
+
+@media (min-width: 1800px) {
+  // Date type
+  #conditionLines select[id$="][0]"] {
+    width: 24%;
+  }
+
+  #conditionLines select[id$="][1]"] {
+    width: 24%;
+  }
+
+  #conditionLines input[id$="][2]"] {
+    width: 24%;
+  }
+
+  #conditionLines select[id$="][3]"] {
+    width: 24%;
+  }
+
+}
+
+[field="action_lines"] {
+  display: block;
+  width: 100%;
+}
+
+#conditionLines [type="button"] {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#actionLines [type="button"] {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+#actionLines {
+  display: block;
+}
+
+#actionLines > tr {
+  display: block;
+}
+
+#actionLines > tr > td {
+  display: block;
+}
+
+#actionLines td[field] label {
+  margin-right: 8px;
+}
+
+#actionLines > tr > td {
+  border: 1px solid $workflow-action-bg;
+  border-radius: $border-radius-base;
+  margin-bottom: 4px;
+}
+
+#actionLines .action-table {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tbody {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tr {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action-parameter] input.sqsEnabled {
+  margin-top: 0px;
+  width: 50%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="create-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="modify-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] input.sqsEnabled {
+  width: 10%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] .id-ff.multiple > button{
+  margin-left: 0;
+}
+
+
+
+#actionLines .action-table td {
+  display: inline-block;
+}
+
+#actionLines .action-table > tbody > tr:first-of-type > td:first-of-type {
+  padding-left: 8px;
+}
+
+#actionLines .action-table > tbody > tr:first-of-type > td {
+  border-bottom: 1px solid $workflow-action-bg;
+  padding-top: 4px;
+}
+
+#actionLines td[field=action] {
+  width: 65%;
+  height: 64px;
+}
+
+#actionLines td[field=action] select {
+  margin-left: 20px;
+}
+
+#actionLines td[field=name] {
+  width: 30%;
+  height: 64px;
+}
+
+#actionLines td[field=name] input[type=text] {
+  width: 80%;
+}
+
+#actionLines td[field=delete] {
+  width: 5%;
+  height: 64px;
+}
+
+#actionLines td[field=delete] .delete-btn {
+  float: right;
+}
+
+#actionLines td[field=delete] .delete-btn .btn {
+  padding: 0 0 0 0;
+}
+
+.edit tr td [data-workflow-action] td {
+  vertical-align: middle;
+}
+
+[data-workflow-action-line] {
+  vertical-align: top;
+}
+
+[data-workflow-action-line] td:first-of-type {
+  width: 48px;
+}
+
+
+[data-workflow-action-line] td:nth-of-type(3) select {
+  width: auto;
+}
+
+[data-workflow-action-line] select[id$="][0]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action-line] select[id$="][1]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"][type=checkbox] {
+  width: 16px;
+}
+
+[data-workflow-action-line] select[id$="][3]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr > td {
+  line-height: $input-line-height;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(1) > td {
+  width: 20%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) {
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td:nth-of-type(1) {
+  padding-left: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
+  width: auto;
+}
+
+#relate_label {
+  line-height: $input-line-height;
+}
+
+#deleteGroup img {
+  background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
+  border: 1px solid $danger-btn-bg;
+  border-radius: $border-radius-base;
+}
+
+.btn-danger {
+  background-color: $danger-btn-bg;
+}
+
+.btn-danger:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.btn-danger:active {
+  background-color: $danger-btn-bg;
+}
+
+.btn-danger:focus {
+  background-color: $danger-btn-bg;
+}
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+[data-workflow-action] .relationship tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+  min-height: 64px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td select {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td input {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+
+
+[data-workflow-action] .name_label {
+  width: 70%;
+}
+
+[data-workflow-action] .name_label {
+  width: 30%;
+}
+
+[data-workflow-action] .lines tbody > tr > td {
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+[data-workflow-action] .lines tbody > tr > td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+[data-workflow-action] .lines select {
+  width: auto;
+  margin-top: 8px;
+}
+
+[data-workflow-action] .lines tbody > tr > td input {
+  margin-top: 8px;
+}
+
+[data-workflow-action] .lines tbody > tr > td input.sqsEnabled {
+  width: 62.5%;
+}
+
+[data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
+  margin-top: 24px;
+}
+
+[data-workflow-action] .lines tbody > tr > td textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
+
+
+[data-workflow-action-parameter] [colspan="4"] {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action-parameter] > td {
+  display: block;
+  width: 100%;
+}
+
+/** EditView action buttons ***/
+.buttons .primary {
+  background-color: $danger-btn-bg;
+}
+
+.buttons .primary:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.buttons .button {
+  background-color: $danger-btn-bg;
+}
+
+.buttons .button:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.removeFileButton {
+   font-size: $page-font-size;
+   font-weight: 500;
+   cursor: pointer;
+   padding: 0 20px 0 20px;
+   border-style: none;
+   border-radius: $border-radius-base;
+   letter-spacing: 1px;
+   line-height: $input-line-height;
+   height: $input-line-height;
+   text-transform: uppercase;
+ }
+
+.removeFileButton {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+}
+
+.removeFileButton:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.buttonOn {
+  font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  border-radius: $border-radius-base;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+}
+
+.btn .btn:hover {
+  font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  border-radius: $border-radius-base;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+}
+
+.btn-default{
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-default:hover {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-default:active {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-default:focus {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-primary {
+  background-color: $primary-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-primary:hover {
+  background-color: $primary-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-primary:active {
+  background-color: $primary-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-primary:focus {
+  background-color: $primary-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-info {
+  background-color: $info-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg;
+}
+
+input[type=button].btn-info {
+  background-color: $info-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg;
+}
+
+.btn-info:hover {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+.btn-info:active {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+.btn-info:focus {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+input[type=button].btn-info:hover {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+input[type=button].btn-info:active {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+input[type=button].btn-info:focus {
+  background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
+  border: 1px solid $info-btn-bg-hover;
+}
+
+.btn-success {
+  background-color: $success-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $success-btn-bg;
+}
+
+.btn-success:hover {
+  background-color: $success-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $success-btn-bg;
+}
+
+.btn-success:active {
+  background-color: $success-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $success-btn-bg;
+}
+
+.btn-success:focus {
+  background-color: $success-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $success-btn-bg;
+}
+
+.btn-danger {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:hover {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:active {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:focus {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+
+.button {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+input[type=submit].button:hover {
+  background: $danger-btn-bg-hover;
+}
+
+input[type=submit] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+input[type=button] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+input[type=reset] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+.btn {
+  margin-bottom: 4px;
+}
+
+button {
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+html input[type=button] {
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+input[type=reset]{
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+input[type=submit] {
+  margin-bottom: 0px;
+  margin-right: 0px;
+}
+
+.button {
+  margin-bottom: 4px;
+}
+
+input[type=button] {
+  margin-bottom: 4px;
+}
+
+input[type=reset] {
+  margin-bottom: 4px;
+}
+
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover {
+  font-size: $page-font-size;
+  color: $default-btn-color;
+  cursor: pointer;
+}
+
+input[type=submit]:active, input[type=button]:active, input[type=reset]:active {
+  font-size: $page-font-size;
+  color: $default-btn-color;
+  cursor: pointer;
+}
+
+input[type=submit]:focus, input[type=button] {
+  font-size: $page-font-size;
+  color: $default-btn-color;
+  cursor: pointer;
+}
+
+.moremenu a {
+  font-size: $page-font-size;
+  color: $default-btn-color;
+  cursor: pointer;
+  margin: 0;
+}
+
+.moremenu ul {
+  top: 49px;
+  margin: 0;
+}
+
+.moremenu ul li a {
+  display: block;
+  font-size: $page-font-size;
+  color: $danger-btn-bg ;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.moremenu ul li:hover {
+  border-radius: 0 ;
+}
+
+.moremenu ul li a:hover {
+  background: none ;
+  background: $danger-btn-bg-hover ;
+  color: $default-btn-color ;
+  cursor: pointer;
+  padding: 5px;
+}
+
+[button]:focus, input[type=reset]:focus {
+  background: $danger-btn-bg-hover;
+}
+
+
+/* Remove Text Transformations for action menu*/
+#tab-actions .button {
+  text-transform: none;
+}
+
+#tab-actions input[type=submit] {
+  text-transform: none;
+}
+
+#tab-actions input[type=button] {
+  text-transform: none;
+}
+
+#tab-actions input[type=reset] {
+  text-transform: none;
+}
+
+#tab-actions > a {
+ padding-right: 5px;
+}
+
+form[name=DetailView] .button {
+  margin: 0 4px 4px 0;
+  float: left;
+}
+
+form[name=DetailView] input[type=submit] {
+  margin: 0 4px 4px 0;
+  float: left;
+}
+
+form[name=DetailView] input[type=button] {
+  margin: 0 4px 4px 0;
+  float: left;
+}
+
+form[name=DetailView] input[type=reset] {
+  margin: 0 4px 4px 0;
+  float: left;
+}
+
+td.submitButtons .button:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+button[disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background-color: $disabled-btn-bg;
+  color: $disabled-btn-color;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+input[type="submit"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background-color: $disabled-btn-bg;
+  color: $main-bg;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
+}
+
+input[type="reset"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background-color: $disabled-btn-bg;
+  color: $main-bg;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
+}
+
+input[type="button"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
+  background-color: $disabled-btn-bg;
+  color: $main-bg;
+  cursor: pointer;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
+}
+
+[field="billing_address_street"].detail-view-field {
+  padding: 16px 16px 32px 16px;
+}
+
+[field="shipping_address_street"].detail-view-field {
+  padding: 16px 16px 32px 16px;
+}
+
+[field="shipping_address_street"].detail-view-field .button {
+  background-color: $info-btn-bg;
+}
+
+[field="billing_address_street"].detail-view-field .button {
+  background-color: $info-btn-bg;
+}
+
+[field="shipping_address_street"].detail-view-field .button:hover {
+  background-color: $info-btn-bg-hover;
+}
+
+[field="billing_address_street"].detail-view-field .button:hover {
+  background-color: $info-btn-bg-hover;
+}
+
+.buttons input#btn_view_change_log {
+  background-color: $info-btn-bg;
+}
+
+.buttons input#btn_view_change_log:hover {
+  background-color: $info-btn-bg-hover;
+}
+
+
+.button:hover {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button:focus {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button.focus {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button:active {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button.active {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.open > .dropdown-toggle.btn-primary {
+  background-color: $disabled-btn-color;
+  color: $default-btn-color;
+  border-color: $disabled-btn-color;
+}
+
+.button:active {
+  background-image: none;
+}
+
+.button.active {
+  background-image: none;
+}
+
+.open > .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.button .badge {
+  background-color: $default-btn-color;
+  color: $danger-btn-bg;
+}
+
+
+
+.yui-layout-hd .button {
+  font-size: $page-font-size;
+}
+
+.yui-layout-hd input[type=submit] {
+  font-size: $page-font-size;
+}
+
+.yui-layout-hd input[type=button] {
+  font-size: $page-font-size;
+}
+
+.form-control:focus  {
+  box-shadow: none;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input[type=text] {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input[type=number] {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input[type=password] {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input[type=email] {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input:not([type]) {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+textarea {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+}
+
+input[type=text] {
+  line-height: $input-line-height;
+  min-height: $input-line-height;
+}
+
+input[type=number] {
+  line-height: $input-line-height;
+  min-height: $input-line-height;
+}
+
+input[type=password] {
+  line-height: $input-line-height;
+  min-height: $input-line-height  +  8;
+}
+
+input[type=email] {
+  line-height: $input-line-height;
+  min-height: $input-line-height  +  8;
+}
+
+input:not([type]) {
+  line-height: $input-line-height;
+  min-height: $input-line-height  +  8;
+}
+
+
+textarea {
+  width: 50%;
+}
+
+select[size] {
+  background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
+  background-size: 52px 52px;
+  overflow-y: hidden;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  /*height: $input-line-height + 8;*/
+  height:100%;
+  -webkit-appearance: none;
+  appearance: none;
+  border-size: 1px;
+  -moz-appearance: none;
+}
+
+select.form-control {
+  background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
+  background-size: 52px 52px;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
+  -webkit-appearance: none;
+  appearance: none;
+  scrollbar-base-color: $input-select-bg;
+  scrollbar-arrow-color: $input-select-bg;
+  border-size: 1px;
+  -moz-appearance: none;
+}
+
+select {
+  background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
+  background-size: 52px 52px;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
+  -webkit-appearance: none;
+  appearance: none;
+  scrollbar-base-color: $input-select-bg;
+  scrollbar-arrow-color: $input-select-bg;
+  border-size: 1px;
+  -moz-appearance: none;
+}
+
+select:focus {
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-size: 1px;
+}
+
+select::selection {
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  border-size: 1px;
+}
+
+
+select#user_theme_picker {
+  background-image: none;
+}
+
+select:checked {
+  background: $input-select-bg;
+  color: $main-font-color;
+}
+
+option:checked {
+  background: $input-select-bg;
+  color: $main-font-color;
+}
+
+.saved_search_select {
+  background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
+  background-size: 52px 52px;
+  padding: 16px 55px 16px 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  border-size: 1px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select[multiple] {
+  background-image: none !important;
+  overflow: auto !important;
+  vertical-align: text-top;
+}
+
+select.ui-widget-content {
+  background: url("../../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
+  background-size: 52px 52px;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: $border-radius-base;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
+  -webkit-appearance: none;
+  appearance: none;
+  scrollbar-base-color: $input-select-bg;
+  scrollbar-arrow-color: $input-select-bg;
+  border-size: 1px;
+  -moz-appearance: none;
+}
+
+.form-control {
+  box-shadow: none;
+}
+
+
+/*Email Address*/
+#email1_span {
+  display: block;
+}
+#email1_span table {
+  display: block;
+}
+
+#email1_span tbody {
+  display: block;
+}
+
+#email1_span tr {
+  display: block;
+}
+
+#email1_span td {
+  display: block;
+  overflow: hidden;
+}
+
+
+#email1_span tr {
+  margin-bottom: 8px;
+}
+
+div.col-sm-12 #email1_span td.email-address-input {
+  width: 25%;
+}
+
+div.col-sm-6 #email1_span td.email-address-input {
+  width: 50%;
+}
+
+#email1_span td.email-address-input {
+  display: inline-block;
+}
+
+.edit-view-field .email-address-input input[type=text] {
+  width: 100%;
+}
+
+#email1_span td.email-address-remove-button {
+  display: inline-block;
+  line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+}
+
+#email1_span td.email-address-primary {
+  display: inline-block;
+  line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+}
+
+#email1_span td.email-address-opt-out {
+  display: inline-block;
+  line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+}
+
+#email1_span td.email-address-invalid {
+  display: inline-block;
+  line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+}
+
+div.col-sm-12 #email1_span td.email-address-add-button {
+  width: 25%; /* is the same width as td.email-address-input */
+}
+
+div.col-sm-6 #email1_span td.email-address-add-button {
+  width: 50%; /* is the same width as td.email-address-input */
+}
+
+#email1_span  td.email-address-add-button {
+  display: inline-block;
+}
+
+#email1_span  td.email-address-title {
+  display: inline-block;
+  font-size: 10px;
+  padding-top: 42px;
+  width: 52px; /* same widths as td.email-address-remove-button */
+}
+
+.email-address-add-line-container .suitepicon {
+  line-height: inherit;
+}
+
+
+.emailaddresses button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+
+.emailaddresses button {
+  background-color: $danger-btn-bg;
+  border: 0px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.emailaddresses button .suitepicon {
+  line-height: inherit;
+}
+
+.emailaddresses button:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.email-address-add-button .suitepicon-action-plus {
+  padding-left: 4px;
+  font-size:24px;
+}
+
+#email1_span i.error {
+  background: inherit;
+  color: $main-font-color;
+}
+
+.email-address-line-container {
+  margin-bottom: 8px;
+}
+
+.email-address-input-group {
+  background: $input-bg;
+  border: 1px solid $input-border;
+  border-radius: $border-radius-base;
+}
+
+.email-address-input-group input[type=email].form-control {
+  display: inline-block;
+  font-size: 14px;
+  border: none;
+  line-height: 40px;
+}
+
+.email-address-input-group .form-control:focus  {
+  box-shadow: none;
+  border-color: $input-border;
+  outline: 0;
+  -webkit-box-shadow: none;
+}
+.email-address-input-group .form-control {
+  box-shadow: none;
+  border-color: $input-border;
+  outline: 0;
+  -webkit-box-shadow: none;
+}
+
+.email-address-add-line-container .email-address-add-button {
+  padding: 0;
+}
+
+.email-address-add-line-container .email-address-add-button:focus {
+  background-color: $danger-btn-bg;
+  border: 1px solid $danger-btn-bg;
+}
+
+.email-address-add-line-container .email-address-add-button:hover {
+  background-color: $danger-btn-bg-hover;
+  border: 0px solid $danger-btn-bg-hover;
+}
+
+/* override bootstrap (Needs to be stacked) */
+.email-address-input-group .input-group .form-control:last-child,
+.email-address-input-group .input-group-addon:last-child,
+.email-address-input-group .input-group-btn:first-child>.btn-group:not(:first-child)>.btn,
+.email-address-input-group .input-group-btn:first-child>.btn:not(:first-child),
+.email-address-input-group .input-group-btn:last-child>.btn,
+.email-address-input-group .input-group-btn:last-child>.btn-group>.btn,
+.email-address-input-group .input-group-btn:last-child>.dropdown-toggle {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.email-address-input-group .email-address-remove-button {
+  margin-left: 4px;
+}
+
+.email-address-input-group button[disabled].email-address-remove-button {
+  font-size: $page-p-size;
+  padding: 0;
+  line-height: 20px;
+  width: 36px;
+  height: 36px;
+}
+
+.email-address-option label {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.email-address-option input {
+  margin-top: 4px;
+}
+
+
+.email-address-input-group .validation-message {
+  display: inline-block;
+}
+
+.email-address-users-profile {
+  width: 248px;
+}
+
+div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+  visibility: collapse;
+}
+
+.col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+  width: 60%;
+}
+
+.col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+  width: 40%;
+}
+
+.col-sm-6 #email1_span .email-address-option {
+  width: 33.33%;
+}
+
+// Overriding inline style
+// TODO replace with modal dialog
+#settingsDialog_c {
+  z-index: 20;
+}
+
+#testOutboundDialog_c {
+  z-index: 20;
+}
+
+font[color=red] {
+  color: $danger;
+}
+
+@media (max-width: 768px) {
+  .email-address-options-container {
+    margin: 16px 0 16px 0;
+    width: 100%;
+    height: 32px;
+  }
+  div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+    visibility: visible;
+  }
+
+  .email-address-users-profile {
+    width: 100%;
+  }
+
+  .edit-view-row-item {
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+
+  .col-sm-8.edit-view-field {
+    width: 66.6666667%;
+  }
+
+  .edit-view-field select {
+    margin-bottom: 8px;
+  }
+
+  .edit-view-field textarea {
+    margin-bottom: 8px;
+    width: 100%;
+  }
+
+  .edit-view-field input[type="text"] {
+    margin-bottom: 8px;
+    width: 100%;
+  }
+
+  .edit-view-row-item .col-sm-2 {
+    width: 33.333333%;
+  }
+
+  .dateTime input[type="text"] {
+    width: 400px;
+  }
+
+}
+
+
+@media (max-width: 1600px) {
+  .col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 62.5%;
+  }
+
+  .col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .col-sm-6 #email1_span .email-address-option {
+    width: 20%;
+  }
+
+  .col-sm-6 #email1_span .email-address-option label {
+    display: block;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 1400px) {
+  .email-address-option {
+    width: 33%;
+  }
+
+  .col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 65%;
+  }
+}
+
+@media (max-width: 1130px) {
+  .col-sm-6 #email1_span .email-address-option {
+    width: 33%;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .email-address-options-container {
+    width: 50%;
+  }
+
+  .email-address-input-group {
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-base;
+  }
+
+  .email-address-input-group input[type=email].form-control {
+    background: $input-bg;
+    border: 1px solid $input-select-border;
+    border-radius: $border-radius-base;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .input-group-btn:last-child>.btn,
+  .input-group-btn:last-child>.btn-group {
+    margin-left: 8px;
+  }
+
+  .email-address-input-group .email-address-remove-button {
+    margin-left: 8px;
+  }
+}

@@ -319,4 +319,3 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
 
 	return $error->get_soap_array();
 }
-?>

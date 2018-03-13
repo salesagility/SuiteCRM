@@ -58,4 +58,3 @@ foreach ($beanFiles as $bean => $file)
 	}
 }
 echo $mod_strings['LBL_DONE'];
-?>

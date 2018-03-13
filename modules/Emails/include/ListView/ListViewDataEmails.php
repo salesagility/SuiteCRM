@@ -142,7 +142,8 @@ class ListViewDataEmails extends ListViewData
     protected function getInboundEmail($currentUser, $folder) {
 
         $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
-        if (!empty($folder->getId())) {
+        $id = $folder->getId();
+        if (!empty($id)) {
             $inboundEmailID = $folder->getId();
         }
 
@@ -207,17 +208,14 @@ class ListViewDataEmails extends ListViewData
         switch ($folder->getType()) {
 
             case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 $this->searchType = "imap";
                 break;
 
             case "draft":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
                 $this->searchType = "crm";
                 break;
 
             case "trash":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
                 $this->searchType = "imap";
                 break;
 
@@ -228,6 +226,31 @@ class ListViewDataEmails extends ListViewData
         }
 
         return $this->searchType;
+    }
+
+    /**
+     * @param Folder $folder
+     * @param InboundEmail $inboundEmail
+     */
+    private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
+    {
+        switch ($folder->getType()) {
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+                break;
+
+            case "draft":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                break;
+
+            case "trash":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
+                break;
+
+            default:
+                $inboundEmail->mailbox = empty($folder->id) ? '' : $folder->mailbox;
+                break;
+        }
     }
 
 
@@ -365,7 +388,7 @@ class ListViewDataEmails extends ListViewData
      * @param array $params
      * @param Email $seed
      * @param bool $singleSelect
-     * @return array
+     * @return array|string
      */
     public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect) {
 
@@ -478,10 +501,10 @@ class ListViewDataEmails extends ListViewData
 
         switch ($field) {
             case 'from_addr_name':
-                $ret = $emailHeader['from'];
+                $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['from']));
                 break;
             case 'to_addrs_names':
-                $ret = $emailHeader['to'];
+                $ret = mb_decode_mimeheader($emailHeader['to']);
                 break;
             case 'has_attachments':
                 $ret = false;
@@ -588,7 +611,7 @@ class ListViewDataEmails extends ListViewData
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
-                isset($request["type_basic"]) && count($request["type_basic"] > 1) ||
+                isset($request["type_basic"]) && count($request["type_basic"]) > 1 ||
                 $request["type_basic"][0] != ""
             ) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords");
@@ -656,6 +679,7 @@ class ListViewDataEmails extends ListViewData
 
 
             $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
+            $this->setInboundEmailMailbox($folderObj, $inboundEmail);
 
 
             // search in draft in CRM db?
@@ -664,7 +688,7 @@ class ListViewDataEmails extends ListViewData
                 if (!empty($where)) {
                     $where .= ' AND ';
                 }
-                $where .= ' emails.status LIKE "draft" ';
+                $where .= ' emails.status LIKE "draft" AND emails.deleted LIKE "0" ';
             }
 
 
@@ -693,7 +717,7 @@ class ListViewDataEmails extends ListViewData
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
                     $search = new ListViewDataEmailsSearchOnIMap($this);
-                    $ret = $search->search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
+                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
                     break;
 
                 default:

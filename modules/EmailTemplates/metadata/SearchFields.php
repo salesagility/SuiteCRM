@@ -43,4 +43,4 @@ $searchFields['EmailTemplates'] =
 		'name' => array( 'query_type'=>'default'),
 		'description'=> array('query_type'=>'default'),
 	);
-?>
+

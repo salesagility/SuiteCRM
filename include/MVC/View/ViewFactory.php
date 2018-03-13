@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
   /**
   * ViewFactory
   *
@@ -49,13 +53,27 @@ require_once('include/MVC/View/SugarView.php');
  * Sugar view factory
  * @api
  */
-class ViewFactory{
-	/**
-	 * load the correct view
-	 * @param string $type View Type
-	 * @return valid view
-	 */
-	static function loadView($type = 'default', $module = '', $bean = null, $view_object_map = array(), $target_module=''){
+class ViewFactory
+{
+
+    /**
+     * Load the correct view
+     *
+     * @param string $type
+     * @param null $module
+     * @param null $bean
+     * @param array $view_object_map
+     * @param string $target_module
+     * @return a|null
+     */
+    static function loadView(
+        $type = 'default',
+        $module = '',
+        $bean = null,
+        $view_object_map = array(),
+        $target_module = ''
+    )
+    {
 		$type = strtolower($type);
 
 		//first let's check if the module handles this view
@@ -119,6 +137,7 @@ class ViewFactory{
 			if(file_exists('custom/include/MVC/View/views/'.$config_file_name)){
 				require_once('custom/include/MVC/View/views/'.$config_file_name);
 				$view_config_root_cstm = $view_config;
+
 			}
 			if(file_exists('include/MVC/View/views/'.$config_file_name)){
 				require_once('include/MVC/View/views/'.$config_file_name);
@@ -254,4 +273,3 @@ class ViewFactory{
 			return new SugarView($bean, $view_object_map);
 	}
 }
-?>

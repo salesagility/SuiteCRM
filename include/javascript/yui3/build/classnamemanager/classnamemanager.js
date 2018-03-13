@@ -1,9 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('classnamemanager',function(Y){var CLASS_NAME_PREFIX='classNamePrefix',CLASS_NAME_DELIMITER='classNameDelimiter',CONFIG=Y.config;CONFIG[CLASS_NAME_PREFIX]=CONFIG[CLASS_NAME_PREFIX]||'yui3';CONFIG[CLASS_NAME_DELIMITER]=CONFIG[CLASS_NAME_DELIMITER]||'-';Y.ClassNameManager=function(){var sPrefix=CONFIG[CLASS_NAME_PREFIX],sDelimiter=CONFIG[CLASS_NAME_DELIMITER];return{getClassName:Y.cached(function(){var args=Y.Array(arguments);if(args[args.length-1]!==true){args.unshift(sPrefix);}else{args.pop();}
-return args.join(sDelimiter);})};}();},'3.3.0');
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("classnamemanager",function(C){var B="classNamePrefix",D="classNameDelimiter",A=C.config;A[B]=A[B]||"yui3";A[D]=A[D]||"-";C.ClassNameManager=function(){var E=A[B],F=A[D];return{getClassName:C.cached(function(){var G=C.Array(arguments);if(G[G.length-1]!==true){G.unshift(E);}else{G.pop();}return G.join(F);})};}();},"3.3.0");

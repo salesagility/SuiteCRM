@@ -77,13 +77,6 @@ abstract class SuiteEditorSettings
     public $group;
 
     /**
-     * JSON setting for TinyMCE initializer script
-     *
-     * @var string
-     */
-    public $tinyMCESetup = '{}';
-
-    /**
      * Javascript for body click handling
      *
      * @var string

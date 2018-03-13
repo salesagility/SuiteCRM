@@ -90,4 +90,3 @@ class ViewImportvcard extends SugarView
         $this->ss->display($this->getCustomFilePathIfExists('include/MVC/View/tpls/Importvcard.tpl'));
  	}
 }
-?>

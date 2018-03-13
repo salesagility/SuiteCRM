@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'modules/Emails/include/DetailView/EmailsDraftDetailView.php';
 require_once 'include/MVC/View/views/view.detail.php';
 
-class EmailsViewDetaildraft extends ViewDetail
+class EmailsViewDetailDraft extends ViewDetail
 {
     /**
      * @var Email $focus

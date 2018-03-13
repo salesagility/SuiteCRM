@@ -85,4 +85,3 @@ $viewdefs['EmailTemplates']['EditView'] = array(
 
 
 );
-?>

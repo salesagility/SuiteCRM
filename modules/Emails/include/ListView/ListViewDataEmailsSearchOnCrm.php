@@ -76,7 +76,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         if(!empty($where)) {
             $where .= ' AND ';
         }
-        $crmWhere = $where . 'mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
+        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmail->id . "'";
 
 
         // Populates CRM fields
@@ -282,9 +282,9 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
 
         $queryString = '';
 
-        if( isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search" ||
-            isset($request["type_basic"]) && (count($request["type_basic"] > 1) || $request["type_basic"][0] != "") ||
-            isset($request["module"]) && $request["module"] == "MergeRecords")
+        if( (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
+            (isset($request["type_basic"]) && (count($request["type_basic"]) > 1 || $request["type_basic"][0] != "")) ||
+            (isset($request["module"]) && $request["module"] == "MergeRecords"))
         {
             $queryString = "-advanced_search";
         }
@@ -311,6 +311,8 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
                 }
             }
         }
+
+        
 
         $ret =  array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
 

@@ -48,6 +48,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
     /**
      * @param Email $seed
+     * @param array $request
      * @param string $where
      * @param string $id
      * @param InboundEmail $inboundEmail
@@ -56,10 +57,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @param User $currentUser
      * @param string $folder
      * @param int $limit
-     * @param ??? $limitPerPage
+     * @param string $limitPerPage
      * @return array
      */
-    public function search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
+    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
 
 
         // Create the data structure which are required to view a list view.
@@ -127,7 +128,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
 
         // Filter imported emails based on the UID of the results from the IMap server
-        $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
+        $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmail->id . "'";
 
         $ret_array['inner_join'] = '';
         if (!empty($this->lvde->seed->listview_inner_join)) {
@@ -222,6 +223,15 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         $request['folder_type'] = $folderObj->getType();
         $request['inbound_email_record'] = $inboundEmail->id;
 
+        if (empty($folder)) {
+            if (!empty($inboundEmail->mailbox)) {
+                $request['folder'] = $inboundEmail->mailbox;
+            } elseif (!empty($inboundEmail->mailboxarray)
+                && is_array($inboundEmail->mailboxarray)
+                && count($inboundEmail->mailboxarray)) {
+                $request['folder'] = $inboundEmail->mailboxarray[0];
+            }
+        }
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
         $endOffset = floor(($total - 1) / $limit) * $limit;

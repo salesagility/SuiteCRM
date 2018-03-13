@@ -58,4 +58,3 @@ class UserPreferencesController extends SugarController
 	}
 	
 }
-?>

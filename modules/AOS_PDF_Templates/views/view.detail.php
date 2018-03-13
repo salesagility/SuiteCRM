@@ -34,4 +34,3 @@ class AOS_PDF_TemplatesViewDetail extends ViewDetail {
 		$this->bean->pdffooter = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->pdffooter));
 	}
 }
-?>

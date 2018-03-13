@@ -44,12 +44,13 @@
 {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
 <form class="compose-view" id="ComposeView" name="ComposeView" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
-    <input type="hidden" name="action" value="send">
-    <input type="hidden" name="record" value="">
+    <input type="hidden" name="action" value="{$ACTION}">
+    <input type="hidden" name="record" value="{$RECORD}">
     <input type="hidden" name="type" value="out">
     <input type="hidden" name="send" value="1">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
+    <input type="hidden" name="return_id" value="{$RETURN_ID}">
     <input type="hidden" name="inbound_email_id" value="{$INBOUND_ID}">
 <div id="EditView_tabs">
     {*display tabs*}
@@ -190,12 +191,26 @@
         </div>
     </div>
     <div class="attachments">
+        {if $RETURN_MODULE != 'Emails' && $RETURN_ID}
+            <div class="bean-attachments">
+                <div class="bean-attachment-group-container">
+                    <input type="hidden" id="bean_attachment_{$RETURN_ID}" multiple="multiple">
+                    <label for="bean_attachment_{$RETURN_ID}" class="">
+                        <div class="bean-attachment-file-container file-image">
+                            <span class="bean-attachment-type glyphicon glyphicon-file"></span>
+                            <span class="bean-attachment-name">{$ATTACHMENT_NAME}</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        {/if}
         <div class="file-attachments"></div>
         <div class="document-attachments"></div>
     </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
-{if $RETURN_MODULE}
+{if !$IS_MODAL}
+
     {literal}
 
         <script type="text/javascript">
@@ -252,7 +267,12 @@
     <script>
         {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
       $(document).ready(function() {ldelim}
-          $('#ComposeView').EmailsComposeView();
+        $('#ComposeView').EmailsComposeView({if $RETURN_MODULE != 'Emails' && $RETURN_ID}{ldelim}
+          'attachment': {ldelim}
+            'module': '{$RETURN_MODULE}',
+            'id': '{$RETURN_ID}'
+          {rdelim}
+        {rdelim}{/if});
       {rdelim});
     </script>
     {/if}

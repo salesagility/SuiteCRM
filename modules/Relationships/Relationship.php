@@ -106,24 +106,32 @@ class Relationship extends SugarBean {
 		return $this->_self_referencing;
 	}
 
-	/*returns true if a relationship with provided name exists*/
-	static function exists($relationship_name,&$db) {
-		$query = "SELECT relationship_name FROM relationships WHERE deleted=0 AND relationship_name = '".$relationship_name."'";
-		$result = $db->query($query,true," Error searching relationships table..");
-		$row  =  $db->fetchByAssoc($result);
-		if ($row != null) {
-			return true;
-		}
+    /*returns true if a relationship with provided name exists*/
+    public static function exists($relationship_name, $db)
+    {
+        if ($db instanceof DBManager) {
+            $query = "SELECT relationship_name FROM relationships WHERE deleted=0 AND relationship_name = '" . $relationship_name . "'";
+            $result = $db->query($query, true, 'Error searching relationships table..');
+            $row = $db->fetchByAssoc($result);
+            if ($row != null) {
+                return true;
+            }
+        } else {
+            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager');
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	static function delete($relationship_name,&$db) {
-
-		$query = "UPDATE relationships SET deleted=1 WHERE deleted=0 AND relationship_name = '".$relationship_name."'";
-		$result = $db->query($query,true," Error updating relationships table for ".$relationship_name);
-
-	}
+    public static function delete($relationship_name, $db)
+    {
+        if ($db instanceof DBManager) {
+            $query = "UPDATE relationships SET deleted=1 WHERE deleted=0 AND relationship_name = '" . $relationship_name . "'";
+            $db->query($query, true, " Error updating relationships table for " . $relationship_name);
+        } else {
+            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager');
+        }
+    }
 
 
 	function get_other_module($relationship_name, $base_module, &$db){
@@ -292,4 +300,3 @@ class Relationship extends SugarBean {
 
 
 }
-?>

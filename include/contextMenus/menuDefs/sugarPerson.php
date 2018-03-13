@@ -60,5 +60,3 @@ $menuDef['sugarPerson'] = array(
           'module' => 'Calls',
           'aclAction' => 'edit'),
     );
-
-?>

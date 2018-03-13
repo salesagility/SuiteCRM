@@ -108,4 +108,3 @@ $dictionary['UserSignature'] = array(
 		)
 	),
 );
-?>

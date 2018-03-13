@@ -126,6 +126,3 @@ class TemplateInt extends TemplateRange
 		  $this->autoinc_next = $next;
     }
 }
-
-
-?>

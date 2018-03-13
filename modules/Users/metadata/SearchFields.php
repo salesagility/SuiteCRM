@@ -70,5 +70,3 @@ $searchFields['Users'] =
             )
         ),
 	);
-
-?>

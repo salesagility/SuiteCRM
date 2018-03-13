@@ -140,4 +140,3 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 		return $value;
     }
 }
-?>
