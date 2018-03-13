@@ -1082,7 +1082,7 @@ function decrypt_string($string){
 		$buffer = $string;
 		$key = substr(md5($key),0,24);
 	    $iv = "password";
-        return openssl_decrypt(pack("H*", $buffer), OPENSSL_CIPHER_3DES, $key, $iv);
+        return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
 	}else{
 		return $string;
 	}
