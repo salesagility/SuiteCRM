@@ -46,7 +46,7 @@ use SuiteCRM\Enumerator\ExceptionCode;
  * Class IdAlreadyExists
  * @package SuiteCRM\API\v8\Exception
  */
-class IdAlreadyExists extends ApiException
+class IdAlreadyExists extends Conflict
 {
     /**
      * IdAlreadyInUse constructor.

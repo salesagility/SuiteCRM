@@ -51,6 +51,7 @@ use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\API\v8\Exception\ModuleNotFound;
+use SuiteCRM\API\v8\Exception\NotAllowed;
 
 /**
  * Class ModulesLib
@@ -80,6 +81,7 @@ class ModulesLib
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
      * @throws ModuleNotFound
      * @throws \InvalidArgumentException
+     * @throws NotAllowed
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
     {
@@ -91,6 +93,10 @@ class ModulesLib
 
         if ($module === false) {
             throw new ModuleNotFound('"' . $args['module'] . '"');
+        }
+
+        if (!$module->ACLAccess('list')) {
+            throw new NotAllowed();
         }
 
         $moduleList = $this->getModuleList($req, $module);

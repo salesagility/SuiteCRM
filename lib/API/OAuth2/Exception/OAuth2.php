@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,47 +39,43 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\OAuth2\Repositories;
+namespace SuiteCRM\API\OAuth2\Exception;
 
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-use League\OAuth2\Server\Exception\OAuthServerException;
-use SuiteCRM\API\OAuth2\Exception\GrantTypeNotAllowedForClient;
+use Psr\Log\LogLevel;
+use SuiteCRM\Enumerator\ExceptionCode;
+use \SuiteCRM\Exception\Exception;
 
-class ClientRepository implements ClientRepositoryInterface
+class OAuth2 extends Exception
 {
     /**
-     * {@inheritdoc}
-     * @return null|ClientEntity
+     * OAuth2 constructor.
+     * @param string $message API Exception "$message"
+     * @param int $code
+     * @param $previous
      */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
+    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
     {
+        parent::__construct('[OAuth2] '.$message.'', $code, $previous);
+    }
 
-        $client = new \OAuth2Clients();
-        $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
-            return null;
-        }
+    /**
+     * Gives addition details to what caused the exception
+     * @see ApiController::generateJsonApiExceptionResponse()
+     * @return string
+     */
+    public function getDetail()
+    {
+        return 'SuiteCRM OAuth 2 Server has encountered an exception which has not been handled';
+    }
 
-        if($client->allowed_grant_type !== $grantType) {
-            throw new GrantTypeNotAllowedForClient();
-        }
 
-        if (
-            $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
-        ) {
-            return null;
-        }
-
-        $clientEntity = new ClientEntity();
-        $clientEntity->setIdentifier($clientIdentifier);
-        $clientEntity->setName($client->name);
-
-        $redirect_url = isset($client->redirect_uri) ? $client->redirect_uri : '';
-        $clientEntity->setRedirectUri($redirect_url);
-
-        return $clientEntity;
+    /**
+     * Determines the output message in log files.
+     * @return string PSR-3 log level
+     * @see LogLevel
+     */
+    public function getLogLevel()
+    {
+        return LogLevel::ERROR;
     }
 }
