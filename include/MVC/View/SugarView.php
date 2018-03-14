@@ -695,15 +695,6 @@ class SugarView
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
             }
 
-            // Ensure the current active module link is displayed at the bottom of any tab group list
-            // even when the module list is greater than the max tabs limit.
-            foreach ($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
-                    unset($groupTabs[$key]['modules'][$moduleTab]);
-                }
-            }
-        }
-
         if (isset($topTabList) && is_array($topTabList)) {
             // Adding shortcuts array to menu array for displaying shortcuts associated with each module
             $shortcutTopMenu = array();
@@ -792,7 +783,7 @@ class SugarView
                     echo '<p class="error">' . $message . '</p>';
                 }
             }
-            
+
             $messages = SugarApplication::getSuccessMessages();
             if (!empty($messages)) {
                 foreach ($messages as $message) {
