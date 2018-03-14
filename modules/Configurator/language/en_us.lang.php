@@ -170,6 +170,7 @@ $mod_strings = array(
     'SHOW_DOWNLOADS_TAB_HELP' => 'When selected, the Download tab will appear in the User settings and provide users with access to SuiteCRM plug-ins and other available files',
     'LBL_LDAP_ENC_KEY_DESC' => 'For SOAP authentication when using LDAP.',
     'LDAP_ENC_KEY_NO_FUNC_DESC' => 'The php_mcrypt extension must be enabled in your php.ini file.',
+    'LDAP_ENC_KEY_NO_FUNC_OPENSSL_DESC' => 'The openssl extension must be enabled in your php.ini file.',
     'LBL_ALL' => 'All',
     'LBL_MARK_POINT' => 'Mark Point',
     'LBL_NEXT_' => 'Next>>',
