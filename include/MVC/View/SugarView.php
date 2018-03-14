@@ -690,12 +690,6 @@ class SugarView
             }
         }
 
-        foreach($groupTabs as $key => $tabGroup) {
-            if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
-                unset($groupTabs[$key]['modules'][$moduleTab]);
-            }
-        }
-
         if (isset($topTabList) && is_array($topTabList)) {
             // Adding shortcuts array to menu array for displaying shortcuts associated with each module
             $shortcutTopMenu = array();
