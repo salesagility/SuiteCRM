@@ -1098,15 +1098,6 @@ function checkSystemCompliance() {
 		$ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
 	}
 
-
-	// call time pass by ref
-	if('1' == ini_get('allow_call_time_pass_reference')) {
-		$ret['callTimeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_CALL_TIME']}</span></b>";
-		//continue upgrading
-	} else {
-		$ret['callTimeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	}
-
 	// memory limit
 	$ret['memory_msg']     = "";
 	$memory_limit   = "-1";//ini_get('memory_limit');
