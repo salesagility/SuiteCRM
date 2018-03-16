@@ -67,8 +67,10 @@
         </tr>
         {* TODO: Break $pagination so that it can be fully customisable *}
         {$PAGINATION}
-        <tr id="activities_search" class="pagination" style="display:none" colspan="0">
-            <td align="right" colspan="0"></td>
+        <tr id="{$SUBPANEL_ID}_search" class="pagination" style="{$DISPLAY_SPS}">
+            <td align="right" colspan="20">
+                {$SUBPANEL_SEARCH}
+            </td>
         </tr>
     </thead>
     <tbody>

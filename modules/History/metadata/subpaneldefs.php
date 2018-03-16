@@ -130,6 +130,11 @@ $layout_defs['History'] = array(
 		 		 		'width' => '10%',	
 					),
 					array(
+						'name' => 'category_id',
+						'vname' => 'LBL_LIST_CATEGORY',
+						'width' => '10%',
+					),
+					array(
 			 		 	'name' => 'contact_name',
 			 		 	'module' => 'Contacts',
 						'widget_class' => 'SubPanelDetailViewLink',
@@ -341,4 +346,3 @@ $layout_defs['History'] = array(
 		),
 	),
 );
-?>

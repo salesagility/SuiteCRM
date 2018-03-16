@@ -68,5 +68,3 @@ $GLOBALS['studioConfig']['dynamicFields']['radioenum'] = 'modules/DynamicFields/
 $GLOBALS['studioConfig']['dynamicFields']['text'] = 'modules/DynamicFields/templates/Fields/Forms/text.php';
 $GLOBALS['studioConfig']['dynamicFields']['url'] = 'modules/DynamicFields/templates/Fields/Forms/url.php';
 $GLOBALS['studioConfig']['dynamicFields']['varchar'] = 'modules/DynamicFields/templates/Fields/Forms/varchar.php';
-
-?>

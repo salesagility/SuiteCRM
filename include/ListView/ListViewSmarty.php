@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -81,12 +81,30 @@ class ListViewSmarty extends ListViewDisplay
     }
 
     /**
+     *
+     * @return string|boolean
+     */
+    public function buildSendConfirmOptInEmailToPersonAndCompany()
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return false;
+        }
+
+        $linkTpl = new Sugar_Smarty();
+        $linkTpl->assign('module_name', $this->seed->module_name);
+        $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
+
+        return $linkHTML;
+    }
+
+    /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
      *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_public string the corresponding html public in xtpl per row
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
     function process($file, $data, $htmlpublic) {
@@ -100,13 +118,13 @@ class ListViewSmarty extends ListViewDisplay
 
         $totalWidth = 0;
         foreach($this->displayColumns as $name => $params) {
-            $totalWidth += $params['width'];
+            $totalWidth += (int)$params['width'];
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
         foreach($this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
+            $this->displayColumns[$name]['width'] = floor(((int)$this->displayColumns[$name]['width']) / $adjustment);
             // figure out which contextMenu objectsTypes are required
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
@@ -141,14 +159,19 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('recordsLinkString',$app_strings['LBL_LINK_RECORDS']);
         $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
 
-        // Bug 24677 - Correct the page total amount on the last page of listviews
-        $pageTotal = $this->data['pageData']['offsets']['next']-$this->data['pageData']['offsets']['current'];
-        if ( $this->data['pageData']['offsets']['next'] < 0 ) {
-            $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
-        }
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->warn('Incorrect pageData: offset is not set');
+        } else {
+            // Bug 24677 - Correct the page total amount on the last page of listviews
+            $pageTotal = $this->data['pageData']['offsets']['next'] - $this->data['pageData']['offsets']['current'];
+            if ($this->data['pageData']['offsets']['next'] < 0) {
+                $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
+            }
 
-        if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
-        if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
+            if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+
+        }
 
         if($this->show_action_dropdown)
         {
@@ -175,7 +198,13 @@ class ListViewSmarty extends ListViewDisplay
             && ACLController::checkAccess('ProspectLists','edit',true)) {
             $this->ss->assign( 'targetLink', $this->buildTargetList() ) ;
         }
-        $this->processArrows($data['pageData']['ordering']);
+
+        if(!isset($data['pageData']['ordering'])) {
+            $GLOBALS['log']->warn("Incorrect pageData: ordering is not set");
+        } else {
+            $this->processArrows($data['pageData']['ordering']);
+        }
+
         $this->ss->assign('prerow', $this->multiSelect);
         $this->ss->assign('clearAll', $app_strings['LBL_CLEARALL']);
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
@@ -235,7 +264,13 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('query', $this->data['query']);
         $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
             "sugar_flavor" => $sugar_flavor));
-        $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
+        } else {
+            $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+        }
+
         $this->ss->assign('pageData', $this->data['pageData']);
 
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],
@@ -287,5 +322,3 @@ class ListViewSmarty extends ListViewDisplay
         return $str;
     }
 }
-
-?>

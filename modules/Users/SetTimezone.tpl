@@ -61,11 +61,11 @@
 		<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px;">
 			<table width="100%" border="0">
 			<tr>
-				<td colspan="2"><slot>{$MOD.LBL_PICK_TZ_DESCRIPTION}</slot></td>
+				<td colspan="2"><span>{$MOD.LBL_PICK_TZ_DESCRIPTION}</span></td>
 			</tr>
 			</table>
 			<br><br>
-			<slot><select tabindex='3' name='timezone'>{html_options options=$TIMEZONEOPTIONS selected=$TIMEZONE_CURRENT}</select></slot>
+			<span><select tabindex='3' name='timezone'>{html_options options=$TIMEZONEOPTIONS selected=$TIMEZONE_CURRENT}</select></span>
 			<input	title="{$APP.LBL_SAVE_BUTTON_TITLE}"
 					accessKey="{$APP.LBL_SAVE_BUTTON_KEY}"
 					class="button primary"

@@ -66,6 +66,10 @@
 {assign var="moduleName" value = $moduleList.$currentModule}
 {assign var="hideTable" value=false}
 
+{if $form.headerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
+{/if}
+
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
@@ -91,11 +95,13 @@
                 {capture assign="quotedQuery"}"{$query}"{/capture}
                 {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
             </p>
+			{if $pageData}
             <p class="submsg">
                 <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
             </p>
+			{/if}
         {/if}
     {else}
         <p class="msg">
@@ -165,16 +171,16 @@
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
 								{else}
 									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
 								{/if}
 							{else}
 								{capture assign="imageName"}arrow.{$arrowExt}{/capture}
 								{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-								{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+								<span class="suitepicon suitepicon-action-sorting-none" title="{$alt_sort}"></span>
 							{/if}
 							</a>
 						{else}
@@ -209,9 +215,9 @@
 				{if $prerow}
 				<td>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
-						<input type='checkbox' disabled="disabled" class='' value='{$rowData.ID}'>
+						<input type='checkbox' disabled="disabled" class='listview-checkbox' value='{$rowData.ID}'>
 				 {else}
-	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='' name='mass[]' value='{$rowData.ID}'>
+	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='listview-checkbox' name='mass[]' value='{$rowData.ID}'>
 				 {/if}
 				</td>
 				{/if}
@@ -226,7 +232,7 @@
 							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
 							>
                                 {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+								<span class="suitepicon suitepicon-action-edit"></span></a>
                         {/if}
 					</td>
 				{/if}
@@ -301,7 +307,8 @@
 {$contextMenuScript}
 {literal}
 function lvg_nav(m,id,act,offset,t){
-    if(t.href.search(/#/) < 0){return;}
+  if (t.href.search(/#/) < 0) {
+  }
     else{
         if(act=='pte'){
             act='ProjectTemplatesEditView';
@@ -324,4 +331,9 @@ function lvg_nav(m,id,act,offset,t){
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+{/if}
+
+
+{if $form.footerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
 {/if}

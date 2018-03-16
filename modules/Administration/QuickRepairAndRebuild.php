@@ -265,7 +265,7 @@ class RepairAndClear
 	{
 		global $mod_strings;
 		if($this->show_output) echo "<h3>{$mod_strings['LBL_QR_CLEARTEMPLATE']}</h3>";
-		if(!in_array( translate('LBL_ALL_MODULES'),$this->module_list) && !empty($this->module_list))
+		if(!in_array( translate('LBL_ALL_MODULES'), (array)$this->module_list) && !empty($this->module_list))
 		{
 			foreach($this->module_list as $module_name_singular )
 				$this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.tpl');

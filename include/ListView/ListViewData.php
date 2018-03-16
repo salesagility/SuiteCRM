@@ -46,17 +46,18 @@ require_once('include/EditView/SugarVCR.php');
  */
 class ListViewData {
 
-	var $additionalDetails = true;
-    var $listviewName = null;
-	var $additionalDetailsAllow = null;
-    var $additionalDetailsAjax = true; // leave this true when using filter fields
-    var $additionalDetailsFieldToAdd = 'NAME'; // where the span will be attached to
-    var $base_url = null;
+    public $additionalDetails = true;
+    public $listviewName = null;
+	public $additionalDetailsAllow = null;
+    public $additionalDetailsAjax = true; // leave this true when using filter fields
+    public $additionalDetailsFieldToAdd = 'NAME'; // where the span will be attached to
+    public $base_url = null;
+    public $seed;
     /*
      * If you want overwrite the query for the count of the listview set this to your query
      * otherwise leave it empty and it will use SugarBean::create_list_count_query
      */
-    var $count_query = '';
+    public $count_query = '';
 
 	/**
 	 * Constructor sets the limitName to look up the limit in $sugar_config
@@ -608,11 +609,11 @@ class ListViewData {
     {
         global $app_strings;
 
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('info_inline.gif');
+        $jscalendarImage ='<span class="suitepicon suitepicon-action-info" title="'.$app_strings['LBL_ADDITIONAL_DETAILS'].'"></span>';
 
         $extra = "<span id='adspan_" . $id . "' "
                 . "onclick=\"lvg_dtails('$id')\" "
-				. " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jscalendarImage'></span>";
+				. " style='position: relative;'><!--not_in_theme!-->$jscalendarImage</span>";
 
         return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
 	}
@@ -620,9 +621,9 @@ class ListViewData {
     /**
      * generates the additional details values
      *
-     * @param unknown_type $fields
-     * @param unknown_type $adFunction
-     * @param unknown_type $editAccess
+     * @param array $fields
+     * @param callable $adFunction
+     * @param array $editAccess
      * @return array string to attach to field
      */
     function getAdditionalDetails($fields, $adFunction, $editAccess)
@@ -646,19 +647,19 @@ class ListViewData {
 
 	        if($editAccess && !empty($results['editLink']))
 	        {
-	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('edit_inline.png')."\'></a>";
+	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\'suitepicon suitepicon-action-edit\'></span></a>";
 	            $close = true;
 	        }
 	        $close = (!empty($results['viewLink'])) ? true : $close;
-	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=".SugarThemeRegistry::current()->getImageURL('view_inline.png')."></a>" : '');
+	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}> <span class=\'suitepicon suitepicon-action-view-record\'></span></a>" : '');
 
             if($close == true) {
             	$closeVal = "true";
-            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('close.png')."\'></a>";
+            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'> <span class=\'suitepicon suitepicon-action-clear\'></span></a>";
             } else {
             	$closeVal = "false";
             }
-            $extra .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('info_inline.png')."' class='info'>";
+            $extra .= "',".$closeVal.")\"' class='info suitepicon suiteicon-action-info'>";
 
         return array('fieldToAddTo' => $results['fieldToAddTo'], 'string' => $extra);
     }

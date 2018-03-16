@@ -90,8 +90,8 @@
                 'include/javascript/jquery/jquery.highLight.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.showLoading.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.ui.touch-punch.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
-
-            
+                'jssource/src_files/include/javascript/message-box.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'jssource/src_files/include/javascript/EmailsComposeViewModal.js'              => 'include/javascript/sugar_grp1_jquery.js',
 			),
            $sugar_field_grp = array(
                'include/SugarFields/Fields/Collection/SugarFieldCollection.js' => 'include/javascript/sugar_field_grp.js',

@@ -40,7 +40,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-include_once 'suitecrm_version.php';
+include 'suitecrm_version.php';
 global $sugar_config, $mod_strings;
 
 ?>
@@ -116,7 +116,7 @@ global $sugar_config, $mod_strings;
                     <h3><?php echo $mod_strings['LBL_PARTNERS']; ?></h3>
                     <ul id="about_menu">
                         <li><?php echo $mod_strings['LBL_SUITE_PARTNERS']; ?> (<a
-                                    href="https://suitecrm.com/community/partners">http://suitecrm.com</a>)
+                                    href="https://suitecrm.com/about/about-us/partners">http://suitecrm.com</a>)
                         </li>
                     </ul>
                 </div>

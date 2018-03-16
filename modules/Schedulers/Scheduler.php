@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'modules/SchedulersJobs/SchedulersJob.php';
 
@@ -268,7 +272,7 @@ class Scheduler extends SugarBean {
 			$GLOBALS['log']->debug('----->got * months');
 		} elseif(strstr($mons, '*/')) {
 			$mult = str_replace('*/','',$mons);
-			$startMon = $timedate->fromDb(date_time_start)->month;
+            $startMon = $timedate->fromDb($focus->date_time_start)->month;
 			$startFrom = ($startMon % $mult);
 
             $compMons = array();
@@ -394,11 +398,8 @@ class Scheduler extends SugarBean {
 		//_pp($hrName);
 		// derive minutes
 		//$currentMin = date('i');
-        $minName = array();
-		$currentMin = $timedate->getNow()->minute;
-		if(substr($currentMin, 0, 1) == '0') {
-			$currentMin = substr($currentMin, 1, 1);
-		}
+        	$minName = array();
+		$currentMin = (int) $timedate->getNow()->min;
 		if($mins == '*') {
 			$GLOBALS['log']->debug('----->got * mins');
 			for($i=0; $i<60; $i++) {
@@ -410,7 +411,7 @@ class Scheduler extends SugarBean {
 			}
 		} elseif(strstr($mins,'*/')) {
 			$mult = str_replace('*/','',$mins);
-			$startMin = $timedate->fromDb($focus->date_time_start)->minute;
+			$startMin = (int) $timedate->fromDb($focus->date_time_start)->min;
 			$startFrom = ($startMin % $mult);
 			for($i=$startFrom; $i<=59; $i) {
 				if(($currentMin + $i) > 59) {
@@ -738,16 +739,16 @@ class Scheduler extends SugarBean {
 			echo '
 			<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th width="25%" colspan="2"><slot>
+					<th width="25%" colspan="2"><span>
 						'.$mod_strings['LBL_WARN_CURL_TITLE'].'
-					</slot></td>
+					</span></td>
 				</tr>
 				<tr class="oddListRowS1" >
-					<td scope="row" valign=TOP width="20%"><slot>
+					<td scope="row" valign=TOP width="20%"><span>
 						'.$mod_strings['LBL_WARN_CURL'].'
-					<td scope="row" valign=TOP width="80%"><slot>
+					<td scope="row" valign=TOP width="80%"><span>
 						<span class=error>'.$mod_strings['LBL_WARN_NO_CURL'].'</span>
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>
 			<br>';
@@ -782,34 +783,40 @@ class Scheduler extends SugarBean {
 			echo '
 				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th><slot>
+					<th><span>
 						'.$mod_strings['LBL_CRON_INSTRUCTIONS_WINDOWS'].'
-					</slot></th>
+					</span></th>
 				</tr>
 				<tr class="evenListRowS1">
-					<td scope="row" valign="top" width="70%"><slot>
+					<td scope="row" valign="top" width="70%"><span>
 						'.$mod_strings['LBL_CRON_WINDOWS_DESC'].'<br>
 						<b>cd '.realpath('./').'<br>
 						php.exe -f cron.php</b>
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>';
 		} else {
+            require_once 'install/install_utils.php';
+            $webServerUser = getRunningUser();
+            if ($webServerUser == '') {
+                $webServerUser = '<web_server_user>';
+            }
 			echo '<br>';
 			echo '
 				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<th><slot>
+					<th><span>
 						'.$mod_strings['LBL_CRON_INSTRUCTIONS_LINUX'].'
-					</slot></th>
+					</span></th>
 				</tr>
 				<tr>
-					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><slot>
-						'.$mod_strings['LBL_CRON_LINUX_DESC'].'<br>
+					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><span style="font-weight:unset;">
+						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br>
+                        <b>sudo crontab -e -u '.$webServerUser.'</b><br> '.$mod_strings['LBL_CRON_LINUX_DESC2'].'<br>
 						<b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1</b>
 						<br>'.$error.'
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>';
 		}

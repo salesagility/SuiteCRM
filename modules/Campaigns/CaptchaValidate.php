@@ -64,5 +64,3 @@ if(!$response->is_valid){
 	die("Invalid captcha entry, go back and fix. ". $response->error. " ");
 }
 else echo("Success");
-
-?>

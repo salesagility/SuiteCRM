@@ -1,0 +1,122 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<!-- BEGIN: SearchHeader -->
+<script type="text/javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="include/javascript/popup_helper.js?v={VERSION_MARK}"></script>
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+	<tr>
+		<td>
+			<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td scope="row" width="40%" nowrap="nowrap">
+							{MOD.LBL_SUBJECT}&nbsp;&nbsp;<input type="text" size="20" name="name"  value="{NAME}" />
+						</td>
+						<td scope="row" width="40%" nowrap="nowrap">
+							{MOD.LBL_CONTACT_NAME}&nbsp;&nbsp;
+							<input type="text" size="20" name="contact_name"  value="{CONTACT_NAME}" />
+						</td>
+						<td width="20%" align="right">
+							<input type="hidden" name="module" value="{MODULE_NAME}" />
+							<input type="hidden" name="action" value="Popup" />
+							<input type="hidden" name="query" value="true" />
+							<input type="hidden" name="func_name" value="" />
+							<input type="hidden" name="request_data" value="{request_data}" />
+							<input type="hidden" name="populate_parent" value="false" />
+							<input type="hidden" name="record_id" value="" />
+							<input type="submit" name="button" class="button" title="{APP.LBL_SEARCH_BUTTON_TITLE}" value="{APP.LBL_SEARCH_BUTTON_LABEL}" id="search_form_submit" />
+							<input type="hidden" name="mode" value="{MULTI_SELECT}" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>
+<!-- END: SearchHeader -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
+<!-- BEGIN: list_nav_row -->
+	{PAGINATION}
+<!-- END: list_nav_row -->
+	<tr height="20">
+		<td scope="col"  nowrap>
+			{CHECKALL}
+		</td>
+		<td scope="col" width="35%"  nowrap="nowrap" ">
+			<a href="{ORDER_BY}name" class="listViewThLinkS1">
+				{MOD.LBL_LIST_SUBJECT}{arrow_start}{number_arrow}{arrow_end}</a>
+		</td>
+		<td scope="col" width="30%"  nowrap="nowrap" ">
+			<a href="{ORDER_BY}last_name" class="listViewThLinkS1">
+				{MOD.LBL_LIST_CONTACT_NAME}{arrow_start}{last_name_arrow}{arrow_end}</a>
+		</td>
+		<td scope="col" width="30%"  nowrap="nowrap" ">
+			<a href="{ORDER_BY}date_start" class="listViewThLinkS1">
+				{MOD.LBL_LIST_DATE_SENT}{arrow_start}{date_start_arrow}{arrow_end}</a>
+		</td>
+	</tr>
+<!-- BEGIN: row -->
+	<tr height="20" class="{ROW_COLOR}S1">
+		<td valign="top">
+			{PREROW}
+		</td>
+		<td scope='row' valign="top">
+			<a href="#" onclick="send_back('Emails','{EMAIL.ID}');" >
+				{EMAIL.NAME}</a>
+		</td>
+		<td valign="top" bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">
+			{EMAIL.CONTACT_NAME}
+		</td>
+		<td valign="top" bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">
+			{EMAIL.DATE_SENT}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="20" class="listViewHRS1">
+		</td>
+	</tr>
+<!-- END: row -->
+</table>
+{ASSOCIATED_JAVASCRIPT_DATA}
+<!-- END: main -->

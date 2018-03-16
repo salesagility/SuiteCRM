@@ -162,4 +162,3 @@ class SugarWidgetSubPanelTopCreateNoteButton extends SugarWidgetSubPanelTopButto
 		return parent::display($defines, $additionalFormFields);
 	}
 }
-?>

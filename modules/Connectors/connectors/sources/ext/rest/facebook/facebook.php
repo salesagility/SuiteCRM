@@ -94,5 +94,3 @@ class ext_rest_facebook extends ext_rest
         return null;
     }
 }
-
-?>

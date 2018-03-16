@@ -67,4 +67,3 @@ class ViewModulelistmenu extends SugarView
  		$this->ss->display('include/MVC/View/tpls/modulelistmenu.tpl');
  	}
 }
-?>

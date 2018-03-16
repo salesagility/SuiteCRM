@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -62,13 +62,20 @@ class SugarPHPMailer extends PHPMailer
     public $disclosureText;
     public $isHostEmpty = false;
     public $opensslOpened = true;
+    public $fullSmtpLog='';
 
     /**
-     * Sole constructor
+     * @var string
      */
-    public function __construct()
+    public $Body_html;
+
+    /**
+     * Constructor.
+     * @param boolean $exceptions Should we throw external exceptions?
+     */
+    public function __construct($exceptions = null)
     {
-        parent::__construct();
+        parent::__construct($exceptions);
         global $locale;
         global $current_user;
         global $sugar_config;
@@ -405,6 +412,84 @@ eoq;
         }
 
         return false;
+    }
+
+    /**
+     * Replace an Email Template variable placeholder in the email contents
+     * such as Subject, Body Body_html and BodyAlt.
+     * Call this helper function directly before send the email
+     * to replace variables in email contents.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function replace($key, $value) {
+        $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
+        $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
+        $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
+        $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
+    }
+
+    /**
+     * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues
+     *
+     * @return bool
+     */
+    public function send()
+    {
+        //Use these to override some fields for tests when debugging SMTP issues:
+        //$this->Host     = "smtp.myserver.com";
+        //$this->From     = 'me@here.com';
+        //$this->FromName = 'My Name';
+        //$this->Sender   = 'me@here.com';
+        //$this->Password = 'wrong';
+        //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
+
+        $this->fullSmtpLog='';
+        $phpMailerExceptionMsg='';
+
+        try {
+            $saveExceptionsState = $this->exceptions;
+            $this->exceptions = true;
+
+            // pass callabck function for PHPMailer to call to provide log :
+            $this->Debugoutput = function($str, $level) {
+                // obfuscate part of response if previous line was a server 334 request, for authentication data:
+                static $previousIs334 = false;
+                if ($previousIs334) {
+                    $this->fullSmtpLog .= "$level: CLIENT -> SERVER: ---obfuscated---\n";
+                } else {
+                    $this->fullSmtpLog .= "$level: $str\n";
+                }
+                $previousIs334 = (strpos($str, 'SERVER -> CLIENT: 334') !== false);
+            };
+
+            $this->SMTPDebug = 3;
+            $ret = parent::send();
+            $this->exceptions =  $saveExceptionsState;
+        }
+        catch (Exception $e) {
+            $phpMailerExceptionMsg=$e->errorMessage(); //Pretty error messages from PHPMailer
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
+            }
+        }
+        catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
+            $phpMailerExceptionMsg=$e->getMessage(); //generic error messages from anything else
+            if ($phpMailerExceptionMsg) {
+                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
+            }
+        }
+
+        /* uncomment this to send full log into suitecrm.log:
+        $line = strtok($this->fullSmtpLog, "\n");
+        while ($line !== false) {
+             $GLOBALS['log']->debug("smtp send: { $line }");
+             $line = strtok( "\n" );
+        }
+        $GLOBALS['log']->debug("------------ Exiting SugarMailer send");
+        */
+        return $ret;
     }
 
 } // end class definition

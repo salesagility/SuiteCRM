@@ -96,21 +96,21 @@
                                 {{foreach from=$colData.field.fields item=subField}}
                                     {{if $fields[$subField.name]}}
                                         {counter name="panelFieldCount" print=false}
-                                        {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name module=$module}}&nbsp;
+                                        {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$subfields.tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name module=$module}}&nbsp;
                                     {{/if}}
                                 {{/foreach}}
                             {{elseif !empty($colData.field.customCode) && empty($colData.field.customCodeRenderField)}}
                                 {counter name="panelFieldCount"  print=false}
-                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData  accesskey=$ACCKEY tabindex=$tabindex}}
+                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData  accesskey=$ACCKEY tabindex=$colData.field.tabindex}}
                             {{elseif $fields[$colData.field.name]}}
                                 {counter name="panelFieldCount" print=false}
                                 {{$colData.displayParams}}
-                                {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name module=$module}}
+                                {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$colData.field.tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name module=$module}}
                             {{/if}}
 
                             {{if !empty($colData.field.customCode) && !empty($colData.field.customCodeRenderField)}}
                                 {counter name="panelFieldCount"}
-                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$tabindex}}
+                                {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$colData.field.tabindex}}
                             {{/if}}
                             </div>
                     {{else}}

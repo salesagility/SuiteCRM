@@ -29,7 +29,7 @@ $(function() {
 
   //message for ajax loading screen
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //on button click re-generate the chart
     $(document.body).on('click','#create_link', function(e) {
         $(".qtip").remove(); //Clear all tooltips before re-generating the chart
@@ -154,17 +154,23 @@ $(function() {
 
         //set tooltip title
         var title = SUGAR.language.get('Project', 'LBL_TOOLTIP_TITLE');
-        //console.log(title);
-		//get start and end date of the task to pass via ajax to the tooltip controller function
+        
+	//get start and end date of the task to pass via ajax to the tooltip controller function
         var rel = $(this).attr('rel');
         var dates = rel.split("|");
-        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3];
+		var projects = $("#projects").val();
+		if(projects != null)
+			projects = projects.join();
+		else
+			projects = '';
+        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3] + '&projects=' + projects;
         var url = 'index.php?module=Project&action=Tooltips';
 
         $(this).qtip({
             content: {
                 text: function(event, api) {
                     $.ajax({
+			type: "POST",
                         url: url,
                         data: dataString
                     }).then(function(content) {
@@ -211,3 +217,30 @@ $(function() {
     });
 }
 
+
+$(document.body).on('change','#users', function(e) {
+
+	$('#users option:selected').each(function(i, selected){
+		if($(selected).val() == '' || $(selected).val() == 'none' ){
+			$('#users option:selected').removeAttr("selected");	
+			$("#users").val(new Array($(selected).val()));
+			return 0;
+		}
+
+	});
+
+});
+
+
+$(document.body).on('change','#contacts', function(e) {
+
+	$('#contacts option:selected').each(function(i, selected){
+		if($(selected).val() == ''  || $(selected).val() == 'none' ){
+			$('#contacts option:selected').removeAttr("selected");
+			$("#contacts").val(new Array($(selected).val()));
+			return 0;
+		}
+
+	});
+
+});

@@ -38,13 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-class EmailsController extends SugarController
-{
-    public function action_index() {
-       $this->view = 'list';
-    }
-}
+/**
+ * Moved Controller into psr compliant filename
+ */
+require_once "modules/Emails/EmailsController.php";

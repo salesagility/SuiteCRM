@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,11 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('ModuleInstall/PackageManager/PackageManager.php');
 
@@ -107,9 +106,9 @@ class PackageManagerDisplay{
         $form2 .= "</td><td align='left'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait","border='0' align='bottom'",null,null,'.gif',"Loading")."</div></td><td align='right'>";
 
         if($isAlive){
-            $form2 .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></slot>";
+            $form2 .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></span>";
         }else{
-            $form2 .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div' style='display:none;'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></slot>";
+            $form2 .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div' style='display:none;'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></span>";
         }
         $form2 .= "</td></tr></table>";
 		$form2 = '';   //Commenting out the form as part of sugar depot hiding.
@@ -238,9 +237,9 @@ class PackageManagerDisplay{
     function buildLoginPanel($mod_strings, $display_cancel){
         $credentials = PackageManager::getCredentials();
     	$output = "<div id='login_panel'><div class='hd'><b>".$mod_strings['HDR_LOGIN_PANEL']."</b></div>";
-        $output .= "<div class='bd'><form><table><tr><td>".$mod_strings['LBL_USERNAME']."</td><td><input type='text' name='login_panel_username' id='login_panel_username' value='".$credentials['username']."'></td><td><a href='http://www.sugarcrm.com/crm/index.php?option=com_registration&task=register' target='blank'>".$mod_strings['LNK_NEW_ACCOUNT']."</a></td>";
+        $output .= "<div class='bd'><form><table><tr><td>".$mod_strings['LBL_USERNAME']."</td><td><input type='text' name='login_panel_username' id='login_panel_username' value='".$credentials['username']."'></td><td><a target='blank'>".$mod_strings['LNK_NEW_ACCOUNT']."</a></td>";
 
-        $output .= "</tr><tr><td>".$mod_strings['LBL_PASSWORD']."</td><td><input type='password' name='login_panel_password' id='login_panel_password'></td><td><a href='http://www.sugarcrm.com/crm/component/option,com_registration/Itemid,0/task,lostPassword/' target='blank'>".$mod_strings['LNK_FORGOT_PASS']."</a></td>";
+        $output .= "</tr><tr><td>".$mod_strings['LBL_PASSWORD']."</td><td><input type='password' name='login_panel_password' id='login_panel_password'></td><td></td>";
 
 		$terms = PackageManager::getTermsAndConditions();
 		$output .= "</tr><tr><td colspan='6' valign='top'><b>".$mod_strings['LBL_TERMS_AND_CONDITIONS']."</b><br><textarea readonly cols=80 rows=8>" . $terms['terms'] . '</textarea></td>';
@@ -349,7 +348,7 @@ class PackageManagerDisplay{
         $display .= "<b><font color='red' >{$mod_strings['LBL_MODULE_LICENSE']}</font></b>";
         $display .= "</td>";
         $display .= "<td>";
-        $display .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleLowerDiv('span_animate_div_$div_id', 'span_license_div_$div_id', 350, 0);\"><span id='span_animate_div_$div_id'<img src='".SugarThemeRegistry::current()->getImageURL('advanced_search.gif')."' width='8' height='8' alt='Advanced' border='0'>&nbsp;Expand</span></a></slot></td>";
+        $display .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleLowerDiv('span_animate_div_$div_id', 'span_license_div_$div_id', 350, 0);\"><span id='span_animate_div_$div_id'<img src='".SugarThemeRegistry::current()->getImageURL('advanced_search.gif')."' width='8' height='8' alt='Advanced' border='0'>&nbsp;Expand</span></a></span></td>";
         $display .= "</td>";
         $display .= "</tr>";
         $display .= "</table>";

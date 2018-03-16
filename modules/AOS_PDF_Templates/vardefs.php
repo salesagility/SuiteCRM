@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['AOS_PDF_Templates'] = array(
 	'table'=>'aos_pdf_templates',
@@ -76,6 +81,29 @@ $dictionary['AOS_PDF_Templates'] = array(
     'options' => 'pdf_template_type_dom',
     'studio' => 'visible',
   ),
+        'description' =>
+            array(
+                'name' => 'description',
+                'vname' => 'LBL_DESCRIPTION',
+                'type' => 'longtext',
+                'comment' => 'Full text of the note',
+                'rows' => '6',
+                'cols' => '80',
+                'required' => false,
+                'massupdate' => 0,
+                'no_default' => false,
+                'comments' => 'Full text of the note',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'size' => '20',
+                'studio' => 'visible',
+            ),
   'sample' => 
   array (
     'required' => '0',
@@ -268,6 +296,44 @@ $dictionary['AOS_PDF_Templates'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
+          'page_size' =>
+            array (
+                'required' => '0',
+                'name' => 'page_size',
+                'vname' => 'LBL_PAGE_SIZE',
+                'type' => 'enum',
+                'massupdate' => 0,
+                'default' => '',
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => 0,
+                'reportable' => 0,
+                'len' => 100,
+                'options' => 'pdf_page_size_dom',
+                'studio' => 'visible',
+            ),
+        'orientation' =>
+            array (
+                'required' => '0',
+                'name' => 'orientation',
+                'vname' => 'LBL_ORIENTATION',
+                'type' => 'enum',
+                'massupdate' => 0,
+                'default' => '',
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => 0,
+                'reportable' => 0,
+                'len' => 100,
+                'options' => 'pdf_orientation_dom',
+                'studio' => 'visible',
+            ),
 ),
 	'relationships'=>array (
 ),

@@ -1,14 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,13 +34,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+
 require_once 'modules/ModuleBuilder/parsers/ModuleBuilderParser.php';
 
+/**
+ * Class ParserLabel
+ */
 class ParserLabel
 {
+    /**
+     * @var string $packageName
+     */
+    protected $packageName;
+
+    /**
+     * @var string $moduleName
+     */
+    protected $moduleName;
+
+    /**
+     * ParserLabel constructor.
+     * @param string $moduleName
+     * @param string $packageName
+     */
     public function __construct($moduleName, $packageName = '')
     {
         $this->moduleName = $moduleName;
@@ -92,18 +113,19 @@ class ParserLabel
         }
     }
 
-    /*
+    /**
      * Remove a label from the language pack for a module
      * @param string $language      Language key, for example 'en_us'
      * @param string $label         The label to remove
      * @param string $labelvalue    The value of the label to remove
      * @param string $moduleName    Name of the module to which to add these labels
      * @param string $basepath      base path of the language file
-     * @param string $forRelationshipLabel      whether this is a relationship label
+     * @param bool $forRelationshipLabel      whether this is a relationship label
+     * @return bool
      */
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
-        $GLOBALS [ 'log' ]->debug("ParserLabel->removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
+        $GLOBALS [ 'log' ]->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
         if (is_null($basepath)) {
             $deployedModule = true;
             $basepath = "custom/modules/$moduleName/language";
@@ -154,7 +176,7 @@ class ParserLabel
             } else {
                 // if we have a cache to worry about, then clear it now
                 if ($deployedModule) {
-                    $GLOBALS ['log']->debug('PaserLabel->addLabels: clearing language cache');
+                    $GLOBALS ['log']->debug('PaserLabel::addLabels: clearing language cache');
                     $cache_key = 'module_language.'.$language.$moduleName;
                     sugar_cache_clear($cache_key);
                     LanguageManager::clearLanguageCache($moduleName, $language);
@@ -165,20 +187,22 @@ class ParserLabel
         return true;
     }
 
-    /*
+    /**
      * Add a set of labels to the language pack for a module, deployed or undeployed
      * @param string $language      Language key, for example 'en_us'
      * @param array $labels         The labels to add in the form of an array of System label => Display label pairs
      * @param string $moduleName    Name of the module to which to add these labels
-     * @param string $packageName   If module is undeployed, name of the package to which it belongs
+     * @param string $basepath
+     * @param bool $forRelationshipLabel
+     * @return bool
      */
     public static function addLabels($language, $labels, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
-        $GLOBALS [ 'log' ]->debug("ParserLabel->addLabels($language, \$labels, $moduleName, $basepath );");
+        $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels($language, \$labels, $moduleName, $basepath );");
         $GLOBALS [ 'log' ]->debug('$labels:'.print_r($labels, true));
 
         $deployedModule = false;
-        if (is_null($basepath)) {
+        if (null === $basepath) {
             $deployedModule = true;
             $basepath = "custom/modules/$moduleName/language";
             if ($forRelationshipLabel) {
@@ -221,15 +245,15 @@ class ParserLabel
             }
 
         if ($changed) {
-            $GLOBALS [ 'log' ]->debug("ParserLabel->addLabels: writing new mod_strings to $filename");
-            $GLOBALS [ 'log' ]->debug('ParserLabel->addLabels: mod_strings='.print_r($mod_strings, true));
+            $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels: writing new mod_strings to $filename");
+            $GLOBALS [ 'log' ]->debug('ParserLabel::addLabels: mod_strings='.print_r($mod_strings, true));
             if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
                 $GLOBALS [ 'log' ]->fatal("Could not write $filename");
             } else {
                 // if we have a cache to worry about, then clear it now
                 if ($deployedModule) {
                     SugarCache::cleanOpcodes();
-                    $GLOBALS [ 'log' ]->debug('PaserLabel->addLabels: clearing language cache');
+                    $GLOBALS [ 'log' ]->debug('PaserLabel::addLabels: clearing language cache');
                     $cache_key = 'module_language.'.$language.$moduleName;
                     sugar_cache_clear($cache_key);
                     LanguageManager::clearLanguageCache($moduleName, $language);
@@ -332,7 +356,7 @@ class ParserLabel
                         // if we have a cache to worry about, then clear it now
                         if ($deployedModule) {
                             SugarCache::cleanOpcodes();
-                            $GLOBALS ['log']->debug('PaserLabel->addLabels: clearing language cache');
+                            $GLOBALS ['log']->debug('PaserLabel::addLabels: clearing language cache');
                             $cache_key = 'module_language.'.$language.$moduleName;
                             sugar_cache_clear($cache_key);
                             LanguageManager::clearLanguageCache($moduleName, $language);
@@ -349,7 +373,7 @@ class ParserLabel
      * Takes in the request params from a save request and processes
      * them for the save.
      *
-     * @param $metadata
+     * @param array $metadata
      * @param string $language Language key, for example 'en_us'
      */
     public function handleSaveRelationshipLabels($metadata, $language)
@@ -361,11 +385,14 @@ class ParserLabel
         }
     }
 
+    /**
+     * @param array $labels
+     */
     public function addLabelsToAllLanguages($labels)
     {
         $langs = get_languages();
         foreach ($langs as $lang_key => $lang_display) {
-            $this->addLabels($lang_key, $labels, $this->moduleName);
+            self::addLabels($lang_key, $labels, $this->moduleName);
         }
     }
 }

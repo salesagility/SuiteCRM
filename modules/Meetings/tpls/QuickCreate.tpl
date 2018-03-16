@@ -91,25 +91,25 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_NEW_FORM_TITLE}</slot></h4></th>
+	<th align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_NEW_FORM_TITLE}</span></h4></th>
 	</tr>
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td><slot><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></slot></td>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_STATUS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%"><slot><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td><span><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></span></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_STATUS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%"><span><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" rowspan="2"><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
-	<td rowspan="2"><slot><textarea name='description' tabindex='1' cols="50" rows="4">{$DESCRIPTION}</textarea></slot></td>
-	<td scope="row"><slot>{$MOD.LBL_DATE_TIME}</slot></td>
+	<td valign="top" scope="row" rowspan="2"><span>{$MOD.LBL_DESCRIPTION}</span></td>
+	<td rowspan="2"><span><textarea name='description' tabindex='1' cols="50" rows="4">{$DESCRIPTION}</textarea></span></td>
+	<td scope="row"><span>{$MOD.LBL_DATE_TIME}</span></td>
 	<td >
-	<slot>
+	<span>
 		<table cellpadding="0" cellspacing="0">
 		<tr>
 		<td nowrap>
 		<input name='date_start' id='jscal_field' onblur="parseDate(this, '{$USER_DATEFORMAT}');" tabindex='2' size='11' maxlength='10' type="text" value="{$DATE_START}">
-		{sugar_getimage name="jscalendar" ext=".gif" alt=$USER_DATEFORMAT other_attributes='align="absmiddle" id="jscal_trigger" '}&nbsp;</td>
+			<span id="jscal_trigger" class="suitepicon suitepicon-module-calendar"></span></td>
         <td nowrap>
         <select name='time_hour_start' tabindex="2">{$TIME_START_HOUR_OPTIONS}</select>{$TIME_SEPARATOR}
         <select name='time_minute_start' tabindex="2">{$TIME_START_MINUTE_OPTIONS}</select>
@@ -123,13 +123,13 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
         <td nowrap><span class="dateFormat">{$TIME_FORMAT}</span></td>
         </tr>
         </table>
-    </slot>
+    </span>
     </td>
 	</tr>
 	<tr>
-	<td scope="row" valign="top"><slot>{$MOD.LBL_DURATION} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td scope="row" valign="top"><span>{$MOD.LBL_DURATION} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
 	<td valign="top" >
-	<slot><input name='duration_hours' tabindex="2" size='2' maxlength='2' type="text" value='{$DURATION_HOURS}'> <select tabindex="2" name='duration_minutes'>{$DURATION_MINUTES_OPTIONS}</select> {$MOD.LBL_HOURS_MINS}</slot></td>
+	<span><input name='duration_hours' tabindex="2" size='2' maxlength='2' type="text" value='{$DURATION_HOURS}'> <select tabindex="2" name='duration_minutes'>{$DURATION_MINUTES_OPTIONS}</select> {$MOD.LBL_HOURS_MINS}</span></td>
 	</tr>
 	</table>
 </td>

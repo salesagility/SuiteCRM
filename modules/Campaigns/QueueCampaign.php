@@ -195,7 +195,8 @@ if ($test) {
     if($from_wiz){$header_URL .= "&from=send";}
 }
 if($action=='WizardMarketingSave') {
-	$header_URL .= '&WizardMarketingSave=1&marketing_id=' . $_REQUEST['wiz_mass'];
+	$header_URL .= '&WizardMarketingSave=1&marketing_id=' . (isset($_POST['marketing_id']) && $_POST['marketing_id'] ?
+            $_POST['marketing_id'] : $_REQUEST['wiz_mass']);
 }
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 
@@ -206,5 +207,3 @@ if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
 else {
 	header($header_URL);
 }
-
-?>

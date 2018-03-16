@@ -42,13 +42,17 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td nowrap class="paginationWrapper">
-            {if !empty($list_link)}
-                <script>
-                  SUGAR.saveAndContinue = function (elem) {ldelim}
-                    elem.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}
-                  {rdelim}
-                </script>
-        &nbsp;&nbsp;&nbsp;&nbsp;{else}
+            <script>
+                SUGAR.saveAndContinue = function (elem)
+                    {ldelim}
+                        elem.form.action.value='Save';
+                        if(check_form('EditView'))
+                        {ldelim}
+                            sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');
+                        {rdelim}
+                    {rdelim}
+            </script>
+            {if empty($list_link)}
                 {* remove the other save and continue button next to the view change log when you are on the last item on the list *}
                 {literal}
                     <script>
@@ -62,12 +66,12 @@
                 {if !empty($previous_link)}
                 <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_PREVIOUS}" onClick="document.location.href='{$previous_link}';">
                     {*{sugar_getimage name="previous" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}*}
-                    <span class="glyphicon glyphicon-chevron-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
+                    <span class="suitepicon suitepicon-action-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
                 </button>
                 {else}
                 <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_PREVIOUS}" disabled='true'>
                     {*{sugar_getimage name="previous_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}*}
-                    <span class="glyphicon glyphicon-chevron-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
+                    <span class="suitepicon suitepicon-action-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
                 </button>
                 {/if}
                 &nbsp;&nbsp;
@@ -76,12 +80,12 @@
                 {if !empty($next_link)}
                 <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_NEXT}" onClick="document.location.href='{$next_link}';">
                     {*{sugar_getimage name="next" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}*}
-                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="glyphicon glyphicon-chevron-right"> </span>
+                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="suitepicon suitepicon-action-right"> </span>
                 </button>
                 {else}
                 <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_NEXT}" disabled="true">
                     {*{sugar_getimage name="next_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}*}
-                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="glyphicon glyphicon-chevron-right"> </span>
+                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="suitepicon suitepicon-action-right"> </span>
                 </button>
                 {/if}
             </span>

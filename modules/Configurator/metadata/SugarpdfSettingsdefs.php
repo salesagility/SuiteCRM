@@ -56,14 +56,6 @@ $SugarpdfSettings = array(
         "class"=>"basic",
         "type"=>"text",
     ),
-/*    "sugarpdf_pdf_creator"=>array(
-        "label"=>$mod_strings["PDF_CREATOR"],
-        "info_label"=>$mod_strings["PDF_CREATOR_INFO"],
-        "value"=>PDF_CREATOR,
-        "class"=>"basic",
-        "type"=>"text",
-        "required"=>"true"
-    ),*/
     "sugarpdf_pdf_author"=>array(
         "label"=>$mod_strings["PDF_AUTHOR"],
         "info_label"=>$mod_strings["PDF_AUTHOR_INFO"],
@@ -79,22 +71,6 @@ $SugarpdfSettings = array(
         "class"=>"basic",
         "type"=>"text"
     ),
-    /*
-    "sugarpdf_pdf_header_title"=>array(
-        "label"=>$mod_strings["PDF_HEADER_TITLE"],
-        "info_label"=>$mod_strings["PDF_HEADER_TITLE_INFO"],
-        "value"=>PDF_HEADER_TITLE,
-        "class"=>"basic",
-        "type"=>"text",
-    ),
-    "sugarpdf_pdf_header_string"=>array(
-        "label"=>$mod_strings["PDF_HEADER_STRING"],
-        "info_label"=>$mod_strings["PDF_HEADER_STRING_INFO"],
-        "value"=>PDF_HEADER_STRING,
-        "class"=>"basic",
-        "type"=>"text",
-    ),
-    */
     "sugarpdf_pdf_header_logo"=>array(
         "label"=>$mod_strings["PDF_HEADER_LOGO"],
         "info_label"=>$mod_strings["PDF_HEADER_LOGO_INFO"],
@@ -110,17 +86,6 @@ $SugarpdfSettings = array(
         "class"=>"logo",
         "type"=>"file",
     ),
-    /*
-    "sugarpdf_pdf_header_logo_width"=>array(
-        "label"=>$mod_strings["PDF_HEADER_LOGO_WIDTH"],
-        "info_label"=>$mod_strings["PDF_HEADER_LOGO_WIDTH_INFO"],
-        "value"=>PDF_HEADER_LOGO_WIDTH,
-        "class"=>"logo",
-        "type"=>"number",
-        "required"=>"true",
-        "unit"=>PDF_UNIT
-    ),
-    */
     "sugarpdf_pdf_small_header_logo"=>array(
         "label"=>$mod_strings["PDF_SMALL_HEADER_LOGO"],
         "info_label"=>$mod_strings["PDF_SMALL_HEADER_LOGO_INFO"],
@@ -136,19 +101,6 @@ $SugarpdfSettings = array(
         "class"=>"logo",
         "type"=>"file",
     ),
-    /*
-    "sugarpdf_pdf_small_header_logo_width"=>array(
-        "label"=>$mod_strings["PDF_SMALL_HEADER_LOGO_WIDTH"],
-        "info_label"=>$mod_strings["PDF_SMALL_HEADER_LOGO_WIDTH_INFO"],
-        "value"=>PDF_SMALL_HEADER_LOGO_WIDTH,
-        "class"=>"logo",
-        "type"=>"number",
-        "required"=>"true",
-        "unit"=>PDF_UNIT
-    ),
-*/
-    
-
     "sugarpdf_pdf_filename"=>array(
         "label"=>$mod_strings["PDF_FILENAME"],
         "info_label"=>$mod_strings["PDF_FILENAME_INFO"],
@@ -215,24 +167,6 @@ $SugarpdfSettings = array(
         "selectList"=>array("edit"=>"Edition","list"=>"List","detail"=>"Detail", "export"=>"Export"),
         "required"=>"true"
     ),
-    
-/*    "sugarpdf_head_magnification"=>array(
-        "label"=>$mod_strings["HEAD_MAGNIFICATION"],
-        "info_label"=>$mod_strings["HEAD_MAGNIFICATION_INFO"],
-        "value"=>HEAD_MAGNIFICATION,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),*/
-/*    "sugarpdf_k_title_magnification"=>array(
-        "label"=>$mod_strings["K_TITLE_MAGNIFICATION"],
-        "info_label"=>$mod_strings["K_TITLE_MAGNIFICATION_INFO"],
-        "value"=>K_TITLE_MAGNIFICATION,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),*/
-    
     "sugarpdf_k_small_ratio"=>array(
         "label"=>$mod_strings["K_SMALL_RATIO"],
         "info_label"=>$mod_strings["K_SMALL_RATIO_INFO"],
@@ -278,5 +212,3 @@ if (@getimagesize($logo) === FALSE) {
 if (@getimagesize($small_logo) === FALSE) {
     $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
 }
-
-?>
