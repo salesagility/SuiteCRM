@@ -227,6 +227,12 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	        $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
 	    }
 
+            if (isset($_POST['sort_modules_by_name'])) {
+              $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+            } else {
+              $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+            }
+
 	    if(isset($_POST['user_subpanel_tabs']))
 	    {
 	        $focus->setPreference('subpanel_tabs', $_POST['user_subpanel_tabs'], 0, 'global');
