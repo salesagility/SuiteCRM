@@ -40,7 +40,7 @@ buildEditField();
 
 //Global Variables.
 
-var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
+var inlineEditSaveButtonImg = "themes/"+SUGAR.themes.theme_name+"/images/inline_edit_save_icon.svg";
 if($("#inline_edit_icon").length) {
     var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 } else {
@@ -111,6 +111,10 @@ function buildEditField(){
         var _this = elem;
         e.preventDefault();
         // depending on what view you are using will find the id,module,type of field, and field name from the view
+
+        if(view == "view_GanttChart" )
+            view = "DetailView";
+        
         if(view == "DetailView"){
             var field = $(_this).attr( "field" );
             var type = $(_this).attr( "type" );
@@ -140,7 +144,7 @@ function buildEditField(){
             //If we have the field html append it to the div we clicked.
             if(html){
                 $(_this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
-                $("#inlineEditSaveButton").load(inlineEditSaveButtonImg);
+                $("#inlineEditSaveButton").html('<span class="suitepicon suitepicon-action-confirm"></span>');
                 //If the field is a relate field we will need to retrieve the extra js required to make the field work.
                 if(type == "relate" || type == "parent") {
                     var relate_js = getRelateFieldJS(field, module, id);
@@ -272,7 +276,14 @@ $(document).on('click', function (e) {
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
-            var outputValueParse = $(output_value).text();
+
+            // Resolve issues with telephone number throwing exception.
+            if (/<[a-z][\s\S]*>/i.test(output_value)) {
+                var outputValueParse = $(output_value).text();
+            } else {
+                var outputValueParse = output_value;
+            }
+
             var user_value = getInputValue(field, type);
 
             /**
@@ -431,8 +442,10 @@ function handleSave(field,id,module,type){
  */
 
 function setValueClose(value){
+    $.get('themes/'+SUGAR.themes.theme_name+'/images/inline_edit_icon.svg', function(data) {
+        // Fix for #3136 - replace new line characters with <br /> for html on close.
+        value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
-    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
@@ -455,17 +468,17 @@ function setValueClose(value){
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
     var result = $.post('index.php',
-        {
-            'module': 'Home',
-            'action': 'saveHTMLField',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'value': value,
-            'view' : view,
-            'parent_type': parent_type,
-            'to_pdf': true
-        }, null, "json"
+      {
+          'module': 'Home',
+          'action': 'saveHTMLField',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'value': value,
+          'view' : view,
+          'parent_type': parent_type,
+          'to_pdf': true
+      }, null, "json"
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
@@ -486,15 +499,15 @@ function saveFieldHTML(field,module,id,value, parent_type) {
 function loadFieldHTML(field,module,id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getEditFieldHTML',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'view' : view,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getEditFieldHTML',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'view' : view,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
     if(result.responseText){
@@ -524,15 +537,15 @@ function loadFieldHTML(field,module,id) {
 function loadFieldHTMLValue(field,id,module) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getDisplayValue',
-            'field': field,
-            'current_module': module,
-            'view': view,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getDisplayValue',
+          'field': field,
+          'current_module': module,
+          'view': view,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
@@ -552,14 +565,14 @@ function loadFieldHTMLValue(field,id,module) {
 function getValidationRules(field,module,id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getValidationRules',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getValidationRules',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
@@ -586,14 +599,14 @@ function getValidationRules(field,module,id){
 function getRelateFieldJS(field, module, id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getRelateFieldJS',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getRelateFieldJS',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 

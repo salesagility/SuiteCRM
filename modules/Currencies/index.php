@@ -188,5 +188,3 @@ $sugar_smarty = new Sugar_Smarty();
 			}else{
 				echo 'Admin\'s Only';	
 			}
-
-?>

@@ -388,4 +388,3 @@
             echo 'result = ' . $json->encode(array('result' => 'true'));
         }
  }
-?>

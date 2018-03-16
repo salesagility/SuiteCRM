@@ -1,0 +1,552 @@
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+/**************
+ TreeView Icons
+**************/
+.remoteAccount, a.remoteAccount,
+.remoteFolderGroup, a.remoteFolderGroup,
+.remoteFolderGroupUnseen, a.remoteFolderGroupUnseen,
+.sugarFolder, a.sugarFolder,
+.sugarFolderUnseen, a.sugarFolderUnseen,
+.sugarFolderGroup, a.sugarFolderGroup,
+.sugarFolderGroupUnseen, a.sugarFolderGroupUnseen,
+.sugarFolderDynamic, a.sugarFolderDynamic,
+.sugarFolderDynamicUnseen, a.sugarFolderDynamicUnseen {
+    text-decoration: none;
+}
+
+.remoteAccount {
+    background: transparent url(images/email.gif) no-repeat;
+}
+
+.remoteAccountGroup {
+    background: transparent url(images/emailGroup.gif) no-repeat;
+    color: #070;
+    font-style: italic;
+}
+
+.remoteFolder, a.remoteFolder,
+.remoteFolderUnseen, a.remoteFolderUnseen,
+.remoteFolderGroupUnseen, a.remoteFolderGroupUnseen {
+    padding-left: 0px;
+    text-decoration: none;
+}
+
+.remoteFolderUnseen, .remoteFolderGroupUnseen, .sugarFolderUnseen, .sugarFolderGroupUnseen, .sugarFolderDynamicUnseen {
+    font-weight: bold;
+}
+
+.sugarFolderGroup, .sugarFolderGroupUnseen {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_folder.gif) no-repeat;
+    font-style: italic;
+}
+
+.sugarFolderDynamic, .sugarFolderDynamicUnseen {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_folder.gif) no-repeat;
+}
+
+.composeRightTabs span[name="teamset_div"] input {
+    max-width: 95px;
+}
+
+.composeRightTabs input, .composeRightTabs select {
+    max-width: 190px;
+}
+
+/**************
+ Hack for Sugar's pop-over menus
+**************/
+.menu {
+    z-index: 100;
+}
+
+.subDmenu {
+    z-index: 100;
+}
+
+/**************
+ Contacts styles
+**************/
+.rowStylenone {
+    display: none;
+}
+
+/**************
+ UI Elements
+**************/
+.sectionTitle {
+    background-color: #eee;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.selectedDiv {
+    color: #00a;
+    background-color: #ccc;
+}
+
+.folderSelected {
+    background-color: #f00;
+}
+
+.emailUILabel {
+    width: 1%;
+    vertical-align: top;
+    font-weight: bold;
+    text-align: right;
+    padding-bottom: 1em;
+}
+
+.emailUILabel button {
+    width: 50px;
+    text-align: right;
+}
+
+.emailUIField {
+    text-align: left;
+    padding-bottom: 1em;
+}
+
+.emailUITextField {
+    border: 1px solid #333;
+}
+
+.emailUILink {
+    font-family: arial;
+    text-decoration: none;
+}
+
+.groupFolder {
+    color: #007700;
+    font-style: italic;
+}
+
+.sugarFolder {
+    color: #000077;
+}
+
+.displayEmailLabel {
+    color: #999;
+    font-weight: bold;
+    text-align: right;
+}
+
+.displayEmailValue {
+    color: #000;
+}
+
+.displayEmailLabel, .displayEmailValue {
+    padding: 2px;
+    background-color: #eee;
+}
+
+.displayEmailValueWhite {
+    padding: 2px;
+    background-color: #fff;
+}
+
+.ieFolder .ygtvcontent a {
+    margin-left: 18px;
+}
+
+.ieFolder a.ygtvspacer {
+    float: left;
+    height: 16px;
+    left: 17px;
+    position: relative;
+    width: 16px;
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_folder.gif) no-repeat scroll 0 -1px;
+}
+
+.ieFolder .ygtvtm a.ygtvspacer, .ieFolder .ygtvtmh a.ygtvspacer, .ieFolder .ygtvlm a.ygtvspacer, .ieFolder .ygtvlmh a.ygtvspacer {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_folder_exp.gif) no-repeat;
+}
+
+.sugarFolder a.ygtvspacer {
+    float: left;
+    height: 16px;
+    left: 17px;
+    position: relative;
+    width: 16px;
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_sugfolder.gif) no-repeat scroll 0 -1px;
+}
+
+.sugarFolder .ygtvtm a.ygtvspacer, .sugarFolder .ygtvlm a.ygtvspacer, .sugarFolder .ygtvtmh a.ygtvspacer, .sugarFolder .ygtvlmh a.ygtvspacer {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_sugfolder_exp.gif) no-repeat;
+}
+
+.x-tree-node-collapsed.sugarFolder .x-tree-node-icon, .sugarFolder .ygtvcontent a, .folderDragProxy {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_sugfolder.gif) no-repeat scroll 0 -1px;
+    padding-left: 18px;
+}
+
+.x-tree-node-expanded.sugarFolder .x-tree-node-icon {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_sugfolder_exp.gif) no-repeat;
+}
+
+.groupFolder .x-tree-node-icon, .groupFolder .ygtvcontent a {
+    background: transparent url(../../index.php?entryPoint=getImage&imageName=icon_email_folder_grp.gif) no-repeat scroll 0 -1px;
+    padding-left: 18px;
+}
+
+.x-view-selected, .x-view-selected td {
+    background-color: #316ac5;
+    color: white;
+}
+
+.address-primary {
+    font-weight: bold;
+}
+
+.address-list-exp {
+    font-style: italic;
+}
+
+.sqsFloater, #smartInputFloaterContent {
+    z-index: 11000;
+}
+
+.input-error {
+    border: 1px solid #f00;
+}
+
+.maybe {
+    display: inline;
+    white-space: nowrap;
+}
+
+table.list {
+    margin: 0px;
+}
+
+.view, table.view {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+li.yuimenuitem-disabled {
+    display: none;
+}
+
+#container .yui-navset {
+    overflow-y: hidden;
+}
+
+#lefttabs .yui-nav .selected a em {
+    padding-top: 1px;
+}
+
+#lefttabs .yui-content {
+    border: none;
+    overflow: auto;
+
+}
+
+#lefttabs .yui-dt-empty {
+    display: none;
+}
+
+/* .yui-dt table tr th {
+	padding: 2px 5px !important;
+}*/
+
+div #rollover {
+    white-space: normal;
+    display: inline;
+    float: none !important;
+}
+
+.x-dd-drag-ghost {
+    opacity: 1;
+}
+
+#settingsDialog .bd, #settingsDialog .yui-content, #contactsDialogue .bd {
+    padding: 0px;
+}
+
+#_blank, #listBottom, #displayEmailFramePreview {
+    width: 100%;
+    height: 100%;
+}
+
+#_blank {
+    padding-top: 7px;
+}
+
+#_blank, #listBottom {
+    overflow: hidden;
+}
+
+#importDiv {
+    padding: 10px 0 !important;
+}
+
+#listRight {
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+#searchTable {
+    padding: 0px;
+    margin: 0px;
+}
+
+#peopleTableSearchRow td {
+    padding: 3px !important;
+}
+
+#peopleTableSearchRow td {
+    padding: 3px !important;
+}
+
+#listViewDiv .yui-layout-unit .yui-layout-hd {
+    display: none;
+}
+
+#mbfooter img {
+    position: relative;
+    top: -1px;
+}
+
+#mbfooter h2 td {
+    font-weight: normal;
+}
+
+.yui-layout-unit-left .yui-layout-hd {
+    border-bottom-width: 0;
+}
+
+td.yui-dt-col-bean_id {
+    text-align: center;
+}
+
+.yuimenuitem-disabled .yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled:hover {
+    display: none;
+}
+
+#listViewDiv .pagination {
+    margin-bottom: 10px;
+}
+
+.paginator-start {
+    width: 27px;
+    height: 20px;
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=start_off.gif') no-repeat;
+}
+
+.pagination a .paginator-start {
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=start.gif') no-repeat;
+}
+
+.paginator-previous {
+    width: 24px;
+    height: 24px;
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous_off.gif') no-repeat;
+}
+
+.pagination a .paginator-previous {
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous.gif') no-repeat;
+}
+
+.paginator-next {
+    width: 24px;
+    height: 24px;
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=next_off.gif') no-repeat;
+}
+
+.pagination a .paginator-next {
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=next.gif') no-repeat;
+}
+
+.paginator-end {
+    width: 27px;
+    height: 20px;
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=end_off.gif') no-repeat;
+}
+
+.pagination a .paginator-end {
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=end.gif') no-repeat;
+}
+
+.pagination .yui-pg-first, .pagination .yui-pg-previous, .pagination .yui-pg-next, .yui-pg-last, .pagination .yui-pg-current, .pagination .yui-pg-pages, .pagination .yui-pg-page {
+    padding: 0px;
+}
+
+#settingsDialog .yui-content {
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#settingsDialog table.view {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+#settingsDialog h4 {
+    text-align: left;
+    padding-left: 0px;
+}
+
+button img {
+    border: none;
+}
+
+.addressbookSearch {
+    padding: 4px 0 2px;
+    width: 180px;
+}
+
+.addressbookSearch .button {
+    margin-top: -6px;
+    margin-left: 2px;
+    padding: 0;
+}
+
+.addressbookSearch span {
+    white-space: nowrap;
+}
+
+.addressbookSearch input {
+    width: 90px;
+}
+
+.yui-layout th {
+    text-align: left;
+}
+
+#ieSelect tr td {
+    display: inline;
+    position: relative;
+    left: -2px;
+}
+
+div#content {
+    padding-bottom: 0px;
+}
+
+.yui-cstm-cntrd-liner {
+    margin: 0;
+    text-align: center !important;
+}
+
+.rolloverEmail {
+    position: relative;
+    margin: none;
+    display: inline;
+}
+
+.rolloverEmail a {
+    text-decoration: none;
+}
+
+.rolloverEmail a span {
+    text-decoration: none;
+    display: none;
+    overflow: hidden;
+}
+
+.rolloverEmail a:hover span {
+    display: inline;
+    width: 150px;
+    margin: 5px 5px 5px 5px;
+    position: absolute;
+    padding: 10px;
+    color: #333;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 12px;
+    z-index: 1000;
+    top: -10px;
+    right: 10px;
+}
+
+.advancedSearchTD {
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.row-title {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.div-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.edit h4 {
+    font-size: 1.2em;
+    padding-left: 8px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.button-padding {
+    padding-left: 8px;
+}
+
+.input-button {
+    padding-top: 12px;
+}
+
+.emailSettings tr td:first-child {
+    padding-right: 10px;
+}
+
+.emailSettings tr td:nth-child(2) {
+    padding-bottom: 2px;
+}
+
+.emailSettings tr td:nth-child(3) {
+    padding-right: 15px;
+    text-align: right;
+}
+
+.emailSettings tr td:last-child {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}

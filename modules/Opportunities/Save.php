@@ -49,4 +49,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Opportunities/OpportunityFormBase.php');
 $opportunityForm = new OpportunityFormBase();
 $opportunityForm->handleSave('', true, false);
-?>

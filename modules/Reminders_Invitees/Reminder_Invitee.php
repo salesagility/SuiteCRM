@@ -155,4 +155,3 @@ class Reminder_Invitee extends Basic {
     }
 
 }
-?>

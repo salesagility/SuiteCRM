@@ -67,7 +67,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function login($user_auth, $application, $name_value_list = array()){
+    public function login($user_auth, $application = null, $name_value_list = array()){
         $GLOBALS['log']->info("Begin: SugarWebServiceImpl->login({$user_auth['user_name']}, $application, ". print_r($name_value_list, true) .")");
         global $sugar_config, $system_config;
         $error = new SoapError();
@@ -208,26 +208,34 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
 	 *	     'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
 	 * @exception 'SoapFault' -- The SOAP error, if any
 	 */
-	public function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array)
-	{
-	    $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array);
-		$relationshipList = $result['relationship_list'];
-		$returnRelationshipList = array();
-		foreach($relationshipList as $rel){
-			$link_output = array();
-			foreach($rel as $row){
-				$rowArray = array();
-				foreach($row['records'] as $record){
-					$rowArray[]['link_value'] = $record;
-				}
-				$link_output[] = array('name' => $row['name'], 'records' => $rowArray);
-			}
-			$returnRelationshipList[]['link_list'] = $link_output;
-		}
+    public function get_entries(
+        $session,
+        $module_name,
+        $ids,
+        $select_fields,
+        $link_name_to_fields_array,
+        $track_view = false
+    ) {
+        $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array,
+            $track_view);
+        $relationshipList = $result['relationship_list'];
+        $returnRelationshipList = array();
+        foreach ($relationshipList as $rel) {
+            $link_output = array();
+            foreach ($rel as $row) {
+                $rowArray = array();
+                foreach ($row['records'] as $record) {
+                    $rowArray[]['link_value'] = $record;
+                }
+                $link_output[] = array('name' => $row['name'], 'records' => $rowArray);
+            }
+            $returnRelationshipList[]['link_list'] = $link_output;
+        }
 
-		$result['relationship_list'] = $returnRelationshipList;
-		return $result;
-	}
+        $result['relationship_list'] = $returnRelationshipList;
+
+        return $result;
+    }
 
 	    /**
      * Retrieve a list of beans.  This is the primary method for getting list of SugarBeans from Sugar using the SOAP API.

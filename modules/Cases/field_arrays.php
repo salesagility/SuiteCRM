@@ -64,4 +64,3 @@ $fields_array['Case'] = array ('column_fields' => Array("id"
         ),
         'required_fields' => array('name'=>1, 'account_name'=>2),
 );
-?>

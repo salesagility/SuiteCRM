@@ -50,7 +50,7 @@ class SpotsController extends SugarController
 
     //These are the file paths for the cached results of the spot data sets
     protected $spotFilePath = 'cache/modules/Spots/';
-    protected $accountsFilName = 'accounts.json';
+    protected $accountsFileName = 'accounts.json';
     protected $servicesFileName = 'service.json';
     protected $salesFileName = 'sales.json';
     protected $leadsFileName = 'leads.json';
@@ -125,7 +125,7 @@ class SpotsController extends SugarController
     public function action_getAccountsSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -565,7 +565,7 @@ EOF;
 EOF;
 
         $mysqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -579,7 +579,7 @@ EOF;
 EOF;
 
         $mysqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name
@@ -605,7 +605,7 @@ EOF;
         WHERE calls.deleted = 0
 EOF;
         $mssqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -618,7 +618,7 @@ EOF;
         WHERE meetings.deleted = 0
 EOF;
         $mssqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name

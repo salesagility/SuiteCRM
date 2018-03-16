@@ -967,5 +967,3 @@ function search($user_name, $password,$name){
     }
 	return $list;
 }
-
-?>

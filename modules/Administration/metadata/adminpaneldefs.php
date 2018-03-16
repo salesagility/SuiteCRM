@@ -95,8 +95,9 @@ $admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LB
 
 require_once 'include/SugarOAuthServer.php';
 if(SugarOAuthServer::enabled()) {
-    $admin_option_defs['Administration']['oauth']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index');
+    $admin_option_defs['Administration']['oauth_keys']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index');
 }
+$admin_option_defs['Administration']['oauth2_clients']= array('Password','LBL_OAUTH2_CLIENTS_TITLE','LBL_OAUTH2_CLIENTS','./index.php?module=OAuth2Clients&action=index');
 
 $admin_group_header[]= array('LBL_ADMINISTRATION_HOME_TITLE','',false,$admin_option_defs, 'LBL_ADMINISTRATION_HOME_DESC');
 
@@ -284,4 +285,3 @@ foreach ($admin_group_header as $key=>$values) {
 
 	}
 }
-?>

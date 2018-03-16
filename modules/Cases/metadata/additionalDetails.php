@@ -66,7 +66,3 @@ function additionalDetailsaCase($fields) {
 				 'editLink' => "index.php?action=EditView&module=Cases&return_module=Cases&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Cases&return_module=Cases&record={$fields['ID']}");
 }
- 
- ?>
- 
- 

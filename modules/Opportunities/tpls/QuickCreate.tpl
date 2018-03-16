@@ -72,29 +72,29 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<td width="15%" scope="row"><slot>{$MOD.LBL_OPPORTUNITY_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%" ><slot><input name='name' type="text" tabindex='1' size='35' maxlength='50' value=""></slot></td>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_AMOUNT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="30%" ><slot><input name='amount' tabindex='2' size='15' maxlength='25' type="text" value=''></slot></td>
+	<td width="15%" scope="row"><span>{$MOD.LBL_OPPORTUNITY_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%" ><span><input name='name' type="text" tabindex='1' size='35' maxlength='50' value=""></span></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_AMOUNT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="30%" ><span><input name='amount' tabindex='2' size='15' maxlength='25' type="text" value=''></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DATE_CLOSED}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>	
-	<td ><slot><input name='date_closed' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field' type="text" tabindex='1' size='11' maxlength='10' value=""> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger" '} <span class="dateFormat">{$USER_DATEFORMAT}</span></slot></td>
-	<td scope="row"><slot>{$MOD.LBL_LEAD_SOURCE}</slot></td>
-	<td ><slot><select tabindex='2' name='lead_source'>{$LEAD_SOURCE_OPTIONS}</select></slot></td>
+	<td scope="row"><span>{$MOD.LBL_DATE_CLOSED}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td ><span><input name='date_closed' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field' type="text" tabindex='1' size='11' maxlength='10' value=""> <span id="jscal_trigger" class="suitepicon suitepicon-module-calendar"></span> <span class="dateFormat">{$USER_DATEFORMAT}</span></span></td>
+	<td scope="row"><span>{$MOD.LBL_LEAD_SOURCE}</span></td>
+	<td ><span><select tabindex='2' name='lead_source'>{$LEAD_SOURCE_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td scope="row"><slot>{$MOD.LBL_SALES_STAGE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td ><slot><select tabindex='1' name='sales_stage' id='opportunities_sales_stage'>{$SALES_STAGE_OPTIONS}</select></slot></td>
-	<td scope="row"><slot>{$MOD.LBL_PROBABILITY}</slot></td>
-	<td ><slot><input name='probability' id='opportunities_probability' tabindex='2' size='4' maxlength='3' type="text" value=''></slot></td>
+	<td scope="row"><span>{$MOD.LBL_SALES_STAGE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td ><span><select tabindex='1' name='sales_stage' id='opportunities_sales_stage'>{$SALES_STAGE_OPTIONS}</select></span></td>
+	<td scope="row"><span>{$MOD.LBL_PROBABILITY}</span></td>
+	<td ><span><input name='probability' id='opportunities_probability' tabindex='2' size='4' maxlength='3' type="text" value=''></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_ACCOUNT_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td ><slot>{$REQUEST.parent_name}<input id='account_name' name='account_name' type="hidden" value='{$REQUEST.parent_name}'><input id='account_id' name='account_id' type="hidden" value='{$REQUEST.parent_id}'>&nbsp;</slot></td>
+	<td scope="row"><span>{$MOD.LBL_ACCOUNT_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td ><span>{$REQUEST.parent_name}<input id='account_name' name='account_name' type="hidden" value='{$REQUEST.parent_name}'><input id='account_id' name='account_id' type="hidden" value='{$REQUEST.parent_id}'>&nbsp;</span></td>
 	<td></td>
 	<td></td>
 	</tr>
 </table>
-</slot></td></tr></table>
+</span></td></tr></table>
 	</form>
 <script>
 {literal}

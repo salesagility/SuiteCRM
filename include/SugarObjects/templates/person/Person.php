@@ -185,7 +185,7 @@ class Person extends Basic
         $this->add_address_streets('primary_address_street');
         $this->add_address_streets('alt_address_street');
         $ori_in_workflow = empty($this->in_workflow) ? false : true;
-        $this->emailAddress->handleLegacySave($this, $this->module_dir);
+        $this->emailAddress->handleLegacySave($this);
         // bug #39188 - store emails state before workflow make any changes
         $this->emailAddress->stash($this->id, $this->module_dir);
         parent::save($check_notify);
@@ -208,7 +208,8 @@ class Person extends Basic
                 '',
                 '',
                 '',
-                $this->in_workflow
+                $this->in_workflow,
+                    isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
             );
         }
 
@@ -318,7 +319,7 @@ class Person extends Basic
 
         $where_auto = " $table.deleted=0 ";
 
-        if ($where !== '') {
+        if ($where != '') {
             $query .= "WHERE ($where) AND " . $where_auto;
         } else {
             $query .= 'WHERE ' . $where_auto;

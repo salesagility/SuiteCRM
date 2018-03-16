@@ -48,6 +48,7 @@ $dashletData['MyEmailsDashlet']['searchFields'] = array(
                                                        'name'  => array('default' => ''),
 													   //'from_addr_name' => array('default' => ''),
                                                        'assigned_user_id'   => array('default' => ''),
+    'category_id'      => array('default' => ''),
                                                        );
 $dashletData['MyEmailsDashlet']['columns'] = array(
                                                    'from_addr' => array('width'   => '15',
@@ -57,7 +58,7 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                                    'label'   => 'LBL_SUBJECT',
                                                                    'link'    => true,
                                                                    'default' => true),
-                                                   'to_addrs' => array('width'   => '15',
+                                                   'to_addrs_names' => array('width'   => '15',
                                                                          'label'   => 'LBL_TO_ADDRS',
                                                                          'default' => false),
                                                    'assigned_user_name' => array('width'   => '15',
@@ -74,13 +75,12 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                   'date_modified' => array('width'   => '15',
                                                                            'label'   => 'LBL_DATE_MODIFIED'),
                                                   'quick_reply' => array('width'   => '15',
-                                                                        'label'   => '',
+                                                                        'label'   => 'LNK_QUICK_REPLY',
                                                                         'sortable' => false,
                                                                         'default' => true),
-                                                   'create_related' => array('width'   => '25',
-                                                                        'label'   => '',
-                                                                        'sortable' => false,
-                                                                        'default' => true),
-                                                                        );
 
-?>
+    'category_id' => array('width' => '8',
+        'label' => 'LBL_CATEGORY',
+        'default' => true),
+);
+

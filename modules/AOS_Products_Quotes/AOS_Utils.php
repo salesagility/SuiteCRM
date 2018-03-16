@@ -38,10 +38,26 @@ function perform_aos_save($focus){
             if(!number_empty($focus->field_defs[$field['name']])){
                 $currency = new Currency();
                 $currency->retrieve($focus->currency_id);
-                $focus->$fieldNameDollar = $currency->convertToDollar(unformat_number($fieldName));
+
+                $amountToConvert = $focus->$fieldName;
+                if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {
+                    $amountToConvert = unformat_number($focus->$fieldName);
+                }
+
+                $focus->$fieldNameDollar = $currency->convertToDollar($amountToConvert);
             }
 
         }
 
     }
+}
+
+function amountToConvertIsDatabaseValue($focus, $fieldName)
+{
+    if (isset($focus->fetched_row)
+        && isset($focus->fetched_row[$fieldName])
+        && $focus->fetched_row[$fieldName] == $focus->$fieldName) {
+        return true;
+    }
+    return false;
 }

@@ -43,29 +43,29 @@
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 
 <tr height="20" >
-<td scope="col" ><slot>{MOD.LBL_LIST_NAME}</slot></td>
-<td scope="col" ><slot>{MOD.LBL_LIST_PERCENT_COMPLETE}</slot></td>
-<td scope="col" ><slot>{MOD.LBL_LIST_STATUS}</slot></td>
-<td scope="col" ><slot>{MOD.LBL_LIST_ASSIGNED_USER_ID}</slot></td>
-<td scope="col" ><slot>{MOD.LBL_LIST_DATE_DUE}</slot></td>
-<td scope="col" ><slot>&nbsp;</slot></td>
+<td scope="col" ><span>{MOD.LBL_LIST_NAME}</span></td>
+<td scope="col" ><span>{MOD.LBL_LIST_PERCENT_COMPLETE}</span></td>
+<td scope="col" ><span>{MOD.LBL_LIST_STATUS}</span></td>
+<td scope="col" ><span>{MOD.LBL_LIST_ASSIGNED_USER_ID}</span></td>
+<td scope="col" ><span>{MOD.LBL_LIST_DATE_DUE}</span></td>
+<td scope="col" ><span>&nbsp;</span></td>
 </tr>
 
 <!-- BEGIN: row -->
 <tr height="20" class="{ROW_COLOR}S1">
 
-<td scope="row"><slot><a
+<td scope="row"><span><a
 	href="{URL_PREFIX}index.php?module=ProjectTask&action=DetailView&record={project_task.ID}&return_module=Project&return_action=DetailView&return_id={project_task.PARENT_ID}"
-	>{project_task.NAME}</a></slot></td>
-<td><slot>{project_task.PERCENT_COMPLETE}</slot></td>
-<td><slot>{project_task.STATUS}</slot></td>
-<td><slot>{project_task.ASSIGNED_USER_NAME}</slot></td>
-<td><slot>{project_task.DATE_DUE}</slot></td>
-<td nowrap align="right"><slot><a class="listViewTdToolsS1"
+	>{project_task.NAME}</a></span></td>
+<td><span>{project_task.PERCENT_COMPLETE}</span></td>
+<td><span>{project_task.STATUS}</span></td>
+<td><span>{project_task.ASSIGNED_USER_NAME}</span></td>
+<td><span>{project_task.DATE_DUE}</span></td>
+<td nowrap align="right"><span><a class="listViewTdToolsS1"
 	href="{URL_PREFIX}index.php?module=ProjectTask&action=EditView&record={project_task.ID}{RETURN_URL}"
 	>{EDIT_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1"
 	href="{URL_PREFIX}index.php?module=ProjectTask&action=EditView&record={project_task.ID}{RETURN_URL}"
-	>{APP.LNK_EDIT}</a></slot></td>
+	>{APP.LNK_EDIT}</a></span></td>
 </tr>
 <!-- END: row -->
 

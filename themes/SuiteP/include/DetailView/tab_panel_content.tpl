@@ -179,16 +179,18 @@
 
                     {{/if}}
 
+                        {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
+                        <div class="inlineEditIcon col-xs-hidden">
+                            <span class="suitepicon suitepicon-action-edit"></span>
+                        </div>
+                        {{/if}}
+
                     </div>
                     {*<!-- /phone (version 1/2) -->*}
 
                 {{/if}}
 
-                {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
-                    <div class="inlineEditIcon col-xs-hidden">
-                        {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
-                    </div>
-                {{/if}}
+
 
                 {{counter name="fieldCount" print=false}}
 

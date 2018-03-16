@@ -391,5 +391,3 @@ $stepRecheck	= $_REQUEST['step'];
 
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
-
-?>

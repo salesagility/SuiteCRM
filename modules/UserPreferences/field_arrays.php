@@ -57,4 +57,3 @@ $fields_array['UserPreferences'] = array ('column_fields' => Array(
 		),
         'list_fields' =>  array('id', 'contents','category'),
 );
-?>

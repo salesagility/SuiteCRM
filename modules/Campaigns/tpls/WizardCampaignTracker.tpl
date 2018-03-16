@@ -60,14 +60,14 @@
 	<div id='tracker_input_div'>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-		<td width="15%" scope="row"><slot>{$MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;</span></slot></td>
-		<td width="25%" ><slot><input id="tracker_name" type="text" size="30" name="tracker_name" title="{$MOD.LBL_EDIT_TRACKER_NAME}" value="{$TRACKER_NAME}"></slot></td>
-		<td width="25%" scope="row"><slot><input onclick="toggle_tracker_url(this);" name="is_optout" title="{$MOD.LBL_EDIT_OPT_OUT}" id="is_optout"  class="checkbox" type="checkbox" />&nbsp;{$MOD.LBL_EDIT_OPT_OUT_}</slot></td>
-	    <td width="35%" ><slot>&nbsp;</slot></td>
+		<td width="15%" scope="row"><span>{$MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;</span></span></td>
+		<td width="25%" ><span><input id="tracker_name" type="text" size="30" name="tracker_name" title="{$MOD.LBL_EDIT_TRACKER_NAME}" value="{$TRACKER_NAME}"></span></td>
+		<td width="25%" scope="row"><span><input onclick="toggle_tracker_url(this);" name="is_optout" title="{$MOD.LBL_EDIT_OPT_OUT}" id="is_optout"  class="checkbox" type="checkbox" />&nbsp;{$MOD.LBL_EDIT_OPT_OUT_}</span></td>
+	    <td width="35%" ><span>&nbsp;</span></td>
 		</tr>
 		<tr>
-		<td scope="row"><slot>{$MOD.LBL_EDIT_TRACKER_URL}&nbsp;<span class="required"></span></slot></td>
-		<td  colspan=3><slot><input type="text" size="80" maxlength='255' {$TRACKER_URL_DISABLED} name="tracker_url" title="{$MOD.LBL_EDIT_TRACKER_URL}" id="tracker_url" value="http://"></slot> <input type='button' value ='{$MOD.LBL_ADD_TRACKER}' class= 'button' onclick='javascript:add_tracker();'></td>
+		<td scope="row"><span>{$MOD.LBL_EDIT_TRACKER_URL}&nbsp;<span class="required"></span></span></td>
+		<td  colspan=3><span><input type="text" size="80" maxlength='255' {$TRACKER_URL_DISABLED} name="tracker_url" title="{$MOD.LBL_EDIT_TRACKER_URL}" id="tracker_url" value="http://"></span> <input type='button' value ='{$MOD.LBL_ADD_TRACKER}' class= 'button' onclick='javascript:add_tracker();'></td>
 		</tr>
 		<tr><td colspan='4'>&nbsp;</td></tr>
 		</table>

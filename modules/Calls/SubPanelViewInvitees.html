@@ -46,20 +46,20 @@
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	<tr height="20">
 
-		<td scope="col" width="25%" ><slot>{APP.LBL_LIST_NAME}</slot></td>
-		<td scope="col" width="20%" ><slot>{APP.LBL_LIST_USER_NAME}</slot></td>
-		<td scope="col" width="30%" ><slot>{APP.LBL_LIST_EMAIL}</slot></td>
-		<td scope="col" width="15%" ><slot>{APP.LBL_LIST_PHONE}</slot></td>
+		<td scope="col" width="25%" ><span>{APP.LBL_LIST_NAME}</span></td>
+		<td scope="col" width="20%" ><span>{APP.LBL_LIST_USER_NAME}</span></td>
+		<td scope="col" width="30%" ><span>{APP.LBL_LIST_EMAIL}</span></td>
+		<td scope="col" width="15%" ><span>{APP.LBL_LIST_PHONE}</span></td>
 	  </tr>
 
 
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-		<td scope='row' valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}" >{USER.FIRST_NAME}&nbsp;{USER.LAST_NAME}</a></slot></td>
-    	<td valign=TOP><slot>{USER.USER_NAME}</slot></td>
-    	<td valign=TOP><slot><A HREF="mailto:{USER.EMAIL1}" >{USER.EMAIL1}</A></slot></td>
-    	<td valign=TOP  nowrap><slot>{USER.PHONE_WORK}</slot></td>
+		<td scope='row' valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}" >{USER.FIRST_NAME}&nbsp;{USER.LAST_NAME}</a></span></td>
+    	<td valign=TOP><span>{USER.USER_NAME}</span></td>
+    	<td valign=TOP><span><A HREF="mailto:{USER.EMAIL1}" >{USER.EMAIL1}</A></span></td>
+    	<td valign=TOP  nowrap><span>{USER.PHONE_WORK}</span></td>
 
 </tr>
 
@@ -71,18 +71,18 @@
 <p><h3>{APP.LBL_CONTACT_LIST}</h3>
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	<tr height="20">
-		<td width="20%" ><slot>{APP.LBL_LIST_CONTACT_NAME}</slot></td>
-		<td width="25%" ><slot>{APP.LBL_LIST_ACCOUNT_NAME}</slot></td>
-		<td width="30%" ><slot>{APP.LBL_LIST_EMAIL}</slot></td>
-		<td width="15%" ><slot>{APP.LBL_LIST_PHONE}</slot></td>
+		<td width="20%" ><span>{APP.LBL_LIST_CONTACT_NAME}</span></td>
+		<td width="25%" ><span>{APP.LBL_LIST_ACCOUNT_NAME}</span></td>
+		<td width="30%" ><span>{APP.LBL_LIST_EMAIL}</span></td>
+		<td width="15%" ><span>{APP.LBL_LIST_PHONE}</span></td>
 	</tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-		<td valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={CONTACT.ID}" >{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a></slot></td>
-    	<td valign=TOP><slot>{CONTACT.ACCOUNT_NAME}</slot></td>
-    	<td valign=TOP><slot><A HREF="mailto:{CONTACT.EMAIL1}" >{CONTACT.EMAIL1}</A></slot></td>
-    	<td valign=TOP  nowrap><slot>{CONTACT.PHONE_WORK}</slot></td>
+		<td valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={CONTACT.ID}" >{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a></span></td>
+    	<td valign=TOP><span>{CONTACT.ACCOUNT_NAME}</span></td>
+    	<td valign=TOP><span><A HREF="mailto:{CONTACT.EMAIL1}" >{CONTACT.EMAIL1}</A></span></td>
+    	<td valign=TOP  nowrap><span>{CONTACT.PHONE_WORK}</span></td>
 
 </tr>
 

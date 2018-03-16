@@ -179,5 +179,3 @@ else {
 }
 
 echo $subpanel->display();
-
-?>

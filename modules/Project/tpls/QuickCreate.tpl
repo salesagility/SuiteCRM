@@ -72,18 +72,19 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td><slot><textarea name='name' cols="50" tabindex='2' rows="1">{$NAME}</textarea></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td><span><textarea name='name' cols="50" tabindex='2' rows="1">{$NAME}</textarea></span></td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" width="15%"><slot>{$MOD.LBL_DATE_START} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%"><slot><input name='estimated_start_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_start' type="text" tabindex='2' size='11' maxlength='10' value="{$START_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger_start" '}</slot></td>
-	<td valign="top" scope="row" width="15%"><slot>{$MOD.LBL_DATE_END} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%"><slot><input name='estimated_end_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_end' type="text" tabindex='2' size='11' maxlength='10' value="{$END_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger_end" '}</slot></td>
+	<td valign="top" scope="row" width="15%"><span>{$MOD.LBL_DATE_START} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%"><span><input name='estimated_start_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_start' type="text" tabindex='2' size='11' maxlength='10' value="{$START_DATE}"> <span id="jscal_trigger_start" class="suitepicon suitepicon-module-calendar"></span> </span></td>
+	<td valign="top" scope="row" width="15%"><span>{$MOD.LBL_DATE_END} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%"><span><input name='estimated_end_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_end' type="text" tabindex='2' size='11' maxlength='10' value="{$END_DATE}">
+			<span id="jscal_trigger_end" class="suitepicon suitepicon-module-calendar"></span></span></td>
 	</tr>	
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
-	<td><slot><textarea name='description' tabindex='3' cols="50" rows="4">{$DESCRIPTION}</textarea></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_DESCRIPTION}</span></td>
+	<td><span><textarea name='description' tabindex='3' cols="50" rows="4">{$DESCRIPTION}</textarea></span></td>
 	</tr>
 	</table>
 	</form>

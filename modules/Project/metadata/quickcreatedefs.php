@@ -63,13 +63,7 @@ array (
   array('priority',),
   array('assigned_user_name',
   ),
-  array (
-    array (
-      'name' => 'description',
-    ),
-  ),
 
 ),
 
 );
-?>

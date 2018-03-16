@@ -114,7 +114,7 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 
 
 	    $type = !empty($def['custom_type']) ? $def['custom_type'] : $def['type'];
-		$sf = $sfh->getSugarField($type);
+		$sf = $sfh::getSugarField($type);
         if($sf != null){
             $sf->save($focus, $_POST, $field, $def, $prefix);
         } else {
@@ -504,5 +504,3 @@ function save_from_report($report_id,$parent_id, $module_name, $relationship_att
         $focus->$relationship_attr_name->add($reportBean);
     }
 }
-
-?>

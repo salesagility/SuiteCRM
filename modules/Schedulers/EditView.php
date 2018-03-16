@@ -153,7 +153,7 @@ if(is_array($job_strings) && !empty($job_strings)) {
 	$job_function = "<option value=''>--</option>"; 
 	foreach($job_strings as $k => $function) {
 		$job_function .= "<option value='function::".$function."'";
-		if($focus->job == "function::".$function) {
+		if($focus->job === "function::".$function) {
 			$job_function .= " SELECTED ";
 		}
 		$job_function .= ">".$mod_strings['LBL_'.strtoupper($function)]."</option>";
@@ -349,4 +349,3 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 //$focus->displayCronInstructions();
-?>

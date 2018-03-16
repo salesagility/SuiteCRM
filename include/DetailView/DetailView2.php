@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/EditView/EditView2.php');
@@ -47,39 +48,48 @@ require_once('include/EditView/EditView2.php');
  */
 class DetailView2 extends EditView
 {
+    /**
+     * @var string $view
+     */
     public $view = 'DetailView';
+    /**
+     * @var array $defs
+     */
     public $defs;
+
     /**
      * DetailView constructor
      * This is the DetailView constructor responsible for processing the new
      * Meta-Data framework
      *
-     * @param $module String value of module this detail view is for
-     * @param $focus An empty sugarbean object of module
-     * @param $id The record id to retrieve and populate data for
-     * @param $metadataFile String value of file location to use in overriding default metadata file
-     * @param tpl String value of file location to use in overriding default Smarty template
+     * @param string $module String value of module this detail view is for
+     * @param SugarBean|null $focus An empty sugarbean object of module
+     * @param string|null $metadataFile String value of file location to use in overriding default metadata file
+     * @param string $tpl tpl String value of file location to use in overriding default Smarty template
+     * @param bool $createFocus
+     * @param string $metadataFileName specifies the name of the metadata file eg 'detailviewdefs'
      */
-
-    function setup(
+    public function setup(
         $module,
         $focus  = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
-        $createFocus = true
+        $createFocus = true,
+        $metadataFileName = 'detailviewdefs'
         )
     {
         global $sugar_config;
 
         $this->th = new TemplateHandler();
         $this->th->ss = $this->ss;
+        $viewdefs = array();
 
         //Check if inline editing is enabled for detail view.
         if(!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']){
             $this->ss->assign('inline_edit', true);
         }
         $this->focus = $focus;
-        $this->tpl = $tpl;
+        $this->tpl = get_custom_file_if_exists($tpl);
         $this->module = $module;
         $this->metadataFile = $metadataFile;
         if(isset($GLOBALS['sugar_config']['disable_vcr'])) {
@@ -87,9 +97,9 @@ class DetailView2 extends EditView
         }
         if(!empty($this->metadataFile) && file_exists($this->metadataFile)){
             require($this->metadataFile);
-        }else {
+        } else {
         	//If file doesn't exist we create a best guess
-        	if(!file_exists("modules/$this->module/metadata/detailviewdefs.php") &&
+        	if(!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&
         	    file_exists("modules/$this->module/DetailView.html")) {
                 global $dictionary;
         	    $htmlFile = "modules/" . $this->module . "/DetailView.html";
@@ -97,24 +107,33 @@ class DetailView2 extends EditView
         	    if(!file_exists('modules/'.$this->module.'/metadata')) {
         	       sugar_mkdir('modules/'.$this->module.'/metadata');
         	    }
-        	   	$fp = sugar_fopen('modules/'.$this->module.'/metadata/detailviewdefs.php', 'w');
+        	   	$fp = sugar_fopen('modules/'.$this->module.'/metadata/$metadataFileName.php', 'w');
         	    fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
         	    fclose($fp);
         	}
 
         	//Flag an error... we couldn't create the best guess meta-data file
-        	if(!file_exists("modules/$this->module/metadata/detailviewdefs.php")) {
+        	if(!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
         	   global $app_strings;
-        	   $error = str_replace("[file]", "modules/$this->module/metadata/detailviewdefs.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
+        	   $error = str_replace("[file]", "modules/$this->module/metadata/$metadataFileName.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
         	   $GLOBALS['log']->fatal($error);
         	   echo $error;
         	   die();
         	}
-            require("modules/$this->module/metadata/detailviewdefs.php");
+            require("modules/$this->module/metadata/$metadataFileName.php");
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
     }
 
+    /**
+     * @param array $request
+     * @return void
+     * @see EditView::populateBean()
+     */
+    public function populateBean($request = array())
+    {
+        parent::populateBean($request);
+    }
+
 }
-?>

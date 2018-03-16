@@ -134,7 +134,7 @@
         {{/if}}
         {if $config.enable_action_menu and $config.enable_action_menu != false}
         <li id="tab-actions" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}<span class="suitepicon suitepicon-action-caret"></span></a>
             {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
         </li>
         <li class="tab-inline-pagination">
@@ -265,7 +265,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                            <div class="panel-body {{$collapse}} panelContainer" id="{{$panelId}}"  data-id="{{$label_upper}}">
                                 <div class="tab-content">
                                     <!-- TAB CONTENT -->
                                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
@@ -284,7 +284,7 @@
                             </a>
 
                         </div>
-                        <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                        <div class="panel-body {{$collapse}} panelContainer" id="{{$panelId}}" data-id="{{$label_upper}}">
                             <div class="tab-content">
                                 <!-- TAB CONTENT -->
                                 {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
@@ -308,13 +308,13 @@
 
                 <script type="text/javascript">
 
-                    var selectTab = function(tab) {
+                    var selectTabDetailView = function(tab) {
                         $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
                         $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
                     };
 
                     var selectTabOnError = function(tab) {
-                        selectTab(tab);
+                        selectTabDetailView(tab);
                         $('#content ul.nav.nav-tabs > li').removeClass('active');
                         $('#content ul.nav.nav-tabs > li a').css('color', '');
 
@@ -333,7 +333,7 @@
                         $('#content ul.nav.nav-tabs > li > a[data-toggle="tab"]').click(function(e){
                             if(typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
                                 var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                                selectTab(tab);
+                                selectTabDetailView(tab);
                             }
                         });
                     });

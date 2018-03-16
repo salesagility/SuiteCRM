@@ -25,13 +25,15 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
 
   function display() {
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
+<?php if(!empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
   <style type="text/css">
     html,body{
       margin:0;
@@ -90,7 +92,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   </style>
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/css/TableTools.min.css" />
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing,geometry"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing,geometry"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
@@ -693,7 +695,43 @@ function setODataTable() {
             "bStateSave": true,
             "bProcessing": true,
             "sDom": '<Tlfrtip>',
-            "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
+            "oTableTools": {
+                //Define the buttons beneath the Map
+                "aButtons": [
+                    {
+                        //Copy Column Data.
+                        "sExtends": "copy",
+                        "sButtonText": "Copy",
+                        "mColumns": "all"
+
+                    },
+                    {
+                        //Export columns to CSV
+                        "sExtends": "csv",
+                        "sButtonText": "CSV",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Columns to XLS
+                        "sExtends": "xls",
+                        "sButtonText": "XLS",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Visible columns to PDF
+                        "sExtends": "pdf",
+                        "sButtonText": "PDF",
+                        "mColumns": [1,2,3,4,5,6],
+                    },
+                    {
+                        //Move to "Print" page.
+                        "sExtends": "print",
+                        "sButtonText": "Print",
+                        "mColumns": "all"
+                    },
+                ],
+                "sSwfPath": "http://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
+            },
             "fnDrawCallback": function(oSettings) {
                 if (typeof window.parent.resizeDataTables == 'function') {
                     window.parent.resizeDataTables();
@@ -868,9 +906,11 @@ $(document).ready(function(){
             var formData = $(this).serializeArray();
             var formUrl = $(this).attr("action");
             // Add oDataTableShownIds
-            for (var i=0, mLen=oDataTableShownIds.length; i<mLen; i++) {
-                var valId = oDataTableShownIds[i];
-                formData.push({ name: "selected_ids[]", value: valId });
+            if (oDataTableShownIds !== null) {
+                for (var i=0, mLen=oDataTableShownIds.length; i<mLen; i++) {
+                    var valId = oDataTableShownIds[i];
+                    formData.push({ name: "selected_ids[]", value: valId });
+                }
             }
 
             $.ajax({
@@ -895,12 +935,17 @@ $(document).ready(function(){
 
 
 </script>
+<?php endif ?>
 
 </head>
 
 <body>
-
-  <div id="map_canvas"></div>
+<?php if (empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
+<!-- show error-->
+<div class="error"><?= $GLOBALS['mod_strings']['LBL_ERROR_NO_GOOGLE_API_KEY'] ?></div>
+<?php else: ?>
+<!-- show map-->
+<div id="map_canvas"></div>
 
   <br clear="all" />
 
@@ -977,6 +1022,9 @@ $(document).ready(function(){
         <input type="hidden" name="display_module" value="<?php echo htmlspecialchars($this->bean->display_object->module_name); ?>">
         <input type="hidden" name="action" value="add_to_target_list" />
         <input type="hidden" name="to_pdf" value="1" />
+        <?php if (array_key_exists('uid', $_GET)) { ?>
+            <input type="hidden" name="selected_ids" value="<?php echo $_GET['uid'] ?>" />
+        <?php } ?>
         <select id="list_id" tabindex="3" name="list_id" title="">
             <?php foreach ($this->bean->list_array as $key=>$value) { ?>
                 <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
@@ -989,6 +1037,8 @@ $(document).ready(function(){
 <?php
   }
 ?>
+<?php endif ?>
+
 
 </body>
 </html>

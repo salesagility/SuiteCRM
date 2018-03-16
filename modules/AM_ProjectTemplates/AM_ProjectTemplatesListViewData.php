@@ -58,12 +58,12 @@ class AM_ProjectTemplatesListViewData extends ListViewData{
     {
         global $app_strings;
 
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('info_inline.gif');
-		$jsdetailviewImage = SugarThemeRegistry::current()->getImageURL('detailview.gif');
+        $jscalendarImage = '<span class="suitepicon suitepicon-action-info" title="'.$app_strings['LBL_ADDITIONAL_DETAILS'].'"></span>';
+		$jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
 
         $extra = "<span id='aadspan_" . $id . "' "
                 . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=". $id ."'\" "
-				. " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jsdetailviewImage'></span>";
+				. "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
 
         //return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
 	}

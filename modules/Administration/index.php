@@ -172,5 +172,3 @@ $sugar_smarty->assign("COLNUM", $tab);
 $sugar_smarty->assign('ID_TAB', $id_tab);
 
 echo $sugar_smarty->fetch('modules/Administration/index.tpl');
-
-?>

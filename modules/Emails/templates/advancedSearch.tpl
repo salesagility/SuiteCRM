@@ -67,7 +67,7 @@
 		<td class="advancedSearchTD" style="padding-bottom: 2px">
 			{$app_strings.LBL_EMAIL_SEARCH_DATE_FROM}:&nbsp;<i>({$dateFormatExample})</i><br/>
 			<input name='searchDateFrom' id='searchDateFrom' onblur="parseDate(this, '{$dateFormat}');" maxlength='10' size='11' value="" type="text">&nbsp;
-			{sugar_getimage name="jscalendar" ext=".gif" alt=$app_strings.LBL_ENTER_DATE other_attributes='align="absmiddle" id="searchDateFrom_trigger" '}
+			<span id="searchDateFrom_trigger" class="suitepicon suitepicon-module-calendar" alt="$app_strings.LBL_ENTER_DATE"></span>
 		</td>
 	</tr>
 
@@ -75,7 +75,7 @@
 		<td class="advancedSearchTD">
 			{$app_strings.LBL_EMAIL_SEARCH_DATE_UNTIL}:&nbsp;<i>({$dateFormatExample})</i><br/>
 			<input name='searchDateTo' id='searchDateTo' onblur="parseDate(this, '{$dateFormat}');" maxlength='10' size='11' value="" type="text">&nbsp;
-			{sugar_getimage name="jscalendar" ext=".gif" alt=$app_strings.LBL_ENTER_DATE other_attributes='align="absmiddle" id="searchDateTo_trigger" '}		
+			<span id="searchDateTo_trigger" class="suitepicon suitepicon-module-calendar" alt="$app_strings.LBL_ENTER_DATE"></span>
 		</td>
 	</tr>
 
@@ -86,7 +86,7 @@
         <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">      
         
         <a href="javascript:void(0);">
-            <img src="{sugar_getimagepath file='select.gif'}" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"advancedSearchForm","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}}{/literal}, "single", true);'>
+			<span class="suitepicon suitepicon-action-select" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"advancedSearchForm","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}}{/literal}, "single", true);'></span>
         </a>
         </td>
     </tr>

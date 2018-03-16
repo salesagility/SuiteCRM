@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class <module_name > ViewEdit extends ViewEdit{
+class <module_name>ViewEdit extends ViewEdit{
 
     public function display()
     {
