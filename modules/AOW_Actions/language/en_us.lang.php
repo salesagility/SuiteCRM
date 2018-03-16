@@ -88,5 +88,6 @@ $mod_strings = array(
     'LBL_COMPUTEFIELD_ADD_FORMULA' => 'Add formula',
     'LBL_COMPUTEFIELD_VALUE_TYPE' => 'Value type',
     'LBL_COMPUTEFIELD_RAW_VALUE' => 'Raw value',
-    'LBL_COMPUTEFIELD_FORMATTED_VALUE' => 'Formatted value'
+    'LBL_COMPUTEFIELD_FORMATTED_VALUE' => 'Formatted value',
+    'LBL_COPY_EMAIL_ADDRESSES_WORKFLOW' => 'Copy emails from WorkFlow Module'
 );
