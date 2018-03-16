@@ -45,4 +45,3 @@ $viewdefs['AOW_Processed']['QuickCreate'] = array(
 ),
                         
 );
-?>

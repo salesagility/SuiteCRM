@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,30 +44,47 @@ $version = 8;
 $container = new \Slim\Container;
 // Load Containers
 $paths = new \SuiteCRM\Utility\Paths();
-$containerFiles = (array) glob($paths->getLibraryPath().'/API/v8/container/*.php');
+$containerFiles = (array)glob($paths->getLibraryPath() . '/API/v8/container/*.php');
+$customContainerFiles = (array)glob($paths->getCustomLibraryPath() . '/API/v8/container/*.php');
 
+// load core files
 foreach ($containerFiles as $containerFile) {
     require $containerFile;
 }
 
+// load custom files
+foreach ($customContainerFiles as $containerFile) {
+    require $containerFile;
+}
+
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['notAllowedHandler'] = function ($container) {
-    return function ($request, $response) use ($container){
+    return function ($request, $response) use ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $ApiController = $container->get('ApiController');
         $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
+
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
+/**
+ * @param \Psr\Container\ContainerInterface $container
+ * @return Closure
+ */
 $container['notFoundHandler'] = function ($container) {
-    return function ($request, $response) use ($container){
+    return function ($request, $response) use ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $exception = new \SuiteCRM\API\v8\Exception\NotFound('[Resource]');
         $ApiController = $container->get('ApiController');
+
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -77,11 +94,12 @@ $container['notFoundHandler'] = function ($container) {
  * @return Closure
  */
 $container['errorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container){
+    return function ($request, $response, $exception) use ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $ApiController = $container->get('ApiController');
+
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -92,15 +110,16 @@ $container['errorHandler'] = function ($container) {
  * @return Closure
  */
 $container['phpErrorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container){
+    return function ($request, $response, $exception) use ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $ApiController = $container->get('ApiController');
+
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
 
-if(isset($GLOBALS['container']) === false) {
+if (isset($GLOBALS['container']) === false) {
     $GLOBALS['container'] = $container;
 }

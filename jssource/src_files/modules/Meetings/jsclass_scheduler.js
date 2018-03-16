@@ -102,7 +102,7 @@ SugarWidgetListView.prototype.display = function() {
 		}
 
 		html += '<tr class="'+className+'">';
-		html += '<td><img src="'+GLOBAL_REGISTRY.config['site_url']+'/index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName='+bean.module+'s.gif"/></td>';
+		html += '<td><span class="suitepicon suitepicon-module-' + bean.module.toLowerCase().replace('_', '-') + '"></span></td>';
 		html += '<td>'+bean.fields.full_name+'</td>';
 		html += '<td>'+bean.fields.email1+'</td>';
 		html += '<td>'+bean.fields.phone_work+'</td>';
@@ -1030,8 +1030,7 @@ SugarWidgetScheduleRow.prototype.display = function() {
 
         // icon + full name
         td.scope = 'row';
-        var img = '<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
-                + SUGAR.themes.theme_name+'&imageName='+this.focus_bean.module+'s.gif"/>&nbsp;';
+        var img = '<span class="suitepicon suitepicon-module-' + this.focus_bean.module.toLowerCase().replace('_', '-') + '"></span>';
 
         td.innerHTML = img;
 

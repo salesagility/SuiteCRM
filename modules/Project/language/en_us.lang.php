@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -147,7 +147,7 @@ $mod_strings = array(
     'LBL_LAST_NAME' => 'Last Name',
     'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
-    'LBL_CREATE_INVITEE' => 'Create an Resource',
+    'LBL_CREATE_INVITEE' => 'Create a Resource',
     'LBL_CREATE_CONTACT' => 'As Contact',
     'LBL_CREATE_AND_ADD' => 'Create & Add',
     'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',

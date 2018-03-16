@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -215,8 +215,20 @@ class SugarView
         if (!isset($_SESSION['isMobile']) &&
             ($this instanceof ViewList || $this instanceof ViewDetail || $this instanceof ViewEdit)
         ) {
-            $jsAlerts = new jsAlerts();
-            echo $jsAlerts->getScript();
+            if (isset($_SESSION['alerts_output']) && isset($_SESSION['alerts_output_timestamp']) &&
+                $_SESSION['alerts_output_timestamp'] >= (date('U')-60)
+            ) {
+                echo $_SESSION['alerts_output'];
+            } else {
+                $jsAlerts = new jsAlerts();
+                ob_start();
+                echo $jsAlerts->getScript();
+                $jsAlertsOutput = ob_get_clean();
+                //save to session so we dont have to load this every time
+                $_SESSION['alerts_output'] = $jsAlertsOutput;
+                $_SESSION['alerts_output_timestamp'] = date('U');
+                echo $jsAlertsOutput;
+            }
         }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) {
@@ -631,14 +643,12 @@ class SugarView
 
                 $ss->assign('currentGroupTab', $currentGroupTab);
                 $usingGroupTabs = true;
-
             } else {
                 // Setup the default group tab.
                 $ss->assign('currentGroupTab', $app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
-
             }
 
             $topTabList = array();
@@ -714,7 +724,6 @@ class SugarView
             // This is here for backwards compatibility, someday, somewhere, it will be able to be removed
             $ss->assign("moduleTopMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules']);
             $ss->assign("moduleExtraMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['extra']);
-
         }
 
         if (isset($extraTabs) && is_array($extraTabs)) {
@@ -764,19 +773,24 @@ class SugarView
 
             $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
 
-            $errorMessages = SugarApplication::getErrorMessages();
-            if (!empty($errorMessages)) {
-                foreach ($errorMessages as $error_message) {
-                    echo '<p class="error">' . $error_message . '</p>';
+            $messages = SugarApplication::getErrorMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="error">' . $message . '</p>';
+                }
+            }
+
+            $messages = SugarApplication::getSuccessMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="success">' . $message . '</p>';
                 }
             }
         }
-
     }
 
     public function getModuleMenuHTML()
     {
-
     }
 
     /**
@@ -853,7 +867,7 @@ class SugarView
 
         // Add in the number formatting styles here as well, we have been handling this with individual modules.
         require_once('modules/Currencies/Currency.php');
-        list ($num_grp_sep, $dec_sep) = get_number_seperators();
+        list($num_grp_sep, $dec_sep) = get_number_seperators();
 
         $the_script =
             "<script type=\"text/javascript\">\n" .
@@ -1195,7 +1209,6 @@ EOHTML;
 
         $trackerManager = TrackerManager::getInstance();
         $trackerManager->save();
-
     }
 
     /**
@@ -1473,25 +1486,10 @@ EOHTML;
                     "' module='" .
                     $this->bean->module_dir .
                     "'><div class='favorite_icon_outline'>" .
-                    SugarThemeRegistry::current()->getImage(
-                        'favorite-star-outline',
-                        'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"',
-                        null,
-                        null,
-                        '.gif',
-                        translate('LBL_DASHLET_EDIT', 'Home')
-                    ) .
-                    "</div>
-                                                    <div class='favorite_icon_fill'>" .
-                    SugarThemeRegistry::current()->getImage(
-                        'favorite-star',
-                        'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"',
-                        null,
-                        null,
-                        '.gif',
-                        translate('LBL_DASHLET_EDIT', 'Home')
-                    ) .
-                    "</div></div>";
+                    "<span class='suitepicon suitepicon-favorite-star-outline'></span></div>
+                                                    <div class='favorite_icon_fill' 'title=\"' . translate('LBL_DASHLET_EDIT', 'Home') . '\" border=\"0\"  align=\"absmiddle\"'>" .
+
+                    "<span class='suitepicon suitepicon-favorite-star'></span></div></div>";
             }
         }
 
@@ -1620,7 +1618,6 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-
                 } else {
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
@@ -1895,5 +1892,4 @@ EOHTML;
 
         return false;
     }
-
 }

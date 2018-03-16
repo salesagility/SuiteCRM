@@ -46,4 +46,3 @@ $layout_defs['ForUsers'] = array(
 			array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
 		),
 );
-?>

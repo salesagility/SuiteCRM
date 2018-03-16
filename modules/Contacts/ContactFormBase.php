@@ -156,7 +156,6 @@ if(!empty($_REQUEST['birthdate'])){
    }
 
 
-$jsCalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
 $ntc_date_format = $timedate->get_user_date_format();
 $cal_dateformat = $timedate->get_cal_date_format();
 $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
@@ -228,7 +227,7 @@ $form .= <<<EOQ
 
 		<td  nowrap>
 			<input name='{$prefix}birthdate' onblur="parseDate(this, '$cal_dateformat');" size='12' maxlength='10' id='${prefix}jscal_field' type="text" value="{$birthdate}">&nbsp;
-			<!--not_in_theme!--><img src="{$jsCalendarImage}" alt="{$app_strings['LBL_ENTER_DATE']}"  id="${prefix}jscal_trigger" align="absmiddle">
+			<!--not_in_theme!--><span class="suitepicon suitepicon-module-calendar"></span>
 		</td>
 		</tr>
 

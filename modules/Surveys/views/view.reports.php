@@ -171,7 +171,7 @@ EOF;
     private function getChoiceQuestionSkeleton($arr, $options)
     {
         foreach ($options as $option) {
-            $arr['chartLabels'][$option->id] = $option->name;
+            $arr['chartLabels'][$option->id] = html_entity_decode($option->name, ENT_QUOTES | ENT_HTML5);
             $arr['chartData'][$option->id] = 0;
             $arr['responses'][$option->id] = array(
                 'count' => 0,

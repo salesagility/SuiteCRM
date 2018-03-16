@@ -116,4 +116,3 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
 		}
 	}
 }
-?>

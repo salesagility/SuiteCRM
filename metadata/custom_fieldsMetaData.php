@@ -56,5 +56,4 @@ $dictionary['custom_fields'] = array ( 'table' => 'custom_fields'
                                                       )                                  , 'indices' => array (
        array('name' =>'idx_beanid_set_num', 'type' =>'index', 'fields'=>array('bean_id','set_num'))
                                                       )
-                                  )
-?>
+                                  );

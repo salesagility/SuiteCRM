@@ -1,10 +1,11 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,42 +34,103 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class Surveys extends Basic
 {
 
-    var $new_schema = true;
-    var $module_dir = 'Surveys';
-    var $object_name = 'Surveys';
-    var $table_name = 'surveys';
-    var $importable = false;
-    var $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    /** @var bool $new_schema */
+    public $new_schema = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $SecurityGroups;
-    var $status;
+    /** @var string $module_dir */
+    public $module_dir = 'Surveys';
 
+    /** @var string $object_name */
+    public $object_name = 'Surveys';
+
+    /** @var string $table_name */
+    public $table_name = 'surveys';
+
+    /** @var bool $importable */
+    public $importable = false;
+
+    /**
+     * To ensure that modules created and deployed under CE will continue to function under team security
+     * if the instance is upgraded to PRO
+     * @var bool $disable_row_level_security
+     */
+    public $disable_row_level_security = true;
+
+    /** @var string $id */
+    public $id;
+
+    /** @var  string $name */
+    public $name;
+
+    /** @var  string $date_entered */
+    public $date_entered;
+
+    /** @var  string $date_modified */
+    public $date_modified;
+
+    /** @var  string $modified_user_id */
+    public $modified_user_id;
+
+    /** @var  string $modified_by_name */
+    public $modified_by_name;
+
+    /** @var  string $created_by */
+    public $created_by;
+
+    /** @var  string $created_by_name */
+    public $created_by_name;
+
+    /** @var  string $description */
+    public $description;
+
+    /** @var  int|bool $deleted */
+    public $deleted;
+
+    /** @var  string $created_by_link */
+    public $created_by_link;
+
+    /** @var  string $modified_user_link */
+    public $modified_user_link;
+
+    /** @var  string $assigned_user_id */
+    public $assigned_user_id;
+
+    /** @var  string $assigned_user_name */
+    public $assigned_user_name;
+
+    /** @var  string $assigned_user_link */
+    public $assigned_user_link;
+
+    /** @var  string $SecurityGroups
+     * */
+    public $SecurityGroups;
+
+    /** @var  string $status */
+    public $status;
+
+    /**
+     * Surveys constructor.
+     */
     function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * @param string $interface
+     * @return bool
+     */
     function bean_implements($interface)
     {
         switch ($interface) {
@@ -79,6 +141,10 @@ class Surveys extends Basic
         return false;
     }
 
+    /**
+     * @param bool $check_notify
+     * @return string
+     */
     public function save($check_notify = false)
     {
         $res = parent::save($check_notify);
@@ -111,7 +177,13 @@ class Surveys extends Basic
         return $res;
     }
 
-    private function saveOptions($options, $ids, $deleted, $questionId)
+    /**
+     * @param array $options
+     * @param array $ids
+     * @param array $deleted
+     * @param string $questionId
+     */
+    private function saveOptions(array $options, array $ids, array $deleted, $questionId)
     {
         foreach ($options as $key => $option) {
             if (!empty($ids[$key])) {
@@ -129,17 +201,9 @@ class Surveys extends Basic
         }
     }
 
-    public function getCampaignSurveyLink(Contact $contact, $targetTracker = false)
-    {
-        global $sugar_config;
-        $url = $sugar_config['site_url'] . '/index.php?entryPoint=survey&id=' . $this->id . '&contact=' . $contact->id;
-        if (!empty($targetTracker)) {
-            $url .= '&tracker=' . $targetTracker;
-        }
-
-        return $url;
-    }
-
+    /**
+     * @return array
+     */
     public function getMatrixOptions()
     {
         return array(
@@ -149,6 +213,9 @@ class Surveys extends Basic
         );
     }
 
+    /**
+     * @return string
+     */
     public function getSubmitText()
     {
         if (!empty($this->submit_text)) {
@@ -157,5 +224,4 @@ class Surveys extends Basic
 
         return "Submit";
     }
-
 }

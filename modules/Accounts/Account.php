@@ -45,9 +45,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once("include/SugarObjects/templates/company/Company.php");
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // Account is used to store account information.
-class Account extends Company {
+class Account extends Company implements EmailInterface {
 	var $field_name_map = array();
 	// Stored fields
 	var $date_entered;

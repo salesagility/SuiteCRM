@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -121,7 +121,6 @@ $mod_strings = array(
     'ERR_UW_REMOVE_FAILED' => 'Could not remove file ',
     'ERR_UW_UPDATE_CONFIG' => "Error updating config.php with new version information.",
     'ERR_UW_UPLOAD_ERROR' => "There was an error uploading the file, please try again!<br>\n",
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
@@ -366,7 +365,7 @@ $mod_strings = array(
     'LBL_MI_UN_RELATIONSHIPS_DROP' => 'droping table ',
     'LBL_MI_REPAIR_INDICES' => 'Repairing indexes',
     'LBL_MI_IN_CONNECTORS' => 'Installing Connectors',
-    'LBL_MI_UN_CONNECTORS' => 'UnInstalling Connectors',
+    'LBL_MI_UN_CONNECTORS' => 'Uninstalling Connectors',
     'LBL_ML_ACTION' => 'Action',
     'LBL_ML_CANCEL' => 'Cancel',
     'LBL_ML_COMMIT' => 'Commit',
@@ -519,8 +518,6 @@ $mod_strings = array(
     'LBL_SUGAR_SCHEDULER_TITLE' => 'Scheduler',
     'LBL_SUGAR_SCHEDULER' => 'Set up scheduled events',
     'LBL_SUGAR_UPDATE_TITLE' => 'SuiteCRM Updates',
-    'LBL_SUGARCRM_HELP' => 'SuiteCRM Help',
-    'LBL_SUPPORT_TITLE' => 'SuiteCRM Support Portal',
     'LBL_SYSTEM_NAME' => 'System Name',
     'LBL_TERMS_AND_CONDITIONS' => 'Terms and Conditions',
     'LBL_THEME_SETTINGS' => 'Themes',
@@ -655,7 +652,7 @@ $mod_strings = array(
     'LBL_QR_CLEAR_EXT_API' => 'Clearing External API Cache File...done',
     'LBL_REPAIR_SEED_USERS_TITLE' => 'Enable/Disable Seed Users',
     'LBL_REPAIR_SEED_USERS_ACTIVATE' => 'Activate',
-    'LBL_REPAIR_SEED_USERS_DECACTIVATE' => 'DeActivate',
+    'LBL_REPAIR_SEED_USERS_DECACTIVATE' => 'Deactivate',
     'LBL_REPAIR_SEED_USERS_DESC' => 'Quickly enable or disable seed users populated during demo installation.',
     'LBL_UW_FILES_REMOVED' => "These files will be removed from the system:<br>\n",
 
@@ -761,8 +758,10 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     // OAuth
-    'LBL_OAUTH_TITLE' => "OAuth Keys",
-    'LBL_OAUTH' => "OAuth key management",
+    'LBL_OAUTH_TITLE' => 'OAuth Keys',
+    'LBL_OAUTH' => 'OAuth key management',
+    'LBL_OAUTH2_CLIENTS_TITLE' => 'OAuth2 Clients and Tokens',
+    'LBL_OAUTH2_CLIENTS' => 'Manage which clients have access to the OAuth2 Server and view session log and revoke active sessions',
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Error: Unable to create sprites because the imagecreatetruecolor function cannot be loaded',
@@ -901,8 +900,6 @@ $mod_strings = array(
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 
     'LBL_PWDSEC_SETS' => 'Password Security Settings',
-    'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
-    'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
     'LBL_PWDSEC_MIN_LENGTH' => 'Password minimum length',
     'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Password minimum length',
     'LBL_PWDSEC_UPPERCASE' => 'Password should contain uppercase characters',
@@ -913,7 +910,6 @@ $mod_strings = array(
     'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contain numbers',
     'LBL_PWDSEC_SPECCHAR' => 'Password should contain special characters',
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
-    'LBL_PWDSEC_DAYS' => 'Days',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
 );

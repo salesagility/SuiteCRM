@@ -967,10 +967,13 @@ EOHTML;
      */
     public function getCSSURL($cssFileName, $returnURL = true)
     {
+
         if (preg_match('/.css$/', $cssFileName)) {
             global $current_user;
-            $subTheme = $current_user->getSubTheme();
-            $cssFileName = $subTheme . '/' . $cssFileName;
+            if (method_exists($current_user, 'getSubTheme')) {
+                $subTheme = $current_user->getSubTheme();
+                $cssFileName = $subTheme . '/' . $cssFileName;
+            }
         }
 
         if ( isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {

@@ -82,6 +82,3 @@ class TemplateImage extends TemplateText{
 	
 		
 }
-
-
-?>

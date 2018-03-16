@@ -31,5 +31,5 @@
             </tr>
         {/foreach}
     </table>
-    <a href="#" class="showAllResponsesButton" data-question-id="{$question.id}">{$mod.LBL_SHOW_ALL_RESPONSES}</a>
+    <a href="#" class="showHideResponses" data-question-id="{$question.id}">{$mod.LBL_SHOW_RESPONSES}</a>
 </div>

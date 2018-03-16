@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -103,9 +103,9 @@ $mod_strings = array(
     'LBL_NO' => 'No',
     'LBL_SETTINGS' => 'Settings',
     'LBL_CREATE_NEW_RECORD' => 'Create Activity',
-    'LBL_LOADING' => 'Loading ......',
-    'LBL_SAVING' => 'Saving ......',
-    'LBL_SENDING_INVITES' => 'Saving & Sending Invites .....',
+    'LBL_LOADING' => 'Loading...',
+    'LBL_SAVING' => 'Saving...',
+    'LBL_SENDING_INVITES' => 'Saving & Sending Invites...',
     'LBL_CONFIRM_REMOVE' => 'Are you sure you want to remove the record?',
     'LBL_CONFIRM_REMOVE_ALL_RECURRING' => 'Are you sure you want to remove all recurring records?',
     'LBL_EDIT_RECORD' => 'Edit Activity',

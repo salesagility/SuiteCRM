@@ -46,4 +46,3 @@ $dashletMeta['CalendarDashlet'] = array('module'		=> 'Calendar',
                                    'description' => 'LBL_DESCRIPTION', // array index in language pack 
                                    'category'    => 'Module Views',
 );
-?>

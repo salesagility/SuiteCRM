@@ -206,5 +206,3 @@ class CampaignLog extends SugarBean {
 		return $related_id.$related_type;
 	}
 }
-
-?>

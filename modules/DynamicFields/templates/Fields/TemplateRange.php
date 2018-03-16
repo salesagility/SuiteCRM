@@ -274,4 +274,3 @@ class TemplateRange extends TemplateText
 
 
 }
-?>

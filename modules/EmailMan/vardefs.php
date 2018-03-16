@@ -145,7 +145,17 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
 		'len' => '100',
 		'comment' => 'Descriptor of the Sugar object indicated by related_id',
 	),
-	'recipient_name' => array(
+    
+                'related_confirm_opt_in' => array(
+                    'name' => 'related_confirm_opt_in',
+                    'vname' => 'LBL_RELATED_CONFIRM_OPT_IN',
+                    'type' => 'bool',
+                    'default' => 0,
+                    'reportable' => false,
+                    'comment' => '',
+                ),
+    
+                'recipient_name' => array(
 		'name' => 'recipient_name',
 		'type' => 'varchar',
 		'len' => '255',
@@ -178,4 +188,4 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
 					array('name' => 'idx_eman_relid_reltype_id', 'type' => 'index', 'fields'=> array('related_id', 'related_type', 'campaign_id')),
 					)
 );
-?>
+

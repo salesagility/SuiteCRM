@@ -88,6 +88,3 @@ function additionalDetailsLead($fields) {
 				 'editLink' => "index.php?action=EditView&module=Leads&return_module=Leads&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Leads&return_module=Leads&record={$fields['ID']}");
 }
- 
- ?>
- 

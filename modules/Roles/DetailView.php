@@ -153,4 +153,3 @@ echo $old_contents;
 require_once('include/SubPanel/SubPanelTiles.php');
 $subpanel = new SubPanelTiles($focus, 'Roles');
 echo $subpanel->display();
-?>

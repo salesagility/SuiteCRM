@@ -28,5 +28,3 @@ class CasesViewList extends ViewList {
 		$this->lv = new CasesListViewSmarty();
 	}
 }
-
-?>

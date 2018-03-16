@@ -1,4 +1,4 @@
-## SuiteCRM 7.10 Beta 3
+## SuiteCRM 7.10
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
 
@@ -57,9 +57,9 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
 [suitecrm_demo]: https://suitecrm.com/demo
-[suitecrm_forums]: https://suitecrm.com/forum/index
-[suitecrm_docs]: https://suitecrm.com/wiki
-[suitecrm_partners]: https://suitecrm.com/community/partners
+[suitecrm_forums]: https://suitecrm.com/suitecrm/forum/suite-forum
+[suitecrm_docs]: https://docs.suitecrm.com/
+[suitecrm_partners]: https://suitecrm.com/about/about-us/partners
 [suitecrm_ext]: https://store.suitecrm.com/
 
 ### Development Roadmap ###
