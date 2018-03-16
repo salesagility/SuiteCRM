@@ -418,19 +418,24 @@ class actionCreateRecord extends actionBase {
         }
     }
 
-    function copy_email_addresses(SugarBean $record, SugarBean $bean, $params = array()){
-
-
-	if(isset($params['copy_email_addresses']) && $params['copy_email_addresses']){
-		$record->addresses=$bean->addresses;
-		$record->email1=$bean->email1;
-		$record->email2=$bean->email2;
-		$tmp_sea2 = new SugarEmailAddress();
-		foreach ($bean->emailAddress->addresses as $email_address_index => $current_email_address){
-			$tmp_sea2->addAddress($current_email_address['email_address'], $current_email_address['primary_address'], $current_email_address['reply_to_address'],$current_email_address['invalid_email'],$current_email_address['opt_out'],$current_email_address['email_address_id']);
-		}
-		$tmp_sea2->save($record->id,$record->module_name);
-	}
+    function copy_email_addresses(SugarBean $record, SugarBean $bean, $params = array()) {
+        if(isset($params['copy_email_addresses']) && $params['copy_email_addresses']) {
+            $record->addresses = $bean->addresses;
+            $record->email1 = $bean->email1;
+            $record->email2 = $bean->email2;
+            $tmp_sea2 = new SugarEmailAddress();
+            foreach ($bean->emailAddress->addresses as $email_address_index => $current_email_address) {
+                $tmp_sea2->addAddress(
+                    $current_email_address['email_address'],
+                    $current_email_address['primary_address'],
+                    $current_email_address['reply_to_address'],
+                    $current_email_address['invalid_email'],
+                    $current_email_address['opt_out'],
+                    $current_email_address['email_address_id']
+                );
+            }
+            $tmp_sea2->save($record->id,$record->module_name);
+        }
     }
 
 
