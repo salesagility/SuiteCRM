@@ -73,8 +73,20 @@ $(document).ready(function () {
       _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
       var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
       _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
-      var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
-      _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
+			// Fix for issue #1272 (Export)- AOR_Report module cannot export Date type parameter.
+			if ($('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').length) {
+				var fieldValue = $('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').val();
+				var fieldSign = $('#aor_conditions_value\\[' + ln + '\\]\\[1\\]').val();
+				var fieldNumber = $('#aor_conditions_value\\[' + ln + '\\]\\[2\\]').val();
+				var fieldTime = $('#aor_conditions_value\\[' + ln + '\\]\\[3\\]').val();
+				_form.append('<input type="hidden" name="parameter_value[]" value="' + fieldValue + '">');
+				_form.append('<input type="hidden" name="parameter_value[]" value="' + fieldSign + '">');
+				_form.append('<input type="hidden" name="parameter_value[]" value="' + fieldNumber + '">');
+				_form.append('<input type="hidden" name="parameter_value[]" value="' + fieldTime + '">');
+			} else {
+				var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+				_form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
+			}
     });
     _form.submit();
   });
