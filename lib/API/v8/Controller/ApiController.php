@@ -40,25 +40,27 @@
 
 namespace SuiteCRM\API\v8\Controller;
 
-use League\JsonGuard\Dereferencer;
-use League\JsonGuard\RuleSets\DraftFour;
-use League\JsonGuard\Validator;
+use Interop\Container\Exception\ContainerException;
+use InvalidArgumentException;
+use JsonSchema\Validator;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\APIErrorObject;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 class ApiController implements LoggerAwareInterface
 {
@@ -107,7 +109,7 @@ class ApiController implements LoggerAwareInterface
      * @param array $payload
      * @return Response
      * @throws InvalidJsonApiResponse
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws NotAcceptable
      * @throws UnsupportedMediaType
      */
@@ -132,15 +134,19 @@ class ApiController implements LoggerAwareInterface
         // Validate Response
         $data = json_decode(json_encode($payload));
 
-        $validator = new \JsonSchema\Validator();
+        $validator = new Validator();
         $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
 
         if (!$validator->isValid()) {
             $errors = $validator->getErrors();
-            $this->logger->error( '[Invalid Payload Response]'. json_encode($payload));
+            $this->logger->error('[Invalid Payload Response]'. json_encode($payload));
+            $apiErrorObjects = [];
             foreach ($errors as $error) {
-                throw new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']);
+                $apiErrorObject = new APIErrorObject();
+                $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']));
+                $apiErrorObjects[] = $apiErrorObject;
             }
+            $payload['errors'] = $apiErrorObjects;
         }
 
         return $response
@@ -153,7 +159,7 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param \Exception|ApiException $exception
      * @return Response
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function generateJsonApiExceptionResponse(Request $request, Response $response, \Exception $exception)
     {
@@ -247,12 +253,12 @@ class ApiController implements LoggerAwareInterface
         $jsonAPI = $this->containers->get('JsonApi');
         $data = json_decode($request->getBody());
 
-        $validator = new \JsonSchema\Validator();
+        $validator = new Validator();
         $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
 
         if (!$validator->isValid()) {
             $errors = $validator->getErrors();
-            $this->logger->error( '[Invalid Payload Request]'. $request->getBody());
+            $this->logger->error('[Invalid Payload Request]'. $request->getBody());
             throw new InvalidJsonApiRequest($errors[0]['property']. ' ' .$errors[0]['message']);
         }
     }

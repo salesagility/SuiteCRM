@@ -40,6 +40,12 @@
 
 namespace SuiteCRM;
 
+use Exception;
+use Psr\Http\Message\ServerRequestInterface;
+use const sugarEntry;
+use function GuzzleHttp\json_encode;
+use function json_last_error_msg;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -57,12 +63,12 @@ class APIErrorObject
     /**
      * integer
      */
-    const DEFAULT_ID = 0;
+    const DEFAULT_ID = 1;
 
     /**
      * integer
      */
-    const DEFAULT_CODE = 0;
+    const DEFAULT_CODE = 1;
 
     /**
      * integer
@@ -399,7 +405,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return string|null
      */
     protected function getId()
@@ -408,7 +414,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return array|null
      */
     protected function getLinks()
@@ -417,7 +423,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return string|null
      */
     protected function getStatus()
@@ -426,7 +432,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return string|null
      */
     protected function getCode()
@@ -435,7 +441,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return string|null
      */
     protected function getTitle()
@@ -444,7 +450,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return string|null
      */
     protected function getDetail()
@@ -453,7 +459,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return array|null
      */
     protected function getSource()
@@ -462,7 +468,7 @@ class APIErrorObject
     }
     
     /**
-     * 
+     *
      * @return array|null
      */
     protected function getMeta()
@@ -471,7 +477,7 @@ class APIErrorObject
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function export()
@@ -489,7 +495,7 @@ class APIErrorObject
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function exportJson()
@@ -500,5 +506,66 @@ class APIErrorObject
             ErrorMessage::log('API Error Object JSON export error: ' . json_last_error_msg());
         }
         return $json;
+    }
+    
+    /**
+     *
+     * @global array $sugar_config
+     * @param Exception $e
+     * @return array
+     */
+    protected function retrieveMetaFromException(Exception $e)
+    {
+        global $sugar_config;
+        
+        $meta = [
+            'about' => 'Exception',
+            'class' => get_class($e),
+            'code' => $e->getCode(),
+        ];
+        
+        if ($e instanceof LangExceptionInterface) {
+            $meta['langMessage'] = $e->getLangMessage();
+        }
+
+        if (isset($sugar_config['developerMode']) && $sugar_config['developerMode']) {
+            $meta['debug']['message'] = $e->getMessage();
+            $meta['debug']['file'] = $e->getFile();
+            $meta['debug']['line'] = $e->getLine();
+            $meta['debug']['trace'] = $e->getTrace();
+            $meta['debug']['traceAsString'] = $e->getTraceAsString();
+            if ($previous = $e->getPrevious()) {
+                $meta['debug']['previous'] = $this->getErrorMetaFromException($previous);
+            }
+        }
+        
+        return $meta;
+    }
+    
+    /**
+     *
+     * @param Exception $e
+     * @return $this
+     */
+    public function retrieveFromException(Exception $e)
+    {
+        $this->setCode($e->getCode());
+        
+        $meta = $this->getErrorMetaFromException($e);
+        
+        $this->setMeta($meta);
+        
+        return $this;
+    }
+    
+    
+    public function retrieveFromRequest(ServerRequestInterface $request)
+    {
+        $this->setSource([
+            'pointer' => $req->getUri(),
+            'parametes' => $req->getQueryParams(),
+        ]);
+        
+        return $this;
     }
 }

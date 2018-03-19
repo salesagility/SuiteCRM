@@ -40,6 +40,8 @@
 
 namespace SuiteCRM;
 
+use const sugarEntry;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -51,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author gyula
  */
 // implement this interface in any exception to make it translatable
-interface LangInterface
+interface LangExceptionInterface
 {
     
     /**

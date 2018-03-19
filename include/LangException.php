@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * (We can use any kind of exception if it's an interface but 
  * can not guarantee the proper translation in each implementation)
  */
-class LangException extends Exception implements LangInterface {
+class LangException extends \Exception implements LangExceptionInterface {
     
     /**
      *
