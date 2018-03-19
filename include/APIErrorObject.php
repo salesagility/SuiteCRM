@@ -336,7 +336,7 @@ class APIErrorObject
      */
     protected function getDefaultTitle()
     {
-        $text = LangText::get('LBL_DEFAULT_API_ERROR_TITLE');
+        $text = new LangText('LBL_DEFAULT_API_ERROR_TITLE');
         return $text;
     }
 
@@ -346,7 +346,7 @@ class APIErrorObject
      */
     protected function getDefaultDetail()
     {
-        $text = LangText::get('LBL_DEFAULT_API_ERROR_DETAIL');
+        $text = new LangText('LBL_DEFAULT_API_ERROR_DETAIL');
         return $text;
     }
 
@@ -401,7 +401,7 @@ class APIErrorObject
      */
     protected function getDefaultMeta()
     {
-        return ['meta' => null];
+        return [];
     }
     
     /**
@@ -489,7 +489,7 @@ class APIErrorObject
             'code' => $this->getCode(),
             'title' => $this->getTitle(),
             'detail' => $this->getDetail(),
-            'soutrce' => $this->getSource(),
+            'source' => $this->getSource(),
             'meta' => $this->getMeta(),
         ];
     }
@@ -516,7 +516,6 @@ class APIErrorObject
      */
     protected function retrieveMetaFromException(Exception $e)
     {
-        global $sugar_config;
         
         $meta = [
             'about' => 'Exception',
@@ -528,14 +527,14 @@ class APIErrorObject
             $meta['langMessage'] = $e->getLangMessage();
         }
 
-        if (isset($sugar_config['developerMode']) && $sugar_config['developerMode']) {
+        if (inDeveloperMode()) {
             $meta['debug']['message'] = $e->getMessage();
             $meta['debug']['file'] = $e->getFile();
             $meta['debug']['line'] = $e->getLine();
             $meta['debug']['trace'] = $e->getTrace();
             $meta['debug']['traceAsString'] = $e->getTraceAsString();
             if ($previous = $e->getPrevious()) {
-                $meta['debug']['previous'] = $this->getErrorMetaFromException($previous);
+                $meta['debug']['previous'] = $this->retrieveMetaFromException($previous);
             }
         }
         
@@ -551,7 +550,7 @@ class APIErrorObject
     {
         $this->setCode($e->getCode());
         
-        $meta = $this->getErrorMetaFromException($e);
+        $meta = $this->retrieveMetaFromException($e);
         
         $this->setMeta($meta);
         

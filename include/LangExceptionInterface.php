@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -46,18 +47,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
  * Description of LangInterface
  *
  * @author gyula
  */
 // implement this interface in any exception to make it translatable
-interface LangExceptionInterface
-{
-    
+interface LangExceptionInterface { // extends Throwable { // extending Throwable only in PHP7+
+
     /**
+     * 
      * @return string
      */
     public function getLangMessage();
+
 }

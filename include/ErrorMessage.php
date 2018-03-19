@@ -40,6 +40,9 @@
 
 namespace SuiteCRM;
 
+use LoggerManager;
+use const sugarEntry;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -131,9 +134,9 @@ class ErrorMessage
      * @param integer $level
      * @param boolean $throw
      */
-    public static function log($message, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
+    public static function log($message, $level = self::DEFAULT_LOG_LEVEL, $throw = true, $code = self::DEFAULT_CODE)
     {
-        $errorMessage = new ErrorMessage($message, self::DEFAULT_CODE, $level, $throw);
+        $errorMessage = new ErrorMessage($message, $code, $level, $throw);
         $errorMessage->handle();
     }
     

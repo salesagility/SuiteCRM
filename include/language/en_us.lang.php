@@ -3609,3 +3609,8 @@ $app_list_strings['oauth2_duration_units'] = [
     'week' => 'weeks',
     'month' => 'months',
 ];
+
+
+
+$app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
+$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occured.';

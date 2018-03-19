@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,11 +41,11 @@
 
 namespace SuiteCRM;
 
+use const sugarEntry;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
-
 
 /**
  * Description of LangText
@@ -53,66 +54,66 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LangText
 {
-    
+
     /**
      * string
      */
     const LOG_LEVEL = 'fatal';
-    
+
     /**
      * integer
      */
     const USING_MOD_STRINGS = 1;
-    
+
     /**
      * integer
      */
     const USING_APP_STRINGS = 2;
-    
+
     /**
      * integer
      */
-    const USING_MOD_APP_STRINGS = 3;
-    
+    const USING_ALL_STRINGS = 3;
+
     /**
      *
      * @var string
      */
     protected $key;
-    
+
     /**
      *
      * @var array
      */
     protected $args;
-    
+
     /**
      *
-     * @var integer 
+     * @var integer
      */
     protected $use;
-    
+
     /**
      *
      * @var boolean
      */
     protected $log;
-    
+
     /**
      *
      * @var boolean
      */
     protected $throw;
-    
+
     /**
-     * 
+     *
      * @param string|null $key
      * @param array|null $args
      * @param integer $use
      * @param boolean $log
      * @param boolean $throw
      */
-    public function __construct($key = null, $args = null, $use = self::USING_MOD_APP_STRINGS, $log = true, $throw = true)
+    public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
     {
         $this->key = $key;
         $this->args = $args;
@@ -120,9 +121,9 @@ class LangText
         $this->log = $log;
         $this->throw = $throw;
     }
-    
+
     /**
-     * 
+     *
      * @global array $app_strings
      * @global array $mod_strings
      * @param string|null $key
@@ -130,34 +131,36 @@ class LangText
      * @param integer|null $use
      * @return string
      */
-    public function getText($key = null, $args = null, $use = null) // TODO: rename the methode to LangText::translate()
-    {
-        
+    public function getText($key = null, $args = null, $use = null)
+    { // TODO: rename the methode to LangText::translate()
+
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings;
-        
+
         if (!is_null($key)) {
             $this->key = $key;
         }
-        
+
         if (!is_null($args)) {
             $this->args = $args;
         }
-        
+
         if (!is_null($use)) {
             $this->use = $use;
         }
-        
+
         if ($this->use === self::USING_MOD_STRINGS) {
-            $text = $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
+            $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
         } elseif ($this->use === self::USING_APP_STRINGS) {
-            $text = $app_strings[$this->key] ? $app_strings[$this->key] : null;
-        } elseif ($this->use === self::USING_MOD_APP_STRINGS) {
-            $text = $mod_strings[$this->key] ? $mod_string[$this->key] : $app_strings[$this->key];
+            $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
+        } elseif ($this->use === self::USING_ALL_STRINGS) {
+            $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
+                    isset($app_strings[$this->key]) ? $app_strings[$this->key] : null
+                );
         } else {
             ErrorMessage::log('Unknown use case for translation: ' . $this->use);
         }
-        
+
         if (!$text) {
             if ($this->log) {
                 ErrorMessage::log('A language key does not found: [' . $this->key . ']', self::LOG_LEVEL, $this->throw);
@@ -165,16 +168,16 @@ class LangText
                 $text = $this->key;
             }
         }
-        
-        foreach ((array)$this->args as $name => $value) {
+
+        foreach ((array) $this->args as $name => $value) {
             $text = str_replace('{' . $name . '}', $value, $text);
         }
-        
+
         return $text;
     }
-    
+
     /**
-     * 
+     *
      * @return string
      */
     public function __toString()
@@ -182,17 +185,17 @@ class LangText
         $text = $this->getText();
         return $text;
     }
-    
+
     /**
-     * 
+     *
      * @param string $key
      * @param array|null $args
      * @param boolean|null $log
-     * @param integer|null $use
+     * @param integer $use
      * @param boolean $throw
      * @return string
      */
-    public static function get($key, $args = null, $use = null, $log = true, $throw = true)
+    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
     {
         $text = new LangText($key, $args, $use, $log, $throw);
         $translated = $text->getText();
