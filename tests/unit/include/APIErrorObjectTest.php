@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\APIErrorObject;
+use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\LangException;
 use SuiteCRM\LangText;
 
@@ -11,11 +11,11 @@ use SuiteCRM\LangText;
  */
 
 /**
- * Description of APIErrorObjectTest
+ * Description of JsonApiErrorObjectTest
  *
  * @author gyula
  */
-class APIErrorObjectTest extends PHPUnit_Framework_TestCase {
+class JsonApiErrorObjectTest extends PHPUnit_Framework_TestCase {
     
     public function setUp() {
         parent::setUp();
@@ -35,7 +35,7 @@ class APIErrorObjectTest extends PHPUnit_Framework_TestCase {
         include_once __DIR__ . '/../../../include/ErrorMessageException.php';
         include_once __DIR__ . '/../../../include/ErrorMessage.php';
         include_once __DIR__ . '/../../../include/LangText.php';
-        include_once __DIR__ . '/../../../include/APIErrorObject.php';
+        include_once __DIR__ . '/../../../include/JsonApiErrorObject.php';
         include_once __DIR__ . '/../../../include/LangExceptionInterface.php';
         include_once __DIR__ . '/../../../include/LangException.php';
         
@@ -47,7 +47,7 @@ class APIErrorObjectTest extends PHPUnit_Framework_TestCase {
     
     public function testConstruct() {
         
-        $error = new APIErrorObject();
+        $error = new JsonApiErrorObject();
         $expected = [
             'id' => '1',
             'links' => ['about' => null],
@@ -65,7 +65,7 @@ class APIErrorObjectTest extends PHPUnit_Framework_TestCase {
         $app_strings['LBL_TEST_LABEL_TITLE'] = 'A title';
         $app_strings['LBL_TEST_LABEL_DETAIL'] = 'A detail';
         
-        $error = new APIErrorObject(new LangText('LBL_TEST_LABEL_TITLE'), new LangText('LBL_TEST_LABEL_DETAIL'), 123, 234, 345, ['about' => 'test123'], ['pointer' => '/test/foo/bar', 'parameter' => 'wrong'], ['some' => 'meta info']);
+        $error = new JsonApiErrorObject(new LangText('LBL_TEST_LABEL_TITLE'), new LangText('LBL_TEST_LABEL_DETAIL'), 123, 234, 345, ['about' => 'test123'], ['pointer' => '/test/foo/bar', 'parameter' => 'wrong'], ['some' => 'meta info']);
         $expected = [
             'id' => '123',
             'links' => ['about' => 'test123'],
@@ -83,7 +83,7 @@ class APIErrorObjectTest extends PHPUnit_Framework_TestCase {
     
     public function testRetrieveFromException() {
         
-        $error = new APIErrorObject();
+        $error = new JsonApiErrorObject();
         
         global $app_strings;
         $app_strings['LBL_TEST_LANG_TEXT'] = 'Test text with variable {foo}.';

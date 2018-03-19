@@ -34,7 +34,7 @@ class LangTextTest extends PHPUnit_Framework_TestCase
         include_once __DIR__ . '/../../../include/ErrorMessageException.php';
         include_once __DIR__ . '/../../../include/ErrorMessage.php';
         include_once __DIR__ . '/../../../include/LangText.php';
-        include_once __DIR__ . '/../../../include/APIErrorObject.php';
+        include_once __DIR__ . '/../../../include/JsonApiErrorObject.php';
         include_once __DIR__ . '/../../../include/LangExceptionInterface.php';
         include_once __DIR__ . '/../../../include/LangException.php';
     }

@@ -75,7 +75,7 @@ use SuiteCRM\API\v8\Exception\NotFound;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\API\v8\Library\ModulesLib;
-use SuiteCRM\APIErrorObject;
+use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
@@ -313,7 +313,7 @@ class ModuleController extends ApiController
                 );
             }
         } catch (\Exception $e) {
-            $error = new APIErrorObject();
+            $error = new JsonApiErrorObject();
             $error->retriveFromRequest($req)->retrieveFromException($e);
             
             $payload['errors'][] = $error->export();

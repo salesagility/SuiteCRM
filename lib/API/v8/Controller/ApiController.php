@@ -56,7 +56,7 @@ use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
 use SuiteCRM\API\v8\Exception\NotAcceptable;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
-use SuiteCRM\APIErrorObject;
+use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 use function GuzzleHttp\json_decode;
@@ -142,7 +142,7 @@ class ApiController implements LoggerAwareInterface
             $this->logger->error('[Invalid Payload Response]'. json_encode($payload));
             $apiErrorObjects = [];
             foreach ($errors as $error) {
-                $apiErrorObject = new APIErrorObject();
+                $apiErrorObject = new JsonApiErrorObject();
                 $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']));
                 $apiErrorObjects[] = $apiErrorObject;
             }

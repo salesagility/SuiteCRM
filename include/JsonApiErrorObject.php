@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @todo incomplete...
  */
-class APIErrorObject
+class JsonApiErrorObject
 {
 
     /**
