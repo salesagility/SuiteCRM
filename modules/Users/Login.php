@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -45,7 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /** @var AuthenticationController $authController */
 $authController->authController->pre_login();
 
-global $current_language, $mod_strings, $app_strings;
+global $current_language;
+global $mod_strings;
+global $app_strings;
+global $app_list_strings;
+
 if (isset($_REQUEST['login_language'])) {
     $lang = $_REQUEST['login_language'];
     $_REQUEST['ck_login_language_20'] = $lang;
@@ -163,7 +167,7 @@ $captcha_privatekey = '';
 $captcha_publickey = '';
 $captcha_js = '';
 $Captcha = '';
-
+$captchaContent = '';
 // if the admin set the captcha stuff, assign javascript and div
 if (
     isset($admin->settings['captcha_on']) &&
@@ -174,63 +178,19 @@ if (
 
     $captcha_privatekey = $admin->settings['captcha_private_key'];
     $captcha_publickey = $admin->settings['captcha_public_key'];
-    $captcha_js .=
-        "<script type='text/javascript' src='" .
-        getJSPath('cache/include/javascript/sugar_grp1_yui.js') . "'></script><script type='text/javascript' src='" .
-        getJSPath('cache/include/javascript/sugar_grp_yui2.js') . "'></script>
-			<script type='text/javascript' src='http://www.google.com/recaptcha/api/js/recaptcha_ajax.js'></script>
-			<script>
-			function initCaptcha(){
-			Recaptcha.create('$captcha_publickey' ,'captchaImage',{theme:'custom'});
-			}
-			window.onload=initCaptcha;
-
-			var handleFailure=handleSuccess;
-			var handleSuccess = function(o){
-				if(o.responseText!==undefined && o.responseText ==='Success'){
-					generatepwd();
-					Recaptcha.reload();
-				}
-				else{
-					if(o.responseText!=='')
-						document.getElementById('generate_success').innerHTML =o.responseText;
-					Recaptcha.reload();
-				}
-			}
-			var callback2 ={ success:handleSuccess, failure: handleFailure };
-
-			function validateAndSubmit(){
-					var form = document.getElementById('form');
-					var url = 
-					'&to_pdf=1&module=Home&action=index&entryPoint=Changenewpassword&recaptcha_challenge_field='+
-					Recaptcha.get_challenge()+'&recaptcha_response_field='+ Recaptcha.get_response();
-					YAHOO.util.Connect.asyncRequest('POST','index.php',callback2,url);
-			}</script>";
-    $Captcha .= "<tr>
-			<td scope='row' width='20%'>" . $mod_strings['LBL_RECAPTCHA_INSTRUCTION'] . ":</td>
-		    <td width='70%'><input type='text' size='26' id='recaptcha_response_field' value=''></td>
-
-		</tr>
-		<tr>
-
-		 	<td colspan='2'><div style='margin-left:2px'class='x-sqs-list' id='recaptcha_image'></div></td>
-		</tr>
-		<tr>
-			<td colspan='2' align='right'><a href='javascript:Recaptcha.reload()'>" .
-        $mod_strings['LBL_RECAPTCHA_NEW_CAPTCHA'] . "</a>&nbsp;&nbsp;
-			 		<a class='recaptcha_only_if_image' href='javascript:Recaptcha.switch_type(\"audio\")'>" .
-        $mod_strings['LBL_RECAPTCHA_SOUND'] . "</a>
-			 		<a class='recaptcha_only_if_audio' href='javascript:Recaptcha.switch_type(\"image\")'> " .
-        $mod_strings['LBL_RECAPTCHA_IMAGE'] . '</a>
-		 	</td>
-		</tr>';
-    $sugar_smarty->assign('CAPTCHA', $Captcha);
-    echo $captcha_js;
+    $captchaContentTemplate = new Sugar_Smarty();
+    $captchaContentTemplate->assign('APP_LIST_STRINGS', $app_list_strings);
+    $captchaContentTemplate->assign('APP', $app_strings);
+    $captchaContentTemplate->assign('MOD', $mod_strings);
+    $captchaContentTemplate->assign('SITE_KEY', $captcha_publickey);
+    $captchaContentTemplate->assign('SECRET', $captcha_privatekey);
+    $captchaContent = $captchaContentTemplate->fetch('modules/Users/tpls/recaptcha.tpl');
+    $sugar_smarty->assign('CAPTCHA', $captchaContent);
 
 } else {
     echo '<script>
-		function validateAndSubmit(){generatepwd();}
-		</script>';
+        function validateAndSubmit(){generatepwd();}
+        </script>';
 }
 
 if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
