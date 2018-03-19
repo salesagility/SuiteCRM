@@ -58,6 +58,7 @@ if (
     die($error);
 }
 
+$recaptcha = new \ReCaptcha\ReCaptcha($privatekey);
 $response = $recaptcha->verify($_REQUEST["recaptcha_response_field"], $_SERVER["REMOTE_ADDR"]);
 if (!$response->isSuccess()) {
     $log->warn('FAILED TO VERIFY RECAPCHA, ip['.$_SERVER["REMOTE_ADDR"].']');
