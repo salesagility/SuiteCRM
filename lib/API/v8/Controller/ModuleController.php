@@ -51,7 +51,6 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use RuntimeException;
 use SugarBean;
 use SugarView;
 use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
@@ -67,18 +66,15 @@ use SuiteCRM\API\v8\Exception\ConflictException;
 use SuiteCRM\API\v8\Exception\EmptyBodyException;
 use SuiteCRM\API\v8\Exception\ForbiddenException;
 use SuiteCRM\API\v8\Exception\IdAlreadyExistsException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
 use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
 use SuiteCRM\API\v8\Exception\NotAcceptableException;
 use SuiteCRM\API\v8\Exception\NotFoundException;
-use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
-use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\ApplicationLanguage;
 use Tracker;
 
@@ -99,13 +95,10 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @return Response
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ModuleNotFoundException
-     * @throws InvalidJsonApiResponseException
-     * @throws RuntimeException
-     * @throws \InvalidArgumentException
      */
     public function getModulesMetaList(Request $req, Response $res)
     {
@@ -136,9 +129,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
-     * @throws ContainerExceptionInterface
-     * @throws NotImplementedException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
     {
@@ -200,12 +194,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ModuleNotFoundException
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
@@ -269,7 +261,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModulesMetaViewed(Request $req, Response $res, array $args)
     {
@@ -332,7 +327,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws NotImplementedException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)
     {
@@ -369,12 +367,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ModuleNotFoundException
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -422,18 +418,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ApiException
-     * @throws ModuleNotFoundException
-     * @throws EmptyBodyException
-     * @throws ConflictException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws BadRequestException
-     * @throws ForbiddenException
-     * @throws \InvalidArgumentException
-     * @throws RuntimeException
-     * @throws InvalidJsonApiRequestException
-     * @throws InvalidJsonApiResponseException
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
@@ -533,17 +521,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws BadRequestException
-     * @throws ConflictException
-     * @throws NotFoundException
-     * @throws EmptyBodyException
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ModuleNotFoundException
-     * @throws InvalidJsonApiRequestException
-     * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
      */
     public function getModuleRecord(Request $req, Response $res, array $args)
     {
@@ -608,18 +589,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ConflictException
-     * @throws NotFoundException
-     * @throws EmptyBodyException
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws InvalidJsonApiRequestException
-     * @throws InvalidJsonApiResponseException
-     * @throws ModuleNotFoundException
-     * @throws BadRequestException
-     * @throws \InvalidArgumentException
-     * @throws RuntimeException
      */
     public function updateModuleRecord(Request $req, Response $res, array $args)
     {
@@ -707,15 +680,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ConflictException
-     * @throws NotFoundException
-     * @throws EmptyBodyException
-     * @throws ApiException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ModuleNotFoundException
-     * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
      */
     public function deleteModuleRecord(Request $req, Response $res, array $args)
     {
@@ -771,11 +739,9 @@ class ModuleController extends ApiController
      * @param array $args
      * @return Response
      * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaTypeException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
@@ -804,11 +770,9 @@ class ModuleController extends ApiController
      * @param array $args
      * @return Response
      * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaTypeException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getApplicationMetaLanguages(Request $req, Response $res, array $args)
     {
@@ -837,11 +801,9 @@ class ModuleController extends ApiController
      * @param array $args
      * @return Response
      * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaTypeException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
@@ -883,12 +845,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
-     * @throws UnsupportedMediaTypeException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
@@ -929,7 +889,10 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws NotImplementedException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
@@ -992,7 +955,10 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws Exception
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getModuleFavorites(Request $req, Response $res, array $args)
     {
@@ -1018,14 +984,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
-     * @throws NotFoundException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws BadRequestException
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
@@ -1068,14 +1030,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#fetching-relationships
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
-     * @throws NotFoundException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws BadRequestException
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1205,19 +1163,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ForbiddenException
-     * @throws BadRequestException
-     * @throws InvalidJsonApiRequestException
-     * @throws NotFoundException
-     * @throws NotImplementedException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ConflictException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ApiException
      */
     public function createModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1368,19 +1317,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ForbiddenException
-     * @throws BadRequestException
-     * @throws InvalidJsonApiRequestException
-     * @throws NotFoundException
-     * @throws NotImplementedException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ConflictException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ApiException
      */
     public function updateModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1511,19 +1451,10 @@ class ModuleController extends ApiController
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      * @return Response
-     * @throws ForbiddenException
-     * @throws BadRequestException
-     * @throws InvalidJsonApiRequestException
-     * @throws NotFoundException
-     * @throws NotImplementedException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
-     * @throws ConflictException
-     * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponseException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ApiException
      */
     public function deleteModuleRelationship(Request $req, Response $res, array $args)
     {

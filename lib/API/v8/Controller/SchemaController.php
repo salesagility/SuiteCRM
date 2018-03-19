@@ -43,12 +43,13 @@ namespace SuiteCRM\API\v8\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
 use SuiteCRM\API\v8\Exception\NotFoundException;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class SchemaController extends ApiController
 {
@@ -56,9 +57,10 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
-     * @throws \InvalidArgumentException
-     * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFoundException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -91,8 +93,10 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
-     * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFoundException
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
