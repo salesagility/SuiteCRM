@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotAcceptable;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 
-class NotAcceptableTest extends \Codeception\Test\Unit
+class BadRequestExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -21,7 +21,7 @@ class NotAcceptableTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new NotAcceptable();
+            self::$exception = new BadRequestException();
         }
     }
 
@@ -31,12 +31,13 @@ class NotAcceptableTest extends \Codeception\Test\Unit
 
     public function testGetMessage()
     {
-        $this->assertEquals('[SuiteCRM] [API] [Not Acceptable] ', self::$exception->getMessage());
+        $this->assertEquals('[SuiteCRM] [API] [BadRequest] ', self::$exception->getMessage());
     }
+
 
     public function testGetSetDetail()
     {
-        $this->assertEquals('Json API expects the "Accept" header to be application/vnd.api+json', self::$exception->getDetail());
+        $this->assertEquals('Please ensure you fill in the fields required', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +48,6 @@ class NotAcceptableTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(406, self::$exception->getHttpStatus());
+        $this->assertEquals(400, self::$exception->getHttpStatus());
     }
 }

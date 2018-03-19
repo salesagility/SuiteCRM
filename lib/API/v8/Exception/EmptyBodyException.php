@@ -43,36 +43,15 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class InvalidJsonApiRequest
+ * Class EmptyBodyException
  * @package SuiteCRM\API\v8\Exception
  */
-class InvalidJsonApiRequest extends ApiException
+class EmptyBodyException extends ApiException
 {
-    /**
-     * InvalidJsonApiRequest constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, $previous = null)
-    {
-        parent::__construct('[InvalidJsonApiRequest] '.$message, $code, $previous);
-    }
+    
+    const MSG_PREFIX = '[EmptyBody]';
+    const DEFAULT_CODE = 8015;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_EMPTY_BODY_EXCEPTION_DETAIL';
 
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Unable to validate the Json Api Payload Request';
-    }
-
-    /**
-     * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
 }

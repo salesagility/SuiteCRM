@@ -43,35 +43,14 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class EmptyBody
+ * Class ForbiddenException
  * @package SuiteCRM\API\v8\Exception
  */
-class EmptyBody extends ApiException
+class ForbiddenException extends ApiException
 {
-    /**
-     * EmptyBody constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, $previous = null)
-    {
-        parent::__construct('[EmptyBody] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Json API expects body of the request to be JSON';
-    }
+    
+    const MSG_PREFIX = '[Forbidden]';
+    const DEFAULT_CODE = 8020;
+    const HTTP_STATUS = 403;
+    
 }

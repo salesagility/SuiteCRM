@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\EmptyBody;
+use SuiteCRM\API\v8\Exception\NotFoundException;
 
-class EmptyBodyTest extends \Codeception\Test\Unit
+class NotFoundExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -18,15 +18,10 @@ class EmptyBodyTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [EmptyBody] ', self::$exception->getMessage());
-    }
-
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new EmptyBody();
+            self::$exception = new NotFoundException();
         }
     }
 
@@ -34,9 +29,14 @@ class EmptyBodyTest extends \Codeception\Test\Unit
     {
     }
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [Not Found] ', self::$exception->getMessage());
+    }
+
     public function testGetSetDetail()
     {
-        $this->assertEquals('Json API expects body of the request to be JSON', self::$exception->getDetail());
+        $this->assertEquals('Api Version: 8', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class EmptyBodyTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(400, self::$exception->getHttpStatus());
+        $this->assertEquals(404, self::$exception->getHttpStatus());
     }
 }

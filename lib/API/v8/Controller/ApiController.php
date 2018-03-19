@@ -52,10 +52,10 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
-use SuiteCRM\API\v8\Exception\NotAcceptable;
-use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
@@ -106,10 +106,10 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param array $payload
      * @return Response
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws InvalidArgumentException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     protected function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
@@ -141,7 +141,7 @@ class ApiController implements LoggerAwareInterface
             $apiErrorObjects = [];
             foreach ($errors as $error) {
                 $apiErrorObject = new JsonApiErrorObject();
-                $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponse($errors[0]['property']. ' ' .$errors[0]['message']));
+                $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponseException($errors[0]['property']. ' ' .$errors[0]['message']));
                 $apiErrorObjects[] = $apiErrorObject;
             }
             $payload['errors'] = $apiErrorObjects;
@@ -232,18 +232,18 @@ class ApiController implements LoggerAwareInterface
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     protected function negotiatedJsonApiContent(Request $request, Response $response)
     {
         if ($request->getContentType() !== self::CONTENT_TYPE) {
-            throw new UnsupportedMediaType();
+            throw new UnsupportedMediaTypeException();
         }
 
         $header = $request->getHeader('Accept');
         if (empty($header) || count($header) !== 1 || $header[0] !== self::CONTENT_TYPE) {
-            throw new NotAcceptable();
+            throw new NotAcceptableException();
         }
 
         if ($this->logger === null) {
@@ -257,7 +257,7 @@ class ApiController implements LoggerAwareInterface
 
     /**
      * @param Request $request
-     * @throws InvalidJsonApiRequest
+     * @throws InvalidJsonApiRequestException
      */
     protected function validateRequestWithJsonApiSchema(Request $request)
     {
@@ -271,7 +271,7 @@ class ApiController implements LoggerAwareInterface
         if (!$validator->isValid()) {
             $errors = $validator->getErrors();
             $this->logger->error('[Invalid Payload Request]'. $request->getBody());
-            throw new InvalidJsonApiRequest($errors[0]['property']. ' ' .$errors[0]['message']);
+            throw new InvalidJsonApiRequestException($errors[0]['property']. ' ' .$errors[0]['message']);
         }
     }
 

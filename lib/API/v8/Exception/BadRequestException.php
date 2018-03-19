@@ -37,41 +37,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\LangText;
 
 /**
- * Class NotAllowed
+ * Class BadRequestException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotAllowed extends ApiException
+class BadRequestException extends ApiException
 {
-    /**
-     * NotAllowed constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Allowed] '.$message, $code, $previous);
-    }
+    
+    const MSG_PREFIX = '[BadRequest]';
+    const DEFAULT_CODE = 8020;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_BAD_REQUEST_EXCEPTION_DETAIL';
 
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
 }

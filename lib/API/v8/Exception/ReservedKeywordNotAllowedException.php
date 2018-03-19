@@ -40,39 +40,17 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
+
+use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\Exception\Exception;
 
 /**
- * Class InvalidJsonApiResponse
+ * Class ReservedKeywordNotAllowedException
  * @package SuiteCRM\API\v8\Exception
  */
-class InvalidJsonApiResponse extends ApiException
+class ReservedKeywordNotAllowedException extends ConflictException
 {
-    /**
-     * InvalidJsonApiResponse constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, $previous = null)
-    {
-        parent::__construct('[InvalidJsonApiResponse] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Unable to validate the Json Api Payload Response';
-    }
-
-    /**
-     * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
+    const MSG_PREFIX = '[ReservedKeywordNotAllowed]';
+    const DEFAULT_CODE = 8040;
 }

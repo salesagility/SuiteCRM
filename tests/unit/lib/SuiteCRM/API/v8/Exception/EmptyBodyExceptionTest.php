@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
+use SuiteCRM\API\v8\Exception\EmptyBodyException;
 
-class ReservedKeywordsNotAllowedTest extends \Codeception\Test\Unit
+class EmptyBodyExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -18,10 +18,15 @@ class ReservedKeywordsNotAllowedTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [EmptyBody] ', self::$exception->getMessage());
+    }
+
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new ReservedKeywordNotAllowed();
+            self::$exception = new EmptyBodyException();
         }
     }
 
@@ -29,14 +34,9 @@ class ReservedKeywordsNotAllowedTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [Conflict] [ReservedKeywordNotAllowed] ', self::$exception->getMessage());
-    }
-
     public function testGetSetDetail()
     {
-        $this->assertEquals('', self::$exception->getDetail());
+        $this->assertEquals('Json API expects body of the request to be JSON', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class ReservedKeywordsNotAllowedTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(409, self::$exception->getHttpStatus());
+        $this->assertEquals(400, self::$exception->getHttpStatus());
     }
 }

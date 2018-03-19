@@ -43,35 +43,13 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class Forbidden
+ * Class IdAlreadyExistsException
  * @package SuiteCRM\API\v8\Exception
  */
-class Forbidden extends ApiException
+class IdAlreadyExistsException extends ApiException
 {
-    /**
-     * Conflict constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, $previous = null)
-    {
-        parent::__construct('[Forbidden] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    const MSG_PREFIX = '[IdAlreadyExists]';
+    const DEFAULT_CODE = 8060;
+    const HTTP_STATUS = 403;
+    
 }

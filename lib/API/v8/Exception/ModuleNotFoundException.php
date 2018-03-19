@@ -40,25 +40,16 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class ReservedKeywordNotAllowed
+ * Class ModuleNotFoundException
  * @package SuiteCRM\API\v8\Exception
  */
-class ReservedKeywordNotAllowed extends Conflict
+class ModuleNotFoundException extends ApiException
 {
-    /**
-     * ApiException constructor.
-     * @param string $message API Exception "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_RESERVED_KEYWORD_NOT_ALLOWED, $previous = null)
-    {
-        parent::__construct('[ReservedKeywordNotAllowed] '.$message.'', $code, $previous);
-    }
+    const MSG_PREFIX = '[Module Not Found]';
+    const DEFAULT_CODE = 8015;
+    const HTTP_STATUS = 406;
+    const DETAIL_TEXT_LABEL = 'LBL_MODULE_NOT_FOUND_EXCEPTION_DETAIL';
 }

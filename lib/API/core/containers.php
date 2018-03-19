@@ -56,7 +56,7 @@ $container['notAllowedHandler'] = function ($container) {
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
         $ApiController = $container->get('ApiController');
-        $exception = new \SuiteCRM\API\v8\Exception\NotAllowed();
+        $exception = new \SuiteCRM\API\v8\Exception\NotAllowedException();
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };
 };
@@ -66,7 +66,7 @@ $container['notFoundHandler'] = function ($container) {
         /**
          * @var \SuiteCRM\API\v8\Controller\ApiController $ApiController
          */
-        $exception = new \SuiteCRM\API\v8\Exception\NotFound('[Resource]');
+        $exception = new \SuiteCRM\API\v8\Exception\NotFoundException('[Resource]');
         $ApiController = $container->get('ApiController');
         return $ApiController->generateJsonApiExceptionResponse($request, $response, $exception);
     };

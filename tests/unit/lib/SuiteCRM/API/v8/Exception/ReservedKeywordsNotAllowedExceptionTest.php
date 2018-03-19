@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
+use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowedException;
 
-class InvalidJsonApiRequestTest extends \Codeception\Test\Unit
+class ReservedKeywordsNotAllowedExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -18,15 +18,10 @@ class InvalidJsonApiRequestTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [InvalidJsonApiRequest] ', self::$exception->getMessage());
-    }
-
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new InvalidJsonApiRequest();
+            self::$exception = new ReservedKeywordNotAllowedException();
         }
     }
 
@@ -34,9 +29,14 @@ class InvalidJsonApiRequestTest extends \Codeception\Test\Unit
     {
     }
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [ReservedKeywordNotAllowed] ', self::$exception->getMessage());
+    }
+
     public function testGetSetDetail()
     {
-        $this->assertEquals('Unable to validate the Json Api Payload Request', self::$exception->getDetail());
+        $this->assertEquals('Api Version: 8', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class InvalidJsonApiRequestTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(400, self::$exception->getHttpStatus());
+        $this->assertEquals(409, self::$exception->getHttpStatus());
     }
 }

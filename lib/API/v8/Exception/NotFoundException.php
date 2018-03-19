@@ -43,35 +43,12 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class IdAlreadyExists
+ * Class NotFoundException
  * @package SuiteCRM\API\v8\Exception
  */
-class IdAlreadyExists extends ApiException
+class NotFoundException extends ApiException
 {
-    /**
-     * IdAlreadyInUse constructor.
-     * @param string $message Bean id %s already exists in %s module
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_ID_ALREADY_EXISTS, $previous = null)
-    {
-        parent::__construct('[IdAlreadyExists] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    const MSG_PREFIX = '[Not Found]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 404;
 }

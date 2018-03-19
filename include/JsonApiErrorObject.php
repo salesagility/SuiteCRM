@@ -152,6 +152,7 @@ class JsonApiErrorObject
         if ($this->isValidTitle($title)) {
             $this->title = $title->getText();
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid title', 'warn', false);
             $this->title = $this->getDefaultTitle();
         }
     }
@@ -165,6 +166,7 @@ class JsonApiErrorObject
         if ($this->isValidDetail($detail)) {
             $this->detail = $detail->getText();
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid detail', 'warn', false);
             $this->detail = $this->getDefaultDetail();
         }
     }
@@ -178,6 +180,7 @@ class JsonApiErrorObject
         if ($this->isValidId($id)) {
             $this->id = $id;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid id', 'warn', false);
             $this->getDefaultId();
         }
     }
@@ -191,6 +194,7 @@ class JsonApiErrorObject
         if ($this->isValidCode($code)) {
             $this->code = $code;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid code', 'warn', false);
             $this->code = $this->getDefaultCode();
         }
     }
@@ -204,6 +208,7 @@ class JsonApiErrorObject
         if ($this->isValudStatus($status)) {
             $this->status = $status;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid status', 'warn', false);
             $this->status = $this->getDefaultSource();
         }
     }
@@ -217,6 +222,7 @@ class JsonApiErrorObject
         if ($this->isValidLinks($links)) {
             $this->links = $links;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid links', 'warn', false);
             $this->links = $this->getDefaultLinks();
         }
     }
@@ -230,6 +236,7 @@ class JsonApiErrorObject
         if ($this->isValidSource($source)) {
             $this->source = $source;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid source', 'warn', false);
             $this->source = $this->getDefaultSource();
         }
     }
@@ -243,6 +250,7 @@ class JsonApiErrorObject
         if ($this->getValidMeta($meta)) {
             $this->meta = $meta;
         } else {
+            ErrorMessage::log('Invalid JSON API error object, invalid meta', 'warn', false);
             $this->meta = $this->getDefaultMeta();
         }
     }
@@ -550,6 +558,13 @@ class JsonApiErrorObject
         $meta = $this->retrieveMetaFromException($e);
         
         $this->setMeta($meta);
+        
+        
+        if ($e instanceof API\v8\Exception\ApiException) {
+            $this->setCode($e->getCode());
+            $this->setDetail($e->getDetail());
+            $this->setStatus($e->getHttpStatus());
+        }
         
         return $this;
     }

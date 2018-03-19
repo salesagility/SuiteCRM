@@ -43,35 +43,13 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class NotFound
+ * Class NotAcceptableException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotFound extends ApiException
+class NotAcceptableException extends ApiException
 {
-    /**
-     * NotFound constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Found] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 404;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    const MSG_PREFIX = '[Not Acceptable]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 406;
+    const DETAIL_TEXT_LABEL = 'LBL_NOT_ACCEPTABLE_EXCEPTION_DETAIL';
 }

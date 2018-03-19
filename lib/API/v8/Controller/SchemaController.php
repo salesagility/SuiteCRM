@@ -48,7 +48,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\NotFoundException;
 
 class SchemaController extends ApiController
 {
@@ -58,14 +58,14 @@ class SchemaController extends ApiController
      * @return ResponseInterface
      * @throws \InvalidArgumentException
      * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \SuiteCRM\API\v8\Exception\NotFoundException
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
         try {
             $jsonApi = new JsonApi();
             if(file_exists($jsonApi->getSchemaPath()) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
                 );
             }
@@ -92,14 +92,14 @@ class SchemaController extends ApiController
      * @param ResponseInterface $response
      * @return ResponseInterface|static
      * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws \SuiteCRM\API\v8\Exception\NotFoundException
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
         try {
             $path = dirname(__DIR__).'/swagger.json';
             if(file_exists($path) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[SchemaController] unable to find JSON Api Schema file:  '. $path
                 );
             }

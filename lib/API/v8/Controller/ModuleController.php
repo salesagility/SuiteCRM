@@ -62,18 +62,18 @@ use SuiteCRM\API\JsonApi\v1\Resource\Resource;
 use SuiteCRM\API\JsonApi\v1\Resource\ResourceIdentifier;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\Conflict;
-use SuiteCRM\API\v8\Exception\EmptyBody;
-use SuiteCRM\API\v8\Exception\Forbidden;
-use SuiteCRM\API\v8\Exception\IdAlreadyExists;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiRequest;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
-use SuiteCRM\API\v8\Exception\ModuleNotFound;
-use SuiteCRM\API\v8\Exception\NotAcceptable;
-use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ConflictException;
+use SuiteCRM\API\v8\Exception\EmptyBodyException;
+use SuiteCRM\API\v8\Exception\ForbiddenException;
+use SuiteCRM\API\v8\Exception\IdAlreadyExistsException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
+use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
+use SuiteCRM\API\v8\Exception\NotFoundException;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
-use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 use SuiteCRM\API\v8\Library\ModulesLib;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
@@ -100,10 +100,10 @@ class ModuleController extends ApiController
      * @param Response $res
      * @return Response
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws ModuleNotFound
-     * @throws InvalidJsonApiResponse
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ModuleNotFoundException
+     * @throws InvalidJsonApiResponseException
      * @throws RuntimeException
      * @throws \InvalidArgumentException
      */
@@ -136,7 +136,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws NotAcceptable
+     * @throws NotAcceptableException
      * @throws ContainerExceptionInterface
      * @throws NotImplementedException
      */
@@ -200,12 +200,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ModuleNotFound
+     * @throws ModuleNotFoundException
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
@@ -369,12 +369,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws ModuleNotFound
+     * @throws ModuleNotFoundException
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -423,17 +423,17 @@ class ModuleController extends ApiController
      * @param array $args
      * @return Response
      * @throws ApiException
-     * @throws ModuleNotFound
-     * @throws EmptyBody
-     * @throws Conflict
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws BadRequest
-     * @throws Forbidden
+     * @throws ModuleNotFoundException
+     * @throws EmptyBodyException
+     * @throws ConflictException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws BadRequestException
+     * @throws ForbiddenException
      * @throws \InvalidArgumentException
      * @throws RuntimeException
-     * @throws InvalidJsonApiRequest
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiRequestException
+     * @throws InvalidJsonApiResponseException
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
@@ -449,23 +449,23 @@ class ModuleController extends ApiController
 
             // Validate module
             if (empty($module)) {
-                throw new ModuleNotFound($moduleName);
+                throw new ModuleNotFoundException($moduleName);
             }
 
             // Validate JSON
             if (empty($body)) {
-                throw new EmptyBody();
+                throw new EmptyBodyException();
             }
 
             // Validate Type
             if (!isset($body['data']['type'])) {
-                $exception = new Conflict('[ModuleController] [Missing "type" key in data]');
+                $exception = new ConflictException('[ModuleController] [Missing "type" key in data]');
                 $exception->setSource(self::SOURCE_TYPE);
                 throw $exception;
             }
 
             if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
-                $exception = new Conflict(
+                $exception = new ConflictException(
                     '[ModuleController] ["type" does not match resource type] '.$body['data']['type']. ' !== ' . $moduleName,
                     ExceptionCode::API_MODULE_NOT_FOUND
                 );
@@ -480,7 +480,7 @@ class ModuleController extends ApiController
                     return $this->generateJsonApiExceptionResponse(
                         $req,
                         $res,
-                        new IdAlreadyExists(sprintf(
+                        new IdAlreadyExistsException(sprintf(
                             'Bean id %s already exists in %s module', $beanID, $moduleName
                         ), ExceptionCode::API_ID_ALREADY_EXISTS)
                     );
@@ -533,29 +533,29 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws BadRequest
-     * @throws Conflict
-     * @throws NotFound
-     * @throws EmptyBody
+     * @throws BadRequestException
+     * @throws ConflictException
+     * @throws NotFoundException
+     * @throws EmptyBodyException
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws ModuleNotFound
-     * @throws InvalidJsonApiRequest
-     * @throws InvalidJsonApiResponse
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ModuleNotFoundException
+     * @throws InvalidJsonApiRequestException
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      */
     public function getModuleRecord(Request $req, Response $res, array $args)
     {
         try {
             if (isset($query['include'])) {
-                throw new BadRequest(
+                throw new BadRequestException(
                     '[ModuleController] [include query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
 
             if (isset($query['filter'])) {
-                throw new BadRequest(
+                throw new BadRequestException(
                     '[ModuleController] [filter query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
@@ -569,12 +569,12 @@ class ModuleController extends ApiController
 
             // Validate module
             if (empty($module)) {
-                throw new ModuleNotFound($moduleName);
+                throw new ModuleNotFoundException($moduleName);
             }
 
             $sugarBean = BeanFactory::getBean($moduleName, $moduleId);
             if ($sugarBean->new_with_id === true) {
-                $exception = new NotFound(self::MISSING_ID);
+                $exception = new NotFoundException(self::MISSING_ID);
                 $exception->setSource('');
                 throw $exception;
             }
@@ -608,16 +608,16 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws Conflict
-     * @throws NotFound
-     * @throws EmptyBody
+     * @throws ConflictException
+     * @throws NotFoundException
+     * @throws EmptyBodyException
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws InvalidJsonApiRequest
-     * @throws InvalidJsonApiResponse
-     * @throws ModuleNotFound
-     * @throws BadRequest
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws InvalidJsonApiRequestException
+     * @throws InvalidJsonApiResponseException
+     * @throws ModuleNotFoundException
+     * @throws BadRequestException
      * @throws \InvalidArgumentException
      * @throws RuntimeException
      */
@@ -634,23 +634,23 @@ class ModuleController extends ApiController
 
             // Validate module
             if (empty($module)) {
-                throw new ModuleNotFound($moduleName);
+                throw new ModuleNotFoundException($moduleName);
             }
 
             // Validate JSON
             if (empty($body)) {
-                throw new EmptyBody();
+                throw new EmptyBodyException();
             }
 
             // Validate Type
             if (!isset($body['data']['type'])) {
-                $exception = new Conflict('[Missing "type" key in data]');
+                $exception = new ConflictException('[Missing "type" key in data]');
                 $exception->setSource(self::SOURCE_TYPE);
                 throw $exception;
             }
 
             if (isset($body['data']['type']) && $body['data']['type'] !== $module->module_name) {
-                $exception = new Conflict('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
+                $exception = new ConflictException('["type" does not exist]"', ExceptionCode::API_MODULE_NOT_FOUND);
                 $exception->setSource(self::SOURCE_TYPE);
                 throw $exception;
             }
@@ -658,7 +658,7 @@ class ModuleController extends ApiController
             // Validate ID
             $sugarBean = BeanFactory::getBean($moduleName, $moduleId);
             if ($sugarBean->new_with_id === true || $sugarBean === false) {
-                $exception = new NotFound('[ModuleController] ["id" does not exist]');
+                $exception = new NotFoundException('[ModuleController] ["id" does not exist]');
                 $exception->setSource('');
                 throw $exception;
             }
@@ -707,14 +707,14 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws Conflict
-     * @throws NotFound
-     * @throws EmptyBody
+     * @throws ConflictException
+     * @throws NotFoundException
+     * @throws EmptyBodyException
      * @throws ApiException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws ModuleNotFound
-     * @throws InvalidJsonApiResponse
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ModuleNotFoundException
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      */
     public function deleteModuleRecord(Request $req, Response $res, array $args)
@@ -729,13 +729,13 @@ class ModuleController extends ApiController
 
             // Validate module
             if (empty($module)) {
-                throw new ModuleNotFound($moduleName);
+                throw new ModuleNotFoundException($moduleName);
             }
 
             // Validate ID
             $sugarBean = BeanFactory::getBean($moduleName, $moduleId);
             if ($sugarBean->new_with_id === true) {
-                $exception = new NotFound(self::MISSING_ID);
+                $exception = new NotFoundException(self::MISSING_ID);
                 $exception->setSource('');
                 throw $exception;
             }
@@ -770,12 +770,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaType
-     * @throws NotAcceptable
+     * @throws UnsupportedMediaTypeException
+     * @throws NotAcceptableException
      */
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
@@ -803,12 +803,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaType
-     * @throws NotAcceptable
+     * @throws UnsupportedMediaTypeException
+     * @throws NotAcceptableException
      */
     public function getApplicationMetaLanguages(Request $req, Response $res, array $args)
     {
@@ -836,12 +836,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaType
-     * @throws NotAcceptable
+     * @throws UnsupportedMediaTypeException
+     * @throws NotAcceptableException
      */
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
@@ -864,12 +864,12 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaType
-     * @throws NotAcceptable
+     * @throws UnsupportedMediaTypeException
+     * @throws NotAcceptableException
      */
     public function getModuleMetaFields(Request $req, Response $res, array $args)
     {
@@ -885,10 +885,10 @@ class ModuleController extends ApiController
      * @return Response
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws \InvalidArgumentException
-     * @throws UnsupportedMediaType
-     * @throws NotAcceptable
+     * @throws UnsupportedMediaTypeException
+     * @throws NotAcceptableException
      */
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
@@ -1018,14 +1018,14 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
-     * @throws NotFound
+     * @throws InvalidJsonApiResponseException
+     * @throws NotFoundException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
@@ -1035,7 +1035,7 @@ class ModuleController extends ApiController
             $sugarBean = BeanFactory::newBean($args['module']);
 
             if (empty($sugarBean)) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Module does not exist] ' . $args['module'],
                     ExceptionCode::API_MODULE_NOT_FOUND
                 );
@@ -1046,7 +1046,7 @@ class ModuleController extends ApiController
             $viewdefs = $parser->_viewdefs;
 
             if (empty($viewdefs)) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [ViewDefinitions does not exist] ' . $args['view'],
                     ExceptionCode::API_VIEWDEF_NOT_FOUND
                 );
@@ -1068,14 +1068,14 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#fetching-relationships
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
-     * @throws NotFound
+     * @throws InvalidJsonApiResponseException
+     * @throws NotFoundException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1083,11 +1083,11 @@ class ModuleController extends ApiController
             $query = $req->getQueryParams('include');
 
             if (isset($query['include'])) {
-                throw new BadRequest('[ModuleController] [include query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED);
+                throw new BadRequestException('[ModuleController] [include query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED);
             }
 
             if (isset($query['filter'])) {
-                throw new BadRequest('[ModuleController] [filter query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED);
+                throw new BadRequestException('[ModuleController] [filter query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED);
             }
 
             $config = $this->containers->get('ConfigurationManager');
@@ -1098,14 +1098,14 @@ class ModuleController extends ApiController
             $sugarBean = BeanFactory::getBean($args['module'], $args['id']);
 
             if (empty($sugarBean)) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Record does not exist] ' . $args['link'],
                     ExceptionCode::API_RECORD_NOT_FOUND
                 );
             }
 
             if ($sugarBean->load_relationship($args['link']) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Relationship does not exist] ' . $args['link'],
                     ExceptionCode::API_RELATIONSHIP_NOT_FOUND
                     );
@@ -1179,7 +1179,7 @@ class ModuleController extends ApiController
                     $payload['meta']['attributes'] = $middleTableFieldDefs =  $sugarBeanRelationship->relationship->def['fields'];
                 }
             } else {
-                throw new  BadRequest('[ModuleController] [Relationship type not supported]');
+                throw new  BadRequestException('[ModuleController] [Relationship type not supported]');
             }
 
             $payload['meta']['relationships']['type'] = $relationshipType;
@@ -1205,16 +1205,16 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws Forbidden
-     * @throws BadRequest
-     * @throws InvalidJsonApiRequest
-     * @throws NotFound
+     * @throws ForbiddenException
+     * @throws BadRequestException
+     * @throws InvalidJsonApiRequestException
+     * @throws NotFoundException
      * @throws NotImplementedException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws Conflict
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ConflictException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws ApiException
@@ -1227,20 +1227,20 @@ class ModuleController extends ApiController
             $sugarBean = BeanFactory::getBean($args['module'], $args['id']);
 
             if ($sugarBean->new_with_id === true) {
-                $exception = new NotFound(self::MISSING_ID);
+                $exception = new NotFoundException(self::MISSING_ID);
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean === false) {
-                $exception = new NotFound('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
+                $exception = new NotFoundException('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
                 $exception->setDetail('Please ensure that the module name and the id is correct.');
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean->load_relationship($args['link']) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Relationship does not exist] ' . $args['link'],
                     ExceptionCode::API_RELATIONSHIP_NOT_FOUND
                 );
@@ -1253,7 +1253,7 @@ class ModuleController extends ApiController
 
             // Validate JSON
             if (empty($requestPayload)) {
-                throw new EmptyBody();
+                throw new EmptyBodyException();
             }
 
             /** @var Relationship $relationship */
@@ -1308,7 +1308,7 @@ class ModuleController extends ApiController
 
                 $added = $sugarBeanRelationship->add($links, $additional_fields);
                 if ($added !== true) {
-                    throw new Conflict('[ModuleController] [Unable to add relationships (to many)] ' . json_encode($added));
+                    throw new ConflictException('[ModuleController] [Unable to add relationships (to many)] ' . json_encode($added));
                 }
             } elseif (SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_ONE) {
                 $resourceIdentifier = $this->containers->get('ResourceIdentifier');
@@ -1337,7 +1337,7 @@ class ModuleController extends ApiController
 
                 $sugarBeanRelationship->add($requestPayload['data']['id'], $additional_fields);
             } else {
-                throw new Forbidden('[ModuleController] [Invalid Relationship type]');
+                throw new ForbiddenException('[ModuleController] [Invalid Relationship type]');
             }
 
 
@@ -1368,16 +1368,16 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws Forbidden
-     * @throws BadRequest
-     * @throws InvalidJsonApiRequest
-     * @throws NotFound
+     * @throws ForbiddenException
+     * @throws BadRequestException
+     * @throws InvalidJsonApiRequestException
+     * @throws NotFoundException
      * @throws NotImplementedException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws Conflict
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ConflictException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws ApiException
@@ -1390,20 +1390,20 @@ class ModuleController extends ApiController
             $sugarBean = BeanFactory::getBean($args['module'], $args['id']);
 
             if ($sugarBean->new_with_id === true) {
-                $exception = new NotFound(self::MISSING_ID);
+                $exception = new NotFoundException(self::MISSING_ID);
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean === false) {
-                $exception = new NotFound('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
+                $exception = new NotFoundException('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
                 $exception->setDetail('Please ensure that the module name and the id is correct.');
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean->load_relationship($args['link']) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Relationship does not exist] ' . $args['link'],
                     ExceptionCode::API_RELATIONSHIP_NOT_FOUND
                 );
@@ -1416,7 +1416,7 @@ class ModuleController extends ApiController
 
             // Validate JSON
             if (empty($requestPayload)) {
-                throw new EmptyBody();
+                throw new EmptyBodyException();
             }
 
             /** @var Relationship $relationship */
@@ -1511,16 +1511,16 @@ class ModuleController extends ApiController
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      * @return Response
-     * @throws Forbidden
-     * @throws BadRequest
-     * @throws InvalidJsonApiRequest
-     * @throws NotFound
+     * @throws ForbiddenException
+     * @throws BadRequestException
+     * @throws InvalidJsonApiRequestException
+     * @throws NotFoundException
      * @throws NotImplementedException
-     * @throws NotAcceptable
-     * @throws UnsupportedMediaType
-     * @throws Conflict
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
+     * @throws ConflictException
      * @throws \InvalidArgumentException
-     * @throws InvalidJsonApiResponse
+     * @throws InvalidJsonApiResponseException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws ApiException
@@ -1533,20 +1533,20 @@ class ModuleController extends ApiController
             $sugarBean = BeanFactory::getBean($args['module'], $args['id']);
 
             if ($sugarBean->new_with_id === true) {
-                $exception = new NotFound(self::MISSING_ID);
+                $exception = new NotFoundException(self::MISSING_ID);
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean === false) {
-                $exception = new NotFound('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
+                $exception = new NotFoundException('[ModuleController] [Unable to find SugarBean] /modules/'.$args['module'].'/'.$args['id']);
                 $exception->setDetail('Please ensure that the module name and the id is correct.');
                 $exception->setSource('');
                 throw $exception;
             }
 
             if ($sugarBean->load_relationship($args['link']) === false) {
-                throw new NotFound(
+                throw new NotFoundException(
                     '[ModuleController] [Relationship does not exist] ' . $args['link'],
                     ExceptionCode::API_RELATIONSHIP_NOT_FOUND
                 );
@@ -1581,7 +1581,7 @@ class ModuleController extends ApiController
 
                     $removed = $sugarBeanRelationship->remove($links);
                     if ($removed !== true) {
-                        throw new Conflict(
+                        throw new ConflictException(
                             '[ModuleController] [Unable to remove relationships (to many)]' . json_encode($removed)
                         );
                     }
@@ -1593,7 +1593,7 @@ class ModuleController extends ApiController
                     $sugarBeanRelationship->remove($requestPayload['data']['id']);
                 }
             } else {
-                throw new Forbidden('[ModuleController] [Invalid Relationship type]');
+                throw new ForbiddenException('[ModuleController] [Invalid Relationship type]');
             }
 
             $responsePayload = array();
