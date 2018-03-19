@@ -62,22 +62,29 @@ class SchemaController extends ApiController
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $jsonApi = new JsonApi();
-        if(file_exists($jsonApi->getSchemaPath()) === false) {
-            throw new NotFound(
-                '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
-            );
+        try {
+            $jsonApi = new JsonApi();
+            if(file_exists($jsonApi->getSchemaPath()) === false) {
+                throw new NotFound(
+                    '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
+                );
+            }
+
+            $schemaFile = file_get_contents($jsonApi->getSchemaPath());
+
+            if($schemaFile === false) {
+                throw new ApiException(
+                    '[SchemaController] unable to read JSON Api Schema file: '.  $jsonApi->getSchemaPath()
+                );
+            }
+
+            return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+            
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-
-        $schemaFile = file_get_contents($jsonApi->getSchemaPath());
-
-        if($schemaFile === false) {
-            throw new ApiException(
-                '[SchemaController] unable to read JSON Api Schema file: '.  $jsonApi->getSchemaPath()
-            );
-        }
-
-        return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 
     /**
@@ -89,21 +96,28 @@ class SchemaController extends ApiController
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $path = dirname(__DIR__).'/swagger.json';
-        if(file_exists($path) === false) {
-            throw new NotFound(
-                '[SchemaController] unable to find JSON Api Schema file:  '. $path
-            );
+        try {
+            $path = dirname(__DIR__).'/swagger.json';
+            if(file_exists($path) === false) {
+                throw new NotFound(
+                    '[SchemaController] unable to find JSON Api Schema file:  '. $path
+                );
+            }
+
+            $schemaFile = file_get_contents($path);
+
+            if($schemaFile === false) {
+                throw new ApiException(
+                    '[SchemaController] unable to read JSON Api Schema file: '.  $path
+                );
+            }
+
+            return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+            
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-
-        $schemaFile = file_get_contents($path);
-
-        if($schemaFile === false) {
-            throw new ApiException(
-                '[SchemaController] unable to read JSON Api Schema file: '.  $path
-            );
-        }
-
-        return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

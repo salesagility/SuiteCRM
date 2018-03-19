@@ -63,13 +63,20 @@ class OAuth2Controller extends ApiController
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {
-        /** @var AuthorizationServer $server */
-        $server = $this->containers->get('AuthorizationServer');
-
         try {
-            return $server->respondToAccessTokenRequest($request, $response);
-        } catch (OAuthServerException $exception) {
-            return $exception->generateHttpResponse($response);
+            /** @var AuthorizationServer $server */
+            $server = $this->containers->get('AuthorizationServer');
+
+            try {
+                return $server->respondToAccessTokenRequest($request, $response);
+            } catch (OAuthServerException $exception) {
+                return $exception->generateHttpResponse($response);
+            }
+            
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

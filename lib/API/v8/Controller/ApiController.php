@@ -153,6 +153,20 @@ class ApiController implements LoggerAwareInterface
             ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
             ->write(json_encode($payload));
     }
+    
+    /**
+     * 
+     * @param Request $request
+     * @param \Exception $e
+     * @param array $payload
+     * @return array
+     */
+    protected function handleExceptionIntoPayloadError(Request $request, \Exception $exception, &$payload) {
+        $error = new JsonApiErrorObject();
+        $error->retriveFromRequest($request)->retrieveFromException($exception);
+        $payload['errors'][] = $error->export();
+        return $payload;
+    }
 
     /**
      * @param Request $request
