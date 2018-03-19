@@ -81,11 +81,6 @@ use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\ApplicationLanguage;
 use Tracker;
-use function get_val_array;
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\json_encode;
-use function isValidId;
-use function query_module_access_list;
 
 /**
  * Class ModuleController

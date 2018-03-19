@@ -41,7 +41,6 @@
 namespace SuiteCRM;
 
 use LoggerManager;
-use const sugarEntry;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');

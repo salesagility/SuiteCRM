@@ -42,9 +42,6 @@ namespace SuiteCRM;
 
 use Exception;
 use Psr\Http\Message\ServerRequestInterface;
-use const sugarEntry;
-use function GuzzleHttp\json_encode;
-use function json_last_error_msg;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');

@@ -59,8 +59,6 @@ use SuiteCRM\API\v8\Exception\UnsupportedMediaType;
 use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\json_encode;
 
 class ApiController implements LoggerAwareInterface
 {

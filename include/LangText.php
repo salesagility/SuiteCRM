@@ -41,7 +41,6 @@
 
 namespace SuiteCRM;
 
-use const sugarEntry;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
