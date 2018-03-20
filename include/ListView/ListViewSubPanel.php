@@ -429,6 +429,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
                             }
                             if (isset($list_field['alias'])) {
                                 $list_field['name'] = $list_field['alias'];
+				 // Clone field def from origin field def to alias field def
+                                $alias_field_def = $aItem->field_defs[$field_name];
+                                $alias_field_def['name'] = $list_field['alias'];
+                                // Add alias field def into bean to can render field in subpanel
+                                $aItem->field_defs[$list_field['alias']] = $alias_field_def;
                             }
                             else {
                                 $list_field['name'] = $field_name;
