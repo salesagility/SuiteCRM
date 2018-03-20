@@ -23,7 +23,7 @@
     "psr/log": "^1.0",
     "league/oauth2-server": "^5.1",
     "justinrainbow/json-schema": "^5.2",
-    "onelogin/php-saml": "^2.13"
+    "onelogin/php-saml": "3.0.0.x-dev as 3.0.0"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -31,8 +31,7 @@
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "browserstack/browserstack-local": "dev-master",
-    "onelogin/php-saml": "2.*"
+    "browserstack/browserstack-local": "dev-master"
   },
   "scripts": {},
   "prefer-stable": true,
