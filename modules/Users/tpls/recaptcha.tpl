@@ -40,9 +40,6 @@
 *}
 <div id='recaptcha-container' class="g-recaptcha"></div>
 <input type="hidden" id="recaptcha_response_field" name="recaptcha_response_field">
-{*{if $JS}*}
-{*{$JS}*}
-{*{/if}*}
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadRecaptchaCallback&render=explicit" async defer>
 </script>
 <script>
