@@ -1237,6 +1237,7 @@
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
       if (typeof response.data !== "undefined") {
+        $('.file-attachments').empty();
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
       if (typeof response.errors !== "undefined") {
@@ -1269,7 +1270,6 @@
 
   $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
     var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
-    $('.file-attachments').empty();
     var inputName = 'template_attachment[]';
     var removeName = 'temp_remove_attachment[]';
     if (isDraft) {
