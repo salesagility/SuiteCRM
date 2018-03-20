@@ -154,15 +154,15 @@ class LangText
             $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
         } elseif ($this->use === self::USING_ALL_STRINGS) {
             $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
-                    isset($app_strings[$this->key]) ? $app_strings[$this->key] : null
-                );
+                isset($app_strings[$this->key]) ? $app_strings[$this->key] : null
+            );
         } else {
-            ErrorMessage::log('Unknown use case for translation: ' . $this->use);
+            ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
         }
 
         if (!$text) {
             if ($this->log) {
-                ErrorMessage::log('A language key does not found: [' . $this->key . ']', self::LOG_LEVEL, $this->throw);
+                ErrorMessage::handler('A language key does not found: [' . $this->key . ']', self::LOG_LEVEL, $this->throw);
             } else {
                 $text = $this->key;
             }

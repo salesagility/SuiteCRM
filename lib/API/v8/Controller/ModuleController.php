@@ -95,10 +95,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModulesMetaList(Request $req, Response $res)
     {
@@ -129,10 +126,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
     {
@@ -194,10 +188,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
@@ -261,10 +252,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModulesMetaViewed(Request $req, Response $res, array $args)
     {
@@ -327,10 +315,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)
     {
@@ -367,10 +352,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -418,10 +400,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
@@ -462,24 +441,17 @@ class ModuleController extends ApiController
             }
 
             if (!empty($beanID = $body['data']['id'])) {
+
+                if (!isValidId($beanID)) {
+                    throw new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
+                }
+                
                 $bean = BeanFactory::getBean($moduleName, $beanID);
 
                 if ($bean instanceof SugarBean) {
-                    return $this->generateJsonApiExceptionResponse(
-                        $req,
-                        $res,
-                        new IdAlreadyExistsException(sprintf(
+                    throw new IdAlreadyExistsException(sprintf(
                             'Bean id %s already exists in %s module', $beanID, $moduleName
-                        ), ExceptionCode::API_ID_ALREADY_EXISTS)
-                    );
-                }
-
-                if (!isValidId($beanID)) {
-                    return $this->generateJsonApiExceptionResponse(
-                        $req,
-                        $res,
-                        new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID))
-                    );
+                        ), ExceptionCode::API_ID_ALREADY_EXISTS);
                 }
             }
 
@@ -521,10 +493,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleRecord(Request $req, Response $res, array $args)
     {
@@ -589,10 +558,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function updateModuleRecord(Request $req, Response $res, array $args)
     {
@@ -680,10 +646,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function deleteModuleRecord(Request $req, Response $res, array $args)
     {
@@ -738,10 +701,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
@@ -769,10 +729,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getApplicationMetaLanguages(Request $req, Response $res, array $args)
     {
@@ -800,10 +757,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
@@ -845,10 +799,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
@@ -889,10 +840,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
@@ -955,10 +903,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleFavorites(Request $req, Response $res, array $args)
     {
@@ -984,10 +929,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
@@ -1030,10 +972,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#fetching-relationships
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1163,10 +1102,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function createModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1317,10 +1253,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function updateModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1451,10 +1384,7 @@ class ModuleController extends ApiController
      * @param array $args
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     public function deleteModuleRelationship(Request $req, Response $res, array $args)
     {

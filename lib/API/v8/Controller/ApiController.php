@@ -50,12 +50,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
 use SuiteCRM\API\v8\Exception\NotAcceptableException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
+use SuiteCRM\ErrorMessage;
 use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger as Logger;
@@ -106,50 +108,55 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param array $payload
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
+     * @throws RuntimeException
      */
     protected function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
-        $negotiated = $this->negotiatedJsonApiContent($request, $response);
-        if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
-            // return error instead of response
-            return $negotiated;
-        }
-
-        $payload['meta']['suiteapi'] = array(
-          'major' => self::VERSION_MAJOR,
-          'minor' => self::VERSION_MINOR,
-          'patch' => self::VERSION_PATCH,
-          'stability' => self::VERSION_STABILITY,
-        );
-
-        $jsonAPI = $this->containers->get('JsonApi');
-        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
-
-        // Validate Response
-        $data = json_decode(json_encode($payload));
-
-        $validator = new Validator();
-        $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
-
-        if (!$validator->isValid()) {
-            $errors = $validator->getErrors();
-            $this->logger->error('[Invalid Payload Response]'. json_encode($payload));
-            $apiErrorObjects = [];
-            foreach ($errors as $error) {
-                $apiErrorObject = new JsonApiErrorObject();
-                $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponseException($errors[0]['property']. ' ' .$errors[0]['message']));
-                $apiErrorObjects[] = $apiErrorObject;
+        try {
+            $negotiated = $this->negotiatedJsonApiContent($request, $response);
+            if (in_array($negotiated->getStatusCode(), array(415, 406), true)) {
+                // return error instead of response
+                return $negotiated;
             }
-            $payload['errors'] = $apiErrorObjects;
-        }
 
-        return $response
-            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
-            ->write(json_encode($payload));
+            $payload['meta']['suiteapi'] = array(
+              'major' => self::VERSION_MAJOR,
+              'minor' => self::VERSION_MINOR,
+              'patch' => self::VERSION_PATCH,
+              'stability' => self::VERSION_STABILITY,
+            );
+
+            $jsonAPI = $this->containers->get('JsonApi');
+            $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
+
+            // Validate Response
+            $data = json_decode(json_encode($payload));
+
+            $validator = new Validator();
+            $validator->validate($data, (object)['$ref' => 'file://' . realpath($jsonAPI->getSchemaPath())]);
+
+            if (!$validator->isValid()) {
+                $errors = $validator->getErrors();
+                $this->logger->error('[Invalid Payload Response]'. json_encode($payload));
+                $apiErrorObjects = [];
+                foreach ($errors as $error) {
+                    $apiErrorObject = new JsonApiErrorObject();
+                    $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponseException($errors[0]['property']. ' ' .$errors[0]['message']));
+                    $apiErrorObjects[] = $apiErrorObject;
+                }
+                $payload['errors'] = $apiErrorObjects;
+            }
+
+            return $response
+                ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
+                ->write(json_encode($payload));
+        } catch (Exception $e) {
+            $errorMessage = 'Generate JSON API Response exception detected: ' . get_class($e) . ': ' . $e->getMessage() . ' (' . $e->getCode() . ')';
+            if(inDeveloperMode()) {
+                ErrorMessage::log($errorMessage);
+            }
+            throw new RuntimeException($errorMessage, $e->getCode(), $e);
+        }
     }
     
     /**
@@ -158,12 +165,22 @@ class ApiController implements LoggerAwareInterface
      * @param \Exception $e
      * @param array $payload
      * @return array
+     * @throws RuntimeException
      */
     protected function handleExceptionIntoPayloadError(Request $request, \Exception $exception, &$payload) {
-        $error = new JsonApiErrorObject();
-        $error->retriveFromRequest($request)->retrieveFromException($exception);
-        $payload['errors'][] = $error->export();
-        return $payload;
+        try {
+            ErrorMessage::log($exception->getMessage());
+            $error = new JsonApiErrorObject();
+            $error->retriveFromRequest($request)->retrieveFromException($exception);
+            $payload['errors'][] = $error->export();
+            return $payload;
+        } catch (Exception $e) {
+            $errorMessage = 'Generate JSON API Error Response exception detected: ' . get_class($e) . ': ' . $e->getMessage() . ' (' . $e->getCode() . ')';
+            if(inDeveloperMode()) {
+                ErrorMessage::log($errorMessage);
+            }
+            throw new RuntimeException($errorMessage, $e->getCode(), $e);
+        }
     }
 
     /**

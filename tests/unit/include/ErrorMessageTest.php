@@ -86,7 +86,7 @@ class ErrorMessageTest extends PHPUnit_Framework_TestCase
     public function testLog()
     {
         try {
-            ErrorMessage::log('A test error message', 'debug', true, 321);
+            ErrorMessage::handler('A test error message', 'debug', true, 321);
             $this->assertFalse(true, 'Error handler should throw an exception in this scenario.');
         } catch (ErrorMessageException $e) {
             $message = $e->getMessage();
