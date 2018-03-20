@@ -230,7 +230,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
             if (isset($_POST['sort_modules_by_name'])) {
               $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
             } else {
-              $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+              $focus->setPreference('sort_modules_by_name', '', 0, 'global');
             }
 
 	    if(isset($_POST['user_subpanel_tabs']))
