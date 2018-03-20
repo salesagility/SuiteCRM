@@ -40,6 +40,9 @@
 *}
 <div id='recaptcha-container' class="g-recaptcha"></div>
 <input type="hidden" id="recaptcha_response_field" name="recaptcha_response_field">
+{*{if $JS}*}
+{*{$JS}*}
+{*{/if}*}
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadRecaptchaCallback&render=explicit" async defer>
 </script>
 <script>
@@ -87,7 +90,15 @@
      * @return {Element} password reset button
      */
     var getResetPasswordSubmit = function () {
-      return document.getElementById('generate_pwd_button');
+      // "submit" button in the login screen
+      if (document.getElementById('generate_pwd_button')) {
+        return document.getElementById('generate_pwd_button');
+      }
+
+      // "login" button in the change new password screen
+      if (document.getElementById('login_button')) {
+        return document.getElementById('login_button');
+      }
     };
 
     /**
@@ -163,11 +174,12 @@
     };
 
     /**
-     * Send recaptcha response to SuiteCRM with the user's details
+     * Send recaptcha response to SuiteCRM with the user's details from the login screen
      * @see verifySuiteCrmUserCallback
+     * @return {boolean}
      */
     var validateAndSubmit = function () {
-      if(!hasRecaptchaResponse()) {
+      if (!hasRecaptchaResponse()) {
         disableResetPasswordSubmit();
         return false;
       }
@@ -186,6 +198,19 @@
         callback2,
         url
       );
+    };
+
+    /**
+     * Send recaptcha response to SuiteCRM with the user's details from the change password screen
+     * @return {boolean}
+     */
+    var validateCaptchaAndSubmit = function() {
+      if (!hasRecaptchaResponse()) {
+        disableResetPasswordSubmit();
+        return false;
+      }
+      document.getElementById('username_password').value = document.getElementById('new_password').value;
+      document.getElementById('ChangePasswordForm').submit();
     };
 {/literal}
 </script>
