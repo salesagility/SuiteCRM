@@ -113,7 +113,7 @@ if (is_admin($current_user) || isset ($from_sync_client) || is_admin_for_any_mod
 				unset($GLOBALS['dictionary'][$bean]);
 				$focus = new $bean ();
 				if (($focus instanceOf SugarBean) && !isset($repairedTables[$focus->table_name])) {
-				    $sql .= $db->repairTable($focus, $execute);
+                                    $sql .= $db->repairTable($focus, $execute);
 				    $repairedTables[$focus->table_name] = true;
 				}
                 //Repair Custom Fields

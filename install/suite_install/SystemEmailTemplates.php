@@ -114,7 +114,7 @@ function getSystemEmailTemplates()
             '<p>Hi $contact_first_name $contact_last_name,</p>
              <p>
                 Please confirm that you have opted in by selecting the following link:
-                <a href="$sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_email_address">Opt In</a>
+                <a href="$sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_confirm_opt_in_token">Opt In</a>
              </p>'
     );
 

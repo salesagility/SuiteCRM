@@ -152,11 +152,9 @@ class EntryPointConfirmOptInHandler
      */
     private function methodConfirmOptInUser($request) {
         $emailAddress = BeanFactory::getBean('EmailAddresses');
-        $this->emailAddress = $emailAddress->retrieve_by_string_fields(
-                array(
-                    'email_address' => $request['from']
-                )
-        );
+        $this->emailAddress = $emailAddress->retrieve_by_string_fields([
+            'confirm_opt_in_token' => $request['from']
+        ]);
 
         if ($this->emailAddress) {
             $this->emailAddress->confirmOptIn();

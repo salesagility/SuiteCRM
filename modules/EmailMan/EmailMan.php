@@ -1385,7 +1385,13 @@ class EmailMan extends SugarBean
             isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
             isset($focus->last_name) ? $focus->last_name : '');
-        $mailer->replace('emailaddress_email_address', $emailAddressString);
+        $emailAddressConfirmOptInToken = $emailAddress->getConfirmOptInTokenGenerateIfNotExists();
+        $mailer->replace('emailaddress_confirm_opt_in_token', $emailAddressConfirmOptInToken);
+        
+        /**
+         * @deprecated since version 7.10.2
+         */
+        $mailer->replace('emailaddress_email_address', $emailAddressConfirmOptInToken);
 
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 
