@@ -47,7 +47,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request as Request;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -150,7 +150,7 @@ class ApiController implements LoggerAwareInterface
             return $response
                 ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
                 ->write(json_encode($payload));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMessage = 'Generate JSON API Response exception detected: ' . get_class($e) . ': ' . $e->getMessage() . ' (' . $e->getCode() . ')';
             if(inDeveloperMode()) {
                 ErrorMessage::log($errorMessage);
@@ -171,7 +171,7 @@ class ApiController implements LoggerAwareInterface
         try {
             ErrorMessage::log($exception->getMessage());
             $error = new JsonApiErrorObject();
-            $error->retriveFromRequest($request)->retrieveFromException($exception);
+            $error->retrieveFromRequest($request)->retrieveFromException($exception);
             $payload['errors'][] = $error->export();
             return $payload;
         } catch (Exception $e) {
@@ -211,7 +211,7 @@ class ApiController implements LoggerAwareInterface
                 ' Message: ' . $exception->getMessage() .
                 ' Detail: ' . $exception->getDetail() .
                 ' Source: [' . $exception->getSource()['pointer'] . ']';
-            $this->logger->log($exception->getLogLevel(), $logMessage);
+            $this->logger->log('fatal', $logMessage);
         } else {
             $response = $response->withStatus(400);
             $logMessage = $exception->getMessage();
@@ -254,13 +254,20 @@ class ApiController implements LoggerAwareInterface
      */
     protected function negotiatedJsonApiContent(Request $request, Response $response)
     {
-        if ($request->getContentType() !== self::CONTENT_TYPE) {
-            throw new UnsupportedMediaTypeException();
+        $contentType = $request->getContentType();
+        if ($contentType !== self::CONTENT_TYPE) {
+            throw new UnsupportedMediaTypeException('Request "Content-Type" should be "' . self::CONTENT_TYPE . '", ' . ($contentType ? '"' . $contentType . '" given' : 'request doesn\'t have "Content-Type"') . ' in header.');
         }
 
         $header = $request->getHeader('Accept');
-        if (empty($header) || count($header) !== 1 || $header[0] !== self::CONTENT_TYPE) {
-            throw new NotAcceptableException();
+        if (empty($header)) {
+            throw new NotAcceptableException('Header should contains an "Accept" header.');
+        }
+        if(count($header) !== 1) {
+            throw new NotAcceptableException('Header should contains exactly one "Accept" header.');
+        }
+        if($header[0] !== self::CONTENT_TYPE) {
+            throw new NotAcceptableException('Header "Accept" should be "' . self::CONTENT_TYPE . '", ' . ($header[0] ? '"' . $header[0] . '" given.' : 'request doesn\'t have "Accept"'));
         }
 
         if ($this->logger === null) {

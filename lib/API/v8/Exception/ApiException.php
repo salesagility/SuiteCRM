@@ -84,7 +84,7 @@ class ApiException extends LangException
      */
     public function getDetail()
     {
-        $text = $this->detail ? $this->detail : LangText::get($this::DETAIL_TEXT_LABEL);
+        $text = $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
         return $text;
     }
 

@@ -578,8 +578,8 @@ class JsonApiErrorObject
     public function retrieveFromRequest(ServerRequestInterface $request)
     {
         $this->setSource([
-            'pointer' => $req->getUri(),
-            'parametes' => $req->getQueryParams(),
+            'pointer' => $request->getUri(),
+            'parametes' => $request->getQueryParams(),
         ]);
         
         return $this;
