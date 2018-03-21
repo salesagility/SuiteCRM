@@ -201,6 +201,9 @@ class SuiteBeanResource extends Resource
 
         if (empty($sugarBean)) {
             $sugarBean = \BeanFactory::newBean($this->type);
+            if(!$sugarBean) {
+                throw new \Exception('Bean factory can not retrieve a bean. type was: ' . $this->type);
+            }
 
             if (!empty($this->id)) {
                 $sugarBean->new_with_id = true;

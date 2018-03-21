@@ -295,7 +295,7 @@ class ApiController implements LoggerAwareInterface
         if (!$validator->isValid()) {
             $errors = $validator->getErrors();
             $this->logger->error('[Invalid Payload Request]'. $request->getBody());
-            throw new InvalidJsonApiRequestException($errors[0]['property']. ' ' .$errors[0]['message']);
+            throw new InvalidJsonApiRequestException('Invalid Payload Request deteced: ' . $errors[0]['property']. ' ' .$errors[0]['message']);
         }
     }
 
