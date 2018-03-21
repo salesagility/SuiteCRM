@@ -187,62 +187,69 @@ class ApiController implements LoggerAwareInterface
      * @param Request $request
      * @param Response $response
      * @param \Exception|ApiException $exception
-     * @return Response
-     * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
-    public function generateJsonApiExceptionResponse(Request $request, Response $response, \Exception $exception)
+    public function generateJsonApiErrorResponse(Request $request, Response $response, \Exception $exception)
     {
-        $jsonError = array(
-            'code' => $exception->getCode(),
-            'title' => $exception->getMessage(),
-        );
+        try {
+            $jsonError = array(
+                'code' => $exception->getCode(),
+                'title' => $exception->getMessage(),
+            );
 
-        if (null === $this->logger) {
-            $this->setLogger(new Logger());
+            if (null === $this->logger) {
+                $this->setLogger(new Logger());
+            }
+
+            if (is_subclass_of($exception, ApiException::class)) {
+                $jsonError['detail'] = $exception->getDetail();
+                $jsonError['source'] = $exception->getSource();
+                $response = $response->withStatus($exception->getHttpStatus());
+                $logMessage =
+                    ' Code: [' . $exception->getCode() . ']' .
+                    ' Status: [' . $exception->getHttpStatus() . ']' .
+                    ' Message: ' . $exception->getMessage() .
+                    ' Detail: ' . $exception->getDetail() .
+                    ' Source: [' . $exception->getSource()['pointer'] . ']';
+                $this->logger->log('fatal', $logMessage);
+            } else {
+                $response = $response->withStatus(400);
+                $logMessage = $exception->getMessage();
+                $this->logger->error($logMessage);
+            }
+
+
+
+            $jsonError['status'] = $response->getStatusCode();
+
+            $payload = array(
+                'errors' => array(
+                    $jsonError
+                )
+            );
+
+            $payload['meta']['suiteapi'] = array(
+                'major' => self::VERSION_MAJOR,
+                'minor' => self::VERSION_MINOR,
+                'patch' => self::VERSION_PATCH,
+                'stability' => self::VERSION_STABILITY,
+            );
+
+            /** @var JsonApi $jsonAPI */
+            $jsonAPI = $this->containers->get('JsonApi');
+            $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
+
+
+            return $response
+                ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
+                ->write(json_encode($payload));
+        } catch (\Exception $e) {
+            $errorMessage = 'Generate JSON API Error Response exception detected: ' . get_class($e) . ': ' . $e->getMessage() . ' (' . $e->getCode() . ')';
+            if(inDeveloperMode()) {
+                ErrorMessage::log($errorMessage);
+            }
+            throw new RuntimeException($errorMessage, $e->getCode(), $e);
         }
-
-        if (is_subclass_of($exception, ApiException::class)) {
-            $jsonError['detail'] = $exception->getDetail();
-            $jsonError['source'] = $exception->getSource();
-            $response = $response->withStatus($exception->getHttpStatus());
-            $logMessage =
-                ' Code: [' . $exception->getCode() . ']' .
-                ' Status: [' . $exception->getHttpStatus() . ']' .
-                ' Message: ' . $exception->getMessage() .
-                ' Detail: ' . $exception->getDetail() .
-                ' Source: [' . $exception->getSource()['pointer'] . ']';
-            $this->logger->log('fatal', $logMessage);
-        } else {
-            $response = $response->withStatus(400);
-            $logMessage = $exception->getMessage();
-            $this->logger->error($logMessage);
-        }
-
-
-
-        $jsonError['status'] = $response->getStatusCode();
-
-        $payload = array(
-            'errors' => array(
-                $jsonError
-            )
-        );
-
-        $payload['meta']['suiteapi'] = array(
-            'major' => self::VERSION_MAJOR,
-            'minor' => self::VERSION_MINOR,
-            'patch' => self::VERSION_PATCH,
-            'stability' => self::VERSION_STABILITY,
-        );
-
-        /** @var JsonApi $jsonAPI */
-        $jsonAPI = $this->containers->get('JsonApi');
-        $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
-
-
-        return $response
-            ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
-            ->write(json_encode($payload));
     }
 
     /**

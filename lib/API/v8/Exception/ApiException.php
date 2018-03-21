@@ -79,7 +79,6 @@ class ApiException extends LangException
 
     /**
      * Gives addition details to what caused the exception
-     * @see ApiController::generateJsonApiExceptionResponse()
      * @return LangText
      */
     public function getDetail()
@@ -117,7 +116,6 @@ class ApiException extends LangException
 
     /**
      * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
      */
     public function getHttpStatus()
     {
