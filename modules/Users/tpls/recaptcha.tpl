@@ -99,7 +99,7 @@
     };
 
     /**
-     * Allow user from submitting password reset form
+     * Allow user to submit password reset form
      */
     var enableResetPasswordSubmit = function () {
       getResetPasswordSubmit().removeAttribute('disabled');
@@ -140,7 +140,7 @@
     };
 
     /**
-     * Callback to handle when the recapcha has response to the user
+     * Callback to handle when the recapcha has responsed to the user
      */
     var verifyRecaptchaCallback = function () {
       if (hasRecaptchaResponse()) {
