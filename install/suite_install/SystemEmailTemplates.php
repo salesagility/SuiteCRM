@@ -43,13 +43,12 @@
  */
 function installSystemEmailTemplates()
 {
-
     require_once __DIR__ . '/../../modules/EmailTemplates/EmailTemplate.php';
     global $sugar_config;
 
     $templates = getSystemEmailTemplates();
     foreach ($templates as $configKey => $templateData) {
-        if(
+        if (
             isset($sugar_config['system_email_templates'])
             && isset($sugar_config['system_email_templates'][$configKey . "_id"])
             && !empty($sugar_config['system_email_templates'][$configKey . "_id"])
@@ -83,7 +82,7 @@ function setSystemEmailTemplatesDefaultConfig()
 
 
     // set confirm_opt_in_template
-    if(
+    if (
         isset($sugar_config['system_email_templates'])
         && isset($sugar_config['system_email_templates']['confirm_opt_in_template' . "_id"])
         && isset($sugar_config['email_enable_confirm_opt_in'])
