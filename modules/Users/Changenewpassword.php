@@ -47,6 +47,8 @@ global $sugar_config;
 global $app_list_strings;
 global $app_strings;
 global $current_language;
+/** @var DBManager $db */
+global $db;
 
 require_once('modules/Users/language/en_us.lang.php');
 $mod_strings = return_module_language('', 'Users');
@@ -89,7 +91,7 @@ if (isset($_REQUEST['recaptcha_challenge_field']) && isset($_REQUEST['recaptcha_
 $redirect = '1';
 if (isset($_REQUEST['guid'])) {
     // Change 'deleted = 0' clause to 'COALESCE(deleted, 0) = 0' because by default the values were NULL
-    $Q = "SELECT * FROM users_password_link WHERE id = '" . $_REQUEST['guid'] . "' AND COALESCE(deleted, 0) = '0'";
+    $Q = "SELECT * FROM users_password_link WHERE id = '" . $db->quote($_REQUEST['guid']) . "' AND COALESCE(deleted, 0) = '0'";
     $result = $GLOBALS['db']->limitQuery($Q, 0, 1, false);
     $row = $GLOBALS['db']->fetchByAssoc($result);
     if (!empty($row)) {
@@ -114,7 +116,7 @@ if (isset($_REQUEST['guid'])) {
                     $usr_id = $usr->retrieve_user_id($_POST['user_name']);
                     $usr->retrieve($usr_id);
                     $usr->setNewPassword($_POST['new_password']);
-                    $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $_REQUEST['guid'] . "'";
+                    $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
                     $GLOBALS['db']->query($query2, true, "Error setting link for $usr->user_name: ");
                     $_POST['user_name'] = $_REQUEST['user_name'];
                     $_POST['username_password'] = $_REQUEST['new_password'];
@@ -136,7 +138,7 @@ if (isset($_REQUEST['guid'])) {
                 $redirect = '0';
             }
         } else {
-            $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $_REQUEST['guid'] . "'";
+            $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
             $GLOBALS['db']->query($query2, true, "Error setting link");
         }
     }
