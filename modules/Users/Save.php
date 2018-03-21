@@ -199,6 +199,12 @@ if (!$focus->is_group && !$focus->portal_only) {
         $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
     }
 
+    if (isset($_POST['sort_modules_by_name'])) {
+        $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+    } else {
+        $focus->setPreference('sort_modules_by_name', '', 0, 'global');
+    }
+
     if (isset($_POST['user_subpanel_tabs'])) {
         $focus->setPreference('subpanel_tabs', $_POST['user_subpanel_tabs'], 0, 'global');
     } else {
@@ -380,7 +386,7 @@ if (!$focus->verify_data()) {
     if ((isset($_POST['old_password']) || $focus->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] == 'true')) {
-        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {            
+        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
 
             if ($focus->error_string) {
                 SugarApplication::appendErrorMessage($focus->error_string);
