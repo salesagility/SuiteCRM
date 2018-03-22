@@ -179,7 +179,7 @@ class SubPanelTiles
 	}
 	function display($showContainer = true, $forceTabless = false)
 	{
-		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
+		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader, $db;
 
 		if(isset($layout_edit_mode) && $layout_edit_mode){
 			return;
@@ -365,7 +365,6 @@ class SubPanelTiles
                 // Get Subpanel
                 include_once('include/SubPanel/SubPanel.php');
                 $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
-
                 $arr = array();
                 // TODO: Remove x-template:
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
@@ -373,6 +372,19 @@ class SubPanelTiles
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+            } else {
+                $count = 0;
+                $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
+                if (isset($subPanelDef['get_subpanel_data'])) {
+
+                    $count = $this->getSubpanelRowCount($subPanelDef['get_subpanel_data']);
+
+                } else {
+                    foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
+                        $count += $this->getSubpanelRowCount($subSubPanelDef['get_subpanel_data']);
+                    }
+                }
+                $tabs_properties[$t]['title'] .= ' (' . $count . ')';
             }
 
             array_push($tab_names, $tab);
@@ -402,6 +414,24 @@ class SubPanelTiles
         return $template_header . $template_body . $template_footer;
 	}
 
+    private function getSubpanelRowCount($relationshipName)
+    {
+        global $db;
+        $this->focus->load_relationship($relationshipName);
+        /** @var Link2 $relationship */
+        $relationship = $this->focus->$relationshipName;
+        if ($relationship) {
+            $query = $relationship->getQuery();
+            $parts = explode(' ', $query);
+            $parts[1] = 'COUNT(' . $parts[1] . ')';
+            $query = implode(' ', $parts);
+            $result = $db->query($query);
+            if ($row = $db->fetchByAssoc($result)) {
+                return array_shift($row);
+            }
+        }
+        return 0;
+    }
 
 	function getLayoutManager()
 	{
