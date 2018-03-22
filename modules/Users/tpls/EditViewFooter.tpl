@@ -506,6 +506,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td width="17%" scope="row"><span>{$MOD.LBL_SORT_MODULES}
+                            :</span>&nbsp;{sugar_help text=$MOD.LBL_SORT_MODULES_DESCRIPTION }</td>
+                    <td width="83%" colspan="3">
+                        <input type="checkbox" name="sort_modules_by_name" {$SORT_MODULES_BY_NAME} tabindex='13'>
+                   </td>
+                </tr>
+                <tr>
                     <td width="17%" scope="row"><span>{$MOD.LBL_SUBPANEL_TABS}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_SUBPANEL_TABS_DESCRIPTION }</td>
                     <td width="83%" colspan="3"><input type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
