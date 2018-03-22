@@ -67,7 +67,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view" id="settingsForTCPDF">
         <tr>
-            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUGARPDF_BASIC_SETTINGS}</h4></th>
+            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUITEPDF_BASIC_SETTINGS}</h4></th>
         </tr>
         <tr>
             <td scope="row">
@@ -92,7 +92,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
         <tr>
-            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUGARPDF_LOGO_SETTINGS}</h4></th>
+            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUITEPDF_LOGO_SETTINGS}</h4></th>
         </tr>
         <tr>
             <td scope="row">
@@ -116,7 +116,7 @@
 <!--
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
         <tr>
-            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUGARPDF_ADVANCED_SETTINGS}</h4></th>
+            <th align="left" scope="row" colspan="4"><h4 >{$MOD.SUITEPDF_ADVANCED_SETTINGS}</h4></th>
         </tr>
         <tr>
             <td scope="row" scope="row">
