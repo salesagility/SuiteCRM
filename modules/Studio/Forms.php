@@ -109,7 +109,7 @@ EOQ;
 						</td></tr></table>
 					<div id="s_fields_MSIlink" style="display:none">
 						<a href="#" onclick="toggleDisplay('s_fields_MSI');">
-							 $add_icon {$mod_strings['LBL_VIEW_SUGAR_FIELDS']}
+							 $add_icon {$mod_strings['LBL_VIEW_SUITE_FIELDS']}
 						</a>
 					</div>
 					<div id="s_fields_MSI" style="display:inline">
