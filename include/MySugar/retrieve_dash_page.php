@@ -122,7 +122,7 @@ if(!$hasUserPreferences){
             'module' => 'Home',
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_SUGAR_NEWS',
+            'options' => array('titleLabel' => 'LBL_DASHLET_SUITE_NEWS',
                 'url' => 'https://suitecrm.com/about/newsroom/news/',
                 'height' => 315,
             ));

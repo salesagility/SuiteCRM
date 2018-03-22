@@ -49,7 +49,7 @@ class SugarNewsDashlet extends iFrameDashlet {
     var $url;
 
     function __construct($id, $options = null) {
-        $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');
+        $this->title = translate('LBL_DASHLET_SUITE_NEWS', 'Home');
         parent::__construct($id, $options);
     }
 
