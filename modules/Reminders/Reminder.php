@@ -308,18 +308,21 @@ class Reminder extends Basic
         $dateTimeNowStamp = strtotime(self::unQuoteTime($dateTimeNow));
         $dateTimeMaxStamp = strtotime(self::unQuoteTime($dateTimeMax));
 
-        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', 
+        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('',
                 "reminders.popup = 1 AND (reminders.date_willexecute = -1 OR reminders.date_willexecute BETWEEN " . $dateTimeNowStamp . " AND " . $dateTimeMaxStamp . ")");
 
         if ($popupReminders) {
             $i_runs = 0;
             foreach ($popupReminders as $popupReminder) {
-                $relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
+                $relatedEvent = BeanFactory::getBean(
+                    $popupReminder->related_event_module,
+                    $popupReminder->related_event_module_id
+                );
                 $relatedEventStart = strtotime($relatedEvent->date_start);
 
-                /** UPDATE REMINDER EXECUTION TIME *********************************************************************************************** */
+                /** UPDATE REMINDER EXECUTION TIME ************************************************************* */
                 if (
-                    $i_runs >= 100 &&
+                    $i_runs >= 1000 &&
                     isset($popupReminder->fetched_row['date_willexecute']) &&
                     $popupReminder->fetched_row['date_willexecute'] == -1
                 ) {
@@ -333,7 +336,7 @@ class Reminder extends Basic
                     $popupReminder->save();
                     $i_runs++;
                 }
-                /** UPDATE REMINDER EXECUTION TIME END  ***************************************************************************************** */
+                /** UPDATE REMINDER EXECUTION TIME END  ******************************************************* */
 
                 if (!$relatedEvent) {
                     continue;
@@ -343,11 +346,13 @@ class Reminder extends Basic
                     continue;
                 }
 
-                if ($relatedEventStart && ($relatedEventStart <= $dateTimeNowStamp || $relatedEventStart >= $dateTimeMaxStamp )) {
+                if ($relatedEventStart
+                    && ($relatedEventStart <= $dateTimeNowStamp || $relatedEventStart >= $dateTimeMaxStamp )) {
                     continue;
                 }
 
-                if ($checkDecline && self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))) {
+                if ($checkDecline
+                    && self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))) {
                     continue;
                 }
 
