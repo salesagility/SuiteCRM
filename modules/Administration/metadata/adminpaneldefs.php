@@ -88,7 +88,7 @@ $admin_option_defs['Administration']['theme_settings']=array('icon_AdminThemes',
 
 $admin_option_defs['Administration']['scheduler'] = array('Schedulers','LBL_SUITE_SCHEDULER_TITLE','LBL_SUITE_SCHEDULER','./index.php?module=Schedulers&action=index', 'scheduler');
 
-$admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LBL_SUGARFEED_SETTINGS','LBL_SUGARFEED_SETTINGS_DESC','./index.php?module=SugarFeed&action=AdminSettings', 'activity-streams');
+$admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LBL_SUITEFEED_SETTINGS','LBL_SUITEFEED_SETTINGS_DESC','./index.php?module=SugarFeed&action=AdminSettings', 'activity-streams');
 
 
 
