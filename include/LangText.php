@@ -129,6 +129,7 @@ class LangText
      * @param array|null $args
      * @param integer|null $use
      * @return string
+     * @throws ErrorMessageException
      */
     public function getText($key = null, $args = null, $use = null)
     { // TODO: rename the methode to LangText::translate()
@@ -193,6 +194,7 @@ class LangText
      * @param integer $use
      * @param boolean $throw
      * @return string
+     * @throws ErrorMessageException
      */
     public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
     {

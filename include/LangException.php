@@ -69,7 +69,7 @@ class LangException extends Exception implements LangExceptionInterface
      *
      * @param string $message
      * @param integer $code
-     * @param Throwable $previous
+     * @param Exception $previous (Throwable)
      * @param LangText $langMessage
      */
     public function __construct($message = "", $code = 0, Exception $previous = null, LangText $langMessage = null)
@@ -80,7 +80,7 @@ class LangException extends Exception implements LangExceptionInterface
 
     /**
      *
-     * @return string
+     * @return string|null
      */
     public function getLangMessage()
     {

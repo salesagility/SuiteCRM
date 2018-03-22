@@ -167,7 +167,7 @@ class ApiController implements LoggerAwareInterface
      * @return array
      * @throws RuntimeException
      */
-    protected function handleExceptionIntoPayloadError(Request $request, \Exception $exception, &$payload) {
+    protected function handleExceptionIntoPayloadError(Request $request, \Exception $exception, $payload) {
         try {
             ErrorMessage::log($exception->getMessage());
             $error = new JsonApiErrorObject();
@@ -187,6 +187,7 @@ class ApiController implements LoggerAwareInterface
      * @param Request $request
      * @param Response $response
      * @param \Exception|ApiException $exception
+     * @return integer
      * @throws RuntimeException
      */
     public function generateJsonApiErrorResponse(Request $request, Response $response, \Exception $exception)

@@ -87,7 +87,7 @@ class ErrorMessage
     /**
      *
      * @param string $message
-     * @param integer $code
+     * @param integer|null $code
      * @param string $level
      * @param boolean $throw
      */
@@ -99,11 +99,11 @@ class ErrorMessage
     /**
      *
      * @param string $message
-     * @param integer $code
+     * @param integer|null $code
      * @param string $level
      * @param boolean $throw
      */
-    protected function setState($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
+    public function setState($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
     {
         $this->message = $message;
         $this->code = $code;
@@ -130,9 +130,10 @@ class ErrorMessage
     /**
      *
      * @param string $message
-     * @param integer $level
+     * @param string $level
      * @param boolean $throw
      * @param integer $code
+     * @throws ErrorMessageException
      */
     public static function handler($message, $level = self::DEFAULT_LOG_LEVEL, $throw = true, $code = self::DEFAULT_CODE)
     {
