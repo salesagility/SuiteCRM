@@ -298,7 +298,6 @@ $mod_strings = array(
     'LBL_SITECFG_SITE_SECURITY' => 'Select Security Options',
     'LBL_SITECFG_SUITE_UP_DIRECTIONS' => 'If selected, the system will periodically check for updated versions of the application.',
     'LBL_SITECFG_SUITE_UP' => 'Automatically Check For Updates?',
-    'LBL_SITECFG_SUGAR_UPDATES' => 'SuiteCRM Updates Config',
     'LBL_SITECFG_TITLE' => 'Site Configuration',
     'LBL_SITECFG_TITLE2' => 'Identify Administration User',
     'LBL_SITECFG_SECURITY_TITLE' => 'Site Security',
