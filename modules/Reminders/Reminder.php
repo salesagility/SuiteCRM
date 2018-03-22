@@ -95,6 +95,8 @@ class Reminder extends Basic
 
     private static function saveRemindersData($eventModule, $eventModuleId, $remindersData)
     {
+        global $db;
+
         $savedReminderIds = array();
         foreach ($remindersData as $reminderData) {
             if (isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $reminderData->id = '';
@@ -110,6 +112,14 @@ class Reminder extends Basic
             $reminderBean->date_willexecute = null;
 
             $reminderBean->save();
+
+            // Delete related alerts
+            $url = Reminder::makeAlertURL(
+                $reminderBean->related_event_module,
+                $reminderBean->related_event_module_id
+            );
+            $db->query("UPDATE `alerts` SET `deleted` = 1 WHERE `url_redirect` = '$url'");
+
             $savedReminderIds[] = $reminderBean->id;
             $reminderId = $reminderBean->id;
             Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
@@ -369,7 +379,10 @@ class Reminder extends Basic
                 $timeRemind = $popupReminder->timer_popup;
                 $timeStart -= $timeRemind;
 
-                $url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
+                $url = Reminder::makeAlertURL(
+                    $popupReminder->related_event_module,
+                    $popupReminder->related_event_module_id
+                );
                 $instructions = $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG'];
 
                 if ($popupReminder->related_event_module == 'Meetings') {
@@ -417,6 +430,11 @@ class Reminder extends Basic
                 );
             }
         }
+    }
+
+    public static function makeAlertURL($module, $record_id)
+    {
+        return 'index.php?action=DetailView&module=' . $module . '&record=' . $record_id;
     }
 
     private static function unQuoteTime($timestr)
