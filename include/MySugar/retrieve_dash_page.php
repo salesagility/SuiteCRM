@@ -107,7 +107,7 @@ if(!$hasUserPreferences){
             'module' => 'Home',
             'forceColumn' => 0,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUGAR_PRO',
+            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUITE',
                 'url' => 'https://suitecrm.com/',
                 'height' => 315,
             ));
