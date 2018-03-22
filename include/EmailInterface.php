@@ -38,40 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-use SuiteCRM\Enumerator\ExceptionCode;
-
-/**
- * Class IdAlreadyExists
- * @package SuiteCRM\API\v8\Exception
- */
-class IdAlreadyExists extends Conflict
+interface EmailInterface
 {
-    /**
-     * IdAlreadyInUse constructor.
-     * @param string $message Bean id %s already exists in %s module
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_ID_ALREADY_EXISTS, $previous = null)
-    {
-        parent::__construct('[IdAlreadyExists] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
 }
