@@ -257,7 +257,7 @@ class RepairAndClear
 	public function clearSugarFeedCache()
 	{
 		global $mod_strings;
-		if($this->show_output) echo "<h3>{$mod_strings['LBL_QR_CLEARSUGARFEEDCACHE']}</h3>";
+		if($this->show_output) echo "<h3>{$mod_strings['LBL_QR_CLEARSUITEFEEDCACHE']}</h3>";
 
         SugarFeed::flushBackendCache();
 	}
