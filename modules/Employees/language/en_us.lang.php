@@ -106,7 +106,7 @@ $mod_strings = array(
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
     'LBL_LIST_EMPLOYEE_STATUS' => 'Employee Status',
 
-    'LBL_SUGAR_LOGIN' => 'Is User',
+    'LBL_SUITE_LOGIN' => 'Is User',
     'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',
     'LBL_IS_ADMIN' => 'Is Administrator',
     'LBL_GROUP' => 'Group User',
