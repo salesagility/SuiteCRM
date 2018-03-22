@@ -264,7 +264,7 @@ function checkAlerts() {
         if (typeof Alerts !== "undefined") {
           //
           // Use Alerts module
-          Alerts.prototype.show(
+          Alerts.prototype.addToManager(
             {
               title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
               options: {

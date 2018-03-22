@@ -83,7 +83,6 @@ Alerts.prototype.show = function (AlertObj) {
           }
         }
       }
-      Alerts.prototype.addToManager(AlertObj);
     }
     else {
       var message = AlertObj.title;
@@ -98,9 +97,6 @@ Alerts.prototype.show = function (AlertObj) {
               window.location = AlertObj.options.url_redirect;
             }
           }
-        }
-        else {
-          Alerts.prototype.addToManager(AlertObj);
         }
       }
     }
@@ -132,9 +128,12 @@ Alerts.prototype.addToManager = function (AlertObj) {
     is_read: is_read,
     target_module: target_module,
     type: type
-  }).done(function (data) {
+  }).done(function (jsonData) {
+    data = JSON.parse(jsonData);
+    if (typeof data !== 'undefined' && typeof data.result !== 'undefined' && data.result === 1) {
+      Alerts.prototype.show(AlertObj);
+    }
   }).fail(function (data) {
-    console.log(data);
   }).always(function () {
     Alerts.prototype.updateManager();
   });

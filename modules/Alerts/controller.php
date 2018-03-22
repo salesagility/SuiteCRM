@@ -91,9 +91,11 @@ class AlertsController extends SugarController
             $type = $_POST['type'];
         }
 
+        $shouldShowReminderPopup = false;
+
         if(isset($_POST)) {
             $bean = BeanFactory::getBean('Alerts');
-            $result = $bean->get_full_list("","alerts.assigned_user_id = '".$current_user->id."' AND url_redirect = '".$_POST['url_redirect']."' AND is_read != 1");
+            $result = $bean->get_full_list("","alerts.assigned_user_id = '".$current_user->id."' AND url_redirect = '".$_POST['url_redirect']."'");
             if(empty($result)) {
                 $bean = BeanFactory::newBean('Alerts');
                 $bean->name = $name;
@@ -104,12 +106,25 @@ class AlertsController extends SugarController
                 $bean->assigned_user_id = $assigned_user_id;
                 $bean->type = $type;
                 $bean->save();
+
+                $shouldShowReminderPopup = true;
+            } else {
+                foreach ($result as $alert) {
+                    if (!$alert->is_read) {
+                        $shouldShowReminderPopup = true;
+                        break;
+                    }
+                }
             }
         }
 
+
+
         $this->view_object_map['Flash'] = '';
         $this->view_object_map['Result'] = '';
-        $this->view = 'json';
+        $this->view = 'ajax';
+
+        echo json_encode(['result' => intval($shouldShowReminderPopup)], true);
     }
 
     public function action_markAsRead()
