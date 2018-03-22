@@ -173,6 +173,7 @@ class SugarView
             $GLOBALS['logic_hook']->call_custom_logic('', 'after_ui_frame');
         }
 
+        unset($_SESSION['alerts_output']);
         // We have to update jsAlerts as soon as possible
         if (!isset($_SESSION['isMobile']) &&
             ($this instanceof ViewList || $this instanceof ViewDetail || $this instanceof ViewEdit)
