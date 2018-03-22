@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -55,7 +54,7 @@ class EntryPointConfirmOptInHandler
     private $emailAddress;
 
     /**
-     * 
+     *
      * @param array $request
      * @param array $post
      */
@@ -78,7 +77,7 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     * 
+     *
      * @param string $method
      * @param array $post
      * @param array $request
@@ -146,7 +145,7 @@ class EntryPointConfirmOptInHandler
 
     /**
      * Confirm Opt In User
-     * 
+     *
      * @param array $request
      * @return string
      */
@@ -165,6 +164,7 @@ class EntryPointConfirmOptInHandler
 
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
+        $template->assign('APP', $GLOBALS['app_strings']);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
     }
