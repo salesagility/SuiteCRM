@@ -355,6 +355,15 @@ class Reminder extends Basic
                     continue;
                 }
 
+                // The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+                $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list(
+                    '',
+                    "reminders_invitees.reminder_id = '{$popupReminder->id}' AND reminders_invitees.related_invitee_module_id = '{$current_user->id}'"
+                );
+                if (!$invitees) {
+                    continue;
+                }
+
                 // need to concatenate since GMT times can bridge two local days
                 $timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
                 $timeRemind = $popupReminder->timer_popup;
