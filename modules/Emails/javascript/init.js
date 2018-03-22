@@ -175,7 +175,7 @@ function email2init() {
       onclick: {fn: SEC.openMultiple}
     },
     {
-      text: "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=icon_email_archive.gif'/>" + app_strings.LBL_EMAIL_ARCHIVE_TO_SUGAR,
+      text: "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=icon_email_archive.gif'/>" + app_strings.LBL_EMAIL_ARCHIVE_TO_SUITE,
       onclick: {fn: SEC.archiveToSugar}
     },
     {
