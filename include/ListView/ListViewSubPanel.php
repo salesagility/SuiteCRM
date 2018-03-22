@@ -428,12 +428,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 $list_field['owner_module'] = false;
                             }
                             if (isset($list_field['alias'])) {
-                                $list_field['name'] = $list_field['alias'];
-				 // Clone field def from origin field def to alias field def
-                                $alias_field_def = $aItem->field_defs[$field_name];
-                                $alias_field_def['name'] = $list_field['alias'];
-                                // Add alias field def into bean to can render field in subpanel
-                                $aItem->field_defs[$list_field['alias']] = $alias_field_def;
+                                 $list_field['name'] = $list_field['alias'];
+                            	// Clone field def from origin field def to alias field def
+                            	$alias_field_def = $aItem->field_defs[$field_name];
+                            	$alias_field_def['name'] = $list_field['alias'];
+                            	// Add alias field def into bean to can render field in subpanel
+                            	$aItem->field_defs[$list_field['alias']] = $alias_field_def;
+                            	if(!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
+                                	global $timedate;
+                                	$fields[strtoupper($list_field['alias'])] = (!empty($aItem->$field_name)) ? $aItem->$field_name : $timedate->to_display_date_time($aItem->{$list_field['alias']});
+                            	}
+
                             }
                             else {
                                 $list_field['name'] = $field_name;
