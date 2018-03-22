@@ -2091,6 +2091,7 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Confirmed Opt In Fail Date',
+    'LBL_CONFIRM_OPT_IN_TOKEN' => 'Confirm Opt In Token',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
 
