@@ -610,7 +610,7 @@ $mod_strings = array(
     'WARN_NO_SMTP_SERVER_AVAILABLE_ERROR' => "Note: To send record assignment notifications, an SMTP server must be configured in <a href='index.php?module=EmailMan&action=config'>Email Settings</a>.",
     'LBL_MODULEBUILDER' => 'Module Builder',
     'LBL_MODULEBUILDER_DESC' => 'Build new modules to expand the functionality of SuiteCRM',
-    'LBL_SUGARPORTAL' => 'SuiteCRM Portal',
+    'LBL_SUITEPORTAL' => 'SuiteCRM Portal',
     'LBL_CLEAR_VARDEFS_DATA_CACHE_TITLE' => 'Clear Vardefs Data Cache',
     'LBL_QUICK_REPAIR_AND_REBUILD' => 'Quick Repair and Rebuild',
     'LBL_QUICK_REPAIR_TITLE' => 'Please select Module(s) to repair:',

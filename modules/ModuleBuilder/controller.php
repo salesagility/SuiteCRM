@@ -66,7 +66,7 @@ class ModuleBuilderController extends SugarController
                 return $mod_strings['LBL_STUDIO'];
             }
             elseif ( $_REQUEST['type'] == 'sugarportal' ) {
-                return $mod_strings['LBL_SUGARPORTAL'];
+                return $mod_strings['LBL_SUITEPORTAL'];
             }
             elseif ( $_REQUEST['type'] == 'mb' ) {
                 return $mod_strings['LBL_MODULEBUILDER'];
