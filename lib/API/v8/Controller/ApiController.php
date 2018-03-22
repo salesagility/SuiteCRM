@@ -141,12 +141,18 @@ class ApiController implements LoggerAwareInterface
                 $apiErrorObjects = [];
                 foreach ($errors as $error) {
                     $apiErrorObject = new JsonApiErrorObject();
-                    $apiErrorObject->retrieveFromRequest($request)->retrieveFromException(new InvalidJsonApiResponseException($errors[0]['property']. ' ' .$errors[0]['message']));
-                    $apiErrorObjects[] = $apiErrorObject;
+                    $apiErrorObject->retrieveFromRequest($request);
+                    $apiErrorObjectArray = array_merge($error, $apiErrorObject->export());
+                    $apiErrorObjectArrays[] = $apiErrorObjectArray;
                 }
-                $payload['errors'] = $apiErrorObjects;
+                $payload['errors'] = array_merge($payload['errors'], $apiErrorObjectArrays);
             }
 
+            json_encode($payload);
+            if(json_last_error() != JSON_ERROR_NONE) {
+                throw new Exception('Generating JSON payload failed: ' . json_last_error_msg());
+            }
+            
             return $response
                 ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
                 ->write(json_encode($payload));
@@ -240,6 +246,8 @@ class ApiController implements LoggerAwareInterface
             $jsonAPI = $this->containers->get('JsonApi');
             $payload['jsonapi'] = $jsonAPI->toJsonApiResponse();
 
+            
+            $payload = $this->handleExceptionIntoPayloadError($request, $exception, $payload);
 
             return $response
                 ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
