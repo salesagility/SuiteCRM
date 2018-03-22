@@ -108,7 +108,11 @@
 					<td align='center'>
 						<table id="new_module" onclick="ModuleBuilder.addModule('{$package->name}')" class='wizardButton' onmousedown="ModuleBuilder.buttonDown(this);return false;" onmouseout="ModuleBuilder.buttonOut(this);">
 						<tr>
-						<td  align='center'>{sugar_image name="NewModule" width=48 height=48}</td>
+							<td  align='center'>
+								<a href="#">
+									<span class="suitepicon suitepicon-module-new-module"></span>
+								</a>
+							</td>
 						</tr>
 						<tr><td>
 						  <a  class='studiolink' href="javascript:void(0)" onclick="ModuleBuilder.addModule('{$package->name}')">
