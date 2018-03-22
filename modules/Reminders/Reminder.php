@@ -283,8 +283,6 @@ class Reminder extends Basic
 
         // cn: get a boundary limiter
         $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
-        
-        $dateTimeMaxUnix = time()+$app_list_strings['reminder_max_time'];
 
         $dateTimeNow = $timedate->getNow(true)->asDb(false);
 
@@ -318,11 +316,12 @@ class Reminder extends Basic
                     $popupReminder->related_event_module,
                     $popupReminder->related_event_module_id
                 );
-                $relatedEventStart = strtotime($relatedEvent->date_start);
+                $dateTime = DateTime::createFromFormat($timedate->get_date_time_format(), $relatedEvent->date_start);
+                $relatedEventStart = $dateTime ? $dateTime->getTimestamp() : $dateTime;
 
                 /** UPDATE REMINDER EXECUTION TIME ************************************************************* */
                 if (
-                    $i_runs >= 1000 &&
+                    $i_runs < 1000 &&
                     isset($popupReminder->fetched_row['date_willexecute']) &&
                     $popupReminder->fetched_row['date_willexecute'] == -1
                 ) {
