@@ -498,7 +498,7 @@ if(count($prospect_lists)>0){
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
     foreach($app_list_strings['prospect_list_type_dom'] as $key=>$val){
-        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='$val';}";
+        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='".addslashes($val)."';}";
     }
     $ss->assign("PL_DOM_STMT", $dom_txt);
     $trgt_count = 0;
