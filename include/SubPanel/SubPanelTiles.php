@@ -62,6 +62,8 @@ class SubPanelTiles
 	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
 							//should be the array.
 
+    protected $collapsedRowCountLimit = 100;
+
 	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 		$this->focus = $focus;
@@ -251,6 +253,7 @@ class SubPanelTiles
             $rel->load_relationship_meta();
         }
 
+        $loadingTime = 0;
         foreach ($tabs as $t => $tab)
         {
             // load meta definition of the sub-panel.
@@ -373,19 +376,12 @@ class SubPanelTiles
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
             } else {
-                $count = 0;
-                $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-                if (isset($subPanelDef['get_subpanel_data'])) {
-
-                    $count = $this->getSubpanelRowCount($subPanelDef['get_subpanel_data']);
-
-                } else {
-                    foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                        $count += $this->getSubpanelRowCount($subSubPanelDef['get_subpanel_data']);
-                    }
-                }
+                $microtime = microtime();
+                $count = $this->getSubpanelRowCount($tab);
                 $tabs_properties[$t]['title'] .= ' (' . $count . ')';
+                $loadingTime += microtime() - $microtime;
             }
+
 
             array_push($tab_names, $tab);
         }
@@ -414,16 +410,38 @@ class SubPanelTiles
         return $template_header . $template_body . $template_footer;
 	}
 
-    private function getSubpanelRowCount($relationshipName)
+    protected function getSubpanelRowCount($tab)
     {
+        $count = 0;
+        $limit = $this->collapsedRowCountLimit;
+        $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
+        if (isset($subPanelDef['get_subpanel_data'])) {
+
+            $count = $this->getRelationshipRowCount($subPanelDef['get_subpanel_data'], $limit);
+
+        } else {
+            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
+                $count += $this->getRelationshipRowCount($subSubPanelDef['get_subpanel_data'], $limit - $count);
+            }
+        }
+        return $count;
+    }
+
+    protected function getRelationshipRowCount($relationshipName, $limit)
+    {
+        if ($limit < 1) {
+            return 0;
+        }
         global $db;
         $this->focus->load_relationship($relationshipName);
         /** @var Link2 $relationship */
         $relationship = $this->focus->$relationshipName;
-        if ($relationship) {
+        if (!$relationship) {
             $query = $relationship->getQuery();
             $parts = explode(' ', $query);
             $parts[1] = 'COUNT(' . $parts[1] . ')';
+            $parts[] = 'LIMIT';
+            $parts[] = $limit;
             $query = implode(' ', $parts);
             $result = $db->query($query);
             if ($row = $db->fetchByAssoc($result)) {
