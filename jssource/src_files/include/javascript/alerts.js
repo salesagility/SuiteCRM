@@ -158,6 +158,11 @@ Alerts.prototype.redirectToLogin = function () {
   return false;
 }
 Alerts.prototype.updateManager = function () {
+  if (typeof Alerts.prototype.lastUpdatedManager === 'undefined') {
+    Alerts.prototype.lastUpdatedManager = new Date().getTime();
+  }else if (Alerts.prototype.lastUpdatedManager < (new Date().getTime() + 1000)) {
+    return;
+  }
   var url = 'index.php?module=Alerts&action=get&to_pdf=1';
   $.ajax(url).done(function (data) {
     if (data == 'lost session') {
