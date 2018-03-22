@@ -2097,11 +2097,6 @@ $app_strings = array(
     'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
     'LBL_PRIMARY_GROUP' => "Primary Group",
 
-    'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
-    'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
-
     // footer
     'LBL_SUITE_TOP' => 'Back to top',
     'LBL_SUITE_SUPERCHARGED' => 'Supercharged by SuiteCRM',
@@ -3592,7 +3587,11 @@ $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%
 
 $app_strings['ERR_TWO_FACTOR_FAILED'] = 'Two Factor Authentication failed';
 $app_strings['ERR_TWO_FACTOR_CODE_SENT'] = 'Two Factor Authentication code sent.';
+$app_strings['ERR_TWO_FACTOR_CODE_FAILED'] = 'Two Factor Authentication code failed to send.';
 $app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your interest.';
+
+$app_strings['ERR_IP_CHANGE'] = 'Your session was terminated due to a significant change in your IP address';
+$app_strings['ERR_RETURN'] = 'Return to Home';
 
 
 $app_list_strings['oauth2_grant_type_dom'] = array(

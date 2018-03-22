@@ -133,7 +133,6 @@ $mod_strings = array(
     'LBL_UPLOAD_MAX_FILESIZE_TITLE' => 'Upload File Size',
     'ERR_URL_BLANK' => 'Provide the base URL for the SuiteCRM instance.',
     'ERR_UW_NO_UPDATE_RECORD' => 'Could not locate installation record of',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',

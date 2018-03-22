@@ -818,6 +818,7 @@
                                                 <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
                                                 <span>{$item.item_summary_short}</span>
                                             </a>
+                                            <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                         </li>
                                     </div>
                                 {/if}
@@ -838,6 +839,7 @@
                                         <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
                                         <span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
+                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                 </li>
                             </div>
                             {/if}

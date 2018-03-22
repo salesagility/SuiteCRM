@@ -40,6 +40,9 @@
         "lib/",
         "tests/SuiteCRM/",
         "tests/unit/lib/SuiteCRM/"
+      ],
+      "SuiteCRM\\Custom\\": [
+        "custom/lib"
       ]
     }
   },

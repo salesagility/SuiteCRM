@@ -518,8 +518,6 @@ $mod_strings = array(
     'LBL_SUITE_SCHEDULER_TITLE' => 'Scheduler',
     'LBL_SUITE_SCHEDULER' => 'Set up scheduled events',
     'LBL_SUITE_UPDATE_TITLE' => 'SuiteCRM Updates',
-    'LBL_SUGARCRM_HELP' => 'SuiteCRM Help',
-    'LBL_SUPPORT_TITLE' => 'SuiteCRM Support Portal',
     'LBL_SYSTEM_NAME' => 'System Name',
     'LBL_TERMS_AND_CONDITIONS' => 'Terms and Conditions',
     'LBL_THEME_SETTINGS' => 'Themes',
@@ -902,8 +900,6 @@ $mod_strings = array(
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 
     'LBL_PWDSEC_SETS' => 'Password Security Settings',
-    'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
-    'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
     'LBL_PWDSEC_MIN_LENGTH' => 'Password minimum length',
     'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Password minimum length',
     'LBL_PWDSEC_UPPERCASE' => 'Password should contain uppercase characters',
@@ -914,7 +910,6 @@ $mod_strings = array(
     'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contain numbers',
     'LBL_PWDSEC_SPECCHAR' => 'Password should contain special characters',
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
-    'LBL_PWDSEC_DAYS' => 'Days',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
 );

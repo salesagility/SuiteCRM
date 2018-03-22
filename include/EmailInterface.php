@@ -38,47 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\OAuth2\Repositories;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-use League\OAuth2\Server\Exception\OAuthServerException;
-use SuiteCRM\API\OAuth2\Exception\GrantTypeNotAllowedForClient;
-
-class ClientRepository implements ClientRepositoryInterface
+interface EmailInterface
 {
-    /**
-     * {@inheritdoc}
-     * @return null|ClientEntity
-     */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
-    {
-
-        $client = new \OAuth2Clients();
-        $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
-            return null;
-        }
-
-        if($client->allowed_grant_type !== $grantType) {
-            throw new GrantTypeNotAllowedForClient();
-        }
-
-        if (
-            $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
-        ) {
-            return null;
-        }
-
-        $clientEntity = new ClientEntity();
-        $clientEntity->setIdentifier($clientIdentifier);
-        $clientEntity->setName($client->name);
-
-        $redirect_url = isset($client->redirect_uri) ? $client->redirect_uri : '';
-        $clientEntity->setRedirectUri($redirect_url);
-
-        return $clientEntity;
-    }
 }

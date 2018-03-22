@@ -445,6 +445,8 @@ eoq;
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
 
+        $ret = null;
+        
         $this->fullSmtpLog='';
         $phpMailerExceptionMsg='';
 
