@@ -417,13 +417,16 @@ class Reminder extends Basic
                 }
 
                 // standard functionality
-                $alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
-                                 $app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'] . $time,
-                                 $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
-                                 $description .
-                                 $instructions,
-                                 $relatedEventStart - strtotime($alertDateTimeNow),
-                                 $url
+                $alert->addAlert(
+                    $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'],
+                    $meetingName,
+                    $app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'] . $time,
+                    $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
+                    $description .
+                    $instructions,
+                    $relatedEventStart - strtotime($alertDateTimeNow),
+                    $url,
+                    $popupReminder->id
                 );
             }
         }

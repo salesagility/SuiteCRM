@@ -118,6 +118,9 @@ Alerts.prototype.addToManager = function (AlertObj) {
     if (typeof AlertObj.options.type !== "undefined") {
       type = AlertObj.options.type
     }
+    if (typeof AlertObj.options.reminder_id !== "undefined") {
+      reminder_id = AlertObj.options.reminder_id
+    }
   }
   $.post(url, {
     module: 'Alerts',
@@ -127,6 +130,7 @@ Alerts.prototype.addToManager = function (AlertObj) {
     url_redirect: url_redirect,
     is_read: is_read,
     target_module: target_module,
+    reminder_id: reminder_id,
     type: type
   }).done(function (jsonData) {
     data = JSON.parse(jsonData);
