@@ -50,7 +50,7 @@ require_once('service/core/SugarWebServiceImpl.php');
  */
 abstract class SugarSoapService extends SugarWebService{
 	protected $soap_version = '1.1';
-	protected $namespace = 'https://suitecrm.com';
+	protected $namespace = 'http://www.sugarcrm.com/sugarcrm';
 	protected $implementationClass = 'SugarWebServiceImpl';
 	protected $registryClass = "";
 	protected $soapURL = "";
