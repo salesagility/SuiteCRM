@@ -365,6 +365,7 @@ class SubPanelTiles
                 // Get Subpanel
                 include_once('include/SubPanel/SubPanel.php');
                 $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
+
                 $arr = array();
                 // TODO: Remove x-template:
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
@@ -457,11 +458,9 @@ class SubPanelTiles
         $relationship = $this->focus->$relationshipName;
 
         if ($relationship) {
-            $query = $relationship->getQuery();
-            $parts = explode(' ', $query);
+            $parts = explode(' ', $relationship->getQuery());
             $parts[1] = 'COUNT(' . $parts[1] . ')';
-            $parts[] = 'LIMIT 1';
-            return implode(' ', $parts);
+            return implode(' ', $parts) . ' LIMIT 1';
         }
         elseif (substr($relationshipName, 0, 9) === 'function:') {
             include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
