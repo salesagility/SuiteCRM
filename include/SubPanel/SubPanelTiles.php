@@ -62,8 +62,6 @@ class SubPanelTiles
 	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
 							//should be the array.
 
-    protected $collapsedRowCountLimit = 100;
-
 	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 		$this->focus = $focus;
@@ -253,7 +251,6 @@ class SubPanelTiles
             $rel->load_relationship_meta();
         }
 
-        $loadingTime = 0;
         foreach ($tabs as $t => $tab)
         {
             // load meta definition of the sub-panel.
@@ -375,11 +372,16 @@ class SubPanelTiles
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
-            } else {
-                $microtime = microtime();
+            }
+            elseif ($current_user->getPreference('count_collapsed_subpanels')) {
                 $count = $this->getSubpanelRowCount($tab);
-                $tabs_properties[$t]['title'] .= ' (' . $count . ')';
-                $loadingTime += microtime() - $microtime;
+                if (!$count) {
+                    $tabs_properties[$t]['title'] .= ' (0)';
+                }
+                else {
+                    $tabs_properties[$t]['title'] .= ' +';
+                    $tabs_properties[$t]['collapsed_override'] = 1;
+                }
             }
 
 
@@ -416,48 +418,77 @@ class SubPanelTiles
      */
     protected function getSubpanelRowCount($tab)
     {
-        $count = 0;
-        $limit = $this->collapsedRowCountLimit;
         $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
         if (isset($subPanelDef['get_subpanel_data'])) {
 
-            $count = $this->getRelationshipRowCount($subPanelDef['get_subpanel_data'], $limit);
+            return $this->getRelationshipRowCount($subPanelDef);
 
         } else {
             foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                $count += $this->getRelationshipRowCount($subSubPanelDef['get_subpanel_data'], $limit - $count);
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * @param string $relationshipName
-     * @param int $limit
-     * @return int
-     */
-    protected function getRelationshipRowCount($relationshipName, $limit)
-    {
-        if ($limit < 1) {
-            return 0;
-        }
-        global $db;
-        $this->focus->load_relationship($relationshipName);
-        /** @var Link2 $relationship */
-        $relationship = $this->focus->$relationshipName;
-        if (!$relationship) {
-            $query = $relationship->getQuery();
-            $parts = explode(' ', $query);
-            $parts[1] = 'COUNT(' . $parts[1] . ')';
-            $parts[] = 'LIMIT';
-            $parts[] = $limit;
-            $query = implode(' ', $parts);
-            $result = $db->query($query);
-            if ($row = $db->fetchByAssoc($result)) {
-                return array_shift($row);
+                if($this->getRelationshipRowCount($subSubPanelDef)) {
+                    return 1;
+                }
             }
         }
         return 0;
+    }
+
+    /**
+     * @param array $subPanelDef
+     * @return int
+     */
+    protected function getRelationshipRowCount($subPanelDef)
+    {
+        global $db;
+
+        $query = $this->makeSubpanelRowCountQuery($subPanelDef);
+
+        if (!$query) {
+            return 0;
+        }
+
+        $result = $db->query($query);
+        if ($row = $db->fetchByAssoc($result)) {
+            return array_shift($row);
+        }
+
+        return 0;
+    }
+
+    /**
+     * @param array $subPanelDef
+     * @return string
+     */
+    protected function makeSubpanelRowCountQuery($subPanelDef) {
+
+        $relationshipName = $subPanelDef['get_subpanel_data'];
+        $this->focus->load_relationship($relationshipName);
+        /** @var Link2 $relationship */
+        $relationship = $this->focus->$relationshipName;
+
+        if ($relationship) {
+            $query = $relationship->getQuery();
+            $parts = explode(' ', $query);
+            $parts[1] = 'COUNT(' . $parts[1] . ')';
+            $parts[] = 'LIMIT 1';
+            return implode(' ', $parts);
+        }
+        elseif (substr($relationshipName, 0, 9) === 'function:') {
+            include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
+            $functionName = substr($relationshipName, 9);
+            $array = [];
+            if (method_exists($this->focus, $functionName)) {
+                $array = $this->focus->$functionName($subPanelDef['function_parameters']);
+            }
+            elseif (function_exists($functionName)) {
+                $array = call_user_func($functionName,$subPanelDef['function_parameters']);
+            }
+            if (!count($array)) {
+                return '';
+            }
+            $select = 'SELECT COUNT(' . str_replace('SELECT', '', $array['select']) . ') ';
+            return $select . $array['from'] . $array['join'] . $array['where'] . 'LIMIT 1';
+        }
     }
 
 	function getLayoutManager()
