@@ -108,13 +108,6 @@ class AlertsController extends SugarController
                 $bean->save();
 
                 $shouldShowReminderPopup = true;
-            } else {
-                foreach ($result as $alert) {
-                    if (!$alert->is_read) {
-                        $shouldShowReminderPopup = true;
-                        break;
-                    }
-                }
             }
         }
 
