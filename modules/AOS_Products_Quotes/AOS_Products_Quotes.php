@@ -75,7 +75,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
             } else {
                 $product_quote = BeanFactory::getBean('AOS_Products_Quotes', $post_data[$key . 'id'][$i]);
                 if (!$product_quote) {
-                    $product_quote = new AOS_Products_Quotes();
+                    $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
                 }
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
