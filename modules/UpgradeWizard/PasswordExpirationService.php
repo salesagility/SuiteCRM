@@ -44,7 +44,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class PasswordExpirationService
 {
-    const EXPIRATION_MESSAGE = 'Warning! Password expiraton is set to none!';
+    /**
+     * @var array
+     */
+    private $suiteConfig;
+
+    /**
+     * @var array
+     */
+    private $modStrings;
+
+    public function __construct()
+    {
+        global $sugar_config;
+        global $mod_strings;
+
+        $this->suiteConfig = $sugar_config;
+        $this->modStrings = $mod_strings;
+    }
 
     /**
      * @return string
@@ -52,7 +69,15 @@ class PasswordExpirationService
     public function getExpirationMessage()
     {
         $this->setExpiration();
-        return self::EXPIRATION_MESSAGE;
+
+        $expirationMessage = sprintf(
+            '%s! <a href="%s/index.php?module=Administration&action=PasswordManager">%s</a>',
+            $this->modStrings['LBL_PASSWORD_EXPIRATON_CHANGED'],
+            $this->suiteConfig['site_url'],
+            $this->modStrings['LBL_PASSWORD_EXPIRATON_REDIRECT']
+        );
+
+        return $expirationMessage;
     }
 
     /**
@@ -60,9 +85,7 @@ class PasswordExpirationService
      */
     private function setExpiration()
     {
-        global $sugar_config;
-
-        $sugar_config['passwordsetting']['systexpiration'] = '';
-        write_array_to_file("sugar_config", $sugar_config, "config.php");
+        $this->suiteConfig['passwordsetting']['systexpiration'] = '';
+        write_array_to_file("sugar_config", $this->suiteConfig, "config.php");
     }
 }
