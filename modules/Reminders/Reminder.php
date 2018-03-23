@@ -120,6 +120,9 @@ class Reminder extends Basic
             );
             $db->query("UPDATE `alerts` SET `deleted` = 1 WHERE `url_redirect` = '$url'");
 
+            // And delete cached Reminders/Alerts
+            unset($_SESSION['alerts_output']);
+
             $savedReminderIds[] = $reminderBean->id;
             $reminderId = $reminderBean->id;
             Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
