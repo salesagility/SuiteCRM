@@ -453,6 +453,23 @@ class SubPanelTiles
     protected function makeSubPanelRowCountQuery($subPanelDef) {
 
         $relationshipName = $subPanelDef['get_subpanel_data'];
+
+        if (substr($relationshipName, 0, 9) === 'function:') {
+            include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
+            $functionName = substr($relationshipName, 9);
+            $array = [];
+            if (method_exists($this->focus, $functionName)) {
+                $array = $this->focus->$functionName($subPanelDef['function_parameters']);
+            } elseif (function_exists($functionName)) {
+                $array = call_user_func($functionName, $subPanelDef['function_parameters']);
+            }
+            if (!count($array)) {
+                return '';
+            }
+            $select = 'SELECT COUNT(' . str_replace('SELECT', '', $array['select']) . ') ';
+            return $select . $array['from'] . $array['join'] . $array['where'] . 'LIMIT 1';
+        }
+
         $this->focus->load_relationship($relationshipName);
         /** @var Link2 $relationship */
         $relationship = $this->focus->$relationshipName;
@@ -462,22 +479,8 @@ class SubPanelTiles
             $parts[1] = 'COUNT(' . $parts[1] . ')';
             return implode(' ', $parts) . ' LIMIT 1';
         }
-        elseif (substr($relationshipName, 0, 9) === 'function:') {
-            include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
-            $functionName = substr($relationshipName, 9);
-            $array = [];
-            if (method_exists($this->focus, $functionName)) {
-                $array = $this->focus->$functionName($subPanelDef['function_parameters']);
-            }
-            elseif (function_exists($functionName)) {
-                $array = call_user_func($functionName,$subPanelDef['function_parameters']);
-            }
-            if (!count($array)) {
-                return '';
-            }
-            $select = 'SELECT COUNT(' . str_replace('SELECT', '', $array['select']) . ') ';
-            return $select . $array['from'] . $array['join'] . $array['where'] . 'LIMIT 1';
-        }
+
+        return '';
     }
 
 	function getLayoutManager()
