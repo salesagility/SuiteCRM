@@ -316,8 +316,11 @@ class Reminder extends Basic
         $dateTimeNowStamp = strtotime(self::unQuoteTime($dateTimeNow));
         $dateTimeMaxStamp = strtotime(self::unQuoteTime($dateTimeMax));
 
-        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('',
-                "reminders.popup = 1 AND (reminders.date_willexecute = -1 OR reminders.date_willexecute BETWEEN " . $dateTimeNowStamp . " AND " . $dateTimeMaxStamp . ")");
+        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list(
+            '',
+            "reminders.popup = 1 AND (reminders.date_willexecute = -1 OR reminders.date_willexecute BETWEEN "
+                . $dateTimeNowStamp . " AND " . $dateTimeMaxStamp . ")"
+        );
 
         if ($popupReminders) {
             $i_runs = 0;
@@ -432,6 +435,11 @@ class Reminder extends Basic
         }
     }
 
+    /**
+     * @param string $module
+     * @param string $record_id
+     * @return string
+     */
     public static function makeAlertURL($module, $record_id)
     {
         return 'index.php?action=DetailView&module=' . $module . '&record=' . $record_id;
