@@ -374,10 +374,7 @@ class Reminder extends Basic
                     continue;
                 }
 
-                // need to concatenate since GMT times can bridge two local days
-                $timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-                $timeRemind = $popupReminder->timer_popup;
-                $timeStart -= $timeRemind;
+                $relatedEventStart -= $popupReminder->timer_popup;
 
                 $url = Reminder::makeAlertURL(
                     $popupReminder->related_event_module,
@@ -425,7 +422,7 @@ class Reminder extends Basic
                                  $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
                                  $description .
                                  $instructions,
-                                 $timeStart - strtotime($alertDateTimeNow),
+                                 $relatedEventStart - strtotime($alertDateTimeNow),
                                  $url
                 );
             }
