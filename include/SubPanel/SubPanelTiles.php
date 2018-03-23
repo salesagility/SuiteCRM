@@ -179,7 +179,7 @@ class SubPanelTiles
 	}
 	function display($showContainer = true, $forceTabless = false)
 	{
-		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader, $db;
+		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
 
 		if(isset($layout_edit_mode) && $layout_edit_mode){
 			return;
@@ -374,7 +374,10 @@ class SubPanelTiles
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
             }
             elseif ($current_user->getPreference('count_collapsed_subpanels')) {
-                $count = $this->getSubpanelRowCount($tab);
+
+                $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
+                $count = $this->getSubPanelRowCount($subPanelDef);
+
                 if (!$count) {
                     $tabs_properties[$t]['title'] .= ' (0)';
                 }
@@ -413,36 +416,23 @@ class SubPanelTiles
 	}
 
     /**
-     * @param string $tab
+     * @param string $subPanelDef
      * @return int
      */
-    protected function getSubpanelRowCount($tab)
-    {
-        $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-        if (isset($subPanelDef['get_subpanel_data'])) {
-
-            return $this->getRelationshipRowCount($subPanelDef);
-
-        } else {
-            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                if($this->getRelationshipRowCount($subSubPanelDef)) {
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * @param array $subPanelDef
-     * @return int
-     */
-    protected function getRelationshipRowCount($subPanelDef)
+    protected function getSubPanelRowCount($subPanelDef)
     {
         global $db;
 
-        $query = $this->makeSubpanelRowCountQuery($subPanelDef);
+        if (!isset($subPanelDef['get_subpanel_data'])) {
+            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
+                if($this->getSubPanelRowCount($subSubPanelDef)) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
 
+        $query = $this->makeSubPanelRowCountQuery($subPanelDef);
         if (!$query) {
             return 0;
         }
@@ -459,7 +449,7 @@ class SubPanelTiles
      * @param array $subPanelDef
      * @return string
      */
-    protected function makeSubpanelRowCountQuery($subPanelDef) {
+    protected function makeSubPanelRowCountQuery($subPanelDef) {
 
         $relationshipName = $subPanelDef['get_subpanel_data'];
         $this->focus->load_relationship($relationshipName);
