@@ -410,6 +410,10 @@ class SubPanelTiles
         return $template_header . $template_body . $template_footer;
 	}
 
+    /**
+     * @param string $tab
+     * @return int
+     */
     protected function getSubpanelRowCount($tab)
     {
         $count = 0;
@@ -427,6 +431,11 @@ class SubPanelTiles
         return $count;
     }
 
+    /**
+     * @param string $relationshipName
+     * @param int $limit
+     * @return int
+     */
     protected function getRelationshipRowCount($relationshipName, $limit)
     {
         if ($limit < 1) {
