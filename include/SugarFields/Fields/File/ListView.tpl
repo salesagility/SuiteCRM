@@ -50,5 +50,5 @@
 {/if}
 </a>&nbsp;
 <a href="index.php?preview=yes&entryPoint=download&id={$parentFieldArray.ID}&type={$displayParams.module}{$vardef.displayParams.module}" class="tabDetailViewDFLink" target='_blank' style="border-bottom: 0px;">
-	<i class="fas fa-eye"></i>
+	<i class="glyphicon glyphicon-eye-open"></i>
 </a>
