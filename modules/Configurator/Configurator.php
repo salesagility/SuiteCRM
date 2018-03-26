@@ -153,7 +153,8 @@ class Configurator {
 	}
 
     /**
-     * @param $key
+     * @param mixed $key
+     * @param mixed $value
      */
     public function addKeyToIgnoreOverride($key, $value)
     {
