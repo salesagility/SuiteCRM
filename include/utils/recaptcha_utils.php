@@ -62,7 +62,7 @@ function getRecaptchaSettings()
  * @see getRecaptchaSettings()
  * @return bool|string false if setting is not found
  */
-function getSiteKey(array $settings)
+function getRecaptchaSiteKey(array $settings)
 {
     return isset($settings['captcha_public_key']) ? $settings['captcha_public_key'] : false;
 }
@@ -80,7 +80,7 @@ function getRecaptchaChallengeField()
  * @see getRecaptchaSettings()
  * @return bool|string false if setting is not found
  */
-function getPrivateKey(array $settings)
+function getRecaptchaPrivateKey(array $settings)
 {
     return isset($settings['captcha_private_key']) ? $settings['captcha_private_key'] : false;
 }
@@ -167,8 +167,8 @@ function displayRecaptchaValidation()
 
     if (
         !isRecaptchaEnabled($settings)
-        || empty(getSiteKey($settings))
-        || empty(getPrivateKey($settings))
+        || empty(getRecaptchaSiteKey($settings))
+        || empty(getRecaptchaPrivateKey($settings))
     ) {
         $msg = 'Missing Captcha Settings';
         $log->error($msg);
@@ -178,7 +178,7 @@ function displayRecaptchaValidation()
 
     /** @var Response $response */
     $response = verifyRecapthaResponse(
-        new ReCaptcha(getPrivateKey($settings)),
+        new ReCaptcha(getRecaptchaPrivateKey($settings)),
         getRecapthaResponse(),
         getRemoteIpAddress()
     );
@@ -209,15 +209,15 @@ function displayRecaptcha()
 
     if (
         !isRecaptchaEnabled($settings)
-        || empty(getSiteKey($settings))
-        || empty(getPrivateKey($settings))
+        || empty(getRecaptchaSiteKey($settings))
+        || empty(getRecaptchaPrivateKey($settings))
     ) {
         $log->info('Captcha Settings are disabled');
         return $captchaContentTemplate->fetch(__DIR__ . '/recaptcha_disabled.tpl');
     }
 
-    $captchaContentTemplate->assign('SITE_KEY', getSiteKey($settings));
-    $captchaContentTemplate->assign('SECRET', getPrivateKey($settings));
+    $captchaContentTemplate->assign('SITE_KEY', getRecaptchaSiteKey($settings));
+    $captchaContentTemplate->assign('SECRET', getRecaptchaPrivateKey($settings));
 
     return $captchaContentTemplate->fetch(__DIR__ . '/recaptcha_enabled.tpl');
 }
