@@ -82,7 +82,9 @@ class StateChecker {
     
     protected $redefineMemoryLimit;
     
-    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = true) {
+    protected $storeDetails;
+    
+    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = true, $storeDetails = true) {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new StateCheckerException('DBManagerFactory get instace failure');
         }
@@ -101,6 +103,8 @@ class StateChecker {
             $this->memoryLimit = ini_get('memory_limit');
             ini_set('memory_limit', -1);
         }
+        
+        $this->storeDetails = $storeDetails;
                 
         if($autorun) {
             $this->getStateHash();
@@ -129,9 +133,17 @@ class StateChecker {
         $this->hashes = [];
     }
     
+    protected function isDetailedKey($key) {
+        $detailedKey = preg_match('/\w+\:\:/', $key);
+        return $detailedKey;
+    }
+    
     protected function checkHash($hash, $key) {
         if(!isset($this->hashes[$key])) {
-            $this->hashes[$key] = $hash;
+            $detailedKey = $this->isDetailedKey($key);
+            if(!$detailedKey || ($detailedKey && $this->storeDetails)) {
+                $this->hashes[$key] = $hash;
+            }
         }
         $match = $this->hashes[$key] == $hash;
         return $match;
