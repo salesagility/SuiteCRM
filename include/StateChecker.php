@@ -84,7 +84,7 @@ class StateChecker {
     
     protected $storeDetails;
     
-    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = true, $storeDetails = true) {
+    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = false, $storeDetails = false) {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new StateCheckerException('DBManagerFactory get instace failure');
         }
