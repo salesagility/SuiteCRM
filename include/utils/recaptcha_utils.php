@@ -211,7 +211,7 @@ function displayRecaptcha()
         || empty(getSiteKey($settings))
         || empty(getPrivateKey($settings))
     ) {
-        $log->warning('Missing Captcha Settings');
+        $log->info('Captcha Settings are disabled');
         return $captchaContentTemplate->fetch(__DIR__ . '/recaptcha_disabled.tpl');
     }
 
