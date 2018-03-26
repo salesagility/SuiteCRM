@@ -145,10 +145,6 @@ $view->displayHeader();
 
 $sugar_smarty = new Sugar_Smarty();
 
-$admin = new Administration();
-$admin->retrieveSettings('captcha');
-$add_captcha = 0;
-
 $pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
 
 $sugar_smarty->assign('sugar_md', getWebPath('include/images/sugar_md_open.png'));
