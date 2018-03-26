@@ -1,6 +1,11 @@
 <?php
 
+use SuiteCRM\Test\TestLogger;
+
 /** @noinspection PhpUndefinedClassInspection */
+/**
+ * @deprecated since 7.10.2
+ */
 class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
 {
 
