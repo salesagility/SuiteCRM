@@ -121,7 +121,7 @@ function getRemoteIpAddress()
 }
 
 /**
- * @param \ReCaptcha\ReCaptcha $reCaptcha
+ * @param ReCaptcha $reCaptcha
  * @param string $response
  * @param string $remoteIpAddress
  * @return Response
