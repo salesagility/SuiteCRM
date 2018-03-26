@@ -139,13 +139,19 @@ class StateChecker {
     }
     
     protected function checkHash($hash, $key) {
+        $detailedKey = $this->isDetailedKey($key);
+        $needToStore = !$detailedKey || ($detailedKey && $this->storeDetails);
+        
         if(!isset($this->hashes[$key])) {
-            $detailedKey = $this->isDetailedKey($key);
-            if(!$detailedKey || ($detailedKey && $this->storeDetails)) {
+            if($needToStore) {
                 $this->hashes[$key] = $hash;
             }
         }
-        $match = $this->hashes[$key] == $hash;
+        if($needToStore) {
+            $match = $this->hashes[$key] == $hash;
+        } else {
+            $match = true;
+        }
         return $match;
     }
     
