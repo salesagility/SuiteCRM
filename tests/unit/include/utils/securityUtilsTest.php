@@ -1,10 +1,9 @@
 <?php
 
 require_once 'include/utils/security_utils.php';
-class security_utilsTest extends PHPUnit_Framework_TestCase
+class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    protected function setUp() { parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();

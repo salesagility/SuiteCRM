@@ -5,7 +5,7 @@ use User;
 use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
+abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
 
     /**
@@ -45,8 +45,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCa
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp()
-    {
+    public function setUp() { parent::setUp();
         global $current_user, $sugar_config;
         $current_user = new User();
         get_sugar_config_defaults();
@@ -88,6 +87,8 @@ abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCa
         $GLOBALS['log'] = $this->log;
 
         DBManagerFactory::$instances = $this->dbManagerFactoryInstances;
+        
+        parent::tearDown();
     }
 
 }

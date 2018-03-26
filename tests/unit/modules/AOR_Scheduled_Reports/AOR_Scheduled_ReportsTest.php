@@ -1,9 +1,8 @@
 <?php
 
-class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase
+class AOR_Scheduled_ReportsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    protected function setUp() { parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();

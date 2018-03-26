@@ -1,9 +1,8 @@
 <?php
 
-class GroupTest extends PHPUnit_Framework_TestCase
+class GroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    protected function setUp() { parent::setUp();
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();

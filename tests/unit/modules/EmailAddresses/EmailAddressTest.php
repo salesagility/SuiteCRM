@@ -1,7 +1,7 @@
 <?php
 
 
-class EmailAddressTest extends PHPUnit_Framework_TestCase
+class EmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function testEmailAddress()
     {

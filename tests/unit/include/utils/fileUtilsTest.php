@@ -3,10 +3,9 @@
 use org\bovigo\vfs\vfsStream;
 
 require_once 'include/utils/file_utils.php';
-class file_utilsTest extends PHPUnit_Framework_TestCase
+class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
+    public function setUp() { parent::setUp();
         $this->rootFs = org\bovigo\vfs\vfsStream::setup('root');
         $this->rootFs->addChild(org\bovigo\vfs\vfsStream::newDirectory('testDir'));
         $this->rootFs->addChild(org\bovigo\vfs\vfsStream::newFile('test.txt')->withContent('Hello world!'));

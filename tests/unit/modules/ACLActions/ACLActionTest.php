@@ -1,18 +1,22 @@
 <?php
 
 
-class ACLActionTest extends PHPUnit_Framework_TestCase
+class ACLActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    
+    public function setUp() { parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
     }
+    
+    public function tearDown() {
+        parent::tearDown();
+    }
 
     public function testACLAction()
     {
-
+$_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);

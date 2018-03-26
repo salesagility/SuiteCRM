@@ -1,6 +1,6 @@
 <?PHP
 
-class FP_eventsTest extends PHPUnit_Framework_TestCase
+class FP_eventsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function testFP_events()
     {

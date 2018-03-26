@@ -1,6 +1,6 @@
 <?php
 
-class jjwg_MapsTest extends PHPUnit_Framework_TestCase
+class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function testjjwg_Maps()
     {

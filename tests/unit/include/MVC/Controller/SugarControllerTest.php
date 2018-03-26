@@ -2,10 +2,9 @@
 
 use SuiteCRM\Test\TestLogger;
 
-class SugarControllerTest extends PHPUnit_Framework_TestCase
+class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    protected function setUp() { parent::setUp();
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();

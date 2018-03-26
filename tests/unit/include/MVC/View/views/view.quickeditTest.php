@@ -1,9 +1,8 @@
 <?php
 
-class ViewQuickeditTest extends PHPUnit_Framework_TestCase
+class ViewQuickeditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
+    protected function setUp() { parent::setUp();
     }
 
     public function testpreDisplay()

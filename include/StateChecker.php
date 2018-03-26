@@ -62,6 +62,8 @@ class StateChecker {
     
     // ----------- COMMON ----------------
     
+    protected $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
+    
     /**
      *
      * @var DBManager
@@ -70,9 +72,11 @@ class StateChecker {
     
     protected $hashes;
     
-    protected $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
+    protected $traces;
     
-    public function __construct($autorun = true) {
+    protected $saveTraces;
+    
+    public function __construct($saveTraces = false, $autorun = true) {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new Exception('DBManagerFactory get instace failure');
         }
@@ -80,11 +84,19 @@ class StateChecker {
             throw new Exception('Incompatible DB type, only supported: mysqli');
         }
         $this->resetHashes();
+        $this->resetTraces();
+        
+        $this->saveTraces = $saveTraces;
+                
         if($autorun) {
             $this->getStateHash();
         }
     }
     
+    protected function resetTraces() {
+        $this->traces = [];
+    }
+
     protected function resetHashes() {
         $this->hashes = [];
     }
@@ -105,6 +117,10 @@ class StateChecker {
         
         if(!$this->checkHash($hash, $key)) {
             throw new Exception('Hash doesn\'t match at key "' . $key . '"');
+        }
+        
+        if($this->saveTraces) {
+            $this->traces[$key][] = debug_backtrace();
         }
         
         return $hash;
@@ -157,7 +173,7 @@ class StateChecker {
     }
     
     protected function getFilesystemHash() {
-        $files = $this->getFiles();
+        $files = $this->getFiles(__DIR__ . '/../');
         $hash = $this->getHash($files, 'filesys');
         return $hash;
     }
