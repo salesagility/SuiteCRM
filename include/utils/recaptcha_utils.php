@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use \ReCaptcha\ReCaptcha as ReCaptcha;
 use \ReCaptcha\Response as Response;
+use SuiteCRM\Utility\SuiteLogger as SuiteLogger;
 
 /**
  * @return array|null
@@ -160,7 +161,7 @@ function getRecaptchaErrors(Response $response)
  */
 function displayRecaptchaValidation()
 {
-    $log = new SuiteCRM\Utility\SuiteLogger();
+    $log = new SuiteLogger();
     /** @var array $settings */
     $settings = getRecaptchaSettings();
 
@@ -202,7 +203,7 @@ function displayRecaptchaValidation()
 function displayRecaptcha()
 {
     $captchaContentTemplate = new Sugar_Smarty();
-    $log = new SuiteCRM\Utility\SuiteLogger();
+    $log = new SuiteLogger();
     /** @var array $settings */
     $settings = getRecaptchaSettings();
 
