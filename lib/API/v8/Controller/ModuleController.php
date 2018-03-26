@@ -523,6 +523,9 @@ class ModuleController extends ApiController
             }
 
             $sugarBean = BeanFactory::getBean($moduleName, $moduleId);
+            if (!$sugarBean) {
+                throw new Exception('Bean Factory can not retrive a bean: ' . $moduleName);
+            }
             if ($sugarBean->new_with_id === true) {
                 $exception = new NotFoundException('Bean factory can not get a bean with new id. Module name was: ' . $moduleName . ', ' . self::MISSING_ID);
                 $exception->setSource('');

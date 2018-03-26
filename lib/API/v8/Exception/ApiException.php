@@ -72,6 +72,13 @@ class ApiException extends LangException
      */
     protected $detail;
 
+    /**
+     * 
+     * @param string $message
+     * @param integer $code
+     * @param \Exception $previous
+     * @param LangText $langMessage
+     */
     public function __construct($message = "", $code = 0, \Exception $previous = null, LangText $langMessage = null)
     {
         parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ? $code : self::DEFAULT_CODE, $previous, $langMessage);
