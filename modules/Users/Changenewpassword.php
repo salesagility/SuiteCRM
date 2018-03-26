@@ -55,29 +55,15 @@ $mod_strings = return_module_language('', 'Users');
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	RECAPTCHA CHECK ONLY
-
-if (isset($_REQUEST['recaptcha_challenge_field']) && isset($_REQUEST['recaptcha_response_field'])) {
-
-    $admin = new Administration();
-    $admin->retrieveSettings('captcha');
-    if ($admin->settings['captcha_on'] == '1' && !empty($admin->settings['captcha_private_key'])) {
-        $privatekey = $admin->settings['captcha_private_key'];
+require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
+if (getRecaptchaChallengeField() !== false) {
+    $response =  displayRecaptchaValidation();
+    if ($response === 'Success') {
+        echo $response;
+        return;
     } else {
-        echo("Captcha settings not found");
+        die($response);
     }
-
-    $recaptcha = new \ReCaptcha\ReCaptcha($privatekey);
-    $response = $recaptcha->verify($_REQUEST["recaptcha_response_field"], $_SERVER["REMOTE_ADDR"]);
-    if (!$response->isSuccess()) {
-        $log->warn('FAILED TO VERIFY RECAPCHA, ip['.$_SERVER["REMOTE_ADDR"].']');
-        foreach ($response->getErrorCodes() as $code) {
-            echo '<kbd>' , $code , '</kbd> ';
-        }
-    } else {
-        echo("Success");
-    }
-
-    return;
 }
 ////	RECAPTCHA CHECK ONLY
 ///////////////////////////////////////////////////////////////////////////////
@@ -162,33 +148,12 @@ $sugar_smarty = new Sugar_Smarty();
 $admin = new Administration();
 $admin->retrieveSettings('captcha');
 $add_captcha = 0;
-$captcha_privatekey = "";
-$captcha_publickey = "";
-$captcha_js = "";
-$Captcha = "";
-$captchaContent = "";
-if (isset($admin->settings['captcha_on']) && $admin->settings['captcha_on'] == '1' && !empty($admin->settings['captcha_private_key']) && !empty($admin->settings['captcha_public_key'])) {
-    $add_captcha = 1;
-    $captcha_privatekey = $admin->settings['captcha_private_key'];
-    $captcha_publickey = $admin->settings['captcha_public_key'];
-    $captchaContentTemplate = new Sugar_Smarty();
-    $captchaContentTemplate->assign('APP_LIST_STRINGS', $app_list_strings);
-    $captchaContentTemplate->assign('APP', $app_strings);
-    $captchaContentTemplate->assign('MOD', $mod_strings);
-    $captchaContentTemplate->assign('SITE_KEY', $captcha_publickey);
-    $captchaContentTemplate->assign('SECRET', $captcha_privatekey);
-    $captchaContent = $captchaContentTemplate->fetch('modules/Users/tpls/recaptcha.tpl');
-
-
-} else {
-    echo "<script>function validateCaptchaAndSubmit(){document.getElementById('username_password').value=document.getElementById('new_password').value;document.getElementById('ChangePasswordForm').submit();}</script>";
-}
 
 $pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
 
 $sugar_smarty->assign('sugar_md', getWebPath('include/images/sugar_md_open.png'));
 $sugar_smarty->assign("MOD", $mod_strings);
-$sugar_smarty->assign("CAPTCHA", $captchaContent);
+$sugar_smarty->assign("CAPTCHA", displayRecaptcha());
 $sugar_smarty->assign("IS_ADMIN", '1');
 $sugar_smarty->assign("ENTRY_POINT", 'Changenewpassword');
 $sugar_smarty->assign('return_action', 'login');

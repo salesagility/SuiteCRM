@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,18 +37,23 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
+{literal}
+<script>
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
-if (getRecaptchaChallengeField() !== false) {
-    $response =  displayRecaptchaValidation();
-    if ($response === 'Success') {
-        echo $response;
-        return;
-    } else {
-        die($response);
+  /**
+   * Login Screen Validation
+   */
+  function validateAndSubmit() {
+      generatepwd();
     }
-}
+
+  /**
+   * Password reset screen validation
+   */
+  function validateCaptchaAndSubmit() {
+      document.getElementById('username_password').value = document.getElementById('new_password').value;
+      document.getElementById('ChangePasswordForm').submit();
+    }
+</script>
+{/literal}

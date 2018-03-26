@@ -160,38 +160,8 @@ if (!empty($logindisplay)) {
 }
 
 // RECAPTCHA
-
-$admin = new Administration();
-$admin->retrieveSettings('captcha');
-$captcha_privatekey = '';
-$captcha_publickey = '';
-$captcha_js = '';
-$Captcha = '';
-$captchaContent = '';
-// if the admin set the captcha stuff, assign javascript and div
-if (
-    isset($admin->settings['captcha_on']) &&
-    $admin->settings['captcha_on'] == '1' &&
-    !empty($admin->settings['captcha_private_key']) &&
-    !empty($admin->settings['captcha_public_key'])
-) {
-
-    $captcha_privatekey = $admin->settings['captcha_private_key'];
-    $captcha_publickey = $admin->settings['captcha_public_key'];
-    $captchaContentTemplate = new Sugar_Smarty();
-    $captchaContentTemplate->assign('APP_LIST_STRINGS', $app_list_strings);
-    $captchaContentTemplate->assign('APP', $app_strings);
-    $captchaContentTemplate->assign('MOD', $mod_strings);
-    $captchaContentTemplate->assign('SITE_KEY', $captcha_publickey);
-    $captchaContentTemplate->assign('SECRET', $captcha_privatekey);
-    $captchaContent = $captchaContentTemplate->fetch('modules/Users/tpls/recaptcha.tpl');
-    $sugar_smarty->assign('CAPTCHA', $captchaContent);
-
-} else {
-    echo '<script>
-        function validateAndSubmit(){generatepwd();}
-        </script>';
-}
+require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
+$sugar_smarty->assign('CAPTCHA', displayRecaptcha());
 
 if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
     $sugar_smarty->display('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl');
