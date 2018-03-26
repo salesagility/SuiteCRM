@@ -924,7 +924,6 @@
       var out = new String();
 
       var ie_name = Dom.get('ie_name').value;
-      var fromAddress = Dom.get('ie_from_addr').value;
       var server_url = Dom.get('server_url').value;
       var email_user = Dom.get('email_user').value;
       var email_password = Dom.get('email_password').value;
@@ -961,12 +960,6 @@
 
       if (trim(ie_name) == "") {
         errors.push(app_strings.LBL_EMAIL_ERROR_NAME);
-      }
-
-      if (typeof(validateRules.validateFromAddr) != 'undefined' && validateRules.validateFromAddr) {
-        if (trim(fromAddress) == "" || !isValidEmail(fromAddress)) {
-          errors.push(app_strings.LBL_EMAIL_ERROR_FROM_ADDRESS);
-        }
       }
 
 
