@@ -38,6 +38,7 @@
     "psr-4": {
       "SuiteCRM\\": [
         "lib/",
+        "include/",
         "tests/SuiteCRM/",
         "tests/unit/lib/SuiteCRM/"
       ],
