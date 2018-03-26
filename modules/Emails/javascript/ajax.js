@@ -491,6 +491,8 @@ AjaxObject.accounts = {
       // fill values
       document.getElementById("mail_id").value = ret.id;
       document.getElementById("type").value = ret.type;
+      document.getElementById("smtp_from_name").value = ret.smtp_from_name;
+      document.getElementById("smtp_from_addr").value = ret.smtp_from_addr;
       document.getElementById("mail_sendtype").value = ret.mail_sendtype;
       document.getElementById("mail_name").value = ret.name;
       document.getElementById("mail_smtpserver").value = ret.mail_smtpserver;
