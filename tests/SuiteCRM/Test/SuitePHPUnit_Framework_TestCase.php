@@ -1,14 +1,11 @@
 <?php
 namespace SuiteCRM\Test;
 
-use DBManager;
-use DBManagerFactory;
-use LoggerManager;
-use PHPUnit_Framework_TestCase;
 use User;
+use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
+abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -17,12 +14,12 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
     protected $env = array();
 
     /**
-     * @var LoggerManager
+     * @var \LoggerManager
      */
     protected $log;
 
     /**
-     * @var DBManager
+     * @var \DBManager
      */
     protected $db;
 
@@ -35,11 +32,6 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
      * @var array
      */
     protected $sugarConfig;
-
-    /**
-     * @var array
-     */
-    protected $fieldDefsStore;
 
     public static function setUpBeforeClass()
     {
@@ -63,7 +55,6 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $this->dbManagerFactoryInstances = DBManagerFactory::$instances;
-        DBManagerFactory::$instances = array();
         $this->db = DBManagerFactory::getInstance();
 
 
@@ -75,37 +66,6 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
         }
 
         $this->sugarConfig = $sugar_config;
-
-        $this->fieldDefsStore();
-    }
-
-    /**
-     * Store static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsStore($key = 'base')
-    {
-        global $beanList;
-
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
-        }
-    }
-
-    /**
-     * Restore static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsRestore($key = 'base')
-    {
-        global $beanList;
-
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
-            $object->field_defs = $this->fieldDefsStore[$key][$class];
-        }
     }
 
     /**
@@ -115,8 +75,6 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         global $sugar_config;
-
-        $this->fieldDefsRestore();
 
         $sugar_config = $this->sugarConfig;
 
