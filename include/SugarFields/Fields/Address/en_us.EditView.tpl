@@ -38,8 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<script type="text/javascript"
-        src='{sugar_getjspath file="include/SugarFields/Fields/Address/SugarFieldAddress.js"}'></script>
+<script src='{sugar_getjspath file="include/SugarFields/Fields/Address/SugarFieldAddress.js"}'></script>
 {{assign var="key" value=$displayParams.key|upper}}
 {{assign var="street" value=$displayParams.key|cat:'_address_street'}}
 {{assign var="city" value=$displayParams.key|cat:'_address_city'}}
