@@ -50,6 +50,12 @@ class Configurator {
 	var $logger = NULL;
 	var $previous_sugar_override_config_array = array();
 	var $useAuthenticationClass = false;
+
+    /**
+     * @var array
+     */
+    protected $keysToIgnoreLoadedOverrideFile = [];
+
 	protected $error = null;
 
 	function __construct() {
@@ -98,6 +104,10 @@ class Configurator {
 		$diffArray = deepArrayDiff($this->config, $sugar_config);
 		$overrideArray = sugarArrayMergeRecursive($overrideArray, $diffArray);
 
+      foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
+          $overrideArray[$key] = $val;
+      }
+
 		// To remember checkbox state
 		if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
 			if (isset($overrideArray['authenticationClass']) &&
@@ -141,6 +151,14 @@ class Configurator {
 		$this->saveOverride($overideString);
 		if(isset($this->config['logger']['level']) && $this->logger) $this->logger->setLevel($this->config['logger']['level']);
 	}
+
+    /**
+     * @param $key
+     */
+    public function addKeyToIgnoreOverride($key, $value)
+    {
+        $this->keysToIgnoreLoadedOverrideFile[$key] = $value;
+    }
 
 	//bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
 	function clearCache(){
