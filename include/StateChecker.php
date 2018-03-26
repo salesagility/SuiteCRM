@@ -80,7 +80,9 @@ class StateChecker {
     
     protected $memoryLimit;
     
-    public function __construct($saveTraces = false, $autorun = true) {
+    protected $redefineMemoryLimit;
+    
+    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = true) {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new StateCheckerException('DBManagerFactory get instace failure');
         }
@@ -92,7 +94,10 @@ class StateChecker {
         
         if($saveTraces) {
             $this->saveTraces = $saveTraces;
+        }
         
+        $this->redefineMemoryLimit = $redefineMemoryLimit;
+        if($redefineMemoryLimit) {
             $this->memoryLimit = ini_get('memory_limit');
             ini_set('memory_limit', -1);
         }
@@ -111,7 +116,7 @@ class StateChecker {
     }
     
     public function __destruct() {
-        if($this->saveTraces) {
+        if($this->redefineMemoryLimit) {
             ini_set('memory_limit', $this->memoryLimit);
         }
     }
