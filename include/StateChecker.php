@@ -76,6 +76,8 @@ class StateChecker {
     
     protected $saveTraces;
     
+    protected $memoryLimit;
+    
     public function __construct($saveTraces = false, $autorun = true) {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new Exception('DBManagerFactory get instace failure');
@@ -86,10 +88,29 @@ class StateChecker {
         $this->resetHashes();
         $this->resetTraces();
         
-        $this->saveTraces = $saveTraces;
+        if($saveTraces) {
+            $this->saveTraces = $saveTraces;
+        
+            $this->memoryLimit = ini_get('memory_limit');
+            ini_set('memory_limit', -1);
+        }
                 
         if($autorun) {
             $this->getStateHash();
+        }
+        
+    }
+    
+    public function getTraces() {
+        if($this->saveTraces) {
+            throw new Exception('Trace information is not saved, use saveTraces argument as true');
+        }
+        return $this->traces;
+    }
+    
+    public function __destruct() {
+        if($this->saveTraces) {
+            ini_set('memory_limit', $this->memoryLimit);
         }
     }
     
