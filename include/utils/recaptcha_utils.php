@@ -110,7 +110,7 @@ function isRecaptchaEnabled(array $settings)
  */
 function getRecapthaResponse()
 {
-    return $_REQUEST["recaptcha_response_field"];
+    return $_REQUEST['recaptcha_response_field'];
 }
 
 /**
@@ -118,7 +118,7 @@ function getRecapthaResponse()
  */
 function getRemoteIpAddress()
 {
-    return $_SERVER["REMOTE_ADDR"];
+    return $_SERVER['REMOTE_ADDR'];
 }
 
 /**
