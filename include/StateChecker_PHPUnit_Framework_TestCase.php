@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
  */
 class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase {
     
-    protected $useStateChecker = false;
+    protected $useStateChecker = true;
     
     protected $useAssertationFailureOnError = true;
     
