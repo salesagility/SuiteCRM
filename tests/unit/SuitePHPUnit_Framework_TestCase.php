@@ -46,7 +46,10 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateChecker_PHPUnit_Fram
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp() { parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
+
         global $current_user, $sugar_config;
         $current_user = new User();
         get_sugar_config_defaults();

@@ -2,7 +2,10 @@
 
 class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
-    protected function setUp() { parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();

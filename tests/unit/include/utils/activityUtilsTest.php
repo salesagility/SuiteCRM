@@ -5,7 +5,10 @@ require_once 'include/utils/activity_utils.php';
 class activity_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
 
-    protected function setUp() { parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
+
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();

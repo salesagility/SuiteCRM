@@ -16,7 +16,10 @@ class SugarEmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Test
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp() { parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
