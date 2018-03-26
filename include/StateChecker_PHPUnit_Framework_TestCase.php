@@ -17,6 +17,10 @@ use PHPUnit_Framework_TestCase;
  */
 class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase {
     
+    protected $useStateChecker = false;
+    
+    protected $useAssertationFailureOnError = true;
+    
     /**
      *
      * @var StateChecker
@@ -25,12 +29,25 @@ class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
     
     public function setUp() {
         parent::setUp();
-        $this->stateChecker = new StateChecker();
+        if($this->useStateChecker) {
+            $this->stateChecker = new StateChecker();
+        }
     }
     
     public function tearDown() {
         parent::tearDown();
-        $this->stateChecker->getStateHash();
+        if($this->useStateChecker && $this->stateChecker) {
+            try {
+                $this->stateChecker->getStateHash();
+            } catch (\SuiteCRM\StateCheckerException $e) {
+                $message = 'Incorrect state hash: ' . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString() . "\n";
+                if($this->useAssertationFailureOnError) {
+                    $this->assertFalse(true, $message);
+                } else {
+                    echo $message;
+                }
+            }
+        }
     }
     
 }

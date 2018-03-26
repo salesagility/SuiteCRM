@@ -53,6 +53,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
+class StateCheckerException extends Exception {}
+
 /**
  * Description of StateChecker
  *
@@ -80,10 +82,10 @@ class StateChecker {
     
     public function __construct($saveTraces = false, $autorun = true) {
         if(!$this->db = DBManagerFactory::getInstance()) {
-            throw new Exception('DBManagerFactory get instace failure');
+            throw new StateCheckerException('DBManagerFactory get instace failure');
         }
         if(!($this->db instanceof MysqliManager)) {
-            throw new Exception('Incompatible DB type, only supported: mysqli');
+            throw new StateCheckerException('Incompatible DB type, only supported: mysqli');
         }
         $this->resetHashes();
         $this->resetTraces();
@@ -103,7 +105,7 @@ class StateChecker {
     
     public function getTraces() {
         if($this->saveTraces) {
-            throw new Exception('Trace information is not saved, use saveTraces argument as true');
+            throw new StateCheckerException('Trace information is not saved, use saveTraces argument as true');
         }
         return $this->traces;
     }
@@ -132,12 +134,12 @@ class StateChecker {
     
     protected function getHash($data, $key) {
         if(!$serialized = serialize($data)) {
-            throw new Exception('Serialize object failure');
+            throw new StateCheckerException('Serialize object failure');
         }
         $hash = md5($serialized);
         
         if(!$this->checkHash($hash, $key)) {
-            throw new Exception('Hash doesn\'t match at key "' . $key . '"');
+            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '"');
         }
         
         if($this->saveTraces) {
@@ -159,7 +161,7 @@ class StateChecker {
     
     protected function getDatabaseTables() {
         if(!$tables = $this->db->tablesLike('')) {
-            throw new Exception('get tables failure');
+            throw new StateCheckerException('get tables failure');
         }
         return $tables;
     }
@@ -179,7 +181,7 @@ class StateChecker {
     
     protected function getFiles($path = '.') {
         if(!$realpath = realpath($path)) {
-            throw new Exception('Real path can not resolved for: ' . $path);
+            throw new StateCheckerException('Real path can not resolved for: ' . $path);
         }
 
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($realpath), RecursiveIteratorIterator::SELF_FIRST);
@@ -206,7 +208,7 @@ class StateChecker {
         
         $globals = [];
         foreach($this->globalKeys as $globalKey) {
-            $globals[$globalKey] = $this->getHash($GLOBALS[$globalKey], 'globals::' . $globalKey);
+            $globals[$globalKey] = $this->getHash(isset($GLOBALS[$globalKey]) ? $GLOBALS[$globalKey] : null, 'globals::' . $globalKey);
         }
         
         $hash = $this->getHash($globals, 'globals');
