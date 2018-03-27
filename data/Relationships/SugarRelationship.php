@@ -121,7 +121,7 @@ abstract class SugarRelationship
      *
      * @param Link2 $link
      * @param array $params
-     * @param bool  $return_array
+     * @param bool $return_array
      *
      * @return array|string the query to join against the related modules table for the given link.
      */
@@ -291,7 +291,7 @@ abstract class SugarRelationship
         foreach ($where as $field => $val) {
             $stringSets[] = "$field = '$val'";
         }
-        $whereString = 'WHERE '.implode(' AND ', $stringSets);
+        $whereString = 'WHERE ' . implode(' AND ', $stringSets);
 
         $query = "UPDATE {$this->getRelationshipTable()} set deleted=1 , date_modified = '$date_modified' $whereString";
 
@@ -318,7 +318,8 @@ abstract class SugarRelationship
         //Check the relationship role as well
         $roleCheck = $this->getRoleWhere();
 
-        $query = "SELECT * FROM {$this->getRelationshipTable()} WHERE $leftIDName='$leftID' AND $rightIDName='$rightID' $roleCheck AND deleted=0";
+        $query = "SELECT * FROM {$this->getRelationshipTable()} WHERE $leftIDName='$leftID' "
+            . "AND $rightIDName='$rightID' $roleCheck AND deleted=0";
 
         $db = DBManagerFactory::getInstance();
         $result = $db->query($query);
@@ -334,7 +335,7 @@ abstract class SugarRelationship
      * Gets the relationship role column check for the where clause.
      *
      * @param string $table
-     * @param bool   $ignore_role_filter
+     * @param bool $ignore_role_filter
      *
      * @return string
      */
@@ -345,7 +346,8 @@ abstract class SugarRelationship
         if (empty($table)) {
             $table = $this->getRelationshipTable();
         }
-        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$ignore_role_filter) {
+        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value'])
+            && !$ignore_role_filter) {
             if (empty($table)) {
                 $roleCheck = " AND $this->relationship_role_column";
             } else {
@@ -363,9 +365,9 @@ abstract class SugarRelationship
     }
 
     /**
-     * @param SugarBean $focus     base bean the hooks is triggered from
-     * @param SugarBean $related   bean being added/removed/updated from relationship
-     * @param string    $link_name name of link being triggered
+     * @param SugarBean $focus base bean the hooks is triggered from
+     * @param SugarBean $related bean being added/removed/updated from relationship
+     * @param string $link_name name of link being triggered
      *
      * @return array base arguments to pass to relationship logic hooks
      */
@@ -386,9 +388,9 @@ abstract class SugarRelationship
     /**
      * Call the before add logic hook for a given link.
      *
-     * @param SugarBean $focus     base bean the hooks is triggered from
-     * @param SugarBean $related   bean being added/removed/updated from relationship
-     * @param string    $link_name name of link being triggered
+     * @param SugarBean $focus base bean the hooks is triggered from
+     * @param SugarBean $related bean being added/removed/updated from relationship
+     * @param string $link_name name of link being triggered
      */
     protected function callBeforeAdd($focus, $related, $link_name = '')
     {
@@ -399,9 +401,9 @@ abstract class SugarRelationship
     /**
      * Call the after add logic hook for a given link.
      *
-     * @param SugarBean $focus     base bean the hooks is triggered from
-     * @param SugarBean $related   bean being added/removed/updated from relationship
-     * @param string    $link_name name of link being triggered
+     * @param SugarBean $focus base bean the hooks is triggered from
+     * @param SugarBean $related bean being added/removed/updated from relationship
+     * @param string $link_name name of link being triggered
      */
     protected function callAfterAdd($focus, $related, $link_name = '')
     {
@@ -412,7 +414,7 @@ abstract class SugarRelationship
     /**
      * @param SugarBean $focus
      * @param SugarBean $related
-     * @param string    $link_name
+     * @param string $link_name
      */
     protected function callBeforeDelete($focus, $related, $link_name = '')
     {
@@ -423,7 +425,7 @@ abstract class SugarRelationship
     /**
      * @param SugarBean $focus
      * @param SugarBean $related
-     * @param string    $link_name
+     * @param string $link_name
      */
     protected function callAfterDelete($focus, $related, $link_name = '')
     {
@@ -432,7 +434,8 @@ abstract class SugarRelationship
     }
 
     /**
-     * @param $optional_array array clause to add to the where query when populating this relationship. It should be in the
+     * @param $optional_array array clause to add to the where query when populating this relationship.
+     * It should be in the
      *
      * @return string
      */
@@ -445,7 +448,8 @@ abstract class SugarRelationship
             }
         }
 
-        return $optional_array['lhs_field'].''.$optional_array['operator']."'".$optional_array['rhs_value']."'";
+        return $optional_array['lhs_field'] . '' . $optional_array['operator'] . "'"
+            . $optional_array['rhs_value'] . "'";
     }
 
     /**
