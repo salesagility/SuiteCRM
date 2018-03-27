@@ -65,7 +65,7 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
      */
     public function setUp()
     {
-        if (StateCheckerConfig::$testsUseStateChecker) {
+        if (StateCheckerConfig::get('testsUseStateChecker')) {
             $this->stateChecker = new StateChecker();
         }
         
@@ -79,12 +79,12 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
     {
         parent::tearDown();
         
-        if (StateCheckerConfig::$testsUseStateChecker && $this->stateChecker) {
+        if (StateCheckerConfig::get('testsUseStateChecker') && $this->stateChecker) {
             try {
                 $this->stateChecker->getStateHash();
             } catch (StateCheckerException $e) {
-                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::$saveTraces ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
-                if (StateCheckerConfig::$testsUseAssertionFailureOnError) {
+                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::get('saveTraces') ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
+                if (StateCheckerConfig::get('testsUseAssertionFailureOnError')) {
                     $this->assertFalse(true, $message);
                 } else {
                     echo $message;

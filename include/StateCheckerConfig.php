@@ -52,53 +52,65 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class StateCheckerConfig
 {
     /**
-     * SuperGlobals Collection
+     * SuperGlobals Collection 
+     * (DO NOT CHANGE!)
      *
      * @var array 
      */
-    public static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
+    protected static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
     
     /**
      * Automatically run state collection in StateChecker constructor
+     * (DO NOT CHANGE!)
      *
      * @var boolean 
      */
-    public static $autoRun = true;
+    protected static $autoRun = true;
     
     /**
      * Save trace info on state-hash mismatch
-     *
+     * (Slow working but give more information about the error location, use in development only)
      * @var boolean 
      */
-    public static $saveTraces = false;
+    protected static $saveTraces = false;
     
     /**
      * Redefine memory limit
-     *
+     * (For more memory expensive task, for e.g collection stack trace information when $saveTraces is ON, use in development only)
      * @var boolean 
      */
-    public static $redefineMemoryLimit = false;
+    protected static $redefineMemoryLimit = false;
     
     /**
-     * Store more information about hash-mismatch
-     * (which part having state of globals/filesys/database)
-     *
+     * Store more information about hash-mismatch, 
+     * which part having state of globals/filesys/database.
+     * (Slow working but give more information about the error location, use in development only)
+     * 
      * @var boolean 
      */
-    public static $storeDetails = false;
+    protected static $storeDetails = false;
     
     /**
-     * Test using StateChecker (use in development mode only)
+     * Test using StateChecker
+     * (Slow working but give more information about the error location, use in development only)
      *
      * @var boolean 
      */
-    public static $testsUseStateChecker = false;
+    protected static $testsUseStateChecker = false;
     
     /**
      * Test shows up an assertion failure when hash-mismatch,
      * use $testsUseStateChecker also, $testsUseAssertionFailureOnError applied only if $testsUseStateChecker = true;
+     * (use in development only)
      * 
      * @var boolean
      */
-    public static $testsUseAssertionFailureOnError = true;
+    protected static $testsUseAssertionFailureOnError = true;
+    
+    public static function get($key) {
+        if(inDeveloperMode() && in_array($key, ['testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
+            return true;
+        }
+        return self::$$key;
+    }
 }

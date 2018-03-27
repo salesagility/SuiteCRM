@@ -42,7 +42,6 @@ namespace SuiteCRM;
 
 use DBManager;
 use DBManagerFactory;
-use Exception;
 use mysqli_result;
 use MysqliManager;
 use RecursiveDirectoryIterator;
@@ -99,12 +98,12 @@ class StateChecker
         $this->resetHashes();
         $this->resetTraces();
         
-        if (StateCheckerConfig::$redefineMemoryLimit) {
+        if (StateCheckerConfig::get('redefineMemoryLimit')) {
             $this->memoryLimit = ini_get('memory_limit');
             ini_set('memory_limit', -1);
         }
                 
-        if (StateCheckerConfig::$autoRun) {
+        if (StateCheckerConfig::get('autoRun')) {
             $this->getStateHash();
         }
     }
@@ -116,8 +115,8 @@ class StateChecker
      */
     public function getTraces()
     {
-        if (StateCheckerConfig::$saveTraces) {
-            throw new StateCheckerException('Trace information is not saved, use StateCheckerConfig::$saveTraces as true');
+        if (StateCheckerConfig::get('saveTraces')) {
+            throw new StateCheckerException('Trace information is not saved, use StateCheckerConfig::get(\'saveTraces\') as true');
         }
         return $this->traces;
     }
@@ -127,7 +126,7 @@ class StateChecker
      */
     public function __destruct()
     {
-        if (StateCheckerConfig::$redefineMemoryLimit) {
+        if (StateCheckerConfig::get('redefineMemoryLimit')) {
             ini_set('memory_limit', $this->memoryLimit);
         }
     }
@@ -168,7 +167,7 @@ class StateChecker
     protected function checkHash($hash, $key)
     {
         $detailedKey = $this->isDetailedKey($key);
-        $needToStore = !$detailedKey || ($detailedKey && StateCheckerConfig::$storeDetails);
+        $needToStore = !$detailedKey || ($detailedKey && StateCheckerConfig::get('storeDetails'));
         
         if (!isset($this->hashes[$key])) {
             if ($needToStore) {
@@ -201,7 +200,7 @@ class StateChecker
             throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
         }
         
-        if (StateCheckerConfig::$saveTraces) {
+        if (StateCheckerConfig::get('saveTraces')) {
             $this->traces[$key][] = debug_backtrace();
         }
         
@@ -298,7 +297,7 @@ class StateChecker
     protected function getSuperGlobalsHash()
     {
         $globals = [];
-        foreach (StateCheckerConfig::$globalKeys as $globalKey) {
+        foreach (StateCheckerConfig::get('globalKeys') as $globalKey) {
             $globals[$globalKey] = $this->getHash(isset($GLOBALS[$globalKey]) ? $GLOBALS[$globalKey] : null, 'globals::' . $globalKey);
         }
         
