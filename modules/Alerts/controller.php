@@ -138,18 +138,18 @@ class AlertsController extends SugarController
     public function action_redirect()
     {
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
+        $redirect_url = $bean->url_redirect;
         $bean->is_read = 1;
         $bean->save();
 
-        if(empty($bean->url_redirect)) {
-            if (!empty($_SERVER['HTTP_REFERER'])){
-                SugarApplication::redirect($_SERVER['HTTP_REFERER']);
-            }
-            SugarApplication::redirect('index.php');
+        if ($redirect_url) {
+            SugarApplication::redirect($redirect_url);
         }
 
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            SugarApplication::redirect($_SERVER['HTTP_REFERER']);
+        }
 
-        SugarApplication::redirect($bean->url_redirect);
-
+        SugarApplication::redirect('index.php');
     }
 }
