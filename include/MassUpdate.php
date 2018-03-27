@@ -1266,7 +1266,7 @@ EOQ;
         $html = <<<EOQ
 		<td scope="row" width="20%">$displayname</td>
 		<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}_date' maxlength='10' value="">
-		$javascriptend
+		&nbsp;$javascriptend
 
 		<span id="{$varname}_time_section"></span>
 		</td>
