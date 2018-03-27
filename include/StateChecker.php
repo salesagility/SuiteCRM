@@ -215,7 +215,7 @@ class StateChecker
      * @param mysqli_result $resource
      * @return array
      */
-    protected function getMysqliResoults(mysqli_result $resource)
+    protected function getMysqliResults(mysqli_result $resource)
     {
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -247,7 +247,7 @@ class StateChecker
         $tables = $this->getDatabaseTables();
         $hashes = [];
         foreach ($tables as $table) {
-            $rows = $this->getMysqliResoults($this->db->query('SELECT * FROM ' . $table));
+            $rows = $this->getMysqliResults($this->db->query('SELECT * FROM ' . $table));
             $hashes[] = $this->getHash($rows, 'database::' . $table);
         }
         $hash = $this->getHash($hashes, 'database');
