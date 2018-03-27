@@ -59,5 +59,4 @@ $subpanel_layout = array(
 			'target_module' => 'Accounts',
 		),
 	),
-);		
-?>
+);

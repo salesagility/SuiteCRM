@@ -402,9 +402,8 @@ Studio2 = {
 		div.appendChild(child);
 		newPanel.appendChild(div);
 
-		var img = document.createElement('img');
-		img.src='index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName=edit_inline.gif';
-		img.className = 'le_edit';
+		var img = document.createElement('button');
+		img.className = 'le_edit suitepicon suitepicon-action-edit';
 		img.style.cursor="pointer;";
 		var editModule = document.getElementById('prepareForSave').view_module.value;
 		var editString = 'module=ModuleBuilder&action=editProperty&view_module='+editModule+'&view='+view+'&id_label=le_panelname_'+newPanel.id+'&name_label=label_'+panelLabel+'&title_label='+SUGAR.language.get('ModuleBuilder', 'LBL_LABEL_TITLE') ;

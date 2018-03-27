@@ -363,4 +363,3 @@ class AOD_Index extends AOD_Index_sugar {
         return $modules;
     }
 }
-?>

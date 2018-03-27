@@ -86,5 +86,3 @@ class Jit extends JsChart {
 
 	
 }
-
-?>

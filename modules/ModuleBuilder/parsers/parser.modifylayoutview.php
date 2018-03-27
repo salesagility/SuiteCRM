@@ -521,4 +521,3 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     }
 
 }
-?>

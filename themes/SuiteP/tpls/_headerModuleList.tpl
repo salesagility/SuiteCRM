@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -80,13 +80,12 @@
                 <div id="modulelinks" class="modulelinks">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
-                            <span class="modulename" data-toggle="dropdown"
-                                  aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}
+                            <span class="modulename" data-toggle="dropdown" aria-expanded="false">
+                                {sugar_link id="moduleTab_$name" module=$name data=$module caret=true}
                             </span>
-
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
-                                    {if count($shortcutTopMenu.$name) > 0}
+                                    {if is_array($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0}
                                         <li class="mobile-current-actions" role="presentation">
                                            <ul class="mobileCurrentTab">
                                                {foreach from=$shortcutTopMenu.$name item=item}
@@ -103,7 +102,7 @@
                                     {/if}
                             {/if}
 
-                                    {if count($recentRecords) > 0}
+                                    {if is_array($recentRecords) && count($recentRecords) > 0}
                                         <li class="recent-links-title" role="presentation">
                                             <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
                                         </li>
@@ -115,7 +114,8 @@
                                                             <a title="{$item.module_name}"
                                                                accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg' }"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                                                <span aria-hidden="true">{$item.item_summary_short}</span>
                                                             </a>
                                                             <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
                                                         </li>
@@ -125,7 +125,7 @@
                                          </li>
                                     {/if}
 
-                                    {if count($favoriteRecords) > 0}
+                                    {if is_array($favoriteRecords) && count($favoriteRecords) > 0}
                                         <li class="favorite-links-title" role="presentation">
                                             <a><strong>{$APP.LBL_FAVORITES}</strong></a>
                                         </li>
@@ -137,7 +137,8 @@
                                                             <a title="{$item.module_name}"
                                                                accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"  class="favorite-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                                                <span aria-hidden="true">{$item.item_summary_short}</span>
                                                             </a>
                                                             <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                                         </li>
@@ -157,7 +158,7 @@
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     <li class="navbar-brand-container">
-                            <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                            <a class="navbar-brand with-home-icon suitepicon suitepicon-action-home" href="index.php?module=Home&action=index"></a>
                     </li>
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
@@ -183,12 +184,14 @@
                                             {assign var=foundFavorits value=true}
                                         {/if}
                                     {/foreach}
-                                    {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
+                                    {if $foundRecents || $foundFavorits
+                                        || (is_array($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0)}
 
                                         <ul class="dropdown-menu" role="menu">
                                             <li class="current-module-action-links">
                                                 <ul>
-                                                    {if count($shortcutTopMenu.$name) > 0}
+                                                    {if is_array($shortcutTopMenu.$name)
+                                                        && count($shortcutTopMenu.$name) > 0}
                                                         {foreach from=$shortcutTopMenu.$name item=item}
                                                             {if $item.URL == "-"}
                                                                 {*<li><a></a><span>&nbsp;</span></li>*}
@@ -218,6 +221,7 @@
                                                                     <a title="{$item.module_name}"
                                                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
+
                                                                         <span aria-hidden="true">{$item.item_summary_short}</span>
                                                                     </a>
                                                                     <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
@@ -249,6 +253,7 @@
                                                                 <a title="{$item.module_name}"
                                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                                    href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                                                                    <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
                                                                     <span aria-hidden="true">{$item.item_summary_short}</span>
                                                                 </a>
                                                                 <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
@@ -316,7 +321,9 @@
 
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
                     <li class="navbar-brand-container">
-                        <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                        <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">
+                            <span class="suitepicon suitepicon-action-home"></span>
+                        </a>
                     </li>
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
@@ -332,7 +339,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <ul>
-                                            {if count($shortcutTopMenu) > 0}
+                                            {if is_array($shortcutTopMenu) && count($shortcutTopMenu) > 0}
                                                 {foreach from=$shortcutTopMenu.$submodule item=item}
                                                     {if $item.URL == "-"}
                                                         {*<li><a></a><span>&nbsp;</span></li>*}
@@ -466,7 +473,7 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}
+                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -493,8 +500,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -507,14 +513,14 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
                     </div>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
@@ -528,20 +534,20 @@
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
                         <div class="input-group">
-                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                            <input type="text" class="form-control query_string " name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
-                            aria-expanded="true">
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-user-small"></span>
                     </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
@@ -563,7 +569,7 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}
+                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -590,8 +596,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -604,7 +609,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
@@ -621,13 +626,13 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
@@ -637,8 +642,9 @@
 
                     <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
                             aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-current-user"></span>
                     </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
@@ -660,7 +666,7 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}
+                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -687,8 +693,7 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
-                        Search
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -701,7 +706,7 @@
                                 <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                             </span>
                             </div>
                         </form>
@@ -718,31 +723,25 @@
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
                     </span>
                         </div>
                     </form>
                 </li>
                 <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
                             aria-expanded="false">
                         <span class="alert_count hidden">0</span>
                     </button>
                     <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
-
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
-                            aria-expanded="true">
+                    <button id="with-label" class="dropdown-toggle user-menu-button" title="{$CURRENT_USER}"data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-current-user"></span>
+                        <span>{$CURRENT_USER}</span>
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </button>
-
-                    <button id="with-label" class="dropdown-toggle with-label" data-toggle="dropdown"
-                            aria-expanded="true">
-                        <span class="user_icon"> </span>
-                        <span class="user_label">{$CURRENT_USER}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="with-label">
                         <li role="presentation">
                             <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
                                 {$APP.LBL_PROFILE}
@@ -779,15 +778,18 @@
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
                             <ul>
-                                {if isset($shortcutTopMenu.$name) && count($shortcutTopMenu.$name) > 0}
+                                {if isset($shortcutTopMenu.$name) && is_array($shortcutTopMenu)
+                                    && count($shortcutTopMenu.$name) > 0}
                                     <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                     {foreach from=$shortcutTopMenu.$name item=item}
                                         {if $item.URL == "-"}
                                             <li><a></a><span>&nbsp;</span></li>
                                         {else}
                                             <li class="actionmenulinks" role="presentation">
-                                                <a href="{$item.URL}" >
-                                                    <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
+                                                <a href="{$item.URL}" data-action-name="{$item.MODULE_NAME}">
+                                                    <div class="side-bar-action-icon">
+                                                        <span class="suitepicon suitepicon-action-{$item.MODULE_NAME|lower|replace:'_':'-'}"></span>
+                                                    </div>
                                                     <div class="actionmenulink">{$item.LABEL}</div>
                                                 </a>
                                             </li>
@@ -800,18 +802,21 @@
                 </div>
                 
                 <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
-                {if count($recentRecords) > 0}
+                {if is_array($recentRecords) && count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 {/if}
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$recentRecords item=item name=lastViewed}
                             {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar">
+                                {if $item.module_name != 'Emails' && $item.module_name != 'InboundEmail'}<!--Check to ensure that recently viewed emails or email addresses are not displayed in the recently viewed panel.-->
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                        <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span>{$item.item_summary_short}</span>
+                                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                        <span>{$item.item_summary_short}</span>
                                     </a>
                                 </li>
+                                {/if}
                             </div>
                             {/if}
                         {/foreach}
@@ -819,7 +824,7 @@
                 </div>
      
                 <div id="favoritesSidebar" class="favoritesSidebar">
-                {if count($favoriteRecords) > 0}
+                {if is_array($favoriteRecords) && count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                 {/if}
                     <ul class="nav nav-pills nav-stacked">
@@ -828,7 +833,8 @@
                             <div class="recently_viewed_link_container_sidebar">
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
-                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                                        <span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>

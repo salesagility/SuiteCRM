@@ -100,7 +100,7 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 			|| ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {
 			$action_access = true;
 		}
-		$icon_img_html = SugarThemeRegistry::current()->getImage( $module . '', 'border="0"',null,null,'.gif',$app_list_strings['moduleList'][$module]);
+		$icon_img_html = '<span class="suitepicon suitepicon-module-'.strtolower(str_replace('_','-',$module)).'"></span>';
 		if (!empty($layout_def['attachment_image_only']) && $layout_def['attachment_image_only'] == true) {
 			$ret="";
 		} else {
@@ -162,4 +162,3 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 		return $ret;
 	}
 }
-?>

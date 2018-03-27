@@ -52,4 +52,3 @@
  	'searchfields'	  =>    'modules/Bugs/metadata/SearchFields.php',
 
  );
-?>

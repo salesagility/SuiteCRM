@@ -91,5 +91,3 @@ function additionalDetailsUser($fields) {
 				 'editLink' => $editLink,
 				 'viewLink' => $viewLink);
 }
- 
-?>

@@ -63,5 +63,3 @@ public function notify($msg = '') {
 }
 
 }
-
-?>

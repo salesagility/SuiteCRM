@@ -58,4 +58,3 @@ $module_name = 'AOS_Contracts';
 						),
 					),
  			   );
-?>

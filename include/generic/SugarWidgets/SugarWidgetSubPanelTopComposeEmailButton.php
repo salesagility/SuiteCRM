@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -84,10 +84,12 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
                 $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
             }
         } else {
-            //Generate the compose package for the quick create options.
+            // Generate the compose package for the quick create options.
             require_once 'modules/Emails/EmailUI.php';
+
             $emailUI = new EmailUI();
-            $button = $emailUI->populateComposeViewFields() . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+            $button = $emailUI->populateComposeViewFields($defines['focus'])
+                . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'] . '</a>';
         }
 
         return $button;

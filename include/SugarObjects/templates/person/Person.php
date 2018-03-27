@@ -208,15 +208,9 @@ class Person extends Basic
                 '',
                 '',
                 '',
-                $this->in_workflow
+                $this->in_workflow,
+                    isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
             );
-        }
-
-        // User Profile specific save for Email addresses
-
-        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
-            return false;
         }
 
         return $this->id;

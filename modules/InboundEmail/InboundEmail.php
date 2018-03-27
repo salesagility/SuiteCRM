@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -413,6 +413,8 @@ class InboundEmail extends SugarBean
                     $lastMsg = $firstMsg + (int)$pageSize;
                 }
             }
+            $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
+            $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
 
             $sequence  = $firstMsg . ':' . $lastMsg;
             $emailSortedHeaders = imap_fetch_overview(
@@ -461,19 +463,11 @@ class InboundEmail extends SugarBean
 
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
-        foreach ($emailHeaders as $i => $emailHeader) {
+        foreach ($emailHeaders as $i=> $emailHeader) {
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
 
-            $structure = imap_fetchstructure($this->conn, $emailHeader['msgno'], FT_UID);
-
-            if (isset($structure->parts[0]->parts)) {
-                // has attachment
-                $emailHeaders[$i]['has_attachment'] = true;
-            } else {
-                // no attachment
-                $emailHeaders[$i]['has_attachment'] = false;
-            }
+            $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
         }
-
 
         usort(
             $emailHeaders,
@@ -499,6 +493,29 @@ class InboundEmail extends SugarBean
             "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
+
+    /**
+     * @param $imapStructure
+     * @return bool
+     */
+    private function mesageStructureHasAttachment($imapStructure)
+    {
+        if (!isset($imapStructure->parts)
+            && isset($imapStructure->disposition)
+            && $imapStructure->disposition == 'attachment') {
+            return true;
+        }
+
+        if (isset($imapStructure->parts)) {
+            foreach ($imapStructure->parts as $part) {
+                if ($this->mesageStructureHasAttachment($part)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     ////	CUSTOM LOGIC HOOKS
     /**
@@ -2605,7 +2622,10 @@ class InboundEmail extends SugarBean
         if ($this->protocol == "pop3") {
             $_REQUEST['mailbox'] = "INBOX";
         }
+
         $this->mailbox = $_REQUEST['mailbox'];
+        $inboxFolders = explode(',', $this->mailbox);
+
         $this->mailbox_type = 'pick'; // forcing this
 
 
@@ -2676,93 +2696,77 @@ class InboundEmail extends SugarBean
             $ieId = $this->save();
 
             // Folders
-            $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "' . $this->id . '"');
+            $foldersFound = $this->db->query(
+                'SELECT folders.id FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '"'
+            );
             $row = $this->db->fetchByAssoc($foldersFound);
-            $sf = new SugarFolder();
+
             if (empty($row)) {
-                // Create Folders
-                $params = array(
-                    // Inbox
-                    "inbound" => array(
-                        'name' => $this->mailbox . ' (' . $this->name . ')',
-                        'folder_type' => "inbound",
-                        'has_child' => 1,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("inbound", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // My Drafts
-                    "draft" => array(
-                        'name' => $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')',
-                        'folder_type' => "draft",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("draft", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Sent Emails
-                    "sent" => array(
-                        'name' => $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')',
-                        'folder_type' => "sent",
-                        'has_child' => 0,
-                        'dynamic_query' => $this->generateDynamicFolderQuery("sent", $focusUser->id),
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
-                    // Archived Emails
-                    "archived" => array(
-                        'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
-                        'folder_type' => "archived",
-                        'has_child' => 0,
-                        'dynamic_query' => '',
-                        'is_dynamic' => 1,
-                        'created_by' => $focusUser->id,
-                        'modified_by' => $focusUser->id,
-                    ),
+
+                $this->createFolder(
+                    $inboxFolders[0] . ' ('.$this->name.')',
+                    "inbound",
+                    $focusUser,
+                    $this->id
                 );
 
-
-                require_once("include/SugarFolders/SugarFolders.php");
-
-                $parent_id = '';
-
-
-                foreach ($params as $type => $type_params) {
-                    if ($type == "inbound") {
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->new_with_id = false;
-                        $folder->id = $this->id;
-                        $folder->save();
-
-                        $parent_id = $folder->id;
-                    } else {
-                        $params[$type]['parent_folder'] = $parent_id;
-
-                        $folder = new SugarFolder();
-                        foreach ($params[$type] as $key => $val) {
-                            $folder->$key = $val;
-                        }
-
-                        $folder->save();
+                foreach ($inboxFolders as $key => $folder) {
+                    if ($key == 0) {
+                        continue;
                     }
+                    if ($this->folderIsRequestTrashOrSent($folder)) {
+                        continue;
+                    }
+                    $this->createFolder(
+                        $folder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
+
+                $this->createFolder(
+                    $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')',
+                    "draft",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LNK_SENT_EMAIL_LIST'] . ' (' . $stored_options['sentFolder'] . ')',
+                    "sent",
+                    $focusUser
+                );
+                $this->createFolder(
+                    $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+                    "archived",
+                    $focusUser
+                );
+
             } else {
                 // Update folders
-                $foldersFound = $this->db->query('SELECT * FROM folders WHERE folders.id LIKE "' . $this->id . '" OR ' .
-                    'folders.parent_folder LIKE "' . $this->id . '"');
+                $foldersFound = $this->db->query(
+                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
+                );
+                $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
+
                     $name = '';
+                    $folder = new SugarFolder();
+                    $folder->retrieve($row['id']);
+
                     switch ($row['folder_type']) {
                         case 'inbound':
-                            $name = $this->mailbox . ' (' . $this->name . ')';
+                            if (!$row['has_child']) {
+                                if (in_array($row['name'], $inboxNames)) {
+                                    // We have the folder, all is good
+                                    unset($inboxNames[array_search($row['name'], $inboxNames)]);
+                                } else {
+                                    // We have a folder we shouldn't have
+                                    $folder->id = $row['id'];
+                                    $folder->delete();
+                                }
+                            } else {
+                                $name = $inboxFolders[0] . ' (' . $this->name . ')';
+                            }
                             break;
                         case 'draft':
                             $name = $mod_strings['LNK_MY_DRAFTS'] . ' (' . $stored_options['sentFolder'] . ')';
@@ -2775,10 +2779,22 @@ class InboundEmail extends SugarBean
                             break;
                     }
 
-                    $folder = new SugarFolder();
-                    $folder->retrieve($row['id']);
-                    $folder->name = $name;
-                    $folder->save();
+                    if ($name) {
+                        $folder->name = $name;
+                        $folder->save();
+                    }
+
+                }
+                // Any inbox folder we don't have yet we need to create
+                foreach ($inboxNames as $newInboxFolder) {
+                    if ($this->folderIsRequestTrashOrSent($newInboxFolder)) {
+                        continue;
+                    }
+                    $this->createFolder(
+                        $newInboxFolder,
+                        "inbound",
+                        $focusUser
+                    );
                 }
             }
             //If this is the first personal account the user has setup mark it as default for them.
@@ -2794,6 +2810,45 @@ class InboundEmail extends SugarBean
 
             return false;
         }
+    }
+
+    /**
+     * @param $name
+     * @param $type
+     * @param $focusUser
+     * @param int $id
+     * @return int
+     */
+    private function createFolder($name, $type, $focusUser, $id = 0)
+    {
+        $folder = new SugarFolder();
+        $folder->name = $name;
+        $folder->folder_type = $type;
+        $folder->has_child = $id ? 1 : 0;
+        $folder->is_dynamic = 1;
+        $folder->dynamic_query = $this->generateDynamicFolderQuery("sent", $focusUser->id);
+        $folder->created_by = $focusUser->id;
+        $folder->modified_by = $focusUser->id;
+
+        if ($id) {
+            $folder->new_with_id = false;
+            $folder->id = $id;
+        } else {
+            $folder->parent_folder = $this->id;
+        }
+
+        $folder->save();
+
+        return $folder->id;
+    }
+
+    /**
+     * @param $folderName
+     * @return bool
+     */
+    private function folderIsRequestTrashOrSent($folderName)
+    {
+        return $folderName == $_REQUEST['trashFolder'] || $folderName == $_REQUEST['sentFolder'];
     }
 
     /**
@@ -3386,20 +3441,18 @@ class InboundEmail extends SugarBean
                 if (sizeof($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
-                    $acct = new Account();
-                    $acct->retrieve($c->account_id);
-                    $c->account_name = $acct->name;
-                } // if
-            } // if
-            $c->save(true);
-            $caseId = $c->id;
-            $c = new aCase();
-            $c->retrieve($caseId);
-            if ($c->load_relationship('emails')) {
-                $c->emails->add($email->id);
-            } // if
-            if ($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
-                if (!empty($contactIds) && $c->load_relationship('contacts')) {
+					$acct = new Account();
+					$acct->retrieve($c->account_id);
+					$c->account_name = $acct->name;
+				} // if
+			} // if
+			$c->save(true);
+            $c->retrieve($c->id);;
+			if($c->load_relationship('emails')) {
+				$c->emails->add($email->id);
+			} // if
+			if($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
+				if(!empty($contactIds) && $c->load_relationship('contacts')) {
                     if (!$accountIds && count($contactIds) == 1) {
                         $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
                         if ($contact->load_relationship('accounts')) {
@@ -3409,34 +3462,34 @@ class InboundEmail extends SugarBean
                             }
                         }
                     }
-                    $c->contacts->add($contactIds);
-                } // if
-            } // if
-            $c->email_id = $email->id;
-            $email->parent_type = "Cases";
-            $email->parent_id = $caseId;
-            // assign the email to the case owner
-            $email->assigned_user_id = $c->assigned_user_id;
-            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " " . $email->name;
-            $email->save();
-            $GLOBALS['log']->debug('InboundEmail created one case with number: ' . $c->case_number);
-            $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
-            if (!empty($this->stored_options)) {
-                $storedOptions = unserialize(base64_decode($this->stored_options));
-            }
-            if (!empty($createCaseTemplateId)) {
-                $fromName = "";
-                $fromAddress = "";
-                if (!empty($this->stored_options)) {
-                    $fromAddress = $storedOptions['from_addr'];
-                    $fromName = from_html($storedOptions['from_name']);
-                    $replyToName = (!empty($storedOptions['reply_to_name'])) ? from_html($storedOptions['reply_to_name']) : $fromName;
-                    $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
-                } // if
-                $defaults = $current_user->getPreferredEmail();
-                $fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
-                $fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
-                $to[0]['email'] = $contactAddr;
+					$c->contacts->add($contactIds);
+				} // if
+			} // if
+			$c->email_id = $email->id;
+			$email->parent_type = "Cases";
+            $email->parent_id = $c->id;
+			// assign the email to the case owner
+			$email->assigned_user_id = $c->assigned_user_id;
+			$email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;
+			$email->save();
+			$GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
+			$createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
+			if(!empty($this->stored_options)) {
+				$storedOptions = unserialize(base64_decode($this->stored_options));
+			}
+			if(!empty($createCaseTemplateId)) {
+				$fromName = "";
+				$fromAddress = "";
+				if (!empty($this->stored_options)) {
+					$fromAddress = $storedOptions['from_addr'];
+					$fromName = from_html($storedOptions['from_name']);
+					$replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
+					$replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
+				} // if
+				$defaults = $current_user->getPreferredEmail();
+				$fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
+				$fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
+				$to[0]['email'] = $contactAddr;
 
                 // handle to name: address, prefer reply-to
                 if (!empty($email->reply_to_name)) {
@@ -3801,7 +3854,7 @@ class InboundEmail extends SugarBean
         // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
         $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
-        return SugarCleaner::cleanHtml($msgPart, false);
+        return SugarCleaner::cleanHtml($msgPart, true);
     }
 
 
@@ -3896,7 +3949,7 @@ class InboundEmail extends SugarBean
         // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
         $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
-        return SugarCleaner::cleanHtml($msgPart, false);
+        return SugarCleaner::cleanHtml($msgPart, true);
     }
 
     /**
@@ -5268,39 +5321,42 @@ class InboundEmail extends SugarBean
             $email->type = 'inbound';
 
 
-            if (empty($email->date_entered)) {
+            if(empty($email->date_entered)) {
 
-                // find if string has (UTC) in timezone
-                $pattern = "/\([\w-+\/]+\)/i";
-                $timezoneTextFound = preg_match($pattern, $header[0]->date);
+                $possibleFormats = [
+                    \DateTime::RFC2822,
+                    str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
+                    str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
+                    str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional
+                    \DateTime::RFC822,
+                    str_replace(['D, '], '', \DateTime::RFC822), // day is optional
+                    str_replace([':s'], '', \DateTime::RFC822), // seconds are optional
+                    str_replace(['D, ', ':s'], '', \DateTime::RFC822), // day is optional, seconds are optional
+                ];
 
-                $dateTimeFormat = 'D, d M Y H:i:s O *';
-                if ($timezoneTextFound === false || $timezoneTextFound === 0) {
-                    $dateTimeFormat = 'D, d M Y H:i:s O';
+                foreach ($possibleFormats  as $possibleFormat) {
+                    $dateTime = \DateTime::createFromFormat( $possibleFormat, $header[0]->date);
+                    if ($dateTime !== false) {
+                        break;
+                    }
                 }
 
-                $dateTime = DateTime::createFromFormat(
-                    $dateTimeFormat,
-                    $header[0]->date
-                );
-
-                if (!empty($dateTime)) {
-                    $email->date_entered = $timedate->asUser($dateTime, $current_user);
-                    $email->date_modified = $timedate->asUser($dateTime, $current_user);
-                    $email->date_start = $timedate->asUserDate($dateTime);
-                    $email->time_start = $timedate->asUserTime($dateTime);
-
-                    $systemUser = BeanFactory::getBean('Users', 1);
-                    $email->created_by = $systemUser->id;
-                    $email->created_by_name = $systemUser->name;
-                    $email->modified_user_id = $systemUser->id;
-                    $email->modified_by_name = $systemUser->name;
-                } else {
+                if ($dateTime === false) {
                     throw new Exception(
-                        'DateTime::createFromFormat (' . $dateTimeFormat . ',' . $header[0]->date . '): ' .
-                        'expected DateTime but it returned FALSE or empty.'
+                        sprintf('Expected header Date to comply with RFC882 or RFC2882, but actual is "%s"', $header[0]->date)
                     );
                 }
+
+                $email->date_entered = $timedate->asUser($dateTime, $current_user);
+                $email->date_modified = $timedate->asUser($dateTime, $current_user);
+                $email->date_start = $timedate->asUserDate($dateTime);
+                $email->time_start = $timedate->asUserTime($dateTime);
+
+                $systemUser =  BeanFactory::getBean('Users', 1);
+                $email->created_by = $systemUser->id;
+                $email->created_by_name = $systemUser->name;
+                $email->modified_user_id = $systemUser->id;
+                $email->modified_by_name = $systemUser->name;
             }
 
             $email->status = 'unread'; // this is used in Contacts' Emails SubPanel

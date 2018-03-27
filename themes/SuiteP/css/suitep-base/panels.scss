@@ -1,7 +1,8 @@
 /**** Panels ****/
 
 .panel {
-  margin-bottom: 0;
+  margin-top: 7px;
+  margin-bottom: 0px;
 }
 
 .panel-body {
@@ -16,11 +17,8 @@
   background: $panel-expanded-bg;
   color: $panel-expanded-color;
   padding: 0;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  height: 40px/$panel-height-divisor;
-  vertical-align: middle;
-  line-height:40px/$panel-height-divisor;
+  height:$panel-header-height;
+  border-color: $panel-bg;//
 }
 
 .panel-default > .panel-heading > div {
@@ -28,16 +26,11 @@
   font-weight: 500;
   background-color: $panel-expanded-bg;
   color: $panel-expanded-color;
-  line-height: 52px/$panel-height-divisor;
-  height: 52px/$panel-height-divisor;
+  vertical-align: middle;
 }
 
 .panel-default > .panel-body {
   padding: 0;
-}
-
-.panel-default > .panel-heading-collapse {
-  background: $panel-collapsed-color;
 }
 
 .collapse, .collapsing, .collapse.in {
@@ -52,39 +45,39 @@
 
 .panel-default > .panel-heading > a {
   display: block;
-  font-size: 12px ;
   font-weight: 500;
   color: $panel-expanded-color;
-  padding: 0 10px 0 10px/$panel-height-divisor;
+  padding: 0 10px 0 10px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 40px;
   text-decoration: none;
-  text-decoration: none;
-  //background-color: $panel-expanded-bg;
 }
 
-#EditView_tabs .panel-default > .panel-heading > a {
-	padding-top:0px;
+.sub-panel > .panel-heading {
+  line-height: $panel-header-height;
+  border-bottom-width: 0px;
 }
 
+.subpanel-icon {
+  margin: 0 4px 0 4px;
+  line-height: $panel-header-height;
+}
 
 .panel-default.sub-panel > .panel-heading  > a {
   display: block;
-  font-size: 14px ;
+  font-size: $panel-header-font-size;
   font-weight: 500;
   color: $panel-expanded-color;
-  padding: 0 10px 0 10px/$panel-height-divisor;
+  padding: 0 10px 0 10px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 40px/$panel-height-divisor;
+  height: $panel-header-height;
   text-decoration: none;
   //background-color: $panel-expanded-bg;
 }
 
-.panel-default > .panel-heading  > a:not(.collapsed) {
+.panel-default > .panel-heading  > a:not(.panel-heading a div) {
   background-color: $panel-expanded-bg;
-
 }
 
 .sub-panel  div.tab-content {
@@ -106,16 +99,30 @@
 }
 
 
-.panel-heading a.collapsed:before {
-  content: "\2b" ;
+.panel-heading a.collapsed {
+  @extend .suitepicon;
+  @extend .suitepicon-action-plus;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  vertical-align: middle;
+  margin: 0;
 }
 
-.panel-heading a:before
-{
-  font-family: 'Glyphicons Halflings';
-  content: "\2212";
-  font-weight: 100;
-  line-height: 40px/$panel-height-divisor;
+.panel-heading a {
+  @extend .suitepicon;
+  @extend .suitepicon-action-minus;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.panel-heading a:before {
+  line-height: $panel-header-height;
+}
+
+.panel-heading a div {
+  line-height: $panel-header-height - 4px;
 }
 
 
@@ -171,7 +178,7 @@ div.sub-panel {
 .table-responsive.list .pagination tr,
 .table-responsive.list .pagination  td,
 .table-responsive.list .pagination  th {
-    border: 0;
+  border: 0;
 }
 
 .sub-panel tbody tr td .sugar_action_button > a:link {
@@ -196,11 +203,6 @@ div.sub-panel {
   color: $list-view-button-color;
   width: 100%;
 }
-
-.sub-panel tbody tr td ul.clickMenu > li > span {
-  margin-top: 8px;
-}
-
 
 .footable-details.table-responsive.list th {
   font-weight: bold;
@@ -292,8 +294,8 @@ div.sub-panel {
 
 .subpanel-table.list tr.pagination span.pageNumbers {
   position: relative;
-  /*top: -7px;*/
-  top:5px;
+  /*top: 5px;*/
+  top: -7px;
 }
 
 
@@ -308,8 +310,6 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
-  background-image: none,url("../../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
   padding: 0;
   margin: 0;
   width: 26px;
@@ -319,23 +319,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"]:hover {
-  background-color: $campaign-pagination-bg-hover;
-}
-
-.subpanel-table.list tr.pagination button.button[name="listViewStartButton"] {
-  background-position: 9px -29px;
-}
-
-.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"] {
-  background-position: 9px -50px;
-}
-
-.subpanel-table.list tr.pagination button.button[name="listViewNextButton"] {
-  background-position: 10px -132px;
-}
-
-.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
-  background-position: 10px -112px;
+  background-color: $panel-button-bg-hover;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled],
@@ -343,7 +327,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled],
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled] {
   cursor: default;
-  opacity: .5;
+  background-color: $panel-button-bg-disabled;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
@@ -354,7 +338,11 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
-  background-color: $panel-button-bg;
+  background-color: $panel-button-bg-disabled;
+}
+
+.subpanel-table .pagination button .suitepicon {
+  line-height: 26px;
 }
 
 #actionLinkTop li.sugar_action_button:hover,
@@ -386,10 +374,9 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .clickMenu li span {
-  margin-top: 9px;
   margin-left: 0;
   margin-right: 5px;
-  float: right;
+  display: inline-block;
 }
 
 

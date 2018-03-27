@@ -839,5 +839,3 @@ if($dovardefs)
 
 //finish up the last steps
 finishDiag();
-
-?>

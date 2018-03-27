@@ -102,6 +102,3 @@ class TemplateDynamicenum extends TemplateEnum
 
     }
 }
-
-
-?>

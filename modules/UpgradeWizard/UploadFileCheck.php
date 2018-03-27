@@ -84,4 +84,3 @@ if (!empty($response)) {
 }
 sugar_cleanup();
 exit();
-?>

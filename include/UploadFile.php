@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/externalAPI/ExternalAPIFactory.php');
-require_once 'include/UploadStream.php';
+require_once __DIR__.'/externalAPI/ExternalAPIFactory.php';
+require_once __DIR__.'/UploadStream.php';
 
 /**
  * @api
@@ -432,28 +432,30 @@ class UploadFile
 
     /**
      * moves uploaded temp file to permanent save location
-     * @param string bean_id ID of parent bean
+     * @param string $bean_id ID of parent bean
      * @return bool True on success
      */
     public function final_move($bean_id)
     {
+        global $log;
+
         $destination = $bean_id;
-        if (substr($destination, 0, 9) != "upload://") {
-            $destination = "upload://$bean_id";
+        if (substr($destination, 0, 9) != 'upload://') {
+            $destination = 'upload://'.$bean_id;
         }
+
         if ($this->use_soap) {
             if (!file_put_contents($destination, $this->file)) {
-                $GLOBALS['log']->fatal("ERROR: can't save file to $destination");
-
+                $log->fatal('Unable to save file to '. $destination);
                 return false;
             }
-        } else {
-            if (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
-                $GLOBALS['log']->fatal("ERROR: can't move_uploaded_file to $destination.".
-                    " You should try making the directory writable by the webserver");
+        } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
+                $log->fatal(
+                    'Unable to move move_uploaded_file to ' . $destination .
+                    ' You should try making the directory writable by the webserver'
+                );
 
                 return false;
-            }
         }
 
         return true;

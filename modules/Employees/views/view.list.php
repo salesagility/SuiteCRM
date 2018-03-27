@@ -129,6 +129,7 @@ EOHTML;
 			return;
 		if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false){
 			$this->lv->ss->assign("SEARCH",true);
+                        $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
 
 			$tplFile = 'include/ListView/ListViewGeneric.tpl';
 			if (!$GLOBALS['current_user']->isAdminForModule('Users')){

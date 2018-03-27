@@ -76,4 +76,3 @@ class MyTasksDashlet extends DashletGeneric {
 
 }
 
-?>

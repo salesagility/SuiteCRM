@@ -237,4 +237,3 @@ $dictionary['UsersLastImport'] = array (
             )
         )
     );
-?>

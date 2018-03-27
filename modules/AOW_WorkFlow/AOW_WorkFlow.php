@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -126,8 +126,9 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -302,11 +303,19 @@ class AOW_WorkFlow extends Basic
                 switch($this->flow_run_on){
 
                     case'New_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" .$this->date_entered."'";
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'activity_date' . ' > ' . "'" . $this->activity_date . "'";
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
+                        }
                         Break;
 
                     case'Modified_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" .$this->date_entered."'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->activity_date . "'" . ' AND ' . $module->table_name . '.' . 'activity_date' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        }
                         Break;
 
                 }
@@ -676,6 +685,8 @@ class AOW_WorkFlow extends Basic
                     default:
                         if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
+                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                            $value = 0;
                         }
                         break;
                 }

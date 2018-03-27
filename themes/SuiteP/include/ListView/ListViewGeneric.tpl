@@ -171,16 +171,16 @@
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
 								{else}
 									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
 								{/if}
 							{else}
 								{capture assign="imageName"}arrow.{$arrowExt}{/capture}
 								{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-								{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+								<span class="suitepicon suitepicon-action-sorting-none" title="{$alt_sort}"></span>
 							{/if}
 							</a>
 						{else}
@@ -232,7 +232,7 @@
 							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
 							>
                                 {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+								<span class="suitepicon suitepicon-action-edit"></span></a>
                         {/if}
 					</td>
 				{/if}

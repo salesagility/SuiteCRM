@@ -47,4 +47,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 function getJSPath($file=''){
 	//nothing here fake function
 }
-?>

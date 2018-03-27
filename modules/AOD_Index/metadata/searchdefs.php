@@ -61,4 +61,3 @@ $module_name = 'AOD_Index';
 						),
 					),
  			   );
-?>

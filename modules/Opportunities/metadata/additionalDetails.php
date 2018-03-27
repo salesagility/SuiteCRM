@@ -61,6 +61,3 @@ function additionalDetailsOpportunity($fields) {
 				 'editLink' => "index.php?action=EditView&module=Opportunities&return_module=Opportunities&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Opportunities&return_module=Opportunities&record={$fields['ID']}");
 }
- 
- ?>
- 

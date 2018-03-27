@@ -46,4 +46,3 @@ $layout_defs['ForContacts'] = array(
 			array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
 		),
 );
-?>

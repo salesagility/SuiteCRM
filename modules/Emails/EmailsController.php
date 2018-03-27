@@ -186,11 +186,9 @@ class EmailsController extends SugarController
                 // We need to ensure that drafts will still show
                 // in the list view
                 if ($this->bean->status !== 'draft') {
-                    $this->bean->status = 'send_error';
                     $this->bean->save();
-                } else {
-                    $this->bean->status = 'send_error';
                 }
+                $this->bean->status = 'send_error';
         }
 
             $this->view = 'sendemail';
@@ -403,9 +401,9 @@ class EmailsController extends SugarController
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
+                        'reply_to' => $storedOptions['reply_to_addr'],
+                        'name' => $storedOptions['from_name'],
                         'from' => $storedOptions['from_addr'],
-                        'name' => $inboundEmail->name,
-                        'oe' => $oe->mail_smtpuser,
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
@@ -445,9 +443,60 @@ class EmailsController extends SugarController
             }
         }
 
+        $oe = new OutboundEmail();
+        if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
+            $system = $oe->getSystemMailerSettings();
+            $data[] = array(
+                'type' => 'system',
+                'id' => $system->id,
+                'attributes' => array(
+                    'from' => $system->mail_smtpuser,
+                    'name' => $system->name,
+                    'oe' => $system->mail_smtpuser,
+                ),
+                'prepend' => false,
+                'isPersonalEmailAccount' => false,
+                'isGroupEmailAccount' => true,
+                'outboundEmail' => array(
+                    'id' => $system->id,
+                    'name' => $system->name,
+                ),
+                'emailSignatures' => $defaultEmailSignature,
+            );
+        }
+
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
         echo utf8_decode($dataEncoded);
+        $this->view = 'ajax';
+    }
 
+    /**
+     * Returns attachment data to ajax call
+     */
+    public function action_GetDraftAttachmentData()
+    {
+        $data['attachments'] = array();
+
+        if(!empty($_REQUEST['id'])){
+            $bean = BeanFactory::getBean('Emails', $_REQUEST['id']);
+            $data['draft'] = $bean->status == 'draft' ? 1 : 0;
+            $attachmentBeans = BeanFactory::getBean('Notes')
+                ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'");
+            foreach($attachmentBeans as $attachmentBean) {
+                $data['attachments'][] = array(
+                    'id' => $attachmentBean->id,
+                    'name' => $attachmentBean->name,
+                    'file_mime_type' => $attachmentBean->file_mime_type,
+                    'filename' => $attachmentBean->filename,
+                    'parent_type' => $attachmentBean->parent_type,
+                    'parent_id' => $attachmentBean->parent_id,
+                    'description' => $attachmentBean->description,
+                );
+            }
+        }
+
+        $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
+        echo utf8_decode($dataEncoded);
         $this->view = 'ajax';
     }
 
@@ -849,8 +898,6 @@ class EmailsController extends SugarController
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
-        $hasAccess = false;
-
         // Check that user is allowed to use inbound email account
         $hasAccessToInboundEmailAccount = false;
         $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
@@ -910,11 +957,14 @@ class EmailsController extends SugarController
             $isAllowedToUseOutboundEmail = true;
         }
 
-        $hasAccess =
-            ($hasAccessToInboundEmailAccount === true) &&
-            ($isFromAddressTheSame === true) &&
-            ($isAllowedToUseOutboundEmail === true);
+        // The inbound email account is an empty object, we assume the user has access
+        if (empty($requestedInboundEmail->id)) {
+            $hasAccessToInboundEmailAccount = true;
+            $isFromAddressTheSame = true;
+        }
 
-        return $hasAccess;
+        return $hasAccessToInboundEmailAccount === true &&
+            $isFromAddressTheSame === true &&
+            $isAllowedToUseOutboundEmail === true;
     }
 }

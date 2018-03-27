@@ -80,4 +80,3 @@ class TemplateURL extends TemplateText{
 	} 
 
 }
-?>

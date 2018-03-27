@@ -72,4 +72,3 @@ $_REQUEST['action'] = 'DetailView';
 //This line of code is critical.  We need to ensure that the global controller bean is set to the $currentModule global variable
 $GLOBALS['app']->controller->bean = $focus;
 echo $subpanel->display(false);
-?>

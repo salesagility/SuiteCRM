@@ -53,4 +53,3 @@ $viewdefs[$module_name]['SideQuickCreate'] = array(
 
 
 );
-?>

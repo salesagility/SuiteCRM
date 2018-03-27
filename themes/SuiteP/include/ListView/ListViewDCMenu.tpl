@@ -77,7 +77,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		{if $prerow}
 			<th scope='col' nowrap="nowrap" width='1%' class="selectCol">
 				<div>
-					<label class="hidden glyphicon bootstrap-checkbox glyphicon-unchecked"></label><input type='checkbox'  title="{sugar_translate label='LBL_SELECT_ALL_TITLE'}"  class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, "mass[]", this.checked);' />
+					<label class="hidden glyphicon bootstrap-checkbox glyphicon-unchecked"></label><span class='suitepicon suitepicon-action-caret'></span><input type='checkbox'  title="{sugar_translate label='LBL_SELECT_ALL_TITLE'}"  class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, "mass[]", this.checked);' />
 				{$selectLink}
 				</div>
 			</th>
@@ -108,18 +108,12 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 					&nbsp;&nbsp;
 					{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 						{if $pageData.ordering.sortOrder == 'ASC'}
-							{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-							{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+							<span class="suitepicon suitepicon-action-sorting-descending"></span>
 						{else}
-							{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-							{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+							<span class="suitepicon suitepicon-action-sorting-ascending"></span>
 						{/if}
 					{else}
-						{capture assign="imageName"}arrow.{$arrowExt}{/capture}
-                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-						{sugar_getimage name="$imageName" width="$arrowWidth" height="$arrowHeight" attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+						<span class="suitepicon suitepicon-action-sorting-none"></span>
 					{/if}
                     </a>
 				{else}
@@ -158,7 +152,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 			{/if}
 			{if !empty($quickViewLinks)}
 
-			<td width='2%' nowrap>{if $pageData.access.edit}<a title='{$editLinkString}' id="dashedit-{$rowData.ID}" href="index.php?action=EditView&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index" title="{sugar_translate label="LBL_EDIT_INLINE"}">{sugar_getimage name="edit_inline.gif" attr='border="0" '}</a>{/if}</td>
+			<td width='2%' nowrap>{if $pageData.access.edit}<a title='{$editLinkString}' id="dashedit-{$rowData.ID}" href="index.php?action=EditView&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index" title="{sugar_translate label="LBL_EDIT_INLINE"}"><span class="suitepicon suitepicon-action-edit"></span></a>{/if}</td>
 
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}

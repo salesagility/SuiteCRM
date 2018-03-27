@@ -252,10 +252,10 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($result->id));
         $this->assertEquals(36, strlen($result->id));
 
-        $this->assertTrue(isset($result->from_addr));
-        $this->assertTrue(isset($result->to_addrs));
-        $this->assertTrue(isset($result->cc_addrs));
-        $this->assertTrue(isset($result->bcc_addrs));
+        $this->assertTrue(isset($result->from_addr_name));
+        $this->assertTrue(isset($result->to_addrs_names));
+        $this->assertTrue(isset($result->cc_addrs_names));
+        $this->assertTrue(isset($result->bcc_addrs_names));
 
         $this->assertTrue(isset($result->raw_source));
         $this->assertTrue(isset($result->description_html));
@@ -289,10 +289,10 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email->id = $id;
         $email->retrieveEmailAddresses();
 
-        $this->assertTrue(isset($email->from_addr));
-        $this->assertTrue(isset($email->to_addrs));
-        $this->assertTrue(isset($email->cc_addrs));
-        $this->assertTrue(isset($email->bcc_addrs));
+        $this->assertTrue(isset($email->from_addr_name));
+        $this->assertTrue(isset($email->to_addrs_names));
+        $this->assertTrue(isset($email->cc_addrs_names));
+        $this->assertTrue(isset($email->bcc_addrs_names));
     }
 
     public function linkEmailToAddress($id)

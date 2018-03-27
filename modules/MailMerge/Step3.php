@@ -208,5 +208,3 @@ function generateSelect($seed, $relModule){
 	}
 	return "";
 }
-
-?>

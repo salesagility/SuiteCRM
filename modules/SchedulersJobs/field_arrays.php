@@ -59,4 +59,3 @@ $fields_array['Schedulers_jobs'] = array (
 		'execute_time' => 1
 	)
 );
-?>

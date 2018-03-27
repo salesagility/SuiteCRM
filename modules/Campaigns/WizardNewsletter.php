@@ -185,8 +185,8 @@ $focus->list_view_parse_additional_sections($ss);
 
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
-$ss->assign("SURVEY_ID", $focus->survey_id );
-$ss->assign("SURVEY_NAME", $focus->survey_name );
+$ss->assign("SURVEY_ID", $focus->survey_id);
+$ss->assign("SURVEY_NAME", $focus->survey_name);
 
 if((!isset($focus->status)) && (!isset($focus->id))){
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], 'Planning'));
@@ -780,7 +780,3 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
     return $nav_html;
 }
-    
-
-
-?>

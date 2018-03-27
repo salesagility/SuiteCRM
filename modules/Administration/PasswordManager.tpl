@@ -463,7 +463,9 @@
 							</table>
 
 						             <!-- start SAML -->
-						   {if !empty($config.authenticationClass) && $config.authenticationClass == 'SAMLAuthenticate'}
+                            {if !empty($config.authenticationClass)
+                                && ($config.authenticationClass == 'SAMLAuthenticate'
+                                || $config.authenticationClass == 'SAML2Authenticate')}
                            {assign var='saml_enabled_checked' value='CHECKED'}
                            {assign var='saml_display' value='inline'}
                         {else}

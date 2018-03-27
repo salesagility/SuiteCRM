@@ -131,4 +131,3 @@ if(!empty($_REQUEST['edit'])) {
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
 header("Location: index.php?action=$return_action&module=$return_module&record=$return_id&$edit");
-?>

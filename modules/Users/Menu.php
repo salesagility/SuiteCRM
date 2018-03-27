@@ -73,4 +73,3 @@ if (is_admin($current_user)) {
 
 
 }
-?>

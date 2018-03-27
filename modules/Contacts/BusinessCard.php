@@ -367,4 +367,3 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 }
-?>

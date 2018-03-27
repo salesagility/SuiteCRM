@@ -60,4 +60,3 @@ $searchFields['AOS_Quotes'] =
         'start_range_expiration' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
         'end_range_expiration' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 	);
-?>

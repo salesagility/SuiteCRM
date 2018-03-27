@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -248,11 +248,13 @@ class actionCreateRecord extends actionBase {
                                 if($params['value'][$key][0] === 'now'){
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] === 'field'){
-                                    $date = $record->fetched_row[$params['field'][$key]];
+                                    $dateToUse = $params['field'][$key];
+                                    $date = $record->$dateToUse;
                                 } else if ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
-                                    $date = $bean->fetched_row[$params['value'][$key][0]];
+                                    $dateToUse = $params['value'][$key][0];
+                                    $date = $bean->$dateToUse;
                                 }
 
                                 if($params['value'][$key][1] !== 'now'){
