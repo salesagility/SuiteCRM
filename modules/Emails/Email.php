@@ -969,7 +969,10 @@ class Email extends SugarBean {
 			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
 				$sentFolder = $ie->get_stored_options("sentFolder");
 				if (!empty($sentFolder)) {
-					$data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
 					$ie->mailbox = $sentFolder;
 					if ($ie->connectMailserver() == 'true') {
 						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
