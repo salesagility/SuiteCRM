@@ -52,15 +52,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-class StateCheckerException extends Exception {}
-
 /**
  * Description of StateChecker
  *
  * @author SalesAgility
  */
-class StateChecker {
+class StateChecker
+{
 
     /**
      *
@@ -68,69 +66,116 @@ class StateChecker {
      */
     protected $db;
     
+    /**
+     *
+     * @var array
+     */
     protected $hashes;
     
+    /**
+     *
+     * @var array
+     */
     protected $traces;
     
+    /**
+     *
+     * @var integer
+     */
     protected $memoryLimit;
     
-    public function __construct() {
-        if(!$this->db = DBManagerFactory::getInstance()) {
+    /**
+     * 
+     * @throws StateCheckerException
+     */
+    public function __construct()
+    {
+        if (!$this->db = DBManagerFactory::getInstance()) {
             throw new StateCheckerException('DBManagerFactory get instace failure');
         }
-        if(!($this->db instanceof MysqliManager)) {
+        if (!($this->db instanceof MysqliManager)) {
             throw new StateCheckerException('Incompatible DB type, only supported: mysqli');
         }
         $this->resetHashes();
         $this->resetTraces();
         
-        if(StateCheckerConfig::$redefineMemoryLimit) {
+        if (StateCheckerConfig::$redefineMemoryLimit) {
             $this->memoryLimit = ini_get('memory_limit');
             ini_set('memory_limit', -1);
         }
                 
-        if(StateCheckerConfig::$autoRun) {
+        if (StateCheckerConfig::$autoRun) {
             $this->getStateHash();
         }
-        
     }
     
-    public function getTraces() {
-        if(StateCheckerConfig::$saveTraces) {
+    /**
+     * 
+     * @return array traces
+     * @throws StateCheckerException
+     */
+    public function getTraces()
+    {
+        if (StateCheckerConfig::$saveTraces) {
             throw new StateCheckerException('Trace information is not saved, use StateCheckerConfig::$saveTraces as true');
         }
         return $this->traces;
     }
     
-    public function __destruct() {
-        if(StateCheckerConfig::$redefineMemoryLimit) {
+    /**
+     * 
+     */
+    public function __destruct()
+    {
+        if (StateCheckerConfig::$redefineMemoryLimit) {
             ini_set('memory_limit', $this->memoryLimit);
         }
     }
     
-    protected function resetTraces() {
+    /**
+     * resetTraces
+     */
+    protected function resetTraces()
+    {
         $this->traces = [];
     }
 
-    protected function resetHashes() {
+    /**
+     * resetHashes
+     */
+    protected function resetHashes()
+    {
         $this->hashes = [];
     }
     
-    protected function isDetailedKey($key) {
+    /**
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    protected function isDetailedKey($key)
+    {
         $detailedKey = preg_match('/\w+\:\:/', $key);
         return $detailedKey;
     }
     
-    protected function checkHash($hash, $key) {
+    /**
+     * 
+     * @param string $hash
+     * @param string $key
+     * @return boolean
+     */
+    protected function checkHash($hash, $key)
+    {
         $detailedKey = $this->isDetailedKey($key);
         $needToStore = !$detailedKey || ($detailedKey && StateCheckerConfig::$storeDetails);
         
-        if(!isset($this->hashes[$key])) {
-            if($needToStore) {
+        if (!isset($this->hashes[$key])) {
+            if ($needToStore) {
                 $this->hashes[$key] = $hash;
             }
         }
-        if($needToStore) {
+        if ($needToStore) {
             $match = $this->hashes[$key] == $hash;
         } else {
             $match = true;
@@ -138,17 +183,25 @@ class StateChecker {
         return $match;
     }
     
-    protected function getHash($data, $key) {
-        if(!$serialized = serialize($data)) {
+    /**
+     * 
+     * @param mixed $data should be serializable
+     * @param string $key
+     * @return string
+     * @throws StateCheckerException
+     */
+    protected function getHash($data, $key)
+    {
+        if (!$serialized = serialize($data)) {
             throw new StateCheckerException('Serialize object failure');
         }
         $hash = md5($serialized);
         
-        if(!$this->checkHash($hash, $key)) {
+        if (!$this->checkHash($hash, $key)) {
             throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
         }
         
-        if(StateCheckerConfig::$saveTraces) {
+        if (StateCheckerConfig::$saveTraces) {
             $this->traces[$key][] = debug_backtrace();
         }
         
@@ -157,25 +210,42 @@ class StateChecker {
     
     // ------------ DATABASE ----------------
     
-    protected function getMysqliResoults(mysqli_result $resource) {
+    /**
+     * 
+     * @param mysqli_result $resource
+     * @return array
+     */
+    protected function getMysqliResoults(mysqli_result $resource)
+    {
         $rows = [];
-        while($row = $resource->fetch_assoc()) {
+        while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         return $rows;
     }
     
-    protected function getDatabaseTables() {
-        if(!$tables = $this->db->tablesLike('')) {
+    /**
+     * 
+     * @return array
+     * @throws StateCheckerException
+     */
+    protected function getDatabaseTables()
+    {
+        if (!$tables = $this->db->tablesLike('')) {
             throw new StateCheckerException('get tables failure');
         }
         return $tables;
     }
     
-    protected function getDatabaseHash() {
+    /**
+     * 
+     * @return string
+     */
+    protected function getDatabaseHash()
+    {
         $tables = $this->getDatabaseTables();
         $hashes = [];
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $rows = $this->getMysqliResoults($this->db->query('SELECT * FROM ' . $table));
             $hashes[] = $this->getHash($rows, 'database::' . $table);
         }
@@ -185,14 +255,21 @@ class StateChecker {
     
     // ------------- FILE SYSTEM ---------------
     
-    protected function getFiles($path = '.') {
-        if(!$realpath = realpath($path)) {
+    /**
+     * 
+     * @param string $path
+     * @return array
+     * @throws StateCheckerException
+     */
+    protected function getFiles($path = '.')
+    {
+        if (!$realpath = realpath($path)) {
             throw new StateCheckerException('Real path can not resolved for: ' . $path);
         }
 
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($realpath), RecursiveIteratorIterator::SELF_FIRST);
         $files = [];
-        foreach($objects as $name => $object){
+        foreach ($objects as $name => $object) {
             $fileObject = $object;
             $fileObject->modifyTime = filemtime($name);
             $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
@@ -201,7 +278,12 @@ class StateChecker {
         return $files;
     }
     
-    protected function getFilesystemHash() {
+    /**
+     * 
+     * @return string
+     */
+    protected function getFilesystemHash()
+    {
         $files = $this->getFiles(__DIR__ . '/../');
         $hash = $this->getHash($files, 'filesys');
         return $hash;
@@ -209,11 +291,14 @@ class StateChecker {
     
     // -------------- SUPERGLOBALS -----------------
     
-    
-    protected function getSuperGlobalsHash() {
-        
+    /**
+     * 
+     * @return string
+     */
+    protected function getSuperGlobalsHash()
+    {
         $globals = [];
-        foreach(StateCheckerConfig::$globalKeys as $globalKey) {
+        foreach (StateCheckerConfig::$globalKeys as $globalKey) {
             $globals[$globalKey] = $this->getHash(isset($GLOBALS[$globalKey]) ? $GLOBALS[$globalKey] : null, 'globals::' . $globalKey);
         }
         
@@ -223,7 +308,12 @@ class StateChecker {
     
     // -------------- ALL ----------------------
     
-    public function getStateHash() {
+    /**
+     * 
+     * @return string
+     */
+    public function getStateHash()
+    {
         $hashes['database'] = $this->getDatabaseHash();
         $hashes['filesys'] = $this->getFilesystemHash();
         $hashes['globals'] = $this->getSuperGlobalsHash();

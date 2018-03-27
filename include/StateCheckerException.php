@@ -45,60 +45,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of StateCheckerConfig
+ * Description of StateCheckerException
  *
  * @author SalesAgility
  */
-class StateCheckerConfig
+class StateCheckerException extends Exception
 {
-    /**
-     * SuperGlobals Collection
-     *
-     * @var array 
-     */
-    public static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
-    
-    /**
-     * Automatically run state collection in StateChecker constructor
-     *
-     * @var boolean 
-     */
-    public static $autoRun = true;
-    
-    /**
-     * Save trace info on state-hash mismatch
-     *
-     * @var boolean 
-     */
-    public static $saveTraces = false;
-    
-    /**
-     * Redefine memory limit
-     *
-     * @var boolean 
-     */
-    public static $redefineMemoryLimit = false;
-    
-    /**
-     * Store more information about hash-mismatch
-     * (which part having state of globals/filesys/database)
-     *
-     * @var boolean 
-     */
-    public static $storeDetails = false;
-    
-    /**
-     * Test using StateChecker (use in development mode only)
-     *
-     * @var boolean 
-     */
-    public static $testsUseStateChecker = false;
-    
-    /**
-     * Test shows up an assertion failure when hash-mismatch,
-     * use $testsUseStateChecker also, $testsUseAssertionFailureOnError applied only if $testsUseStateChecker = true;
-     * 
-     * @var boolean
-     */
-    public static $testsUseAssertionFailureOnError = true;
 }
