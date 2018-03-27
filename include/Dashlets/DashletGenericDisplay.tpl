@@ -187,7 +187,7 @@
                     <a title='{$editLinkString}' class="list-view-data-icon" href='index.php?action=EditView&module={$pageData.bean.moduleDir}&record={$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index'> <span class="suitepicon suitepicon-action-edit"></span></a>
 				{/if}
 				{if $pageData.access.view}
-                <a title='{$viewLinkString}' class="list-view-data-icon" href='index.php?action=DetailView&module={$params.module|default:$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
+                <a title='{$viewLinkString}' class="list-view-data-icon" href='index.php?action=DetailView&module={$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
 				{/if}
 			</td>
 			{/if}
