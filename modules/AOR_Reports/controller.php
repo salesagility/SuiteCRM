@@ -171,6 +171,7 @@ class AOR_ReportsController extends SugarController
 
     protected function action_export()
     {
+        set_time_limit(0);
         if(!$this->bean->ACLAccess('Export')){
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
