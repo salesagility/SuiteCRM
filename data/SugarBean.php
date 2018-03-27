@@ -1894,8 +1894,10 @@ class SugarBean
         }
 
 
-        require_once("data/BeanFactory.php");
-        BeanFactory::registerBean($this->module_name, $this);
+        if (!$this->hasAutoIncrementFields()) {
+            require_once("data/BeanFactory.php");
+            BeanFactory::registerBean($this->module_name, $this);
+        }
 
         if (empty($GLOBALS['updating_relationships']) && empty($GLOBALS['saving_relationships']) && empty($GLOBALS['resavingRelatedBeans'])) {
             $GLOBALS['saving_relationships'] = true;
@@ -5537,5 +5539,18 @@ class SugarBean
             $this->db->save_audit_records($this, $change);
             $this->fetched_row[$change['field_name']] = $change['after'];
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasAutoIncrementFields()
+    {
+        foreach ($this->field_defs as $key => $field_def){
+            if ($field_def['type'] === 'int' && $field_def['auto_increment'] === true) {
+                return true;
+            }
+        }
+        return false;
     }
 }
