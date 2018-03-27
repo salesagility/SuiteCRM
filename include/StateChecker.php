@@ -145,7 +145,7 @@ class StateChecker {
         $hash = md5($serialized);
         
         if(!$this->checkHash($hash, $key)) {
-            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '"');
+            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
         }
         
         if(StateCheckerConfig::$saveTraces) {

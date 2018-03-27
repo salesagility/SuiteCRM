@@ -15,7 +15,7 @@ use PHPUnit_Framework_TestCase;
  *
  * @author SalesAgility
  */
-class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase {
+abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase {
    
     /**
      *
@@ -38,7 +38,7 @@ class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
             try {
                 $this->stateChecker->getStateHash();
             } catch (StateCheckerException $e) {
-                $message = 'Incorrect state hash: ' . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString() . "\n";
+                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::$saveTraces ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
                 if(StateCheckerConfig::$testsUseAssertationFailureOnError) {
                     $this->assertFalse(true, $message);
                 } else {

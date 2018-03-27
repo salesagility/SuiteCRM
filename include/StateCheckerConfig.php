@@ -66,33 +66,9 @@ class StateCheckerConfig {
     public static $testsUseStateChecker = false;
     
     /**
-     * only is $testsUseStateChecker = true;
+     * use $testsUseStateChecker also, $testsUseAssertationFailureOnError applied only if $testsUseStateChecker = true;
      * @var boolean
      */
-    public static $testsUseAssertationFailureOnError = false;
-    
-    public static function setDefaults($mode = 'debug') {
-        switch ($mode) {
-            
-            case 'debug':
-                self::$saveTraces = true;
-                self::$redefineMemoryLimit = true;
-                self::$storeDetails = true;
-                self::$testsUseStateChecker = true;
-                self::$testsUseAssertationFailureOnError = true;
-                break;
-            
-            case 'live':
-                self::$saveTraces = false;
-                self::$redefineMemoryLimit = false;
-                self::$storeDetails = false;
-                self::$testsUseStateChecker = false;
-                self::$testsUseAssertationFailureOnError = false;
-                break;
-            
-            default:
-                throw new RuntimeException('State Checker Config: Invalid mode');
-        }
-    }
+    public static $testsUseAssertationFailureOnError = true;    
     
 }
