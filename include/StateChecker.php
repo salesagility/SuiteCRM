@@ -61,11 +61,7 @@ class StateCheckerException extends Exception {}
  * @author SalesAgility
  */
 class StateChecker {
-    
-    // ----------- COMMON ----------------
-    
-    protected $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
-    
+
     /**
      *
      * @var DBManager
@@ -76,15 +72,9 @@ class StateChecker {
     
     protected $traces;
     
-    protected $saveTraces;
-    
     protected $memoryLimit;
     
-    protected $redefineMemoryLimit;
-    
-    protected $storeDetails;
-    
-    public function __construct($saveTraces = false, $autorun = true, $redefineMemoryLimit = false, $storeDetails = false) {
+    public function __construct() {
         if(!$this->db = DBManagerFactory::getInstance()) {
             throw new StateCheckerException('DBManagerFactory get instace failure');
         }
@@ -94,33 +84,26 @@ class StateChecker {
         $this->resetHashes();
         $this->resetTraces();
         
-        if($saveTraces) {
-            $this->saveTraces = $saveTraces;
-        }
-        
-        $this->redefineMemoryLimit = $redefineMemoryLimit;
-        if($redefineMemoryLimit) {
+        if(StateCheckerConfig::$redefineMemoryLimit) {
             $this->memoryLimit = ini_get('memory_limit');
             ini_set('memory_limit', -1);
         }
-        
-        $this->storeDetails = $storeDetails;
                 
-        if($autorun) {
+        if(StateCheckerConfig::$autoRun) {
             $this->getStateHash();
         }
         
     }
     
     public function getTraces() {
-        if($this->saveTraces) {
-            throw new StateCheckerException('Trace information is not saved, use saveTraces argument as true');
+        if(StateCheckerConfig::$saveTraces) {
+            throw new StateCheckerException('Trace information is not saved, use StateCheckerConfig::$saveTraces as true');
         }
         return $this->traces;
     }
     
     public function __destruct() {
-        if($this->redefineMemoryLimit) {
+        if(StateCheckerConfig::$redefineMemoryLimit) {
             ini_set('memory_limit', $this->memoryLimit);
         }
     }
@@ -140,7 +123,7 @@ class StateChecker {
     
     protected function checkHash($hash, $key) {
         $detailedKey = $this->isDetailedKey($key);
-        $needToStore = !$detailedKey || ($detailedKey && $this->storeDetails);
+        $needToStore = !$detailedKey || ($detailedKey && StateCheckerConfig::$storeDetails);
         
         if(!isset($this->hashes[$key])) {
             if($needToStore) {
@@ -165,7 +148,7 @@ class StateChecker {
             throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '"');
         }
         
-        if($this->saveTraces) {
+        if(StateCheckerConfig::$saveTraces) {
             $this->traces[$key][] = debug_backtrace();
         }
         
@@ -230,7 +213,7 @@ class StateChecker {
     protected function getSuperGlobalsHash() {
         
         $globals = [];
-        foreach($this->globalKeys as $globalKey) {
+        foreach(StateCheckerConfig::$globalKeys as $globalKey) {
             $globals[$globalKey] = $this->getHash(isset($GLOBALS[$globalKey]) ? $GLOBALS[$globalKey] : null, 'globals::' . $globalKey);
         }
         

@@ -16,11 +16,7 @@ use PHPUnit_Framework_TestCase;
  * @author SalesAgility
  */
 class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase {
-    
-    protected $useStateChecker = false;
-    
-    protected $useAssertationFailureOnError = false;
-    
+   
     /**
      *
      * @var StateChecker
@@ -28,20 +24,22 @@ class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
     protected $stateChecker;
     
     public function setUp() {
-        parent::setUp();
-        if($this->useStateChecker) {
+        if(StateCheckerConfig::$testsUseStateChecker) {
             $this->stateChecker = new StateChecker();
         }
+        
+        parent::setUp();
     }
     
     public function tearDown() {
         parent::tearDown();
-        if($this->useStateChecker && $this->stateChecker) {
+        
+        if(StateCheckerConfig::$testsUseStateChecker && $this->stateChecker) {
             try {
                 $this->stateChecker->getStateHash();
-            } catch (\SuiteCRM\StateCheckerException $e) {
+            } catch (StateCheckerException $e) {
                 $message = 'Incorrect state hash: ' . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString() . "\n";
-                if($this->useAssertationFailureOnError) {
+                if(StateCheckerConfig::$testsUseAssertationFailureOnError) {
                     $this->assertFalse(true, $message);
                 } else {
                     echo $message;
