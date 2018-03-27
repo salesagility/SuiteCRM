@@ -191,7 +191,8 @@ class StateChecker
      */
     protected function getHash($data, $key)
     {
-        if (!$serialized = serialize($data)) {
+        $serialized = serialize($data);
+        if (!$serialized) {
             throw new StateCheckerException('Serialize object failure');
         }
         $hash = md5($serialized);
@@ -230,7 +231,8 @@ class StateChecker
      */
     protected function getDatabaseTables()
     {
-        if (!$tables = $this->db->tablesLike('')) {
+        $tables = $this->db->tablesLike('');
+        if (!$tables) {
             throw new StateCheckerException('get tables failure');
         }
         return $tables;
@@ -262,7 +264,8 @@ class StateChecker
      */
     protected function getFiles($path = '.')
     {
-        if (!$realpath = realpath($path)) {
+        $realpath = realpath($path);
+        if (!$realpath) {
             throw new StateCheckerException('Real path can not resolved for: ' . $path);
         }
 
