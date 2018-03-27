@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,9 +48,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // Contact is used to store customer information.
-class Contact extends Person
+class Contact extends Person implements EmailInterface
 {
     public $field_name_map;
     // Stored fields
@@ -456,9 +457,11 @@ class Contact extends Person
             $camp = new Campaign();
             $where = "campaigns.id='{$this->campaign_id}'";
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
-            $this->campaign_name = $campaign_list[0]->name;
-        }
-    }
+            if (!empty($campaign_list) && !empty($campaign_list[0]->name)) {
+                $this->campaign_name = $campaign_list[0]->name;
+            }
+		}
+	}
 
     /**
      * loads the contacts_users relationship to populate a checkbox

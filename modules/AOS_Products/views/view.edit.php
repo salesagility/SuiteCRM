@@ -50,4 +50,3 @@ class AOS_ProductsViewEdit extends ViewEdit {
         parent::display();
     }
 }
-?>

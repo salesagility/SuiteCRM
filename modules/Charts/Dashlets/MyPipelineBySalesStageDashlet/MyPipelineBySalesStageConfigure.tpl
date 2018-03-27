@@ -64,14 +64,14 @@
     <td valign='top' nowrap class='dataLabel'>{$LBL_DATE_START} <br><i>{$user_date_format}</i></td>
     <td valign='top' class='dataField'>
     	<input onblur="parseDate(this, '{$cal_dateformat}');" type="text" class="text" name="mypbss_date_start" size='12' maxlength='10' id='date_start' value='{$date_start}'>
-    	{sugar_getimage name="jscalendar" ext=".gif" alt=$LBL_ENTER_DATE other_attributes='align="absmiddle" id="date_start_trigger" '}
+        <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span>
     </td>
 </tr>
 <tr>
     <td valign='top' nowrap class='dataLabel'>{$LBL_DATE_END}<br><i>{$user_date_format}</i></td>
     <td valign='top' class='dataField'>
     	<input onblur="parseDate(this, '{$cal_dateformat}');" type="text" class="text" name="mypbss_date_end" size='12' maxlength='10' id='date_end' value='{$date_end}'>
-    	{sugar_getimage name="jscalendar" ext=".gif" alt=$LBL_ENTER_DATE other_attributes='align="absmiddle" id="date_end_trigger" '}
+        <span id="date_end_trigger" class="suitepicon suitepicon-module-calendar"></span>
     </td>
 </tr>
 

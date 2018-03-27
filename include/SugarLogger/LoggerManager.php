@@ -163,6 +163,7 @@ class LoggerManager
 
  	/**
  	 * Returns a logger instance
+     * @return LoggerManager
  	 */
  	public static function getLogger()
 	{

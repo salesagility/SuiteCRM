@@ -45,6 +45,3 @@ class TemplateId extends TemplateField{
     
     
 }
-
-
-?>

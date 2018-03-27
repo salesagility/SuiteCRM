@@ -324,8 +324,7 @@ function displayDateTimeField($question)
          "' name='question[" .
          $question->id .
          "]' type='text'/>";
-    echo "<div class=\"input-group-addon ui-datetimepicker-trigger\"><img src=\"themes/SuiteP/images/jscalendar.gif\" 
-alt=\"Select date\" title=\"Select date\"></div></div>";
+    echo "<div class=\"input-group-addon ui-datetimepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
 }
 
 function displayDateField($question)
@@ -336,7 +335,7 @@ function displayDateField($question)
          "' name='question[" .
          $question->id .
          "]' type='text'/>";
-    echo "<div class=\"input-group-addon ui-datepicker-trigger\"><img src=\"themes/SuiteP/images/jscalendar.gif\" alt=\"Select date\" title=\"Select date\"></div></div>";
+    echo "<div class=\"input-group-addon ui-datepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
 }
 
 function displayClosedPage($survey)

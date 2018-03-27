@@ -185,8 +185,8 @@ $focus->list_view_parse_additional_sections($ss);
 
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
-$ss->assign("SURVEY_ID", $focus->survey_id );
-$ss->assign("SURVEY_NAME", $focus->survey_name );
+$ss->assign("SURVEY_ID", $focus->survey_id);
+$ss->assign("SURVEY_NAME", $focus->survey_name);
 
 if((!isset($focus->status)) && (!isset($focus->id))){
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], 'Planning'));
@@ -498,7 +498,7 @@ if(count($prospect_lists)>0){
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
     foreach($app_list_strings['prospect_list_type_dom'] as $key=>$val){
-        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='$val';}";
+        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='".addslashes($val)."';}";
     }
     $ss->assign("PL_DOM_STMT", $dom_txt);
     $trgt_count = 0;
@@ -780,7 +780,3 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
     return $nav_html;
 }
-    
-
-
-?>

@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -133,7 +133,7 @@ var validate = new Array();
 var maxHours = 24;
 var requiredTxt = 'Missing Required Field:';
 var invalidTxt = 'Invalid Value:';
-var secondsSinceLoad = 0;
+var scriptStartedTime = Date.now();
 var alertsTimeoutId;
 var inputsWithErrors = new Array();
 var tabsWithErrors = new Array();
@@ -254,7 +254,7 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['redirect'] = redirect;
 }
 function checkAlerts() {
-  secondsSinceLoad += 1;
+  var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
   var mj = 0;
   var alertmsg = '';
   for (mj = 0; mj < alertList.length; mj++) {
@@ -2207,7 +2207,7 @@ sugarListView.prototype.send_form_for_emails = function (select, currentModule, 
   return false;
 }
 
-sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info) {
+sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info, ajax, callback) {
   if (document.MassUpdate.select_entire_list.value == 1) {
 
     if (sugarListView.get_checks_count() < 1) {
@@ -2300,8 +2300,17 @@ sugarListView.prototype.send_form = function (select, currentModule, action, no_
   }
 
   document.MassUpdate.parentNode.appendChild(newForm);
-
-  newForm.submit();
+  if (ajax) {
+    var _callback = callback ? callback : null;
+    $.post($('form[name="newForm"]').attr('action'), $('form[name="newForm"]').serialize(), function (resp) {
+      if (_callback) {
+        _callback(resp);
+      }
+    });
+    return false;
+  } else {
+    newForm.submit();
+  }
   // awu Bug 18624: Fixing issue where a canceled Export and unselect of row will persist the uid field, clear the field
   document.MassUpdate.uid.value = '';
 
@@ -2425,25 +2434,50 @@ sugarListView.prototype.check_item = function (cb, form) {
 
 sugarListView.prototype.toggleSelected = function () {
 
-  var numSelected = sugarListView.get_num_selected();
-  var selectedRecords = document.getElementById("selectedRecordsTop");
-  var selectActions = document.getElementById("selectActions");
-  var selectActionsDisabled = document.getElementById("selectActionsDisabled");
-  if (numSelected > 0) {
-    $(selectedRecords).removeAttr("style").addClass("show");
-    $(".selectActionsDisabled").hide();
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).removeAttr("style").addClass("show");
-    });
+    var numSelected = sugarListView.get_num_selected();
+    var selectedRecords = document.getElementById("selectedRecordsTop");
+    var selectActions = document.getElementById("actionLinkTop");
+    var selectActionsDisabled = document.getElementById("select_actions_disabled_top");
+    var selectActionsBottom = document.getElementById("actionLinkBottom");
+    var selectActionsDisabledBottom = document.getElementById("select_actions_disabled_bottom");
 
-  } else {
-    $(selectedRecords).hide();
-    $(".selectActionsDisabled").removeAttr("style").addClass("show");
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).hide();
-    });
-  }
-
+    if (numSelected > 0) {
+        $(selectedRecords).removeAttr("style").addClass("show");
+        $(".selectActionsDisabled").hide();
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('ul[name=selectActionsBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("show").addClass("hide");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+    } else {
+        $(selectedRecords).hide();
+        $(selectActions).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsBottom).removeAttr("style").removeClass("show").addClass("hide");
+        $(".selectActionsDisabled").removeAttr("style").addClass("show");
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("hide").addClass("show");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide").addClass("show");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+    }
 }
 
 /**#28000, remove the  unselect record id from MassUpdate.uid **/
@@ -2962,7 +2996,7 @@ SUGAR.util = function () {
       }
     },
     evalScript: function (text) {
-      if (isSafari) {
+      if (UA.webkit && !UA.chrome) {
         var waitUntilLoaded = function () {
           SUGAR.evalScript_waitCount--;
           if (SUGAR.evalScript_waitCount == 0) {

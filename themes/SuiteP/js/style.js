@@ -437,9 +437,6 @@ $(function () {
     initFooterPopups();
   }
 
-  setInterval(function () {
-    $('#alerts').css({left: 16 - $('#alerts').width() + 'px'});
-  }, 100);
 
 
   var hideEmptyFormCellsOnTablet = function () {

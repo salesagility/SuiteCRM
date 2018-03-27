@@ -43,7 +43,7 @@
 <td nowrap>
 <input autocomplete="off" type="text" id="{{sugarvar key='name'}}_date" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}" size="11" maxlength="10" title='{{$vardef.help}}' {{if !empty($tabindex)}} tabindex='{{$tabindex}}' {{/if}}  onblur="combo_{{sugarvar key='name'}}.update(); {{if isset($displayParams.updateCallback)}}{{$displayParams.updateCallback}}{{/if}}">
 {capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{{sugarvar key='name'}}_trigger"{/capture}
-{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
+	<button id="{{sugarvar key='name'}}_trigger" class="btn btn-danger"><span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}"></span></button>
 {{if empty($displayParams.splitDateTime)}}
 </td>
 <td nowrap>

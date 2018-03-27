@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,18 +39,8 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
-
-/* * *******************************************************************************
-
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
-
-
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
@@ -134,6 +124,11 @@ if (!empty($_POST['saveConfig'])) {
             $_POST['passwordsetting_lockoutexpiration'] = 2;
         }
 
+        $configurator->config['passwordsetting']['oneupper'] = $_POST['passwordsetting_oneupper'];
+        $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
+        $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
+        $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
+
         $configurator->saveConfig();
 
         $focus->saveConfig();
@@ -165,19 +160,11 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-//echo "sugar_config[authenticationClass]: " . $sugar_config['authenticationClass'];
-//if (array_key_exists('authenticationClass', $sugar_config) && $sugar_config['authenticationClass'] == 'SAMLAuthenticate') {
-//   $sugar_smarty->assign('saml_enabled_checked', true);
-//} else {
-//	$sugar_smarty->assign('saml_enabled_checked', false);
-//}
-
-
-if (!function_exists('mcrypt_cbc')) {
-    $sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
-    $sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
-} else {
-    $sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
+if(!function_exists('openssl_encrypt')){
+	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_OPENSSL_DESC']);
+}else{
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
 }
 $sugar_smarty->assign("settings", $focus->settings);
 

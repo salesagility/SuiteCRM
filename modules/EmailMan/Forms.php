@@ -155,4 +155,3 @@ function add_checks(f) {
 EOQ;
 return $the_script;
 }
-?>

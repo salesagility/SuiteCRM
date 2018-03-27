@@ -72,4 +72,3 @@ $fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
 		),
         'required_fields' => Array("revision"=>1),
 );
-?>

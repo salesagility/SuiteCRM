@@ -85,4 +85,3 @@ $dashletData['MyBugsDashlet']['columns'] = array('bug_number' => array('width'  
                                                  'assigned_user_name' => array('width'   => '8', 
                                                                                'label'   => 'LBL_LIST_ASSIGNED_USER'),
                                                      );
-?>

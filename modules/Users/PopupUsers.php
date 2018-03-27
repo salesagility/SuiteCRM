@@ -135,4 +135,3 @@ $ListView->setModStrings($current_module_strings);
 $ListView->processListViewMulti($seed_object, "main", "USER");
 
 insert_popup_footer();
-?>

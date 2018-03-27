@@ -57,5 +57,3 @@ if(ACLController::checkAccess('Opportunities','list',true)){
 if(ACLController::checkAccess('Opportunities','import',true)){
 	$module_menu[]=  Array("index.php?module=Import&action=Step1&import_module=Opportunities&return_module=Opportunities&return_action=index", $mod_strings['LNK_IMPORT_OPPORTUNITIES'],"Import");
 }
-
-?>

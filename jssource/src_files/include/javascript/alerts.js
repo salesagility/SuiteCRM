@@ -130,10 +130,8 @@ Alerts.prototype.show = function (AlertObj) {
             window.open(AlertObj.options.url_redirect);
           }
         }
-        notification.onclose = function () {
-          Alerts.prototype.addToManager(AlertObj);
-        }
       }
+      Alerts.prototype.addToManager(AlertObj);
     }
     else {
       var message = AlertObj.title;

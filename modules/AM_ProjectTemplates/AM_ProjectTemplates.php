@@ -178,4 +178,3 @@ function save($check_notify = FALSE) {
 	}
 
 }
-?>

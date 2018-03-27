@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -293,6 +293,8 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'email_enable_auto_send_opt_in' => false,
+        'email_enable_confirm_opt_in' => SugarEmailAddress::COI_STAT_DISABLED,
         'filter_module_fields' => array(
             'Users' => array(
                 'show_on_employees',
@@ -1049,7 +1051,7 @@ function _mergeCustomAppListStrings($file, $app_list_strings)
  */
 function return_application_language($language)
 {
-    global $app_strings, $sugar_config;
+    global $app_strings, $sugar_config, $app_list_strings;
 
     $cache_key = 'app_strings.' . $language;
 
@@ -4539,7 +4541,7 @@ function get_dashlets_dialog_icon($module = '', $width = '32', $height = '32', $
         return $app_strings['LBL_NO_IMAGE'];
     }
 
-    return SugarThemeRegistry::current()->getImage($iconName, "align=\"$align\" border=\"0\"", $width, $height);
+    return $iconName;
 }
 
 // works nicely to change UTF8 strings that are html entities - good for PDF conversions

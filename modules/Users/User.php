@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,9 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // User is used to store customer information.
-class User extends Person
+class User extends Person implements EmailInterface
 {
 
     // Stored fields
@@ -587,7 +588,9 @@ class User extends Person
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                    SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                }
             } else {
                 if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
@@ -595,8 +598,10 @@ class User extends Person
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            $this->factor_auth = $tmpUser->factor_auth;
-            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            if($tmpUser) {
+                $this->factor_auth = $tmpUser->factor_auth;
+                $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            }
         }
 
         if ($this->factor_auth && $isUpdate && is_admin($current_user)) {
@@ -638,6 +643,11 @@ class User extends Person
 
         parent::save($check_notify);
 
+        // User Profile specific save for Email addresses
+        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+            $GLOBALS['log']->error('Email address save error');
+            return false;
+        }
 
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
@@ -1009,7 +1019,7 @@ EOQ;
         }
 
         if ($onelower && strtoupper($newPassword) === $newPassword) {
-            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+            $messages[] = $mod_strings['ERR_PASSWORD_ONELOWER'];
         }
 
         if ($onenumber && !preg_match('/[0-9]/', $newPassword)) {
@@ -1479,7 +1489,7 @@ EOQ;
             }
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $emailAddress . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
         }
 
         return $emailLink;
@@ -1522,7 +1532,7 @@ EOQ;
             $emailLink = $emailUI->populateComposeViewFields($focus);
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $focus->$attribute . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
         }
 
         return $emailLink;

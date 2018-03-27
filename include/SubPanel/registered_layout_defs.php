@@ -52,5 +52,3 @@ function get_layout_defs()
 	global $layout_defs;
 	return $layout_defs;
 }
-
-?>

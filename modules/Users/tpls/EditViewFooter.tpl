@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -504,6 +504,13 @@
                             </tr>
                         </table>
                     </td>
+                </tr>
+                <tr>
+                    <td width="17%" scope="row"><span>{$MOD.LBL_SORT_MODULES}
+                            :</span>&nbsp;{sugar_help text=$MOD.LBL_SORT_MODULES_DESCRIPTION }</td>
+                    <td width="83%" colspan="3">
+                        <input type="checkbox" name="sort_modules_by_name" {$SORT_MODULES_BY_NAME} tabindex='13'>
+                   </td>
                 </tr>
                 <tr>
                     <td width="17%" scope="row"><span>{$MOD.LBL_SUBPANEL_TABS}

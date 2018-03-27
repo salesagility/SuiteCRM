@@ -49,7 +49,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
 
-    private $_packageName ;
+    protected $_packageName ;
 
    /*
      * Constructor
@@ -159,7 +159,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         }
         $filename = $this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION);
         $GLOBALS ['log']->debug(get_class($this) . "->deploy(): writing to " . $filename);
-        $this->_saveToFile($filename, $layoutDefinitions);
+        $this->_saveToFile($filename, $defs);
     }
 
     /**
@@ -227,4 +227,3 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 		return $this->module->key_name;
 	}
 }
-?>

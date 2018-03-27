@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
  * 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd. 
  * 
  * This program is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU Affero General Public License version 3 as published by the 
@@ -664,25 +664,85 @@ class SugarApplication {
     }
 
     /**
-     * Redirect to another URL
+     * Storing messages into session
      *
      * @access	public
-     * @param	string	$url	The URL to redirect to
+     * @param string $message
      */
-    public static function appendErrorMessage($error_message) {
-        if (empty($_SESSION['user_error_message']) || !is_array($_SESSION['user_error_message'])) {
-            $_SESSION['user_error_message'] = array();
-        }
-        $_SESSION['user_error_message'][] = $error_message;
+    public static function appendErrorMessage($message) {
+        self::appendMessage('user_error_message', $message);
     }
 
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
     public static function getErrorMessages() {
-        if (isset($_SESSION['user_error_message']) && is_array($_SESSION['user_error_message'])) {
-            $msgs = $_SESSION['user_error_message'];
-            unset($_SESSION['user_error_message']);
+        $messages = self::getMessages('user_error_message');
+        return $messages;
+    }
+    
+    /**
+     * Storing messages into session
+     *
+     * @access	public
+     * @param string $message
+     */
+    public static function appendSuccessMessage($message) {
+        self::appendMessage('user_success_message', $message);
+    }
+
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
+    public static function getSuccessMessages() {
+        $messages = self::getMessages('user_success_message');
+        return $messages;
+    }
+    
+    /**
+     * Storing messages into session
+     * @param string $message
+     */
+    protected static function appendMessage($type, $message) {
+        
+        self::validateMessageType($type);
+        
+        if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
+            $_SESSION[$type] = array();
+        }
+        if(!in_array($message, $_SESSION[$type])) {
+            $_SESSION[$type][] = $message;
+        }
+    }
+    
+    /**
+     * picking up the messages from the session and clearing session storage array
+     * @return array messages
+     */
+    protected static function getMessages($type) {
+        
+        self::validateMessageType($type);
+        
+        if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
+            $msgs = $_SESSION[$type];
+            unset($_SESSION[$type]);
             return $msgs;
         } else {
             return array();
+        }
+    }
+    
+    /**
+     * 
+     * @param string $type possible message types: ['user_error_message', 'user_success_message']
+     * @throws Exception message type should be valid
+     */
+    protected static function validateMessageType($type) {
+
+        if (!in_array($type, array('user_error_message', 'user_success_message'))) {
+            throw new Exception('Incorrect application message type: ' . $type);
         }
     }
 

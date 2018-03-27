@@ -47,7 +47,3 @@ $popupMeta = array('moduleMain' => 'ProjectTask',
 						'searchInputs' =>
 							array('name')
 						);
-
-
-?>
- 

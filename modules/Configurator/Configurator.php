@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -338,4 +338,67 @@ class Configurator
         }
         $this->handleOverride(true);
     }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_OPT_IN;
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmOptInTemplateId() {
+        /** @var null|string $confirmOptInTemplateId */
+        $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
+        if (empty($confirmOptInTemplateId)) {
+            $confirmOptInTemplateId = 
+                isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
+                    $this->config['system_email_templates']['confirm_opt_in_template_id'] : null;
+        }
+        
+        if (!$confirmOptInTemplateId) {
+            $this->logger->warn('Confirm Opt template is not set');
+        }
+        
+        return $confirmOptInTemplateId;
+    }
+    
+    /**
+     * returns Confirm Opt In Enum Value from configuration
+     * 
+     * @return string
+     */
+    public function getConfirmOptInEnumValue() {
+        // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
+        $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
+        return $ret;
+    }
+    
 }

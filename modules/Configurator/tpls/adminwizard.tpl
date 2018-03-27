@@ -342,6 +342,7 @@ function disableReturnSubmission(e) {
                         <table width="100%" cellpadding="0" cellspacing="0">
                             <tr id="mailsettings1">
                                 <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_MAIL_SMTPSERVER}</span> <span class="required" id="required_mail_smtpserver"></span></td>
+                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_MAIL_SMTPSERVER}</span> <span class="required" id="required_mail_smtpserver"></span></td>
                                 <td width="30%" ><span><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255" value="{$mail_smtpserver}"></span></td>
                                 <td width="20%" scope="row"><span id="mail_smtpport_label">{$MOD.LBL_MAIL_SMTPPORT}</span></td>
                                 <td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5" value="{$mail_smtpport}"></td>

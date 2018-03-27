@@ -1,3 +1,30 @@
+.popupBody {
+  .list tr th {
+    padding: 10px;
+  }
+
+  .list tr th a:link {
+    padding-right: 0;
+  }
+
+  .list.view .pagination .button {
+    padding: 0;
+  }
+
+  .list.view .selectedRecords{
+    line-height: 26px;
+    margin: 0 4px 0 4px;
+  }
+
+  .list.view .pagination .button .suitepicon {
+    line-height: 26px;
+  }
+
+  .list.view .sugar_action_button {
+    line-height: 26px;
+  }
+}
+
 .popup {
   .nav-tabs {
     margin-top: 0;
@@ -38,6 +65,8 @@
     width: 25%;
     border-top-right-radius: 4px;
   }
+
+
   .glyph-print {
     font-size: 20px;
     color: $panel-button-bg-hover;

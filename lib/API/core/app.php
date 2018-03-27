@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -50,23 +50,33 @@ $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['curren
 $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 $version = 8;
-const API_PATH = 'lib/API/v8';
 
 require_once __DIR__.'/containers.php';
 
 $app = new \Slim\App($container);
+$paths = new \SuiteCRM\Utility\Paths();
 
-// Load Routes
-$routeFiles = (array) glob(API_PATH.'/route/*.php');
 
+// Load Core Routes
+$routeFiles = (array) glob($paths->getLibraryPath() . '/API/v8/route/*.php');
 foreach ($routeFiles as $routeFile) {
     require $routeFile;
 }
 
-// Load Callables
-$callableFiles = (array) glob(API_PATH.'/callable/*.php');
+// Load Custom Routes
+$customRouteFiles = (array) glob($paths->getCustomLibraryPath() . '/API/v8/route/*.php');
+foreach ($customRouteFiles as $routeFile) {
+    require $routeFile;
+}
 
+// Load callables
+$callableFiles = (array) glob($paths->getLibraryPath().'/API/v8/callable/*.php');
 foreach ($callableFiles as $callableFile) {
+    require $callableFile;
+}
+
+$customCallableFiles = (array) glob($paths->getCustomLibraryPath().'/API/v8/callable/*.php');
+foreach ($customCallableFiles as $callableFile) {
     require $callableFile;
 }
 

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -51,7 +51,7 @@ class Paths
     /**
      * @return string
      */
-    public function getContainersPath()
+    public function getContainersFilePath()
     {
         return $this->getLibraryPath() .'/API/core/containers.php';
     }
@@ -62,6 +62,17 @@ class Paths
     public function getLibraryPath()
     {
         return realpath(dirname(__DIR__));
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomLibraryPath()
+    {
+        $projectPath = $this->getProjectPath();
+        $libPath = $this->getLibraryPath();
+        $customLibraryPath = str_replace($projectPath, $projectPath . DIRECTORY_SEPARATOR . 'custom', $libPath);
+        return realpath($customLibraryPath);
     }
 
     /**
