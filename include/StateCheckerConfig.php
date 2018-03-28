@@ -59,6 +59,8 @@ class StateCheckerConfig
      */
     protected static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
     
+    protected static $fileExludeRegexes = ['/\/\.git$\//', '/\/cache\//', '/\/suitecrm.log$/'];
+    
     /**
      * Automatically run state collection in StateChecker constructor
      * (DO NOT CHANGE!)
@@ -88,7 +90,7 @@ class StateCheckerConfig
      * 
      * @var boolean 
      */
-    protected static $storeDetails = false;
+    protected static $storeDetails = true; //false;
     
     /**
      * Test using StateChecker

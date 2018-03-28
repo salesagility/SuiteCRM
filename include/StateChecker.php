@@ -256,6 +256,16 @@ class StateChecker
     
     // ------------- FILE SYSTEM ---------------
     
+    protected function isExcludedFile($name) 
+    {
+        foreach (StateCheckerConfig::get('fileExludeRegexes') as $regex) {
+            if (preg_match($regex, $name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * 
      * @param string $path
@@ -272,10 +282,12 @@ class StateChecker
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($realpath), RecursiveIteratorIterator::SELF_FIRST);
         $files = [];
         foreach ($objects as $name => $object) {
-            $fileObject = $object;
-            $fileObject->modifyTime = filemtime($name);
-            $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
-            $files[] = $name;
+            if (!$object->isDir() && !$this->isExcludedFile($name)) {
+                $fileObject = $object;
+                $fileObject->modifyTime = filemtime($name);
+                $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
+                $files[] = $name;
+            }
         }
         return $files;
     }

@@ -15,34 +15,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     protected $fieldDefsStore;    
     
-    /**
-     *
-     * @var array 
-     */
-    protected $globalsStack;
-    
-    /**
-     * storeGlobals
-     */
-    protected function storeGlobals() {
-        $globalKeys = StateCheckerConfig::get('globalKeys');
-        $globals = [];
-        foreach($globalKeys as $key) {
-            if(isset($_GLOBALS[$key])) {
-                $globals[$key] = $GLOBALS[$key];
-            }
-        }
-        $this->globalsStack[] = $globals;
-    }
-    
-    /**
-     * restoreGlobals
-     */
-    protected function restoreGlobals() {
-        $GLOBALS = array_pop($this->globalsStack);
-    }
-    
-
 
     public function setUp() {
         parent::setUp();
@@ -767,7 +739,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
-
+        
     }
 
     /**
@@ -776,7 +748,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testGetUnionRelatedList()
     {
-        //$this->storeGlobals();
+        $request = $_REQUEST;
+        self::assertFalse(isset($_SESSION));
         
         // test
         $GLOBALS['log']->reset();
@@ -849,7 +822,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             'query' => '',
         ), $results);
 
-        //$this->restoreGlobals();
+        $_REQUEST = $request;
+        unset($_SESSION);
     }
 
     /**
@@ -1222,6 +1196,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
         $this->db->query($query);
 
+        // cleanup
+        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
     }
 
 
@@ -2363,7 +2339,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
+            self::assertTrue(true);
         }
         self::assertFalse(isValidId($results));
 
@@ -2509,6 +2485,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
         $this->fieldDefsRestore('temp1', true);
 
+        // cleanup
+        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
     }
 
     /**
