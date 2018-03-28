@@ -164,7 +164,7 @@ $layout_defs['Documents'] = array(
             'sort_order' => 'asc',
             'sort_by' => 'id',
             'title_key' => 'AOS_Contracts',
-            'get_subpanel_data' => 'documents',
+            'get_subpanel_data' => 'aos_contracts',
             'top_buttons' =>
                 array(
                     0 =>
@@ -192,4 +192,3 @@ $layout_defs['Documents'] = array(
         ),
     ),
 );
-?>

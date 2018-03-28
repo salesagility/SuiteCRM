@@ -129,5 +129,3 @@ class BlankMonitor extends Monitor implements Trackable {
 
 	}
 }
-
-?>

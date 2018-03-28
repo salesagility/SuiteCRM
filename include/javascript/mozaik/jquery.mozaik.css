@@ -9,10 +9,8 @@
 }
 
 .mozaik-inner {
-    max-width: 600px;
     width: auto;
     margin: 0 auto;
-    background: white;
     padding: 0 30px;
     -webkit-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
@@ -230,4 +228,22 @@ div.mozaik-preloader {
 .mozaik-thumbs {
     background: #fff;
     height: 400px;
+}
+
+/* margin set */
+.mozaik-width-set {
+    display: block;
+    float: none;
+    height: 0;
+    position: relative;
+    width: 100%;
+}
+
+.mozaik-width-set .handler {
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 10;
 }

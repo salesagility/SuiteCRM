@@ -62,7 +62,7 @@ if( !isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitte
 
 //php version suggestion
 $php_suggested_ver = '';
-if(version_compare(phpversion(),'5.2.2') < 0){
+if(check_php_version() === -1){
     $php_suggested_ver=$mod_strings['LBL_YOUR_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
 }
 
@@ -129,11 +129,10 @@ $out .= <<<EOQ2
             </form>
         </div>
         <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>
 </html>
 EOQ2;
 echo $out;
-?>

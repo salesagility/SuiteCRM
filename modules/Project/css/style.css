@@ -122,11 +122,34 @@
     font-size:12px;
     table-layout:fixed;
 }
-.main_table th, td {
+.main_table th, .main_table td {
     padding: 0px;
     overflow: hidden;
     width: 24px;
 }
+
+.table_inner th, .table_inner td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+.task_td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+
+/*
+.panelContainer > td {
+	width: auto !important;
+}*/
+
+.buttons {
+    overflow: visible;
+}
+
 .month_row {
     border-bottom: 1px solid #DDDDDD;
 }
@@ -224,7 +247,7 @@
     position: 'absolute';
 }
 .task_td {
-    width:100%;
+    width:100% !important;
     border-right: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
 }
@@ -335,13 +358,20 @@
     width:80%;
     padding: .4em;
 }
-#Milestone, #Milestone_label, #Subtask, #Subtask_label {
-    display: inline!important;
+input[type=radio]#Milestone, label#Milestone_label, input[type=radio]#Subtask, label#Subtask_label {
+    display: inline-block;
 }
-#Duration, #Lag {
-    display: inline!important;
-    width: 58%!important;
- }
+
+input[type=text]#Duration {
+    display: inline;
+    width: 58%;
+}
+
+input[type=text]#Lag {
+    display: inline;
+    width: 58%;
+}
+
 #Duration_unit, #Lag_unit {
     display: inline;
     padding: .3em;

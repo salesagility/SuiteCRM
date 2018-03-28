@@ -114,4 +114,3 @@ FABRICE;
 		fclose($fileHandle);
 	}
 }
-?>

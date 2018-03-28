@@ -72,4 +72,3 @@ class ContactsQuickCreate extends QuickCreate {
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }   
 }
-?>

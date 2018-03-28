@@ -23,13 +23,27 @@
  */
 
 
-require_once('modules/AOW_Actions/actions/actionBase.php');
+require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
+require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
+    
+    /**
+     *
+     * @var int
+     */
+    protected $lastEmailsFailed;
+    
+    /**
+     *
+     * @var int
+     */
+    protected $lastEmailsSuccess;
 
     function __construct($id = ''){
         parent::__construct($id);
+        $this->clearLastEmailsStatus();
     }
 
     /**
@@ -53,7 +67,7 @@ class actionSendEmail extends actionBase {
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
         global $app_list_strings;
-        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
         if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
@@ -65,11 +79,12 @@ class actionSendEmail extends actionBase {
         $checked = '';
         if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
 
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_INDIVIDUAL_EMAILS","AOW_Actions").':';
+        $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate("LBL_INDIVIDUAL_EMAILS",
+                "AOW_Actions") . ':</label>';
         $html .= '</td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= "<td valign='top'>";
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][individual_email]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][individual_email]' name='aow_actions_param[".$line."][individual_email]' value='1' $checked></td>";
         $html .= '</td>';
@@ -78,8 +93,9 @@ class actionSendEmail extends actionBase {
         $hidden = "style='visibility: hidden;'";
         if($params['email_template'] != '') $hidden = "";
 
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL_TEMPLATE","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL_TEMPLATE",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
 
         $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE','AOW_Actions')."</a>";
@@ -87,11 +103,12 @@ class actionSendEmail extends actionBase {
         $html .= "</td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= '<td valign="top" scope="row" width="37.5%">';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td valign="top" scope="row">';
 
         $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%" class="email-line"></table>';
         $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";
@@ -242,10 +259,12 @@ class actionSendEmail extends actionBase {
                         }
                         if($linkedBeans){
                             foreach($linkedBeans as $linkedBean) {
-                                $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
-                                if (trim($rel_email) != '') {
-                                    $emails[$params['email_to_type'][$key]][] = $rel_email;
-                                    $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                if(!empty($linkedBean)){
+                                    $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                                    if (trim($rel_email) != '') {
+                                        $emails[$params['email_to_type'][$key]][] = $rel_email;
+                                        $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                    }
                                 }
                             }
                         }
@@ -262,52 +281,98 @@ class actionSendEmail extends actionBase {
         return $emails;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    /**
+     * Return true on success otherwise false.
+     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed() 
+     * methods to get last email sending status
+     * 
+     * @param SugarBean $bean
+     * @param array $params
+     * @param bool $in_save
+     * @return boolean
+     */
+    public function run_action(SugarBean $bean, $params = array(), $in_save = false)
+    {
 
-        include_once('modules/EmailTemplates/EmailTemplate.php');
+        include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
+        
+        $this->clearLastEmailsStatus();
+        
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
-        if($emailTemp->id == ''){
+        if ($emailTemp->id == '') {
             return false;
         }
 
-        $emails = $this->getEmailsFromParams($bean,$params);
+        $emails = $this->getEmailsFromParams($bean, $params);
 
-        if(!isset($emails['to']) || empty($emails['to']))
+        if (!isset($emails['to']) || empty($emails['to']))
             return false;
 
         $attachments = $this->getAttachments($emailTemp);
 
-        if(isset($params['individual_email']) && $params['individual_email']){
+        $ret = true;
+        if (isset($params['individual_email']) && $params['individual_email']) {
 
-            foreach($emails['to'] as $email_to){
+            foreach ($emails['to'] as $email_to) {
                 $emailTemp = new EmailTemplate();
                 $emailTemp->retrieve($params['email_template']);
                 $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
-                $this->parse_template($bean, $emailTemp,$template_override);
-                $this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+                $this->parse_template($bean, $emailTemp, $template_override);
+                if (!$this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+                    $ret = false;
+                    $this->lastEmailsFailed++;
+                } else {
+                    $this->lastEmailsSuccess++;
+                }
             }
-
         } else {
             $this->parse_template($bean, $emailTemp);
-			if($emailTemp->text_only=='1')
-			{
-				$email_body_html = $emailTemp->body;
-			}
-			else 
-			{
-				$email_body_html = $emailTemp->body_html;
-			}
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
+            if ($emailTemp->text_only == '1') {
+                $email_body_html = $emailTemp->body;
+            } else {
+                $email_body_html = $emailTemp->body_html;
+            }
+
+            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+                $ret = false;
+                $this->lastEmailsFailed++;
+            } else {
+                $this->lastEmailsSuccess++;
+            }
         }
-        return true;
+        return $ret;
+    }
+    
+    /**
+     *  clear last email sending status
+     */
+    protected function clearLastEmailsStatus() {
+        $this->lastEmailsFailed = 0;
+        $this->lastEmailsSuccess = 0;
+    }
+    
+    /**
+     * failed emails count at last run_action
+     * @return int
+     */
+    public function getLastEmailsFailed() {
+        return $this->lastEmailsFailed;
+    }
+    
+    /**
+     * successfully sent emails count at last run_action
+     * @return type
+     */
+    public function getLastEmailsSuccess() {
+        return $this->lastEmailsSuccess;
     }
 
     function parse_template(SugarBean $bean, &$template, $object_override = array()){
         global $sugar_config;
 
-        require_once('modules/AOW_Actions/actions/templateParser.php');
+        require_once __DIR__ . '/templateParser.php';
 
         $object_arr[$bean->module_dir] = $bean->id;
 
@@ -354,8 +419,10 @@ class actionSendEmail extends actionBase {
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
         $template->body_html = str_replace("\$url",$url,$template->body_html);
+        $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
         $template->body = str_replace("\$url",$url,$template->body);
+        $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
     function getAttachments(EmailTemplate $template){
@@ -409,7 +476,7 @@ class actionSendEmail extends actionBase {
         }
 
         //now create email
-        if (@$mail->Send()) {
+        if ($mail->Send()) {
             $emailObj->to_addrs= implode(',',$emailTo);
             $emailObj->cc_addrs= implode(',',$emailCc);
             $emailObj->bcc_addrs= implode(',',$emailBcc);
@@ -429,6 +496,27 @@ class actionSendEmail extends actionBase {
             $emailObj->status = 'sent';
             $emailObj->save();
 
+            // Fix for issue 1561 - Email Attachments Sent By Workflow Do Not Show In Related Activity.
+            foreach($attachments as $attachment) {
+                $note = new Note();
+                $note->id = create_guid();
+                $note->date_entered = $attachment->date_entered;
+                $note->date_modified = $attachment->date_modified;
+                $note->modified_user_id = $attachment->modified_user_id;
+                $note->assigned_user_id = $attachment->assigned_user_id;
+                $note->new_with_id = true;
+                $note->parent_id = $emailObj->id;
+                $note->parent_type = $attachment->parent_type;
+                $note->name = $attachment->name;;
+                $note->filename = $attachment->filename;
+                $note->file_mime_type = $attachment->file_mime_type;
+                $fileLocation = "upload://{$attachment->id}";
+                $dest = "upload://{$note->id}";
+                if(!copy($fileLocation, $dest)) {
+                    $GLOBALS['log']->debug("EMAIL 2.0: could not copy attachment file to $fileLocation => $dest");
+                }
+                $note->save();
+            }
             return true;
         }
         return false;

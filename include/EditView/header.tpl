@@ -93,7 +93,7 @@
 {{/if}}
 {{sugar_action_menu buttons=$header_buttons class="fancymenu" flat=true}}
 </td>
-<td align='right'>{{$ADMIN_EDIT}}
+<td align='right' class="edit-view-pagination">{{$ADMIN_EDIT}}
 {{if $panelCount == 0}}
     {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
 	{{if $SHOW_VCR_CONTROL}}

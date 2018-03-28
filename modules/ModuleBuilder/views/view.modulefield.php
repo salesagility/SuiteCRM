@@ -360,6 +360,15 @@ class ViewModulefield extends SugarView
         }
 
         $fv->ss->assign('help_group', $edit_or_add);
+
+        // Fix for case 2183 - the form in the field.tpl needs to know whether it is an update
+        if($field_name == '') {
+            $is_update = false;
+        } else {
+            $is_update = true;
+        }
+        $fv->ss->assign('is_update', $is_update);
+
         $body = $this->fetchTemplate($fv, 'modules/ModuleBuilder/tpls/MBModule/field.tpl');
         $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR','ModuleBuilder'), $body );
         return $ac;

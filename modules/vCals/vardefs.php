@@ -103,4 +103,3 @@ $dictionary['vCal'] = array('table' => 'vcals'
                                                       )
 
                             );
-?>

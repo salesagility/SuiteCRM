@@ -85,6 +85,7 @@ class SubpanelQuickCreate{
 
         $this->ev = $this->getEditView();
 		$this->ev->view = $this->viewType;
+		$this->ev->showVCRControl = false;
 		$this->ev->ss = new Sugar_Smarty();
 		//$_REQUEST['return_action'] = 'SubPanelViewer';
 

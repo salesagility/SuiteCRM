@@ -310,5 +310,3 @@ class TemplateDragDropChooser extends Template {
     }
 
 }
-
-?>

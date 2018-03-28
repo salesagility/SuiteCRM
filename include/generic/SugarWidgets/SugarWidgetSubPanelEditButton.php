@@ -85,5 +85,3 @@ class SugarWidgetSubPanelEditButton extends SugarWidgetField
     }
 
 }
-
-?>

@@ -1,8 +1,11 @@
-<?PHP
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+<?php
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,10 +33,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 class SugarFeed extends Basic {
@@ -268,9 +275,9 @@ class SugarFeed extends Basic {
         }
         $text = strip_tags(from_html($text));
 		$text = '<b>{this.CREATED_BY}</b> ' . $text;
-		$feed->name = substr($text, 0, 255);
-		if(strlen($text) > 255){
-			$feed->description = substr($text, 255, 510);
+		$feed->name = mb_substr($text, 0, 255, 'UTF-8');	
+		if(mb_strlen($text, 'UTF-8') > 255){
+			$feed->description = mb_substr($text, 255, 510, 'UTF-8');
 		}
 
 		if ( $record_assigned_user_id === false ) {
@@ -447,6 +454,7 @@ class SugarFeed extends Basic {
 		}else if($weeks > 1){
 			$result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
 			if($days > 0) {
+			    $result .= ' ' .translate('LBL_TIME_AND','SugarFeed').' ';
                 $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
             }
 		}else{

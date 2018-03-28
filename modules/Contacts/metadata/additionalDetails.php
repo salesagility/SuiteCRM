@@ -83,7 +83,3 @@ function additionalDetailsContact($fields) {
 				 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}");
 }
- 
- ?>
- 
- 

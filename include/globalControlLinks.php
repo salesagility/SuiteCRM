@@ -68,7 +68,7 @@ if (
 'submenu' => ''
 );
 $global_control_links['training'] = array(
-'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'http://suitecrm.com/forum/index\'))'),
+'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'https://suitecrm.com/suitecrm/forum/suite-forum\'))'),
 'submenu' => ''
  );
 
@@ -88,10 +88,9 @@ $global_control_links['about'] = array('linkinfo' => array($app_strings['LNK_ABO
 'submenu' => ''
 );
 
-if (sugar_is_file('custom/include/globalControlLinks.php')) {
+if (is_file('custom/include/globalControlLinks.php')) {
     include('custom/include/globalControlLinks.php');
 }
-if (sugar_is_file('custom/application/Ext/GlobalLinks/links.ext.php')) {
+if (is_file('custom/application/Ext/GlobalLinks/links.ext.php')) {
     include('custom/application/Ext/GlobalLinks/links.ext.php');
 }
-?>

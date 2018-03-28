@@ -44,20 +44,20 @@
 <!-- BEGIN: main -->
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	<tr height="20" >
-	<td scope="col"  scope="col"  width="50%" ><slot>{MOD.LBL_LIST_OPPORTUNITY_NAME}</slot></td>
-	<td scope="col"  width="30%" ><slot>{MOD.LBL_LIST_ACCOUNT_NAME}</slot></td>
-	<td scope="col"  width="20%" ><slot>{MOD.LBL_LIST_DATE_CLOSED}</slot></td>
-	<td scope="col"  width="20%" ><slot>&nbsp;</slot></td>
+	<td scope="col"  scope="col"  width="50%" ><span>{MOD.LBL_LIST_OPPORTUNITY_NAME}</span></td>
+	<td scope="col"  width="30%" ><span>{MOD.LBL_LIST_ACCOUNT_NAME}</span></td>
+	<td scope="col"  width="20%" ><span>{MOD.LBL_LIST_DATE_CLOSED}</span></td>
+	<td scope="col"  width="20%" ><span>&nbsp;</span></td>
 
 	  </tr>
 
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-		<td scope="row" valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Opportunities&record={OPPORTUNITY.ID}"  >{OPPORTUNITY.NAME}</a></slot></td>
-    	<td valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Accounts&record={OPPORTUNITY.ACCOUNT_ID}"  >{OPPORTUNITY.ACCOUNT_NAME}</A></slot></td>
-    	<td valign=TOP><slot>{OPPORTUNITY.DATE_CLOSED}</slot></td>
-    	<td nowrap align="center" valign=TOP><slot><a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Opportunities&record={OPPORTUNITY.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Opportunities&record={OPPORTUNITY.ID}{RETURN_URL}">{APP.LNK_EDIT}</a></slot></td>
+		<td scope="row" valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Opportunities&record={OPPORTUNITY.ID}"  >{OPPORTUNITY.NAME}</a></span></td>
+    	<td valign=TOP><span><a href="{URL_PREFIX}index.php?action=DetailView&module=Accounts&record={OPPORTUNITY.ACCOUNT_ID}"  >{OPPORTUNITY.ACCOUNT_NAME}</A></span></td>
+    	<td valign=TOP><span>{OPPORTUNITY.DATE_CLOSED}</span></td>
+    	<td nowrap align="center" valign=TOP><span><a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Opportunities&record={OPPORTUNITY.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Opportunities&record={OPPORTUNITY.ID}{RETURN_URL}">{APP.LNK_EDIT}</a></span></td>
 </tr>
 
 <!-- END: row -->

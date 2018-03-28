@@ -61,4 +61,3 @@ $module_name = 'LBL_MODULE_NAME';
 						),
 					),
  			   );
-?>

@@ -102,23 +102,37 @@ class AccountsListViewSmarty extends ListViewSmarty {
  			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist', 'form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'}, 'passthru_data':{'do_contacts' : 1 }   } );
 EOF;
 		$js = str_replace(array("\r","\n"),'',$js);
-		return "<a href='javascript:void(0)' id=\"targetlist_listview \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
+		return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
 	}
 
 
-	function process($file, $data, $htmlVar) {
+    /**
+     *
+     * @param File $file deprecated
+     * @param array $data
+     * @param string $htmlVar
+     * @return void|bool
+     */
+    public function process($file, $data, $htmlVar)
+	{
 
-		$this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
+        $this->actionsMenuExtraItems[] = $this->buildAddAccountContactsToTargetList();
 
-		parent::process($file, $data, $htmlVar);
+        $configurator = new Configurator();
+        if ($configurator->isConfirmOptInEnabled()) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
 
-		if(!ACLController::checkAccess($this->seed->module_dir,'export',true) || !$this->export) {
-			$this->ss->assign('exportLink', $this->buildExportLink());
-		}
-	}
+        $ret = parent::process($file, $data, $htmlVar);
 
+        if (!ACLController::checkAccess($this->seed->module_dir, 'export', true) || !$this->export) {
+            $this->ss->assign('exportLink', $this->buildExportLink());
+        }
 
-	/**
+        return $ret;
+    }
+
+    /**
 	 * override
 	 */
 	protected function buildActionsLink($id = 'actions_link', $location = 'top') {
@@ -157,5 +171,3 @@ EOF;
 	}
 
 }
-
-?>

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,87 +36,133 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once 'include/SugarObjects/templates/basic/Basic.php';
 
- require_once('include/SugarObjects/templates/basic/Basic.php');
- class Sale extends Basic{
+class Sale extends Basic
+{
 
- 	function __construct(){
- 		parent::__construct();
-
- 	}
+    public $amount_usdollar;
+    public $currency_id;
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * Sale constructor.
      */
-    function Sale(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+    public function __construct()
+    {
+        parent::__construct();
+
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
+     *     please update your code, use __construct instead
+     */
+    public function Sale()
+    {
+        $deprecatedMessage =
+            'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    /**
+     * @param string $order_by
+     * @param string $where
+     * @param array $filter
+     * @param array $params
+     * @param int $show_deleted
+     * @param string $join_type
+     * @param bool $return_array
+     * @param null $parentbean
+     * @param bool $singleSelect
+     *
+     * @param bool $ifListForExport
+     *
+     * @return String
+     */
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    ) {
+        //Ensure that amount is always on list view queries if amount_usdollar is as well.
+        if (!empty($filter) && isset($filter['amount_usdollar']) && !isset($filter['amount'])) {
+            $filter['amount'] = true;
+        }
 
- 	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false)
- 	{
- 		//Ensure that amount is always on list view queries if amount_usdollar is as well.
- 		if (!empty($filter) && isset($filter['amount_usdollar']) && !isset($filter['amount']))
- 		{
- 			$filter['amount'] = true;
- 		}
- 		return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, $return_array, $parentbean, $singleSelect);
- 	}
+        return parent::create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $parentbean,
+            $singleSelect
+        );
+    }
 
- 	function fill_in_additional_list_fields()
-	{
-    	parent::fill_in_additional_list_fields();
+    /**
+     *
+     */
+    public function fill_in_additional_list_fields()
+    {
+        parent::fill_in_additional_list_fields();
 
-		//Ensure that the amount_usdollar field is not null.
-		if (empty($this->amount_usdollar) && !empty($this->amount))
-		{
-			$this->amount_usdollar = $this->amount;
-		}
-	}
+        //Ensure that the amount_usdollar field is not null.
+        if (empty($this->amount_usdollar) && !empty($this->amount)) {
+            $this->amount_usdollar = $this->amount;
+        }
+    }
 
- 	function fill_in_additional_detail_fields()
-	{
-		parent::fill_in_additional_detail_fields();
-		//Ensure that the amount_usdollar field is not null.
-		if (empty($this->amount_usdollar) && !empty($this->amount))
-		{
-			$this->amount_usdollar = $this->amount;
-		}
-	}
+    /**
+     *
+     */
+    public function fill_in_additional_detail_fields()
+    {
+        parent::fill_in_additional_detail_fields();
+        //Ensure that the amount_usdollar field is not null.
+        if (empty($this->amount_usdollar) && !empty($this->amount)) {
+            $this->amount_usdollar = $this->amount;
+        }
+    }
 
-
- 	function save($check_notify = FALSE) {
- 		//"amount_usdollar" is really amount_basecurrency. We need to save a copy of the amount in the base currency.
-		if(isset($this->amount) && !number_empty($this->amount)){
-            if (!number_empty($this->currency_id))
-			{
+    /**
+     * @param bool $check_notify
+     *
+     * @return string
+     */
+    public function save($check_notify = false)
+    {
+        //"amount_usdollar" is really amount_basecurrency. We need to save a copy of the amount in the base currency.
+        if (isset($this->amount) && !number_empty($this->amount)) {
+            if (!number_empty($this->currency_id)) {
                 $currency = new Currency();
                 $currency->retrieve($this->currency_id);
                 $this->amount_usdollar = $currency->convertToDollar($this->amount);
-			}
-			else
-			{
-			$this->amount_usdollar = $this->amount;
-			}
-		}
+            } else {
+                $this->amount_usdollar = $this->amount;
+            }
+        }
 
-		return parent::save($check_notify);
- 	}
- }
-?>
+        return parent::save($check_notify);
+    }
+}

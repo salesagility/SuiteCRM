@@ -51,6 +51,9 @@ class LoggerManager
 	protected static $_loggers = array();
 
 	//this is the instance of the LoggerManager
+    /**
+     * @var null|LoggerManager
+     */
 	private static $_instance = NULL;
 
 	//these are the mappings for levels to different log types
@@ -160,6 +163,7 @@ class LoggerManager
 
  	/**
  	 * Returns a logger instance
+     * @return LoggerManager
  	 */
  	public static function getLogger()
 	{
@@ -191,7 +195,7 @@ class LoggerManager
  	{
  	    $locations = array('include/SugarLogger','custom/include/SugarLogger');
  	    foreach ( $locations as $location ) {
-            if (sugar_is_dir($location) && $dir = opendir($location)) {
+            if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
@@ -222,4 +226,14 @@ class LoggerManager
 
  	    return $loggerLevels;
  	}
+
+ 	public static function setLogLevel($level)
+    {
+        self::$_instance->_level = $level;
+    }
+
+    public static function getLogLevel()
+    {
+        return self::$_instance->_level;
+    }
 }

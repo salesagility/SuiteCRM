@@ -181,6 +181,18 @@
 							&nbsp;{MOD.LBL_SEND_AS_TEXT}
 						</td>
 					</tr>
+					<tr {width_style}>
+						<td width="15%" scope="row">
+							{MOD.LBL_WIDTH}
+						</td>
+						<td>
+							<div class="panel-toolbar">
+								<div class="template-container">
+									<input type="number" class="form-control input-sm" id="mozaik_width_set" onkeyup="mozaik.setWidth(parseInt(this.value)+'px');" onmouseup="mozaik.setWidth(parseInt(this.value)+'px'); "value="{template_width}" >
+								</div>
+							</div>
+						</td>
+					<tr>
 					<tr>
 						<td valign="top" scope="row">
 							{MOD.LBL_BODY}
@@ -188,7 +200,7 @@
 
 <!-- BEGIN: textarea -->
 						<td colspan="4" >
-							{BODY_MOZAIK}
+							{BODY_EDITOR}
 							<div id='body_text_div'>
 								<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40" style="display: none;">{BODY_HTML}</textarea>
 							</div>

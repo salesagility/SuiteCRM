@@ -172,7 +172,9 @@ global $currentModule;
 
     function getMarketingId() {
         $campaignId = isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'] ? $_REQUEST['campaign_id'] : $_REQUEST['record'];
-        $ret = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId);
+        $ret = isset($_POST['marketing_id']) && $_POST['marketing_id'] ? $_POST['marketing_id'] : (
+            isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId)
+        );
         return $ret;
     }
 
@@ -185,15 +187,7 @@ global $currentModule;
         else {
             $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
         }
-
-        if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-            $href = $matches[1];
-            SugarApplication::redirect($href);
-        }
-        else {
-            header($header_URL);
-        }
-
+        SugarApplication::headerRedirect($header_URL);
     }
     
 }else{
@@ -544,5 +538,3 @@ function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url){
   
     return $nav_html;
 }
-
-?>

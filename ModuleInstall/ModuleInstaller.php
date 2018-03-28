@@ -845,11 +845,11 @@ class ModuleInstaller{
 				$action['from'] = str_replace('<basepath>', $this->base_dir, $action['from']);
 				$GLOBALS['log']->debug("Uninstalling DCActions ..." . $action['from'] );
 				$path = 'custom/Extension/application/Ext/DashletContainer/Containers';
-				if (sugar_is_file($path . '/'. $this->id_name . '.php', 'w'))
+				if (is_file($path . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. $this->id_name . '.php');
 				}
-				else if (sugar_is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php', 'w'))
+				else if (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
 				}
@@ -983,10 +983,10 @@ class ModuleInstaller{
 						if($packs['to_module'] == 'application'){
 							$path ='custom/Extension/' . $packs['to_module']. '/Ext/Language';
 						}
-						if (sugar_is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
+						if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
 							rmdir_recursive( $path.'/'.$packs['language'].'.'. $this->id_name . '.php');
-						} else if (sugar_is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
-							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w');
+						} else if (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
+							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
 						}
 					}
 					$this->rebuild_languages($languages, $modules);
@@ -1244,7 +1244,7 @@ class ModuleInstaller{
 		if($dir == '.' && is_dir($from)){
 			$dir = $to;
 		}
-		if(!sugar_is_dir($dir, 'instance'))
+		if(!is_dir($dir))
 			mkdir_recursive($dir, true);
 /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
 		if(empty($backup_path)) {

@@ -91,10 +91,11 @@ class SugarFieldHandler
 
     /**
      * return the singleton of the SugarField
-     *
-     * @param field string field type
+     * @param $field
+     * @param bool $returnNullIfBase
+     * @return mixed
      */
-    static function getSugarField($field, $returnNullIfBase=false) {
+    public static function getSugarField($field, $returnNullIfBase=false) {
         static $sugarFieldObjects = array();
 
         $field = self::fixupFieldType($field);
@@ -169,6 +170,3 @@ class SugarFieldHandler
         return $string;
     }
 }
-
-
-?>

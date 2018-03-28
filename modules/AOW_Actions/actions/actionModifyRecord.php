@@ -56,19 +56,19 @@ class actionModifyRecord extends actionCreateRecord {
         $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
 
         $html = "<input type='hidden' name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."' value='' />";
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='modify-record'>";
         $html .= "<tr>";
         $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][rel_type]' id='aow_actions_param_rel_type".$line."'  onchange='show_mrModuleFields($line);'>".$modules."</select></td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crLine' . $line . '_table" width="100%" class="lines"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_FIELD","AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_RELATIONSHIP","AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
@@ -90,8 +90,9 @@ EOS;
 
 
         $module = getRelatedModule($bean->module_name, $params['rel_type']);
-        $html .= "cr_module[".$line."] = \"".$module."\";";
-        $html .= "cr_fields[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($module)))."\";";
+        $html .= "cr_module[" . $line . "] = \"" . $module . "\";";
+        $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace('/\s+/', ' ',
+                getModuleFields($module, 'EditView', '', array(), array('email1', 'email2')))) . "\";";
         $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
         if($params && array_key_exists('field',$params)){
             foreach($params['field'] as $key => $field){

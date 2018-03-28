@@ -56,9 +56,10 @@ require_once('include/SugarObjects/templates/person/Person.php');
 
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // Lead is used to store profile information for people who may become customers.
-class Lead extends Person {
+class Lead extends Person implements EmailInterface {
 	var $field_name_map;
 	// Stored fields
 	var $id;
@@ -526,7 +527,7 @@ class Lead extends Person {
 					} elseif($value['type'] == 'text' ) {
 						$form .= "<textarea name='".$prefix.$field."' rows='6' cols='50'>".$this->$field."</textarea>";
 					} elseif($value['type'] == 'date' ) {
-						$form .= "<input name='".$prefix.$field."' id='jscal_field".$field."' type='text'  size='11' maxlength='10' value='".$this->$field."'>&nbsp;".SugarThemeRegistry::current()->getImage("jscalendar", "id='jscal_trigger".$field."' align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ENTERDATE'])."' <span class='dateFormat'>yyyy-mm-dd</span><script type='text/javascript'>Calendar.setup ({inputField : 'jscal_field".$field."', ifFormat : '%Y-%m-%d', showsTime : false, button : 'jscal_trigger".$field."', singleClick : true, step : 1, weekNumbers:false}); addToValidate('ConvertLead', '".$field."', 'date', false,'".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
+						$form .= "<input name='".$prefix.$field."' id='jscal_field".$field."' type='text'  size='11' maxlength='10' value='".$this->$field."'>&nbsp;<span id=\"jscal_trigger\" class='suitepicon suitepicon-module-calendar'></span> <span class='dateFormat'>yyyy-mm-dd</span><script type='text/javascript'>Calendar.setup ({inputField : 'jscal_field".$field."', ifFormat : '%Y-%m-%d', showsTime : false, button : 'jscal_trigger".$field."', singleClick : true, step : 1, weekNumbers:false}); addToValidate('ConvertLead', '".$field."', 'date', false,'".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
 					} else {
 						$form .= "<input name='".$prefix.$field."' type='text' value='".$this->$field."'>";
 

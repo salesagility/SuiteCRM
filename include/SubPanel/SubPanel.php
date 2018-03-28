@@ -38,6 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+require_once('include/ListView/ListViewSubPanel.php');
 require_once('include/SubPanel/registered_layout_defs.php');
 /**
  * Subpanel
@@ -65,6 +66,7 @@ class SubPanel
 	{
 		global $beanList, $beanFiles, $focus, $app_strings;
 
+
 		$this->subpanel_defs=$subpanelDef;
 		$this->subpanel_id = $subpanel_id;
 		$this->parent_record_id = $record_id;
@@ -89,29 +91,16 @@ class SubPanel
 		{
 			sugar_die($app_strings['ERROR_NO_RECORD']);
 		}
-		$this->buildSearchQuery();
+
 		if (empty($subpanelDef)) {
 			//load the subpanel by name.
 			require_once 'include/SubPanel/SubPanelDefinitions.php' ;
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
 			$this->subpanel_defs=$subpanelDef;
+		}
 
-		}
-	}
-
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	function SubPanel($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() ){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key, $collections);
+		$this->buildSearchQuery();
 	}
 
 	function setTemplateFile($template_file)
@@ -138,7 +127,7 @@ class SubPanel
 		$subpanel_def = $thisPanel->get_buttons();
 
 		if(!isset($this->listview)){
-			$this->listview = new ListView();
+			$this->listview = new ListViewSubPanel();
 		}
 		$layout_manager = $this->listview->getLayoutManager();
 		$widget_contents = '<div><table cellpadding="0" cellspacing="0"><tr>';
@@ -172,32 +161,36 @@ class SubPanel
 		global $app_strings;
 		global $current_user;
 		global $sugar_config;
+		global $app_strings;
 
-		if(isset($this->listview)){
-			$ListView =& $this->listview;
-		}else{
-			$ListView = new ListView();
-		}
-		$ListView->initNewXTemplate($xTemplatePath,$this->subpanel_defs->mod_strings);
-		$ListView->xTemplateAssign("RETURN_URL", "&return_module=".$this->parent_module."&return_action=DetailView&return_id=".$this->parent_bean->id);
-		$ListView->xTemplateAssign("RELATED_MODULE", $this->parent_module);  // TODO: what about unions?
-		$ListView->xTemplateAssign("RECORD_ID", $this->parent_bean->id);
-		$ListView->xTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle"  border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
-		$ListView->xTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_DELETE_INLINE']));
-		$ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_ID_FF_REMOVE']));
+//		if(isset($this->listview)){
+//			$ListView =& $this->listview;
+//		}else{
+//			$this->listview = new ListViewSubPanel();
+//		}
+		$this->listview = new ListViewSubPanel();
+		$ListView =& $this->listview;
+		$ListView->initNewSmartyTemplate($xTemplatePath,$this->subpanel_defs->mod_strings);
+		$ListView->smartyTemplateAssign("RETURN_URL", "&return_module=".$this->parent_module."&return_action=DetailView&return_id=".$this->parent_bean->id);
+		$ListView->smartyTemplateAssign("RELATED_MODULE", $this->parent_module);  // TODO: what about unions?
+		$ListView->smartyTemplateAssign("RECORD_ID", $this->parent_bean->id);
+		$ListView->smartyTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle"  border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
+		$ListView->smartyTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_DELETE_INLINE']));
+		$ListView->smartyTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_ID_FF_REMOVE']));
+		$ListView->smartyTemplateAssign("APP", $app_strings);
 		$header_text= '';
 
-		$ListView->xTemplateAssign("SUBPANEL_ID", $this->subpanel_id);
-		$ListView->xTemplateAssign("SUBPANEL_SEARCH", $this->getSearchForm());
+		$ListView->smartyTemplateAssign("SUBPANEL_ID", $this->subpanel_id);
+		$ListView->smartyTemplateAssign("SUBPANEL_SEARCH", $this->getSearchForm());
 		$display_sps = '';
 		if($this->search_query == '' && empty($this->collections)) $display_sps = 'display:none';
-		$ListView->xTemplateAssign("DISPLAY_SPS",$display_sps);
+		$ListView->smartyTemplateAssign("DISPLAY_SPS",$display_sps);
 
 		if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace']))
 		{
 			$exploded = explode('/', $xTemplatePath);
-			$file_name = $exploded[sizeof($exploded) - 1];
-			$mod_name =  $exploded[sizeof($exploded) - 2];
+			$file_name = $exploded[count($exploded) - 1];
+			$mod_name =  $exploded[count($exploded) - 2];
 			$header_text= "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=$file_name&from_module=$mod_name&mod_lang="
 				.$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif','Edit Layout')."</a>";
 		}
@@ -480,4 +473,3 @@ class SubPanel
 		return '';
 	}
 }
-?>

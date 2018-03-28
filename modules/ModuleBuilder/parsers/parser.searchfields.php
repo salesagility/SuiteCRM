@@ -136,5 +136,3 @@ class ParserSearchFields extends ModuleBuilderParser
 
 
 }
-
-?>

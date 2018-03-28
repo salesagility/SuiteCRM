@@ -1,14 +1,11 @@
 <?php
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2017 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * Description:
@@ -213,6 +214,10 @@ upgrade_custom_relationships();
 
 require_once 'modules/UpgradeWizard/uw_utils.php';
 
+// guarantee the cron user check mechanism works for people upgrading from systems installed before the check existed:
+require_once 'include/utils.php';
+addCronAllowedUser(getRunningUser());
+
 set_upgrade_progress('end', 'done');
 
 logThis('Cleaning up the session.  Goodbye.');
@@ -270,6 +275,9 @@ $cleanUrl = "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
 check_now(get_sugarbeat());
 ob_end_clean();*/
 
+include 'PasswordExpirationService.php';
+$expirationMessage = (new PasswordExpirationService())->getExpirationMessage();
+
 $uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 
@@ -282,6 +290,8 @@ $uwMain = <<<eoq
 			<br>
             <b>{$mod_strings['LBL_UW_END_LOGOUT_PRE']}</b> {$mod_strings['LBL_UW_END_LOGOUT']}
 			</p>
+			<br>
+			<p>{$expirationMessage}</p>
 		</td>
 	</tr>
 </table>
@@ -314,3 +324,9 @@ $stepRecheck = 0;
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);
 unset($_SESSION['target_db_version']);
+
+
+ob_start();
+include __DIR__ . '/../Administration/UpgradeAccess.php';
+echo $cnt = ob_get_contents();
+ob_get_clean();

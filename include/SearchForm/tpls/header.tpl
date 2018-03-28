@@ -61,7 +61,12 @@ function submitOnEnter(e)
 }
 </script>
 {/literal}
-<form name='search_form' id='search_form' class='search_form' method='post' action='index.php?module={$module}&action={$action}' onkeydown='submitOnEnter(event);'>
+
+{if $searchFormInPopup}
+    {include file='include/SearchForm/tpls/headerPopup.tpl'}
+{/if}
+
+<form name='search_form' id='search_form' class='search_form{if !$searchFormInPopup} non-popup{/if}' method='post' action='index.php?module={$module}&action={$action}' onkeydown='submitOnEnter(event);'>
 <input type='hidden' name='searchFormTab' value='{$displayView}'/>
 <input type='hidden' name='module' value='{$module}'/>
 <input type='hidden' name='action' value='{$action}'/> 

@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,30 +37,33 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 require_once 'include/ListView/ListViewSmarty.php';
 
 class SpotsListViewSmarty extends ListViewSmarty
 {
-    public function SpotsListViewSmarty()
-    {
-        parent::ListViewSmarty();
+
+    /**
+     * Constructor
+     *
+     */
+    public function __construct() {
+        parent::__construct();
     }
 
-    /*
-    function buildExportLink($id = 'export_link') {
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
+     * please update your code, use __construct instead
+     */
+    public function SpotsListViewSmarty(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
-        global $app_strings;
-
-        $script = "<a href='javascript:void(0)' id='export_listview_top' ".
-                "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
-                "'index.php?entryPoint=export', " .
-                "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>" .
-                "</li><li>". // List item hack
-                "<a href='javascript:void(0)' id='map_listview_top' " .
-                " onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
-                "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
-                "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
-
-        return $script;
-    }*/
 }

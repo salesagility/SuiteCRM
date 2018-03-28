@@ -309,7 +309,7 @@ $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
 
 if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . '/tpls/MySugar.tpl');
 }
 else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
@@ -321,7 +321,7 @@ else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
 }
 else if(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . 'include/MySugar/tpls/MySugar.tpl');
 }
 else {
     $GLOBALS['log']->fatal('MySugar.tpl not found');
@@ -332,4 +332,4 @@ else {
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
 echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
 echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-?>
+

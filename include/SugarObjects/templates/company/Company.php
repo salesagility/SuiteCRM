@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,148 +36,166 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-require_once('include/SugarObjects/templates/basic/Basic.php');
+require_once 'include/SugarObjects/templates/basic/Basic.php';
 
 class Company extends Basic
 {
- 	/**
- 	 * Constructor
- 	 */
-    public function __construct()
- 	{
- 		parent::__construct();
- 		$this->emailAddress = new SugarEmailAddress();
- 	}
+    public $emailAddress;
+    public $email1;
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * Constructor
      */
-    public function Company(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->emailAddress = new SugarEmailAddress();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be removed in 8.0,
+     *     please update your code, use __construct instead
+     */
+    public function Company()
+    {
+        $deprecatedMessage =
+            'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
-
- 	/**
- 	 * @see parent::save()
- 	 */
-	public function save($check_notify=false)
- 	{
- 	    if(!empty($GLOBALS['resavingRelatedBeans']))
- 	    {
- 	        return parent::save($check_notify);
- 	    }
-		$this->add_address_streets('billing_address_street');
-		$this->add_address_streets('shipping_address_street');
-    	$ori_in_workflow = empty($this->in_workflow) ? false : true;
-		$this->emailAddress->handleLegacySave($this, $this->module_dir);
-    	$record_id = parent::save($check_notify);
+    /**
+     * @see parent::save()
+     *
+     * @param bool $check_notify
+     *
+     * @return string
+     */
+    public function save($check_notify = false)
+    {
+        if (!empty($GLOBALS['resavingRelatedBeans'])) {
+            return parent::save($check_notify);
+        }
+        $this->add_address_streets('billing_address_street');
+        $this->add_address_streets('shipping_address_street');
+        $ori_in_workflow = empty($this->in_workflow) ? false : true;
+        $this->emailAddress->handleLegacySave($this);
+        $record_id = parent::save($check_notify);
         $override_email = array();
-        if(!empty($this->email1_set_in_workflow)) {
+        if (!empty($this->email1_set_in_workflow)) {
             $override_email['emailAddress0'] = $this->email1_set_in_workflow;
         }
-        if(!empty($this->email2_set_in_workflow)) {
+        if (!empty($this->email2_set_in_workflow)) {
             $override_email['emailAddress1'] = $this->email2_set_in_workflow;
         }
-        if(!isset($this->in_workflow)) {
+        if (!isset($this->in_workflow)) {
             $this->in_workflow = false;
         }
-        if($ori_in_workflow === false || !empty($override_email)){
-            $this->emailAddress->save($this->id, $this->module_dir, $override_email,'','','','',$this->in_workflow);
+        if ($ori_in_workflow === false || !empty($override_email)) {
+            $this->emailAddress->saveEmail(
+                $this->id,
+                $this->module_dir,
+                $override_email,
+                '',
+                '',
+                '',
+                '',
+                $this->in_workflow,
+                isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
+            );
         }
-		return $record_id;
-	}
 
- 	/**
- 	 * Populate email address fields here instead of retrieve() so that they are properly available for logic hooks
- 	 *
- 	 * @see parent::fill_in_relationship_fields()
- 	 */
-	public function fill_in_relationship_fields()
-	{
-	    parent::fill_in_relationship_fields();
-	    $this->emailAddress->handleLegacyRetrieve($this);
-	}
+        return $record_id;
+    }
 
-	/**
- 	 * @see parent::get_list_view_data()
- 	 */
-	public function get_list_view_data()
-	{
-		global $system_config;
-		global $current_user;
+    /**
+     * Populate email address fields here instead of retrieve() so that they are properly available for logic hooks
+     *
+     * @see parent::fill_in_relationship_fields()
+     */
+    public function fill_in_relationship_fields()
+    {
+        parent::fill_in_relationship_fields();
+        $this->emailAddress->handleLegacyRetrieve($this);
+    }
 
-		$temp_array = $this->get_list_view_array();
+    /**
+     * @see parent::get_list_view_data()
+     */
+    public function get_list_view_data()
+    {
+        global $current_user;
 
-		$temp_array['EMAIL1'] = $this->emailAddress->getPrimaryAddress($this);
+        $temp_array = $this->get_list_view_array();
 
-            $this->email1 = $temp_array['EMAIL1'];
+        $temp_array['EMAIL1'] = $this->emailAddress->getPrimaryAddress($this);
 
-		$temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
+        $this->email1 = $temp_array['EMAIL1'];
 
-		return $temp_array;
-	}
+        $temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
+
+        return $temp_array;
+    }
 
     /**
      * Default export query for Company based modules
      * used to pick all mails (primary and non-primary)
      *
      * @see SugarBean::create_export_query()
+     *
+     * @param string $order_by
+     * @param string $where
+     * @param string $relate_link_join
+     *
+     * @return string
      */
-    function create_export_query($order_by, $where, $relate_link_join = '')
+    public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->custom_fields->getJOIN(true, true, $where);
 
         // For easier code reading, reused plenty of time
         $table = $this->table_name;
 
-        if($custom_join)
-        {
+        if ($custom_join) {
             $custom_join['join'] .= $relate_link_join;
         }
         $query = "SELECT
 					$table.*,
 					email_addresses.email_address email_address,
-					'' email_addresses_non_primary, " . // email_addresses_non_primary needed for get_field_order_mapping()
-					"users.user_name as assigned_user_name ";
-        if($custom_join)
-        {
+					'' email_addresses_non_primary, " .
+                 // email_addresses_non_primary needed for get_field_order_mapping()
+                 'users.user_name as assigned_user_name ';
+        if ($custom_join) {
             $query .= $custom_join['select'];
         }
 
         $query .= " FROM $table ";
 
-
         $query .= "LEFT JOIN users
 					ON $table.assigned_user_id=users.id ";
 
-
         //Join email address table too.
-        $query .=  " LEFT JOIN email_addr_bean_rel on $table.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module = '" . $this->module_dir . "' and email_addr_bean_rel.deleted = 0 and email_addr_bean_rel.primary_address = 1";
-        $query .=  " LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ";
+        $query .= " LEFT JOIN email_addr_bean_rel on $table.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module = '" .
+                  $this->module_dir .
+                  "' and email_addr_bean_rel.deleted = 0 and email_addr_bean_rel.primary_address = 1";
+        $query .= ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ';
 
-        if($custom_join)
-        {
+        if ($custom_join) {
             $query .= $custom_join['join'];
         }
 
         $where_auto = " $table.deleted=0 ";
 
-        if($where != "")
-        {
+        if ($where !== '') {
             $query .= "WHERE ($where) AND " . $where_auto;
-        }
-        else
-        {
-            $query .= "WHERE " . $where_auto;
+        } else {
+            $query .= 'WHERE ' . $where_auto;
         }
 
         $order_by = $this->process_order_by($order_by);

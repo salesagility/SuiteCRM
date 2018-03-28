@@ -87,7 +87,7 @@ if(!empty($_REQUEST['layout_def_key'])){
 
 $subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key);
 
-$subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
+$subpanel_object->setTemplateFile('include/SubPanel/tpls/SubPanelDynamic.tpl');
 
 if(!empty($_REQUEST['mkt_id']) && $_REQUEST['mkt_id'] != 'all') {// bug 32910
     $mkt_id = $_REQUEST['mkt_id'];
@@ -104,5 +104,3 @@ if(empty($_REQUEST['inline']))
 {
 	insert_popup_footer($theme);
 }
-
-?>

@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,7 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 *}
 <link rel="stylesheet" type="text/css" href="modules/ModuleBuilder/tpls/MB.css" />
@@ -46,7 +47,7 @@
 <input type='hidden' name='original_name' value='{$module->name}'>
 <input type='hidden' name='duplicate' value='0'>
 <input type='hidden' name='to_pdf' value='1'>
-<table class='mbTable'  >
+<table class='mbLBL' >
 	<tr><td></td><td colspan=4><input type='button' name='savebtn' value='{$mod_strings.LBL_BTN_SAVE}' class='button' onclick="ModuleBuilder.handleSave('CreateModule');">&nbsp;
 		{if !empty($module->name)}
 			<input type='button' name='duplicatebtn' value='{$mod_strings.LBL_BTN_DUPLICATE}' class='button' onclick="document.CreateModule.duplicate.value=1;ModuleBuilder.handleSave('CreateModule');">
@@ -78,7 +79,7 @@
         <td class='mbLBL'><font color="#ff0000"> * </font><b>{$mod_strings.LBL_TYPE}</b></td>
         {counter name='items' assign='items' start=0}
         <td>
-            <table>
+            <table id="factory-module">
                 <tr{if empty($module->name)} id="factory_modules"{/if}>
                 {if empty($module->name)}<input type='hidden' name='type'>{/if}
                 {foreach from=$types key='type' item='name'}
@@ -92,16 +93,23 @@
                         {if empty($module->name)}
                     <td align='center'>
                         <table id='type_{$type}' onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");' class='wizardButton' onmousedown='return false;' onmouseout='ModuleBuilder.buttonOut(this,"{$type}", "type");'>
-						  <tr>
-						      <td  align='center'>{sugar_image name=$type width=48 height=48}</td>
-						  </tr>
-					   </table>
-					   <a class='studiolink' href="javascript:void(0)" onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");'>{$name}</a>
-                        <script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
-                    </td>
+							<tr>
+							  <td  align='center'>
+								  <a href="#">
+									  <span class="suitepicon suitepicon-module-{$type}"></span>
+								  </a>
+							  </td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">{$name}</a>
+								</td>
+							</tr>
+					    </table>
+						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
+					</td>
                     {else}
-                    <td align='center'>{sugar_image name=$type width=48 height=48}<br>
-                    {$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
                     {/if}
                     </td>
                     {/if}

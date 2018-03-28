@@ -22,8 +22,8 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-
-class ProjectViewGanttChart extends SugarView {
+require_once('include/MVC/View/views/view.detail.php');
+class ProjectViewGanttChart extends ViewDetail {
 
     //Constructor
     public function __construct() {
@@ -74,6 +74,8 @@ class ProjectViewGanttChart extends SugarView {
         $start_date = $db->getOne($query);
         $query = "SELECT estimated_end_date FROM project WHERE id = '{$project->id}'";
         $end_date = $db->getOne($query);
+
+		parent::display();
 ?>
         <!--Create task pop-up-->
         <div style="display: none;">
@@ -81,22 +83,24 @@ class ProjectViewGanttChart extends SugarView {
                 <p>
                     <?php echo $mod_strings['LBL_EDIT_TASK_PROPERTIES']; ?>
                 </p>
-                <form id="popup_form">
+                <form id="popup_form" class="projects-gantt-chart-popup">
                     <fieldset>
 						<table width="100%">
 							<tr><td>
 						
 							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
-							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project->override_business_hours; ?>">
-							<input type="text" style="display: none;" name="task_id" id="task_id" value="">
+							<input type="hidden" name="consider_business_hours" id="consider_business_hours" value="<?php echo $project->override_business_hours; ?>">
+							<input type="hidden" name="task_id" style="display: none; visibility: collapse;" id="task_id" value="">
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
 							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
-							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
-							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
-							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
-							<label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
-							<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+
+							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>
+							<label id="parent_task_id" for="parent_task" style="display: none; visibility: collapse;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
+							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none; visibility: collapse;" type="text" name="parent_task" value="" />
+							<label for="task_name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
+							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
+
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
 							<?php
 							echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
@@ -178,18 +182,16 @@ class ProjectViewGanttChart extends SugarView {
 
 
         <!--Mark-up for the main body of the view-->
-        
-			<div class="moduleTitle">
+			<!-- div class="moduleTitle">
 				<h2> <?php echo $project->name;?> </h2>
 				<div class="clear"></div>
 				<br><a class="utilsLink" href="index.php?module=Project&action=DetailView&record=<?php echo $_REQUEST["project_id"];?>&return_module=Project&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL'];?></a>
 				<span class="utils">&nbsp; 
 				</span>
 				<div class="clear"></div>
-			</div>
-
-			<div class="yui-navset detailview_tabs yui-navset-top" id="Project_detailview_tabs">
-				<!--ul class="yui-nav"-->
+			</div -->
+			<!-- div class="yui-navset detailview_tabs yui-navset-top" id="Project_detailview_tabs">
+				<!--ul class="yui-nav"-- >
 				<div class="yui-content">    
 					<div id="tabcontent0">
 						<div id="detailpanel_1" class="detail view  detail508 expanded">
@@ -219,27 +221,31 @@ class ProjectViewGanttChart extends SugarView {
 							<td scope="col" width="12.5%"><?php echo ""; ?></td>
 							<td class="inlineEdit" width="37.5%"><?php echo ""; ?></td>
 							</tr>
-							<!--tr >
+							< !--tr >
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
 							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project->description;?></td>
-							</tr -->
+							</tr -- >
 							</tbody></table>
 						</div>
 					</div>
 				</div>
 				<br>
-				<?php
-					if(ACLController::checkAccess('Project', 'edit', true)){
-						echo '<button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button>';
-						echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
-					}
+	
 				?>
-			</div>
+			</div -->
+
 
 
         <div id="wrapper" >
 
-            <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["project_id"];?>" />
+			<?php
+					if(ACLController::checkAccess('Project', 'edit', true)){
+						
+						echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
+						echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
+					}
+?>
+            <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["record"];?>" />
             <div id="project_wrapper">
 
 

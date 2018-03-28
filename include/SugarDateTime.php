@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,7 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 
 /**
@@ -107,7 +108,7 @@ class SugarDateTime extends DateTime
 	 * @return SugarDateTime
 	 * @see DateTime::createFromFormat
 	 */
-	public static function createFromFormat($format, $time, $timezone = null)
+    public static function createFromFormat($format, $time, $timezone = null)
 	{
 	    if(empty($time) || empty($format)) {
 	        return false;
@@ -622,71 +623,6 @@ class SugarDateTime extends DateTime
         }
 
         return $data;
-    }
-
-    // 5.2 compatibility - 5.2 functions don't return $this, let's help them
-
-    /**
-     * (non-PHPdoc)
-     * @see DateTime::setDate()
-     * @param $year
-     * @param $month
-     * @param $day
-     * @return SugarDateTime
-     */
-    public function setDate ($year, $month, $day)
-    {
-        parent::setDate($year, $month, $day);
-        return $this;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see DateTime::setTime()
-     * @param $hour
-     * @param $minute
-     * @param int $sec
-     * @return SugarDateTime
-     */
-    public function setTime($hour, $minute, $sec = 0)
-    {
-        parent::setTime($hour, $minute, $sec);
-        return $this;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see DateTime::modify()
-     * @param $modify
-     * @return SugarDateTime
-     */
-    public function modify($modify)
-    {
-        // We can't user PHP_VERSION_ID here because problem with yesterday and tomorrow appears in defferent versions
-        // In that case we just set time to midnight for yesterday & tomorrow
-        // To leave time as it is we can use -+1 day instead of yesterday & tomorrow
-        if (strpos($modify, 'yesterday') !== false || strpos($modify, 'tomorrow') !== false) {
-            $this->setTime(0, 0);
-        }
-        if(PHP_VERSION_ID >= 50300 || $modify != 'first day of next month') {
-            parent::modify($modify);
-        } else {
-            /* PHP 5.2 does not understand 'first day of' and defaults need it */
-            $this->setDate($this->year, $this->month+1, 1);
-        }
-        return $this;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see DateTime::setTimezone()
-     * @param DateTimeZone $timezone
-     * @return SugarDateTime
-     */
-    public function setTimezone ($timezone)
-    {
-        parent::setTimezone($timezone);
-        return $this;
     }
 
 }

@@ -38,15 +38,15 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
  *}
-<!-- tab_panel_content.tpl START -->
+{*<!-- tab_panel_content.tpl START -->*}
 
-<!-- tab panel main div -->
+{*<!-- tab panel main div -->*}
 
 {{foreach name=rowIteration from=$panel key=row item=rowData}}
 
     {*row*}
 
-    <!-- ROW -->
+    {*<!-- ROW -->*}
 <div class="row detail-view-row">
 
     {{counter name="columnCount" start=0 print=false assign="columnCount"}}
@@ -55,13 +55,13 @@
 
         {*column*}
 
-        <!-- COLUMN -->
+        {*<!-- COLUMN -->*}
 
         {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            <!-- DIV column - colspan != 3 -->
+            {*<!-- DIV column - colspan != 3 -->*}
             <div class="col-xs-12 col-sm-6 detail-view-row-item">
         {{else}}
-            <!-- DIV column - colspan = 3 -->
+            {*<!-- DIV column - colspan = 3 -->*}
             <div class="col-xs-12 col-sm-12 detail-view-row-item">
         {{/if}}
 
@@ -71,12 +71,12 @@
         {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
             {{if !(!isset($subField.name) || !$subField.name)}}
-                <!-- [hide!!] -->
+                {*<!-- [hide!!] -->*}
 
                 {{if $fieldCount < $smarty.foreach.colIteration.total && !empty($colData.field.name)}}
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-                        <!-- DIV inside - colspan != 3 -->
+                        {*<!-- DIV inside - colspan != 3 -->*}
 
                     {{if $smarty.foreach.colIteration.index == 0}}
                         <div class="col-xs-12 col-sm-4 label col-1-label">
@@ -84,13 +84,13 @@
                         <div class="col-xs-12 col-sm-4 label col-2-label">
                     {{/if}}
                     {{else}}
-                        <!-- DIV inside - colspan = 3 -->
+                        {*<!-- DIV inside - colspan = 3 -->*}
                         <div class="col-xs-12 col-sm-2 label col-1-label">
                     {{/if}}
 
                     {*label*}
 
-                    <!-- LABEL -->
+                    {*<!-- LABEL -->*}
 
                     {{if isset($colData.field.customLabel)}}
                         {{$colData.field.customLabel}}
@@ -117,13 +117,13 @@
                     {{/if}}
 
                     </div>
-                    <!-- /DIV inside  -->
+                    {*<!-- /DIV inside  -->*}
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-                        <!-- phone (version 1) -->
+                        {*<!-- phone (version 1) -->*}
                         <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
                     {{else}}
-                        <!-- phone (version 2) -->
+                        {*<!-- phone (version 2) -->*}
                         <div class="col-xs-12 col-sm-10 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
                     {{/if}}
 
@@ -131,7 +131,7 @@
 
 
 
-                    <!-- simple hidden start -->
+                    {*<!-- simple hidden start -->*}
                     {if !$fields.{{$colData.field.name}}.hidden}
 
 
@@ -173,32 +173,34 @@
 
 
                     {/if}
-                    <!-- simple hidden finish -->
+                    {*<!-- simple hidden finish -->*}
 
 
 
                     {{/if}}
 
+                        {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
+                        <div class="inlineEditIcon col-xs-hidden">
+                            <span class="suitepicon suitepicon-action-edit"></span>
+                        </div>
+                        {{/if}}
+
                     </div>
-                    <!-- /phone (version 1/2) -->
+                    {*<!-- /phone (version 1/2) -->*}
 
                 {{/if}}
 
-                {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
-                    <div class="inlineEditIcon col-xs-hidden">
-                        {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
-                    </div>
-                {{/if}}
+
 
                 {{counter name="fieldCount" print=false}}
 
-            <!-- [/hide!!] -->
+            {*<!-- [/hide!!] -->*}
             {{/if}}
 
         {{/foreach}}
 
         </div>
-        <!-- /DIV column -->
+        {*<!-- /DIV column -->*}
         {{if $fieldCount==0}}
         <div class="clear"></div>
         {{/if}}
@@ -210,4 +212,4 @@
 </div>
 {{/foreach}}
 
-<!-- /tab panel main div -->
+{*<!-- /tab panel main div -->*}

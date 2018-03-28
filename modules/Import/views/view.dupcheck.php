@@ -371,4 +371,3 @@ EOJAVASCRIPT;
     }
 }
 
-?>

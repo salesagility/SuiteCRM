@@ -80,10 +80,10 @@
         </td>
 
 
-        <td align="right" width="20%">{$ADMIN_EDIT}
+        <td align="right" width="20%" class="buttons">{$ADMIN_EDIT}
             {{if $panelCount == 0}}
             {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
-            {{if $SHOW_VCR_CONTROL}}
+            {{if $SHOW_VCR_CONTROL and $config.enable_action_menu == false}}
             {$PAGINATION}
             {{/if}}
             {{counter name="panelCount" print=false}}

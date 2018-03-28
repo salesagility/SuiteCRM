@@ -48,7 +48,7 @@
 {assign var="alt_prev" value=$navStrings.previous}
 {assign var="alt_end" value=$navStrings.end}
 
-	<tr id='pagination'  role='presentation'>
+	<tr id='pagination' class="pagination-unique"  role='presentation'>
 		<td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
 			<table border='0' cellpadding='0' cellspacing='0' width='100%' class='paginationTable'>
 				<tr>
@@ -61,8 +61,15 @@
 
 						{sugar_action_menu id=$link_action_id params=$actionsLink}
 
-                        { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}<span class='ab'></span></div>{/if}
-						&nbsp;{$selectedObjectsSpan}		
+                        { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}</div>{/if}
+						{if $showFilterIcon}
+							{include file='include/ListView/ListViewSearchLink.tpl'}
+						{/if}
+                        {if empty($hideColumnFilter)}
+							{include file='include/ListView/ListViewColumnsFilterLink.tpl'}
+                        {/if}
+
+						&nbsp;{$selectedObjectsSpan}
 					</td>
 					<td  nowrap='nowrap' align="right" class='paginationChangeButtons' width="1%">
 						{if $pageData.urls.startPage}

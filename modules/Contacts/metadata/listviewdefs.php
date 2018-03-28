@@ -91,7 +91,7 @@ $listViewDefs['Contacts'] = array(
 		'label' => 'LBL_LIST_EMAIL_ADDRESS',
 		'sortable' => false,
 		'link' => true,
-		'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+		'customCode' => '{$EMAIL1_LINK}',
         'default' => true
 		),  
 	'PHONE_WORK' => array(
@@ -179,4 +179,4 @@ $listViewDefs['Contacts'] = array(
         'label' => 'LBL_DATE_ENTERED',
 		'default' => true)       
 );
-?>
+

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 /**
@@ -257,10 +261,7 @@ EOHTML;
  * @param  $theme string the name of the current theme, ignorred to use SugarThemeRegistry::current() instead.
  * @return string HTML
  */
-function insert_popup_header(
-    $theme = null,
-    $includeJS = true
-    )
+function insert_popup_header($theme = null, $includeJS = true)
 {
     global $app_strings, $sugar_config;
 
@@ -283,7 +284,9 @@ EOHTML;
         echo $sugar_config['meta_tags']['IE_COMPAT_MODE'];
     }
 
-    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>" . $themeCSS;
+    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>";
+    echo '<link href="themes/'.SugarThemeRegistry::current().'/css/bootstrap.min.css" rel="stylesheet">';
+    echo $themeCSS;
     if ($includeJS)
     {
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
@@ -295,8 +298,7 @@ EOHTML;
     /* Fix to include files required to make pop-ups responsive */
     echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
     echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
-    echo '<link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">';
-    echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
+
     echo '</head>';
     echo  '<body class="popupBody">';
 }
@@ -315,4 +317,3 @@ function insert_popup_footer()
 </html>
 EOQ;
 }
-?>

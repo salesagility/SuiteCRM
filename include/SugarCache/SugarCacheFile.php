@@ -131,7 +131,7 @@ class SugarCacheFile extends SugarCacheAbstract
         )
     {
         // load up the external cache file
-        if ( sugar_is_file($cachedfile = sugar_cached($this->_cacheFileName)))
+        if ( is_file($cachedfile = sugar_cached($this->_cacheFileName)))
             $this->localCache = unserialize(file_get_contents($cachedfile));
 
         if ( isset($this->_localStore[$key]) )

@@ -86,7 +86,36 @@
 
         return snapshotTxt;
     }
+
+    var SpotsObj = (function () {
+        const _this = this;
+        const buttonIds = ['SAVE_HEADER', 'SAVE_FOOTER', 'save_and_continue'];
+
+        this.setEvents = function (buttons) {
+            for (var i = 0; i < buttons.length; i++) {
+                var button = document.getElementById(buttons[i]);
+
+                if (button) {
+                    button.addEventListener('click', function () {
+                        window.onbeforeunload = sendAndRedirect('EditView', 'Saving Spots...', '?module=Spots');
+                    });
+                }
+            }
+        };
+        function resetButtons() {
+            if (document.getElementById('EditView')) {
+                _this.setEvents(buttonIds);
+            }
+        }
+
+        var result = {};
+        result.resetButtons = resetButtons;
+
+        return result;
+    })();
+
+    SpotsObj.resetButtons();
 </script>
 {/literal}
 
-<div id="output"></div>
+<div id="output" style="overflow: auto"></div>

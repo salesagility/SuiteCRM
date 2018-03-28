@@ -39,19 +39,25 @@
 
 *}
 </form>
+
 {{if $externalJSFile}}
-require_once("'".$externalJSFile."'");
-{{/if}}
-{$set_focus_block}
-{{if isset($scriptBlocks)}}
-<!-- Begin Meta-Data Javascript -->
-{{$scriptBlocks}}
-<!-- End Meta-Data Javascript -->
+	require_once("'".$externalJSFile."'");
 {{/if}}
 
+{$set_focus_block}
+
+{{if isset($scriptBlocks)}}
+	<!-- Begin Meta-Data Javascript -->
+	{{$scriptBlocks}}
+	<!-- End Meta-Data Javascript -->
+{{/if}}
 
 <div class="h3Row" id="scheduler"></div>
 
+<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+  
 <script type="text/javascript">
 {literal}
 SUGAR.calls = {};
@@ -104,16 +110,5 @@ YAHOO.util.Event.onContentReady("{/literal}{{$form_name}}{literal}",function() {
 {/literal}
 </script>
 </form>
-<form >
-	<div class="buttons">
-		{{if !empty($form) && !empty($form.buttons_footer)}}
-		   {{foreach from=$form.buttons_footer key=val item=button}}
-		      {{sugar_button module="$module" id="$button" location="FOOTER" view="$view"}}
-		   {{/foreach}}
-		{{else}}
-				{{sugar_button module="$module" id="SAVE" view="$view"}}
-				{{sugar_button module="$module" id="CANCEL" view="$view"}}
-		{{/if}}
-		{{sugar_button module="$module" id="Audit" view="$view"}}
-	</div>
-</form> 
+<form>{{sugar_include type="smarty" file='include/EditView/footer.tpl'}}{* template has a </form>*}
+

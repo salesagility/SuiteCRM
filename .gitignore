@@ -59,11 +59,16 @@ nbproject/
 .*.sw[a-z]
 *.un~
 Session.vim
+tags
 # Windows
 Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+# Microsoft Visual Studio
+*.sln
+*.suo
+*.phpproj
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -72,3 +77,27 @@ SuiteCRM.kdev4
 #Ignore composer vendor folder
 vendor/
 public/
+
+#Ingore composer files
+composer.lock
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
+
+#Ignore Sass Generated files in SuiteP
+themes/SuiteP/css/*.map
+themes/SuiteP/css/*/*.map
+themes/SuiteP/css/*/color-palette.css
+themes/SuiteP/css/*/variables.css
+tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err
+cache/
+custom/**/
+.sass-cache/
+.php_cs.cache

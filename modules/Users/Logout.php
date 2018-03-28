@@ -52,6 +52,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $current_user->setPreference('lastTheme',$theme);
 $GLOBALS['current_user']->call_custom_logic('before_logout');
 
+if(method_exists($authController->authController, 'preLogout')) {
+	$authController->authController->preLogout();
+}
+
 // submitted by Tim Scott from SugarCRM forums
 foreach($_SESSION as $key => $val) {
 	$_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP	

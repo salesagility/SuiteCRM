@@ -73,51 +73,51 @@
 <table width="100%" border="0" cellspacing="{GRIDLINE}" cellpadding="0">
 {PAGINATION}
     <tr>
-    <td scope="row" width='15%'><slot>{MOD.LBL_TYPE}</slot></td>
-    <td colspan="3"><slot>{TYPE}</slot></td>
+    <td scope="row" width='15%'><span>{MOD.LBL_TYPE}</span></td>
+    <td colspan="3"><span>{TYPE}</span></td>
     </tr>
 	<tr>
-	<td scope="row" width='15%'><slot>{MOD.LBL_NAME}</slot></td>
-	<td><slot>{NAME}&nbsp;</slot></td>
-	<td scope="row"><slot>{APP.LBL_DATE_MODIFIED}</slot></td>
-	<td><slot>{DATE_MODIFIED} {APP.LBL_BY} {MODIFIED_BY}&nbsp;</slot></td>
+	<td scope="row" width='15%'><span>{MOD.LBL_NAME}</span></td>
+	<td><span>{NAME}&nbsp;</span></td>
+	<td scope="row"><span>{APP.LBL_DATE_MODIFIED}</span></td>
+	<td><span>{DATE_MODIFIED} {APP.LBL_BY} {MODIFIED_BY}&nbsp;</span></td>
 	<!--
-	<td><slot>{MOD.LBL_PUBLISH}</slot></td>
-	<td><slot><input type="checkbox" name="published" disabled {PUBLISHED}></slot></td>
+	<td><span>{MOD.LBL_PUBLISH}</span></td>
+	<td><span><input type="checkbox" name="published" disabled {PUBLISHED}></span></td>
 	-->
 	</tr>
 	<tr>
-	<td scope="row" width='15%'><slot>{MOD.LBL_DESCRIPTION}</slot></td>
-	<td><slot>{DESCRIPTION}&nbsp;</slot></td>
-	<td scope="row"><slot>{APP.LBL_DATE_ENTERED}</slot></td>
-	<td><slot>{DATE_ENTERED} {APP.LBL_BY} {CREATED_BY}&nbsp;</slot></td>
+	<td scope="row" width='15%'><span>{MOD.LBL_DESCRIPTION}</span></td>
+	<td><span>{DESCRIPTION}&nbsp;</span></td>
+	<td scope="row"><span>{APP.LBL_DATE_ENTERED}</span></td>
+	<td><span>{DATE_ENTERED} {APP.LBL_BY} {CREATED_BY}&nbsp;</span></td>
 	</tr>
 <!--
 	<tr>
-	<td scope="row" valign="top"><slot></slot></td>
-	<td><slot></slot></td>
+	<td scope="row" valign="top"><span></span></td>
+	<td><span></span></td>
 	</tr>
 -->
 	<tr>
-	<td scope="row" valign="top"><slot>{MOD.LBL_SUBJECT}</slot></td>
-	<td><slot>{SUBJECT}&nbsp;</slot></td>
+	<td scope="row" valign="top"><span>{MOD.LBL_SUBJECT}</span></td>
+	<td><span>{SUBJECT}&nbsp;</span></td>
 	<td scope="row" valign="top">
 	</td>
-	<td><slot>{TEAM}&nbsp;</slot></td>
+	<td><span>{TEAM}&nbsp;</span></td>
 	</tr>
 	<tr>
-	<td scope="row" width='15%'><slot>{MOD.LBL_SEND_AS_TEXT}</slot></td>
-	<td><slot><input id='text_only' type="checkbox" disabled="disabled" {TEXT_ONLY_CHECKED} /></slot></td>
+	<td scope="row" width='15%'><span>{MOD.LBL_SEND_AS_TEXT}</span></td>
+	<td><span><input id='text_only' type="checkbox" disabled="disabled" {TEXT_ONLY_CHECKED} /></span></td>
 	
-	<td scope="row" width='15%'><slot>{APP.LBL_ASSIGNED_TO}</slot></td>
-	<td><slot>{ASSIGNED_USER_NAME}</slot></td>
+	<td scope="row" width='15%'><span>{APP.LBL_ASSIGNED_TO}</span></td>
+	<td><span>{ASSIGNED_USER_NAME}</span></td>
 	
 	</tr>
 	<tr>
-	<td scope="row" valign="top"><slot>{MOD.LBL_BODY}</slot></td>
-        <td colspan="3"  style="background-color: #ffffff;" ><slot><div id="html_div" style="background-color: #ffffff;padding: 5px"><iframe id="html_frame" src="" style="width:100%; height:500px"></iframe></div>
+	<td scope="row" valign="top"><span>{MOD.LBL_BODY}</span></td>
+        <td colspan="3"  style="background-color: #ffffff;" ><span><div id="html_div" style="background-color: #ffffff;padding: 5px"><iframe id="html_frame" src="" style="width:100%; height:500px"></iframe></div>
 <input id='toggle_textarea_elem' onclick="toggle_textarea(this);" type="button" name="toggle_html" value="{MOD.LBL_SHOW_ALT_TEXT}"/><br>
-<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px"><pre>{BODY}</pre></div></slot>
+<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px"><pre>{BODY}</pre></div></span>
 <script>
 function toggle_textarea(obj)
 {
@@ -137,8 +137,8 @@ document.getElementById("html_frame").contentWindow.document.close();
 
 	</tr>
 	<tr>
-		<td scope="row" valign="top"><slot>{MOD.LBL_ATTACHMENTS}</td>
-		<td colspan="3"><slot>{ATTACHMENTS}&nbsp;</slot></td>
+		<td scope="row" valign="top"><span>{MOD.LBL_ATTACHMENTS}</td>
+		<td colspan="3"><span>{ATTACHMENTS}&nbsp;</span></td>
 	</tr>
 
 </table>

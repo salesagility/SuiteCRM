@@ -46,6 +46,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * theme basis.
  ********************************************************************************/
 
+include_once __DIR__ . '/SugarThemeRegistry.php';
+
 if(!defined('JSMIN_AS_LIB'))
     define('JSMIN_AS_LIB', true);
 
@@ -317,7 +319,7 @@ class SugarTheme
             }
         }
         if ( !inDeveloperMode() ) {
-            if ( sugar_is_file($cachedfile = sugar_cached($this->getFilePath().'/pathCache.php'))) {
+            if ( is_file($cachedfile = sugar_cached($this->getFilePath().'/pathCache.php'))) {
                 $caches = unserialize(file_get_contents($cachedfile));
                 if ( isset($caches['jsCache']) )
                     $this->_jsCache       = $caches['jsCache'];
@@ -329,7 +331,7 @@ class SugarTheme
                     $this->_templateCache = $caches['templateCache'];
             }
             $cachedfile = sugar_cached($this->getFilePath().'/spriteCache.php');
-			if(!empty($GLOBALS['sugar_config']['use_sprites']) && sugar_is_file($cachedfile)) {
+			if(!empty($GLOBALS['sugar_config']['use_sprites']) && is_file($cachedfile)) {
 				$this->_spriteCache = unserialize(sugar_file_get_contents($cachedfile));
 			}
         }
@@ -601,11 +603,7 @@ class SugarTheme
         $html = '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('deprecated.css').'" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
-
 
 		// sprites
 		if(!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
@@ -646,6 +644,8 @@ class SugarTheme
             $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('fonts.'.$font.'.css').'" id="current_font_style" />';
         }
 
+
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
         return $html;
     }
 
@@ -677,17 +677,17 @@ EOHTML;
             return $this->_templateCache[$templateName];
 
         $templatePath = '';
-        if (sugar_is_file('custom/'.$this->getTemplatePath().'/'.$templateName))
+        if (is_file('custom/'.$this->getTemplatePath().'/'.$templateName))
             $templatePath = 'custom/'.$this->getTemplatePath().'/'.$templateName;
-        elseif (sugar_is_file($this->getTemplatePath().'/'.$templateName))
+        elseif (is_file($this->getTemplatePath().'/'.$templateName))
             $templatePath = $this->getTemplatePath().'/'.$templateName;
         elseif (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getTemplate($templateName)) != '')
             $templatePath = $filename;
-        elseif (sugar_is_file('custom/'.$this->getDefaultTemplatePath().'/'.$templateName))
+        elseif (is_file('custom/'.$this->getDefaultTemplatePath().'/'.$templateName))
             $templatePath = 'custom/'.$this->getDefaultTemplatePath().'/'.$templateName;
-        elseif (sugar_is_file($this->getDefaultTemplatePath().'/'.$templateName))
+        elseif (is_file($this->getDefaultTemplatePath().'/'.$templateName))
             $templatePath = $this->getDefaultTemplatePath().'/'.$templateName;
         else {
             $GLOBALS['log']->warn("Template $templateName not found");
@@ -945,13 +945,13 @@ EOHTML;
         )
     {
         // return now if the extension matches that of which we are looking for
-        if ( sugar_is_file($imageName) )
+        if ( is_file($imageName) )
             return $imageName;
         $pathParts = pathinfo($imageName);
         foreach ( $this->imageExtensions as $extension )
             if ( isset($pathParts['extension']) )
                 if ( ( $extension != $pathParts['extension'] )
-                        && sugar_is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension) )
+                        && is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension) )
                     return $pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension;
 
         return '';
@@ -967,7 +967,16 @@ EOHTML;
      */
     public function getCSSURL($cssFileName, $returnURL = true)
     {
-        if ( isset($this->_cssCache[$cssFileName]) && sugar_is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
+
+        if (preg_match('/.css$/', $cssFileName)) {
+            global $current_user;
+            if (method_exists($current_user, 'getSubTheme')) {
+                $subTheme = $current_user->getSubTheme();
+                $cssFileName = $subTheme . '/' . $cssFileName;
+            }
+        }
+
+        if ( isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
             if ( $returnURL )
                 return getJSPath("cache/".$this->_cssCache[$cssFileName]);
             else
@@ -982,15 +991,15 @@ EOHTML;
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName,false)) != '')
             $cssFileContents .= file_get_contents($filename);
         else {
-            if (sugar_is_file($defaultFileName))
+            if (is_file($defaultFileName))
                 $cssFileContents .= file_get_contents($defaultFileName);
-            if (sugar_is_file('custom/'.$defaultFileName))
+            if (is_file('custom/'.$defaultFileName))
                 $cssFileContents .= file_get_contents('custom/'.$defaultFileName);
         }
-        if (sugar_is_file($fullFileName)) {
+        if (is_file($fullFileName)) {
             $cssFileContents .= file_get_contents($fullFileName);
         }
-        if (sugar_is_file('custom/'.$fullFileName)) {
+        if (is_file('custom/'.$fullFileName)) {
             $cssFileContents .= file_get_contents('custom/'.$fullFileName);
         }
         if (empty($cssFileContents)) {
@@ -1016,7 +1025,7 @@ EOHTML;
         }
 
         // minify the css
-        if ( !inDeveloperMode() && !sugar_is_file($cssFilePath) ) {
+        if ( !inDeveloperMode() && !is_file($cssFilePath) ) {
             $cssFileContents = cssmin::minify($cssFileContents);
         }
 
@@ -1041,7 +1050,7 @@ EOHTML;
      */
     public function getJSURL($jsFileName, $returnURL = true)
     {
-        if ( isset($this->_jsCache[$jsFileName]) && sugar_is_file(sugar_cached($this->_jsCache[$jsFileName])) ) {
+        if ( isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName])) ) {
             if ( $returnURL )
                 return getJSPath("cache/".$this->_jsCache[$jsFileName]);
             else
@@ -1056,14 +1065,14 @@ EOHTML;
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getJSURL($jsFileName,false)) != ''    && !in_array($jsFileName,$this->ignoreParentFiles)) {
            $jsFileContents .= file_get_contents($filename);
        } else {
-            if (sugar_is_file($defaultFileName))
+            if (is_file($defaultFileName))
                 $jsFileContents .= file_get_contents($defaultFileName);
-            if (sugar_is_file('custom/'.$defaultFileName))
+            if (is_file('custom/'.$defaultFileName))
                 $jsFileContents .= file_get_contents('custom/'.$defaultFileName);
         }
-        if (sugar_is_file($fullFileName))
+        if (is_file($fullFileName))
             $jsFileContents .= file_get_contents($fullFileName);
-        if (sugar_is_file('custom/'.$fullFileName))
+        if (is_file('custom/'.$fullFileName))
             $jsFileContents .= file_get_contents('custom/'.$fullFileName);
         if (empty($jsFileContents)) {
             $GLOBALS['log']->warn("Javascript File $jsFileName not found");
@@ -1074,7 +1083,7 @@ EOHTML;
         $jsFilePath = create_cache_directory($fullFileName);
 
         // minify the js
-        if ( !inDeveloperMode()&& !sugar_is_file(str_replace('.js','-min.js',$jsFilePath)) ) {
+        if ( !inDeveloperMode()&& !is_file(str_replace('.js','-min.js',$jsFilePath)) ) {
             $jsFileContents = SugarMin::minify($jsFileContents);
             $jsFilePath = str_replace('.js','-min.js',$jsFilePath);
             $fullFileName = str_replace('.js','-min.js',$fullFileName);
@@ -1111,8 +1120,8 @@ EOHTML;
         $imageArray = array();
         foreach ( $pathsToSearch as $path )
         {
-            if (!sugar_is_dir($path)) $path = "custom/$path";
-            if (sugar_is_dir($path) && is_readable($path) && $dir = opendir($path)) {
+            if (!is_dir($path)) $path = "custom/$path";
+            if (is_dir($path) && is_readable($path) && $dir = opendir($path)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
@@ -1159,368 +1168,16 @@ EOHTML;
 
         return $config;
     }
-
-}
-
-/**
- * Registry for all the current classes in the system
- */
-class SugarThemeRegistry
-{
-    /**
-     * Array of all themes and thier object
-     *
-     * @var array
-     */
-    private static $_themes = array();
-
-    /**
-     * Name of the current theme; corresponds to an index key in SugarThemeRegistry::$_themes
-     *
-     * @var string
-     */
-    private static $_currentTheme;
-
-    /**
-     * Disable the constructor since this will be a singleton
-     */
-    private function __construct() {}
-
-    /**
-     * Adds a new theme to the registry
-     *
-     * @param $themedef array
-     */
-    public static function add(
-        array $themedef
-        )
-    {
-        // make sure the we know the sugar version
-        global $sugar_version;
-        if (empty($sugar_version))
-        {
-            include('sugar_version.php');
-        }
-
-        // Assume theme is designed for 5.5.x if not specified otherwise
-        if ( !isset($themedef['version']) )
-            $themedef['version']['regex_matches'] = array('5\.5\.*');
-
-        // Check to see if theme is valid for this version of Sugar; return false if not
-        $version_ok = false;
-        if( isset($themedef['version']['exact_matches']) ){
-            $matches_empty = false;
-            foreach( $themedef['version']['exact_matches'] as $match ){
-                if( $match == $GLOBALS['sugar_version'] ){
-                    $version_ok = true;
-                }
-            }
-        }
-        if( !$version_ok && isset($themedef['version']['regex_matches']) ){
-            $matches_empty = false;
-            foreach( $themedef['version']['regex_matches'] as $match ){
-                if( preg_match( "/$match/", $GLOBALS['sugar_version'] ) ){
-                    $version_ok = true;
-                }
-            }
-        }
-        if ( !$version_ok )
-            return false;
-
-        $theme = new SugarTheme($themedef);
-        self::$_themes[$theme->dirName] = $theme;
+    
+    
+    public function getSubThemes() {
+        $subThemes = SugarThemeRegistry::getSubThemes();
+        return $subThemes;
+    }
+    
+    public function getSubThemeDefault() {
+        $subThemeDefault = SugarThemeRegistry::getSubThemeDefault();
+        return $subThemeDefault;
     }
 
-    /**
-     * Removes a new theme from the registry
-     *
-     * @param $themeName string
-     */
-    public static function remove(
-        $themeName
-        )
-    {
-        if ( self::exists($themeName) )
-            unset(self::$_themes[$themeName]);
-    }
-
-    /**
-     * Returns a theme object in the registry specified by the given $themeName
-     *
-     * @param $themeName string
-     */
-    public static function get(
-        $themeName
-        )
-    {
-        if ( isset(self::$_themes[$themeName]) )
-            return self::$_themes[$themeName];
-    }
-
-    /**
-     * Returns the current theme object
-     *
-     * @return SugarTheme object
-     */
-    public static function current()
-    {
-        if ( !isset(self::$_currentTheme) )
-            self::buildRegistry();
-
-        return self::$_themes[self::$_currentTheme];
-    }
-
-    /**
-     * Returns the default theme object
-     *
-     * @return SugarTheme object
-     */
-    public static function getDefault()
-    {
-        if ( !isset(self::$_currentTheme) )
-            self::buildRegistry();
-
-        if ( isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme']) ) {
-            return self::get($GLOBALS['sugar_config']['default_theme']);
-        }
-        $array_keys = array_keys(self::availableThemes());
-        return self::get(array_pop($array_keys));
-    }
-
-    /**
-     * Returns true if a theme object specified by the given $themeName exists in the registry
-     *
-     * @param  $themeName string
-     * @return bool
-     */
-    public static function exists(
-        $themeName
-        )
-    {
-        return (self::get($themeName) !== null);
-    }
-
-    /**
-     * Sets the given $themeName to be the current theme
-     *
-     * @param  $themeName string
-     */
-    public static function set(
-        $themeName
-        )
-    {
-        if ( !self::exists($themeName) )
-            return false;
-
-        self::$_currentTheme = $themeName;
-
-        // set some of the expected globals
-        $GLOBALS['barChartColors'] = self::current()->barChartColors;
-        $GLOBALS['pieChartColors'] = self::current()->pieChartColors;
-        return true;
-    }
-
-    /**
-     * Builds the theme registry
-     */
-    public static function buildRegistry()
-    {
-        self::$_themes = array();
-        $dirs = array("themes/","custom/themes/");
-
-        // check for a default themedef file
-        $themedefDefault = array();
-        if ( sugar_is_file("custom/themes/default/themedef.php") ) {
-            $themedef = array();
-            require("custom/themes/default/themedef.php");
-            $themedefDefault = $themedef;
-        }
-
-        foreach ($dirs as $dirPath ) {
-            if (sugar_is_dir('./'.$dirPath) && is_readable('./'.$dirPath) && $dir = opendir('./'.$dirPath)) {
-                while (($file = readdir($dir)) !== false) {
-                    if ($file == ".."
-                            || $file == "."
-                            || $file == ".svn"
-                            || $file == "CVS"
-                            || $file == "Attic"
-                            || $file == "default"
-                            || !sugar_is_dir("./$dirPath".$file)
-                            || !sugar_is_file("./{$dirPath}{$file}/themedef.php")
-                            )
-                        continue;
-                    $themedef = array();
-                    require("./{$dirPath}{$file}/themedef.php");
-                    $themedef = array_merge($themedef,$themedefDefault);
-                    $themedef['dirName'] = $file;
-                    // check for theme already existing in the registry
-                    // if so, then it will override the current one
-                    if ( self::exists($themedef['dirName']) ) {
-                        $existingTheme = self::get($themedef['dirName']);
-                        foreach ( SugarTheme::getThemeDefFields() as $field )
-                            if ( !isset($themedef[$field]) )
-                                $themedef[$field] = $existingTheme->$field;
-                        self::remove($themedef['dirName']);
-                    }
-                    if ( isset($themedef['name']) ) {
-                        self::add($themedef);
-                    }
-                }
-                closedir($dir);
-            }
-        }
-        // default to setting the default theme as the current theme
-        if ( !isset($GLOBALS['sugar_config']['default_theme']) || !self::set($GLOBALS['sugar_config']['default_theme']) ) {
-            if ( count(self::availableThemes()) == 0 )
-            {
-                sugar_die('No valid themes are found on this instance');
-            } else {
-                self::set(self::getDefaultThemeKey());
-            }
-        }
-    }
-
-
-    /**
-     * getDefaultThemeKey
-     *
-     * This function returns the default theme key.  It takes into account string casing issues that may arise
-     * from upgrades.  It attempts to look for the Sugar theme and if not found, defaults to return the name of the last theme
-     * in the array of available themes loaded.
-     *
-     * @return $defaultThemeKey String value of the default theme key to use
-     */
-    private static function getDefaultThemeKey()
-    {
-        $availableThemes = self::availableThemes();
-        foreach($availableThemes as $key=>$theme)
-        {
-            if(strtolower($key) == 'sugar')
-            {
-                return $key;
-            }
-        }
-        $array_keys = array_keys($availableThemes);
-        return array_pop($array_keys);
-    }
-
-
-    /**
-     * Returns an array of available themes. Designed to be absorbed into get_select_options_with_id()
-     *
-     * @return array
-     */
-    public static function availableThemes()
-    {
-        $themelist = array();
-        $disabledThemes = array();
-        if ( isset($GLOBALS['sugar_config']['disabled_themes']) )
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
-
-        foreach ( self::$_themes as $themename => $themeobject ) {
-            if ( in_array($themename,$disabledThemes) )
-                continue;
-            $themelist[$themeobject->dirName] = $themeobject->name;
-        }
-        asort($themelist, SORT_STRING);
-        return $themelist;
-    }
-
-    /**
-     * Returns an array of un-available themes. Designed used with the theme selector in the admin panel
-     *
-     * @return array
-     */
-    public static function unAvailableThemes()
-    {
-        $themelist = array();
-        $disabledThemes = array();
-        if ( isset($GLOBALS['sugar_config']['disabled_themes']) )
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
-
-        foreach ( self::$_themes as $themename => $themeobject ) {
-            if ( in_array($themename,$disabledThemes) )
-                $themelist[$themeobject->dirName] = $themeobject->name;
-        }
-
-        return $themelist;
-    }
-
-    /**
-     * Returns an array of all themes found in the current installation
-     *
-     * @return array
-     */
-    public static function allThemes()
-    {
-        $themelist = array();
-
-        foreach ( self::$_themes as $themename => $themeobject )
-            $themelist[$themeobject->dirName] = $themeobject->name;
-
-        return $themelist;
-    }
-
-    /**
-     * Returns an array of all themes def found in the current installation
-     *
-     * @return array
-     */
-    public static function allThemesDefs()
-    {
-        $themelist = array();
-        $disabledThemes = array();
-        if (isset($GLOBALS['sugar_config']['disabled_themes']))
-            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
-
-        foreach (self::$_themes as $themename => $themeobject) {
-            $themearray['name'] = $themeobject->name;
-            $themearray['configurable'] = $themeobject->configurable;
-            $themearray['enabled'] = !in_array($themename, $disabledThemes);
-            $themelist[$themeobject->dirName] = $themearray;
-        }
-
-        return $themelist;
-    }
-
-    /**
-     * get the configurable options for $themeName
-     *
-     * @param  $themeName string
-     */
-    public static function getThemeConfig($themeName)
-    {
-        global $sugar_config;
-
-        if ( !self::exists($themeName) )
-            return false;
-
-        $config = array();
-
-        foreach(self::$_themes[$themeName]->config_options as $name => $def){
-            $config[$name] = $def;
-
-            $value = '';
-            if(isset($sugar_config['theme_settings'][$themeName][$name])){
-                $value = $sugar_config['theme_settings'][$themeName][$name];
-            } else if(isset($def['default'])){
-                $value = $def['default'];
-            }
-            $config[$name]['value'] = $value;
-
-        }
-
-        return $config;
-
-    }
-
-    /**
-     * Clears out the cached path locations for all themes
-     */
-    public static function clearAllCaches()
-    {
-        foreach ( self::$_themes as $themeobject ) {
-            $themeobject->clearCache();
-        }
-    }
 }

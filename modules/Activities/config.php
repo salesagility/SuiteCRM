@@ -45,5 +45,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 //defines the call and meeting status.  Values are keys, not translated strings
 $open_status[] = "Planned";
-
-?>

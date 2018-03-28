@@ -59,4 +59,3 @@ $dashletData['MyPipelineBySalesStageDashlet']['searchFields'] = array(
             ),
         
         );
-?>

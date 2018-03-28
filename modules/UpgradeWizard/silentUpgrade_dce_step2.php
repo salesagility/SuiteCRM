@@ -192,6 +192,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
         'systexpirationtime' => '',
         'systexpirationtype' => '0',
         'systexpirationlogin' => '',
+        'factoremailtmpl' => '',
         ) ,
     );
 
@@ -850,6 +851,3 @@ if(count($errors) > 0) {
 	echo "******** Run Repair -> Rebuild Relationships  **********************\n";
 	echo "********************************************************************\n";
 }
-
-
-?>

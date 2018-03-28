@@ -40,7 +40,7 @@ buildEditField();
 
 //Global Variables.
 
-var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
+var inlineEditSaveButtonImg = "themes/"+SUGAR.themes.theme_name+"/images/inline_edit_save_icon.svg";
 if($("#inline_edit_icon").length) {
     var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 } else {
@@ -56,20 +56,24 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
-    	
-    	if(e.which !== undefined && e.which === 2){
+
+        if(e.which !== undefined && e.which === 2){
             return;
         }
-        
+
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
-            clicks++;
-            
+
+            // Fix for Issue #3148, force it so clicks is only ever = 1 when clicked, never higher.
+            if (clicks == 0) {
+                clicks++;
+            }
+
             if(e.ctrlKey && clicks == 1){
                 return;
             }
@@ -85,10 +89,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -107,6 +111,10 @@ function buildEditField(){
         var _this = elem;
         e.preventDefault();
         // depending on what view you are using will find the id,module,type of field, and field name from the view
+
+        if(view == "view_GanttChart" )
+            view = "DetailView";
+        
         if(view == "DetailView"){
             var field = $(_this).attr( "field" );
             var type = $(_this).attr( "type" );
@@ -136,12 +144,17 @@ function buildEditField(){
             //If we have the field html append it to the div we clicked.
             if(html){
                 $(_this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
-                $("#inlineEditSaveButton").load(inlineEditSaveButtonImg);
+                $("#inlineEditSaveButton").html('<span class="suitepicon suitepicon-action-confirm"></span>');
                 //If the field is a relate field we will need to retrieve the extra js required to make the field work.
                 if(type == "relate" || type == "parent") {
                     var relate_js = getRelateFieldJS(field, module, id);
                     $(_this).append(relate_js);
                     SUGAR.util.evalScript($(_this).html());
+                    // Issue 2344 and 2499 changes - Dump existing QSProcessedFieldsArray to enable multiple QS on multiple rows.
+                    var fieldToCheck = 'EditView_' + field + '_display';
+                    if(fieldToCheck in QSProcessedFieldsArray) {
+                        delete QSProcessedFieldsArray[fieldToCheck];
+                    }
                     //Needs to be called to enable quicksearch/typeahead functionality on the field.
                     enableQS(true);
                 }
@@ -223,8 +236,6 @@ function validateFormAndSave(field,id,module,type){
     });
 }
 
-
-
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
  * the current element and have not clicked away from the field. Note we need to check on .cal_panel too for the calendar popup.
@@ -235,6 +246,7 @@ function validateFormAndSave(field,id,module,type){
 
 var ie_field, ie_id, ie_module, ie_type, ie_message_field;
 var clickListenerActive = false;
+
 function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
     message_field = 'LBL_' + field.toUpperCase();
@@ -252,6 +264,7 @@ function clickedawayclose(field,id,module, type){
     ie_message_field = message_field;
     clickListenerActive = true;
 }
+
 $(document).on('click', function (e) {
     if(clickListenerActive) {
         var field = ie_field;
@@ -259,13 +272,48 @@ $(document).on('click', function (e) {
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
+        var alertFlag = true;
+
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
+
+            // Resolve issues with telephone number throwing exception.
+            if (/<[a-z][\s\S]*>/i.test(output_value)) {
+                var outputValueParse = $(output_value).text();
+            } else {
+                var outputValueParse = output_value;
+            }
+
             var user_value = getInputValue(field, type);
-            // Fix for issue #373 strip HTML tags for correct comparison
-            var output_value_compare = $(output_value).text();
-            if (user_value != output_value_compare) {
-                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
+
+            /**
+             * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
+             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
+             */
+
+            // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+            if (typeof user_value === "undefined") {
+                user_value = '';
+            }
+
+            // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
+            if (outputValueParse != user_value && output_value != user_value) {
+                var fieldName = field + '_display';
+                var replacementUserValue = $("#" + fieldName).val();
+
+                // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
+                // user_value with this value.
+                if (replacementUserValue != undefined) {
+                    user_value = replacementUserValue;
+                }
+            }
+
+            if (user_value == outputValueParse || user_value == output_value) {
+                var alertFlag = false;
+            }
+
+            if (alertFlag) {
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
                     clickListenerActive = false;
@@ -337,7 +385,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -379,7 +427,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -394,8 +442,10 @@ function handleSave(field,id,module,type){
  */
 
 function setValueClose(value){
+    $.get('themes/'+SUGAR.themes.theme_name+'/images/inline_edit_icon.svg', function(data) {
+        // Fix for #3136 - replace new line characters with <br /> for html on close.
+        value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
-    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
@@ -418,17 +468,17 @@ function setValueClose(value){
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
     var result = $.post('index.php',
-        {
-            'module': 'Home',
-            'action': 'saveHTMLField',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'value': value,
-            'view' : view,
-            'parent_type': parent_type,
-            'to_pdf': true
-        }, null, "json"
+      {
+          'module': 'Home',
+          'action': 'saveHTMLField',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'value': value,
+          'view' : view,
+          'parent_type': parent_type,
+          'to_pdf': true
+      }, null, "json"
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
@@ -449,27 +499,27 @@ function saveFieldHTML(field,module,id,value, parent_type) {
 function loadFieldHTML(field,module,id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getEditFieldHTML',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'view' : view,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getEditFieldHTML',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'view' : view,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }
@@ -487,15 +537,15 @@ function loadFieldHTML(field,module,id) {
 function loadFieldHTMLValue(field,id,module) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getDisplayValue',
-            'field': field,
-            'current_module': module,
-            'view': view,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getDisplayValue',
+          'field': field,
+          'current_module': module,
+          'view': view,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
@@ -515,14 +565,14 @@ function loadFieldHTMLValue(field,id,module) {
 function getValidationRules(field,module,id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getValidationRules',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getValidationRules',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
@@ -549,14 +599,14 @@ function getValidationRules(field,module,id){
 function getRelateFieldJS(field, module, id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getRelateFieldJS',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getRelateFieldJS',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 

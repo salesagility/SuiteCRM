@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,96 +34,120 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 require_once('include/templates/TemplateGroupChooser.php');
 
 
-class SavedSearch extends SugarBean {
-	var $db;
+class SavedSearch extends SugarBean
+{
+    var $db;
     var $field_name_map;
 
-	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $modified_by_name;
-	var $name;
-	var $description;
-	var $content;
-	var $search_module;
+    // Stored fields
+    var $id;
+    var $date_entered;
+    var $date_modified;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $modified_by_name;
+    var $name;
+    var $description;
+    var $content;
+    var $search_module;
 
-	var $object_name = 'SavedSearch';
-	var $table_name = 'saved_search';
+    var $object_name = 'SavedSearch';
+    var $table_name = 'saved_search';
 
-	var $module_dir = 'SavedSearch';
-	var $field_defs = array();
-	var $field_defs_map = array();
+    var $module_dir = 'SavedSearch';
+    var $field_defs = array();
+    var $field_defs_map = array();
 
     var $columns;
 
-    public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC') {
-		parent::__construct();
+    public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC')
+    {
+        parent::__construct();
         $this->columns = $columns;
         $this->orderBy = $orderBy;
         $this->sortOrder = $sortOrder;
-		$this->setupCustomFields('SavedSearch');
-		foreach ($this->field_defs as $field) {
-			$this->field_name_map[$field['name']] = $field;
-		}
+        $this->setupCustomFields('SavedSearch');
+        foreach ($this->field_defs as $field) {
+            $this->field_name_map[$field['name']] = $field;
+        }
 
-	}
+    }
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	public function SavedSearch($columns = array(), $orderBy = null, $sortOrder = 'DESC'){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct($columns, $orderBy, $sortOrder);
-	}
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SavedSearch($columns = array(), $orderBy = null, $sortOrder = 'DESC')
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($columns, $orderBy, $sortOrder);
+    }
 
-	// Saved Search Form
-	function getForm($module, $inline = true) {
-	    global $db, $current_user, $currentModule, $current_language, $app_strings;
+    // Saved Search Form
+    function getForm($module, $inline = true, $orderBySelectOnly = false)
+    {
+        global $db, $current_user, $currentModule, $current_language, $app_strings;
         $json = getJSONobj();
 
-		$saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
+        $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
 
-		$query = 'SELECT id, name FROM saved_search
+        $query = 'SELECT id, name FROM saved_search
 				  WHERE
 					deleted = \'0\' AND
 				  	assigned_user_id = \'' . $current_user->id . '\' AND
 					search_module =  \'' . $module . '\'
 				  ORDER BY name';
-	    $result = $db->query($query, true, "Error filling in saved search list: ");
+        $result = $db->query($query, true, "Error filling in saved search list: ");
 
-		$savedSearchArray['_none'] = $app_strings['LBL_NONE'];
-	    while ($row = $db->fetchByAssoc($result, -1, FALSE)) {
-	        $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
-	    }
-		$sugarSmarty = new Sugar_Smarty();
-		$sugarSmarty->assign('SEARCH_MODULE', $module);
-		$sugarSmarty->assign('MOD', $saved_search_mod_strings);
-		$sugarSmarty->assign('DELETE', $app_strings['LBL_DELETE_BUTTON_LABEL']);
+        $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
+        while ($row = $db->fetchByAssoc($result, -1, false)) {
+            $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
+        }
+        $sugarSmarty = new Sugar_Smarty();
+        $sugarSmarty->assign('SEARCH_MODULE', $module);
+        $sugarSmarty->assign('MOD', $saved_search_mod_strings);
+        $sugarSmarty->assign('DELETE', $app_strings['LBL_DELETE_BUTTON_LABEL']);
         $sugarSmarty->assign('UPDATE', $app_strings['LBL_UPDATE']);
-		$sugarSmarty->assign('SAVE', $app_strings['LBL_SAVE_BUTTON_LABEL']);
+        $sugarSmarty->assign('SAVE', $app_strings['LBL_SAVE_BUTTON_LABEL']);
+
+        $chooser = $this->getTemplateGroupChooser($module);
+
+        $sugarSmarty->assign('columnChooser', $chooser->display());
+
+        $sugarSmarty->assign('selectedOrderBy', $this->orderBy);
+        if (empty($this->sortOrder)) $this->sortOrder = 'ASC';
+        $sugarSmarty->assign('selectedSortOrder', $this->sortOrder);
+
+        $lastSavedView = (empty($_SESSION['LastSavedView'][$module]) ? '' : $_SESSION['LastSavedView'][$module]);
+        $sugarSmarty->assign('columnsMeta', $json->encode($this->columns));
+        $sugarSmarty->assign('lastSavedView', $lastSavedView);
+        $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $lastSavedView));
+
+        $json = getJSONobj();
+
+        $sugarSmarty->assign('orderBySelectOnly', $orderBySelectOnly);
+
+        return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchForm.tpl');
+    }
+
+    public function getTemplateGroupChooser($module)
+    {
+        global $app_strings;
 
         // Column Chooser
         $chooser = new TemplateGroupChooser();
@@ -134,62 +158,51 @@ class SavedSearch extends SugarBean {
         $chooser->args['values_array'][0] = array();
         $chooser->args['values_array'][1] = array();
 
-        if(isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select']!='_none') {
+        if (isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select'] != '_none') {
             $this->retrieveSavedSearch($_REQUEST['saved_search_select']);
         }
 
-        if((!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') || (isset($this->contents['displayColumns']) && $this->contents['displayColumns'] != 'undefined')) {
-             // columns to display
-             if(!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') $temp_displayColumns = $_REQUEST['displayColumns'];
-             else $temp_displayColumns = $this->contents['displayColumns'];
-             foreach(explode('|', $temp_displayColumns) as $num => $name) {
-             		if (!isset($this->columns[$name])) {
-						// Ignore any column that is not on the list.
-             			continue;
-             		}
-                    $chooser->args['values_array'][0][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
-             }
-             // columns not displayed
-             foreach(array_diff(array_keys($this->columns), array_values(explode('|', $temp_displayColumns))) as $num => $name) {
-                    $chooser->args['values_array'][1][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
-             }
-        }
-        else {
-             foreach($this->columns as $name => $val) {
-                if(!empty($val['default']) && $val['default'])
+        if ((!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') || (isset($this->contents['displayColumns']) && $this->contents['displayColumns'] != 'undefined')) {
+            // columns to display
+            if (!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') $temp_displayColumns = $_REQUEST['displayColumns'];
+            else $temp_displayColumns = $this->contents['displayColumns'];
+            foreach (explode('|', $temp_displayColumns) as $num => $name) {
+                if (!isset($this->columns[$name])) {
+                    // Ignore any column that is not on the list.
+                    continue;
+                }
+                $chooser->args['values_array'][0][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
+            }
+            // columns not displayed
+            foreach (array_diff(array_keys($this->columns), array_values(explode('|', $temp_displayColumns))) as $num => $name) {
+                $chooser->args['values_array'][1][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
+            }
+        } else {
+            foreach ($this->columns as $name => $val) {
+                if (!empty($val['default']) && $val['default'])
                     $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
                 else
                     $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
             }
         }
 
-        if(!empty($_REQUEST['sortOrder'])) $this->sortOrder = $_REQUEST['sortOrder'];
-        if(!empty($_REQUEST['orderBy'])) $this->orderBy = $_REQUEST['orderBy'];
+        if (!empty($_REQUEST['sortOrder'])) $this->sortOrder = $_REQUEST['sortOrder'];
+        if (!empty($_REQUEST['orderBy'])) $this->orderBy = $_REQUEST['orderBy'];
 
         $chooser->args['left_name'] = 'display_tabs';
         $chooser->args['right_name'] = 'hide_tabs';
         $chooser->args['alt_tip'] = $app_strings['LBL_SORT'];
 
-        $chooser->args['left_label'] =  $app_strings['LBL_DISPLAY_COLUMNS'];
-        $chooser->args['right_label'] =  $app_strings['LBL_HIDE_COLUMNS'];
-        $chooser->args['title'] =  '';
-        $sugarSmarty->assign('columnChooser', $chooser->display());
+        $chooser->args['left_label'] = $app_strings['LBL_DISPLAY_COLUMNS'];
+        $chooser->args['right_label'] = $app_strings['LBL_HIDE_COLUMNS'];
+        $chooser->args['title'] = '';
+        $this->lastTemplateGroupChooser = $chooser;
 
-        $sugarSmarty->assign('selectedOrderBy', $this->orderBy);
-        if(empty($this->sortOrder)) $this->sortOrder = 'ASC';
-        $sugarSmarty->assign('selectedSortOrder', $this->sortOrder);
+        return $chooser;
+    }
 
-        $lastSavedView = (empty($_SESSION['LastSavedView'][$module]) ? '' : $_SESSION['LastSavedView'][$module]);
-        $sugarSmarty->assign('columnsMeta', $json->encode($this->columns));
-        $sugarSmarty->assign('lastSavedView', $lastSavedView);
-        $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $lastSavedView));
-
-        $json = getJSONobj();
-
-        return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchForm.tpl');
-	}
-
-    function getSelect($module) {
+    function getSelect($module, &$savedSearchData = null)
+    {
 
 
         global $db, $current_user, $currentModule, $current_lang, $app_strings;
@@ -204,25 +217,31 @@ class SavedSearch extends SugarBean {
         $result = $db->query($query, true, "Error filling in saved search list: ");
 
         $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
-        while ($row = $db->fetchByAssoc($result, -1, FALSE)) {
-            $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
+        $savedSearchData['hasOptions'] = false;
+        while ($row = $db->fetchByAssoc($result, -1, false)) {
+            $savedSearchData['hasOptions'] = true;
+            $savedSearchData['options'][$row['id']] = $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
         }
 
         $sugarSmarty = new Sugar_Smarty();
         $sugarSmarty->assign('SEARCH_MODULE', $module);
         $sugarSmarty->assign('MOD', $saved_search_mod_strings);
 
-        if(!empty($_SESSION['LastSavedView'][$module]) && (($_REQUEST['action'] == 'ListView') || ($_REQUEST['action'] == 'index')))
+        if (!empty($_SESSION['LastSavedView'][$module]) && (($_REQUEST['action'] == 'ListView') || ($_REQUEST['action'] == 'index')))
             $selectedSearch = $_SESSION['LastSavedView'][$module];
         else
             $selectedSearch = '';
 
+        $savedSearchData['selected'] = $selectedSearch;
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
+        $savedSearchData['module'] = $module;
+        
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
-    function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv='no') {
+    function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv = 'no')
+    {
         global $db, $current_user, $currentModule;
         $this->retrieveSavedSearch($id);
 
@@ -230,186 +249,179 @@ class SavedSearch extends SugarBean {
 
         $saved_search_name = '';
         $header .= $this->contents['search_module'];
-        if(empty($_SESSION['LastSavedView'])) $_SESSION['LastSavedView'] = array();
+        if (empty($_SESSION['LastSavedView'])) $_SESSION['LastSavedView'] = array();
         $_SESSION['LastSavedView'][$this->contents['search_module']] = $id;
         $saved_search_id = $id;
         $saved_search_name = $this->name;
         $search_form_tab = $this->contents['searchFormTab'];
         $query = $this->contents['query'];
-        $orderBy = empty($this->contents['orderBy'])? 'name' : $this->contents['orderBy'];
+        $orderBy = empty($this->contents['orderBy']) ? 'name' : $this->contents['orderBy'];
         //Reduce the params to avoid the problems caused by URL max length in IE.
-        header($header . '&saved_search_select=' . $saved_search_id . '&saved_search_select_name=' . $saved_search_name . '&orderBy=' . $orderBy . '&sortOrder=' . $this->contents['sortOrder'] . '&query=' . $query . '&searchFormTab='. $search_form_tab .'&showSSDIV=' . $showDiv);
-}
+        SugarApplication::headerRedirect($header . '&saved_search_select=' . $saved_search_id . '&saved_search_select_name=' . $saved_search_name . '&orderBy=' . $orderBy . '&sortOrder=' . $this->contents['sortOrder'] . '&query=' . $query . '&searchFormTab=' . $search_form_tab . '&showSSDIV=' . $showDiv);
+    }
 
-    function returnSavedSearchContents($id) {
-		global $db, $current_user, $currentModule;
-		$query = 'SELECT id, name, contents, search_module FROM saved_search
+    function returnSavedSearchContents($id)
+    {
+        global $db, $current_user, $currentModule;
+        $query = 'SELECT id, name, contents, search_module FROM saved_search
 				  WHERE
 				  	id = \'' . $id . '\'';
-	    $result = $db->query($query, true, "Error filling in saved search list: ");
+        $result = $db->query($query, true, "Error filling in saved search list: ");
 
-	    $header = 'Location: index.php?action=index&module=';
-	    $contents = '';
-	    $saved_search_name = '';
-	    while ($row = $db->fetchByAssoc($result, false)) {
-	        $header .= $row['search_module'];
-            if(empty($_SESSION['LastSavedView'])) $_SESSION['LastSavedView'] = array();
+        $header = 'Location: index.php?action=index&module=';
+        $contents = '';
+        $saved_search_name = '';
+        while ($row = $db->fetchByAssoc($result, false)) {
+            $header .= $row['search_module'];
+            if (empty($_SESSION['LastSavedView'])) $_SESSION['LastSavedView'] = array();
             $_SESSION['LastSavedView'][$row['search_module']] = $row['id'];
-	        $contents = unserialize(base64_decode($row['contents']));
-	        $saved_search_id = $row['id'];
+            $contents = unserialize(base64_decode($row['contents']));
+            $saved_search_id = $row['id'];
             $saved_search_name = $row['name'];
-	    }
+        }
 
-	    return $contents;
-	}
+        return $contents;
+    }
 
-	function handleDelete($id) {
-		$this->mark_deleted($id);
-		header("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
-	}
+    function handleDelete($id)
+    {
+        $this->mark_deleted($id);
+        SugarApplication::headerRedirect("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
+    }
 
-	function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean) {
+    public function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean = null)
+    {
 
-		global $current_user, $timedate;
+        global $current_user, $timedate;
 
-		$focus = new SavedSearch();
-		if($id) $focus->retrieve($id);
+        $focus = new SavedSearch();
+        if ($id) $focus->retrieve($id);
 
-		if($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
-			return null;
-		}
+        if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
+            return null;
+        }
 
-		$ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
+        $ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
 
         $contents = $_REQUEST;
-		if($id == null) $focus->name = $contents['saved_search_name'];
-		$focus->search_module = $contents['search_module'];
+        if ($contents['saved_search_name']) $focus->name = $contents['saved_search_name'];
+        $focus->search_module = $contents['search_module'];
 
-		foreach($contents as $input=>$value)
-		{
-			if(in_array($input, $ignored_inputs))
-			{
-				unset($contents[$input]);
-				continue;
-			}
+        foreach ($contents as $input => $value) {
+            if (in_array($input, $ignored_inputs)) {
+                unset($contents[$input]);
+                continue;
+            }
 
-			//Filter date fields to ensure it is saved to DB format, but also avoid empty values
-			if(!empty($value) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $input, $match))
-			{
-			   $field = $match[2];
-			   if(isset($searchModuleBean->field_defs[$field]['type']) && empty($searchModuleBean->field_defs[$field]['disable_num_format']))
-			   {
-			   	  $type = $searchModuleBean->field_defs[$field]['type'];
+            //Filter date fields to ensure it is saved to DB format, but also avoid empty values
+            if (!empty($value) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $input, $match)) {
+                $field = $match[2];
+                if (isset($searchModuleBean->field_defs[$field]['type']) && empty($searchModuleBean->field_defs[$field]['disable_num_format'])) {
+                    $type = $searchModuleBean->field_defs[$field]['type'];
 
-			   	  //Avoid macro values for the date types
-			   	  if(($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value))
-			   	  {
-			   	  	 $db_format = $timedate->to_db_date($value, false);
-			   	  	 $contents[$input] = $db_format;
-			   	  } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                    //Avoid macro values for the date types
+                    if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
+                        $db_format = $timedate->to_db_date($value, false);
+                        $contents[$input] = $db_format;
+                    } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
 
-			   	  	if(preg_match('/[^\d]/', $value)) {
-				   	  	 require_once('modules/Currencies/Currency.php');
-				   	  	 $contents[$input] = unformat_number($value);
-				   	  	 //Flag this value as having been unformatted
-				   	  	 $contents[$input . '_unformatted_number'] = true;
-				   	  	 //If the type is of currency and there was a currency symbol (non-digit), save the symbol
-				   	  	 if($type == 'currency' && preg_match('/^([^\d])/', $value, $match))
-				   	  	 {
-				   	  	 	$contents[$input . '_currency_symbol'] = $match[1];
-				   	  	 }
-			   	  	} else {
-			   	  		 //unset any flags
-			   	  		 if(isset($contents[$input . '_unformatted_number']))
-			   	  		 {
-			   	  		 	unset($contents[$input . '_unformatted_number']);
-			   	  		 }
+                        if (preg_match('/[^\d]/', $value)) {
+                            require_once('modules/Currencies/Currency.php');
+                            $contents[$input] = unformat_number($value);
+                            //Flag this value as having been unformatted
+                            $contents[$input . '_unformatted_number'] = true;
+                            //If the type is of currency and there was a currency symbol (non-digit), save the symbol
+                            if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
+                                $contents[$input . '_currency_symbol'] = $match[1];
+                            }
+                        } else {
+                            //unset any flags
+                            if (isset($contents[$input . '_unformatted_number'])) {
+                                unset($contents[$input . '_unformatted_number']);
+                            }
 
-			   	  		 if(isset($contents[$input . '_currency_symbol']))
-			   	  		 {
-			   	  		 	unset($contents[$input . '_currency_symbol']);
-			   	  		 }
-			   	  	}
-			   	  }
-			   }
-			}
+                            if (isset($contents[$input . '_currency_symbol'])) {
+                                unset($contents[$input . '_currency_symbol']);
+                            }
+                        }
+                    }
+                }
+            }
 
-		}
+        }
 
-		$contents['advanced'] = true;
+        $contents['advanced'] = true;
 
-		$focus->contents = base64_encode(serialize($contents));
+        $focus->contents = base64_encode(serialize($contents));
 
-		$focus->assigned_user_id = $current_user->id;
-		$focus->new_schema = true;
+        $focus->assigned_user_id = $current_user->id;
+        $focus->new_schema = true;
 
-		$saved_search_id = $focus->save();
+        $saved_search_id = $focus->save();
 
-		$GLOBALS['log']->debug("Saved record with id of " . $focus->id);
-		$orderBy = empty($contents['orderBy'])? 'name' : $contents['orderBy'];
-        $search_query = "&orderBy=" . $orderBy . "&sortOrder=".$contents['sortOrder'] . "&query=" . $_REQUEST['query'] . "&searchFormTab=" . $_REQUEST['searchFormTab'].'&showSSDIV=' . $contents['showSSDIV'];
+        $GLOBALS['log']->debug("Saved record with id of " . $focus->id);
+        $orderBy = empty($contents['orderBy']) ? 'name' : $contents['orderBy'];
+        $search_query = "&orderBy=" . $orderBy . "&sortOrder=" . $contents['sortOrder'] . "&query=" . $_REQUEST['query'] . "&searchFormTab=" . $_REQUEST['searchFormTab'] . '&showSSDIV=' . $contents['showSSDIV'];
 
-        if($redirect)
-        {
-        	$this->handleRedirect($focus->search_module, $search_query, $saved_search_id, 'true');
+        if ($redirect) {
+            $this->handleRedirect($focus->search_module, $search_query, $saved_search_id, 'true');
         }
     }
 
-	function handleRedirect($return_module, $search_query, $saved_search_id, $advanced = 'false') {
+    function handleRedirect($return_module, $search_query, $saved_search_id, $advanced = 'false')
+    {
         $_SESSION['LastSavedView'][$return_module] = $saved_search_id;
         $return_action = 'index';
         $ajaxLoad = empty($_REQUEST['ajax_load']) ? "" : "&ajax_load=" . $_REQUEST['ajax_load'];
         //Reduce the params to avoid the problems caused by URL max length in IE ( the reduced params can be get from saved search according to saved_search_id).
-        header("Location: index.php?action=$return_action&module=$return_module&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
+        SugarApplication::headerRedirect("Location: index.php?action=$return_action&module=$return_module&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
         die();
-	}
+    }
 
-	function fill_in_additional_list_fields() {
-		global $app_list_strings;
-		// Fill in the assigned_user_name
-		$this->search_module = $app_list_strings['moduleList'][$this->contents['search_module']];
-		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+    function fill_in_additional_list_fields()
+    {
+        global $app_list_strings;
+        // Fill in the assigned_user_name
+        $this->search_module = $app_list_strings['moduleList'][$this->contents['search_module']];
+        $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
 
-	}
+    }
 
 
-    function retrieveSavedSearch($id) {
+    function retrieveSavedSearch($id)
+    {
         parent::retrieve($id);
         $this->contents = unserialize(base64_decode($this->contents));
     }
 
-    function populateRequest(){
+    function populateRequest()
+    {
 
-    	global $timedate;
+        global $timedate;
 
-        if(isset($this->contents['search_module']))
-        {
-           $searchModuleBean = loadBean($this->contents['search_module']);
+        if (isset($this->contents['search_module'])) {
+            $searchModuleBean = loadBean($this->contents['search_module']);
         }
 
-        foreach($this->contents as $key=>$val){
-            if($key != 'advanced' && $key != 'module' && !strpos($key, '_ORDER_BY') && $key != 'lvso') {
-            	if(isset($searchModuleBean) && !empty($val) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $key, $match))
-            	{
-            	   $field = $match[2];
-				   if(isset($searchModuleBean->field_defs[$field]['type'])  && empty($searchModuleBean->field_defs[$field]['disable_num_format']))
-				   {
-				   	  $type = $searchModuleBean->field_defs[$field]['type'];
+        foreach ($this->contents as $key => $val) {
+            if ($key != 'advanced' && $key != 'module' && !strpos($key, '_ORDER_BY') && $key != 'lvso') {
+                if (isset($searchModuleBean) && !empty($val) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $key, $match)) {
+                    $field = $match[2];
+                    if (isset($searchModuleBean->field_defs[$field]['type']) && empty($searchModuleBean->field_defs[$field]['disable_num_format'])) {
+                        $type = $searchModuleBean->field_defs[$field]['type'];
 
-				   	  //Avoid macro values for the date types
-				   	  if(($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $val) && !preg_match('/^\[.*?\]$/', $val))
-				   	  {
-				   	  	 $val = $timedate->to_display_date($val, false);
-				   	  }  else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
-				   	  	 require_once('modules/Currencies/Currency.php');
-				   	  	 $val = format_number($val);
-				   	  	 if($type == 'currency' && isset($this->contents[$key . '_currency_symbol']))
-				   	  	 {
-				   	  	 	$val = $this->contents[$key . '_currency_symbol'] . $val;
-				   	  	 }
-				   	  }
-				   }
-            	}
+                        //Avoid macro values for the date types
+                        if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $val) && !preg_match('/^\[.*?\]$/', $val)) {
+                            $val = $timedate->to_display_date($val, false);
+                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
+                            require_once('modules/Currencies/Currency.php');
+                            $val = format_number($val);
+                            if ($type == 'currency' && isset($this->contents[$key . '_currency_symbol'])) {
+                                $val = $this->contents[$key . '_currency_symbol'] . $val;
+                            }
+                        }
+                    }
+                }
 
                 $_REQUEST[$key] = $val;
                 $_GET[$key] = $val;
@@ -418,5 +430,3 @@ class SavedSearch extends SugarBean {
 
     }
 }
-
-?>

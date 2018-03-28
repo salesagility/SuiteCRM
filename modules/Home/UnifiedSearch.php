@@ -286,17 +286,17 @@ function getPaginateHTML($queryString, $start, $amount, $total){
             <input type="hidden" name="total" value="<?php echo $total;?>">
             <input type="hidden" name="query_string" value="<?php echo $queryString;?>">
             <button type="submit" id="listViewStartButton_top" name="listViewStartButton" title="Start" class="button" <?php echo $first ? 'disabled="disabled"' : ''?>>
-                <img src="<?php echo $startImage;?>" alt="Start" align="absmiddle" border="0">
+                <span class='suitepicon suitepicon-action-first'></span>
             </button>
             <button type="submit" id="listViewPrevButton_top" name="listViewPrevButton" class="button" title="Previous" <?php echo $first ? 'disabled="disabled"' : ''?>>
-                <img src="<?php echo $prevImage;?>" alt="Previous" align="absmiddle" border="0">
+                <span class='suitepicon suitepicon-action-left'></span>
             </button>
             <span class="pageNumbers">(<?php echo $total ? $start+1 : 0;?> - <?php echo min($start + $amount,$total);?> of <?php echo $total;?>)</span>
             <button type="submit" id="listViewNextButton_top" name="listViewNextButton" title="Next" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
-                <img src="<?php echo $nextImage;?>" alt="Next" align="absmiddle" border="0">
+                <span class='suitepicon suitepicon-action-right'></span>
             </button>
             <button type="submit" id="listViewEndButton_top" name="listViewEndButton" title="End" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
-                <img src="<?php echo $endImage;?>" alt="End" align="absmiddle" border="0">
+                <span class='suitepicon suitepicon-action-last'></span>
             </button>
         </form>
     </td>

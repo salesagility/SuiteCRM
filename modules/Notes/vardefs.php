@@ -244,7 +244,8 @@ $dictionary['Note'] = array(
 		'name'=> 'parent_name',
 		'parent_type'=>'record_type_display' ,
 		'type_name'=>'parent_type',
-		'id_name'=>'parent_id', 'vname'=>'LBL_RELATED_TO',
+		'id_name'=>'parent_id',
+		'vname'=>'LBL_RELATED_TO',
 		'type'=>'parent',
 		'source'=>'non-db',
 		'options'=> 'record_type_display_notes',
@@ -472,4 +473,3 @@ $dictionary['Note'] = array(
 
 VardefManager::createVardef('Notes','Note', array('assignable', 'security_groups',
 ));
-?>

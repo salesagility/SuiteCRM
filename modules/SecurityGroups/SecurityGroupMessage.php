@@ -182,4 +182,3 @@ class SecurityGroupMessage extends Basic {
 	}
 
 }
-?>

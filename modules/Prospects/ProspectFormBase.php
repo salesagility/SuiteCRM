@@ -506,6 +506,3 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 }
 
 }
-
-
-?>

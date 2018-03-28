@@ -662,7 +662,7 @@ class ModuleScanner{
         static $md5 = array();
         if (empty($md5) && file_exists('files.md5')) {
             include ('files.md5');
-            $md5 = $md5_string;
+            $md5 = isset($md5_string) ? $md5_string : null;
         }
         if ($path[0] != '.' || $path[1] != '/') {
             $path = './' . $path;
@@ -880,5 +880,3 @@ function MSLoadManifest($manifest_file)
 	include( $manifest_file );
 	return array($manifest, $installdefs);
 }
-
-?>

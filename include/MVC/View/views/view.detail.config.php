@@ -68,4 +68,3 @@ $view_config = array(
         ),
     ),
 );
-?>

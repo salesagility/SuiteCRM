@@ -61,5 +61,3 @@ class CalendarViewGetGR extends SugarView {
 	}	
 
 }
-
-?>

@@ -38,9 +38,18 @@
  ********************************************************************************/
 
 class ViewPopup extends SugarView{
+    /**
+     * @var string
+     */
+    public $type ='list';
+    /**
+     * @var array
+     */
     protected $override_popup = array();
-	var $type ='list';
 
+    /**
+     * ViewPopup constructor.
+     */
 	public function __construct(){
 		parent::__construct();
 	}
@@ -59,8 +68,10 @@ class ViewPopup extends SugarView{
         self::__construct();
     }
 
-
-	function display(){
+    /**
+     * @inheritdoc
+     */
+	public function display(){
 		global $popupMeta, $mod_strings;
 
         if(($this->bean instanceOf SugarBean) && !$this->bean->ACLAccess('list')){
@@ -222,4 +233,3 @@ class ViewPopup extends SugarView{
 		}
 	}
 }
-?>

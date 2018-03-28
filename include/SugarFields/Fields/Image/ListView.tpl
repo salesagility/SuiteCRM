@@ -37,6 +37,5 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 *}
-
-<img id="{$col|lower}" src="index.php?entryPoint=download&id={sugar_fetch object=$parentFieldArray key='ID'}_{$col|lower}&type={sugar_fetch object=$vardef key="custom_module"}" style="max-width: 200px;" height="50">
+<img id="{$col|lower}" src="index.php?entryPoint=download&id={sugar_fetch object=$parentFieldArray key='ID'}_{$col|lower}&type={$module}" style="max-width: 200px;" height="50">
 

@@ -72,15 +72,7 @@ if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
 	$focus=$result;
 } else {
 	$header_URL = "Location: index.php?module=Accounts&action=index";
-
-    if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-        $href = $matches[1];
-        SugarApplication::redirect($href);
-    }
-    else {
-        header($header_URL);
-    }
-
+    SugarApplication::headerRedirect($header_URL);
 }
 
 // if campaign type is set to newsletter, then include newsletter detail view..
@@ -293,4 +285,3 @@ if (!empty($alltabs)) {
     }
 }
 echo $subpanel->display();
-?>

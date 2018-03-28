@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/ListView/ListViewData.php');
 require_once('include/MassUpdate.php');
@@ -49,6 +50,12 @@ class ListViewDisplay {
 
 	var $show_mass_update_form = false;
 	var $show_action_dropdown = true;
+
+	/**
+	 * @var bool Show Bulk Action button as Delete link
+	 */
+	var $show_action_dropdown_as_delete = false;
+
 	var $rowCount;
 	var $mass = null;
 	var $seed;
@@ -200,16 +207,22 @@ class ListViewDisplay {
         return $filter_fields;
 	}
 
-
 	/**
 	 * Any additional processing
-	 * @param file File template file to use
-	 * @param data array row data
-	 * @param html_var string html string to be passed back and forth
+	 *
+	 * @param $file (legacy, unused) File template file to use
+	 * @param array $data array row data
+	 * @param string $htmlVar html string to be passed back and forth
+	 * @return bool
 	 */
 	function process($file, $data, $htmlVar) {
 		$this->rowCount = count($data['data']);
+		if(!isset($data['pageData']['bean'])) {
+			$GLOBALS['log']->warn("List view process error: Invalid data, bean is not set");
+			return false;
+		}
 		$this->moduleString = $data['pageData']['bean']['moduleDir'] . '2_' . strtoupper($htmlVar) . '_offset';
+		return true;
 	}
 
 	/**
@@ -250,8 +263,9 @@ class ListViewDisplay {
         }
 
 		$close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
+		$selectObjectSpan = $this->buildSelectedObjectsSpan();
 		$menuItems = array(
-            "<input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='checkbox massall' name='massall' id='massall_".$location."' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a id='$id'  href='javascript: void(0);'></a>",
+            "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"><span class='suitepicon suitepicon-action-caret'></span></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall_".$location."' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />$selectObjectSpan<a id='$id'  href='javascript: void(0);'></a>",
             "<a  name='thispage' id='button_select_this_page_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $pageTotal)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$pageTotal}&#x29;&#x200E;</a>",
             "<a  name='selectall' id='button_select_all_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$total});' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$total_label}&#x29;&#x200E;</a>",
             "<a name='deselect' id='button_deselect_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href='#'>{$app_strings['LBL_LISTVIEW_NONE']}</a>",
@@ -266,45 +280,107 @@ class ListViewDisplay {
         return $link;
 	}
 
-	/**
-	 * Display the actions link
-	 *
-	 * @param  string $id link id attribute, defaults to 'actions_link'
-	 * @return string HTML source
-	 */
-	protected function buildActionsLink($id = 'actions_link', $location = 'top')
-	{
-	    global $app_strings;
-		$closeText = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
-		$moreDetailImage = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
-		$menuItems = array();
+    /**
+     * Display the actions link
+     *
+     * @param  string $id link id attribute, defaults to 'actions_link'
+     * @global $app_strings
+     * @global $mod_strings
+     * @return string HTML source
+     */
+    protected function buildActionsLink($id = 'actions_link', $location = 'top')
+    {
+        global $app_strings;
+        global $mod_strings;
 
-		// delete
-		if ( ACLController::checkAccess($this->seed->module_dir,'delete',true) && $this->delete )
-			$menuItems[] = $this->buildDeleteLink($location);
-		// compose email
-        if ( $this->email )
-			$menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
-		// mass update
-		$mass = $this->getMassUpdate();
-		$mass->setSugarBean($this->seed);
-		if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
-            $menuItems[] = $this->buildMassUpdateLink($location);
-		// merge
-		if ( $this->mailMerge )
-		    $menuItems[] = $this->buildMergeLink(null, $location);
-		if ( $this->mergeduplicates )
-		    $menuItems[] = $this->buildMergeDuplicatesLink($location);
-		// add to target list
-		if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) )
-		    $menuItems[] = $this->buildTargetList($location);
-		// export
-		if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export )
-			$menuItems[] = $this->buildExportLink($location);
+        $closeText = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif",
+            $app_strings['LBL_CLOSEINLINE']);
+        $moreDetailImage = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
+        $menuItems = array();
 
-		foreach ( $this->actionsMenuExtraItems as $item )
-		    $menuItems[] = $item;
+        if(isset($this->templateMeta['form']['actions'])) {
+            // override bulk actions
+            foreach ($this->templateMeta['form']['actions'] as $action) {
+                if(isset($action['customCode'])) {
 
+                    $template = new Sugar_Smarty();
+                    $template->assign('APP', $app_strings);
+                    $template->assign('MOD', $mod_strings);
+                    $template->assign('id', $id);
+                    $template->assign('location', $location);
+                    $template->assign('customCode', $action['customCode']);
+
+                    $menuItems[] =  $template->fetch("include/ListView/ListViewEval.tpl");
+                }
+            }
+        } else {
+            // delete
+            if (
+                ACLController::checkAccess($this->seed->module_dir,'delete',true)
+                && $this->delete
+            ) {
+                if ($this->show_action_dropdown_as_delete) {
+                    $menuItems[] = $this->buildDeleteLink($location);
+                } else {
+                    $menuItems[] = $this->buildBulkActionButton($location);
+                }
+            }
+
+            // compose email
+            if (isset($this->email)) {
+                $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            }
+
+            // mass update
+            $mass = $this->getMassUpdate();
+            $mass->setSugarBean($this->seed);
+            if (
+                (
+                    ACLController::checkAccess($this->seed->module_dir,'edit',true)
+                    && ACLController::checkAccess($this->seed->module_dir,'massupdate',true)
+                )
+                && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus()
+            ) {
+                $menuItems[] = $this->buildMassUpdateLink($location);
+            }
+
+            // merge
+            if ($this->mailMerge) {
+                $menuItems[] = $this->buildMergeLink(null, $location);
+            }
+
+            if ($this->mergeduplicates) {
+                $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            }
+
+            // add to target list
+            if (
+                $this->targetList
+                && ACLController::checkAccess('ProspectLists','edit',true)
+            ) {
+                $menuItems[] = $this->buildTargetList($location);
+            }
+
+            // export
+            if (
+                ACLController::checkAccess($this->seed->module_dir,'export',true)
+                && $this->export
+            ) {
+                $menuItems[] = $this->buildExportLink($location);
+            }
+
+            foreach ($this->actionsMenuExtraItems as $item) {
+                $menuItems[] = $item;
+            }
+
+
+            if(
+                $this->delete
+                && !$this->show_action_dropdown_as_delete
+            ) {
+                $menuItems[] = $this->buildDeleteLink($location);
+            }
+        }
         $link = array(
             'class' => 'clickMenu selectActions fancymenu',
             'id' => 'selectActions',
@@ -313,8 +389,7 @@ class ListViewDisplay {
             'flat' => false,
         );
         return $link;
-
-}
+    }
 	/**
 	 * Builds the export link
 	 *
@@ -323,7 +398,7 @@ class ListViewDisplay {
 	protected function buildExportLink($loc = 'top')
 	{
 		global $app_strings;
-		return "<a href='javascript:void(0)' id=\"export_listview_". $loc ." \" onclick=\"return sListView.send_form(true, '{$this->seed->module_dir}', 'index.php?entryPoint=export','{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>";
+		return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"export_listview_". $loc ." \" onclick=\"return sListView.send_form(true, '{$this->seed->module_dir}', 'index.php?entryPoint=export','{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>";
     }
 
 	/**
@@ -336,57 +411,68 @@ class ListViewDisplay {
 		global $app_strings;
 
         $onClick = "document.getElementById('massupdate_form').style.display = ''; var yLoc = YAHOO.util.Dom.getY('massupdate_form'); scroll(0,yLoc);";
-		return "<a href='javascript:void(0)' id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_UPDATE']}</a>";
+		return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_UPDATE']}</a>";
 
 	}
 
-	/**
-	 * Builds the compose email link
-	 *
-	 * @return string HTML
-	 */
-	protected function buildComposeEmailLink($totalCount, $loc = 'top')
-	{
-		global $app_strings,$dictionary;
+    /**
+     * Builds the compose email link
+     *
+     * @param int $totalCount
+     * @param string $loc
+     * @global
+     * @return string HTML
+     */
+    protected function buildComposeEmailLink($totalCount, $loc = 'top')
+    {
+        global $app_strings;
+        global $dictionary;
 
         if (!is_array($this->seed->field_defs)) {
             return '';
         }
+
         $foundEmailField = false;
         // Search for fields that look like an email address
         foreach ($this->seed->field_defs as $field) {
-            if(isset($field['type'])&&$field['type']=='link'
-               &&isset($field['relationship'])&&isset($dictionary[$this->seed->object_name]['relationships'][$field['relationship']])
-               &&$dictionary[$this->seed->object_name]['relationships'][$field['relationship']]['rhs_module']=='EmailAddresses') {
+            if (
+                isset($field['type'])
+                && $field['type'] === 'link'
+                && isset($field['relationship'])
+                && isset($dictionary[$this->seed->object_name]['relationships'][$field['relationship']])
+                && $dictionary[$this->seed->object_name]['relationships'][$field['relationship']]['rhs_module'] === 'EmailAddresses'
+            ) {
                 $foundEmailField = true;
                 break;
             }
         }
+
         if (!$foundEmailField) {
             return '';
         }
 
 
-		$userPref = $GLOBALS['current_user']->getPreference('email_link_type');
-		$defaultPref = $GLOBALS['sugar_config']['email_default_client'];
-		if($userPref != '')
-			$client = $userPref;
-		else
-			$client = $defaultPref;
+        $userPref = $GLOBALS['current_user']->getPreference('email_link_type');
+        $defaultPref = $GLOBALS['sugar_config']['email_default_client'];
+        if ($userPref != '') {
+            $client = $userPref;
+        } else {
+            $client = $defaultPref;
+        }
 
-		if($client == 'sugar')
-			$script = "<a href='javascript:void(0)' " .
-                    "id=\"composeemail_listview_". $loc ."\"".
-					'onclick="return sListView.send_form_for_emails(true, \''."Emails".'\', \'index.php?module=Emails&action=Compose&ListView=true\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\', \''.$this->seed->module_dir.'\', \''.$totalCount.'\', \''.$app_strings['LBL_LISTVIEW_LESS_THAN_TEN_SELECT'].'\')">' .
-					$app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
-		else
-			$script = "<a href='javascript:void(0)' " .
-                    "id=\"composeemail_listview_". $loc ."\"".
-					"onclick=\"return sListView.use_external_mail_client('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', '{$_REQUEST['module']}');\">" .
-					$app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
+        if ($client === 'sugar') {
+            require_once 'modules/Emails/EmailUI.php';
+            $emailUI = new EmailUI();
+            $script = $emailUI->createBulkActionEmailLink();
+        } else {
+            $script = "<a href='javascript:void(0)' " .
+                "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_" . $loc . "\"" .
+                "onclick=\"return sListView.use_external_mail_client('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', '{$_REQUEST['module']}');\">" .
+                $app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
+        }
 
         return $script;
-	} // fn
+    } // fn
 	/**
 	 * Builds the delete link
 	 *
@@ -395,8 +481,20 @@ class ListViewDisplay {
 	protected function buildDeleteLink($loc = 'top')
 	{
 		global $app_strings;
-        return "<a href='javascript:void(0)' id=\"delete_listview_". $loc ."\" onclick=\"return sListView.send_mass_update('selected', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', 1)\">{$app_strings['LBL_DELETE_BUTTON_LABEL']}</a>";
+        return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"delete_listview_". $loc ."\" onclick=\"return sListView.send_mass_update('selected', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', 1)\">{$app_strings['LBL_DELETE_BUTTON_LABEL']}</a>";
 	}
+
+	/**
+	 * Generate Bulk Action button
+	 *
+	 * @param string $loc position on list view
+	 * @return string HTML of Bulk Action Button
+	 */
+	protected function buildBulkActionButton($loc = 'top') {
+		global $app_strings;
+		return "<a href='javascript:void(0)' class=\"parent-dropdown-handler\" id=\"delete_listview_". $loc ."\" onclick=\"return false;\"><label class=\"selected-actions-label hidden-mobile\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL_MOBILE']}<span class='suitepicon suitepicon-action-caret'></span></label><label class=\"selected-actions-label hidden-desktop\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL']}<span class='suitepicon suitepicon-action-caret'></span></label></a>";
+	}
+
 	/**
 	 * Display the selected object span object
 	 *
@@ -407,9 +505,6 @@ class ListViewDisplay {
 
         $displayStyle = $total > 0 ? "" : "display: none;";
 		$template = new Sugar_Smarty();
-
-		$displayStyle = $total > 0 ? "" : "display: none;";
-		$selectedObjectSpan = "";
 
 		$template->assign('DISPLAY_STYLE', $displayStyle);
 		$template->assign('APP', $app_strings);
@@ -440,7 +535,7 @@ class ListViewDisplay {
 
         if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true ) {
             return "<a href='javascript:void(0)' ".
-                            "id='mergeduplicates_listview_". $loc ."'".
+                            "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_". $loc ."'".
                             "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>".
                             $app_strings['LBL_MERGE_DUPLICATES'].'</a>';
         }
@@ -553,7 +648,7 @@ class ListViewDisplay {
 			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist','form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'} } );
 EOF;
         $js = str_replace(array("\r","\n"),'',$js);
-        return "<a href='javascript:void(0)' id=\"targetlist_listview_". $loc ." \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL']}</a>";
+        return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview_". $loc ." \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL']}</a>";
 	}
 	/**
 	 * Display the bottom of the ListView (ie MassUpdate

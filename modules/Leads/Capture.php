@@ -122,4 +122,3 @@ if (!empty($_POST['redirect'])) {
 	echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
 	echo '</body></html>';
 }
-?>
