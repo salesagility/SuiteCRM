@@ -1199,6 +1199,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         // cleanup
         $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
+        $this->db->query("DELETE FROM aod_index");
     }
 
 
