@@ -42,13 +42,50 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
-if (getRecaptchaChallengeField() !== false) {
-    $response =  displayRecaptchaValidation();
-    if ($response === 'Success') {
-        echo $response;
-        return;
-    } else {
-        die($response);
+class PasswordExpirationService
+{
+    /**
+     * @var array
+     */
+    private $suiteConfig;
+
+    /**
+     * @var array
+     */
+    private $modStrings;
+
+    public function __construct()
+    {
+        global $sugar_config;
+        global $mod_strings;
+
+        $this->suiteConfig = $sugar_config;
+        $this->modStrings = $mod_strings;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpirationMessage()
+    {
+        $this->setExpiration();
+
+        $expirationMessage = sprintf(
+            '%s! <a href="%s/index.php?module=Administration&action=PasswordManager">%s</a>',
+            $this->modStrings['LBL_PASSWORD_EXPIRATON_CHANGED'],
+            $this->suiteConfig['site_url'],
+            $this->modStrings['LBL_PASSWORD_EXPIRATON_REDIRECT']
+        );
+
+        return $expirationMessage;
+    }
+
+    /**
+     *
+     */
+    private function setExpiration()
+    {
+        $this->suiteConfig['passwordsetting']['systexpiration'] = '';
+        write_array_to_file("sugar_config", $this->suiteConfig, "config.php");
     }
 }

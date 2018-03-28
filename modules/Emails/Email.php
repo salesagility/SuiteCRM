@@ -3096,7 +3096,10 @@ class Email extends Basic
      */
     public function fill_in_additional_detail_fields()
     {
-        global $app_list_strings, $mod_strings;
+        global $app_list_strings;
+
+        $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
+
         // Fill in the assigned_user_name
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id, '');
         //if ($this->parent_type == 'Contacts') {
