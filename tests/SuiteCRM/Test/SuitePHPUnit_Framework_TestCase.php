@@ -50,7 +50,11 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateChecker_PH
         parent::setUp();
 
         global $current_user, $sugar_config;
-        $current_user = new User();
+        try {
+            $current_user = @\BeanFactory::getBean('Users'); //new User();
+        } catch (Exception $e) {
+            
+        }
         get_sugar_config_defaults();
 
         $this->log = $GLOBALS['log'];

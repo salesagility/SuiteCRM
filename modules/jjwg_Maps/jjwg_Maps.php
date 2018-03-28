@@ -391,7 +391,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             // Set Google Maps API Key
             if(!isset($rev['google_maps_api_key'])) {
-                $GLOBALS['log']->fatal('Undefined index: google_maps_api_key');
+                $GLOBALS['log']->warn('Undefined index: google_maps_api_key');
                 $this->settings['google_maps_api_key'] = null;
             } else {
                 $this->settings['google_maps_api_key'] = $rev['google_maps_api_key'];

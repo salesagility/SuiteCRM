@@ -242,7 +242,7 @@ class TemplateHandler
             } //foreach
 
             //Create a base class with field_name_map property
-            $sugarBean = new SugarBean();
+            $sugarBean = BeanFactory::getBean($module); // $sugarBean = new SugarBean();
             $sugarBean->field_name_map = $defs;
             $sugarBean->module_dir = $module;
 

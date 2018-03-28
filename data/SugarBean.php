@@ -58,7 +58,7 @@ require_once "data/Relationships/RelationshipFactory.php";
  * a bean should be plural (e.g. contacts).
  * @api
  */
-class SugarBean
+abstract class SugarBean
 {
     /**
      * Blowfish encryption key
@@ -604,11 +604,9 @@ class SugarBean
         if ($time) {
             $dtAry = explode('&', $value, 2);
             $now = $timedate->getNow(true);
-            try {
-                $dateValue = $now->modify($dtAry[0]);
-            } catch (Exception $e) {
-                $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
-                throw $e;
+            $dateValue = $now->modify($dtAry[0]);
+            if ($dateValue === false) {
+                $GLOBALS['log']->fatal('Invalid modifier for DateTime::modify(): ' . $dtAry[0]);
             }
             if (!empty($dtAry[1])) {
                 $timeValue = $timedate->fromString($dtAry[1]);

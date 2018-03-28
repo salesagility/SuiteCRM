@@ -76,9 +76,9 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
      * Collect state information and comparing hash
      */
     public function tearDown()
-    {
+    {        
         parent::tearDown();
-        
+           
         if (StateCheckerConfig::get('testsUseStateChecker') && $this->stateChecker) {
             try {
                 $this->stateChecker->getStateHash();
