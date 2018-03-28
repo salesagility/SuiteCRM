@@ -301,7 +301,7 @@ class JsonApiErrorObject
      * @param string $status
      * @return boolean
      */
-    protected function isValudStatus($status)
+    protected function isValidStatus($status)
     {
         return is_string($status) || is_numeric($status);
     }
