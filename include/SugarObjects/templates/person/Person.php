@@ -199,7 +199,7 @@ class Person extends Basic
         if (!isset($this->in_workflow)) {
             $this->in_workflow = false;
         }
-        if ($ori_in_workflow === false || !empty($override_email)) {
+        if ($ori_in_workflow && !empty($override_email)) {
             $this->emailAddress->saveEmail(
                 $this->id,
                 $this->module_dir,
