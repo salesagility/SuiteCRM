@@ -90,7 +90,7 @@ class StateCheckerConfig
      * 
      * @var boolean 
      */
-    protected static $storeDetails = true; //false;
+    protected static $storeDetails = false;
     
     /**
      * Test using StateChecker
@@ -110,7 +110,7 @@ class StateCheckerConfig
     protected static $testsUseAssertionFailureOnError = true;
     
     public static function get($key) {
-        if(inDeveloperMode() && in_array($key, ['testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
+        if(inDeveloperMode() && in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
             return true;
         }
         return self::$$key;
