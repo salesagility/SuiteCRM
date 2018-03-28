@@ -206,7 +206,7 @@ class JsonApiErrorObject
      */
     public function setStatus($status)
     {
-        if ($this->isValudStatus($status)) {
+        if ($this->isValidStatus($status)) {
             $this->status = $status;
         } else {
             ErrorMessage::log('Invalid JSON API error object, invalid status', 'warn');
@@ -301,7 +301,7 @@ class JsonApiErrorObject
      * @param string $status
      * @return boolean
      */
-    protected function isValudStatus($status)
+    protected function isValidStatus($status)
     {
         return is_string($status) || is_numeric($status);
     }
