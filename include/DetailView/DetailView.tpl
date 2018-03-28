@@ -120,12 +120,17 @@ class="yui-navset detailview_tabs"
 		{{assign var='columnsInRow' value=$rowData|@count}}
 		{{assign var='columnsUsed' value=0}}
 		{{foreach name=colIteration from=$rowData key=col item=colData}}
+
 	    {{if !empty($colData.field.hideIf)}}
 	    	{if !({{$colData.field.hideIf}}) }
 	    {{/if}}
 			{counter name="fieldsUsed"}
 			{{if empty($colData.field.hideLabel)}}
-			<td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].label}}%' scope="col">
+                {{if $colData.field.name == ''}}
+                    <td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].label}}%' scope="">
+                {{else}}
+                    <td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].label}}%' scope="col">
+                {{/if}}
 				{{if !empty($colData.field.name)}}
 				    {if !$fields.{{$colData.field.name}}.hidden}
                 {{/if}}
@@ -197,7 +202,6 @@ class="yui-navset detailview_tabs"
 			<td>&nbsp;</td><td>&nbsp;</td>
 			{/if}
 	    {{/if}}
-
 		{{/foreach}}
 	</tr>
 	{/capture}
