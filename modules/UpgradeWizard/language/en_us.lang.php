@@ -268,4 +268,6 @@ $mod_strings = array(
         7 => 'Failed to write file to disk.',
         8 => 'File upload stopped by extension.',
     ),
+    'LBL_PASSWORD_EXPIRATON_CHANGED' => 'Warning: password expiration is set to none!',
+    'LBL_PASSWORD_EXPIRATON_REDIRECT' => 'Please update your settings here',
 );

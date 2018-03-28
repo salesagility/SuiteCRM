@@ -308,7 +308,7 @@ class EmailMan extends SugarBean
             . $this->db->concat('contacts', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Leads' THEN "
             . $this->db->concat('leads', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Accounts' THEN accounts.name WHEN 'Users' THEN "
             . $this->db->concat('users', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Prospects' THEN "
-            . $this->db->concat('prospects', array('first_name', 'last_name'),'&nbsp;') . ' '
+            . $this->db->concat('prospects', array('first_name', 'last_name'), '&nbsp;') . ' '
             . "END) recipient_name";
 
         $query .=
@@ -358,13 +358,13 @@ class EmailMan extends SugarBean
     {
         $query =
             "SELECT $this->table_name.* ,campaigns.name as campaign_name,email_marketing.name as message_name,(CASE related_type WHEN 'Contacts' THEN "
-            . $this->db->concat('contacts', array('first_name', 'last_name'),'&nbsp;')
+            . $this->db->concat('contacts', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Leads' THEN "
             . $this->db->concat('leads', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Accounts' THEN accounts.name WHEN 'Users' THEN "
             . $this->db->concat('users', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Prospects' THEN "
-            . $this->db->concat('prospects', array('first_name', 'last_name'),'&nbsp;')
+            . $this->db->concat('prospects', array('first_name', 'last_name'), '&nbsp;')
             . "END) recipient_name";
         $query .= '    FROM '.$this->table_name.' '
             . 'LEFT JOIN users ON users.id = '.$this->table_name.'.related_id and '.$this->table_name.'.related_type =\'Users\' '
@@ -453,7 +453,6 @@ class EmailMan extends SugarBean
         $activity_type = null,
         $resend_type = null
     ) {
-
         global $timedate;
 
         $this->send_attempts++;
@@ -881,7 +880,6 @@ class EmailMan extends SugarBean
 
             //fetch email marketing.
             if (empty($this->current_emailmarketing) or ! isset($this->current_emailmarketing)) {
-
                 $this->current_emailmarketing = new EmailMarketing();
             }
             if (empty($this->current_emailmarketing->id) or $this->current_emailmarketing->id !== $this->marketing_id) {
@@ -893,7 +891,7 @@ class EmailMan extends SugarBean
             if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
                 $this->current_emailtemplate = new EmailTemplate();
 
-                if (isset($this->resend_type) && $this->resend_type == 'Reminder'){
+                if (isset($this->resend_type) && $this->resend_type == 'Reminder') {
                     $this->current_emailtemplate->retrieve($sugar_config['survey_reminder_template']);
                 } else {
                     $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
@@ -1144,7 +1142,6 @@ class EmailMan extends SugarBean
      */
     public function is_primary_email_address(SugarBean $bean)
     {
-
         if (!isset($bean->email1)) {
             return false;
         }
@@ -1256,7 +1253,6 @@ class EmailMan extends SugarBean
                 || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT
                 || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED
             ) {
-
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
                 $this->related_confirm_opt_in = true;
@@ -1323,7 +1319,6 @@ class EmailMan extends SugarBean
      */
     private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {
-
         global $log;
         global $app_strings;
 
@@ -1385,7 +1380,13 @@ class EmailMan extends SugarBean
             isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
             isset($focus->last_name) ? $focus->last_name : '');
-        $mailer->replace('emailaddress_email_address', $emailAddressString);
+        $emailAddressConfirmOptInToken = $emailAddress->getConfirmOptInTokenGenerateIfNotExists();
+        $mailer->replace('emailaddress_confirm_opt_in_token', $emailAddressConfirmOptInToken);
+        
+        /**
+         * @deprecated since version 7.10.2
+         */
+        $mailer->replace('emailaddress_email_address', $emailAddressConfirmOptInToken);
 
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 

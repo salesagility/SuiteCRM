@@ -1276,11 +1276,14 @@ eoq;
             $oe->type = $type;
             $oe->user_id = $current_user->id;
             $oe->mail_sendtype = "SMTP";
-            $oe->mail_smtptype = $_REQUEST['mail_smtptype'];
+
+            $oe->smtp_from_name = $_REQUEST['smtp_from_name'];
+            $oe->smtp_from_addr = $_REQUEST['smtp_from_addr'];
             $oe->mail_smtpserver = $_REQUEST['mail_smtpserver'];
             $oe->mail_smtpport = $_REQUEST['mail_smtpport'];
             $oe->mail_smtpssl = $_REQUEST['mail_smtpssl'];
             $oe->mail_smtpauth_req = isset($_REQUEST['mail_smtpauth_req']) ? 1 : 0;
+            $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             if (!empty($_REQUEST['mail_smtppass'])) {
                 $oe->mail_smtppass = $_REQUEST['mail_smtppass'];
