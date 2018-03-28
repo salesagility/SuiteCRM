@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/<module_name>/<object_name>.php');
 
-class <module_name > Dashlet extends DashletGeneric {
+class <module_name>Dashlet extends DashletGeneric {
     function __construct($id, $def = null)
     {
         global $current_user, $app_strings;

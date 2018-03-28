@@ -196,18 +196,6 @@ function validate_manifest( $manifest ){
             die( $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version );
         }
     }
-
-    if( isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0 ){
-        $flavor_ok = false;
-        foreach( $manifest['acceptable_sugar_flavors'] as $match ){
-            if( $match == $sugar_flavor ){
-                $flavor_ok = true;
-            }
-        }
-        if( !$flavor_ok ){
-            die( $mod_strings['ERROR_FLAVOR_INCOMPATIBLE'] . $sugar_flavor );
-        }
-    }
 }
 
 function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_version = ''){

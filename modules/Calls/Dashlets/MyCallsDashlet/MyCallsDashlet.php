@@ -83,7 +83,7 @@ class MyCallsDashlet extends DashletGeneric {
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array()) {
+    function process($lvsParams = array(), $id = null) {
         global $current_language, $app_list_strings, $current_user;
         $mod_strings = return_module_language($current_language, 'Calls');
 

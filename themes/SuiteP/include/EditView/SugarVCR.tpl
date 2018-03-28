@@ -42,13 +42,17 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td nowrap class="paginationWrapper">
-            {if !empty($list_link)}
-                <script>
-                  SUGAR.saveAndContinue = function (elem) {ldelim}
-                    elem.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}
-                  {rdelim}
-                </script>
-        &nbsp;&nbsp;&nbsp;&nbsp;{else}
+            <script>
+                SUGAR.saveAndContinue = function (elem)
+                    {ldelim}
+                        elem.form.action.value='Save';
+                        if(check_form('EditView'))
+                        {ldelim}
+                            sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');
+                        {rdelim}
+                    {rdelim}
+            </script>
+            {if empty($list_link)}
                 {* remove the other save and continue button next to the view change log when you are on the last item on the list *}
                 {literal}
                     <script>

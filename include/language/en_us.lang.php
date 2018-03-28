@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -495,7 +495,11 @@ $app_list_strings = array(
             'Prospects' => 'Target',
 
         ),
-
+    'parent_line_items' => array(
+        'AOS_Quotes' => 'Quotes',
+        'AOS_Invoices' => 'Invoices',
+        'AOS_Contracts' => 'Contracts',
+    ),
     'issue_priority_default_key' => 'Medium',
     'issue_priority_dom' => array(
             'Urgent' => 'Urgent',
@@ -1262,7 +1266,7 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_GENERAL_TITLE' => 'An error has occurred',
     'LBL_EMAIL_ERROR_LIST_NAME' => 'An email list with that name already exists',
     'LBL_EMAIL_ERROR_MESSAGE_DELETED' => 'Message Removed from Server',
-    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either message Removed from Server or moved to a different folder',
+    'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED' => 'Either the message was removed from Server or moved to a different folder',
     'LBL_EMAIL_ERROR_MAILSERVERCONNECTION' => 'Connection to the mail server failed. Please contact your Administrator',
     'LBL_EMAIL_ERROR_MOVE' => 'Moving email between servers and/or mail accounts is not supported at this time.',
     'LBL_EMAIL_ERROR_MOVE_TITLE' => 'Move Error',
@@ -2031,9 +2035,9 @@ $app_strings = array(
     'LBL_SUBSCRIBE' => 'Subscribe',
     'LBL_UNSUBSCRIBE' => 'Unsubscribe',
     // Ajax status strings
-    'LBL_LOADING' => 'Loading ...',
+    'LBL_LOADING' => 'Loading...',
     'LBL_SEARCHING' => 'Searching...',
-    'LBL_SAVING_LAYOUT' => 'Saving Layout ...',
+    'LBL_SAVING_LAYOUT' => 'Saving Layout...',
     'LBL_SAVED_LAYOUT' => 'Layout has been saved.',
     'LBL_SAVED' => 'Saved',
     'LBL_SAVING' => 'Saving',
@@ -2042,7 +2046,7 @@ $app_strings = array(
     'LBL_HIDE_COLUMNS' => 'Hide Columns',
     'LBL_SEARCH_CRITERIA' => 'Search Criteria',
     'LBL_SAVED_VIEWS' => 'Saved Views',
-    'LBL_PROCESSING_REQUEST' => 'Processing..',
+    'LBL_PROCESSING_REQUEST' => 'Processing...',
     'LBL_REQUEST_PROCESSED' => 'Done',
     'LBL_AJAX_FAILURE' => 'Ajax failure',
     'LBL_MERGE_DUPLICATES' => 'Merge',
@@ -2132,16 +2136,16 @@ $app_strings = array(
     'LBL_DASHLET_CONFIGURE_DISPLAY_ROWS' => 'Display Rows',
 
     // MySugar status strings
-    'LBL_CREATING_NEW_PAGE' => 'Creating New Page ...',
+    'LBL_CREATING_NEW_PAGE' => 'Creating New Page...',
     'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Dashlets menu option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
-    'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title ...',
-    'LBL_RETRIEVING_PAGE' => 'Retrieving Page ...',
+    'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title...',
+    'LBL_RETRIEVING_PAGE' => 'Retrieving Page...',
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
@@ -2439,6 +2443,7 @@ $app_strings = array(
     'LBL_OK' => 'Ok',
 
     'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_COLUMN_CHOOSER' => 'Column Chooser',
     'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
     'LBL_DISPLAYED' => 'Displayed',
     'LBL_HIDDEN' => 'Hidden',
@@ -2446,6 +2451,8 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
+    'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
+    'LBL_PRIMARY_GROUP' => "Primary Group",
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3353,7 +3360,6 @@ $app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
 $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
-$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
 $app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
 $app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
@@ -3491,16 +3497,6 @@ $app_list_strings['aow_operator_list']['Contains'] = 'Contains';
 $app_list_strings['aow_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aow_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aow_operator_list']['is_null'] = 'Is Null';
-$app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-$app_list_strings['aow_sql_operator_list']['Contains'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['Starts_With'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['Ends_With'] = 'LIKE';
-$app_list_strings['aow_sql_operator_list']['is_null'] = 'IS NULL';
 $app_list_strings['aow_process_status_list']['Complete'] = 'Complete';
 $app_list_strings['aow_process_status_list']['Running'] = 'Running';
 $app_list_strings['aow_process_status_list']['Pending'] = 'Pending';

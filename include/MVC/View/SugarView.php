@@ -181,8 +181,21 @@ class SugarView
         if (!isset($_SESSION['isMobile']) &&
             ($this instanceof ViewList || $this instanceof ViewDetail || $this instanceof ViewEdit)
         ) {
-            $jsAlerts = new jsAlerts();
-            echo $jsAlerts->getScript();
+            if (isset($_SESSION['alerts_output']) && isset($_SESSION['alerts_output_timestamp']) &&
+                $_SESSION['alerts_output_timestamp'] >= (date('U')-60)
+            ) {
+                echo $_SESSION['alerts_output'];
+            } else {
+                $jsAlerts = new jsAlerts();
+                ob_start();
+                echo $jsAlerts->getScript();
+                $jsAlertsOutput = ob_get_clean();
+                //save to session so we dont have to load this every time
+                $_SESSION['alerts_output'] = $jsAlertsOutput;
+                $_SESSION['alerts_output_timestamp'] = date('U');
+                echo $jsAlertsOutput;
+            }
+
         }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) {
@@ -627,6 +640,9 @@ class SugarView
                     }
                     if (!empty($moduleTab)) {
                         $topTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        if (count($topTabs) >= $max_tabs - 1) {
+                            $extraTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        }
                     }
                 }
 

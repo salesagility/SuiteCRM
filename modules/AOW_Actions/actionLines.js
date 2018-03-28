@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -152,7 +152,7 @@ function getView(ln, id){
         success: function(result) {
             document.getElementById('action_parameter' + ln).innerHTML = result.responseText;
             if(document.getElementById('aow_script'+ln) != null){
-              SUGAR.util.evalScript(document.getElementById('aow_script'+ln).innerHTML);
+              SUGAR.util.evalScript(result.responseText);
             }
         }
     };

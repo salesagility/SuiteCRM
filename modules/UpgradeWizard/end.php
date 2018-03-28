@@ -319,3 +319,9 @@ $stepRecheck = 0;
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);
 unset($_SESSION['target_db_version']);
+
+
+ob_start();
+include __DIR__ . '/../Administration/UpgradeAccess.php';
+echo $cnt = ob_get_contents();
+ob_get_clean();

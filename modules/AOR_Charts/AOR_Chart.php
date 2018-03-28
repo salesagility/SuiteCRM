@@ -222,7 +222,7 @@ class AOR_Chart extends Basic {
             $chartPicture->replaceImageMapTitle("data", $labels);
         }
         ob_start();
-        $chartPicture->render('');
+        $chartPicture->render(null);
         $img = ob_get_clean();
         if($asDataURI){
             return 'data:image/png;base64,'.base64_encode($img);
@@ -569,11 +569,6 @@ EOF;
         $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
         switch($this->type){
-            case 'polar':
-                $chartFunction = 'PolarArea';
-                $data = $this->getPolarChartData($reportData, $xName,$yName);
-                $config = $this->getPolarChartConfig();
-                break;
             case 'radar':
                 $chartFunction = 'Radar';
                 $data = $this->getRadarChartData($reportData, $xName,$yName);
@@ -778,17 +773,10 @@ EOF;
         return $this->getBarChartData($reportData, $xName,$yName);
     }
 
-    private function getPolarChartData($reportData, $xName,$yName){
-        return $this->getPieChartData($reportData, $xName,$yName);
-    }
-
     private function getRadarChartConfig(){
         return array();
     }
 
-    private function getPolarChartConfig(){
-        return $this->getPieChartConfig();
-    }
     private function getPieChartConfig(){
         $config = array();
         $config['legendTemplate'] = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";

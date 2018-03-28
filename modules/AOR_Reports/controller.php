@@ -170,6 +170,11 @@ class AOR_ReportsController extends SugarController
 
     protected function action_export()
     {
+        if(!$this->bean->ACLAccess('Export')){
+            SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
+            SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
+            sugar_die('');
+        }
         $this->bean->user_parameters = requestToUserParameters();
         $this->bean->build_report_csv();
         die;
@@ -177,6 +182,11 @@ class AOR_ReportsController extends SugarController
 
     protected function action_downloadPDF()
     {
+        if(!$this->bean->ACLAccess('Export')){
+            SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
+            SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
+            sugar_die('');
+        }
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 

@@ -85,7 +85,7 @@ class Company extends Basic
         $this->add_address_streets('billing_address_street');
         $this->add_address_streets('shipping_address_street');
         $ori_in_workflow = empty($this->in_workflow) ? false : true;
-        $this->emailAddress->handleLegacySave($this, $this->module_dir);
+        $this->emailAddress->handleLegacySave($this);
         $record_id = parent::save($check_notify);
         $override_email = array();
         if (!empty($this->email1_set_in_workflow)) {
