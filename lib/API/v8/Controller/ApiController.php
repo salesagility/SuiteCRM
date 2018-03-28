@@ -152,9 +152,15 @@ class ApiController implements LoggerAwareInterface
             if(json_last_error() != JSON_ERROR_NONE) {
                 throw new Exception('Generating JSON payload failed: ' . json_last_error_msg());
             }
-            
+
+            if(isset($payload['errors'][0]['status'])) {
+                $status = $payload['errors'][0]['status'];
+            } else {
+                $status = $response->getStatusCode();
+            }
             return $response
                 ->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE)
+                ->withStatus($status)
                 ->write(json_encode($payload));
         } catch (\Exception $e) {
             $errorMessage = 'Generate JSON API Response exception detected: ' . get_class($e) . ': ' . $e->getMessage() . ' (' . $e->getCode() . ')';
