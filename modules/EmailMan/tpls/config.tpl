@@ -642,10 +642,6 @@ function notify_setrequired(f) {
 	document.getElementById("smtp_auth1").style.visibility = (document.getElementById('mail_smtpauth_req').checked) ? "visible" : "hidden";
 	document.getElementById("smtp_auth2").style.display = (document.getElementById('mail_smtpauth_req').checked) ? "" : "none";
 	document.getElementById("smtp_auth2").style.visibility = (document.getElementById('mail_smtpauth_req').checked) ? "visible" : "hidden";
-	if( document.getElementById('mail_smtpauth_req').checked)
-	   YAHOO.util.Dom.removeClass('mail_allow_user', "yui-hidden");
-	else
-	   YAHOO.util.Dom.addClass("mail_allow_user", "yui-hidden");
 
 	return true;
 }
