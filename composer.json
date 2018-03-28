@@ -22,7 +22,8 @@
     "league/url": "^3.3",
     "psr/log": "^1.0",
     "league/oauth2-server": "^5.1",
-    "justinrainbow/json-schema": "^5.2"
+    "justinrainbow/json-schema": "^5.2",
+    "onelogin/php-saml": "3.0.0.x-dev as 3.0.0"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
