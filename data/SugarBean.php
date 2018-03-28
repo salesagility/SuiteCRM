@@ -624,7 +624,6 @@ abstract class SugarBean
                 $results = $now->modify($value);
             } catch (Exception $e) {
                 $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
-                throw $e;
             }
             if (is_bool($results)) {
                 $GLOBALS['log']->fatal('Type Error: Argument 1 passed to TimeDate::asUser() ' .
