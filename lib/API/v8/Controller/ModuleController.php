@@ -423,8 +423,9 @@ class ModuleController extends ApiController
 
             // Validate Type
             if (!isset($body['data']['type'])) {
-                $exception = new ConflictException('[ModuleController] [Request body contents was incorrect, Missing "type" key in data] ');
+                $exception = new ConflictException('[ModuleController] [1] [Request body contents was incorrect, Missing "type" key in data] ');
                 $exception->setSource(self::SOURCE_TYPE);
+
                 throw $exception;
             }
 

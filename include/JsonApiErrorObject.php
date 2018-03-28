@@ -563,6 +563,7 @@ class JsonApiErrorObject
         
         if ($e instanceof ApiException) {
             $this->setCode($e->getCode());
+            $this->setStatus($e->getHttpStatus());
             $this->setDetail($e->getDetail());
             $this->setStatus($e->getHttpStatus());
         }
