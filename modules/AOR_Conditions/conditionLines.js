@@ -315,10 +315,7 @@ var moduleFieldsPendingFinished = 0;
 var testModuleFieldsPendingFinished = function () {
   moduleFieldsPendingFinished--;
   if (moduleFieldsPendingFinished <= 0) {
-    moduleFieldsPendingFinished = true;
-    if (moduleFieldsPendingFinishedCallback) {
-      moduleFieldsPendingFinishedCallback();
-    }
+    setModuleFieldsPendingFinishedCallback();
   }
 };
 
