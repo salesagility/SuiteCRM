@@ -48,6 +48,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
 use SuiteCRM\API\v8\Exception\BadRequest;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\StringValidator;
 
 use Psr\Container\ContainerInterface;
 use SuiteCRM\Exception\InvalidArgumentException;
@@ -300,6 +301,11 @@ class FilterInterpreter
      */
     private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands)
     {
+        // detect custom field and change table to {table}_cstm
+        if($this->isCustomField($filterOperator->stripFilterTag($field))) {
+            $tableName = $this->toCustomTable($tableName);
+        }
+
         // Lets build the last operation into a SQL Query
         $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
         $sqlOperator = $lastOperator->toSqlOperator();
@@ -347,5 +353,36 @@ class FilterInterpreter
             '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
             'containers '
         );
+    }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    protected function isCustomField($field)
+    {
+        if(!is_string($field)) {
+            throw new InvalidArgumentException('isCustomField requires $field to be a string');
+        }
+
+        return StringValidator::endsWith($field, '_c');
+    }
+
+    /**
+     * @param string $table
+     * @return string custom version of the table
+     * @throws InvalidArgumentException
+     */
+    protected function toCustomTable($table)
+    {
+        if(!is_string($table)) {
+            throw new InvalidArgumentException('toCustom requires $table to be a string');
+        }
+
+        if(StringValidator::endsWith($table, '_cstm')) {
+            return $table;
+        }
+
+        return $table . '_cstm';
     }
 }
