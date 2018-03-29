@@ -70,6 +70,8 @@ class StateChecker
      * @var array
      */
     protected $hashes;
+
+    protected $lastHash;
     
     /**
      *
@@ -196,6 +198,7 @@ class StateChecker
             throw new StateCheckerException('Serialize object failure');
         }
         $hash = md5($serialized);
+        $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
             throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
@@ -206,6 +209,10 @@ class StateChecker
         }
         
         return $hash;
+    }
+
+    public function getLastHash() {
+        return $this->lastHash;
     }
     
     // ------------ DATABASE ----------------
