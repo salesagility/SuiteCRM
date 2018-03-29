@@ -10,6 +10,11 @@ class ViewQuickeditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testpreDisplay()
     {
+        
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
+        
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
         $view->preDisplay();
@@ -28,5 +33,13 @@ class ViewQuickeditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
+
+        // clean up
+
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }
