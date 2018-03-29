@@ -2745,8 +2745,8 @@ class InboundEmail extends SugarBean
             } else {
                 // Update folders
                 $foldersFound = $this->db->query(
-                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
-                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
+                    'SELECT * FROM folders WHERE deleted = 0 AND (folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '")'
                 );
                 $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
