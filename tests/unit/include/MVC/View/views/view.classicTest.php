@@ -31,6 +31,11 @@ class ViewClassicTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test with a valid module but invalid action. it should return false.
@@ -63,5 +68,13 @@ class ViewClassicTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
+        
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 }
