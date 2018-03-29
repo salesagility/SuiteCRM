@@ -442,7 +442,7 @@ class ModuleController extends ApiController
             isset($body['data']['id'])
             && !empty($body['data']['id'])
         ) {
-            $beanID = $body['data']['id']
+            $beanID = $body['data']['id'];
 
             if (!isValidId($beanID)) {
                 throw new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
