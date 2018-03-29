@@ -46,6 +46,7 @@ use PHPUnit_Framework_TestCase;
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 /**
  * Description of StateChecker_PHPUnit_Framework_TestCase
  *
@@ -58,15 +59,56 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
      *
      * @var StateChecker
      */
-    protected $stateChecker;
+    protected static $stateChecker = null;
+    
+    protected function saveStates() {
+        if (StateCheckerConfig::get('testsUseStateChecker')) {
+            if(null === self::$stateChecker) {
+                self::$stateChecker = new StateChecker();
+            }
+        }
+    }
+    
+    protected function checkStates() {
+        if (StateCheckerConfig::get('testsUseStateChecker') && self::$stateChecker) {
+            try {
+                self::$stateChecker->getStateHash();
+            } catch (StateCheckerException $e) {
+                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::get('saveTraces') ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
+                if (StateCheckerConfig::get('testsUseAssertionFailureOnError')) {
+                    self::assertFalse(true, $message);
+                } else {
+                    echo $message;
+                }
+            }
+        }
+    }
+    
+    public static function setUpBeforeClass()
+    {
+        if(StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+            self::saveStates();
+        }
+        
+        parent::setUpBeforeClass();
+    }
+    
+    public static function tearDownAfterClass()
+    {        
+        parent::tearDownAfterClass();
+           
+        if(StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+            self::checkStates();
+        }
+    }
     
     /**
      * Collect state information and storing a hash
      */
     public function setUp()
     {
-        if (StateCheckerConfig::get('testsUseStateChecker')) {
-            $this->stateChecker = new StateChecker();
+        if(StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
+            self::saveStates();
         }
         
         parent::setUp();
@@ -79,17 +121,8 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
     {        
         parent::tearDown();
            
-        if (StateCheckerConfig::get('testsUseStateChecker') && $this->stateChecker) {
-            try {
-                $this->stateChecker->getStateHash();
-            } catch (StateCheckerException $e) {
-                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::get('saveTraces') ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
-                if (StateCheckerConfig::get('testsUseAssertionFailureOnError')) {
-                    $this->assertFalse(true, $message);
-                } else {
-                    echo $message;
-                }
-            }
+        if(StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
+            self::checkStates();
         }
     }
 }

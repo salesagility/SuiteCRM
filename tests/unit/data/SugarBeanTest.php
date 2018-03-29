@@ -2538,7 +2538,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->fixUpFormatting();
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
         
         // test
         $bean = new Contact();
@@ -2551,7 +2551,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2564,7 +2564,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
 
         // test
@@ -2578,7 +2578,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2591,7 +2591,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
 
         // test
@@ -2605,7 +2605,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2618,7 +2618,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('invalid-format', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2631,7 +2631,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('am', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
 
         // test
@@ -2645,7 +2645,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('NULL', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
 
         // test
@@ -2659,7 +2659,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('NULL', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2672,7 +2672,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals(0, $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
 
         // test
@@ -2688,7 +2688,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2703,7 +2703,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2718,7 +2718,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2733,7 +2733,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2748,7 +2748,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2763,7 +2763,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2778,7 +2778,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2793,7 +2793,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2808,7 +2808,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2825,7 +2825,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNull($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2838,7 +2838,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2855,7 +2855,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
 
         // test
         $bean = new Contact();
@@ -2872,7 +2872,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotEquals('', $bean->testField1);
 
-        self::assertEquals($this->stateChecker->getLastHash(), $this->stateChecker->getStateHash());
+        self::assertEquals(self::$stateChecker->getLastHash(), self::$stateChecker->getStateHash());
     }
 
     /**

@@ -51,6 +51,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class StateCheckerConfig
 {
+    
+    const RUN_NEVER = 0;
+    const RUN_PER_TESTS = 1;
+    const RUN_PER_CLASSES = 2;
+    
     /**
      * SuperGlobals Collection 
      * (DO NOT CHANGE!)
@@ -102,6 +107,8 @@ class StateCheckerConfig
      */
     protected static $storeDetails = false;
     
+    protected $testStateCheckMode = self::RUN_NEVER;
+    
     /**
      * Test using StateChecker
      * (Slow working but give more information about the error location, use in development only)
@@ -120,9 +127,14 @@ class StateCheckerConfig
     protected static $testsUseAssertionFailureOnError = true;
     
     public static function get($key) {
-        if(/*inDeveloperMode() &&*/ in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
-            return true;
-        }
+        //if(inDeveloperMode()) {
+            if(in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
+                return true;
+            }
+            if(in_array($key, ['testStateCheckMode'])) {
+                return self::RUN_PER_TESTS;
+            }
+        //}
         return self::$$key;
     }
 }
