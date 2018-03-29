@@ -43,6 +43,7 @@ class ViewPopupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             self::assertTrue(true);
         }
 
+        // clean up
 
         if(isset($session)) {
             $_SESSION = $session;
