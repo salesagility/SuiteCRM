@@ -43,35 +43,13 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class NotAcceptable
+ * Class NotAllowedException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotAcceptable extends ApiException
+class NotAllowedException extends ApiException
 {
-    /**
-     * NotAcceptable constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Acceptable] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 406;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Json API expects the "Accept" header to be application/vnd.api+json';
-    }
+    const MSG_PREFIX = '[Not Allowed]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 403;
+    
 }

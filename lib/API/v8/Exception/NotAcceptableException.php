@@ -43,35 +43,13 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class Forbidden
+ * Class NotAcceptableException
  * @package SuiteCRM\API\v8\Exception
  */
-class Forbidden extends ApiException
+class NotAcceptableException extends ApiException
 {
-    /**
-     * Conflict constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, $previous = null)
-    {
-        parent::__construct('[Forbidden] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    const MSG_PREFIX = '[Not Acceptable]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 406;
+    const DETAIL_TEXT_LABEL = 'LBL_NOT_ACCEPTABLE_EXCEPTION_DETAIL';
 }

@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotImplementedException;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 
-class NotImplementedTest extends \Codeception\Test\Unit
+class NotAllowedExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -21,7 +21,7 @@ class NotImplementedTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new NotImplementedException();
+            self::$exception = new NotAllowedException();
         }
     }
 
@@ -31,13 +31,12 @@ class NotImplementedTest extends \Codeception\Test\Unit
 
     public function testGetMessage()
     {
-        $this->assertEquals('[SuiteCRM] [API] [NotImplementedException] ', self::$exception->getMessage());
+        $this->assertEquals('[SuiteCRM] [API] [Not Allowed] ', self::$exception->getMessage());
     }
 
     public function testGetSetDetail()
     {
-        self::$exception->setDetail('test');
-        $this->assertEquals('test', self::$exception->getDetail());
+        $this->assertEquals('Api Version: 8', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -48,6 +47,6 @@ class NotImplementedTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(500, self::$exception->getHttpStatus());
+        $this->assertEquals(403, self::$exception->getHttpStatus());
     }
 }

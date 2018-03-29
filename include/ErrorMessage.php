@@ -39,93 +39,125 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+namespace SuiteCRM;
 
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use LoggerManager;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
- * Class ApiException
- * @package SuiteCRM\API\v8\Exception
- */
-class ApiException extends LangException
+class ErrorMessage
 {
-    const MSG_PREFIX = '[SuiteCRM] [API]';
-    const DEFAULT_CODE = 8000;
-    const HTTP_STATUS = 500;
-    const DETAIL_TEXT_LABEL = 'LBL_API_EXCEPTION_DETAIL';
-    
+
+    /**
+     * integer
+     */
+    const DEFAULT_CODE = 1;
+
+    /**
+     * string
+     */
+    const DEFAULT_LOG_LEVEL = 'fatal';
+
     /**
      *
-     * @var array
+     * @var string
      */
-    protected $source = ['pointer' => null, 'parameter' => null];
-    
+    protected $message;
+
     /**
      *
-     * @var LangText
+     * @var integer
      */
-    protected $detail;
+    protected $code;
+
+    /**
+     *
+     * @var string
+     */
+    protected $level;
+
+    /**
+     *
+     * @var boolean
+     */
+    protected $throw;
+
+    /**
+     *
+     * @param string $message
+     * @param integer|null $code
+     * @param string $level
+     * @param boolean $throw
+     */
+    public function __construct($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
+    {
+        $this->setState($message, $code, $level, $throw);
+    }
+
+    /**
+     *
+     * @param string $message
+     * @param integer|null $code
+     * @param string $level
+     * @param boolean $throw
+     */
+    public function setState($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
+    {
+        $this->message = $message;
+        $this->code = $code;
+        $this->level = $level;
+        $this->throw = $throw;
+    }
+
+    /**
+     *
+     * @throws ErrorMessageException
+     */
+    public function handle()
+    {
+        if ($this->level) {
+            $log = LoggerManager::getLogger();
+            $level = $this->level;
+            $log->$level($this->message);
+        }
+        if ($this->throw) {
+            throw new ErrorMessageException($this->message, $this->code);
+        }
+    }
+
+    /**
+     *
+     * @param string $message
+     * @param string $level
+     * @param boolean $throw
+     * @param integer $code
+     * @throws ErrorMessageException
+     */
+    public static function handler($message, $level = self::DEFAULT_LOG_LEVEL, $throw = true, $code = self::DEFAULT_CODE)
+    {
+        $errorMessage = new ErrorMessage($message, $code, $level, $throw);
+        $errorMessage->handle();
+    }
+
+    /**
+     * 
+     * @param string $message
+     * @param integer $level
+     */
+    public static function log($message, $level = self::DEFAULT_LOG_LEVEL)
+    {
+        self::handler($message, $level, false);
+    }
 
     /**
      * 
      * @param string $message
      * @param integer $code
-     * @param \Exception $previous
-     * @param LangText $langMessage
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null, LangText $langMessage = null)
+    public static function drop($message, $code = self::DEFAULT_CODE)
     {
-        parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ? $code : self::DEFAULT_CODE, $previous, $langMessage);
-    }
-
-    /**
-     * Gives addition details to what caused the exception
-     * @return LangText
-     */
-    public function getDetail()
-    {
-        $text = $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
-        return $text;
-    }
-
-    /**
-     * @param string $detail
-     */
-    public function setDetail(LangText $detail)
-    {
-        $this->detail = $detail;
-    }
-    
-    /**
-     * @param array|string $source
-     */
-    public function setSource($source)
-    {
-        if(is_string($source)) {
-            $source = ['pointer' => $source];
-        }
-        $this->source = $source;
-    }
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getSource() {
-        return $this->source;
-    }
-
-    /**
-     * @return int http status code that should be returned back to the client
-     */
-    public function getHttpStatus()
-    {
-        return $this::HTTP_STATUS;
+        self::handler($message, $code);
     }
 }

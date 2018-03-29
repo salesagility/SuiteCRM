@@ -2,14 +2,16 @@
 
 namespace SuiteCRM\Exception;
 
-use Psr\Log\LogLevel;
+use Codeception\Test\Unit;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\API\v8\Exception\NotImplementedException;
+use SuiteCRM\LangText;
+use UnitTester;
 
-class NotAllowedTest extends \Codeception\Test\Unit
+class NotImplementedExceptionTest extends Unit
 {
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -21,7 +23,7 @@ class NotAllowedTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new NotAllowed();
+            self::$exception = new NotImplementedException();
         }
     }
 
@@ -31,12 +33,15 @@ class NotAllowedTest extends \Codeception\Test\Unit
 
     public function testGetMessage()
     {
-        $this->assertEquals('[SuiteCRM] [API] [Not Allowed] ', self::$exception->getMessage());
+        $this->assertEquals('[SuiteCRM] [API] [NotImplementedException] ', self::$exception->getMessage());
     }
 
     public function testGetSetDetail()
     {
-        $this->assertEquals('', self::$exception->getDetail());
+        global $app_strings;
+        $app_strings['LBL_API_TEST_1'] = 'test';
+        self::$exception->setDetail(new LangText('LBL_API_TEST_1'));
+        $this->assertEquals('test', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +52,6 @@ class NotAllowedTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(403, self::$exception->getHttpStatus());
+        $this->assertEquals(500, self::$exception->getHttpStatus());
     }
 }

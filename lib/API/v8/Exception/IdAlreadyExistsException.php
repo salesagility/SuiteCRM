@@ -40,18 +40,16 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotImplementedException
+ * Class IdAlreadyExistsException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotImplementedException extends ApiException
+class IdAlreadyExistsException extends ApiException
 {
-    const MSG_PREFIX = '[NotImplementedException]';
-    const DEFAULT_CODE = 8035;
-    const HTTP_STATUS = 500;
+    const MSG_PREFIX = '[IdAlreadyExists]';
+    const DEFAULT_CODE = 8060;
+    const HTTP_STATUS = 403;
+    
 }

@@ -38,20 +38,61 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+use SuiteCRM\ErrorMessage;
+use SuiteCRM\ErrorMessageException;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotImplementedException
- * @package SuiteCRM\API\v8\Exception
+ * Description of ErrorMessageTest
+ *
+ * @author gyula
  */
-class NotImplementedException extends ApiException
+class ErrorMessageTest extends PHPUnit_Framework_TestCase
 {
-    const MSG_PREFIX = '[NotImplementedException]';
-    const DEFAULT_CODE = 8035;
-    const HTTP_STATUS = 500;
+    public function setUp()
+    {
+        parent::setUp();
+        if (!defined('sugarEntry')) {
+            define('sugarEntry', true);
+        }
+
+        global $app_strings, $mod_strings;
+
+        include_once __DIR__ . '/../../../include/utils.php';
+        include_once __DIR__ . '/../../../include/SugarTheme/SugarTheme.php';
+        include_once __DIR__ . '/../../../include/SugarTheme/SugarThemeRegistry.php';
+        include __DIR__ . '/../../../include/language/en_us.lang.php';
+        include_once __DIR__ . '/../../../include/SugarObjects/SugarConfig.php';
+        include_once __DIR__ . '/../../../include/SugarLogger/LoggerManager.php';
+
+        include_once __DIR__ . '/../../../include/ErrorMessageException.php';
+        include_once __DIR__ . '/../../../include/ErrorMessage.php';
+        include_once __DIR__ . '/../../../include/LangText.php';
+        include_once __DIR__ . '/../../../include/JsonApiErrorObject.php';
+        include_once __DIR__ . '/../../../include/LangExceptionInterface.php';
+        include_once __DIR__ . '/../../../include/LangException.php';
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
+    public function testLog()
+    {
+        try {
+            ErrorMessage::handler('A test error message', 'debug', true, 321);
+            $this->assertFalse(true, 'Error handler should throw an exception in this scenario.');
+        } catch (ErrorMessageException $e) {
+            $message = $e->getMessage();
+            $code = $e->getCode();
+            $this->assertEquals('A test error message', $message, 'Incorrect exception message given.');
+            $this->assertEquals(321, $code, 'Incorrect exception code given.');
+        }
+    }
 }

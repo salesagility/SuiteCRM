@@ -37,40 +37,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\v8\Exception;
 
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class BadRequest
+ * Class UnsupportedMediaTypeException
  * @package SuiteCRM\API\v8\Exception
  */
-class BadRequest extends ApiException
+class UnsupportedMediaTypeException extends ApiException
 {
-    /**
-     * BadRequest constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, $previous = null)
-    {
-        parent::__construct('[BadRequest] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Please ensure you fill in the fields required';
-    }
+    const MSG_PREFIX = '[Unsupported Media Type]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 415;
+    const DETAIL_TEXT_LABEL = 'LBL_UNSUPPORTED_MEDIA_TYPE_EXCEPTION_DETAIL';
 }

@@ -43,35 +43,12 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class EmptyBody
+ * Class NotFoundException
  * @package SuiteCRM\API\v8\Exception
  */
-class EmptyBody extends ApiException
+class NotFoundException extends ApiException
 {
-    /**
-     * EmptyBody constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, $previous = null)
-    {
-        parent::__construct('[EmptyBody] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Json API expects body of the request to be JSON';
-    }
+    const MSG_PREFIX = '[Not Found]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 404;
 }

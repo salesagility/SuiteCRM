@@ -49,9 +49,9 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\ModuleNotFound;
-use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib
@@ -79,7 +79,7 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
-     * @throws ModuleNotFound
+     * @throws ModuleNotFoundException
      * @throws \InvalidArgumentException
      * @throws NotAllowed
      */
@@ -92,7 +92,7 @@ class ModulesLib
         $module = \BeanFactory::newBean($args['module']);
 
         if ($module === false) {
-            throw new ModuleNotFound('"' . $args['module'] . '"');
+            throw new ModuleNotFoundException('"' . $args['module'] . '"');
         }
 
         if (!$module->ACLAccess('list')) {
@@ -256,7 +256,7 @@ class ModulesLib
      * @param array route arguments
      * @return array
      * @throws \SuiteCRM\Exception\Exception
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
     protected function getModuleList(Request $req, \SugarBean $module, array $args = array())
     {
@@ -305,7 +305,7 @@ class ModulesLib
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         }
 
-        throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        throw new BadRequestException('[ModulesLib][getModuleList][Unknown filter strategy]');
     }
 
     /**
