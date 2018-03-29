@@ -3567,6 +3567,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         // The 'G' modifier is available since PHP 5.1.0

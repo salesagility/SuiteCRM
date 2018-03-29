@@ -136,7 +136,7 @@ class Importer
     {
         global $sugar_config, $mod_strings, $current_user;
 
-        $focus = clone $this->bean;
+        $focus = BeanFactory::getBean($this->bean->module_name);
         $focus->unPopulateDefaultValues();
         $focus->save_from_post = false;
         $focus->team_id = null;
