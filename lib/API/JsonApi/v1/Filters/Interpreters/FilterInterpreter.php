@@ -51,7 +51,6 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\Utility\StringValidator;
 
 use Psr\Container\ContainerInterface;
-use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
  * Class FilterInterpreter
@@ -362,7 +361,7 @@ class FilterInterpreter
     protected function isCustomField($field)
     {
         if(!is_string($field)) {
-            throw new InvalidArgumentException('isCustomField requires $field to be a string');
+            throw new \InvalidArgumentException('isCustomField requires $field to be a string');
         }
 
         return StringValidator::endsWith($field, '_c');
@@ -376,7 +375,7 @@ class FilterInterpreter
     protected function toCustomTable($table)
     {
         if(!is_string($table)) {
-            throw new InvalidArgumentException('toCustom requires $table to be a string');
+            throw new \InvalidArgumentException('toCustom requires $table to be a string');
         }
 
         if(StringValidator::endsWith($table, '_cstm')) {
