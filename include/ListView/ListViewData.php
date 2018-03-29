@@ -181,7 +181,7 @@ class ListViewData {
 	 */
 	function setVariableName($baseName, $where, $listviewName = null, $id = null){
         global $timedate;
-        $module = (!empty($listviewName)) ? $listviewName: $_REQUEST['module'];
+        $module = (!empty($listviewName)) ? $listviewName: isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
         $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
 
 		$this->var_order_by = $this->var_name .'_ORDER_BY';
