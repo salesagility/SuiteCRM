@@ -873,35 +873,35 @@ AjaxObject.detailView = {
     var SED = SUGAR.email2.detailView;
     var ret = YAHOO.lang.JSON.parse(o.responseText);
 
-    if (!SED.quickCreateDialog) {
-      SED.quickCreateDialog = new YAHOO.widget.Dialog("emailDetailDialog", {
-        modal: true,
-        visible: true,
-        //fixedcenter:true,
-        constraintoviewport: true,
-        draggable: true,
-        autofillheight: "body",
-        shadow: true
-      });
-      SED.quickCreateDialog.renderEvent.subscribe(function () {
-        var viewHeight = YAHOO.util.Dom.getViewportHeight();
-        var contH = 0;
-        for (var i in this.body.childNodes) {
-          if (this.body.childNodes[i].offsetHeight)
-            contH += this.body.childNodes[i].offsetHeight;
-        }
-        this.body.style.overflow = "auto";
-        this.body.style.width = "800px";
-        this.body.style.height = (viewHeight - 75 > contH ? (contH + 10) : (viewHeight - 75)) + "px";
-        this.center();
-      }, SED.quickCreateDialog);
-    }
-    SED.quickCreateDialog.setHeader(app_strings.LBL_EMAIL_RECORD);
-    SED.quickCreateDialog.setBody(ret.html);
-    SED.quickCreateDialog.render();
-    SUGAR.util.evalScript(ret.html);
-    SED.quickCreateDialog.show();
-  },
+		if(!SED.quickCreateDialog) {
+			SED.quickCreateDialog = new YAHOO.widget.Dialog("emailDetailDialog", {
+				modal:true,
+				visible:true,
+            	//fixedcenter:true,
+            	constraintoviewport: true,
+            	draggable: true,
+				autofillheight: "body",
+				shadow	: true
+			});
+			SED.quickCreateDialog.renderEvent.subscribe(function() {
+            	var viewHeight = YAHOO.util.Dom.getViewportHeight();
+            	var contH = document.body["scrollHeight"];
+            	for (var i in this.body.childNodes) {
+            		if (this.body.childNodes[i].offsetHeight)
+            			contH += this.body.childNodes[i].offsetHeight;
+            	}
+        		this.body.style.overflow = "auto";
+        		this.body.style.width = "800px";
+        		this.body.style.height = (viewHeight - 75 > contH ? (contH + 10) : (viewHeight - 75)) + "px";
+        		this.center();
+            }, SED.quickCreateDialog);
+		}
+		SED.quickCreateDialog.setHeader(app_strings.LBL_EMAIL_RECORD);
+		SED.quickCreateDialog.setBody(ret.html);
+		SED.quickCreateDialog.render();
+        SUGAR.util.evalScript(ret.html);
+        SED.quickCreateDialog.show();
+	},
 
   showAssignmentDialogWithData: function (o) {
     var SEC = SUGAR.email2.contextMenus;
