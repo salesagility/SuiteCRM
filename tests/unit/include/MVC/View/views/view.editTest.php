@@ -27,6 +27,11 @@
 
      public function testpreDisplay()
      {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
          error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
@@ -42,6 +47,14 @@
          $view->bean = new Meeting();
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
+         
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
      }
 
      public function testdisplay()
