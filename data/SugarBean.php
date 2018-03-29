@@ -4738,7 +4738,12 @@ abstract class SugarBean
             return;
         }
         foreach ($this->field_defs as $fieldDef) {
-            $field = $fieldDef['name'];
+            if(!isset($fieldDef['name'])) {
+                LoggerManager::getLogger()->warn("Field definition has not 'name'");
+                $field = null;
+            } else {
+                $field = $fieldDef['name'];
+            }
             if (!isset($this->processed_dates_times[$field])) {
                 $this->processed_dates_times[$field] = '1';
                 if (empty($this->$field)) {
