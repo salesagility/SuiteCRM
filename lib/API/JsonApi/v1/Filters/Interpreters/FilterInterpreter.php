@@ -205,10 +205,11 @@ class FilterInterpreter
     /**
      * Convert the filter structure for a parser into an SQL where clause
      * @param array $filterStructure [table => [field => [operator, operand, ... ], ...]
+     * @param array $args Route arguments
      * @return string
      * @throws BadRequest
      */
-    public function getFilterByAttributes(array $filterStructure)
+    public function getFilterByAttributes(array $filterStructure, array $args)
     {
         $filter = '';
         $filterOperator = new FieldOperator($this->containers);
@@ -262,7 +263,14 @@ class FilterInterpreter
                         }
 
                         // Here's where the magic happens
-                        $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+                        $filter .= $this->toSqlFilter(
+                            $tableName,
+                            $filterOperator,
+                            $lastOperator,
+                            $field,
+                            $operands,
+                            $args
+                        );
 
                         // Clear the operands for the next operator
                         $operands = array();
@@ -283,7 +291,15 @@ class FilterInterpreter
                 }
 
                 // Handle the last operator
-                $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+                // Here's where the magic happens
+                $filter .= $this->toSqlFilter(
+                    $tableName,
+                    $filterOperator,
+                    $lastOperator,
+                    $field,
+                    $operands,
+                    $args
+                );
             }
         }
 
@@ -296,12 +312,13 @@ class FilterInterpreter
      * @param OperatorInterface|FilterInterface $lastOperator
      * @param string $field
      * @param array $operands
+     * @param array $args route arguments
      * @return string
      */
-    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands)
+    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands, array $args)
     {
         // detect custom field and change table to {table}_cstm
-        if($this->isCustomField($filterOperator->stripFilterTag($field))) {
+        if($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
             $tableName = $this->toCustomTable($tableName);
         }
 
@@ -356,21 +373,29 @@ class FilterInterpreter
 
     /**
      * @param string $field
+     * @param array $args route arguments
      * @return bool
      */
-    protected function isCustomField($field)
+    protected function isCustomField($field, array $args)
     {
         if(!is_string($field)) {
             throw new \InvalidArgumentException('isCustomField requires $field to be a string');
         }
 
-        return StringValidator::endsWith($field, '_c');
+        if(empty($args) || !isset($args['module'])) {
+            return false;
+        }
+
+        $module = $args['module'];
+        $bean = \BeanFactory::newBean($module);
+
+        return $bean->custom_fields->fieldExists($field);
     }
 
     /**
      * @param string $table
      * @return string custom version of the table
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function toCustomTable($table)
     {
