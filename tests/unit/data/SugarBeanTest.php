@@ -905,6 +905,14 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
 
         global $sugar_config;
+        
+        $query = "SELECT * FROM aod_index";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        $tableAodIndex = $rows;
 
         // test
         $GLOBALS['log']->reset();
@@ -1200,6 +1208,15 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
         $this->db->query("DELETE FROM aod_index");
+        $query = "INSERT aod_index INTO (";
+        foreach($tableAodIndex as $row) {
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
     }
 
 
