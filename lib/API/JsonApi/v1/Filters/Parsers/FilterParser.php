@@ -48,7 +48,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FilterValidator;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 
@@ -159,7 +159,7 @@ class FilterParser
      * @param string $fieldKey
      * @param string $delimiter
      * @return array
-     * @throws BadRequest
+     * @throws BadRequestException
      * @throws Exception
      * @throws InvalidArgumentException
      */
@@ -210,7 +210,7 @@ class FilterParser
 
             $response = $treeDataStructure;
         } else {
-            throw new BadRequest('[JsonApi][v1][Filters][FilterParser][splitFieldKeys][unable to split value] "' . $fieldKey . '"');
+            throw new BadRequestException('[JsonApi][v1][Filters][FilterParser][splitFieldKeys][unable to split value] "' . $fieldKey . '"');
         }
 
 

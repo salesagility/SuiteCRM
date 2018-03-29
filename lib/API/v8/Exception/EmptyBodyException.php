@@ -40,18 +40,18 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotImplementedException
+ * Class EmptyBodyException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotImplementedException extends ApiException
+class EmptyBodyException extends ApiException
 {
-    const MSG_PREFIX = '[NotImplementedException]';
-    const DEFAULT_CODE = 8035;
-    const HTTP_STATUS = 500;
+    
+    const MSG_PREFIX = '[EmptyBody]';
+    const DEFAULT_CODE = 8015;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_EMPTY_BODY_EXCEPTION_DETAIL';
+
 }

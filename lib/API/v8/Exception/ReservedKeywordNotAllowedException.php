@@ -40,38 +40,17 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
+
+use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
+use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotAllowed
+ * Class ReservedKeywordNotAllowedException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotAllowed extends ApiException
+class ReservedKeywordNotAllowedException extends ConflictException
 {
-    /**
-     * NotAllowed constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Allowed] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    const MSG_PREFIX = '[ReservedKeywordNotAllowed]';
+    const DEFAULT_CODE = 8040;
 }

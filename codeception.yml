@@ -111,19 +111,19 @@ coverage:
         - lib\API\v8\Controller\OAuth2Controller.php
         - lib\API\v8\Controller\SchemaController.php
         - lib\API\v8\Exception\ApiException.php
-        - lib\API\v8\Exception\BadRequest.php
-        - lib\API\v8\Exception\Conflict.php
-        - lib\API\v8\Exception\EmptyBody.php
-        - lib\API\v8\Exception\Forbidden.php
-        - lib\API\v8\Exception\InvalidJsonApiRequest.php
-        - lib\API\v8\Exception\InvalidJsonApiResponse.php
-        - lib\API\v8\Exception\ModuleNotFound.php
-        - lib\API\v8\Exception\NotAcceptable.php
-        - lib\API\v8\Exception\NotAllowed.php
-        - lib\API\v8\Exception\NotFound.php
+        - lib\API\v8\Exception\BadRequestException.php
+        - lib\API\v8\Exception\ConflictException.php
+        - lib\API\v8\Exception\EmptyBodyException.php
+        - lib\API\v8\Exception\ForbiddenException.php
+        - lib\API\v8\Exception\InvalidJsonApiRequestException.php
+        - lib\API\v8\Exception\InvalidJsonApiResponseException.php
+        - lib\API\v8\Exception\ModuleNotFoundException.php
+        - lib\API\v8\Exception\NotAcceptableException.php
+        - lib\API\v8\Exception\NotAllowedException.php
+        - lib\API\v8\Exception\NotFoundException.php
         - lib\API\v8\Exception\NotImplementedException.php
-        - lib\API\v8\Exception\ReservedKeywordNotAllowed.php
-        - lib\API\v8\Exception\UnsupportedMediaType.php
+        - lib\API\v8\Exception\ReservedKeywordNotAllowedException.php
+        - lib\API\v8\Exception\UnsupportedMediaTypeException.php
         - lib\API\v8\Library\ModulesLib.php
         - lib\API\v8\Library\UtilityLib.php
         - lib\Enumerator\ExceptionCode.php

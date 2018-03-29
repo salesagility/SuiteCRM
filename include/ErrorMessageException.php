@@ -38,20 +38,21 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+namespace SuiteCRM;
+
+use Exception;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotImplementedException
- * @package SuiteCRM\API\v8\Exception
+ * Description of ErrorMessageException
+ *
+ * @author gyula
  */
-class NotImplementedException extends ApiException
+class ErrorMessageException extends Exception
 {
-    const MSG_PREFIX = '[NotImplementedException]';
-    const DEFAULT_CODE = 8035;
-    const HTTP_STATUS = 500;
 }
