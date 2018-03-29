@@ -24,7 +24,7 @@ class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     }
 
     public function testdisplaySelect()
-    {
+    {   
         $view = new ViewMetadata();
 
         //check with empty values array. it should return html sting
@@ -79,6 +79,12 @@ class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $view = new ViewMetadata();
@@ -97,6 +103,15 @@ class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+        
+        
+        // clean up
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testgetModules()
