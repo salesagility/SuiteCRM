@@ -92,7 +92,6 @@ class ListViewData {
 	function getOrderBy($orderBy = '', $direction = '') {
 		if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
             if(!empty($_REQUEST[$this->var_order_by])) {
-    			$direction = 'ASC';
     			$orderBy = $_REQUEST[$this->var_order_by];
     			if(!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0) ){
     				$direction = $_REQUEST['lvso'];

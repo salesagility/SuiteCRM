@@ -108,7 +108,7 @@ $mod_strings = array(
     'TXT_REMOVE_ME_ALT' => 'To remove yourself from this email list go to',
     'TXT_REMOVE_ME_CLICK' => 'click here',
     'TXT_REMOVE_ME' => 'To remove yourself from this email list ',
-    'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER' => 'Send notification from assigning user\'s e-mail address',
+    'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER' => 'Send notification from the email address of the assigning user',
 
     'LBL_SECURITY_TITLE' => 'Email Security Settings',
     'LBL_SECURITY_DESC' => 'Check the following that should NOT be allowed in via InboundEmail or displayed in the Emails module.',

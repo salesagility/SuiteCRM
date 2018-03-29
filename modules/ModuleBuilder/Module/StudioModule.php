@@ -42,6 +42,8 @@
 require_once 'data/BeanFactory.php';
 require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
 require_once 'modules/ModuleBuilder/parsers/constants.php';
+require_once 'IconRepository.php';
+
 
 class StudioModule
 {
@@ -191,7 +193,8 @@ class StudioModule
             'module' => $this->module,
             'type' => 'StudioModule',
             'action' => "module=ModuleBuilder&action=wizard&view_module={$this->module}",
-            'children' => $this->getModule()
+            'children' => $this->getModule(),
+            'icon' => IconRepository::getIconName($this->module)
         );
     }
 
@@ -203,30 +206,30 @@ class StudioModule
         $sources = array(
             translate('LBL_LABELS') => array(
                 'action' => "module=ModuleBuilder&action=editLabels&view_module={$this->module}",
-                'imageTitle' => 'Labels',
-                'help' => 'labelsBtn'
+                'help' => 'labelsBtn',
+                'icon' => IconRepository::ICON_LABELS,
             ),
             translate('LBL_FIELDS') => array(
                 'action' => "module=ModuleBuilder&action=modulefields&view_package=studio&view_module={$this->module}",
-                'imageTitle' => 'Fields',
-                'help' => 'fieldsBtn'
+                'help' => 'fieldsBtn',
+                'icon' => IconRepository::ICON_FIELDS,
             ),
             translate('LBL_RELATIONSHIPS') => array(
                 'action' => "get_tpl=true&module=ModuleBuilder&action=relationships&view_module={$this->module}",
-                'imageTitle' => 'Relationships',
-                'help' => 'relationshipsBtn'
+                'help' => 'relationshipsBtn',
+                'icon' => IconRepository::ICON_RELATIONSHIPS,
             ),
             translate('LBL_LAYOUTS') => array(
                 'children' => 'getLayouts',
                 'action' => "module=ModuleBuilder&action=wizard&view=layouts&view_module={$this->module}",
-                'imageTitle' => 'Layouts',
-                'help' => 'layoutsBtn'
+                'help' => 'layoutsBtn',
+                'icon' => IconRepository::ICON_LAYOUTS,
             ),
             translate('LBL_SUBPANELS') => array(
                 'children' => 'getSubpanels',
                 'action' => "module=ModuleBuilder&action=wizard&view=subpanels&view_module={$this->module}",
-                'imageTitle' => 'Subpanels',
-                'help' => 'subpanelsBtn'
+                'help' => 'subpanelsBtn',
+                'icon' => IconRepository::ICON_SUBPANELS,
             )
         );
 
@@ -297,9 +300,8 @@ class StudioModule
             $layouts [$def['name']] = array(
                 'name' => $def['name'],
                 'action' => "module=ModuleBuilder&action=editLayout&view={$view}&view_module={$this->module}",
-                'imageTitle' => $def['image'],
                 'help' => "viewBtn{$def['type']}",
-                'size' => '48'
+                'icon' => $view
             );
         }
 
@@ -329,19 +331,22 @@ class StudioModule
         $popups [] = array(
             'name' => translate('LBL_POPUPLISTVIEW'),
             'type' => 'popuplistview',
-            'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
         $popups [] = array(
             'name' => translate('LBL_POPUPSEARCH'),
             'type' => 'popupsearch',
-            'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
         $layouts [translate('LBL_POPUP')] = array(
             'name' => translate('LBL_POPUP'),
             'type' => 'Folder',
             'children' => $popups,
             'imageTitle' => 'Popup',
-            'action' => 'module=ModuleBuilder&action=wizard&view=popup&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=wizard&view=popup&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
 
         $nodes = $this->getSearch();
@@ -353,7 +358,8 @@ class StudioModule
                 'action' => "module=ModuleBuilder&action=wizard&view=search&view_module={$this->module}",
                 'imageTitle' => 'BasicSearch',
                 'help' => 'searchBtn',
-                'size' => '48'
+                'size' => '48',
+                'icon' => 'filter'
             );
         }
 

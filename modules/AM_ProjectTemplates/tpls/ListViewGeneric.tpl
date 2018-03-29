@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -194,7 +194,7 @@
             <tr class='{$_rowColor}S1'>
                 {if $prerow}
                     <td width='1%' class='nowrap'>
-                        {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
+                        {if !$is_admin && $is_admin_for_user && $rowData.IS_ADMIN==1}
                             <input type='checkbox' disabled="disabled" class='checkbox' value='{$rowData.ID}'>
                         {else}
                             <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}"

@@ -8,7 +8,6 @@
 }
 
 .suitepicon {
-    line-height: 1;
     vertical-align: middle;
 }
 
@@ -25,9 +24,11 @@
 .suitepicon-module- {
     @extend .suitepicon-module-default;
 }
-
 .suitepicon-action- {
     @extend .suitepicon-action-empty-action;
+}
+.suitepicon-admin- {
+    @extend .suitepicon-admin-password;
 }
 
 /**
@@ -187,5 +188,5 @@
     @extend .suitepicon;
     @extend .suitepicon-action-move-right;
     line-height: 30px;
-    margin-left: 4px;
+    margin-left: 7px;
 }

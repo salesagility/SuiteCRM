@@ -75,10 +75,11 @@ class FilterRepository
 
     /**
      * @param Request $request
+     * @param array route arguments
      * @return array
      * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
-    public function fromRequest(Request $request)
+    public function fromRequest(Request $request, array $args = array())
     {
         /** @var OperatorInterface[] $filterOperators */
         // Parse Filters from request
@@ -94,7 +95,7 @@ class FilterRepository
 
             if(is_array($filters)) {
                 foreach ($filters as $filterKey => $filter) {
-                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter));
+                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
                 }
             } else if(is_string($filters)) {
                 $response = array($filters);

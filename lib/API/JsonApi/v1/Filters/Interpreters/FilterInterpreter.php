@@ -48,9 +48,9 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Utility\StringValidator;
 
 use Psr\Container\ContainerInterface;
-use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
  * Class FilterInterpreter
@@ -205,10 +205,11 @@ class FilterInterpreter
     /**
      * Convert the filter structure for a parser into an SQL where clause
      * @param array $filterStructure [table => [field => [operator, operand, ... ], ...]
+     * @param array $args Route arguments
      * @return string
      * @throws BadRequestException
      */
-    public function getFilterByAttributes(array $filterStructure)
+    public function getFilterByAttributes(array $filterStructure, array $args)
     {
         $filter = '';
         $filterOperator = new FieldOperator($this->containers);
@@ -262,7 +263,14 @@ class FilterInterpreter
                         }
 
                         // Here's where the magic happens
-                        $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+                        $filter .= $this->toSqlFilter(
+                            $tableName,
+                            $filterOperator,
+                            $lastOperator,
+                            $field,
+                            $operands,
+                            $args
+                        );
 
                         // Clear the operands for the next operator
                         $operands = array();
@@ -283,7 +291,15 @@ class FilterInterpreter
                 }
 
                 // Handle the last operator
-                $filter .= $this->toSqlFilter($tableName, $filterOperator, $lastOperator, $field, $operands);
+                // Here's where the magic happens
+                $filter .= $this->toSqlFilter(
+                    $tableName,
+                    $filterOperator,
+                    $lastOperator,
+                    $field,
+                    $operands,
+                    $args
+                );
             }
         }
 
@@ -296,10 +312,16 @@ class FilterInterpreter
      * @param OperatorInterface|FilterInterface $lastOperator
      * @param string $field
      * @param array $operands
+     * @param array $args route arguments
      * @return string
      */
-    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands)
+    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands, array $args)
     {
+        // detect custom field and change table to {table}_cstm
+        if($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
+            $tableName = $this->toCustomTable($tableName);
+        }
+
         // Lets build the last operation into a SQL Query
         $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
         $sqlOperator = $lastOperator->toSqlOperator();
@@ -347,5 +369,44 @@ class FilterInterpreter
             '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
             'containers '
         );
+    }
+
+    /**
+     * @param string $field
+     * @param array $args route arguments
+     * @return bool
+     */
+    protected function isCustomField($field, array $args)
+    {
+        if(!is_string($field)) {
+            throw new \InvalidArgumentException('isCustomField requires $field to be a string');
+        }
+
+        if(empty($args) || !isset($args['module'])) {
+            return false;
+        }
+
+        $module = $args['module'];
+        $bean = \BeanFactory::newBean($module);
+
+        return $bean->custom_fields->fieldExists($field);
+    }
+
+    /**
+     * @param string $table
+     * @return string custom version of the table
+     * @throws \InvalidArgumentException
+     */
+    protected function toCustomTable($table)
+    {
+        if(!is_string($table)) {
+            throw new \InvalidArgumentException('toCustom requires $table to be a string');
+        }
+
+        if(StringValidator::endsWith($table, '_cstm')) {
+            return $table;
+        }
+
+        return $table . '_cstm';
     }
 }
