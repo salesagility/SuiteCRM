@@ -22,6 +22,11 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistViewPrepare()
     {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test without setting parameters. it should return some html
@@ -48,10 +53,45 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals('value', $_REQUEST['key']);
+         
+        // cleanup
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testlistViewProcess()
     {
+        
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
+        $query = "SELECT * FROM aod_index";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        $tableAodIndex = $rows;
+        
+        $query = "SELECT * FROM email_addresses";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        $tableEmailAddresses = $rows;
+        
+        
         //execute the method and call methods to get the required child objects set. it should return some html.
         $view = new ViewList();
         $view->seed = new User();
@@ -63,10 +103,55 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+        
+        
+        
+        // clean up 
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        foreach($tableEmailAddresses as $row) {
+            $query = "INSERT email_addresses INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
+        foreach($tableAodIndex as $row) {
+            $query = "INSERT aod_index INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
+        
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
+        
     }
 
     public function testprepareSearchForm()
     {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object. 
         $view1 = new ViewList();
         $view1->module = 'Users';
@@ -81,6 +166,14 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $view2->prepareSearchForm();
 
         $this->assertInstanceOf('SearchForm', $view2->searchForm);
+        
+        // clean up
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testprocessSearchForm()
@@ -117,6 +210,19 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
+        $query = "SELECT * FROM email_addresses";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        $tableEmailAddresses = $rows;
+        
         $view = new ViewList();
 
         //test without setting bean attibute. it shuold return no access html.
@@ -139,5 +245,25 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
+        
+        // clean up 
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        foreach($tableEmailAddresses as $row) {
+            $query = "INSERT email_addresses INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
+        
     }
 }

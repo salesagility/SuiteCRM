@@ -1207,9 +1207,10 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         // cleanup
         $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
+        
         $this->db->query("DELETE FROM aod_index");
-        $query = "INSERT aod_index INTO (";
         foreach($tableAodIndex as $row) {
+            $query = "INSERT aod_index INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach($row as $value) {
                 $quoteds[] = "'$value'";
