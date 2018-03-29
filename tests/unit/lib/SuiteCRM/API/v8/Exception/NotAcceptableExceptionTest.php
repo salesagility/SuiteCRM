@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
 
-class ConflictTest extends \Codeception\Test\Unit
+class NotAcceptableExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -18,15 +18,10 @@ class ConflictTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [Conflict] ', self::$exception->getMessage());
-    }
-
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new Conflict();
+            self::$exception = new NotAcceptableException();
         }
     }
 
@@ -34,9 +29,14 @@ class ConflictTest extends \Codeception\Test\Unit
     {
     }
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [Not Acceptable] ', self::$exception->getMessage());
+    }
+
     public function testGetSetDetail()
     {
-        $this->assertEquals('', self::$exception->getDetail());
+        $this->assertEquals('Json API expects the "Accept" header to be application/vnd.api+json', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class ConflictTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(409, self::$exception->getHttpStatus());
+        $this->assertEquals(406, self::$exception->getHttpStatus());
     }
 }

@@ -4,8 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\API\v8\Exception\ForbiddenException;
 
-class ModuleNotFound extends \Codeception\Test\Unit
+class ForbiddenExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -17,11 +18,15 @@ class ModuleNotFound extends \Codeception\Test\Unit
      */
     private static $exception;
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [Forbidden] ', self::$exception->getMessage());
+    }
 
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new \SuiteCRM\API\v8\Exception\ModuleNotFound();
+            self::$exception = new ForbiddenException();
         }
     }
 
@@ -29,14 +34,9 @@ class ModuleNotFound extends \Codeception\Test\Unit
     {
     }
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [Module Not Found] ', self::$exception->getMessage());
-    }
-
     public function testGetSetDetail()
     {
-        $this->assertEquals('Json API cannot find resource', self::$exception->getDetail());
+        $this->assertEquals('Api Version: 8', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class ModuleNotFound extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(406, self::$exception->getHttpStatus());
+        $this->assertEquals(403, self::$exception->getHttpStatus());
     }
 }

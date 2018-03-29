@@ -43,35 +43,14 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class NotAcceptable
+ * Class InvalidJsonApiRequestException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotAcceptable extends ApiException
+class InvalidJsonApiRequestException extends ApiException
 {
-    /**
-     * NotAcceptable constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Acceptable] '.$message, $code, $previous);
-    }
+    const MSG_PREFIX = '[InvalidJsonApiRequest]';
+    const DEFAULT_CODE = 8010;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_INVALID_JSON_API_REQUEST_EXCEPTION_DETAIL';
 
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 406;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Json API expects the "Accept" header to be application/vnd.api+json';
-    }
 }

@@ -46,7 +46,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters\ByIdFilter;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\Exception;
 
 use Psr\Container\ContainerInterface;
@@ -206,7 +206,7 @@ class FilterInterpreter
      * Convert the filter structure for a parser into an SQL where clause
      * @param array $filterStructure [table => [field => [operator, operand, ... ], ...]
      * @return string
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     public function getFilterByAttributes(array $filterStructure)
     {
@@ -216,7 +216,7 @@ class FilterInterpreter
         foreach ($filterStructure as $beanType => $filterFields) {
             //
             if ($filterOperator->isValid($beanType) === false) {
-                throw new BadRequest('[getFilterByAttributes][invalid filter]');
+                throw new BadRequestException('[getFilterByAttributes][invalid filter]');
             }
 
             /** @var \SugarBean $module */
@@ -228,15 +228,15 @@ class FilterInterpreter
             {
                 // Get next field
                 if ($filterOperator->isValid($field) === false) {
-                    throw new BadRequest('[getFilterByAttributes][invalid field]');
+                    throw new BadRequestException('[getFilterByAttributes][invalid field]');
                 }
                 $fieldName = $filterOperator->stripFilterTag($field);
                 if (isset($module->field_defs[$fieldName]) === false) {
-                    throw new BadRequest('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
+                    throw new BadRequestException('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
                 }
 
                 if(is_array($fieldOperations) === false) {
-                    throw new BadRequest('[getFilterByAttributes][operations does not exist]');
+                    throw new BadRequestException('[getFilterByAttributes][operations does not exist]');
                 }
 
                 // Build the SQL Query for each operation [operator, [operand, ...] ...] in this filter

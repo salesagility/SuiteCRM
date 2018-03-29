@@ -46,19 +46,11 @@ use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
 
 /**
- * Class ReservedKeywordNotAllowed
+ * Class ReservedKeywordNotAllowedException
  * @package SuiteCRM\API\v8\Exception
  */
-class ReservedKeywordNotAllowed extends Conflict
+class ReservedKeywordNotAllowedException extends ConflictException
 {
-    /**
-     * ApiException constructor.
-     * @param string $message API Exception "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_RESERVED_KEYWORD_NOT_ALLOWED, $previous = null)
-    {
-        parent::__construct('[ReservedKeywordNotAllowed] '.$message.'', $code, $previous);
-    }
+    const MSG_PREFIX = '[ReservedKeywordNotAllowed]';
+    const DEFAULT_CODE = 8040;
 }

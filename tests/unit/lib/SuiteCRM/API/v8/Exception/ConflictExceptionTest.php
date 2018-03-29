@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiResponse;
+use SuiteCRM\API\v8\Exception\ConflictException;
 
-class InvalidJsonApiResponseTest extends \Codeception\Test\Unit
+class ConflictExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -18,10 +18,15 @@ class InvalidJsonApiResponseTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
+    public function testGetMessage()
+    {
+        $this->assertEquals('[SuiteCRM] [API] [Conflict] ', self::$exception->getMessage());
+    }
+
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new InvalidJsonApiResponse();
+            self::$exception = new ConflictException();
         }
     }
 
@@ -29,14 +34,9 @@ class InvalidJsonApiResponseTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testGetMessage()
-    {
-        $this->assertEquals('[SuiteCRM] [API] [InvalidJsonApiResponse] ', self::$exception->getMessage());
-    }
-
     public function testGetSetDetail()
     {
-        $this->assertEquals('Unable to validate the Json Api Payload Response', self::$exception->getDetail());
+        $this->assertEquals('Api Version: 8', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class InvalidJsonApiResponseTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(400, self::$exception->getHttpStatus());
+        $this->assertEquals(409, self::$exception->getHttpStatus());
     }
 }

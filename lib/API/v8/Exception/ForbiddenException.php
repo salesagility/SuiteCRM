@@ -40,18 +40,17 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
 
 /**
- * Class NotImplementedException
+ * Class ForbiddenException
  * @package SuiteCRM\API\v8\Exception
  */
-class NotImplementedException extends ApiException
+class ForbiddenException extends ApiException
 {
-    const MSG_PREFIX = '[NotImplementedException]';
-    const DEFAULT_CODE = 8035;
-    const HTTP_STATUS = 500;
+    
+    const MSG_PREFIX = '[Forbidden]';
+    const DEFAULT_CODE = 8020;
+    const HTTP_STATUS = 403;
+    
 }

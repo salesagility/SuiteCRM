@@ -43,36 +43,13 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class InvalidJsonApiResponse
+ * Class NotAllowedException
  * @package SuiteCRM\API\v8\Exception
  */
-class InvalidJsonApiResponse extends ApiException
+class NotAllowedException extends ApiException
 {
-    /**
-     * InvalidJsonApiResponse constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, $previous = null)
-    {
-        parent::__construct('[InvalidJsonApiResponse] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Unable to validate the Json Api Payload Response';
-    }
-
-    /**
-     * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
+    const MSG_PREFIX = '[Not Allowed]';
+    const DEFAULT_CODE = 8005;
+    const HTTP_STATUS = 403;
+    
 }

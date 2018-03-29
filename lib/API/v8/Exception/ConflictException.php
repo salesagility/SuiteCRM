@@ -43,35 +43,14 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class Conflict
+ * Class ConflictException
  * @package SuiteCRM\API\v8\Exception
  */
-class Conflict extends ApiException
+class ConflictException extends ApiException
 {
-    /**
-     * Conflict constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MISSING_REQUIRED, $previous = null)
-    {
-        parent::__construct('[Conflict] '.$message, $code, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 409;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
-    }
+    
+    const MSG_PREFIX = '[Conflict]';
+    const DEFAULT_CODE = 8021;
+    const HTTP_STATUS = 409;
+    
 }

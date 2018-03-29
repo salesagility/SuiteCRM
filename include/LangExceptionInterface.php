@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,40 +39,25 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+namespace SuiteCRM;
 
-use SuiteCRM\Enumerator\ExceptionCode;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
- * Class NotAllowed
- * @package SuiteCRM\API\v8\Exception
+ * Description of LangInterface
+ *
+ * @author gyula
  */
-class NotAllowed extends ApiException
-{
-    /**
-     * NotAllowed constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
-    {
-        parent::__construct('[Not Allowed] '.$message, $code, $previous);
-    }
+// implement this interface in any exception to make it translatable
+interface LangExceptionInterface { // extends Throwable { // extending Throwable only in PHP7+
 
     /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 403;
-    }
-
-    /**
+     * 
      * @return string
      */
-    public function getDetail()
-    {
-        return '';
-    }
+    public function getLangMessage();
+
 }

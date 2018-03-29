@@ -49,8 +49,8 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\ModuleNotFound;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
 
 /**
  * Class ModulesLib
@@ -78,7 +78,7 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
-     * @throws ModuleNotFound
+     * @throws ModuleNotFoundException
      * @throws \InvalidArgumentException
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
@@ -90,7 +90,7 @@ class ModulesLib
         $module = \BeanFactory::newBean($args['module']);
 
         if ($module === false) {
-            throw new ModuleNotFound('"' . $args['module'] . '"');
+            throw new ModuleNotFoundException('"' . $args['module'] . '"');
         }
 
         $moduleList = $this->getModuleList($req, $module);
@@ -249,7 +249,7 @@ class ModulesLib
      * @param \SugarBean $module
      * @return array
      * @throws \SuiteCRM\Exception\Exception
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
     protected function getModuleList(Request $req, \SugarBean $module)
     {
@@ -298,7 +298,7 @@ class ModulesLib
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         }
 
-        throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        throw new BadRequestException('[ModulesLib][getModuleList][Unknown filter strategy]');
     }
 
     /**
