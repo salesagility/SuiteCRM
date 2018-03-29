@@ -15,6 +15,12 @@ class ViewModulelistmenuTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 
     public function testdisplay()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
+        
         //execute the method with required child objects preset. it should return some html. 
         $view = new ViewModulelistmenu();
         $view->ss = new Sugar_Smarty();
@@ -26,5 +32,11 @@ class ViewModulelistmenuTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, is_array($renderedContent));
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 }
