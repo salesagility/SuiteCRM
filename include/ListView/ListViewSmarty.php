@@ -237,8 +237,9 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
-	}
+        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+        $this->ss->assign('showFilterIcon', !in_array($module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+    }
 
     /**
      * Assigns the sort arrows in the tpl
