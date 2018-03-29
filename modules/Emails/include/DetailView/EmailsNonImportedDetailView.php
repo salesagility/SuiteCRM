@@ -79,8 +79,16 @@ class EmailsNonImportedDetailView extends EmailsDetailView
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
             }
 
-            if($_REQUEST['folder'] === 'inbound' && !empty($_REQUEST['folder_name'])) {
-                $inboundEmail->mailbox = $_REQUEST['folder_name'];
+            if($_REQUEST['folder'] === 'inbound') {
+                if (!empty($_REQUEST['folder_name'])) {
+                    $inboundEmail->mailbox = $_REQUEST['folder_name'];
+                }
+                elseif (count($this->mailboxarray)) {
+                    $inboundEmail->mailbox = $this->mailboxarray[0];
+                }
+                else {
+                    $inboundEmail->mailbox = 'INBOX';
+                }
             }
 
             $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
