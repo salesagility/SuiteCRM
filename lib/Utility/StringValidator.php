@@ -38,80 +38,50 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\JsonApi\v1\Repositories;
-
-use Psr\Http\Message\ServerRequestInterface as Request;
-use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
-use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+namespace SuiteCRM\Utility;
 
 /**
- * Class FilterRepository
- * @package SuiteCRM\API\JsonApi\v1\Repositories
+ * Class StringValidator
+ * @package SuiteCRM\Utility
  */
-class FilterRepository
+class StringValidator
 {
     /**
-     * @var ContainerInterface $containers
+     * @param string $haystack
+     * @param string $needle
+     * @return bool true when $haystack starts with $needle
      */
-    private $containers;
-
-    /**
-     * @var FilterParser $filterParser
-     */
-    private $filterParser;
-
-    /**
-     * FilterRepository constructor.
-     * @param ContainerInterface $containers
-     */
-    public function __construct(ContainerInterface $containers)
+    public static function startsWith($haystack, $needle)
     {
-        $this->containers = $containers;
-        $this->filterParser = new FilterParser($containers);
+        if (!is_string($haystack)) {
+            throw new \InvalidArgumentException('StringValidator::startsWith $haystack must be a string');
+        }
+
+        if (!is_string($needle)) {
+            throw new \InvalidArgumentException('StringValidator::startsWith $needle must be a string');
+        }
+
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
     }
 
     /**
-     * @param Request $request
-     * @param array route arguments
-     * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @param string $haystack
+     * @param string $needle
+     * @return bool true when $haystack ends with $needle
      */
-    public function fromRequest(Request $request, array $args = array())
+    public static function endsWith($haystack, $needle)
     {
-        /** @var OperatorInterface[] $filterOperators */
-        // Parse Filters from request
-        $queries = $request->getQueryParams();
-        if(empty($queries)) {
-            return array();
+        if (!is_string($haystack)) {
+            throw new \InvalidArgumentException('StringValidator::endsWith $haystack must be a string');
         }
 
-        $response = array();
-        if(isset($queries['filter'])) {
-            /** @var array $filters */
-            $filters = $queries['filter'];
-
-            if(is_array($filters)) {
-                foreach ($filters as $filterKey => $filter) {
-                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
-                }
-            } else if(is_string($filters)) {
-                $response = array($filters);
-            } else {
-                throw new BadRequest('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
-            }
+        if (!is_string($needle)) {
+            throw new \InvalidArgumentException('StringValidator::endsWith $needle must be a string');
         }
 
-        return $response;
-    }
+        $length = strlen($needle);
 
-    /**
-     * @return SuiteBeanResource
-     */
-    public function toSuiteBeanResource()
-    {
-        return new SuiteBeanResource($this->containers);
+        return $length === 0 || (substr($haystack, -$length) === $needle);
     }
 }

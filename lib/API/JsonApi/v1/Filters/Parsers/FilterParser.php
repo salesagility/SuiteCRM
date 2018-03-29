@@ -62,10 +62,27 @@ class FilterParser
      * @var ContainerInterface
      */
     private $containers;
+
+    /**
+     * @var FieldOperator $fieldOperator
+     */
     private static $fieldOperator;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] $filterOperators
+     */
     private static $filterOperators;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     */
     private static $filterFieldOperators;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     */
     private static $filterSpecialOperators;
+
 
     /**
      * FilterParser constructor.
