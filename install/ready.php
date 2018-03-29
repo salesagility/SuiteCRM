@@ -270,7 +270,7 @@ if(is_windows()) {
         }
     }
     $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'</b><br>
-						cd '.realpath('./').'<br>
+						cd /D '.realpath('./').'<br>
 						php.exe -f cron.php
 						<br>'.$error.'</p>
 			   ';

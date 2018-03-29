@@ -62,7 +62,8 @@ global $HTTP_RAW_POST_DATA;
 $administrator = new Administration();
 $administrator->retrieveSettings();
 
-$NAMESPACE = 'https://suitecrm.com';
+// Sugarcrm namespace is necessary for backwards compatibility with existing SOAP clients
+$NAMESPACE = 'http://www.sugarcrm.com/sugarcrm';
 $server = new soap_server;
 $server->configureWSDL('sugarsoap', $NAMESPACE, $sugar_config['site_url'].'/soap.php');
 
