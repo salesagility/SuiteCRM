@@ -62,7 +62,7 @@ class StateCheckerConfig
     protected static $fileExludeRegexes = [
         '/\/\.git\//', 
         '/\/cache\//', 
-        '/\/.log$/', 
+        '/\.log$/', 
         '/\/tests\/_output\//', 
         '/\/blowfish\//', 
         '/\/upload\//', 
