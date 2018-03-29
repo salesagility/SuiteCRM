@@ -412,6 +412,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
                 '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
+	     // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
+	   if($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownLoadPDF') {
+                global $sugar_config;
+                $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
+                $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
+                $contents = str_replace('&type={$module}', '', $contents);
+            }
             $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
         }
         // hack to disable one of the js calls in this control
