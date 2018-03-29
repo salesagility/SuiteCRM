@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,40 +39,57 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+namespace SuiteCRM;
 
-use SuiteCRM\Enumerator\ExceptionCode;
+use Exception;
+use Throwable;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
- * Class NotFound
- * @package SuiteCRM\API\v8\Exception
+ * Description of LangException
+ *
+ * @author gyula
+ * @todo should it implement or an interface enough for it?
+ * (We can use any kind of exception if it's an interface but
+ * can not guarantee the proper translation in each implementation)
  */
-class NotFound extends ApiException
+class LangException extends Exception implements LangExceptionInterface
 {
+
     /**
-     * NotFound constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
+     *
+     * @var LangText
      */
-    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
+    protected $langMessage;
+
+    /**
+     *
+     * @param string $message
+     * @param integer $code
+     * @param Exception $previous (Throwable)
+     * @param LangText $langMessage
+     */
+    public function __construct($message = "", $code = 0, Exception $previous = null, LangText $langMessage = null)
     {
-        parent::__construct('[Not Found] '.$message, $code, $previous);
+        parent::__construct($message, $code, $previous);
+        $this->langMessage = $langMessage;
     }
 
     /**
-     * @return int
+     *
+     * @return string|null
      */
-    public function getHttpStatus()
+    public function getLangMessage()
     {
-        return 404;
-    }
+        $message = null;
 
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return '';
+        if (null !== $this->langMessage) {
+            $message = $this->langMessage->getText();
+        }
+
+        return $message;
     }
 }

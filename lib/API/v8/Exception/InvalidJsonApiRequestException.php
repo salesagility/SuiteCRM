@@ -43,35 +43,14 @@ namespace SuiteCRM\API\v8\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class ModuleNotFound
+ * Class InvalidJsonApiRequestException
  * @package SuiteCRM\API\v8\Exception
  */
-class ModuleNotFound extends ApiException
+class InvalidJsonApiRequestException extends ApiException
 {
-    /**
-     * ModuleNotFound constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_MODULE_NOT_FOUND, $previous = null)
-    {
-        parent::__construct('[Module Not Found] '.$message, $code, $previous);
-    }
+    const MSG_PREFIX = '[InvalidJsonApiRequest]';
+    const DEFAULT_CODE = 8010;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_INVALID_JSON_API_REQUEST_EXCEPTION_DETAIL';
 
-    /**
-     * @return int
-     */
-    public function getHttpStatus()
-    {
-        return 406;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail()
-    {
-        return 'Json API cannot find resource';
-    }
 }

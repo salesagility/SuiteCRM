@@ -37,28 +37,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 namespace SuiteCRM\API\v8\Exception;
 
-
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\LangText;
 
 /**
- * Class ReservedKeywordNotAllowed
+ * Class BadRequestException
  * @package SuiteCRM\API\v8\Exception
  */
-class ReservedKeywordNotAllowed extends Conflict
+class BadRequestException extends ApiException
 {
-    /**
-     * ApiException constructor.
-     * @param string $message API Exception "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_RESERVED_KEYWORD_NOT_ALLOWED, $previous = null)
-    {
-        parent::__construct('[ReservedKeywordNotAllowed] '.$message.'', $code, $previous);
-    }
+    
+    const MSG_PREFIX = '[BadRequest]';
+    const DEFAULT_CODE = 8020;
+    const HTTP_STATUS = 400;
+    const DETAIL_TEXT_LABEL = 'LBL_BAD_REQUEST_EXCEPTION_DETAIL';
+
 }

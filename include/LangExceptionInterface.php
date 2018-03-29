@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,41 +39,25 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\API\v8\Exception;
+namespace SuiteCRM;
 
-use SuiteCRM\Enumerator\ExceptionCode;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
- * Class InvalidJsonApiResponse
- * @package SuiteCRM\API\v8\Exception
+ * Description of LangInterface
+ *
+ * @author gyula
  */
-class InvalidJsonApiResponse extends ApiException
-{
-    /**
-     * InvalidJsonApiResponse constructor.
-     * @param string $message Module Not Found "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_INVALID_BODY, $previous = null)
-    {
-        parent::__construct('[InvalidJsonApiResponse] '.$message, $code, $previous);
-    }
+// implement this interface in any exception to make it translatable
+interface LangExceptionInterface { // extends Throwable { // extending Throwable only in PHP7+
 
     /**
+     * 
      * @return string
      */
-    public function getDetail()
-    {
-        return 'Unable to validate the Json Api Payload Response';
-    }
+    public function getLangMessage();
 
-    /**
-     * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
-     */
-    public function getHttpStatus()
-    {
-        return 400;
-    }
 }

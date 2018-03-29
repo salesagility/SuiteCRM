@@ -4,9 +4,9 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 
-class NotFoundTest extends \Codeception\Test\Unit
+class UnsupportedMediaTypeExceptionTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -21,7 +21,7 @@ class NotFoundTest extends \Codeception\Test\Unit
     protected function _before()
     {
         if(self::$exception === null) {
-            self::$exception = new NotFound();
+            self::$exception = new UnsupportedMediaTypeException();
         }
     }
 
@@ -31,12 +31,12 @@ class NotFoundTest extends \Codeception\Test\Unit
 
     public function testGetMessage()
     {
-        $this->assertEquals('[SuiteCRM] [API] [Not Found] ', self::$exception->getMessage());
+        $this->assertEquals('[SuiteCRM] [API] [Unsupported Media Type] ', self::$exception->getMessage());
     }
 
     public function testGetSetDetail()
     {
-        $this->assertEquals('', self::$exception->getDetail());
+        $this->assertEquals('Json API expects the "Content-Type" header to be application/vnd.api+json', self::$exception->getDetail());
     }
 
     public function testGetSetSource()
@@ -47,6 +47,6 @@ class NotFoundTest extends \Codeception\Test\Unit
 
     public function testGetHttpStatus()
     {
-        $this->assertEquals(404, self::$exception->getHttpStatus());
+        $this->assertEquals(415, self::$exception->getHttpStatus());
     }
 }
