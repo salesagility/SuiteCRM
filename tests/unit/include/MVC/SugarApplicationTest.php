@@ -51,6 +51,11 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testACLFilter()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -61,6 +66,15 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
     public function testsetupResourceManagement()
@@ -100,6 +114,11 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testpreProcess()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -111,6 +130,15 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
     public function testhandleOfflineClient()
@@ -222,6 +250,11 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testloadGlobals()
     {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -233,10 +266,25 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        
+        // cleanup
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
+        
     }
 
     public function teststartSession()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -248,6 +296,15 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
+        
     }
 
     public function testendSession()
@@ -290,11 +347,24 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testappendErrorMessage()
     {
+        
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         //execute the method and check that the method adds the message to user_error_message array.
         //there should be one more array element after method execution.
         $user_error_message_count = count($_SESSION['user_error_message']);
         SugarApplication::appendErrorMessage('some error');
         $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+        
+        // cleanup
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
     public function testgetErrorMessages()
@@ -306,9 +376,21 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testsetCookie()
     {
+        
+        if(isset($_COOKIE)) {
+            $cookie = $_COOKIE;
+        }
         //execute the method and check that the method adds the key value pair to cookies array.
         SugarApplication::setCookie('key', 'value');
         $this->assertEquals('value', $_COOKIE['key']);
+        
+        // cleanup
+        
+        if(isset($cookie)) {
+            $_COOKIE = $cookie;
+        } else {
+            unset($_COOKIE);
+        }
     }
 
     public function testcreateLoginVars()
