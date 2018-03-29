@@ -108,6 +108,10 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
 
     public function testpre_save()
     {
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
+        
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->record = "1";
@@ -122,6 +126,11 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         }
 
         $this->assertTrue(true);
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        }
+        
     }
 
     public function testaction_save()
