@@ -21,8 +21,8 @@ class php_zip_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $result = unzip($file, $cache_dir);
         $this->assertTrue($result);
 
-        $this->assertFileExists($cache_dir.'/config.php');
-        $this->assertFileExists($cache_dir.'/config_override.php');
+        $this->assertFileExists($cache_dir.'/config.php1');
+        $this->assertFileExists($cache_dir.'/config_override.php1');
 
         unlink($cache_dir.'/config.php');
         unlink($cache_dir.'/config_override.php');
