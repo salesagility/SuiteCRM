@@ -31,6 +31,12 @@ class StateSaver {
         $this->clearErrors();
     }
     
+    public function __destruct() {
+        if(!empty($this->state)) {
+            throw new StateSaverException('Some garbage state left in stack');
+        }
+    }
+    
     protected function error($msg) {
         $this->errors[] = $msg;
     }
@@ -108,7 +114,8 @@ class StateSaver {
     }
     
     public function pushErrorLevel($key = 'level', $namespace = 'error_reporting') {
-        $this->push(error_reporting(), $key, $namespace);
+        $level = error_reporting();
+        $this->push($level, $key, $namespace);
     }
     
     public function popErrorLevel($key = 'level', $namespace = 'error_reporting') {
