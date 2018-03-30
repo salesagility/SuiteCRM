@@ -5968,6 +5968,22 @@ class InboundEmail extends SugarBean
             $service = $this->getServiceString();
         }
 
+        if($_REQUEST['folder'] === 'sent') {
+            $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
+        }
+
+        if($_REQUEST['folder'] === 'inbound') {
+            if (!empty($_REQUEST['folder_name'])) {
+                $this->mailbox = $_REQUEST['folder_name'];
+            }
+            elseif (count($this->mailboxarray)) {
+                $this->mailbox = $this->mailboxarray[0];
+            }
+            else {
+                $this->mailbox = 'INBOX';
+            }
+        }
+
         $connectString = $this->getConnectString($service, $this->mailbox);
 
         /*
