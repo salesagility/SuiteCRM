@@ -38,6 +38,11 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testprocess()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -56,6 +61,9 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        $state->popErrorLevel();
     }
 
     public function testdisplayErrors()
