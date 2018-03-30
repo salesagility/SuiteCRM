@@ -300,7 +300,9 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->startSession();
         } catch (Exception $e) {
-            $this->fail();
+            $err = $e->getMessage() . ' ' . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . ' ' . $e->getTraceAsString();
+            var_dump($err);
+            $this->fail($err);
         }
 
         $this->assertTrue(true);
@@ -362,6 +364,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         //execute the method and check that the method adds the message to user_error_message array.
         //there should be one more array element after method execution.
+        $_SESSION['user_error_message'] = [];
         $user_error_message_count = count($_SESSION['user_error_message']);
         SugarApplication::appendErrorMessage('some error');
         $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
