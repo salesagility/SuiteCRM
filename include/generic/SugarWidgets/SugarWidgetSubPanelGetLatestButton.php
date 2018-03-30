@@ -50,7 +50,7 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
 		return '&nbsp;';
 	}
 
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		//if the contract has been executed or selected_revision is same as latest revision
 		//then hide the latest button. 		
