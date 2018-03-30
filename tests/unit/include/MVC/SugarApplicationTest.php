@@ -286,6 +286,8 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
     }
 
+    protected $sessionStartedOk = false;
+    
     public function teststartSession()
     {
         
@@ -298,7 +300,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $SugarApplication->startSession();
+            if(!headers_sent()) {
+                $SugarApplication->startSession();
+                $this->sessionStartedOk = true;
+            }
         } catch (Exception $e) {
             $err = $e->getMessage() . ' ' . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . ' ' . $e->getTraceAsString();
             var_dump($err);
@@ -324,9 +329,13 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $SugarApplication->endSession();
+            if($this->sessionStartedOk) {
+                $SugarApplication->endSession();
+            }
         } catch (Exception $e) {
-            $this->fail();
+            $err = $e->getMessage() . ' ' . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . ' ' . $e->getTraceAsString();
+            var_dump($err);
+            $this->fail($err);
         }
 
         $this->assertTrue(true);
