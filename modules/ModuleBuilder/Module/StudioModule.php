@@ -300,9 +300,8 @@ class StudioModule
             $layouts [$def['name']] = array(
                 'name' => $def['name'],
                 'action' => "module=ModuleBuilder&action=editLayout&view={$view}&view_module={$this->module}",
-                'imageTitle' => $def['image'],
                 'help' => "viewBtn{$def['type']}",
-                'size' => '48'
+                'icon' => $view
             );
         }
 
@@ -332,19 +331,22 @@ class StudioModule
         $popups [] = array(
             'name' => translate('LBL_POPUPLISTVIEW'),
             'type' => 'popuplistview',
-            'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
         $popups [] = array(
             'name' => translate('LBL_POPUPSEARCH'),
             'type' => 'popupsearch',
-            'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
         $layouts [translate('LBL_POPUP')] = array(
             'name' => translate('LBL_POPUP'),
             'type' => 'Folder',
             'children' => $popups,
             'imageTitle' => 'Popup',
-            'action' => 'module=ModuleBuilder&action=wizard&view=popup&view_module=' . $this->module
+            'action' => 'module=ModuleBuilder&action=wizard&view=popup&view_module=' . $this->module,
+            'icon' => 'popupview'
         );
 
         $nodes = $this->getSearch();
@@ -356,7 +358,8 @@ class StudioModule
                 'action' => "module=ModuleBuilder&action=wizard&view=search&view_module={$this->module}",
                 'imageTitle' => 'BasicSearch',
                 'help' => 'searchBtn',
-                'size' => '48'
+                'size' => '48',
+                'icon' => 'filter'
             );
         }
 

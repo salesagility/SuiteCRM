@@ -8,7 +8,6 @@
 }
 
 .suitepicon {
-    line-height: 1;
     vertical-align: middle;
 }
 
@@ -22,7 +21,6 @@
 /**
  * CSS Fallbacks
  */
-[class*="suitepicon-module"]:before,
 .suitepicon-module- {
     @extend .suitepicon-module-default;
 }

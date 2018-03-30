@@ -111,6 +111,13 @@ $dictionary['email_addresses'] = array(
             'vname' => 'LBL_CONFIRM_OPT_IN_FAIL_DATE',
         ),
         
+        'confirm_opt_in_token' => [
+            'name' => 'confirm_opt_in_token',
+            'type' => 'varchar',
+            'len' => 255,
+            'vname' => 'LBL_CONFIRM_OPT_IN_TOKEN',
+        ],
+        
         'date_created' => array(
             'name'            => 'date_created',
             'type'            => 'datetime',
