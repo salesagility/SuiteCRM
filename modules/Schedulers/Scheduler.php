@@ -783,7 +783,7 @@ class Scheduler extends SugarBean {
 				<tr class="evenListRowS1">
 					<td scope="row" valign="top" width="70%"><slot>
 						'.$mod_strings['LBL_CRON_WINDOWS_DESC'].'<br>
-						<b>cd '.realpath('./').'<br>
+						<b>cd /D '.realpath('./').'<br>
 						php.exe -f cron.php</b>
 					</slot></td>
 				</tr>
