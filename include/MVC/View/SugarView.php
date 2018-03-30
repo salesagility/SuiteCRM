@@ -153,8 +153,8 @@ class SugarView
     ) {
         $this->bean = $bean;
         $this->view_object_map = $view_object_map;
-        $this->action = $GLOBALS['action'];
-        $this->module = $GLOBALS['module'];
+        $this->action = isset($GLOBALS['action']) ? $GLOBALS['action'] : null;
+        $this->module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         $this->_initSmarty();
     }
 
