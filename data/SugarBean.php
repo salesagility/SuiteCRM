@@ -539,7 +539,7 @@ class SugarBean
     public function populateDefaultValues($force = false)
     {
         if (!is_array($this->field_defs)) {
-            $GLOBALS['log']->fatal('field_defs should be an array');
+            $GLOBALS['log']->fatal('SugarBean::populateDefaultValues $field_defs should be an array');
             return;
         }
         foreach ($this->field_defs as $field => $value) {
@@ -1342,7 +1342,9 @@ class SugarBean
                             $GLOBALS['log']->fatal('Trying to get property of non-object');
                         } else {
                             if (!is_array($current_bean->field_defs)) {
-                                $GLOBALS['log']->fatal('Field definition should be an array');
+                                $GLOBALS['log']->fatal(
+                                    'SugarBean::process_union_list_query $field_defs should be an array'
+                                );
                                 $fieldDefs = (array)$current_bean->field_defs;
                             } else {
                                 $fieldDefs = $current_bean->field_defs;
@@ -1794,7 +1796,7 @@ class SugarBean
         }
         if (empty($def)) {
             if (!is_array($this->field_defs) && !is_object($this->field_defs)) {
-                $GLOBALS['log']->fatal('SugarBean::$field_defs should be an array');
+                $GLOBALS['log']->fatal('SugarBean::getPrimaryFieldDefinition $field_defs should be an array');
             } else {
                 $defs = (array)$this->field_defs;
                 reset($defs);
@@ -2481,7 +2483,7 @@ class SugarBean
         static $bool_false_values = array('off', 'false', '0', 'no');
 
         if (!is_array($this->field_defs) && !is_object($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+            $GLOBALS['log']->fatal('SugarBean::fixUpFormatting $field_defs should be an array');
         } else {
             foreach ((array)$this->field_defs as $field => $def) {
                 if (!isset($this->$field)) {
@@ -2856,7 +2858,7 @@ class SugarBean
             'remove' => array('success' => array(), 'failure' => array()),
         );
         if (!is_array($this->field_defs) && !is_object($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+            $GLOBALS['log']->fatal('SugarBean::handle_remaining_relate_fields $field_defs should be an array');
         } else {
             foreach ((array)$this->field_defs as $def) {
                 if ($def ['type'] == 'relate' && isset($def ['id_name'])
@@ -2933,7 +2935,7 @@ class SugarBean
     protected function update_parent_relationships($exclude = array())
     {
         if (!is_array($this->field_defs) && !is_object($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+            $GLOBALS['log']->fatal('SugarBean::update_parent_relationships $field_defs should be an array');
         } else {
             foreach ($this->field_defs as $def) {
                 if (!empty($def['type']) && $def['type'] == "parent") {

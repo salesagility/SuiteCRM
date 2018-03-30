@@ -10,12 +10,14 @@
             <div class="panel-heading panel-heading-collapse">
 
             {if $subpanel_tabs_properties.$i.expanded_subpanels == true}
-                <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
+                <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false"
+                   onclick="toggleSubpanelCookie('{$subpanel_tab}');">
             {else}
                     <a id="subpanel_title_{$subpanel_tab}"
                        class="{if isset($subpanel_tabs_properties.$i.collapsed_override)}in{else}collapsed{/if}"
                        role="button" data-toggle="collapse"
-                       href="#subpanel_{$subpanel_tab}" aria-expanded="false" onclick="showSubPanel('{$subpanel_tab}')">
+                       href="#subpanel_{$subpanel_tab}" aria-expanded="false"
+                       onclick="showSubPanel('{$subpanel_tab}'); toggleSubpanelCookie('{$subpanel_tab}');">
             {/if}
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>

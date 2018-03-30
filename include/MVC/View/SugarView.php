@@ -663,7 +663,7 @@ class SugarView
                 }
 
                 // put the current module at the top of the list
-                if (!empty($moduleTab)) {
+                if (!empty($moduleTab) && isset($tabData['modules'][$moduleTab])) {
                     unset($topTabs[$moduleTab]);
                     $topTabs = array_merge(
                         array($moduleTab => $tabData['modules'][$moduleTab]),
