@@ -57,7 +57,7 @@ class ViewClassicTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $ret = $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        $this->assertGreaterThan(0, strlen($renderedContent), 'Renderered Content was: ' . $renderedContent);
         $this->assertTrue($ret);
 
         //test with a valid module and customized action. it should return true
