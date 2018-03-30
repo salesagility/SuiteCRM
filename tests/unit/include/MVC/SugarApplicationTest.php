@@ -51,6 +51,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testACLFilter()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         
         if(isset($_SESSION)) {
             $session = $_SESSION;
@@ -68,7 +74,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $this->assertTrue(true);
         
         
-        // cleanup
+        
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($session)) {
             $_SESSION = $session;
@@ -79,6 +88,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testsetupResourceManagement()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method with invalid input and test if it works and does not throws an exception.
@@ -96,10 +111,20 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsetupPrint()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -110,10 +135,20 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpreProcess()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         
         if(isset($_SESSION)) {
             $session = $_SESSION;
@@ -132,7 +167,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $this->assertTrue(true);
         
         
-        // cleanup
+        
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($session)) {
             $_SESSION = $session;
@@ -143,6 +181,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testhandleOfflineClient()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -153,6 +197,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testhandleAccessControl()
@@ -171,6 +219,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testpreLoadLanguages()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         try {
             SugarApplication::preLoadLanguages();
 
@@ -182,10 +236,20 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testloadLanguages()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -206,6 +270,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcheckDatabaseVersion()
@@ -230,6 +298,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testloadDisplaySettings()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -240,10 +314,20 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testloadLicense()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -254,10 +338,20 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testloadGlobals()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         
         if(isset($_REQUEST)) {
             $request = $_REQUEST;
@@ -276,7 +370,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $this->assertTrue(true);
         
         
-        // cleanup
+        
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($request)) {
             $_REQUEST = $request;
@@ -415,6 +512,12 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testcreateLoginVars()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -425,6 +528,10 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetLoginVars()

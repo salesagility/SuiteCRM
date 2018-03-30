@@ -13,6 +13,12 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testLogicHook()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
         try {
             $LogicHook = new LogicHook();
@@ -21,6 +27,10 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $this->fail();
         }
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsetBean()
@@ -174,6 +184,12 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testrefreshHooks()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         try {
@@ -182,6 +198,10 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testloadHooks()
@@ -479,6 +499,12 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcall_custom_logic()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         $LogicHook = new LogicHook();
@@ -491,11 +517,21 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $this->fail();
         }
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
 
     public function testprocess_hooks()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         $LogicHook = new LogicHook();
@@ -509,6 +545,10 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $this->fail();
         }
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
 }

@@ -96,6 +96,12 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 
         $mergeRecord = new MergeRecord();
 
@@ -108,11 +114,21 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
@@ -124,6 +140,10 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

@@ -66,6 +66,12 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testload_flow_beans()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -75,6 +81,10 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testrun_flows()
@@ -87,6 +97,12 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testrun_flow()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -96,6 +112,10 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testrun_bean_flows()

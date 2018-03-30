@@ -55,6 +55,12 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testflushBackendCache()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             SugarFeed::flushBackendCache();
@@ -62,6 +68,10 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetModuleFeedFiles()

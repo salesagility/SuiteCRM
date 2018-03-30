@@ -68,6 +68,12 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplayErrors()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -79,10 +85,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpreDisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -93,10 +109,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -107,10 +133,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplayHeader()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -129,10 +165,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetModuleMenuHTML()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -143,10 +189,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testincludeClassicFile()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -158,6 +214,10 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetJavascriptValidation()
@@ -169,6 +229,11 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplayFooter()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -185,10 +250,20 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testrenderJavascript()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -205,6 +280,10 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetMenu()

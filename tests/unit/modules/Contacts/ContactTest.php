@@ -160,6 +160,12 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testload_contacts_users_relationship(){
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$contact = new Contact();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -170,6 +176,10 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		catch (Exception $e) {
 			$this->fail();
 		}
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 
@@ -259,6 +269,12 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testsave_relationship_changes() {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$contact = new Contact();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -270,6 +286,10 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		catch (Exception $e) {
 			$this->fail();
 		}
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 
@@ -295,6 +315,12 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testprocess_sync_to_outlook()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
     	$contact = new Contact();
 
     	//execute the method and test if it works and does not throws an exception.
@@ -317,6 +343,10 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     	}
 
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 

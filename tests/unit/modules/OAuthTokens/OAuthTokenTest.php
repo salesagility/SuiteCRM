@@ -190,6 +190,12 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testcleanup()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::cleanup();
@@ -197,6 +203,10 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcheckNonce()
@@ -207,6 +217,12 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdeleteByConsumer()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::deleteByConsumer('1');
@@ -214,10 +230,20 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdeleteByUser()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::deleteByUser('1');
@@ -225,6 +251,10 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplayDateFromTs()

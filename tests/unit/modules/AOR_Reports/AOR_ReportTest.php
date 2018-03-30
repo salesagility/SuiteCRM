@@ -88,6 +88,12 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testload_report_beans()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $aor_Report = new AOR_Report();
 
         //execute the method and test if it works and does not throws an exception.
@@ -97,6 +103,10 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetReportFields()

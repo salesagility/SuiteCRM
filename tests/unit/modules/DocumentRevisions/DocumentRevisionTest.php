@@ -89,6 +89,12 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -98,10 +104,20 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $documentRevision = new DocumentRevision();
 
             //execute the method and test if it works and does not throws an exception.
@@ -111,6 +127,10 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetDocumentRevisionNameForDisplay()
@@ -130,6 +150,12 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testfill_document_name_revision()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -139,10 +165,20 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testlist_view_parse_additional_sections()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -152,6 +188,10 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()

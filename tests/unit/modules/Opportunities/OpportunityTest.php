@@ -85,6 +85,12 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -101,10 +107,20 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -114,6 +130,10 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_contacts()
@@ -126,6 +146,12 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testupdate_currency_id()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -135,6 +161,10 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()
@@ -204,6 +234,12 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave_relationship_changes()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $opportunity = new Opportunity();
         $opportunity->account_id = 1;
 
@@ -213,10 +249,20 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testset_opportunity_contact_relationship()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $opportunity = new Opportunity();
 
         try {
@@ -225,6 +271,10 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testset_notification_body()
@@ -277,6 +327,12 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetCurrencyType()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             getCurrencyType();
@@ -286,5 +342,9 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('This method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

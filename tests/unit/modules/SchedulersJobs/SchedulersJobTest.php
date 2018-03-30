@@ -97,6 +97,12 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -106,6 +112,10 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfailJob()
@@ -144,6 +154,12 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testonFailureRetry()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -155,10 +171,20 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testonFinalFailure()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -170,6 +196,10 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testresolveJob()

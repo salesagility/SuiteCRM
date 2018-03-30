@@ -87,6 +87,12 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
 
         //execute the method and test if it works and does not throws an exception.
@@ -98,10 +104,20 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
         $task->contact_id = 1;
 
@@ -112,10 +128,20 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
@@ -127,6 +153,10 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()

@@ -88,6 +88,12 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcommit()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -99,6 +105,10 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testisModuleSearchable()
@@ -139,6 +149,12 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testremove()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -150,6 +166,10 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetIndexableModules()

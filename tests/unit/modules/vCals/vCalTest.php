@@ -52,6 +52,12 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -63,10 +69,20 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -78,10 +94,20 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -93,6 +119,10 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_freebusy_lines_cache()
@@ -140,6 +170,12 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcache_sugar_vcal()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -150,10 +186,20 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcache_sugar_vcal_freebusy()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -164,6 +210,10 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfold_ical_lines()

@@ -5,6 +5,12 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 {
     public function testprogress_bar_flush()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -13,10 +19,20 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplay_flow_bar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -27,10 +43,20 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function teststart_flow_bar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -41,10 +67,20 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdestroy_flow_bar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -55,10 +91,20 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplay_progress_bar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -69,10 +115,20 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testupdate_progress_bar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -83,5 +139,9 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

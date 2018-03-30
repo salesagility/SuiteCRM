@@ -275,6 +275,12 @@ class CallTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave_relationship_changes()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $call = new Call();
 
         //execute the method and test if it works and does not throws an exception.
@@ -284,6 +290,10 @@ class CallTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetDefaultStatus()

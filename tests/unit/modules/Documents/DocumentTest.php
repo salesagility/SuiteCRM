@@ -91,6 +91,12 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $document = new Document();
 
         //execute the method and test if it works and does not throws an exception.
@@ -100,6 +106,10 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
@@ -120,6 +130,12 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlist_view_parse_additional_sections()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $document = new Document();
 
         //execute the method and test if it works and does not throws an exception.
@@ -129,6 +145,10 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_export_query()
@@ -192,6 +212,12 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testmark_relationships_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $document = new Document();
 
         //execute the method and test if it works and does not throws an exception.
@@ -201,6 +227,10 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testbean_implements()

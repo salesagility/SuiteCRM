@@ -75,6 +75,12 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testclear_campaign_prospect_list_relationship()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -85,10 +91,20 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testmark_relationships_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -99,10 +115,20 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -112,10 +138,20 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -125,10 +161,20 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testupdate_currency_id()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -138,6 +184,10 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()

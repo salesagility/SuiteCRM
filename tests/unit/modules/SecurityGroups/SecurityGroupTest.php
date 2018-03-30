@@ -117,6 +117,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testinherit()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -129,11 +135,21 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testassign_default_groups()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -144,11 +160,21 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testinherit_creator()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -159,11 +185,21 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testinherit_assigned()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
         $account->assigned_user_id = 1;
@@ -175,11 +211,21 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testinherit_parent()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -190,11 +236,21 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testinherit_parentQuery()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -205,6 +261,10 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testinheritOne()
@@ -348,6 +408,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testaddGroupToRecord()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
         //$db->disconnect();
@@ -363,10 +429,20 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testremoveGroupFromRecord()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
         //$db->disconnect();
@@ -382,6 +458,10 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetUserSecurityGroups()

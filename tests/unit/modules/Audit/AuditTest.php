@@ -45,6 +45,12 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
 
         //execute the method and test if it works and does not throws an exception.
@@ -56,10 +62,20 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -70,10 +86,20 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -84,10 +110,20 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -98,10 +134,20 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -112,10 +158,20 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_audit_link()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -126,6 +182,10 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_audit_list()

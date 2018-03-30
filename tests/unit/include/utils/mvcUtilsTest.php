@@ -5,6 +5,12 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function testloadParentView()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
         try {
             loadParentView('classic');
@@ -12,6 +18,10 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetPrintLink()

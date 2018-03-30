@@ -195,6 +195,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function renameFolder($id)
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->retrieve($id);
@@ -206,6 +212,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function search($id)
@@ -636,6 +646,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdeletePop3Cache()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -647,6 +663,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpop3_open()
@@ -662,6 +682,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testpop3_cleanUp()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -673,6 +699,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpop3_sendCommand()
@@ -722,6 +752,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testpop3_checkPartialEmail()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -736,10 +772,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpop3_checkEmail()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -754,10 +800,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetMessagesInEmailCache()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -780,6 +836,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcheckEmailOneMailbox()
@@ -848,6 +908,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheckEmail()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //test for IMAP
@@ -869,10 +935,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsyncEmail()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         global $current_user;
         $current_user = new User('1');
 
@@ -885,10 +961,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdeleteCachedMessages()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -900,6 +986,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetOverviewsFromCacheFile()
@@ -984,6 +1074,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testmarkEmails()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -998,6 +1094,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdeleteFolder()
@@ -1293,6 +1393,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testhandleAutoresponse()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 
         $inboundEmail = new InboundEmail();
 
@@ -1309,6 +1415,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testhandleCaseAssignment()
@@ -1325,6 +1435,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testhandleMailboxType()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 
         $inboundEmail = new InboundEmail();
 
@@ -1340,6 +1456,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testisMailBoxTypeCreateCase()
@@ -1362,6 +1482,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testhandleCreateCase()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $email = new Email();
@@ -1374,6 +1500,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testhandleLinking()
@@ -1446,6 +1576,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetMessageTextFromSingleMimePart()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 
         $inboundEmail = new InboundEmail();
 
@@ -1456,6 +1592,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testaddBreadCrumbOffset()
@@ -1479,6 +1619,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetMessageText()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1488,6 +1634,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdecodeHeader()
@@ -1527,6 +1677,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testbuildBreadCrumbs()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1536,11 +1692,21 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testbuildBreadCrumbsHTML()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1550,6 +1716,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testconvertImapToSugarEmailAddress()
@@ -1586,6 +1756,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testsaveAttachments()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1595,6 +1771,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetNoteBeanForAttachment()
@@ -1644,6 +1824,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testsaveAttachmentBinaries()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $part = (Object)array('disposition' => 'multipart', 'subtype' => 10);
@@ -1655,6 +1841,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testhandleTranserEncoding()
@@ -1708,6 +1898,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetDuplicateEmailId()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1717,6 +1913,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testimportOneEmail()
@@ -1896,6 +2096,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisconnectMailserver()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1905,6 +2111,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testconnectMailserver()
@@ -1922,6 +2132,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheckImap()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1931,6 +2147,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()
@@ -2031,6 +2251,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcleanOutCache()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -2040,10 +2266,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcopyEmails()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -2055,6 +2291,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testmoveEmails()
@@ -2096,6 +2336,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdeleteMessageOnMailServerForPop3()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -2105,6 +2351,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testisPop3Protocol()
@@ -2320,6 +2570,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testinsertMailBoxFolders()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = '101';
@@ -2331,6 +2587,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testretrieveDelimiter()
@@ -2403,6 +2663,12 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetNewEmailsForSyncedMailbox()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -2412,10 +2678,20 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testimportMessages()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -2427,6 +2703,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testOverview()

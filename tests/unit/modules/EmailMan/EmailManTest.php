@@ -126,6 +126,12 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testset_as_sent()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -145,6 +151,10 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_indiv_email()
@@ -218,6 +228,12 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testmark_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -227,6 +243,10 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_ref_email()

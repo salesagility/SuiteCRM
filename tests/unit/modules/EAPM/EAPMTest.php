@@ -98,6 +98,12 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -107,10 +113,20 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -120,6 +136,10 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave_cleanup()
@@ -136,6 +156,12 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdelete_user_accounts()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -145,6 +171,10 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetEAPMExternalApiDropDown()

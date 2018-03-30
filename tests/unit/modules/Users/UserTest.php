@@ -188,6 +188,12 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testsavePreferencesToDB()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $user = new User();
 
         $user->retrieve(1);
@@ -199,6 +205,10 @@ class UserTest extends \Codeception\Test\Unit
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
 

@@ -62,6 +62,12 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
 
     public function testexecute()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarController = new SugarController();
 
         // replace and use a temporary logger
@@ -90,10 +96,20 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         $this->assertEquals(count($testLogger->calls['fatal']), 3);
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testprocess()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $SugarController = new SugarController();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -104,6 +120,10 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testpre_save()

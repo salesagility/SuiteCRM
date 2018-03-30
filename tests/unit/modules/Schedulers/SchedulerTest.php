@@ -73,6 +73,12 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheckPendingJobs()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -82,6 +88,10 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testderiveDBDateTimes()
@@ -175,6 +185,12 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheckCurl()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -184,6 +200,10 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdisplayCronInstructions()
@@ -203,6 +223,12 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testrebuildDefaultSchedulers()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -212,6 +238,10 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_export_query()
@@ -231,6 +261,12 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -240,10 +276,20 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.

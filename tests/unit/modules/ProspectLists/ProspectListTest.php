@@ -193,6 +193,12 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testmark_relationships_deleted()
 	{
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -205,11 +211,21 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 
 	public function testfill_in_additional_list_fields()
 	{
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -222,6 +238,10 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 
@@ -237,6 +257,12 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testupdate_currency_id()
 	{
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
 
 		$prospectList = new ProspectList();
 
@@ -250,6 +276,10 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 

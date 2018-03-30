@@ -250,6 +250,12 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsend_assignment_notifications()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $meeting = new Meeting();
 
         $meeting->date_start = '2016-02-11 17:30:00';
@@ -268,6 +274,10 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_meeting_users()
@@ -320,6 +330,12 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave_relationship_changes()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $meeting = new Meeting();
 
         //execute the method and test if it works and does not throws an exception.
@@ -329,6 +345,10 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     /**
@@ -336,6 +356,12 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
      */
     public function testafterImportSave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         require_once 'data/Link.php';
 
         //execute the method and test if it works and does not throws an exception.
@@ -356,6 +382,10 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetDefaultStatus()

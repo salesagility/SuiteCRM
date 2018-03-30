@@ -22,6 +22,12 @@ class ViewHtmlTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $view = new ViewHtml();
 
         //execute the method and test if it works and does not throws an exception.
@@ -30,5 +36,9 @@ class ViewHtmlTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

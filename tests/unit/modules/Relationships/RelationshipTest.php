@@ -73,6 +73,12 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testdelete()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete('test_test', $db);
@@ -80,6 +86,10 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_other_module()
@@ -188,6 +198,12 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testbuild_relationship_cache()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $relationship = new Relationship();
 
         //execute the method and test if it works and does not throws an exception.
@@ -197,6 +213,10 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcache_file_dir()
@@ -214,6 +234,12 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testdelete_cache()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete_cache();
@@ -221,6 +247,10 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testtrace_relationship_module()

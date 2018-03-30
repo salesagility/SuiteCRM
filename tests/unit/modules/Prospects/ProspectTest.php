@@ -87,6 +87,12 @@ class ProspectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testconverted_prospect()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        error_reporting(E_ERROR | E_PARSE);
+        
+        
         $prospect = new Prospect();
 
         //execute the method and test if it works and does not throws an exception.
@@ -98,6 +104,10 @@ class ProspectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('Multiple errors in query');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testbean_implements()
