@@ -65,6 +65,11 @@
      public function testdisplay()
      {
 
+         $state = new SuiteCRM\StateSaver();
+         $state->pushErrorLevel();
+         
+         error_reporting(E_ERROR | E_PARSE);
+         
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewEdit();
          $view->module = 'Users';
@@ -77,5 +82,7 @@
          $renderedContent = ob_get_contents();
          ob_end_clean();
          $this->assertGreaterThan(0, strlen($renderedContent));
+         
+         $state->popErrorLevel();
      }
  }
