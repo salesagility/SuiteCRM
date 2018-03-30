@@ -75,22 +75,6 @@ class EmailsNonImportedDetailView extends EmailsDetailView
         if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
 
-            if($_REQUEST['folder'] === 'sent') {
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
-            }
-
-            if($_REQUEST['folder'] === 'inbound') {
-                if (!empty($_REQUEST['folder_name'])) {
-                    $inboundEmail->mailbox = $_REQUEST['folder_name'];
-                }
-                elseif (count($this->mailboxarray)) {
-                    $inboundEmail->mailbox = $this->mailboxarray[0];
-                }
-                else {
-                    $inboundEmail->mailbox = 'INBOX';
-                }
-            }
-
             $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
             $this->focus = $email;
             $this->populateFields();
