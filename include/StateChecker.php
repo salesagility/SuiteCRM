@@ -327,6 +327,14 @@ class StateChecker
         return $hash;
     }
     
+    // -------------- ERROR LEVEL -------------
+    
+    protected function getErrorLevelHash() {
+        $level = error_reporting();
+        $hash = $this->getHash($level, 'errlevel');
+        return $hash;
+    }
+    
     // -------------- ALL ----------------------
     
     /**
@@ -338,6 +346,7 @@ class StateChecker
         $hashes['database'] = $this->getDatabaseHash();
         $hashes['filesys'] = $this->getFilesystemHash();
         $hashes['globals'] = $this->getSuperGlobalsHash();
+        $hashes['errlevel'] = $this->getErrorLevelHash();
         $hash = $this->getHash($hashes, 'state');
         return $hash;
     }
