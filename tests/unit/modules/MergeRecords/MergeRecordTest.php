@@ -214,6 +214,9 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_inputs_for_search_params()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $mergeRecord = new MergeRecord();
@@ -225,6 +228,10 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $result = $mergeRecord->get_inputs_for_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
         $this->assertSame($expected, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testemail_addresses_query()

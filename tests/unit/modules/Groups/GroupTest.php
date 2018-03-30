@@ -27,6 +27,9 @@ class GroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testmark_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $group = new Group();
@@ -38,6 +41,10 @@ class GroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_export_query()

@@ -26,6 +26,9 @@ class AccountTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test without name setting attribute
@@ -37,6 +40,10 @@ class AccountTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $Account->name = 'test account';
         $name = $Account->get_summary_text();
         $this->assertEquals('test account', $name);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_contacts()

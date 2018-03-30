@@ -32,6 +32,9 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheck_date_relationships_load()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $schedulersJob = new SchedulersJob();
@@ -40,6 +43,10 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $schedulersJob->check_date_relationships_load();
 
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testhandleDateFormat()

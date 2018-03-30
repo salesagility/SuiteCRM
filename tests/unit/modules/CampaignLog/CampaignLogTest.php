@@ -28,6 +28,9 @@ class CampaignLogTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $campaignLog = new CampaignLog();
@@ -36,6 +39,10 @@ class CampaignLogTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $actual = $campaignLog->get_list_view_data();
         $this->assertTrue(is_array($actual));
         $this->assertSame(array(), $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testretrieve_email_address()

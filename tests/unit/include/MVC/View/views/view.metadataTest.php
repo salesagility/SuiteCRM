@@ -84,6 +84,9 @@ class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $request = $_REQUEST;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         
         error_reporting(E_ERROR | E_PARSE);
 
@@ -106,6 +109,8 @@ class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         
         // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($request)) {
             $_REQUEST = $request;

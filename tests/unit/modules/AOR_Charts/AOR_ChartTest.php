@@ -22,6 +22,9 @@ class AOR_ChartTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         $this->markTestSkipped('Skipping AOR Charts Tests');
         error_reporting(E_ERROR | E_PARSE);
 
@@ -46,6 +49,10 @@ class AOR_ChartTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testbuildChartImageBar()

@@ -31,6 +31,9 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
 
     public function testsave_groups()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aosLineItemGroup = new AOS_Line_Item_Groups();
@@ -55,6 +58,10 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         foreach ($line_item_groups as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave()

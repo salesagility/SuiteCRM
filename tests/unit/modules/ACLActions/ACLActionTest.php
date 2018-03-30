@@ -34,6 +34,9 @@ $_POST['foo'] = 'bar123ase';
 
     public function testaddActions()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //take count of actions initially and then after method execution and test if action count increases
@@ -41,6 +44,10 @@ $_POST['foo'] = 'bar123ase';
         ACLAction::addActions('Test');
         $actual = ACLAction::getDefaultActions();
         $this->assertGreaterThan($action_count, count($actual));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testremoveActions()
@@ -55,10 +62,17 @@ $_POST['foo'] = 'bar123ase';
 
     public function testAccessName()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetDefaultActions()

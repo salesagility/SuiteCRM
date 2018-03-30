@@ -29,6 +29,9 @@ class EmailTemplateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgenerateFieldDefsJS()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $emailTemplate = new EmailTemplate();
@@ -39,6 +42,10 @@ class EmailTemplateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //$this->assertSame($expected,$actual);
 
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

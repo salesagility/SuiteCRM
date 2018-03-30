@@ -16,6 +16,10 @@ class activity_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testbuild_related_list_by_user_id()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns true
@@ -30,5 +34,9 @@ class activity_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $bean = new Meeting();
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

@@ -24,6 +24,9 @@ class jjwg_MarkersTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testconfiguration()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $jjwgMarkers = new jjwg_Markers();
@@ -33,6 +36,10 @@ class jjwg_MarkersTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertInstanceOf('jjwg_Maps', $jjwgMarkers->jjwg_Maps);
         $this->assertTrue(is_array($jjwgMarkers->settings));
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testdefine_loc()

@@ -22,6 +22,9 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testisEnabled()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aod_index = new AOD_Index();
@@ -29,6 +32,10 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //execute the method and verify that it returns true
         $result = $aod_index->isEnabled();
         $this->assertTrue($result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfind()

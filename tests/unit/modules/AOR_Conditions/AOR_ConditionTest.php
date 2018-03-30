@@ -22,6 +22,9 @@ class AOR_ConditionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aor_Condition = new AOR_Condition();
@@ -42,5 +45,9 @@ class AOR_ConditionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

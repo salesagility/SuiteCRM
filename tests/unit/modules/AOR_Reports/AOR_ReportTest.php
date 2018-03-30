@@ -14,6 +14,9 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testAOR_Report()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -28,6 +31,10 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'new_schema', $aor_Report);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testbean_implements()

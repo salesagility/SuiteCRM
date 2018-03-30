@@ -29,6 +29,9 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testgetDefaultPreference()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         global $sugar_config;
 
         error_reporting(E_ERROR | E_PARSE);
@@ -55,6 +58,10 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $email_link_type = $sugar_config['email_link_type'] != '' ? $sugar_config['email_link_type'] : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testSetAndGetPreference()

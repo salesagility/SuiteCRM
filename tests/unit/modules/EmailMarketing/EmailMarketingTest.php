@@ -21,12 +21,19 @@ class EmailMarketingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testretrieve()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $emailMarketing = new EmailMarketing();
 
         $result = $emailMarketing->retrieve();
         $this->assertInstanceOf('EmailMarketing', $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

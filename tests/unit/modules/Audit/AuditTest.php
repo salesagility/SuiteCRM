@@ -14,6 +14,9 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testAudit()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -22,6 +25,10 @@ class AuditTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

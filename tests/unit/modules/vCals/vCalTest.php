@@ -30,6 +30,10 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $vcal = new vCal();
@@ -40,6 +44,10 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set
         $vcal->name = 'test';
         $this->assertEquals('', $vcal->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_list_fields()

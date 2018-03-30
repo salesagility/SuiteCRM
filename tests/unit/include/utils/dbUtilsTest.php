@@ -39,6 +39,10 @@ class db_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdb_concat()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected values
@@ -48,6 +52,10 @@ class db_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),'',IFNULL(Table1.Col2,''),'',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfrom_db_convert()

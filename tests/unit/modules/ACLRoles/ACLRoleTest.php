@@ -53,6 +53,9 @@ class ACLRoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testmark_relationships_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
@@ -63,10 +66,17 @@ class ACLRoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
         $this->assertLessThan($initial_count, $final_count);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetUserRoles()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
@@ -78,6 +88,10 @@ class ACLRoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with flase getAsNameArray param value
         $result = $aclRole->getUserRoles('1', false);
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetUserRoleNames()

@@ -28,6 +28,9 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetGroupWhere()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $securityGroup = new SecurityGroup();
@@ -55,6 +58,10 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
                                AND secg.deleted = 0) ";
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetGroupUsersWhere()
@@ -313,6 +320,9 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetLinkName()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
@@ -330,6 +340,10 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         error_reporting(E_ALL);
         //error_reporting(E_ERROR | E_PARSE);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testaddGroupToRecord()

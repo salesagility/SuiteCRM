@@ -30,6 +30,9 @@ class BugTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $bug = new Bug();
@@ -40,6 +43,10 @@ class BugTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set//test with name set
         $bug->name = 'test';
         $this->assertEquals('test', $bug->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_list_query()

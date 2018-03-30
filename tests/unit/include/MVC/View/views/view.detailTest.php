@@ -48,6 +48,9 @@ class ViewDetailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $session = $_SESSION;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with essential parameters set. it should return some html.
@@ -64,7 +67,9 @@ class ViewDetailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         
-        // cleanup
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($session)) {
             $_SESSION = $session;

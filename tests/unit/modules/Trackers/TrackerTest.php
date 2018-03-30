@@ -64,6 +64,9 @@ class TrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlogPage()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test without setting headerDisplayed
@@ -74,5 +77,9 @@ class TrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $GLOBALS['app']->headerDisplayed = 1;
         Tracker::logPage();
         $this->assertEquals(time(), $_SESSION['lpage']);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

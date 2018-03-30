@@ -31,6 +31,9 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aCase = new aCase();
@@ -38,6 +41,10 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $aCase->name = 'test';
         $this->assertEquals('test', $aCase->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testlistviewACLHelper()

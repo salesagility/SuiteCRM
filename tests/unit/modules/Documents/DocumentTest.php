@@ -30,6 +30,9 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSaveAndGet_document_name()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $document = new Document();
@@ -56,6 +59,10 @@ class DocumentTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $document->mark_deleted($document->id);
         $result = $document->retrieve($document->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

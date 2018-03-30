@@ -13,6 +13,9 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testMeeting()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -36,6 +39,10 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(null, 'cached_get_users', $meeting);
         $this->assertAttributeEquals(false, 'date_changed', $meeting);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testACLAccess()

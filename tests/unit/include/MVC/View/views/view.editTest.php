@@ -32,6 +32,9 @@
             $session = $_SESSION;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
          error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
@@ -48,7 +51,9 @@
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
          
-        // cleanup
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($session)) {
             $_SESSION = $session;

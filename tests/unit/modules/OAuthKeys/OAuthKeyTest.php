@@ -31,6 +31,9 @@ class OAuthKeyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testMain()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $oauthKey = new OAuthKey();
@@ -50,6 +53,10 @@ class OAuthKeyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function getByKey($key)

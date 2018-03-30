@@ -57,6 +57,11 @@ class ViewQuickcreateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
             $_request = $_REQUEST;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required child objects and parameters preset. it will return some html.
@@ -76,6 +81,8 @@ class ViewQuickcreateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json. 
         
         // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($_session)) {
             $_SESSION = $_session;

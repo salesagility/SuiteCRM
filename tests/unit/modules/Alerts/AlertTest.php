@@ -31,6 +31,9 @@ class AlertTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $alert = new Alert();
@@ -38,5 +41,9 @@ class AlertTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertEquals(false, $alert->bean_implements('')); //test with empty value
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

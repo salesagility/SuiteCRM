@@ -36,6 +36,9 @@ class ViewClassicTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $session = $_SESSION;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test with a valid module but invalid action. it should return false.
@@ -69,7 +72,10 @@ class ViewClassicTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
         
-        // cleanup
+        
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($session)) {
             $_SESSION = $session;

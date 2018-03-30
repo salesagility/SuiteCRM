@@ -31,6 +31,9 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testadd_list_count_joins()
 	{
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         $this->markTestIncomplete('Breaks on php 7.1');
 		error_reporting(E_ERROR | E_PARSE);
 
@@ -57,6 +60,10 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		$this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ",$query);
 
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
 	}
 
 	public function testlistviewACLHelper()

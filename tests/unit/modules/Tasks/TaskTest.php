@@ -30,6 +30,9 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $task = new Task();
@@ -49,6 +52,10 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

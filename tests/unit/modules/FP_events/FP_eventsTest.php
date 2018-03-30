@@ -21,6 +21,9 @@ class FP_eventsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testemail_templates()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         global $app_list_strings;
@@ -29,5 +32,9 @@ class FP_eventsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $fpEvents->email_templates();
         $this->assertTrue(is_array($app_list_strings['email_templet_list']));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

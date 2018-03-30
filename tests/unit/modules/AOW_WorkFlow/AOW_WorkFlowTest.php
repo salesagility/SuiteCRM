@@ -30,12 +30,19 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowWorkFlow->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave()

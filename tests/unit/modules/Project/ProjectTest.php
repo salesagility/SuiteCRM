@@ -30,6 +30,9 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testfill_in_additional_detail_fields()
 	{
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
 		error_reporting(E_ERROR | E_PARSE);
 
 		$project = new Project();
@@ -43,6 +46,10 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
 	}
 

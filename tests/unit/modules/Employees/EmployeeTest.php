@@ -29,6 +29,9 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $employee = new Employee();
@@ -39,6 +42,10 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set
         $employee->retrieve(1);
         $this->assertEquals('Administrator', $employee->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
 

@@ -32,6 +32,9 @@ class ProspectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $prospect = new Prospect();
@@ -46,6 +49,10 @@ class ProspectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals('last', 'full_name', $prospect);
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testfill_in_additional_detail_fields()

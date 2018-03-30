@@ -13,6 +13,9 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSugarFeed()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -28,6 +31,10 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $sugarFeed);
         $this->assertAttributeEquals(false, 'importable', $sugarFeed);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testactivateAndDisableModuleFeed()

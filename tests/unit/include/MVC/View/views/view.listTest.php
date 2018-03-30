@@ -27,6 +27,10 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $request = $_REQUEST;
         }
         
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test without setting parameters. it should return some html
@@ -54,7 +58,9 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals('value', $_REQUEST['key']);
          
-        // cleanup
+        // clean up
+        
+        $state->popErrorLevel();
         
         if(isset($request)) {
             $_REQUEST = $request;

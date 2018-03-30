@@ -14,6 +14,9 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testtoString()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $emailMan = new EmailMan();
@@ -35,6 +38,10 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $expected = "EmailMan:\nid = 1 ,user_id= 1 module = test , related_id = 1 , related_type = test ,list_id = 1, send_date_time= 1/1/2015\n";
         $actual = $emailMan->toString();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testEmailMan()

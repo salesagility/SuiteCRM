@@ -14,6 +14,9 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetVcalIcal()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $ical = new iCal();
@@ -28,5 +31,9 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //match the leading and trailing string parts to verify it returns expected results
         $this->assertStringStartsWith($expectedStart, $actual);
         $this->assertStringEndsWith($expectedEnd, $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 }

@@ -14,6 +14,9 @@ class CampaignTrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
 
     public function testCampaignTracker()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -25,6 +28,10 @@ class CampaignTrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         $this->assertAttributeEquals('CampaignTracker', 'object_name', $campaignTracker);
         $this->assertAttributeEquals('campaign_trkrs', 'table_name', $campaignTracker);
         $this->assertAttributeEquals(true, 'new_schema', $campaignTracker);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave()

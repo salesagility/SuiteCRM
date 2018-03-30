@@ -65,6 +65,9 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testquery_user_has_roles()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         // execute the method and test it returns 1 role
@@ -75,6 +78,10 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $expected = '0';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_user_allowed_modules()

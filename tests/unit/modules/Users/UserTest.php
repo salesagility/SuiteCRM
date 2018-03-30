@@ -300,6 +300,9 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testsaveAndOthers()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -364,6 +367,10 @@ class UserTest extends \Codeception\Test\Unit
         $user->user_name = "test_deleted";
         $user->save();
         $user->mark_deleted($user->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function retrieve($id)
@@ -989,6 +996,9 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testafterImportSave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ALL);
 
         $user = new User();
@@ -1000,6 +1010,10 @@ class UserTest extends \Codeception\Test\Unit
         } catch (Exception $e) {
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
 

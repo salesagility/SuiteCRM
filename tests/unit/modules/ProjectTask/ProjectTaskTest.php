@@ -31,6 +31,9 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testskipParentUpdate()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $projectTask = new ProjectTask();
@@ -42,6 +45,10 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with parameter value  = true
         $projectTask->skipParentUpdate(false);
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave()

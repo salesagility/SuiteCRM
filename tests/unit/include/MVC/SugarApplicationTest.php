@@ -210,6 +210,9 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testcheckDatabaseVersion()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $SugarApplication = new SugarApplication();
@@ -218,6 +221,11 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         //testing with true will allow it to use die() which stops phpunit execution as well.
         $result = $SugarApplication->checkDatabaseVersion(false);
         $this->assertFalse($result);
+        
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testloadDisplaySettings()

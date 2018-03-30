@@ -29,6 +29,9 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlist_view_parse_additional_sections()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $campaign = new Campaign();
@@ -37,6 +40,10 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $tpl = new Sugar_Smarty();
         $campaign->list_view_parse_additional_sections($tpl);
         $this->assertEquals('', $tpl->_tpl_vars['ASSIGNED_USER_NAME']);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

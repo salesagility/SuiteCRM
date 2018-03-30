@@ -34,12 +34,19 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetForm()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');
 
         $this->assertGreaterThan(0, strlen($result));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetSelect()

@@ -54,6 +54,9 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsaveAndOthers()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         
@@ -108,6 +111,10 @@ class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //test hardDelete method
         $this->hardDelete($inboundEmail->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function getSingularRelatedId()

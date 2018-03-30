@@ -32,6 +32,9 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $opportunity = new Opportunity();
@@ -42,6 +45,10 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set
         $opportunity->name = 'test';
         $this->assertEquals('test', $opportunity->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_list_query()

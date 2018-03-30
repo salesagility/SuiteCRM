@@ -27,6 +27,9 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testconvertToDollar()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $currency = new Currency();
@@ -37,6 +40,10 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with required attributes set
         $currency->conversion_rate = 1.6;
         $this->assertEquals(62.5, $currency->convertToDollar(100, 2));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testconvertFromDollar()

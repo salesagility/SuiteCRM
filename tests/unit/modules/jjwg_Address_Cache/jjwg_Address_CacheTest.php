@@ -5,6 +5,9 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 {
     public function testjjwg_Address_Cache()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
@@ -20,6 +23,10 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $this->assertAttributeEquals(true, 'new_schema', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'importable', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testconfiguration()

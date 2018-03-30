@@ -22,12 +22,19 @@ class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
         $this->assertEquals(false, $eapm->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $eapm->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetLoginInfo()

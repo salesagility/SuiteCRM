@@ -31,6 +31,9 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aopCaseUpdates = new AOP_Case_Updates();
@@ -46,6 +49,10 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
         //mark the record as deleted for cleanup 
         $aopCaseUpdates->mark_deleted($aopCaseUpdates->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetCase()

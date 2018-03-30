@@ -30,6 +30,9 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $role = new Role();
@@ -40,6 +43,10 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set
         $role->name = 'test';
         $this->assertEquals('test', $role->get_summary_text());
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreate_export_query()

@@ -26,6 +26,9 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
     public function testSaveAndRetrieve()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $documentRevision = new DocumentRevision();
@@ -54,6 +57,10 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $docRev->mark_deleted($docRev->id);
         $result = $docRev->retrieve($docRev->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_summary_text()

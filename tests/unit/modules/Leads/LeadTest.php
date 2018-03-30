@@ -32,6 +32,9 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_account()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $lead = new Lead();
@@ -45,6 +48,10 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $lead->account_id = 1;
         $result = $lead->get_account();
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_opportunity()

@@ -29,6 +29,9 @@ class jjwg_AreasTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testconfiguration()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $jjwgAreas = new jjwg_Areas();
@@ -37,6 +40,10 @@ class jjwg_AreasTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertInstanceOf('jjwg_Maps', $jjwgAreas->jjwg_Maps);
         $this->assertTrue(is_array($jjwgAreas->settings));
         $this->assertGreaterThan(0, count($jjwgAreas->settings));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testretrieve()

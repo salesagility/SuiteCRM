@@ -34,6 +34,9 @@ class CallTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testACLAccess()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $call = new Call();
@@ -45,6 +48,10 @@ class CallTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with recurring_source attribute set
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testSaveAndMarkDeleted()

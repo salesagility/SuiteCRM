@@ -32,6 +32,9 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsaveAndDelete()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aosContracts = new AOS_Contracts();
@@ -47,6 +50,10 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $aosContracts->mark_deleted($aosContracts->id);
         $result = $aosContracts->retrieve($aosContracts->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()

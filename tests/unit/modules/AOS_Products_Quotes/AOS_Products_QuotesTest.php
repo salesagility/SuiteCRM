@@ -30,6 +30,9 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
 
     public function testsave_lines()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aosProductsQuotes = new AOS_Products_Quotes();
@@ -50,6 +53,10 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         //get the linked beans and verify if records created
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $this->assertEquals(count($post_data['name']), count($product_quote_lines));
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testmark_lines_deleted()

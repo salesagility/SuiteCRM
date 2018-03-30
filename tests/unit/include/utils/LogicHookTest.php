@@ -56,6 +56,10 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testscanHooksDir()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected contents
@@ -161,6 +165,10 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $this->assertTrue(empty($hookscan));
         }
 
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
     }
 

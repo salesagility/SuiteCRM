@@ -30,6 +30,9 @@ class AOS_ProductsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aosProducts = new AOS_Products();
@@ -50,6 +53,10 @@ class AOS_ProductsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testgetCustomersPurchasedProductsQuery()

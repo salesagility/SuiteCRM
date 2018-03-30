@@ -29,6 +29,10 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_
 	}
 
 	public function testbean_implements(){
+            
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
 
 		error_reporting(E_ERROR | E_PARSE);
 
@@ -36,6 +40,10 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_
 		$this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
 		$this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
 		$this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
 
     }
 

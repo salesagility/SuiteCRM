@@ -5,6 +5,10 @@ class ViewFactoryTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function testloadView()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         //check with invalid input. must return sugaview instance
@@ -18,6 +22,10 @@ class ViewFactoryTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //check with a valid module and specific view, must reutern speciifc view instance
         $view = ViewFactory::loadView('list', 'Users');
         $this->assertInstanceOf('UsersViewList', $view);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function test_loadConfig()

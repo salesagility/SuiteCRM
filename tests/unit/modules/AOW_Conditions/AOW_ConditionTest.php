@@ -31,12 +31,19 @@ class AOW_ConditionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testsave_lines()

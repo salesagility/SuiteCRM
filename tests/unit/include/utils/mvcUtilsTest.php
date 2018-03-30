@@ -16,6 +16,10 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetPrintLink()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         //test without setting REQUEST param
@@ -28,6 +32,10 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $expected = 'javascript:SUGAR.ajaxUI.print();';
         $actual = getPrintLink();
         $this->assertSame($expected, $actual);
+        
+        
+        $state->popErrorLevel();
+        $state->popGlobals();
     }
 
     public function testajaxBannedModules()

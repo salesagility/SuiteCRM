@@ -39,6 +39,9 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfireQualified()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
         error_reporting(E_ERROR | E_PARSE);
 
         $scheduler = new Scheduler();
@@ -54,6 +57,10 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $result = $scheduler->fireQualified();
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testcreateJob()
