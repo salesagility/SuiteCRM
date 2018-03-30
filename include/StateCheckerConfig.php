@@ -107,7 +107,7 @@ class StateCheckerConfig
      */
     protected static $storeDetails = false;
     
-    protected $testStateCheckMode = self::RUN_NEVER;
+    protected static $testStateCheckMode = self::RUN_NEVER;
     
     /**
      * Test using StateChecker
@@ -127,14 +127,14 @@ class StateCheckerConfig
     protected static $testsUseAssertionFailureOnError = true;
     
     public static function get($key) {
-        //if(inDeveloperMode()) {
+        if(inDeveloperMode()) {
             if(in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
                 return true;
             }
             if(in_array($key, ['testStateCheckMode'])) {
                 return self::RUN_PER_TESTS;
             }
-        //}
+        }
         return self::$$key;
     }
 }
