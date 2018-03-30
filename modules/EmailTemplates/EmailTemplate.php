@@ -523,14 +523,18 @@ class EmailTemplate extends SugarBean
                 continue;
             }
 
-            $fieldName = $field_def['name'];
+            $fieldName = isset($field_def['name']) ? $field_def['name'] : null;
             if ($field_def['type'] == 'enum') {
-                $translated = translate($field_def['options'], 'Users', $user->$fieldName);
+                if(!isset($fieldName)) {
+                    LoggerManager::getLogger()->fatal('Field name not found');
+                } else {
+                    $translated = translate($field_def['options'], 'Users', $user->$fieldName);
 
-                if (isset($translated) && !is_array($translated)) {
-                    $repl_arr["contact_user_" . $fieldName] = $translated;
-                } else { // unset enum field, make sure we have a match string to replace with ""
-                    $repl_arr["contact_user_" . $fieldName] = '';
+                    if (isset($translated) && !is_array($translated)) {
+                        $repl_arr["contact_user_" . $fieldName] = $translated;
+                    } else { // unset enum field, make sure we have a match string to replace with ""
+                        $repl_arr["contact_user_" . $fieldName] = '';
+                    }
                 }
             } else {
                 if (isset($user->$fieldName)) {
