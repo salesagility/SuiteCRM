@@ -8,6 +8,7 @@
 
 namespace SuiteCRM;
 
+use DBManagerFactory;
 use Exception;
 
 class StateSaverException extends Exception {}
@@ -113,6 +114,35 @@ class StateSaver {
     public function popErrorLevel($key = 'level', $namespace = 'error_reporting') {
         $level = $this->pop($key, $namespace);
         error_reporting($level);
+    }
+    
+    
+    public function pushTable($table, $namespace = 'db_table') {
+        
+        $query = "SELECT * FROM $table";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        
+        $this->push($rows, $table, $namespace);
+    }
+    
+    public function popTable($table, $namespace = 'db_table') {
+        
+        $rows = $this->pop($table, $namespace);
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM $table");
+        foreach($rows as $row) {
+            $query = "INSERT $table INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
     }
     
 }
