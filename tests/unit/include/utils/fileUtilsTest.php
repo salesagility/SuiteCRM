@@ -427,6 +427,11 @@ class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfileToHash()
     {
+        
+        if(isset($_SESSION)) {
+            $_session = $_SESSION;
+        }
+        
         //execute the method and test if it returns expected values
 
         //test with empty filename string
@@ -440,10 +445,23 @@ class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $hash = fileToHash('config.php');
         $this->assertSame($expected, $hash);
         $this->assertSame('config.php', $_SESSION['file2Hash'][$hash]);
+
+        // clean up
+
+        if(isset($_session)) {
+            $_SESSION = $_session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
     public function testhashToFile()
     {
+        
+        if(isset($_SESSION)) {
+            $_session = $_SESSION;
+        }
+        
         //execute the method and test if it returns expected values
 
         //test with invalid hash.
@@ -454,6 +472,14 @@ class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $hash = fileToHash('config.php');
         $actual = hashToFile($hash);
         $this->assertSame('config.php', $actual);
+
+        // clean up
+
+        if(isset($_session)) {
+            $_SESSION = $_session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
     public function testget_file_extension()
