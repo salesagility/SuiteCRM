@@ -119,7 +119,7 @@ class StateSaver {
     
     public function pushTable($table, $namespace = 'db_table') {
         
-        $query = "SELECT * FROM $table";
+        $query = "SELECT * FROM " . DBManagerFactory::getInstance()->quote($table);
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while($row = $resource->fetch_assoc()) {
@@ -133,7 +133,7 @@ class StateSaver {
         
         $rows = $this->pop($table, $namespace);
         
-        DBManagerFactory::getInstance()->query("DELETE FROM $table");
+        DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
         foreach($rows as $row) {
             $query = "INSERT $table INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
