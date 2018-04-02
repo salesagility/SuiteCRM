@@ -59,12 +59,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             return $temp;
         }
 
-        global $app_strings, $current_user, $sugar_config, $beanList, $beanFiles;
+        global $app_strings, $current_user, $sugar_config;
         $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
-        //$accesskey = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_KEY'];
         $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
-        $parent_type = $defines['focus']->module_dir;
-        $parent_id = $defines['focus']->id;
 
         //martin Bug 19660
         $userPref = $current_user->getPreference('email_link_type');
@@ -88,8 +85,8 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             require_once 'modules/Emails/EmailUI.php';
 
             $emailUI = new EmailUI();
-            $button = $emailUI->populateComposeViewFields($defines['focus'])
-                . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'] . '</a>';
+            $emailUI->appendTick = false;
+            $button = $emailUI->populateComposeViewFields($defines['focus']);
         }
 
         return $button;

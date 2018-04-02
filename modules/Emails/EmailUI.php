@@ -68,6 +68,13 @@ class EmailUI
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
     /**
+     * Setting this to false will prevent the email tick to be appended to the compose email link
+     *
+     * @var bool
+     */
+    public $appendTick = true;
+
+    /**
      * Sole constructor
      */
     public function __construct()
@@ -520,7 +527,9 @@ eoq;
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLink .= $email_tick;
+                                        if ($this->appendTick) {
+                                            $emailLink .= $email_tick;
+                                        }
                                         $emailLink .= '<span class="email-line-through">';
                                         $emailLink .= $myBean->{$emailField};
                                         $emailLink .= '</span>';
@@ -533,7 +542,10 @@ eoq;
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLink .= $email_tick . $myBean->{$emailField};
+                                        if ($this->appendTick) {
+                                            $emailLink .= $email_tick;
+                                        }
+                                        $emailLink .= $myBean->{$emailField};
 
                                     }
                                     $emailLink .= '</a>';
