@@ -228,4 +228,11 @@ $mod_strings = array(
     //Events
     'LNK_EVENT' => 'Event',
     'LNK_EVENT_VIEW' => 'View Event',
+    'LBL_DATE' => 'Date: ',
+    'LBL_DURATION' => 'Duration: ',
+    'LBL_NAME' => 'Title: ',
+    'LBL_HOURS_ABBREV' => 'hour(s)',
+    'LBL_MINSS_ABBREV' => 'minutes',
+
+
 );
