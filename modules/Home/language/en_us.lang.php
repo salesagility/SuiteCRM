@@ -233,6 +233,9 @@ $mod_strings = array(
     'LBL_NAME' => 'Title: ',
     'LBL_HOURS_ABBREV' => 'hour(s)',
     'LBL_MINSS_ABBREV' => 'minutes',
+    'LBL_LOCATION' => 'Location: ',
+    'LBL_STATUS' => 'Status: ',
+    'LBL_DESCRIPTION' => 'Description: ',
 
 
 );
