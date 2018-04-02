@@ -224,4 +224,8 @@ $mod_strings = array(
     'LBL_REPEAT_UNTIL' => 'Repeat Until',
     'LBL_REPEAT_COUNT' => 'Number of recurrences',
     'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
+
+    //Events
+    'LNK_EVENT' => 'Event',
+    'LNK_EVENT_VIEW' => 'View Event',
 );
