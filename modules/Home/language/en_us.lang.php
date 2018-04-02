@@ -236,6 +236,5 @@ $mod_strings = array(
     'LBL_LOCATION' => 'Location: ',
     'LBL_STATUS' => 'Status: ',
     'LBL_DESCRIPTION' => 'Description: ',
-
-
+    //End Events
 );
