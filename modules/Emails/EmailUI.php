@@ -441,11 +441,13 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-
-        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+        $emailLink = '<a class="email-link"'
             . ' onclick="$(document).openComposeViewModal(this);"'
-            . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
-        $emailLinkOverwritten = false;
+            . ' data-module="' . $myBean->module_name
+            . '" data-record-id="' . $myBean->id
+            . '" data-module-name="' . $myBean->name
+            . '" data-email-address="">'
+            . $innerText;
 
         // focus is set?
         if (!is_object($myBean)) {
