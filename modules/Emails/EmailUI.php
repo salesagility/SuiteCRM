@@ -472,7 +472,7 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
+                    $emailLink = '<a onclick=" $(document).openComposeViewModal(this);" ' .
                         'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
                         $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
                         '"  data-email-address="' . $composeData['to_addrs'] . '">';
@@ -482,7 +482,7 @@ eoq;
                     $invalid = false;
 
                     if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
-                        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+                        $emailLink = '<a class="email-link"'
                             . ' onclick="$(document).openComposeViewModal(this);"'
                             . ' data-module="'
                             . $myBean->module_name . '" ' . 'data-record-id="'
@@ -521,7 +521,7 @@ eoq;
                                         || $invalid === true
                                     ) {
                                         $emailLink =
-                                            '<a class="email-link" href="javascript:void(0);"'
+                                            '<a class="email-link"'
                                             . ' onclick="$(document).openComposeViewModal(this);"'
                                             . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
                                             . $myBean->id . '" data-module-name="'
@@ -535,7 +535,7 @@ eoq;
                                         $emailLink .= '</span>';
                                     } else {
                                         $emailLink =
-                                            '<a class="email-link" href="javascript:void(0);"'
+                                            '<a class="email-link"'
                                             . ' onclick="$(document).openComposeViewModal(this);"'
                                             . ' data-module="'
                                             . $myBean->module_name . '" ' . 'data-record-id="'
