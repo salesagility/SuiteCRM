@@ -13,6 +13,9 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSchedulersJob()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        
         //execute the contructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
 
@@ -28,6 +31,10 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'process_save_dates', $schedulersJob);
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 
     public function testcheck_date_relationships_load()
@@ -120,6 +127,9 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testfailJob()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->failJob();
@@ -133,6 +143,10 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testsucceedJob()
@@ -177,12 +191,12 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->popErrorLevel();
     }
 
-    public function testonFinalFailure()
+    public function testOnFinalFailure()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $schedulersJob = new SchedulersJob();
@@ -204,6 +218,11 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testresolveJob()
     {
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //test for JOB_FAILURE
@@ -225,6 +244,11 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
+        
     }
 
     public function testpostponeJobAndMark_deleted()
