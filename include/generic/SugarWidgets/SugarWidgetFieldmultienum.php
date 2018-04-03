@@ -44,7 +44,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 	public function queryFilternot_one_of(&$layout_def) {
 		$arr = array ();
 		foreach ($layout_def['input_name0'] as $value) {
-			array_push($arr, "'".$GLOBALS['db']->quote($value)."'");
+			array_push($arr, "'".DBManagerFactory::getInstance()->quote($value)."'");
 		}
 	    $reporter = $this->layout_manager->getAttribute("reporter");
 
@@ -67,7 +67,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
         $arr = array();
         foreach ($layout_def['input_name0'] as $value) {
             if($value != ""){
-                array_push($arr, "'".$GLOBALS['db']->quote($value)."'");
+                array_push($arr, "'".DBManagerFactory::getInstance()->quote($value)."'");
             }else{
                 array_push($arr, "'^^'");
             }

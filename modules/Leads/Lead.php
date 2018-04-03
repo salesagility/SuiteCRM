@@ -346,7 +346,7 @@ class Lead extends Person implements EmailInterface {
 	*/
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
-	$the_query_string = $GLOBALS['db']->quote($the_query_string);
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
 	array_push($where_clauses, "leads.last_name like '$the_query_string%'");
 	array_push($where_clauses, "leads.account_name like '$the_query_string%'");

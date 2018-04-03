@@ -1265,11 +1265,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 function getProspectLists()
 {
     $query = "SELECT id, name, list_type FROM prospect_lists WHERE deleted = 0 ORDER BY name ASC";
-    $result = $GLOBALS['db']->query($query, false);
+    $result = DBManagerFactory::getInstance()->query($query, false);
 
     $list = array();
     $list['']='';
-    while (($row = $GLOBALS['db']->fetchByAssoc($result)) != null) {
+    while (($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) != null) {
         $list[$row['id']] = $row['name'];
     }
 

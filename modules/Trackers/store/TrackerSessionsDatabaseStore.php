@@ -89,7 +89,7 @@ class TrackerSessionsDatabaseStore implements Store {
                $date_end = 'NULL';
            }
        	  $query = "UPDATE $monitor->table_name SET date_end = $date_end , seconds = $monitor->seconds, active = $monitor->active, round_trips = $monitor->round_trips WHERE session_id = '{$monitor->session_id}'";
-       	  $GLOBALS['db']->query($query);
+       	  DBManagerFactory::getInstance()->query($query);
        }
     }
 }

@@ -564,7 +564,7 @@ class User extends Person implements EmailInterface
      */
     public static function getLicensedUsersWhere()
     {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name', 'length') . ">0";
+        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . DBManagerFactory::getInstance()->convert('user_name', 'length') . ">0";
 
         return "1<>1";
     }

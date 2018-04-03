@@ -632,7 +632,7 @@ class M2MRelationship extends SugarRelationship
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
 
-        return $GLOBALS['db']->getOne($query);
+        return DBManagerFactory::getInstance()->getOne($query);
     }
 
     /**

@@ -2714,7 +2714,7 @@ eoq;
                 "length") . ",0) > 0";
         $r = $user->db->query($q);
 
-        while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
             if ($row['folder_type'] == 'inbound') {
                 $parent_id = $row['id'];
             }

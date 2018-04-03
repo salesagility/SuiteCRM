@@ -426,7 +426,7 @@ class UserTest extends \Codeception\Test\Unit
 
         // preset
         $query = "DELETE FROM users WHERE user_name = '{$user->user_name}' AND id != '$id'";
-        $GLOBALS['db']->query($query);
+        DBManagerFactory::getInstance()->query($query);
 
 
         //set user password and then retrieve user by created password

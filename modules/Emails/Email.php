@@ -520,7 +520,7 @@ class Email extends Basic
 
             return array(
                 'guid' => $guid,
-                'name' => $GLOBALS['db']->quote($fileName),
+                'name' => DBManagerFactory::getInstance()->quote($fileName),
                 'nameForDisplay' => $fileName
             );
         } else {

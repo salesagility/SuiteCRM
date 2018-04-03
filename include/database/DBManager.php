@@ -1415,15 +1415,15 @@ abstract class DBManager
                         } else {
                             if (isset($type) && $type == 'int') {
                                 if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = $GLOBALS['db']->quote(from_html($val));
+                                    $cstm_values[$fieldDef['name']] = DBManagerFactory::getInstance()->quote(from_html($val));
                                 } else {
-                                    $values[$fieldDef['name']] = $GLOBALS['db']->quote(from_html($val));
+                                    $values[$fieldDef['name']] = DBManagerFactory::getInstance()->quote(from_html($val));
                                 }
                             } else {
                                 if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
+                                    $cstm_values[$fieldDef['name']] = "'" . DBManagerFactory::getInstance()->quote(from_html($val)) . "'";
                                 } else {
-                                    $values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
+                                    $values[$fieldDef['name']] = "'" . DBManagerFactory::getInstance()->quote(from_html($val)) . "'";
                                 }
                             }
                         }

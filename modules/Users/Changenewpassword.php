@@ -78,8 +78,8 @@ $redirect = '1';
 if (isset($_REQUEST['guid'])) {
     // Change 'deleted = 0' clause to 'COALESCE(deleted, 0) = 0' because by default the values were NULL
     $Q = "SELECT * FROM users_password_link WHERE id = '" . $db->quote($_REQUEST['guid']) . "' AND COALESCE(deleted, 0) = '0'";
-    $result = $GLOBALS['db']->limitQuery($Q, 0, 1, false);
-    $row = $GLOBALS['db']->fetchByAssoc($result);
+    $result = DBManagerFactory::getInstance()->limitQuery($Q, 0, 1, false);
+    $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
     if (!empty($row)) {
         $pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
         $expired = '0';
@@ -103,7 +103,7 @@ if (isset($_REQUEST['guid'])) {
                     $usr->retrieve($usr_id);
                     $usr->setNewPassword($_POST['new_password']);
                     $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
-                    $GLOBALS['db']->query($query2, true, "Error setting link for $usr->user_name: ");
+                    DBManagerFactory::getInstance()->query($query2, true, "Error setting link for $usr->user_name: ");
                     $_POST['user_name'] = $_REQUEST['user_name'];
                     $_POST['username_password'] = $_REQUEST['new_password'];
                     $_POST['module'] = 'Users';
@@ -125,7 +125,7 @@ if (isset($_REQUEST['guid'])) {
             }
         } else {
             $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
-            $GLOBALS['db']->query($query2, true, "Error setting link");
+            DBManagerFactory::getInstance()->query($query2, true, "Error setting link");
         }
     }
 }

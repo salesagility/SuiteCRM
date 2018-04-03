@@ -183,8 +183,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         if ($doQuery && isset($query)) {
-            $rs = $GLOBALS['db']->query($query);
-            $row = $GLOBALS['db']->fetchByAssoc($rs);
+            $rs = DBManagerFactory::getInstance()->query($query);
+            $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
 
             if (empty($row)) {
                 die($app_strings['ERROR_NO_RECORD']);
