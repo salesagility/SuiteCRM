@@ -109,7 +109,7 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 		<tr>
 		<td nowrap>
 		<input name='date_start' id='jscal_field' onblur="parseDate(this, '{$USER_DATEFORMAT}');" tabindex='2' size='11' maxlength='10' type="text" value="{$DATE_START}">
-		{sugar_getimage name="jscalendar" ext=".gif" alt=$USER_DATEFORMAT other_attributes='align="absmiddle" id="jscal_trigger" '}&nbsp;</td>
+			<span id="jscal_trigger" class="suitepicon suitepicon-module-calendar"></span></td>
         <td nowrap>
         <select name='time_hour_start' tabindex="2">{$TIME_START_HOUR_OPTIONS}</select>{$TIME_SEPARATOR}
         <select name='time_minute_start' tabindex="2">{$TIME_START_MINUTE_OPTIONS}</select>

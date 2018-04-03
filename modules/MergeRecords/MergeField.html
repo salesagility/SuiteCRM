@@ -61,7 +61,7 @@
 	<td width="{CELL_WIDTH}" valign="top" ><span><input name="{EDIT_FIELD_NAME}" id="{EDIT_FIELD_NAME}" class="checkbox" tabindex="{TAB_INDEX}" type="checkbox" {EDIT_FIELD_VALUE}/></span></td>
 <!-- END: merge_cell_edit_checkbox -->
 <!-- BEGIN: merge_cell_edit_datetime -->
-	<td  valign="top" width="{CELL_WIDTH}"><span><input name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}_date' type="text" tabindex='{TAB_INDEX}' size='11' maxlength='10' value="{EDIT_FIELD_VALUE}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{APP.LBL_ENTER_DATE}"  id="{EDIT_FIELD_NAME}_trigger" align="absmiddle"> <span class="dateFormat"></span><span id='{EDIT_FIELD_NAME}_time_section'  ></span><input type="hidden" name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}'></span></td>
+<td  valign="top" width="{CELL_WIDTH}"><span><input name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}_date' type="text" tabindex='{TAB_INDEX}' size='11' maxlength='10' value="{EDIT_FIELD_VALUE}"> <span class="suitepicon suitepicon-module-calendar" alt="{APP.LBL_ENTER_DATE}"  id="{EDIT_FIELD_NAME}_trigger"></span> <span class="dateFormat"></span><span id='{EDIT_FIELD_NAME}_time_section'  ></span><input type="hidden" name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}'></span></td>
 	<script type="text/javascript" src="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js?v={VERSION_MARK}"></script>
 	<script type="text/javascript">
 	var combo_{EDIT_FIELD_NAME} = new Datetimecombo("{EDIT_FIELD_VALUE}", "{EDIT_FIELD_NAME}", "{USER_DATEFORMAT}", '','','');
@@ -96,7 +96,7 @@
 	</script>
 <!-- END: merge_cell_edit_datetime -->
 <!-- BEGIN: merge_cell_edit_date -->
-	<td  valign="top" width="{CELL_WIDTH}"><span><input name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}' type="text" tabindex='{TAB_INDEX}' size='11' maxlength='10' value="{EDIT_FIELD_VALUE}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{APP.LBL_ENTER_DATE}"  id="{EDIT_FIELD_NAME}_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT}</span></span></td>
+<td  valign="top" width="{CELL_WIDTH}"><span><input name='{EDIT_FIELD_NAME}' id='{EDIT_FIELD_NAME}' type="text" tabindex='{TAB_INDEX}' size='11' maxlength='10' value="{EDIT_FIELD_VALUE}"> <span class="suitepicon suitepicon-module-calendar" alt="{APP.LBL_ENTER_DATE}"  id="{EDIT_FIELD_NAME}_trigger" align="absmiddle"></span> <span class="dateFormat">{USER_DATEFORMAT}</span></span></td>
 	<script type="text/javascript">
 	Calendar.setup ({
 		inputField : "{EDIT_FIELD_NAME}", daFormat : "{CALENDAR_DATEFORMAT}", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "{EDIT_FIELD_NAME}_trigger", singleClick : true, step : 1

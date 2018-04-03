@@ -140,7 +140,7 @@ class AOW_WorkFlowController extends SugarController {
 
             $app_list_strings['aow_operator_list'];
             if($view == 'EditView'){
-                echo "<select type='text' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_operator_list'], $value) ."</select>";
+                echo "<select type='text' name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_operator_list'], $value) ."</select>";
             }else{
                 echo $app_list_strings['aow_operator_list'][$value];
             }

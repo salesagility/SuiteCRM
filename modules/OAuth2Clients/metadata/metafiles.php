@@ -42,12 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'OAuth2Tokens';
+$module_name = 'OAuth2Clients';
 $metafiles[$module_name] = array(
-    'detailviewdefs' => '',
-    'editviewdefs' => '',
-    'listviewdefs' => '',
-    'searchdefs' => '',
-    'popupdefs' => '',
-    'searchfields' => '',
+    'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
+    'detailpasswordviewdefs' => 'modules/' . $module_name . '/metadata/detailpasswordviewdefs.php',
+    'detailcredentialsviewdefs' => 'modules/' . $module_name . '/metadata/detailcredentialsviewdefs.php',
+    'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
+    'editpasswordviewdefs' => 'modules/' . $module_name . '/metadata/editpasswordviewdefs.php',
+    'editcredentialsviewdefs' => 'modules/' . $module_name . '/metadata/editcredentialsviewdefs.php',
+    'listviewdefs' => 'modules/' . $module_name . '/metadata/listviewdefs.php',
+    'searchdefs' => 'modules/' . $module_name . '/metadata/searchdefs.php',
+    'popupdefs' => 'modules/' . $module_name . '/metadata/popupdefs.php',
+    'searchfields' => 'modules/' . $module_name . '/metadata/SearchFields.php',
 );

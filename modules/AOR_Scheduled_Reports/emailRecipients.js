@@ -83,7 +83,7 @@ function add_emailLine(){
     x.id = 'emailLine'+'_line' + emailln;
 
     var a = x.insertCell(0);
-    a.innerHTML = "<button type='button' id='emailLine_delete" + emailln+"' class='button' value='Remove Line' tabindex='116' onclick='clear_emailLine(this);'><img src='themes/default/images/id-ff-remove-nobg.png' alt='Remove Line'></button> ";
+    a.innerHTML = "<button type='button' id='emailLine_delete" + emailln+"' class='button' value='Remove Line' tabindex='116' onclick='clear_emailLine(this);'><span class='suitepicon suitepicon-action-minus'></span></button> ";
 
     a.innerHTML += "<select tabindex='116' name='email_recipients[email_target_type]["+emailln+"]' id='email_recipients_email_target_type"+emailln+"' onchange='show_emailField(" + emailln + ");'>" + aor_email_type_list + "</select> ";
 

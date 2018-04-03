@@ -145,21 +145,12 @@ class TaskTest extends PHPUnit_Framework_TestCase
                 'CONTACT_PHONE' => '1234567',
                 'PRIORITY' => 'Medium',
                 'PARENT_MODULE' => 'Accounts',
-                'SET_COMPLETE' => '~'.preg_quote("<a id='' onclick='SUGAR.util.closeActivityPanel.show(\"Tasks\",\"\",\"Completed\",\"listview\",\"1\");'><img src=\"themes/$current_theme/images/close_inline")."\.\w+\?v="
-                    .'[\w-]+'
-                    .preg_quote("\"    title=Close border='0' alt=\"Close\" /></a>")
-                    .'~',
+                'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
                 'TITLE' => ": test\nAccount: test",
         );
 
         $actual = $task->get_list_view_data();
-        foreach ($expected as $expectedKey => $expectedVal) {
-            if ($expectedKey == 'SET_COMPLETE') {
-                $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
-            } else {
-                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
-            }
-        }
+        $this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body()

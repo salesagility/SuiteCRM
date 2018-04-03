@@ -207,7 +207,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
             $writeFile = $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null,
                 $this->_packageName);
         }
-        $this->implementation->_history->append($file);
+        $this->implementation->getHistory()->append($file);
         if ($populate) {
             $this->_populateFromRequest();
         }

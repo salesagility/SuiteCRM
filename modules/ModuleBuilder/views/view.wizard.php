@@ -260,7 +260,11 @@ class ModuleBuilderViewWizard extends SugarView
 		//$GLOBALS['log']->debug(print_r($nodes,true));
 		foreach ( $nodes as $module )
 		{
-			$this->buttons [ $module [ 'name' ] ] = array ( 'action' => $module [ 'action' ] , 'imageTitle' => ucfirst ( $module [ 'module' ] . "_32" ) , 'size' => '32', 'linkId' => 'studiolink_'.$module [ 'module' ] ) ;
+            $this->buttons[$module['name']] = [
+                'action' => $module['action'],
+                'linkId' => 'studiolink_' . $module['module'],
+                'icon' => $module['icon']
+            ];
 		}
 	}
 

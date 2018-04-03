@@ -199,6 +199,7 @@ class Popup_Picker
                     'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
                     'module' => 'Meetings',
+                    'module' => 'Meetings',
                     'status' => $app_list_strings['meeting_status_dom'][$meeting->status],
                     'parent_id' => $meeting->parent_id,
                     'parent_type' => $app_list_strings['parent_type_display'][$meeting->parent_type],

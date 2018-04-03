@@ -42,84 +42,54 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
+/**
+ * Class SugarWidgetSubPanelEmailLink
+ */
+class SugarWidgetSubPanelEmailLink extends SugarWidgetField
+{
+    /**
+     * @param array $layout_def
+     * @return string
+     */
+    function displayList($layout_def)
+    {
+        global $current_user;
+        global $sugar_config;
+        global $focus;
 
-	function displayList($layout_def) {
-		global $current_user;
-		global $focus;
-		global $sugar_config;
-		global $locale;
-
-		if(isset($layout_def['varname'])) {
-			$key = strtoupper($layout_def['varname']);
-		} else {
-			$key = $this->_get_column_alias($layout_def);
-			$key = strtoupper($key);
-		}
-		$value = $layout_def['fields'][$key];
-
-
-
-			if(isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-			else $action = '';
-
-			if(isset($_REQUEST['module'])) $module = $_REQUEST['module'];
-			else $module = '';
-
-			if(isset($_REQUEST['record'])) $record = $_REQUEST['record'];
-			else $record = '';
-
-			if (!empty($focus->name)) {
-				$name = $focus->name;
-			} else {
-				if( !empty($focus->first_name) && !empty($focus->last_name)) {
-					$name = $locale->getLocaleFormattedName($focus->first_name, $focus->last_name);
-					}
-				if(empty($name)) {
-					$name = '*';
-				}
-			}
-
-			$userPref = $current_user->getPreference('email_link_type');
-			$defaultPref = $sugar_config['email_default_client'];
-			if($userPref != '') {
-				$client = $userPref;
-			} else {
-				$client = $defaultPref;
-			}
-
-        if ($client == 'sugar') {
-            $composeData = array(
-                'load_id' => $layout_def['fields']['ID'],
-                'load_module' => $this->layout_manager->defs['module_name'],
-                'parent_type' => $this->layout_manager->defs['module_name'],
-                'parent_id' => $layout_def['fields']['ID'],
-                'to_addrs' => $layout_def['fields']['EMAIL1'],
-                'return_module' => $module,
-                'return_action' => $action,
-                'return_id' => $record
-            );
-            if (isset($layout_def['fields']['FULL_NAME'])) {
-                $composeData['parent_name'] = $layout_def['fields']['FULL_NAME'];
-                $composeData['to_email_addrs'] = sprintf("%s <%s>", $layout_def['fields']['FULL_NAME'],
-                    $layout_def['fields']['EMAIL1']);
-            } else {
-                $composeData['to_email_addrs'] = $layout_def['fields']['EMAIL1'];
-            }
-            require_once('modules/Emails/EmailUI.php');
-            $emailUi = new EmailUI();
-            $link = $emailUi->populateComposeViewFields(
-                $bean = null,
-                $emailField = 'email1',
-                $checkAllEmail = true,
-                '',
-                $composeData
-            );
+        if (isset($layout_def['varname'])) {
+            $key = strtoupper($layout_def['varname']);
         } else {
-            $link = '<a href="mailto:' . $value . '" >';
+            $key = $this->_get_column_alias($layout_def);
+            $key = strtoupper($key);
+        }
+        $value = $layout_def['fields'][$key];
+
+        $userPref = $current_user->getPreference('email_link_type');
+        $defaultPref = $sugar_config['email_default_client'];
+        if ($userPref != '') {
+            $client = $userPref;
+        } else {
+            $client = $defaultPref;
         }
 
-        return $link . $value . '</a>';
+        if ($client == 'sugar') {
+            require_once('modules/Emails/EmailUI.php');
+            $emailUi = new EmailUI();
+            if ($focus !== null) {
+                return $emailUi->populateComposeViewFields($focus);
+            }
+            if (!empty($layout_def['module']) && !empty($layout_def['fields']) && !empty($layout_def['fields']['ID'])) {
+                $bean = BeanFactory::getBean($layout_def['module'], $layout_def['fields']['ID']);
+                if (!empty($bean)) {
+                    return $emailUi->populateComposeViewFields($bean);
+                }
+            }
+            if ($current_user !== null) {
+                return $emailUi->populateComposeViewFields($current_user);
+            }
+        }
 
-	}
-} // end class def
+        return '<a href="mailto:' . $value . '" >' . $value . '</a>';
+    }
+}

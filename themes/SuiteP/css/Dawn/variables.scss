@@ -964,11 +964,20 @@ $navbar-menu-link-color: $color-80;
 $navbar-menu-link-color-hover: $color-50;
 $navbar-menu-seperator: $color-18;
 $navbar-menu-current-seperator: $color-50;
+$navbar-mobile-toolbar-color: $color-80;
+
+$navbar-home-color: $navbar-link-color;
+$navbar-home-color-hover: $navbar-link-color-hover;
+
 
 $navbar-search-bg: $color-11;
 $navbar-search-btn-bg: $color-23;
 $navbar-search-text-color: $color-32;
 $navbar-search-color: $color-59;
+$navbar-search-btn-color: $navbar-link-color;
+$navbar-search-btn-color-hover: $navbar-link-color-hover;
+$navbar-search-query-btn-color: $navbar-link-color;
+$navbar-search-query-btn-color-hover: $navbar-link-color-hover;
 
 $navbar-quick-create-link-color: $color-80;
 $navbar-quick-create-mobile-btn-bg: $color-33;
@@ -979,12 +988,19 @@ $navbar-quick-create-menu-color-hover: $color-80;
 $navbar-quick-create-menu-seperator: $color-20;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
+$navbar-alert-color: $navbar-link-color;
+$navbar-alert-color-hover: $navbar-link-color-hover;
 $navbar-alert-count-link-color: $color-80;
 $navbar-alert-link-color: $color-80;
-$navbar-alert-body-color: $color-1;
+$navbar-alert-body-color: $main-font-color;
+$navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
+$navbar-alert-title-color: $main-font-color;
 $navbar-alert-seperator: $navbar-menu-seperator;
 $navbar-alert-count-bg: $color-50;
+
+$navbar-user-color: $navbar-link-color;
+$navbar-user-color-hover: $navbar-link-color-hover;
 
 $mobile-navbar-toolbar-bg: $color-33;
 
@@ -1003,6 +1019,15 @@ $sidebar-btn-color: $color-80;
 $side-bar-header-color: $color-51;
 $side-bar-link-color-hover: $sidebar-bg;
 $side-bar-link-color-hover: $color-14;
+
+$side-bar-action-height: 48px;
+$side-bar-action-font-size: 13px;
+$side-bar-action-icon-font-size: 30px;
+
+// Recently Viewed or Favorites
+$side-bar-links-height: 18px;
+$side-bar-links-font-size: 13px;
+$side-bar-links-icon-font-size: $side-bar-links-height;
 
 // Tabs
 $active-tab-bg: $color-20;
@@ -1025,11 +1050,14 @@ $tab-margin-bottom: 5px;
 // Panels
 $panel-collapsed-bg: $color-39;
 $panel-expanded-bg: $color-13;
-$panel-height-divisor: 1; // 1 normal  1.25 small
+$panel-header-height: 32px;
+$panel-header-font-size: 14px;
 $panel-collapsed-color: $color-80;
 $panel-expanded-color: $panel-collapsed-color;
 $panel-button-bg: $color-28;
 $panel-button-bg-hover: $color-20;
+$panel-button-bg-disabled: $disabled-btn-bg;
+$panel-button-color: $color-80;
 $campaign-pagination-bg-hover: $color-22;
 
 // Detail view
@@ -1043,21 +1071,27 @@ $confirm-opt-in-tick-color-in-confirmed: $color-16;
 // List View
 $list-view-toolbar-bg: $color-39;
 $list-view-header-bg: $color-20;
+$list-view-header-color: $color-80;
 $list-view-button-color: $color-80;
 $list-view-text-color: $color-46;
 $list-view-link-color: $color-46;
 $list-view-link-hover-color: $color-43;
-$list-view-action-button-disabled-bg: $color-41;
+$list-view-action-button-disabled-bg: $disabled-btn-bg;
+$list-view-action-button-disabled-color: $disabled-btn-color;
 $list-view-action-button-bg: $color-28;
+$list-view-action-button-bg-hover: $color-28;
 $list-view-action-menu-bg: $color-20;
 $list-view-action-menu-link-bg: $color-14;
 $list-view-action-menu-separator: $color-27;
 $list-view-choose-columns-displayed: $color-42;
 $list-view-choose-columns-hidden: $color-56;
+$list-view-data-icon-color: $main-font-color;
+$list-view-data-icon-font-size: 18px;
 $page-list-view-font-size: 12px;
+$mass-update-text-color: $main-font-color;
 
 // mass assign form
-$mass-assign-color: $color-15;
+$mass-assign-color: $main-font-color;
 $mass-assign-bg: $color-51;
 
 // Filters / Search
@@ -1086,13 +1120,22 @@ $table-row-bg: $main-alternate-bg;
 
 // Dashlets
 $dashlet-title-bg: $color-13;
+$dashlet-title-color: $color-80;
 $dashlet-toolbar-bg: $color-39;
 $dashlet-pagination-bg: $color-28;
 $dashlet-header-bg: $color-20;
+$dashlet-btn-color: $color-80;
 
 $dashlet-title-height: 30px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
 $dashlet-header-padding: 5px; // 5 normal 0 small
+$dashlet-header-icon-font-size: 13px;
+$dashlet-header-toolset-icon-font-size: 18px;
+
+$dashlet-action-color: $main-font-color;
+$dashlet-action-icon-font-size: 18px;
+
+$add-dashlet-tab-color: $color-80;
 
 
 // Campaigns
@@ -1132,6 +1175,7 @@ $calendar-user-height: 32px;
 $calendar-user-bg: $color-36;
 $calendar-user-height: 40px;
 $calendar-header-bg: $color-39;
+$calendar-header-color: $color-51;
 // YUI Popup calendar
 $calendar-month-day-header-bg: $color-20;
 $calendar-month-day-header-color: $color-51;

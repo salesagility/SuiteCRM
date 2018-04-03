@@ -100,3 +100,4 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
+.php_cs.cache

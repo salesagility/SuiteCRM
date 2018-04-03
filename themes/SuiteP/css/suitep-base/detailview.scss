@@ -12,6 +12,16 @@
 
 }
 
+.vcard {
+  font-size: inherit;
+  border: none;
+  color: $main-font-color;
+}
+
+.vcard .suitepicon {
+  font-size: 18px;
+}
+
 p.msg {
 	padding:10px;
 }
@@ -29,6 +39,10 @@ p.msg {
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: $disabled-btn-bg;
+}
+
+.btn-pagination .suitepicon {
+  line-height: inherit;
 }
 
 .buttons .pagination .btn-pagination {
@@ -378,6 +392,8 @@ p.msg {
   font-size: 14px;
 }
 
+
+
 .email-opt-in-not-sent {
   color: $opt-in-tick-color-not-sent;
 }
@@ -396,4 +412,31 @@ p.msg {
 
 .email-line-through {
   text-decoration: line-through;
+}
+
+// Fix for list view confirm opt in ticks
+.table-responsive.list > tbody > tr > td {
+  .email-opt-in .suitepicon {
+    font-size: $page-font-size;
+  }
+
+  .email-opt-in-not-sent .suitepicon {
+    @extend  .email-opt-in-not-sent;
+  }
+
+  .email-opt-in-failed .suitepicon {
+    @extend  .email-opt-in-failed;
+  }
+
+  .email-opt-in-sent .suitepicon {
+    @extend  .email-opt-in-sent;
+  }
+
+  .email-opt-in-confirmed .suitepicon {
+    @extend  .email-opt-in-confirmed;
+  }
+}
+
+.email-opt-in .suitepicon {
+  line-height: inherit;
 }

@@ -45,11 +45,45 @@ class apiTester extends \Codeception\Actor
     private static $tokenExpiresIn;
 
     /**
-     * Logins into API
-     * @param $username
-     * @param $password
+     * @throws \Codeception\Exception\ModuleException
      */
-    public function login($username, $password)
+    public function loginAsAdmin()
+    {
+        $this->loginAsAdminWithPassword();
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function loginAsAdminWithPassword()
+    {
+        $this->loginWithPasswordGrant(
+            $this->getPasswordGrantClientId(),
+            $this->getPasswordGrantClientSecret(),
+            $this->getAdminUser(),
+            $this->getAdminPassword()
+        );
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function loginAsAdminWithClientCredentials()
+    {
+        $this->loginWithClientCredentialsGrant(
+              $this->getClientCredentialsGrantClientId(),
+              $this->getClientCredentialsGrantClientSecret()
+        );
+    }
+
+    /**
+     * Logins into API with Password grant type
+     * @param string $client
+     * @param string $secret
+     * @param string $username
+     * @param string $password
+     */
+    public function loginWithPasswordGrant($client, $secret, $username, $password)
     {
         $I = $this;
 
@@ -67,8 +101,8 @@ class apiTester extends \Codeception\Actor
                 'password' => $password,
                 'grant_type' => 'password',
                 'scope' => '',
-                'client_id' => $I->getClientID(),
-                'client_secret' => $I->getClientSecret()
+                'client_id' => $client,
+                'client_secret' => $secret
             )
         );
         $I->canSeeResponseIsJson();
@@ -82,18 +116,29 @@ class apiTester extends \Codeception\Actor
     }
 
     /**
-     * Login as admin
+     * Logins into API with Client Credentials grant type
+     * @param string $client
+     * @param string $secret
      */
-    public function loginAsAdmin()
+    public function loginWithClientCredentialsGrant($client, $secret)
     {
         $I = $this;
-        /**
-         * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
-         */
-        $I->login(
-            $I->getAdminUser(),
-            $I->getAdminPassword()
+
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'grant_type' => 'client_credentials',
+                'client_id' => $client,
+                'client_secret' => $secret
+            )
         );
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(200);
+
+        $response = json_decode($I->grabResponse(), true);
+        self::$tokenType = $response['token_type'];
+        self::$tokenExpiresIn =  (int)$response['expires_in'];
+        self::$accessToken = $response['access_token'];
     }
 
     /**
