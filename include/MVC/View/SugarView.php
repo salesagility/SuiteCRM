@@ -1121,7 +1121,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                $GLOBALS['server_unique_key'] .
+                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1236,7 +1236,7 @@ EOHTML;
     private function _calculateFooterMetrics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $this->responseTime = number_format(round($deltaTime, 2), 2);
         // Print out the resources used in constructing the page.
         $this->fileResources = count(get_included_files());
@@ -1248,7 +1248,7 @@ EOHTML;
     private function _getStatistics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $response_time_string =
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME'] .
             ' ' .
