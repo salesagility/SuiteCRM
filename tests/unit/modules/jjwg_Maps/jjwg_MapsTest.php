@@ -35,7 +35,7 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $jjwgMaps->configuration();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -293,7 +293,7 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $jjwgMaps->logGeocodeInfo($bean);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

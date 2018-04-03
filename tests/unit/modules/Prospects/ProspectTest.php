@@ -100,7 +100,7 @@ class ProspectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('Multiple errors in query');

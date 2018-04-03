@@ -72,7 +72,7 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -95,7 +95,7 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -118,7 +118,7 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

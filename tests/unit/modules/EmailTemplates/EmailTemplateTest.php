@@ -90,7 +90,7 @@ class EmailTemplateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -132,7 +132,7 @@ class EmailTemplateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

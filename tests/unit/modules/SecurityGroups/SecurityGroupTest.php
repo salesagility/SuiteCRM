@@ -133,7 +133,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::inherit($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -158,7 +158,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::assign_default_groups($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -183,7 +183,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::inherit_creator($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -209,7 +209,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::inherit_assigned($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -234,7 +234,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::inherit_parent($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -259,7 +259,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             SecurityGroup::inherit_parentQuery($account, 'Accounts', 1, 1, $account->module_dir);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -427,7 +427,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $securityGroup->addGroupToRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -456,7 +456,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $securityGroup->removeGroupFromRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

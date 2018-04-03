@@ -203,7 +203,7 @@ class UserTest extends \Codeception\Test\Unit
             $user->savePreferencesToDB();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

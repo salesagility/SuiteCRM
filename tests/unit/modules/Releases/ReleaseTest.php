@@ -67,7 +67,7 @@ class ReleaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $release->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -90,7 +90,7 @@ class ReleaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $release->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

@@ -47,7 +47,7 @@ class AOR_ChartTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $result = $aorChart->save_lines($post, $bean, $postKey);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

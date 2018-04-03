@@ -24,7 +24,7 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $LogicHook = new LogicHook();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         
@@ -196,7 +196,7 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             LogicHook::refreshHooks();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -514,7 +514,7 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $LogicHook->call_custom_logic('', 'after_ui_footer');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         
@@ -542,7 +542,7 @@ class LogicHookTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $LogicHook->process_hooks($hooks, 'after_ui_footer', array());
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         

@@ -65,7 +65,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -90,7 +90,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -115,7 +115,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $vcal->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -184,7 +184,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -208,7 +208,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

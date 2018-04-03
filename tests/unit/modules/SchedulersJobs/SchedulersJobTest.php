@@ -117,7 +117,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $schedulersJob->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -181,7 +181,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $schedulersJob->onFailureRetry();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
@@ -206,7 +206,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $schedulersJob->onFinalFailure();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');

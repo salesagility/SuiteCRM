@@ -41,7 +41,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
             $SugarApplication->loadUser();
         } 
         catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         $this->assertTrue(TRUE);
@@ -68,7 +68,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->ACLFilter();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -100,14 +100,14 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->setupResourceManagement('');
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         //execute the method with valid input and test if it works and does not throws an exception.
         try {
             $SugarApplication->setupResourceManagement('Users');
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -131,7 +131,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->setupPrint();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -161,7 +161,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->preProcess();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -193,7 +193,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->handleOfflineClient();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -234,7 +234,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
             //check that method call got the app_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -268,7 +268,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
             //check that method call got the mod_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['mod_strings']) && count($GLOBALS['mod_strings']) > 0);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -314,7 +314,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->loadDisplaySettings();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -338,7 +338,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->loadLicense();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -368,7 +368,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $SugarApplication->loadGlobals();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -459,7 +459,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
             $this->assertGreaterThan(0,strlen($renderedContent));
              
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         */
         $this->markTestIncomplete('Can Not be implemented');
@@ -528,7 +528,7 @@ class SugarApplicationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         try {
             $vars = $SugarApplication->createLoginVars();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);

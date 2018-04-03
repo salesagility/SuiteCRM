@@ -64,7 +64,7 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $employee->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -146,7 +146,7 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $employee->list_view_parse_additional_sections(new Sugar_Smarty(), $xTemplateSection);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -186,7 +186,7 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $employee->preprocess_fields_on_save();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

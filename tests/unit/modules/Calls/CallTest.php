@@ -288,7 +288,7 @@ class CallTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $call->save_relationship_changes(true);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

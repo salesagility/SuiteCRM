@@ -944,7 +944,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $email->fillPrimaryParentFields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -970,7 +970,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $email->cid2Link('1', 'image/png');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -996,7 +996,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $email->cids2Links();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -1019,7 +1019,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $email->setFieldNullable('description');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -1042,7 +1042,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $email->revertFieldNullable('description');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

@@ -103,7 +103,7 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aod_index->commit();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -164,7 +164,7 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aod_index->remove('Accounts', 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

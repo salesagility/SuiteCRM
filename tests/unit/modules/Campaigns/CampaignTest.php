@@ -89,7 +89,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $campaign->clear_campaign_prospect_list_relationship('1');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -113,7 +113,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $campaign->mark_relationships_deleted('1');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -136,7 +136,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $campaign->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -159,7 +159,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $campaign->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -182,7 +182,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $campaign->update_currency_id('', '');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

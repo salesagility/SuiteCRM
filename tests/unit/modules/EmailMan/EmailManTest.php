@@ -140,7 +140,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $emailMan->set_as_sent('test@test.com', true, null, null, 'send error');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         //execute the method and test if it works and does not throws an exception.
@@ -149,7 +149,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $emailMan->set_as_sent('test@test.com', false, null, null, 'send error');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -241,7 +241,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $emailMan->mark_deleted('');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

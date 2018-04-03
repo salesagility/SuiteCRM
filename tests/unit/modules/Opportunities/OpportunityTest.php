@@ -105,7 +105,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -128,7 +128,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -159,7 +159,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -247,7 +247,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $opportunity->save_relationship_changes(true);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -269,7 +269,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $opportunity->set_opportunity_contact_relationship('1');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -338,7 +338,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             getCurrencyType();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('This method has no implementation');

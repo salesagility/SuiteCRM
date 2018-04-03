@@ -35,7 +35,7 @@ class ViewXMLTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

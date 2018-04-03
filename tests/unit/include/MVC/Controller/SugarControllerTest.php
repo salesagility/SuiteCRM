@@ -81,7 +81,7 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         try {
             $SugarController->execute();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         // change back to original logger
@@ -114,7 +114,7 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         try {
             $SugarController->process();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);

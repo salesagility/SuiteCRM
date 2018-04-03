@@ -34,7 +34,7 @@ class ViewHtmlTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $view->display();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

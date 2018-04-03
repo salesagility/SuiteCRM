@@ -16,7 +16,7 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             loadParentView('classic');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

@@ -43,7 +43,7 @@ class AOR_ConditionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aor_Condition->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

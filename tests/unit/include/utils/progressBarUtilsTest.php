@@ -17,7 +17,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             progress_bar_flush(false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -41,7 +41,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             ob_end_clean();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -65,7 +65,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             ob_end_clean();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -89,7 +89,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             ob_end_clean();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -113,7 +113,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             ob_end_clean();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -137,7 +137,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
             ob_end_clean();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

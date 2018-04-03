@@ -25,7 +25,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $SugarView->init();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -59,7 +59,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -81,7 +81,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $errors = $SugarView->displayErrors();
             $this->assertEmpty($errors, print_r($SugarView, true));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -105,7 +105,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $SugarView->preDisplay();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -129,7 +129,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $SugarView->display();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -163,7 +163,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -185,7 +185,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $SugarView->getModuleMenuHTML();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -210,7 +210,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $SugarView->includeClassicFile('config.php');
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -248,7 +248,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -278,7 +278,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -303,7 +303,7 @@ class SugarViewTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     		 
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
-    		//$this->fail();
+    		//$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	} */
 
         //check with valid value and check if it returns an array.

@@ -101,7 +101,7 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $aor_Report->load_report_beans();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

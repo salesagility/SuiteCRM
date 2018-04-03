@@ -84,7 +84,7 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -211,7 +211,7 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
@@ -245,7 +245,7 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             Relationship::delete_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up

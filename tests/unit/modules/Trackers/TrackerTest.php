@@ -55,7 +55,7 @@ class TrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             $tracker->makeInvisibleForAll(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
