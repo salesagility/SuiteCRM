@@ -595,7 +595,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (isset($params['record_id']) ? $params['record_id'] : null) {
         $ss->assign("record_id", $params['record_id']);
     }
 

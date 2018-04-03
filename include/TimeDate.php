@@ -709,6 +709,9 @@ class TimeDate
      */
     public function fromDb($date)
     {
+        if (!is_string($date)) {
+            throw new InvalidArgumentException('Date should be a string, ' . gettype($date) . ' given.');
+        }
         try {
             return SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT, $date, self::$gmtTimezone);
         } catch (Exception $e) {

@@ -218,7 +218,7 @@ class AOW_WorkFlow extends Basic
     function get_flow_beans(){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -285,7 +285,7 @@ class AOW_WorkFlow extends Basic
     function build_flow_query_where($query = array()){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -322,7 +322,7 @@ class AOW_WorkFlow extends Basic
             }
 
             if(!$this->multiple_runs){
-                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
+                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".(isset($this->id) ? $this->id : null)."' AND aow_processed.parent_id=".(isset($module->table_name) ? $module->table_name : null).".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
             $query['where'][] = $module->table_name.".deleted = 0 ";

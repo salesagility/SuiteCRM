@@ -70,7 +70,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $product_quote = new AOS_Products_Quotes();

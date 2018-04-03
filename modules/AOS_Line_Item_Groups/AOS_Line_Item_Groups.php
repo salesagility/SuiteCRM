@@ -71,7 +71,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         $j = 0;
         for ($i = 0; $i < $group_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $product_quote_group = new AOS_Line_Item_Groups();

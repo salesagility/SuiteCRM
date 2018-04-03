@@ -631,7 +631,7 @@ class AOR_Report extends Basic
           // Fix #5427
         $report_style = '';
         $thead_style = '';
-        if ($_REQUEST['action'] == 'DownloadPDF') {
+        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
             $report_style = 'margin-top: 0px;';
             $thead_style = 'background: #919798; color: #fff';
         }
@@ -939,7 +939,7 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
                 $fieldDefinition = $moduleBean->field_defs[$field['field']];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {

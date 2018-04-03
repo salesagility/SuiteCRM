@@ -39,7 +39,7 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with attributes preset and verify template variables are set accordingly
         $tpl = new Sugar_Smarty();
         $campaign->list_view_parse_additional_sections($tpl);
-        $this->assertEquals('', $tpl->_tpl_vars['ASSIGNED_USER_NAME']);
+        $this->assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
         
         // clean up
         

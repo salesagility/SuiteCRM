@@ -37,7 +37,12 @@ function perform_aos_save($focus){
             $focus->$fieldNameDollar = '';
             if(!number_empty($focus->field_defs[$field['name']])){
                 $currency = new Currency();
-                $currency->retrieve($focus->currency_id);
+                if(!isset($focus->currency_id)) {
+                    LoggerManager::getLogger()->warn('Currency is not set for perform AOS save.');
+                    $currency->retrieve();
+                } else {
+                    $currency->retrieve($focus->currency_id);
+                }
 
                 $amountToConvert = $focus->$fieldName;
                 if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {

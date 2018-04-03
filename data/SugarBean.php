@@ -457,7 +457,7 @@ abstract class SugarBean
             }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
-                $this->field_name_map = $dictionary[$this->object_name]['fields'];
+                $this->field_name_map = isset($dictionary[$this->object_name]['fields']) ? $dictionary[$this->object_name]['fields'] : null;
                 $this->field_defs = $dictionary[$this->object_name]['fields'];
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {

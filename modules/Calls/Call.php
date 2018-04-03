@@ -512,7 +512,10 @@ class Call extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->modify("+1 day"));
-		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
+                if(!isset($call_fields['DATE_START'])) {
+                    LoggerManager::getLogger()->warn('Call has not DATE_START field for list view data.');
+                }
+		$mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
 			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   

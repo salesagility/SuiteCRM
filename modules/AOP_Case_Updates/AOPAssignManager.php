@@ -87,7 +87,7 @@ class AOPAssignManager
     {
         global $sugar_config;
         if ($this->aopFallback) {
-            return $sugar_config['aop']['distribution_options'];
+            return isset($sugar_config['aop']['distribution_options']) ? $sugar_config['aop']['distribution_options'] : null;
         } else {
             return $this->ieX->get_stored_options('distribution_options', '');
         }
