@@ -157,6 +157,58 @@ class EmailsController extends SugarController
     }
 
     /**
+     * Creates a record from the Quick Create Modal
+     */
+    public function action_QuickCreate()
+    {
+        $this->view = 'ajax';
+        $originModule = $_REQUEST['module'];
+        $targetModule = $_REQUEST['quickCreateModule'];
+
+        $_REQUEST['module'] = $targetModule;
+
+        $controller = ControllerFactory::getController($targetModule);
+        $controller->loadBean();
+        $controller->pre_save();
+        $controller->action_save();
+        $bean = $controller->bean;
+
+        $_REQUEST['module'] = $originModule;
+
+        if (!$bean) {
+            $result = ['id' => false];
+            echo json_encode($result);
+            return;
+        }
+
+        $result = [
+            'id' => $bean->id,
+            'module' => $bean->module_name,
+        ];
+        echo json_encode($result);
+
+        if (empty($_REQUEST['parentEmailRecordId'])) {
+            return;
+        }
+
+        $emailBean = BeanFactory::getBean('Emails', $_REQUEST['parentEmailRecordId']);
+
+        if (!$emailBean) {
+            return;
+        }
+
+        $relationship = strtolower($controller->module);
+        $emailBean->load_relationship($relationship);
+        $emailBean->$relationship->add($bean->id);
+
+        if (!$bean->load_relationship('emails')) {
+            return;
+        }
+
+        $bean->emails->add($emailBean->id);
+    }
+
+    /**
      * @see EmailsViewSendemail
      */
     public function action_send()

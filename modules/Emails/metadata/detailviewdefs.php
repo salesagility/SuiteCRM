@@ -57,10 +57,8 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=Forward&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_FORWARD}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'index.php?module=Leads&action=EditView&in_popup=1&sugar_body_only=1&email1={$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_LEADS}">'
-                ),
-                array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'index.php?module=Contacts&action=EditView&in_popup=1&sugar_body_only=1\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_CONTACTS}">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Leads\',\'&email1={$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_LEADS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
                 ),
             )
         ),
