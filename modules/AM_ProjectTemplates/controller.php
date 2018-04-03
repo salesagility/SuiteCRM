@@ -258,7 +258,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/AM_ProjectTemplates/gantt.php');
         include_once('modules/AM_ProjectTemplates/project_table.php');

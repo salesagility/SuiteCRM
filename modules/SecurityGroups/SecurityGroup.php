@@ -472,7 +472,7 @@ class SecurityGroup extends SecurityGroup_sugar
     public function inheritOne($user_id, $record_id, $module)
     {
         //check to see if in just one group...if so, inherit that group and return true
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $query = 'select count(securitygroups.id) as results from securitygroups '
             . 'inner join securitygroups_users on securitygroups.id = securitygroups_users.securitygroup_id '
@@ -507,7 +507,7 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public function getMembershipCount($user_id)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         if (!isset($_SESSION['securitygroup_count'])) {
             $query = 'select count(securitygroups.id) as results from securitygroups '
@@ -532,7 +532,7 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public function retrieveDefaultGroups()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $default_groups = array();
         $query = 'select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id '
@@ -653,7 +653,7 @@ class SecurityGroup extends SecurityGroup_sugar
         if (empty($module) || empty($record_id) || empty($securitygroup_id)) {
             return; //missing data
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = 'insert into securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
             . "values( '" . create_guid() . "','" . $securitygroup_id . "','$record_id','$module'," . $db->convert('',
                 'today') . ',0) ';
@@ -672,7 +672,7 @@ class SecurityGroup extends SecurityGroup_sugar
         if (empty($module) || empty($record_id) || empty($securitygroup_id)) {
             return; //missing data
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = 'update securitygroups_records set deleted = 1, date_modified = ' . $db->convert('', 'today') . ' '
             . "where securitygroup_id = '" . $securitygroup_id . "' and record_id = '$record_id' and module = '$module'";
         $GLOBALS['log']->debug("SecuritySuite: addGroupToRecord: $query");
@@ -686,7 +686,7 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public function getUserSecurityGroups($user_id)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = 'select securitygroups.id, securitygroups.name from securitygroups_users '
             . 'inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id '
             . '      and securitygroups.deleted = 0 '
@@ -707,7 +707,7 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public function getAllSecurityGroups()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = 'SELECT id, name FROM securitygroups '
             . 'WHERE securitygroups.deleted = 0 '
             . 'ORDER BY name';
@@ -726,7 +726,7 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public function getMembers()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $query = 'select users.id, users.user_name, users.first_name, users.last_name '
             . 'from securitygroups '

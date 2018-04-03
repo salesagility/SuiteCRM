@@ -1030,7 +1030,7 @@ eoq;
  * @return bool true on success
  */
 function updateVersions($version) {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $sugar_config;
 	global $path;
 
@@ -1096,7 +1096,7 @@ function getModuleLanguagePack($lang, $module) {
 function checkSystemCompliance() {
 	global $sugar_config;
 	global $current_language;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $mod_strings;
 	global $app_strings;
 
@@ -2372,7 +2372,7 @@ function UWrebuild() {
 }
 
 function getCustomTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	return $db->tablesLike('%_cstm');
 }
@@ -2383,7 +2383,7 @@ function alterCustomTables($customTables)
 }
 
 function getAllTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	return $db->getTablesArray();
 }
 
@@ -2399,7 +2399,7 @@ function printAlterTableSql($tables)
 
 function executeConvertTablesSql($tables)
 {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	foreach($tables as $table){
 		$query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
@@ -3909,7 +3909,7 @@ function clearHelpFiles(){
 function upgradeDateTimeFields($path)
 {
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	$meetingsSql = "UPDATE meetings SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	$callsSql = "UPDATE calls SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	logThis('upgradeDateTimeFields Meetings SQL:' . $meetingsSql, $path);
@@ -3925,7 +3925,7 @@ function upgradeDateTimeFields($path)
  */
 function upgradeDocumentTypeFields($path){
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	$documentsSql = "UPDATE documents SET doc_type = 'Sugar' WHERE doc_type IS NULL";
 	$meetingsSql = "UPDATE meetings SET type = 'Sugar' WHERE type IS NULL";

@@ -5294,7 +5294,7 @@ abstract class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->query('DELETE FROM cron_remove_documents WHERE bean_id=' . $db->quoted($this->id));
 
         return true;
@@ -5453,7 +5453,7 @@ abstract class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $record = array(
             'bean_id' => $db->quoted($this->id),
             'module' => $db->quoted($this->module_name),

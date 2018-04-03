@@ -289,7 +289,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -385,7 +385,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -415,7 +415,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -444,7 +444,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -467,7 +467,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetUserSecurityGroups()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -482,7 +482,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetAllSecurityGroups()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -497,7 +497,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetMembers()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -512,7 +512,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetPrimaryGroupID()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset ($db->database);
         $db->checkConnection();

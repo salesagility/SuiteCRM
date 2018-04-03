@@ -35,7 +35,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateChecker_PH
 
     public static function setUpBeforeClass()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();

@@ -150,7 +150,7 @@ class AOR_Scheduled_Reports extends basic {
                                 break;
                             Case 'all':
                             default:
-                                global $db;
+                                $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {

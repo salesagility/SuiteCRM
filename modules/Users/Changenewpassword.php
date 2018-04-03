@@ -48,7 +48,7 @@ global $app_list_strings;
 global $app_strings;
 global $current_language;
 /** @var DBManager $db */
-global $db;
+$db = DBManagerFactory::getInstance();
 
 require_once('modules/Users/language/en_us.lang.php');
 $mod_strings = return_module_language('', 'Users');

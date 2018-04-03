@@ -49,7 +49,7 @@ require_once('modules/Trackers/store/Store.php');
 class TrackerSessionsDatabaseStore implements Store {
 
     public function flush($monitor) {
-        global $db;
+        $db = DBManagerFactory::getInstance();
        $metrics = $monitor->getMetrics();
 
        if(isset($monitor->client_ip) && strlen($monitor->client_ip) > 45)

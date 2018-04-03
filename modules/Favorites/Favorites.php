@@ -143,7 +143,7 @@ class Favorites extends Basic
      */ 
     public function getCurrentUserFavoritesForModule($module)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $current_user;
         global $moduleList;
 

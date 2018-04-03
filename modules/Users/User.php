@@ -920,7 +920,7 @@ EOQ;
             $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
             return false;
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $before = $name;
         $name = $db->quote($name);
         if ($before && !$name) {

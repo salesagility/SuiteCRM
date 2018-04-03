@@ -37,7 +37,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetDefaultSignature()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -123,7 +123,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetUserPrivGuid()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -140,7 +140,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testsetUserPrivGuid()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -159,7 +159,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testSetAndGetAndResetPreference()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -215,7 +215,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetUserDateTimePreferences()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -237,7 +237,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testGetETagSeedAndIncrementETag()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -292,7 +292,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testcheck_role_membership()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
@@ -316,7 +316,7 @@ class UserTest extends \Codeception\Test\Unit
         //error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
         $db->checkConnection();
