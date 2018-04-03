@@ -445,7 +445,8 @@ class ListViewData {
                 $additionalDetailsEdit = $editViewAccess;
                 if($additionalDetailsAllow) {
                     if($this->additionalDetailsAjax) {
-					   $ar = $this->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
+                        LoggerManager::getLogger()->warn('Undefined data index ID for list view data.');
+					   $ar = $this->getAdditionalDetailsAjax(isset($data[$dataIndex]['ID']) ? $data[$dataIndex]['ID'] : null);
                     }
                     else {
                         $additionalDetailsFile = 'modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
