@@ -113,6 +113,20 @@ class StateSaver {
         }
     }
     
+    public function pushGlobalKeys() {
+        $keys = array_keys($GLOBALS);
+        $this->push($keys, 'keys', 'globalsArrayKeys');
+    }
+    
+    public function popGlobalKeys() {
+        $keys = $this->pop('keys', 'globalsArrayKeys');
+        foreach($keys as $key) {
+            if(!isset($GLOBALS[$key])) {
+                $GLOBALS[$key] = [];
+            }
+        }
+    }
+    
     public function pushErrorLevel($key = 'level', $namespace = 'error_reporting') {
         $level = error_reporting();
         $this->push($level, $key, $namespace);
