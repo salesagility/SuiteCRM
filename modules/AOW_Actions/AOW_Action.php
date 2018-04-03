@@ -106,7 +106,13 @@ class AOW_Action extends Basic
                 foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {
-                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            if (!isset($post_data[$key . 'param'][$i]['value_type'])) {
+                                LoggerManager::getLogger()->warn('AOW action error when trying to save lines, value type is undefined in post data, key and index was: ' . $key . ', ' . $i);
+                            } elseif (!isset($post_data[$key . 'param'][$i]['value_type'][$p_id])) {
+                                LoggerManager::getLogger()->warn('AOW action error when trying to save lines, parameter id not found in post data, parameter id was: ' . $p_id);
+                            } else {
+                                if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            }
                         }
                     }
                     $params[$param_name] = $param_value;

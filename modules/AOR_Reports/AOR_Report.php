@@ -918,7 +918,7 @@ class AOR_Report extends Basic
             }
             if ($field['total']) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][$field['total']];
+                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][isset($field['total']) ? $field['total'] : null];
                 $html .= "<th>{$totalLabel}</td>";
             } else {
                 $html .= '<th></th>';
@@ -940,7 +940,7 @@ class AOR_Report extends Basic
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
                 $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $fieldDefinition = $moduleBean->field_defs[isset($field['field']) ? $field['field'] : null];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {
                     case "currency":
@@ -1103,8 +1103,12 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        if(!isset($query_array['select'])) {
+            LoggerManager::getLogger()->warn('Trying to build report query without database select definition.');
+        } else {
+            foreach ($query_array['select'] as $select) {
+                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+            }
         }
 
         if (empty($query_array['group_by'])) {

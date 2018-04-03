@@ -524,7 +524,13 @@ class Call extends SugarBean {
 			}   
 			else   
 			{    
-				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+                            if(!isset($call_fields['DATE_START'])) {
+                                LoggerManager::getLogger()->warn('Call field has not START_DATE when trying to get list view data.');
+                                $dateStart = null;
+                            } else {
+                                $dateStart = $call_fields['DATE_START'];
+                            }
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";

@@ -83,7 +83,10 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
                 }
                 $product_quote_group->number = ++$j;
                 $product_quote_group->assigned_user_id = $parent->assigned_user_id;
-                $product_quote_group->currency_id = $parent->currency_id;
+                if (!isset($parent->currency_id)) {
+                    LoggerManager::getLogger()->warn('AOS Line Item Group saving error: undefined Curency ID');
+                }
+                $product_quote_group->currency_id = isset($parent->currency_id) ? $parent->currency_id : null;
                 $product_quote_group->parent_id = $parent->id;
                 $product_quote_group->parent_type = $parent->object_name;
                 $product_quote_group->save();

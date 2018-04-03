@@ -44,7 +44,10 @@ function perform_aos_save($focus){
                     $currency->retrieve($focus->currency_id);
                 }
 
-                $amountToConvert = $focus->$fieldName;
+                if(!isset($focus->$fieldName)) {
+                    LoggerManager::getLogger()->warn('Perform AOS Save error: Undefined field name of focus. Focus and field name was: ' . get_class($focus) . ', ' . $fieldName);
+                }
+                $amountToConvert = isset($focus->$fieldName) ? $focus->$fieldName : null;
                 if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {
                     $amountToConvert = unformat_number($focus->$fieldName);
                 }

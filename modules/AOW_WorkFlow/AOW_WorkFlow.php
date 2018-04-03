@@ -322,6 +322,9 @@ class AOW_WorkFlow extends Basic
             }
 
             if(!$this->multiple_runs){
+                if (!isset($query['where'])) {
+                   $query['where'] = []; 
+                }
                 $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".(isset($this->id) ? $this->id : null)."' AND aow_processed.parent_id=".(isset($module->table_name) ? $module->table_name : null).".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 

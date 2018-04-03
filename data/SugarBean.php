@@ -458,7 +458,13 @@ abstract class SugarBean
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
                 $this->field_name_map = isset($dictionary[$this->object_name]['fields']) ? $dictionary[$this->object_name]['fields'] : null;
-                $this->field_defs = $dictionary[$this->object_name]['fields'];
+                
+                if (!isset($dictionary[$this->object_name]['fields'])) {
+                    LoggerManager::getLogger()->warn('SugarBean constructor error: Object has not fields in dictionary. Object name was: ' . $this->object_name);
+                    $this->field_defs = null;
+                } else {
+                    $this->field_defs = $dictionary[$this->object_name]['fields'];
+                }
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {
                     $this->optimistic_lock = true;

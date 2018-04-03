@@ -520,7 +520,7 @@ function get_number_seperators($reset_sep = false)
  */
 function toString($echo = true) {
 	$s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
-         "\$m_currency_decimal=$m_currency_decimal \n" .
+         "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
          "\$m_currency_symbol=$m_currency_symbol \n" .
          "\$m_currency_iso=$m_currency_iso \n" .
          "\$m_currency_name=$m_currency_name \n";
@@ -547,7 +547,12 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
 		require_once('modules/Currencies/ListCurrency.php');
 		$currency_fields = array();
 		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
+                if (!isset($focus->field_defs)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+                    $defs = null;
+                } else {
+                    $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+                }
 		//
 		foreach($defs as $name=>$key){
 			if($key['type'] == 'currency'){
