@@ -768,7 +768,7 @@ class UserTest extends \Codeception\Test\Unit
         $emailAddress->addAddress('abc@email.com');
 
         $expected =
-            '<a class="email-link" href="javascript:void(0);"'
+            '<a class="email-link"'
             . ' onclick="$(document).openComposeViewModal(this);" data-module="Accounts" '
             . 'data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $account);
@@ -784,7 +784,7 @@ class UserTest extends \Codeception\Test\Unit
         $emailAddress->addAddress('abc@email.com');
 
         $expected =
-            '<a class="email-link" href="javascript:void(0);"'
+            '<a class="email-link"'
             . ' onclick="$(document).openComposeViewModal(this);" data-module="Contacts"'
             . ' data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
@@ -805,7 +805,7 @@ class UserTest extends \Codeception\Test\Unit
         $account->name = "test";
 
         $expected =
-            '<a class="email-link" href="javascript:void(0);"'
+            '<a class="email-link"'
             . ' onclick=" $(document).openComposeViewModal(this);" data-module="Accounts"'
             . ' data-record-id="" data-module-name="test"  data-email-address=""></a>';
         $actual = $user->getEmailLink("name", $account);
