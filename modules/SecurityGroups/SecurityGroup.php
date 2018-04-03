@@ -146,9 +146,9 @@ class SecurityGroup extends SecurityGroup_sugar
             return true; //means that this is a listview and everybody is an owner of the listview
         }
 
-        global $db;
         global $current_user;
         global $sugar_config;
+        $db = DBManagerFactory::getInstance();
         $query = 'select count(securitygroups.id) as results from securitygroups '
             . 'inner join securitygroups_users on securitygroups.id = securitygroups_users.securitygroup_id'
             . ' and securitygroups_users.deleted = 0 '
