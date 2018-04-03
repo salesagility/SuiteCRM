@@ -179,7 +179,7 @@ class EAPM extends Basic
             return false;
         }
         // Don't use save, it will attempt to revalidate
-       $adata = DBManagerFactory::getInstance()->quote($this->api_data);
+       $adata = DBManagerFactory::getInstance()->quote(isset($this->api_data) ? $this->api_data : null);
         DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app

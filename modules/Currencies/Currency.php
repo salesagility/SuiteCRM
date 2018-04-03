@@ -519,7 +519,7 @@ function get_number_seperators($reset_sep = false)
  * Utility function to print out some information about Currency instance.
  */
 function toString($echo = true) {
-	$s = "\$m_currency_round=$m_currency_round \n" .
+	$s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
          "\$m_currency_decimal=$m_currency_decimal \n" .
          "\$m_currency_symbol=$m_currency_symbol \n" .
          "\$m_currency_iso=$m_currency_iso \n" .

@@ -100,6 +100,7 @@ class Document extends File
         'contract_id' => 'contracts',
     );
 
+    public $authenticated = null;
 
     function __construct()
     {
@@ -368,6 +369,13 @@ class Document extends File
         $document_fields['FILE_URL'] = $this->file_url;
         $document_fields['FILE_URL_NOIMAGE'] = $this->file_url_noimage;
         $document_fields['LAST_REV_CREATED_BY'] = $this->last_rev_created_name;
+        if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
+            if (!isset($this->category_id)) {
+                LoggerManager::getLogger()->warn('Undefined category id for document list view data.');
+            } else {
+                LoggerManager::getLogger()->warn('In language app strings[document_category_dom] does not found for category id for document list view data: ' . $this->category_id);
+            }
+        }
         $document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['document_category_dom'][$this->category_id];
         $document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
         $document_fields['NAME'] = $this->document_name;

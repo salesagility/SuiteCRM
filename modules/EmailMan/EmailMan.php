@@ -404,7 +404,7 @@ class EmailMan extends SugarBean
         global $locale, $current_user;
         $temp_array = parent::get_list_view_array();
 
-        $related_type = $temp_array['RELATED_TYPE'];
+        $related_type = isset($temp_array['RELATED_TYPE']) ? $temp_array['RELATED_TYPE'] : null;
         $related_id = $temp_array['RELATED_ID'];
         $is_person = SugarModule::get($related_type)->moduleImplements('Person');
 

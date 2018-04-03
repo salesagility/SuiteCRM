@@ -91,7 +91,7 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //test without setting attributes
         $result = $currency->list_view_parse_additional_sections(new Sugar_Smarty());
-        $this->assertEquals(null, $result->_tpl_vars['PREROW']);
+        $this->assertEquals(null, isset($result->_tpl_vars['PREROW']) ? $result->_tpl_vars['PREROW'] : null);
 
         //test with required attributes set
         $isMerge = true;
@@ -218,11 +218,11 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetCurrencyDropDown()
     {
         //test with view = Default / DetailView
-        $this->assertEquals('US Dollars', getCurrencyDropDown($focus));
+        $this->assertEquals('US Dollars', getCurrencyDropDown(null));
 
         //test with view = EditView  	
         $expected = "<select name=\"currency_id\" id=\"currency_id_select\" onchange=\"CurrencyConvertAll(this.form);\"><option value=\"-99\" selected>US Dollars : $</select><script>var ConversionRates = new Array(); \nvar CurrencySymbols = new Array(); \nvar lastRate = \"1\"; ConversionRates['-99'] = '1';\n CurrencySymbols['-99'] = '$';\nvar currencyFields = [];\n					function get_rate(id){\n						return ConversionRates[id];\n					}\n					function ConvertToDollar(amount, rate){\n						return amount / rate;\n					}\n					function ConvertFromDollar(amount, rate){\n						return amount * rate;\n					}\n					function ConvertRate(id,fields){\n							for(var i = 0; i < fields.length; i++){\n								fields[i].value = toDecimal(ConvertFromDollar(toDecimal(ConvertToDollar(toDecimal(fields[i].value), lastRate)), ConversionRates[id]));\n							}\n							lastRate = ConversionRates[id];\n						}\n					function ConvertRateSingle(id,field){\n						var temp = field.innerHTML.substring(1, field.innerHTML.length);\n						unformattedNumber = unformatNumber(temp, num_grp_sep, dec_sep);\n						\n						field.innerHTML = CurrencySymbols[id] + formatNumber(toDecimal(ConvertFromDollar(ConvertToDollar(unformattedNumber, lastRate), ConversionRates[id])), num_grp_sep, dec_sep, 2, 2);\n						lastRate = ConversionRates[id];\n					}\n					function CurrencyConvertAll(form){\n                        try {\n                        var id = form.currency_id.options[form.currency_id.selectedIndex].value;\n						var fields = new Array();\n						\n						for(i in currencyFields){\n							var field = currencyFields[i];\n							if(typeof(form[field]) != 'undefined'){\n								form[field].value = unformatNumber(form[field].value, num_grp_sep, dec_sep);\n								fields.push(form[field]);\n							}\n							\n						}\n							\n							ConvertRate(id, fields);\n						for(i in fields){\n							fields[i].value = formatNumber(fields[i].value, num_grp_sep, dec_sep);\n\n						}\n							\n						} catch (err) {\n                            // Do nothing, if we can't find the currency_id field we will just not attempt to convert currencies\n                            // This typically only happens in lead conversion and quick creates, where the currency_id field may be named somethnig else or hidden deep inside a sub-form.\n                        }\n						\n					}\n				</script>";
-        $actual = getCurrencyDropDown($focus, 'currency_id', '', 'EditView');
+        $actual = getCurrencyDropDown(null, 'currency_id', '', 'EditView');
         $this->assertSame($expected, $actual);
     }
 
@@ -240,11 +240,11 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetCurrencySymbolDropDown()
     {
         //test with view = Default / DetailView
-        $this->assertEquals('US Dollars', getCurrencySymbolDropDown($focus));
+        $this->assertEquals('US Dollars', getCurrencySymbolDropDown(null));
 
         //test with view = EditView
         $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='\$'>\$</OPTION></select>";
-        $actual = getCurrencySymbolDropDown($focus, 'currency_name', '', 'EditView');
+        $actual = getCurrencySymbolDropDown(null, 'currency_name', '', 'EditView');
         $this->assertSame($expected, $actual);
     }
 }
