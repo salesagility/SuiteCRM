@@ -43,9 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // User is used to store customer information.
-class User extends Person
+class User extends Person implements EmailInterface
 {
 
     // Stored fields
@@ -1488,7 +1489,7 @@ EOQ;
             }
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $emailAddress . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
         }
 
         return $emailLink;
@@ -1531,7 +1532,7 @@ EOQ;
             $emailLink = $emailUI->populateComposeViewFields($focus);
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $focus->$attribute . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
         }
 
         return $emailLink;

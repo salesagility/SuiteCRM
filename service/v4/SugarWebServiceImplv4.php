@@ -114,7 +114,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             self::$helperObject->setFaultObject($error);
             return;
         }
-		else if(function_exists('mcrypt_cbc') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
+		else if(function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
         		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN' ) )
         {
             $password = self::$helperObject->decrypt_string($user_auth['password']);

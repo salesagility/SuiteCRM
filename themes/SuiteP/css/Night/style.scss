@@ -1,6 +1,7 @@
 // Core variables and mixins
 @import "color-palette";
 @import "variables";
+@import "icons";
 @import "../bootstrap/mixins";
 
 // Reset and dependencies
@@ -49,6 +50,11 @@
 @import "../bootstrap/utilities";
 @import "../bootstrap/responsive-utilities";
 
+// Generated Glyphs
+@import '../suitep-base/suitepicon-glyphs';
+// Font fixes
+@import '../suitep-base/suitepicon';
+
 /**SuiteP Theme Base Styles**/
 @import '../suitep-base/mixins';
 @import '../suitep-base/main';
@@ -73,9 +79,5 @@
 @import '../suitep-base/popup';
 @import '../suitep-base/studio';
 @import '../suitep-base/tinemce.scss';
-// Generated Glyphs
-@import '../suitep-base/suitepicon-glyphs';
-// Font fixes
-@import '../suitep-base/suitepicon';
 @import '../suitep-base/jstree';
-//      
+//

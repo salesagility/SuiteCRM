@@ -123,7 +123,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
             )
         );
         $expected = 'accounts.date_modified >= "2017-11-17T11:40:00+00:00"';
-        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $actual = self::$interpreter->getFilterByAttributes($filter, array());
         $this->assertEquals($expected, $actual);
     }
 
@@ -142,7 +142,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
             )
         );
         $expected = 'accounts.name IN ("a","b","c","d","e")';
-        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $actual = self::$interpreter->getFilterByAttributes($filter, array());
         $this->assertEquals($expected, $actual);
     }
 }

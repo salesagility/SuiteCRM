@@ -41,24 +41,6 @@
 
  ********************************************************************************/
 -->
-{literal}
-<style>
-	.li-tick {
-		list-style-image: url("themes/default/images/cmpwzrd/ic_check_circle_black_24px.svg");
-		height: 24px;
-		margin-top: 8px;
-	}
-	.li-cross {
-		list-style-image: url("themes/default/images/cmpwzrd/ic_cancel_black_24px.svg");
-		height: 24px;
-		margin-top: 8px;
-	}
-	.li-tick *, .li-cross * {
-		position: absolute;
-		line-height: 24px;
-	}
-</style>
-{/literal}
 {if $hideScreen}<div style="display:none;">{/if}
 {literal}
 <script type="text/javascript">
@@ -862,7 +844,7 @@
 			<tr>
 
 				<td scope="col" NOWRAP valign="top"><span>{$MOD.LBL_START_DATE_TIME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
-				<td  style="display:none;" class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <img src="{sugar_getimagepath file='jscalendar.gif'}" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td  style="display:none;" class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input title ='{$MOD.LBL_START_DATE_TIME}' id='date_start' name='wiz_step3_date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" size='11' tabindex='1' maxlength='10' type="text" value="{$MRKT_DATE_START}"> <span class="suitepicon suitepicon-module-calendar" alt="{$CALENDAR_DATEFORMAT}"  id="jscal_trigger"></span>&nbsp;</td>
 				<td  style="display:none;" nowrap><input type="text" size='5' maxlength='5' id='time_start'  name='wiz_step3_time_start' tabindex="1" value="{$MRKT_TIME_START}"/>{$TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{$USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{$TIME_FORMAT}</span></td></tr></table></span>
 					<script type="text/javascript">
 						{literal}
@@ -895,7 +877,7 @@
 								<input type="hidden" id="userTimeFormat" value="{$TIME_FORMAT}">
 								<input autocomplete="off" type="text" id="{$fields.date_start.name}_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_{$fields.date_start.name}.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_{$fields.date_start.name}.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
 								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$fields.date_start.name}_trigger"{/capture}
-								{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
+								<button type="button" id="{$fields.date_start.name}_trigger" class="btn btn-danger" onclick="return false;" title="{$APP.LBL_ENTER_DATE}"><span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}"></span></button>
 							</td>
 							<td nowrap colspan="5" style="width:200px;">
 								{literal}
@@ -1172,38 +1154,51 @@
 				if(oe_stored_options[mailbox.value]) {
 					var focusOe = oe_stored_options[mailbox.value];
 					// from name
-                                        var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
+                                        
+                                        if(!fn.value) {
+                                            var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
                                                 focusOe.from_name ? focusOe.from_name : (
                                                     focusOe.name ? focusOe.name : ''
                                                 ));
-					if(fromName && fromName != "")
-						fn.value = fromName;
-					else
-						fn.value = '';
+                                            if (fromName && fromName != "") {
+                                                fn.value = fromName;
+                                            } else {
+                                                fn.value = '';
+                                            }
+                                        }
 
 					// from addr
-                                        var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
+                                        if(!fa.value) {
+                                            var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
                                                 focusOe.from_addr ? focusOe.from_addr : (
                                                     focusOe.mail_smtpuser ? focusOe.mail_smtpuser : ''
                                                 ));
-					if(fromAddr && fromAddr != "")
-						fa.value = fromAddr;
-					else
-						fa.value = '';
+                                            if (fromAddr && fromAddr != "") {
+                                                fa.value = fromAddr;
+                                            } else {
+                                                fa.value = '';
+                                            }
+                                        }
                                 }
 				if(ie_stored_options[mailbox.value]) {
 					var focusIe = ie_stored_options[mailbox.value];
 					// reply name
-					if(focusIe.from_name && focusIe.from_name != "")
-						rn.value = focusIe.from_name;
-					else
-						rn.value = '';
+                                        if (!rn.value) {
+                                            if (focusIe.from_name && focusIe.from_name != "") {
+                                                rn.value = focusIe.from_name;
+                                            } else {
+                                                rn.value = '';
+                                            }
+                                        }
 
-					// reply add
-					if(focusIe.from_addr && focusIe.from_addr != "")
-						ra.value = focusIe.from_addr;
-					else
-						ra.value = '';
+                                        // reply add
+                                        if (!ra.value) {
+                                            if(focusIe.from_addr && focusIe.from_addr != "") {
+                                                ra.value = focusIe.from_addr;
+                                            } else {
+                                                ra.value = '';
+                                            }
+                                        }
 				}
 			} else {
 				fn.value = '';
@@ -1353,13 +1348,13 @@
 					</div>
 				</div>
 				<ul>
-					<li class="li-tick"><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></li>
-					<li class="{if $error_on_target_list}li-cross{else}li-tick{/if}"><a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
+					<li class="li-tick"><span class="suitepicon suitepicon-action-confirm"></span><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></li>
+					<li class="li-tick">{if $error_on_target_list}<span class="suitepicon suitepicon-action-clear"></span> {else}<span class="suitepicon suitepicon-action-confirm"></span>{/if}<a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
 					{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-					<li class="{if $error_on_templates}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
-					<li class="{if $error_on_marketing}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
-					<li class="{if $error_on_scheduler2 || $error_on_mailbox2}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
-					<li class="{if $error_on_scheduler1 || $error_on_mailbox1}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
+					<li class="li-tick">{if $error_on_templates}<span class="suitepicon suitepicon-action-clear"></span> {else}<span class="suitepicon suitepicon-action-confirm"></span>{/if}<a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
+					<li class="li-tick">{if $error_on_marketing}<span class="suitepicon suitepicon-action-clear"></span> {else}<span class="suitepicon suitepicon-action-confirm"></span>{/if}<a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
+					<li class="li-tick">{if $error_on_scheduler2 || $error_on_mailbox2}<span class="suitepicon suitepicon-action-clear"></span> {else}<span class="suitepicon suitepicon-action-confirm"></span>{/if}<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
+					<li class="li-tick">{if $error_on_scheduler1 || $error_on_mailbox1}<span class="suitepicon suitepicon-action-clear"></span> {else}<span class="suitepicon suitepicon-action-confirm"></span>{/if}<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
 					{/if}
 				</ul>
 			</div>
@@ -1370,11 +1365,11 @@
 					<input type="hidden" name="wiz_home_next_step" value="1" />
 
 					<a class="btn {if $PL_DISABLED}btn-default{else}btn-primary{/if} btn-sm" style="border-radius: 0px;" {if $PL_DISABLED} {else}href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());"{/if}>
-						<img src="themes/default/images/cmpwzrd/wallclock.png" style="height: 18px; width: auto;"> {$MOD.LBL_SEND_EMAIL}
+						<span class="suitepicon suitepicon-action-schedule"></span> {$MOD.LBL_SEND_EMAIL}
 					</a>
 
 					<a class="btn {if $PL_DISABLED_TEST}btn-default{else}btn-primary{/if} btn-sm" style="border-radius: 0px;" {if $PL_DISABLED_TEST} {else}href="javascript:;"  onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());"{/if}>
-						<img src="themes/default/images/cmpwzrd/email167.png" style="height: 18px; width: auto;"> {$MOD.LBL_SEND_AS_TEST}
+					<span class="suitepicon suitepicon-module-emails"></span> {$MOD.LBL_SEND_AS_TEST}
 					</a>
 				</div>
 				<div class="button-group-seperator"></div>

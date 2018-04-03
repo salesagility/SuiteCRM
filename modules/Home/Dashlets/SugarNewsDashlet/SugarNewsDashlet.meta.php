@@ -44,5 +44,5 @@ global $app_strings;
 $dashletMeta['SugarNewsDashlet'] = array('module'		=> 'Home',
                                           'title'       => translate('LBL_DASHLET_SUGAR_NEWS', 'Home'),
                                           'description' => 'A customizeable portal page',
-                                          'icon'        => 'themes/default/images/icon_SugarNews_32.gif',
+                                          'icon'        => 'sugarnews',
                                           'category'    => 'Tools');

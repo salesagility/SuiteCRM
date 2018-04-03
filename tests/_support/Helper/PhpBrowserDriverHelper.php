@@ -10,6 +10,11 @@ use SuiteCRM\Enumerator\DatabaseDriver;
  */
 class PhpBrowserDriverHelper extends \Codeception\Module
 {
+
+    /**
+     * @return array|mixed|null
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function getConfig()
     {
         $webDriver = $this->moduleContainer->getModule('PhpBrowser');
@@ -19,207 +24,179 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'INSTANCE_URL' environment variable or 'url' in a yaml file.
      * @return string the test instance url.
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getInstanceURL()
     {
-        $envInstanceURL = getenv('INSTANCE_URL');
-        if($envInstanceURL === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['url'])) {
-                // return default
-                return 'http://localhost/';
-            } else {
-                return $config['url'];
-            }
-        } else {
-            return $envInstanceURL;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_URL',
+            'http://localhost/'
+        );
     }
 
     /**
      * Gets the 'DATABASE_DRIVER' environment variable or 'database_driver' in a yaml file.
      * @see DatabaseDriver
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getDatabaseDriver()
     {
-        $envDatabaseDriver = getenv('DATABASE_DRIVER');
-        if($envDatabaseDriver === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['database_driver'])) {
-                // return default
-                return DatabaseDriver::MYSQL;
-            } else {
-                return $config['database_driver'];
-            }
-        } else {
-            return $envDatabaseDriver;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'DATABASE_DRIVER',
+            DatabaseDriver::MYSQL
+        );
     }
 
     /**
      * Gets the 'DATABASE_NAME' environment variable or 'database_name' in a yaml file.
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getDatabaseName()
     {
-        $envDatabaseName = getenv('DATABASE_NAME');
-        if($envDatabaseName === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['database_name'])) {
-                // return default
-                return 'automated_tests';
-            } else {
-                return $config['database_name'];
-            }
-        } else {
-            return $envDatabaseName;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'DATABASE_NAME',
+            'automated_tests'
+        );
     }
 
 
     /**
      * Gets the 'DATABASE_HOST' environment variable or 'database_host' in a yaml file.
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getDatabaseHost()
     {
-        $envDatabaseHost = getenv('DATABASE_HOST');
-        if($envDatabaseHost === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['database_host'])) {
-                // return default
-                return 'localhost';
-            } else {
-                return $config['database_host'];
-            }
-        } else {
-            return $envDatabaseHost;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'DATABASE_HOST',
+            'database_host'
+        );
     }
 
     /**
      * Gets the 'DATABASE_USER' environment variable or 'database_user' in a yaml file.
      * @return string the test instance url.
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getDatabaseUser()
     {
-        $envDatabaseUser = getenv('DATABASE_USER');
-        if($envDatabaseUser === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['database_user'])) {
-                // return default
-                return 'automated_tests';
-            } else {
-                return $config['database_user'];
-            }
-        } else {
-            return $envDatabaseUser;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'DATABASE_USER',
+            'automated_tests'
+        );
     }
 
     /**
      * Gets the 'DATABASE_PASSWORD' environment variable or 'database_password' in a yaml file.
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getDatabasePassword()
     {
-        $envDatabasePassword = getenv('DATABASE_PASSWORD');
-        if($envDatabasePassword === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['database_password'])) {
-                // return default
-                return 'automated_tests';
-            } else {
-                return $config['database_password'];
-            }
-        } else {
-            return $envDatabasePassword;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'DATABASE_PASSWORD',
+            'automated_tests'
+        );
     }
 
 
     /**
      * Gets the 'INSTANCE_ADMIN_USER' environment variable or 'instance_admin_user' in a yaml file.
+     *
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getAdminUser()
     {
-        $env = getenv('INSTANCE_ADMIN_USER');
-        if($env === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_ADMIN_USER'])) {
-                // return default
-                return 'admin';
-            } else {
-                return $config['instance_admin_user'];
-            }
-        } else {
-            return $env;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_ADMIN_USER',
+            'admin'
+        );
     }
 
     /**
      * Gets the 'INSTANCE_ADMIN_PASSWORD' environment variable or 'instance_admin_password' in a yaml file.
      * @return string
+     * @throws \Codeception\Exception\ModuleException
      */
     public function getAdminPassword()
     {
-        $env = getenv('INSTANCE_ADMIN_PASSWORD');
-        if($env === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
-                // return default
-                return 'admin';
-            } else {
-                return $config['instance_admin_password'];
-            }
-        } else {
-            return $env;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_ADMIN_PASSWORD',
+            'admin'
+        );
     }
 
-    // Add other methods to get environmental variables here...
-    public function getClientId()
+    /**
+     * @return array|false|string
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function getPasswordGrantClientId()
     {
-        $env = getenv('INSTANCE_CLIENT_ID');
-        if($env === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_CLIENT_ID'])) {
-                // return default
-                return 'admin';
-            } else {
-                return $config['instance_admin_password'];
-            }
-        } else {
-            return $env;
-        }
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_CLIENT_ID',
+            'API-4c59-f678-cecc-6594-5a8d9c704473'
+        );
     }
 
     /**
      * @return string
      * @throws \Codeception\Exception\ModuleException
      */
-    public function getClientSecret()
+    public function getPasswordGrantClientSecret()
     {
-        $env = getenv('INSTANCE_CLIENT_SECRET');
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_CLIENT_SECRET',
+            'secret'
+        );
+    }
+
+    /**
+     * @return array|false|string
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function getClientCredentialsGrantClientId()
+    {
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_CREDENTIALS_CLIENT_ID',
+            'API-ea74-c352-badd-c2be-5a8d9c9d4351'
+        );
+    }
+
+    /**
+     * @return string
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function getClientCredentialsGrantClientSecret()
+    {
+        return $this->getEnvironmentVariableOrDefault(
+            'INSTANCE_CREDENTIALS_CLIENT_SECRET',
+            'secret'
+        );
+    }
+
+    /**
+     * @param string $variable
+     * @param string $default
+     * @return string
+     * @throws \Codeception\Exception\ModuleException
+     */
+    private function getEnvironmentVariableOrDefault($variable, $default)
+    {
+        $upperCase = strtoupper($variable);
+        $lowerCase = strtoupper($variable);
+
+        $env = getenv($upperCase);
         if($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_CLIENT_SECRET'])) {
+            if(empty($config[$upperCase])) {
                 // return default
-                return 'client_secret';
+                return $default;
             } else {
-                return $config['instance_client_secret'];
+                return $config[$lowerCase];
             }
         } else {
             return $env;

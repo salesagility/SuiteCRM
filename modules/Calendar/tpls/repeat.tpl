@@ -73,7 +73,7 @@
 			<div>					
 				<input type="radio" name="repeat_end_type" id="repeat_until_radio" value="date" onclick="toggle_repeat_end();" style="position: relative; top: -5px;"> {$MOD.LBL_REPEAT_END_BY}
 				<input type="input" size="11" maxlength="10" id="repeat_until_input" name="repeat_until" value="" disabled>
-				<img border="0" src="index.php?entryPoint=getImage&imageName=jscalendar.gif" alt="{$APP.LBL_ENTER_DATE}" id="repeat_until_trigger" align="absmiddle" style="display: none;">	
+				<span class="suitepicon suitepicon-module-calendar" id="repeat_until_trigger"></span>
 							
 				<script type="text/javascript">
 						Calendar.setup ({literal}{{/literal}

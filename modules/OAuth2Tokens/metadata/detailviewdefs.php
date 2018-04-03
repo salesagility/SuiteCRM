@@ -60,7 +60,10 @@ $viewdefs[$module_name]['DetailView'] = [
                     'name' => 'id',
                 ],
                 [
-                    'name' => 'client',
+                    'name' => 'oauth2client_name',
+                ],
+                [
+                    'name' => 'assigned_user_name',
                 ],
                 [
                     'name' => 'token_is_revoked',
@@ -75,9 +78,6 @@ $viewdefs[$module_name]['DetailView'] = [
                     'name' => 'refresh_token_expires',
                 ],
                 [
-                    'name' => 'grant_type',
-                ],
-                [
                     'name' => 'state',
                 ],
             ],
@@ -88,6 +88,7 @@ $viewdefs[$module_name]['DetailView'] = [
                         0 =>
                             [
                                 'name' => 'date_entered',
+                                'label' => 'LBL_DATE_ENTERED',
                                 'customCode' =>
                                     '{$fields.date_entered.value}',
                             ],

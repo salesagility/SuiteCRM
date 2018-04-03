@@ -74,6 +74,7 @@
 
                     <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
                         {$dashboardPages.$tabNum.pageTitle}
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul id="first-tab-menu-xs" class="dropdown-menu">
                         {counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}
@@ -98,7 +99,7 @@
 
         {if !$lock_homepage}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$APP.LBL_LINK_ACTIONS}<span class="suitepicon suitepicon-action-caret"></span></a>
                 {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
             </li>
         {/if}
@@ -166,8 +167,8 @@
                             <div class="panel-heading">
                                 <div>
                                     <div class="col-xs-10 col-sm-11 col-md-11">
-                                        <div>
-                                            <img src="themes/SuiteP/images/sub_panel/Tab.svg">
+                                        <div class="edit-dashboard-tabs">
+                                            <span class="suitepicon suitepicon-mimetype-tab"></span>
                                             <span class="panel-title">Untitled</span>
                                         </div>
                                     </div>

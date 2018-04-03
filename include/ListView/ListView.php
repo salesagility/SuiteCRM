@@ -332,7 +332,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             } else {
                 $this->xTemplate->assign('TAG_NAME','span');
             }
-            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"><span class='suitepicon suitepicon-action-caret'></span></label><input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
         }
 
         if($oddRow)
@@ -1355,7 +1355,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 //Bug#52931: Replace with actionMenu
                 //$select_link = "<a id='select_link' onclick='return select_dialog();' href=\"javascript:void(0)\">".$this->local_app_strings['LBL_LINK_SELECT']."&nbsp;".SugarThemeRegistry::current()->getImage('MoreDetail', 'border=0', 11, 7, '.png', $app_strings['LBL_MOREDETAIL'])."</a>";
                 $menuItems = array(
-                    "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
+                    "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"><span class='suitepicon suitepicon-action-caret'></span></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
                     "<a  name='thispage' id='button_select_this_page' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $pageTotal)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$pageTotal}&#x29;&#x200E;</a>",
                     "<a  name='selectall' id='button_select_all' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$total});' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$total_label}&#x29;&#x200E;</a>",
                     "<a name='deselect' id='button_deselect' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href='#'>{$app_strings['LBL_LISTVIEW_NONE']}</a>",
@@ -1613,7 +1613,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             }
             $this->xTemplate->assign('PREROW', $prerow);
 
-            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox' class='bootstrap-checkbox-hidden checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><span class='suitepicon suitepicon-action-caret'></span><input type='checkbox' class='bootstrap-checkbox-hidden checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
             }
             if(!isset($this->data_array)) {
                 $tag = $aItem->listviewACLHelper();
@@ -1884,45 +1884,53 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         }
     }
 
-    function getArrowStart() {
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        return "&nbsp;<!--not_in_theme!--><img border='0' src='".$imgFileParts['dirname']."/".$imgFileParts['filename']."";
+    /**
+     * @deprecated
+     * @return string
+     */
+    function getArrowStart()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowStart is now deprecate and will be removed in a future release');
+        return '';
     }
 
-    function getArrowUpDownStart($upDown) {
-        $ext = ( SugarThemeRegistry::current()->pngSupport ? "png" : "gif" );
-
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
+    /**
+     * @param $upDown
+     * @return string
+     */
+    function getArrowUpDownStart($upDown)
+    {
+        if ($upDown === '_down') {
+            return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
+        } elseif (($upDown === '_up')) {
+            return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
+        } else {
+            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
-        return "&nbsp;<img border='0' src='".SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.{$ext}")."' ";
     }
 
-	function getArrowEnd() {
-		$imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        list($width,$height) = ListView::getArrowImageSize();
-
-		return '.'.$imgFileParts['extension']."' width='$width' height='$height' align='absmiddle' alt=".translate('LBL_SORT').">";
+    /**
+     * @deprecated
+     * @return string
+     */
+	function getArrowEnd()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowEnd is now deprecate and will be removed in a future release');
+        return '';
     }
 
-    function getArrowUpDownEnd($upDown) {
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
-        }
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.gif"));
-
-        list($width,$height) = ListView::getArrowUpDownImageSize($upDown);
-
-        //get the right alt tag for the sort
-        $sortStr = translate('LBL_ALT_SORT');
-        if($upDown == '_down'){
-            $sortStr = translate('LBL_ALT_SORT_DESC');
-        }elseif($upDown == '_up'){
-            $sortStr = translate('LBL_ALT_SORT_ASC');
-        }
-        return " width='$width' height='$height' align='absmiddle' alt='$sortStr'>";
+    /**
+     * @deprecated
+     * @param $upDown
+     * @return string
+     */
+    function getArrowUpDownEnd($upDown)
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowUpDownEnd is now deprecate and will be removed in a future release');
+        return '';
     }
 
 	function getArrowImageSize() {

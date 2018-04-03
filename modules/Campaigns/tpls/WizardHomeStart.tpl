@@ -81,7 +81,7 @@
 								<ul class="icon-btn-lst">
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NEWSLETTER_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-newsletter.png"}" />
+											<span class="suitepicon suitepicon-action-view-news"></span>
 											<br />
 											<span>{$MOD.LBL_NEWSLETTER}</span>
 										</a>
@@ -89,7 +89,7 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();" title="{$MOD.LBL_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-email.png"}" />
+											<span class="suitepicon suitepicon-module-emails"></span>
 											<br />
 											<span>{$MOD.LBL_EMAIL}</span>
 										</a>
@@ -97,14 +97,14 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NON_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
+											<span class="suitepicon suitepicon-action-megaphone"></span>
 											<br />
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
 										</a>
 									</li>
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_survey').click(); $(this).closest('form').submit();" title="{$MOD.LBL_CAMPAIGN_SURVEY}">
-											<img src="{sugar_getimagepath file="cmpwzrd/Surveys.png"}" />
+											<span class="suitepicon suitepicon-module-surveys"></span>
 											<br />
 											<span>{$MOD.LBL_CAMPAIGN_SURVEY}</span>
 										</a>
