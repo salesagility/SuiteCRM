@@ -37,7 +37,7 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');
@@ -120,7 +120,7 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $savedSearch = new SavedSearch();
@@ -143,7 +143,7 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $savedSearch = new SavedSearch();

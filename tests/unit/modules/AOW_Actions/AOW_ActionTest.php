@@ -35,7 +35,7 @@ class AOW_ActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
 
@@ -70,7 +70,7 @@ class AOW_ActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value

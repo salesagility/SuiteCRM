@@ -62,7 +62,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         
         
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required child objects and parameters preset. it will return some html.
         $view = new ViewQuickcreate();

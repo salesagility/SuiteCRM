@@ -34,7 +34,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 

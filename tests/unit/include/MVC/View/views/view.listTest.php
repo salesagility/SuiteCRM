@@ -31,7 +31,7 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //test without setting parameters. it should return some html
         $view = new ViewList();

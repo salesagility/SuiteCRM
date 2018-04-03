@@ -35,7 +35,7 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         
         $this->markTestIncomplete('Breaks on php 7.1');
-		error_reporting(E_ERROR | E_PARSE);
+		//error_reporting(E_ERROR | E_PARSE);
 
 		$contact = new Contact();
 
@@ -163,7 +163,7 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
 		$contact = new Contact();
@@ -272,7 +272,7 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
 		$contact = new Contact();
@@ -318,7 +318,7 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
     	$contact = new Contact();

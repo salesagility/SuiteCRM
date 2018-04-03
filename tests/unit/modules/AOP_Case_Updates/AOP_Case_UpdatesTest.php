@@ -34,7 +34,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';

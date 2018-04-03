@@ -101,7 +101,7 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
 
@@ -128,7 +128,7 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $mergeRecord = new MergeRecord();
@@ -239,7 +239,7 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $mergeRecord = new MergeRecord();
 
@@ -323,6 +323,6 @@ class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual);
 
-        //error_reporting(E_ALL);
+        ////error_reporting(E_ALL);
     }
 }

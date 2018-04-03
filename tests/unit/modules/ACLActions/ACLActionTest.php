@@ -37,7 +37,7 @@ $_POST['foo'] = 'bar123ase';
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //take count of actions initially and then after method execution and test if action count increases
         $action_count = count(ACLAction::getDefaultActions());
@@ -65,7 +65,7 @@ $_POST['foo'] = 'bar123ase';
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value

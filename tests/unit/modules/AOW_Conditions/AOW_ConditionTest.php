@@ -34,7 +34,7 @@ class AOW_ConditionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value

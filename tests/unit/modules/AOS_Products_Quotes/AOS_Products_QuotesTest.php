@@ -33,7 +33,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosProductsQuotes = new AOS_Products_Quotes();
 

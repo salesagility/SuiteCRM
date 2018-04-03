@@ -191,7 +191,7 @@ class UserTest extends \Codeception\Test\Unit
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $user = new User();
@@ -313,7 +313,7 @@ class UserTest extends \Codeception\Test\Unit
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
@@ -1009,7 +1009,7 @@ class UserTest extends \Codeception\Test\Unit
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ALL);
+        //error_reporting(E_ALL);
 
         $user = new User();
 

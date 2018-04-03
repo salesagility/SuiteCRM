@@ -51,7 +51,7 @@ class ViewDetailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();

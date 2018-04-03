@@ -9,7 +9,7 @@ class ViewFactoryTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         
         
-        error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');

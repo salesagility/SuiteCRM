@@ -29,7 +29,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $documentRevision = new DocumentRevision();
 
@@ -92,7 +92,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $documentRevision = new DocumentRevision();
@@ -115,7 +115,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $documentRevision = new DocumentRevision();
@@ -153,7 +153,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $documentRevision = new DocumentRevision();
@@ -176,7 +176,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $documentRevision = new DocumentRevision();

@@ -26,7 +26,7 @@ class AOR_ChartTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aorChart = new AOR_Chart();
 

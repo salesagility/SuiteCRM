@@ -20,7 +20,7 @@ class activity_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $state->pushErrorLevel();
         
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns true
 

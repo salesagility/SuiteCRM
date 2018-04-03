@@ -8,7 +8,7 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throws an exception
@@ -30,7 +30,7 @@ class mvc_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushGlobals();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";

@@ -8,7 +8,7 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $jjwgAddressCache = new jjwg_Address_Cache();

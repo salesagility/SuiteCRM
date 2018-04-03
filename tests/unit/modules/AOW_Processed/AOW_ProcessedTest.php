@@ -33,7 +33,7 @@ class AOW_ProcessedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowProcessed = new AOW_Processed();
         $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value

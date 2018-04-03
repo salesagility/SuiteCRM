@@ -33,7 +33,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
@@ -69,7 +69,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $aowWorkFlow = new AOW_WorkFlow();
@@ -100,7 +100,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $aowWorkFlow = new AOW_WorkFlow();

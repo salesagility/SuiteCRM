@@ -33,7 +33,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateChecker_PHPUnit_Framework
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';

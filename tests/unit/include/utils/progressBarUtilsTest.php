@@ -8,7 +8,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -30,7 +30,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -54,7 +54,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -78,7 +78,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -102,7 +102,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -126,7 +126,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         //execute the method and test if it doesn't throw an exception.
