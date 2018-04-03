@@ -41,7 +41,7 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $view->listViewPrepare();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        $this->assertLessThanOrEqual(0, strlen($renderedContent));
 
         //test with some REQUEST parameters preset. it should return some html and set the REQUEST key we provided in current_query_by_page REQUEST Param.
         $view = new ViewList();
@@ -153,6 +153,8 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testprepareSearchForm()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
         
         if(isset($_REQUEST)) {
             $request = $_REQUEST;
@@ -180,6 +182,8 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } else {
             unset($_REQUEST);
         }
+        
+        $state->popTable('email_addresses');
     }
 
     public function testprocessSearchForm()
@@ -208,10 +212,16 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testpreDisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
         $view->preDisplay();
         $this->assertInstanceOf('ListViewSmarty', $view->lv);
+        
+        // clean up
+        $state->popTable('email_addresses');
     }
 
     public function testdisplay()

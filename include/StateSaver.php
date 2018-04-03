@@ -141,7 +141,9 @@ class StateSaver {
     public function pushTable($table, $namespace = 'db_table') {
         
         $query = "SELECT * FROM " . DBManagerFactory::getInstance()->quote($table);
-        $resource = DBManagerFactory::getInstance()->query($query);
+        if(!$resource = DBManagerFactory::getInstance()->query($query)) {
+            throw new StateSaverException('Could not resolve DB resource for table: ' . $table);
+        }
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;

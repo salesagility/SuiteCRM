@@ -205,7 +205,9 @@ class SavedSearch extends SugarBean
     {
 
 
-        global $db, $current_user, $currentModule, $current_lang, $app_strings;
+        global $current_user, $currentModule, $current_lang, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $saved_search_mod_strings = return_module_language($current_lang, 'SavedSearch');
 
         $query = 'SELECT id, name FROM saved_search

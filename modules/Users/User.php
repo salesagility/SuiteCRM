@@ -1158,7 +1158,11 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $mod_strings['LBL_CHECKMARK']);
+            if(!isset($mod_strings['LBL_CHECKMARK'])) {
+                LoggerManager::getLogger()->warn('A language label not found: LBL_CHECKMARK');
+            }
+            $checkmark = isset($mod_strings['LBL_CHECKMARK']) ? $mod_strings['LBL_CHECKMARK'] : null;
+            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $checkmark);
         } elseif (!$this->is_admin) {
             $user_fields['IS_ADMIN'] = '';
         }

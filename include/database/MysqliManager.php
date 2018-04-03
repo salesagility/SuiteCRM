@@ -135,7 +135,7 @@ class MysqliManager extends MysqlManager
         if(!empty($sql)) {
             if ($this->database instanceof mysqli) {
                 $result = $suppress ? @mysqli_query($this->database, $sql) : mysqli_query($this->database, $sql);
-                if($result === false) {
+                if($result === false && !$suppress) {
                     if(inDeveloperMode()) {
                         LoggerManager::getLogger()->debug('Mysqli_query failed, error was: ' . $this->lastDbError() . ', query was: ');
                     }
