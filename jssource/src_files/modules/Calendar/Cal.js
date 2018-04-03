@@ -619,7 +619,28 @@ CAL.dialog_create = function (date, end_date, user_id) {
 
 CAL.dialog_save = function () {
   CAL.disable_buttons();
-  ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
+  if (CAL.get("name").value == "") {
+      CAL.enable_buttons();
+      CAL.get("title-cal-edit").innerHTML = "Please enter a subject.";
+      return;
+  } else if (CAL.get("date_start_date").value == "") {
+      CAL.enable_buttons();
+      CAL.get("title-cal-edit").innerHTML = "Please enter a start date.";
+      return;
+  } else if (CAL.get("date_end_date").value == "") {
+      CAL.enable_buttons();
+      CAL.get("title-cal-edit").innerHTML = "Please enter an end date.";
+      return;
+  } else if ((CAL.get("radio_call").checked == true) &&  (CAL.get("date_start_date").value != "")){
+      CAL.enable_buttons();
+      CAL.get("title-cal-edit").innerHTML = "Please enter a start date.";
+      return;
+  } else if (CAL.get("date_start_date").value > CAL.get("date_end_date").value) {
+      CAL.enable_buttons();
+      CAL.get("title-cal-edit").innerHTML = "Please enter an end date which is after the start date.";
+      return;
+  }
+    ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
   if (CAL.get("send_invites").value == "1") {
     CAL.get("title-cal-edit").innerHTML = CAL.lbl_sending;
   } else {
