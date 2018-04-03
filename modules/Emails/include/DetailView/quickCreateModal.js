@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-function openQuickCreateModal(url) {
+function openQuickCreateModal(module, paramStr) {
   "use strict";
 
   var quickCreateBox = $('<div></div>').appendTo('#content');
@@ -50,7 +50,7 @@ function openQuickCreateModal(url) {
   $.ajax({
     type: "GET",
     cache: false,
-    url: url
+    url: 'index.php?module=' +module + '&action=EditView&in_popup=1&sugar_body_only=1' + paramStr
   }).done(function (data) {
     if (data.length === 0) {
       console.error("Unable to display QuickCreateView");
@@ -63,15 +63,98 @@ function openQuickCreateModal(url) {
       if ($(this).attr('id') === 'CANCEL') {
         $(this).attr('onclick', "$('#" + quickCreateBox.attr('id') + "').remove(); return false;");
       }
+      if ($(this).attr('id') === 'SAVE') {
+        $(this).attr('onclick', "submitQuickCreateForm('" + quickCreateBox.attr('id') + "'); return false;");
+      }
     }, quickCreateBox);
 
-    quickCreateBox.on('cancel', function () {
-      quickCreateBox.remove();
-    });
-    quickCreateBox.on('hide.bs.modal', function () {
-      quickCreateBox.remove();
-    });
+    $('<input>', {
+      id: 'quickCreateModule',
+      name: 'quickCreateModule',
+      value: module,
+      type: 'hidden'
+    }).appendTo('#EditView');
+    $('<input>', {
+      id: 'parentEmailRecordId',
+      name: 'parentEmailRecordId',
+      value: $('#parentEmailId').val(),
+      type: 'hidden'
+    }).appendTo('#EditView');
+    $('<input>', {
+      id: 'parentEmailRecordImported',
+      name: 'parentEmailRecordImported',
+      value: $('#parentEmailImported').val(),
+      type: 'hidden'
+    }).appendTo('#EditView');
+
   }).fail(function (data) {
     quickCreateBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+  });
+}
+
+function submitQuickCreateForm(parentId) {
+  var _form = document.getElementById('EditView');
+  _form.action.value = 'Save';
+  if (check_form('EditView')) {
+    _form.action.value = 'QuickCreate';
+    _form.module.value = 'Emails';
+
+    var sentDataBox = $('<div></div>').appendTo('#content');
+    sentDataBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg'});
+    sentDataBox.setBody(
+      '<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>'
+    );
+    sentDataBox.show();
+
+    $.ajax({
+      type: "POST",
+      cache: false,
+      url: 'index.php',
+      data: $(_form).serialize(),
+      async:true
+    })
+      .done(function(jsonData) {
+        var data = JSON.parse(jsonData);
+
+        if (data.id) {
+          sentDataBox.remove();
+          var returnDataBox = $('<div></div>').appendTo('#content');
+          returnDataBox.messageBox({"size": 'lg'});
+          returnDataBox.setBody(
+            SUGAR.language.translate('Emails', 'LBL_QUICK_CREATE_SUCCESS1')
+            + '<br />'
+            + SUGAR.language.translate('Emails', 'LBL_QUICK_CREATE_SUCCESS2')
+            + '<br />'
+            + SUGAR.language.translate('Emails', 'LBL_QUICK_CREATE_SUCCESS3')
+          );
+          returnDataBox.show();
+          returnDataBox.on('ok', function () {
+            window.location.href = 'index.php?module=' + data.module + '&action=DetailView&record=' + data.id;
+          });
+          returnDataBox.on('cancel', function () {
+            returnDataBox.remove();
+            $("#" + parentId).remove();
+          });
+        }
+        else {
+          showErrorMessage(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+        }
+      })
+      .fail(function() {
+        showErrorMessage(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
+      })
+  }
+}
+
+function showErrorMessage(msg) {
+  var errorBox = $('<div></div>').appendTo('#content');
+  errorBox.messageBox({"size": 'lg'});
+  errorBox.setBody(msg);
+  errorBox.show();
+  errorBox.on('ok', function () {
+    errorBox.remove();
+  });
+  errorBox.on('cancel', function () {
+    errorBox.remove();
   });
 }

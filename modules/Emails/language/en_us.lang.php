@@ -356,6 +356,10 @@ $mod_strings = array(
     'LBL_EMAIL_DRAFT_DELETED' => 'Draft has been deleted',
     'LBL_EMAIL_DRAFT_ERROR_DELETING' => 'An error has occurred while trying to delete draft.',
 
+    'LBL_QUICK_CREATE_SUCCESS1' => 'The record has been successfully created.',
+    'LBL_QUICK_CREATE_SUCCESS2' => 'Click OK to view the new record.',
+    'LBL_QUICK_CREATE_SUCCESS3' => 'Click Cancel to return to the Email.',
+
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
@@ -366,6 +370,7 @@ $mod_strings = array(
     'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
     'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---',
+
 
     'LBL_MARK_UNREAD' => 'Mark As Unread',
     'LBL_MARK_READ' => 'Mark As Read',
