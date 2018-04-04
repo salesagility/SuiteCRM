@@ -28,6 +28,11 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -60,11 +65,23 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
+        $state->popGlobals();
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
         $state->popErrorLevel();
     }
 
     public function testget_summary_text()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
+        
         $documentRevision = new DocumentRevision();
 
         //test without setting name
@@ -73,10 +90,24 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         //test with name set
         $documentRevision->filename = 'test';
         $this->assertEquals('test', $documentRevision->get_summary_text());
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
     }
 
     public function testis_authenticated()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
+        
         $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
@@ -85,12 +116,23 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         //test with attributes preset
         $documentRevision->authenticated = true;
         $this->assertEquals(true, $documentRevision->is_authenticated());
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
     }
 
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -107,6 +149,11 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        
         $state->popErrorLevel();
     }
 
@@ -114,6 +161,9 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -130,11 +180,19 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
         $state->popErrorLevel();
     }
 
     public function testgetDocumentRevisionNameForDisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
         $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
@@ -146,12 +204,21 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $documentRevision->revision = 1;
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
         $this->assertEquals('-Revision_1.ext', $result);
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testfill_document_name_revision()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -168,6 +235,9 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
         $state->popErrorLevel();
     }
 
@@ -175,11 +245,16 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
         
         //error_reporting(E_ERROR | E_PARSE);
         
         
         $documentRevision = new DocumentRevision();
+        
+        $xTemplateSection = null;
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -191,35 +266,83 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
         $state->popErrorLevel();
     }
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
+        
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_list_view_data();
         $this->assertEquals(array('DELETED' => 0), $result);
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_document_revision_name()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_document_revisions()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
         $documentRevision = new DocumentRevision();
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        
         $documentRevision = new DocumentRevision();
         $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
         $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 }
