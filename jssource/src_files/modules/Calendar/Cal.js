@@ -622,28 +622,28 @@ CAL.dialog_save = function () {
 
   //Form validation
   if (CAL.get("name").value == "") {
+      alert(CAL.lbl_missing_subect);
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_subect;
       return;
   } else if (CAL.get("date_start_date").value == "") {
+      alert(CAL.lbl_missing_start_date);
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_start_date;
       return;
   } else if (CAL.get("radio_meeting").checked == true) {
     if (CAL.get("date_end_date").value == "") {
+        alert(CAL.lbl_missing_end_date);
         CAL.enable_buttons();
-        CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_end_date;
         return;
     } else if (CAL.get("date_start_date").value > CAL.get("date_end_date").value) {
+        alert(CAL.lbl_invalid_dates);
         CAL.enable_buttons();
-        CAL.get("title-cal-edit").innerHTML = CAL.lbl_invalid_dates;
         return;
     }
   } else if (CAL.get("radio_call").checked == true &&
             (CAL.get("duration_hours").value == 0 || CAL.get("duration_hours").value == "") &&
              CAL.get("duration_minutes").value == 00) {
+      alert(CAL.lbl_missing_duration);
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_duration;
       return;
   }
   //End form validation
