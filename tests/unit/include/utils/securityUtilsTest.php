@@ -15,52 +15,60 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
     public function testquery_module_access_list()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('aod_indexevent');
+        
         //execute the method and test it it returns expected contents
 
         $user = new User('1');
         $expected = array(
-                'Home' => 'Home',
-                'Accounts' => 'Accounts',
-                'Contacts' => 'Contacts',
-                'Opportunities' => 'Opportunities',
-                'Leads' => 'Leads',
-                'AOS_Quotes' => 'AOS_Quotes',
-                'Calendar' => 'Calendar',
-                'Documents' => 'Documents',
-                'Emails' => 'Emails',
-                'Spots' => 'Spots',
-                'Campaigns' => 'Campaigns',
-                'Calls' => 'Calls',
-                'Meetings' => 'Meetings',
-                'Tasks' => 'Tasks',
-                'Notes' => 'Notes',
-                'AOS_Invoices' => 'AOS_Invoices',
-                'AOS_Contracts' => 'AOS_Contracts',
-                'Cases' => 'Cases',
-                'Prospects' => 'Prospects',
-                'ProspectLists' => 'ProspectLists',
-                'Project' => 'Project',
-                'AM_ProjectTemplates' => 'AM_ProjectTemplates',
-                'FP_events' => 'FP_events',
-                'FP_Event_Locations' => 'FP_Event_Locations',
-                'AOS_Products' => 'AOS_Products',
-                'AOS_Product_Categories' => 'AOS_Product_Categories',
-                'AOS_PDF_Templates' => 'AOS_PDF_Templates',
-                'jjwg_Maps' => 'jjwg_Maps',
-                'jjwg_Markers' => 'jjwg_Markers',
-                'jjwg_Areas' => 'jjwg_Areas',
-                'jjwg_Address_Cache' => 'jjwg_Address_Cache',
-                'AOR_Reports' => 'AOR_Reports',
-                'AOW_WorkFlow' => 'AOW_WorkFlow',
-                'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
-                'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
-                'EmailTemplates' => 'EmailTemplates',
-                'Surveys' => 'Surveys'
+            'Home' => 'Home',
+            'Accounts' => 'Accounts',
+            'Contacts' => 'Contacts',
+            'Opportunities' => 'Opportunities',
+            'Leads' => 'Leads',
+            'AOS_Quotes' => 'AOS_Quotes',
+            'Documents' => 'Documents',
+            'Emails' => 'Emails',
+            'Spots' => 'Spots',
+            'Campaigns' => 'Campaigns',
+            'Calls' => 'Calls',
+            'Meetings' => 'Meetings',
+            'Tasks' => 'Tasks',
+            'Notes' => 'Notes',
+            'AOS_Invoices' => 'AOS_Invoices',
+            'AOS_Contracts' => 'AOS_Contracts',
+            'Cases' => 'Cases',
+            'Prospects' => 'Prospects',
+            'ProspectLists' => 'ProspectLists',
+            'Project' => 'Project',
+            'AM_ProjectTemplates' => 'AM_ProjectTemplates',
+            'FP_events' => 'FP_events',
+            'FP_Event_Locations' => 'FP_Event_Locations',
+            'AOS_Products' => 'AOS_Products',
+            'AOS_Product_Categories' => 'AOS_Product_Categories',
+            'AOS_PDF_Templates' => 'AOS_PDF_Templates',
+            'jjwg_Maps' => 'jjwg_Maps',
+            'jjwg_Markers' => 'jjwg_Markers',
+            'jjwg_Areas' => 'jjwg_Areas',
+            'jjwg_Address_Cache' => 'jjwg_Address_Cache',
+            'AOR_Reports' => 'AOR_Reports',
+            'AOW_WorkFlow' => 'AOW_WorkFlow',
+            'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
+            'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
+            'EmailTemplates' => 'EmailTemplates',
+            'Surveys' => 'Surveys',
 
         );
 
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testquery_user_has_roles()
@@ -98,11 +106,12 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         //execute the method and test it it returns expected contents
 
         $expected = array(
+            'Calendar' => 'Calendar',
             'Bugs' => 'Bugs',
             'ResourceCalendar' => 'ResourceCalendar',
             'AOBH_BusinessHours' => 'AOBH_BusinessHours',
             'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
-            'SecurityGroups' => 'SecurityGroups'
+            'SecurityGroups' => 'SecurityGroups',
         );
 
         $allowed = query_module_access_list(new User('1'));
@@ -113,6 +122,9 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testquery_client_ip()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
 
@@ -125,6 +137,10 @@ class security_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_val_array()
