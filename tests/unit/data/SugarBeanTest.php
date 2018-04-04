@@ -2241,7 +2241,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             self::assertTrue(true);
         }
         self::assertNotTrue(isValidId($results));
-        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(true, $bean->in_save);
         self::assertEquals(null, $bean->date_modified);
