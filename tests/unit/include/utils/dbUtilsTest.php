@@ -32,9 +32,16 @@ class db_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testdb_concat()
@@ -49,7 +56,7 @@ class db_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $table = 'Table1';
         $fields = array('Col1', 'Col2', 'Col3');
-        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),'',IFNULL(Table1.Col2,''),'',IFNULL(Table1.Col3,''))))";
+        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
         
