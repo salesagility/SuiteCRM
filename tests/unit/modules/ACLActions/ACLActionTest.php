@@ -46,6 +46,7 @@ $_POST['foo'] = 'bar123ase';
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         $state->pushTable('acl_actions');
+        $state->pushTable('aod_index');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -57,6 +58,7 @@ $_POST['foo'] = 'bar123ase';
         
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('acl_actions');
         $state->popErrorLevel();
     }
