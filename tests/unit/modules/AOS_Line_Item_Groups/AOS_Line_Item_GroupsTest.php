@@ -33,6 +33,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aos_line_item_groups');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -61,11 +62,16 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         
         // clean up
         
+        $state->popTable('aos_line_item_groups');
         $state->popErrorLevel();
     }
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_line_item_groups');
+        
+        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $aosLineItemGroup->name = 'test';
         $aosLineItemGroup->total_amount = 100;
@@ -81,5 +87,9 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         $aosLineItemGroup->mark_deleted($aosLineItemGroup->id);
         $result = $aosLineItemGroup->retrieve($aosLineItemGroup->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_line_item_groups');
     }
 }
