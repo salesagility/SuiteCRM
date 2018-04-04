@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
 {
-        function displayList($layout_def)
+        function displayList(&$layout_def)
         {
                 global $timedate;
                 // i guess qualifier and column_function are the same..
