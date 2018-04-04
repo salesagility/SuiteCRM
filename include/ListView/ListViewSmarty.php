@@ -161,7 +161,7 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('MOD',$mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
-        $this->ss->assign('colCount', count($this->displayColumns) + 10);
+        $this->ss->assign('colCount', count((array)$this->displayColumns) + 10);
         $this->ss->assign('htmlpublic', strtoupper($htmlpublic));
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
