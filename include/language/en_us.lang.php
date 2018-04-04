@@ -2112,6 +2112,14 @@ $app_strings = array(
     'LBL_CONTACT_HAS_NO_PRIMARY_EMAIL' => 'Confirm Opt In Email sending is not possible because the Contact has not Primary Email Address',
     'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sending failed',
     'LBL_CONFIRM_EMAIL_SENT' => 'Confirm Opt In Email sent successfully',
+
+    //Required field error messages
+    'LBL_MISSING_SUBJECT' => 'Please enter a subject',
+    'LBL_MISSING_START_DATE' => 'Please enter a start date',
+    'LBL_MISSING_END_DATE' => 'Please enter an end date',
+    'LBL_INVALID_DATES' => 'Please enter a start date which is before the end date',
+    'LBL_MISSING_DURATION' => 'Please enter a duration',
+    //end required field error messages
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';

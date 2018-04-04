@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -619,28 +619,36 @@ CAL.dialog_create = function (date, end_date, user_id) {
 
 CAL.dialog_save = function () {
   CAL.disable_buttons();
+
+  //Form validation
   if (CAL.get("name").value == "") {
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = "Please enter a subject.";
+      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_subect;
       return;
   } else if (CAL.get("date_start_date").value == "") {
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = "Please enter a start date.";
+      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_start_date;
       return;
-  } else if (CAL.get("date_end_date").value == "") {
+  } else if (CAL.get("radio_meeting").checked == true) {
+    if (CAL.get("date_end_date").value == "") {
+        CAL.enable_buttons();
+        CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_end_date;
+        return;
+    } else if (CAL.get("date_start_date").value > CAL.get("date_end_date").value) {
+        CAL.enable_buttons();
+        CAL.get("title-cal-edit").innerHTML = CAL.lbl_invalid_dates;
+        return;
+    }
+  } else if (CAL.get("radio_call").checked == true &&
+            (CAL.get("duration_hours").value == 0 || CAL.get("duration_hours").value == "") &&
+             CAL.get("duration_minutes").value == 00) {
       CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = "Please enter an end date.";
-      return;
-  } else if ((CAL.get("radio_call").checked == true) &&  (CAL.get("date_start_date").value != "")){
-      CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = "Please enter a start date.";
-      return;
-  } else if (CAL.get("date_start_date").value > CAL.get("date_end_date").value) {
-      CAL.enable_buttons();
-      CAL.get("title-cal-edit").innerHTML = "Please enter an end date which is after the start date.";
+      CAL.get("title-cal-edit").innerHTML = CAL.lbl_missing_duration;
       return;
   }
-    ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
+  //End form validation
+
+  ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
   if (CAL.get("send_invites").value == "1") {
     CAL.get("title-cal-edit").innerHTML = CAL.lbl_sending;
   } else {
