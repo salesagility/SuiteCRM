@@ -34,6 +34,9 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_contracts');
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -53,11 +56,20 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popGlobals();
+        $state->popTable('aos_contracts');
+        $state->popTable('aod_indexevent');
         $state->popErrorLevel();
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('calls');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
         $call = new call();
 
         $aosContracts = new AOS_Contracts();
@@ -81,7 +93,14 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //delete the call and verify that this record cannot be retrieved anymore.		
         $aosContracts->deleteCall();
-        $call->retrieve($aosContracts->call_id);
+        $result = $call->retrieve($aosContracts->call_id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('calls');
+        $state->popTable('aod_indexevent');
     }
 }

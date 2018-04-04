@@ -45,11 +45,17 @@ function perform_aos_save($focus){
                 }
 
                 if(!isset($focus->$fieldName)) {
-                    LoggerManager::getLogger()->warn('Perform AOS Save error: Undefined field name of focus. Focus and field name was: ' . get_class($focus) . ', ' . $fieldName);
+                    LoggerManager::getLogger()->warn('Perform AOS Save error: Undefined field name of focus. Focus and field name were: ' . get_class($focus) . ', ' . $fieldName);
                 }
                 $amountToConvert = isset($focus->$fieldName) ? $focus->$fieldName : null;
                 if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {
-                    $amountToConvert = unformat_number($focus->$fieldName);
+                    if (!isset($focus->$fieldName)) {
+                        LoggerManager::getLogger()->warn('Undefined field for AOS utils / perform aos save. Focus and field name were: [' . get_class($focus) . '], [' . $fieldName . ']');
+                        $focusFieldValue = null;
+                    } else {
+                        $focusFieldValue = $focus->$fieldName;
+                    }
+                    $amountToConvert = unformat_number($focusFieldValue);
                 }
 
                 $focus->$fieldNameDollar = $currency->convertToDollar($amountToConvert);

@@ -144,7 +144,14 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
 		if($this->renewal_reminder_date != 0){
             $call->id = $this->call_id;
-            $call->parent_id = $this->contract_account_id;
+            
+            if (!isset($this->contract_account_id)) {
+                LoggerManager::getLogger()->warn('Contract Account ID not defined for AOS Contracts / create link.');
+                $contractAccountId = null;
+            } else {
+                $contractAccountId = $this->contract_account_id;
+            }
+            $call->parent_id = $contractAccountId;
             $call->parent_type = 'Accounts';
             $call->reminder_time = 60;
             $call->save();
@@ -154,8 +161,16 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	function deleteCall(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
+            
+            
+            if (!isset($this->call_id)) {
+                LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');
+                $callId = null;
+            } else {
+                $callId = $this->call_id;
+            }
 
-		if($this->call_id != null){
+		if($callId != null){
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
 		}
