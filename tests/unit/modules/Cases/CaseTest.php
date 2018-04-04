@@ -49,10 +49,17 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
         $aCase = new aCase();
-        $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
+        $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
@@ -144,7 +151,8 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $aCase = new aCase();
         $result = $aCase->get_contacts();
-        $this->assertTrue(is_array($result));
+        $this->assertFalse(is_array($result));
+        $this->assertEquals(false, $result);
     }
 
     public function testget_list_view_data()
@@ -245,6 +253,13 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aop_case_events');
+        $state->pushTable('cases');
+        $state->pushTable('sugarfeed');
+        $state->pushGlobals();
+        
         $aCase = new aCase();
         $aCase->name = 'test';
         $aCase->priority = 'P1';
@@ -259,6 +274,14 @@ class aCaseTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('sugarfeed');
+        $state->popTable('cases');
+        $state->popTable('aop_case_events');
+        $state->popTable('aod_indexevent');
     }
 
     public function testgetEmailSubjectMacro()
