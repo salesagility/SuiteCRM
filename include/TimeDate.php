@@ -710,8 +710,12 @@ class TimeDate
     public function fromDb($date)
     {
         
-        if($date instanceof DateTime) {
+        if ($date instanceof DateTime) {
             $date = $date->format(self::DB_DATETIME_FORMAT);
+        }
+        
+        if (null === $date) {
+            $date = '';
         }
             
         if (!is_string($date)) {

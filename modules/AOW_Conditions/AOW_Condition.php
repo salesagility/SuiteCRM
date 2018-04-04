@@ -99,7 +99,14 @@ class AOW_Condition extends Basic
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $line_count = count($post_data[$key . 'field']);
+        if (!isset($post_data[$key . 'field'])) {
+            LoggerManager::getLogger()->warn('Post data not found at key field. Key was: ' . $key);
+            $postDataAtKeyField = null;
+        } else {
+            $postDataAtKeyField = $post_data[$key . 'field'];
+        }
+        
+        $line_count = count((array)$postDataAtKeyField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 

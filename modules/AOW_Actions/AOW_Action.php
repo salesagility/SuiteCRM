@@ -88,7 +88,15 @@ class AOW_Action extends Basic
     function save_lines($post_data, $parent, $key = '')
     {
 
-        $line_count = count($post_data[$key . 'action']);
+
+        if (!isset($post_data[$key . 'action'])) {
+            LoggerManager::getLogger()->warn('Post data not found at key action. Key was: ' . $key);
+            $postDataAtKeyAction = null;
+        } else {
+            $postDataAtKeyAction = $post_data[$key . 'action'];
+        }
+        
+        $line_count = count((array)$postDataAtKeyAction);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
