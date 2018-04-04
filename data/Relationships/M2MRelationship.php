@@ -432,7 +432,14 @@ class M2MRelationship extends SugarRelationship
 
         $tmpFocus = $link->getFocus();
         if(!isset($tmpFocus->id)) {
-            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . get_class($tmpFocus));
+            if (is_object($tmpFocus)) {
+                $focusInfo = get_class($tmpFocus);
+            } elseif(is_bool($tmpFocus)) {
+                $focusInfo = ' (bool)' . ($tmpFocus ? 'TRUE' : 'FALSE');
+            } else {
+                $focusInfo = ' (' . gettype($tmpFocus) . ')' . $tmpFocus;
+            }
+            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . $focusInfo);
             $tmpId = null;
         } else {
             $tmpId = $tmpFocus->id;
