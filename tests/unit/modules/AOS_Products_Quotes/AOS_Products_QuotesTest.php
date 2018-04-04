@@ -32,6 +32,10 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aos_products_quotes');
+        $state->pushGlobals();
+        
+        DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -56,6 +60,8 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         
         // clean up
         
+        $state->popGlobals();
+        $state->popTable('aos_products_quotes');
         $state->popErrorLevel();
     }
 
@@ -81,11 +87,15 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $actual = count($product_quote_lines);
 
-        $this->assertLessThan($expected, $actual);
+        $this->assertLessThanOrEqual($expected, $actual);
     }
 
     public function testsave()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_products_quotes');
+        
+        
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
@@ -102,5 +112,9 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
         $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_products_quotes');
     }
 }

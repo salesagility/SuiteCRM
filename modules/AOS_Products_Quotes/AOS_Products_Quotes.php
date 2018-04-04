@@ -99,7 +99,15 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                     $product_quote->number = ++$j;
                     $product_quote->assigned_user_id = $parent->assigned_user_id;
                     $product_quote->parent_id = $parent->id;
-                    $product_quote->currency_id = $parent->currency_id;
+                    
+                    if (!isset($parent->currency_id)) {
+                        LoggerManager::getLogger()->warn('Paren Currency ID is not defined for AOD Product Quotes / save lines.');
+                        $parentCurrencyId = null;
+                    } else {
+                        $parentCurrencyId = $parent->currency_id;
+                    }
+                    
+                    $product_quote->currency_id = $parentCurrencyId;
                     $product_quote->parent_type = $parent->object_name;
                     $product_quote->save();
                     $_POST[$key . 'id'][$i] = $product_quote->id;
