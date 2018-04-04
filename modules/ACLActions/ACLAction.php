@@ -375,15 +375,17 @@ class ACLAction  extends SugarBean{
             }
             $_SESSION['ACL'][$user_id] = $selected_actions;
         }else{
-            if(empty($action) && !empty($category)){
-                if(!empty($type)){
-                    $_SESSION['ACL'][$user_id][$category][$type] = $selected_actions[$category][$type];}
-                $_SESSION['ACL'][$user_id][$category] = $selected_actions[$category];
-            }else{
-                if(!empty($action) && !empty($category) && !empty($type)){
-                $_SESSION['ACL'][$user_id][$category][$type][$action] = $selected_actions[$category][$action];
-
-            }
+            if (empty($action) && !empty($category)) {
+                if (!empty($type)) {
+                    $selectedActionCategoryType = isset($selected_actions[$category][$type]) ? $selected_actions[$category][$type] : null;
+                    $_SESSION['ACL'][$user_id][$category][$type] = $selectedActionCategoryType;
+                }
+                $selectedActionCategory = isset($selected_actions[$category]) ? $selected_actions[$category] : null;
+                $_SESSION['ACL'][$user_id][$category] = $selectedActionCategory;
+            } else {
+                if (!empty($action) && !empty($category) && !empty($type)) {
+                    $_SESSION['ACL'][$user_id][$category][$type][$action] = $selected_actions[$category][$action];
+                }
             }
         }
 
@@ -585,8 +587,9 @@ class ACLAction  extends SugarBean{
                         }
 
                     }
-                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($action['aclaccess']);
-                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($action['aclaccess']);
+                    $aclaccess = isset($action['aclaccess']) ? $action['aclaccess'] : null;
+                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($aclaccess);
+                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($aclaccess);
 
                     if($cat_name=='Users'&& $act_name=='admin'){
                         $categories[$cat_name][$type_name][$act_name]['accessOptions'][ACL_ALLOW_DEFAULT]=ACLAction::AccessName(ACL_ALLOW_DEFAULT);;
