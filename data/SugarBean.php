@@ -552,7 +552,7 @@ abstract class SugarBean
             if ((isset($value['default']) || !empty($value['display_default'])) && ($force || empty($this->$field))) {
 
                 if (!isset($value['type'])) {
-                    $GLOBALS['log']->fatal('Undefined index: type');
+                    $GLOBALS['log']->warn('Undefined index: type');
                     $type = null;
                 } else {
                     $type = $value['type'];
