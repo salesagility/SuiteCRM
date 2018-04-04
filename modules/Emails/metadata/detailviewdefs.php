@@ -57,24 +57,24 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=Forward&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_FORWARD}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Bugs\',\'&name={$bean->name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_BUGS}">'
-                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Bugs\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_BUGS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Cases\',\'&name={$bean->name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_CASES}">'
-                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Cases\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_CASES}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Contacts\',\'&last_name={$bean->name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_CONTACTS}">'
-                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Contacts\',\'&last_name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_CONTACTS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Leads\',\'&last_name={$bean->name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_LEADS}">'
-                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Leads\',\'&last_name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_LEADS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
                 ),
                 array(
-                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Opportunities\',\'&name={$bean->name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_OPPORTUNITIES}">'
-                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}"><input type="hidden" id="parentEmailImported" name="parentEmailImported" value="1">'
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Opportunities\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_QUICK_CREATE} {$APP.LBL_EMAIL_QC_OPPORTUNITIES}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
                 ),
             )
         ),

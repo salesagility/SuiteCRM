@@ -190,9 +190,7 @@ class EmailsController extends SugarController
         if (empty($_REQUEST['parentEmailRecordId'])) {
             return;
         }
-
         $emailBean = BeanFactory::getBean('Emails', $_REQUEST['parentEmailRecordId']);
-
         if (!$emailBean) {
             return;
         }

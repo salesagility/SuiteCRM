@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-function openQuickCreateModal(module, paramStr) {
+function openQuickCreateModal(module, paramStr, fromAddr) {
   "use strict";
 
   var quickCreateBox = $('<div></div>').appendTo('#content');
@@ -68,6 +68,8 @@ function openQuickCreateModal(module, paramStr) {
       }
     }, quickCreateBox);
 
+    quickCreateBox.find('input[type="email"]').val(fromAddr);
+
     $('<input>', {
       id: 'quickCreateModule',
       name: 'quickCreateModule',
@@ -78,12 +80,6 @@ function openQuickCreateModal(module, paramStr) {
       id: 'parentEmailRecordId',
       name: 'parentEmailRecordId',
       value: $('#parentEmailId').val(),
-      type: 'hidden'
-    }).appendTo('#EditView');
-    $('<input>', {
-      id: 'parentEmailRecordImported',
-      name: 'parentEmailRecordImported',
-      value: $('#parentEmailImported').val(),
       type: 'hidden'
     }).appendTo('#EditView');
 
