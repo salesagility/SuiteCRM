@@ -26,7 +26,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
              $view = new ViewSugarpdf();
              $this->assertEmpty("", $view);
          } catch (Exception $e) {
-             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
+             $this->assertStringStartsWith('Cannot modify header information? : ' . $e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
          }
 
 
