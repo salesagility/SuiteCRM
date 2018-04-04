@@ -431,7 +431,12 @@ class M2MRelationship extends SugarRelationship
         $rel_table = $this->getRelationshipTable();
 
         $tmpFocus = $link->getFocus();
-        $tmpId = $tmpFocus->id;
+        if(!isset($tmpFocus->id)) {
+            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . $tmpFocus);
+            $tmpId = null;
+        } else {
+            $tmpId = $tmpFocus->id;
+        }
         
         $where = "$rel_table.$knownKey = '{$tmpId}'" . $this->getRoleWhere();
         $order_by = '';
