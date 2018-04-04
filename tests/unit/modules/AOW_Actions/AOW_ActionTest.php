@@ -34,6 +34,7 @@ class AOW_ActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aow_actions');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -62,6 +63,7 @@ class AOW_ActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('aow_actions');
         $state->popErrorLevel();
     }
 
