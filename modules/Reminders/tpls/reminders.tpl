@@ -99,8 +99,14 @@
 		<div class="clear"></div>
 
 		<div class="btns">
-			<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);">
-			<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);">
+			<button class="add-btn btn btn-info" type="button" onclick="Reminders.onAddAllClick(this); return false;">
+				<span class="suitepicon suitepicon-action-plus"></span>
+                {$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}
+			</button>
+			<button class="remove-reminder-btn btn btn-danger" type="button" onclick="Reminders.onRemoveClick(this); return false;">
+				<span class="suitepicon suitepicon-action-minus"></span>
+                {$MOD.LBL_REMINDERS_REMOVE_REMINDER}
+			</button>
 		</div>
 
 		<div class="clear"></div>
@@ -194,8 +200,8 @@
                     <ul class="invitees_list disabled">
                     {foreach from=$reminder.invitees item=invitee}
                         <li class="invitees_item">
-                            <button class="invitee_btn" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
-                                <img src="index.php?entryPoint=getImage&amp;themeName=SuiteR+&amp;imageName=Users.gif&quot;">
+                            <button class="invitee_btn btn btn-danger" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
+								<span class="suitepicon suitepicon-module-users"></span>
                                 <span class="related-value"> {$invitee.value}</span>
                             </button>
                         </li>
@@ -212,7 +218,10 @@
 	{/if}
     </ul>
 	{if !$REMINDERS_DISABLED}
-	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
+		<button id="reminder_add_btn" class="add-btn btn btn-info" type="button" onclick="Reminders.onAddClick(this);return false">
+			<span class="suitepicon suitepicon-action-plus"></span>
+            {$MOD.LBL_REMINDERS_ADD_REMINDER}
+		</button>
 	{/if}
 </div>
 

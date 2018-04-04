@@ -63,6 +63,15 @@ class ImportView extends SugarView
         
     }
 
+    public function preDisplay() {
+        if (!is_file('cache/jsLanguage/Import/' . $GLOBALS['current_language'] . '.js')) {
+            require_once ('include/language/jsLanguage.php');
+            jsLanguage::createModuleStringsCache('Import', $GLOBALS['current_language']);
+        }
+        echo '<script src="cache/jsLanguage/Import/'. $GLOBALS['current_language'] . '.js"></script>';
+        parent::preDisplay();
+    }
+
     /**
      * @see SugarView::getMenu()
      */

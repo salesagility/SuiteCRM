@@ -138,7 +138,6 @@ switch($time_format)
 ?>
 <div id="dialog1" class="yui-pe-content">
     <div id="date_start_time_section"> </div>
-    <div class="hd"><?php echo $app_strings['LBL_RESCHEDULE_TITLE']; ?></div>
     <div class="bd">
         <form method="POST" action="index.php?module=Calls&action=Reschedule">
             <input id="use_real_names" type="hidden" name="use_real_names" value="<?php echo $user_real_names; ?>">
@@ -148,7 +147,7 @@ switch($time_format)
             <input id="call_id" type="hidden" name="call_id" >
             <label for="date"><?php echo $app_strings['LBL_RESCHEDULE_DATE']; ?></label><br />
             <input id="date" type="textbox" name="date" value="<?php echo $date;?>" />
-            <img id="date_start_trigger"  border="0" style="position:relative; top:2px" alt="Enter Date" src="themes/Suite7/images/jscalendar.gif"/>
+            <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span>
 <?php
 //$mins is the minutes option
 $mins = '<select id="date_start_minutes" name="date_start_minutes" class="datetimecombo_time" size="1">';
@@ -261,28 +260,4 @@ $hours2 .= '</select>';
     </div>
 </div>
 
-<script id="script" type="text/javascript">
-
-    YAHOO.util.Event.onDOMReady(function()
-    {
-        var now = new Date();
-        Calendar.setup ({
-
-            inputField : "date",
-            ifFormat : cal_date_format,
-            daFormat : "%m/%d/%Y %I:%M%P",
-            button : "date_start_trigger",
-            singleClick : true,
-            step : 1,
-            weekNumbers: false,
-            startWeekday: 0
-
-
-        });
-
-    });
-
-
-</script>
-
-<script id="script2" type="text/javascript" src="jsscource/src_files/include/javascript/sugar_3.js " > </script>
+<script id="script" type="text/javascript" src="jsscource/src_files/include/javascript/sugar_3.js " > </script>

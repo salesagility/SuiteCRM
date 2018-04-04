@@ -64,5 +64,3 @@ $ListView->initNewXTemplate( 'modules/Opportunities/ListViewTop.html',$current_m
 $ListView->setHeaderTitle($current_module_strings['LBL_TOP_OPPORTUNITIES']. $header_text );
 $ListView->setQuery($where, 5, "amount  DESC", "OPPORTUNITY", false);
 $ListView->processListView($seedOpportunity, "main", "OPPORTUNITY");
-
-?>

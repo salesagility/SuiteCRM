@@ -1,0 +1,210 @@
+
+/**** LOGIN **/
+
+.login {
+  padding: 10px 6px 12px 10px ;
+}
+
+.login .login_more {
+  text-align: right;
+}
+
+
+div.p_login {
+  background-color: $main-bg;
+  height: 100%;
+}
+
+div.p_login .p_login_top {
+  background-color: $login-top-bar-bg;
+  padding: 10px 2% 10px 2%;
+  float: left;
+  width: 100%;
+}
+
+div.p_login .error {
+	border-radius:0;
+}
+
+div.p_login .p_login_top a {
+  display: block;
+  background-image: none, url("../../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../../themes/SuiteP/images/p_login_logo.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  width: 170px;
+  height: 40px;
+  text-indent: -9999px;
+}
+
+div.p_login .p_login_middle {
+  background-color: $main-bg;
+  float: left;
+  width: 100%;
+}
+div.p_login .p_login_bottom {
+  bottom: 0;
+  left: 0;
+  background-color: $footer-btn-bg;
+  padding: 15px 2% 15px 2%;
+  float: left;
+  width: 100%;
+}
+
+.login-language-chooser {
+  margin-bottom: 10px;
+}
+
+@media (min-height: 400px) {
+
+  div.p_login .p_login_bottom {
+    position: absolute;
+  }
+}
+
+div.p_login .p_login_bottom a#powered_by {
+  margin-left: 20px;
+}
+
+div.p_login #loginform {
+  padding: 15px;
+  margin: 8% auto 0 auto;
+  text-align: center;
+  max-width: 400px;
+}
+
+div.p_login #loginform .input-group {
+  font-size: 19px;
+  color: $default-input-group-color;
+  width: 100%;
+  border-radius: 2px;
+}
+
+div.p_login #loginform .input-group input {
+  background-color: $main-alternate-bg;
+  color: $default-input-group-color;
+  padding: 0 2% 0 50px;
+  border: none;
+  border-radius: 3px;
+  line-height: 40px;
+  height: 40px;
+  min-height: 0px;
+}
+
+div.p_login #loginform .input-group input#fp_user_name,
+div.p_login #loginform .input-group input#user_name,
+#user_name:-webkit-autofill,
+div.p_login #loginform .input-group input#username_password {
+  background-image: none, url("../../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../../themes/SuiteP/images/login_bg.png");
+  background-repeat: no-repeat;
+}
+
+
+div.p_login #loginform .input-group input#fp_user_name,
+div.p_login #loginform .input-group input#user_name {
+  background-image: none, url("../../../../../themes/SuiteP/images/login_bg.svg");
+  background-position: 5px 3px;
+  background-repeat: no-repeat;
+}
+
+div.p_login #loginform .input-group input#username_password {
+  background-image: none, url("../../../../../themes/SuiteP/images/login_bg.png");
+  background-position: 5px -57px;
+  background-repeat: no-repeat;
+}
+
+div.p_login #loginform .input-group input#fp_user_mail {
+  background-image: none, url("../../../../../themes/SuiteP/images/p_icon_email_address_32.svg");
+  background-position: 14px;
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+}
+
+div.p_login #loginform .glyphicon {
+  top: 0;
+}
+
+div.p_login br {
+	height:10px;
+}
+
+div.p_login #loginform span.error {
+  display: block;
+  background-color: transparent;
+  color: $danger;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+  line-height: 140%;
+}
+
+div.p_login #loginform #bigbutton {
+  font-size: 16px;
+  padding: 0;
+  border-radius: 3px;
+  letter-spacing: 3px;
+  line-height: 40px;
+  height: 40px;
+}
+
+div.p_login #loginform #bigbutton:hover {
+  background-color: $danger-btn-bg-hover;
+  border:none;
+}
+
+#forgotpasslink {
+  margin: 10px 0 0 0;
+  padding: 10px;
+  clear: both;
+
+}
+
+#generate_pwd_button {
+  height: 50px;
+  font-size: 20px;
+}
+
+// recaptcha
+#recaptcha_image {
+  margin-top: 10px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 10px;
+}
+
+// links for recaptcha
+#forgot_password_dialog a {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+@media (max-width: 750px) {
+
+  div.p_login .p_login_top {
+    padding: 10px 3% 10px 3%;
+  }
+
+  div.p_login .p_login_top a {
+    background-image: none, url("../../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../../themes/SuiteP/images/p_login_logo.png");
+    background-position: 0 -70px;
+    width: 170px;
+    height: 30px;
+  }
+
+  div.p_login .p_login_bottom {
+    padding: 10px 3% 10px 3%;
+    padding-top: 10px;
+  }
+
+  div.p_login .p_login_bottom a#powered_by, div.p_login .p_login_bottom a#admin_options {
+    display: block;
+    font-size: 10px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  div.p_login .p_login_bottom a#admin_options {
+    margin-bottom: 5px;
+  }
+
+}

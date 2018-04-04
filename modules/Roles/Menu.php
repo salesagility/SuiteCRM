@@ -49,5 +49,3 @@ $module_menu = Array(
 	Array("index.php?module=Roles&action=index", $mod_strings['LNK_ROLES'],"Role_Management"),
 
 );
-
-?>

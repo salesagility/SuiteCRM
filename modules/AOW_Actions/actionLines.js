@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -111,7 +111,7 @@ function insertActionLine(){
     var c1 = x.insertCell(2);
     c1.scope="row";
     c1.setAttribute("field", "delete");
-  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-clear.png' alt='X'></a></span>";
+  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><span class=\"suitepicon suitepicon-action-clear\"></span></a></span>";
     c1.innerHTML += "<input type='hidden' name='aow_actions_deleted[" + actln + "]' id='aow_actions_deleted" + actln + "' value='0'><input type='hidden' name='aow_actions_id[" + actln + "]' id='aow_actions_id" + actln + "' value=''>";
 
 
@@ -152,7 +152,7 @@ function getView(ln, id){
         success: function(result) {
             document.getElementById('action_parameter' + ln).innerHTML = result.responseText;
             if(document.getElementById('aow_script'+ln) != null){
-              SUGAR.util.evalScript(document.getElementById('aow_script'+ln).innerHTML);
+              SUGAR.util.evalScript(result.responseText);
             }
         }
     };

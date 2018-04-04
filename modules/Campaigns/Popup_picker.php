@@ -188,4 +188,3 @@ class Popup_Picker
 		return $output_html;
 	}
 } // end of class Popup_Picker
-?>

@@ -54,4 +54,3 @@ class SugarFieldPhone extends SugarFieldBase {
     }    
     
 }
-?>

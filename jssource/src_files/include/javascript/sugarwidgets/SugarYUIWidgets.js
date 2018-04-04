@@ -198,9 +198,20 @@ sw.Template.prototype = {
         }
 	},
 
-	_getValue: function(v, scope) {
-		return function(e) {return this[e];}.call(scope, v);
-	}
+  _getValue: function(v, scope) {
+    return function(e) {
+      if(e.indexOf('.') == -1) {
+        return this[e];
+      }
+      var splits = e.split('.');
+      var top = this;
+      for(var i=0; i<splits.length; i++) {
+		top = top[splits[i]];
+      }
+      return top;
+    }.call(scope, v);
+  }
+
 };
 
 

@@ -172,5 +172,3 @@ function displaySelectionBox($objectList)
 	$html .= '</select>';
 	return $html;
 }
-
-?>

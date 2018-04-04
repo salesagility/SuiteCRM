@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,9 +39,8 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
-
 
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
@@ -1181,15 +1180,6 @@ function checkSystemCompliance() {
 		$ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
 	}
 
-
-	// call time pass by ref
-	if('1' == ini_get('allow_call_time_pass_reference')) {
-		$ret['callTimeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_CALL_TIME']}</span></b>";
-		//continue upgrading
-	} else {
-		$ret['callTimeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	}
-
 	// memory limit
 	$ret['memory_msg']     = "";
 	$memory_limit   = "-1";//ini_get('memory_limit');
@@ -2217,20 +2207,6 @@ if ( !function_exists('validate_manifest') ) {
 			if (!$matches_empty && !$version_ok) {
 				return $mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . "<br />" .
 				$mod_strings['ERR_UW_SUITECRM_VERSION'] . $suitecrm_version;
-			}
-		}
-
-		if(isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0) {
-			$flavor_ok = false;
-			foreach($manifest['acceptable_sugar_flavors'] as $match) {
-				if($match == $sugar_flavor) {
-					$flavor_ok = true;
-				}
-			}
-			if(!$flavor_ok) {
-				return $mod_strings['ERROR_FLAVOR_INCOMPATIBLE']."<br />".
-				$mod_strings['ERR_UW_FLAVOR'].$sugar_flavor."<br />".
-				$mod_strings['ERR_UW_FLAVOR_2'].$manifest['acceptable_sugar_flavors'][0];
 			}
 		}
 
@@ -3815,7 +3791,7 @@ function update_iframe_dashlets(){
 		if(!empty($content['dashlets']) && !empty($content['pages'])){
 			$originalDashlets = $content['dashlets'];
 			foreach($originalDashlets as $key => $ds){
-				if(!empty($ds['options']['url']) && stristr($ds['options']['url'],'https://www.sugarcrm.com/crm/product/gopro')){
+				if(!empty($ds['options']['url']) && stristr($ds['options']['url'],'https://suitecrm.com/')){
 					unset($originalDashlets[$key]);
 				}
 			}

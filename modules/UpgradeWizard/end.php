@@ -275,6 +275,9 @@ $cleanUrl = "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
 check_now(get_sugarbeat());
 ob_end_clean();*/
 
+include 'PasswordExpirationService.php';
+$expirationMessage = (new PasswordExpirationService())->getExpirationMessage();
+
 $uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 
@@ -287,6 +290,8 @@ $uwMain = <<<eoq
 			<br>
             <b>{$mod_strings['LBL_UW_END_LOGOUT_PRE']}</b> {$mod_strings['LBL_UW_END_LOGOUT']}
 			</p>
+			<br>
+			<p>{$expirationMessage}</p>
 		</td>
 	</tr>
 </table>
@@ -319,3 +324,9 @@ $stepRecheck = 0;
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);
 unset($_SESSION['target_db_version']);
+
+
+ob_start();
+include __DIR__ . '/../Administration/UpgradeAccess.php';
+echo $cnt = ob_get_contents();
+ob_get_clean();

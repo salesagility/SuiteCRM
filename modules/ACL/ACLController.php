@@ -74,7 +74,7 @@ class ACLController
             return true;
         }
 
-        if ($_REQUEST['module'] === 'AOR_Reports' && $category === 'EmailAddresses') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'AOR_Reports' && $category === 'EmailAddresses') {
             return ACLAction::userHasAccess($current_user->id, 'AOR_Reports', $action, 'module', $is_owner, $in_group);
         }
 

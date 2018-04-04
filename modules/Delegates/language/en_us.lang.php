@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,39 +42,39 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_EDIT_BUTTON' => 'Edit',
-  'LBL_REMOVE' => 'Remove',
-  'LBL_LIST_FORM_TITLE' => 'Event List',
-  'LBL_MODULE_NAME' => 'Event',
-  'LBL_MODULE_TITLE' => 'Event',
-  'LBL_HOMEPAGE_TITLE' => 'My Event',
-  'LNK_NEW_RECORD' => 'Create Event',
-  'LNK_LIST' => 'View Events',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Event',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_NEW_FORM_TITLE' => 'New Event',
-  'LBL_LOCATION' => 'Location',
-  'LBL_START_DATE' => 'start date',
-  'LBL_END_DATE' => 'End Date/Time',
-  'LBL_BUDGET' => 'Budget',
-  'LBL_INVITE_PDF' => 'Send Invites',
-  'LBL_EMAIL_TEMPLATE' => 'Invite Email Template',
-  'LBL_EDITVIEW_PANEL1' => 'New Panel 1',
-  'LBL_DEFAULT_SUBPANEL_TITLE' => 'Delegates',
+$mod_strings = array(
+    'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
+    'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+    'LBL_ID' => 'ID',
+    'LBL_DATE_ENTERED' => 'Date Created',
+    'LBL_DATE_MODIFIED' => 'Date Modified',
+    'LBL_MODIFIED' => 'Modified By',
+    'LBL_MODIFIED_NAME' => 'Modified By Name',
+    'LBL_CREATED' => 'Created By',
+    'LBL_DESCRIPTION' => 'Description',
+    'LBL_DELETED' => 'Deleted',
+    'LBL_NAME' => 'Name',
+    'LBL_CREATED_USER' => 'Created by User',
+    'LBL_MODIFIED_USER' => 'Modified by User',
+    'LBL_LIST_NAME' => 'Name',
+    'LBL_EDIT_BUTTON' => 'Edit',
+    'LBL_REMOVE' => 'Remove',
+    'LBL_LIST_FORM_TITLE' => 'Event List',
+    'LBL_MODULE_NAME' => 'Event',
+    'LBL_MODULE_TITLE' => 'Event',
+    'LBL_HOMEPAGE_TITLE' => 'My Event',
+    'LNK_NEW_RECORD' => 'Create Event',
+    'LNK_LIST' => 'View Events',
+    'LBL_SEARCH_FORM_TITLE' => 'Search Event',
+    'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
+    'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+    'LBL_NEW_FORM_TITLE' => 'New Event',
+    'LBL_LOCATION' => 'Location',
+    'LBL_START_DATE' => 'start date',
+    'LBL_END_DATE' => 'End Date/Time',
+    'LBL_BUDGET' => 'Budget',
+    'LBL_INVITE_PDF' => 'Send Invites',
+    'LBL_EMAIL_TEMPLATE' => 'Invite Email Template',
+    'LBL_EDITVIEW_PANEL1' => 'New Panel 1',
+    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Delegates',
 );

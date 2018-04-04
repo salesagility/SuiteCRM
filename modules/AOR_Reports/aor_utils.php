@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -79,6 +79,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
             $modulePathDisplay[] = $currentBean->module_name;
         }
     }
+    $fieldType = $currentBean->field_name_map[$field]['type'];
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
@@ -87,14 +88,14 @@ function getDisplayForField($modulePath, $field, $reportModule)
         isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
         );
     }
-
-    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
+    return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
 function requestToUserParameters()
 {
     $params = array();
-    if (isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
+    if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
+        $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',',
@@ -110,10 +111,10 @@ function requestToUserParameters()
             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
             if ($_REQUEST['parameter_type'][$key] === 'Date') {
                 $values = array();
-                $values[] = $_REQUEST['parameter_value'][0];
-                $values[] = $_REQUEST['parameter_value'][1];;
-                $values[] = $_REQUEST['parameter_value'][2];;
-                $values[] = $_REQUEST['parameter_value'][3];;
+                $values[] = $_REQUEST['parameter_date_value'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_sign'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_number'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_time'][$dateCount];
 
                 $params[$parameterId] = array(
                     'id' => $parameterId,
@@ -121,6 +122,7 @@ function requestToUserParameters()
                     'type' => $_REQUEST['parameter_type'][$key],
                     'value' => $values,
                 );
+                $dateCount++;
             }
 
             // determine if parameter is a date
@@ -432,9 +434,14 @@ function calculateQuarters($offsetMonths = 0)
  */
 function convertToDateTime($value)
 {
-    global $current_user;
+    global $current_user, $timedate;
 
     $user_dateformat = $current_user->getPreference('datef');
+
+    // In some cases the date string already is in database format
+    if ($timedate->check_matching_format($value, $timedate->get_db_date_format())) {
+        $user_dateformat = $timedate->get_db_date_format();
+    }
 
     switch ($user_dateformat) {
         case 'Y-m-d':

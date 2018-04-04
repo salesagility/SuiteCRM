@@ -53,7 +53,7 @@
 {MOD.LBL_CAMPAIGN_STATUS} <span class="required">*</span><br />
 <select name='status'>{STATUS_OPTIONS}</select><br />
 {MOD.LBL_CAMPAIGN_END_DATE} <span class="required">*</span><br />
-<input onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" name='end_date' id='end_date' type="text" size='11' maxlength='10'> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{APP.LBL_ENTER_DATE}" id="end_date_trigger" align="absmiddle"> <span class="dateFormat">{APP.NTC_DATE_FORMAT}</span><br />
+	<input onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" name='end_date' id='end_date' type="text" size='11' maxlength='10'> <span alt="{APP.LBL_ENTER_DATE}" id="end_date_trigger"></span> <span class="dateFormat">{APP.NTC_DATE_FORMAT}</span><br />
 {MOD.LBL_CAMPAIGN_TYPE} <span class="required">*</span><br />
 <select name='campaign_type'>{TYPE_OPTIONS}</select>
 </p>

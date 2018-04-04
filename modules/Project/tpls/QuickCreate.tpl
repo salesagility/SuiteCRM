@@ -77,9 +77,10 @@
 	</tr>
 	<tr>
 	<td valign="top" scope="row" width="15%"><span>{$MOD.LBL_DATE_START} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
-	<td width="35%"><span><input name='estimated_start_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_start' type="text" tabindex='2' size='11' maxlength='10' value="{$START_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger_start" '}</span></td>
+	<td width="35%"><span><input name='estimated_start_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_start' type="text" tabindex='2' size='11' maxlength='10' value="{$START_DATE}"> <span id="jscal_trigger_start" class="suitepicon suitepicon-module-calendar"></span> </span></td>
 	<td valign="top" scope="row" width="15%"><span>{$MOD.LBL_DATE_END} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
-	<td width="35%"><span><input name='estimated_end_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_end' type="text" tabindex='2' size='11' maxlength='10' value="{$END_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger_end" '}</span></td>
+	<td width="35%"><span><input name='estimated_end_date' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" id='jscal_field_end' type="text" tabindex='2' size='11' maxlength='10' value="{$END_DATE}">
+			<span id="jscal_trigger_end" class="suitepicon suitepicon-module-calendar"></span></span></td>
 	</tr>	
 	<tr>
 	<td valign="top" scope="row"><span>{$MOD.LBL_DESCRIPTION}</span></td>

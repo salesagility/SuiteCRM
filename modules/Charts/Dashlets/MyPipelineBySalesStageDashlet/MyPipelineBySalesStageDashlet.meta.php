@@ -48,4 +48,3 @@ $dashletMeta['MyPipelineBySalesStageDashlet'] = array('title'       => 'LBL_TITL
                                                       'icon'		  => 'icon_Charts_Funnel_32.gif',
                                                       'module'        => 'Opportunities', 
                                                       'category'    => 'Charts');
-?>

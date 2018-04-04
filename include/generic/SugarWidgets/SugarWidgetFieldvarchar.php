@@ -61,12 +61,12 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
     }
 
 
- function queryFilterEquals(&$layout_def)
+ function queryFilterEquals($layout_def)
  {
 		return $this->_get_column_select($layout_def)."='".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
  }
 
- function queryFilterNot_Equals_Str(&$layout_def)
+ function queryFilterNot_Equals_Str($layout_def)
  {
 		return $this->_get_column_select($layout_def)."!='".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
  }
@@ -98,11 +98,9 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
     return $this->_get_column_select($layout_def) . " IN ('" . implode("','", $layout_def['input_name0']) . "')\n";
  }
 
- function displayInput(&$layout_def)
+ function displayInput($layout_def)
  {
  		$str = '<input type="text" size="20" value="' . $layout_def['input_name0'] . '" name="' . $layout_def['name'] . '">';
  		return $str;
  }
 }
-
-?>

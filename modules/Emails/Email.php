@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -45,6 +46,7 @@ include_once('modules/Emails/EmailException.php');
 require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
+
 
 class Email extends Basic
 {
@@ -399,7 +401,49 @@ class Email extends Basic
     public $notes;
 
     /**
+     * @var string
+     */
+    public $From;
+
+    /**
+     * @var string
+     */
+    public $FromName;
+
+    /**
+     * @var string
+     */
+    public $Subject;
+
+    /**
+     * @var string
+     */
+    public $Body;
+
+    /**
+     * @var string
+     */
+    public $AltBody;
+
+    public $msgNo;
+
+    /**
+     * @var string
+     */
+    public $to_name;
+
+    protected static $validFieldNames = array(
+        'email_address',
+        'to',
+        'from',
+        'from_name',
+        'cc',
+        'bcc'
+    );
+
+    /**
      * sole constructor
+     * @global $current_user
      */
     public function __construct()
     {
@@ -488,6 +532,7 @@ class Email extends Basic
 
     /**
      * @param string $filename
+     * @global $sugar_config
      * @return bool
      */
     public function safeAttachmentName($filename)
@@ -637,6 +682,8 @@ class Email extends Basic
      * @param $toaddress
      * @param string $mail_sendtype
      * @param string $fromname
+     * @global $current_user
+     * @global $app_strings
      * @return array
      */
     public function sendEmailTest(
@@ -653,7 +700,7 @@ class Email extends Basic
     ) {
         global $current_user, $app_strings;
         $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
-        $mail = new SugarPHPMailer();
+        $mail = new SugarPHPMailer(true);
         $mail->Mailer = strtolower($mail_sendtype);
         if ($mail->Mailer == 'smtp') {
             $mail->Host = $mailserver_url;
@@ -697,7 +744,7 @@ class Email extends Basic
             ob_clean();
             $return['status'] = false;
             $return['errorMessage'] = $app_strings['LBL_EMAIL_ERROR_PREPEND'] . $mail->ErrorInfo;
-
+            $return['fullSmtpLog'] = $mail->fullSmtpLog;
             return $return;
         } // if
         $return['status'] = true;
@@ -733,6 +780,14 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
+     * @global $timedate
+     * @global $beanList
+     * @global $beanFiles
      * @return bool
      */
     public function email2Send($request)
@@ -1248,29 +1303,31 @@ class Email extends Basic
             $this->save();
         }
 
-        if (!empty($request['fromAccount'])) {
-            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-                $sentFolder = $ie->get_stored_options("sentFolder");
-                if (!empty($sentFolder)) {
-                    $data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
-                    $ie->mailbox = $sentFolder;
-                    if ($ie->connectMailserver() == 'true') {
-                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-                        $returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
-                        if (!$returnData) {
-                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-                        } // if
-                    } else {
-                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-                    } // else
-                } else {
-                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-                } // else
-            } // if
-        } // if
-
-        return true;
-    } // end email2send
+		if(!empty($request['fromAccount'])) {
+			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+				$sentFolder = $ie->get_stored_options("sentFolder");
+				if (!empty($sentFolder)) {
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
+					$ie->mailbox = $sentFolder;
+					if ($ie->connectMailserver() == 'true') {
+						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
+						if (!$returnData) {
+							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+						} // if
+					} else {
+						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+					} // else
+				} else {
+					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+				} // else
+			} // if
+		} // if
+		return true;
+	} // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for
@@ -1279,6 +1336,7 @@ class Email extends Basic
      *
      * @param $module string module name
      * @param $idsArray array of record ids to get the email address for
+     * @global $local
      * @return string (config-specified) delimited list of email addresses
      */
     public function getNamePlusEmailAddressesForCompose($module, $idsArray)
@@ -1357,6 +1415,7 @@ class Email extends Basic
     ////	SAVERS
     /**
      * @param bool $check_notify
+     * @global $current_user
      * @return bool|string
      */
     public function save($check_notify = false)
@@ -1384,7 +1443,7 @@ class Email extends Basic
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
             $this->reply_to_addr = $this->cleanEmails($this->reply_to_addr);
             $this->description = SugarCleaner::cleanHtml($this->description);
-            if(empty($this->description_html)) {
+            if (empty($this->description_html)) {
                 $this->description_html = $this->description;
                 $this->description_html = nl2br($this->description_html);
             }
@@ -1483,6 +1542,7 @@ class Email extends Basic
                 if (!empty($toaddr)) {
                     $toId = $this->emailAddress->getEmailGUID($toaddr);
                     $this->linkEmailToAddress($toId, 'to');
+                    $this->sendOptInEmailToEmailAddressById($toId);
                 }
             }
         }
@@ -1497,6 +1557,7 @@ class Email extends Basic
                 if (!empty($ccAddr)) {
                     $ccId = $this->emailAddress->getEmailGUID($ccAddr);
                     $this->linkEmailToAddress($ccId, 'cc');
+                    $this->sendOptInEmailToEmailAddressById($ccId);
                 }
             }
         }
@@ -1510,6 +1571,7 @@ class Email extends Basic
                 if (!empty($bccAddr)) {
                     $bccId = $this->emailAddress->getEmailGUID($bccAddr);
                     $this->linkEmailToAddress($bccId, 'bcc');
+                    $this->sendOptInEmailToEmailAddressById($bccId);
                 }
             }
         }
@@ -1593,7 +1655,7 @@ class Email extends Basic
             $email->retrieveEmailText();
             //$ret->raw_source = SugarCleaner::cleanHtml($ret->raw_source);
             $email->description = $email->description;
-            if(empty($email->description_html)) {
+            if (empty($email->description_html)) {
                 $email->description_html = $email->description;
                 $email->description_html = nl2br($email->description_html);
             }
@@ -1637,16 +1699,16 @@ class Email extends Basic
 
         if (count($return) > 0) {
             if (isset($return['from'])) {
-                $this->from_addr = implode(", ", $return['from']);
+                $this->from_addr_name = implode(", ", $return['from']);
             }
             if (isset($return['to'])) {
-                $this->to_addrs = implode(", ", $return['to']);
+                $this->to_addrs_names = implode(", ", $return['to']);
             }
             if (isset($return['cc'])) {
-                $this->cc_addrs = implode(", ", $return['cc']);
+                $this->cc_addrs_names = implode(", ", $return['cc']);
             }
             if (isset($return['bcc'])) {
-                $this->bcc_addrs = implode(", ", $return['bcc']);
+                $this->bcc_addrs_names = implode(", ", $return['bcc']);
             }
         }
     }
@@ -1730,7 +1792,7 @@ class Email extends Basic
         }
 
         $noteArray = array();
-        $q = "SELECT id FROM notes WHERE parent_id = '" . $id . "'";
+        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = '" . $id . "'";
         $r = $this->db->query($q);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -1762,6 +1824,8 @@ class Email extends Basic
 
     /**
      * creates the standard "Reply" info at the top of the forwarded message
+     * @global $mod_string
+     * @global $current_user
      * @return string
      */
     public function getReplyHeader()
@@ -1832,6 +1896,7 @@ class Email extends Basic
 
     /**
      * Ensures that the user is able to send outbound emails
+     * @global $current_user
      */
     public function check_email_settings()
     {
@@ -1868,6 +1933,8 @@ class Email extends Basic
 
     /**
      * outputs JS to set fields in the MassUpdate form in the "My Inbox" view
+     * @global $mod_strings
+     * @return string
      */
     public function js_set_archived()
     {
@@ -1948,6 +2015,8 @@ class Email extends Basic
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function pickOneButton()
@@ -2081,6 +2150,7 @@ class Email extends Basic
 
     /**
      * handles attachments of various kinds when sending email
+     * @global $mod_strings
      */
     public function handleAttachments()
     {
@@ -2281,6 +2351,7 @@ class Email extends Basic
 
     /**
      * Handles file attachments with multiple files
+     * @global $mod_strings
      */
     public function handleMultipleFileAttachments()
     {
@@ -2288,7 +2359,10 @@ class Email extends Basic
 
         ///////////////////////////////////////////////////////////////////////////
         ////    ATTACHMENTS FROM DRAFTS
-        if (($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+        if (($this->type == 'out' || $this->type == 'draft')
+            && $this->status == 'draft'
+            && isset($_REQUEST['record'])
+            && empty($_REQUEST['ignoreParentAttachments'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS
@@ -2546,6 +2620,7 @@ class Email extends Basic
      * @param object $mail SugarPHPMailer object
      * @param string $mailer_id
      * @param string $ieId
+     * @global $current_user
      * @return object mail SugarPHPMailer object
      */
     public function setMailer($mail, $mailer_id = '', $ieId = '')
@@ -2587,6 +2662,7 @@ class Email extends Basic
     /**
      * Preps SugarPHPMailer object for HTML or Plain text sends
      * @param SugarPHPMailer $mail
+     * @global $current_user
      * @return Email
      */
     public function handleBody($mail)
@@ -2594,18 +2670,18 @@ class Email extends Basic
         global $current_user;
 
         // User preferences should takee precedence over everything else
-        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
+        $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
         $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
 
         $sendEmailsInPlainText = false;
-        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
+        if (isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
             $sendEmailsInPlainText = true;
         }
 
-        if($alwaysSendEmailsInPlainText === true) {
+        if ($alwaysSendEmailsInPlainText === true) {
             // plain text only
             $this->handleBodyInPlainTextFormat($mail);
-        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+        } elseif ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
             $this->handleBodyInPlainTextFormat($mail);
         } else {
             $this->handleBodyInHTMLformat($mail);
@@ -2624,6 +2700,7 @@ class Email extends Basic
 
     /**
      * Retrieve function from handlebody() to unit test easily
+     * @sugar_config
      * @param SugarPHPMailer $mail
      */
     public function handleBodyInHTMLformat($mail)
@@ -2653,6 +2730,10 @@ class Email extends Basic
 
     /**
      * Sends Email
+     * @global $mod_strings
+     * @global $current_user
+     * @global $sugar_config
+     * @global $locale
      * @return bool True on success
      */
     public function send()
@@ -2703,6 +2784,8 @@ class Email extends Basic
         // FROM NAME
         if (!empty($this->from_name)) {
             $mail->FromName = $this->from_name;
+        } elseif (!empty($this->from_addr_name)) {
+            $mail->FromName = $this->from_addr_name;
         } else {
             $mail->FromName = $current_user->getPreference('mail_fromname');
             $this->from_name = $mail->FromName;
@@ -2970,8 +3053,9 @@ class Email extends Basic
         return $query;
     } // fn
 
-
     /**
+     * @global $timedate
+     * @global $mod_strings
      * fill_in_additional_list_fields
      */
     public function fill_in_additional_list_fields()
@@ -3008,11 +3092,16 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $mod_strings
      * fill_in_additional_detail_fields
      */
     public function fill_in_additional_detail_fields()
     {
-        global $app_list_strings, $mod_strings;
+        global $app_list_strings;
+
+        $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
+
         // Fill in the assigned_user_name
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id, '');
         //if ($this->parent_type == 'Contacts') {
@@ -3078,7 +3167,7 @@ class Email extends Basic
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
 
-        if (empty($this->name) && empty($_REQUEST['record'])) {
+        if (empty($this->name) && empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
             $this->name = $mod_strings['LBL_NO_SUBJECT'];
         }
 
@@ -3127,6 +3216,11 @@ class Email extends Basic
     }
 
     /**
+     * @global $app_list_strings
+     * @global $theme
+     * @global $current_user
+     * @global $timedate
+     * @global $mod_strings
      * @return array
      */
     public function get_list_view_data()
@@ -3147,7 +3241,8 @@ class Email extends Basic
             'Emails'); // hard-coding for Home screen ListView
 
         if ($this->status != 'replied') {
-            $email_fields['QUICK_REPLY'] = '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=' . $this->id . '&inbound_email_id=' . $this->id . '">' . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
+            $email_fields['QUICK_REPLY'] = '<a href="index.php?module=Emails&action=ReplyTo&record='. $this->id .'">'
+                . $mod_strings['LNK_QUICK_REPLY'] . '</a>';
             $email_fields['STATUS'] = ($email_fields['REPLY_TO_STATUS'] == 1 ? $mod_strings['LBL_REPLIED'] : $email_fields['STATUS']);
         } else {
             $email_fields['QUICK_REPLY'] = $mod_strings['LBL_REPLIED'];
@@ -3217,6 +3312,10 @@ class Email extends Basic
     }
 
     /**
+     * @global $mod_strings
+     * @global $app_strings
+     * @global $currentModule
+     * @global $current_language
      * @return string
      */
     public function quickCreateForm()
@@ -3233,6 +3332,11 @@ class Email extends Basic
     }
 
     /**
+     * @global timedate
+     * @global $current_user
+     * @global $beanList
+     * @global $sugar_config
+     * @gloabl $app_strings
      *  Searches all imported emails and returns the result set as an array.
      * @param string $sort
      * @param string $direction
@@ -3354,6 +3458,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the query used for searching imported emails.
      *
      * @return String Query to be executed.
@@ -3407,6 +3512,7 @@ class Email extends Basic
     }
 
     /**
+     * @global $timedate
      * Generate the where clause for searching imported emails.
      * @return array|string
      */
@@ -3501,6 +3607,11 @@ class Email extends Basic
 
 
     /**
+     * @global $app_list_strings
+     * @global $app_strings
+     * @global $mod_strings
+     * @global $theme
+     * @global $current_user
      * @param string $where
      * @return string
      */
@@ -3645,6 +3756,8 @@ eoq;
     }
 
     /**
+     * @global $theme
+     * @global $mod_strings
      * @return string
      */
     public function userSelectTable()
@@ -3747,7 +3860,9 @@ eoq;
     }
 
     /**
-     * @param sting $type
+     * @global $theme
+     * @global $mod_strings
+     * @param string $type
      * @return string
      */
     public function checkInbox($type)
@@ -3915,66 +4030,66 @@ eoq;
         $new = array('<', '>');
 
 
-		// Validation first: we have to check that there is
-		// 'from' email and/or name in the request and
-		// if is not, then use the default one
+        // Validation first: we have to check that there is
+        // 'from' email and/or name in the request and
+        // if is not, then use the default one
 
-		// Let's pretend that everything is ok..
+        // Let's pretend that everything is ok..
 
-		$useDefaultFromAddressName = false;
-		$useDefaultFromAddressEmail = false;
+        $useDefaultFromAddressName = false;
+        $useDefaultFromAddressEmail = false;
 
-		// is from address in the request?
+        // is from address in the request?
 
-		if(!isset($request['from_addr_name']) || !$request['from_addr_name']) {
-			$useDefaultFromAddressName = true;
-		}
+        if (!isset($request['from_addr_name']) || !$request['from_addr_name']) {
+            $useDefaultFromAddressName = true;
+        }
 
-		// is from name in the request?
+        // is from name in the request?
 
-		if(!isset($request['from_addr_email']) || !$request['from_addr_email']) {
-			$useDefaultFromAddressEmail = true;
-		}
+        if (!isset($request['from_addr_email']) || !$request['from_addr_email']) {
+            $useDefaultFromAddressEmail = true;
+        }
 
-		// so, do we have to use any default data?
+        // so, do we have to use any default data?
 
-		if($useDefaultFromAddressName || $useDefaultFromAddressEmail) {
+        if ($useDefaultFromAddressName || $useDefaultFromAddressEmail) {
 
-			// get the default data
-			// (curently the system default will be used)
+            // get the default data
+            // (curently the system default will be used)
 
-			$defaultEmail = $bean->getSystemDefaultEmail();
+            $defaultEmail = $bean->getSystemDefaultEmail();
 
-			// do we have to use the default from address?
+            // do we have to use the default from address?
 
-			if($useDefaultFromAddressEmail) {
+            if ($useDefaultFromAddressEmail) {
 
-				// just make sure are there any default 'from' address set? (validation)
+                // just make sure are there any default 'from' address set? (validation)
 
-				if(!isset($defaultEmail['email']) || !$defaultEmail['email']) {
-					throw new EmailException("No system default 'from' email address", NO_DEFAULT_FROM_ADDR);
-				}
+                if (!isset($defaultEmail['email']) || !$defaultEmail['email']) {
+                    throw new EmailException("No system default 'from' email address", NO_DEFAULT_FROM_ADDR);
+                }
 
-				// use the default one
+                // use the default one
 
-				$request['from_addr_email'] = $defaultEmail['email'];
-			}
+                $request['from_addr_email'] = $defaultEmail['email'];
+            }
 
-			// do we have to use the default name?
+            // do we have to use the default name?
 
-			if($useDefaultFromAddressName) {
+            if ($useDefaultFromAddressName) {
 
-				// just make sure are there any default 'from' address set? (validation)
+                // just make sure are there any default 'from' address set? (validation)
 
-				if(!isset($defaultEmail['name']) || !$defaultEmail['name']) {
-					throw new EmailException("No system default 'from' name", NO_DEFAULT_FROM_NAME);
-				}
+                if (!isset($defaultEmail['name']) || !$defaultEmail['name']) {
+                    throw new EmailException("No system default 'from' name", NO_DEFAULT_FROM_NAME);
+                }
 
-				// use the default one
+                // use the default one
 
-				$request['from_addr_name'] = $defaultEmail['name'];
-			}
-		}
+                $request['from_addr_name'] = $defaultEmail['name'];
+            }
+        }
 
         if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
             if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
@@ -4152,7 +4267,7 @@ eoq;
         // We need to generate a new id
         if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
             $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
-            if(in_array($_REQUEST['refer_action'], $referActions)) {
+            if (in_array($_REQUEST['refer_action'], $referActions)) {
                 $bean->id = create_guid();
                 $bean->new_with_id = true;
                 $bean->type = 'out';
@@ -4188,5 +4303,161 @@ eoq;
         $mail->Body = wordwrap($plainText, 996);
         $mail->Body = $this->decodeDuringSend($mail->Body);
         $this->description = $mail->Body;
+    }
+
+
+    /**
+     * Send OptIn Email to EmailAddress By Id
+     * return success state or false if it's disabled in config
+     *
+     * @global array $sugar_config
+     * @global LoggerManager $log
+     * @param string $id
+     * @return bool
+     */
+    private function sendOptInEmailToEmailAddressById($id)
+    {
+        global $sugar_config;
+        global $log;
+
+        $ret = false;
+
+        if (!$id) {
+            $log->fatal('Empty Email Id');
+        } elseif (
+            isset($sugar_config['email_enable_auto_send_opt_in'])
+            && $sugar_config['email_enable_auto_send_opt_in']
+        ) {
+            /** @var \EmailAddress $emailAddress */
+            $emailAddresses = BeanFactory::getBean('EmailAddresses');
+            $emailAddress = $emailAddresses->retrieve($id);
+
+            if (
+                $emailAddress !== null
+                && $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && empty($emailAddress->confirm_opt_in_sent_date)) {
+                $this->sendOptInEmail($emailAddress);
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @deprecated DO NOT CALL THIS, remove this function as we have a similar working version in EmailMan.php
+     * @see same functionality implemented in EmailMam::sendOptInEmail() method. Use that instead this
+     * @global array $app_strings
+     * @param EmailAddress $emailAddress
+     * @return boolean
+     * @throws Exception
+     */
+    private function sendOptInEmail(EmailAddress $emailAddress)
+    {
+        global $app_strings;
+
+        $ret = false;
+
+        $db = $this->db;
+        $log = LoggerManager::getLogger();
+        $timedate = new TimeDate();
+        $configurator = new Configurator();
+        $sugar_config =  $configurator->config;
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return $ret;
+        }
+
+        require_once __DIR__ . '/../AOW_Actions/actions/actionSendEmail.php';
+
+        $confirmOptInTemplateId = $configurator->getConfirmOptInTemplateId();
+
+        if (!$confirmOptInTemplateId) {
+            $log->fatal('Opt In Email Template is not configured. Please set up in email settings');
+            SugarApplication::appendErrorMessage($app_strings['ERR_OPT_IN_TPL_NOT_SET']);
+            return $ret;
+        }
+
+        // Prevent sending an opt in email multiple time
+        if (!$this->parent_name || !$this->parent_type) {
+            return $ret;
+        }
+
+        $emailAddressString = $emailAddress->email_address;
+        if(!$this->isValidEmail($emailAddressString)) {
+            $emailAddressString = $emailAddress->email_address[0]['email_address'];
+            if(!$this->isValidEmail($emailAddressString)) {
+                throw new Exception('Invalid email address: ' . $emailAddressString);
+            }
+        }
+
+        // Send email template
+
+        $params = array(
+            'individual_email' => '1',
+            'email_template' => $confirmOptInTemplateId,
+            'email_to_type' => array(
+                0 => 'to',
+            ),
+            'email_target_type' => array(
+                0 => 'Email Address',
+            ),
+            'email' => array(
+                0 => $emailAddressString,
+            ),
+        );
+
+
+        // Get Related Contact | Lead | Target etc.
+        $query = ' SELECT * FROM email_addresses' .
+            ' JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id' .
+            ' WHERE email_address_id LIKE \'' . $db->quote($emailAddress->id) . '\'' .
+                ' AND email_addr_bean_rel.primary_address = 1 '
+                . 'AND email_addresses.deleted = 0 AND email_addr_bean_rel.deleted = 0';
+
+        $dbResult = $db->query($query);
+        while ($row = $db->fetchByAssoc($dbResult)) {
+
+            if ($ret) {
+                throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
+            }
+
+            $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
+
+            $actionSendEmail = new actionSendEmail();
+            $date = new DateTime();
+            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+            if(!$actionSendEmail->run_action($bean, $params)) {
+                $emailAddress->confirm_opt_in_fail_date = $now;
+            } else {
+                $emailAddress->confirm_opt_in_sent_date = $now;
+            }
+            $emailAddress->save();
+
+            $ret = true;
+        }
+
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $emailAddressString
+     * @return boolean
+     */
+    private function isValidEmail($emailAddressString) {
+        return filter_var($emailAddressString, FILTER_VALIDATE_EMAIL);
+    }
+
+    /**
+     * @param string $emailField eg from_name
+     */
+    protected function validateSugarEmailAddressField($emailField)
+    {
+        if (!is_string($emailField)) {
+            throw new InvalidArgumentException('Invalid type. $emailField must be a string value, eg. from_name');
+        }
+
+        if ($emailField === 'from_name') {
+            LoggerManager::getLogger()->error('from_name is invalid email address field.');
+        }
     }
 } // end class def

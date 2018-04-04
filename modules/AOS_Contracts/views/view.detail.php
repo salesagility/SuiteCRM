@@ -100,4 +100,3 @@ class AOS_ContractsViewDetail extends ViewDetail {
 		}
 	}
 }
-?>

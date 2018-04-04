@@ -65,4 +65,3 @@ class Calls_Reschedule extends Calls_Reschedule_sugar {
 
 
 }
-?>

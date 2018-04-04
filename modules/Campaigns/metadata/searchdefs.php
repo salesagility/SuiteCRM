@@ -61,4 +61,3 @@ $searchdefs['Campaigns'] = array(
 				),												
 			),
 );
-?>

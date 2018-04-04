@@ -22,4 +22,3 @@ array (
     'default' => true,
   ),
 );
-?>

@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 {
-	function displayHeaderCell(&$layout_def)
+	function displayHeaderCell($layout_def)
 	{
 		return '&nbsp;';
 	}
@@ -124,4 +124,3 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 		}
 	}
 }
-?>

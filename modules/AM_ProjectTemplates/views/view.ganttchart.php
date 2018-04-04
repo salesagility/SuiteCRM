@@ -40,7 +40,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/splitter.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.blockUI.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.validate.min.js"></script>';
-		echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
+	echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
+	echo '<script type="text/javascript" src="include/javascript/qtip/jquery.qtip.min.js"></script>';
 
 
         $project_template = new AM_ProjectTemplates();
@@ -198,7 +199,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
                             </script>
 							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
                              <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
-							 <span style="position: relative;"  id="copy_all_tasks_help"><!--not_in_theme!--><img border="0" src="themes/SuiteR/images/info_inline.gif" alt="Help class="info" vertical-align="middle"></span>
+							 <span style="position: relative;"  id="copy_all_tasks_help"><span class="suitepicon suitepicon-action-info"></span>
+							 </span>
 							<script type="text/javascript">
 
 									var help = $("#copy_all_tasks_help");

@@ -504,5 +504,3 @@ function save_from_report($report_id,$parent_id, $module_name, $relationship_att
         $focus->$relationship_attr_name->add($reportBean);
     }
 }
-
-?>

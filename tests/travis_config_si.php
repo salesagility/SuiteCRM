@@ -23,4 +23,5 @@ $sugar_config_si  = array (
     'setup_site_sugarbeet_automatic_checks' => true,
     'setup_site_url' => 'http://localhost',
     'setup_system_name' => 'SuiteCRM Travis Build',
+    'show_log_trace' => false,
 );
