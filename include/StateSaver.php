@@ -10,6 +10,7 @@ namespace SuiteCRM;
 
 use DBManagerFactory;
 use Exception;
+use LoggerManager;
 
 class StateSaverException extends Exception {}
 
@@ -130,11 +131,13 @@ class StateSaver {
     }
     
     public function pushErrorLevel($key = 'level', $namespace = 'error_reporting') {
+        LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
         $level = error_reporting();
         $this->push($level, $key, $namespace);
     }
     
     public function popErrorLevel($key = 'level', $namespace = 'error_reporting') {
+        LoggerManager::getLogger()->warn('Pop error level. Try to remove the error_reporting() function from your code.');
         $level = $this->pop($key, $namespace);
         error_reporting($level);
     }
