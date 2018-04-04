@@ -709,8 +709,15 @@ class TimeDate
      */
     public function fromDb($date)
     {
+        
+        if($date instanceof DateTime) {
+            $date = $date->format(self::DB_DATETIME_FORMAT);
+        }
+            
         if (!is_string($date)) {
-            throw new InvalidArgumentException('Date should be a string, ' . gettype($date) . ' given.');
+            $msg = 'Date should be a string, ' . gettype($date) . ' given.';
+            LoggerManager::getLogger()->fatal($msg . "\nDate was:\n" . print_r($date, true));
+            throw new InvalidArgumentException($msg);
         }
         try {
             return SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT, $date, self::$gmtTimezone);
@@ -720,7 +727,7 @@ class TimeDate
             return null;
         }
     }
-
+    
     /**
      * Create a date from a certain type of field in DB format
      * The types are: date, time, datatime[combo]

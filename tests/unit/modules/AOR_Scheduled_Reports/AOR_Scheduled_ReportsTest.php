@@ -48,6 +48,10 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_
     }
 
 	public function testSaveAndGet_email_recipients(){
+            
+            $state = new SuiteCRM\StateSaver();
+            $state->pushTable('aor_scheduled_reports');
+            $state->pushGlobals();
 
 		$aorScheduledReports = new AOR_Scheduled_Reports();
 		$aorScheduledReports->name = "test";
@@ -74,6 +78,10 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_
 		$aorScheduledReports->mark_deleted($aorScheduledReports->id);
 		unset($aorScheduledReports);
 
+                // clean up
+                
+                $state->popGlobals();
+                $state->popTable('aor_scheduled_reports');
     }
 
 
