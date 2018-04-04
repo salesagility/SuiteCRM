@@ -298,7 +298,7 @@ class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $expected = array(
             'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
-            'data/Relationships/M2MRelationship.php' => '07b7a31d4e0c2c959123203c1a982c2e',
+            'data/Relationships/M2MRelationship.php' => 'd892195344955fe5b344fd48c3f0290a',
             'data/Relationships/One2MBeanRelationship.php' => '5fd7277f4e1480f8f7a9dee123765dc8',
             'data/Relationships/One2MRelationship.php' => '8a2fbfed8d6b74faf2851eb0a6c6bad3',
             'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
