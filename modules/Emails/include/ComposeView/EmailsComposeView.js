@@ -462,7 +462,7 @@
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
         if (html !== null) {
-          editor.setContent('<p></p>' + html);
+          editor.setContent('<p></p>' + JSON.parse(html));
         }
       });
 
