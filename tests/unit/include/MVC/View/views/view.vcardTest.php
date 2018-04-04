@@ -24,7 +24,8 @@ class ViewVcardTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         try {
             $view->display();
         } catch (Exception $e) {
-            $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
+            $msg = $e->getMessage();
+            $this->assertStringStartsWith('Cannot modify header information', $msg, $msg . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertInstanceOf('ViewVcard', $view);
