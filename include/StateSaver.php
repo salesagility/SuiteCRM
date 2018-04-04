@@ -27,6 +27,8 @@ class StateSaver {
     
     protected $errors;
     
+    protected $files;
+    
     public function __conatruct() {
         $this->clearErrors();
     }
@@ -166,6 +168,52 @@ class StateSaver {
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+    }
+    
+    // --- Files ---
+    
+    public function pushFile($filename) {
+        $exists = file_exists($filename);
+        $realpath = realpath($filename);
+        if (!$realpath && $exists) {
+            throw new StateSaverException('Could not resolve real path for file for push: ' . $filename);
+        }
+        if ($exists) {
+            $contents = file_get_contents($realpath);
+            if (false === $contents) {
+                throw new StateSaverException('Can not read file: ' . $realpath);
+            }
+            $this->files[$realpath]['contents'] = $contents;
+            $this->files[$realpath]['time'] = filemtime($realpath);
+            if (false === $this->files[$realpath]['time']) {
+                throw new StateSaverException('Unable to get filemtime for file: ' . $realpath);
+            }
+        } else {
+            unset($this->files[$realpath]['contents']);
+        }
+    }
+    
+    public function popFile($filename) {
+        $exists = file_exists($filename);
+        $realpath = realpath($filename);
+        if (!$realpath && $exists) {
+            throw new StateSaverException('Could not resolve real path for file for pop: ' . $filename);
+        }
+        if (isset($this->files[$realpath]['contents'])) {
+            $contents = $this->files[$realpath]['contents'];
+            $ok = file_put_contents($realpath, $contents);
+            if (false === $ok) {
+                throw new StateSaverException('Can not write file: ' . $realpath);            
+            }
+            if (false ===touch($realpath, $this->files[$realpath]['time'])) {
+                throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
+            }
+        } else {
+            if (file_exists($realpath) && false === unlink($realpath)) {
+                return false;
+            }
+        }
+        return true;
     }
     
 }

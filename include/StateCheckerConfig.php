@@ -73,7 +73,8 @@ class StateCheckerConfig
         '/\/upload\//', 
         '/\/vendor\//',
         '/\/sugarfield_jjwg_maps_/',
-        '/\/vardefs.ext.php$/',        
+        '/\/vardefs.ext.php$/', 
+        '/\/modules\/AOD_Index\/Index\/Index\//',
     ];
     
     /**
