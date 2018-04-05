@@ -228,7 +228,15 @@ class One2MBeanRelationship extends One2MRelationship
             $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $deleted = !empty($params['deleted']) ? 1 : 0;
-            $where = "WHERE $rhsTableKey = '{$link->getFocus()->$lhsKey}' AND {$rhsTable}.deleted=$deleted";
+            
+            if (!isset($link->getFocus()->$lhsKey)) {
+                LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
+                $linkFocusLhsKey = null;
+            } else {
+                $linkFocusLhsKey = $link->getFocus()->$lhsKey;
+            }
+            
+            $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
             $order_by = '';
 
             //Check for role column

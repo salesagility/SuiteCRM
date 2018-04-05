@@ -78,11 +78,24 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdeleteAttachment()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $note = new Note();
 
         $note->id = 1;
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testget_summary_text()
@@ -185,11 +198,24 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $note = new Note();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testbean_implements()
