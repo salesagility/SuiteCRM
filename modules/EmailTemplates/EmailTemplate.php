@@ -525,10 +525,18 @@ class EmailTemplate extends SugarBean
 
             $fieldName = isset($field_def['name']) ? $field_def['name'] : null;
             if ($field_def['type'] == 'enum') {
-                if(!isset($fieldName)) {
-                    LoggerManager::getLogger()->fatal('Field name not found');
+                if (!isset($fieldName)) {
+                    LoggerManager::getLogger()->warn('Email Template / parse user level error: Field name not found');
                 } else {
-                    $translated = translate($field_def['options'], 'Users', $user->$fieldName);
+                    
+                    if (!isset($user->$fieldName)) {
+                        LoggerManager::getLogger()->warn('Email Template / parse user level error: User field not found. Field name was: "' . $fieldName . '"');
+                        $userFieldName = null;
+                    } else {
+                        $userFieldName = $user->$fieldName;
+                    }
+
+                    $translated = translate($field_def['options'], 'Users', $userFieldName);
 
                     if (isset($translated) && !is_array($translated)) {
                         $repl_arr["contact_user_" . $fieldName] = $translated;
@@ -661,7 +669,16 @@ class EmailTemplate extends SugarBean
 
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'enum') {
-                    $translated = translate($field_def['options'], 'Accounts', $contact->$fieldName);
+                    
+                    
+                    if (!isset($contact->$fieldName)) {
+                        LoggerManager::getLogger()->warn('Email Template / parse template bean error: Contact field not found. Field name was: "' . $fieldName . '"');
+                        $contactFieldName = null;
+                    } else {
+                        $contactFieldName = $contact->$fieldName;
+                    }
+                    
+                    $translated = translate($field_def['options'], 'Accounts', $contactFieldName);
 
                     if (isset($translated) && !is_array($translated)) {
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
@@ -689,43 +706,47 @@ class EmailTemplate extends SugarBean
 
         ///////////////////////////////////////////////////////////////////////
         ////	LOAD FOCUS DATA INTO REPL_ARR
-        foreach ($focus->field_defs as $field_def) {
-            $fieldName = $field_def['name'];
-            if (isset($focus->$fieldName)) {
-                if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
-                    continue;
-                }
+        if (!isset($focus->field_defs)) {
+            LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs is undefined.');
+        } else { 
+            foreach ($focus->field_defs as $field_def) {
+                $fieldName = $field_def['name'];
+                if (isset($focus->$fieldName)) {
+                    if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
+                        continue;
+                    }
 
-                if ($field_def['type'] == 'enum' && isset($field_def['options'])) {
-                    $translated = translate($field_def['options'], $bean_name, $focus->$fieldName);
+                    if ($field_def['type'] == 'enum' && isset($field_def['options'])) {
+                        $translated = translate($field_def['options'], $bean_name, $focus->$fieldName);
 
-                    if (isset($translated) && !is_array($translated)) {
+                        if (isset($translated) && !is_array($translated)) {
+                            $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
+                                strtolower($beanList[$bean_name]) . "_" . $fieldName => $translated,
+                            ));
+                        } else { // unset enum field, make sure we have a match string to replace with ""
+                            $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
+                                strtolower($beanList[$bean_name]) . "_" . $fieldName => '',
+                            ));
+                        }
+                    } else {
+                        // bug 47647 - translate currencies to appropriate values
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
-                            strtolower($beanList[$bean_name]) . "_" . $fieldName => $translated,
+                            strtolower($beanList[$bean_name]) . "_" . $fieldName => self::_convertToType($field_def['type'], $focus->$fieldName),
                         ));
-                    } else { // unset enum field, make sure we have a match string to replace with ""
+                    }
+                } else {
+                    if ($fieldName == 'full_name') {
+                        $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
+                            strtolower($beanList[$bean_name]) . '_full_name' => $focus->get_summary_text(),
+                        ));
+                    } else {
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
                             strtolower($beanList[$bean_name]) . "_" . $fieldName => '',
                         ));
                     }
-                } else {
-                    // bug 47647 - translate currencies to appropriate values
-                    $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
-                        strtolower($beanList[$bean_name]) . "_" . $fieldName => self::_convertToType($field_def['type'], $focus->$fieldName),
-                    ));
                 }
-            } else {
-                if ($fieldName == 'full_name') {
-                    $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
-                        strtolower($beanList[$bean_name]) . '_full_name' => $focus->get_summary_text(),
-                    ));
-                } else {
-                    $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
-                        strtolower($beanList[$bean_name]) . "_" . $fieldName => '',
-                    ));
-                }
-            }
-        } // end foreach()
+            } // end foreach()
+        }
 
         krsort($repl_arr);
         reset($repl_arr);
