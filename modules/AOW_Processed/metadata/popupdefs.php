@@ -33,6 +33,3 @@ $popupMeta = array('moduleMain' => 'AOW_Processed',
 						    'searchInputs'=> array('freeflow_processed_number', 'name', 'priority','status'),
 							
 						);
-?>
- 
- 

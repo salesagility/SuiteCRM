@@ -271,5 +271,3 @@ function display_shipping_vat($focus, $field, $value, $view){
     return format_number($value);
 
 }
-
-?>

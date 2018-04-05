@@ -191,5 +191,3 @@ return $this->createFileContents($moduleDir, $panels, $templateMeta);
 }
 
 }
-?>
-

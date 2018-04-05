@@ -176,7 +176,7 @@ $checks = array(
 	//commenting mbstring overload.
 	//'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
 );
-if($result['error_found'] == true || $result['warn_found']) {
+if($result['error_found'] == true || !empty($result['warn_found'])) {
 	if($result['error_found']) {
 		$stop = true;
 	}
@@ -289,4 +289,3 @@ $uwMain =<<<eoq
  </div>
 eoq;
 
-?>

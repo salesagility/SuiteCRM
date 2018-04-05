@@ -110,32 +110,46 @@ class Sugar_Smarty extends Smarty
         return true;
     }
 
-	/**
-	 * executes & returns or displays the template results
-	 *
-	 * @param string $resource_name
-	 * @param string|null $cache_id
-	 * @param string|null $compile_id
-	 * @param boolean $display
+    /**
+     * executes & returns or displays the template results
+     *
+     * @global array $app_list_strings
+     * @global array $app_strings
+     * @global array $mod_strings
+     * @global array $sugar_config
+     * @param string $resource_name
+     * @param string|null $cache_id
+     * @param string|null $compile_id
+     * @param boolean $display
      * @return string
-	 */
-    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
+     */
+    public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
+    {
+        global $app_list_strings;
+        global $app_strings;
+        global $mod_strings;
+        global $sugar_config;
 
-		/// Try and fetch the tpl from the theme folder
-		/// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
-		/// otherwise fall back to the default tpl
-		$current_theme = SugarThemeRegistry::current();
-		$theme_directory = $current_theme->__toString();
-		if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
-			$test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
-			if (file_exists($test_path)) {
-				$resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
-			}
-		}
-		///
-		return parent::fetch($resource_name, $cache_id, $compile_id, $display);
-	}
+        /// Try and fetch the tpl from the theme folder
+        /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
+        /// otherwise fall back to the default tpl
+        $current_theme = SugarThemeRegistry::current();
+        $theme_directory = $current_theme->__toString();
+        if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+            $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+            if (file_exists($test_path)) {
+                $resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+            }
+        }
+        ///
 
+        $this->assign('APP_LIST_STRINGS', $app_list_strings);
+        $this->assign('APP', $app_strings);
+        $this->assign('MOD', $mod_strings);
+        $this->assign('APP_CONFIG', $sugar_config);
+
+        return parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+    }
 
     /**
      * Log smarty error out to default log location

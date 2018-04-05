@@ -216,5 +216,3 @@ class Role extends SugarBean {
 	}
 
 }
-
-?>

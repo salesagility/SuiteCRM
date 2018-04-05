@@ -64,4 +64,3 @@ class CaseFeed extends FeedLogicBase {
 
     }
 }
-?>

@@ -81,4 +81,3 @@ class ViewJson extends SugarView{
 		sugar_cleanup(true);
 	}
 }
-?>

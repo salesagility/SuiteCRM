@@ -538,5 +538,3 @@ function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url){
   
     return $nav_html;
 }
-
-?>

@@ -68,6 +68,3 @@ $GLOBALS['ldapConfig'] = array(
 
 
 );
-
-
-?>

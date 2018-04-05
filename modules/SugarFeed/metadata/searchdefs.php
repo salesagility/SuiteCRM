@@ -62,4 +62,3 @@ $module_name = 'SugarFeed';
 						),
 					),
  			   );
-?>

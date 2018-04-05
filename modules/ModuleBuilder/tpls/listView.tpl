@@ -112,7 +112,7 @@ studiotabs.reset();
                     {sugar_getimage name="SugarLogic/icon_dependent" alt=$mod_strings.LBL_DEPENDANT ext=".png" other_attributes=''}
                 {/if}
                 {* END SUGARCRM flav=pro ONLY *}
-                <img src="{sugar_getimagepath file='edit_inline.gif'}" style="cursor: pointer;"
+                <button class="suitepicon suitepicon-action-edit" style="cursor: pointer;"
 				onclick="var value_label = document.getElementById('subslot{$modCounter}label').innerHTML.replace(/^\s+|\s+$/g,''); 
 				    {if !($view|substr:-6 == "search") }
 					var value_width = document.getElementById('subslot{$modCounter}width').innerHTML;
@@ -129,7 +129,7 @@ studiotabs.reset();
 							{if ($view|substr:-6 != "search") }
 							+ '&id_width=subslot{$modCounter}width&name_width={$MOD.LBL_WIDTH|escape:'url'}&value_width=' + encodeURIComponent(value_width)
 							{/if}
-					);"
+					);return false;"
 				>
             </td>
             </tr>

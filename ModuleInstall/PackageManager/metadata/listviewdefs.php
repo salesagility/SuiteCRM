@@ -64,4 +64,3 @@ $listViewDefs['module_loader']['releases'] = array(
         'default' => true,
         'link' => false),
 );
-?>

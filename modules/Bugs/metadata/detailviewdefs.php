@@ -118,4 +118,3 @@ $viewdefs['Bugs']['DetailView'] = array(
       ),
 )
 );
-?>

@@ -209,4 +209,3 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
     }
 
 }
-?>

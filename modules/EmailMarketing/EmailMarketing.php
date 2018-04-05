@@ -104,9 +104,12 @@ class EmailMarketing extends SugarBean
 		}
 
 		$timedate = TimeDate::getInstance();
-		$timedate->setUser($current_user);
-		if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start)) {
-			$dateStart = $timedate->asDb($dateTime);
+
+        $userTimeZone = $current_user->getPreference('timezone');
+        $timeZone = new DateTimeZone($userTimeZone);
+
+        if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start,$timeZone)) {
+            $dateStart = $timedate->asDb($dateTime);
 			$this->date_start = $dateStart;
 		}
 
@@ -122,6 +125,7 @@ class EmailMarketing extends SugarBean
 			$this->time_start = $date_start_array[1];
         	$this->date_start = $date_start_array[0];
         }
+
         return $this;
 	}
 
@@ -242,4 +246,3 @@ class EmailMarketing extends SugarBean
 		return $errors;
 	}
 }
-?>

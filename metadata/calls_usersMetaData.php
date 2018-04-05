@@ -70,4 +70,3 @@ $dictionary['calls_users'] = array(
         ),
     ),
 );
-?>

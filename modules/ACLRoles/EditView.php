@@ -120,5 +120,3 @@ $buttons = array(
 $action_buttons = $buttons;
 $sugar_smarty->assign('ACTION_MENU', $action_buttons);
 echo $sugar_smarty->fetch('modules/ACLRoles/EditView.tpl');
-
-?>

@@ -77,17 +77,23 @@ function add_blank_option($options){
 	return $options;
 }
 
-/*
- * Given an array and key names, return a string in the form of $array_name[$key_name[0]][$key_name[1]]... = $value recursively.
- * @params : $key_names - array of keys
- * 			 $array_name- name of the array
- * 			 $value -value of the array
- * 			 $eval - evals the generated string if true, note that the array name must be in the global space!
- * @return : example - string $array_name['a']['b']['c'][.] = 'hello'
+/**
+ * Exports array to string
+ *
+ * @param array $key_names array of keys
+ * @param string $array_name  name of the array
+ * @param mixed $value value of the array
+ * @param bool $eval evaluates the generated string if true, note that the array name must be in the global space!
+ * @return mixed|string string $array_name['a']['b']['c'][.] = 'hello'
  */
-function override_value_to_string_recursive($key_names, $array_name, $value, $eval=false){
-	if ($eval) return eval( "\${$array_name}". override_recursive_helper($key_names, $array_name, $value));
-	else return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
+function override_value_to_string_recursive($key_names, $array_name, $value, $eval = false)
+{
+    global $log;
+	if ($eval) {
+	    $log->deprecated('$eval parameter is deprecated');
+	}
+
+	return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_recursive_helper($key_names, $array_name, $value){

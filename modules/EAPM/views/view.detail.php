@@ -112,5 +112,3 @@ class EAPMViewDetail extends ViewDetail {
         }
  	}
 }
-
-?>

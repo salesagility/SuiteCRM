@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -89,6 +89,7 @@ class Popup_Picker
         global $focus;
         global $mod_strings;
         global $app_strings;
+        global $app_list_strings;
         global $timedate;
 
         $summary_list = array();
@@ -198,9 +199,10 @@ class Popup_Picker
                     'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
                     'module' => 'Meetings',
-                    'status' => $meeting->status,
+                    'module' => 'Meetings',
+                    'status' => $app_list_strings['meeting_status_dom'][$meeting->status],
                     'parent_id' => $meeting->parent_id,
-                    'parent_type' => $meeting->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$meeting->parent_type],
                     'parent_name' => $meeting->parent_name,
                     'contact_id' => $meeting->contact_id,
                     'contact_name' => $meeting->contact_name,
@@ -218,9 +220,9 @@ class Popup_Picker
                     'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
                     'module' => 'Meetings',
-                    'status' => $meeting->status,
+                    'status' => $app_list_strings['meeting_status_dom'][$meeting->status],
                     'parent_id' => $meeting->parent_id,
-                    'parent_type' => $meeting->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$meeting->parent_type],
                     'parent_name' => $meeting->parent_name,
                     'contact_id' => $meeting->contact_id,
                     'contact_name' => $meeting->contact_name,
@@ -248,9 +250,9 @@ class Popup_Picker
                     'type' => $mod_strings['LBL_CALL_TYPE'],
                     'direction' => $call->direction,
                     'module' => 'Calls',
-                    'status' => $call->status,
+                    'status' => $app_list_strings['call_status_dom'][$call->status],
                     'parent_id' => $call->parent_id,
-                    'parent_type' => $call->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$call->parent_type],
                     'parent_name' => $call->parent_name,
                     'contact_id' => $call->contact_id,
                     'contact_name' => $call->contact_name,
@@ -268,9 +270,9 @@ class Popup_Picker
                     'direction' => $call->direction,
                     'type' => $mod_strings['LBL_CALL_TYPE'],
                     'module' => 'Calls',
-                    'status' => $call->status,
+                    'status' => $app_list_strings['call_status_dom'][$call->status],
                     'parent_id' => $call->parent_id,
-                    'parent_type' => $call->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$call->parent_type],
                     'parent_name' => $call->parent_name,
                     'contact_id' => $call->contact_id,
                     'contact_name' => $call->contact_name,
@@ -306,7 +308,7 @@ class Popup_Picker
                 'module' => 'Emails',
                 'status' => '',
                 'parent_id' => $email->parent_id,
-                'parent_type' => $email->parent_type,
+                'parent_type' => $app_list_strings['parent_type_display'][$email->parent_type],
                 'parent_name' => $email->parent_name,
                 'contact_id' => $email->contact_id,
                 'contact_name' => $email->contact_name,
@@ -347,7 +349,7 @@ class Popup_Picker
                     'module' => 'Emails',
                     'status' => '',
                     'parent_id' => $email->parent_id,
-                    'parent_type' => $email->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$email->parent_type],
                     'parent_name' => $email->parent_name,
                     'contact_id' => $email->contact_id,
                     'contact_name' => $email->contact_name,
@@ -371,7 +373,7 @@ class Popup_Picker
                     'module' => 'Notes',
                     'status' => '',
                     'parent_id' => $note->parent_id,
-                    'parent_type' => $note->parent_type,
+                    'parent_type' => $app_list_strings['parent_type_display'][$note->parent_type],
                     'parent_name' => $note->parent_name,
                     'contact_id' => $note->contact_id,
                     'contact_name' => $note->contact_name,
@@ -393,7 +395,7 @@ class Popup_Picker
 
 
         if (count($summary_list) > 0) {
-            $summary_list = array_csort($summary_list, 'sort_value', SORT_DESC);
+            array_multisort(array_column($summary_list, 'sort_value'), SORT_DESC, $summary_list);
 
             foreach ($summary_list as $list) {
                 if ($list['module'] === 'Tasks') {
@@ -413,6 +415,9 @@ class Popup_Picker
         $template = new Sugar_Smarty();
         $template->assign('app', $app_strings);
         $template->assign('mod', $mod_strings);
+        $theme = SugarThemeRegistry::current();
+        $css = $theme->getCSS();
+        $template->assign('css', $css);
         $template->assign('theme', SugarThemeRegistry::current());
         $template->assign('langHeader', get_language_header());
         $template->assign('summaryList', $summary_list);

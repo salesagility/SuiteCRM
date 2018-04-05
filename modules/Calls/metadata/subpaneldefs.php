@@ -106,4 +106,3 @@ $layout_defs['Calls'] = array(
         ),
     ),
 );
-?>

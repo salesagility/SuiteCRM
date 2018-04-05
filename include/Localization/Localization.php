@@ -72,6 +72,7 @@ class Localization {
 		'KOI8-U',       //Cyrillic Ukranian
 		'SJIS',         //MS Japanese
 		'UTF-8',        //UTF-8
+		'UTF-16LE',     //UTF-16LE
 		);
 	var $localeNameFormat;
 	var $localeNameFormatDefault;
@@ -828,5 +829,3 @@ eoq;
         return false;
     }
 } // end class def
-
-?>

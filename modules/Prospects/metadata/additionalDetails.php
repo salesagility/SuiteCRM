@@ -92,6 +92,3 @@ function additionalDetailsProspect($fields) {
 				 'viewLink' => "index.php?action=DetailView&module=Prospects&return_module=Prospects&record={$fields['ID']}");
 	
 }
- 
- ?>
- 

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -138,7 +138,7 @@ $mod_strings = array(
         ),
         'layoutEditor' => array(
             'defaultdetailview' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>DetailView</b>.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
-        'defaultquickcreate' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>QuickCreate</b> form.<br><br>The QuickCreate form appears in the subpanels for the module when the Create button is clicked.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
+            'defaultquickcreate' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>QuickCreate</b> form.<br><br>The QuickCreate form appears in the subpanels for the module when the Create button is clicked.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
             //this default will be used for edit view
             'default' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>EditView</b>.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
             'saveBtn' => 'Click <b>Save</b> to preserve the changes you made to the layout since the last time you saved it.<br><br>The changes will not be displayed in the module until you Deploy the saved changes.',
@@ -179,7 +179,7 @@ $mod_strings = array(
             'fieldsBtn' => 'Create and customize <b>Fields</b> to store information in the module.',
             'labelsBtn' => 'Edit the <b>Labels</b> that display for the fields and other titles in the module.',
             'relationshipsBtn' => 'Add new or view existing <b>Relationships</b> for the module.',
-            'layoutsBtn' => 'Customize the module <b>Layouts</b>. The layouts are the different views of the module contaning fields.<br><br>You can determine which fields appear and how they are organized in each layout.',
+            'layoutsBtn' => 'Customize the module <b>Layouts</b>. The layouts are the different views of the module containing fields.<br><br>You can determine which fields appear and how they are organized in each layout.',
             'subpanelBtn' => 'Determine which fields appear in the <b>Subpanels</b> in the module.',
             'portalBtn' => 'Customize the module <b>Layouts</b> that appear in the <b>SuiteCRM Portal</b>.',
             'layoutsHelp' => 'The module <b>Layouts</b> that can be customized appear here.<br><br>The layouts display fields and field data.<br><br>Click an icon to select the layout to edit.',
@@ -228,7 +228,7 @@ $mod_strings = array(
         ),
         'relationshipsHelp' => array(
             'default' => 'The <b>Relationships</b> that have been created between the module and other modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships. The relationship properties are stored in the database tables belonging to the primary module.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view and edit the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.',
-            'addrelbtn' => 'mouse over help for add relationship..',
+            'addrelbtn' => 'mouse over help for add relationship...',
             'addRelationship' => '<b>Relationships</b> can be created between the module and another custom module or a deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
         ),
         'labelsHelp' => array(
@@ -261,7 +261,7 @@ $mod_strings = array(
             'editView' => 'Here you can edit the existing fields. You can remove any of the existing fields or add available fields in the left panel.',
             'create' => 'When choosing the type of <b>Type</b> of module that you wish to create, keep in mind the types of fields you would like to have within the module. <br/><br/>Each module template contains a set of fields pertaining to the type of module described by the title.<br/><br/><b>Basic</b> - Provides basic fields that appear in standard modules, such as the Name, Assigned to, Team, Date Created and Description fields.<br/><br/> <b>Company</b> - Provides organization-specific fields, such as Company Name, Industry and Billing Address. Use this template to create modules that are similar to the standard Accounts module.<br/><br/> <b>Person</b> - Provides individual-specific fields, such as Salutation, Title, Name, Address and Phone Number. Use this template to create modules that are similar to the standard Contacts and Leads modules.<br/><br/><b>Issue</b> - Provides case- and bug-specific fields, such as Number, Status, Priority and Description. Use this template to create modules that are similar to the standard Cases and Bugs modules.<br/><br/>Note: After you create the module, you can edit the labels of the fields provided by the template, as well as create custom fields to add to the module layouts.',
             'afterSave' => 'Customize the module to suit your needs by editing and creating fields, establishing relationships with other modules and arranging the fields within the layouts.<br/><br/>To view the template fields and manage custom fields within the module, click <b>View Fields</b>.<br/><br/>To create and manage relationships between the module and other modules, whether modules already in the application or other custom modules within the same package, click <b>View Relationships</b>.<br/><br/>To edit the module layouts, click <b>View Layouts</b>. You can change the Detail View, Edit View and List View layouts for the module just as you would for modules already in the application within Studio.<br/><br/> To create a module with the same properties as the current module, click <b>Duplicate</b>. You can further customize the new module.',
-            'viewfields' => 'The fields in the module can be customized to suit your needs.<br/><br/>You can not delete standard fields, but you can remove them from the appropriate layouts within the Layouts pages. <br/><br/>You can quickly create new fields that have similar properties to existing fields by clicking <b>Clone</b> in the <b>Properties</b> form. Enter any new properties, and then click <b>Save</b>.<br/><br/>It is recommended that you set all of the properties for the standard fields and custom fields before you publish and install the package containing the custom module.',
+            'viewfields' => 'The fields in the module can be customized to suit your needs.<br/><br/>You cannot delete standard fields, but you can remove them from the appropriate layouts within the Layouts pages. <br/><br/>You can quickly create new fields that have similar properties to existing fields by clicking <b>Clone</b> in the <b>Properties</b> form. Enter any new properties, and then click <b>Save</b>.<br/><br/>It is recommended that you set all of the properties for the standard fields and custom fields before you publish and install the package containing the custom module.',
             'viewrelationships' => 'You can create many-to-many relationships between the current module and other modules in the package, and/or between the current module and modules already installed in the application.<br><br> To create one-to-many and one-to-one relationships, create <b>Relate</b> and <b>Flex Relate</b> fields for the modules.',
             'viewlayouts' => 'You can control what fields are available for capturing data within the <b>Edit View</b>. You can also control what data displays within the <b>Detail View</b>. The views do not have to match. <br/><br/>The Quick Create form is displayed when the <b>Create</b> is clicked in a module subpanel. By default, the <b>Quick Create</b> form layout is the same as the default <b>Edit View</b> layout. You can customize the Quick Create form so that it contains less and/or different fields than the Edit View layout. <br><br>You can determine the module security using Layout customization along with <b>Role Management</b>.<br><br>',
             'existingModule' => 'After creating and customizing this module, you can create additional modules or return to the package to <b>Publish</b> or <b>Deploy</b> the package.<br><br>To create additional modules, click <b>Duplicate</b> to create a module with the same properties as the current module, or navigate back to the package, and click <b>New Module</b>.<br><br> If you are ready to <b>Publish</b> or <b>Deploy</b> the package containing this module, navigate back to the package to perform these functions. You can publish and deploy packages containing at least one module.',
@@ -301,7 +301,7 @@ $mod_strings = array(
             'description' => 'The <b>Description</b> of the package will be displayed in Module Loader after the package is uploaded for installation in Studio.',
         ),
         'studioWizard' => array(
-            'mainHelp' => 'Welcome to the <b>Developer Tools</b1> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
+            'mainHelp' => 'Welcome to the <b>Developer Tools</b> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
             'studioBtn' => 'Use <b>Studio</b> to customize installed modules by changing the field arrangement, selecting what fields are available and creating custom data fields.',
             'mbBtn' => 'Use <b>Module Builder</b> to create new modules.',
             'appBtn' => 'Use Application mode to customize various properties of the program, such as how many TPS reports are displayed on the homepage',
@@ -313,14 +313,13 @@ $mod_strings = array(
             'labelsBtn' => 'Click <b>Save</b> to save your custom labels.',
             'layoutsBtn' => 'Customize the <b>Layouts</b> of the Edit, Detail, List and search views.',
             'subpanelBtn' => 'Edit what information is shown in this modules subpanels.',
-            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/<br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
+            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/><br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
             'subpanelHelp' => 'Select a <b>Subpanel</b> to edit.',
             'searchHelp' => 'Select a <b>Search</b> layout to edit.',
             'newPackage' => 'Click <b>New Package</b> to create a new package.',
             'mbHelp' => '<b>Welcome to Module Builder.</b><br/><br/>Use <b>Module Builder</b> to create packages containing custom modules based on standard or custom objects. <br/><br/>To begin, click <b>New Package</b> to create a new package, or select a package to edit.<br/><br/> A <b>package</b> acts as a container for custom modules, all of which are part of one project. The package can contain one or more custom modules that can be related to each other or to modules in the application. <br/><br/>Examples: You might want to create a package containing one custom module that is related to the standard Accounts module. Or, you might want to create a package containing several new modules that work together as a project and that are related to each other and to modules in the application.',
             'exportBtn' => 'Click <b>Export Customizations</b> to create a package containing customizations made in Studio for specific modules.',
         ),
-
 
 
     ),
@@ -347,16 +346,16 @@ $mod_strings = array(
     'LBL_CURRENCY' => 'Currency',
     'LBL_DASHLET' => 'SuiteCRM Dashlet',
     'LBL_DASHLETLISTVIEW' => 'SuiteCRM Dashlet ListView',
-    'LBL_POPUP' => 'PopupView',
+    'LBL_POPUP' => 'Popup View',
     'LBL_POPUPLISTVIEW' => 'Popup ListView',
     'LBL_POPUPSEARCH' => 'Popup Search',
     'LBL_DASHLETSEARCHVIEW' => 'SuiteCRM Dashlet Search',
-    'LBL_DETAILVIEW' => 'DetailView',
+    'LBL_DETAILVIEW' => 'Detail View',
     'LBL_DROP_HERE' => '[Drop Here]',
     'LBL_EDIT' => 'Edit',
     'LBL_EDIT_LAYOUT' => 'Edit Layout',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
-    'LBL_EDITVIEW' => 'EditView',
+    'LBL_EDITVIEW' => 'Edit View',
     'LBL_FILLER' => '(filler)',
     'LBL_FIELDS' => 'Fields',
     'LBL_FAILED_TO_SAVE' => 'Failed To Save',
@@ -364,23 +363,25 @@ $mod_strings = array(
     'LBL_HOMEPAGE_PREFIX' => 'My',
     'LBL_LAYOUT_PREVIEW' => 'Layout Preview',
     'LBL_LAYOUTS' => 'Layouts',
-    'LBL_LISTVIEW' => 'ListView',
+    'LBL_LISTVIEW' => 'List View',
     'LBL_MODULES' => 'Modules',
     'LBL_MODULE_TITLE' => 'Studio',
     'LBL_NEW_PACKAGE' => 'New Package',
     'LBL_NEW_PANEL' => 'New Panel',
     'LBL_NEW_ROW' => 'New Row',
     'LBL_PACKAGE_DELETED' => 'Package Deleted',
-    'LBL_PUBLISHING' => 'Publishing ...',
+    'LBL_PUBLISHING' => 'Publishing...',
     'LBL_PUBLISHED' => 'Published',
     'LBL_SELECT_FILE' => 'Select File',
     'LBL_SUBPANELS' => 'Subpanels',
     'LBL_SUBPANEL' => 'Subpanel',
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
+    'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_FILTER' => 'Filter',
     'LBL_TOOLBOX' => 'Toolbox',
-    'LBL_QUICKCREATE' => 'QuickCreate',
+    'LBL_QUICKCREATE' => 'Quick Create',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
     'LBL_BLANK' => '-blank-',
@@ -397,7 +398,7 @@ $mod_strings = array(
     'LBL_DROPDOWN_ITEMS' => 'List Items',
     'LBL_DROPDOWN_ITEM_NAME' => 'Item Name',
     'LBL_DROPDOWN_ITEM_LABEL' => 'Display Label',
-    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to DetailView',
+    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to Detail View',
     'LBL_SYNC_TO_DETAILVIEW_HELP' => 'Select this option to sync this EditView layout to the corresponding DetailView layout. Fields and field placement in the EditView<br>will be sync\'d and saved to the DetailView automatically upon clicking Save or Save & Deploy in the EditView. <br>Layout changes will not be able to be made in the DetailView.',
     'LBL_SYNC_TO_DETAILVIEW_NOTICE' => 'This DetailView is sync\'d with the corresponding EditView.<br> Fields and field placement in this DetailView reflect the fields and field placement in the EditView.<br> Changes to the DetailView cannot be saved or deployed within this page. Make changes or un-sync the layouts in the EditView. ',
     'LBL_COPY_FROM_EDITVIEW' => 'Copy from EditView',
@@ -470,7 +471,7 @@ $mod_strings = array(
     'LBL_DEFAULT' => 'Default',
     'LBL_HIDDEN' => 'Hidden',
     'LBL_AVAILABLE' => 'Available',
-    'LBL_LISTVIEW_DESCRIPTION' => 'There are three columns displayed below. The <b>Default</b> column contains fields that are displayed in a list view by default. The <b>Additional</b> column contains fields that a user can choose to use for creating a custom view. The <b>Available</b> column displays fields availabe for you as an admin to add to the Default or Additional columns for use by users.',
+    'LBL_LISTVIEW_DESCRIPTION' => 'There are three columns displayed below. The <b>Default</b> column contains fields that are displayed in a list view by default. The <b>Additional</b> column contains fields that a user can choose to use for creating a custom view. The <b>Available</b> column displays fields available for you as an admin to add to the Default or Additional columns for use by users.',
     'LBL_LISTVIEW_EDIT' => 'List View Editor',
 
 //Manager Backups History
@@ -544,6 +545,12 @@ $mod_strings = array(
     'LBL_RESTORE_DEFAULT' => 'Restore Default',
     'LBL_ACTIVITIES' => 'Activities',
     'LBL_NEW' => 'New',
+    'LBL_TYPE_BASIC' => 'basic',
+    'LBL_TYPE_COMPANY' => 'company',
+    'LBL_TYPE_PERSON' => 'person',
+    'LBL_TYPE_ISSUE' => 'issue',
+    'LBL_TYPE_SALE' => 'sale',
+    'LBL_TYPE_FILE' => 'file',
     'LBL_RSUB' => 'This is the subpanel that will be displayed in your module',
     'LBL_MSUB' => 'This is the subpanel that your module provides to the related module for display',
     'LBL_MB_IMPORTABLE' => 'Importing',
@@ -564,6 +571,14 @@ $mod_strings = array(
     'LBL_EC_EXPORTBTN' => 'Export',
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
+    'LBL_EC_VIEWS' => 'customized view(s)',
+    'LBL_EC_SUGARFEEDS' => 'customized Feed(s)',
+    'LBL_EC_DASHLETS' => 'customized Dashlet(s)',
+    'LBL_EC_CSS' => 'customized css(s)',
+    'LBL_EC_TPLS' => 'customized tpls(s)',
+    'LBL_EC_IMAGES' => 'customized image(s)',
+    'LBL_EC_JS' => 'customized js(s)',
+    'LBL_EC_QTIP' => 'customized qtip(s)',
 
 //AJAX STATUS
     'LBL_AJAX_FAILED_DATA' => 'Failed to retrieve data',
@@ -574,8 +589,8 @@ $mod_strings = array(
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
-    'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
-    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
+    'LBL_AJAX_LOADING_TITLE' => 'In Progress...',
+    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading...',
 
 //JS
     'LBL_JS_REMOVE_PACKAGE' => 'Are you sure you wish to remove this package? This will permanently delete all files associated with this package.',

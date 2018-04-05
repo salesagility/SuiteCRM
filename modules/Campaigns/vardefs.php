@@ -275,7 +275,46 @@ $dictionary['Campaign'] = array('audited' => true,
             'link_file' => 'modules/Campaigns/ProspectLink.php'
         ),
 
-
+        "survey" => array (
+                'name' => 'survey',
+                'type' => 'link',
+                'relationship' => 'surveys_campaigns',
+                'source' => 'non-db',
+                'module' => 'Surveys',
+                'bean_name' => 'Surveys',
+                'vname' => 'LBL_CAMPAIGN_SURVEYS',
+                'id_name' => 'survey_id',
+                'link_type'=>'one',
+                'side' => 'left',
+        ),
+        "survey_name" => array (
+                'name' => 'survey_name',
+                'type' => 'relate',
+                'source' => 'non-db',
+                'vname' => 'LBL_CAMPAIGN_SURVEYS',
+                'save' => true,
+                'id_name' => 'survey_id',
+                'link' => 'survey',
+                'table' => 'surveys',
+                'module' => 'Surveys',
+                'rname' => 'name',
+        ),
+        "survey_id" => array (
+                'name' => 'survey_id',
+                'type' => 'id',
+                'reportable' => false,
+                'vname' => 'LBL_CAMPAIGN_SURVEYS',
+        ),
+        "surveyresponses_campaigns" => array (
+                'name' => 'surveyresponses_campaigns',
+                'type' => 'link',
+                'relationship' => 'surveyresponses_campaigns',
+                'source' => 'non-db',
+                'module' => 'SurveyResponses',
+                'bean_name' => 'SurveyResponses',
+                'side' => 'right',
+                'vname' => 'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE',
+        ),
     ),
     'indices' => array(
         array(
@@ -330,8 +369,16 @@ $dictionary['Campaign'] = array('audited' => true,
         'campaign_modified_user' => array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
             'rhs_module' => 'Campaigns', 'rhs_table' => 'campaigns', 'rhs_key' => 'modified_user_id',
             'relationship_type' => 'one-to-many'),
+        'surveyresponses_campaigns' => array(
+                'rhs_module' => 'SurveyResponses',
+                'rhs_table' => 'surveyresponses',
+                'rhs_key' => 'campaign_id',
+                'lhs_module' => 'Campaigns',
+                'lhs_table' => 'campaigns',
+                'lhs_key' => 'id',
+                'relationship_type' => 'one-to-many',
+        ),
     )
 );
 VardefManager::createVardef('Campaigns', 'Campaign', array('default', 'assignable', 'security_groups',
 ));
-?>

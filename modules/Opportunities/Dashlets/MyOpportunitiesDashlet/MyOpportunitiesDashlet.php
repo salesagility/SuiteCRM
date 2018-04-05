@@ -78,7 +78,7 @@ class MyOpportunitiesDashlet extends DashletGeneric {
     //4.5.0g fix for upgrade issue where user_preferences table still refer to column as 'amount'
 
     //Bug fix for dashlet issue with amount_us and amount fields.
-    function process($lvsParams = array(), $id=NULL) {
+    function process($lvsParams = array(), $id = null) {
 //     	if(!empty($this->displayColumns)) {
 //     	if(array_search('amount', $this->displayColumns)) {
 //     		$this->displayColumns[array_search('amount', $this->displayColumns)] = 'amount_usdollar';
@@ -88,5 +88,3 @@ class MyOpportunitiesDashlet extends DashletGeneric {
     }
 
 }
-
-?>

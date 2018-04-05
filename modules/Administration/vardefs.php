@@ -147,6 +147,3 @@ $dictionary['UpgradeHistory'] = array(
 
     ),
 );
-
-
-?>

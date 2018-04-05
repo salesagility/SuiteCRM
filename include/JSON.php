@@ -61,7 +61,7 @@ class JSON
     /**
      * JSON encode a string
      *
-     * @param string $string
+     * @param array $string
      * @param bool $addSecurityEnvelope defaults to false
      * @param bool $encodeSpecial
      * @return string

@@ -146,4 +146,3 @@ $focus->save($GLOBALS['check_notify']);
 $return_id = $focus->id;
 
 handleRedirect($return_id,'Tasks');
-?>

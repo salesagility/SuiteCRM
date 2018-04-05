@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -104,11 +104,12 @@ $mod_strings = array(
         'Portal' => 'Portal',
         'Charts' => 'Charts',
         'Tools' => 'Tools',
-        'Miscellaneous' => 'Miscellaneous'),
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+        'Miscellaneous' => 'Miscellaneous'
+    ),
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
     'LBL_DASHLET_CONFIGURE_GENERAL' => 'General',
     'LBL_DASHLET_CONFIGURE_FILTERS' => 'Filters',
@@ -137,15 +138,15 @@ $mod_strings = array(
 
     'LBL_SOURCE_SUGAR' => 'SugarCRM Inc - providers of CE framework',
 
-  'LBL_DASHLET_TITLE' => 'My Sites',
-  'LBL_DASHLET_OPT_TITLE' => 'Title',
-  'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
-  'LBL_DASHLET_OPT_URL' => 'Website Location',
-  'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
-  'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
-  'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
-	'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
-	'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
+    'LBL_DASHLET_TITLE' => 'My Sites',
+    'LBL_DASHLET_OPT_TITLE' => 'Title',
+    'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
+    'LBL_DASHLET_OPT_URL' => 'Website Location',
+    'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
+    'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
+    'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
+    'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
     'LBL_TOUR_HOME' => 'Home Icon',
     'LBL_TOUR_HOME_DESCRIPTION' => 'Quickly get back to your Home Page dashboard in one click.',
     'LBL_TOUR_MODULES' => 'Modules',
@@ -198,4 +199,29 @@ $mod_strings = array(
 
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',
 
+    'LBL_SAVE_BUTTON' => 'Save',
+    'LBL_DELETE_BUTTON' => 'Delete',
+    'LBL_APPLY_BUTTON' => 'Apply',
+    'LBL_SEND_INVITES' => 'Save & Send Invites',
+    'LBL_CANCEL_BUTTON' => 'Cancel',
+    'LBL_CLOSE_BUTTON' => 'Close',
+
+    'LBL_CREATE_NEW_RECORD' => 'Create Activity',
+    'LBL_CREATE_CALL' => 'Log Call',
+    'LBL_CREATE_MEETING' => 'Schedule Meeting',
+
+    'LBL_GENERAL_TAB' => 'Details',
+    'LBL_PARTICIPANTS_TAB' => 'Invitees',
+    'LBL_REPEAT_TAB' => 'Recurrence',
+
+    'LBL_REPEAT_TYPE' => 'Repeat',
+    'LBL_REPEAT_INTERVAL' => 'Every',
+    'LBL_REPEAT_END' => 'End',
+    'LBL_REPEAT_END_AFTER' => 'After',
+    'LBL_REPEAT_OCCURRENCES' => 'recurrences',
+    'LBL_REPEAT_END_BY' => 'By',
+    'LBL_REPEAT_DOW' => 'On',
+    'LBL_REPEAT_UNTIL' => 'Repeat Until',
+    'LBL_REPEAT_COUNT' => 'Number of recurrences',
+    'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
 );

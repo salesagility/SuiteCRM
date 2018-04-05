@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -121,7 +121,6 @@ $mod_strings = array(
     'ERR_UW_REMOVE_FAILED' => 'Could not remove file ',
     'ERR_UW_UPDATE_CONFIG' => "Error updating config.php with new version information.",
     'ERR_UW_UPLOAD_ERROR' => "There was an error uploading the file, please try again!<br>\n",
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
@@ -276,10 +275,10 @@ $mod_strings = array(
     'LBL_LDAP_SERVER_HOSTNAME' => 'Server:',
     'LBL_LDAP_SERVER_PORT' => 'Port Number:',
     'LBL_LDAP_ADMIN_USER' => 'User Name:',
-    'LBL_LDAP_ADMIN_USER_DESC' => 'Used to search for the SuiteCRM user. [May need to be fully qualified] It will bind anonymously if not provided.',
+    'LBL_LDAP_ADMIN_USER_DESC' => 'Used to search for the LDAP user. This may need to be fully qualified.',
     'LBL_LDAP_ADMIN_PASSWORD' => 'Password:',
     'LBL_LDAP_AUTHENTICATION' => 'Authentication:',
-    'LBL_LDAP_AUTHENTICATION_DESC' => 'Bind to the LDAP server using a specific users credentials',
+    'LBL_LDAP_AUTHENTICATION_DESC' => 'Bind to the LDAP server using a specific users credentials. It will bind anonymously if not provided.',
     'LBL_LDAP_AUTO_CREATE_USERS' => 'Auto Create Users:',
     'LBL_LDAP_USER_DN' => 'User DN:',
     'LBL_LDAP_GROUP_DN' => 'Group DN:',
@@ -293,11 +292,11 @@ $mod_strings = array(
     'LBL_LDAP_GROUP_ATTR' => 'Group Attribute:',
     'LBL_LDAP_GROUP_ATTR_REQ_DN' => 'With User DN:',
     'LBL_LDAP_GROUP_ATTR_REQ_DN_DESC' => 'Include the User DN with the User Attribute when checking group membership',
-    'LBL_LDAP_USER_FILTER_DESC' => 'Any additional filter params to apply when authenticating users e.g.\nis_suitecrm_user=1 or (is_suitecrm_user=1)(is_sales=1)',
+    'LBL_LDAP_USER_FILTER_DESC' => 'Any additional filter params to apply when authenticating users e.g.\\nis_suitecrm_user=1 or (is_suitecrm_user=1)(is_sales=1)',
     'LBL_LDAP_LOGIN_ATTRIBUTE' => 'Login Attribute:',
     'LBL_LDAP_BIND_ATTRIBUTE' => 'Bind Attribute:',
-    'LBL_LDAP_BIND_ATTRIBUTE_DESC' => 'For Binding the LDAP User<br>Examples:&nbsp;<b>AD:</b>&nbsp;userPrincipalName,&nbsp;<b>openLDAP:</b>&nbsp;userPrincipalName,&nbsp;<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid ',
-    'LBL_LDAP_LOGIN_ATTRIBUTE_DESC' => 'For searching for the LDAP User<br>Examples:<b>AD:</b>&nbsp;userPrincipalName,&nbsp;<b>openLDAP:</b>&nbsp;dn,&nbsp;<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;dn ',
+    'LBL_LDAP_BIND_ATTRIBUTE_DESC' => 'For Binding the LDAP User<br>Examples:&nbsp;<b>AD:</b>&nbsp;userPrincipalName,&nbsp;<b>openLDAP:</b>&nbsp;dn,&nbsp;<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid ',
+    'LBL_LDAP_LOGIN_ATTRIBUTE_DESC' => 'For searching for the LDAP User<br>Examples:<b>AD:</b>&nbsp;userPrincipalName,&nbsp;<b>openLDAP:</b>&nbsp;cn,&nbsp;<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;dn ',
     'LBL_LDAP_SERVER_HOSTNAME_DESC' => 'Example: ldap.example.com or ldaps://ldap.example.com for SSL',
     'LBL_LDAP_SERVER_PORT_DESC' => 'Example: 389 or 636 for SSL',
     'LBL_LDAP_GROUP_NAME' => 'Group Name:',
@@ -366,7 +365,7 @@ $mod_strings = array(
     'LBL_MI_UN_RELATIONSHIPS_DROP' => 'droping table ',
     'LBL_MI_REPAIR_INDICES' => 'Repairing indexes',
     'LBL_MI_IN_CONNECTORS' => 'Installing Connectors',
-    'LBL_MI_UN_CONNECTORS' => 'UnInstalling Connectors',
+    'LBL_MI_UN_CONNECTORS' => 'Uninstalling Connectors',
     'LBL_ML_ACTION' => 'Action',
     'LBL_ML_CANCEL' => 'Cancel',
     'LBL_ML_COMMIT' => 'Commit',
@@ -394,8 +393,9 @@ $mod_strings = array(
     'LBL_PASSWORD_TEMPLATE' => 'Email Templates',
     'LBL_PASSWORD_CREATE_TEMPLATE' => 'Create',
     'LBL_PASSWORD_EDIT_TEMPLATE' => 'Edit',
-    'LBL_PASSWORD_GENERATE_TEMPLATE_MSG' => 'Email template containing system-generated password',
-    'LBL_PASSWORD_LOST_TEMPLATE_MSG' => 'Email template containing system-generated link to reset password',
+    'LBL_PASSWORD_GENERATE_TEMPLATE_MSG' => 'For system-generated password',
+    'LBL_PASSWORD_LOST_TEMPLATE_MSG' => 'For system-generated link to reset password',
+    'LBL_TWO_FACTOR_AUTH_EMAIL_TPL' => 'For system-generated two-factor authentication code',
     'LBL_PASSWORD_SYST_GENERATED_PWD_ON' => 'Enable System-Generated Passwords Feature',
     'LBL_PASSWORD_SYST_GENERATED_PWD_HELP' => 'When this feature is enabled, users will be emailed a system-generated link to reset their passwords. Requirements for this feature are: 1) a outbound email server must be configured properly in Email Settings, and 2) users must have valid email addresses in their user records',
     'LBL_PASSWORD_EXP_AFTER' => 'Password Expires upon',
@@ -471,7 +471,7 @@ $mod_strings = array(
     'LBL_REPAIR_DATABASE_DESC' => 'Repairs database based on values defined in vardefs',
     'LBL_REPAIR_DATABASE_PROCESSING' => 'Processing database and vardef comparison...',
     'LBL_REPAIR_DATABASE_DIFFERENCES' => "Differences found between database and vardefs",
-    'LBL_REPAIR_DATABASE_TEXT' =>   "The following script will sync the database structure with the structure defined in the vardefs. You have the option of exporting this script and then running it against your database using external database management tools, or to allow the administration module to run the script. <br><br><strong>NOTE</strong>: any changes you make to the script in the textbox will be reflected in the exported or executed code.<br><br>",
+    'LBL_REPAIR_DATABASE_TEXT' => "The following script will sync the database structure with the structure defined in the vardefs. You have the option of exporting this script and then running it against your database using external database management tools, or to allow the administration module to run the script. <br><br><strong>NOTE</strong>: any changes you make to the script in the textbox will be reflected in the exported or executed code.<br><br>",
     'LBL_REPAIR_DATABASE_SYNCED' => "Database tables are synced with vardefs",
     'LBL_REPAIR_DATABASE_EXECUTE' => "Execute",
     'LBL_REPAIR_DATABASE_EXPORT' => "Export",
@@ -518,8 +518,6 @@ $mod_strings = array(
     'LBL_SUGAR_SCHEDULER_TITLE' => 'Scheduler',
     'LBL_SUGAR_SCHEDULER' => 'Set up scheduled events',
     'LBL_SUGAR_UPDATE_TITLE' => 'SuiteCRM Updates',
-    'LBL_SUGARCRM_HELP' => 'SuiteCRM Help',
-    'LBL_SUPPORT_TITLE' => 'SuiteCRM Support Portal',
     'LBL_SYSTEM_NAME' => 'System Name',
     'LBL_TERMS_AND_CONDITIONS' => 'Terms and Conditions',
     'LBL_THEME_SETTINGS' => 'Themes',
@@ -654,7 +652,7 @@ $mod_strings = array(
     'LBL_QR_CLEAR_EXT_API' => 'Clearing External API Cache File...done',
     'LBL_REPAIR_SEED_USERS_TITLE' => 'Enable/Disable Seed Users',
     'LBL_REPAIR_SEED_USERS_ACTIVATE' => 'Activate',
-    'LBL_REPAIR_SEED_USERS_DECACTIVATE' => 'DeActivate',
+    'LBL_REPAIR_SEED_USERS_DECACTIVATE' => 'Deactivate',
     'LBL_REPAIR_SEED_USERS_DESC' => 'Quickly enable or disable seed users populated during demo installation.',
     'LBL_UW_FILES_REMOVED' => "These files will be removed from the system:<br>\n",
 
@@ -760,8 +758,10 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     // OAuth
-    'LBL_OAUTH_TITLE' => "OAuth Keys",
-    'LBL_OAUTH' => "OAuth key management",
+    'LBL_OAUTH_TITLE' => 'OAuth Keys',
+    'LBL_OAUTH' => 'OAuth key management',
+    'LBL_OAUTH2_CLIENTS_TITLE' => 'OAuth2 Clients and Tokens',
+    'LBL_OAUTH2_CLIENTS' => 'Manage which clients have access to the OAuth2 Server and view session log and revoke active sessions',
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Error: Unable to create sprites because the imagecreatetruecolor function cannot be loaded',
@@ -895,8 +895,22 @@ $mod_strings = array(
     'LBL_SYNC_ERROR_FOUND' => "IMAP errors detected",
     'LBL_SYNC_ALERT_FOUND' => "IMAP alerts detected",
     'LBL_SYNC_NO_EMAIL' => "No imported related Email to Inbound Email Account",
-    'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission..",
-    'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission..",
+    'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission.",
+    'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission.",
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
+
+    'LBL_PWDSEC_SETS' => 'Password Security Settings',
+    'LBL_PWDSEC_MIN_LENGTH' => 'Password minimum length',
+    'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Password minimum length',
+    'LBL_PWDSEC_UPPERCASE' => 'Password should contain uppercase characters',
+    'LBL_PWDSEC_UPPERCASE_DESC' => 'Password should contain uppercase characters',
+    'LBL_PWDSEC_LOWERCASE' => 'Password should contain lowercase characters',
+    'LBL_PWDSEC_LOWERCASE_DESC' => 'Password should contain lowercase characters',
+    'LBL_PWDSEC_NUMBERS' => 'Password should contain numbers',
+    'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contain numbers',
+    'LBL_PWDSEC_SPECCHAR' => 'Password should contain special characters',
+    'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
+    'LBL_PWDSEC_CHARS' => 'Characters',
+
 );
 

@@ -83,7 +83,3 @@ require_once('include/SubPanel/SubPanelTiles.php');
 $subpanel = new SubPanelTiles($role, 'ACLRoles');
 
 echo $subpanel->display();
-
-
-
-?>
