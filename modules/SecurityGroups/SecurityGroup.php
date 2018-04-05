@@ -634,7 +634,7 @@ class SecurityGroup extends SecurityGroup_sugar
     {
         $GLOBALS['log']->debug("SecurityGroup->getLinkName this_module: $this_module rel_module: $rel_module");
         include_once 'modules/Relationships/RelationshipHandler.php';
-        $rh = new RelationshipHandler($GLOBALS['db'], $this_module);
+        $rh = new RelationshipHandler(DBManagerFactory::getInstance(), $this_module);
         $rh->process_by_rel_bean($rel_module);
         $rh->build_info();
         $rh->get_rel1_vardef_field_base($rh->base_bean->field_defs);
@@ -754,7 +754,8 @@ class SecurityGroup extends SecurityGroup_sugar
     public static function getPrimaryGroupID()
     {
         $primary_group_id = null;
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
         $query = 'select ';
         if ($db->dbType == 'mssql') {
             $query .= ' top 1 ';

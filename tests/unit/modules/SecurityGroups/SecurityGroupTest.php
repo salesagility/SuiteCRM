@@ -119,6 +119,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -138,6 +139,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popGlobals();
         $state->popErrorLevel();
     }
 
@@ -279,14 +281,35 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testgetMembershipCount()
     {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
+
         $securityGroup = new SecurityGroup();
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('securitygroups');
+
+	// test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -321,6 +344,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //delete the security group as well for cleanup
         $securityGroup->mark_deleted($securityGroup->id);
+        
+        // clean up
+        
+        $state->popTable('securitygroups');
+        $state->popTable('aod_index');
+
     }
 
     public function testgetSecurityModules()
@@ -410,6 +439,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('securitygroups_records');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -432,6 +462,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('securitygroups_records');
         $state->popErrorLevel();
     }
 
