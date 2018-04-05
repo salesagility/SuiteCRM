@@ -361,20 +361,20 @@ function hashToFile($hash){
  */
 function get_file_extension($filename, $string_to_lower=true)
 {
-    if(strpos($filename, '.') !== false)
-    {
-        return $string_to_lower ? 
-            strtolower(
-                array_pop(
-                    explode('.', $filename)
-                )
-            ) : 
-            array_pop(
-                explode('.', $filename)
-            );
+    $ret = '';
+    
+    if (strpos($filename, '.') !== false) {
+        if ($string_to_lower) {
+            $exp = explode('.', $filename);
+            $pop = array_pop($exp);
+            $ret = strtolower($pop); 
+        } else {
+            $exp = explode('.', $filename);
+            $ret = array_pop($exp);
+        }
     }
 
-    return '';
+    return $ret;
 }
 
 
