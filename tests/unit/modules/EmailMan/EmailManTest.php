@@ -128,6 +128,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('campaign_log');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -154,11 +155,22 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popErrorLevel();
     }
 
     public function testcreate_indiv_email()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+        $state->pushTable('emails_text');
+        
+        // test 
+        
         $emailMan = new EmailMan();
 
         $result = $emailMan->create_indiv_email(new Contact(), new Email());
@@ -168,17 +180,53 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $email = new Email();
         $email->mark_deleted($result);
+        
+        // clean up
+        
+        $state->popTable('emails_text');
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testverify_campaign()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
+        
         $emailMan = new EmailMan();
         $result = $emailMan->verify_campaign('');
         $this->assertEquals(false, $result);
+
+
+        // clean up
+        
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testsendEmail()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
+        
         $emailMan = new EmailMan();
 
         //test without setting any attributes
@@ -190,29 +238,80 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $emailMan->related_id = 1;
         $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(true, $result);
+
+
+        // clean up
+        
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testvalid_email_address()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
+        
         $emailMan = new EmailMan();
 
         $this->assertEquals(false, $emailMan->valid_email_address(''));
         $this->assertEquals(false, $emailMan->valid_email_address('test'));
         $this->assertEquals(true, $emailMan->valid_email_address('test@test.com'));
+
+
+        // clean up
+        
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testis_primary_email_address()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
         $emailMan = new EmailMan();
 
         $bean = new Contact();
 
         //test without setting any email
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
+
+        // clean up
+        
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testcreate_export_query()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
         $emailMan = new EmailMan();
 
         //test with empty string params
@@ -224,12 +323,26 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $expected = 'SELECT emailman.* FROM emailman where (emailman.user_id="") AND ( emailman.deleted IS NULL OR emailman.deleted=0 )';
         $actual = $emailMan->create_export_query('emailman.id', 'emailman.user_id=""');
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testmark_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+
+	// test
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -243,14 +356,30 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
+
         // clean up
         
-        $state->popErrorLevel();
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 
     public function testcreate_ref_email()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        $state->pushTable('emails');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('emails_email_addr_rel');
+        $state->pushTable('emails_text');
+        $state->pushTable('notes');
+        $state->pushGlobals();
+
+	// test
+        
         $emailMan = new EmailMan();
         $emailMan->test = true;
 
@@ -261,5 +390,15 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertEquals(36, strlen($result));
         $email = new Email();
         $email->mark_deleted($result);
+
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('notes');
+        $state->popTable('emails_text');
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('aod_indexevent');
+        $state->popTable('emails');
+        $state->popTable('campaign_log');
     }
 }
