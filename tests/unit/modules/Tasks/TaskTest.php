@@ -32,6 +32,10 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('tasks');
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -55,6 +59,10 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popGlobals();
+        $state->popTable('tasks');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
         $state->popErrorLevel();
     }
 
@@ -226,11 +234,23 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $task = new Task();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testgetDefaultStatus()
