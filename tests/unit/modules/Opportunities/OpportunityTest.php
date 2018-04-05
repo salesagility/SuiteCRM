@@ -212,6 +212,17 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('opportunities');
+        $state->pushTable('opportunities_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushGlobals();
+
+	// test
+        
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
@@ -230,6 +241,15 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $opportunity->mark_deleted($opportunity->id);
         $result = $opportunity->retrieve($opportunity->id);
         $this->assertEquals(null, $result);
+
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('sugarfeed');
+        $state->popTable('opportunities_cstm');
+        $state->popTable('opportunities');
+        $state->popTable('aod_indexevent');
+
     }
 
     public function testsave_relationship_changes()
@@ -309,11 +329,24 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $opportunity = new Opportunity();
 
-        $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
+        $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testget_account_detail()
