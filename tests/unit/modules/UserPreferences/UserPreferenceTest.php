@@ -55,7 +55,7 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $result = $userPreference->getDefaultPreference('timef');
         $this->assertEquals($time_format, $result);
 
-        $email_link_type = $sugar_config['email_link_type'] != '' ? $sugar_config['email_link_type'] : $sugar_config['email_default_client'];
+        $email_link_type = (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) != '' ? (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
         
@@ -66,6 +66,13 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testSetAndGetPreference()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         global $sugar_config;
 
         $user = new User();
@@ -84,10 +91,21 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testloadPreferences()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -96,21 +114,45 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $result = $userPreference->loadPreferences();
 
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testreloadPreferences()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $user = new User();
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
 
         $result = $userPreference->reloadPreferences();
-        $this->assertEquals(false, $result);
+        $this->assertEquals(false, $result, 'Result was: ' . var_dump($result, true));
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testgetUserDateTimePreferences()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -118,10 +160,24 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testSavePreferencesToDBAndResetPreferences()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        $state->pushTable('user_preferences');
+        $state->pushGlobals();
+
+	// test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -145,6 +201,13 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
                 'category' => 'test_category',
         ));
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('user_preferences');
+        $state->popTable('email_addresses');
+
     }
 
     public function testupdateAllUserPrefs()
