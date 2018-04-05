@@ -119,6 +119,15 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testpushFeed2()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('sugarfeed');
+
+	// test
+        
         $lead = new Lead();
         $lead->id = 1;
         $lead->assigned_user_id = 1;
@@ -135,10 +144,24 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
+        
+        // clean up
+        
+        $state->popTable('sugarfeed');
+        $state->popTable('aod_index');
+
+
     }
 
     public function testpushFeed()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('sugarfeed');
+
+	// test
+        
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
         //retrieve newly created bean
@@ -154,6 +177,12 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //mark the record as deleted 
         $sugarFeed->mark_deleted($sugarFeed->id);
+        
+        // clean up
+        
+        $state->popTable('sugarfeed');
+
+
     }
 
     public function fetchReplies()
