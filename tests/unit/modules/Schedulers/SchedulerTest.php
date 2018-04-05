@@ -75,6 +75,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('job_queue');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -91,6 +92,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('job_queue');
         $state->popErrorLevel();
     }
 
@@ -208,6 +210,13 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testdisplayCronInstructions()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $scheduler = new Scheduler();
 
         //execute the method and capture the echo output 
@@ -219,12 +228,18 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         ob_end_clean();
 
         $this->assertGreaterThanOrEqual(0, strlen($renderedContent));
+
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testrebuildDefaultSchedulers()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('schedulers');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -241,6 +256,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('schedulers');
         $state->popErrorLevel();
     }
 
