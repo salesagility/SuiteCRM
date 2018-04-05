@@ -99,12 +99,33 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testverify_data()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+
+	// test
+        
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
+
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 
     public function testget_list_view_data()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('email_addresses');
+        
+        
         $employee = new Employee();
 
         $expected = array(
@@ -129,6 +150,11 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popTable('aod_index');
     }
 
     public function testlist_view_parse_additional_sections()
@@ -143,7 +169,7 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $employee->list_view_parse_additional_sections(new Sugar_Smarty(), $xTemplateSection);
+            $employee->list_view_parse_additional_sections(new Sugar_Smarty(), null);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
@@ -213,14 +239,27 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     	$actual = $employee->create_new_list_query('users.id','users.user_name=""');
     	$this->assertSame($expected,$actual);
     	*/
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::markTestIncomplete();
     }
 
 
     public function testhasCustomFields()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+
+	// test
+        
+        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
+        
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 }
