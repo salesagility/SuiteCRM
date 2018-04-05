@@ -904,6 +904,13 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testProcessUnionListQuery()
     {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+
+	// test
         global $sugar_config;
         
         $query = "SELECT * FROM aod_index";
@@ -1218,6 +1225,12 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
+
     }
 
 
@@ -2228,6 +2241,13 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testSave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('tracker');
+
+	// test
+        
         global $current_user;
 
         // test
@@ -2242,7 +2262,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         }
         self::assertNotTrue(isValidId($results));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(null, $bean->in_save);
         self::assertEquals(null, $bean->date_modified);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
@@ -2269,7 +2289,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         }
         self::assertFalse(isValidId($results));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(null, $bean->in_save);
         self::assertEquals(null, $bean->date_modified);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
@@ -2296,7 +2316,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         }
         self::assertFalse(isValidId($results));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(null, $bean->in_save);
         //self::assertEquals(null, $bean->date_modified);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         //self::assertEquals('testing', $bean->modified_by_name);
@@ -2509,6 +2529,11 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
+        
+        // clean up
+        
+        $state->popTable('tracker');
+
     }
 
     /**
