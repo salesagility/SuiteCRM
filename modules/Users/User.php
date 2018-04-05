@@ -1003,13 +1003,47 @@ EOQ;
         global $sugar_config, $mod_strings;
 
         $messages = array();
+        
+        if (!isset($sugar_config['passwordsetting']['minpwdlength'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: minpwdlength ($sugar_config[passwordsetting][minpwdlength])');
+            $sugar_config['passwordsetting']['minpwdlength'] = null;
+        }
 
         $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['oneupper'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: oneupper ($sugar_config[passwordsetting][oneupper])');
+            $sugar_config['passwordsetting']['oneupper'] = null;
+        }
+
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onelower'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onelower ($sugar_config[passwordsetting][onelower])');
+            $sugar_config['passwordsetting']['onelower'] = null;
+        }
+        
         $onelower = $sugar_config['passwordsetting']['onelower'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onenumber'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onenumber ($sugar_config[passwordsetting][onenumber])');
+            $sugar_config['passwordsetting']['onenumber'] = null;
+        }
+        
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onespecial'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onespecial ($sugar_config[passwordsetting][onespecial])');
+            $sugar_config['passwordsetting']['onespecial'] = null;
+        }
+        
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
+        
         if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
         }
