@@ -35,9 +35,9 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //error_reporting(E_ERROR | E_PARSE);
 
         $oauthToken = new OAuthToken();
-        $oauthToken->setState($oauthToken->REQUEST);
+        $oauthToken->setState($oauthToken::REQUEST);
 
-        $this->assertEquals($oauthToken->REQUEST, $oauthToken->tstate);
+        $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
         
         // clean up
         
@@ -138,7 +138,7 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //verify that record can not be loaded anymore
         $token = OAuthToken::load($id);
-        $this->assertEquals(null, $token->id);
+        $this->assertEquals(null, $token);
     }
 
     public function testcreateAuthorized()
@@ -212,7 +212,7 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testcheckNonce()
     {
         $result = OAuthToken::checkNonce('test', 'test', 123);
-        $this->assertEquals(0, $result);
+        $this->assertEquals(1, $result);
     }
 
     public function testdeleteByConsumer()
