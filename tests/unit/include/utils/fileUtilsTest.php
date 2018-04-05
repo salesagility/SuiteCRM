@@ -487,11 +487,17 @@ class file_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         //execute the method and test if it returns expected values
 
-        $ext = get_file_extension(''); // Only variables should be passed by reference in php7
-        $this->assertSame('', $ext);
-        $this->assertSame('txt', get_file_extension('test.txt'));
-        $this->assertSame('Txt', get_file_extension('test.ext.Txt', false));
-        $this->assertSame('txt', get_file_extension('test.ext.TXT', true));
+        $file = ''; // Only variables should be passed by reference in php7
+        $this->assertSame('', get_file_extension($file));
+        
+        $file = 'test.txt'; // Only variables should be passed by reference in php7
+        $this->assertSame('txt', get_file_extension($file));
+        
+        $file = 'test.ext.Txt'; // Only variables should be passed by reference in php7
+        $this->assertSame('Txt', get_file_extension($file, false));
+        
+        $file = 'test.ext.TXT'; // Only variables should be passed by reference in php7
+        $this->assertSame('txt', get_file_extension($file, true));
     }
 
     public function testget_mime_content_type_from_filename()
