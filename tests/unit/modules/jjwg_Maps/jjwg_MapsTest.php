@@ -45,6 +45,14 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsaveConfiguration()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('config');
+        $state->pushTable('tracker');
+
+	// test
+        
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty array/default
@@ -54,6 +62,12 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with data array
         $result = $jjwgMaps->saveConfiguration(array('test' => 1));
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('config');
+
     }
 
     public function testupdateGeocodeInfo()
@@ -75,8 +89,24 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $this->assertEquals(null, $result);
         $this->assertEquals(100, $bean->jjwg_maps_lat_c);
         $this->assertEquals(40, $bean->jjwg_maps_lng_c);
-        $this->assertEquals('', $bean->jjwg_maps_geocode_status_c);
-        $this->assertEquals('', $bean->jjwg_maps_address_c);
+        
+        
+        if (!isset($bean->jjwg_maps_geocode_status_c)) {
+            $beanJjwgMapsGeocodeStatusC = null;
+        } else {
+            $beanJjwgMapsGeocodeStatusC = $bean->jjwg_maps_geocode_status_c;
+        }
+        
+        $this->assertEquals('', $beanJjwgMapsGeocodeStatusC);
+        
+        
+        if (!isset($bean->jjwg_maps_address_c)) {
+            $beanJjwgMapsAddressC = null;
+        } else {
+            $beanJjwgMapsAddressC = $bean->jjwg_maps_address_c;
+        }
+        
+        $this->assertEquals('', $beanJjwgMapsAddressC);
     }
 
     public function testupdateRelatedMeetingsGeocodeInfo()

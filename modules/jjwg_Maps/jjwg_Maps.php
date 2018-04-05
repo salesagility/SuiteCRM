@@ -480,19 +480,51 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_duplicate_marker_adjustment']) && is_numeric(trim($data['map_duplicate_marker_adjustment']))) {
                 $admin->saveSetting($category, 'map_duplicate_marker_adjustment', (float) trim($data['map_duplicate_marker_adjustment']));
             }
-            if (!$this->is_valid_lat($data['map_default_center_latitude'])) $data['map_default_center_latitude'] = 39.5;
+            
+            if (!isset($data['map_default_center_latitude'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_latitude');
+                $dataMapDefaultCenterLatitude = null;
+            } else {
+                $dataMapDefaultCenterLatitude = $data['map_default_center_latitude'];
+            }
+            
+            if (!$this->is_valid_lat($dataMapDefaultCenterLatitude)) {
+                $data['map_default_center_latitude'] = 39.5;
+            }
+            
             if (isset($data['map_default_center_latitude']) && is_numeric(trim($data['map_default_center_latitude']))) {
                 $admin->saveSetting($category, 'map_default_center_latitude', (float) trim($data['map_default_center_latitude']));
             }
-            if (!$this->is_valid_lng($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
+            
+            if (!isset($data['map_default_center_longitude'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_longitude');
+                $dataMapDefaultCenterLongitude = null;
+            } else {
+                $dataMapDefaultCenterLongitude = $data['map_default_center_longitude'];
+            }
+            
+            
+            if (!$this->is_valid_lng($dataMapDefaultCenterLongitude)) {
+                $data['map_default_center_longitude'] = -99.5;
+            }
+            
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }
 
             // Set Geocoding API URL or Proxy URL
-            if (substr($data['geocoding_api_url'], 0, 4) != 'http' && substr($data['geocoding_api_url'], 0, 2) != '//') {
+            
+            if (!isset($data['geocoding_api_url'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: geocoding_api_url ');
+                $dataGeocodingApiUrl = null;
+            } else {
+                $dataGeocodingApiUrl = $data['geocoding_api_url'];
+            }
+            
+            if (substr($dataGeocodingApiUrl, 0, 4) != 'http' && substr($dataGeocodingApiUrl, 0, 2) != '//') {
                 $data['geocoding_api_url'] = $this->settings['geocoding_api_url'];
             }
+            
             if (isset($data['geocoding_api_url'])) {
                 $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
             }
@@ -594,7 +626,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         // Check to see if address info is already set, or redefine
         $bean_data = get_object_vars($bean);
         $aInfo = $this->defineMapsAddress($bean->object_name, $bean_data);
-        $GLOBALS['log']->debug(__METHOD__.' $bean_data: '.$bean_data);
+        $GLOBALS['log']->debug(__METHOD__.' $bean_data: '.print_r($bean_data, true));
         $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.$aInfo);
 
         // If needed, check the Address Cache Module for Geocode Info
@@ -1056,8 +1088,16 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         } elseif (in_array($object_name, array('aCase', 'Case'))) {
 
             // Find Account from Case (account_id field)
+            
+            if (!isset($display['account_id'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps defineMapsAddress: Undefined index: account_id  ');
+                $displayAccountId = null;
+            } else {
+                $displayAccountId = $display['account_id'];
+            }
+            
             $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
-                    " WHERE accounts.deleted = 0 AND id = '" . $display['account_id'] . "'";
+                    " WHERE accounts.deleted = 0 AND id = '" . $displayAccountId . "'";
             $GLOBALS['log']->debug(__METHOD__.' Case to Account');
             $result = $this->db->limitQuery($query, 0, 1);
             $fields = $this->db->fetchByAssoc($result);
