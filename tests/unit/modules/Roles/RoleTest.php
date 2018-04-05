@@ -97,6 +97,14 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+
+	// test
+        
         $role = new Role();
 
         $role->id = 1;
@@ -119,6 +127,11 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test clear_user_relationship method
         $this->clear_user_relationship($role->id, '1');
         $this->clear_user_relationship($role->id, '2');
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+
     }
 
     public function get_users($id)
@@ -136,7 +149,7 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $role = new Role();
 
         //get related records count and verify that records are removed
-        $role->clear_user_relationship($role_id, $user_id);
+        $result = $role->clear_user_relationship($role_id, $user_id);
         $this->assertEquals(0, count($result));
     }
 
@@ -153,7 +166,7 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $role = new Role();
 
         $allowed = array('Accounts' => 'Accounts', 'Leads' => 'Leads');
-        $result = $role->query_user_disallowed_modules($user_id, $allowed);
+        $result = $role->query_user_disallowed_modules(null, $allowed);
 
         $this->assertTrue(is_array($result));
     }
