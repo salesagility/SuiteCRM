@@ -101,7 +101,9 @@ class SavedSearch extends SugarBean
     // Saved Search Form
     function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
-        global $db, $current_user, $currentModule, $current_language, $app_strings;
+        global $current_user, $currentModule, $current_language, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $json = getJSONobj();
 
         $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
@@ -179,10 +181,18 @@ class SavedSearch extends SugarBean
             }
         } else {
             foreach ($this->columns as $name => $val) {
+                
+                if (!isset($val['label'])) {
+                    LoggerManager::getLogger()->warn("SavedSearch getTemplateGroupChooser: Illegal string offset 'label'");
+                    $valLabel = null;
+                } else {
+                    $valLabel = $val['label'];
+                }
+                
                 if (!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
                 else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
             }
         }
 
