@@ -414,9 +414,11 @@ class InboundEmail extends SugarBean
                 }
             }
             $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
+            $firstMsg = $firstMsg > $totalMsgs ? $totalMsgs : $firstMsg;
             $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
+            $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
 
-            $sequence  = $firstMsg . ':' . $lastMsg;
+            $sequence = $firstMsg . ':' . $lastMsg;
             $emailSortedHeaders = imap_fetch_overview(
                 $this->conn,
                 $sequence
@@ -2743,8 +2745,8 @@ class InboundEmail extends SugarBean
             } else {
                 // Update folders
                 $foldersFound = $this->db->query(
-                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
-                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
+                    'SELECT * FROM folders WHERE deleted = 0 AND (folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '")'
                 );
                 $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
@@ -5964,6 +5966,22 @@ class InboundEmail extends SugarBean
             }
         } else {
             $service = $this->getServiceString();
+        }
+
+        if($_REQUEST['folder'] === 'sent') {
+            $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
+        }
+
+        if($_REQUEST['folder'] === 'inbound') {
+            if (!empty($_REQUEST['folder_name'])) {
+                $this->mailbox = $_REQUEST['folder_name'];
+            }
+            elseif (count($this->mailboxarray)) {
+                $this->mailbox = $this->mailboxarray[0];
+            }
+            else {
+                $this->mailbox = 'INBOX';
+            }
         }
 
         $connectString = $this->getConnectString($service, $this->mailbox);
