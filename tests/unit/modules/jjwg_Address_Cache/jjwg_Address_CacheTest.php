@@ -41,6 +41,14 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('jjwg_address_cache');
+
+	// test
+        
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test saveAddressCacheInfo() with empty info array
@@ -70,6 +78,11 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         //verify that record cannot be retrieved anynore
         $result = $jjwgAddressCache->getAddressCacheInfo($ainfo);
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popTable('jjwg_address_cache');
+
     }
 
     public function testis_valid_lng()
