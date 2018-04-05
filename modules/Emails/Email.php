@@ -1500,6 +1500,7 @@ class Email extends Basic
      * @param string $filename
      * @param string $fileLocation
      * @param string $mimeType
+     * @return boolean success/failed
      */
     public function saveTempNoteAttachments($filename, $fileLocation, $mimeType)
     {
@@ -1512,10 +1513,22 @@ class Email extends Basic
         $tmpNote->filename = $filename;
         $tmpNote->file_mime_type = $mimeType;
         $noteFile = "upload://{$tmpNote->id}";
-        if (!copy($fileLocation, $noteFile)) {
-            $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
+        
+        if (!file_exists($fileLocation)) {
+            LoggerManager::getLogger()->warn('Email error: File Location not found for save temp note attachments. File location was: "' . $fileLocation . '"');
+        } else {
+
+            if (!copy($fileLocation, $noteFile)) {
+                $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
+            } else {
+                
+                if (!$tmpNote->save()) {
+                    return false;
+                }
+            }
         }
-        $tmpNote->save();
+        
+        return true;
     }
 
     /**
