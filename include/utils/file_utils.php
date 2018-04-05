@@ -447,7 +447,9 @@ function get_mime_content_type_from_filename($filename)
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
         );
 
-        $ext = strtolower(array_pop(explode('.',$filename)));
+        $exp = explode('.',$filename);
+        $pop = array_pop($exp);
+        $ext = strtolower($pop);
         if (array_key_exists($ext, $mime_types)) {
             return $mime_types[$ext];
         }
