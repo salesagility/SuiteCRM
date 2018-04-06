@@ -1395,6 +1395,7 @@ $app_strings = array(
     'LBL_ASSIGNED_TO' => 'Assigned to:',
     'LBL_BACK' => 'Back',
     'LBL_BILLING_ADDRESS' => 'Billing Address',
+    'LBL_QUICK_CREATE' => 'Create ',
     'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS' => 'Bugs',
     'LBL_BY' => 'by',
