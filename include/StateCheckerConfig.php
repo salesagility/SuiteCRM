@@ -145,6 +145,27 @@ class StateCheckerConfig
      */
     protected static $testsUseAssertionFailureOnError = true;
     
+    
+    /**
+     * Retrieve from sugar_config
+     * 
+     * @global array $sugar_config
+     */
+    protected static function retrieve()
+    {
+        global $sugar_config;
+        
+        self::$globalKeys = isset($sugar_config['state_checker']['global_keys']) ? $sugar_config['state_checker']['global_keys'] : self::$globalKeys;
+        self::$fileExludeRegexes = isset($sugar_config['state_checker']['file_exlude_regexes']) ? $sugar_config['state_checker']['file_exlude_regexes'] : self::$fileExludeRegexes;
+        self::$autoRun = isset($sugar_config['state_checker']['auto_run']) ? $sugar_config['state_checker']['auto_run'] : self::$autoRun;
+        self::$saveTraces = isset($sugar_config['state_checker']['save_traces']) ? $sugar_config['state_checker']['save_traces'] : self::$saveTraces;
+        self::$redefineMemoryLimit = isset($sugar_config['state_checker']['redefine_memory_limit']) ? $sugar_config['state_checker']['redefine_memory_limit'] : self::$redefineMemoryLimit;
+        self::$storeDetails = isset($sugar_config['state_checker']['store_details']) ? $sugar_config['state_checker']['store_details'] : self::$storeDetails;
+        self::$testStateCheckMode = isset($sugar_config['state_checker']['test_state_check_mode']) ? $sugar_config['state_checker']['test_state_check_mode'] : self::$testStateCheckMode;
+        self::$testsUseStateChecker = isset($sugar_config['state_checker']['tests_use_state_checker']) ? $sugar_config['state_checker']['tests_use_state_checker'] : self::$testsUseStateChecker;
+        self::$testsUseAssertionFailureOnError = isset($sugar_config['state_checker']['tests_use_assertion_failure_on_error']) ? $sugar_config['state_checker']['tests_use_assertion_failure_on_error'] : self::$testsUseAssertionFailureOnError;
+    }
+    
     /**
      *
      * @param string $key
@@ -152,6 +173,9 @@ class StateCheckerConfig
      */
     public static function get($key)
     {
+        if (!self::$retrieved) {
+            self::retrieve();
+        }
         if (inDeveloperMode()) {
             if (in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
                 return true;
