@@ -1,5 +1,4 @@
 <?php
-//_pp($_REQUEST);
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -47,7 +46,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 require_once('include/Popups/Popup_picker.php');
-$popup = new Popup_Picker();
+
+class DocumentPopupPicker extends Popup_Picker {
+
+	public function __construct()
+	{
+	}
+
+	public function _get_where_clause() {
+		$where = '';
+		if(isset($_REQUEST['query']))
+		{
+			$where_clauses = array();
+			append_where_clause($where_clauses, "document_name", "documents.document_name");
+			append_where_clause($where_clauses, "category_id", "documents.category_id");
+			append_where_clause($where_clauses, "subcategory_id", "documents.subcategory_id");
+			append_where_clause($where_clauses, "template_type", "documents.template_type");
+			append_where_clause($where_clauses, "is_template", "documents.is_template");
+
+			$where = generate_where_statement($where_clauses);
+		}
+		return $where;
+	}
+
+}
+
+$popup = new DocumentPopupPicker();
 
 global $theme;
 global $current_mod_strings;
@@ -62,11 +86,7 @@ $where = '';
 
 $where = $popup->_get_where_clause();
 
-// We can't attach remote documents to emails because we can't necessarialy fetch a copy of them to include.
-if ( ! empty($where) ) {
-    $where .= ' AND ';
-}
-$where .= "documents.doc_type IN ( '', 'Sugar')";
+
 
 $name = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
 $document_name = empty($_REQUEST['document_name']) ? '' : $_REQUEST['document_name'];
@@ -76,7 +96,6 @@ $template_type = empty($_REQUEST['template_type']) ? '' : $_REQUEST['template_ty
 $is_template = empty($_REQUEST['is_template']) ? '' : $_REQUEST['is_template'];
 $document_revision_id = empty($_REQUEST['document_revision_id']) ? '' : $_REQUEST['document_revision_id'];
 
-//$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 
 $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
@@ -92,6 +111,7 @@ $button .= "<input type='submit' name='button' class='button' onclick=\"window.c
 	.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 $button .= "</form>\n";
 
+
 $form = new XTemplate('modules/Emails/PopupDocuments.html');
 $form->assign('MOD', $current_mod_strings);
 $form->assign('APP', $app_strings);
@@ -99,15 +119,15 @@ $form->assign('THEME', $theme);
 $form->assign('MODULE_NAME', $currentModule);
 $form->assign('NAME', $name);
 $form->assign('DOCUMENT_NAME', $document_name);
-$form->assign('DOCUMENT_TARGET', $_REQUEST['target']);
+if(isset($_REQUEST['target'])) $form->assign('DOCUMENT_TARGET', $_REQUEST['target']);
+else $form->assign('DOCUMENT_TARGET', '');
+
 $form->assign('DOCUMENT_REVISION_ID', $document_revision_id);
 
-//$form->assign('request_data', $request_data);
 $form->assign("CATEGORY_OPTIONS", get_select_options_with_id($app_list_strings['document_category_dom'], $category_id));
 $form->assign("SUB_CATEGORY_OPTIONS", get_select_options_with_id($app_list_strings['document_subcategory_dom'], $subcategory_id));
 $form->assign("IS_TEMPLATE_OPTIONS", get_select_options_with_id($app_list_strings['checkbox_dom'], $is_template));
 $form->assign("TEMPLATE_TYPE_OPTIONS", get_select_options_with_id($app_list_strings['document_template_type_dom'], $template_type));
-
 
 
 ob_start();
