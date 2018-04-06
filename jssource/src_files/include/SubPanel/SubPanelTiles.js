@@ -326,6 +326,10 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
 
 }
 
+function toggleSubpanelCookie(tab) {
+  set_div_cookie(get_module_name() + '_' + tab + '_v', !$('#subpanel_' + tab).is(":visible"));
+}
+
 function markSubPanelLoaded(child_field) {
   child_field_loaded[child_field] = 2;
 }

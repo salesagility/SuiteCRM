@@ -158,13 +158,6 @@ class Task extends SugarBean {
 
         }
 
-
-
-	function fill_in_additional_list_fields()
-	{
-
-	}
-
 	function fill_in_additional_detail_fields()
 	{
         parent::fill_in_additional_detail_fields();
