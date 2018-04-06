@@ -91,6 +91,8 @@ class StateSaver
         }
     }
     
+    // ------------ Error Collector ------------
+    
     /**
      *
      * @param string $msg
@@ -101,8 +103,9 @@ class StateSaver
     }
     
     /**
+     * Retrieve if any error occurred in storing/restoring processes.
      *
-     * @return type
+     * @return array
      */
     public function getErrors()
     {
@@ -110,7 +113,7 @@ class StateSaver
     }
     
     /**
-     *
+     * Clear all collected error information about latest storing/restoring processes.
      */
     public function clearErrors()
     {
@@ -118,6 +121,8 @@ class StateSaver
     }
     
     /**
+     * Retrieve if any error occurred in storing/restoring processes and
+     * clear all collected error information about latest storing/restoring processes.
      *
      * @return array
      */
@@ -128,8 +133,10 @@ class StateSaver
         return $errors;
     }
 
+    // ------------- Push/pop stack storeage -------------------
 
     /**
+     * Save any value into state store at a key and namespace.
      *
      * @param mixed $value
      * @param string $key
@@ -144,6 +151,7 @@ class StateSaver
     }
     
     /**
+     * Restore any value from state store at a key and namespace.
      *
      * @param string $key
      * @param string $namespace
@@ -169,6 +177,7 @@ class StateSaver
     }
     
     /**
+     * Save a global variable into storage at an optional namespace.
      *
      * @param string $key
      * @param string $namespace
@@ -181,6 +190,7 @@ class StateSaver
     }
     
     /**
+     * Restore a global value from storage at an optional namespace.
      *
      * @param string $key
      * @param string $namespace
@@ -199,6 +209,9 @@ class StateSaver
     }
     
     /**
+     * Save all super globals which are specified in configuration.
+     * @see StateCheckerConfig
+     *
      * pushGlobals
      */
     public function pushGlobals()
@@ -210,6 +223,9 @@ class StateSaver
     }
     
     /**
+     * Restore all super globals which are specified in configuration.
+     * @see StateCheckerConfig
+     *
      * popGlobals
      */
     public function popGlobals()
@@ -221,6 +237,9 @@ class StateSaver
     }
     
     /**
+     * Save all defined global variable name.
+     * (note: this function does not store the values, so use it carefully)
+     *
      * pushGlobalKeys
      */
     public function pushGlobalKeys()
@@ -230,6 +249,9 @@ class StateSaver
     }
     
     /**
+     * Restore all defined global variable name.
+     * (note: this function does not restore the values, so use it carefully)
+     *
      * popGlobalKeys
      */
     public function popGlobalKeys()
@@ -243,6 +265,8 @@ class StateSaver
     }
     
     /**
+     * Save Error Reporting Level into the store at an optional key and namespace.
+     * (note: error level should not be changed for any reason, so use it for own risk)
      *
      * @param string $key
      * @param string $namespace
@@ -255,6 +279,8 @@ class StateSaver
     }
     
     /**
+     * Restore Error Reporting Level from the store at an optional key and namespace.
+     * (note: error level should not be changed for any reason, so use it for own risk)
      *
      * @param string $key
      * @param string $namespace
@@ -267,6 +293,7 @@ class StateSaver
     }
     
     /**
+     * Save all data from a database table into store at an optional namespace.
      *
      * @param string $table
      * @param string $namespace
@@ -287,6 +314,7 @@ class StateSaver
     }
     
     /**
+     * Restore all data into a database table from store at an optional namespace.
      *
      * @param string $table
      * @param string $namespace
@@ -310,6 +338,7 @@ class StateSaver
     // --- Files ---
     
     /**
+     * Save a file contents.
      *
      * @param string $filename
      * @throws StateSaverException
@@ -337,6 +366,7 @@ class StateSaver
     }
     
     /**
+     * Restore a file contents.
      *
      * @param string $filename
      * @return boolean
