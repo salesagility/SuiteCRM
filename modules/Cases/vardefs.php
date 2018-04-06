@@ -296,7 +296,6 @@ $dictionary['Case'] = array(
             'vname' => 'LBL_UPDATE_TEXT',
             'source' => 'non-db',
             'type' => 'text',
-            'editor' => 'html',
             'massupdate' => '0',
             'default' => '',
             'no_default' => false,
