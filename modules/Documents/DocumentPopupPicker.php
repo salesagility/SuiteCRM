@@ -45,8 +45,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/Popups/Popup_picker.php');
 
+/**
+ * Class DocumentPopupPicker
+ *
+ * DocumentPopupPicker class is used to filter
+ * documents on compose email pop-up.
+ *
+ * @author Marc Sanchez <@sanchezfauste>
+ */
 class DocumentPopupPicker extends Popup_Picker
 {
+    /**
+     * Return WHERE clause used to filter
+     * documents on compose email pop-up.
+     *
+     * @return string WHERE clause
+     */
     public function _get_where_clause()
     {
         $where = '';
