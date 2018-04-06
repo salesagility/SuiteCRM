@@ -129,7 +129,7 @@
     }
     else{
       var inputs = document.MassUpdate.elements;
-      for (var i = 0; i < inputs.length; i++) {
+      for (var i = 0; i < inputs.length; i++) {//
         if (inputs[i].name === 'mass[]' && inputs[i].checked) {
           ids = ids + inputs[i].value + ',';
         }
