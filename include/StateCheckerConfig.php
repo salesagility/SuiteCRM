@@ -145,6 +145,7 @@ class StateCheckerConfig
      */
     protected static $testsUseAssertionFailureOnError = true;
     
+    protected static $retrieved = false;
     
     /**
      * Retrieve from sugar_config
@@ -199,6 +200,8 @@ class StateCheckerConfig
             isset($sugar_config['state_checker']['tests_use_assertion_failure_on_error']) ?
                 $sugar_config['state_checker']['tests_use_assertion_failure_on_error'] :
                 self::$testsUseAssertionFailureOnError;
+        
+        self::$retrieved = true;
     }
     
     /**
