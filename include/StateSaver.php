@@ -1,0 +1,368 @@
+<?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+
+namespace SuiteCRM;
+
+use DBManagerFactory;
+use Exception;
+use LoggerManager;
+
+/**
+ * Description of StateSaver
+ *
+ * @author SalesAgility
+ */
+class StateSaver
+{
+    const UNDEFINED = '__reserved_value_of_undefined__';
+
+    /**
+     *
+     * @var array
+     */
+    protected $stack;
+    
+    /**
+     *
+     * @var array
+     */
+    protected $errors;
+    
+    /**
+     *
+     * @var array
+     */
+    protected $files;
+    
+    /**
+     *
+     */
+    public function __conatruct()
+    {
+        $this->clearErrors();
+    }
+    
+    /**
+     *
+     * @throws StateSaverException
+     */
+    public function __destruct()
+    {
+        if (!empty($this->state)) {
+            throw new StateSaverException('Some garbage state left in stack');
+        }
+    }
+    
+    /**
+     *
+     * @param string $msg
+     */
+    protected function error($msg)
+    {
+        $this->errors[] = $msg;
+    }
+    
+    /**
+     *
+     * @return type
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+    
+    /**
+     *
+     */
+    public function clearErrors()
+    {
+        $this->errors = [];
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getErrorsClear()
+    {
+        $errors = $this->getErrors();
+        $this->clearErrors();
+        return $errors;
+    }
+
+
+    /**
+     *
+     * @param mixed $value
+     * @param string $key
+     * @param string $namespace
+     */
+    public function push($value, $key, $namespace)
+    {
+        if (!isset($this->stack[$namespace][$key])) {
+            $this->stack[$namespace][$key] = [];
+        }
+        $this->stack[$namespace][$key][] = $value;
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @param string $namespace
+     * @return mixed
+     */
+    public function pop($key, $namespace)
+    {
+        $ok = true;
+        if (!isset($this->stack[$namespace])) {
+            $this->error('Trying to pop form stack at namespace but stack is unset: ' . $namespace . '.' . $key);
+            $ok = false;
+        } elseif (!isset($this->stack[$namespace][$key])) {
+            $this->error('Trying to pop form stack at key but stack is unset: ' . $namespace . '.' . $key);
+            $ok = false;
+        } elseif (!count($this->stack[$namespace][$key])) {
+            $this->error('Trying to pop from state stack but stack is empty: ' . $namespace . '.' . $key);
+            $ok = false;
+        }
+        
+        $value = $ok ? array_pop($this->stack[$namespace][$key]) : self::UNDEFINED;
+          
+        return $value;
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @param string $namespace
+     */
+    public function pushGlobal($key, $namespace = 'GLOBALS')
+    {
+        if (isset($GLOBALS[$key])) {
+            $this->push(isset($GLOBALS[$key]) ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
+        }
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @param string $namespace
+     */
+    public function popGlobal($key, $namespace = 'GLOBALS')
+    {
+        $top = $this->pop($key, $namespace);
+        if (!$this->stack[$namespace]) {
+            unset($this->stack[$namespace]);
+        }
+        if ($top !== self::UNDEFINED) {
+            $GLOBALS[$key] = $top;
+        } else {
+            unset($GLOBALS[$key]);
+        }
+    }
+    
+    /**
+     * pushGlobals
+     */
+    public function pushGlobals()
+    {
+        $keys = StateCheckerConfig::get('globalKeys');
+        foreach ($keys as $key) {
+            $this->pushGlobal($key);
+        }
+    }
+    
+    /**
+     * popGlobals
+     */
+    public function popGlobals()
+    {
+        $keys = StateCheckerConfig::get('globalKeys');
+        foreach ($keys as $key) {
+            $this->popGlobal($key);
+        }
+    }
+    
+    /**
+     * pushGlobalKeys
+     */
+    public function pushGlobalKeys()
+    {
+        $keys = array_keys($GLOBALS);
+        $this->push($keys, 'keys', 'globalsArrayKeys');
+    }
+    
+    /**
+     * popGlobalKeys
+     */
+    public function popGlobalKeys()
+    {
+        $keys = $this->pop('keys', 'globalsArrayKeys');
+        foreach ($keys as $key) {
+            if (!isset($GLOBALS[$key])) {
+                $GLOBALS[$key] = [];
+            }
+        }
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @param string $namespace
+     */
+    public function pushErrorLevel($key = 'level', $namespace = 'error_reporting')
+    {
+        LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
+        $level = error_reporting();
+        $this->push($level, $key, $namespace);
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @param string $namespace
+     */
+    public function popErrorLevel($key = 'level', $namespace = 'error_reporting')
+    {
+        LoggerManager::getLogger()->warn('Pop error level. Try to remove the error_reporting() function from your code.');
+        $level = $this->pop($key, $namespace);
+        error_reporting($level);
+    }
+    
+    /**
+     *
+     * @param string $table
+     * @param string $namespace
+     * @throws StateSaverException
+     */
+    public function pushTable($table, $namespace = 'db_table')
+    {
+        $query = "SELECT * FROM " . DBManagerFactory::getInstance()->quote($table);
+        if (!$resource = DBManagerFactory::getInstance()->query($query)) {
+            throw new StateSaverException('Could not resolve DB resource for table: ' . $table);
+        }
+        $rows = [];
+        while ($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        
+        $this->push($rows, $table, $namespace);
+    }
+    
+    /**
+     *
+     * @param string $table
+     * @param string $namespace
+     */
+    public function popTable($table, $namespace = 'db_table')
+    {
+        $rows = $this->pop($table, $namespace);
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
+        foreach ($rows as $row) {
+            $query = "INSERT $table INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach ($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
+    }
+    
+    // --- Files ---
+    
+    /**
+     *
+     * @param string $filename
+     * @throws StateSaverException
+     */
+    public function pushFile($filename)
+    {
+        $exists = file_exists($filename);
+        $realpath = realpath($filename);
+        if (!$realpath && $exists) {
+            throw new StateSaverException('Could not resolve real path for file for push: ' . $filename);
+        }
+        if ($exists) {
+            $contents = file_get_contents($realpath);
+            if (false === $contents) {
+                throw new StateSaverException('Can not read file: ' . $realpath);
+            }
+            $this->files[$realpath]['contents'] = $contents;
+            $this->files[$realpath]['time'] = filemtime($realpath);
+            if (false === $this->files[$realpath]['time']) {
+                throw new StateSaverException('Unable to get filemtime for file: ' . $realpath);
+            }
+        } else {
+            unset($this->files[$realpath]['contents']);
+        }
+    }
+    
+    /**
+     *
+     * @param string $filename
+     * @return boolean
+     * @throws StateSaverException
+     */
+    public function popFile($filename)
+    {
+        $exists = file_exists($filename);
+        $realpath = realpath($filename);
+        if (!$realpath && $exists) {
+            throw new StateSaverException('Could not resolve real path for file for pop: ' . $filename);
+        }
+        if (isset($this->files[$realpath]['contents'])) {
+            $contents = $this->files[$realpath]['contents'];
+            $ok = file_put_contents($realpath, $contents);
+            if (false === $ok) {
+                throw new StateSaverException('Can not write file: ' . $realpath);
+            }
+            if (false ===touch($realpath, $this->files[$realpath]['time'])) {
+                throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
+            }
+        } else {
+            if (file_exists($realpath) && false === unlink($realpath)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
