@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-require_once('include/Popups/DocumentPopupPicker.php');
+require_once('modules/Documents/DocumentPopupPicker.php');
 $popup = new DocumentPopupPicker();
 
 global $theme;
