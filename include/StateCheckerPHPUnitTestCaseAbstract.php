@@ -41,16 +41,66 @@
 
 namespace SuiteCRM;
 
+use PHPUnit_Framework_TestCase;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Description of StateSaverException
+ * Description of StateChecker_PHPUnit_Framework_TestCase
  *
  * @author SalesAgility
  */
-
-class StateSaverException extends Exception
+abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_TestCase
 {
+    use StateCheckerTrait;
+    
+    /**
+     * 
+     */
+    public static function setUpBeforeClass()
+    {
+        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+            self::saveStates();
+        }
+        
+        parent::setUpBeforeClass();
+    }
+    
+    /**
+     * 
+     */
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+           
+        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+            self::checkStates();
+        }
+    }
+    
+    /**
+     * Collect state information and storing a hash
+     */
+    public function setUp()
+    {
+        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
+            self::saveStates();
+        }
+        
+        parent::setUp();
+    }
+    
+    /**
+     * Collect state information and comparing hash
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+           
+        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
+            self::checkStates();
+        }
+    }
 }

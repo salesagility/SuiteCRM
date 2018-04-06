@@ -45,6 +45,10 @@ use DBManagerFactory;
 use Exception;
 use LoggerManager;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Description of StateSaver
  *

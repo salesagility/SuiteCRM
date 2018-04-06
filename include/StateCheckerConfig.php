@@ -52,7 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class StateCheckerConfig
 {
     const RUN_NEVER = 0;
+    
     const RUN_PER_TESTS = 1;
+    
+    /**
+     * affects only PHP Unit Test Cases
+     */
     const RUN_PER_CLASSES = 2;
     
     /**
@@ -112,7 +117,13 @@ class StateCheckerConfig
     protected static $storeDetails = false;
     
     /**
-     *
+     * Enum for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_NEVER].
+     * RUN_NEVER: State check and save never run.
+     * RUN_PER_TEST: State check runs after each test methods.
+     * RUN_PER_CLASSES: State check runs after each test class.
+     * 
+     * Note: Mode RUN_PER_CLASSES affects only PHPUnit Test Cases
+     * 
      * @var integer
      */
     protected static $testStateCheckMode = self::RUN_NEVER;

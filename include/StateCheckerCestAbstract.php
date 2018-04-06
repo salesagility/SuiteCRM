@@ -41,99 +41,38 @@
 
 namespace SuiteCRM;
 
-use PHPUnit_Framework_TestCase;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Description of StateChecker_PHPUnit_Framework_TestCase
+ * Description of StateCheckerCestAbstract
  *
  * @author SalesAgility
  */
-abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
+abstract class StateCheckerCestAbstract
 {
-   
-    /**
-     *
-     * @var StateChecker
-     */
-    protected static $stateChecker = null;
+    use StateCheckerTrait;
     
-    /**
-     * 
-     */
-    protected function saveStates()
-    {
-        if (StateCheckerConfig::get('testsUseStateChecker')) {
-            if (null === self::$stateChecker) {
-                self::$stateChecker = new StateChecker();
-            }
-        }
-    }
-    
-    /**
-     * 
-     */
-    protected function checkStates()
-    {
-        if (StateCheckerConfig::get('testsUseStateChecker') && self::$stateChecker) {
-            try {
-                self::$stateChecker->getStateHash();
-            } catch (StateCheckerException $e) {
-                $message = 'Incorrect state hash: ' . $e->getMessage() . (StateCheckerConfig::get('saveTraces') ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
-                if (StateCheckerConfig::get('testsUseAssertionFailureOnError')) {
-                    self::assertFalse(true, $message);
-                } else {
-                    echo $message;
-                }
-            }
-        }
-    }
-    
-    /**
-     * 
-     */
-    public static function setUpBeforeClass()
-    {
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-            self::saveStates();
-        }
-        
-        parent::setUpBeforeClass();
-    }
-    
-    /**
-     * 
-     */
-    public static function tearDownAfterClass()
-    {
-        parent::tearDownAfterClass();
-           
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-            self::checkStates();
-        }
-    }
     
     /**
      * Collect state information and storing a hash
      */
-    public function setUp()
+    public function _before()
     {
         if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
             self::saveStates();
         }
         
-        parent::setUp();
+        parent::_before();
     }
     
     /**
      * Collect state information and comparing hash
      */
-    public function tearDown()
+    public function _after()
     {
-        parent::tearDown();
+        parent::_after();
            
         if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
             self::checkStates();
