@@ -53,29 +53,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class StateCheckerCestAbstract
 {
     use StateCheckerTrait;
-    
-    
-    /**
-     * Collect state information and storing a hash
-     */
-    public function _before()
-    {
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::saveStates();
-        }
-        
-        parent::_before();
-    }
-    
-    /**
-     * Collect state information and comparing hash
-     */
-    public function _after()
-    {
-        parent::_after();
-           
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::checkStates();
-        }
-    }
+    use StateCheckerCodeceptionTrait;
 }
