@@ -11,7 +11,7 @@ $subpanel_layout['list_fields'] = array (
                         <li style="clear: both;margin: 0;padding: 0;white-space: nowrap;width: 100%;"><a class="button_select_all_top" style="border: 0 none !important;float: left;font-size: 12px !important;padding: 1px 10px !important;text-align: left;width: 100%;line-height: 18px;display: block;" href="#" name="selectall">{$APP.LBL_LISTVIEW_OPTION_ENTIRE}‎</a></li>
                         <li style="clear: both;margin: 0;padding: 0;white-space: nowrap;width: 100%;"><a class="button_deselect_top" style="border: 0 none !important;float: left;font-size: 12px !important;padding: 1px 10px !important;text-align: left;width: 100%;line-height: 18px;display: block;" href="#" name="deselect">{$APP.LBL_LISTVIEW_NONE}</a></li>
                       </ul>
-                      <span class="cust_select" class="subhover"> </span>
+                      <span class="cust_select" class="subhover"><span class="suitepicon suitepicon-action-caret"></span></span>
                     </li>
                     </ul>',
     'widget_type' => 'checkbox',

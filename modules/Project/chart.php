@@ -241,7 +241,7 @@ class chart
               </td>
               <td scope="row_val" nowrap="nowrap" >
                   <input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/>
-                  '.SugarThemeRegistry::current()->getImage('jscalendar','id="date_start_trigger" style="position:relative; top:0px" border="0"').'
+                  <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span>
               </td>
               <td scope="row_label" nowrap="nowrap" >
                   <label for="field_chart">&nbsp;</label>

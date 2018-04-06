@@ -66,6 +66,21 @@ $viewdefs[$module_name]['EditView'] = [
                     ],
                 3 =>
                     [
+                        'name' => 'allowed_grant_type',
+                    ],
+                4 =>
+                    [
+                        0 =>
+                            [
+                                'name' => 'duration_amount',
+                            ],
+                        1 =>
+                            [
+                                'name' => 'duration_unit',
+                            ],
+                    ],
+                5 =>
+                    [
                         0 =>
                             [
                                 'name' => 'new_secret',

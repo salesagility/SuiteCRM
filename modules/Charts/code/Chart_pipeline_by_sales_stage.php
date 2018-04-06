@@ -237,11 +237,11 @@ $puser_date_start = $current_user->getPreference('user_date_start');
 <table cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_START']?></b> <br><span class="dateFormat"><?php echo "(".$timedate->get_user_date_format().")"; ?></span></td>
-	<td valign='top' ><input class="text" name="pbss_date_start" size='12' maxlength='10' id='date_start' value='<?php if (isset($date_start)) echo $date_start; ?>'>  <?php echo SugarThemeRegistry::current()->getImage('jscalendar', 'id="date_start_trigger" align="absmiddle"', null, null, ".gif", $app_strings['LBL_ENTER_DATE']); ?> </td>
+	<td valign='top' ><input class="text" name="pbss_date_start" size='12' maxlength='10' id='date_start' value='<?php if (isset($date_start)) echo $date_start; ?>'> <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span> </td>
 </tr>
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_END'];?></b><br><span class="dateFormat"><?php echo "(".$timedate->get_user_date_format().")"; ?></span></td>
-	<td valign='top' ><input class="text" name="pbss_date_end" size='12' maxlength='10' id='date_end' value='<?php if (isset($date_end)) echo $date_end; ?>'>  <?php echo SugarThemeRegistry::current()->getImage('jscalendar', 'id="date_end_trigger" align="absmiddle"', null, null, ".gif", $app_strings['LBL_ENTER_DATE']); ?> </td>
+	<td valign='top' ><input class="text" name="pbss_date_end" size='12' maxlength='10' id='date_end' value='<?php if (isset($date_end)) echo $date_end; ?>'>  <span id="date_end_trigger" class="suitepicon suitepicon-module-calendar"></span></td>
 </tr>
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_SALES_STAGES'];?></b></td>

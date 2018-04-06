@@ -45,7 +45,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 
 /**
  * Class FilterRepository
@@ -75,10 +75,11 @@ class FilterRepository
 
     /**
      * @param Request $request
+     * @param array route arguments
      * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
-    public function fromRequest(Request $request)
+    public function fromRequest(Request $request, array $args = array())
     {
         /** @var OperatorInterface[] $filterOperators */
         // Parse Filters from request
@@ -94,12 +95,12 @@ class FilterRepository
 
             if(is_array($filters)) {
                 foreach ($filters as $filterKey => $filter) {
-                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter));
+                    $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
                 }
             } else if(is_string($filters)) {
                 $response = array($filters);
             } else {
-                throw new BadRequest('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
+                throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
             }
         }
 

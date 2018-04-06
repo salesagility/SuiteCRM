@@ -3,7 +3,7 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,7 +77,6 @@ $mod_strings = array(
     'LBL_VIEW_SURVEY_REPORTS'                                => 'View Survey Reports',
     'LBL_CHECKED'                                            => 'Checked',
     'LBL_UNCHECKED'                                          => 'Unchecked',
-    'LBL_SHOW_ALL_RESPONSES'                                 => 'Show all responses',
     'LBL_RESPONSE_ANSWER'                                    => 'Answer',
     'LBL_RESPONSE_CONTACT'                                   => 'Contact',
     'LBL_RESPONSE_TIME'                                      => 'Date',
@@ -89,4 +88,5 @@ $mod_strings = array(
     'LBL_DISSATISFIED_TEXT'                                  => 'Dissatisfied Text',
     'LBL_SURVEYS_SURVEYQUESTIONS_FROM_SURVEYQUESTIONS_TITLE' => 'Survey Questions',
     'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
+    'LBL_SHOW_RESPONSES' => 'Show responses',
 );

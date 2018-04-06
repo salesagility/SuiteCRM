@@ -47,14 +47,15 @@ $listViewDefs[$module_name] = [
         'default' => true,
         'link' => true,
     ],
-    'redirect_url' => [
-        'label' => 'LBL_REDIRECT_URL',
+    'allowed_grant_type' => [
+        'label' => 'LBL_ALLOWED_GRANT_TYPE',
         'default' => true,
-        'link' => true,
     ],
-    'is_confidential' => [
-        'label' => 'LBL_IS_CONFIDENTIAL',
+    'assigned_user_name' => [
+        'label' => 'LBL_USER',
+        'module' => 'Users',
+        'id' => 'USER_ID',
         'default' => true,
-        'link' => true,
+        'sortable' => true,
     ],
 ];

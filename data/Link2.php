@@ -271,6 +271,14 @@ class Link2
     }
 
     /**
+    * @return Array of related fields
+    */
+    public function getRelatedFields()
+    {
+        return $this->relationship_fields;
+    }
+    
+    /**
      * @param $name
      *
      * @return string The value for the relationship field $name
@@ -283,7 +291,7 @@ class Link2
             return null;
         } //For now return null. Later try the relationship object directly.
     }
-
+    
     /**
      * @return SugarRelationship the relationship object this link references
      */

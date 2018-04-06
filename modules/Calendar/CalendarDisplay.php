@@ -547,7 +547,7 @@ class CalendarDisplay {
 			$ss->assign('tabs_params',$tabs_params);
 			$ss->assign('current_date',$current_date);
 			$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
-			$ss->assign('cal_img',SugarThemeRegistry::current()->getImageURL("jscalendar.gif",false));
+			$ss->assign('cal_img', '<span class="suitepicon suitepicon-module-calendar"></span>');
 		}
 
 		$ss->assign('previous',$this->get_previous_calendar());

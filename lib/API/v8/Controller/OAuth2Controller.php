@@ -42,14 +42,13 @@
 namespace SuiteCRM\API\v8\Controller;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\OAuth2\Middleware\AuthorizationServer;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
-use SuiteCRM\API\v8\Exception\NotImplementedException;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class OAuth2Controller extends ApiController
 {
@@ -57,19 +56,27 @@ class OAuth2Controller extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
-     * @throws ContainerException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {
-        /** @var AuthorizationServer $server */
-        $server = $this->containers->get('AuthorizationServer');
-
         try {
-            return $server->respondToAccessTokenRequest($request, $response);
-        } catch (OAuthServerException $exception) {
-            return $exception->generateHttpResponse($response);
+            /** @var AuthorizationServer $server */
+            $server = $this->containers->get('AuthorizationServer');
+
+            try {
+                return $server->respondToAccessTokenRequest($request, $response);
+            } catch (OAuthServerException $exception) {
+                return $exception->generateHttpResponse($response);
+            }
+            
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

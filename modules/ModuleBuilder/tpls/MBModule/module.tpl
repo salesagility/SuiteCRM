@@ -79,7 +79,7 @@
         <td class='mbLBL'><font color="#ff0000"> * </font><b>{$mod_strings.LBL_TYPE}</b></td>
         {counter name='items' assign='items' start=0}
         <td>
-            <table>
+            <table id="factory-module">
                 <tr{if empty($module->name)} id="factory_modules"{/if}>
                 {if empty($module->name)}<input type='hidden' name='type'>{/if}
                 {foreach from=$types key='type' item='name'}
@@ -93,16 +93,23 @@
                         {if empty($module->name)}
                     <td align='center'>
                         <table id='type_{$type}' onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");' class='wizardButton' onmousedown='return false;' onmouseout='ModuleBuilder.buttonOut(this,"{$type}", "type");'>
-						  <tr>
-						      <td  align='center'>{sugar_image name=$type width=48 height=48}</td>
-						  </tr>
-					   </table>
-					   <a class='studiolink' href="javascript:void(0)" onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");'>{$name}</a>
-                        <script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
-                    </td>
+							<tr>
+							  <td  align='center'>
+								  <a href="#">
+									  <span class="suitepicon suitepicon-module-{$type}"></span>
+								  </a>
+							  </td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">{$name}</a>
+								</td>
+							</tr>
+					    </table>
+						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
+					</td>
                     {else}
-                    <td align='center'>{sugar_image name=$type width=48 height=48}<br>
-                    {$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
                     {/if}
                     </td>
                     {/if}
