@@ -221,13 +221,13 @@ class ViewPopup extends SugarView{
 			echo $popup->display();
 
 		}else{
-			if(file_exists('custom/modules/' . $this->module . '/Popup_picker.php')){
-				require_once('custom/modules/' . $this->module . '/Popup_picker.php');
-			}elseif(file_exists('modules/' . $this->module . '/Popup_picker.php')){
-				require_once('modules/' . $this->module . '/Popup_picker.php');
-			}else{
-				require_once('include/Popups/Popup_picker.php');
-			}
+            if (file_exists('custom/modules/' . $this->module . '/Popup_picker.php')) {
+                require_once('custom/modules/' . $this->module . '/Popup_picker.php');
+            } elseif (file_exists('modules/' . $this->module . '/Popup_picker.php')) {
+                require_once('modules/' . $this->module . '/Popup_picker.php');
+            } else {
+                require_once('include/Popups/Popup_picker.php');
+            }
 
 			$popup = new Popup_Picker();
 			$popup->_hide_clear_button = true;
