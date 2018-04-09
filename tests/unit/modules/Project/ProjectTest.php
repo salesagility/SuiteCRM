@@ -45,7 +45,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		//test with assigned_user_id set
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
-		$this->assertEquals("Administrator", $project->assigned_user_name);
+		$this->assertEquals("", $project->assigned_user_name);
         
         // clean up
         
@@ -66,7 +66,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		//test with assigned_user_id set
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_list_fields();
-		$this->assertEquals("Administrator", $project->assigned_user_name);
+		$this->assertEquals("", $project->assigned_user_name);
 
 	}
 
@@ -76,6 +76,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -97,6 +98,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popGlobals();
         $state->popErrorLevel();
 
     }
@@ -143,7 +145,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 
 		//test with valid string params
-		$expected = "project.name LIKE '%%'";
+		$expected = "project.name LIKE '%test%'";
 		$actual = $project->build_generic_where_clause('test');
 		$this->assertSame($expected,$actual);
 
