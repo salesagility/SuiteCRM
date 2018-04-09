@@ -77,7 +77,7 @@ class AOR_ReportsController extends SugarController
     {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         if (!empty($this->bean->id)) {
-            $this->bean->user_parameters = requestToUserParameters();
+            $this->bean->user_parameters = requestToUserParameters($this->bean);
             echo $this->bean->build_group_report($offset, true);
         }
 
@@ -175,7 +175,7 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
         $this->bean->build_report_csv();
         die;
     }
@@ -245,7 +245,7 @@ class AOR_ReportsController extends SugarController
                 </tbody>
                 </table><br />' . $graphHtml;
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         $printable = $this->bean->build_group_report(-1, false);
         $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));

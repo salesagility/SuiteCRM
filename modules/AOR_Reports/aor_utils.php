@@ -70,19 +70,26 @@ function getDisplayForField($modulePath, $field, $reportModule)
     return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
-function requestToUserParameters()
+function requestToUserParameters($reportBean)
 {
     $params = array();
     if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
+            $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
+            if (!$condition) {
+                continue;
+            }
+
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
             }
-            $params[$parameterId] = array('id' => $parameterId,
+            $value = fixUpFormatting($reportBean->report_module, $condition->field, $_REQUEST['parameter_value'][$key]);
+            $params[$parameterId] = array(
+                'id' => $parameterId,
                 'operator' => $_REQUEST['parameter_operator'][$key],
                 'type' => $_REQUEST['parameter_type'][$key],
-                'value' => $_REQUEST['parameter_value'][$key],
+                'value' => $value,
             );
 
             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.

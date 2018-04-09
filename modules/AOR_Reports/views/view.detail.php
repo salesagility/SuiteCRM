@@ -72,7 +72,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
 
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         //$reportHTML = $this->bean->build_group_report(0,true);
         $reportHTML = $this->bean->buildMultiGroupReport(0,true);
