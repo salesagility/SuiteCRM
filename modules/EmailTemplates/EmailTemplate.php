@@ -186,7 +186,10 @@ class EmailTemplate extends SugarBean
                     }
                     // valid def found, process
                     $optionKey = strtolower("{$prefixes[$collectionKey]}{$key}");
-                    $optionLabel = preg_replace('/:$/', "", translate($field_def['vname'], $beankey));
+                    if (!isset($field_def['vname'])) {
+                        LoggerManager::getLogger()->warn('Filed def has not translatable name.');
+                    }
+                    $optionLabel = preg_replace('/:$/', "", translate(isset($field_def['vname']) ? $field_def['vname'] : null, $beankey));
                     $dup = 1;
                     foreach ($collection[$collectionKey] as $value) {
                         if ($value['name'] == $optionKey) {
