@@ -260,7 +260,8 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $documentRevision->list_view_parse_additional_sections(new Sugar_Smarty(), $xTemplateSection);
+            $ss = new Sugar_Smarty();
+            $documentRevision->list_view_parse_additional_sections($ss, $xTemplateSection);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
