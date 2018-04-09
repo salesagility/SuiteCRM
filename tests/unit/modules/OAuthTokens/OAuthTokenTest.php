@@ -78,6 +78,14 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSaveAndOthers()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('tracker');
+
+	// test
+        
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -98,6 +106,12 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthToken->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+
+
     }
 
     public function load($id)
@@ -143,6 +157,13 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcreateAuthorized()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('tracker');
+
+	// test
+        
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
@@ -162,6 +183,12 @@ class OAuthTokenTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //finally mark deleted for cleanup
         $oauthToken->mark_deleted($oauthToken->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+
+
     }
 
     public function copyAuthData($token)
