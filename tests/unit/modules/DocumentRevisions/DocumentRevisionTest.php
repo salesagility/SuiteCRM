@@ -32,6 +32,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -66,6 +67,7 @@ class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
