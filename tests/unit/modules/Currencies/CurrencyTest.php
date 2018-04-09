@@ -90,12 +90,14 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $currency = new Currency();
 
         //test without setting attributes
-        $result = $currency->list_view_parse_additional_sections(new Sugar_Smarty());
+        $ss = new Sugar_Smarty();
+        $result = $currency->list_view_parse_additional_sections($ss);
         $this->assertEquals(null, isset($result->_tpl_vars['PREROW']) ? $result->_tpl_vars['PREROW'] : null);
 
         //test with required attributes set
         $isMerge = true;
-        $result = $currency->list_view_parse_additional_sections(new Sugar_Smarty());
+        $ss = new Sugar_Smarty();
+        $result = $currency->list_view_parse_additional_sections($ss);
         $this->assertEquals('<input name="mergecur[]" type="checkbox" value="">', $result->_tpl_vars['PREROW']);
     }
 
