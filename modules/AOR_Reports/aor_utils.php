@@ -73,11 +73,12 @@ function getDisplayForField($modulePath, $field, $reportModule)
 function requestToUserParameters($reportBean)
 {
     $params = array();
-    if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
+    if(!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
             $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
             if (!$condition) {
+                $GLOBALS['log']->error('Unable to load report parameter: ' . $_REQUEST['parameter_id'][$key]);
                 continue;
             }
 
