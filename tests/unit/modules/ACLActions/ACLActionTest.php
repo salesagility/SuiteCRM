@@ -20,8 +20,8 @@ class ACLActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testACLAction()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
         $state->pushTable('acl_actions');
+        $state->pushGlobals();
         
 $_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
@@ -37,14 +37,13 @@ $_POST['foo'] = 'bar123ase';
         
         // clean up
         
-        $state->popTable('acl_actions');
         $state->popGlobals();
+        $state->popTable('acl_actions');
     }
 
     public function testaddActions()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
         $state->pushTable('acl_actions');
         $state->pushTable('aod_index');
         
@@ -60,7 +59,6 @@ $_POST['foo'] = 'bar123ase';
         
         $state->popTable('aod_index');
         $state->popTable('acl_actions');
-        $state->popErrorLevel();
     }
 
     public function testremoveActions()
