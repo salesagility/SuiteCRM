@@ -177,7 +177,7 @@ class EmailTemplate extends SugarBean
                     if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                         ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
                         ($field_def['type'] == 'bool') ||
-                        (in_array($field_def['name'], $this->badFields))
+                        (isset($field_def['name']) && in_array((array)$field_def['name'], $this->badFields))
                     ) {
                         continue;
                     }
