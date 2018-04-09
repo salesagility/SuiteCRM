@@ -53,6 +53,16 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('project_task');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+
+	// test
+        
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
@@ -73,7 +83,14 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
-        $this->assertEquals(null, $result);
+        $this->assertEquals(null, $result);   
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('project_task');
+        $state->popTable('aod_indexevent');
     }
 
     public function _get_depends_on_name($id)
@@ -131,6 +148,7 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -147,6 +165,7 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popGlobals();
         $state->popErrorLevel();
     }
 
