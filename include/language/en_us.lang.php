@@ -38,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -1601,6 +1602,7 @@ $app_strings = array(
     'LBL_BILL_TO_CONTACT' => 'Bill to Contact',
     'LBL_BILLING_ADDRESS' => 'Billing Address',
     'LBL_QUICK_CREATE_TITLE' => 'Quick Create',
+    'LBL_QUICK_CREATE' => 'Create ',
     'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS' => 'Bugs',
     'LBL_BY' => 'by',
