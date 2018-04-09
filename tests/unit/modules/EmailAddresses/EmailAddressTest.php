@@ -25,6 +25,7 @@ class EmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
+        $state->pushTable('tracker');
         
         // test 
         
@@ -46,6 +47,7 @@ class EmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('email_addresses');
     }
 }
