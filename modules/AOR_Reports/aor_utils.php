@@ -70,22 +70,23 @@ function getDisplayForField($modulePath, $field, $reportModule)
     return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
-function requestToUserParameters($reportBean)
+function requestToUserParameters($reportBean = null)
 {
     $params = array();
     if(!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
-            $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
-            if (!$condition) {
-                $GLOBALS['log']->error('Unable to load report parameter: ' . $_REQUEST['parameter_id'][$key]);
-                continue;
-            }
 
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
             }
-            $value = fixUpFormatting($reportBean->report_module, $condition->field, $_REQUEST['parameter_value'][$key]);
+
+            $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
+            $value = $_REQUEST['parameter_value'][$key];
+            if ($reportBean && $condition) {
+                $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
+            }
+
             $params[$parameterId] = array(
                 'id' => $parameterId,
                 'operator' => $_REQUEST['parameter_operator'][$key],
