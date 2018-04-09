@@ -219,6 +219,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('opportunities');
         $state->pushTable('opportunities_cstm');
         $state->pushTable('sugarfeed');
+        $state->pushTable('tracker');
         $state->pushGlobals();
 
 	// test
@@ -245,6 +246,7 @@ class OpportunityTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('sugarfeed');
         $state->popTable('opportunities_cstm');
         $state->popTable('opportunities');
