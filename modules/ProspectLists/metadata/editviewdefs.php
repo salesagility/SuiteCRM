@@ -77,7 +77,7 @@ function toggle_domain_name(list_type)  {ldelim}
       array('name'=>'description'),
       array('name' => 'domain_name',
             'customLabel' => '<div id="domain_label_div">{$MOD.LBL_DOMAIN}</div>',
-            'customCode' =>  '<div style="display:none" id="domain_name_div"><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>',),
+            'customCode' =>  '<div id="domain_name_div"><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>',),
     ),
     
   ),
