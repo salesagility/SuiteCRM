@@ -157,6 +157,7 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('currencies');
+        $state->pushTable('tracker');
         
         $currency = new Currency();
         $currency->name = 'Rand';
@@ -178,6 +179,7 @@ class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         
+        $state->popTable('tracker');
         $state->popTable('currencies');
         $state->popTable('aod_index');
     }
