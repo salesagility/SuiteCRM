@@ -162,6 +162,11 @@ class StateSaver {
         $rows = $this->pop($table, $namespace);
         
         DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
+        
+        if (!is_array($rows) && !is_object($rows)) {
+            throw new StateCheckerException('Table state pop failed, invalid data format. Table and namespace were: "' . $table . '", "' . $namespace . '"');
+        }
+        
         foreach($rows as $row) {
             $query = "INSERT $table INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');

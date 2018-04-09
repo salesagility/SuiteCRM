@@ -68,12 +68,22 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testlistviewACLHelper()
 	{
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
 		$contact = new Contact();
 
-		$expected = array( "MAIN"=>"a", "ACCOUNT"=>"a");
+		$expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
 		$actual = $contact->listviewACLHelper();
 		$this->assertSame($expected,$actual);
 
+        // clean up
+        
+        $state->popGlobals();
 	}
 
     /**
@@ -185,6 +195,14 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
 	public function testget_list_view_data() {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        $state->pushTable('tracker');
+
+	// test
+        
 		$contact = new Contact();
 
 		//test with attributes preset and verify attributes are set accordingly
@@ -214,6 +232,11 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		$this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
 		$this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
 
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('email_addresses');
 	}
 
 
@@ -306,7 +329,13 @@ class ContactTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		$contact = new Contact();
 
 		//execute the method and verify that it retunrs expected results
-		$expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Contacts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
+		$expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Contacts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id";
 		$actual = $contact->get_unlinked_email_query();
 		$this->assertSame($expected,$actual);
 
