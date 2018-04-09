@@ -15,7 +15,7 @@ class CampaignTrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
     public function testCampaignTracker()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('aod_index');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -31,11 +31,20 @@ class CampaignTrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         
         // clean up
         
-        $state->popErrorLevel();
+        $state->popTable('aod_index');
     }
 
     public function testsave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+
+	// test
+        
         $campaignTracker = new CampaignTracker();
 
         $campaignTracker->tracker_name = 'test';
@@ -51,6 +60,12 @@ class CampaignTrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         $campaignTracker->mark_deleted($campaignTracker->id);
         $result = $campaignTracker->retrieve($campaignTracker->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
+        $state->popTable('campaign_trkrs');
     }
 
     public function testget_summary_text()
