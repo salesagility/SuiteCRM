@@ -240,6 +240,18 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testSaveAndMarkDeleted()
     {
+        
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('campaigns');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+
+	// test
+        
         $campaign = new Campaign();
         $campaign->name = 'test';
         $campaign->amount = 100;
@@ -254,6 +266,14 @@ class CampaignTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $campaign->mark_deleted($campaign->id);
         $result = $campaign->retrieve($campaign->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('campaigns');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
     }
 
     public function testset_notification_body()
@@ -361,7 +381,7 @@ WHERE  emailman.campaign_id = ''
         $expected = str_replace(' ','', $expected);
         $expected = str_replace("\n",'', $expected);
         $expected = str_replace("\t",'', $expected);
-        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace("\r",'', $expected);
         $expected = strtolower($expected);
 
         $actual = $campaign->get_queue_items();
