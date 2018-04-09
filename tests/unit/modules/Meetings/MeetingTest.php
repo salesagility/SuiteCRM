@@ -96,6 +96,7 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('meetings_leads');
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
+        $state->pushTable('tracker');
         $state->pushGlobals();
 
 	// test
@@ -143,6 +144,7 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
         $state->popTable('meetings_leads');
@@ -191,9 +193,9 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $meeting->fill_in_additional_detail_fields();
 
         //verify effected atributes
-        $this->assertEquals('Administrator', $meeting->assigned_user_name);
-        $this->assertEquals('Administrator', $meeting->created_by_name);
-        $this->assertEquals('Administrator', $meeting->modified_by_name);
+        $this->assertEquals('', $meeting->assigned_user_name);
+        $this->assertEquals('', $meeting->created_by_name);
+        $this->assertEquals('', $meeting->modified_by_name);
         $this->assertTrue(isset($meeting->time_start_hour));
         $this->assertTrue(isset($meeting->date_start));
         $this->assertTrue(isset($meeting->time_start));

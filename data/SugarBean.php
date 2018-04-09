@@ -3222,7 +3222,15 @@ abstract class SugarBean
             $notify_mail->setMailerForSystem();
 
             if (empty($admin->settings['notify_send_from_assigning_user'])) {
-                $notify_mail->From = $admin->settings['notify_fromaddress'];
+                
+                if (!isset($admin->settings['notify_fromaddress'])) {
+                    LoggerManager::getLogger()->warn('admin settings / notify from address is not set');
+                    $adminSettingsNotifyFromAddress = null;
+                } else {
+                    $adminSettingsNotifyFromAddress = $admin->settings['notify_fromaddress'];
+                }
+                
+                $notify_mail->From = $adminSettingsNotifyFromAddress;
                 $notify_mail->FromName = (empty($admin->settings['notify_fromname']))
                     ? "" : $admin->settings['notify_fromname'];
             } else {
