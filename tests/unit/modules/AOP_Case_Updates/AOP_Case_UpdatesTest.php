@@ -32,7 +32,11 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
     public function testsave()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('acl_actions');
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aop_case_updates');
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -52,7 +56,11 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestC
         
         // clean up
         
-        $state->popErrorLevel();
+        $state->popGlobals();
+        $state->popTable('aop_case_updates');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        $state->popTable('acl_actions');
     }
 
     public function testgetCase()
