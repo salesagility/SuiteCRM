@@ -51,6 +51,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('aow_conditions');
         $state->pushTable('aod_indexevent');
         $state->pushTable('aow_workflow');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         
@@ -73,6 +75,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
         $state->popTable('aow_workflow');
         $state->popTable('aod_indexevent');
         $state->popTable('aow_conditions');
@@ -161,7 +165,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test for AOS_Quotes. it will return null as no test data is available
         $aowWorkFlow->flow_module = 'AOS_Quotes';
         $result = $aowWorkFlow->get_flow_beans();
-        $this->assertGreaterThanOrEqual(0, count($result));
+        $this->assertGreaterThanOrEqual(0, count((array)$result));
     }
 
     public function testbuild_flow_query_join()
@@ -337,6 +341,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aow_processed');
+        $state->pushTable('tracker');
                 
                 
         $aowWorkFlow = new AOW_WorkFlow();
@@ -365,6 +370,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aow_processed');
     }
 }
