@@ -57,6 +57,8 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -73,6 +75,8 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
         $state->popErrorLevel();
     }
 
@@ -83,6 +87,7 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('tracker');
 
 	// test
         
@@ -94,6 +99,7 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         // clean up
         
+        $state->popTable('tracker');
         $state->popGlobals();
 
     }
