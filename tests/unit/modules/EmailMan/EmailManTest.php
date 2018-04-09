@@ -127,7 +127,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testset_as_sent()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('tracker');
         $state->pushTable('campaign_log');
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -156,7 +156,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popTable('campaign_log');
-        $state->popErrorLevel();
+        $state->popTable('tracker');
     }
 
     public function testcreate_indiv_email()
@@ -168,6 +168,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
+        $state->pushTable('tracker');
         
         // test 
         
@@ -183,6 +184,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
         $state->popTable('emails');
@@ -223,6 +225,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
+        $state->pushTable('tracker');
 
 	// test
         
@@ -242,6 +245,7 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('emails_email_addr_rel');
         $state->popTable('emails');
         $state->popTable('campaign_log');
@@ -376,6 +380,8 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
         $state->pushTable('notes');
+        $state->pushTable('email_addresses');
+        $state->pushTable('tracker');
         $state->pushGlobals();
 
 	// test
@@ -394,6 +400,8 @@ class EmailManTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('email_addresses');
         $state->popTable('notes');
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
