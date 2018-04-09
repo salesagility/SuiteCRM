@@ -56,36 +56,38 @@ class AdministrationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
         $this->assertSame($admin, $result);
     }
 
-//    public function testsaveConfig()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        return;
-//	// save state
-//
-//        $state = new \SuiteCRM\StateSaver();
-//        $state->pushTable('config');
-//        $state->pushGlobals();
-//
-//	// test
-//        
-//        $admin = new Administration();
-//
-//        $_POST['proxy_test'] = 'test value';
-//
-//        //execute the method and verify that it sets the correct config key
-//        $admin->saveConfig();
-//        $actual = $admin->settings['proxy_test'];
-//        $this->assertEquals($actual, 'test value');
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        $state->popTable('config');
-//    }
+    public function testsaveConfig()
+    {
+        self::markTestIncomplete('environment dependency');
+        
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('config');
+        $state->pushGlobals();
+
+	// test
+        
+        $admin = new Administration();
+
+        $_POST['proxy_test'] = 'test value';
+
+        //execute the method and verify that it sets the correct config key
+        $admin->saveConfig();
+        $actual = $admin->settings['proxy_test'];
+        $this->assertEquals($actual, 'test value');
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('config');
+    }
 
     public function testsaveSetting()
     {
 	// save state
+        
+        self::markTestIncomplete('environment dependency');
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
