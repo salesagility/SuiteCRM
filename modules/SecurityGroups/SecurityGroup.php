@@ -400,7 +400,7 @@ class SecurityGroup extends SecurityGroup_sugar
             /* need to find relate fields...for example for Cases look to see if account_id is set */
             //allow inheritance for all relate field types....iterate through and inherit each related field
             foreach ($focus->field_name_map as $name => $def) {
-                if ($def['type'] == 'relate' && isset($def['id_name'])
+                if ((!isset($def['type']) || ($def['type'] == 'relate' && isset($def['id_name'])))
                     && isset($def['module']) && strtolower($def['module']) != 'users'
                 ) {
                     if (isset($_REQUEST[$def['id_name']])) {

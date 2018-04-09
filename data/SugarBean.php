@@ -2461,7 +2461,7 @@ abstract class SugarBean
                     $type .= $def['dbType'];
                 }
 
-                if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
+                if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml')) {
                     $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
                 } elseif (
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
@@ -2864,7 +2864,7 @@ abstract class SugarBean
             $GLOBALS['log']->fatal('SugarBean::handle_remaining_relate_fields $field_defs should be an array');
         } else {
             foreach ((array)$this->field_defs as $def) {
-                if ($def ['type'] == 'relate' && isset($def ['id_name'])
+                if ((isset($def['type']) && $def ['type'] == 'relate') && isset($def ['id_name'])
                     && isset($def ['link']) && isset($def['save'])) {
                     if (in_array($def['id_name'], $exclude) || in_array($def['id_name'], $this->relationship_fields)) {
                         // continue to honor the exclude array and exclude any relationships that will be handled
@@ -5321,7 +5321,7 @@ abstract class SugarBean
             $return = true;
         } elseif (!empty($this->field_defs)) {
             foreach ($this->field_defs as $fieldDef) {
-                if ($fieldDef['type'] != 'image') {
+                if (!isset($fieldDef['type']) || $fieldDef['type'] != 'image') {
                     continue;
                 }
                 $return = true;

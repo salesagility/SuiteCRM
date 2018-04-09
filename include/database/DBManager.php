@@ -556,7 +556,7 @@ abstract class DBManager
 				if(!empty($auto)) {
 					$values[$field] = $auto;
 				}
-			} elseif ($fieldDef['name'] == 'deleted') {
+			} elseif (isset($fieldDef['name']) && $fieldDef['name'] == 'deleted') {
 				$values['deleted'] = (int)$val;
 			} else {
 				// need to do some thing about types of values
