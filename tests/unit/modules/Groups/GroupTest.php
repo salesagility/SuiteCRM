@@ -28,7 +28,9 @@ class GroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testmark_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        $state->pushTable('users');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -44,7 +46,9 @@ class GroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popErrorLevel();
+        $state->popTable('users');
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testcreate_export_query()
