@@ -213,7 +213,7 @@ class StateSaver {
             if (false === $ok) {
                 throw new StateSaverException('Can not write file: ' . $realpath);            
             }
-            if (false ===touch($realpath, $this->files[$realpath]['time'])) {
+            if (false === touch($realpath, $this->files[$realpath]['time'])) {
                 throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
             }
         } else {
