@@ -186,4 +186,3 @@ class TemplateDatetimecombo extends TemplateRange
 	}
 	
 }
-?>

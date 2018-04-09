@@ -246,4 +246,3 @@ class Audit extends SugarBean {
         }
     }
 }
-?>

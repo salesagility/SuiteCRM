@@ -228,7 +228,7 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
             else if( preg_match('/quickcreatedefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_QUICKCREATE'];
             else if( preg_match('/searchdefs.php/i', $layoutPath) )
-                $label = $module_builder_language['LBL_SEARCH'];
+                $label = $module_builder_language['LBL_SEARCH_BUTTON'];
             else 
                 continue;
 

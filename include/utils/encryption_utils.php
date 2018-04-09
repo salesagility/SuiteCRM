@@ -103,5 +103,3 @@ function blowfishDecode($key, $encoded){
 	$bf = new Crypt_Blowfish($key);
 	return trim($bf->decrypt($data));
 }
-
-?>

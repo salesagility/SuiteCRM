@@ -5,7 +5,9 @@
 
 
 function retrievePage(page_id, callback){
-     retrieveData(page_id, callback);
+    setTimeout(function(){
+        retrieveData(page_id, callback);
+    }, 300);
 }
 
 function retrieveData(page_id, callback){
@@ -77,7 +79,7 @@ var dashletsPageInit = function() {
 
             if(tab != 0) {
                 // add buttons
-                var removeButton = $('<button class="btn btn-xs btn-danger"><img src="themes/SuiteP/images/id-ff-remove-nobg.svg"></button>');
+                var removeButton = $('<button class="btn btn-xs btn-danger"><span class="suitepicon suitepicon-action-minus"></span></button>');
                 removeButton.click(function(a) {
                     const _this = $(this);
                     var id = $(this).parents('.panel').index();
@@ -103,8 +105,8 @@ var dashletsPageInit = function() {
                                 },
 
                                 success: function (data) {
-                                    let modelTabItem = $(_this).closest('.panel');
-                                    let tabItem = tabs.eq(modelTabItem.index());
+                                    var modelTabItem = $(_this).closest('.panel');
+                                    var tabItem = tabs.eq(modelTabItem.index());
 
                                     if (tabItem.hasClass('active')) {
                                         $('> a', tabs.eq(0)).trigger('click');

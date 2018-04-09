@@ -600,7 +600,6 @@ EOQ;
 </tr>
 EOQ;
 }
-$jscalenderImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
 $form .=	<<<EOQ
 
 
@@ -616,7 +615,9 @@ $form .=	<<<EOQ
 <td scope='row'>$lbl_date&nbsp;<span class="required">$lbl_required_symbol</span>&nbsp;<span class="dateFormat">$ntc_date_format</span></td>
 </tr>
 <tr>
-<td ><input onblur="parseDate(this, '$cal_dateformat');" name='${prefix}date_start' size="12" id='${prefix}jscal_field' maxlength='10' type="text" value="${default_date_start}"> <!--not_in_theme!--><img src="{$jscalenderImage}" alt="{$app_strings['LBL_ENTER_DATE']}"  id="${prefix}jscal_trigger" align="absmiddle"></td>
+<td ><input onblur="parseDate(this, '$cal_dateformat');" name='${prefix}date_start' size="12" id='${prefix}jscal_field' maxlength='10' type="text" value="${default_date_start}"> <!--not_in_theme!-->
+<span class="suitepicon suitepicon-module-calendar" alt="{$app_strings['LBL_ENTER_DATE']}"  id="${prefix}jscal_trigger"></span>
+</td>
 </tr>
 
 <tr>
@@ -649,4 +650,3 @@ return $form;
 
 
 }
-?>

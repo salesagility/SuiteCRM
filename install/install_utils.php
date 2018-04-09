@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,18 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * $Description: TODO: To be written. Portions created by SugarCRM are Copyright
- * (C) SugarCRM, Inc. All Rights Reserved. Contributor(s):
- * ______________________________________..
- * *******************************************************************************/
-
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -70,7 +63,7 @@ function installerHook($function_name, $options = array()){
             $GLOBALS['customInstallHooksExist'] = true;
         }
         else{
-            installLog("installerHook: Could not find custom/install/install_hooks.php");
+            installLog("installerHook: Info: custom/install/install_hooks.php not present, no custom hooks to execute");
             $GLOBALS['customInstallHooksExist'] = false;
         }
     }
@@ -794,6 +787,41 @@ function handleSugarConfig() {
     $sugar_config['log_file']                       = $setup_site_log_file;
     $sugar_config['enable_line_editing_detail']     = true;
     $sugar_config['enable_line_editing_list']       = true;
+    $sugar_config['filter_module_fields']           = array(
+        'Users' => array(
+            'show_on_employees',
+            'portal_only',
+            'is_group',
+            'system_generated_password',
+            'external_auth_only',
+            'sugar_login',
+            'authenticate_id',
+            'pwd_last_changed',
+            'is_admin',
+            'user_name',
+            'user_hash',
+            'password',
+            'last_login',
+            'oauth_tokens',
+        ),
+        'Employees' => array(
+            'show_on_employees',
+            'portal_only',
+            'is_group',
+            'system_generated_password',
+            'external_auth_only',
+            'sugar_login',
+            'authenticate_id',
+            'pwd_last_changed',
+            'is_admin',
+            'user_name',
+            'user_hash',
+            'password',
+            'last_login',
+            'oauth_tokens',
+        )
+    );
+
     $sugar_config['hide_subpanels']       = true;
 
     // Setup FTS
@@ -957,8 +985,10 @@ EOQ;
     Options +FollowSymLinks
     RewriteEngine On
     RewriteBase {$basePath}
-    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
-    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
+    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
+    RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
@@ -2048,7 +2078,7 @@ function post_install_modules(){
 }
 
 function get_help_button_url(){
-    $help_url = 'http://www.sugarcrm.com/docs/Administration_Guides/CommunityEdition_Admin_Guide_5.0/toc.html';
+    $help_url = 'https://docs.suitecrm.com/user/';
 
     return $help_url;
 }

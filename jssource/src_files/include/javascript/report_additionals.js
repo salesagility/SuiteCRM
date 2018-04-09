@@ -757,8 +757,8 @@ function addFilterInputDate(row, filter) {
 
   var cell = document.createElement("td");
   cell.setAttribute('valign', 'middle');
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger');
   cell.appendChild(img_element);
   row.appendChild(cell);
@@ -954,8 +954,8 @@ function addFilterInputDateBetween(row, filter) {
 
   var cell = document.createElement("td");
   cell.setAttribute('valign', 'middle');
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger');
   cell.appendChild(img_element);
   row.appendChild(cell);
@@ -994,8 +994,8 @@ function addFilterInputDateBetween(row, filter) {
   filter_row.input_field1 = new_input;
 
   var cell = document.createElement("td");
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger2');
   cell.appendChild(img_element);
   row.appendChild(cell);

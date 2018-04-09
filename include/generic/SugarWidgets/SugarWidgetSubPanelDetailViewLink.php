@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 {
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $focus;
 
@@ -138,5 +138,3 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 		
 	}
 }
-
-?>

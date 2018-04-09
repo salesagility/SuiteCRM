@@ -10,19 +10,15 @@
             <div class="panel-heading panel-heading-collapse">
 
             {if $subpanel_tabs_properties.$i.expanded_subpanels == true}
-                <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
+                <a id="subpanel_title_{$subpanel_tab}" class="in" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false"
+                   onclick="toggleSubpanelCookie('{$subpanel_tab}');">
             {else}
-                    <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse"
-                       href="#subpanel_{$subpanel_tab}" aria-expanded="false" onclick="showSubPanel('{$subpanel_tab}')">
+                    <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false"
+                       onclick="showSubPanel('{$subpanel_tab}'); toggleSubpanelCookie('{$subpanel_tab}');">
             {/if}
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>
-                            {capture name="sub_panel_img_capture" assign="side_bar_img"}{sugar_getimagepath directory='sub_panel' file_name=$subpanel_tabs_properties.$i.module_name file_extension='svg'}{/capture}
-                            {if !empty($side_bar_img)}
-                                <img src="{$side_bar_img}"/>
-                            {else}
-                                <img src="themes/SuiteP/images/sub_panel/basic.svg"/>
-                            {/if}
+                            <span class="suitepicon suitepicon-module-{$subpanel_tabs_properties.$i.module_name|lower|replace:'_':'-'} subpanel-icon"></span>
                             {$subpanel_tabs_properties.$i.title}
                         </div>
                     </div>

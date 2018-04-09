@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -59,7 +59,7 @@ function sp_del_conf(){return confirm(SUGAR.language.get('app_strings','NTC_DELE
 function get_record_id(){return window.document.forms['DetailView'].elements['record'].value;}
 function get_layout_def_key(){if(typeof(window.document.forms['DetailView'].elements['layout_def_key'])=='undefined')return'';return window.document.forms['DetailView'].elements['layout_def_key'].value;}
 function save_finished(args){var child_field=request_map[args.request_id];delete(child_field_loaded[child_field]);showSubPanel(child_field);}
-function set_return_and_save_background(popup_reply_data){var form_name=popup_reply_data.form_name;var name_to_value_array=popup_reply_data.name_to_value_array;var passthru_data=popup_reply_data.passthru_data;var select_entire_list=typeof(popup_reply_data.select_entire_list)=='undefined'?0:popup_reply_data.select_entire_list;var current_query_by_page=popup_reply_data.current_query_by_page.replace(/&quot;/g,'');var query_array=new Array();if(name_to_value_array!='undefined'){for(var the_key in name_to_value_array){if(the_key=='toJSON'){}
+function set_return_and_save_background(popup_reply_data){var form_name=popup_reply_data.form_name;var name_to_value_array=popup_reply_data.name_to_value_array;var passthru_data=popup_reply_data.passthru_data;var select_entire_list=typeof(popup_reply_data.select_entire_list)==='undefined'?0:popup_reply_data.select_entire_list;var current_query_by_page=typeof(popup_reply_data.current_query_by_page)==='undefined'?'':popup_reply_data.current_query_by_page.replace(/&quot;/g,'');var query_array=new Array();if(name_to_value_array!='undefined'){for(var the_key in name_to_value_array){if(the_key=='toJSON'){}
 else{query_array.push(the_key+"="+name_to_value_array[the_key]);}}}
 var selection_list=popup_reply_data.selection_list;if(selection_list!='undefined'){for(var the_key in selection_list){query_array.push('subpanel_id[]='+selection_list[the_key])}}
 var module=get_module_name();var id=get_record_id();query_array.push('value=DetailView');query_array.push('module='+module);query_array.push('http_method=get');query_array.push('return_module='+module);query_array.push('return_id='+id);query_array.push('record='+id);query_array.push('isDuplicate=false');query_array.push('action=Save2');query_array.push('inline=1');query_array.push('select_entire_list='+select_entire_list);if(select_entire_list==1){query_array.push('current_query_by_page='+current_query_by_page);}
@@ -77,6 +77,7 @@ current_subpanel_url=url;var loadingImg='<img src="themes/'+SUGAR.themes.theme_n
 request_id++;}});}else{var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){hideSubPanel(current_child_field);}
 current_child_field=child_field;}
 if(typeof(url)!='undefined'&&url!=null&&url.indexOf('refresh_page=1')>0){document.location.reload();}}
+function toggleSubpanelCookie(tab){set_div_cookie(get_module_name()+'_'+tab+'_v',!$('#subpanel_'+tab).is(":visible"));}
 function markSubPanelLoaded(child_field){child_field_loaded[child_field]=2;}
 function hideSubPanel(child_field){var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='none';set_div_cookie(subpanel.cookie_name,'none');}
 var sub_cookie_name=get_module_name()+'_divs';var temp=Get_Cookie(sub_cookie_name);var div_cookies=new Array();if(temp&&typeof(temp)!='undefined'){div_cookies=get_sub_cookies(temp);}

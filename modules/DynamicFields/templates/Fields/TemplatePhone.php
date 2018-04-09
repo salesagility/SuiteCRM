@@ -68,6 +68,3 @@ class TemplatePhone extends TemplateText{
 		return $def;	
 	}
 }
-
-
-?>

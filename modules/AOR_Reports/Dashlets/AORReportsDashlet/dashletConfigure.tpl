@@ -77,11 +77,11 @@
                                             true
                                     );' >
                                 {/literal}
-                            <img src="{sugar_getimagepath file="id-ff-select.png"}">
+                            <span class="suitepicon suitepicon-action-select"></span>
                         </button>
                         <button type="button" name="btn_clr_aor_report_name" id="btn_clr_aor_report_name" tabindex="0" title="{$MOD.LBL_DASHLET_CLEAR_REPORT}"  class="button lastChild"
                             onclick="SUGAR.clearRelateField(this.form, 'aor_report_name', 'aor_report_id');"  value="{$MOD.LBL_DASHLET_CLEAR_REPORT}" >
-                            <img src="{sugar_getimagepath file="id-ff-clear.png"}">
+                            <span class="suitepicon suitepicon-action-clear"></span>
                         </button>
                     </span>
                     <script type="text/javascript">

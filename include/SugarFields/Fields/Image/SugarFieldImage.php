@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -93,7 +93,9 @@ class SugarFieldImage extends SugarFieldFile
         if ($move) {
             $upload_file->final_move($bean->id . '_' . $field); //BEAN ID IS THE FILE NAME IN THE INSTANCE.
 
-            $upload_file->upload_doc($bean, $bean->id, $params[$prefix . $vardef['docType']], $bean->$field, $upload_file->mime_type);
+            $docType = isset($vardef['docType']) && isset($params[$prefix . $vardef['docType']]) ?
+                $params[$prefix . $vardef['docType']] : '';
+            $upload_file->upload_doc($bean, $bean->id, $docType, $bean->$field, $upload_file->mime_type);
         } else if (!empty($old_id)) {
             // It's a duplicate, I think
 

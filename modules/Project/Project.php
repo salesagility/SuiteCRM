@@ -334,8 +334,9 @@ class Project extends SugarBean {
 		
 		$focus = $this; 
 
-		//--- check if project template is same or changed.
-        $new_template_id = $focus->am_projecttemplates_project_1am_projecttemplates_ida;
+        //--- check if project template is same or changed.
+        $new_template_id = property_exists($focus->am_projecttemplates_project_1am_projecttemplates_ida) ?
+            $focus->am_projecttemplates_project_1am_projecttemplates_ida : null;
         $current_template_id = "";
 
 		$focus->load_relationship('am_projecttemplates_project_1');
@@ -660,4 +661,3 @@ class Project extends SugarBean {
 	}
 
 }
-?>

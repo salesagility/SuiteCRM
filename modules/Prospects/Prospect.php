@@ -47,8 +47,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
-class Prospect extends Person {
+class Prospect extends Person implements EmailInterface {
     var $field_name_map;
 	// Stored fields
 	var $id;

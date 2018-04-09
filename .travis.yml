@@ -1,27 +1,35 @@
 language: php
 php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 5.4
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
+  - '7.2'
 matrix:
-  allow_failures:
-    - php: 5.4
+  fast_finish: true
+sudo: required
+dist: trusty
+services:
+  - mysql
+
+install:
+  - composer self-update && composer --version
+
 before_script:
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
-  - composer self-update
-  - composer install --no-interaction
+  - phpenv config-rm xdebug.ini
+  - composer install
+
+script:
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
-script:
-  - cd tests
-  - ../vendor/bin/phpunit
-  - cat ../suitecrm.log
-services:
-  - mysql
+  - ./vendor/bin/codecept run -f unit --steps -vvv --debug
+
+after_script:
+  - cat suitecrm.log
+
 branches:
   only:
     - master
@@ -29,3 +37,4 @@ branches:
     - /hotfix.*/
     - /feature.*/
     - /fix.*/
+    - /staging.*/

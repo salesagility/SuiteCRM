@@ -88,4 +88,3 @@ class ViewImportvcardsave extends SugarView
         }
     }
 }
-?>

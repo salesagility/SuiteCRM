@@ -674,11 +674,18 @@ if (typeof('console') == 'undefined') {
 
           // get bookmarked url state
           var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
-          var urlVars = {};
-          var splits = YUI_HistoryBookmarkedState.split('&');
-          for (key in splits) {
-            var urlVar = splits[key].split('=');
-            urlVars[urlVar[0]] = urlVar[1];
+            var urlVars = {};
+
+            if (YUI_HistoryBookmarkedState === null) {
+                urlVars.module = '';
+                urlVars.action = '';
+                urlVars.vie_package = '';
+          } else {
+              var splits = YUI_HistoryBookmarkedState.split('&');
+              for (key in splits) {
+                var urlVar = splits[key].split('=');
+                urlVars[urlVar[0]] = urlVar[1];
+              }
           }
 
           // check where we are and do it if we are in field editor in module builder

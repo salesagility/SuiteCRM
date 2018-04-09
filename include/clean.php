@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -102,7 +102,7 @@ class SugarCleaner
         $hidden_tags = array('script' => true, 'style' => true, 'title' => true, 'head' => true);
         $config->set('Core.HiddenElements', $hidden_tags);
         $config->set('Cache.SerializerPath', sugar_cached("htmlclean"));
-        $config->set('URI.Base', $sugar_config['site_url']);
+        $config->set('URI.Base', isset($sugar_config['site_url']) ? $sugar_config['site_url'] : null);
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
@@ -192,8 +192,7 @@ class SugarCleaner
             // remove all HTML tags
             $sugarCleaner = new SugarCleaner();
             $purifier = $sugarCleaner->purifier;
-            $config = HTMLPurifier_Config::create(null);
-            $clean_html = $purifier->purify($dirty_html_decoded, $config);
+            $clean_html = $purifier->purify($dirty_html_decoded);
         } else {
             // encode all HTML tags
             $clean_html = $dirty_html_decoded;

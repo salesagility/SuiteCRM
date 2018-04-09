@@ -125,4 +125,3 @@ function populateFromRow(&$focus,$row){
         }
     }
 }
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -198,6 +198,7 @@ class Popup_Picker
                     'id' => $meeting->id,
                     'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
+                    'module' => 'Meetings',
                     'module' => 'Meetings',
                     'status' => $app_list_strings['meeting_status_dom'][$meeting->status],
                     'parent_id' => $meeting->parent_id,
@@ -414,6 +415,9 @@ class Popup_Picker
         $template = new Sugar_Smarty();
         $template->assign('app', $app_strings);
         $template->assign('mod', $mod_strings);
+        $theme = SugarThemeRegistry::current();
+        $css = $theme->getCSS();
+        $template->assign('css', $css);
         $template->assign('theme', SugarThemeRegistry::current());
         $template->assign('langHeader', get_language_header());
         $template->assign('summaryList', $summary_list);

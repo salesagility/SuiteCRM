@@ -30,7 +30,6 @@ ul.jqtree-tree .jqtree-toggler {
 }
 
 ul.jqtree-tree .jqtree-toggler:hover {
-    color: #000;
     text-decoration: none;
 }
 
@@ -39,7 +38,6 @@ ul.jqtree-tree .jqtree-element {
 }
 
 .jqtree-tree .jqtree-title {
-    color: #1C4257;
     vertical-align: middle;
     margin-left: 1.5em;
 }

@@ -61,5 +61,3 @@ class ProjectListViewSmarty extends ListViewSmarty {
     }
 
 }
-
-?>

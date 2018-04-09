@@ -484,5 +484,3 @@ $query .= 			"LEFT JOIN users
 function getCurrencyType(){
 
 }
-
-?>

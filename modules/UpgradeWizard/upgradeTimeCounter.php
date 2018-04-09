@@ -87,5 +87,3 @@ $GLOBALS['log']->fatal('TOTAL TIME .....'.$_SESSION['totalUpgradeTime']);
 
 sugar_cleanup();
 exit();
-
-?>

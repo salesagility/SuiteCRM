@@ -172,6 +172,3 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
 		$focus->save();
    } //foreach
 }
-
-
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -142,23 +142,32 @@ function getRelModuleFields($module, $rel_field, $view='EditView',$value = ''){
 
 }
 
-function getRelatedModule($module, $rel_field){
-    global $beanList;
+/**
+ * @param string $module
+ * @param string $linkFields
+ * @return string
+ */
+function getRelatedModule($module, $linkFields)
+{
+    $linkField = explode(':', $linkFields, 2);
 
-    if($module == $rel_field){
-        return $module;
+    $link = $linkField[0];
+    $relatedModule = $module;
+
+    if ($module === $link) {
+        $relatedModule = $module;
+    } else {
+        $bean = BeanFactory::newBean($module);
+        if ($bean && $bean->load_relationship($link)) {
+            $relatedModule = $bean->$link->getRelatedModuleName();
+        }
     }
 
-    $mod = new $beanList[$module]();
-
-    if(isset($arr['module']) && $arr['module'] != '') {
-        return $arr['module'];
-    } else if($mod->load_relationship($rel_field)){
-        return $mod->$rel_field->getRelatedModuleName();
+    if (!empty($linkField[1])) {
+        return getRelatedModule($relatedModule, $linkField[1]);
     }
 
-    return $module;
-
+    return $relatedModule;
 }
 
 function getModuleTreeData($module){
@@ -403,6 +412,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
                 '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
+	     // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
+	   if($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownLoadPDF') {
+                global $sugar_config;
+                $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
+                $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
+                $contents = str_replace('&type={$module}', '', $contents);
+            }
             $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
         }
         // hack to disable one of the js calls in this control
@@ -586,7 +602,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (isset($params['record_id']) && $params['record_id']) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -848,7 +864,7 @@ function fixUpFormatting($module, $field, $value)
 
     require_once($beanFiles[$beanList[$module]]);
     $bean = new $beanList[$module];
-    
+
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
     switch($bean->field_defs[$field]['type']) {

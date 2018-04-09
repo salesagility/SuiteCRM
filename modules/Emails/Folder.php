@@ -102,7 +102,6 @@ class Folder
                 // root node (inbound)
 
                 $this->id = $row['id'];
-
             } else {
 
                 // child node
