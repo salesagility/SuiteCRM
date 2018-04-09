@@ -31,7 +31,10 @@ class AOS_ProductsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testsave()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('aos_products');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -56,7 +59,10 @@ class AOS_ProductsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popErrorLevel();
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
+        $state->popTable('aos_products');
     }
 
     public function testgetCustomersPurchasedProductsQuery()
