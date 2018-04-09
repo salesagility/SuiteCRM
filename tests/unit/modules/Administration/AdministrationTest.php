@@ -58,7 +58,8 @@ class AdministrationTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
     public function testsaveConfig()
     {
-
+        self::markTestIncomplete('environment dependency');
+        return;
 	// save state
 
         $state = new \SuiteCRM\StateSaver();
