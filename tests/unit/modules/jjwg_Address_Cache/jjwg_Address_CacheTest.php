@@ -46,6 +46,8 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('jjwg_address_cache');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
 
 	// test
         
@@ -81,6 +83,8 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Tes
         
         // clean up
         
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
         $state->popTable('jjwg_address_cache');
 
     }
