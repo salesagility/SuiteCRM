@@ -201,6 +201,7 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 	// save state
 
         $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('saved_search');
         $state->pushGlobals();
 
 	// test
@@ -221,6 +222,7 @@ class SavedSearchTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         // clean up
         
+        $state->popTable('saved_search');
         $state->popGlobals();
 
     }
