@@ -71,15 +71,14 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testlistViewProcess()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+
+	// test
         
-        
-        if(isset($_SESSION)) {
-            $session = $_SESSION;
-        }
-        
-        if(isset($_REQUEST)) {
-            $request = $_REQUEST;
-        }
         
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -136,19 +135,10 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             DBManagerFactory::getInstance()->query($query);
         }
         
+        // clean up
         
-        if(isset($request)) {
-            $_REQUEST = $request;
-        } else {
-            unset($_REQUEST);
-        }
-        
-        if(isset($session)) {
-            $_SESSION = $session;
-        } else {
-            unset($_SESSION);
-        }
-        
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     public function testprepareSearchForm()
@@ -227,9 +217,14 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testdisplay()
     {
         
-        if(isset($_SESSION)) {
-            $session = $_SESSION;
-        }
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+
+	// test
+        
         
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -281,5 +276,10 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
             unset($_SESSION);
         }
         
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popGlobals();
+
     }
 }
