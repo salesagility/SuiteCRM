@@ -171,7 +171,8 @@ class EmployeeTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $employee->list_view_parse_additional_sections(new Sugar_Smarty(), null);
+            $ss = new Sugar_Smarty();
+            $employee->list_view_parse_additional_sections($ss, null);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
