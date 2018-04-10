@@ -174,7 +174,16 @@ class Scheduler extends SugarBean {
 	    $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
-        $job->assigned_user_id = $this->getUser()->id;
+        
+        $user = $this->getUser();
+        
+        if(!is_object($user)) {
+            LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
+            $job->assigned_user_id = null;
+        } else {
+            $job->assigned_user_id = $user->id;
+        }
+        
         $job->target = $this->job;
         return $job;
 	}

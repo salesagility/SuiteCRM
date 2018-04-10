@@ -262,6 +262,14 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('schedulers');
+
+	// test
+        
         $scheduler = new Scheduler();
 
         //test with empty string params
@@ -273,12 +281,16 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $expected = " SELECT  schedulers.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt1.user_name modified_by_name , jt1.created_by modified_by_name_owner  , 'Users' modified_by_name_mod FROM schedulers   LEFT JOIN  users jt0 ON jt0.id=schedulers.created_by AND jt0.deleted=0\n AND jt0.deleted=0  LEFT JOIN  users jt1 ON schedulers.modified_user_id=jt1.id AND jt1.deleted=0\n\n AND jt1.deleted=0 where (schedulers.name = \"\") AND schedulers.deleted=0";
         $actual = $scheduler->create_export_query('schedulers.id', 'schedulers.name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('schedulers');
     }
 
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushTable('schedulers');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -295,7 +307,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popErrorLevel();
+        $state->popTable('schedulers');
     }
 
     public function testfill_in_additional_detail_fields()
@@ -321,6 +333,14 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('schedulers');
+
+	// test
+        
         $scheduler = new Scheduler();
 
         //preset required attributes
@@ -344,10 +364,21 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $actual = $scheduler->get_list_view_data();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('schedulers');
     }
 
     public function testget_summary_text()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('schedulers');
+
+	// test
+        
         $scheduler = new Scheduler();
 
         //test without setting name
@@ -356,11 +387,26 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with name set
         $scheduler->name = 'test';
         $this->assertEquals('test', $scheduler->get_summary_text());
+        
+        // clean up
+        
+        $state->popTable('schedulers');
     }
 
     public function testgetJobsList()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('schedulers');
+
+	// test
+        
         $result = Scheduler::getJobsList();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popTable('schedulers');
     }
 }
