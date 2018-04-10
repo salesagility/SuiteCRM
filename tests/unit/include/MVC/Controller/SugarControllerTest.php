@@ -62,9 +62,13 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
 
     public function testexecute()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('tracker');
         $state->pushGlobals();
+        
+	// test
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -96,8 +100,8 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         
         // clean up
         
-        $state->popErrorLevel();
         $state->popGlobals();
+        $state->popTable('tracker');
     }
 
     public function testprocess()
@@ -169,6 +173,7 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         if(isset($_SESSION)) {
             $session = $_SESSION;
@@ -208,6 +213,7 @@ class SugarControllerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCa
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
