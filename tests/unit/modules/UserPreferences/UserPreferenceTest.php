@@ -82,7 +82,14 @@ class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCas
 
         //test setPreference method
         $userPreference->setPreference('test', 'test val', 'test_category');
-        $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
+        
+        if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
+            LoggerManager::getLogger()->warn('no session');
+            $result = null;
+        } else {
+            $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
+        }
+        
         $this->assertEquals('test val', $result);
 
         //test getPreference method
