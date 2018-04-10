@@ -214,7 +214,7 @@ class NoteTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $note = new Note();
 
-        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
+        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
