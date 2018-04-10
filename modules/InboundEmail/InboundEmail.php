@@ -3815,7 +3815,20 @@ class InboundEmail extends SugarBean
         $results = array();
         for ($i = 0; $i < count($a_bc); $i++) {
             if (isset($a_offset[$i])) {
-                $results[] = $a_bc[$i] + $a_offset[$i];
+                
+                if(!is_numeric($a_bc[$i])) {
+                    $aBcI = 0;
+                } else {
+                    $aBcI = $a_bc[$i];
+                }
+                
+                if(!is_numeric($a_offset[$i])) {
+                    $aOffsetI = 0;
+                } else {
+                    $aOffsetI = $a_offset[$i];
+                }
+                
+                $results[] = $aBcI + $aOffsetI;
             } else {
                 $results[] = $a_bc[$i];
             }
