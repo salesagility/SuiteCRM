@@ -45,7 +45,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		//test with assigned_user_id set
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
-		$this->assertEquals("", $project->assigned_user_name);
+		$this->assertEquals("Administrator", $project->assigned_user_name);
         
         // clean up
         
@@ -66,7 +66,7 @@ class ProjectTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 		//test with assigned_user_id set
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_list_fields();
-		$this->assertEquals("", $project->assigned_user_name);
+		$this->assertEquals("Administrator", $project->assigned_user_name);
 
 	}
 
