@@ -35,6 +35,7 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('tasks');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -60,6 +61,7 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('tasks');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
