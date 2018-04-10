@@ -193,9 +193,9 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $meeting->fill_in_additional_detail_fields();
 
         //verify effected atributes
-        $this->assertEquals('', $meeting->assigned_user_name);
-        $this->assertEquals('', $meeting->created_by_name);
-        $this->assertEquals('', $meeting->modified_by_name);
+        $this->assertEquals('Administrator', $meeting->assigned_user_name);
+        $this->assertEquals('Administrator', $meeting->created_by_name);
+        $this->assertEquals('Administrator', $meeting->modified_by_name);
         $this->assertTrue(isset($meeting->time_start_hour));
         $this->assertTrue(isset($meeting->date_start));
         $this->assertTrue(isset($meeting->time_start));
