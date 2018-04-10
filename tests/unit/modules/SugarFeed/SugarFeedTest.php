@@ -39,6 +39,14 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testactivateAndDisableModuleFeed()
     {
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('config');
+
+	// test
+        
         $admin = new Administration();
 
         //test activateModuleFeed method
@@ -50,6 +58,10 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         SugarFeed::disableModuleFeed('Accounts');
         $admin->retrieveSettings('sugarfeed');
         $this->assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
+        
+        // clean up
+        
+        $state->popTable('config');
     }
 
     public function testflushBackendCache()
