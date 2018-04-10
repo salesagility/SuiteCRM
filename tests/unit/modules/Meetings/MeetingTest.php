@@ -57,10 +57,10 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $meeting = new Meeting();
 
         //test without recurring_source
-        $this->assertEquals(false, $meeting->ACLAccess('edit'));
-        $this->assertEquals(false, $meeting->ACLAccess('save'));
-        $this->assertEquals(false, $meeting->ACLAccess('editview'));
-        $this->assertEquals(false, $meeting->ACLAccess('delete'));
+        $this->assertEquals(true, $meeting->ACLAccess('edit'));
+        $this->assertEquals(true, $meeting->ACLAccess('save'));
+        $this->assertEquals(true, $meeting->ACLAccess('editview'));
+        $this->assertEquals(true, $meeting->ACLAccess('delete'));
 
         //test with recurring_source
         $meeting->recurring_source = 'test';
@@ -399,7 +399,7 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $meeting = new Meeting();
 
-        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
+        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
