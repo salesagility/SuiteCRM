@@ -78,6 +78,7 @@ class RelationshipTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         //error_reporting(E_ERROR | E_PARSE);
         
+        $db = DBManagerFactory::getInstance();
         
         //execute the method and test if it works and does not throws an exception.
         try {
