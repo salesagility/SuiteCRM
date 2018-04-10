@@ -361,7 +361,8 @@ class MeetingTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $meeting = new Meeting();
 
-        $result = $meeting->get_invite_meetings(new User());
+        $user = new User();
+        $result = $meeting->get_invite_meetings($user);
         $this->assertTrue(is_array($result));
     }
 
