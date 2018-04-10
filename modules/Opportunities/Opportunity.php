@@ -281,7 +281,9 @@ $query .= 			"LEFT JOIN users
 			$query.=' '.$qstring;
 		}
 	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-		return $this->build_related_list2($query, new Contact(), $temp);
+		
+            $contact = new Contact();
+            return $this->build_related_list2($query, $contact, $temp);
 	}
 
     function update_currency_id($fromid, $toid) {
