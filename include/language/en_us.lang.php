@@ -3888,13 +3888,6 @@ $app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
 
 $app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
 
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
-$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
-$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
-$app_strings['LBL_QUICK_CALL'] = 'Log Call';
-$app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';
