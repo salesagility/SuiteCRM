@@ -350,7 +350,7 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $lead = new Lead();
 
-        $expected = array("MAIN" => "span", "ACCOUNT" => "span", "OPPORTUNITY" => "span", "CONTACT" => "span");
+        $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
         $actual = $lead->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
