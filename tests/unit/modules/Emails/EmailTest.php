@@ -45,10 +45,21 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+
+	// test
+        
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
         $this->assertEquals(false, $email->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $email->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testemail2saveAttachment()
@@ -213,6 +224,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
         $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
 
 	// test
@@ -264,6 +276,7 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
