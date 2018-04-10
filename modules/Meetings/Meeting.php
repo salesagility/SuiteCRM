@@ -638,16 +638,16 @@ class Meeting extends SugarBean {
                     $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
                 }
                 
-                if(!is_object($meeting->current_notify_user)) {
+                if (!is_object($meeting->current_notify_user)) {
                     LoggerManager::getLogger()->warn('Meeting try to set notification body but the current notify user is not an object');
                 }
                 
-		if(is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
+		if (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
 							'/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.
                                 $meetingCurrentNotifyUserId.'&record='.
                                 $meetingId);
-		} elseif(strtolower(get_class($meeting->current_notify_user)) == 'lead') {
+		} elseif (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'lead') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
 							'/index.php?entryPoint=acceptDecline&module=Meetings&lead_id='.
                                 $meetingCurrentNotifyUserId.'&record='.
