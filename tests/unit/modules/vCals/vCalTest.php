@@ -197,6 +197,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         $state->pushTable('tracker');
         $state->pushTable('vcals');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
 
         
@@ -217,6 +218,7 @@ class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('vcals');
         $state->popTable('tracker');
         $state->popErrorLevel();
