@@ -52,6 +52,13 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testoptimise()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('tracker');
+
+	// test
+        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -60,6 +67,12 @@ class AOD_IndexTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //execute the method and test if the last optimized date is changed to a later date/time.
         $aod_index->optimise();
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+
+
     }
 
     public function testgetIndex()
