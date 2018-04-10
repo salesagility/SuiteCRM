@@ -144,6 +144,13 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('accounts_cstm');
+
+	// test
+        
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty parameters
@@ -157,10 +164,21 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with non empty valid parameters
         $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('accounts', array('id' => 1), array());
         $this->assertSame(null, $result);
+        
+        // clean up
+        
+        $state->popTable('accounts_cstm');
     }
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('accounts_cstm');
+
+	// test
+        
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
 
@@ -172,6 +190,10 @@ class jjwg_MapsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $bean->id = 1;
         $result = $jjwgMaps->updateGeocodeInfoByBeanQuery($bean);
         $this->assertSame(null, $result);
+        
+        // clean up
+        
+        $state->popTable('accounts_cstm');
     }
 
     public function testdeleteAllGeocodeInfoByBeanQuery()
