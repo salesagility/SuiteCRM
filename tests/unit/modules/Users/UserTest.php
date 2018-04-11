@@ -138,7 +138,13 @@ class UserTest extends \Codeception\Test\Unit
 
         $user->retrieve(1);
 
-        $result = $user->getUserPrivGuid();
+        try {
+            $result = $user->getUserPrivGuid();
+            $this->fail('This function sould throws an Exception.');
+        }
+        catch (Exception $e) {
+            
+        }
 
         $this->assertTrue(isset($result));
         $this->assertEquals(36, strlen($result));
