@@ -546,23 +546,35 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $email = new Email();
 
         //with empty params
-        $expected = "\n		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin\n			function clear_form(form) {\n				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true\";\n				if(typeof(form.advanced) != \"undefined\"){\n					newLoc += \"&advanced=\" + form.advanced.value;\n				}\n				document.location.href= newLoc;\n			}\n		//  End --></script>";
+        $expected = "		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin
+			function clear_form(form) {
+				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true\";
+				if(typeof(form.advanced) != \"undefined\"){
+					newLoc += \"&advanced=\" + form.advanced.value;
+				}
+				document.location.href= newLoc;
+			}
+		//  End --></script>";
         $actual = $email->u_get_clear_form_js('', '', '');
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
 
         //with valid params
         $expected = "\n		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin\n			function clear_form(form) {\n				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true&type=out&assigned_user_id=1\";\n				if(typeof(form.advanced) != \"undefined\"){\n					newLoc += \"&advanced=\" + form.advanced.value;\n				}\n				document.location.href= newLoc;\n			}\n		//  End --></script>";
         $actual = $email->u_get_clear_form_js('out', '', '1');
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
     }
 
     public function testpickOneButton()
     {
-        self::markTestIncomplete('environment dependency (CRLF?)');
         
         $email = new Email();
 
-        $expected = "<div><input	title=\"\"\n						class=\"button\"\n						type=\"button\" name=\"button\"\n						onClick=\"window.location='index.php?module=Emails&action=Grab';\"\n						style=\"margin-bottom:2px\"\n						value=\"    \"></div>";
+        $expected = "<div><input	title=\"\"
+						class=\"button\"
+						type=\"button\" name=\"button\"
+						onClick=\"window.location='index.php?module=Emails&action=Grab';\"
+						style=\"margin-bottom:2px\"
+						value=\"    \"></div>";
         $actual = $email->pickOneButton();
         $this->assertSame($expected, $actual);
     }
@@ -885,18 +897,17 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function test_genereateSearchImportedEmailsQuery()
     {
         
-        self::markTestIncomplete('environment dependency (CRLF?)');
         
         $email = new Email();
 
-        $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status,\n		                      emails_text.from_addr, emails_text.to_addrs  FROM emails   JOIN emails_text on emails.id = emails_text.email_id   WHERE (emails.type= 'inbound' OR emails.type='archived' OR emails.type='out') AND emails.deleted = 0 ";
+        $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status,
+		                      emails_text.from_addr, emails_text.to_addrs  FROM emails   JOIN emails_text on emails.id = emails_text.email_id   WHERE (emails.type= 'inbound' OR emails.type='archived' OR emails.type='out') AND emails.deleted = 0 ";
         $actual = $email->_genereateSearchImportedEmailsQuery();
         $this->assertSame($expected, $actual);
     }
 
     public function test_generateSearchImportWhereClause()
     {
-        self::markTestIncomplete('environment dependency (CRLF?)');
         
 	// save state
 
@@ -929,7 +940,8 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         //test with both request params
         $_REQUEST['searchDateFrom'] = '2015-01-01 00:00:00';
         $_REQUEST['searchDateTo'] = '2015-01-01 00:00:00';
-        $expected = "( emails.date_sent >= '' AND\n                                          emails.date_sent <= '' )";
+        $expected = "( emails.date_sent >= '' AND
+                                          emails.date_sent <= '' )";
         $actual = $email->_generateSearchImportWhereClause();
         $this->assertSame($expected, $actual);
 
@@ -998,17 +1010,26 @@ class EmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testcheckInbox()
     {
-        self::markTestIncomplete('environment dependency (CRLF?)');
         
         $email = new Email();
 
         //test with empty string
-        $expected = "<div><input	title=\"\"\n						class=\"button\"\n						type=\"button\" name=\"button\"\n						onClick=\"window.location='index.php?module=Emails&action=Check&type=';\"\n						style=\"margin-bottom:2px\"\n						value=\"    \"></div>";
+        $expected = "<div><input	title=\"\"
+						class=\"button\"
+						type=\"button\" name=\"button\"
+						onClick=\"window.location='index.php?module=Emails&action=Check&type=';\"
+						style=\"margin-bottom:2px\"
+						value=\"    \"></div>";
         $actual = $email->checkInbox('');
         $this->assertSame($expected, $actual);
 
         //test with valid string
-        $expected = "<div><input	title=\"\"\n						class=\"button\"\n						type=\"button\" name=\"button\"\n						onClick=\"window.location='index.php?module=Emails&action=Check&type=test';\"\n						style=\"margin-bottom:2px\"\n						value=\"    \"></div>";
+        $expected = "<div><input	title=\"\"
+						class=\"button\"
+						type=\"button\" name=\"button\"
+						onClick=\"window.location='index.php?module=Emails&action=Check&type=test';\"
+						style=\"margin-bottom:2px\"
+						value=\"    \"></div>";
         $actual = $email->checkInbox('test');
         $this->assertSame($expected, $actual);
     }
