@@ -3,6 +3,34 @@
 
 class UserTest extends \Codeception\Test\Unit
 {
+
+
+    public function testgetSignatureButtons()
+    {
+        global $mod_strings;
+
+        $user = new User();
+
+        //preset required values
+        $user->retrieve(1);
+        $mod_strings['LBL_BUTTON_EDIT'] = "";
+        $mod_strings['LBL_BUTTON_CREATE'] = "";
+
+
+        //test with defaultDisplay false
+        $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:hidden;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
+					</span>";
+        $actual = $user->getSignatureButtons('');
+        $this->assertSame($expected, $actual);
+
+
+        //test with defaultDisplay true
+        $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:inherit;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
+					</span>";
+        $actual = $user->getSignatureButtons('', true);
+        $this->assertSame($expected, $actual);
+    }
+
     public function testUser()
     {
 
@@ -83,32 +111,6 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertTrue(strpos($actual, $expected) === 0);
         $this->assertEquals(preg_match('/\<\/select\>$/', $actual), 1);
     }
-
-
-    public function testgetSignatureButtons()
-    {
-        global $mod_strings;
-
-        $user = new User();
-
-        //preset required values
-        $user->retrieve(1);
-        $mod_strings['LBL_BUTTON_EDIT'] = "";
-        $mod_strings['LBL_BUTTON_CREATE'] = "";
-
-
-        //test with defaultDisplay false
-        $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:hidden;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;\n					</span>";
-        $actual = $user->getSignatureButtons('');
-        $this->assertSame($expected, $actual);
-
-
-        //test with defaultDisplay true
-        $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:inherit;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;\n					</span>";
-        $actual = $user->getSignatureButtons('', true);
-        $this->assertSame($expected, $actual);
-    }
-
 
     public function testhasPersonalEmail()
     {
