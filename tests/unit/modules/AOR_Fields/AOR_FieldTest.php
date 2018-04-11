@@ -27,6 +27,7 @@ class AOR_FieldTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('aor_fields');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -58,6 +59,7 @@ class AOR_FieldTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('aor_fields');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
