@@ -49,7 +49,61 @@ class SugarEmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Test
         
         parent::tearDown();
     }
+    
 
+    /**
+     * Test for save() method.
+     */
+    public function testSave()
+    {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addr_bean_rel');
+
+	// test
+        
+        
+        $query = "SELECT * FROM email_addr_bean_rel";
+        $resource = DBManagerFactory::getInstance()->query($query);
+        $rows = [];
+        while($row = $resource->fetch_assoc()) {
+            $rows[] = $row;
+        } 
+        $tableEmailAddrBeanRel = $rows;
+        
+        
+        $logger = $GLOBALS['log'];
+        $GLOBALS['log'] = new TestLogger();
+
+        // test
+        /** @noinspection PhpDeprecationInspection */
+        $this->ea->save(null, null, null, null, null, null, null, null);
+        self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
+
+        $GLOBALS['log'] = $logger;
+        
+        // clean up
+        
+        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
+        foreach($tableEmailAddrBeanRel as $row) {
+            $query = "INSERT email_addr_bean_rel INTO (";
+            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            foreach($row as $value) {
+                $quoteds[] = "'$value'";
+            }
+            $query .= (implode(', ', $quoteds)) . ')';
+            DBManagerFactory::getInstance()->query($query);
+        }
+        
+        // clean up
+        
+        $state->popTable('email_addr_bean_rel');
+
+
+    }
+    
+    
     /**
      * Tests for constructor.
      */
@@ -194,44 +248,6 @@ class SugarEmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Test
     }
 
 
-    /**
-     * Test for save() method.
-     */
-    public function testSave()
-    {
-        
-        $query = "SELECT * FROM email_addr_bean_rel";
-        $resource = DBManagerFactory::getInstance()->query($query);
-        $rows = [];
-        while($row = $resource->fetch_assoc()) {
-            $rows[] = $row;
-        } 
-        $tableEmailAddrBeanRel = $rows;
-        
-        
-        $logger = $GLOBALS['log'];
-        $GLOBALS['log'] = new TestLogger();
-
-        // test
-        /** @noinspection PhpDeprecationInspection */
-        $this->ea->save(null, null, null, null, null, null, null, null);
-        self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
-
-        $GLOBALS['log'] = $logger;
-        
-        // clean up
-        
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
-        foreach($tableEmailAddrBeanRel as $row) {
-            $query = "INSERT email_addr_bean_rel INTO (";
-            $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach($row as $value) {
-                $quoteds[] = "'$value'";
-            }
-            $query .= (implode(', ', $quoteds)) . ')';
-            DBManagerFactory::getInstance()->query($query);
-        }
-    }
 
     /**
      * Test for saveEmail() method.
