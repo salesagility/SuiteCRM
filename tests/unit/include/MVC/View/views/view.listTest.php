@@ -11,64 +11,6 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $current_user = new User();
     }
 
-    public function testViewList()
-    {
-        //execute the contructor and check for the Object type and type attribute
-        $view = new ViewList();
-        $this->assertInstanceOf('ViewList', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('list', 'type', $view);
-    }
-
-    public function testlistViewPrepare()
-    {
-        
-        if(isset($_REQUEST)) {
-            $request = $_REQUEST;
-        }
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
-
-        //test without setting parameters. it should return some html
-        $view = new ViewList();
-        $view->module = 'Users';
-
-        ob_start();
-        $view->listViewPrepare();
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
-        $this->assertLessThanOrEqual(0, strlen($renderedContent));
-
-        //test with some REQUEST parameters preset. it should return some html and set the REQUEST key we provided in current_query_by_page REQUEST Param.
-        $view = new ViewList();
-        $view->module = 'Users';
-        $GLOBALS['module'] = 'Users';
-        $_REQUEST['Users2_USER_offset'] = 1;
-        $_REQUEST['current_query_by_page'] = htmlentities(json_encode(array('key' => 'value')));
-        $view->bean = new User();
-
-        ob_start();
-        $view->listViewPrepare();
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
-        $this->assertEquals('value', $_REQUEST['key']);
-         
-        // clean up
-        
-        $state->popErrorLevel();
-        
-        if(isset($request)) {
-            $_REQUEST = $request;
-        } else {
-            unset($_REQUEST);
-        }
-    }
-
     public function testlistViewProcess()
     {
 	// save state
@@ -76,6 +18,7 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
 
 	// test
         
@@ -137,8 +80,67 @@ class ViewListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('email_addresses');
         $state->popTable('tracker');
         $state->popGlobals();
+    }
+
+    public function testViewList()
+    {
+        //execute the contructor and check for the Object type and type attribute
+        $view = new ViewList();
+        $this->assertInstanceOf('ViewList', $view);
+        $this->assertInstanceOf('SugarView', $view);
+        $this->assertAttributeEquals('list', 'type', $view);
+    }
+
+    public function testlistViewPrepare()
+    {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+
+        //test without setting parameters. it should return some html
+        $view = new ViewList();
+        $view->module = 'Users';
+
+        ob_start();
+        $view->listViewPrepare();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        $this->assertLessThanOrEqual(0, strlen($renderedContent));
+
+        //test with some REQUEST parameters preset. it should return some html and set the REQUEST key we provided in current_query_by_page REQUEST Param.
+        $view = new ViewList();
+        $view->module = 'Users';
+        $GLOBALS['module'] = 'Users';
+        $_REQUEST['Users2_USER_offset'] = 1;
+        $_REQUEST['current_query_by_page'] = htmlentities(json_encode(array('key' => 'value')));
+        $view->bean = new User();
+
+        ob_start();
+        $view->listViewPrepare();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        $this->assertGreaterThan(0, strlen($renderedContent));
+        $this->assertEquals('value', $_REQUEST['key']);
+         
+        // clean up
+        
+        $state->popErrorLevel();
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testprepareSearchForm()
