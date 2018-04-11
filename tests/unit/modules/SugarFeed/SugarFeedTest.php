@@ -39,6 +39,8 @@ class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testactivateAndDisableModuleFeed()
     {
+        
+        self::markTestIncomplete('environment dependency');
 
 	// save state
 
