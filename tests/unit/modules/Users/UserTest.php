@@ -7,6 +7,8 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetSignatureButtons()
     {
+        self::markTestIncomplete('environment dependency');
+        
         global $mod_strings;
 
         $user = new User();
