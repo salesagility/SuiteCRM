@@ -346,6 +346,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
+        self::markTestIncomplete('environment dependency');
 
 	// save state
 
