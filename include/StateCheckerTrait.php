@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of StateCheckerTrait
+ * StateCheckerTrait
  *
  * @author SalesAgility
  */
