@@ -33,6 +33,7 @@ class AOS_InvoicesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         $state->pushTable('aos_invoices');
+        $state->pushTable('tracker');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -53,6 +54,7 @@ class AOS_InvoicesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aos_invoices');
         $state->popErrorLevel();
     }
