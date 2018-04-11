@@ -50,7 +50,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author SalesAgility
  */
-
 class StateSaverException extends Exception
 {
 }
