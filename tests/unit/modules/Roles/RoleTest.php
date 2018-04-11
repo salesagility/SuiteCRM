@@ -77,7 +77,7 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //get the related records count
         $result = $role->query_modules();
-        $this->assertGreaterThanOrEqual(2, count($result));
+        $this->assertGreaterThanOrEqual(2, count((array)$result));
 
         //test clear_module_relationship method 
         $this->clear_module_relationship($role->id);
@@ -92,7 +92,7 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //get related records count and verify that records are removed
         $result = $role->query_modules();
-        $this->assertEquals(0, count($result));
+        $this->assertEquals(0, count((array)$result));
     }
 
     public function testSet_user_relationshipAndCheck_user_role_count()
@@ -150,7 +150,7 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //get related records count and verify that records are removed
         $result = $role->clear_user_relationship($role_id, $user_id);
-        $this->assertEquals(0, count($result));
+        $this->assertEquals(0, count((array)$result));
     }
 
     public function testquery_user_allowed_modules()
