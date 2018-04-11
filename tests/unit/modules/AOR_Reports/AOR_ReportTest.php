@@ -50,6 +50,8 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         $state->pushTable('aor_charts');
         $state->pushTable('aor_fields');
         $state->pushTable('aor_reports');
@@ -130,6 +132,8 @@ class AOR_ReportTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->popTable('aor_reports');
         $state->popTable('aor_fields');
         $state->popTable('aor_charts');
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
         $state->popTable('aod_indexevent');
     }
 
