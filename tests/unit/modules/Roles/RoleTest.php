@@ -115,11 +115,11 @@ class RoleTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         //get the related records count
         $result = $role->check_user_role_count('1');
-        $this->assertGreaterThanOrEqual(1, count($result));
+        $this->assertGreaterThanOrEqual(1, count((array)$result));
 
         //get the related records count
         $result = $role->check_user_role_count('2');
-        $this->assertGreaterThanOrEqual(1, count($result));
+        $this->assertGreaterThanOrEqual(1, count((array)$result));
 
         //test get_users method
         $this->get_users($role->id);
