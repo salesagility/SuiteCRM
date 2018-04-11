@@ -131,6 +131,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -150,6 +151,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
@@ -159,6 +161,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -178,6 +181,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
@@ -238,6 +242,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -266,6 +271,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popErrorLevel();
         
@@ -277,6 +283,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -300,6 +307,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
@@ -309,6 +317,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -330,6 +339,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
@@ -339,6 +349,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('tracker');
         
         // test
         
@@ -368,6 +379,7 @@ class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
