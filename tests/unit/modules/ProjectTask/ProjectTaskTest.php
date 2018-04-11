@@ -10,6 +10,27 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
+    
+        public function testcreate_export_query()
+    {
+        $projectTask = new ProjectTask();
+
+        //test with empty string params
+        $expected = "SELECT
+				project_task.*,
+                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
+                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
+        $actual = $projectTask->create_export_query('', '');
+        $this->assertSame($expected, $actual);
+
+        //test with valid string params
+        $expected = "SELECT
+				project_task.*,
+                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
+                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
+        $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
+        $this->assertSame($expected, $actual);
+    }
 
     public function testProjectTask()
     {
@@ -307,24 +328,7 @@ class ProjectTaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->popGlobals();
     }
 
-    public function testcreate_export_query()
-    {
-        self::markTestIncomplete('string diff (CRLF?)');
-        $projectTask = new ProjectTask();
 
-        //test with empty string params
-        $expected = "SELECT
-				project_task.*,
-                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
-                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0";
-        $actual = $projectTask->create_export_query('', '');
-        $this->assertSame($expected, $actual);
-
-        //test with valid string params
-        $expected = "SELECT\n				project_task.*,\n                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users\n                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
-        $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
-        $this->assertSame($expected, $actual);
-    }
 
     public function testgetUtilizationDropdown()
     {
