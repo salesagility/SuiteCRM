@@ -36,7 +36,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
-        $expected = " securitygroups.id in (\n                select secg.id from securitygroups secg\n                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n                    and secu.user_id = '1'\n                where secg.deleted = 0\n            )";
+        $expected = " securitygroups.id in (
+                select secg.id from securitygroups secg
+                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+                    and secu.user_id = '1'
+                where secg.deleted = 0
+            )";
         $actual = $securityGroup->getGroupWhere('securitygroups', 'SecurityGroups', 1);
         $this->assertSame($expected, $actual);
 
@@ -68,7 +73,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $securityGroup = new SecurityGroup();
 
-        $expected = " users.id in (\n            select sec.user_id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        )";
+        $expected = " users.id in (
+            select sec.user_id from securitygroups_users sec
+            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
+                and secu.user_id = '1'
+            where sec.deleted = 0
+        )";
         $actual = $securityGroup::getGroupUsersWhere(1);
 
         $this->assertSame($expected, $actual);
@@ -79,12 +89,22 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
-        $expected = " LEFT JOIN (select distinct secg.id from securitygroups secg\n    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n            and secu.user_id = '1'\n    where secg.deleted = 0\n) securitygroup_join on securitygroup_join.id = securitygroups.id ";
+        $expected = " LEFT JOIN (select distinct secg.id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '1'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = securitygroups.id ";
         $actual = $securityGroup->getGroupJoin('securitygroups', 'SecurityGroups', 1);
         $this->assertSame($expected, $actual);
 
         //test with //test with securitygroups module
-        $expected = " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg\n    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n            and secu.user_id = '1'\n    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0\n             and secr.module = 'Users'\n    where secg.deleted = 0\n) securitygroup_join on securitygroup_join.id = users.id ";
+        $expected = " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '1'
+    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
+             and secr.module = 'Users'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupJoin('users', 'Users', 1);
         $this->assertSame($expected, $actual);
     }
@@ -93,7 +113,12 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     {
         $securityGroup = new SecurityGroup();
 
-        $expected = " LEFT JOIN (\n            select distinct sec.user_id as id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        ) securitygroup_join on securitygroup_join.id = users.id ";
+        $expected = " LEFT JOIN (
+            select distinct sec.user_id as id from securitygroups_users sec
+            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
+                and secu.user_id = '1'
+            where sec.deleted = 0
+        ) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupUsersJoin(1);
         $this->assertSame($expected, $actual);
     }
@@ -307,6 +332,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('securitygroups');
+        $state->pushTable('tracker');
 
 	// test
         
@@ -347,6 +373,7 @@ class SecurityGroupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('securitygroups');
         $state->popTable('aod_index');
 
