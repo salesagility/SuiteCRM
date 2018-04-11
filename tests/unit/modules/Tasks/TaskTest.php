@@ -245,7 +245,7 @@ class TaskTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         $task = new Task();
 
-        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
+        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
