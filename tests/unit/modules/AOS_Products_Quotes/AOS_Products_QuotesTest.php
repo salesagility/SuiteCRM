@@ -10,22 +10,36 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         get_sugar_config_defaults();
         $current_user = new User();
     }
+    
 
-    public function testAOS_Products_Quotes()
+    public function testsave()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_products_quotes');
+        $state->pushTable('tracker');
+        
+        
         $aosProductsQuotes = new AOS_Products_Quotes();
-        $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
-        $this->assertInstanceOf('Basic', $aosProductsQuotes);
-        $this->assertInstanceOf('SugarBean', $aosProductsQuotes);
 
-        $this->assertAttributeEquals('AOS_Products_Quotes', 'module_dir', $aosProductsQuotes);
-        $this->assertAttributeEquals('AOS_Products_Quotes', 'object_name', $aosProductsQuotes);
-        $this->assertAttributeEquals('aos_products_quotes', 'table_name', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'new_schema', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
+        $aosProductsQuotes->name = 'test';
+        $aosProductsQuotes->product_id = 1;
+        $aosProductsQuotes->product_unit_price = 100;
+
+        $aosProductsQuotes->save();
+
+        //test for record ID to verify that record is saved
+        $this->assertTrue(isset($aosProductsQuotes->id));
+        $this->assertEquals(36, strlen($aosProductsQuotes->id));
+
+        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
+        $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
+        $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aos_products_quotes');
     }
 
     public function testsave_lines()
@@ -33,6 +47,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         $state->pushTable('aos_products_quotes');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
@@ -61,9 +76,29 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('aos_products_quotes');
         $state->popErrorLevel();
     }
+    
+    
+    public function testAOS_Products_Quotes()
+    {
+
+        //execute the contructor and check for the Object type and  attributes
+        $aosProductsQuotes = new AOS_Products_Quotes();
+        $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
+        $this->assertInstanceOf('Basic', $aosProductsQuotes);
+        $this->assertInstanceOf('SugarBean', $aosProductsQuotes);
+
+        $this->assertAttributeEquals('AOS_Products_Quotes', 'module_dir', $aosProductsQuotes);
+        $this->assertAttributeEquals('AOS_Products_Quotes', 'object_name', $aosProductsQuotes);
+        $this->assertAttributeEquals('aos_products_quotes', 'table_name', $aosProductsQuotes);
+        $this->assertAttributeEquals(true, 'new_schema', $aosProductsQuotes);
+        $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
+        $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
+    }
+
 
     public function testmark_lines_deleted()
     {
@@ -88,33 +123,5 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_Te
         $actual = count($product_quote_lines);
 
         $this->assertLessThanOrEqual($expected, $actual);
-    }
-
-    public function testsave()
-    {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_products_quotes');
-        
-        
-        $aosProductsQuotes = new AOS_Products_Quotes();
-
-        $aosProductsQuotes->name = 'test';
-        $aosProductsQuotes->product_id = 1;
-        $aosProductsQuotes->product_unit_price = 100;
-
-        $aosProductsQuotes->save();
-
-        //test for record ID to verify that record is saved
-        $this->assertTrue(isset($aosProductsQuotes->id));
-        $this->assertEquals(36, strlen($aosProductsQuotes->id));
-
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
-        $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
-        $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
-        $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popTable('aos_products_quotes');
     }
 }
