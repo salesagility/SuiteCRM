@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of StateSaverException
+ * StateSaverException
  *
  * @author SalesAgility
  */
