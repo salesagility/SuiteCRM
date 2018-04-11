@@ -36,6 +36,8 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushErrorLevel();
         $state->pushTable('aod_indexevent');
         $state->pushTable('aos_contracts');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -57,6 +59,8 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
         $state->popTable('aos_contracts');
         $state->popTable('aod_indexevent');
         $state->popErrorLevel();
@@ -68,6 +72,7 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('aod_indexevent');
         $state->pushTable('calls');
         $state->pushTable('vcals');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
         $call = new call();
@@ -99,6 +104,7 @@ class AOS_ContractsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('vcals');
         $state->popTable('calls');
         $state->popTable('aod_indexevent');
