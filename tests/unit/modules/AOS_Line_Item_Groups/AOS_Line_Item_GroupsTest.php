@@ -34,6 +34,8 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         $state = new SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         $state->pushTable('aos_line_item_groups');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -62,6 +64,8 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         
         // clean up
         
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
         $state->popErrorLevel();
     }
@@ -70,6 +74,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_line_item_groups');
+        $state->pushTable('tracker');
         
         
         $aosLineItemGroup = new AOS_Line_Item_Groups();
@@ -90,6 +95,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_T
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
     }
 }
