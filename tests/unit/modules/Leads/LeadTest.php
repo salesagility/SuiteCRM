@@ -377,10 +377,15 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testget_unlinked_email_query()
     {
-        self::markTestIncomplete('environment dependency (CRLF?)');
         $lead = new Lead();
 
-        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Leads' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Leads' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
+        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Leads' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Leads' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $lead->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
     }
