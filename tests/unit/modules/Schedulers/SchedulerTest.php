@@ -342,6 +342,10 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        $state->popErrorLevel();
     }
 
     public function testget_list_view_data()
@@ -385,7 +389,7 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     }
 
     public function testget_summary_text()
-    {
+    {        
 	// save state
 
         $state = new \SuiteCRM\StateSaver();
@@ -409,6 +413,8 @@ class SchedulerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetJobsList()
     {
+        self::markTestIncomplete('environment dependency');
+        
 	// save state
 
         $state = new \SuiteCRM\StateSaver();
