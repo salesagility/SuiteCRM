@@ -10,6 +10,52 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
+    
+
+	public function testcreate_export_query()
+	{
+
+		$prospectList = new ProspectList();
+
+		//test with empty string params
+		$expected = "SELECT
+                                prospect_lists.*,
+                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
+                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+		$actual = $prospectList->create_export_query('','');
+		$this->assertSame($expected,$actual);
+
+
+		//test with valid string params
+		$expected = "SELECT
+                                prospect_lists.*,
+                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
+                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+		$actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
+		$this->assertSame($expected,$actual);
+
+    }
+
+    
+	public function testcreate_list_query()
+	{
+
+		$prospectList = new ProspectList();
+
+		//test with empty string params
+		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+		$actual = $prospectList->create_list_query('','');
+		$this->assertSame($expected,$actual);
+
+
+		//test with valid string params
+		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+		$actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
+		$this->assertSame($expected,$actual);
+
+	}
 
 	public function testProspectList()
 	{
@@ -49,44 +95,6 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->popErrorLevel();
 	}
 
-	public function testcreate_list_query()
-	{
-            self::markTestIncomplete('environment dependency (CRLF?)');
-
-		$prospectList = new ProspectList();
-
-		//test with empty string params
-		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users\n					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-		$actual = $prospectList->create_list_query('','');
-		$this->assertSame($expected,$actual);
-
-
-		//test with valid string params
-		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users\n					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-		$actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
-		$this->assertSame($expected,$actual);
-
-	}
-
-
-	public function testcreate_export_query()
-	{
-            self::markTestIncomplete('environment dependency (CRLF?)');
-
-		$prospectList = new ProspectList();
-
-		//test with empty string params
-		$expected = "SELECT\n                                prospect_lists.*,\n                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users\n                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-		$actual = $prospectList->create_export_query('','');
-		$this->assertSame($expected,$actual);
-
-
-		//test with valid string params
-		$expected = "SELECT\n                                prospect_lists.*,\n                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users\n                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-		$actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
-		$this->assertSame($expected,$actual);
-
-    }
 
     /**
      * @todo: NEEDS FIXING!
@@ -112,6 +120,7 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('prospect_lists');
+        $state->pushTable('tracker');
         $state->pushGlobals();
 
 	// test
@@ -144,6 +153,7 @@ class ProspectListTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('prospect_lists');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
