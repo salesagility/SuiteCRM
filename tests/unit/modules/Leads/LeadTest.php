@@ -13,6 +13,7 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testLead()
     {
+        //self::markTestIncomplete('Test changes error level');
 
 	// save state
 

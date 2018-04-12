@@ -52,8 +52,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class StateCheckerConfig
 {
     
+    /**
+     * Tests never check state
+     */
     const RUN_NEVER = 0;
+    
+    /**
+     * Tests check states after each test method
+     */
     const RUN_PER_TESTS = 1;
+    
+    /**
+     * Tests check state after each test class (PHPUnit only)
+     */
     const RUN_PER_CLASSES = 2;
     
     /**
@@ -64,6 +75,11 @@ class StateCheckerConfig
      */
     protected static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
     
+    /**
+     * Tests won't checking hash at these files so won't failing
+     *
+     * @var array 
+     */
     protected static $fileExludeRegexes = [
         '/\/\.git\//', 
         '/\/cache\//', 
@@ -109,6 +125,12 @@ class StateCheckerConfig
      */
     protected static $storeDetails = false;
     
+    /**
+     * Enum specified that tests needs to check system state.
+     * Note: developer mode override this value
+     *
+     * @var integer
+     */
     protected static $testStateCheckMode = self::RUN_NEVER;
     
     /**
@@ -128,6 +150,21 @@ class StateCheckerConfig
      */
     protected static $testsUseAssertionFailureOnError = true;
     
+    /**
+     * Tests won't checking hash at these keys so won't failing
+     *
+     * @todo "errlevel" Temporary added to exclusions but it should be empty
+     * @var array
+     */
+    protected static $testsFailureExcludeKeys = [
+        'errlevel', 
+    ];
+    
+    /**
+     * 
+     * @param string $key
+     * @return mixed
+     */
     public static function get($key) {
         //if(inDeveloperMode()) {
             if(in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {

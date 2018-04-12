@@ -197,7 +197,11 @@ class StateChecker
         if (!$serialized) {
             throw new StateCheckerException('Serialize object failure');
         }
-        $hash = md5($serialized);
+        
+        $hash = null;
+        if (!in_array($key, StateCheckerConfig::get('testsFailureExcludeKeys'))) {
+            $hash = md5($serialized);
+        }
         $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
@@ -348,7 +352,7 @@ class StateChecker
         $hashes['database'] = $this->getDatabaseHash();
         $hashes['filesys'] = $this->getFilesystemHash();
         $hashes['globals'] = $this->getSuperGlobalsHash();
-        //$hashes['errlevel'] = $this->getErrorLevelHash();
+        $hashes['errlevel'] = $this->getErrorLevelHash();
         $hash = $this->getHash($hashes, 'state');
         return $hash;
     }
