@@ -107,7 +107,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
 		return $this->_get_column_select($layout_def)." NOT IN (".$str.")\n";
 	}
 
-    function & displayList($layout_def) {
+    function & displayList(&$layout_def) {
         if(!empty($layout_def['column_key'])){
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
         }else if(!empty($layout_def['fields'])){

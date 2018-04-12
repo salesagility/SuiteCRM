@@ -236,8 +236,11 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            header("Content-Disposition: attachment; filename=\"" . $name . "\";");
-
+            if($_REQUEST['preview'] === "yes"){ 
+                header( "Content-Disposition: inline; filename=\"".$name."\";"); }
+            else{
+                header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+            }
         }
         // disable content type sniffing in MSIE
         header("X-Content-Type-Options: nosniff");

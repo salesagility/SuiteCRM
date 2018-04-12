@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldDate extends SugarWidgetFieldDateTime
 {
-    function displayList($layout_def)
+    function displayList(&$layout_def)
     {
         global $timedate;
         // i guess qualifier and column_function are the same..
@@ -78,7 +78,7 @@ class SugarWidgetFieldDate extends SugarWidgetFieldDateTime
         return $this->queryDateOp($this->_get_column_select($layout_def), $layout_def['input_name0'], "=", "date");
     }
 
-    function queryFilterBetween_Dates(& $layout_def)
+    function queryFilterBetween_Dates($layout_def)
     {
         $begin = $layout_def['input_name0'];
         $end = $layout_def['input_name1'];

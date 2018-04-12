@@ -3584,7 +3584,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
-    $val = (int)$val;
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         case 'g':

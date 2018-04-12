@@ -61,12 +61,12 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
     }
 
 
- function queryFilterEquals(&$layout_def)
+ function queryFilterEquals($layout_def)
  {
 		return $this->_get_column_select($layout_def)."='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
  }
 
- function queryFilterNot_Equals_Str(&$layout_def)
+ function queryFilterNot_Equals_Str($layout_def)
  {
 		return $this->_get_column_select($layout_def)."!='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
  }

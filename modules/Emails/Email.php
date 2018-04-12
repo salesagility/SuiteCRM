@@ -1303,29 +1303,31 @@ class Email extends Basic
             $this->save();
         }
 
-        if (!empty($request['fromAccount'])) {
-            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-                $sentFolder = $ie->get_stored_options("sentFolder");
-                if (!empty($sentFolder)) {
-                    $data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
-                    $ie->mailbox = $sentFolder;
-                    if ($ie->connectMailserver() == 'true') {
-                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-                        $returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
-                        if (!$returnData) {
-                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-                        } // if
-                    } else {
-                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-                    } // else
-                } else {
-                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-                } // else
-            } // if
-        } // if
-
-        return true;
-    } // end email2send
+		if(!empty($request['fromAccount'])) {
+			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+				$sentFolder = $ie->get_stored_options("sentFolder");
+				if (!empty($sentFolder)) {
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
+					$ie->mailbox = $sentFolder;
+					if ($ie->connectMailserver() == 'true') {
+						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
+						if (!$returnData) {
+							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+						} // if
+					} else {
+						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+					} // else
+				} else {
+					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+				} // else
+			} // if
+		} // if
+		return true;
+	} // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for

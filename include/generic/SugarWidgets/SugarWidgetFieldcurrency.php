@@ -90,7 +90,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
 
 
-    function & displayList($layout_def)
+    function & displayList(&$layout_def)
         {
             global $locale;
             $symbol = $locale->getPrecedentPreference('default_currency_symbol');

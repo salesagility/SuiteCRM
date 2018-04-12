@@ -86,7 +86,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Documents
     {counter start=0 name="colCounter" print=false assign="colCounter"}
     {foreach from=$displayColumns key=colHeader item=params}
       <th scope='col' width='{$params.width}%'>
-        <div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+        <div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
           {sugar_translate label=$params.label module='Documents'}
         </div>
       </th>

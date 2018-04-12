@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 //TODO Rename this to edit link
 class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
 {
-	function displayHeaderCell(&$layout_def)
+	function displayHeaderCell($layout_def)
 	{
 		return '&nbsp;';
 	}

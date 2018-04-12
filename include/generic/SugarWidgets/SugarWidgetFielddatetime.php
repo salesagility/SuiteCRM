@@ -553,7 +553,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         }
     }
 
-    function displayList($layout_def) {
+    function displayList(&$layout_def) {
         global $timedate;
         // i guess qualifier and column_function are the same..
         if (!empty ($layout_def['column_function'])) {

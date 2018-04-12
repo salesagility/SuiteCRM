@@ -420,15 +420,8 @@ class Scheduler extends SugarBean {
 			}
 		} elseif(strstr($mins,'*/')) {
 			$mult = str_replace('*/','',$mins);
-			$startMin = (int) $timedate->fromDb($focus->date_time_start)->min;
-			$startFrom = ($startMin % $mult);
-			for($i=$startFrom; $i<=59; $i) {
-				if(($currentMin + $i) > 59) {
-					$minName[] = ($i + $currentMin - 60);
-				} else {
-					$minName[] = ($i+$currentMin);
-				}
-				$i += $mult;
+			for($i = 0; $i < 60; $i += $mult) {
+				$minName[] = $i;
 			}
 
 		} elseif($mins != '*') {
@@ -799,7 +792,7 @@ class Scheduler extends SugarBean {
 				<tr class="evenListRowS1">
 					<td scope="row" valign="top" width="70%"><span>
 						'.$mod_strings['LBL_CRON_WINDOWS_DESC'].'<br>
-						<b>cd '.realpath('./').'<br>
+						<b>cd /D '.realpath('./').'<br>
 						php.exe -f cron.php</b>
 					</span></td>
 				</tr>

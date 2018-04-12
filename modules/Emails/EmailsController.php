@@ -802,6 +802,8 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
+
+        $this->bean->description_html = '';
     }
 
 

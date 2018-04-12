@@ -412,6 +412,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
                 '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
+	     // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
+	   if($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownLoadPDF') {
+                global $sugar_config;
+                $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
+                $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
+                $contents = str_replace('&type={$module}', '', $contents);
+            }
             $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
         }
         // hack to disable one of the js calls in this control
@@ -595,7 +602,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if (isset($params['record_id']) ? $params['record_id'] : null) {
+    if (isset($params['record_id']) && $params['record_id']) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -857,7 +864,7 @@ function fixUpFormatting($module, $field, $value)
 
     require_once($beanFiles[$beanList[$module]]);
     $bean = new $beanList[$module];
-    
+
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
     switch($bean->field_defs[$field]['type']) {

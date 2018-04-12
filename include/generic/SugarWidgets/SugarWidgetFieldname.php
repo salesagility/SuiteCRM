@@ -224,7 +224,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 	}
 
     // $rename_columns, if true then you're coming from reports
-	function queryFilterone_of($layout_def, $rename_columns = true)
+	function queryFilterone_of(&$layout_def, $rename_columns = true)
 	{
 
         if($rename_columns) { // this was a hack to get reports working, sugarwidgets should not be renaming $name!

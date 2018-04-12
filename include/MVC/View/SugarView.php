@@ -680,6 +680,26 @@ class SugarView
                 if (count($topTabs) > $max_tabs) {
                     $extraTabs = array_splice($topTabs, $max_tabs);
                 }
+                // Make sure the current module is accessable through one of the top tabs
+                if (!isset($topTabs[$moduleTab])) {
+                    // Nope, we need to add it.
+                    // First, take it out of the extra menu, if it's there
+                    if (isset($extraTabs[$moduleTab])) {
+                        unset($extraTabs[$moduleTab]);
+                    }
+                    if (count($topTabs) >= $max_tabs - 1) {
+                        // We already have the maximum number of tabs, so we need to shuffle the last one
+                        // from the top to the first one of the extras
+                        $lastElem = array_splice($topTabs, $max_tabs - 1);
+                        $extraTabs = $lastElem + $extraTabs;
+                    }
+                    if (!empty($moduleTab)) {
+                        $topTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        if (count($topTabs) >= $max_tabs - 1) {
+                            $extraTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        }
+                    }
+                }
 
                 // Get a unique list of the top tabs so we can build the popup menus for them
                 foreach ($topTabs as $moduleKey => $module) {
@@ -688,6 +708,14 @@ class SugarView
 
                 $groupTabs[$tabIdx]['modules'] = $topTabs;
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
+            }
+
+            foreach ($groupTabs as $key => $tabGroup) {
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra'])
+                ) {
+                    unset($groupTabs[$key]['modules'][$moduleTab]);
+                }
             }
         }
 
