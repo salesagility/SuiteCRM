@@ -14,6 +14,13 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
     public function testLead()
     {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email');
+
+	// test
+        
         //execute the contructor and check for the Object type and  attributes
         $lead = new Lead();
 
@@ -28,6 +35,12 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $lead);
         $this->assertAttributeEquals(true, 'importable', $lead);
+        
+        // clean up
+        
+        $state->popTable('inbound_email');
+
+
     }
 
     public function testget_account()
