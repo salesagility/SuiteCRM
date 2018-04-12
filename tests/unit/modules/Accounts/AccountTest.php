@@ -12,6 +12,38 @@ class AccountTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         $current_user = new User();
     }
 
+    public function testgetProductsServicesPurchasedQuery()
+    {
+        $Account = new Account();
+
+        //without account id
+        $expected = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''
+
+			";
+        $actual = $Account->getProductsServicesPurchasedQuery();
+        $this->assertSame($expected, $actual);
+
+        //with account id
+        $expected = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '1234'
+
+			";
+        $Account->id = '1234';
+        $actual = $Account->getProductsServicesPurchasedQuery();
+        $this->assertSame($expected, $actual);
+    }
+
     public function testAccount()
     {
 
@@ -240,12 +272,17 @@ WHERE ( accounts.deleted IS NULL
 
     public function testget_unlinked_email_query()
     {
-        self::markTestIncomplete();
         
         $Account = new Account();
 
         //without setting type parameter
-        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
+        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $Account->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
 
@@ -254,27 +291,17 @@ WHERE ( accounts.deleted IS NULL
             'select' => 'SELECT emails.id ',
             'from' => 'FROM emails ',
             'where' => '',
-            'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id",
+            'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id",
             'join_tables' => array(''),
         );
 
         $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
-        $this->assertSame($expected, $actual);
-    }
-
-    public function testgetProductsServicesPurchasedQuery()
-    {
-        $Account = new Account();
-
-        //without account id
-        $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''\n\n			";
-        $actual = $Account->getProductsServicesPurchasedQuery();
-        $this->assertSame($expected, $actual);
-
-        //with account id
-        $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '1234'\n\n			";
-        $Account->id = '1234';
-        $actual = $Account->getProductsServicesPurchasedQuery();
         $this->assertSame($expected, $actual);
     }
 }
