@@ -5411,7 +5411,7 @@ class InboundEmail extends SugarBean
             if(empty($email->date_entered)) {
 
                 $possibleFormats = [
-                    \DateTime::RFC2822,
+                    \DateTime::RFC2822.'+',
                     str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
                     str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
                     str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional

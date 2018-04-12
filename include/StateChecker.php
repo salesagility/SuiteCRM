@@ -71,6 +71,10 @@ class StateChecker
      */
     protected $hashes;
 
+    /**
+     *
+     * @var string
+     */
     protected $lastHash;
     
     /**
@@ -86,7 +90,7 @@ class StateChecker
     protected $memoryLimit;
     
     /**
-     * 
+     *
      * @throws StateCheckerException
      */
     public function __construct()
@@ -111,7 +115,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @return array traces
      * @throws StateCheckerException
      */
@@ -124,7 +128,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      */
     public function __destruct()
     {
@@ -150,7 +154,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @param string $key
      * @return boolean
      */
@@ -161,7 +165,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @param string $hash
      * @param string $key
      * @return boolean
@@ -185,7 +189,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @param mixed $data should be serializable
      * @param string $key
      * @return string
@@ -217,14 +221,19 @@ class StateChecker
         return $hash;
     }
 
-    public function getLastHash() {
+    /**
+     *
+     * @return string
+     */
+    public function getLastHash()
+    {
         return $this->lastHash;
     }
     
     // ------------ DATABASE ----------------
     
     /**
-     * 
+     *
      * @param mysqli_result $resource
      * @return array
      */
@@ -238,7 +247,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @return array
      * @throws StateCheckerException
      */
@@ -252,7 +261,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @return string
      */
     protected function getDatabaseHash()
@@ -269,7 +278,12 @@ class StateChecker
     
     // ------------- FILE SYSTEM ---------------
     
-    protected function isExcludedFile($name) 
+    /**
+     *
+     * @param string $name filename
+     * @return boolean
+     */
+    protected function isExcludedFile($name)
     {
         foreach (StateCheckerConfig::get('fileExludeRegexes') as $regex) {
             if (preg_match($regex, $name)) {
@@ -280,7 +294,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @param string $path
      * @return array
      * @throws StateCheckerException
@@ -306,7 +320,7 @@ class StateChecker
     }
     
     /**
-     * 
+     *
      * @return string
      */
     protected function getFilesystemHash()
@@ -319,7 +333,7 @@ class StateChecker
     // -------------- SUPERGLOBALS -----------------
     
     /**
-     * 
+     *
      * @return string
      */
     protected function getSuperGlobalsHash()
@@ -335,7 +349,12 @@ class StateChecker
     
     // -------------- ERROR LEVEL -------------
     
-    protected function getErrorLevelHash() {
+    /**
+     *
+     * @return string hash
+     */
+    protected function getErrorLevelHash()
+    {
         $level = error_reporting();
         $hash = $this->getHash($level, 'errlevel');
         return $hash;
@@ -344,8 +363,9 @@ class StateChecker
     // -------------- ALL ----------------------
     
     /**
+     * Retrieve a hash of all 
      * 
-     * @return string
+     * @return string hash
      */
     public function getStateHash()
     {

@@ -68,10 +68,10 @@ class StateCheckerConfig
     const RUN_PER_CLASSES = 2;
     
     /**
-     * SuperGlobals Collection 
+     * SuperGlobals Collection
      * (DO NOT CHANGE!)
      *
-     * @var array 
+     * @var array
      */
     protected static $globalKeys = ['_POST', '_GET', '_REQUEST', '_SESSION', '_SERVER', '_ENV', '_FILES', '_COOKIE'];
     
@@ -81,15 +81,15 @@ class StateCheckerConfig
      * @var array 
      */
     protected static $fileExludeRegexes = [
-        '/\/\.git\//', 
-        '/\/cache\//', 
-        '/\.log$/', 
-        '/\/tests\/_output\//', 
-        '/\/blowfish\//', 
-        '/\/upload\//', 
+        '/\/\.git\//',
+        '/\/cache\//',
+        '/\.log$/',
+        '/\/tests\/_output\//',
+        '/\/blowfish\//',
+        '/\/upload\//',
         '/\/vendor\//',
         '/\/sugarfield_jjwg_maps_/',
-        '/\/vardefs.ext.php$/', 
+        '/\/vardefs.ext.php$/',
         '/\/modules\/AOD_Index\/Index\/Index\//',
         '/\/travis\/build\//',
     ];
@@ -126,9 +126,15 @@ class StateCheckerConfig
     protected static $storeDetails = false;
     
     /**
-     * Enum specified that tests needs to check system state.
+     * Enum specified that tests needs to check system state,
+     * for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_NEVER].
+     * RUN_NEVER: State check and save never run.
+     * RUN_PER_TEST: State check runs after each test methods.
+     * RUN_PER_CLASSES: State check runs after each test class.
+     * 
+     * Note: Mode RUN_PER_CLASSES affects only PHPUnit Test Cases
      * Note: developer mode override this value
-     *
+     * 
      * @var integer
      */
     protected static $testStateCheckMode = self::RUN_NEVER;
@@ -137,7 +143,7 @@ class StateCheckerConfig
      * Test using StateChecker
      * (Slow working but give more information about the error location, use in development only)
      *
-     * @var boolean 
+     * @var boolean
      */
     protected static $testsUseStateChecker = false;
     
@@ -145,11 +151,17 @@ class StateCheckerConfig
      * Test shows up an assertion failure when hash-mismatch,
      * use $testsUseStateChecker also, $testsUseAssertionFailureOnError applied only if $testsUseStateChecker = true;
      * (use in development only)
-     * 
+     *
      * @var boolean
      */
     protected static $testsUseAssertionFailureOnError = true;
     
+    /**
+     *
+     * @var boolean 
+     */
+    protected static $retrieved = false;
+        
     /**
      * Tests won't checking hash at these keys so won't failing
      *
@@ -157,23 +169,84 @@ class StateCheckerConfig
      * @var array
      */
     protected static $testsFailureExcludeKeys = [
-        'errlevel', 
+        'errlevel',
     ];
     
     /**
+     * Retrieve from sugar_config
      * 
-     * @param string $key
-     * @return mixed
+     * @global array $sugar_config
      */
-    public static function get($key) {
-        //if(inDeveloperMode()) {
-            if(in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
+    protected static function retrieve()
+    {
+        global $sugar_config;
+        
+        self::$globalKeys =
+            isset($sugar_config['state_checker']['global_keys']) ?
+                $sugar_config['state_checker']['global_keys'] :
+                self::$globalKeys;
+        
+        self::$fileExludeRegexes =
+            isset($sugar_config['state_checker']['file_exlude_regexes']) ?
+                $sugar_config['state_checker']['file_exlude_regexes'] :
+                self::$fileExludeRegexes;
+        
+        self::$autoRun =
+            isset($sugar_config['state_checker']['auto_run']) ?
+                $sugar_config['state_checker']['auto_run'] :
+                self::$autoRun;
+        
+        self::$saveTraces =
+            isset($sugar_config['state_checker']['save_traces']) ?
+                $sugar_config['state_checker']['save_traces'] :
+                self::$saveTraces;
+        
+        self::$redefineMemoryLimit =
+            isset($sugar_config['state_checker']['redefine_memory_limit']) ?
+                $sugar_config['state_checker']['redefine_memory_limit'] :
+                self::$redefineMemoryLimit;
+        
+        self::$storeDetails =
+            isset($sugar_config['state_checker']['store_details']) ?
+                $sugar_config['state_checker']['store_details'] :
+                self::$storeDetails;
+        
+        self::$testStateCheckMode =
+            isset($sugar_config['state_checker']['test_state_check_mode']) ?
+                $sugar_config['state_checker']['test_state_check_mode'] :
+                self::$testStateCheckMode;
+        
+        self::$testsUseStateChecker =
+            isset($sugar_config['state_checker']['tests_use_state_checker']) ?
+                $sugar_config['state_checker']['tests_use_state_checker'] :
+                self::$testsUseStateChecker;
+        
+        self::$testsUseAssertionFailureOnError =
+            isset($sugar_config['state_checker']['tests_use_assertion_failure_on_error']) ?
+                $sugar_config['state_checker']['tests_use_assertion_failure_on_error'] :
+                self::$testsUseAssertionFailureOnError;
+        
+        self::$retrieved = true;
+    }
+    
+    /**
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public static function get($key)
+    {
+        if (!self::$retrieved) {
+            self::retrieve();
+        }
+        if (inDeveloperMode()) {
+            if (in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
                 return true;
             }
-            if(in_array($key, ['testStateCheckMode'])) {
+            if (in_array($key, ['testStateCheckMode'])) {
                 return self::RUN_PER_TESTS;
             }
-        //}
+        }
         return self::$$key;
     }
 }
