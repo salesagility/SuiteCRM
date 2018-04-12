@@ -5,6 +5,8 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function test__construct()
     {
+        self::markTestIncomplete('environment dependency');
+        
 	// save state
 
         $state = new \SuiteCRM\StateSaver();

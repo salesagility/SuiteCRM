@@ -903,6 +903,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testProcessUnionListQuery()
     {
+        self::markTestIncomplete('environment dependency');
 
 	// save state
 
@@ -2245,6 +2246,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
+        $state->pushTable('aod_index');
 
 	// test
         
@@ -2532,6 +2534,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('tracker');
 
     }
