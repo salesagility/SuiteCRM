@@ -120,7 +120,8 @@ function portal_login($portal_auth, $user_name, $application_name){
 this validates the session and starts the session;
 */
 function portal_validate_authenticated($session_id){
-    $old_error_reporting = error_reporting(0);
+    $old_error_reporting = error_reporting();
+    error_reporting(0);
     session_id($session_id);
 
     // This little construct checks to see if the session validated

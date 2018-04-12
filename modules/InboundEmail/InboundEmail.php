@@ -3005,7 +3005,7 @@ class InboundEmail extends SugarBean
         }
 
         imap_errors(); // clearing error stack
-        error_reporting(0); // turn off notices from IMAP
+        //error_reporting(0); // turn off notices from IMAP
 
         if (isset($_REQUEST['ssl']) && $_REQUEST['ssl'] == 1) {
             $useSsl = true;
@@ -6037,7 +6037,7 @@ class InboundEmail extends SugarBean
         }
 
         imap_errors(); // clearing error stack
-        error_reporting(0); // turn off notices from IMAP
+        //error_reporting(0); // turn off notices from IMAP
 
         // tls::ca::ssl::protocol::novalidate-cert::notls
         $useSsl = ($_REQUEST['ssl'] == 'true') ? true : false;
