@@ -73,7 +73,15 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $product_quote = BeanFactory::getBean('AOS_Products_Quotes', $post_data[$key . 'id'][$i]);
+                
+                if (!isset($post_data[$key . 'id'][$i])) {
+                    LoggerManager::getLogger()->warn('');
+                    $postDataKeyIdI = null;
+                } else {
+                    $postDataKeyIdI = $post_data[$key . 'id'][$i];
+                }
+                
+                $product_quote = BeanFactory::getBean('AOS_Products_Quotes', $postDataKeyIdI);
                 if (!$product_quote) {
                     $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
                 }
