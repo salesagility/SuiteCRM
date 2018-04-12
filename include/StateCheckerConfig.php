@@ -75,6 +75,7 @@ class StateCheckerConfig
         '/\/sugarfield_jjwg_maps_/',
         '/\/vardefs.ext.php$/', 
         '/\/modules\/AOD_Index\/Index\/Index\//',
+        '/\/travis\/build\//',
     ];
     
     /**
