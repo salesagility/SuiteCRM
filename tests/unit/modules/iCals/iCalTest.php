@@ -5,11 +5,24 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 {
     public function test__construct()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+	// test
+        
         //execute the contructor and check for the Object type and  attributes
         $ical = new iCal();
         $this->assertInstanceOf('iCal', $ical);
         $this->assertInstanceOf('vCal', $ical);
         $this->assertInstanceOf('SugarBean', $ical);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
     }
 
     public function testgetVcalIcal()
