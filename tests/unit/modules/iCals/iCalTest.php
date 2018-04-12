@@ -14,9 +14,14 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
     public function testgetVcalIcal()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
         $state->pushGlobals();
+        
+	// test
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -36,6 +41,6 @@ class iCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         // clean up
         
         $state->popGlobals();
-        $state->popErrorLevel();
+        $state->popTable('email_addresses');
     }
 }
