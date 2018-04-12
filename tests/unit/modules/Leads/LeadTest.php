@@ -18,6 +18,7 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
+        $state->pushErrorLevel();
 
 	// test
         
@@ -38,6 +39,7 @@ class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
         
         // clean up
         
+        $state->popErrorLevel();
         $state->popTable('inbound_email');
 
 
