@@ -67,21 +67,21 @@ class UserTest extends \Codeception\Test\Unit
     }
 
 
-//    public function testgetDefaultSignature()
-//    {
-////        self::markTestIncomplete('environment dependency');
-//        $db = DBManagerFactory::getInstance();
-//        $db->disconnect();
-//        unset($db->database);
-//        $db->checkConnection();
-//
-//        $user = new User();
-//
-//        $user->retrieve(1);
-//
-//        $result = $user->getDefaultSignature();
-//        $this->assertTrue(is_array($result));
-//    }
+    public function testgetDefaultSignature()
+    {
+//        self::markTestIncomplete('environment dependency');
+        $db = DBManagerFactory::getInstance();
+        $db->disconnect();
+        unset($db->database);
+        $db->checkConnection();
+
+        $user = new User();
+
+        $user->retrieve(1);
+
+        $result = $user->getDefaultSignature();
+        $this->assertTrue(is_array($result));
+    }
 
 
     public function testgetSignature()
@@ -231,55 +231,55 @@ class UserTest extends \Codeception\Test\Unit
     }
 
 
-//
-//    public function testgetUserDateTimePreferences()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        $db = DBManagerFactory::getInstance();
-//        $db->disconnect();
-//        unset($db->database);
-//        $db->checkConnection();
-//
-//        $user = new User();
-//
-//        $user->retrieve(1);
-//
-//        $result = $user->getUserDateTimePreferences();
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertTrue(isset($result['date']));
-//        $this->assertTrue(isset($result['time']));
-//        $this->assertTrue(isset($result['userGmt']));
-//        $this->assertTrue(isset($result['userGmtOffset']));
-//    }
-//
-//
-//
-//    public function testGetETagSeedAndIncrementETag()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        $db = DBManagerFactory::getInstance();
-//        $db->disconnect();
-//        unset($db->database);
-//        $db->checkConnection();
-//
-//        $user = new User();
-//
-//        $user->retrieve(1);
-//
-//        //execute getETagSeed method, get Etag value
-//        $ETagInitial = $user->getETagSeed('test');
-//        $this->assertGreaterThanOrEqual(0, $ETagInitial);
-//
-//
-//        //execute incrementETag to increment
-//        $user->incrementETag('test');
-//
-//
-//        //execute getETagSeed method again, get Etag final value and  compare final and initial values
-//        $ETagFinal = $user->getETagSeed('test');
-//        $this->assertGreaterThan($ETagInitial, $ETagFinal);
-//    }
+
+    public function testgetUserDateTimePreferences()
+    {
+        self::markTestIncomplete('environment dependency');
+        $db = DBManagerFactory::getInstance();
+        $db->disconnect();
+        unset($db->database);
+        $db->checkConnection();
+
+        $user = new User();
+
+        $user->retrieve(1);
+
+        $result = $user->getUserDateTimePreferences();
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(isset($result['date']));
+        $this->assertTrue(isset($result['time']));
+        $this->assertTrue(isset($result['userGmt']));
+        $this->assertTrue(isset($result['userGmtOffset']));
+    }
+
+
+
+    public function testGetETagSeedAndIncrementETag()
+    {
+        self::markTestIncomplete('environment dependency');
+        $db = DBManagerFactory::getInstance();
+        $db->disconnect();
+        unset($db->database);
+        $db->checkConnection();
+
+        $user = new User();
+
+        $user->retrieve(1);
+
+        //execute getETagSeed method, get Etag value
+        $ETagInitial = $user->getETagSeed('test');
+        $this->assertGreaterThanOrEqual(0, $ETagInitial);
+
+
+        //execute incrementETag to increment
+        $user->incrementETag('test');
+
+
+        //execute getETagSeed method again, get Etag final value and  compare final and initial values
+        $ETagFinal = $user->getETagSeed('test');
+        $this->assertGreaterThan($ETagInitial, $ETagFinal);
+    }
 
 
     public function testgetLicensedUsersWhere()
@@ -309,103 +309,103 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals(false, $user->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $user->bean_implements('ACL')); //test with valid value
     }
-//
-//
-//    public function testcheck_role_membership()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        $db = DBManagerFactory::getInstance();
-//        $db->disconnect();
-//        unset($db->database);
-//        $db->checkConnection();
-//
-//        $user = new User();
-//
-//        $result = $user->check_role_membership("test", '');
-//        $this->assertEquals(false, $result);
-//
-//
-//        $result = $user->check_role_membership("test", '1');
-//        $this->assertEquals(false, $result);
-//    }
-//
-//
-//    public function testsaveAndOthers()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushErrorLevel();
-//        
-//        //error_reporting(E_ERROR | E_PARSE);
-//
-//        //unset and reconnect Db to resolve mysqli fetch exeception
-//        $db = DBManagerFactory::getInstance();
-//        $db->disconnect();
-//        unset($db->database);
-//        $db->checkConnection();
-//
-//
-//        $user = new User();
-//
-//        $user->user_name = "test";
-//
-//        $user->first_name = "firstn";
-//        $user->last_name = "lastn";
-//
-//        $user->email1 = "one@email.com";
-//        $user->email2 = "two@email.com";
-//
-//        $result = $user->save();
-//
-//        //test for record ID to verify that record is saved
-//        $this->assertTrue(isset($user->id));
-//        $this->assertEquals(36, strlen($user->id));
-//
-//
-//        //test retrieve method
-//        $this->retrieve($user->id);
-//
-//
-//        //test retrieve_by_email_address method
-//        $this->retrieve_by_email_address($user->id);
-//
-//
-//        //test newPassword And findUserPassword methods
-//        $this->NewPasswordAndFindUserPassword($user->id);
-//
-//        //test authenticate_user method
-//        $this->authenticate_user($user->id);
-//
-//
-//        //test load_user method
-//        $this->load_user($user->id);
-//
-//
-//        //test change_password method
-//        $this->change_password($user->id);
-//
-//        //test getPreferredEmail method
-//        $this->getPreferredEmail($user->id);
-//
-//
-//        //test getUsersNameAndEmail method
-//        $this->getUsersNameAndEmail($user->id);
-//
-//
-//        //test getEmailInfo method
-//        $this->getEmailInfo($user->id);
-//
-//
-//        //change username and delete the user to avoid picking it up by password in future
-//        $user->user_name = "test_deleted";
-//        $user->save();
-//        $user->mark_deleted($user->id);
-//        
-//        // clean up
-//        
-//        $state->popErrorLevel();
-//    }
-//
+
+
+    public function testcheck_role_membership()
+    {
+        self::markTestIncomplete('environment dependency');
+        $db = DBManagerFactory::getInstance();
+        $db->disconnect();
+        unset($db->database);
+        $db->checkConnection();
+
+        $user = new User();
+
+        $result = $user->check_role_membership("test", '');
+        $this->assertEquals(false, $result);
+
+
+        $result = $user->check_role_membership("test", '1');
+        $this->assertEquals(false, $result);
+    }
+
+
+    public function testsaveAndOthers()
+    {
+        self::markTestIncomplete('environment dependency');
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        
+        //error_reporting(E_ERROR | E_PARSE);
+
+        //unset and reconnect Db to resolve mysqli fetch exeception
+        $db = DBManagerFactory::getInstance();
+        $db->disconnect();
+        unset($db->database);
+        $db->checkConnection();
+
+
+        $user = new User();
+
+        $user->user_name = "test";
+
+        $user->first_name = "firstn";
+        $user->last_name = "lastn";
+
+        $user->email1 = "one@email.com";
+        $user->email2 = "two@email.com";
+
+        $result = $user->save();
+
+        //test for record ID to verify that record is saved
+        $this->assertTrue(isset($user->id));
+        $this->assertEquals(36, strlen($user->id));
+
+
+        //test retrieve method
+        $this->retrieve($user->id);
+
+
+        //test retrieve_by_email_address method
+        $this->retrieve_by_email_address($user->id);
+
+
+        //test newPassword And findUserPassword methods
+        $this->NewPasswordAndFindUserPassword($user->id);
+
+        //test authenticate_user method
+        $this->authenticate_user($user->id);
+
+
+        //test load_user method
+        $this->load_user($user->id);
+
+
+        //test change_password method
+        $this->change_password($user->id);
+
+        //test getPreferredEmail method
+        $this->getPreferredEmail($user->id);
+
+
+        //test getUsersNameAndEmail method
+        $this->getUsersNameAndEmail($user->id);
+
+
+        //test getEmailInfo method
+        $this->getEmailInfo($user->id);
+
+
+        //change username and delete the user to avoid picking it up by password in future
+        $user->user_name = "test_deleted";
+        $user->save();
+        $user->mark_deleted($user->id);
+        
+        // clean up
+        
+        $state->popErrorLevel();
+    }
+
     public function retrieve($id)
     {
         $user = new User();
@@ -630,6 +630,8 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testfill_in_additional_list_fields()
     {
+        self::markTestIncomplete('environment dependency');
+        
         $user = new User();
 
         $user->retrieve(1);
