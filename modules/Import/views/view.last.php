@@ -294,7 +294,7 @@ EOJAVASCRIPT;
 				WHERE users_last_import.assigned_user_id = '{$current_user->id}' AND users_last_import.bean_type='Prospect' AND users_last_import.bean_id=prospects.id
 				AND users_last_import.deleted=0 AND prospects.deleted=0";
 
-        $prospect_id = Array();
+        $prospect_id = array();
         if(!empty($query)){
             $res=$GLOBALS['db']->query($query);
             while($row = $GLOBALS['db']->fetchByAssoc($res))
