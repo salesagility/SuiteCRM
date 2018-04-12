@@ -75,7 +75,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
             } else {
                 
                 if (!isset($post_data[$key . 'id'][$i])) {
-                    LoggerManager::getLogger()->warn('');
+                    LoggerManager::getLogger()->warn('Post date has no key id');
                     $postDataKeyIdI = null;
                 } else {
                     $postDataKeyIdI = $post_data[$key . 'id'][$i];

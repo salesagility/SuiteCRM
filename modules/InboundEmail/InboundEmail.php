@@ -283,7 +283,12 @@ class InboundEmail extends SugarBean
         $this->connectMailserver();
         $oldConnect = $this->getConnectString('', $oldName);
         $newConnect = $this->getConnectString('', $newName);
-        if (!imap_renamemailbox($this->conn, $oldConnect, $newConnect)) {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        error_reporting(0);
+        $imapRenameMailbox = imap_renamemailbox($this->conn, $oldConnect, $newConnect);
+        $state->popErrorLevel();
+        if (!$imapRenameMailbox) {
             $GLOBALS['log']->debug("***INBOUNDEMAIL: failed to rename mailbox [ {$oldConnect} ] to [ {$newConnect} ]");
         } else {
             $this->mailbox = str_replace($oldName, $newName, $this->mailbox);
@@ -6040,7 +6045,15 @@ class InboundEmail extends SugarBean
         //error_reporting(0); // turn off notices from IMAP
 
         // tls::ca::ssl::protocol::novalidate-cert::notls
-        $useSsl = ($_REQUEST['ssl'] == 'true') ? true : false;
+        
+        if (!isset($_REQUEST['ssl'])) {
+            LoggerManager::getLogger()->warn('Request ssl value not found.');
+            $requestSsl = null;
+        } else {
+            $requestSsl = $_REQUEST['ssl'];
+        }
+        
+        $useSsl = ($requestSsl == 'true') ? true : false;
         if ($test) {
             imap_timeout(1, 15); // 60 secs is the default
             imap_timeout(2, 15);
@@ -6057,11 +6070,18 @@ class InboundEmail extends SugarBean
             $service = $this->getServiceString();
         }
 
-        if($_REQUEST['folder'] === 'sent') {
+        if (!isset($_REQUEST['folder'])) {
+            LoggerManager::getLogger()->warn('Requested folder is not defined');
+            $requestFolder = null;
+        } else {
+            $requestFolder = $_REQUEST['folder'];
+        }
+        
+        if($requestFolder === 'sent') {
             $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
         }
 
-        if($_REQUEST['folder'] === 'inbound') {
+        if($requestFolder === 'inbound') {
             if (!empty($_REQUEST['folder_name'])) {
                 $this->mailbox = $_REQUEST['folder_name'];
             }
@@ -6195,7 +6215,11 @@ class InboundEmail extends SugarBean
                 $params = array();
             }
 
+            $state = new \SuiteCRM\StateSaver();
+            $state->pushErrorLevel();
+            error_reporting(0);
             $connection = imap_open($mailbox, $username, $password, $options, 0, $params);
+            $state->popErrorLevel();
         }
 
         return $connection;
