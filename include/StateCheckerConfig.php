@@ -169,7 +169,7 @@ class StateCheckerConfig
      * @var array
      */
     protected static $testsFailureExcludeKeys = [
-        'errlevel',
+        //'errlevel',
     ];
     
     /**

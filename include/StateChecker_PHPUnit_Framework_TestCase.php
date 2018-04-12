@@ -70,6 +70,10 @@ abstract class StateChecker_PHPUnit_Framework_TestCase extends PHPUnit_Framework
     }
     
     protected function checkStates() {
+        if (!error_reporting()) {
+            error_reporting(E_ALL);
+            throw new Exception('Error reporting switched off');
+        }
         if (StateCheckerConfig::get('testsUseStateChecker') && self::$stateChecker) {
             try {
                 self::$stateChecker->getStateHash();
