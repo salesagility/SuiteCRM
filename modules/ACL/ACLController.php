@@ -58,14 +58,11 @@ class ACLController {
 		//calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
 
       if ($category === AOS_Products_Quotes::class) {
-          return ACLAction::userHasAccess(
-              $current_user->id,
-              AOS_Quotes::class,
-              $action,
-              $type,
-              $is_owner,
-              $in_group
-          );
+          return (
+          		ACLAction::userHasAccess($current_user->id,AOS_Quotes::class,$action,$type,$is_owner,$in_group)
+              || ACLAction::userHasAccess($current_user->id,AOS_Invoices::class,$action,$type,$is_owner,$in_group)
+          		|| ACLAction::userHasAccess($current_user->id,AOS_Contracts::class,$action,$type,$is_owner,$in_group)
+							);
       }
 
 		if($category == 'Calendar'){
